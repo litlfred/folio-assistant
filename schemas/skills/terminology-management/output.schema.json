@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/terminology-management/output.schema.json",
+  "title": "Terminology Management Output",
+  "description": "Output schema for terminology management operations.",
+  "type": "object",
+  "required": ["resources"],
+  "properties": {
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "resourceType"],
+        "properties": {
+          "path": { "type": "string" },
+          "resourceType": { "type": "string", "enum": ["CodeSystem", "ValueSet", "ConceptMap"] },
+          "url": { "type": "string" },
+          "conceptCount": { "type": "integer" }
+        }
+      }
+    },
+    "unmappedConcepts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Concepts that could not be mapped to the target standard."
+    }
+  }
+}

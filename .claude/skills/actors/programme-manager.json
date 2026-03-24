@@ -1,0 +1,12 @@
+{
+  "id": "programme-manager",
+  "name": "Programme Manager",
+  "type": "person",
+  "description": "Overall coordination and governance. Responsible for scope definition, team formation, resource allocation, timeline planning, and stakeholder engagement.",
+  "inherits": ["content-reviewer"],
+  "capabilities": ["git-push", "project-governance", "release-authorization"],
+  "meta": {
+    "smartBaseAnalog": "SGAuthoring.Persona.ProgrammeManager",
+    "lifecycle": ["plan", "review", "publish", "feedback"]
+  }
+}

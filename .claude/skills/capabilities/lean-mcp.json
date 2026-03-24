@@ -1,0 +1,7 @@
+{
+  "id": "lean-mcp",
+  "name": "Lean MCP Server",
+  "description": "MCP server providing Lean 4 diagnostics, proof state, and goal information.",
+  "detection": { "method": "mcp-probe", "endpoint": "lean-mcp", "healthPath": "/health" },
+  "requires": ["lean-toolchain"]
+}

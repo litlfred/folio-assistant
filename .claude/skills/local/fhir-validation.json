@@ -1,0 +1,23 @@
+{
+  "id": "fhir-validation",
+  "name": "FHIR Validation",
+  "description": "Validate FHIR IG content: SUSHI compilation, IG Publisher QA, CRMI conformance checks.",
+  "roles": ["fhir-modeller", "qc-reviewer", "admin"],
+  "requiredCapabilities": [
+    { "capabilityId": "sushi-compiler", "degradation": "fail" },
+    { "capabilityId": "ig-publisher", "degradation": "warn" },
+    { "capabilityId": "java-runtime", "degradation": "fail" }
+  ],
+  "dependsOn": [
+    { "ref": "req:fhir-validation", "kind": "requirement", "conformance": "SHALL" }
+  ],
+  "scripts": [
+    { "path": "scripts/sushi-build.sh", "runtime": "bash", "phase": "validate" },
+    { "path": "scripts/ig-publisher-build.sh", "runtime": "bash", "phase": "validate" }
+  ],
+  "routingPatterns": ["validate FHIR", "QA", "sushi", "IG Publisher", "conformance"],
+  "tags": ["smart-guidelines", "fhir", "validation", "qa"],
+  "package": "authoring-who-smart-guidelines",
+  "lifecycleStages": ["validate", "test"],
+  "schemaRef": "schemas/skills/fhir-validation"
+}

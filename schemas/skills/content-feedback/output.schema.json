@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/content-feedback/output.schema.json",
+  "title": "Content Feedback Output",
+  "description": "Output schema for triaged feedback.",
+  "type": "object",
+  "required": ["triagedItems"],
+  "properties": {
+    "triagedItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "priority", "disposition"],
+        "properties": {
+          "id": { "type": "string" },
+          "priority": { "type": "string", "enum": ["P0", "P1", "P2", "P3"] },
+          "disposition": { "type": "string", "enum": ["backlog", "next-sprint", "wont-fix", "duplicate", "needs-info"] },
+          "assignee": { "type": "string" },
+          "linkedIssue": { "type": "string" }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total": { "type": "integer" },
+        "critical": { "type": "integer" },
+        "major": { "type": "integer" },
+        "minor": { "type": "integer" },
+        "enhancement": { "type": "integer" }
+      }
+    }
+  }
+}

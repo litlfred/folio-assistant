@@ -1,0 +1,22 @@
+{
+  "assignments": [
+    {
+      "userPattern": "litlfred@gmail.com",
+      "identitySource": "git-config",
+      "actorId": "admin",
+      "priority": 100
+    },
+    {
+      "userPattern": "*@who.int",
+      "identitySource": "git-config",
+      "actorId": "author",
+      "priority": 50
+    },
+    {
+      "userPattern": "*",
+      "identitySource": "default",
+      "actorId": "viewer",
+      "priority": 0
+    }
+  ]
+}

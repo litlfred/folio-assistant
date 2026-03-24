@@ -1,0 +1,16 @@
+{
+  "id": "content-feedback",
+  "name": "Content Feedback",
+  "description": "Gather, triage, and prioritize feedback on published content for future iterations.",
+  "roles": ["technical-officer", "programme-manager", "clinical-sme", "business-analyst", "admin"],
+  "requiredCapabilities": [],
+  "dependsOn": [
+    { "ref": "content-publish", "kind": "skill", "conformance": "SHOULD" },
+    { "ref": "req:content-lifecycle", "kind": "requirement", "conformance": "SHOULD" }
+  ],
+  "routingPatterns": ["feedback", "triage", "backlog", "implementer feedback"],
+  "tags": ["lifecycle", "feedback"],
+  "package": "content-lifecycle",
+  "lifecycleStages": ["feedback"],
+  "schemaRef": "schemas/skills/content-feedback"
+}
