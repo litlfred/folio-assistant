@@ -1,0 +1,21 @@
+{
+  "id": "content-publish",
+  "name": "Content Publication",
+  "description": "Package, version, and publish approved content.",
+  "roles": ["publication-manager", "programme-manager", "admin"],
+  "requiredCapabilities": [
+    { "capabilityId": "git-push", "degradation": "fail" }
+  ],
+  "dependsOn": [
+    { "ref": "content-test", "kind": "skill", "conformance": "SHALL" },
+    { "ref": "req:content-lifecycle", "kind": "requirement", "conformance": "SHALL" }
+  ],
+  "scripts": [
+    { "path": "scripts/create-release.sh", "runtime": "bash", "phase": "execute" }
+  ],
+  "routingPatterns": ["publish", "release", "deploy", "version"],
+  "tags": ["lifecycle", "publication"],
+  "package": "content-lifecycle",
+  "lifecycleStages": ["publish"],
+  "schemaRef": "schemas/skills/content-publish"
+}

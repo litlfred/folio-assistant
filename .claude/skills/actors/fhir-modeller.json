@@ -1,0 +1,12 @@
+{
+  "id": "fhir-modeller",
+  "name": "FHIR Modeller",
+  "type": "person",
+  "description": "L3 machine-readable artifact creator who translates L2 specifications into FHIR Implementation Guide artifacts using FSH, SUSHI, CQL, and IG Publisher.",
+  "inherits": ["author"],
+  "capabilities": ["git-push", "sushi-compiler", "ig-publisher", "fhir-validator", "cql-authoring"],
+  "meta": {
+    "smartBaseAnalog": "SGAuthoring.Persona.FHIRModeller",
+    "lifecycle": ["author", "validate", "test"]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "bpmn-authoring",
+  "name": "BPMN Authoring",
+  "description": "Author BPMN 2.0 business process diagrams for workflow modeling.",
+  "roles": ["business-analyst", "author", "admin"],
+  "requiredCapabilities": [
+    { "capabilityId": "graphviz", "degradation": "skip" }
+  ],
+  "routingPatterns": ["BPMN", "business process", "workflow diagram"],
+  "tags": ["smart-guidelines", "bpmn", "workflow"],
+  "package": "authoring-who-smart-guidelines",
+  "lifecycleStages": ["author"],
+  "schemaRef": "schemas/skills/bpmn-authoring"
+}

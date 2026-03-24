@@ -1,0 +1,62 @@
+{
+  "name": "claude-scientific-skills",
+  "description": "Scientific skills for Claude — visualization, critical thinking, hypothesis generation. Maintained by K-Dense-AI.",
+  "repo": "https://github.com/K-Dense-AI/claude-scientific-skills",
+  "ref": "main",
+  "path": "/",
+  "maintainer": "K-Dense-AI",
+  "sync": {
+    "strategy": "shallow-clone",
+    "frequency": "weekly",
+    "autoUpdate": true
+  },
+  "wrapper": {
+    "description": "Light wrapper providing SkillPackageManifest compliance for external claude-scientific-skills.",
+    "docker": {
+      "baseImage": "ubuntu:24.04",
+      "aptPackages": [
+        "curl",
+        "git",
+        "python3",
+        "python3-pip",
+        "python3-venv",
+        "nodejs",
+        "npm",
+        "graphviz",
+        "ca-certificates"
+      ],
+      "pipPackages": [
+        "matplotlib",
+        "numpy",
+        "scipy",
+        "sympy",
+        "pandas",
+        "seaborn"
+      ],
+      "npmPackages": [
+        "typescript",
+        "ts-node"
+      ],
+      "labels": {
+        "org.opencontainers.image.title": "folio-assistant-scientific-skills",
+        "org.opencontainers.image.description": "Scientific skills for visualization, critical thinking, and hypothesis generation",
+        "org.opencontainers.image.source": "https://github.com/K-Dense-AI/claude-scientific-skills"
+      }
+    },
+    "providesCapabilities": [
+      "scientific-visualization",
+      "hypothesis-generation",
+      "critical-thinking"
+    ],
+    "skills": [
+      "scientific-visualization",
+      "scientific-critical-thinking",
+      "hypothesis-generation"
+    ],
+    "lifecycleStages": [
+      "author",
+      "validate",
+      "review"
+    ]
+  }
+}

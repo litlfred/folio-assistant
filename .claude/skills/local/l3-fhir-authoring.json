@@ -1,0 +1,23 @@
+{
+  "id": "l3-fhir-authoring",
+  "name": "L3 FHIR Authoring",
+  "description": "Author WHO SMART Guidelines L3 machine-readable FHIR artifacts: profiles, questionnaires, CQL, StructureMaps, measures.",
+  "roles": ["fhir-modeller", "author", "admin"],
+  "requiredCapabilities": [
+    { "capabilityId": "sushi-compiler", "degradation": "fail" },
+    { "capabilityId": "ig-publisher", "degradation": "warn" },
+    { "capabilityId": "node-runtime", "degradation": "fail" }
+  ],
+  "dependsOn": [
+    { "ref": "l2-dak-authoring", "kind": "skill", "conformance": "SHOULD" },
+    { "ref": "req:fhir-validation", "kind": "requirement", "conformance": "SHALL" }
+  ],
+  "scripts": [
+    { "path": "scripts/sushi-build.sh", "runtime": "bash", "phase": "validate" }
+  ],
+  "routingPatterns": ["L3", "FHIR", "FSH", "profile", "questionnaire", "CQL", "StructureMap"],
+  "tags": ["smart-guidelines", "l3", "fhir", "authoring"],
+  "package": "authoring-who-smart-guidelines",
+  "lifecycleStages": ["author", "validate"],
+  "schemaRef": "schemas/skills/l3-fhir-authoring"
+}

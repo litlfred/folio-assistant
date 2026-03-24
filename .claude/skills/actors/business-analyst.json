@@ -1,0 +1,12 @@
+{
+  "id": "business-analyst",
+  "name": "Business Analyst",
+  "type": "person",
+  "description": "L2 DAK component author who translates clinical guidelines into structured digital artifacts including BPMN processes, data dictionaries, decision logic, and indicators.",
+  "inherits": ["author"],
+  "capabilities": ["git-push", "bpmn-authoring", "dmn-authoring", "data-dictionary-authoring"],
+  "meta": {
+    "smartBaseAnalog": "SGAuthoring.Persona.BusinessAnalyst",
+    "lifecycle": ["author", "validate", "test"]
+  }
+}

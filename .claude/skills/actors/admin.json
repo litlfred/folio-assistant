@@ -1,0 +1,8 @@
+{
+  "id": "admin",
+  "name": "Administrator",
+  "type": "person",
+  "description": "Full administrative access. Can manage roles, settings, and all content operations.",
+  "inherits": ["programme-manager", "publication-manager"],
+  "capabilities": ["git-push", "admin-settings", "role-management", "release-authorization"]
+}

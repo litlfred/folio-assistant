@@ -1,0 +1,63 @@
+{
+  "name": "content-lifecycle",
+  "version": "0.1.0",
+  "description": "General content development lifecycle skills: plan, author, validate, review, test, publish, feedback, retire",
+  "skills": [
+    "content-plan",
+    "content-author",
+    "content-validate",
+    "content-review",
+    "content-test",
+    "content-publish",
+    "content-feedback",
+    "content-retire"
+  ],
+  "docker": {
+    "baseImage": "ubuntu:24.04",
+    "aptPackages": [
+      "curl",
+      "git",
+      "git-lfs",
+      "python3",
+      "python3-pip",
+      "python3-venv",
+      "nodejs",
+      "npm",
+      "jq",
+      "ca-certificates"
+    ],
+    "pipPackages": [
+      "jsonschema",
+      "pyyaml",
+      "requests"
+    ],
+    "npmPackages": [
+      "typescript",
+      "ts-node"
+    ],
+    "labels": {
+      "org.opencontainers.image.title": "folio-assistant-lifecycle",
+      "org.opencontainers.image.description": "Content development lifecycle management tools",
+      "org.opencontainers.image.source": "https://github.com/litlfred/folio-assistant"
+    }
+  },
+  "providesCapabilities": [
+    "git-push",
+    "python3",
+    "node-runtime"
+  ],
+  "lifecycleStages": [
+    "plan",
+    "author",
+    "validate",
+    "review",
+    "test",
+    "publish",
+    "feedback",
+    "retire"
+  ],
+  "schemas": [
+    "schemas/generated/SkillDefinition.schema.json",
+    "schemas/generated/Requirement.schema.json"
+  ]
+}

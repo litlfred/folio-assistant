@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/proof-verification/output.schema.json",
+  "title": "Proof Verification Output",
+  "description": "Output schema for the proof-verification skill.",
+  "type": "object",
+  "required": ["verified", "sorryCount"],
+  "properties": {
+    "verified": { "type": "boolean" },
+    "sorryCount": { "type": "integer", "minimum": 0 },
+    "sorries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "line", "obligation"],
+        "properties": {
+          "file": { "type": "string" },
+          "line": { "type": "integer" },
+          "obligation": { "type": "string" },
+          "reference": { "type": "string" }
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": { "type": "string" },
+          "line": { "type": "integer" },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "content-plan",
+  "name": "Content Planning",
+  "description": "Plan content development: scope, team, timeline, sprint cadence, governance.",
+  "roles": ["programme-manager", "admin"],
+  "requiredCapabilities": [],
+  "dependsOn": [
+    { "ref": "req:content-lifecycle", "kind": "requirement", "conformance": "SHALL" }
+  ],
+  "routingPatterns": ["plan", "scope", "timeline", "sprint", "team"],
+  "tags": ["lifecycle", "planning"],
+  "package": "content-lifecycle",
+  "lifecycleStages": ["plan"],
+  "schemaRef": "schemas/skills/content-plan"
+}

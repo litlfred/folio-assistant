@@ -1,0 +1,61 @@
+{
+  "id": "req:content-lifecycle",
+  "title": "Content Development Lifecycle",
+  "description": "Content must follow the plan → author → validate → review → test → publish → feedback lifecycle with appropriate phase gates.",
+  "derivedFrom": ["req:agent-workflow"],
+  "actors": ["author", "reviewer", "content-reviewer", "qc-reviewer", "publication-manager", "programme-manager"],
+  "statements": [
+    {
+      "key": "plan-before-author",
+      "label": "Planning precedes authoring",
+      "conformance": "SHALL",
+      "requirement": "Content authoring MUST NOT begin until a project plan with defined scope and team is established.",
+      "actors": ["programme-manager"],
+      "satisfiedBy": [{ "kind": "skill", "ref": "content-plan" }]
+    },
+    {
+      "key": "validate-before-review",
+      "label": "Validation precedes review",
+      "conformance": "SHALL",
+      "requirement": "Content MUST pass automated validation (schema, FHIR, Lean) before entering formal review.",
+      "dependsOn": ["plan-before-author"],
+      "satisfiedBy": [{ "kind": "skill", "ref": "content-validate" }]
+    },
+    {
+      "key": "review-before-test",
+      "label": "Review precedes testing",
+      "conformance": "SHALL",
+      "requirement": "Content MUST receive formal review approval before integration testing.",
+      "dependsOn": ["validate-before-review"],
+      "actors": ["content-reviewer"],
+      "satisfiedBy": [{ "kind": "skill", "ref": "content-review" }]
+    },
+    {
+      "key": "test-before-publish",
+      "label": "Testing precedes publication",
+      "conformance": "SHALL",
+      "requirement": "Content MUST pass all tests before publication.",
+      "dependsOn": ["review-before-test"],
+      "actors": ["qc-reviewer"],
+      "satisfiedBy": [{ "kind": "skill", "ref": "content-test" }]
+    },
+    {
+      "key": "publish-authorized",
+      "label": "Publication requires authorization",
+      "conformance": "SHALL",
+      "requirement": "Publication MUST be authorized by the Programme Manager or designated authority.",
+      "dependsOn": ["test-before-publish"],
+      "actors": ["programme-manager", "publication-manager"],
+      "satisfiedBy": [{ "kind": "skill", "ref": "content-publish" }]
+    },
+    {
+      "key": "feedback-collected",
+      "label": "Feedback collected post-publication",
+      "conformance": "SHOULD",
+      "requirement": "Feedback SHOULD be collected from implementers and users after publication and triaged for the next iteration.",
+      "dependsOn": ["publish-authorized"],
+      "satisfiedBy": [{ "kind": "skill", "ref": "content-feedback" }]
+    }
+  ],
+  "tags": ["common", "lifecycle"]
+}
