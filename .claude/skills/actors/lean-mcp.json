@@ -1,0 +1,12 @@
+{
+  "id": "lean-mcp",
+  "name": "Lean MCP Server",
+  "type": "system",
+  "description": "System actor providing Lean 4 proof checking and diagnostics via MCP protocol.",
+  "inherits": [],
+  "capabilities": ["lean-toolchain", "lean-diagnostics"],
+  "meta": {
+    "provider": "mcp",
+    "endpoint": "lean-mcp"
+  }
+}

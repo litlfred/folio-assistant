@@ -1,0 +1,21 @@
+{
+  "id": "proof-verification",
+  "name": "Proof Verification",
+  "description": "Verify Lean 4 proofs, track sorry obligations, and report build diagnostics.",
+  "roles": ["author", "qc-reviewer", "admin"],
+  "requiredCapabilities": [
+    { "capabilityId": "lean-toolchain", "degradation": "fail" }
+  ],
+  "dependsOn": [
+    { "ref": "req:lean-verification", "kind": "requirement", "conformance": "SHALL" }
+  ],
+  "scripts": [
+    { "path": "scripts/verify-proofs.sh", "runtime": "bash", "phase": "validate" }
+  ],
+  "mcpServices": ["lean-mcp"],
+  "routingPatterns": ["verify", "check proofs", "sorry", "proof obligations"],
+  "tags": ["math", "lean", "verification", "qa"],
+  "package": "authoring-math",
+  "lifecycleStages": ["validate", "test"],
+  "schemaRef": "schemas/skills/proof-verification"
+}

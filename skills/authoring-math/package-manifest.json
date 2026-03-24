@@ -1,0 +1,82 @@
+{
+  "name": "authoring-math",
+  "version": "0.1.0",
+  "description": "Formal mathematics authoring skills for Lean 4 proofs, LaTeX documents, and category theory formalization",
+  "skills": [
+    "lean-formalization",
+    "latex-authoring",
+    "proof-verification",
+    "scientific-visualization",
+    "hypothesis-generation",
+    "scientific-critical-thinking"
+  ],
+  "docker": {
+    "baseImage": "ubuntu:24.04",
+    "aptPackages": [
+      "curl",
+      "git",
+      "git-lfs",
+      "build-essential",
+      "cmake",
+      "pkg-config",
+      "libgmp-dev",
+      "python3",
+      "python3-pip",
+      "python3-venv",
+      "nodejs",
+      "npm",
+      "texlive-full",
+      "latexmk",
+      "biber",
+      "pandoc",
+      "graphviz",
+      "ca-certificates",
+      "wget",
+      "unzip"
+    ],
+    "pipPackages": [
+      "matplotlib",
+      "numpy",
+      "sympy",
+      "jupyter"
+    ],
+    "npmPackages": [
+      "typescript",
+      "ts-node",
+      "bun"
+    ],
+    "setupCommands": [
+      "curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain leanprover/lean4:v4.16.0",
+      "echo 'export PATH=\"$HOME/.elan/bin:$PATH\"' >> /etc/profile.d/lean.sh"
+    ],
+    "env": {
+      "LEAN_HOME": "/root/.elan",
+      "PATH": "/root/.elan/bin:${PATH}"
+    },
+    "labels": {
+      "org.opencontainers.image.title": "folio-assistant-math",
+      "org.opencontainers.image.description": "Formal mathematics authoring environment with Lean 4 and LaTeX",
+      "org.opencontainers.image.source": "https://github.com/litlfred/folio-assistant"
+    }
+  },
+  "providesCapabilities": [
+    "lean-toolchain",
+    "latex-compiler",
+    "bun-runtime",
+    "python3",
+    "graphviz"
+  ],
+  "requiresCapabilities": [
+    "git-push"
+  ],
+  "lifecycleStages": [
+    "author",
+    "validate",
+    "review",
+    "test"
+  ],
+  "schemas": [
+    "schemas/generated/SkillDefinition.schema.json",
+    "schemas/generated/SkillPackageManifest.schema.json"
+  ]
+}

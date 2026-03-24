@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/content-review/output.schema.json",
+  "title": "Content Review Output",
+  "description": "Output schema for content review decisions.",
+  "type": "object",
+  "required": ["decision"],
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": ["approve", "request-changes", "reject"]
+    },
+    "reviewer": { "type": "string" },
+    "reviewDate": { "type": "string", "format": "date-time" },
+    "comments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "location": { "type": "string" },
+          "severity": { "type": "string", "enum": ["blocking", "suggestion", "praise"] },
+          "comment": { "type": "string" }
+        }
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Conditions that must be met before the approval is final."
+    }
+  }
+}

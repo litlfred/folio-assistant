@@ -1,0 +1,24 @@
+{
+  "id": "ig-publication",
+  "name": "IG Publication",
+  "description": "Publish FHIR Implementation Guides: versioning, release branches, GitHub releases, platform deployment.",
+  "roles": ["publication-manager", "admin"],
+  "requiredCapabilities": [
+    { "capabilityId": "ig-publisher", "degradation": "fail" },
+    { "capabilityId": "git-push", "degradation": "fail" },
+    { "capabilityId": "jekyll", "degradation": "warn" }
+  ],
+  "dependsOn": [
+    { "ref": "fhir-validation", "kind": "skill", "conformance": "SHALL" },
+    { "ref": "req:content-lifecycle", "kind": "requirement", "conformance": "SHALL" }
+  ],
+  "scripts": [
+    { "path": "scripts/ig-publisher-build.sh", "runtime": "bash", "phase": "execute" },
+    { "path": "scripts/create-release.sh", "runtime": "bash", "phase": "post" }
+  ],
+  "routingPatterns": ["publish IG", "release", "version", "deploy"],
+  "tags": ["smart-guidelines", "fhir", "publication"],
+  "package": "authoring-who-smart-guidelines",
+  "lifecycleStages": ["publish"],
+  "schemaRef": "schemas/skills/ig-publication"
+}

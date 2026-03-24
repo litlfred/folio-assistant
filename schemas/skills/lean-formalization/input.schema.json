@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/lean-formalization/input.schema.json",
+  "title": "Lean Formalization Input",
+  "description": "Input schema for the lean-formalization skill. Describes source material to be formalized in Lean 4.",
+  "type": "object",
+  "required": ["sourceFile", "targetModule"],
+  "properties": {
+    "sourceFile": {
+      "type": "string",
+      "description": "Path to the source material (LaTeX, markdown, or existing Lean file) to formalize."
+    },
+    "targetModule": {
+      "type": "string",
+      "description": "Lean module path for the output (e.g. 'Qou.CategoryTheory.Functors')."
+    },
+    "proofStrategy": {
+      "type": "string",
+      "enum": ["tactic", "term", "mixed"],
+      "default": "tactic",
+      "description": "Preferred proof style."
+    },
+    "dependencies": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Lean package dependencies (lake packages)."
+    }
+  }
+}

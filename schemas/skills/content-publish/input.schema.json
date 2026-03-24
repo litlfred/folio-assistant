@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/content-publish/input.schema.json",
+  "title": "Content Publish Input",
+  "description": "Input schema for content publication.",
+  "type": "object",
+  "required": ["versionIncrement"],
+  "properties": {
+    "versionIncrement": { "type": "string", "enum": ["major", "minor", "patch"] },
+    "releaseNotes": { "type": "string" },
+    "target": {
+      "type": "string",
+      "enum": ["github-release", "npm", "fhir-registry", "arxiv"],
+      "description": "Publication target."
+    }
+  }
+}

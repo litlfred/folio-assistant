@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/content-publish/output.schema.json",
+  "title": "Content Publish Output",
+  "description": "Output schema for content publication.",
+  "type": "object",
+  "required": ["version", "status"],
+  "properties": {
+    "version": { "type": "string" },
+    "status": { "type": "string", "enum": ["published", "failed"] },
+    "publishedUrl": { "type": "string" },
+    "releaseTag": { "type": "string" }
+  }
+}

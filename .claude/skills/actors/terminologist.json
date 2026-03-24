@@ -1,0 +1,12 @@
+{
+  "id": "terminologist",
+  "name": "Terminologist",
+  "type": "person",
+  "description": "Semantic interoperability and terminology governance specialist who maps data elements to standard terminologies (ICD-11, SNOMED CT, LOINC).",
+  "inherits": ["author"],
+  "capabilities": ["git-push", "terminology-management"],
+  "meta": {
+    "smartBaseAnalog": "SGAuthoring.Persona.Terminologist",
+    "lifecycle": ["author", "validate"]
+  }
+}

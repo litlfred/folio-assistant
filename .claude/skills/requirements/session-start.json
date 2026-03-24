@@ -1,0 +1,31 @@
+{
+  "id": "req:session-start",
+  "title": "Session Start Protocol",
+  "description": "Every agent session must detect the user role and check environment capabilities before proceeding.",
+  "derivedFrom": ["req:agent-workflow"],
+  "actors": ["viewer", "reviewer", "author", "admin"],
+  "statements": [
+    {
+      "key": "detect-role",
+      "label": "Detect user role",
+      "conformance": "SHALL",
+      "requirement": "The agent MUST determine the user's role at session start by checking identity sources against the role assignment table.",
+      "satisfiedBy": [{ "kind": "capability", "ref": "role-detection" }]
+    },
+    {
+      "key": "check-capabilities",
+      "label": "Check environment capabilities",
+      "conformance": "SHALL",
+      "requirement": "The agent MUST probe for all capabilities referenced by skills the user's role can access.",
+      "dependsOn": ["detect-role"]
+    },
+    {
+      "key": "check-todos",
+      "label": "Check open todos",
+      "conformance": "SHOULD",
+      "requirement": "The agent SHOULD check for open todos and present a summary to the user.",
+      "dependsOn": ["detect-role"]
+    }
+  ],
+  "tags": ["common", "session"]
+}

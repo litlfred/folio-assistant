@@ -1,0 +1,29 @@
+{
+  "name": "@folio-assistant/core",
+  "version": "0.1.0",
+  "description": "Cross-repository agent skills framework with unified skill management, RBAC, and capability detection",
+  "type": "module",
+  "main": "schemas/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "generate:schemas": "ts-node scripts/generate-schemas.ts",
+    "generate:docs": "ts-node scripts/generate-docs.ts",
+    "generate:registry": "ts-node scripts/generate-registry.ts",
+    "generate:all": "npm run generate:schemas && npm run generate:docs && npm run generate:registry",
+    "validate": "ts-node scripts/validate-skills.ts",
+    "docker:build": "docker build -t folio-assistant .",
+    "docker:build:math": "docker build -f skills/authoring-math/Dockerfile -t folio-assistant-math .",
+    "docker:build:smart": "docker build -f skills/authoring-who-smart-guidelines/Dockerfile -t folio-assistant-smart ."
+  },
+  "dependencies": {
+    "zod": "^3.23.0",
+    "zod-to-json-schema": "^3.23.0",
+    "typescript-json-schema": "^0.65.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "ts-node": "^10.9.0",
+    "@types/node": "^22.0.0"
+  },
+  "license": "MIT"
+}
