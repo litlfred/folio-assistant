@@ -72,23 +72,29 @@ RUN pip3 install --no-cache-dir --break-system-packages \
     requests \
     pyyaml \
     jsonschema \
-    lxml \
-    zod-to-json-schema 2>/dev/null || true
+    lxml
 
 # ─── Ruby gems ───────────────────────────────────────────────────────────────
 RUN gem install jekyll bundler
 
-# ─── FHIR IG Publisher ───────────────────────────────────────────────────────
+# ─── FHIR IG Publisher (pinned version for reproducibility) ──────────────────
+# Pin to a specific release; update this ARG when upgrading.
+ARG IG_PUBLISHER_VERSION=1.7.4
 RUN mkdir -p /opt/ig-publisher \
-    && curl -L -o /opt/ig-publisher/publisher.jar \
-       https://github.com/HL7/fhir-ig-publisher/releases/latest/download/publisher.jar
+    && curl -fSL -o /opt/ig-publisher/publisher.jar \
+       "https://github.com/HL7/fhir-ig-publisher/releases/download/${IG_PUBLISHER_VERSION}/publisher.jar"
 
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 ENV IG_PUBLISHER_JAR=/opt/ig-publisher/publisher.jar
 
 # ─── Lean 4 toolchain ────────────────────────────────────────────────────────
-RUN curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
-    | sh -s -- -y --default-toolchain leanprover/lean4:v4.16.0 \
+# Download the installer, verify it's a shell script, then execute it.
+ARG ELAN_VERSION=v3.1.1
+RUN curl -fSL -o /tmp/elan-init.sh \
+       "https://raw.githubusercontent.com/leanprover/elan/${ELAN_VERSION}/elan-init.sh" \
+    && head -1 /tmp/elan-init.sh | grep -q '^#!' \
+    && sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.16.0 \
+    && rm /tmp/elan-init.sh \
     && echo 'export PATH="$HOME/.elan/bin:$PATH"' >> /etc/profile.d/lean.sh
 
 ENV LEAN_HOME=/root/.elan
@@ -104,11 +110,11 @@ COPY scripts/ scripts/
 COPY .claude/ .claude/
 
 # Install npm dependencies
-RUN npm install --production 2>/dev/null || true
+RUN npm install --production
 
 # Generate schemas and registry
-RUN npx ts-node scripts/generate-schemas.ts 2>/dev/null || true
-RUN npx ts-node scripts/generate-docs.ts 2>/dev/null || true
-RUN npx ts-node scripts/generate-registry.ts 2>/dev/null || true
+RUN npx ts-node scripts/generate-schemas.ts
+RUN npx ts-node scripts/generate-docs.ts
+RUN npx ts-node scripts/generate-registry.ts
 
 CMD ["/bin/bash"]

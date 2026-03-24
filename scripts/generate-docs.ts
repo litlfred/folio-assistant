@@ -91,6 +91,33 @@ function timestamp(): string {
   return new Date().toISOString().replace(/T.*/, "");
 }
 
+/**
+ * Compute the transitive closure of an actor's identity: the actor itself
+ * plus all actors that inherit from it (directly or transitively).
+ * This lets us check "can this actor invoke a skill?" by testing whether
+ * any of the skill's allowed roles are in this set.
+ */
+function getTransitiveRoles(actorId: string): Set<string> {
+  const result = new Set<string>([actorId]);
+  const queue = [actorId];
+  while (queue.length > 0) {
+    const current = queue.shift()!;
+    // Find actors whose `inherits` includes `current` — those are children
+    // that also satisfy the role check. But we actually want ancestors:
+    // if this actor inherits from X, then this actor can do anything X can.
+    const actor = actors.find(a => a.data.id === current);
+    if (actor?.data.inherits) {
+      for (const parentId of actor.data.inherits) {
+        if (!result.has(parentId)) {
+          result.add(parentId);
+          queue.push(parentId);
+        }
+      }
+    }
+  }
+  return result;
+}
+
 // ─── Load all data ───────────────────────────────────────────────────────────
 
 const actors = loadJsonDir(join(rootDir, ".claude", "skills", "actors"));
@@ -376,8 +403,11 @@ function generateActorsMd(): string {
       }
     }
 
-    // Which skills can this actor invoke?
-    const accessibleSkills = skills.filter(s => s.data.roles?.some((r: string) => r === d.id || actors.find(a2 => a2.data.id === r)?.data.inherits?.includes(d.id)));
+    // Which skills can this actor invoke? (full transitive inheritance)
+    const effectiveRoles = getTransitiveRoles(d.id);
+    const accessibleSkills = skills.filter(s =>
+      s.data.roles?.some((r: string) => effectiveRoles.has(r))
+    );
     if (accessibleSkills.length) {
       L.push(`**Accessible Skills:** ${accessibleSkills.map(s => `\`${s.data.id}\``).join(", ")}  `);
     }

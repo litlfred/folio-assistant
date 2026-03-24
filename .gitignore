@@ -3,8 +3,10 @@ dist/
 *.js
 *.js.map
 *.d.ts
-!schemas/generated/*.json
 .env
 .env.*
 *.log
 .DS_Store
+
+# Generated files — regenerate with `npm run generate:all`
+schemas/generated/
