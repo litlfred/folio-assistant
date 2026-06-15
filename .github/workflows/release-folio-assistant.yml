@@ -47,8 +47,14 @@ jobs:
           else
             VERSION="${GITHUB_REF_NAME#folio-assistant-v}"
           fi
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "tag=folio-assistant-v$VERSION" >> $GITHUB_OUTPUT
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "version<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$VERSION" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "tag<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "folio-assistant-v$VERSION" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Install dependencies
         run: cd $PKG_DIR && bun install

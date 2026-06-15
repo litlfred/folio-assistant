@@ -95,7 +95,10 @@ jobs:
             'content/**/*.qa.json' \
             'content/pipeline/script-sidecars/' \
             2>/dev/null | wc -l)
-          echo "count=$changed" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "count<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$changed" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
           if [ "$changed" -eq 0 ]; then
             echo "No sidecar changes — exiting cleanly."
           else
@@ -125,7 +128,10 @@ jobs:
           fi
           git commit -m "qa-sweep: nightly refresh ($(date -u +%Y-%m-%d))"
           git push -u origin "$BRANCH"
-          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "branch<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$BRANCH" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Open (or surface existing) PR
         if: steps.push.outputs.branch != ''

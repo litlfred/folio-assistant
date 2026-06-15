@@ -180,7 +180,10 @@ jobs:
         id: folio
         run: |
           python3 .github/scripts/extract-folio.py > papers.json
-          echo "papers_json=$(cat papers.json | jq -c .)" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "papers_json<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$(cat papers.json | jq -c .)" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Detect compute changes (gate witness regen)
         id: compute_diff
@@ -201,7 +204,10 @@ jobs:
               changed=false
             fi
           fi
-          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "changed<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$changed" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
           echo "compute changed since base: $changed (false => skip witness regen)"
 
       - name: Regenerate stale witnesses
@@ -315,7 +321,10 @@ jobs:
         id: filename
         run: |
           base=$(date -u +"%Y%m%d-%H%M%S")-${GITHUB_SHA:0:7}
-          echo "base=$base" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "base<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$base" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Upload content-pipeline artefacts
         uses: actions/upload-artifact@v4

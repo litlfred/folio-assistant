@@ -153,7 +153,10 @@ jobs:
           GAPROOT=$(dirname $(dirname $(readlink -f "$GAP_BIN")))
           # apt-installed GAP places sysinfo.gap under /usr/share/gap; honour that.
           [ -f /usr/share/gap/sysinfo.gap ] && GAPROOT=/usr/share/gap
-          echo "gaproot=$GAPROOT" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "gaproot<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$GAPROOT" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
           ls -la "$GAPROOT"
       - name: Generate ./configure (autoreconf)
         run: cd tools/hecke-engine-gap/src && autoreconf -fi

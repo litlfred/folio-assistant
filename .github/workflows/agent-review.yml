@@ -63,9 +63,18 @@ jobs:
       - name: Get commit info
         id: commit
         run: |
-          echo "message=$(git log -1 --pretty=%s)" >> "$GITHUB_OUTPUT"
-          echo "sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
-          echo "author=$(git log -1 --pretty=%an)" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "message<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$(git log -1 --pretty=%s)" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "sha<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "author<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$(git log -1 --pretty=%an)" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
 
       # Skills are now loaded programmatically by agent_review.py via qou_lib.skills.
       # The shell-based skill collection step is no longer needed.
@@ -74,8 +83,11 @@ jobs:
         id: pdf
         run: |
           OWNER="${{ github.repository_owner }}"
-          REPO_NAME="${{ github.event.repository.name }}"
-          echo "url=https://${OWNER}.github.io/${REPO_NAME}/quantum-observable-universe.pdf" >> "$GITHUB_OUTPUT"
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "url<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "https://${OWNER}.github.io/${REPO_NAME}/quantum-observable-universe.pdf" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Run agent review
         env:

@@ -63,17 +63,38 @@ jobs:
           if [ "$EVENT" = "workflow_run" ]; then
             if [ "${{ github.event.workflow_run.conclusion }}" != "success" ]; then
               echo "Image build did not succeed — skipping deploy."
-              echo "action=skip" >> "$GITHUB_OUTPUT"
+              EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+              echo "action<<$EOF" >> "$GITHUB_OUTPUT"
+              echo "skip" >> "$GITHUB_OUTPUT"
+              echo "$EOF" >> "$GITHUB_OUTPUT"
             else
-              echo "action=update" >> "$GITHUB_OUTPUT"
+              EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+              echo "action<<$EOF" >> "$GITHUB_OUTPUT"
+              echo "update" >> "$GITHUB_OUTPUT"
+              echo "$EOF" >> "$GITHUB_OUTPUT"
             fi
-            echo "auto=true" >> "$GITHUB_OUTPUT"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "auto<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "true" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
           elif [ "$EVENT" = "push" ]; then
-            echo "action=update" >> "$GITHUB_OUTPUT"
-            echo "auto=true" >> "$GITHUB_OUTPUT"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "action<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "update" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "auto<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "true" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
           else
-            echo "action=$INPUT_ACTION" >> "$GITHUB_OUTPUT"
-            echo "auto=false" >> "$GITHUB_OUTPUT"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "action<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "$INPUT_ACTION" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "auto<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "false" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Parse config

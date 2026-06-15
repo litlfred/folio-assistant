@@ -54,7 +54,10 @@ jobs:
         working-directory: tools/pyhecke
         run: |
           v=$(grep -E '^version\s*=' pyproject.toml | head -1 | sed -E 's/.*"([^"]+)".*/\1/')
-          echo "version=$v" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "version<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$v" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
           echo "::notice::pyhecke version = $v"
 
       - name: Build sdist + wheel

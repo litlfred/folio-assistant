@@ -87,7 +87,10 @@ jobs:
       - name: Configure environment
         run: |
           git config --global --add safe.directory "${{ github.workspace }}"
-          echo "PYTHONPATH=${{ github.workspace }}/.github/scripts" >> "$GITHUB_ENV"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "PYTHONPATH<<$EOF" >> "$GITHUB_ENV"
+          echo "${{ github.workspace }}/.github/scripts" >> "$GITHUB_ENV"
+          echo "$EOF" >> "$GITHUB_ENV"
 
       # Bun + TeX + Lean are pre-installed in the paper-assistant image.
 
