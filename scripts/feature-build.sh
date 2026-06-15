@@ -28,10 +28,10 @@ set -euo pipefail
 ROOT="$(git rev-parse --show-toplevel)"; cd "$ROOT"
 PAPER="quantum-observable-universe"; BASE="origin/main"; CHAPTERS=""; OUT="build-feature"
 while [ $# -gt 0 ]; do case "$1" in
-  --base) BASE="$2"; shift 2;;
-  --chapters) CHAPTERS="$2"; shift 2;;
-  --paper) PAPER="$2"; shift 2;;
-  --out) OUT="$2"; shift 2;;
+  --base) BASE="${2:-}"; shift 2;;
+  --chapters) CHAPTERS="${2:-}"; shift 2;;
+  --paper) PAPER="${2:-}"; shift 2;;
+  --out) OUT="${2:-}"; shift 2;;
   *) echo "feature-build: unknown arg: $1" >&2; exit 2;;
 esac; done
 PAPERDIR="content/$PAPER"
@@ -60,7 +60,12 @@ echo "feature-build: changed chapters → $CHAPTERS"
 mkdir -p "$OUT"
 # Inline preamble = everything in main.tex before \begin{document} (carries the
 # manifest macros + memoize \usepackage that %&qou would gobble).
-awk '/\\begin\{document\}/{exit} {print}' main.tex > "$OUT/preamble-inline.tex"
+if [ -f main.tex ]; then
+  awk '/\\begin\{document\}/{exit} {print}' main.tex > "$OUT/preamble-inline.tex"
+else
+  echo "feature-build: main.tex missing, falling back to empty preamble"
+  touch "$OUT/preamble-inline.tex"
+fi
 # latexdiff markup defs (UNDERLINE type) so \DIFadd/\DIFdel resolve when we wrap
 # a diffed chapter BODY (latexdiff only emits these into a full-document preamble).
 cat "$OUT/preamble-inline.tex" > "$OUT/preamble-diff.tex"
@@ -79,7 +84,7 @@ echo "feature-build: [2/3] quick changed-chapters PDF…"
 { cat "$OUT/preamble-inline.tex"; echo '\begin{document}'
   for c in "${CHS[@]}"; do [ -f "chapters/$c.tex" ] && echo "\\input{$ROOT/chapters/$c}"; done
   echo '\end{document}'; } > "$OUT/changed.tex"
-( cd "$OUT" && latexmk -pdf -shell-escape -f -interaction=nonstopmode changed.tex >changed.log 2>&1 || true )
+latexmk -pdf -shell-escape -f -interaction=nonstopmode -outdir="$OUT" "$OUT/changed.tex" >"$OUT/changed.log" 2>&1 || true
 [ -f "$OUT/changed.pdf" ] && echo "  → $OUT/changed.pdf" || echo "  ! changed.pdf not produced (see $OUT/changed.log)"
 
 echo "feature-build: [3/3] per-chapter latexdiff (colored + plain)…"
@@ -96,7 +101,7 @@ for c in "${CHS[@]}"; do
   for v in color plain; do
     { cat "$OUT/preamble-diff.tex"; echo '\begin{document}'
       echo "\\input{$ROOT/$OUT/$c.body-$v}"; echo '\end{document}'; } > "$OUT/$c.diff-$v.tex"
-    ( cd "$OUT" && latexmk -pdf -shell-escape -f -interaction=nonstopmode "$c.diff-$v.tex" >/dev/null 2>&1 || true )
+    latexmk -pdf -shell-escape -f -interaction=nonstopmode -outdir="$OUT" "$OUT/$c.diff-$v.tex" >/dev/null 2>&1 || true
   done
   echo "  $c → $OUT/$c.diff-color.pdf , $OUT/$c.diff-plain.pdf"
 done
