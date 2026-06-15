@@ -1,0 +1,24 @@
+[package]
+name = "hecke-engine-c"
+version = "0.1.0"
+edition = "2021"
+description = "C-ABI bindings for hecke-engine — exposed via cbindgen for FFI from any C-callable language (Octave MEX, native iOS/Android, embedded Lua, R via .Call, etc.)"
+license = "MIT"
+repository = "https://github.com/litlfred/qou"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+name = "hecke_engine_c"
+
+[dependencies]
+hecke-engine = { path = "../hecke-engine" }
+
+[build-dependencies]
+cbindgen = "0.27"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

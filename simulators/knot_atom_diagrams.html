@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Knot Diagrams — Atoms for p ≤ 4</title>
+<style>
+body { font-family: 'Helvetica Neue', sans-serif; font-size: 13px; margin: 20px; color: #1a1a2e; background: #fafbff; }
+h2 { font-size: 16px; letter-spacing: 0.1em; color: #2a3a6a; margin-top: 30px; }
+table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+th { background: #eef1f8; padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 2px solid #ccd; }
+td { padding: 10px 12px; border-bottom: 1px solid #e8eaf0; vertical-align: middle; }
+td:first-child { font-weight: 600; width: 30px; text-align: center; }
+td:nth-child(2) { width: 80px; }
+.knot-row { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.sub-link { border: 2px solid; border-radius: 8px; padding: 4px 6px; display: inline-flex; align-items: center; gap: 4px; }
+.sub-link.shell-1 { border-color: #3a7; background: rgba(51,170,119,0.06); }
+.sub-link.shell-2 { border-color: #37a; background: rgba(51,119,170,0.06); }
+.sub-link.nucleus { border-color: #a53; background: rgba(170,85,51,0.06); }
+.bowtie { color: #888; font-size: 16px; margin: 0 2px; }
+.legend { display: flex; gap: 20px; flex-wrap: wrap; margin: 10px 0 20px; font-size: 11px; color: #556; }
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.note { font-size: 11px; color: #778; margin-top: 5px; }
+svg.knot { vertical-align: middle; }
+</style>
+</head>
+<body>
+
+<h2>Knot Diagrams of Light Atoms (p ≤ 4)</h2>
+
+<div class="legend">
+  <div class="legend-item">
+    <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+      <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+            fill="#2255aa" stroke="#112244" stroke-width="1.5"/>
+    </svg>
+    Left trefoil (solid) = $T_{2,3}$
+  </div>
+  <div class="legend-item">
+    <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+      <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+            fill="none" stroke="#2255aa" stroke-width="2"/>
+    </svg>
+    Right trefoil (outline) = σ(T_{2,3})
+  </div>
+  <div class="legend-item">
+    <svg class="knot" width="24" height="24" viewBox="-12 -12 24 24">
+      <circle r="8" fill="none" stroke="#888" stroke-width="2"/>
+    </svg>
+    Unknot
+  </div>
+  <div class="legend-item">
+    <svg class="knot" width="36" height="24" viewBox="-18 -12 36 24">
+      <circle cx="-5" cy="0" r="8" fill="none" stroke="#c44" stroke-width="2"/>
+      <circle cx="5" cy="0" r="8" fill="none" stroke="#44c" stroke-width="2"/>
+    </svg>
+    Hopf link (⋈)
+  </div>
+  <div class="legend-item">
+    <span class="sub-link shell-1" style="padding:2px 6px;">1s²</span> Closed sub-link (shell 1)
+  </div>
+  <div class="legend-item">
+    <span class="sub-link nucleus" style="padding:2px 6px;">nucleus</span> Nuclear sub-link
+  </div>
+</div>
+
+<table>
+<tr>
+  <th>p</th><th>Atom</th><th>n</th><th>Knot diagram</th><th>Sub-links</th><th>Shells</th>
+</tr>
+
+<!-- Hydrogen: p=1, n=0 -->
+<tr>
+  <td>1</td>
+  <td>H</td>
+  <td>0</td>
+  <td>
+    <div class="knot-row">
+      <span class="sub-link nucleus">
+        <!-- 1 proton (left trefoil) -->
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="#2255aa" stroke="#112244" stroke-width="1.5"/>
+        </svg>
+        <span style="font-size:9px;color:#a53">𝔭</span>
+      </span>
+      <span class="bowtie">⋈</span>
+      <!-- 1 electron (right trefoil, outline) -->
+      <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+        <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+              fill="none" stroke="#2255aa" stroke-width="2"/>
+      </svg>
+      <span style="font-size:9px;color:#556">e⁻</span>
+    </div>
+  </td>
+  <td>None</td>
+  <td>1s¹ (open)</td>
+</tr>
+
+<!-- Helium: p=2, n=2 -->
+<tr>
+  <td>2</td>
+  <td>He</td>
+  <td>2</td>
+  <td>
+    <div class="knot-row">
+      <span class="sub-link nucleus">
+        <!-- alpha particle: 2p + 2n as Hopf-linked pairs -->
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="#2255aa" stroke="#112244" stroke-width="1.5"/>
+        </svg>
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="#2255aa" stroke="#112244" stroke-width="1.5"/>
+        </svg>
+        <svg class="knot" width="24" height="24" viewBox="-12 -12 24 24">
+          <circle r="8" fill="none" stroke="#aa5533" stroke-width="2"/>
+        </svg>
+        <svg class="knot" width="24" height="24" viewBox="-12 -12 24 24">
+          <circle r="8" fill="none" stroke="#aa5533" stroke-width="2"/>
+        </svg>
+        <span style="font-size:9px;color:#a53">α</span>
+      </span>
+      <span class="bowtie">⋈</span>
+      <span class="sub-link shell-1">
+        <!-- 2 electrons Hopf-linked (closed!) -->
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="none" stroke="#2255aa" stroke-width="2"/>
+        </svg>
+        <svg class="knot" width="20" height="20" viewBox="-10 -10 20 20">
+          <circle cx="-3" cy="0" r="5" fill="none" stroke="#c44" stroke-width="1.5"/>
+          <circle cx="3" cy="0" r="5" fill="none" stroke="#44c" stroke-width="1.5"/>
+        </svg>
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="none" stroke="#2255aa" stroke-width="2"/>
+        </svg>
+        <span style="font-size:9px;color:#3a7">1s²</span>
+      </span>
+    </div>
+  </td>
+  <td>k<sub>α</sub> = 1</td>
+  <td><b>1s² (closed)</b></td>
+</tr>
+
+<!-- Lithium: p=3, n=4 -->
+<tr>
+  <td>3</td>
+  <td>Li</td>
+  <td>4</td>
+  <td>
+    <div class="knot-row">
+      <span class="sub-link nucleus">
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="#2255aa" stroke="#112244" stroke-width="1.5"/>
+        </svg>
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="#2255aa" stroke="#112244" stroke-width="1.5"/>
+        </svg>
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="#2255aa" stroke="#112244" stroke-width="1.5"/>
+        </svg>
+        <svg class="knot" width="24" height="24" viewBox="-12 -12 24 24">
+          <circle r="8" fill="none" stroke="#aa5533" stroke-width="2"/>
+        </svg>
+        <svg class="knot" width="24" height="24" viewBox="-12 -12 24 24">
+          <circle r="8" fill="none" stroke="#aa5533" stroke-width="2"/>
+        </svg>
+        <svg class="knot" width="24" height="24" viewBox="-12 -12 24 24">
+          <circle r="8" fill="none" stroke="#aa5533" stroke-width="2"/>
+        </svg>
+        <svg class="knot" width="24" height="24" viewBox="-12 -12 24 24">
+          <circle r="8" fill="none" stroke="#aa5533" stroke-width="2"/>
+        </svg>
+        <span style="font-size:9px;color:#a53">3𝔭4𝔫</span>
+      </span>
+      <span class="bowtie">⋈</span>
+      <span class="sub-link shell-1">
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="none" stroke="#2255aa" stroke-width="2"/>
+        </svg>
+        <svg class="knot" width="20" height="20" viewBox="-10 -10 20 20">
+          <circle cx="-3" cy="0" r="5" fill="none" stroke="#c44" stroke-width="1.5"/>
+          <circle cx="3" cy="0" r="5" fill="none" stroke="#44c" stroke-width="1.5"/>
+        </svg>
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="none" stroke="#2255aa" stroke-width="2"/>
+        </svg>
+        <span style="font-size:9px;color:#3a7">1s²</span>
+      </span>
+      <span class="bowtie">⋈</span>
+      <!-- outer electron -->
+      <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+        <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+              fill="none" stroke="#2255aa" stroke-width="2"/>
+      </svg>
+      <span style="font-size:9px;color:#556">2s¹</span>
+    </div>
+  </td>
+  <td>k<sub>α</sub> = 1</td>
+  <td>1s² + 2s¹</td>
+</tr>
+
+<!-- Beryllium: p=4, n=5 -->
+<tr>
+  <td>4</td>
+  <td>Be</td>
+  <td>5</td>
+  <td>
+    <div class="knot-row">
+      <span class="sub-link nucleus">
+        <span style="font-size:9px;color:#a53">4𝔭5𝔫</span>
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="#2255aa" stroke="#112244" stroke-width="1.5"/>
+        </svg>
+        ×4
+        <svg class="knot" width="24" height="24" viewBox="-12 -12 24 24">
+          <circle r="8" fill="none" stroke="#aa5533" stroke-width="2"/>
+        </svg>
+        ×5
+      </span>
+      <span class="bowtie">⋈</span>
+      <span class="sub-link shell-1">
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="none" stroke="#2255aa" stroke-width="2"/>
+        </svg>
+        <svg class="knot" width="20" height="20" viewBox="-10 -10 20 20">
+          <circle cx="-3" cy="0" r="5" fill="none" stroke="#c44" stroke-width="1.5"/>
+          <circle cx="3" cy="0" r="5" fill="none" stroke="#44c" stroke-width="1.5"/>
+        </svg>
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="none" stroke="#2255aa" stroke-width="2"/>
+        </svg>
+        <span style="font-size:9px;color:#3a7">1s²</span>
+      </span>
+      <span class="bowtie">⋈</span>
+      <span class="sub-link shell-2">
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="none" stroke="#2255aa" stroke-width="2"/>
+        </svg>
+        <svg class="knot" width="20" height="20" viewBox="-10 -10 20 20">
+          <circle cx="-3" cy="0" r="5" fill="none" stroke="#c44" stroke-width="1.5"/>
+          <circle cx="3" cy="0" r="5" fill="none" stroke="#44c" stroke-width="1.5"/>
+        </svg>
+        <svg class="knot" width="28" height="28" viewBox="-14 -14 28 28">
+          <path d="M-6,-10 C-12,-6 -12,6 -6,10 C0,6 0,-6 6,-10 C12,-6 12,6 6,10 C0,6 0,-6 -6,-10Z"
+                fill="none" stroke="#2255aa" stroke-width="2"/>
+        </svg>
+        <span style="font-size:9px;color:#37a">2s²</span>
+      </span>
+    </div>
+  </td>
+  <td>k<sub>α</sub> = 2</td>
+  <td>1s² + 2s²</td>
+</tr>
+
+</table>
+
+<div class="note">
+  <b>Key.</b>
+  <svg class="knot" width="20" height="20" viewBox="-10 -10 20 20" style="vertical-align:middle">
+    <path d="M-4,-7 C-8,-4 -8,4 -4,7 C0,4 0,-4 4,-7 C8,-4 8,4 4,7 C0,4 0,-4 -4,-7Z"
+          fill="#2255aa" stroke="#112244" stroke-width="1.2"/>
+  </svg> = left trefoil $T_{2,3}$ (proton quark / solid);
+  <svg class="knot" width="20" height="20" viewBox="-10 -10 20 20" style="vertical-align:middle">
+    <path d="M-4,-7 C-8,-4 -8,4 -4,7 C0,4 0,-4 4,-7 C8,-4 8,4 4,7 C0,4 0,-4 -4,-7Z"
+          fill="none" stroke="#2255aa" stroke-width="1.5"/>
+  </svg> = right trefoil $\sigma(T_{2,3})$ (electron / outline);
+  <svg class="knot" width="18" height="18" viewBox="-9 -9 18 18" style="vertical-align:middle">
+    <circle r="6" fill="none" stroke="#aa5533" stroke-width="1.5"/>
+  </svg> = unknot (neutron);
+  <svg class="knot" width="26" height="18" viewBox="-13 -9 26 18" style="vertical-align:middle">
+    <circle cx="-3" cy="0" r="5" fill="none" stroke="#c44" stroke-width="1.5"/>
+    <circle cx="3" cy="0" r="5" fill="none" stroke="#44c" stroke-width="1.5"/>
+  </svg> = Hopf link (⋈);
+  <span class="sub-link shell-1" style="padding:1px 4px;font-size:10px">green</span> = closed 1s sub-link;
+  <span class="sub-link shell-2" style="padding:1px 4px;font-size:10px">blue</span> = closed 2s sub-link;
+  <span class="sub-link nucleus" style="padding:1px 4px;font-size:10px">brown</span> = nuclear sub-link.
+  <br><br>
+  Trefoil SVG design after
+  <a href="https://en.wikipedia.org/wiki/Trefoil_knot#/media/File:Trefoil_knot_left.svg">Wikimedia Commons: Trefoil_knot_left.svg</a> and
+  <a href="https://en.wikipedia.org/wiki/Trefoil_knot#/media/File:TrefoilKnot_01.svg">TrefoilKnot_01.svg</a> (public domain).
+</div>
+
+</body>
+</html>

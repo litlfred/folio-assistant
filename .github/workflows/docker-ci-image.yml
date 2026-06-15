@@ -1,0 +1,68 @@
+# DEPRECATED — All CI workflows now use the unified paper-assistant image.
+# See build-lean-mcp.yml for the active build workflow.
+#
+# This workflow is disabled (no automatic triggers). Use manual dispatch
+# only if you need a standalone qou-ci image for some reason.
+#
+# Original: Build and publish the QOU CI Docker image to GHCR.
+
+name: "[DEPRECATED] CI Docker Image"
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/qou-ci
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc \
+            /usr/local/share/powershell /usr/local/.ghcup
+          sudo docker system prune -af
+          df -h /
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Read Lean toolchain version
+        id: toolchain
+        run: |
+          TC=$(cat content/quantum-observable-universe/lean/lean-toolchain)
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "version<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "${TC}" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+          echo "Lean toolchain: ${TC}"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .github/docker
+          push: true
+          build-args: |
+            LEAN_TOOLCHAIN=${{ steps.toolchain.outputs.version }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

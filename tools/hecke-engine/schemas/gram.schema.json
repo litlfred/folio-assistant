@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://folio.litlfred.org/schemas/hecke-engine/gram.schema.json",
+  "title": "Gram matrix certificate",
+  "description": "Output of `hecke-gram` — the 6x6 Gram matrix of H_3(q) on the NF basis, its inverse, and the Markov trace weights, at a given q.",
+  "type": "object",
+  "required": ["q", "z", "h", "n", "basis", "trace_weights", "matrix", "inverse", "determinant"],
+  "properties": {
+    "q": { "type": "number", "exclusiveMinimum": 0 },
+    "z": { "type": "number" },
+    "h": { "type": "number" },
+    "n": { "type": "integer", "const": 3 },
+    "basis": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "trace_weights": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "matrix": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": { "type": "number" },
+        "minItems": 6,
+        "maxItems": 6
+      },
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "inverse": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": { "type": "number" },
+        "minItems": 6,
+        "maxItems": 6
+      },
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "determinant": { "type": "number" }
+  }
+}

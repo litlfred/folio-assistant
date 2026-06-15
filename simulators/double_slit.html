@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QOU Double-Slit: Comprehensive</title>
+<style>
+
+:root {
+  --bg: #050508;
+  --panel: rgba(10, 15, 25, 0.85);
+  --border: rgba(60, 120, 255, 0.20);
+  --accent: #00d2ff;
+  --accent2: #ffaa33;
+  --accent3: #00ff88;
+  --text: #c0d0f0;
+  --dim: #506080;
+}
+
+body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  height: 100vh;
+}
+
+/* Glassmorphism Sidebar */
+.sidebar {
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  box-shadow: 2px 0 20px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+.header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.header p {
+  font-size: 11px;
+  color: var(--dim);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Controls */
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+}
+.control-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.slider-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-family: 'Share Tech Mono', monospace;
+}
+.slider-header span.val { color: var(--accent); }
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: rgba(0, 210, 255, 0.15);
+  border-radius: 2px; outline: none; cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.6);
+  transition: transform 0.1s;
+}
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+}
+
+select, button {
+  background: rgba(0, 210, 255, 0.05);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+button:hover, select:hover { background: rgba(0, 210, 255, 0.15); border-color: var(--accent); color: var(--accent); }
+
+.radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.radio-label {
+  font-size: 11px; display: flex; align-items: center; gap: 4px;
+  cursor: pointer; color: var(--dim); transition: color 0.2s;
+}
+.radio-label:hover { color: var(--text); }
+input[type=radio], input[type=checkbox] { accent-color: var(--accent); }
+input[type=radio]:checked + span { color: var(--accent); }
+
+/* Main Area */
+.main {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr 200px 140px;
+  height: 100vh;
+}
+
+.canvas-container { position: relative; width: 100%; height: 100%; }
+canvas { display: block; width: 100%; height: 100%; }
+
+/* Plots */
+.plots-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--border);
+  background: rgba(2, 5, 10, 0.95);
+}
+.plot-wrapper {
+  position: relative;
+  border-right: 1px solid var(--border);
+  padding: 10px;
+}
+.plot-title {
+  position: absolute; top: 10px; left: 15px;
+  font-size: 11px; color: var(--dim);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* Buildup */
+.buildup-container {
+  border-top: 1px solid var(--border);
+  background: rgba(0, 3, 10, 0.98);
+  position: relative;
+}
+
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="header">
+    <h1>Double-Slit Unified</h1>
+    <p>Comprehensive framework including Bach 2013 overlay, Julia set envelopes, and Paper 2211.13362v2 time-of-arrival logic.</p>
+  </div>
+
+  <div class="control-group">
+    <div class="control-title">Core Mode</div>
+    <div class="radio-group">
+      <label class="radio-label"><input type="radio" name="mode" value="1" checked> <span>Massive (q-harmonic)</span></label>
+      <label class="radio-label"><input type="radio" name="mode" value="2"> <span>Photon (Julia set)</span></label>
+    </div>
+    
+    <div class="radio-group" style="margin-top:4px;">
+      <label class="radio-label"><input type="radio" name="theory" value="gauss" checked> <span>Gaussian (Paper)</span></label>
+      <label class="radio-label"><input type="radio" name="theory" value="symbolic"> <span>Symbolic (Exact)</span></label>
+      <label class="radio-label"><input type="radio" name="theory" value="qou"> <span>QOU (q-CLT)</span></label>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="control-title">Detection Surface</div>
+    <div class="radio-group">
+      <label class="radio-label"><input type="radio" name="surface" value="flat" checked> <span>Flat Screen</span></label>
+      <label class="radio-label"><input type="radio" name="surface" value="spherical"> <span>Spherical</span></label>
+    </div>
+    <label class="radio-label" style="margin-top:6px;"><input type="checkbox" id="cb_bach"> <span>Show Bach 2013 Data (Spatial)</span></label>
+  </div>
+
+  <div class="control-group">
+    <div class="control-title">Slit Material (vdW Interaction)</div>
+    <select id="sel_material">
+      <option value="0">Ideal (Geometric boundary)</option>
+      <option value="0.05">SiNx (Silicon Nitride)</option>
+      <option value="0.15">Au (Gold / Metal)</option>
+      <option value="0.02">Graphene (2D layer)</option>
+    </select>
+  </div>
+
+  <div class="control-group">
+    <div class="control-title">Parameters</div>
+    
+    <div class="slider-row">
+      <div class="slider-header"><span>q-Parameter</span> <span class="val" id="val_q">1.02</span></div>
+      <input type="range" id="sl_q" min="0.8" max="1.5" step="0.005" value="1.02">
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-header"><span>Slit Sep. (d)</span> <span class="val" id="val_d">280 nm</span></div>
+      <input type="range" id="sl_d" min="10" max="1000" step="1" value="280">
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-header"><span>Slit Width (a)</span> <span class="val" id="val_a">50 nm</span></div>
+      <input type="range" id="sl_a" min="5" max="500" step="1" value="50">
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-header"><span>Wavelength (λ)</span> <span class="val" id="val_lam">50 pm</span></div>
+      <input type="range" id="sl_lam" min="1" max="200" step="0.5" value="50">
+    </div>
+    
+    <div class="slider-row">
+      <div class="slider-header"><span>Reeb Ratio (r_ξ)</span> <span class="val" id="val_rxi">0.10</span></div>
+      <input type="range" id="sl_rxi" min="0" max="0.5" step="0.01" value="0.10">
+    </div>
+    
+    <div class="slider-row">
+      <div class="slider-header"><span>Dist. to Screen (L)</span> <span class="val" id="val_L">1.95 m</span></div>
+      <input type="range" id="sl_L" min="0.1" max="5.0" step="0.05" value="1.95">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="control-title">Presets</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+      <button onclick="preset('bach')">Bach 2013 e⁻</button>
+      <button onclick="preset('c60')">C60 Fullerene</button>
+      <button onclick="preset('photon')">Visible Photon</button>
+      <button onclick="preset('classical')">Classical Limit</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="main">
+  <div class="canvas-container">
+    <canvas id="view2d"></canvas>
+  </div>
+  
+  <div class="plots-container">
+    <div class="plot-wrapper">
+      <div class="plot-title">Spatial Interference (I vs θ)</div>
+      <canvas id="plotSpace"></canvas>
+    </div>
+    
+    <div class="plot-wrapper" style="border-right: none;">
+      <div class="plot-title">Time-of-Arrival (P vs t)</div>
+      <canvas id="plotTime"></canvas>
+    </div>
+  </div>
+  
+  <div class="buildup-container">
+    <div class="plot-title">Particle Buildup</div>
+    <div style="position:absolute; top:10px; right:15px; display:flex; gap:10px; align-items:center;">
+      <button id="btn_play" onclick="togglePlay()" style="padding:2px 8px;">▶ Play</button>
+      <button onclick="resetBuildup()" style="padding:2px 8px;">↺ Reset</button>
+      <span id="v_count" style="font-size:11px; font-family:'Share Tech Mono'; color:var(--accent);">0 detections</span>
+    </div>
+    <canvas id="plotBuildup"></canvas>
+  </div>
+</div>
+
+<script type="module">
+import init, { qou_chi_lambda_braid } from './pkg/hecke_engine_wasm.js';
+
+let wasmReady = false;
+async function loadWasm() {
+  try {
+    await init();
+    wasmReady = true;
+    console.log("WASM Hecke Engine loaded.");
+  } catch(e) {
+    console.warn("WASM load failed", e);
+  }
+}
+loadWasm();
+
+const BACH_DATA = [
+  [-2.5584,0.1781],[-2.5240,0.2756],[-2.4897,0.2851],[-2.4554,0.2822],[-2.4210,0.2711],
+  [-2.3867,0.3044],[-2.3523,0.3149],[-2.3180,0.2994],[-2.2837,0.2844],[-2.2493,0.3470],
+  [-2.2150,0.4921],[-2.1806,0.5803],[-2.1463,0.6441],[-2.1120,0.5930],[-2.0776,0.6273],
+  [-2.0433,0.6457],[-2.0089,0.7225],[-1.9746,0.7156],[-1.9402,0.7194],[-1.9059,0.7298],
+  [-1.8716,0.7552],[-1.8372,0.7663],[-1.8029,0.7971],[-1.7685,0.7559],[-1.7342,0.7317],
+  [-1.6999,0.7060],[-1.6655,0.6575],[-1.6312,0.6152],[-1.5968,0.5384],[-1.5625,0.5000],
+  [-1.5282,0.4565],[-1.4938,0.4298],[-1.4595,0.4492],[-1.4251,0.4302],[-1.3908,0.4079],
+  [-1.3565,0.4324],[-1.3221,0.5000],[-1.2878,0.5749],[-1.2534,0.6552],[-1.2191,0.6870],
+  [-1.1848,0.7171],[-1.1504,0.7629],[-1.1161,0.8537],[-1.0817,0.8997],[-1.0474,0.8886],
+  [-1.0130,0.9060],[-0.9787,0.9667],[-0.9444,0.9952],[-0.9100,0.9492],[-0.8757,0.9489],
+  [-0.8413,0.9575],[-0.8070,0.9495],[-0.7727,0.8838],[-0.7383,0.8006],[-0.7040,0.7787],
+  [-0.6696,0.7521],[-0.6353,0.7063],[-0.6010,0.6648],[-0.5666,0.5492],[-0.5323,0.4962],
+  [-0.4979,0.4876],[-0.4636,0.5206],[-0.4293,0.5254],[-0.3949,0.5213],[-0.3606,0.5600],
+  [-0.3262,0.6295],[-0.2919,0.6527],[-0.2576,0.7054],[-0.2232,0.8073],[-0.1889,0.8997],
+  [-0.1545,0.9390],[-0.1202,0.9029],[-0.0859,0.9790],[-0.0515,0.9632],[-0.0172,1.0000],
+  [0.0172,0.9390],[0.0515,0.9708],[0.0859,0.9429],[0.1202,0.9070],[0.1545,0.8641],
+  [0.1889,0.8060],[0.2232,0.6810],[0.2576,0.5895],[0.2919,0.5537],[0.3262,0.5660],
+  [0.3606,0.5568],[0.3949,0.4594],[0.4293,0.4508],[0.4636,0.3883],[0.4979,0.4283],
+  [0.5323,0.3914],[0.5666,0.4419],[0.6010,0.5175],[0.6353,0.5851],[0.6696,0.6451],
+  [0.7040,0.6149],[0.7383,0.6089],[0.7727,0.6746],[0.8070,0.7857],[0.8413,0.8781],
+  [0.8757,0.8940],[0.9100,0.8346],[0.9444,0.8594],[0.9787,0.8048],[1.0130,0.8333],
+  [1.0474,0.8057],[1.0817,0.8165],[1.1161,0.8029],[1.1504,0.6698],[1.1848,0.5470],
+  [1.2191,0.4197],[1.2534,0.3762],[1.2878,0.3632],[1.3221,0.3225],[1.3565,0.3162],
+  [1.3908,0.2610],[1.4251,0.2368],[1.4595,0.2619],[1.4938,0.2733],[1.5282,0.3311],
+  [1.5625,0.2946],[1.5968,0.3102],[1.6312,0.3400],[1.6655,0.4070],[1.6999,0.4635],
+  [1.7342,0.5133],[1.7685,0.4860],[1.8029,0.4940],[1.8372,0.4327],[1.8716,0.4835],
+  [1.9059,0.4762],[1.9402,0.4765],[1.9746,0.4387],[2.0089,0.3683],[2.0433,0.3511],
+  [2.0776,0.3584],[2.1120,0.3924],[2.1463,0.3810],[2.1806,0.3451],[2.2150,0.3263],
+  [2.2493,0.2917],[2.2837,0.2308],[2.3180,0.1756],[2.3523,0.1349],[2.3867,0.1394],
+  [2.4210,0.1965],[2.4554,0.2381],[2.4897,0.2857],[2.5240,0.2727],[2.5584,0.1867]
+];
+
+// --- State ---
+const P = {
+  mode: 1, theory: 'gauss', surface: 'flat', showBach: false, vdw: 0,
+  q: 1.02, d: 280, a: 50, lam: 50, rxi: 0.1, L: 1.95
+};
+let playing = false, detections = [], animId = null;
+let activeParticles = []; // For 2D timestep evolution
+let globalStep = 0; // Tracks discrete computational time steps
+let latticeZr = 0.5, latticeZi = 0.0; // Persistent lattice phase state
+
+// --- Bindings ---
+document.getElementById('sel_material').addEventListener('change', e => { P.vdw = parseFloat(e.target.value); update(); });
+const bindRadio = (name) => document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.addEventListener('change', e => { P[name] = isNaN(e.target.value) ? e.target.value : parseInt(e.target.value); update(); }));
+bindRadio('mode'); bindRadio('theory'); bindRadio('surface');
+document.getElementById('cb_bach').addEventListener('change', e => { P.showBach = e.target.checked; update(); });
+
+const bindSlider = (id, key, unit) => {
+  const sl = document.getElementById('sl_' + key);
+  const val = document.getElementById('val_' + key);
+  sl.addEventListener('input', () => { P[key] = parseFloat(sl.value); val.textContent = P[key].toFixed(sl.step.includes('.') ? sl.step.split('.')[1].length : 0) + (unit ? ' '+unit : ''); update(); });
+};
+bindSlider('q','',''); bindSlider('d','nm'); bindSlider('a','nm'); bindSlider('lam','pm'); bindSlider('rxi',''); bindSlider('L','m');
+
+function preset(name) {
+  if(name==='bach') { setP({q:1.02, d:280, a:50, lam:50, rxi:0.1, mode:1, theory:'qou', surface:'flat', showBach:true}); }
+  else if(name==='c60') { setP({q:1.05, d:100, a:50, lam:2.5, rxi:0.25, mode:1, theory:'qou', showBach:false}); }
+  else if(name==='photon') { setP({q:1.02, d:500, a:200, lam:100, rxi:0.1, mode:2, theory:'qou', showBach:false}); }
+  else if(name==='classical') { setP({q:1.0, d:272, a:62, lam:50, rxi:0.1, mode:1, theory:'gauss', showBach:false}); }
+  update();
+}
+function setP(vals) {
+  for(let k in vals) { P[k] = vals[k]; }
+  document.getElementById('sl_q').value = P.q; document.getElementById('val_q').innerText = P.q.toFixed(3);
+  document.getElementById('sl_d').value = P.d; document.getElementById('val_d').innerText = P.d + ' nm';
+  document.getElementById('sl_a').value = P.a; document.getElementById('val_a').innerText = P.a + ' nm';
+  document.getElementById('sl_lam').value = P.lam; document.getElementById('val_lam').innerText = P.lam + ' pm';
+  document.getElementById('sl_rxi').value = P.rxi; document.getElementById('val_rxi').innerText = P.rxi.toFixed(2);
+  document.getElementById('cb_bach').checked = P.showBach;
+  if(vals.vdw !== undefined) document.getElementById('sel_material').value = vals.vdw.toString();
+  document.querySelector(`input[name="mode"][value="${P.mode}"]`).checked = true;
+  document.querySelector(`input[name="theory"][value="${P.theory}"]`).checked = true;
+  document.querySelector(`input[name="surface"][value="${P.surface}"]`).checked = true;
+}
+
+// --- Canvases ---
+const cvs = {
+  view2d: document.getElementById('view2d'),
+  space: document.getElementById('plotSpace'),
+  time: document.getElementById('plotTime'),
+  buildup: document.getElementById('plotBuildup')
+};
+const ctx = {
+  view2d: cvs.view2d.getContext('2d'),
+  space: cvs.space.getContext('2d'),
+  time: cvs.time.getContext('2d'),
+  buildup: cvs.buildup.getContext('2d')
+};
+
+function resize() {
+  const dpr = window.devicePixelRatio || 1;
+  Object.keys(cvs).forEach(k => {
+    const rect = cvs[k].parentElement.getBoundingClientRect();
+    cvs[k].width = rect.width * dpr;
+    cvs[k].height = rect.height * dpr;
+    cvs[k].style.width = rect.width + 'px';
+    cvs[k].style.height = rect.height + 'px';
+    ctx[k].setTransform(dpr, 0, 0, dpr, 0, 0);
+  });
+  update();
+}
+window.addEventListener('resize', resize);
+
+// --- Math ---
+function sinc(x) { return Math.abs(x) < 1e-12 ? 1 : Math.sin(x)/x; }
+
+function juliaEscape(theta, q, a, maxIter=64) {
+  const R_PROJ = 1.0;
+  const x = a * Math.sin(theta) / R_PROJ;
+  const cr = (q - 1) * Math.cos(Math.PI / 4);
+  const ci = (q - 1) * Math.sin(Math.PI / 4);
+  let zr = Math.cos(x), zi = Math.sin(x);
+  for (let n = 0; n < maxIter; n++) {
+    const zr2 = zr*zr - zi*zi + cr;
+    const zi2 = 2*zr*zi + ci;
+    zr = zr2; zi = zi2;
+    if (zr*zr + zi*zi > 4) return n / maxIter;
+  }
+  return 1;
+}
+
+function computeIntensity(theta) {
+  let I = 0;
+  const k = Math.PI * Math.sin(theta);
+  
+  if (P.mode === 1) { // Massive
+    const qFactor = (P.theory === 'qou' || P.theory === 'symbolic') ? P.q : 1.0;
+    const REEB_COUPLING = 0.02;
+    
+    // Van der Waals Casimir-Polder effect
+    // Highly attractive potential near the edges reduces effective slit width and introduces a dispersive phase shift tail
+    const a_eff = P.a * (1 - P.vdw);
+    const vdwDispersion = P.vdw * 0.1 * Math.sin(theta * 5); 
+    
+    let phase = (1/qFactor) * 2 * k * P.d / P.lam + vdwDispersion;
+    if (P.theory === 'qou' || P.theory === 'symbolic') phase += (1 - 1/qFactor) * REEB_COUPLING * Math.sin(theta);
+    
+    let envArg = (1/qFactor) * k * a_eff / P.lam;
+    if (P.theory === 'qou' || P.theory === 'symbolic') envArg += Math.pow(1 - 1/qFactor, 2) * P.rxi * k * a_eff / P.lam;
+    
+    I = Math.pow(Math.cos(phase/2), 2) * Math.pow(sinc(envArg), 2);
+  } else { // Photon
+    const qFactor = (P.theory === 'qou' || P.theory === 'symbolic') ? P.q : 1.0;
+    const R_PROJ = 1.0;
+    const cosPhase = Math.cos(qFactor * P.d * Math.sin(theta) / (2 * R_PROJ));
+    const dH = 1 + 0.4 * Math.abs(qFactor - 1);
+    const PHOTON_SCALE = 500;
+    const esc = juliaEscape(theta, qFactor, P.a * 1e-9 * PHOTON_SCALE);
+    const env = Math.pow(esc, 2/dH);
+    I = cosPhase * cosPhase * env;
+  }
+  
+  // Outer damping
+  if (P.theory === 'gauss') {
+    I *= Math.exp(- (theta*theta) / (2 * 0.002*0.002));
+  } else if (P.theory === 'qou') {
+    // q-CLT asymptotic continuous heavy tail
+    I *= Math.pow(1 + (P.q-1)*theta*theta/0.000005, -1/(P.q-1));
+  } else if (P.theory === 'symbolic') {
+    // Exact trace without the continuous limit damping (shows raw aliasing)
+    // We just leave I as the exact discrete form
+  }
+  return isNaN(I) || I < 0 ? 0 : I;
+}
+
+function getDistributions() {
+  const nPts = 400, thetaMax = 0.015;
+  const spatial = new Float32Array(nPts);
+  const timeDist = new Float32Array(nPts);
+  
+  const v = 1000;
+  let baseT = P.L / v;
+  let tSpread = baseT * 0.01;
+  
+  for (let i = 0; i < nPts; i++) {
+    const theta = -thetaMax + (2*thetaMax * i)/(nPts-1);
+    const I = computeIntensity(theta);
+    spatial[i] = I;
+    
+    // Time distribution (Mock integration based on surface)
+    const y = Math.tan(theta) * P.L;
+    let D = (P.surface === 'spherical') ? P.L : Math.sqrt(P.L*P.L + y*y);
+    let t_arr = D / v;
+    
+    let t_idx = ((t_arr - (baseT - tSpread)) / (2*tSpread)) * nPts;
+    let blur = (P.surface === 'flat') ? 20 : 2;
+    
+    // Gaussian or q-CLT blur around arrival time
+    for(let j=-blur; j<=blur; j++) {
+      let tj = Math.floor(t_idx + j);
+      if(tj>=0 && tj<nPts) timeDist[tj] += I * Math.exp(-(j*j)/(blur));
+    }
+  }
+  return { spatial, timeDist };
+}
+
+// --- Drawing ---
+function update() {
+  const W2 = cvs.view2d.offsetWidth, H2 = cvs.view2d.offsetHeight;
+  ctx.view2d.clearRect(0,0,W2,H2);
+  
+  // 2D View
+  const sx = W2*0.1, sy = H2*0.5, slx = W2*0.3, scx = W2*0.85, gap = 20;
+  ctx.view2d.fillStyle = '#fff'; ctx.view2d.beginPath(); ctx.view2d.arc(sx,sy,4,0,Math.PI*2); ctx.view2d.fill();
+  
+  // Draw Slits
+  ctx.view2d.fillStyle = '#445';
+  ctx.view2d.fillRect(slx, 0, 4, sy - gap/2 - 2); 
+  ctx.view2d.fillRect(slx, sy - gap/2 + 2, 4, gap - 4); 
+  ctx.view2d.fillRect(slx, sy + gap/2 + 2, 4, H2);
+  
+  // Clarify Spacetime Axis in 2D View
+  ctx.view2d.fillStyle = 'rgba(0,0,0,0.5)';
+  ctx.view2d.font = '10px monospace';
+  ctx.view2d.textAlign = 'center';
+  ctx.view2d.fillText('Computational Spacetime Axis ⟶', W2/2, H2-10);
+
+  ctx.view2d.strokeStyle = '#00ff88'; ctx.view2d.lineWidth = 2; ctx.view2d.beginPath();
+  if(P.surface === 'flat') { ctx.view2d.moveTo(scx,0); ctx.view2d.lineTo(scx,H2); }
+  else { ctx.view2d.arc(sx, sy, scx-sx, -Math.PI/6, Math.PI/6); }
+  ctx.view2d.stroke();
+  
+  const data = getDistributions();
+  
+  // Draw particles in 2D View
+  ctx.view2d.fillStyle = P.mode === 1 ? 'rgba(0, 210, 255, 0.8)' : 'rgba(255, 170, 51, 0.8)';
+  for (let p of activeParticles) {
+    let drawX = sx + p.x * (scx - sx); // p.x is 0 to 1
+    
+    // Y deviation depends on flat vs spherical
+    let dy = p.y * H2 * 0.8; 
+    let drawY = sy + dy;
+    
+    if (P.surface === 'spherical') {
+      const radius = scx - sx;
+      const angle = Math.atan2(dy, radius);
+      drawX = sx + p.r * radius * Math.cos(angle);
+      drawY = sy + p.r * radius * Math.sin(angle);
+    }
+    
+    ctx.view2d.beginPath();
+    ctx.view2d.arc(drawX, drawY, 1.5, 0, Math.PI*2);
+    ctx.view2d.fill();
+  }
+  
+  // Plot Space
+  const WS = cvs.space.offsetWidth, HS = cvs.space.offsetHeight;
+  ctx.space.clearRect(0,0,WS,HS);
+  
+  if (P.showBach) {
+    ctx.space.fillStyle = 'rgba(255,170,51,0.5)';
+    ctx.space.strokeStyle = '#ffaa33';
+    ctx.space.beginPath();
+    BACH_DATA.forEach((pt, i) => {
+      const px = WS * (pt[0]/1000 + 0.015)/0.03;
+      const py = HS - pt[1] * HS * 0.8 - 10;
+      ctx.space.arc(px, py, 1.5, 0, Math.PI*2);
+      if(i===0) ctx.space.moveTo(px,py); else ctx.space.lineTo(px,py);
+    });
+    ctx.space.stroke(); ctx.space.fill();
+  }
+  
+  ctx.space.strokeStyle = '#00d2ff'; ctx.space.lineWidth = 2; ctx.space.beginPath();
+  let maxS = Math.max(...data.spatial) || 1;
+  for (let i=0; i<data.spatial.length; i++) {
+    const px = (i/(data.spatial.length-1))*WS;
+    const py = HS - (data.spatial[i]/maxS)*HS*0.8 - 10;
+    if(i===0) ctx.space.moveTo(px,py); else ctx.space.lineTo(px,py);
+  }
+  ctx.space.stroke();
+  
+  // Plot Time
+  const WT = cvs.time.offsetWidth, HT = cvs.time.offsetHeight;
+  ctx.time.clearRect(0,0,WT,HT);
+  ctx.time.strokeStyle = '#ff2a5f'; ctx.time.lineWidth = 2; ctx.time.beginPath();
+  let maxT = Math.max(...data.timeDist) || 1;
+  for (let i=0; i<data.timeDist.length; i++) {
+    const px = (i/(data.timeDist.length-1))*WT;
+    const py = HT - (data.timeDist[i]/maxT)*HT*0.8 - 10;
+    if(i===0) ctx.time.moveTo(px,py); else ctx.time.lineTo(px,py);
+  }
+  ctx.time.stroke();
+  
+  drawBuildup();
+}
+
+function sampleTheta() {
+  for(let i=0; i<200; i++) {
+    const th = (Math.random()*2 - 1)*0.015;
+    if(Math.random() < computeIntensity(th)) return th;
+  }
+  return 0;
+}
+
+function drawBuildup() {
+  const W = cvs.buildup.offsetWidth, H = cvs.buildup.offsetHeight;
+  ctx.buildup.fillStyle = 'rgba(0,3,10,0.8)';
+  ctx.buildup.fillRect(0,0,W,H);
+  
+  ctx.buildup.fillStyle = P.mode === 1 ? 'rgba(0,210,255,0.6)' : 'rgba(255,170,51,0.6)';
+  for(let th of detections) {
+    const px = W/2 + (th/0.015)*(W/2);
+    const py = 10 + Math.random()*(H-20);
+    ctx.buildup.beginPath(); ctx.buildup.arc(px, py, 1.2, 0, Math.PI*2); ctx.buildup.fill();
+  }
+  document.getElementById('v_count').innerText = detections.length + ' detections';
+}
+
+function togglePlay() {
+  playing = !playing;
+  document.getElementById('btn_play').innerText = playing ? '⏸ Pause' : '▶ Play';
+  if(playing) tick();
+}
+function resetBuildup() { detections = []; activeParticles = []; drawBuildup(); }
+
+function tick() {
+  if(!playing) return;
+  
+  globalStep++;
+  
+  // Evolve local lattice boundary state via discrete q-Reeb flow f_q(z) = z^2 + c(q)
+  const cr = (P.q - 1) * Math.cos(Math.PI / 4);
+  const ci = (P.q - 1) * Math.sin(Math.PI / 4);
+  let t_zr = latticeZr*latticeZr - latticeZi*latticeZi + cr;
+  latticeZi = 2*latticeZr*latticeZi + ci;
+  latticeZr = t_zr;
+  // If the orbit escapes the bounded Julia set, re-absorb it (simulate periodic recurrence)
+  if (latticeZr*latticeZr + latticeZi*latticeZi > 4.0) {
+    latticeZr = 0.5;
+    latticeZi = 0.0;
+  }
+  
+  // Advance active particles (QOU timestep evolution)
+  const speed = 0.02;
+  for (let i = activeParticles.length - 1; i >= 0; i--) {
+    let p = activeParticles[i];
+    p.x += speed; // linear x progress
+    p.r += speed; // radial progress for spherical
+    
+    // N-body structural interaction with slit lattice using WASM Hecke Traces
+    if (p.x < 0.1 && wasmReady) {
+       let forceY = 0;
+       // The slit acts as a topological defect. We calculate the Markov trace
+       // using the local q-Reeb vibration (latticeZr).
+       let defectSize = Math.max(0, Math.floor(Math.abs(latticeZr) * 3.0));
+       let genIdx = p.startY > 0 ? 1 : 2;
+       try {
+           // Compute chi_lambda for partition [2, 1] on the braid word
+           let chi = qou_chi_lambda_braid("[2, 1]", `[[${genIdx}, ${defectSize}]]`, P.q);
+           // True N-body scattering scale based on Isotope vdW and the Hecke character
+           let vdw = P.A ? (P.A / 197.0) * 0.8 : 1.0;
+           forceY += (vdw * 0.05) * chi;
+       } catch(e) {}
+       p.targetY += forceY;
+       p.targetTheta += forceY * 0.015;
+    }
+    
+    // QOU Algebraic / Bohmian Guidance
+    // Interpolate y from slit (startY) to target (targetY) to prevent crossing
+    let t = Math.min(1.0, p.x);
+    let evolution = 0;
+    
+    if (P.theory === 'symbolic') {
+      // Symbolic (Exact): Evaluate a discrete algebraic Markov step
+      // The number of steps is the number of local Planck lengths traversed
+      // Time and distance are intrinsically related: t_P(q) = q / |q - 1|
+      let steps = Math.max(1, Math.round(P.L * P.q / Math.abs(P.q - 1))); 
+      let quantizedT = Math.floor(t * steps) / steps;
+      evolution = quantizedT * quantizedT * (3 - 2 * quantizedT);
+    } else {
+      // q-CLT / Gauss: The continuous macroscopic asymptotic limit
+      evolution = t * t * (3 - 2 * t); 
+    }
+    
+    p.y = p.startY + (p.targetY - p.startY) * evolution;
+    
+    if (p.x >= 1.0) {
+      // Hit screen!
+      detections.push(p.targetTheta);
+      activeParticles.splice(i, 1);
+    }
+  }
+  
+  // Spawn new particles
+  for(let i=0; i<3; i++) {
+    const th = sampleTheta();
+    // Start at slits (top or bottom slit)
+    const startY = (Math.random() > 0.5 ? 1 : -1) * (P.d / 20000); 
+    const targetY = th / 0.015; // Normalized target Y (-1 to 1)
+    
+    activeParticles.push({
+      x: 0, r: 0,
+      startY: startY + (Math.random()-0.5)*0.001,
+      targetY: targetY,
+      targetTheta: th
+    });
+  }
+  
+  update(); // This draws both the 2D view and the buildup since drawBuildup is inside update
+  animId = requestAnimationFrame(tick);
+}
+
+setTimeout(resize, 100);
+</script>
+</body>
+</html>

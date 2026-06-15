@@ -1,0 +1,137 @@
+name: Lean Build & Proof Status
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: >
+          Branch, tag, or commit SHA to build from.
+          Leave blank to use the ref selected in the GitHub UI's
+          "Use workflow from" dropdown. Provide a value here when the
+          dropdown will not accept your branch name (e.g. very long
+          `copilot/...` or `claude/...` branch names).
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+  packages: read          # required to pull the paper-assistant container image
+
+jobs:
+  extract-and-build:
+    runs-on: ubuntu-latest
+    # Paper-assistant image — same image used by the folio MCP server.
+    # Pre-installs: TeX Live (full), Lean 4, Bun, pandoc, ripgrep, Python.
+    container:
+      image: ghcr.io/${{ github.repository }}/paper-assistant:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      # Lean is pre-installed in the paper-assistant image (via elan).
+      - name: Verify Lean installation
+        run: |
+          echo "lean $(lean --version 2>&1 | head -1)"
+          echo "lake $(lake --version 2>&1 | head -1)"
+
+      # ── Step 0: Set PYTHONPATH for qou_lib shared library ──────────
+      - name: Configure Python path
+        run: |
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "PYTHONPATH<<$EOF" >> "$GITHUB_ENV"
+          echo "${{ github.workspace }}/.github/scripts" >> "$GITHUB_ENV"
+          echo "$EOF" >> "$GITHUB_ENV"
+          git config --global --add safe.directory "${{ github.workspace }}"
+
+      # ── Step 1: Build content objects → LaTeX chapters ─────────────
+      # Bun + TeX + Lean are pre-installed in the paper-assistant image.
+
+      - name: Build content objects to LaTeX chapters
+        continue-on-error: true
+        run: |
+          cd content && bun install --frozen-lockfile 2>/dev/null || bun install
+          bun run pipeline/build.ts \
+            quantum-observable-universe/quantum-observable-universe.ts \
+            --out-dir ../chapters/ \
+            --generate-main \
+            --main-out ../main.tex \
+            --preamble ../latex/preamble.tex
+          echo "Generated chapters:"
+          ls -la ../chapters/*.tex 2>/dev/null || echo "  (none)"
+
+      # ── Step 2: Run Ontologist — scan LaTeX for glossary terms ─────
+      - name: Run Ontologist (glossary scan)
+        run: python3 .github/scripts/ontologist.py all
+
+      # ── Step 3: Extract proof objects from LaTeX ───────────────────
+      - name: Extract proof objects from LaTeX
+        continue-on-error: true
+        run: python3 .github/scripts/extract_proof_objects.py
+
+      # ── Step 4: Generate Lean stubs for new objects ────────────────
+      - name: Generate Lean stubs
+        continue-on-error: true
+        run: python3 .github/scripts/generate_lean_stubs.py
+
+      - name: Cache Lean build artifacts
+        uses: actions/cache@v4
+        with:
+          path: content/quantum-observable-universe/lean/.lake
+          key: lean-ci-${{ runner.os }}-${{ hashFiles('content/quantum-observable-universe/lean/lean-toolchain', 'content/quantum-observable-universe/lean/lakefile.toml', 'content/quantum-observable-universe/lean/lake-manifest.json') }}
+          restore-keys: |
+            lean-ci-${{ runner.os }}-
+
+      # ── Step 5: Build Lean project ─────────────────────────────────
+      - name: Build Lean project
+        working-directory: content/quantum-observable-universe/lean
+        run: |
+          lake update
+          lake build 2>&1 | tee ../build.log
+        continue-on-error: true
+
+      # ── Step 6: Update proof status from build log ─────────────────
+      # Uses proof-status-tracking skill workflow.
+      - name: Update proof status
+        run: python3 .github/scripts/update_proof_status.py --build-log build.log
+
+      # ── Step 7: Consistency loop — if build failed, re-scan glossary
+      # The Ontologist re-evaluates for type mismatches when lake build
+      # reports errors.  This implements the design doc's consistency loop.
+      - name: Consistency check (re-scan on build failure)
+        if: failure()
+        run: |
+          echo "⚠️  Build failed — running Ontologist consistency check"
+          python3 .github/scripts/ontologist.py scan --output glossary-recheck.json
+          echo "Checking for type mismatches in build log..."
+          grep -i "type mismatch\|universe\|expected.*got" build.log || echo "No type mismatches found"
+
+      # ── Step 8: Check for sorry and flag for review ────────────────
+      # Any sorry in the codebase triggers a note for the agent review
+      # pipeline to include Formalizer and Ontologist reviews.
+      - name: Check sorry status
+        run: |
+          SORRY_COUNT=$(grep -rc "sorry" content/quantum-observable-universe/lean/QOU/*.lean 2>/dev/null | awk -F: '{s+=$2} END {print s}')
+          echo "Total sorry occurrences: ${SORRY_COUNT}"
+          if [ "${SORRY_COUNT}" -gt 0 ]; then
+            echo "⚠️  ${SORRY_COUNT} sorry markers remain — Formalizer review recommended"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "SORRY_COUNT<<$EOF" >> "$GITHUB_ENV"
+            echo "${SORRY_COUNT}" >> "$GITHUB_ENV"
+            echo "$EOF" >> "$GITHUB_ENV"
+          fi
+
+      # ── Step 9: Commit updated manifests ───────────────────────────
+      - name: Commit updated manifests
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add proof-objects.json glossary.json mapping.json
+          git diff --staged --quiet || git commit -m "chore: update proof-objects.json and glossary from Lean build"
+          git push || true

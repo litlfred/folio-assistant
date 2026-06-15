@@ -1,0 +1,665 @@
+name: Build & Publish
+
+# **Canonical build + publish workflow** (8-job DAG).
+#
+# Split the monolithic 1,061-LOC `build-and-publish` job into 8 parallel
+# jobs:
+#
+#   1. content-pipeline   (sequential — provides inputs to 2a/2b/2c)
+#   2a. paper-pdf         (parallel with 2b, 2c)
+#   2b. appendix-pdfs     (parallel)
+#   2c. schema-docs       (parallel)
+#   3a. diff-pdf          (depends on paper-pdf)
+#   3b. per-chapter-split (depends on paper-pdf)
+#   4. assemble           (depends on 2a/2b/2c/3a/3b)
+#   5. deploy             (depends on assemble; gh-pages push on workflow_dispatch)
+#
+# Critical path: content-pipeline (~5-8 min) + paper-pdf (~3-5 min) +
+# max(diff-pdf, per-chapter-split) (~4 min) + assemble (~3 min) +
+# deploy (~1 min) ≈ **21 min** (25-35% faster than the previous
+# monolithic publish.yml at ~25-30 min).
+#
+# History: this file is the rename of `publish-fast.yml` (Phase D
+# shadow workflow, PR #1161) into the canonical `publish.yml` slot
+# after Phase E retired the legacy monolithic version
+# (docs/workplans/2026-05-24-publish-yml-parallelization-plan.md PR #1099 §Phase E).
+#
+# **Triggers**:
+#   - `pull_request` (paths-filtered) — every PR touching content / chapters /
+#     main.tex / tools / folio-assistant / this file / paper-builder image
+#     runs the pipeline through `assemble`; `deploy` is gated to manual.
+#   - `workflow_dispatch` — manual run; with the optional source_branch /
+#     feature_branch / publish_branch inputs preserved from the legacy
+#     workflow so existing runbooks keep working.
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_branch:
+        description: >
+          Branch to build from.
+          Leave blank to build from the branch selected in the GitHub UI.
+        required: false
+        default: ''
+        type: string
+      feature_branch:
+        description: >
+          Feature branch to diff against main (for latexdiff).
+          Use this when building from a claude/* assistant branch to generate
+          the diff against the actual feature branch instead of the assistant branch.
+          Leave blank to diff the source branch itself against main.
+        required: false
+        default: ''
+        type: string
+      publish_branch:
+        description: >
+          Branch to push the built artefacts to.
+          Leave blank to use the default (gh-pages).
+        required: false
+        default: 'gh-pages'
+        type: string
+      skip_witnesses:
+        description: >
+          Skip the witness regeneration step (saves ~36 min).
+          Use for fast iteration when only testing LaTeX/content changes.
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: publish-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  packages: read   # pull the prebuilt ghcr.io/litlfred/qou-paper-builder image (TeX jobs)
+
+jobs:
+  # ── 1. content-pipeline (sequential prerequisite) ──────────────
+  content-pipeline:
+    name: Content pipeline (bun + python + witnesses)
+    runs-on: ubuntu-latest
+    # Job-scoped write so we can commit refreshed witnesses back to the
+    # PR branch (top-level perms stay contents: read). Same-repo PRs only;
+    # fork PRs get a read-only token and the commit-back step no-ops.
+    permissions:
+      contents: write
+    outputs:
+      papers-json: ${{ steps.folio.outputs.papers_json }}
+      filename-base: ${{ steps.filename.outputs.base }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # need branches for diff PDF in Job 3a
+          # For same-repo PRs, check out the PR HEAD branch (not the
+          # detached merge ref) so the witness commit-back below can push
+          # straight to the branch tip. Fork PRs / non-PR events fall back
+          # to the default ref.
+          ref: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) && github.event.pull_request.head.ref || '' }}
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Tool diagnostics
+        run: |
+          echo "=== tool versions ==="
+          for t in git python3 bun npm node jq; do
+            v=$(command -v "$t" 2>/dev/null && "$t" --version 2>&1 | head -1 || echo "(missing)")
+            printf "  %-12s %s\n" "$t" "$v"
+          done
+          df -h / 2>&1 | tail -2
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-pypdf5-numpy2.1-sympy1.13-scipy1.14-mpmath1.3
+          restore-keys: |
+            pip-${{ runner.os }}-
+
+      - name: Install Python scientific dependencies
+        run: |
+          pip3 install --break-system-packages \
+            'pypdf>=5.0' 'numpy>=2.1' 'sympy>=1.13' 'scipy>=1.14' 'mpmath>=1.3'
+
+      - name: Cache bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('content/bun.lock') }}
+          restore-keys: |
+            bun-${{ runner.os }}-
+
+      - name: Cache witness computation caches
+        # Persists the gitignored computation caches (hecke startup cache,
+        # ocneanu/hoefsmit intermediate tables) across CI runs so the
+        # "Regenerate stale witnesses" step doesn't pay the full cold-start
+        # cost on every PR build. Keyed on the witness/computation sources;
+        # restore-keys fall back to the latest cache when sources change.
+        uses: actions/cache@v4
+        with:
+          path: |
+            folio-assistant/computations/hecke_startup_cache.json
+            folio-assistant/computations/.cache
+            folio-assistant/computations/.hoefsmit_cache
+          key: witness-cache-${{ runner.os }}-${{ hashFiles('folio-assistant/computations/*.py') }}
+          restore-keys: |
+            witness-cache-${{ runner.os }}-
+
+      - name: Install content pipeline dependencies
+        run: cd content && bun install --frozen-lockfile 2>/dev/null || bun install
+
+      - name: Check references.bib is in sync with references.ts
+        # Guard against the recurring "Citation 'foo' undefined" failure
+        # mode (PR #1702): a contributor adds an entry to
+        # content/schema/references.ts but forgets to regenerate
+        # references.bib via `cd content && bun run export-bibtex`.
+        # The pdflatex compile in the paper-pdf job then fails with
+        # an undefined-citation error, which is opaque from a content
+        # PR's perspective. Fail fast here with an actionable message.
+        #
+        # Ignores the `% Generated:` timestamp line, which differs on
+        # every regen but carries no semantic content.
+        run: |
+          cd content && bun run pipeline/export-bibtex.ts
+          cd ..
+          if ! diff -q -I '^% Generated:' \
+               <(git show HEAD:references.bib) references.bib > /dev/null; then
+            echo "::error::references.bib is stale: a content/schema/references.ts entry was added/modified without regenerating references.bib. Fix locally with: cd content && bun run export-bibtex && cd .. && git add references.bib && git commit"
+            echo ""
+            echo "── Diff (regenerated vs committed; '% Generated:' line ignored) ──"
+            diff -u -I '^% Generated:' \
+              <(git show HEAD:references.bib) references.bib | head -40 || true
+            exit 1
+          fi
+          echo "✓ references.bib is in sync with content/schema/references.ts"
+
+      - name: Extract paper list from folio
+        id: folio
+        run: |
+          python3 .github/scripts/extract-folio.py > papers.json
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "papers_json<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$(cat papers.json | jq -c .)" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Detect compute changes (gate witness regen)
+        id: compute_diff
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          # Witnesses are DERIVED from the computation Python; if no compute
+          # file changed in this PR, the committed witnesses can't be stale,
+          # so the ~36 min regen is pure waste. Fail-safe: default to running
+          # (changed=true); only an explicit empty compute-diff skips it.
+          changed=true
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base="$BASE_SHA"
+            if git fetch origin "$base" --depth=1 || true; then :; fi
+            if git cat-file -e "$base" 2>/dev/null && \
+               [ -z "$(git diff --name-only "$base"...HEAD -- \
+                        computations 2>/dev/null \
+                        | grep -E '\.py$')" ]; then
+              changed=false
+            fi
+          fi
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "changed<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$changed" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+          echo "compute changed since base: $changed (false => skip witness regen)"
+
+      - name: Regenerate stale witnesses
+        if: inputs.skip_witnesses != true && steps.compute_diff.outputs.changed == 'true'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          cd folio-assistant/computations
+          python3 hecke_startup_cache.py 2>/dev/null || true
+          python3 run_pipeline.py --content-only --timeout 120 2>&1 \
+            | tee /tmp/witness-pipeline.log \
+            | grep -E '^\[|^Done:|FAILED|TIMEOUT|OK' \
+            || echo "::warning::Some witness computations failed"
+          echo ""
+          echo "── Summary ──"
+          tail -3 /tmp/witness-pipeline.log
+
+      - name: Commit refreshed witnesses back to PR branch
+        # Persists witnesses regenerated above onto the PR branch so the
+        # next CI run observes them as current and skips the recompute.
+        # Guards: same-repo PR only (fork tokens are read-only), and only
+        # when witnesses actually drifted. The commit carries [skip ci] so
+        # it does not re-trigger this workflow (no loop); witnesses are
+        # derived artifacts, so re-running gates against them is not needed.
+        if: >
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.head.repo.full_name == github.repository &&
+          inputs.skip_witnesses != true &&
+          steps.compute_diff.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          changed=$(git status --porcelain -- \
+            'folio-assistant/computations/*.witness.json' \
+            'folio-assistant/computations/*.derivation.json' | wc -l)
+          if [ "$changed" -eq 0 ]; then
+            echo "No witness drift — nothing to commit."
+            exit 0
+          fi
+          echo "Refreshed ${changed} witness file(s); committing to ${HEAD_REF}."
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          # Stage ONLY the regenerated sidecars — never sweep in incidental
+          # working-tree changes from the build.
+          git add \
+            'folio-assistant/computations/*.witness.json' \
+            'folio-assistant/computations/*.derivation.json'
+          git commit \
+            -m "chore(witnesses): refresh stale *.witness.json [skip ci]" \
+            -m "Regenerated by publish.yml content-pipeline so the next CI run observes witnesses as current and skips the recompute. [skip ci] avoids a loop." \
+            -m "Co-authored-by: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          # Retry once on push race (PR author or another run landed first).
+          if ! git push origin "HEAD:${HEAD_REF}"; then
+            echo "::warning::push failed — rebasing onto ${HEAD_REF} and retrying once"
+            git pull --rebase origin "${HEAD_REF}"
+            git push origin "HEAD:${HEAD_REF}"
+          fi
+
+      - name: Validate content objects
+        # Pass the paper dir explicitly. Bare `bun run validate` resolves to
+        # content/package.json's no-arg script, which validates the (empty)
+        # content/objects/ dir and always passes — a silent no-op that never
+        # checked the actual paper. The paper currently validates clean
+        # (0 errors), so enabling the real check closes that hole without
+        # breaking CI; future content errors now fail here as intended.
+        run: cd content && bun run pipeline/validate.ts quantum-observable-universe/
+
+      - name: Build content objects (chapters .tex + main.tex)
+        # Pre-existing cross-reference warnings produce exit code 1
+        # but chapters/*.tex and main.tex are still generated successfully.
+        # `bun run build` (package.json) does NOT pass --generate-main, so
+        # we invoke pipeline/build.ts directly with the flags needed to emit
+        # main.tex at the repo root — mirroring blueprint.yml / lean-build.yml
+        # / lean_ci.yml. Without this, the downstream paper-pdf job fails with
+        # "latexmk: Could not find file 'main.tex'".
+        run: |
+          cd content
+          # Pre-build hooks from the npm `build` script (witness staleness +
+          # atlas render). Keep them best-effort, exit code intentionally
+          # masked to match the existing behaviour.
+          bun run check-witnesses || true
+          bun run render-atlas:write || true
+          bun run pipeline/build.ts \
+            quantum-observable-universe/quantum-observable-universe.ts \
+            --out-dir ../chapters/ \
+            --generate-main \
+            --main-out ../main.tex \
+            --preamble ../latex/preamble.tex 2>&1 | tail -20 || \
+            echo "::warning::Content build reported issues (chapters/main.tex still generated)"
+          echo "── Generated artefacts ──"
+          ls -la ../main.tex ../chapters/*.tex 2>/dev/null | head -20 || \
+            { echo "::error::main.tex was not generated"; exit 1; }
+
+      - name: LaTeX preflight (macro lint — fast, no TeX)
+        # Fast static gate (~1 s, no TeX install) on the GENERATED compile
+        # unit (main.tex + every \input'd chapters/*.tex). Catches the three
+        # recurring fatal-pdflatex classes that the unified-latex AST
+        # validation is structurally blind to (it never resolves macros):
+        #   A. duplicate \newcommand  → "Command \X already defined"
+        #   B. undefined control seq  → "! Undefined control sequence"
+        #   C. fragile math accent as bare sub/superscript ("Q^\check{q}")
+        # This gates EVERY PR even when the heavy `paper-pdf` job no-ops
+        # (GitHub Actions billing block / [skip-ci]) — exactly the
+        # conditions under which classes A/B/C historically reached main
+        # and needed a manual fix(latex) commit (see
+        # docs/audits/2026-06-07-latex-compile-bug-prevention.md).
+        run: cd content && bun run pipeline/latex-preflight.ts ../main.tex
+
+      - name: Compute output filename base
+        id: filename
+        run: |
+          base=$(date -u +"%Y%m%d-%H%M%S")-${GITHUB_SHA:0:7}
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "base<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$base" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Upload content-pipeline artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-pipeline-${{ steps.filename.outputs.base }}
+          path: |
+            main.tex
+            chapters/
+            standalone-*.tex
+            papers.json
+            folio-assistant/computations/*.witness.json
+          retention-days: 1
+
+  # ── 2a. paper-pdf (parallel with 2b, 2c) ───────────────────────
+  paper-pdf:
+    name: Compile main paper PDF
+    needs: content-pipeline
+    runs-on: ubuntu-latest
+    # Prebuilt image bakes in TeX Live + latexmk/latexdiff/latexpand, so the
+    # per-job ~5 min `apt-get install texlive-full` becomes a ~2-3 min image
+    # pull. Built + pushed by paper-builder-image.yml on every main commit
+    # touching the Dockerfile (+ monthly cron). Falls back nowhere: if the
+    # image is missing the job fails fast (pull error) rather than silently
+    # compiling against a different TeX.
+    container:
+      image: ghcr.io/litlfred/qou-paper-builder:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: content-pipeline-${{ needs.content-pipeline.outputs.filename-base }}
+
+      - name: Quick LaTeX syntax check (draftmode)
+        run: |
+          # -f so undefined-citation warnings (the first pass runs before
+          # the .bbl exists) don't abort the check. Gate on actual fatal
+          # '! ' errors in main.log, not latexmk's exit code (which is
+          # nonzero on warning-level issues).
+          # NOTE: grep -a — a failing compile injects control bytes (e.g.
+          # ^^Y) into main.log, so without -a grep treats it as binary and
+          # silently misses the '! ' lines, letting a broken compile pass.
+          # Fast draft gate: a SINGLE pdflatex -draftmode pass (not a full
+          # multi-pass latexmk run) is enough to surface fatal '! ' errors.
+          # It does NOT write a latexmk .fdb, so it can't confuse the real
+          # (full latexmk) main build below. This is the draft-vs-main split:
+          # cheap syntax gate, full build only once.
+          # The fast-fail gate only needs fatal '! ' errors, which the ~2944
+          # \marginnote annotations never cause — and they cost ~50% of
+          # compile (measured). Strip them here for a ~2x faster gate; the
+          # full build below keeps every margin icon.
+          sed 's|\\begin{document}|\\renewcommand{\\marginnote}[2][]{}\\begin{document}|' \
+            main.tex > main-syntax.tex
+          pdflatex -shell-escape -draftmode -interaction=nonstopmode main-syntax.tex \
+            > latex-syntax.log 2>&1 || true
+          if grep -aqE '^! ' main-syntax.log 2>/dev/null; then
+            echo "::error::Fatal LaTeX error(s) in draftmode syntax check:"
+            grep -anE '^! ' main-syntax.log | head -20
+            tail -50 latex-syntax.log
+            exit 1
+          fi
+
+      - name: Compile LaTeX to PDF
+        run: |
+          # The "Quick LaTeX syntax check (draftmode)" step above runs
+          # `latexmk -pdf -draftmode`, which makes pdflatex SKIP writing
+          # main.pdf while still recording a completed build in
+          # main.fdb_latexmk. A plain `latexmk -pdf` then sees the sources
+          # unchanged and reports "Nothing to do ... All targets (main.pdf)
+          # are up-to-date", so it never re-runs pdflatex: main.pdf is never
+          # written and the gate below fails with "pdflatex: failed to create
+          # output file in previous invocation of latexmk". Wipe latexmk's
+          # state (incl. main.fdb_latexmk) so this is a real from-scratch
+          # build that actually emits the PDF.
+          latexmk -C main.tex >/dev/null 2>&1 || true
+          rm -f main.fdb_latexmk
+          # -f forces latexmk through the full bibtex cycle even though the
+          # first pdflatex pass returns 1 on undefined-citation warnings
+          # (before the .bbl exists). Without -f latexmk stops before
+          # bibtex and every \cite stays undefined. Gate on PDF production +
+          # absence of fatal '! ' errors rather than latexmk's exit code.
+          latexmk -pdf -shell-escape -f -interaction=nonstopmode main.tex || true
+          # grep -a: a failing compile injects control bytes into main.log,
+          # so without -a grep treats it as binary and misses the '! ' lines.
+          if grep -aqE '^! ' main.log 2>/dev/null; then
+            echo "::error::Fatal LaTeX error(s) in PDF compile:"
+            grep -anE '^! ' main.log | head -20
+            exit 1
+          fi
+          test -f main.pdf || { echo "::error::main.pdf not produced"; exit 1; }
+          echo "main.pdf produced ($(wc -c < main.pdf) bytes)"
+
+      - name: Capture LaTeX build warnings
+        run: |
+          grep -aE '^(Warning|Overfull|Underfull|LaTeX Warning)' main.log \
+            > latex-warnings.txt 2>/dev/null || true
+          wc -l < latex-warnings.txt || true
+          cat latex-warnings.txt | head -30 || true
+
+      - name: Flatten \input includes
+        run: latexpand main.tex > main-flat.tex 2>/dev/null || true
+
+      - name: Upload paper-pdf artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-pdf-${{ needs.content-pipeline.outputs.filename-base }}
+          path: |
+            main.pdf
+            main-flat.tex
+            latex-warnings.txt
+          retention-days: 1
+
+  # ── 2b. appendix-pdfs (parallel with 2a, 2c) ───────────────────
+  appendix-pdfs:
+    name: Compile standalone appendix PDFs
+    needs: content-pipeline
+    runs-on: ubuntu-latest
+    # See paper-pdf: prebuilt image replaces the per-job texlive-full install.
+    container:
+      image: ghcr.io/litlfred/qou-paper-builder:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: content-pipeline-${{ needs.content-pipeline.outputs.filename-base }}
+
+      - name: Compile standalone appendix PDFs
+        run: |
+          mkdir -p appendices/
+          for tex in $(find chapters/ -name "appendix-*.tex" 2>/dev/null); do
+            base=$(basename "$tex" .tex)
+            (cd appendices && \
+              cp "../$tex" "${base}.tex" && \
+              latexmk -pdf -interaction=nonstopmode "${base}.tex" || \
+              echo "::warning::appendix ${base} compile failed")
+          done
+
+      - name: Upload appendix-pdfs artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: appendix-pdfs-${{ needs.content-pipeline.outputs.filename-base }}
+          path: appendices/*.pdf
+          retention-days: 1
+          if-no-files-found: ignore
+
+  # ── 2c. schema-docs (parallel with 2a, 2b) ─────────────────────
+  schema-docs:
+    name: TypeDoc — schema-docs/
+    needs: content-pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: TypeDoc generate
+        working-directory: folio-assistant
+        run: |
+          bun install || npm install
+          npx typedoc --out ../schema-docs \
+            --entryPointStrategy expand \
+            --readme none --hideGenerator \
+            schemas/ adapters/paper/schemas/ 2>&1 | tail -10
+
+      - name: Upload schema-docs artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: schema-docs-${{ needs.content-pipeline.outputs.filename-base }}
+          path: schema-docs/
+          retention-days: 1
+
+  # ── 3a. diff-pdf (depends on paper-pdf) ────────────────────────
+  diff-pdf:
+    name: Generate diff PDF vs main
+    needs: [content-pipeline, paper-pdf]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    # See paper-pdf: prebuilt image replaces the per-job texlive-full install.
+    container:
+      image: ghcr.io/litlfred/qou-paper-builder:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: paper-pdf-${{ needs.content-pipeline.outputs.filename-base }}
+
+      - name: Fetch base branch + flatten + latexdiff
+        continue-on-error: true
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref || 'main' }}
+        run: |
+          git fetch origin "$BASE_REF"
+          git checkout "origin/$BASE_REF" -- main.tex
+          latexpand main.tex > main-base-flat.tex 2>/dev/null
+          # main-flat.tex came from the paper-pdf job's artefact
+          latexdiff main-base-flat.tex main-flat.tex > main-diff.tex 2>/dev/null
+          latexmk -pdf -interaction=nonstopmode main-diff.tex \
+            > diff-build.log 2>&1 || \
+            { tail -30 diff-build.log; echo "::warning::diff PDF compile failed"; }
+
+      - name: Upload diff-pdf
+        uses: actions/upload-artifact@v4
+        with:
+          name: diff-pdf-${{ needs.content-pipeline.outputs.filename-base }}
+          path: main-diff.pdf
+          retention-days: 1
+          if-no-files-found: ignore
+
+  # ── 3b. per-chapter-split (depends on paper-pdf) ───────────────
+  per-chapter-split:
+    name: Split main PDF into per-chapter
+    needs: [content-pipeline, paper-pdf]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: paper-pdf-${{ needs.content-pipeline.outputs.filename-base }}
+
+      - name: Install pypdf
+        run: pip3 install --break-system-packages 'pypdf>=5.0'
+
+      - name: Split main.pdf into per-chapter PDFs
+        run: |
+          mkdir -p chapters-pdf/
+          python3 scripts/split-pdf-by-chapter.py \
+            --input main.pdf \
+            --output-dir chapters-pdf/ \
+            2>&1 | tail -20 || \
+            echo "::warning::per-chapter split failed (script may not exist on this branch)"
+
+      - name: Upload per-chapter PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: per-chapter-${{ needs.content-pipeline.outputs.filename-base }}
+          path: chapters-pdf/*.pdf
+          retention-days: 1
+          if-no-files-found: ignore
+
+  # ── 4. assemble (fan-in from 2a/2b/2c/3a/3b) ───────────────────
+  assemble:
+    name: Assemble site/ + builds.json
+    needs: [content-pipeline, paper-pdf, appendix-pdfs, schema-docs, per-chapter-split]
+    # Note: `diff-pdf` intentionally OMITTED from needs[] — it's
+    # pull_request-only and `continue-on-error: true`. Including it
+    # in needs[] would cancel the assemble job on push/dispatch
+    # (where diff-pdf is skipped) per GH-Actions skip-propagation.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artefacts/
+          merge-multiple: true
+
+      - name: Assemble _site/
+        run: |
+          mkdir -p _site/papers _site/chapters _site/appendices _site/schema-docs
+          cp artefacts/main.pdf _site/ 2>/dev/null || true
+          cp -r artefacts/*.pdf _site/chapters/ 2>/dev/null || true
+          cp -r artefacts/appendix-* _site/appendices/ 2>/dev/null || true
+          cp -r artefacts/schema-docs _site/ 2>/dev/null || true
+          ls -la _site/
+
+      - name: Upload site artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-${{ needs.content-pipeline.outputs.filename-base }}
+          path: _site/
+          retention-days: 7
+
+      - name: Comment preview info on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `## Publish preview
+
+            **Artefacts** (in this workflow run's "Artifacts" section):
+            - \`site-${{ needs.content-pipeline.outputs.filename-base }}\` — full _site/ bundle
+            - \`paper-pdf-${{ needs.content-pipeline.outputs.filename-base }}\`
+            - \`appendix-pdfs-${{ needs.content-pipeline.outputs.filename-base }}\`
+            - \`diff-pdf-${{ needs.content-pipeline.outputs.filename-base }}\` (vs ${{ github.event.pull_request.base.ref }})
+            - \`per-chapter-${{ needs.content-pipeline.outputs.filename-base }}\`
+            - \`schema-docs-${{ needs.content-pipeline.outputs.filename-base }}\`
+
+            Manual gh-pages deploy: trigger this workflow via workflow_dispatch.`;
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
+
+  # ── 5. deploy (gated on workflow_dispatch only — PR builds stop at  ──
+  # assemble; pushing to gh-pages requires a manual run from the
+  # Actions tab so feature-branch PR runs do not overwrite main's
+  # published site)
+  deploy:
+    name: Deploy to gh-pages (gated)
+    needs: assemble
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-${{ needs.content-pipeline.outputs.filename-base }}
+          path: _site/
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true
+          commit_message: 'publish(deploy): manual workflow_dispatch from ${{ github.sha }}'

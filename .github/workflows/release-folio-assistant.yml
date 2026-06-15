@@ -1,0 +1,116 @@
+# Publish folio-assistant as a GitHub Release with tarball.
+#
+# Content repos install via:
+#   bun add https://github.com/litlfred/qou/releases/download/folio-assistant-v0.1.0/folio-assistant-0.1.0.tgz
+#
+# Triggers on:
+#   - Tag push matching folio-assistant-v*
+#   - Manual dispatch
+
+name: Release Folio Assistant
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 0.1.0)'
+        required: true
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  PKG_DIR: folio-assistant
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Determine version
+        id: version
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+        run: |
+          if [ -n "$INPUT_VERSION" ]; then
+            VERSION="$INPUT_VERSION"
+          else
+            VERSION="${GITHUB_REF_NAME#folio-assistant-v}"
+          fi
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "version<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$VERSION" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "tag<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "folio-assistant-v$VERSION" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Install dependencies
+        run: cd $PKG_DIR && bun install
+
+      - name: Pack tarball (generic core only)
+        run: |
+          cd $PKG_DIR
+          # bun pack creates a tarball from package.json "files" field
+          bun pack 2>/dev/null || npm pack 2>/dev/null || tar czf \
+            "folio-assistant-${{ steps.version.outputs.version }}.tgz" \
+            --transform 's,^,package/,' \
+            src/ ui/ viewer/sw-pyodide-cache.js viewer/register-sw.js \
+            folio.config.example.json package.json tsconfig.json README.md 2>/dev/null || true
+          ls -la *.tgz
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "Folio Assistant ${{ steps.version.outputs.version }}"
+          body: |
+            ## Folio Assistant v${{ steps.version.outputs.version }}
+
+            Content-agnostic assistant platform with MCP server, auth, UI, and block module registry.
+
+            ### Install in a content repo
+
+            ```bash
+            bun add https://github.com/litlfred/qou/releases/download/${{ steps.version.outputs.tag }}/folio-assistant-${{ steps.version.outputs.version }}.tgz
+            ```
+
+            ### What's included
+            - Generic MCP + HTTP server (`FolioServer`)
+            - `ContentAdapter` interface for pluggable content types
+            - Block module registry with lazy loading
+            - Pyodide cache Service Worker
+            - Git integration, RBAC, feedback storage
+            - Assistant UI (pre-built SPA)
+
+            ### What's NOT included (content-specific)
+            - Paper adapter (implement `ContentAdapter` for your content type)
+            - Content schemas (define your own block types)
+            - Simulators, computations, etc.
+          files: |
+            ${{ env.PKG_DIR }}/*.tgz
+          draft: false
+          prerelease: ${{ contains(steps.version.outputs.version, '-') }}
+
+      # Optionally publish to GitHub Packages npm registry
+      - name: Publish to GitHub Packages
+        if: "!contains(steps.version.outputs.version, '-')"
+        run: |
+          cd $PKG_DIR
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
+          echo "@litlfred:registry=https://npm.pkg.github.com/" >> .npmrc
+          # Update scope for GitHub Packages
+          sed -i 's/"@anthropic-ai\/folio-assistant"/"@litlfred\/folio-assistant"/' package.json
+          npm publish --registry=https://npm.pkg.github.com/ || echo "Publish to GPR skipped (may need scope setup)"
+        continue-on-error: true

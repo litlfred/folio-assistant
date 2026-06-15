@@ -1,0 +1,104 @@
+name: Agent Review
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: >
+          Commit SHA to review. Leave blank to review the latest commit
+          on main.
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit_sha || github.sha }}
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r .github/scripts/requirements.txt
+
+      - name: Configure Python path
+        run: echo "PYTHONPATH=${{ github.workspace }}/.github/scripts" >> "$GITHUB_ENV"
+
+      - name: Get commit diff
+        id: diff
+        run: |
+          if git rev-parse --verify HEAD~1 >/dev/null 2>&1; then
+            if ! DIFF=$(git diff HEAD~1 HEAD -- . ':(exclude).github' 2>/dev/null); then
+              echo "Failed to compute commit diff against HEAD~1." >&2
+              exit 1
+            fi
+          else
+            if ! DIFF=$(git diff --root HEAD -- . ':(exclude).github' 2>/dev/null); then
+              echo "Failed to compute root commit diff." >&2
+              exit 1
+            fi
+          fi
+          # Truncate in-variable to avoid broken pipe from piping into head
+          DIFF="${DIFF:0:50000}"
+          # Use a random delimiter to prevent collisions with diff content
+          DELIM="DIFF_EOF_$(python -c 'import secrets; print(secrets.token_hex(8))')"
+          {
+            echo "diff<<${DELIM}"
+            printf '%s\n' "$DIFF"
+            echo "${DELIM}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Get commit info
+        id: commit
+        run: |
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "message<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$(git log -1 --pretty=%s)" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "sha<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "author<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$(git log -1 --pretty=%an)" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+
+      # Skills are now loaded programmatically by agent_review.py via qou_lib.skills.
+      # The shell-based skill collection step is no longer needed.
+
+      - name: Derive PDF URL
+        id: pdf
+        run: |
+          OWNER="${{ github.repository_owner }}"
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "url<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "https://${OWNER}.github.io/${REPO_NAME}/quantum-observable-universe.pdf" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Run agent review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_DIFF: ${{ steps.diff.outputs.diff }}
+          COMMIT_MESSAGE: ${{ steps.commit.outputs.message }}
+          COMMIT_SHA: ${{ steps.commit.outputs.sha }}
+          COMMIT_AUTHOR: ${{ steps.commit.outputs.author }}
+          REPO_NAME: ${{ github.repository }}
+          PDF_URL: ${{ steps.pdf.outputs.url }}
+        run: python .github/scripts/agent_review.py
+

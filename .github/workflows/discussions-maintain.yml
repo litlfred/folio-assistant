@@ -1,0 +1,93 @@
+name: Maintain discussion archive
+
+# Two post-hoc maintenance passes over human-agent-discussions/, both
+# credential-free and committed back to the branch:
+#   * --retag : recompute each session's related PRs/commits/branches against
+#     the CURRENT git + GitHub state, so a PR/commit that landed AFTER the
+#     session was archived gets attached to the discussion it came from.
+#     This is the "post-merge, automatic" tagging the archive is built for.
+#   * --rerender-pdfs : upgrade any builtin-engine PDF to pandoc + XeLaTeX.
+#
+# Triggers:
+#   * push to main  — post-merge retag (a merged PR's commits now carry
+#     session trailers visible to retag).
+#   * push touching a session file — re-tag + re-render after new sessions
+#     are archived on a branch.
+# GITHUB_TOKEN pushes don't retrigger workflows, and the commit carries
+# [skip ci] as a second loop guard.
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_rerender:
+        description: "Re-render every PDF, not just builtin-engine ones"
+        type: boolean
+        default: false
+
+concurrency:
+  group: discussions-maintain-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  maintain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # retag greps all history for session trailers
+
+      - name: Skip if no sessions archived yet
+        id: gate
+        run: |
+          if compgen -G "human-agent-discussions/*/*/metadata.json" > /dev/null; then
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "have_sessions<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "true" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
+          else
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "have_sessions<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "false" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
+            echo "No archived sessions yet — nothing to maintain."
+          fi
+
+      - name: Install pandoc + XeLaTeX + DejaVu fonts
+        if: steps.gate.outputs.have_sessions == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            pandoc texlive-xetex texlive-fonts-recommended \
+            texlive-latex-recommended lmodern fonts-dejavu
+
+      - name: Re-tag sessions against current PRs/commits
+        if: steps.gate.outputs.have_sessions == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 human-agent-discussions/tools/archive_sessions.py --retag --github
+
+      - name: Re-render session PDFs
+        if: steps.gate.outputs.have_sessions == 'true'
+        run: |
+          python3 human-agent-discussions/tools/archive_sessions.py \
+            --rerender-pdfs ${{ inputs.force_rerender == true && '--force' || '' }} \
+            --pdf-engine pandoc \
+            --pdf-mainfont "DejaVu Serif" --pdf-monofont "DejaVu Sans Mono"
+
+      - name: Commit maintenance result
+        if: steps.gate.outputs.have_sessions == 'true'
+        run: |
+          if [ -z "$(git status --porcelain human-agent-discussions)" ]; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add human-agent-discussions
+          git commit -m "chore(discussions): retag + re-render session PDFs [skip ci]"
+          git push

@@ -1,0 +1,259 @@
+# LeanBlueprint — Build, validate declarations, and deploy to GitHub Pages
+#
+# Uses the canonical leanblueprint + docgen-action pipeline:
+#   1. Build Lean project (leanprover/lean-action)
+#   2. Compile blueprint (plasTeX → HTML + PDF)
+#   3. Generate doc-gen4 interactive documentation
+#   4. Validate \lean{} declaration names (lake exe checkdecls)
+#   5. Deploy to gh-pages branch (blueprint/, docs/, blueprint.pdf)
+#
+# Published artifacts (gh-pages branch):
+#   /blueprint/         Interactive dependency graph with proof status
+#   /blueprint.pdf      Print version of the blueprint
+#   /docs/              doc-gen4 API documentation
+#   /axiom-report.txt   Verification report
+#
+# Deployment note:
+#   docgen-action's built-in deploy uses actions/deploy-pages (artifact-based),
+#   which conflicts with the branch-based gh-pages deployment used by the rest
+#   of this repo.  We set deploy: false and use peaceiris/actions-gh-pages to
+#   push the built output to the gh-pages branch instead.
+#
+# References:
+#   - https://github.com/PatrickMassot/leanblueprint
+#   - https://github.com/leanprover-community/docgen-action
+#   - https://github.com/leanprover/lean-action
+
+name: Blueprint
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: >
+          Branch, tag, or commit SHA to build the blueprint from.
+          Leave blank to use the ref selected in the GitHub UI's
+          "Use workflow from" dropdown. Provide a value here when the
+          dropdown will not accept your branch name (e.g. very long
+          `copilot/...` or `claude/...` branch names).
+        required: false
+        default: ''
+        type: string
+
+concurrency:
+  group: blueprint-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  issues: write
+  pull-requests: write
+  packages: read          # required to pull the paper-assistant container image
+
+jobs:
+  build_blueprint:
+    runs-on: ubuntu-latest
+    name: Build project & blueprint
+    # Paper-assistant image — same image used by the folio MCP server.
+    # Pre-installs: TeX Live (full), Lean 4, Bun, pandoc, ripgrep, Python.
+    container:
+      image: ghcr.io/${{ github.repository }}/paper-assistant:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      # ── Free disk space (mathlib + doc-gen4 need ~10 GB) ─────────
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
+        with:
+          tool-cache: false
+          android: true
+          dotnet: false
+          haskell: false
+          large-packages: false
+          docker-images: false
+          swap-storage: false
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.ref || github.ref }}
+
+      # ── Pre-build: content pipeline + extraction ──────────────────
+      - name: Configure environment
+        run: |
+          git config --global --add safe.directory "${{ github.workspace }}"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "PYTHONPATH<<$EOF" >> "$GITHUB_ENV"
+          echo "${{ github.workspace }}/.github/scripts" >> "$GITHUB_ENV"
+          echo "$EOF" >> "$GITHUB_ENV"
+
+      # Bun + TeX + Lean are pre-installed in the paper-assistant image.
+
+      - name: Build content objects to LaTeX chapters
+        continue-on-error: true
+        run: |
+          cd content && bun install --frozen-lockfile 2>/dev/null || bun install
+          bun run pipeline/build.ts \
+            quantum-observable-universe/quantum-observable-universe.ts \
+            --out-dir ../chapters/ \
+            --generate-main \
+            --main-out ../main.tex \
+            --preamble ../latex/preamble.tex
+          echo "Generated chapters:"
+          ls -la ../chapters/*.tex 2>/dev/null || echo "  (none)"
+
+      - name: Run Ontologist (glossary scan)
+        run: python3 .github/scripts/ontologist.py all
+
+      - name: Extract proof objects from LaTeX
+        continue-on-error: true
+        run: python3 .github/scripts/extract_proof_objects.py
+
+      - name: Generate Lean stubs
+        continue-on-error: true
+        run: python3 .github/scripts/generate_lean_stubs.py
+
+      # ── Build Lean project ───────────────────────────────────────
+      # Cache `.lake/` for the root workspace and every per-paper
+      # package.  The root lakefile pulls all three paper packages
+      # (qou, ugb, fred2005) via `[[require]]` stanzas.
+      - name: Cache Lean build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            .lake
+            content/quantum-observable-universe/lean/.lake
+            content/unital-groebner-bases/lean/.lake
+            content/fred2005-formal-groups/lean/.lake
+          key: lean-ci-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'content/quantum-observable-universe/lean/lakefile.toml', 'content/unital-groebner-bases/lean/lakefile.toml', 'content/fred2005-formal-groups/lean/lakefile.toml') }}
+          restore-keys: |
+            lean-ci-${{ runner.os }}-
+
+      # Build from the repo-root Lake workspace so cross-paper
+      # dependencies (QOU → UGB) resolve in a single pass.
+      - name: Build and lint Lean workspace
+        id: lean_build
+        uses: leanprover/lean-action@v1
+        with:
+          build: true
+          lint: false
+          lake-package-directory: .
+        continue-on-error: true
+
+      # ── Build blueprint + doc-gen4 (no deploy) ─────────────────
+      # docgen-action builds blueprint HTML, blueprint PDF, and
+      # doc-gen4 API docs into the homepage directory.  We disable
+      # its built-in deploy and handle deployment ourselves below.
+      #
+      # The blueprint itself is paper-specific (only QOU has a
+      # blueprint/ directory today); the underlying Lake build uses
+      # the QOU package's lakefile so doc-gen4 can pick up Mathlib
+      # linkage.  When additional papers add blueprints, add parallel
+      # docgen-action steps scoped to their per-paper Lake dirs.
+      - name: Compile blueprint and documentation
+        id: docgen
+        uses: leanprover-community/docgen-action@main
+        with:
+          blueprint: true
+          deploy: false
+          homepage: home_page
+          lake-package-directory: content/quantum-observable-universe/lean
+          references: references.bib
+        continue-on-error: true
+
+      # ── Post-build: generate axiom report ────────────────────────
+      - name: Generate axiom report
+        run: |
+          touch build.log
+          python3 .github/scripts/axiom_report.py \
+            --build-log build.log \
+            --lean-dir content/quantum-observable-universe/lean \
+            --output axiom-report.txt
+        continue-on-error: true
+
+      # ── Collect output for deployment ───────────────────────────
+      # docgen-action places its output in home_page/_site/ (Jekyll)
+      # or directly in home_page/ (blueprint/, blueprint.pdf, docs/).
+      # We assemble everything into _deploy/ for gh-pages.
+      - name: Assemble deployment directory
+        run: |
+          mkdir -p _deploy
+
+          # 1. If Jekyll built a _site, use that as the base
+          if [ -d home_page/_site ]; then
+            echo "Found Jekyll _site output"
+            cp -r home_page/_site/* _deploy/
+          fi
+
+          # 2. Blueprint HTML (interactive dependency graph)
+          if [ -d home_page/blueprint ]; then
+            echo "Found blueprint HTML output"
+            cp -r home_page/blueprint _deploy/blueprint
+          fi
+
+          # 3. Blueprint PDF
+          if [ -f home_page/blueprint.pdf ]; then
+            echo "Found blueprint PDF"
+            cp home_page/blueprint.pdf _deploy/blueprint.pdf
+          fi
+
+          # 4. doc-gen4 API docs (may be under home_page/docs/ or
+          #    in the Jekyll _site/docs/ already copied above)
+          if [ -d home_page/docs ] && [ ! -d _deploy/docs ]; then
+            echo "Found doc-gen4 output"
+            cp -r home_page/docs _deploy/docs
+          fi
+
+          # 5. Axiom report
+          if [ -f axiom-report.txt ]; then
+            cp axiom-report.txt _deploy/axiom-report.txt
+          fi
+
+          # 6. Manifests from pre-build pipeline
+          for f in proof-objects.json glossary.json mapping.json; do
+            [ -f "$f" ] && cp "$f" _deploy/
+          done
+
+          echo "── Deployment contents ──"
+          find _deploy -type f | sort | head -50
+          echo "Total files: $(find _deploy -type f | wc -l)"
+
+      # ── Upload deploy artifacts for the deploy job ──────────────
+      - name: Upload deploy artifacts
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: blueprint-deploy
+          path: _deploy
+          retention-days: 1
+
+  deploy:
+    name: Deploy to gh-pages
+    runs-on: ubuntu-latest
+    needs: [build_blueprint]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    concurrency:
+      group: gh-pages-deploy
+      cancel-in-progress: false
+    steps:
+      - name: Download deploy artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: blueprint-deploy
+          path: _deploy
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_deploy
+          publish_branch: gh-pages
+          destination_dir: ''
+          keep_files: true
+          commit_message: >
+            docs: deploy blueprint and docs from ${{ github.sha }}

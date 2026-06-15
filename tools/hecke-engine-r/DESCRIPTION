@@ -1,0 +1,19 @@
+Package: heckeengine
+Title: QOU Hecke-engine Gram + Markov-trace Primitives
+Version: 0.1.0
+Authors@R: c(person("Quantum Observable Universe contributors",
+                     role = c("aut", "cre"),
+                     email = "noreply@anthropic.com"))
+Description: R bindings to the QOU `hecke-engine` Rust crate via
+    extendr. Exposes the Iwahori-Hecke H_3(q) Gram matrix, Markov-trace
+    weights, and substrate-q convenience functions. Mirrors the
+    cross-language surface of `pyhecke-native` (Python), `@litlfred/hecke-engine-node`
+    (Node.js), `@litlfred/hecke-engine-wasm` (browser), and `hecke-engine-jvm`
+    (Kotlin/Swift via UniFFI).
+License: MIT + file LICENSE
+Encoding: UTF-8
+SystemRequirements: Cargo (Rust's package manager), rustc, libgmp-dev, libmpfr-dev
+Config/rextendr/version: 0.4.0
+URL: https://github.com/litlfred/qou
+BugReports: https://github.com/litlfred/qou/issues
+RoxygenNote: 7.3.1

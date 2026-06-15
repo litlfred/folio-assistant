@@ -1,0 +1,552 @@
+# Lean 4 CI/CD — Build, Audit, Documentation, and Deployment
+#
+# Triggers
+# ────────
+#   push (main)            – commits that touch lean/, chapters/, or manifests
+#   pull_request (main)    – PRs targeting main with lean/chapter changes
+#   workflow_dispatch      – manual run
+#
+# Phases
+# ──────
+#   1. Build     – lake build verifying all proofs (SU_q(2), mass derivation)
+#   2. Audit     – axiom report listing sorry, axiom deps, conjecture transparency
+#   3. Docs      – doc-gen4 fallback source browser (full docs via blueprint.yml)
+#   4. Deploy    – publish artifacts to gh-pages, update README badge
+#
+# Published artifacts (gh-pages)
+# ─────────────────────────────
+#   lean/              Raw Lean source files for browsing
+#   lean/docs/         doc-gen4 or fallback source browser
+#   axiom-report.txt   Plaintext verification report
+#   proof-objects.json Formalization status manifest
+#   dependency-graph.svg  Visual dependency graph
+#
+# Note: blueprint/ and docs/ are deployed by blueprint.yml, not this workflow.
+
+name: Lean CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: >
+          Branch, tag, or commit SHA to build from.
+          Leave blank to use the ref selected in the GitHub UI's
+          "Use workflow from" dropdown. Provide a value here when the
+          dropdown will not accept your branch name (e.g. very long
+          `copilot/...` or `claude/...` branch names).
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: lean-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  LEAN_VERSION: "leanprover/lean4:v4.16.0"
+
+jobs:
+
+  # ════════════════════════════════════════════════════════════════════════
+  # Phase 1: Build
+  # ════════════════════════════════════════════════════════════════════════
+  build:
+    name: Build & Verify
+    runs-on: ubuntu-latest
+    outputs:
+      build_status: ${{ steps.build.outcome }}
+      sorry_count: ${{ steps.sorry.outputs.count }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Install CI tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            texlive texlive-latex-extra texlive-fonts-extra texlive-bibtex-extra \
+            texlive-science texlive-extra-utils biber \
+            latexdiff graphviz
+          pip3 install --break-system-packages --no-cache-dir requests>=2.32
+
+      - name: Install Lean via elan
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Configure Python path
+        run: echo "PYTHONPATH=${{ github.workspace }}/.github/scripts" >> "$GITHUB_ENV"
+
+      # ── Pre-build: content pipeline + extraction ──────────────────
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Build content objects to LaTeX chapters
+        continue-on-error: true
+        run: |
+          cd content && bun install --frozen-lockfile 2>/dev/null || bun install
+          bun run pipeline/build.ts \
+            quantum-observable-universe/quantum-observable-universe.ts \
+            --out-dir ../chapters/ \
+            --generate-main \
+            --main-out ../main.tex \
+            --preamble ../latex/preamble.tex
+          echo "Generated chapters:"
+          ls -la ../chapters/*.tex 2>/dev/null || echo "  (none)"
+
+      - name: Run Ontologist (glossary scan)
+        run: python3 .github/scripts/ontologist.py all
+
+      - name: Extract proof objects from LaTeX
+        continue-on-error: true
+        run: python3 .github/scripts/extract_proof_objects.py
+
+      - name: Generate Lean stubs
+        continue-on-error: true
+        run: python3 .github/scripts/generate_lean_stubs.py
+
+      # Tier-1 (actions/cache) + Tier-2 (lake-cache/mathlib-* orphan
+      # branch) + Tier-3 (Mathlib upstream Reservoir) fallback. The
+      # `mathlib` package name selects the workspace-root cache that
+      # covers all paper packages in one shot (`.lake/`, plus the
+      # per-paper `.lake/` directories that workspace-build produces).
+      # See docs/workplans/2026-05-24-lean-cache-strategy.md.
+      - name: Cache Lean build artifacts (hybrid 3-tier)
+        uses: ./.github/actions/lake-cache-restore
+        with:
+          package: mathlib
+          lake-root: .
+          manifest-files: |
+            lean-toolchain
+            lakefile.toml
+            content/quantum-observable-universe/lean/lakefile.toml
+            content/unital-groebner-bases/lean/lakefile.toml
+            content/fred2005-formal-groups/lean/lakefile.toml
+
+      # ── Build ──────────────────────────────────────────────────────
+      # Runs from the repo-root Lake workspace, which aggregates every
+      # paper package (QOU, UGB, Fred2005).  Single `lake build`
+      # compiles them all.
+      - name: Build Lean workspace (root)
+        id: build
+        run: |
+          lake update
+          lake build 2>&1 | tee build.log
+        continue-on-error: true
+
+      # ── Post-build analysis ────────────────────────────────────────
+      - name: Update proof status
+        run: python3 .github/scripts/update_proof_status.py --build-log build.log
+
+      - name: Count sorry markers
+        id: sorry
+        run: |
+          # Scan every registered paper Lake package for `sorry` usage.
+          COUNT=$(grep -rco "\bsorry\b" \
+            content/quantum-observable-universe/lean/QOU \
+            content/unital-groebner-bases/lean/UGB \
+            content/fred2005-formal-groups/lean/Fred2005 \
+            --include='*.lean' 2>/dev/null \
+            | awk -F: '{s+=$2} END {print s+0}')
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "count<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "${COUNT}" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+          echo "Total sorry occurrences (across all paper packages): ${COUNT}"
+
+      - name: Check for type errors
+        if: steps.build.outcome == 'failure'
+        run: |
+          echo "::error::lake build failed — check build.log for type errors"
+          grep -i "error:" build.log | head -20
+
+      # ── Upload artifacts for downstream jobs ───────────────────────
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-build
+          path: |
+            build.log
+            proof-objects.json
+            glossary.json
+            mapping.json
+          retention-days: 30
+
+  # ════════════════════════════════════════════════════════════════════════
+  # Phase 2: Audit
+  # ════════════════════════════════════════════════════════════════════════
+  audit:
+    name: Axiom Audit
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Install CI tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            texlive texlive-latex-extra texlive-fonts-extra texlive-bibtex-extra \
+            texlive-science texlive-extra-utils biber \
+            latexdiff graphviz
+          pip3 install --break-system-packages --no-cache-dir requests>=2.32
+
+      - name: Configure Python path
+        run: echo "PYTHONPATH=${{ github.workspace }}/.github/scripts" >> "$GITHUB_ENV"
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: lean-build
+
+      - name: Restore Lean cache (hybrid 3-tier)
+        uses: ./.github/actions/lake-cache-restore
+        with:
+          package: mathlib
+          lake-root: .
+          manifest-files: |
+            lean-toolchain
+            lakefile.toml
+            content/quantum-observable-universe/lean/lakefile.toml
+            content/unital-groebner-bases/lean/lakefile.toml
+            content/fred2005-formal-groups/lean/lakefile.toml
+
+      # ── Generate axiom report ──────────────────────────────────────
+      - name: Generate axiom report
+        run: |
+          python3 .github/scripts/axiom_report.py \
+            --build-log build.log \
+            --lean-dir content/quantum-observable-universe/lean \
+            --output axiom-report.txt
+
+      - name: Print report summary
+        run: cat axiom-report.txt
+
+      - name: Generate dependency graph
+        run: |
+          python3 .github/scripts/generate_dependency_graph.py \
+            --manifest proof-objects.json \
+            --output dependency-graph.svg
+
+      - name: Upload audit artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-audit
+          path: |
+            axiom-report.txt
+            dependency-graph.svg
+            dependency-graph.dot
+          retention-days: 30
+
+  # ════════════════════════════════════════════════════════════════════════
+  # Phase 3: Documentation (doc-gen4)
+  # ════════════════════════════════════════════════════════════════════════
+  docs:
+    name: Generate Documentation
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Install CI tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            texlive texlive-latex-extra texlive-fonts-extra texlive-bibtex-extra \
+            texlive-science texlive-extra-utils biber \
+            latexdiff graphviz
+          pip3 install --break-system-packages --no-cache-dir requests>=2.32
+
+      - name: Install Lean via elan
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Restore Lean cache (hybrid 3-tier)
+        id: lean-cache-docs
+        uses: ./.github/actions/lake-cache-restore
+        with:
+          package: mathlib
+          lake-root: .
+          manifest-files: |
+            lean-toolchain
+            lakefile.toml
+            content/quantum-observable-universe/lean/lakefile.toml
+            content/unital-groebner-bases/lean/lakefile.toml
+            content/fred2005-formal-groups/lean/lakefile.toml
+
+      - name: Build Lean workspace (ensure .olean files exist)
+        env:
+          CACHE_HIT: ${{ steps.lean-cache-docs.outputs.cache-hit }}
+        run: |
+          # Only fetch dependencies on cache miss
+          if [ "$CACHE_HIT" != "true" ]; then
+            lake update
+          fi
+          lake build
+        continue-on-error: true
+
+      # ── Generate documentation ─────────────────────────────────────
+      # doc-gen4 is fetched via Lake.  If doc-gen4 is not configured in
+      # lakefile.toml, we fall back to copying raw Lean source files with
+      # syntax highlighting metadata.
+      - name: Generate doc-gen4 documentation
+        id: docgen
+        run: |
+          # Build docs for every registered paper library from the root
+          # workspace.  `lake build <lib>:docs` is a no-op if doc-gen4
+          # is not wired in; we fall back to a static source browser.
+          if lake build QOU:docs UGB:docs Fred2005:docs 2>&1 | tee docgen.log; then
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "docgen<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "true" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
+            echo "✅ doc-gen4 succeeded"
+          else
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "docgen<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "false" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
+            echo "⚠️  doc-gen4 not available — generating source browser fallback"
+          fi
+        continue-on-error: true
+
+      # Fallback: create a browsable source directory with syntax info
+      - name: Generate source browser (fallback)
+        if: steps.docgen.outputs.docgen != 'true'
+        run: |
+          mkdir -p lean-docs
+          # Copy Lean source files
+          cp -r content/quantum-observable-universe/lean/QOU lean-docs/QOU
+          cp content/quantum-observable-universe/lean/QOU.lean lean-docs/
+          cp content/quantum-observable-universe/lean/lakefile.toml lean-docs/
+          cp content/quantum-observable-universe/lean/lean-toolchain lean-docs/
+
+          # Generate index page with links to all files
+          cat > lean-docs/index.html << 'HTMLEOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <title>QOU Lean 4 Source Browser</title>
+            <style>
+              :root { --bg: #1e1e2e; --fg: #cdd6f4; --accent: #89b4fa; --border: #313244; --code-bg: #181825; }
+              body { font-family: 'JetBrains Mono', 'Fira Code', monospace; background: var(--bg); color: var(--fg); margin: 0; padding: 2rem; }
+              h1 { color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+              h2 { color: #a6adc8; margin-top: 2rem; }
+              a { color: var(--accent); text-decoration: none; }
+              a:hover { text-decoration: underline; }
+              .file-list { list-style: none; padding: 0; }
+              .file-list li { padding: 0.3rem 0; }
+              .file-list li::before { content: '📄 '; }
+              .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; margin-left: 0.5em; }
+              .badge-sorry { background: #fab387; color: #1e1e2e; }
+              .badge-ok { background: #a6e3a1; color: #1e1e2e; }
+              .info { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin: 1rem 0; }
+              table { border-collapse: collapse; width: 100%; }
+              th, td { text-align: left; padding: 0.4rem 0.8rem; border-bottom: 1px solid var(--border); }
+              th { color: var(--accent); }
+            </style>
+          </head>
+          <body>
+            <h1>∀ QOU Lean 4 Source Browser</h1>
+            <div class="info">
+              <p>Interactive documentation for the Quantum Observable Universe formalization.</p>
+              <p>Hover over definitions in the Lean source files for documentation.</p>
+            </div>
+
+            <h2>Foundation</h2>
+            <ul class="file-list">
+              <li><a href="QOU/Basic.lean">QOU/Basic.lean</a> — Shared foundations</li>
+              <li><a href="QOU/Glossary.lean">QOU/Glossary.lean</a> — Formal semantic glossary</li>
+            </ul>
+
+            <h2>Core Modules</h2>
+            <ul class="file-list">
+              <li><a href="QOU/KnotTheory.lean">QOU/KnotTheory.lean</a> — Combinatorial knot types</li>
+              <li><a href="QOU/MassDerivation.lean">QOU/MassDerivation.lean</a> — Mass-parameter derivation</li>
+            </ul>
+
+            <h2>Chapters</h2>
+            <ul class="file-list">
+              <li><a href="QOU/QuantumObservableUniverse.lean">QOU/QuantumObservableUniverse.lean</a> — Ch.1</li>
+              <li><a href="QOU/Elaboration.lean">QOU/Elaboration.lean</a> — Ch.2</li>
+              <li><a href="QOU/PathIntegrals.lean">QOU/PathIntegrals.lean</a> — Ch.3</li>
+              <li><a href="QOU/Torsion.lean">QOU/Torsion.lean</a> — Ch.4</li>
+              <li><a href="QOU/BringsSurface.lean">QOU/BringsSurface.lean</a> — Ch.5</li>
+              <li><a href="QOU/DescartesUniverse.lean">QOU/DescartesUniverse.lean</a> — Ch.6</li>
+              <li><a href="QOU/PAdicQuantumGroups.lean">QOU/PAdicQuantumGroups.lean</a> — Ch.7</li>
+              <li><a href="QOU/GaugeFieldFluidDynamics.lean">QOU/GaugeFieldFluidDynamics.lean</a> — Ch.8</li>
+              <li><a href="QOU/InformationTheory.lean">QOU/InformationTheory.lean</a> — Ch.9</li>
+            </ul>
+
+            <h2>Configuration</h2>
+            <ul class="file-list">
+              <li><a href="lakefile.toml">lakefile.toml</a> — Lake build configuration</li>
+              <li><a href="lean-toolchain">lean-toolchain</a> — Lean version pin</li>
+            </ul>
+          </body>
+          </html>
+          HTMLEOF
+          echo "✅ Generated source browser fallback"
+
+      # Collect docs output
+      - name: Collect documentation output
+        run: |
+          mkdir -p _lean_docs
+          # doc-gen4 (from the root workspace) outputs to .lake/build/doc/.
+          # Per-paper builds may still drop artefacts under their own .lake
+          # dirs, so we collect from all known locations.
+          for dir in \
+            .lake/build/doc \
+            content/quantum-observable-universe/lean/.lake/build/doc \
+            content/unital-groebner-bases/lean/.lake/build/doc \
+            content/fred2005-formal-groups/lean/.lake/build/doc; do
+            if [ -d "$dir" ]; then
+              cp -r "$dir"/* _lean_docs/ 2>/dev/null || true
+            fi
+          done
+          if [ -d lean-docs ]; then
+            cp -r lean-docs/* _lean_docs/ 2>/dev/null || true
+          fi
+          echo "Documentation files: $(find _lean_docs -type f | wc -l)"
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-docs
+          path: _lean_docs/
+          retention-days: 30
+
+  # ════════════════════════════════════════════════════════════════════════
+  # Phase 4: Deploy
+  # ════════════════════════════════════════════════════════════════════════
+  deploy:
+    name: Deploy to gh-pages
+    runs-on: ubuntu-latest
+    needs: [build, audit, docs]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    concurrency:
+      group: gh-pages-deploy
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Install CI tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            texlive texlive-latex-extra texlive-fonts-extra texlive-bibtex-extra \
+            texlive-science texlive-extra-utils biber \
+            latexdiff graphviz
+          pip3 install --break-system-packages --no-cache-dir requests>=2.32
+
+      - name: Configure Python path
+        run: echo "PYTHONPATH=${{ github.workspace }}/.github/scripts" >> "$GITHUB_ENV"
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Assemble deployment directory
+        run: |
+          mkdir -p _deploy/lean/docs
+
+          # Lean documentation
+          if [ -d lean-docs ]; then
+            cp -r lean-docs/* _deploy/lean/docs/
+          fi
+
+          # Audit artifacts
+          if [ -d lean-audit ]; then
+            cp lean-audit/axiom-report.txt _deploy/
+            cp lean-audit/dependency-graph.svg _deploy/ 2>/dev/null || true
+          fi
+
+          # Build artifacts
+          if [ -d lean-build ]; then
+            cp lean-build/proof-objects.json _deploy/
+            cp lean-build/glossary.json _deploy/ 2>/dev/null || true
+            cp lean-build/mapping.json _deploy/ 2>/dev/null || true
+          fi
+
+          # Copy the root workspace lakefile + toolchain, plus every
+          # paper package's Lean source for browsing.
+          cp lakefile.toml _deploy/lean/
+          cp lean-toolchain _deploy/lean/
+
+          for pkg_dir in \
+            content/quantum-observable-universe/lean \
+            content/unital-groebner-bases/lean \
+            content/fred2005-formal-groups/lean; do
+            if [ -d "$pkg_dir" ]; then
+              mkdir -p "_deploy/lean/$pkg_dir"
+              # Copy lakefile, toolchain, and the library subtree(s).
+              cp "$pkg_dir"/lakefile.toml "_deploy/lean/$pkg_dir/" 2>/dev/null || true
+              cp "$pkg_dir"/lean-toolchain "_deploy/lean/$pkg_dir/" 2>/dev/null || true
+              # Library roots: QOU.lean / UGB.lean / Fred2005.lean + dirs
+              for root in "$pkg_dir"/*.lean; do
+                [ -f "$root" ] && cp "$root" "_deploy/lean/$pkg_dir/"
+              done
+              for libdir in "$pkg_dir"/QOU "$pkg_dir"/UGB "$pkg_dir"/Fred2005; do
+                [ -d "$libdir" ] && cp -r "$libdir" "_deploy/lean/$pkg_dir/"
+              done
+            fi
+          done
+
+          echo "Deployment contents:"
+          find _deploy -type f | head -30
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_deploy
+          publish_branch: gh-pages
+          destination_dir: ''
+          keep_files: true
+          commit_message: >
+            docs: deploy Lean docs and audit report from ${{ github.sha }}
+
+      # ── Commit updated manifests to main ───────────────────────────
+      - name: Commit updated manifests
+        if: github.event_name == 'push'
+        run: |
+          # Restore manifests from build artifacts
+          if [ -f lean-build/proof-objects.json ]; then
+            cp lean-build/proof-objects.json proof-objects.json
+          fi
+          if [ -f lean-build/glossary.json ]; then
+            cp lean-build/glossary.json glossary.json
+          fi
+          if [ -f lean-build/mapping.json ]; then
+            cp lean-build/mapping.json mapping.json
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add proof-objects.json glossary.json mapping.json
+          git diff --staged --quiet || git commit -m "chore: update manifests from Lean CI [skip ci]"
+          git push || true
