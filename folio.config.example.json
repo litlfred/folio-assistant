@@ -1,0 +1,16 @@
+{
+  "$schema": "https://github.com/litlfred/qou/blob/main/folio-assistant/folio-config-schema.json",
+  "contentType": "paper",
+  "adapter": "paper",
+  "adapterModule": "./adapters/paper/index.ts",
+  "feedbackDir": "folio-assistant/feedback",
+  "skills": ".claude/skills/local",
+  "viewer": {
+    "dir": "folio-assistant/viewer",
+    "port": 8080
+  },
+  "simulators": {
+    "dir": "folio-assistant/simulators",
+    "pyodideCache": true
+  }
+}
