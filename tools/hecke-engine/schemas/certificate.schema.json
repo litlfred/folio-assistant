@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://folio.litlfred.org/schemas/hecke-engine/certificate.schema.json",
+  "title": "Hecke-engine witness certificate",
+  "description": "Output of tools/hecke-engine/ binaries. Minimal variant carries f64 trace summaries; full variant adds sparse Laurent polynomials in t = q^{1/2}.",
+  "type": "object",
+  "required": ["isotope", "engine"],
+  "properties": {
+    "isotope": {
+      "type": "object",
+      "required": ["z", "n", "a"],
+      "properties": {
+        "z": { "type": "integer", "minimum": 0 },
+        "n": { "type": "integer", "minimum": 0 },
+        "a": { "type": "integer", "minimum": 0 },
+        "symbol": { "type": "string" },
+        "name": { "type": "string" },
+        "parity": { "type": ["string", "integer", "null"] }
+      }
+    },
+    "engine": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "commit": { "type": ["string", "null"] },
+        "binary": { "type": ["string", "null"] }
+      }
+    },
+    "tr_alt": { "$ref": "#/$defs/SparsePoly" },
+    "net": { "$ref": "#/$defs/SparsePoly" },
+    "observable": { "$ref": "#/$defs/SparsePoly" },
+    "coral": { "$ref": "#/$defs/SparsePoly" },
+    "pn_count": { "type": ["integer", "null"], "minimum": 0 },
+    "f_pauli_f64": { "type": ["number", "null"] },
+    "tr_alt_f64": { "type": ["number", "null"] },
+    "net_f64": { "type": ["number", "null"] },
+    "observable_f64": { "type": ["number", "null"] },
+    "coral_f64": { "type": ["number", "null"] },
+    "strands": {
+      "type": "array",
+      "items": { "type": ["object", "null"] }
+    },
+    "total_words": { "type": ["integer", "null"], "minimum": 0 },
+    "max_coeff_log10": { "type": ["number", "null"] },
+    "elapsed_seconds": { "type": ["number", "null"], "minimum": 0 },
+    "computed_at": { "type": ["string", "null"] },
+    "jets": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/SparsePoly" }
+    }
+  },
+  "$defs": {
+    "SparsePoly": {
+      "type": "object",
+      "description": "Sparse Laurent polynomial in t = q^{1/2}. `terms` is an array of [exponent, coefficient_decimal_string] pairs.",
+      "required": ["terms"],
+      "properties": {
+        "terms": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              { "type": "integer" },
+              { "type": ["string", "integer", "number"] }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          }
+        },
+        "denominator": { "type": ["integer", "string", "null"] }
+      }
+    }
+  }
+}
