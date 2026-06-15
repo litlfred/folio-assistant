@@ -43,7 +43,10 @@ jobs:
       # ── Step 0: Set PYTHONPATH for qou_lib shared library ──────────
       - name: Configure Python path
         run: |
-          echo "PYTHONPATH=${{ github.workspace }}/.github/scripts" >> "$GITHUB_ENV"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "PYTHONPATH<<$EOF" >> "$GITHUB_ENV"
+          echo "${{ github.workspace }}/.github/scripts" >> "$GITHUB_ENV"
+          echo "$EOF" >> "$GITHUB_ENV"
           git config --global --add safe.directory "${{ github.workspace }}"
 
       # ── Step 1: Build content objects → LaTeX chapters ─────────────
@@ -117,7 +120,10 @@ jobs:
           echo "Total sorry occurrences: ${SORRY_COUNT}"
           if [ "${SORRY_COUNT}" -gt 0 ]; then
             echo "⚠️  ${SORRY_COUNT} sorry markers remain — Formalizer review recommended"
-            echo "SORRY_COUNT=${SORRY_COUNT}" >> "$GITHUB_ENV"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "SORRY_COUNT<<$EOF" >> "$GITHUB_ENV"
+            echo "${SORRY_COUNT}" >> "$GITHUB_ENV"
+            echo "$EOF" >> "$GITHUB_ENV"
           fi
 
       # ── Step 9: Commit updated manifests ───────────────────────────

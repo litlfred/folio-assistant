@@ -78,9 +78,15 @@ jobs:
         run: |
           git add -A .claude/skills/
           if git diff --cached --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "changed<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "false" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
           else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "changed<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "true" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Commit and push

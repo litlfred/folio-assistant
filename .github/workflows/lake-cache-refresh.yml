@@ -57,8 +57,14 @@ jobs:
         run: |
           toolchain=$(grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' lean-toolchain | head -1 || cat lean-toolchain | tr -d ' \n' | head -c 20)
           slug=$(echo "$toolchain" | tr '.' '-' | tr -cd 'a-zA-Z0-9-')
-          echo "toolchain-slug=$slug" >> "$GITHUB_OUTPUT"
-          echo "orphan-branch=lake-cache/${{ matrix.package }}-$slug" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "toolchain-slug<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$slug" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "orphan-branch<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "lake-cache/${{ matrix.package }}-$slug" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Resolve Lake root for package
         id: paths
@@ -70,7 +76,10 @@ jobs:
             ugb)     root="content/unital-groebner-bases/lean" ;;
             fred2005) root="content/fred2005-formal-groups/lean" ;;
           esac
-          echo "lake-root=$root" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "lake-root<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$root" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Build the package (populates .lake/)
         if: env.SKIP_REFRESH != '1'

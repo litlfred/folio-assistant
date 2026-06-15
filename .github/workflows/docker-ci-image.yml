@@ -38,7 +38,10 @@ jobs:
         id: toolchain
         run: |
           TC=$(cat content/quantum-observable-universe/lean/lean-toolchain)
-          echo "version=${TC}" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "version<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "${TC}" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
           echo "Lean toolchain: ${TC}"
 
       - name: Set up Docker Buildx

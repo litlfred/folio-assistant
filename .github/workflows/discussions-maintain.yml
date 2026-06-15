@@ -44,9 +44,15 @@ jobs:
         id: gate
         run: |
           if compgen -G "human-agent-discussions/*/*/metadata.json" > /dev/null; then
-            echo "have_sessions=true" >> "$GITHUB_OUTPUT"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "have_sessions<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "true" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
           else
-            echo "have_sessions=false" >> "$GITHUB_OUTPUT"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "have_sessions<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "false" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
             echo "No archived sessions yet — nothing to maintain."
           fi
 

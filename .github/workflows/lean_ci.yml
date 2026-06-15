@@ -158,7 +158,10 @@ jobs:
             content/fred2005-formal-groups/lean/Fred2005 \
             --include='*.lean' 2>/dev/null \
             | awk -F: '{s+=$2} END {print s+0}')
-          echo "count=${COUNT}" >> "$GITHUB_OUTPUT"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "count<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "${COUNT}" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
           echo "Total sorry occurrences (across all paper packages): ${COUNT}"
 
       - name: Check for type errors
@@ -313,10 +316,16 @@ jobs:
           # workspace.  `lake build <lib>:docs` is a no-op if doc-gen4
           # is not wired in; we fall back to a static source browser.
           if lake build QOU:docs UGB:docs Fred2005:docs 2>&1 | tee docgen.log; then
-            echo "docgen=true" >> "$GITHUB_OUTPUT"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "docgen<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "true" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
             echo "✅ doc-gen4 succeeded"
           else
-            echo "docgen=false" >> "$GITHUB_OUTPUT"
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "docgen<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "false" >> "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
             echo "⚠️  doc-gen4 not available — generating source browser fallback"
           fi
         continue-on-error: true
