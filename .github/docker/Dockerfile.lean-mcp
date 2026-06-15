@@ -1,0 +1,93 @@
+# DEPRECATED — Use scripts/mcp-server/Dockerfile (paper-assistant) instead.
+#
+# The unified paper-assistant image now serves as both the MCP server
+# and the CI toolbox. This slim MCP-only image is kept for reference.
+#
+# Original description:
+# Lean MCP Server Docker Image — multi-stage build with baked-in oleans.
+# Auth: FOLIO_API_TOKEN env var for bearer token auth.
+# Transport: Streamable HTTP on port 8080.
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 1: Build — install toolchain, fetch deps, compile everything
+# ═══════════════════════════════════════════════════════════════════
+FROM ubuntu:24.04 AS builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH="/root/.elan/bin:/root/.local/bin:${PATH}"
+
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+      ca-certificates curl git build-essential cmake libgmp-dev \
+      python3 python3-pip python3-venv ripgrep \
+      singular singular-doc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install uv (for lean-lsp-mcp)
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Copy only toolchain + lakefile first (cache-friendly layer ordering)
+WORKDIR /build
+COPY content/quantum-observable-universe/lean/lean-toolchain lean/lean-toolchain
+COPY content/quantum-observable-universe/lean/lakefile.toml lean/lakefile.toml
+COPY content/quantum-observable-universe/lean/lake-manifest.json lean/lake-manifest.json
+
+# Install elan + pinned toolchain
+RUN curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+      | sh -s -- -y --default-toolchain none \
+    && TOOLCHAIN=$(cat lean/lean-toolchain | tr -d '[:space:]') \
+    && elan toolchain install "$TOOLCHAIN" || true
+
+# Fetch all Lake dependencies
+WORKDIR /build/lean
+RUN lake update || true
+
+# Fetch Mathlib oleans cache
+RUN lake exe cache get || true
+
+# Copy the actual Lean source and build
+COPY content/quantum-observable-universe/lean/ /build/lean/
+RUN lake build || true
+
+# Pre-cache lean-lsp-mcp so uvx doesn't download on first run
+RUN uvx lean-lsp-mcp --help > /dev/null 2>&1 || true
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 2: Runtime — slim image with only what's needed to serve
+# ═══════════════════════════════════════════════════════════════════
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH="/root/.elan/bin:/root/.local/bin:${PATH}"
+
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+      ca-certificates curl git libgmp10 python3 python3-venv ripgrep \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy elan + toolchain from builder
+COPY --from=builder /root/.elan /root/.elan
+
+# Copy uv from builder
+COPY --from=builder /root/.local /root/.local
+
+# Copy the built Lean project (with oleans baked in)
+COPY --from=builder /build/lean /workspace/lean
+
+# Copy uv cache (pre-cached lean-lsp-mcp)
+COPY --from=builder /root/.cache/uv /root/.cache/uv
+
+WORKDIR /workspace/lean
+
+# lean-lsp-mcp config
+ENV LEAN_LSP_MCP_HOST=0.0.0.0
+ENV LEAN_LSP_MCP_PORT=8080
+# FOLIO_API_TOKEN must be set at runtime for auth
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+  CMD curl -f http://localhost:8080/mcp || exit 1
+
+ENTRYPOINT ["uvx", "lean-lsp-mcp", \
+  "--transport", "streamable-http", \
+  "--host", "0.0.0.0", \
+  "--port", "8080"]

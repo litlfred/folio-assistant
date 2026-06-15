@@ -1,0 +1,70 @@
+# DEPRECATED — Use scripts/mcp-server/Dockerfile (paper-assistant) instead.
+#
+# All CI workflows now use the unified paper-assistant image which includes
+# everything this image had plus Lean 4, GitHub CLI, and more.
+# See build-lean-mcp.yml for the build workflow.
+#
+# This file is kept for reference only. The build-latex-image.yml workflow
+# that builds this image has been disabled.
+#
+# Original description:
+# QOU LaTeX Build Docker Image
+# Pre-installs TeX Live, pandoc, latexdiff, graphviz, Python, and Bun
+# so the publish.yml workflow skips expensive apt-get install steps.
+
+FROM ubuntu:24.04
+
+LABEL org.opencontainers.image.source="https://github.com/litlfred/qou"
+LABEL org.opencontainers.image.description="LaTeX build image for the QOU paper"
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# ── System packages ────────────────────────────────────────────────────
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+      # Build essentials
+      ca-certificates curl git unzip \
+      # Python (for CI scripts)
+      python3 python3-pip python3-venv \
+      # TeX Live — matches publish.yml requirements
+      texlive texlive-latex-extra texlive-fonts-recommended texlive-bibtex-extra \
+      texlive-science texlive-extra-utils latexmk biber \
+      # Document tools
+      pandoc latexdiff graphviz jq \
+    && rm -rf /var/lib/apt/lists/*
+
+# ── Install ccicons from CTAN (was in texlive-fonts-extra) ───────────
+RUN mkdir -p /tmp/ccicons && cd /tmp/ccicons \
+    && curl -sL https://mirrors.ctan.org/install/fonts/ccicons.tds.zip -o ccicons.tds.zip \
+    && unzip -q ccicons.tds.zip -d /usr/local/share/texmf \
+    && texhash \
+    && updmap-sys --enable Map=ccicons.map \
+    && rm -rf /tmp/ccicons
+
+# ── Python packages ──────────────────────────────────────────────────
+RUN pip3 install --break-system-packages --no-cache-dir \
+      requests>=2.32
+
+# ── Bun (for content pipeline) ───────────────────────────────────────
+RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/root/.bun/bin:${PATH}"
+
+# ── Pre-warm TeX font/format caches ─────────────────────────────────
+# Running a minimal compile ensures font maps, format files, and
+# kpathsea databases are fully built inside the image.
+RUN mkdir -p /tmp/texwarm && \
+    printf '\\documentclass{report}\n\\usepackage[utf8]{inputenc}\n\\usepackage[T1]{fontenc}\n\\usepackage{amsmath,amssymb,amsthm,mathtools}\n\\usepackage{hyperref}\n\\usepackage{graphicx}\n\\usepackage{cite}\n\\usepackage{ccicons}\n\\usepackage{titlesec}\n\\usepackage{tikz}\n\\usepackage{tikz-cd}\n\\usepackage[dvipsnames]{xcolor}\n\\begin{document}\nHello.\n\\end{document}\n' \
+      > /tmp/texwarm/warm.tex && \
+    cd /tmp/texwarm && \
+    pdflatex -interaction=nonstopmode warm.tex && \
+    rm -rf /tmp/texwarm
+
+# Verify installations
+RUN pdflatex --version | head -1 && \
+    latexmk --version | head -1 && \
+    biber --version | head -1 && \
+    pandoc --version | head -1 && \
+    latexdiff --version 2>&1 | head -1 && \
+    bun --version && \
+    python3 --version
+
+WORKDIR /workspace
