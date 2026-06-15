@@ -16,7 +16,8 @@ import {
   discoverDependencies,
   findLeanFiles,
 } from "./helpers";
-import { LEAN_PACKAGES } from "../../folio-assistant/schemas/lean-packages";
+
+import { LEAN_PACKAGES } from "../../schemas/lean-packages.js";
 
 // ── Root workspace ──────────────────────────────────────────────
 
