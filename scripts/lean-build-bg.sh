@@ -32,6 +32,28 @@ set -uo pipefail
 # Shared Lean env helpers (sets REPO_ROOT, LEAN_DIR, PATH, has())
 source "$(dirname "$0")/lib/lean-env.sh"
 
+# Workspace lock: only 1 build per workspace. If locked, exit.
+exec 201>"$REPO_ROOT/.lake-build.lock"
+if ! flock -n 201; then
+  echo "lean-build-bg: Build already running in this workspace. Skipping."
+  exit 0
+fi
+
+# Global concurrency limit: max 3 globally. If full, exit.
+got_global=0
+for i in 1 2 3; do
+  exec 200>"/tmp/qou-lean-build-$i.lock"
+  if flock -n 200; then
+    got_global=$i
+    break
+  fi
+done
+
+if [ "$got_global" -eq 0 ]; then
+  echo "lean-build-bg: Global limit of 3 builds reached. Skipping."
+  exit 0
+fi
+
 STATUS_FILE="/tmp/qou-lean-build-status.json"
 LOG_DIR="/tmp"
 TIMING_FILE="/tmp/qou-lean-build-timing.txt"

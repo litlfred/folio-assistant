@@ -23,6 +23,10 @@
 
 set -uo pipefail
 
+# Acquire global lock to prevent parallel downloads/extracts across agent workspaces
+exec 200>"/tmp/qou-toolchain.lock"
+flock 200
+
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TOOLCHAIN_FILE="$REPO_ROOT/lean-toolchain"
 ELAN_HOME="${ELAN_HOME:-$HOME/.elan}"
