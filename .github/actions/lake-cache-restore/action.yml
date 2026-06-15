@@ -1,0 +1,181 @@
+name: 'Lake cache restore (hybrid)'
+description: |
+  Restore Lake `.lake/` build artifacts via a 3-tier fallback chain:
+    1. actions/cache (fastest; warm-runner hit ~30s)
+    2. orphan branch lake-cache/<pkg>-<lean-toolchain-short> (durable; ~2-3 min)
+    3. `lake exe cache get` (Mathlib upstream Reservoir; ~1-2 min, Mathlib-only)
+  The composite reports which tier hit, and any later workflow step
+  can run `lake build` on whatever artifacts arrived.
+
+inputs:
+  package:
+    description: 'Lake package short name (mathlib | qou | ugb | fred2005)'
+    required: true
+  toolchain-file:
+    description: 'Path to lean-toolchain file (used for cache key)'
+    required: false
+    default: 'lean-toolchain'
+  lake-root:
+    description: 'Path to the Lake root directory (containing lakefile.toml + .lake/)'
+    required: false
+    default: '.'
+  manifest-files:
+    description: 'Newline-separated list of lake-manifest.json or lakefile paths for hashing'
+    required: false
+    default: |
+      lakefile.toml
+      lean-toolchain
+
+outputs:
+  cache-hit:
+    description: 'true if any cache tier restored artifacts'
+    value: ${{ steps.summary.outputs.cache-hit }}
+  source:
+    description: 'actions-cache | orphan-branch | mathlib-upstream | none'
+    value: ${{ steps.summary.outputs.source }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Compute cache keys
+      id: keys
+      shell: bash
+      env:
+        MANIFEST_FILES: ${{ inputs.manifest-files }}
+        TOOLCHAIN_FILE: ${{ inputs.toolchain-file }}
+        PACKAGE: ${{ inputs.package }}
+      run: |
+        # Read inputs from env vars (NOT from $-brace template
+        # interpolation into the run block — that would inject the
+        # multi-line manifest-files literal into the script and
+        # corrupt it). Per PR #1097 review (Gemini + Copilot).
+        set -euo pipefail
+
+        if [ ! -f "$TOOLCHAIN_FILE" ]; then
+          echo "::error::Toolchain file '$TOOLCHAIN_FILE' not found"
+          exit 1
+        fi
+        toolchain=$(grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' "$TOOLCHAIN_FILE" | head -1 \
+                    || tr -d ' \n' < "$TOOLCHAIN_FILE" | head -c 20)
+        slug=$(echo "$toolchain" | tr '.' '-' | tr -cd 'a-zA-Z0-9-')
+        echo "toolchain-slug=$slug" >> "$GITHUB_OUTPUT"
+        echo "orphan-branch=lake-cache/${PACKAGE}-$slug" >> "$GITHUB_OUTPUT"
+
+        # Validate every manifest file exists. A missing/unreadable
+        # file would silently produce a constant hash and cause
+        # unrelated cache entries to collide (per PR #1097 review).
+        mapfile -t files < <(echo "$MANIFEST_FILES" | sed '/^[[:space:]]*$/d' | awk '{$1=$1};1')
+        if [ ${#files[@]} -eq 0 ]; then
+          echo "::error::manifest-files input is empty"
+          exit 1
+        fi
+        for f in "${files[@]}"; do
+          if [ ! -f "$f" ]; then
+            echo "::error::manifest file '$f' does not exist"
+            exit 1
+          fi
+        done
+
+        # Hash all manifest files, then re-hash the digest list down
+        # to a short 16-hex prefix for the cache key.
+        manifest_hash=$(sha256sum "${files[@]}" | sha256sum | head -c 16)
+        echo "ac-key=lake-cache-${PACKAGE}-$slug-$manifest_hash" >> "$GITHUB_OUTPUT"
+        echo "ac-restore-key=lake-cache-${PACKAGE}-$slug-" >> "$GITHUB_OUTPUT"
+
+    - name: Tier 1 — actions/cache lookup
+      id: tier1
+      uses: actions/cache@v4
+      with:
+        path: |
+          ${{ inputs.lake-root }}/.lake
+        key: ${{ steps.keys.outputs.ac-key }}
+        restore-keys: |
+          ${{ steps.keys.outputs.ac-restore-key }}
+
+    - name: Tier 2 — fetch orphan-branch cache (only if Tier 1 missed)
+      id: tier2
+      if: steps.tier1.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        BRANCH: ${{ steps.keys.outputs.orphan-branch }}
+        LAKE_ROOT: ${{ inputs.lake-root }}
+      run: |
+        # NOTE: do NOT use `set -e` here — every failure case below
+        # needs to fall through to Tier 3 (write hit=false and exit 0),
+        # not abort the action. We check exit codes explicitly.
+        # Per PR #1097 review (Gemini + Copilot).
+        echo "Tier 1 missed; trying orphan branch: $BRANCH"
+
+        # Shallow-fetch only the cache branch (no history). Tolerate
+        # fetch failure (e.g. branch does not exist yet on a first run).
+        if ! git fetch --depth=1 origin "$BRANCH" 2>&1; then
+          echo "Orphan branch $BRANCH does not exist — falling through to Tier 3"
+          echo "hit=false" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        # Extract the .lake/ tree from the orphan-branch tip into a
+        # temp dir. `git archive` exits non-zero if the path does not
+        # exist in the tree; tolerate that to allow fall-through.
+        tmp=$(mktemp -d)
+        archive_ok=0
+        if git archive --format=tar "FETCH_HEAD" -- '.lake' 2>/dev/null \
+              | tar -xC "$tmp" 2>/dev/null; then
+          archive_ok=1
+        fi
+
+        if [ "$archive_ok" -eq 1 ] && [ -d "$tmp/.lake" ]; then
+          mkdir -p "$LAKE_ROOT"
+          # Replace the destination atomically — `cp -r src dst` when
+          # dst exists creates dst/src nesting (i.e. `.lake/.lake/`),
+          # which corrupts the cache restore. Per PR #1097 review.
+          rm -rf "$LAKE_ROOT/.lake"
+          mv "$tmp/.lake" "$LAKE_ROOT/.lake"
+          rm -rf "$tmp"
+          echo "Restored .lake/ from orphan branch $BRANCH"
+          echo "hit=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "Orphan branch $BRANCH missing/corrupt .lake/ tree — falling through"
+          rm -rf "$tmp"
+          echo "hit=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Tier 3 — Mathlib upstream cache (lake exe cache get)
+      id: tier3
+      if: ${{ steps.tier1.outputs.cache-hit != 'true' && steps.tier2.outputs.hit != 'true' && inputs.package == 'mathlib' }}
+      shell: bash
+      working-directory: ${{ inputs.lake-root }}
+      run: |
+        # `lake exe cache get` is the Mathlib upstream Reservoir fetch.
+        # A transient network failure should not crash the whole
+        # composite — fall through to a full rebuild (the workflow's
+        # later `lake build` step will handle it). Per PR #1097 review.
+        echo "Tier 2 missed; falling back to Mathlib upstream cache"
+        if lake exe cache get; then
+          echo "hit=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "::warning::lake exe cache get failed — falling through to full rebuild"
+          echo "hit=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Report cache source
+      id: summary
+      shell: bash
+      run: |
+        if [ "${{ steps.tier1.outputs.cache-hit }}" = "true" ]; then
+          echo "cache-hit=true"   >> "$GITHUB_OUTPUT"
+          echo "source=actions-cache" >> "$GITHUB_OUTPUT"
+          echo "::notice::Lake cache restored from actions/cache (Tier 1)"
+        elif [ "${{ steps.tier2.outputs.hit }}" = "true" ]; then
+          echo "cache-hit=true" >> "$GITHUB_OUTPUT"
+          echo "source=orphan-branch" >> "$GITHUB_OUTPUT"
+          echo "::notice::Lake cache restored from orphan branch (Tier 2)"
+        elif [ "${{ steps.tier3.outputs.hit }}" = "true" ]; then
+          echo "cache-hit=true" >> "$GITHUB_OUTPUT"
+          echo "source=mathlib-upstream" >> "$GITHUB_OUTPUT"
+          echo "::notice::Lake cache restored from Mathlib upstream Reservoir (Tier 3)"
+        else
+          echo "cache-hit=false" >> "$GITHUB_OUTPUT"
+          echo "source=none" >> "$GITHUB_OUTPUT"
+          echo "::warning::No Lake cache available — full rebuild required (~30+ min)"
+        fi

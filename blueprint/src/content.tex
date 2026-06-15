@@ -1,0 +1,1192 @@
+% ═══════════════════════════════════════════════════════════════════════
+% QOU Formalization Blueprint — content.tex
+%
+% This file maps every theorem-like object in the manuscript to its
+% Lean 4 declaration via \lean{} macros and records dependency edges
+% via \uses{}.  Objects whose Lean proof is sorry-free carry \leanok.
+%
+% Convention:
+%   - Labels match the manuscript's \label{} tags exactly.
+%   - Lean declarations live in the QOU.* namespace.
+%   - \uses{} lists the labels this object depends on.
+% ═══════════════════════════════════════════════════════════════════════
+
+\chapter{Quantum Observable Universe (Chapter 1)}
+
+% ── Frobenius–Hopf Data ─────────────────────────────────────────
+\begin{definition}[Frobenius–Hopf Data]
+  \label{def:frobenius-hopf-data}
+  \lean{QOU.FrobeniusHopfData}
+  An object $A$ in a monoidal category $\mathcal{C}$ equipped with
+  Hopf algebra structure $(\mu,\eta,\Delta,\varepsilon,S)$,
+  Frobenius form $\lambda$, and coevaluation $\tilde\eta$
+  satisfying the snake identities and Frobenius relation
+  $\mu \circ \Delta = (\Delta \triangleright A) \circ \alpha \circ (A \triangleleft \mu)$.
+\end{definition}
+
+% ── Quantum Universe ────────────────────────────────────────────
+\begin{definition}[Quantum Universe]
+  \label{def:quantum-universe}
+  \lean{QOU.QuantumUniverse}
+  \uses{def:frobenius-hopf-data}
+  A quadruple $(\mathcal{C}, A, \omega, q)$ where $\mathcal{C}$ is a
+  $k$-linear rigid monoidal category, $A$ is a Frobenius–Hopf object,
+  $\omega$ is a fibre functor, and $q \in k^\times$.
+\end{definition}
+
+% ── Quantum Observable Universe ─────────────────────────────────
+\begin{definition}[Quantum Observable Universe]
+  \label{def:quantum-observable-universe}
+  \lean{QOU.QuantumObservableUniverse}
+  \uses{def:quantum-universe}
+  A quantum universe with $\operatorname{Hom}_{\mathcal{C}}(\mathbf{1}, \mathrm{Ad}(A))$
+  trivial (adjoint vanishing).
+\end{definition}
+
+% ── Tannaka–Krein Gauge Group ───────────────────────────────────
+\begin{definition}[Quantum Gauge Group (Tannaka–Krein)]
+  \label{def:gauge-group-categorical}
+  \lean{QOU.QuantumUniverse.gaugeGroup}
+  \uses{def:quantum-universe}
+  $G_q = \mathrm{Aut}^{\otimes}(\omega)$ via Tannaka–Krein reconstruction.
+\end{definition}
+
+% ── Categorical Hodge Involution ────────────────────────────────
+\begin{definition}[Categorical Hodge Involution]
+  \label{def:cat-hodge-involution}
+  \lean{QOU.CatHodgeInvolution}
+  An involutive endomorphism $\star : X \to X$ in a category with
+  $\star \circ \star = \mathrm{id}_X$.
+\end{definition}
+
+% ── Hodge Involution (concrete) ─────────────────────────────────
+\begin{definition}[Hodge Involution]
+  \label{def:hodge-involution}
+  \lean{QOU.HodgeInvolution}
+  An involution $\star : V \to V$ on a type, with self-dual
+  ($\star v = v$) and anti-self-dual ($\star v = -v$) predicates.
+\end{definition}
+
+% ── CR Manifold Data ────────────────────────────────────────────
+\begin{definition}[CR Manifold Data]
+  \label{def:c-quantum-universe}
+  \lean{QOU.CRManifoldData}
+  A tuple $(M, \varTheta, n, r, s, \xi)$ with CR dimension $n \ge 1$,
+  Levi signature $(r,s)$, contact form $\varTheta$, and Reeb field $\xi$.
+\end{definition}
+
+% ── ℂ Quantum Observable Universe ───────────────────────────────
+\begin{definition}[$\mathbb{C}$ Quantum Observable Universe]
+  \label{def:c-quantum-observable-universe}
+  \lean{QOU.CQuantumObservableUniverse}
+  \uses{def:c-quantum-universe}
+  CR manifold data with $H^0(M,\mathrm{Ad}(P))$ and $\Gamma_c(M,\mathcal{S})$ trivial.
+\end{definition}
+
+% ── Instanton Connection ────────────────────────────────────────
+\begin{definition}[Instanton Connection]
+  \label{def:instanton}
+  \lean{QOU.InstantonConnection}
+  \uses{def:c-quantum-universe, def:hodge-involution}
+  A connection on $P$ that minimises the Yang–Mills functional.
+  Carries parallel adjoint sections and a Hodge star when $n=2$.
+\end{definition}
+
+% ── Irreducibility ──────────────────────────────────────────────
+\begin{definition}[Irreducible Connection]
+  \label{def:irreducible-connection}
+  \lean{QOU.InstantonConnection.IsIrreducible}
+  \uses{def:instanton}
+  A connection whose covariant-constant adjoint sections are trivial.
+\end{definition}
+
+\begin{lemma}[Irreducibility of the Connection]
+  \label{lem:irreducible-connection}
+  \lean{QOU.irreducible_connection}
+  \leanok
+  \uses{def:c-quantum-observable-universe, def:instanton, def:irreducible-connection}
+  In a $\mathbb{C}$ quantum observable universe, every instanton
+  connection is irreducible.
+\end{lemma}
+
+% ── Self-Duality ────────────────────────────────────────────────
+\begin{proposition}[Self-Duality of the Curvature]
+  \label{prop:self-dual-curvature}
+  \lean{QOU.self_dual_curvature}
+  \uses{def:c-quantum-observable-universe, def:instanton, def:hodge-involution}
+  When $n = 2$, the curvature $F_A|_H$ is self-dual:
+  $\star_H F_A|_H = F_A|_H$.
+\end{proposition}
+
+% ── Main Commutative Diagram ────────────────────────────────────
+\begin{proposition}[Main Commutative Diagram]
+  \label{prop:main-commutative-diagram}
+  \lean{QOU.main_commutative_diagram}
+  \uses{def:c-quantum-observable-universe, def:instanton, def:substrate-parameter}
+  The diagram relating the Euler–Lagrange operator, jet evaluation,
+  substrate coupling, and parallel transport commutes.
+\end{proposition}
+
+% ── Substrate Parameter ─────────────────────────────────────────
+\begin{definition}[Substrate Parameter]
+  \label{def:substrate-parameter-lean}
+  \lean{QOU.SubstrateParameter}
+  A field $q : M \to \mathbb{R}$ with $q(p) \ge 1$ for all $p$.
+\end{definition}
+
+% ── Quantum Planck Constant ─────────────────────────────────────
+\begin{definition}[Quantum Planck Constant]
+  \label{def:quantum-planck-constant}
+  \lean{QOU.quantumPlanckConstant}
+  \uses{def:substrate-parameter-lean}
+  $\hbar_q(p) = 1 - q(p)^{-1}$.
+\end{definition}
+
+\begin{theorem}[$\hbar_q \ge 0$]
+  \label{thm:planck-nonneg}
+  \lean{QOU.quantumPlanckConstant_nonneg}
+  \leanok
+  \uses{def:quantum-planck-constant}
+  $\hbar_q(p) \ge 0$ for all $p$.
+\end{theorem}
+
+\begin{theorem}[$\hbar_q < 1$]
+  \label{thm:planck-lt-one}
+  \lean{QOU.quantumPlanckConstant_lt_one}
+  \leanok
+  \uses{def:quantum-planck-constant}
+  $\hbar_q(p) < 1$ for all $p$.
+\end{theorem}
+
+% ── Quantum Gauge Group (ℂ realisation) ─────────────────────────
+\begin{definition}[Quantum Gauge Group ($\mathbb{C}$ realisation)]
+  \label{def:quantum-gauge-group-lean}
+  \lean{QOU.QuantumGaugeGroup}
+  \uses{def:substrate-parameter-lean}
+  The family $\{SU_{q(p)}(2)\}_{p \in M}$.
+\end{definition}
+
+% ── Reeb Decomposition ──────────────────────────────────────────
+\begin{definition}[Reeb Decomposition]
+  \label{def:reeb-decomposition}
+  \lean{QOU.ReebDecomposition}
+  $\alpha = \alpha_H + \varTheta \wedge \iota_\xi \alpha$.
+\end{definition}
+
+% ── q-Harmonic Form ─────────────────────────────────────────────
+\begin{definition}[$q$-Harmonic Form (Particle)]
+  \label{def:q-harmonic-form}
+  \lean{QOU.QHarmonicForm}
+  \uses{def:reeb-decomposition}
+  A section in $\ker \Delta_q$.
+\end{definition}
+
+% ── Fermion / Boson ─────────────────────────────────────────────
+\begin{definition}[Fermion]
+  \label{def:fermion}
+  \lean{QOU.Fermion}
+  \uses{def:q-harmonic-form}
+  A $q$-harmonic form with non-trivial vertical component.
+\end{definition}
+
+\begin{definition}[Boson]
+  \label{def:boson}
+  \lean{QOU.Boson}
+  \uses{def:q-harmonic-form}
+  A $q$-harmonic form that is purely horizontal.
+\end{definition}
+
+\begin{theorem}[Boson horizontal identity]
+  \label{thm:boson-total-eq-horizontal}
+  \lean{QOU.Boson.total_eq_horizontal}
+  \leanok
+  \uses{def:boson}
+  A boson's total form equals its horizontal component.
+\end{theorem}
+
+% ── q-Deformed Operators ────────────────────────────────────────
+\begin{definition}[$q$-Deformed Exterior Derivative]
+  \label{def:q-ext-deriv}
+  \lean{QOU.qExtDeriv}
+  \uses{def:substrate-parameter-lean}
+  $d_q \alpha = q^{-1}\,d\alpha + (1-q^{-1})\,\varTheta \wedge L_\xi \alpha$.
+\end{definition}
+
+\begin{definition}[$q$-Deformed Lie Bracket]
+  \label{def:q-lie-bracket}
+  \lean{QOU.qLieBracket}
+  \uses{def:substrate-parameter-lean}
+  $[V,W]_q = q^{-1}[V,W] + (1-q^{-1})(\varTheta(V)L_\xi W - \varTheta(W)L_\xi V)$.
+\end{definition}
+
+\begin{definition}[$q$-Deformed Connection]
+  \label{def:q-connection}
+  \lean{QOU.qConnection}
+  \uses{def:substrate-parameter-lean}
+  $A_q = q^{-1}A + (1-q^{-1})\iota_\xi A \cdot \varTheta$.
+\end{definition}
+
+\begin{definition}[$q$-Deformed Reeb Vector Field]
+  \label{def:q-reeb-vector-field}
+  \lean{QOU.qReebVectorField}
+  \uses{def:substrate-parameter-lean}
+  $\xi_q(f) = q^{-1}\xi(f) + (1-q^{-1})[\xi, X_f]_q$.
+\end{definition}
+
+\begin{definition}[$q$-Deformed Reeb Flow]
+  \label{def:q-reeb-flow}
+  \lean{QOU.QReebFlow}
+  One-parameter family $\phi^q_t$ with $\phi^q_0 = \mathrm{id}$.
+\end{definition}
+
+\begin{definition}[$q$-Torsion Leaf]
+  \label{def:q-torsion-leaf}
+  \lean{QOU.QTorsionLeaf}
+  \uses{def:q-reeb-flow}
+  A maximal integral submanifold of $H$ invariant under $\phi^q_t$.
+\end{definition}
+
+% ── Classical Limits ────────────────────────────────────────────
+\begin{theorem}[Classical Limit of $\hbar_q$]
+  \label{thm:planck-classical-limit}
+  \lean{QOU.planck_classical_limit}
+  \leanok
+  \uses{def:quantum-planck-constant}
+  At $q = 1$, $\hbar_q = 0$.
+\end{theorem}
+
+\begin{theorem}[Classical Limit of $d_q$]
+  \label{thm:q-ext-deriv-classical}
+  \lean{QOU.qExtDeriv_classical}
+  \leanok
+  \uses{def:q-ext-deriv}
+  At $q = 1$, $d_q = d$.
+\end{theorem}
+
+\begin{theorem}[Classical Limit of $[\cdot,\cdot]_q$]
+  \label{thm:q-lie-bracket-classical}
+  \lean{QOU.qLieBracket_classical}
+  \leanok
+  \uses{def:q-lie-bracket}
+  At $q = 1$, $[\cdot,\cdot]_q = [\cdot,\cdot]$.
+\end{theorem}
+
+\begin{theorem}[Classical Limit of $A_q$]
+  \label{thm:q-connection-classical}
+  \lean{QOU.qConnection_classical}
+  \leanok
+  \uses{def:q-connection}
+  At $q = 1$, $A_q = A$.
+\end{theorem}
+
+
+\chapter{Core Algebraic Structures (Glossary)}
+
+% ── Frobenius-Hopf Object ──────────────────────────────────────────
+\begin{definition}[Frobenius-Hopf Object]
+  \label{def:frobenius-hopf}
+  \lean{QOU.Glossary.FrobeniusHopfObject}
+  An object $A$ in a rigid monoidal category equipped with a Hopf
+  algebra structure $(\mu, \eta, \Delta, \varepsilon, S)$ and a
+  Frobenius form $\lambda : A \to \mathbf{1}$ satisfying non-degeneracy.
+\end{definition}
+
+% ── Quantum Deformation Parameter ─────────────────────────────────
+\begin{definition}[Quantum Deformation Parameter]
+  \label{def:quantum-parameter}
+  \lean{QOU.Glossary.quantumParameter}
+  \uses{def:frobenius-hopf}
+  The parameter $q \in k^\times$ governing the Hopf algebra structure.
+  At $q = 1$ we recover the classical cocommutative case.
+\end{definition}
+
+% ── Fibre Functor ──────────────────────────────────────────────────
+\begin{definition}[Fibre Functor]
+  \label{def:fibre-functor}
+  \lean{QOU.Glossary.FibreFunctor}
+  An exact faithful $k$-linear monoidal functor
+  $\omega : \mathcal{C} \to \mathrm{Vect}_k$ used in Tannaka-Krein
+  reconstruction.
+\end{definition}
+
+% ── Quantum Gauge Group ───────────────────────────────────────────
+\begin{definition}[Quantum Gauge Group]
+  \label{def:quantum-gauge-group}
+  \lean{QOU.Glossary.QuantumGaugeGroup}
+  \uses{def:fibre-functor, def:quantum-parameter}
+  The quantum group $G_q = \mathrm{Aut}^{\otimes}(\omega)$ reconstructed
+  via Tannaka-Krein duality from the fibre functor.
+\end{definition}
+
+% ── CR Manifold ────────────────────────────────────────────────────
+\begin{definition}[CR Manifold Structure]
+  \label{def:cr-manifold}
+  \lean{QOU.Glossary.CRManifold}
+  A pseudo-Hermitian structure with Levi distribution, Reeb vector
+  field, and Webster metric.
+\end{definition}
+
+% ── Bring's Surface ───────────────────────────────────────────────
+\begin{definition}[Bring's Surface]
+  \label{def:brings-surface}
+  \lean{QOU.Glossary.BringsSurface}
+  \uses{def:cr-manifold}
+  The maximally symmetric curve of genus 4, with Euler
+  characteristic $\chi = -6$, defined by $\sum_{j=0}^{4} x_j^k = 0$ for
+  $k = 1,2,3$ in $\mathbb{CP}^4$.  Its automorphism group is
+  $S_5$ (order $120$), the largest for any genus-$4$ curve.
+\end{definition}
+
+% ── Substrate Parameter ───────────────────────────────────────────
+\begin{definition}[Substrate Parameter]
+  \label{def:substrate-parameter}
+  \lean{QOU.Glossary.substrateParameter}
+  \uses{def:brings-surface, def:quantum-parameter}
+  $q(p) = 1 + |\langle L_\varTheta, F_A^+\rangle|(p)$ --- couples
+  chiral curvature to contact geometry on Bring's surface.
+\end{definition}
+
+% ── Jet Prolongation ──────────────────────────────────────────────
+\begin{definition}[Jet Prolongation]
+  \label{def:jet-prolongation}
+  \lean{QOU.Glossary.JetProlongation}
+  The first jet bundle $J^1 \mathcal{S}$ represented categorically by
+  $A \otimes \Omega^1(A)$.
+\end{definition}
+
+% ── Kähler Differentials ──────────────────────────────────────────
+\begin{definition}[Kähler Differentials]
+  \label{def:kahler-differentials}
+  \lean{QOU.Glossary.KahlerDifferentials}
+  \uses{def:jet-prolongation}
+  $\Omega^1(A) = \ker(m : A \otimes A \to A)$, the universal
+  first-order differential calculus.
+\end{definition}
+
+% ── Braid Group ───────────────────────────────────────────────────
+\begin{definition}[Braid Group $B_3$]
+  \label{def:braid-group}
+  \lean{QOU.Glossary.BraidGroup}
+  The braid group on 3 strands: $\langle \sigma_1, \sigma_2 \mid
+  \sigma_1\sigma_2\sigma_1 = \sigma_2\sigma_1\sigma_2 \rangle$.
+\end{definition}
+
+% ── Binary Dihedral Group ─────────────────────────────────────────
+\begin{definition}[Binary Dihedral Group]
+  \label{def:binary-dihedral}
+  \lean{QOU.Glossary.BinaryDihedralGroup}
+  \uses{def:braid-group}
+  $\mathrm{Dic}_3 \subset \mathrm{SU}(2)$ of order 12, lifting $S_3$
+  via the double cover $\mathrm{SU}(2) \to \mathrm{SO}(3)$.
+\end{definition}
+
+% ── F-Isocrystal ──────────────────────────────────────────────────
+\begin{definition}[F-Isocrystal]
+  \label{def:f-isocrystal}
+  \lean{QOU.Glossary.FIsocrystal}
+  A module over the Dieudonné ring $\mathbb{Q}_p\langle F, V\rangle
+  / (FV - p)$.
+\end{definition}
+
+
+\chapter{Knot Theory and Combinatorial Types}
+
+% ── Crossing Sign ────────────────────────────────────────────────
+\begin{definition}[Crossing Sign]
+  \label{def:crossing-sign}
+  \lean{QOU.KnotTheory.CrossingSign}
+  \leanok
+  Positive or negative crossing in a planar diagram.
+\end{definition}
+
+% ── Crossing ──────────────────────────────────────────────────────
+\begin{definition}[Crossing]
+  \label{def:crossing}
+  \lean{QOU.KnotTheory.Crossing}
+  \leanok
+  \uses{def:crossing-sign}
+  A crossing with four strand indices and a sign.
+\end{definition}
+
+% ── Planar Diagram ────────────────────────────────────────────────
+\begin{definition}[Planar Diagram Code]
+  \label{def:planar-diagram}
+  \lean{QOU.KnotTheory.PlanarDiagram}
+  \uses{def:crossing}
+  A combinatorial representation of a knot via a list of crossings,
+  each carrying four strand indices and a sign.
+\end{definition}
+
+% ── Crossing Count ────────────────────────────────────────────────
+\begin{definition}[Crossing Count]
+  \label{def:crossing-count}
+  \lean{QOU.KnotTheory.PlanarDiagram.crossingCount}
+  \leanok
+  \uses{def:planar-diagram}
+  The number of crossings in a planar diagram.
+\end{definition}
+
+% ── Writhe ────────────────────────────────────────────────────────
+\begin{definition}[Writhe]
+  \label{def:writhe}
+  \lean{QOU.KnotTheory.PlanarDiagram.writhe}
+  \leanok
+  \uses{def:planar-diagram, def:crossing-sign}
+  The writhe of a planar diagram: $\sum_i \operatorname{sign}(c_i)$.
+\end{definition}
+
+% ── Standard Knots ───────────────────────────────────────────────
+\begin{definition}[Unknot Diagram]
+  \label{def:unknot-diagram}
+  \lean{QOU.KnotTheory.unknot}
+  \leanok
+  \uses{def:planar-diagram}
+  The trivial knot: empty crossing list.
+\end{definition}
+
+\begin{definition}[Trefoil Diagram]
+  \label{def:trefoil-diagram}
+  \lean{QOU.KnotTheory.trefoil}
+  \leanok
+  \uses{def:planar-diagram}
+  The trefoil knot $3_1$: three positive crossings.
+\end{definition}
+
+\begin{definition}[Figure-Eight Diagram]
+  \label{def:figure-eight-diagram}
+  \lean{QOU.KnotTheory.figureEight}
+  \leanok
+  \uses{def:planar-diagram}
+  The figure-eight knot $4_1$: four crossings (alternating sign).
+\end{definition}
+
+% ── Trefoil Volume ───────────────────────────────────────────────
+\begin{definition}[Trefoil Volume]
+  \label{def:vol-trefoil}
+  \lean{QOU.KnotTheory.vol_trefoil}
+  \leanok
+  \uses{def:hyperbolic-volume}
+  $\mathrm{Vol}(3_1) = 0$ (torus knot, not hyperbolic).
+\end{definition}
+
+% ── QOU Identity ─────────────────────────────────────────────────
+\begin{definition}[QOU Identity]
+  \label{def:qou-identity}
+  \lean{QOU.KnotRegistry.QOUIdentity}
+  \leanok
+  Particle identity tags: electron, muon, tau, neutrino, photon.
+\end{definition}
+
+% ── Knot Entry ───────────────────────────────────────────────────
+\begin{definition}[Knot Registry Entry]
+  \label{def:knot-entry}
+  \lean{QOU.KnotRegistry.KnotEntry}
+  \leanok
+  \uses{def:planar-diagram, def:hyperbolic-volume, def:qou-identity}
+  A registry entry bundling a planar diagram, hyperbolic volume,
+  Alexander--Briggs name, and QOU particle identity.
+\end{definition}
+
+% ── Unknot ────────────────────────────────────────────────────────
+\begin{definition}[Unknot ($0_1$)]
+  \label{def:unknot}
+  \lean{QOU.KnotRegistry.unknotEntry}
+  \leanok
+  \uses{def:planar-diagram}
+  The trivial knot with 0 crossings.  QOU identity: Neutrino (SU(2) vacuum).
+  \textit{Knot Atlas}: \url{http://katlas.org/wiki/0_1}
+\end{definition}
+
+% ── Trefoil ───────────────────────────────────────────────────────
+\begin{definition}[Trefoil ($3_1$)]
+  \label{def:trefoil}
+  \lean{QOU.KnotRegistry.trefoilEntry}
+  \leanok
+  \uses{def:planar-diagram, def:braid-group}
+  The simplest non-trivial knot (3 crossings, torus knot).
+  QOU identity: Electron (Generation~1), source of the $B_3$ monodromy
+  for Bring's Surface.
+  \textit{Knot Atlas}: \url{http://katlas.org/wiki/3_1}
+\end{definition}
+
+% ── Figure-Eight ──────────────────────────────────────────────────
+\begin{definition}[Figure-Eight Knot ($4_1$)]
+  \label{def:figure-eight}
+  \lean{QOU.KnotRegistry.figureEightEntry}
+  \leanok
+  \uses{def:planar-diagram}
+  The simplest hyperbolic knot (4 crossings).
+  QOU identity: Muon (Generation~2).  Its hyperbolic volume
+  $\mathrm{Vol}(4_1) \approx 2.0298832128$ drives the mass derivation.
+  \textit{Knot Atlas}: \url{http://katlas.org/wiki/4_1}
+\end{definition}
+
+% ── Photon Entry ─────────────────────────────────────────────────
+\begin{definition}[Photon ($0_1$ boson)]
+  \label{def:photon}
+  \lean{QOU.KnotRegistry.photonEntry}
+  \leanok
+  \uses{def:knot-entry, def:unknot-diagram}
+  The photon: unknot with QOU identity Photon (gauge boson).
+\end{definition}
+
+% ── Registry and Lookup ──────────────────────────────────────────
+\begin{definition}[Knot Registry]
+  \label{def:knot-registry}
+  \lean{QOU.KnotRegistry.registry}
+  \leanok
+  \uses{def:knot-entry, def:unknot, def:trefoil, def:figure-eight, def:photon}
+  The list of all registered knot--particle pairs.
+\end{definition}
+
+\begin{definition}[Registry Lookup by Name]
+  \label{def:registry-lookup}
+  \lean{QOU.KnotRegistry.lookup}
+  \leanok
+  \uses{def:knot-registry}
+  Find a registry entry by Alexander--Briggs name.
+\end{definition}
+
+\begin{definition}[Registry Lookup by Identity]
+  \label{def:registry-lookup-identity}
+  \lean{QOU.KnotRegistry.lookupByIdentity}
+  \leanok
+  \uses{def:knot-registry, def:qou-identity}
+  Find a registry entry by QOU particle identity.
+\end{definition}
+
+\begin{definition}[Volume Value]
+  \label{def:volume-value}
+  \lean{QOU.KnotRegistry.KnotEntry.volumeValue}
+  \leanok
+  \uses{def:knot-entry}
+  Extract the numeric volume from a knot entry.
+\end{definition}
+
+% ── Registry Consistency Theorems ────────────────────────────────
+\begin{theorem}[Figure-Eight Volume Consistent]
+  \label{thm:figure-eight-volume-consistent}
+  \lean{QOU.KnotRegistry.figureEight_volume_consistent}
+  \leanok
+  \uses{def:figure-eight, def:vol-figure-eight}
+  The registry's figure-eight volume matches the KnotTheory constant.
+\end{theorem}
+
+\begin{theorem}[Trefoil Volume Zero]
+  \label{thm:trefoil-volume-zero}
+  \lean{QOU.KnotRegistry.trefoil_volume_zero}
+  \leanok
+  \uses{def:trefoil, def:vol-trefoil}
+  $\mathrm{Vol}(3_1) = 0$ (torus knot).
+\end{theorem}
+
+\begin{theorem}[Unknot Volume Zero]
+  \label{thm:unknot-volume-zero}
+  \lean{QOU.KnotRegistry.unknot_volume_zero}
+  \leanok
+  \uses{def:unknot}
+  $\mathrm{Vol}(0_1) = 0$.
+\end{theorem}
+
+\begin{theorem}[Unknot Crossing Count]
+  \label{thm:unknot-crossing-count}
+  \lean{QOU.KnotRegistry.unknot_crossing_count}
+  \leanok
+  \uses{def:unknot, def:crossing-count}
+  The unknot has 0 crossings.
+\end{theorem}
+
+\begin{theorem}[Trefoil Crossing Count]
+  \label{thm:trefoil-crossing-count}
+  \lean{QOU.KnotRegistry.trefoil_crossing_count}
+  \leanok
+  \uses{def:trefoil, def:crossing-count}
+  The trefoil has 3 crossings.
+\end{theorem}
+
+\begin{theorem}[Figure-Eight Crossing Count]
+  \label{thm:figure-eight-crossing-count}
+  \lean{QOU.KnotRegistry.figureEight_crossing_count}
+  \leanok
+  \uses{def:figure-eight, def:crossing-count}
+  The figure-eight knot has 4 crossings.
+\end{theorem}
+
+% ── Hyperbolic Volume ─────────────────────────────────────────────
+\begin{definition}[Hyperbolic Volume]
+  \label{def:hyperbolic-volume}
+  \lean{QOU.KnotTheory.HyperbolicVolume}
+  The volume of the hyperbolic knot complement $S^3 \setminus K$,
+  computed via the Bloch-Wigner dilogarithm (SnapPy census).
+\end{definition}
+
+% ── Vol(4_1) ──────────────────────────────────────────────────────
+\begin{definition}[Figure-Eight Volume]
+  \label{def:vol-figure-eight}
+  \lean{QOU.KnotTheory.vol_figure_eight}
+  \leanok
+  \uses{def:hyperbolic-volume, def:figure-eight}
+  $\mathrm{Vol}(4_1) = 2.0298832128 \pm 10^{-10}$.
+  Verified against SnapPy and the Bloch-Wigner function.
+\end{definition}
+
+
+\chapter{Topological Mass Derivation}
+
+% ── Topological Mass Theorem ──────────────────────────────────────
+\begin{theorem}[Topological Decomposition of Mass]
+  \label{thm:topological-mass}
+  \lean{QOU.MassDerivation.topological_mass_formula}
+  \leanok
+  \uses{def:hyperbolic-volume, def:substrate-parameter}
+  For a particle identified with knot $K$, its mass satisfies
+  $m = \mathrm{Vol}(K) / \hbar_q^2$ where $\hbar_q = 1 - 1/q$.
+  Proved via the eigenspace decomposition of the descent involution,
+  additivity of the MI integral, and localisation to exceptional divisors.
+\end{theorem}
+
+% ── CODATA Mass Ratio ─────────────────────────────────────────────
+\begin{definition}[Experimental Muon-Electron Mass Ratio]
+  \label{def:mu-e-ratio}
+  \lean{QOU.MassDerivation.experimental_mu_e_ratio}
+  \leanok
+  $m_\mu / m_e = 206.768283$ (CODATA 2022).
+\end{definition}
+
+% ── Quantum Planck Constant ───────────────────────────────────────
+\begin{definition}[Quantum Planck Constant]
+  \label{def:quantum-planck}
+  \lean{QOU.MassDerivation.quantum_planck}
+  \leanok
+  \uses{def:quantum-parameter}
+  $\hbar_q = 1 - 1/q$ for $q > 1$.
+\end{definition}
+
+% ── Substrate Coupling Constant ───────────────────────────────────
+\begin{definition}[Substrate Coupling Constant]
+  \label{def:substrate-q}
+  \lean{QOU.MassDerivation.substrate_q}
+  \leanok
+  $q \approx 1.1097$, the derived value of the substrate parameter.
+\end{definition}
+
+% ── Vol Approximation ─────────────────────────────────────────────
+\begin{lemma}[Figure-Eight Volume Approximation]
+  \label{lem:vol-approx}
+  \lean{QOU.MassDerivation.vol_figure_eight_approx}
+  \uses{def:vol-figure-eight}
+  $|\mathrm{Vol}(4_1) - 2.02988| < 10^{-5}$.
+\end{lemma}
+
+% ── Mass Ratio Approximation ──────────────────────────────────────
+\begin{lemma}[Mass Ratio Approximation]
+  \label{lem:mu-e-approx}
+  \lean{QOU.MassDerivation.mu_e_ratio_approx}
+  \uses{def:mu-e-ratio}
+  $|m_\mu/m_e - 206.768| < 10^{-3}$.
+\end{lemma}
+
+% ── Quantum Planck Approximation ──────────────────────────────────
+\begin{lemma}[Quantum Planck Approximation]
+  \label{lem:hq-approx}
+  \lean{QOU.MassDerivation.quantum_planck_approx}
+  \uses{def:quantum-planck, def:substrate-q}
+  $|\hbar_q(q_0) - 0.09908| < 10^{-4}$.
+\end{lemma}
+
+% ── Derive Substrate q ────────────────────────────────────────────
+\begin{theorem}[Derivation of the Substrate Parameter]
+  \label{thm:derive-substrate-q}
+  \lean{QOU.MassDerivation.derive_substrate_q}
+  \uses{thm:topological-mass, def:vol-figure-eight, def:mu-e-ratio,
+        def:quantum-planck}
+  Given the topological mass theorem and experimental data,
+  the substrate parameter $q$ must satisfy $|q - 1.1097| < 0.0001$.
+
+  Derivation:
+  \begin{enumerate}
+    \item From $m_\mu/m_e = \mathrm{Vol}(4_1)/\hbar_q^2$, solve for
+          $\hbar_q^2 \approx 2.02988/206.768 \approx 0.009817$.
+    \item $\hbar_q \approx 0.09908$.
+    \item From $\hbar_q = 1 - 1/q$, invert: $q = 1/(1-\hbar_q) \approx 1.1097$.
+  \end{enumerate}
+\end{theorem}
+
+% ── Mass Ratio from Volume ────────────────────────────────────────
+\begin{lemma}[Mass Ratio from Volume]
+  \label{lem:mass-ratio-from-volume}
+  \lean{QOU.MassDerivation.mass_ratio_from_volume}
+  \uses{def:vol-figure-eight, def:mu-e-ratio, def:quantum-planck}
+  $\hbar_q \neq 0 \implies \mathrm{Vol}(4_1)/\hbar_q^2 = m_\mu/m_e
+  \implies \hbar_q^2 = \mathrm{Vol}(4_1)/(m_\mu/m_e)$.
+\end{lemma}
+
+
+\chapter{Calculations Module (Registry Bridge)}
+
+% ── Registry Volume Consistency ───────────────────────────────────
+\begin{theorem}[Registry Volume Consistency]
+  \label{thm:registry-volume}
+  \lean{QOU.Calculations.registry_volume_eq_mass_derivation}
+  \leanok
+  \uses{def:figure-eight, def:vol-figure-eight}
+  The figure-eight knot's registry volume equals the
+  \texttt{MassDerivation} volume constant.
+\end{theorem}
+
+% ── Skein Mass Residue ────────────────────────────────────────────
+\begin{theorem}[Skein-Deformed Mass Residue]
+  \label{thm:skein-mass-residue}
+  \lean{QOU.Calculations.skein_mass_residue}
+  \uses{thm:registry-volume, def:mu-e-ratio, def:quantum-planck}
+  The muon-electron mass ratio equals
+  $\mathrm{Vol}(4_1)/\hbar_q^2$ where the volume is sourced from
+  the Alexander-Briggs knot registry.
+\end{theorem}
+
+% ── Substrate Error Bound ─────────────────────────────────────────
+\begin{theorem}[Substrate Error Bound]
+  \label{thm:substrate-error-bound}
+  \lean{QOU.Calculations.substrate_error_bound}
+  \uses{thm:derive-substrate-q, thm:registry-volume}
+  $|q_{\mathrm{derived}} - 1.1097| < 0.0001$.
+\end{theorem}
+
+% ── Full Derivation Chain ─────────────────────────────────────────
+\begin{theorem}[Full Derivation Chain]
+  \label{thm:full-derivation-chain}
+  \lean{QOU.Calculations.full_derivation_chain}
+  \uses{def:figure-eight, def:mu-e-ratio, thm:substrate-error-bound}
+  End-to-end witness:
+  \[
+    \mathrm{KnotRegistry}(4_1).\mathrm{vol}
+      \;\longrightarrow\; \hbar_q^2
+      \;\longrightarrow\; \hbar_q
+      \;\longrightarrow\; q
+      \;\longrightarrow\; |q - 1.1097| < 0.0001
+  \]
+\end{theorem}
+
+% ── Particle Identifications ─────────────────────────────────────
+\begin{theorem}[Muon is Figure-Eight]
+  \label{thm:muon-is-figure-eight}
+  \lean{QOU.Calculations.muon_is_figure_eight}
+  \leanok
+  \uses{def:figure-eight, def:registry-lookup-identity, def:qou-identity}
+  Looking up the Muon identity in the registry returns the figure-eight
+  knot entry.
+\end{theorem}
+
+\begin{theorem}[Electron is Trefoil]
+  \label{thm:electron-is-trefoil}
+  \lean{QOU.Calculations.electron_is_trefoil}
+  \leanok
+  \uses{def:trefoil, def:registry-lookup-identity, def:qou-identity}
+  Looking up the Electron identity returns the trefoil entry.
+\end{theorem}
+
+\begin{theorem}[Neutrino is Unknot]
+  \label{thm:neutrino-is-unknot}
+  \lean{QOU.Calculations.neutrino_is_unknot}
+  \leanok
+  \uses{def:unknot, def:registry-lookup-identity, def:qou-identity}
+  Looking up the Neutrino identity returns the unknot entry.
+\end{theorem}
+
+% ── Derived Constants ────────────────────────────────────────────
+\begin{definition}[$\hbar_q^2$ (derived)]
+  \label{def:h-q-squared}
+  \lean{QOU.Calculations.h_q_squared}
+  \leanok
+  \uses{def:vol-figure-eight, def:mu-e-ratio}
+  $\hbar_q^2 = \mathrm{Vol}(4_1) / (m_\mu/m_e)$.
+\end{definition}
+
+\begin{definition}[$\hbar_q$ (derived)]
+  \label{def:h-q-value}
+  \lean{QOU.Calculations.h_q_value}
+  \leanok
+  \uses{def:h-q-squared}
+  $\hbar_q = \sqrt{\hbar_q^2}$.
+\end{definition}
+
+\begin{definition}[$q$ (derived)]
+  \label{def:derived-q}
+  \lean{QOU.Calculations.derived_q}
+  \leanok
+  \uses{def:h-q-value}
+  $q = 1 / (1 - \hbar_q)$.
+\end{definition}
+
+% ── CODATA Consistency ────────────────────────────────────────────
+\begin{lemma}[$\hbar_q^2 > 0$]
+  \label{lem:hq-squared-pos}
+  \lean{QOU.Calculations.h_q_squared_pos}
+  \uses{def:vol-figure-eight, def:mu-e-ratio}
+  Both $\mathrm{Vol}(4_1)$ and $m_\mu/m_e$ are positive,
+  so $\hbar_q^2 = \mathrm{Vol}/\mathrm{ratio} > 0$.
+\end{lemma}
+
+\begin{lemma}[$\hbar_q \in (0,1)$]
+  \label{lem:hq-unit-interval}
+  \lean{QOU.Calculations.h_q_value_in_unit_interval}
+  \uses{lem:hq-squared-pos}
+  Ensures $q > 1$, as required by the quantum group framework.
+\end{lemma}
+
+\begin{lemma}[$q > 1$]
+  \label{lem:derived-q-gt-one}
+  \lean{QOU.Calculations.derived_q_gt_one}
+  \uses{lem:hq-unit-interval}
+  The derived substrate parameter satisfies $q > 1$
+  ($q = 1$ would collapse to the classical limit).
+\end{lemma}
+
+
+\chapter{Elaboration: Categorical and Analytic Foundations (Chapter 2)}
+
+% ── d_q^2 does not vanish ────────────────────────────────────────
+\begin{proposition}[$d_q^2$ does not vanish]
+  \label{prop:dq-squared}
+  \lean{QOU.Elaboration.dq_squared}
+  \uses{def:q-ext-deriv}
+  For constant $q > 1$, $d_q^2\,\alpha = q^{-1}(1-q^{-1})\,d\varTheta \wedge \mathcal{L}_\xi\,\alpha$.
+  In particular $d_q^2 = 0$ iff $q=1$ or $\alpha$ is Reeb-invariant.
+\end{proposition}
+
+% ── Jacobiator of [·,·]_q ───────────────────────────────────────
+\begin{proposition}[Jacobiator of $[\cdot,\cdot]_q$]
+  \label{prop:q-jacobiator}
+  \lean{QOU.Elaboration.q_jacobiator}
+  \uses{def:q-lie-bracket}
+  For horizontal vector fields $U,V,W$, the Jacobiator is
+  $\mathrm{Jac}_q(U,V,W) = -q^{-1}(1-q^{-1})\sum_{\mathrm{cyc}} d\varTheta(V,W)\,\mathcal{L}_\xi U$.
+  Vanishes iff $q=1$ or $d\varTheta|_{H\times H}=0$.
+  Since $d\varTheta|_{H \times H}$ is the non-degenerate Levi form,
+  $[\cdot,\cdot]_q$ violates the Jacobi identity for all $q \neq 1$;
+  thus $(\mathfrak{X}(M), [\cdot,\cdot]_q)$ is a \emph{Leibniz algebra},
+  not a Lie algebra.
+\end{proposition}
+
+\begin{theorem}[Jacobi identity violation]
+  \label{thm:jacobi-violation}
+  \lean{QOU.Elaboration.jacobi_identity_violation}
+  \uses{prop:q-jacobiator}
+  For $q \neq 1$ and non-degenerate $d\varTheta|_{H \times H}$, the Jacobiator
+  $\mathrm{Jac}_q \neq 0$ generically, witnessing failure of the Jacobi
+  identity.
+\end{theorem}
+
+
+\chapter{Path Integrals and Braiding (Chapter 3)}
+
+% ── Braid Group B_3 ──────────────────────────────────────────────
+\begin{definition}[Braid Group $B_3$]
+  \label{def:braid-group-ch3}
+  \lean{QOU.PathIntegrals.BraidGroup}
+  \uses{def:braid-group}
+  $B_3 = \langle \sigma_1, \sigma_2 \mid \sigma_1\sigma_2\sigma_1 = \sigma_2\sigma_1\sigma_2 \rangle$,
+  the fundamental group of the configuration space of three unordered points.
+\end{definition}
+
+% ── Symmetric Group S_3 ─────────────────────────────────────────
+\begin{definition}[Symmetric Group $S_3$]
+  \label{def:s3-group}
+  \lean{QOU.PathIntegrals.S3Group}
+  \uses{def:braid-group-ch3}
+  $S_3 = \langle s_1,s_2 \mid s_1^2 = s_2^2 = (s_1 s_2)^3 = \mathrm{id} \rangle$,
+  obtained from $B_3$ by imposing $\sigma_i^2 = \mathrm{id}$.
+\end{definition}
+
+% ── su(2) Basis ──────────────────────────────────────────────────
+\begin{definition}[$\mathfrak{su}(2)$ Basis]
+  \label{def:su2-basis}
+  \lean{QOU.PathIntegrals.SU2Basis}
+  $e_a = -\tfrac{i}{2}\tau_a$ for Pauli matrices $\tau_a$,
+  with $[e_a, e_b] = \epsilon_{abc}\,e_c$.
+\end{definition}
+
+% ── SU(2) Generators of Dic_3 ───────────────────────────────────
+\begin{definition}[$\mathrm{SU}(2)$ Generators of $\mathrm{Dic}_3$]
+  \label{def:su2-generators}
+  \lean{QOU.PathIntegrals.SU2Generators}
+  \uses{def:su2-basis, def:binary-dihedral}
+  $\alpha = \exp(\tfrac{2\pi}{3} e_3)$ and $\beta = \exp(\pi e_1)$
+  generate $\mathrm{Dic}_3 \subset \mathrm{SU}(2)$ of order 12.
+\end{definition}
+
+% ── SO(3) Generators ─────────────────────────────────────────────
+\begin{definition}[$\mathrm{SO}(3)$ Generators]
+  \label{def:so3-generators}
+  \lean{QOU.PathIntegrals.SO3Generators}
+  \uses{def:su2-generators}
+  $R_\alpha$ is $2\pi/3$-rotation about $e_3$,
+  $R_\beta$ is $\pi$-rotation about $e_1$ under the adjoint map
+  $\mathrm{SU}(2) \to \mathrm{SO}(3)$.
+\end{definition}
+
+% ── Braid Twist and Flip ────────────────────────────────────────
+\begin{definition}[Braid Involutions: Twist and Flip]
+  \label{def:braid-twist-flip}
+  \lean{QOU.PathIntegrals.BraidTwistFlip}
+  \uses{def:braid-group-ch3}
+  $\sigma_1(\mathbf{w}) = (w_2,w_1,w_4,w_3)$ (twist),
+  $\sigma_2(\mathbf{w}) = (w_4,w_3,w_2,w_1)$ (flip).
+  These generate $V_4 = \{\mathrm{id}, \sigma_1, \sigma_2, \sigma_1\sigma_2\}$.
+\end{definition}
+
+% ── Quantum Group U_q(su(2)) ────────────────────────────────────
+\begin{definition}[Quantum Group $\mathcal{U}_q(\mathfrak{su}(2))$]
+  \label{def:quantum-su2}
+  \lean{QOU.PathIntegrals.QuantumSU2}
+  The algebra generated by $E, F, K, K^{-1}$ with
+  $KK^{-1} = K^{-1}K = 1$, $KEK^{-1} = q^2 E$,
+  $KFK^{-1} = q^{-2} F$, $[E,F] = (K - K^{-1})/(q - q^{-1})$.
+\end{definition}
+
+
+\chapter{Lifting of Quantum Torsion (Chapter 4)}
+
+% ── Jet Prolongation ─────────────────────────────────────────────
+\begin{proposition}[Jet Prolongation]
+  \label{prop:jet-prolongation}
+  \lean{QOU.Torsion.jet_prolongation}
+  \uses{def:c-quantum-observable-universe, def:instanton}
+  If $(\mathbf{C}, \varTheta, G, \mathcal{S})$ is a $\mathbb{C}$ QOU with instanton $A$
+  and metric $g$, then the jet prolongation $J^1 \mathcal{S}$ with its
+  frame bundle and induced connection yields a new $\mathbb{C}$ QOU.
+\end{proposition}
+
+% ── Recursive Brane Tower ───────────────────────────────────────
+\begin{definition}[Recursive Brane Tower]
+  \label{def:recursive-brane-tower}
+  \lean{QOU.Torsion.RecursiveBraneTower}
+  \uses{prop:jet-prolongation, def:c-quantum-observable-universe}
+  Set $M_0 = M$, $E_1 = E$, and define $E_{n+1}$ as the jet
+  prolongation of $E_n$.  Each $E_n$ is the base for level $n+1$.
+\end{definition}
+
+% ── Quantum Characteristic Classes ──────────────────────────────
+\begin{definition}[Quantum Characteristic Classes]
+  \label{def:quantum-characteristic-classes}
+  \lean{QOU.Torsion.QuantumCharacteristicClasses}
+  \uses{def:recursive-brane-tower}
+  $\kappa_n \in H^*(E_{n+1}, \mathbb{Z})$ labelling monodromy
+  fixed points of the holonomy from $E_n$ to $E_{n+1}$.
+\end{definition}
+
+% ── Direct Limit Algebra ────────────────────────────────────────
+\begin{definition}[$\mathbb{C}$ QOU as Direct Limit]
+  \label{def:direct-limit-algebra}
+  \lean{QOU.Torsion.DirectLimitAlgebra}
+  \uses{def:recursive-brane-tower, def:substrate-parameter-lean}
+  $\mathcal{A}_\infty = \varinjlim\,\Gamma(J^1 E_n,\,\mathrm{SU}_{q_n}(2))$.
+\end{definition}
+
+% ── Vacuum State ─────────────────────────────────────────────────
+\begin{proposition}[Existence and Uniqueness of the Vacuum State]
+  \label{prop:vacuum-state}
+  \lean{QOU.Torsion.vacuum_state}
+  \uses{def:direct-limit-algebra}
+  There exists a unique $\mathrm{SU}(2)$-invariant state
+  $\omega : \mathcal{A}_\infty \to \mathbb{C}$.
+\end{proposition}
+
+% ── Euler Characteristic Stability ──────────────────────────────
+\begin{proposition}[Stability of the Euler Characteristic]
+  \label{prop:euler-char-stability}
+  \lean{QOU.Torsion.euler_char_stability}
+  \uses{def:recursive-brane-tower}
+  $\chi(E_{n+1}) = \chi(E_n)$ for all $n$.
+\end{proposition}
+
+% ── Mass Identity ────────────────────────────────────────────────
+\begin{definition}[Mass Identity]
+  \label{def:mass-identity}
+  \lean{QOU.Torsion.MassIdentity}
+  \uses{def:substrate-parameter-lean, def:instanton}
+  $m = \lVert\mathrm{MI}\!\int_\Sigma (\nabla_A q,\; L \wedge F^+)\rVert$,
+  where $\mathrm{MI}\!\int_\Sigma$ is the $2$-dimensional twisted nonabelian
+  multiplicative integral over a surface $\Sigma$ bounding the vortex
+  filament~$\gamma$.  By the nonabelian Stokes theorem this equals
+  $\lVert\mathrm{Hol}_{\nabla_A}(\gamma;\,\mathfrak{G})\rVert$.
+\end{definition}
+
+% ── Descent ──────────────────────────────────────────────────────
+\begin{definition}[Descent]
+  \label{def:descent}
+  \lean{QOU.Torsion.Descent}
+  \uses{def:recursive-brane-tower}
+  Reverse traversal of the brane tower, restricting connections
+  and bundles until $\dim M_k = 0$.
+\end{definition}
+
+% ── Topological Decomposition of Mass ───────────────────────────
+\begin{theorem}[Topological Decomposition of Mass]
+  \label{thm:topological-mass-ch4}
+  \lean{QOU.Torsion.topological_mass_decomposition}
+  \leanok
+  \uses{def:mass-identity, def:hyperbolic-volume, def:substrate-parameter-lean}
+  $m(\gamma) = \lVert\mathrm{Hol}_{\nabla_A}(\gamma_0;\,\mathfrak{G})\rVert
+  + \sum_{i=1}^N \lVert\mathrm{MI}\!\int_{E_i}(\nabla_A q,\,L \wedge F^+)\rVert$,
+  where the first term is the holonomy around the unknot core in the
+  descended subalgebra and each summand is the MI integral over the
+  $i$-th exceptional divisor, yielding the quantum dilogarithm
+  $\Phi_q(z_i)$.
+\end{theorem}
+
+% ── Quantum Dilogarithm Corollary ───────────────────────────────
+\begin{corollary}[Quantum Dilogarithm as Localised Torsion Volume]
+  \label{cor:quantum-dilogarithm}
+  \lean{QOU.Torsion.quantum_dilogarithm_volume}
+  \uses{thm:topological-mass-ch4}
+  $\Phi_q(z_i) = \int_0^{z_i} \frac{\ln_q(1+t)}{t}\,dt
+  = \sum_{n=1}^\infty (-1)^{n+1} \frac{z_i^n}{n\,[n]_q}$.
+\end{corollary}
+
+
+\chapter{Bring's Surface (Chapter 5)}
+
+% ── Bring's Surface ──────────────────────────────────────────────
+\begin{definition}[Bring's Surface]
+  \label{def:brings-surface-ch5}
+  \lean{QOU.BringsSurface.BringsSurface}
+  \uses{def:brings-surface}
+  The genus-4, $\chi=-6$ surface in $\mathbb{P}^4$ defined by
+  $\sum_{j=0}^4 x_j^k = 0$ for $k=1,2,3$.
+\end{definition}
+
+% ── Color Tube Coordinates ──────────────────────────────────────
+\begin{definition}[Color Tube Coordinates]
+  \label{def:color-tube-coordinates}
+  \lean{QOU.BringsSurface.ColorTubeCoordinates}
+  \uses{def:brings-surface-ch5}
+  $r = w_2 - z$, $g = w_3 - z$, $b = w_4 - z$, $\sigma = w_1 - z$
+  where $z = x_0/x_1$ and $w_k$ are Lagrange resolvents.
+\end{definition}
+
+% ── Coral Fibre as Elliptic Curve ──────────────────────────────
+\begin{proposition}[Coral Fibre as an Elliptic Curve]
+  \label{prop:coral-elliptic}
+  \lean{QOU.Brings.coral_elliptic}
+  \uses{def:brings-surface-ch5}
+  At fixed $z \in \mathbb{CP}^1$, the coral constraints reduce
+  to the cubic $X^3 + (z+1)X^2 + (z^2+z+1)X + (z^3+z^2+z+1) = 0$
+  defining an elliptic curve $E_z$.
+\end{proposition}
+
+% ── Color Tube Fibers ───────────────────────────────────────────
+\begin{definition}[Color Tube Fibers]
+  \label{def:color-tube-fibers}
+  \lean{QOU.BringsSurface.ColorTubeFibers}
+  \uses{def:color-tube-coordinates, prop:coral-elliptic}
+  At fixed $z$, the color tube cubic
+  $\mathbf{c}^3 + (4z+1)\mathbf{c}^2 + (6z^2+3z+1)\mathbf{c}
+  + (4z^3+3z^2+2z+1) = 0$ defines fibers $R_z$, $G_z$, $B_z$.
+\end{definition}
+
+% ── Observed Spacetime Value ────────────────────────────────────
+\begin{definition}[Observed Spacetime Value]
+  \label{def:observed-value}
+  \lean{QOU.BringsSurface.ObservedValue}
+  \uses{def:color-tube-fibers}
+  $\mathbf{r}_z + \mathbf{g}_z + \mathbf{b}_z + 4z + 1 = 0$
+  (Vieta identity), defining the projection
+  $\pi_z : R_z \times G_z \times B_z \to \mathbb{A}^1$.
+\end{definition}
+
+% ── Briggs-Klein Chart ──────────────────────────────────────────
+\begin{definition}[Briggs--Klein Affine Chart]
+  \label{def:briggs-klein-chart}
+  \lean{QOU.BringsSurface.BriggsKleinChart}
+  \uses{def:brings-surface-ch5}
+  The chart $(w_1, w_2)$ on $0 < r = |w_1|^2 < \infty$, with
+  the Hermitian metric from Fubini--Study on $\mathbb{P}^4$.
+\end{definition}
+
+% ── Quaternionic Spectral Resolvents ────────────────────────────
+\begin{definition}[Quaternionic Spectral Resolvents]
+  \label{def:quaternionic-spectral-resolvents}
+  \lean{QOU.BringsSurface.QuaternionicResolvents}
+  \uses{def:brings-surface-ch5, def:substrate-parameter-lean}
+  The maps $\omega_k : \mathcal{S} \to J^\infty E$ using
+  $q$-exponential and $q$-logarithm, separating space-like ($\omega_1$)
+  and time-like ($\omega_2, \omega_3$) sectors via $\mathbf{i}, \mathbf{j}, \mathbf{k}$.
+\end{definition}
+
+% ── MI-SW Abelianisation ─────────────────────────────────────────
+\begin{proposition}[MI integral abelianises to SW period on $E_c$]
+  \label{prop:mi-sw-abelianisation}
+  \lean{QOU.BringsSurface.mi_sw_abelianisation}
+  \uses{def:mass-identity, def:brings-surface-ch5}
+  On each exceptional divisor $E_c \cong \mathbb{CP}^1$, the nonabelian
+  MI integral of the connection--curvature pair abelianises to the
+  prolonged Seiberg--Witten period:
+  $\lVert\mathrm{MI}\!\int_{E_c}(\nabla_A q,\,L \wedge F^+)\rVert_{J^n}
+  = \lvert a_D^{(n)}\rvert
+  = \lvert\oint_{E_c}\lambda_{\mathrm{SW}}^{(n)}\rvert$.
+\end{proposition}
+
+
+\chapter{The Descartes Universe (Chapter 6)}
+
+% ── Descartes Condition ──────────────────────────────────────────
+\begin{definition}[Descartes Condition]
+  \label{def:descartes-condition}
+  \lean{QOU.DescartesUniverse.DescartesCondition}
+  \uses{def:c-quantum-observable-universe}
+  A $\mathbb{C}$ QOU with $\chi(E) = -6$.
+\end{definition}
+
+% ── Genus of the Descent ────────────────────────────────────────
+\begin{proposition}[Genus of the One-Complex-Dimensional Descent]
+  \label{prop:genus-maximal-descent}
+  \lean{QOU.DescartesUniverse.genus_maximal_descent}
+  \uses{def:descartes-condition, prop:euler-char-stability}
+  A Descartes universe descending to a compact 1-complex-dimensional
+  variety $M_0$ yields a genus-4 Riemann surface.
+\end{proposition}
+
+% ── Descartes Theorem ───────────────────────────────────────────
+\begin{theorem}[Descartes Theorem]
+  \label{thm:descartes}
+  \lean{QOU.DescartesUniverse.descartes_theorem}
+  \uses{def:descartes-condition, def:brings-surface-ch5}
+  Bring's curve $\Sigma_4$ is a terminal object in the category
+  $\mathcal{C}_{-6}$ of Descartes universes.
+\end{theorem}
+
+
+\chapter{\texorpdfstring{$\mathfrak{p}$}{p}-Adic Quantum Groups (Chapter 7)}
+
+% ── Q_p Realisation ──────────────────────────────────────────────
+\begin{definition}[$\mathbb{Q}_\mathfrak{p}$ Realisation]
+  \label{def:p-adic-realisation}
+  \lean{QOU.PAdicQuantumGroups.PAdicRealisation}
+  \uses{def:quantum-universe, def:f-isocrystal}
+  $k = \mathbb{Q}_\mathfrak{p}$, $\mathcal{C}$ the category of
+  $F$-isocrystals, substrate parameter
+  $q = \mathfrak{p}^{-v_\mathfrak{p}(\det\varphi)}$.
+\end{definition}
+
+% ── F_p Realisation ──────────────────────────────────────────────
+\begin{definition}[$\mathbb{F}_\mathfrak{p}$ Realisation]
+  \label{def:finite-field-realisation}
+  \lean{QOU.PAdicQuantumGroups.FiniteFieldRealisation}
+  \uses{def:quantum-universe}
+  $k = \mathbb{F}_\mathfrak{p}$, $\mathcal{C} =
+  \mathrm{Rep}_{\mathbb{F}_\mathfrak{p}}(\mathrm{SU}_q(2))$,
+  a fusion category when $q$ is a root of unity.
+\end{definition}
+
+
+\chapter{Experimental Evidence (Chapter 10)}
+
+% ── Skein Mass Relation ──────────────────────────────────────────
+\begin{definition}[$q$-Deformed Skein Mass Relation]
+  \label{def:skein-mass-relation}
+  \lean{QOU.Experimental.SkeinMassRelation}
+  \uses{def:substrate-parameter-lean, def:hyperbolic-volume}
+  $q\,\mathcal{M}(L_+) - q^{-1}\,\mathcal{M}(L_-)
+  = (q^{1/2} - q^{-1/2})\,\mathcal{M}(L_0)$.
+\end{definition}
