@@ -1,0 +1,50 @@
+# Build the clarabel-MPFR operator-selection-LP binary and publish it as an
+# artifact, so the witness-pipeline can download a prebuilt binary instead of
+# compiling from scratch on every run. The witness-pipeline falls back to a
+# local `cargo build` if the artifact is unavailable (see witness-pipeline.yml
+# "Provision clarabel-MPFR binary" step).
+#
+# Triggers on changes to the hecke-engine Rust source / manifest, plus a
+# weekly rebuild to keep the cached artifact fresh.
+name: Build clarabel-MPFR binary
+
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install MPFR/GMP system libs
+        run: sudo apt-get update && sudo apt-get install -y libmpfr-dev libgmp-dev
+
+      - name: Cache cargo + target
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            tools/hecke-engine/target
+          key: clarabel-mpfr-${{ runner.os }}-${{ hashFiles('tools/hecke-engine/Cargo.toml', 'tools/hecke-engine/Cargo.lock') }}
+          restore-keys: clarabel-mpfr-${{ runner.os }}-
+
+      - name: Build clarabel-MPFR operator-selection-lp
+        run: |
+          cargo build --release \
+            --manifest-path tools/hecke-engine/Cargo.toml \
+            --features clarabel-mpfr \
+            --bin clarabel-operator-selection-lp
+          test -x tools/hecke-engine/target/release/clarabel-operator-selection-lp
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: clarabel-operator-selection-lp
+          path: tools/hecke-engine/target/release/clarabel-operator-selection-lp
+          retention-days: 30
+          if-no-files-found: error

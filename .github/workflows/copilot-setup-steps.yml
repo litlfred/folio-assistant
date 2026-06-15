@@ -1,0 +1,51 @@
+name: Copilot Setup Steps
+
+# Runs automatically when this file changes (for validation), on manual
+# dispatch, and is picked up by the Copilot cloud agent before it starts
+# work on any session in this repository.
+on:
+  workflow_dispatch:
+jobs:
+  # ── The job MUST be named `copilot-setup-steps` ──────────────────────────
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read   # needed for actions/checkout
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── uv (Python package manager / uvx runner) ──────────────────────
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      # ── elan + pinned Lean toolchain ──────────────────────────────────
+      # Reads the toolchain version from the root lean-toolchain file so
+      # this step automatically tracks any future toolchain bumps.
+      - name: Install elan and Lean toolchain
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
+
+      # ── Mathlib cache ─────────────────────────────────────────────────
+      # `lake exe cache get` downloads pre-built Mathlib `.olean` files so
+      # the agent does not have to recompile Mathlib from scratch.
+      - name: Warm Mathlib cache
+        run: |
+          export PATH="$HOME/.elan/bin:$HOME/.local/bin:$PATH"
+          lake update || echo "::warning::lake update failed (non-fatal — will use cached packages)"
+          lake exe cache get || echo "::warning::Mathlib cache download failed (non-fatal — Lean will rebuild from source)"
+
+      # ── Verify lean-lsp-mcp is reachable via uvx ──────────────────────
+      # This confirms that the MCP server the agent will use can be
+      # invoked; it does not start a persistent process.
+      - name: Check lean-lsp-mcp
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          uvx lean-lsp-mcp --help

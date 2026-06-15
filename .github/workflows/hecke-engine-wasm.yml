@@ -1,0 +1,216 @@
+name: hecke-engine-wasm Build & Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish to npm after successful build + tests'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+permissions:
+  contents: read
+  id-token: write  # for npm provenance
+
+jobs:
+  verify-host-build:
+    name: Verify default hecke-engine builds (no regression)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: 'tools/hecke-engine -> target'
+
+      - name: Install system GMP + MPFR (rug build deps)
+        run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev libmpc-dev
+
+      # `--lib --no-default-features` is the WASM-targetable subset.
+      # This is what tools/hecke-engine-wasm consumes.
+      - name: cargo check --no-default-features --lib (WASM-targetable surface)
+        working-directory: tools/hecke-engine
+        run: cargo check --no-default-features --lib
+
+      # Default-feature lib build (mpfr only; clarabel-sdp gated out
+      # to avoid OpenBLAS / LAPACK / gfortran in this job).
+      - name: cargo check --no-default-features --features mpfr --lib
+        working-directory: tools/hecke-engine
+        run: cargo check --no-default-features --features mpfr --lib
+
+  clarabel-lp-tests:
+    name: Clarabel LP/SDP tests + scipy cross-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: 'tools/hecke-engine -> target'
+
+      - name: Install system GMP + MPFR (rug build deps)
+        run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev libmpc-dev
+
+      # Operator-selection LP correctness proofs (strong duality, KKT,
+      # complementary slackness, dual nonnegativity) PLUS the MPFR≡f64
+      # validation test. The clarabel-mpfr feature pulls the
+      # litlfred/Clarabel.rs git dependency; default features stay on
+      # (no clarabel-* feature is in the default set, so there is no
+      # sdp/mpfr/bigrational mutex conflict).
+      - name: cargo test --features clarabel-mpfr (LP correctness + MPFR≡f64)
+        working-directory: tools/hecke-engine
+        run: cargo test --release --features clarabel-mpfr --lib operator_selection_lp -- --nocapture
+
+      # Build the JSON CLI the Python bridge (pyhecke.lp_dual_solver,
+      # backend="clarabel") subprocesses.
+      - name: Build clarabel-operator-selection-lp CLI
+        working-directory: tools/hecke-engine
+        run: cargo build --release --features clarabel-mpfr --bin clarabel-operator-selection-lp
+
+      # Genuine dense-PSD SDP (#4) — Clarabel PSD cone needs LAPACK.
+      - name: Install LAPACK toolchain (clarabel-sdp build deps)
+        run: sudo apt-get install -y cmake gfortran libopenblas-dev
+      - name: cargo test --features clarabel-sdp (dense-PSD + moment SDP)
+        working-directory: tools/hecke-engine
+        run: cargo test --release --features clarabel-sdp --lib operator_selection_sdp -- --nocapture
+
+      # Moment-SDP CLI (the QOU dense lift) — Python wiring subprocesses it.
+      - name: Build clarabel-confinement-moment-sdp CLI
+        working-directory: tools/hecke-engine
+        run: cargo build --release --features clarabel-sdp --bin clarabel-confinement-moment-sdp
+
+      # Cross-checks: clarabel MPFR ≡ scipy HiGHS (LP, gates the default
+      # flip) AND the Rust moment SDP ≡ cvxpy+CLARABEL (the QOU lift).
+      - name: Install scipy/numpy/mpmath/cvxpy for the cross-checks
+        run: python3 -m pip install --quiet --break-system-packages numpy scipy mpmath cvxpy
+      - name: clarabel ≡ scipy LP cross-check
+        working-directory: folio-assistant/computations
+        run: python3 clarabel_lp_crosscheck.py --seeds 12
+      - name: moment SDP ≡ cvxpy cross-check
+        working-directory: folio-assistant/computations
+        run: |
+          python3 - <<'PY'
+          import numpy as np
+          from sdp_moment_lift import solve_moment_sdp_clarabel, lp_vs_sdp_report
+          G = np.array([[1., .9, .1], [.9, 1., .9], [.1, .9, 1.]])
+          c = np.array([1., .5, .3])
+          r = solve_moment_sdp_clarabel(c, G, 1.0)
+          rep = lp_vs_sdp_report(c=c, G=G, A_eq=np.ones((1, 3)), b_eq=np.array([1.0]))
+          assert r['feasible'] and abs(r['objective'] - rep.sdp_objective) < 1e-5, \
+              (r['objective'], rep.sdp_objective)
+          print('moment SDP Rust == cvxpy OK:', r['objective'])
+          PY
+
+  build-wasm:
+    name: Build + test hecke-engine-wasm
+    runs-on: ubuntu-latest
+    needs: verify-host-build
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: 'tools/hecke-engine-wasm -> target'
+
+      # Use jetli/wasm-pack-action over `curl | sh` — the upstream
+      # installer script has been flaky on PR #1094 build-wasm runs.
+      # Pin to v0.13.0 (latest stable as of 2026-05) to avoid the
+      # wasm-bindgen-cli version drift that the "latest" tag pulls in.
+      # The pinned version matches the wasm-bindgen 0.2.* family the
+      # crate uses, preventing the silent crate-vs-CLI mismatch that
+      # has been the most likely culprit for the prior CI failures.
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.4.0
+        with:
+          version: 'v0.13.0'
+
+      - name: Print toolchain versions (diagnostic for CI failures)
+        run: |
+          echo "--- rust ---"
+          rustc --version
+          cargo --version
+          echo "--- wasm-pack ---"
+          wasm-pack --version
+          echo "--- wasm32 target ---"
+          rustup target list --installed | grep wasm
+
+      - name: Native cargo test (pure-Rust correctness)
+        working-directory: tools/hecke-engine-wasm
+        run: cargo test --lib --verbose
+
+      - name: Install wasm-bindgen-cli (pinned to crate version)
+        # `wasm-pack --mode no-install` doesn't download
+        # wasm-bindgen-cli at build time, which means it has to be on
+        # PATH already.  Pin to the same version as the wasm-bindgen
+        # crate in our Cargo.lock so the CLI / lib pair is in lock-
+        # step.  --locked + --force avoid stale-binary surprises if a
+        # cached cargo install has a different version.
+        run: |
+          WBINDGEN_VERSION=$(grep -A1 '^name = "wasm-bindgen"$' \
+            tools/hecke-engine-wasm/Cargo.lock | grep '^version' \
+            | head -1 | sed 's/.*"\(.*\)"/\1/')
+          echo "Installing wasm-bindgen-cli version $WBINDGEN_VERSION"
+          cargo install --locked --force --version "$WBINDGEN_VERSION" wasm-bindgen-cli
+
+      - name: wasm-pack build --release --target web
+        working-directory: tools/hecke-engine-wasm
+        # --mode no-install: don't try to download wasm-bindgen-cli at
+        # build time (we install it in the step above so the version
+        # matches our Cargo.lock).  Verbose so any failure surfaces
+        # the actual cargo / wasm-bindgen step that errored.
+        run: wasm-pack build --release --target web --mode no-install -- --verbose
+
+      - name: Verify WASM artifact size + presence
+        working-directory: tools/hecke-engine-wasm
+        run: |
+          test -f pkg/hecke_engine_wasm.js
+          test -f pkg/hecke_engine_wasm.d.ts
+          test -f pkg/hecke_engine_wasm_bg.wasm
+          ls -la pkg/
+          # Sanity: WASM artifact under 5 MB (a few-hundred-KB target is realistic)
+          size=$(stat -c%s pkg/hecke_engine_wasm_bg.wasm)
+          echo "WASM size: $size bytes"
+          [ "$size" -lt 5000000 ] || { echo "WASM artifact too large (>5MB)"; exit 1; }
+
+      - name: Upload pkg artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hecke-engine-wasm-pkg
+          path: tools/hecke-engine-wasm/pkg/
+          retention-days: 30
+
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    needs: build-wasm
+    if: ${{ github.event.inputs.publish == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: hecke-engine-wasm-pkg
+          path: tools/hecke-engine-wasm/pkg/
+
+      - name: npm publish
+        working-directory: tools/hecke-engine-wasm
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

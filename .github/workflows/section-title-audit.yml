@@ -1,0 +1,54 @@
+# Section-title + structure audit (chapter-scoped).
+#
+# Two reviews, per docs/structural-framework.md:
+#   - MACHINE review — qa-section-title-audit.ts flags auto-split
+#     " : <tag>" title artifacts, trailing colons, over-long / compound
+#     titles, and structure findings (depth/band/balance P1–P6).
+#   - AGENT review — story-coherence verdicts live in the `agent` block
+#     of each per-paper sidecar (content/<paper>/section-title-audit.qa.json),
+#     re-opened as the chapter manifest hash drifts.
+#
+# This workflow gates the MACHINE side (warn-only on the current
+# artifact baseline) and HARD-gates sidecar freshness, so a chapter
+# manifest can't change without the committed sidecars being updated.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.1.30"
+
+      - name: Install content deps
+        run: |
+          cd content
+          bun install --frozen-lockfile 2>/dev/null || bun install
+
+      # MACHINE review — HARD GATE. The chapter-restructure " : <tag>"
+      # artifact baseline (was 23) has been fully reorged to 0, so this
+      # flips from warn-only to a hard gate: a new split-artifact /
+      # trailing-colon / empty title (or a depth>3 nesting) now fails CI.
+      # Soft conciseness warnings (compound / too-long) still do not fail.
+      - name: Machine review — titles + structure (hard gate)
+        run: bun run content/pipeline/qa-section-title-audit.ts
+
+      # HARD GATE: sidecars must be regenerated when a manifest — or, in
+      # --thorough mode, any contained block (.md/.ts/.lean) or descendant
+      # subsection — changes. For all-pending sidecars a block edit is a
+      # no-op diff; once a section carries a title verdict, a block edit
+      # under it re-opens that verdict (pending), forcing a refresh here.
+      - name: Sidecars up to date
+        run: |
+          bun run content/pipeline/qa-section-title-audit.ts --report-only --write-sidecar --thorough
+          if ! git diff --exit-code -- content/*/section-title-audit.qa.json; then
+            echo "::error::section-title-audit sidecars are stale. Run: bun run content/pipeline/qa-section-title-audit.ts --report-only --write-sidecar --thorough"
+            exit 1
+          fi

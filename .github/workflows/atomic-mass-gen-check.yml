@@ -1,0 +1,47 @@
+# Generated-file drift gate for QOU/AtomicMass.lean.
+#
+# AtomicMass.lean is generated from a canonical data table
+# (scripts/atomic_mass_data.json — CODATA 2022 / AME2020 constants + the
+# 118-element binding-energy table) by scripts/gen_atomic_mass.py.  This
+# gate regenerates the file and fails if the committed .lean has drifted
+# (e.g. a hand-edit that the data table no longer reproduces).  Edit the
+# data/template + regenerate; never hand-edit the generated .lean.
+#
+# Fast + Python-only (no Lean build) so it gates every PR cheaply.
+
+name: Atomic-mass generated-file drift
+
+on:
+  pull_request:
+    paths:
+      - 'content/quantum-observable-universe/lean/scripts/atomic_mass_data.json'
+      - 'content/quantum-observable-universe/lean/scripts/gen_atomic_mass.py'
+      - 'content/quantum-observable-universe/lean/QOU/AtomicMass.lean'
+      - '.github/workflows/atomic-mass-gen-check.yml'
+  push:
+    paths:
+      - 'content/quantum-observable-universe/lean/scripts/atomic_mass_data.json'
+      - 'content/quantum-observable-universe/lean/scripts/gen_atomic_mass.py'
+      - 'content/quantum-observable-universe/lean/QOU/AtomicMass.lean'
+      - '.github/workflows/atomic-mass-gen-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift-check:
+    name: AtomicMass.lean in sync with data table
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # HARD GATE: regenerate from the data table and diff against the
+      # committed .lean. Exit 1 (with a unified diff) on any divergence.
+      - name: Regenerate and check for drift
+        run: |
+          python3 content/quantum-observable-universe/lean/scripts/gen_atomic_mass.py --check

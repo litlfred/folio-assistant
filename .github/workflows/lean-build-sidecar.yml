@@ -1,0 +1,93 @@
+# Lean build sidecar — run the (slow) Lean build ONLINE and commit a
+# machine-readable failure sidecar back to the branch.
+#
+# Why
+# ───
+# Lean builds are slow and verbose. Instead of building locally and
+# pasting terminal output, this workflow builds the root Lake workspace
+# in CI on every push to a working branch, then commits
+# `build-logs/lean-build-status.json` (per-paper pass/fail, failing
+# modules, extracted file:line:col errors + sorry locations) back to the
+# branch. An agent reads that sidecar straight from the branch.
+#
+# Companion tooling: scripts/lean-build-all.sh, scripts/lib/lean-build-sidecar.py,
+# build-logs/README.md (the same sidecar can be produced locally with
+# `./scripts/lean-build-all.sh --commit-sidecar`).
+#
+# Loop prevention
+# ───────────────
+#   * `paths:` excludes build-logs/** (a sidecar-only commit does not
+#     match the Lean-relevant path filter, so it never re-triggers), and
+#   * the commit message carries `[skip ci]` as a second guard.
+
+name: Lean build sidecar
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch/ref to build (blank = the selected ref)'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+
+# Only one sidecar build per branch at a time; a newer push supersedes.
+concurrency:
+  group: lean-build-sidecar-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-sidecar:
+    name: Build all papers + commit sidecar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Install Lean via elan
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      # Hybrid 3-tier Mathlib/.lake cache (same composite action as Lean CI).
+      - name: Restore Lean cache
+        uses: ./.github/actions/lake-cache-restore
+        with:
+          package: mathlib
+          lake-root: .
+          manifest-files: |
+            lean-toolchain
+            lakefile.toml
+            content/quantum-observable-universe/lean/lakefile.toml
+            content/unital-groebner-bases/lean/lakefile.toml
+            content/fred2005-formal-groups/lean/lakefile.toml
+
+      # Build every paper from the root workspace and generate the sidecar.
+      # continue-on-error so a FAILING build still yields a committed
+      # sidecar (capturing the failure is the whole point).
+      - name: Build all papers + generate sidecar
+        continue-on-error: true
+        run: |
+          lake update
+          bash scripts/lean-build-all.sh --log-dir build-logs
+
+      - name: Commit + push sidecar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain -- build-logs/lean-build-status.json)" ]; then
+            echo "Sidecar unchanged — nothing to commit."
+            exit 0
+          fi
+          git add build-logs/lean-build-status.json
+          git commit -m "build: lean-build sidecar [skip ci]" -- build-logs/lean-build-status.json
+          # The branch may have advanced while CI ran; rebase our single
+          # sidecar commit on top, then push.
+          git pull --rebase --autostash origin "$GITHUB_REF_NAME" || true
+          git push origin "HEAD:$GITHUB_REF_NAME" || echo "::warning::sidecar push failed (branch moved during build)"

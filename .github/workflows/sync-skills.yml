@@ -1,0 +1,92 @@
+name: Sync Skills
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Sync skill packages
+        run: |
+          set -euo pipefail
+
+          CONFIG="skills-config.json"
+          if [ ! -f "$CONFIG" ]; then
+            echo "::error::skills-config.json not found"
+            exit 1
+          fi
+
+          PACKAGE_COUNT=$(jq '.packages | length' "$CONFIG")
+          echo "Found $PACKAGE_COUNT package(s) to sync"
+
+          for i in $(seq 0 $((PACKAGE_COUNT - 1))); do
+            NAME=$(jq -r ".packages[$i].name" "$CONFIG")
+            REPO=$(jq -r ".packages[$i].repo" "$CONFIG")
+            SRC_PATH=$(jq -r ".packages[$i].path" "$CONFIG")
+            REF=$(jq -r ".packages[$i].ref // \"main\"" "$CONFIG")
+
+            echo "::group::Syncing package: $NAME from $REPO ($REF)"
+
+            MODE=$(jq -r ".packages[$i].mode // \"sync\"" "$CONFIG")
+            if [ "$MODE" = "reference" ]; then
+              echo "  Skipping $NAME (mode=reference, fetched on demand)"
+              echo "::endgroup::"
+              continue
+            fi
+
+            DEST=".claude/skills/$NAME"
+            CLONE_DIR=$(mktemp -d)
+
+            # Sparse checkout: only the skills source directory
+            git clone --depth 1 --filter=blob:none --sparse \
+              --branch "$REF" \
+              "https://github.com/${REPO}.git" "$CLONE_DIR"
+            git -C "$CLONE_DIR" sparse-checkout set "$SRC_PATH"
+
+            # Read the list of selected skills
+            SKILLS=$(jq -r ".packages[$i].skills[]" "$CONFIG")
+
+            # Wipe previous sync for this package, then copy selected skills
+            rm -rf "$DEST"
+            mkdir -p "$DEST"
+
+            for SKILL in $SKILLS; do
+              SKILL_SRC="$CLONE_DIR/$SRC_PATH/$SKILL"
+              if [ -d "$SKILL_SRC" ]; then
+                cp -r "$SKILL_SRC" "$DEST/$SKILL"
+                echo "  ✓ $SKILL"
+              else
+                echo "  ⚠ $SKILL not found in $REPO — skipping"
+              fi
+            done
+
+            rm -rf "$CLONE_DIR"
+            echo "::endgroup::"
+          done
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git add -A .claude/skills/
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: nightly skills sync from upstream packages"
+          git push

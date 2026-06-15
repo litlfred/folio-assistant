@@ -1,0 +1,565 @@
+# Witness pipeline CI — keeps the QOU computation witnesses green
+#
+# Triggers
+# ────────
+#   pull_request — PRs that touch any of:
+#     - folio-assistant/computations/{habiro_*,markov_*,witness_base,
+#       derivation_chain*,build_*}.py
+#     - any *.witness.json or *.derivation.json under
+#       folio-assistant/computations/
+#     - this workflow file
+#   push (main) — same path filters
+#   workflow_dispatch — manual run
+#
+# Steps
+# ─────
+#   1. Set up Python + uv + sympy + mpmath.
+#   2. Habiro / Markov pipeline:
+#      - habiro_witness_validator (tail_in_ideal axiom)
+#      - markov_substrate_realizer (Place → realize)
+#      - markov_pipeline_cross_validator (skips if term6 absent)
+#      - habiro_interpolate_cross_validator
+#   3. Derivation-chain pipeline:
+#      - derivation_chain_validator runs structural + script-existence
+#        + leaf-value checks across every *.derivation.json + emits
+#        the chain audit witness.
+#   4. Drift check on regenerated witnesses (timestamp-tolerant).
+
+name: Witness pipeline
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install sympy mpmath numpy scipy
+
+      - name: Install MPFR/GMP system libs (clarabel-mpfr)
+        run: sudo apt-get update && sudo apt-get install -y libmpfr-dev libgmp-dev
+
+      - name: Cache cargo + hecke-engine target
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            tools/hecke-engine/target
+          key: clarabel-mpfr-${{ runner.os }}-${{ hashFiles('tools/hecke-engine/Cargo.toml', 'tools/hecke-engine/Cargo.lock') }}
+          restore-keys: clarabel-mpfr-${{ runner.os }}-
+
+      - name: Provision clarabel-MPFR binary (prebuilt artifact else cargo build)
+        # The high-precision SDP/LP path (pyhecke.lp_dual_solver) routes
+        # through this MPFR binary; without it the solver silently falls back
+        # to scipy/cvxpy float64. Prefer the artifact published by
+        # build-clarabel-mpfr.yml (avoids a cold cargo build); fall back to
+        # building from source (cargo cache above keeps it fast) when the
+        # artifact is unavailable (first run, expired, fork). Autodetected at
+        # tools/hecke-engine/target/release/clarabel-operator-selection-lp.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          BIN_DIR=tools/hecke-engine/target/release
+          BIN="$BIN_DIR/clarabel-operator-selection-lp"
+          mkdir -p "$BIN_DIR"
+          # 1. Try the prebuilt artifact from the latest successful
+          #    build-clarabel-mpfr run on this repo.
+          RUN_ID=$(gh run list --workflow build-clarabel-mpfr.yml \
+            --status success --limit 1 --json databaseId \
+            --jq '.[0].databaseId' 2>/dev/null || true)
+          if [ -n "$RUN_ID" ]; then
+            gh run download "$RUN_ID" \
+              -n clarabel-operator-selection-lp -D "$BIN_DIR" 2>/dev/null \
+              && echo "using prebuilt clarabel-MPFR artifact (run $RUN_ID)" || true
+          fi
+          # 2. Fallback: build from source.
+          if [ ! -f "$BIN" ]; then
+            echo "prebuilt artifact unavailable — building from source"
+            cargo build --release \
+              --manifest-path tools/hecke-engine/Cargo.toml \
+              --features clarabel-mpfr \
+              --bin clarabel-operator-selection-lp
+          fi
+          chmod +x "$BIN" || true
+          test -x "$BIN" \
+            && echo "clarabel-MPFR binary ready" \
+            || (echo "::error::clarabel-MPFR binary missing" && exit 1)
+
+      - name: Smoke-test clarabel-MPFR LP/SDP path (strict — no float64 fallback)
+        # QOU_REQUIRE_CLARABEL=1 makes the solver RAISE rather than silently
+        # downgrade to scipy/cvxpy float64. Confirms the MPFR binary is wired
+        # before any witness compute runs.
+        env:
+          QOU_REQUIRE_CLARABEL: "1"
+        run: |
+          PYTHONPATH=tools/pyhecke/python python3 -c "
+          import numpy as np
+          from pyhecke.lp_dual_solver import solve_operator_selection_lp, solve_psd_operator_selection_sdp
+          t=np.array([1.,2.,3.]); G=np.eye(3)
+          lp=solve_operator_selection_lp(t,G,1.0).to_dict()
+          sdp=solve_psd_operator_selection_sdp(t,G,1.0).to_dict()
+          assert lp['feasible'] and sdp['feasible'], 'clarabel-MPFR solve infeasible'
+          assert abs(lp['duality_gap'])<1e-9, f\"gap {lp['duality_gap']}\"
+          print('clarabel-MPFR LP/SDP strict smoke OK')
+          "
+
+      - name: Run hyperbolic_volumes (Vol(4_1) for MostowRigidity)
+        # Emits hyperbolic-volumes.witness.json containing Vol(4_1)
+        # at 50 dps via the Clausen-function identity, and a
+        # conservative gap lower bound.  Source of truth for the
+        # `:leanval[vol_4_1]` / `:leanval[mostow_gap_4_1]` Lean
+        # literals in QOU/Encounter/MostowRigidity.lean.
+        run: python3 folio-assistant/computations/hyperbolic_volumes.py
+
+      - name: Run codata_masses (m_e/m_p/m_n re-export)
+        # Emits codata-masses.witness.json re-exporting the CODATA
+        # 2022 + AME 2020 proton/neutron/electron masses from
+        # codata_constants.py.  Source of truth for the
+        # `:leanval[m_p_MeV]` / `:leanval[m_n_MeV]` /
+        # `:leanval[m_e_MeV]` tags in the .lean tree.
+        run: python3 folio-assistant/computations/codata_masses.py
+
+      - name: Run habiro_witness_validator
+        run: python3 folio-assistant/computations/habiro/habiro_witness_validator.py
+
+      - name: Run markov_substrate_realizer
+        run: python3 folio-assistant/computations/markov/markov_substrate_realizer.py
+
+      - name: Run markov_pipeline_cross_validator (skips if term6 absent)
+        run: python3 folio-assistant/computations/markov/markov_pipeline_cross_validator.py
+
+      - name: Run habiro_interpolate_cross_validator
+        run: python3 folio-assistant/computations/habiro/habiro_interpolate_cross_validator.py
+
+      # ── Picard–Lefschetz / SW thimble correctness chain ─────────
+      # REMOVED (2026-05-24): all 6 thimble-dependent steps removed
+      # per aggressive-cleanup workplan. These scripts are non-canonical
+      # probes that don't feed any production mass prediction. Their
+      # thimble ODE tracing is inherently non-deterministic across
+      # platforms, causing recurring CI failures. Scripts preserved in
+      # the repo but no longer gating CI.
+      # Removed: picard_lefschetz_thimble, mobius_limit_from_thimble,
+      #   baryon_product_from_alt, sw_period_thimble_equivalence,
+      #   residue_algebraic_verification, jet_gb_pl_correspondence
+
+      - name: Run derivation_chain_validator
+        # Walks every *.derivation.json: structural well-formedness,
+        # SCRIPT_CITED file-existence checks, COMPUTATIONAL leaf-value
+        # consistency.  Emits derivation-chain-audit.witness.json with
+        # per-chain results + the global witness-trust audit.
+        run: python3 folio-assistant/computations/derivation_chain_validator.py
+
+      - name: E_0 / Q_β(n) calibration audit (strict)
+        # Per CAL-3 (`prop:three-calibration-inputs`), every site
+        # that uses E_0 or Q_β(n) must derive from the authoritative
+        # `experimental_constants.Q_NEUTRON_MEV` (computed from CODATA
+        # m_n - m_p - m_e). Strict mode fails CI if any active code
+        # site hardcodes the value or anchors on proton mass instead.
+        # Restored to canonical location in #567 — the script was
+        # incorrectly swept into _deprecated/ by 1026fa8b along with
+        # 262 actually-unblocked scripts; it is an active CI gate
+        # for the 22 ppb m_μ/m_e calibration floor (#564 1ppb plan).
+        run: |
+          python3 folio-assistant/computations/audits/e0_calibration_audit.py --strict
+
+      - name: Cross-check tr_M @ q_0 — Hoefsmit vs markov_peel (1ppb)
+        # Independent-path consistency gate for the canonical Markov
+        # trace at the calibrated substrate parameter q_0. Both paths
+        # store full 50-dps decimal strings; the script reports
+        # relative |Δ| via mpmath. Strict mode fails CI on any > 1ppb
+        # divergence — this is the **primary precision regression
+        # gate** for the 1 ppb program goal.
+        # Restored to canonical location in #567 (same provenance
+        # as e0_calibration_audit above).
+        run: |
+          python3 folio-assistant/computations/cross_check_trM_1ppb.py --strict
+
+      - name: q₀ constant-re-pin staleness detector (warn-only)
+        # Per docs/audits/2026-05-30-q0-repin-stale-witness-audit.md:
+        # the run_pipeline.py staleness check keys on producer
+        # scriptHash, which is blind to constant re-pins (a numeric
+        # constant change that touches no producer script).  The
+        # detector scans every *.witness.json for q₀-shaped decimals
+        # that diverge from the live Q_50_DIGIT_STR and flags them.
+        # ≈394 witnesses currently carry the pre-re-pin (muon)
+        # q₀=1.109978595554 (commit 01c18125 re-pinned to the proton
+        # anchor 1.109978582751 on 2026-05-28); they need a one-time
+        # batched regen (~15-hour overnight job per the audit doc).
+        # Without --strict the detector returns 0 even when stale
+        # matches exist (the ~394 baseline) — only --strict promotes
+        # stale-found to exit 1.  Exit 2 (basin/regex drift, detector
+        # broken) and runtime errors should still fail CI, so do NOT
+        # wrap with `|| true` — that would mask exactly the failure
+        # modes we want to catch.  Promote to --strict once the
+        # ~394 stale witnesses have been regenerated.
+        run: |
+          python3 folio-assistant/computations/substrate/witness_constant_staleness.py
+
+      - name: Axiomatic Markov-trace recursive reducer (H_3..H_6)
+        # Per prop:markov-trace-recursive-reducer: terminating axiom-
+        # only reducer for arbitrary H_n braid words. Smoke-tests the
+        # recursive descent on representative atomic-braid words
+        # (proton, neutron-like, deuteron disjoint) and emits the
+        # symbolic closed form + numerical value at q_0 for each.
+        run: |
+          python3 folio-assistant/computations/markov/markov_trace_recursive.py
+
+      - name: Multi-atom axiomatic Markov-trace anchor (proton/neutron/deuteron)
+        # Per prop:markov-trace-recursive-reducer + prop:markov-trace-
+        # axiomatic-closed-form: applies the recursive reducer to all
+        # supported atoms, verifies the disjoint-product property
+        # tr_M(p ⊗ n) = tr_M(p) · tr_M(n) on the H_6 deuteron word
+        # (mpmath-exact at 50 dps), and cross-checks the proton against
+        # markov_trace_atomic_proton_full at float64 precision. Exits
+        # non-zero on any structural failure.
+        run: |
+          python3 folio-assistant/computations/markov/markov_trace_axiomatic_multi_atom.py
+
+      - name: Full-twist Δ_n² scalar verification
+        # Per prop:categorical-neutrality-saturated-shells: tabulates
+        # c(λ) and q^c(λ) per Wedderburn block at n ∈ {1,...,12};
+        # records the empirical realisability of the categorical-
+        # neutrality predicate at magic n. Informational compute.
+        run: |
+          python3 folio-assistant/computations/full_twist_delta_n2_verification.py
+
+      - name: Empirical Δ_λ tabulation (ρ_K^full Proposal 1)
+        # Per `prop:rho-k-h3a-refinement` + workplan
+        # docs/audits/2026-05-09-workplan-update-rho-k.md Proposal 1:
+        # Solves Σ c_λ Δ_λ = ΔM/m_e under 4 candidate ansätze for
+        # K ∈ {D, T, ³He, ⁴He} from cached chi witnesses.  Reports
+        # best λ* per ansatz + cross-atom recurrence pattern.
+        # Informational; does not gate CI.
+        run: |
+          python3 folio-assistant/computations/delta_lambda_empirical_tabulation.py || true
+
+      - name: Compute-audit static scan (P14/P15/P16/P21/P30, warn-only)
+        # Per `local/compute-audit` skill: tracks the count of
+        # P-pattern hits per file. Warn-only — purpose is to detect
+        # regressions (count growing) on the existing 260-finding
+        # baseline. Re-emits compute-audit-scan.witness.json under
+        # folio-assistant/computations/. See PR #565 audit doc:
+        # docs/audits/2026-05-08-compute-infrastructure-audit.md F11.
+        run: |
+          python3 folio-assistant/computations/compute_audit_scan.py
+          python3 -c "import json; d=json.load(open('folio-assistant/computations/compute-audit-scan.witness.json')); print('compute-audit-scan:', d['data']['by_pattern_count'])"
+
+      - name: Per-nucleus witness lean_uniqueness_ref wiring (warn-only)
+        # Per the post-#1537 wiring campaign: every per-nucleus
+        # witness should cite its SDP-uniqueness theorem via a
+        # `lean_uniqueness_ref` field. The audit tracks coverage
+        # and surfaces missing-wiring witnesses. Warn-only initially;
+        # flip to `--strict` once coverage > 80% (currently ~18%).
+        # See PRs #1537, #1542, #1554, #1557, #1559, #1572 + workplan
+        # docs/workplans/2026-05-31-witness-lean-uniqueness-ref-wiring.md.
+        run: |
+          python3 folio-assistant/computations/audit_lean_uniqueness_ref_wiring.py || true
+          python3 -c "import json; d=json.load(open('folio-assistant/computations/audit-lean-uniqueness-ref-wiring.witness.json')); print(f\"lean_uniqueness_ref coverage: {d['data']['wired_count']}/{d['data']['per_nucleus_witnesses_count']} ({d['data']['coverage_fraction']:.1%})\")" || true
+
+      - name: Fitted-labelled-canonical audit (CAL-4 discipline, warn-only)
+        # Per CAL-4 audit 2026-05-22: catches the
+        # "fitted literal disguised as substrate-canonical derivation"
+        # pattern (e.g. m_p_borromean_verification_50dps.py before the
+        # truth-in-naming cleanup).  Scans every production .py under
+        # folio-assistant/computations/ for module-level hardcoded
+        # high-precision literals combined with a substrate /
+        # canonical / derived claim in the docstring, where neither
+        # the variable name nor the surrounding 1000-char context
+        # tags the literal as validation/CODATA/acknowledged/audit-
+        # only/drift-risk.  Warn-only at the current 0-issue baseline
+        # so future regressions are visible without breaking CI;
+        # promote to --strict when the discipline is stable.
+        # See docs/canonical-derivation-cheat-sheet.md §5 fix #1 for
+        # the originating LAMBDA_PROTON_DOC case.
+        run: |
+          python3 folio-assistant/computations/audits/fitted_labelled_canonical_audit.py || true
+          python3 -c "import json; d=json.load(open('folio-assistant/computations/audits/fitted-labelled-canonical-audit.witness.json')); print(f'fitted-labelled-canonical-audit: flagged={d[\"data\"][\"flagged_script_count\"]} issues={d[\"data\"][\"total_issues\"]} (baseline 0)')"
+
+      - name: c_k/d_k canonical registry guard (strict)
+        # Enforces the flip-flop guard from
+        # docs/coordination/ck-dk-canonical-registry.md §8: a WIRED
+        # c_k/d_k rung MUST be tier `canonical`, and the JSON's
+        # production wiring must match the per-rung `wired` flags.
+        # Strict — fails CI on drift so the c_k/d_k status cannot
+        # silently flip-flop again (the recurring problem the registry
+        # was built to stop). See PR #1813 (registry) + #1818 (paper
+        # alignment). Validator: docs/coordination/ck_dk_registry_validate.py.
+        run: python3 docs/coordination/ck_dk_registry_validate.py
+
+      - name: NEGATIVE-finding re-entry guard (purged non-canonical forms, STRICT)
+        # Blocks PURGED non-canonical forms from silently re-entering
+        # production compute via a sibling branch — the failure mode that
+        # forced lambda_scale_yekutieli_extended to be purged TWICE
+        # (PR #985 NEGATIVE, then PR #1027 production revert). Registry:
+        #   - lambda_scale_yekutieli_extended (Yekutieli −G·h² correction,
+        #     falsified by the S₄↓S₃ bijection κ=+0.5);
+        #   - lambda_scale_family_a + the lambda_scale_* symbol prefix
+        #     (owner directive 2026-05-24 "no lambda-scale ANYWHERE in
+        #     production"; absorbed into VolDensity(K), PR #1080/#1089);
+        #   - purged module lambda_yekutieli_extended_borromean.
+        # AST-based: historical mentions in comments/docstrings are NOT
+        # false-positives (only real import/def/use is flagged). STRICT
+        # by design — a re-entry MUST fail CI; that is the guard's whole
+        # purpose. The Yekutieli non-abelian Stokes FUNCTOR stays
+        # canonical (only the empirical correction is banned); y_λ / Δ_λ
+        # are canonical and not in the registry.
+        run: |
+          python3 folio-assistant/computations/audits/noncanonical_reentry_audit.py --strict
+
+      - name: I14 witness-provenance audit (warn-only)
+        # Every *.witness.json under folio-assistant/computations/
+        # must declare engine, scriptFile, commitSha (the
+        # WitnessBuilder convention). Witnesses without these three
+        # fields cannot be reproduced or traced back to source code.
+        # Warn-only at the 113-witness baseline — purpose is to
+        # detect regressions (count growing) while the rest of the
+        # legacy artifacts get migrated to WitnessBuilder.
+        # Per repo-owner directive 2026-05-19: "fix all of these
+        # tables so they always have correct witnessed data from
+        # canonical pipeline. too much divergence."
+        run: |
+          python3 folio-assistant/computations/audits/witness_provenance_audit.py
+          python3 -c "import json; d=json.load(open('folio-assistant/computations/audits/witness-provenance-audit.witness.json')); print('witness-provenance:', d['data']['counts'])"
+
+      - name: Run lp_dual_witness_validator (--strict-wired)
+        # Per prop:operator-selection-lp § dual program: every wired
+        # LP/SDP witness MUST include the LP dual variables
+        # (y0_star, y_star, active_set, primal_obj, dual_obj,
+        # duality_gap). --strict-wired enforces only the wired subset
+        # (currently 0/37 wired LP failures, so promotion to fail is
+        # safe). The orphan/audit-only set is still warn-only via the
+        # default mode below. PR #565 audit F11.
+        run: python3 folio-assistant/computations/lp_dual_witness_validator.py --strict-wired
+
+      - name: Run lp_dual_witness_validator (audit-only set, warn-only)
+        # Same validator, default (non-strict) mode: covers the audit-
+        # only and orphan witnesses for visibility. Migration target:
+        # route LP solves through lp_dual_solver.py.
+        run: python3 folio-assistant/computations/lp_dual_witness_validator.py
+
+      - name: Run bound_state_observable_validator (--strict)
+        # Per prop:confinement-frobenius-reciprocity: every witness
+        # whose description / computation / name claims a bound-state
+        # observable must include gram_matrix, gram_inverse,
+        # lp_active_set, shadow_prices — OR carry an explicit
+        # "observable_type": "raw_trace" / "pslq_probe" opt-out.
+        # PR #565 F5 closed the two outstanding tickets
+        # (gt-matrix-pslq-probe → pslq_probe; t35-weak-vertex →
+        # raw_trace) and promoted this gate from warn to fail.
+        run: python3 folio-assistant/computations/bound_state_observable_validator.py --strict
+
+      - name: Witness wiring audit (warn-only)
+        # Three-bucket triage of every Python `.witness.json`:
+        #   wired   → referenced by `computation.witness` in some content block
+        #   audit-only → declares top-level `auditOnly: docs/audits/*.md`
+        #   orphan  → neither (actionable)
+        # Currently warn-only.  After per-directory orphan count drops
+        # below 50, swap `--warn-only` for `--max-per-dir 5 --baseline N`
+        # to enforce the §5 budget gate.  See scripts/audit-wiring.ts and
+        # `develop triage policy` PR for the full policy.
+        run: |
+          # Install bun on demand (workflow's other steps are pure Python).
+          curl -fsSL https://bun.sh/install | bash
+          export PATH="$HOME/.bun/bin:$PATH"
+          bun run scripts/audit-wiring.ts --warn-only
+
+      - name: Section-story compliance audit (strict on majors)
+        # Enforces the §Story coherence (STRICT) policy from PR #738
+        # (.claude/skills/local/detangler-integration-watcher.md).
+        # Reports 8 finding kinds: missing-section-story / missing-
+        # chapter-intro / generic-section-name / missing-chapter-manifest
+        # (major) and section-lead-too-short / abrupt-chapter-ending /
+        # section-lead-block-title-list / section-narrative-drift (minor).
+        # The script's exit code is the major-finding count (capped at 255).
+        # As of PR #847 + the post-merge refresh, QOU has 0 major findings,
+        # so the gate is strict on majors. Minor findings are surfaced via
+        # the JSON artifact but do not fail the build.
+        run: |
+          export PATH="$HOME/.bun/bin:$PATH"
+          bun run scripts/section-story-audit.ts
+          # Always emit JSON for download as an artifact.
+          bun run scripts/section-story-audit.ts \
+            --json --out docs/audits/section-story-audit-latest.json || true
+
+      - name: Upload section-story audit JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: section-story-audit
+          path: docs/audits/section-story-audit-latest.json
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Trivial-skeleton audit (baseline-strict)
+        # Flags `.lean` declarations whose body is a tautological
+        # constant — the def/instance is Lean-verified but encodes
+        # none of the conjectural content.  Spec-compliant under
+        # CLAUDE.md §3b-cond ("class is inhabited") but should be
+        # upgraded to faithful instances as the genuine mathematics
+        # is formalised.
+        #
+        # Patterns: const_zero, prop_true, punit_type, punit_unit,
+        # one_def, id_def, *skeleton/*trivial instances, holds_trivial.
+        #
+        # **Baseline-strict mode**: per-pattern budgets are pinned at
+        # the current counts (108 flagged total).  Any *new* trivial
+        # skeleton beyond the baseline fails CI.  As Buckets 1–4 land
+        # (workplan: docs/audits/2026-05-08-trivial-skeleton-workplan.md
+        # §"Buckets"), this section's budgets should be tightened
+        # accordingly.
+        #
+        # To re-baseline after a clean-up PR: drop the corresponding
+        # `name=N` entry's value to the post-clean-up count.
+        run: |
+          export PATH="$HOME/.bun/bin:$PATH"
+          # Ensure the script's deps (glob) resolve against
+          # content/package.json by running with --cwd content.
+          set -o pipefail
+          # Baselines (re-baseline after each clean-up parcel):
+          # 2026-05-08: Buckets 1+2+3+4+5′ — total 111 → 62.
+          #   const_zero 38 → 34, skel_inst 21 → 12, prop_true 15 →  1
+          #   (only InSymmetricIdempotent, per-callsite by design),
+          #   punit_type 14 → 0 (B4 ✓), punit_unit 2 → 0 (B4 ✓),
+          #   one_def 10 → 9, holds_trivial 8 → 4.  +2 buffer per
+          #   pattern to absorb local/CI minor discrepancies.
+          # 2026-05-09: PR #607 (merge `48732e1d`) replaced the 12
+          #   `_holds := trivial` placeholders in `CanonicalKnotIdSDP`
+          #   with structurally-discharged `by decide` proofs
+          #   (`structurallyValidBinding`, `evenPower`, `length ≤ 4`).
+          #   Trivial-skeleton-audit `holds_trivial` count: 12 → 0.
+          #   Budget stays at 2 — bumping it would only hide
+          #   future regressions.
+          #
+          # Strict-gate (B6): the `|| true` mask has been dropped.
+          # Any new trivial-skeleton occurrence beyond the budget
+          # below fails CI.  To re-baseline after a clean-up PR,
+          # drop the corresponding `name=N` entry to the post-clean-
+          # up count and update the comment above.
+          bun run --cwd content pipeline/trivial-skeleton-audit.ts \
+            --max-per-pattern \
+              "const_zero=3,skel_inst=2,prop_true=2,punit_type=2,one_def=2,holds_trivial=2,punit_unit=2,id_def=2,const_zero_typed=2,first_arg=12"
+
+      - name: §3b-cond conditional-class banner audit (strict + baseline-allowlist)
+        run: |
+          # Enforces CLAUDE.md §3b-cond compliance: every conditional-
+          # on-class proposition must (a) carry a "Theorem (conditional
+          # on …)." banner in its .md, AND (b) carry the upstream
+          # conjecture's class as an explicit [Instance] hypothesis in
+          # its .lean.
+          #
+          # Currently 12 of 132 conditional-on-class candidates are fully
+          # compliant; the other 232 (label-level) gaps are tracked in
+          # `docs/audits/2026-06-03-conditional-class-banner-baseline.json`
+          # as the baseline-allowlist. The `--strict` exit gate fails only
+          # on NEW labels (regressions beyond the baseline) — not the
+          # accepted pre-existing gap set. Refresh the allowlist via
+          # `bun run … --emit-baseline` after deliberately discharging
+          # (or accepting) a gap. See PR #1735 for the rationale.
+          export PATH="$HOME/.bun/bin:$PATH"
+          bun run content/pipeline/conditional-class-banner-audit.ts \
+            --strict \
+            --baseline-allowlist docs/audits/2026-06-03-conditional-class-banner-baseline.json
+
+      - name: :leanval codemod gate (strict)
+        # Verifies that every Lean numeric literal carrying a
+        # `-- :leanval[NAME]` tag matches the canonical witness
+        # registered in content/values/registry.ts.  Produces a
+        # non-zero exit if any tagged literal has drifted from
+        # its witness; the fix is `bun run pipeline/codemod-leanval.ts
+        # --write`.
+        run: |
+          export PATH="$HOME/.bun/bin:$PATH"
+          bun run content/pipeline/codemod-leanval.ts --check
+
+      - name: Detect drift in committed witnesses
+        run: |
+          # The validators rewrite their output witnesses on every run.
+          # Some fields are expected to differ between local commits
+          # and CI re-runs (timestamps, commit SHAs, engine versions,
+          # script hashes when the script itself was just touched).
+          # Anything else differing means a genuine numerical or
+          # structural change.
+          set -eu
+          # Use git pathspec `:(glob)` magic so git does the glob
+          # expansion internally — avoids potential "argument list
+          # too long" if the witness/derivation directory grows
+          # past the OS ARG_MAX on shell glob expansion.
+          #
+          # Float64-flaky exclusions: `:(exclude)…` for witnesses
+          # whose Python producer uses bare float64 ops at the
+          # digit-17 precision boundary. CPU/microarch differences
+          # across GitHub Actions runners flip bits at that level,
+          # producing apparent "drift" that is not a numerical
+          # change. The proper fix is to migrate the producer to
+          # mpmath (50-dps consistent across architectures); until
+          # then, excluding the witness from the bit-stability gate
+          # is the pragmatic interim.
+          # Audit-witness glob exclusions: files ending in
+          # `-audit.witness.json`, `-scan.witness.json`,
+          # `-compliance.witness.json` are *state-tracking outputs*
+          # (e.g. compute-audit-scan, i1/i2 audits, canonical-
+          # derivation-pipeline-compliance). Their purpose is to
+          # refresh as the underlying codebase changes — drift in
+          # finding counts IS the signal. Bit-stability gating
+          # applies to production numerical witnesses, not audits.
+          #
+          # methodology-deprecation.witness.json is a hand-curated
+          # narrative file (per-particle methodology audit + removed
+          # legacy artifacts record); structural edits are expected.
+          #
+          # Thimble scripts removed from CI (2026-05-24) — no longer
+          # need per-file exclusions. Only the standing exclusions
+          # for audit-state + methodology-narrative witnesses remain.
+          PATHSPECS=':(glob)folio-assistant/computations/**/*.witness.json
+          :(glob)folio-assistant/computations/**/*.derivation.json
+          :(exclude,glob)folio-assistant/computations/**/delta-lambda-empirical-tabulation.witness.json
+          :(exclude,glob)folio-assistant/computations/**/*-audit.witness.json
+          :(exclude,glob)folio-assistant/computations/**/*-scan.witness.json
+          :(exclude,glob)folio-assistant/computations/*-compliance.witness.json
+          :(exclude)folio-assistant/computations/methodology-deprecation.witness.json'
+          if git diff --quiet -- $PATHSPECS; then
+            echo "Witnesses + derivation chains bit-stable."
+            exit 0
+          fi
+          echo "Witnesses changed — filtering expected drift fields..."
+          # --diff-filter=ACMR: only Added/Copied/Modified/Renamed —
+          # exclude Deleted (D). Witness deletions are intentional
+          # cleanup (e.g. legacy-compute removals in PR #781); they
+          # go through PR review, not the bit-stability gate.
+          # Field filter — every key here is metadata about HOW
+          # the witness was produced, not its NUMERICAL result.
+          # Drift in these fields is expected (timestamp, run host,
+          # engine swap, file-size of an unrelated upstream, etc.)
+          # and must not gate the bit-stability check.
+          #
+          # NB: `q_0` is excluded because the substrate parameter
+          # is rendered from a Python float through mpmath; engine
+          # swaps shift the last digits without changing the value.
+          # If you suspect a real q_0 regression (first few digits
+          # changing), use a numerical comparator instead of this
+          # gate.
+          drift=$(git diff --diff-filter=ACMR -- $PATHSPECS | \
+                  grep -E "^[+-]" | \
+                  grep -vE "^\+\+\+|^---" | \
+                  grep -vE '"([a-zA-Z_]*_)?(computedAt|timestamp|durationMs|trace_time_sec|time_sec|elapsed_sec|elapsed_ms|commitSha|scriptCommitSha|scriptHash|engineVersion|engine|engine_version|description|sha256|size_bytes|q_0|chi_cache_witness|timeout_per_atom_sec|method|precision|dps)":' || true)
+          if [ -z "$drift" ]; then
+            echo "Only environment / timestamp drift — OK."
+            exit 0
+          fi
+          echo "Substantive witness drift detected:"
+          echo "$drift"
+          exit 1

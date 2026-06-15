@@ -1,0 +1,161 @@
+name: pyhecke-native wheels
+
+# Build pyhecke_native wheels for Linux/macOS × Python 3.10–3.12
+# using cibuildwheel. On push to main, also publish to GitHub Releases
+# (draft). PyPI publication is opt-in via workflow_dispatch
+# (`publish: pypi` or `testpypi`) — uses Trusted Publishers (OIDC),
+# matching the pyhecke-pypi-publish.yml pattern (Tier-1 item 1b).
+#
+# Manual trigger: gh workflow run "pyhecke-native wheels"
+# Auto-trigger:   push to main that touches tools/pyhecke-native/
+#                 or tools/hecke-engine/ (the underlying Rust crate)
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish target: none (build only), testpypi (dry-run), or pypi (production).'
+        required: false
+        default: 'none'
+        type: choice
+        options:
+          - 'none'
+          - 'testpypi'
+          - 'pypi'
+concurrency:
+  group: pyhecke-native-wheels-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_wheels:
+    name: Build wheels (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-14]
+    steps:
+      - uses: actions/checkout@v4
+
+      # Linux: GMP/MPFR are pre-installed on ubuntu-24.04 runners.
+      # macOS: install via brew.
+      # Windows is not a supported target.
+      - name: Install GMP/MPFR (macOS)
+        if: matrix.os == 'macos-14'
+        run: brew install gmp mpfr
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.21
+        env:
+          CIBW_BUILD: 'cp310-* cp311-* cp312-*'
+          # Skip 32-bit and musl (rug needs full GMP).
+          CIBW_SKIP: '*-musllinux_* *-manylinux_i686'
+          # Ship the clarabel-lp binding (operator_selection_lp — MPFR LP).
+          # Pulls clarabel + rug/MPFR into the wheel; gmp/mpfr dev headers
+          # are installed by CIBW_BEFORE_ALL below. Verified locally:
+          # `maturin build --features clarabel-lp` → importable manylinux wheel.
+          CIBW_ENVIRONMENT: 'MATURIN_PEP517_ARGS="--features clarabel-lp"'
+          CIBW_BEFORE_ALL_LINUX: |
+            yum install -y gmp-devel mpfr-devel || \
+              apt-get install -y libgmp-dev libmpfr-dev
+          CIBW_ARCHS_LINUX: 'x86_64'
+          CIBW_ARCHS_MACOS: 'arm64'
+          # maturin builds Rust extensions; this sets it as the build
+          # backend for cibuildwheel.
+          CIBW_BUILD_FRONTEND: 'build'
+          # Smoke test: import the module + call mn_chi (cheap) + confirm
+          # the clarabel-lp LP binding shipped.
+          CIBW_TEST_COMMAND: >
+            python -c "import pyhecke_native;
+            assert pyhecke_native.mn_chi([3], [2,1]) == 1, 'mn_chi sanity';
+            assert hasattr(pyhecke_native, 'operator_selection_lp'), 'clarabel-lp binding missing';
+            print('pyhecke_native', pyhecke_native.__version__, 'OK + clarabel-lp')"
+        with:
+          package-dir: tools/pyhecke-native
+          output-dir: wheelhouse
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.os }}
+          path: wheelhouse/*.whl
+
+  publish_release:
+    name: Attach wheels to GitHub Release
+    needs: build_wheels
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: wheelhouse
+          merge-multiple: true
+
+      - name: List wheels
+        run: ls -la wheelhouse/
+
+      - name: Attach to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: pyhecke-native-${{ github.sha }}
+          name: pyhecke-native ${{ github.sha }}
+          body: |
+            Automatic wheel build for `pyhecke_native` from commit
+            ${{ github.sha }}.
+
+            Install: `pip install pyhecke_native --find-links <release-url>`
+
+            See `tools/pyhecke-native/README.md` for usage.
+          files: wheelhouse/*.whl
+          draft: true  # human review before publishing release
+          prerelease: true
+
+  publish_testpypi:
+    name: Publish wheels to TestPyPI (dry-run)
+    needs: build_wheels
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.publish == 'testpypi'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # required for Trusted Publishers (OIDC)
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/project/pyhecke-native/
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: wheelhouse
+          merge-multiple: true
+
+      - name: Upload wheels to TestPyPI via Trusted Publishers (OIDC)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          packages-dir: wheelhouse
+          skip-existing: true  # lets repeated dry-runs overwrite
+
+  publish_pypi:
+    name: Publish wheels to PyPI (production)
+    needs: build_wheels
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.publish == 'pypi'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # required for Trusted Publishers (OIDC)
+    environment:
+      name: pypi
+      url: https://pypi.org/project/pyhecke-native/
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: wheelhouse
+          merge-multiple: true
+
+      - name: Upload wheels to PyPI via Trusted Publishers (OIDC)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # repository-url defaults to https://upload.pypi.org/legacy/
+          packages-dir: wheelhouse
+          skip-existing: false  # production: refuse duplicate-version re-uploads

@@ -1,0 +1,165 @@
+name: Pyodide integration smoke
+
+# Tier-2 item 2e from workplan v2: verify pyhecke + qou-substrate +
+# witness-schema load in Pyodide (browser-side Python).
+#
+# Strategy: install the `pyodide` npm package on a Node runner, build
+# fresh wheels from the local repo, then load them via micropip in a
+# Pyodide instance. This avoids:
+#   - PyPI dependency (wheels not yet published when this PR lands)
+#   - Browser/Playwright overhead (Pyodide ships a Node entry point)
+#   - System-Python deps on the runner (pure Pyodide WASM Python)
+#
+# What we verify per package:
+#   - `import <pkg>` succeeds
+#   - A handful of canonical-surface symbols are reachable
+#   - No native deps got smuggled into the pure-Python surface
+#     (would manifest as "ModuleNotFoundError: No module named '_X'")
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: pyodide-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    name: Build wheels + Pyodide micropip-install smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'  # matches Pyodide 0.27.x Python target
+
+      - name: Install Python build tooling
+        run: pip install --upgrade build
+
+      # Build all 3 pure-Python wheels — published versions don't yet
+      # exist on PyPI, so we ship them from the local repo via
+      # `micropip.install("file://...")` below.
+      - name: Build wheels
+        run: |
+          mkdir -p _wheels
+          for pkg in qou-substrate pyhecke witness-schema; do
+            python -m build --wheel --outdir _wheels/ tools/${pkg}
+          done
+          ls -la _wheels/
+
+      - name: Install pyodide npm package
+        run: npm install pyodide@0.27.0
+
+      - name: Download Pyodide distribution (offline package store)
+        # Pyodide's npm package ships the runtime (asm.js + wasm) but
+        # NOT the per-package wheels (micropip, packaging, …).  By
+        # default `loadPackage(...)` fetches those wheels from
+        # cdn.jsdelivr.net at runtime, which has been intermittent.
+        # Pull the full distribution tarball once via curl and point
+        # `loadPyodide({ indexURL })` at the extracted directory so the
+        # wheel lookups are local-only and deterministic.
+        run: |
+          mkdir -p pyodide-dist
+          curl -sSL https://github.com/pyodide/pyodide/releases/download/0.27.0/pyodide-0.27.0.tar.bz2 \
+            | tar -xjC pyodide-dist/ --strip-components=1
+          ls pyodide-dist/ | head -5
+          test -f pyodide-dist/micropip-0.8.0-py3-none-any.whl
+
+      - name: Run Pyodide smoke script
+        run: |
+          cat > pyodide-smoke.mjs << 'JSEOF'
+          import { loadPyodide } from "pyodide";
+          import { readFileSync, readdirSync } from "fs";
+          import { resolve } from "path";
+
+          // Point indexURL at the locally-extracted Pyodide distribution
+          // so loadPackage(...) resolves micropip + packaging locally
+          // instead of fetching them from cdn.jsdelivr.net (which has
+          // been intermittent on CI runners).
+          const py = await loadPyodide({ indexURL: resolve("pyodide-dist") + "/" });
+          await py.loadPackage(["micropip"]);
+
+          // Discover built wheels dynamically so a version bump in any
+          // package's pyproject.toml doesn't require editing this file
+          // (the previous hardcoded list went stale when qou-substrate
+          // and pyhecke moved 0.1.0 → 0.1.1).  Order: install
+          // qou_substrate first (no deps), then witness_schema (only
+          // pydantic), then pyhecke (depends on qou_substrate).
+          const wheelDir = "_wheels";
+          const wheelOrder = ["qou_substrate", "witness_schema", "pyhecke"];
+          const wheelFiles = readdirSync(wheelDir).filter((f) => f.endsWith(".whl"));
+          const wheels = wheelOrder.map((pkg) => {
+            const w = wheelFiles.find((f) => f.startsWith(pkg + "-"));
+            if (!w) throw new Error(`wheel for ${pkg} not found in ${wheelDir}/`);
+            return w;
+          });
+          console.log("discovered wheels:", wheels);
+
+          // Pyodide's micropip can install file:// wheels — we mount
+          // the local _wheels/ via Pyodide's virtual FS.
+          for (const wheel of wheels) {
+            const data = readFileSync(`_wheels/${wheel}`);
+            py.FS.writeFile(`/${wheel}`, data);
+            await py.runPythonAsync(`
+              import micropip
+              await micropip.install("emfs:/${wheel}", keep_going=True)
+            `);
+            console.log(`✓ installed ${wheel}`);
+          }
+
+          // Smoke test: import + reach a few canonical-surface symbols.
+          // Catch + re-throw with full Python trace because Node's
+          // default top-level reject handler dumps Pyodide's minified
+          // runtime instead of the user trace, making CI failures
+          // unactionable.
+          let result;
+          try {
+          result = await py.runPythonAsync(`
+              import qou_substrate
+              from qou_substrate.constants import Q, Q_INV, HA
+              from qou_substrate.precision import set_compute_dps
+              from qou_substrate.witness import WitnessBuilder
+
+              import witness_schema
+              from witness_schema import ComputationWitness, PrecisionMetadata
+
+              import pyhecke
+              from pyhecke.wedderburn import q_dimension, partitions_of, wedderburn_weight
+              from pyhecke.constants import alpha_em, E_MOL, ALPHA_BORROMEAN
+
+              # Functional sanity
+              parts_of_4 = list(partitions_of(4))
+              assert len(parts_of_4) == 5, f"partitions_of(4) wrong: {parts_of_4}"
+
+              qdim = q_dimension((2, 1))
+              assert 1.9 < qdim < 2.1, f"q_dimension([2,1]) out of expected range: {qdim}"
+
+              # Round-trip a witness via the schema
+              w = ComputationWitness.model_validate({
+                "engine": "mpmath",
+                "engineVersion": "1.3.0",
+                "computedAt": "2026-05-24T00:00:00+00:00",
+                "assertions": [],
+                "precisionMetadata": {
+                  "compute_dps": 50, "output_dps": 40,
+                  "guard_digits": 10, "truncation_bound": "1e-40",
+                },
+              })
+              assert w.precisionMetadata.compute_dps == 50
+
+              f"qou_substrate={qou_substrate.__version__}, witness_schema={witness_schema.__version__}, pyhecke={pyhecke.__version__}, Q={Q:.6f}, alpha_em={alpha_em:.9f}, q_dim([2,1])={qdim:.6f}"
+          `);
+          } catch (err) {
+            console.error("Pyodide smoke Python eval failed:");
+            console.error(err.message || err);
+            throw err;
+          }
+          console.log("OK:", result);
+          JSEOF
+
+          node pyodide-smoke.mjs

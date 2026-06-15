@@ -1,0 +1,54 @@
+name: pyhecke
+
+on:
+  workflow_dispatch: {}
+
+concurrency:
+  group: pyhecke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install pyhecke (test extras)
+        working-directory: tools/pyhecke
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[test]"
+
+      - name: Run pytest
+        working-directory: tools/pyhecke
+        run: pytest -v
+
+      - name: Validate all certificates against schema
+        run: |
+          python <<'PY'
+          import json, sys
+          from pathlib import Path
+          from pyhecke import schema as pyhecke_schema
+          root = Path("tools/hecke-engine")
+          n, failed = 0, []
+          for p in sorted(root.glob("certificate-*.json")):
+              n += 1
+              try:
+                  with p.open() as f:
+                      pyhecke_schema.validate("certificate", json.load(f))
+              except Exception as e:
+                  failed.append((p.name, str(e)[:200]))
+          print(f"{n - len(failed)}/{n} certificates pass schema")
+          for name, err in failed:
+              print(f"  FAIL {name}: {err}")
+          sys.exit(1 if failed else 0)
+          PY

@@ -1,0 +1,153 @@
+name: Build paper-builder Docker image
+
+# Builds + pushes ghcr.io/litlfred/qou-paper-builder:<sha> on every
+# main commit that changes the Dockerfile + monthly on a cron, so the
+# image stays current with TeX Live + bun + Python security patches.
+#
+# Tag scheme (revised per PR #1104 review, Copilot):
+#   :latest     → tip of main (overwritten on every push)
+#   :<sha>      → exact commit SHA (immutable; what publish.yml pins).
+#                 ONLY emitted on push events — schedule rebuilds use
+#                 :<yyyymm> instead so a monthly cron can't repush a
+#                 different image bits under the same SHA tag.
+#   :<yyyymm>   → monthly anchor for rollback (e.g. :202605)
+#   :pr-<N>     → PR preview tag (built but never pushed for PRs)
+#
+# Phase B of the publish.yml parallelization plan
+# (PR #1099 / docs/workplans/2026-05-24-publish-yml-parallelization-plan.md).
+# The image is published unconditionally; Phase C wires publish.yml
+# to actually consume it.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    # Rebuild + push the image only when the image's own inputs change.
+    # (The :latest / :<sha> tags are gated to main pushes in the metadata
+    # step, so this is the only event that refreshes the pinned image.)
+    paths:
+      - '.github/docker/Dockerfile.paper-builder'
+      - '.github/workflows/paper-builder-image.yml'
+  schedule:
+    # Monthly rebuild (1st, 04:00 UTC) so the baked TeX Live + bun +
+    # Python stack picks up security patches even when the Dockerfile
+    # is unchanged. Emits the :<yyyymm> rollback anchor (see meta step).
+    - cron: '0 4 1 * *'
+
+# Job-level permissions per PR #1104 review (Copilot, least-privilege).
+# PR runs build the image without pushing, so they don't need
+# `packages: write`; only main / schedule / workflow_dispatch do.
+permissions:
+  contents: read
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: litlfred/qou-paper-builder
+
+jobs:
+  build:
+    name: Build + push paper-builder image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # packages: write only when we'll actually push. PR runs stay at
+      # the default (no packages permission).
+      packages: ${{ github.event_name != 'pull_request' && 'write' || 'read' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Free up ~10-15 GB on the GH-Actions runner before the
+      # texlive-full image build. Mirrors build-lean-mcp.yml's disk-
+      # reclaim pattern (per PR #1104 review, Copilot). texlive-full
+      # + the multi-stage buildx cache often comes close to filling
+      # the runner's default 14 GB free.
+      - name: Free disk space (apt + tool caches)
+        run: |
+          sudo rm -rf /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL \
+                      /usr/share/dotnet /usr/local/share/boost
+          sudo docker image prune -af || true
+          df -h /
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        # Skip on pull_request (no PR has write access to packages by
+        # default — only main builds push the image).
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags + labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          # Tag scheme — the immutable `:<sha>` tag is now restricted
+          # to `push` events. Scheduled / workflow_dispatch rebuilds
+          # use the `:<yyyymm>` (or PR-N) tag instead so a monthly
+          # cron rebuild can't repush the *same* commit SHA tag with
+          # different apt / pip / bun bits (per PR #1104 review,
+          # Copilot — would otherwise break SHA-pinned consumers).
+          tags: |
+            type=raw,value=latest,enable=${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+            type=sha,format=long,enable=${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+            type=schedule,pattern={{date 'YYYYMM'}}
+            type=ref,event=pr
+
+      - name: Build (and push on main / cron / dispatch)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: .github/docker/Dockerfile.paper-builder
+          # PR runs build but don't push (verifies the Dockerfile builds
+          # cleanly without touching the registry).
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=paper-builder
+          cache-to: type=gha,scope=paper-builder,mode=max
+
+      - name: Sanity check — pull + run every baked tool
+        # Only on main pushes; the PR path doesn't push, so nothing
+        # to pull. Exercises EVERY tool publish.yml relies on
+        # (per PR #1104 review, Copilot) so a broken image cannot be
+        # published silently.
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            bash -c '
+              set -eux
+              echo "=== Sanity check ==="
+              pdflatex --version | head -1
+              latexmk --version | head -1
+              latexdiff --version | head -1
+              command -v latexpand
+              dot -V
+              rg --version | head -1
+              jq --version
+              bun --version
+              python3 -c "import numpy, sympy, scipy, mpmath; print(\"py-sci ok\")"
+              python3 -c "import pypdf; print(\"pypdf ok\")"
+              git --version
+            '
+
+      - name: Report image size (uncompressed local + compressed manifest)
+        if: github.event_name != 'pull_request'
+        run: |
+          # `docker images` reports the LOCAL uncompressed size (sum of
+          # layer sizes after unpack). For the COMPRESSED size that
+          # registry consumers see, use buildx imagetools (per PR #1104
+          # review, Copilot). Both are useful: local size = on-disk
+          # cost on the consumer's runner; compressed = network cost.
+          echo "=== Local uncompressed size (docker images) ==="
+          docker images ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} | head -5
+          echo ""
+          echo "=== Remote compressed manifest (buildx imagetools) ==="
+          docker buildx imagetools inspect \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest 2>&1 | head -30 || \
+            echo "(imagetools inspect failed; manifest may not be ready yet)"
