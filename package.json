@@ -1,29 +1,69 @@
 {
-  "name": "@folio-assistant/core",
+  "name": "@anthropic-ai/folio-assistant",
   "version": "0.1.0",
-  "description": "Cross-repository agent skills framework with unified skill management, RBAC, and capability detection",
+  "private": false,
   "type": "module",
-  "main": "schemas/index.ts",
+  "description": "Content-agnostic assistant platform — MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/litlfred/qou.git",
+    "directory": "folio-assistant"
+  },
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./server": "./src/server.ts",
+    "./types": "./src/types.ts",
+    "./core/git": "./src/core/git.ts",
+    "./core/feedback": "./src/core/feedback.ts",
+    "./core/rbac": "./src/core/rbac.ts",
+    "./core/cache": "./src/core/cache.ts",
+    "./core/logging": "./src/core/logging.ts",
+    "./blocks": "./src/blocks/index.ts",
+    "./blocks/registry": "./src/blocks/registry.ts",
+    "./blocks/types": "./src/blocks/types.ts",
+    "./routes/branches": "./src/routes/branches.ts",
+    "./routes/feedback": "./src/routes/feedback.ts",
+    "./routes/chat": "./src/routes/chat.ts",
+    "./tools/check-deps": "./src/tools/check-deps.ts",
+    "./tools/preferences": "./src/tools/preferences.ts",
+    "./tools/preview": "./src/tools/preview.ts"
+  },
+  "files": [
+    "src/",
+    "ui/",
+    "viewer/sw-pyodide-cache.js",
+    "viewer/register-sw.js",
+    "folio.config.example.json",
+    "README.md"
+  ],
   "scripts": {
-    "build": "tsc",
-    "generate:schemas": "ts-node scripts/generate-schemas.ts",
-    "generate:docs": "ts-node scripts/generate-docs.ts",
-    "generate:registry": "ts-node scripts/generate-registry.ts",
-    "generate:all": "npm run generate:schemas && npm run generate:docs && npm run generate:registry",
-    "validate": "ts-node scripts/validate-skills.ts",
-    "docker:build": "docker build -t folio-assistant .",
-    "docker:build:math": "docker build -f skills/authoring-math/Dockerfile -t folio-assistant-math .",
-    "docker:build:smart": "docker build -f skills/authoring-who-smart-guidelines/Dockerfile -t folio-assistant-smart ."
+    "start": "bun run src/index.ts",
+    "start:stdio": "bun run src/index.ts --stdio",
+    "start:http": "bun run src/index.ts --http",
+    "check-deps": "bun run src/index.ts --check-deps",
+    "test:e2e": "playwright test",
+    "test": "bun test",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "zod": "^3.23.0",
-    "zod-to-json-schema": "^3.23.0",
-    "typescript-json-schema": "^0.65.0"
+    "@anthropic-ai/sdk": "^0.80.0",
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.0"
   },
   "devDependencies": {
-    "typescript": "^5.5.0",
-    "ts-node": "^10.9.0",
-    "@types/node": "^22.0.0"
+    "bun-types": "latest",
+    "@playwright/test": "^1.60.0"
   },
-  "license": "MIT"
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "keywords": [
+    "folio",
+    "mcp",
+    "assistant",
+    "content-platform",
+    "model-context-protocol"
+  ]
 }
