@@ -15,6 +15,10 @@
 
 set -euo pipefail
 
+# Acquire global lock to prevent parallel git fetches across agent workspaces
+exec 200>"/tmp/qou-coord-sweep.lock"
+flock 200
+
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 

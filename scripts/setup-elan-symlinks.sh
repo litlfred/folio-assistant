@@ -26,6 +26,10 @@
 
 set -uo pipefail
 
+# Acquire global lock to prevent symlink races across agent workspaces
+exec 200>"/tmp/qou-elan-symlinks.lock"
+flock 200
+
 ELAN_HOME="${ELAN_HOME:-$HOME/.elan}"
 LOCAL_BIN="/usr/local/bin"
 BINS=(elan lake lean leanc leanmake)
