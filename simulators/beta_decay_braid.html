@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Beta Decay Braid Visualizer</title>
+<style>
+:root {
+  --bg:#020710; --panel:rgba(3,10,30,0.93); --border:rgba(60,120,255,0.20);
+  --accent:#3a90ff; --accent2:#ff5533; --accent3:#33ffaa; --accent4:#ffaa33;
+  --text:#b8ccff; --dim:#3a4a78;
+  --u-color:#4488ee; --d-color:#ee4444; --e-color:#4488ee;
+  --nu-color:#888888; --mix-color:#aa44cc;
+}
+body.light {
+  --bg:#f0f4ff; --panel:rgba(235,240,255,0.96); --border:rgba(60,80,180,0.25);
+  --accent:#1a5fcc; --accent2:#cc3300; --accent3:#006633; --accent4:#885500;
+  --text:#1a2855; --dim:#6070a0;
+  --u-color:#2255aa; --d-color:#cc2222; --e-color:#2255aa;
+  --nu-color:#666666; --mix-color:#7722aa;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;overflow-x:hidden;user-select:none;}
+#title{text-align:center;padding:10px 0 2px;font-family:'Rajdhani',sans-serif;font-weight:300;font-size:18px;letter-spacing:.25em;color:var(--accent);text-transform:uppercase;text-shadow:0 0 18px rgba(58,144,255,.5);}
+#subtitle{text-align:center;font-size:9px;letter-spacing:.20em;color:var(--dim);text-transform:uppercase;margin-bottom:8px;}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:12px;backdrop-filter:blur(18px);margin:6px;}
+.panel-title{font-family:'Rajdhani',sans-serif;font-weight:300;font-size:12px;letter-spacing:.20em;color:var(--accent);text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.row{display:flex;align-items:center;gap:8px;margin:4px 0;}
+.lbl{color:var(--dim);font-size:10px;min-width:55px;}
+input[type=range]{-webkit-appearance:none;flex:1;height:3px;background:rgba(58,144,255,0.15);border-radius:2px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:9px;height:9px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 7px rgba(58,144,255,.8);}
+.val{color:var(--accent);font-size:10px;min-width:40px;text-align:right;}
+select{background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:3px;padding:2px 6px;font-family:inherit;font-size:10px;}
+button.toggle{background:var(--panel);color:var(--accent);border:1px solid var(--border);border-radius:3px;padding:3px 10px;cursor:pointer;font-family:inherit;font-size:10px;transition:all .15s;}
+button.toggle:hover{border-color:var(--accent);}
+button.toggle.active{background:var(--accent);color:#fff;}
+#theme-btn{position:fixed;top:10px;right:12px;z-index:20;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:4px 8px;cursor:pointer;color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:10px;}
+#main{display:grid;grid-template-columns:200px 1fr;grid-template-rows:auto 1fr;gap:0;min-height:calc(100vh - 60px);}
+#ctrl{grid-row:1/3;}
+#braid-panel{grid-column:2;min-height:320px;}
+#bottom-panels{grid-column:2;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;}
+svg text{font-family:'Share Tech Mono',monospace;}
+.matrix-table{border-collapse:collapse;font-size:10px;margin:6px auto;}
+.matrix-table td{padding:2px 6px;text-align:center;border:1px solid var(--border);}
+.matrix-table .hdr{color:var(--accent);font-weight:600;border:none;background:none;}
+.crossing-label{font-size:9px;fill:var(--dim);}
+.strand-u{stroke:var(--u-color);fill:none;stroke-width:3;stroke-linecap:round;}
+.strand-d{stroke:var(--d-color);fill:none;stroke-width:3;stroke-linecap:round;stroke-dasharray:8,4;}
+.strand-e{stroke:var(--e-color);fill:none;stroke-width:2.5;stroke-linecap:round;}
+.strand-nu{stroke:var(--nu-color);fill:none;stroke-width:2;stroke-linecap:round;stroke-dasharray:4,4;}
+.strand-mix{stroke:var(--mix-color);fill:none;stroke-width:3;stroke-linecap:round;}
+.gap-bg{stroke:var(--bg);fill:none;stroke-width:7;stroke-linecap:round;}
+body.light .gap-bg{stroke:var(--bg);}
+.basepoint{fill:var(--accent);stroke:none;}
+.legend-box{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0;font-size:9px;color:var(--dim);}
+.legend-item{display:flex;align-items:center;gap:4px;}
+.legend-line{width:20px;height:3px;border-radius:2px;}
+.budget-bar{display:flex;height:14px;border-radius:2px;overflow:hidden;margin:4px 0;}
+.budget-seg{display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;font-weight:600;}
+</style>
+</head>
+<body>
+<div id="title">Beta Decay Braid Visualizer</div>
+<div id="subtitle">T<sub>3,5</sub> weak vertex &middot; 10 crossings &middot; Hecke reduction</div>
+<button id="theme-btn" onclick="document.body.classList.toggle('light')">&#9685;</button>
+<div id="main">
+<div class="panel" id="ctrl">
+  <div class="panel-title">Controls</div>
+  <div class="row">
+    <span class="lbl">Decay</span>
+    <button class="toggle active" id="btn-bminus" onclick="setDecay('-')">&#946;&#8315;</button>
+    <button class="toggle" id="btn-bplus" onclick="setDecay('+')">&#946;&#8314;</button>
+  </div>
+  <div class="row">
+    <span class="lbl">q</span>
+    <input type="range" id="sl-q" min="1.001" max="2.0" step="0.001" value="1.110">
+    <span class="val" id="v-q">1.110</span>
+  </div>
+  <div class="row">
+    <span class="lbl">View</span>
+    <select id="sel-view" onchange="render()">
+      <option value="full">Full T&#8323;&#8325; braid</option>
+      <option value="reduced">Hecke reduced</option>
+    </select>
+  </div>
+  <div class="row">
+    <span class="lbl">Labels</span>
+    <button class="toggle active" id="btn-labels" onclick="toggleLabels()">On</button>
+  </div>
+  <div style="margin-top:12px;">
+    <div class="panel-title">10-Crossing Budget</div>
+    <div class="budget-bar">
+      <div class="budget-seg" style="flex:3;background:var(--u-color);">3 e&#8315;</div>
+      <div class="budget-seg" style="flex:0.5;background:var(--nu-color);min-width:18px;">0 &#957;</div>
+      <div class="budget-seg" style="flex:7;background:var(--accent2);">7 R2</div>
+    </div>
+    <div style="font-size:9px;color:var(--dim);margin-top:4px;">
+      3 &#8594; electron T<sub>2,3</sub><br>
+      0 &#8594; antineutrino K<sub>0&#8321;</sub><br>
+      7 &#8594; nuclear re-reduction
+    </div>
+  </div>
+  <div style="margin-top:12px;">
+    <div class="panel-title">Legend</div>
+    <div class="legend-box">
+      <div class="legend-item"><div class="legend-line" style="background:var(--u-color);"></div>&#x1D58E; (up)</div>
+      <div class="legend-item"><div class="legend-line" style="background:var(--d-color);border:1px dashed var(--d-color);background:none;"></div>&#x1D589; (down)</div>
+      <div class="legend-item"><div class="legend-line" style="background:var(--e-color);"></div>e&#8315; trefoil</div>
+      <div class="legend-item"><div class="legend-line" style="background:var(--nu-color);border:1px dashed var(--nu-color);background:none;"></div>&#957; unknot</div>
+      <div class="legend-item">&#8226; basepoint</div>
+    </div>
+  </div>
+  <div style="margin-top:12px;">
+    <div class="panel-title">Transfer Matrices at q</div>
+    <div id="matrix-display"></div>
+  </div>
+</div>
+<div class="panel" id="braid-panel">
+  <div class="panel-title">Braid Flow: <span id="decay-label">&#946;&#8315; decay</span></div>
+  <svg id="braid-svg" width="100%" height="300" viewBox="0 0 900 280"></svg>
+</div>
+<div id="bottom-panels">
+  <div class="panel">
+    <div class="panel-title">Transfer Matrix Crossings</div>
+    <svg id="crossing-svg" width="100%" height="200" viewBox="0 0 280 180"></svg>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Hecke &amp; Skein Relations</div>
+    <svg id="relation-svg" width="100%" height="200" viewBox="0 0 280 180"></svg>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Universal Decay Matrix &#916;<sub>&#946;</sub></div>
+    <div id="delta-display"></div>
+    <svg id="delta-svg" width="100%" height="120" viewBox="0 0 280 110"></svg>
+  </div>
+</div>
+</div>
+<script>
+// ── State ───────────────────────────────────────────────────────────
+let decayType = '-';
+let showLabels = true;
+
+function getQ() { return parseFloat(document.getElementById('sl-q').value); }
+function getS(q) { return Math.sqrt(q) - 1/Math.sqrt(q); }
+function getView() { return document.getElementById('sel-view').value; }
+
+// ── Transfer matrix computation ─────────────────────────────────────
+function Tpp(q) {
+  const qinv = 1/q;
+  return [[q - qinv, 1], [1, 0]];
+}
+function Tnn(q) {
+  const s = getS(q), qinv = 1/q;
+  return [[q*q*(q - qinv) - q*s, q*q], [q*q, -q*s]];
+}
+function Tmix(q) {
+  const s = getS(q), qinv = 1/q, h = (1 + q*q)/2;
+  return [[h*(q - qinv) - q*s/2, h], [h, -q*s/2]];
+}
+function deltaBeta(q) {
+  const mix = Tmix(q), nn = Tnn(q);
+  return [[mix[0][0]-nn[0][0], mix[0][1]-nn[0][1]],
+          [mix[1][0]-nn[1][0], mix[1][1]-nn[1][1]]];
+}
+
+function fmt(v) { return v >= 0 ? '+'+v.toFixed(4) : v.toFixed(4); }
+
+// ── Controls ────────────────────────────────────────────────────────
+function setDecay(type) {
+  decayType = type;
+  document.getElementById('btn-bminus').classList.toggle('active', type==='-');
+  document.getElementById('btn-bplus').classList.toggle('active', type==='+');
+  document.getElementById('decay-label').innerHTML = type==='-' ? '\u03B2\u207B decay' : '\u03B2\u207A decay';
+  render();
+}
+function toggleLabels() {
+  showLabels = !showLabels;
+  document.getElementById('btn-labels').classList.toggle('active', showLabels);
+  document.getElementById('btn-labels').textContent = showLabels ? 'On' : 'Off';
+  render();
+}
+
+document.getElementById('sl-q').addEventListener('input', function() {
+  document.getElementById('v-q').textContent = this.value;
+  render();
+});
+
+// ── SVG helpers ─────────────────────────────────────────────────────
+function svgEl(tag, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k,v] of Object.entries(attrs)) el.setAttribute(k, v);
+  return el;
+}
+function svgText(x, y, text, cls, anchor) {
+  const el = svgEl('text', {x, y, class: cls || '', 'text-anchor': anchor||'middle', 'font-size':'9'});
+  el.textContent = text;
+  return el;
+}
+
+// ── Draw a single crossing (over/under with gap) ────────────────────
+// dir: 1 = strand i crosses over strand i+1 (positive), -1 = under
+function drawCrossing(svg, x, y1, y2, dir, w, cls1, cls2) {
+  const hw = w/2;
+  // over strand: full curve
+  // under strand: two segments with gap in middle
+  const overY = dir > 0 ? y1 : y2;
+  const underY = dir > 0 ? y2 : y1;
+  const overCls = dir > 0 ? cls1 : cls2;
+  const underCls = dir > 0 ? cls2 : cls1;
+
+  // Gap background (covers middle of under-strand)
+  const gapPath = `M${x-hw*0.3},${(overY+underY)/2 + (underY-overY)*0.2} Q${x},${underY} ${x+hw*0.3},${(overY+underY)/2 + (underY-overY)*0.2}`;
+
+  // Under strand (full path, will be partially covered)
+  const underPath = `M${x-hw},${underY} C${x-hw*0.3},${underY} ${x-hw*0.2},${overY} ${x},${(overY+underY)/2}`;
+  const underPath2 = `M${x},${(overY+underY)/2} C${x+hw*0.2},${underY} ${x+hw*0.3},${underY} ${x+hw},${underY}`;
+
+  // Over strand
+  const overPath = `M${x-hw},${overY} C${x-hw*0.3},${overY} ${x-hw*0.2},${underY} ${x},${(overY+underY)/2} C${x+hw*0.2},${overY} ${x+hw*0.3},${overY} ${x+hw},${overY}`;
+
+  // Draw under first, then gap, then over
+  svg.appendChild(svgEl('path', {d: `M${x-hw},${underY} Q${x},${overY} ${x+hw},${underY}`, class: underCls}));
+  svg.appendChild(svgEl('path', {d: `M${x-hw*0.35},${underY + (overY-underY)*0.35} Q${x},${overY} ${x+hw*0.35},${underY + (overY-underY)*0.35}`, class: 'gap-bg'}));
+  svg.appendChild(svgEl('path', {d: `M${x-hw},${overY} Q${x},${underY} ${x+hw},${overY}`, class: overCls}));
+}
+
+// ── Main braid diagram ──────────────────────────────────────────────
+function drawBraid() {
+  const svg = document.getElementById('braid-svg');
+  svg.innerHTML = '';
+  const q = getQ();
+  const view = getView();
+  const isMinus = decayType === '-';
+
+  // T_{3,5} braid word: (sigma1 sigma2)^5 = 10 crossings
+  // sigma1: strand 0 over strand 1, sigma2: strand 1 over strand 2
+  const fullWord = [];
+  for (let i = 0; i < 5; i++) { fullWord.push(1); fullWord.push(2); }
+
+  // Reduced view: after Hecke reduction, fewer effective crossings
+  const reducedWord = [1, 2, 1, 2, 1, 2]; // 6 crossings after reduction
+
+  const word = view === 'full' ? fullWord : reducedWord;
+  const nCross = word.length;
+
+  const margin = 60;
+  const totalW = 900 - 2*margin;
+  const spacing = totalW / (nCross + 3); // extra space for output
+  const yPositions = [80, 140, 200]; // 3 strands
+  const crossW = spacing * 0.85;
+
+  // Track strand positions
+  let strandY = [...yPositions];
+  // strand types: for beta-, input neutron = [u, d, d]
+  let strandTypes = isMinus ? ['u','d','d'] : ['u','u','d'];
+  let strandClasses = strandTypes.map(t => t==='u' ? 'strand-u' : 'strand-d');
+
+  // Input labels
+  const inputLabel = isMinus ? '\uD835\uDD2B = B\u2083(\uD835\uDD32,\uD835\uDD21,\uD835\uDD21)' : '\uD835\uDD2D = B\u2083(\uD835\uDD32,\uD835\uDD32,\uD835\uDD21)';
+  if (showLabels) {
+    svg.appendChild(svgText(margin - 10, 60, isMinus ? 'Neutron' : 'Proton', 'crossing-label', 'end'));
+    svg.appendChild(svgText(margin - 10, yPositions[0], strandTypes[0] === 'u' ? '\uD835\uDD32' : '\uD835\uDD21', '', 'end'));
+    svg.appendChild(svgText(margin - 10, yPositions[1], strandTypes[1] === 'u' ? '\uD835\uDD32' : '\uD835\uDD21', '', 'end'));
+    svg.appendChild(svgText(margin - 10, yPositions[2], strandTypes[2] === 'u' ? '\uD835\uDD32' : '\uD835\uDD21', '', 'end'));
+  }
+
+  // Basepoints
+  for (let i = 0; i < 3; i++) {
+    svg.appendChild(svgEl('circle', {cx: margin, cy: yPositions[i], r: 3, class: 'basepoint'}));
+  }
+
+  // Draw crossings left to right
+  let positions = strandY.slice();
+  for (let ci = 0; ci < nCross; ci++) {
+    const gen = word[ci]; // 1 or 2
+    const x = margin + spacing * (ci + 1);
+    const si = gen - 1; // strand index (0 or 1)
+
+    // Draw straight segments for non-crossing strand
+    for (let s = 0; s < 3; s++) {
+      if (s !== si && s !== si+1) {
+        const prevX = ci === 0 ? margin : margin + spacing * ci;
+        svg.appendChild(svgEl('line', {x1: prevX + crossW/2, y1: positions[s], x2: x - crossW/2, y2: positions[s], class: strandClasses[s]}));
+      }
+    }
+    // Draw straight lead-in for crossing strands
+    if (ci > 0) {
+      const prevX = margin + spacing * ci;
+      svg.appendChild(svgEl('line', {x1: prevX + crossW/2, y1: positions[si], x2: x - crossW/2, y2: positions[si], class: strandClasses[si]}));
+      svg.appendChild(svgEl('line', {x1: prevX + crossW/2, y1: positions[si+1], x2: x - crossW/2, y2: positions[si+1], class: strandClasses[si+1]}));
+    } else {
+      svg.appendChild(svgEl('line', {x1: margin, y1: positions[si], x2: x - crossW/2, y2: positions[si], class: strandClasses[si]}));
+      svg.appendChild(svgEl('line', {x1: margin, y1: positions[si+1], x2: x - crossW/2, y2: positions[si+1], class: strandClasses[si+1]}));
+      // non-crossing strand lead-in
+      const other = 3 - si - (si+1);
+      svg.appendChild(svgEl('line', {x1: margin, y1: positions[other], x2: x - crossW/2, y2: positions[other], class: strandClasses[other]}));
+    }
+
+    // Draw the crossing: strand si crosses over strand si+1 (positive crossing)
+    drawCrossing(svg, x, positions[si], positions[si+1], 1, crossW, strandClasses[si], strandClasses[si+1]);
+
+    // Crossing label
+    if (showLabels) {
+      svg.appendChild(svgText(x, positions[si] - 18, '\u03C3' + gen, 'crossing-label'));
+    }
+
+    // Color the crossing region for budget
+    if (view === 'full') {
+      let fill = 'rgba(255,85,51,0.08)'; // R2 (red)
+      if (ci < 3) fill = 'rgba(68,136,238,0.08)'; // electron (blue)
+      svg.appendChild(svgEl('rect', {x: x-crossW/2-2, y: 65, width: crossW+4, height: 150, rx: 3, fill, 'pointer-events':'none'}));
+    }
+
+    // Swap strand tracking
+    [positions[si], positions[si+1]] = [positions[si+1], positions[si]];
+    [strandClasses[si], strandClasses[si+1]] = [strandClasses[si+1], strandClasses[si]];
+    [strandTypes[si], strandTypes[si+1]] = [strandTypes[si+1], strandTypes[si]];
+  }
+
+  // Draw output leads
+  const lastX = margin + spacing * nCross;
+  const outX = margin + spacing * (nCross + 1.5);
+  for (let s = 0; s < 3; s++) {
+    svg.appendChild(svgEl('line', {x1: lastX + crossW/2, y1: positions[s], x2: outX - 20, y2: positions[s], class: strandClasses[s]}));
+  }
+
+  // Output labels and decorations
+  const outputNucleon = isMinus ? 'Proton' : 'Neutron';
+  if (showLabels) {
+    // Daughter nucleon
+    svg.appendChild(svgText(outX + 30, 60, 'Daughter ' + outputNucleon, 'crossing-label', 'start'));
+
+    // Lepton pair annotation
+    const leptonY = 240;
+    svg.appendChild(svgText(outX + 30, leptonY, isMinus ? 'e\u207B + \u03BD\u0305\u2091' : 'e\u207A + \u03BD\u2091', '', 'start'));
+    svg.appendChild(svgText(outX + 30, leptonY + 14, isMinus ? 'T\u2082,\u2083 \u2294 K\u2080\u2081' : 'T\u0305\u2082,\u2083 \u2294 K\u2080\u2081', 'crossing-label', 'start'));
+
+    // Electron trefoil icon
+    const ex = outX + 15, ey = leptonY - 6;
+    svg.appendChild(svgEl('circle', {cx: ex, cy: ey, r: 6,
+      fill: isMinus ? 'var(--u-color)' : 'none',
+      stroke: 'var(--u-color)', 'stroke-width': isMinus ? 0 : 2}));
+
+    // Neutrino unknot icon
+    svg.appendChild(svgEl('circle', {cx: ex, cy: ey + 16, r: 5,
+      fill: 'none', stroke: 'var(--nu-color)', 'stroke-width': 1.5,
+      'stroke-dasharray': '3,3'}));
+  }
+
+  // Budget brackets (full view)
+  if (view === 'full' && showLabels) {
+    const bY = 258;
+    // electron bracket (crossings 0-2)
+    const eX1 = margin + spacing * 1 - crossW/2;
+    const eX2 = margin + spacing * 3 + crossW/2;
+    svg.appendChild(svgEl('line', {x1: eX1, y1: bY, x2: eX2, y2: bY, stroke: 'var(--u-color)', 'stroke-width': 1.5}));
+    svg.appendChild(svgText((eX1+eX2)/2, bY + 12, '3 \u2192 e\u207B (T\u2082,\u2083)', 'crossing-label'));
+
+    // R2 bracket (crossings 3-9)
+    const rX1 = margin + spacing * 4 - crossW/2;
+    const rX2 = margin + spacing * 10 + crossW/2;
+    svg.appendChild(svgEl('line', {x1: rX1, y1: bY, x2: rX2, y2: bY, stroke: 'var(--accent2)', 'stroke-width': 1.5}));
+    svg.appendChild(svgText((rX1+rX2)/2, bY + 12, '7 \u2192 R2 re-reduction', 'crossing-label'));
+  }
+
+  // Skein relation annotation
+  if (showLabels) {
+    svg.appendChild(svgText(450, 20, 'T\u2083,\u2085 braid: (\u03C3\u2081\u03C3\u2082)\u2075 = 10 crossings', '', 'middle'));
+  }
+}
+
+// ── Transfer matrix crossing diagrams ───────────────────────────────
+function drawCrossings() {
+  const svg = document.getElementById('crossing-svg');
+  svg.innerHTML = '';
+  const q = getQ();
+
+  const types = [
+    {name: 'T\u209A\u209A', sub: '\uD835\uDD32-\uD835\uDD32', cls1: 'strand-u', cls2: 'strand-u', mat: Tpp(q), x: 50},
+    {name: 'T\u2099\u2099', sub: '\uD835\uDD21-\uD835\uDD21', cls1: 'strand-d', cls2: 'strand-d', mat: Tnn(q), x: 140},
+    {name: 'T\u2098\u1D62\u2093', sub: '\uD835\uDD32-\uD835\uDD21', cls1: 'strand-u', cls2: 'strand-d', mat: Tmix(q), x: 230},
+  ];
+
+  for (const t of types) {
+    // Draw crossing
+    drawCrossing(svg, t.x, 40, 90, 1, 50, t.cls1, t.cls2);
+
+    // Basepoint
+    svg.appendChild(svgEl('circle', {cx: t.x - 25, cy: 40, r: 2.5, class: 'basepoint'}));
+
+    // Labels
+    if (showLabels) {
+      svg.appendChild(svgText(t.x, 22, t.name, '', 'middle'));
+      svg.appendChild(svgText(t.x, 115, t.sub, 'crossing-label', 'middle'));
+      // Matrix entries
+      svg.appendChild(svgText(t.x, 135, '[' + t.mat[0][0].toFixed(3) + ', ' + t.mat[0][1].toFixed(3) + ']', 'crossing-label', 'middle'));
+      svg.appendChild(svgText(t.x, 148, '[' + t.mat[1][0].toFixed(3) + ', ' + t.mat[1][1].toFixed(3) + ']', 'crossing-label', 'middle'));
+    }
+
+    // Crossing type indicator
+    const colors = {'strand-u': 'var(--u-color)', 'strand-d': 'var(--d-color)', 'strand-mix': 'var(--mix-color)'};
+    svg.appendChild(svgEl('rect', {x: t.x-28, y: 160, width: 56, height: 3, rx: 1.5,
+      fill: t.cls1 === t.cls2 ? (t.cls1 === 'strand-u' ? 'var(--u-color)' : 'var(--d-color)') : 'var(--mix-color)'}));
+  }
+}
+
+// ── Hecke & Skein relations ─────────────────────────────────────────
+function drawRelations() {
+  const svg = document.getElementById('relation-svg');
+  svg.innerHTML = '';
+  const q = getQ();
+  const s = getS(q);
+
+  // Hecke relation: T^2 = (q - q^-1)T + 1
+  svg.appendChild(svgText(140, 15, 'Hecke: T\u00B2 = (q \u2212 q\u207B\u00B9)T + 1', '', 'middle'));
+
+  // Double crossing (T^2)
+  drawCrossing(svg, 35, 35, 70, 1, 30, 'strand-u', 'strand-u');
+  drawCrossing(svg, 60, 35, 70, 1, 30, 'strand-u', 'strand-u');
+  svg.appendChild(svgText(47, 85, 'T\u00B2', 'crossing-label', 'middle'));
+
+  // Equals sign
+  svg.appendChild(svgText(90, 55, '=', '', 'middle'));
+
+  // (q - q^-1) coefficient
+  svg.appendChild(svgText(115, 35, '(' + (q - 1/q).toFixed(3) + ')', 'crossing-label', 'middle'));
+
+  // Single crossing (T)
+  drawCrossing(svg, 145, 35, 70, 1, 30, 'strand-u', 'strand-u');
+  svg.appendChild(svgText(145, 85, 'T', 'crossing-label', 'middle'));
+
+  // Plus sign
+  svg.appendChild(svgText(175, 55, '+', '', 'middle'));
+
+  // Identity (parallel lines)
+  svg.appendChild(svgEl('line', {x1: 195, y1: 35, x2: 225, y2: 35, class: 'strand-u'}));
+  svg.appendChild(svgEl('line', {x1: 195, y1: 70, x2: 225, y2: 70, class: 'strand-u'}));
+  svg.appendChild(svgText(210, 85, '1', 'crossing-label', 'middle'));
+
+  // Skein relation: q[L+] - q^-1[L-] = s[L0]
+  svg.appendChild(svgText(140, 105, 'Skein: q[L\u208A] \u2212 q\u207B\u00B9[L\u208B] = s[L\u2080]', '', 'middle'));
+
+  // L+ (positive crossing)
+  drawCrossing(svg, 40, 120, 155, 1, 35, 'strand-u', 'strand-d');
+  svg.appendChild(svgText(40, 170, 'L\u208A', 'crossing-label', 'middle'));
+
+  // Minus
+  svg.appendChild(svgText(75, 140, '\u2212', '', 'middle'));
+
+  // L- (negative crossing)
+  drawCrossing(svg, 110, 120, 155, -1, 35, 'strand-u', 'strand-d');
+  svg.appendChild(svgText(110, 170, 'L\u208B', 'crossing-label', 'middle'));
+
+  // Equals
+  svg.appendChild(svgText(150, 140, '=', '', 'middle'));
+
+  // s coefficient
+  svg.appendChild(svgText(175, 120, 's=' + s.toFixed(4), 'crossing-label', 'middle'));
+
+  // L0 (smoothing: two parallel arcs)
+  svg.appendChild(svgEl('path', {d: 'M195,120 Q210,138 225,120', class: 'strand-u'}));
+  svg.appendChild(svgEl('path', {d: 'M195,155 Q210,137 225,155', class: 'strand-d'}));
+  svg.appendChild(svgText(210, 170, 'L\u2080', 'crossing-label', 'middle'));
+}
+
+// ── Universal decay matrix ──────────────────────────────────────────
+function drawDelta() {
+  const q = getQ();
+  const d = deltaBeta(q);
+  const pp = Tpp(q), nn = Tnn(q), mix = Tmix(q);
+
+  // Matrix display
+  const div = document.getElementById('delta-display');
+  div.innerHTML = `
+    <div style="font-size:10px;color:var(--dim);margin-bottom:4px;">
+      \u0394\u03B2 = T<sub>mix</sub> \u2212 T<sub>nn</sub> = T<sub>pp</sub> \u2212 T<sub>mix</sub>
+    </div>
+    <table class="matrix-table">
+      <tr><td class="hdr">\u0394\u03B2(q)</td><td class="hdr">col 1</td><td class="hdr">col 2</td></tr>
+      <tr><td class="hdr">row 1</td><td>${fmt(d[0][0])}</td><td>${fmt(d[0][1])}</td></tr>
+      <tr><td class="hdr">row 2</td><td>${fmt(d[1][0])}</td><td>${fmt(d[1][1])}</td></tr>
+    </table>
+    <div style="font-size:9px;color:var(--dim);margin-top:4px;">
+      Equally spaced: T<sub>mix</sub> = \u00BD(T<sub>pp</sub> + T<sub>nn</sub>)
+    </div>
+  `;
+
+  // SVG: T_nn -> T_mix -> T_pp with equal arrows
+  const svg = document.getElementById('delta-svg');
+  svg.innerHTML = '';
+
+  const xs = [50, 140, 230];
+  const labels = ['T\u2099\u2099', 'T\u2098\u1D62\u2093', 'T\u209A\u209A'];
+  const clsPairs = [['strand-d','strand-d'], ['strand-u','strand-d'], ['strand-u','strand-u']];
+
+  for (let i = 0; i < 3; i++) {
+    drawCrossing(svg, xs[i], 25, 60, 1, 40, clsPairs[i][0], clsPairs[i][1]);
+    svg.appendChild(svgText(xs[i], 80, labels[i], '', 'middle'));
+
+    // Arrow to next
+    if (i < 2) {
+      const ax = (xs[i] + xs[i+1]) / 2;
+      svg.appendChild(svgEl('line', {x1: xs[i]+25, y1: 42, x2: xs[i+1]-25, y2: 42,
+        stroke: 'var(--accent)', 'stroke-width': 1, 'marker-end': 'url(#arrowhead)'}));
+      svg.appendChild(svgText(ax, 100, '+\u0394\u03B2', 'crossing-label', 'middle'));
+    }
+  }
+
+  // Arrowhead marker
+  const defs = svgEl('defs', {});
+  const marker = svgEl('marker', {id:'arrowhead', markerWidth:6, markerHeight:4, refX:5, refY:2, orient:'auto'});
+  marker.appendChild(svgEl('polygon', {points:'0 0, 6 2, 0 4', fill:'var(--accent)'}));
+  defs.appendChild(marker);
+  svg.prepend(defs);
+}
+
+// ── Matrix display in control panel ─────────────────────────────────
+function drawMatrixPanel() {
+  const q = getQ();
+  const pp = Tpp(q), nn = Tnn(q), mix = Tmix(q);
+  const div = document.getElementById('matrix-display');
+  div.innerHTML = `
+    <div style="font-size:9px;margin:4px 0;">
+      <b style="color:var(--u-color);">T<sub>pp</sub></b> c=1, d=0<br>
+      [${pp[0].map(v=>v.toFixed(3)).join(', ')}]<br>
+      [${pp[1].map(v=>v.toFixed(3)).join(', ')}]
+    </div>
+    <div style="font-size:9px;margin:4px 0;">
+      <b style="color:var(--d-color);">T<sub>nn</sub></b> c=q\u00B2, d=\u2212qs<br>
+      [${nn[0].map(v=>v.toFixed(3)).join(', ')}]<br>
+      [${nn[1].map(v=>v.toFixed(3)).join(', ')}]
+    </div>
+    <div style="font-size:9px;margin:4px 0;">
+      <b style="color:var(--mix-color);">T<sub>mix</sub></b> c=\u00BD(1+q\u00B2)<br>
+      [${mix[0].map(v=>v.toFixed(3)).join(', ')}]<br>
+      [${mix[1].map(v=>v.toFixed(3)).join(', ')}]
+    </div>
+  `;
+}
+
+// ── Render all ──────────────────────────────────────────────────────
+function render() {
+  drawBraid();
+  drawCrossings();
+  drawRelations();
+  drawDelta();
+  drawMatrixPanel();
+}
+
+render();
+</script>
+</body>
+</html>

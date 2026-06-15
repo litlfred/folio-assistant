@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Double-Slit Experiment</title>
+<style>
+
+:root {
+  --bg:      #020710;
+  --panel:   rgba(3,10,30,0.93);
+  --border:  rgba(60,120,255,0.20);
+  --accent:  #3a90ff;
+  --accent2: #ff5533;
+  --accent3: #33ffaa;
+  --accent4: #ffaa33;
+  --accent5: #cc44ff;
+  --text:    #b8ccff;
+  --dim:     #3a4a78;
+}
+body.light {
+  --bg:      #f0f4ff;
+  --panel:   rgba(235,240,255,0.96);
+  --border:  rgba(60,80,180,0.25);
+  --accent:  #1a5fcc;
+  --accent2: #cc3300;
+  --accent3: #006633;
+  --accent4: #885500;
+  --accent5: #770099;
+  --text:    #1a2855;
+  --dim:     #6070a0;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background:var(--bg); color:var(--text);
+  font-family:'Share Tech Mono',monospace; font-size:11px;
+  overflow:hidden; user-select:none;
+}
+
+#title {
+  position:absolute; top:12px; left:50%; transform:translateX(-50%);
+  font-family:'Rajdhani',sans-serif; font-weight:300;
+  font-size:20px; letter-spacing:.30em; color:var(--accent);
+  text-transform:uppercase;
+  text-shadow:0 0 22px rgba(58,144,255,.55);
+  pointer-events:none; white-space:nowrap;
+}
+#subtitle {
+  position:absolute; top:38px; left:50%; transform:translateX(-50%);
+  font-size:9px; letter-spacing:.22em; color:var(--dim);
+  text-transform:uppercase; pointer-events:none; white-space:nowrap;
+}
+
+.panel {
+  position:absolute; background:var(--panel);
+  border:1px solid var(--border); border-radius:3px;
+  padding:12px; backdrop-filter:blur(18px);
+}
+.panel-title {
+  font-family:'Rajdhani',sans-serif; font-weight:300;
+  font-size:11px; letter-spacing:.22em; color:var(--accent);
+  text-transform:uppercase; margin-bottom:9px;
+  padding-bottom:5px; border-bottom:1px solid var(--border);
+}
+.row { display:grid; grid-template-columns:100px 1fr 48px; align-items:center; gap:6px; margin:3px 0; }
+.lbl { color:#6070a0; font-size:10px; }
+.val { color:var(--accent); font-size:10px; text-align:right; }
+
+input[type=range] {
+  -webkit-appearance:none; width:100%; height:3px;
+  background:rgba(58,144,255,0.15); border-radius:2px; outline:none; cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:9px; height:9px; border-radius:50%;
+  background:var(--accent); cursor:pointer; box-shadow:0 0 7px rgba(58,144,255,.8);
+}
+
+.sec { font-size:9px; letter-spacing:.18em; color:var(--dim); margin:9px 0 3px; }
+
+.mode-btn {
+  background:rgba(58,144,255,.06); border:1px solid rgba(58,144,255,.15);
+  color:var(--dim); font-size:9px; cursor:pointer; border-radius:2px;
+  padding:4px 8px; font-family:'Share Tech Mono',monospace;
+  transition: all .15s;
+}
+.mode-btn:hover { background:rgba(58,144,255,.14); color:var(--accent); }
+.mode-btn.active { border-color:var(--accent); color:var(--accent); background:rgba(58,144,255,.12); }
+
+.preset-btn {
+  background:rgba(58,144,255,.06); border:1px solid rgba(58,144,255,.12);
+  color:var(--dim); font-size:8px; cursor:pointer; border-radius:2px;
+  padding:3px 6px; font-family:'Share Tech Mono',monospace;
+  transition: all .15s; display:block; width:100%; text-align:left; margin:2px 0;
+}
+.preset-btn:hover { background:rgba(58,144,255,.14); color:var(--accent); }
+
+.ck { display:flex; align-items:center; gap:4px; cursor:pointer; font-size:9px; color:var(--dim); margin:3px 0; }
+.ck input { accent-color:var(--accent); }
+
+#theme-btn {
+  position:absolute; top:12px; right:14px;
+  background:none; border:1px solid var(--border); border-radius:3px;
+  color:var(--dim); font-size:14px; cursor:pointer; padding:2px 8px;
+}
+#theme-btn:hover { color:var(--accent); }
+
+canvas { display:block; }
+
+/* Buildup controls */
+.ctrl-row { display:flex; gap:6px; align-items:center; margin-top:6px; }
+.ctrl-btn {
+  background:rgba(58,144,255,0.10); border:1px solid rgba(58,144,255,0.25);
+  color:var(--accent); font-size:10px; cursor:pointer; border-radius:2px;
+  padding:2px 10px; font-family:'Share Tech Mono',monospace;
+}
+.ctrl-btn:hover { background:rgba(58,144,255,0.22); }
+
+#stats { line-height:1.9; font-size:10px; color:#4a5a80; }
+#stats .h1 { color:var(--accent3); }
+#stats .h2 { color:var(--accent4); }
+#stats .h3 { color:var(--accent5); }
+
+#formula-text { font-size:9px; line-height:1.8; color:#4a5a80; margin-top:6px; }
+#formula-text .fm { color:rgba(58,144,255,.80); }
+#formula-text .fd { color:rgba(255,85,51,.80); }
+#formula-text .ft { color:rgba(51,255,170,.80); }
+</style>
+</head>
+<body>
+
+<div id="title">Double-Slit Experiment</div>
+<div id="subtitle">QOU Two-Mode Scattering · §6.7 Leitner 2026</div>
+<button id="theme-btn" onclick="document.body.classList.toggle('light');draw()">☾</button>
+
+<!-- Parameters -->
+<div class="panel" id="ctrl" style="top:64px; right:14px; width:258px;">
+  <div class="panel-title">Parameters</div>
+
+  <div class="sec">── Substrate ────────────────────────</div>
+  <div class="row">
+    <span class="lbl">q (substrate)</span>
+    <input type="range" id="sl_q" min="0.8" max="1.5" step="0.001" value="1.02">
+    <span class="val" id="v_q">1.020</span>
+  </div>
+
+  <div class="sec">── Geometry ─────────────────────────</div>
+  <div class="row">
+    <span class="lbl">a (slit width)</span>
+    <input type="range" id="sl_a" min="10" max="300" step="1" value="50">
+    <span class="val" id="v_a">50 nm</span>
+  </div>
+  <div class="row">
+    <span class="lbl">d (separation)</span>
+    <input type="range" id="sl_d" min="50" max="1000" step="1" value="280">
+    <span class="val" id="v_d">280 nm</span>
+  </div>
+  <div class="row">
+    <span class="lbl">λ (wavelength)</span>
+    <input type="range" id="sl_lam" min="1" max="200" step="0.5" value="50">
+    <span class="val" id="v_lam">50 pm</span>
+  </div>
+
+  <div class="sec">── Reeb coupling ────────────────────</div>
+  <div class="row">
+    <span class="lbl">r_ξ (Reeb ratio)</span>
+    <input type="range" id="sl_rxi" min="0" max="0.5" step="0.005" value="0.1">
+    <span class="val" id="v_rxi">0.100</span>
+  </div>
+
+  <div class="sec">── Display ──────────────────────────</div>
+  <label class="ck"><input type="checkbox" id="cb_fraunhofer" checked> Standard QM (Fraunhofer)</label>
+  <label class="ck"><input type="checkbox" id="cb_envelope"> Show envelope</label>
+  <label class="ck"><input type="checkbox" id="cb_bach"> Bach 2013 data (digitized)</label>
+</div>
+
+<!-- Mode + presets -->
+<div class="panel" style="top:64px; left:14px; width:220px;">
+  <div class="panel-title">Scattering Mode</div>
+  <div style="display:flex;gap:6px;margin-bottom:8px;">
+    <button class="mode-btn active" id="btn_m1" onclick="setMode(1)">Mode 1: Massive</button>
+    <button class="mode-btn" id="btn_m2" onclick="setMode(2)">Mode 2: Photon</button>
+  </div>
+  <div id="mode-desc" style="font-size:9px;color:var(--dim);line-height:1.6;margin-bottom:8px;">
+    q-harmonic form · q-Laplacian envelope · Reeb broadening
+  </div>
+
+  <div class="sec">── Presets ──────────────────────────</div>
+  <button class="preset-btn" onclick="preset('bach')">Bach 2013 electrons (600 eV) + data</button>
+  <button class="preset-btn" onclick="preset('c60')">C₆₀ fullerene</button>
+  <button class="preset-btn" onclick="preset('photon')">Visible photon</button>
+  <button class="preset-btn" onclick="preset('classical')">Classical limit (q = 1)</button>
+
+  <div class="sec" style="margin-top:12px;">── Stats ───────────────────────────</div>
+  <div id="stats"></div>
+
+  <div id="formula-text"></div>
+</div>
+
+<!-- Main plot -->
+<canvas id="plot" style="position:absolute;top:58px;left:248px;"></canvas>
+
+<!-- Buildup -->
+<div class="panel" style="bottom:14px;left:248px;right:286px;">
+  <div class="panel-title">Electron Buildup</div>
+  <canvas id="buildup" style="width:100%;height:140px;border:1px solid var(--border);border-radius:2px;background:rgba(0,3,10,0.8);"></canvas>
+  <div class="ctrl-row">
+    <button class="ctrl-btn" id="btn_play" onclick="togglePlay()">▶ Play</button>
+    <button class="ctrl-btn" onclick="resetBuildup()">↺ Reset</button>
+    <span class="lbl" style="margin-left:8px;">Speed:</span>
+    <input type="range" id="sl_speed" min="1" max="50" value="10" style="width:80px;">
+    <span class="val" id="v_count">0 detections</span>
+  </div>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────
+let mode = 1;
+let playing = false;
+let detections = [];
+let animId = null;
+
+const P = {
+  q: 1.02, a: 50, d: 280, lam: 50, rxi: 0.1
+};
+
+// ── Slider binding ─────────────────────────────────────────────────
+const sliders = [
+  ['sl_q',   'v_q',   'q',   v => v.toFixed(3)],
+  ['sl_a',   'v_a',   'a',   v => v.toFixed(0) + ' nm'],
+  ['sl_d',   'v_d',   'd',   v => v.toFixed(0) + ' nm'],
+  ['sl_lam', 'v_lam', 'lam', v => v.toFixed(1) + ' pm'],
+  ['sl_rxi', 'v_rxi', 'rxi', v => v.toFixed(3)],
+];
+
+sliders.forEach(([sid, vid, key, fmt]) => {
+  const sl = document.getElementById(sid);
+  const vl = document.getElementById(vid);
+  sl.addEventListener('input', () => {
+    P[key] = parseFloat(sl.value);
+    vl.textContent = fmt(P[key]);
+    draw();
+  });
+});
+
+// ── Bach 2013 digitized data ──────────────────────────────────────
+// Extracted from Figure 3e (6235 electrons) of arXiv:1210.6243v1
+// Bach, Pope, Liou, Batelaan — New J. Phys. 15 (2013) 033018
+// Experimental parameters: a=50nm, d=280nm, λ=50pm, E=600eV
+// angle_mrad, normalized_intensity (150 bins across 5 central orders)
+const BACH_DATA = [
+  [-2.5584,0.1781],[-2.5240,0.2756],[-2.4897,0.2851],[-2.4554,0.2822],[-2.4210,0.2711],
+  [-2.3867,0.3044],[-2.3523,0.3149],[-2.3180,0.2994],[-2.2837,0.2844],[-2.2493,0.3470],
+  [-2.2150,0.4921],[-2.1806,0.5803],[-2.1463,0.6441],[-2.1120,0.5930],[-2.0776,0.6273],
+  [-2.0433,0.6457],[-2.0089,0.7225],[-1.9746,0.7156],[-1.9402,0.7194],[-1.9059,0.7298],
+  [-1.8716,0.7552],[-1.8372,0.7663],[-1.8029,0.7971],[-1.7685,0.7559],[-1.7342,0.7317],
+  [-1.6999,0.7060],[-1.6655,0.6575],[-1.6312,0.6152],[-1.5968,0.5384],[-1.5625,0.5000],
+  [-1.5282,0.4565],[-1.4938,0.4298],[-1.4595,0.4492],[-1.4251,0.4302],[-1.3908,0.4079],
+  [-1.3565,0.4324],[-1.3221,0.5000],[-1.2878,0.5749],[-1.2534,0.6552],[-1.2191,0.6870],
+  [-1.1848,0.7171],[-1.1504,0.7629],[-1.1161,0.8537],[-1.0817,0.8997],[-1.0474,0.8886],
+  [-1.0130,0.9060],[-0.9787,0.9667],[-0.9444,0.9952],[-0.9100,0.9492],[-0.8757,0.9489],
+  [-0.8413,0.9575],[-0.8070,0.9495],[-0.7727,0.8838],[-0.7383,0.8006],[-0.7040,0.7787],
+  [-0.6696,0.7521],[-0.6353,0.7063],[-0.6010,0.6648],[-0.5666,0.5492],[-0.5323,0.4962],
+  [-0.4979,0.4876],[-0.4636,0.5206],[-0.4293,0.5254],[-0.3949,0.5213],[-0.3606,0.5600],
+  [-0.3262,0.6295],[-0.2919,0.6527],[-0.2576,0.7054],[-0.2232,0.8073],[-0.1889,0.8997],
+  [-0.1545,0.9390],[-0.1202,0.9029],[-0.0859,0.9790],[-0.0515,0.9632],[-0.0172,1.0000],
+  [0.0172,0.9390],[0.0515,0.9708],[0.0859,0.9429],[0.1202,0.9070],[0.1545,0.8641],
+  [0.1889,0.8060],[0.2232,0.6810],[0.2576,0.5895],[0.2919,0.5537],[0.3262,0.5660],
+  [0.3606,0.5568],[0.3949,0.4594],[0.4293,0.4508],[0.4636,0.3883],[0.4979,0.4283],
+  [0.5323,0.3914],[0.5666,0.4419],[0.6010,0.5175],[0.6353,0.5851],[0.6696,0.6451],
+  [0.7040,0.6149],[0.7383,0.6089],[0.7727,0.6746],[0.8070,0.7857],[0.8413,0.8781],
+  [0.8757,0.8940],[0.9100,0.8346],[0.9444,0.8594],[0.9787,0.8048],[1.0130,0.8333],
+  [1.0474,0.8057],[1.0817,0.8165],[1.1161,0.8029],[1.1504,0.6698],[1.1848,0.5470],
+  [1.2191,0.4197],[1.2534,0.3762],[1.2878,0.3632],[1.3221,0.3225],[1.3565,0.3162],
+  [1.3908,0.2610],[1.4251,0.2368],[1.4595,0.2619],[1.4938,0.2733],[1.5282,0.3311],
+  [1.5625,0.2946],[1.5968,0.3102],[1.6312,0.3400],[1.6655,0.4070],[1.6999,0.4635],
+  [1.7342,0.5133],[1.7685,0.4860],[1.8029,0.4940],[1.8372,0.4327],[1.8716,0.4835],
+  [1.9059,0.4762],[1.9402,0.4765],[1.9746,0.4387],[2.0089,0.3683],[2.0433,0.3511],
+  [2.0776,0.3584],[2.1120,0.3924],[2.1463,0.3810],[2.1806,0.3451],[2.2150,0.3263],
+  [2.2493,0.2917],[2.2837,0.2308],[2.3180,0.1756],[2.3523,0.1349],[2.3867,0.1394],
+  [2.4210,0.1965],[2.4554,0.2381],[2.4897,0.2857],[2.5240,0.2727],[2.5584,0.1867],
+];
+// Bach experimental params (from paper): a=50nm, d=280nm, lambda=50pm
+const BACH_PARAMS = { a: 50, d: 280, lam: 50 };
+
+// ── Physics ────────────────────────────────────────────────────────
+
+function sinc(x) { return Math.abs(x) < 1e-12 ? 1 : Math.sin(x) / x; }
+
+// Mode 1: massive particle, q-corrected Fraunhofer
+// ΔΦ_q = q⁻¹·(2πd sinθ/λ) + (1−q⁻¹)·Δφ_ξ   [full phase difference]
+// I_q  = cos²(ΔΦ_q/2) · sinc²(β_q)
+function intensityMassive(theta, q, a, d, lam, rxi) {
+  const k = Math.PI * Math.sin(theta);  // π sinθ
+  // full phase difference: q⁻¹·2π d sinθ/λ + Reeb correction
+  const REEB_COUPLING = 0.02;  // Reeb phase mismatch scale Δφ_ξ
+  const dPhi = (1/q) * 2 * k * d / lam + (1 - 1/q) * REEB_COUPLING * Math.sin(theta);
+  // envelope parameter: β_q = q⁻¹·πa sinθ/λ + (1−q⁻¹)²·r_ξ·πa sinθ/λ
+  const beta = (1/q) * k * a / lam + Math.pow(1 - 1/q, 2) * rxi * k * a / lam;
+  return Math.pow(Math.cos(dPhi / 2), 2) * Math.pow(sinc(beta), 2);
+}
+
+// Standard Fraunhofer (q=1): cos²(πd sinθ/λ)·sinc²(πa sinθ/λ)
+function intensityFraunhofer(theta, a, d, lam) {
+  const k = Math.PI * Math.sin(theta);  // π sinθ
+  return Math.pow(Math.cos(k * d / lam), 2) * Math.pow(sinc(k * a / lam), 2);
+}
+
+// Mode 1 envelope only
+function envelopeMassive(theta, q, a, lam, rxi) {
+  const k = Math.PI * Math.sin(theta);
+  const beta = (1/q) * k * a / lam + Math.pow(1 - 1/q, 2) * rxi * k * a / lam;
+  return Math.pow(sinc(beta), 2);
+}
+
+// Mode 2: photon, Julia-set envelope
+function juliaEscape(theta, q, a, maxIter) {
+  const R_PROJ = 1.0;  // ℙ¹ fiber radius
+  const x = a * Math.sin(theta) / R_PROJ;
+  // f_q(z) = z² + c, c from q-deformed Reeb flow on ℙ¹
+  const cr = (q - 1) * Math.cos(Math.PI / 4);
+  const ci = (q - 1) * Math.sin(Math.PI / 4);
+  let zr = Math.cos(x), zi = Math.sin(x);
+  for (let n = 0; n < maxIter; n++) {
+    const zr2 = zr * zr - zi * zi + cr;
+    const zi2 = 2 * zr * zi + ci;
+    zr = zr2; zi = zi2;
+    if (zr * zr + zi * zi > 4) return n / maxIter;
+  }
+  return 1;
+}
+
+const PHOTON_SCALE = 500;  // nm-to-ℙ¹ scale factor for Julia iteration
+const JULIA_ITERS = 64;    // max iterations for escape-time computation
+
+function intensityPhoton(theta, q, a, d) {
+  const R_PROJ = 1.0;
+  const cosPhase = Math.cos(q * d * Math.sin(theta) / (2 * R_PROJ));
+  const dH = 1 + 0.4 * Math.abs(q - 1);  // Hausdorff dimension
+  const esc = juliaEscape(theta, q, a * 1e-9 * PHOTON_SCALE, JULIA_ITERS);
+  const env = Math.pow(esc, 2 / dH);
+  return cosPhase * cosPhase * env;
+}
+
+function envelopePhoton(theta, q, a) {
+  const dH = 1 + 0.4 * Math.abs(q - 1);
+  const esc = juliaEscape(theta, q, a * 1e-9 * PHOTON_SCALE, JULIA_ITERS);
+  return Math.pow(esc, 2 / dH);
+}
+
+// ── Drawing ────────────────────────────────────────────────────────
+
+const plotCanvas = document.getElementById('plot');
+const plotCtx = plotCanvas.getContext('2d');
+const buCanvas = document.getElementById('buildup');
+const buCtx = buCanvas.getContext('2d');
+
+function resize() {
+  const w = window.innerWidth - 248 - 286;
+  const h = window.innerHeight - 58 - 200;
+  plotCanvas.width = w * devicePixelRatio;
+  plotCanvas.height = h * devicePixelRatio;
+  plotCanvas.style.width = w + 'px';
+  plotCanvas.style.height = h + 'px';
+  plotCtx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+
+  buCanvas.width = buCanvas.offsetWidth * devicePixelRatio;
+  buCanvas.height = 140 * devicePixelRatio;
+  buCtx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+}
+
+function draw() {
+  resize();
+  const W = plotCanvas.width / devicePixelRatio;
+  const H = plotCanvas.height / devicePixelRatio;
+  const ctx = plotCtx;
+
+  // Clear
+  const isDark = !document.body.classList.contains('light');
+  ctx.fillStyle = isDark ? '#020710' : '#f0f4ff';
+  ctx.fillRect(0, 0, W, H);
+
+  // Margins
+  const ml = 50, mr = 20, mt = 30, mb = 40;
+  const pw = W - ml - mr, ph = H - mt - mb;
+
+  // Angle range: ±0.015 rad (covers several fringes for Bach params)
+  const thetaMax = 0.015;
+  const nPts = Math.min(pw * 2, 1200);
+
+  // Compute curves
+  const { q, a, d, lam, rxi } = P;
+  const showFH = document.getElementById('cb_fraunhofer').checked;
+  const showEnv = document.getElementById('cb_envelope').checked;
+  const showBach = document.getElementById('cb_bach').checked;
+
+  const curve = new Float64Array(nPts);
+  const curveFH = new Float64Array(nPts);
+  const curveEnv = new Float64Array(nPts);
+  let maxI = 0;
+
+  for (let i = 0; i < nPts; i++) {
+    const theta = -thetaMax + (2 * thetaMax * i) / (nPts - 1);
+    if (mode === 1) {
+      curve[i] = intensityMassive(theta, q, a, d, lam, rxi);
+      curveEnv[i] = envelopeMassive(theta, q, a, lam, rxi);
+    } else {
+      curve[i] = intensityPhoton(theta, q, a, d);
+      curveEnv[i] = envelopePhoton(theta, q, a);
+    }
+    curveFH[i] = intensityFraunhofer(theta, a, d, lam);
+    maxI = Math.max(maxI, curve[i], curveFH[i]);
+  }
+  if (maxI < 1e-12) maxI = 1;
+
+  // Axes
+  ctx.strokeStyle = isDark ? 'rgba(58,144,255,0.15)' : 'rgba(60,80,180,0.15)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(ml, mt); ctx.lineTo(ml, mt + ph);
+  ctx.lineTo(ml + pw, mt + ph);
+  ctx.stroke();
+
+  // Axis labels
+  ctx.fillStyle = isDark ? '#3a4a78' : '#6070a0';
+  ctx.font = '9px "Share Tech Mono"';
+  ctx.textAlign = 'center';
+  ctx.fillText('θ (scattering angle)', ml + pw / 2, mt + ph + 32);
+  ctx.save();
+  ctx.translate(12, mt + ph / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText('I(θ) / I₀', 0, 0);
+  ctx.restore();
+
+  // Ticks
+  for (let i = 0; i <= 6; i++) {
+    const x = ml + (pw * i) / 6;
+    const t = -thetaMax + (2 * thetaMax * i) / 6;
+    ctx.fillText((t * 1000).toFixed(1) + ' mrad', x, mt + ph + 14);
+    ctx.beginPath();
+    ctx.moveTo(x, mt + ph); ctx.lineTo(x, mt + ph + 4);
+    ctx.stroke();
+  }
+  for (let i = 0; i <= 4; i++) {
+    const y = mt + ph - (ph * i) / 4;
+    ctx.textAlign = 'right';
+    ctx.fillText((i / 4).toFixed(2), ml - 6, y + 3);
+    ctx.beginPath();
+    ctx.moveTo(ml, y); ctx.lineTo(ml - 4, y);
+    ctx.stroke();
+  }
+  ctx.textAlign = 'left';
+
+  function plotCurve(data, color, dash, lw) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lw || 1.5;
+    ctx.setLineDash(dash || []);
+    ctx.beginPath();
+    for (let i = 0; i < nPts; i++) {
+      const x = ml + (pw * i) / (nPts - 1);
+      const y = mt + ph - (ph * data[i]) / maxI;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Bach 2013 digitized experimental data
+  if (showBach) {
+    // Convert BACH_DATA (angle_mrad, intensity) to pixel coordinates
+    // Bach data spans ±2.56 mrad; map onto the plot's angle range
+    ctx.globalAlpha = 0.7;
+    const bachColor = isDark ? '#ffaa33' : '#885500';
+    ctx.strokeStyle = bachColor;
+    ctx.lineWidth = 1.8;
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    let started = false;
+    for (const [ang_mrad, intensity] of BACH_DATA) {
+      const theta = ang_mrad / 1000; // mrad -> rad
+      if (Math.abs(theta) > thetaMax) continue;
+      const xFrac = (theta + thetaMax) / (2 * thetaMax);
+      const x = ml + xFrac * pw;
+      const y = mt + ph - (ph * intensity * maxI) / maxI;
+      if (!started) { ctx.moveTo(x, y); started = true; }
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 1;
+
+    // Scatter dots for individual data points
+    ctx.fillStyle = bachColor;
+    ctx.globalAlpha = 0.5;
+    for (const [ang_mrad, intensity] of BACH_DATA) {
+      const theta = ang_mrad / 1000;
+      if (Math.abs(theta) > thetaMax) continue;
+      const xFrac = (theta + thetaMax) / (2 * thetaMax);
+      const x = ml + xFrac * pw;
+      const y = mt + ph - ph * intensity;
+      ctx.beginPath();
+      ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // Label
+    ctx.fillStyle = bachColor;
+    ctx.font = '8px "Share Tech Mono"';
+    ctx.fillText('Bach et al. 2013 (digitized, 6235 e⁻)', ml + 10, mt + 16);
+  }
+
+  // Standard QM Fraunhofer reference
+  if (showFH) {
+    plotCurve(curveFH, isDark ? 'rgba(58,144,255,0.45)' : 'rgba(60,80,180,0.45)', [4, 4], 1.5);
+    // Label
+    ctx.fillStyle = isDark ? 'rgba(58,144,255,0.6)' : 'rgba(60,80,180,0.6)';
+    ctx.font = '8px "Share Tech Mono"';
+    const fhLabelY = showBach ? mt + 28 : mt + 16;
+    ctx.fillText('Standard QM (Fraunhofer, q=1)', ml + 10, fhLabelY);
+  }
+
+  // Envelope
+  if (showEnv) {
+    plotCurve(curveEnv, isDark ? 'rgba(51,255,170,0.3)' : 'rgba(0,102,51,0.3)', [2, 3], 1);
+  }
+
+  // Main QOU curve
+  const mainColor = mode === 1
+    ? (isDark ? '#3a90ff' : '#1a5fcc')
+    : (isDark ? '#ff5533' : '#cc3300');
+  plotCurve(curve, mainColor, [], 2);
+
+  // QOU label
+  const qouLabelY = mt + (showBach && showFH ? 40 : showBach || showFH ? 28 : 16);
+  ctx.fillStyle = mainColor;
+  ctx.font = '8px "Share Tech Mono"';
+  ctx.fillText('QOU prediction (q=' + q.toFixed(3) + ')', ml + 10, qouLabelY);
+
+  // q annotation (top-right)
+  ctx.fillStyle = isDark ? '#3a90ff' : '#1a5fcc';
+  ctx.font = '12px "Rajdhani"';
+  ctx.textAlign = 'right';
+  ctx.fillText('q = ' + q.toFixed(3), ml + pw - 4, mt + 16);
+
+  // Update stats
+  const fringeSpacing = q * lam / d;
+  const envWidth = q * q * lam / a * (1 + Math.pow(1 - 1/q, 2) * rxi);
+  const widthRatio = envWidth / (lam / a);
+  const dH = 1 + 0.4 * Math.abs(q - 1);
+
+  let statsHtml = '';
+  statsHtml += `Fringe spacing: <span class="h1">${(fringeSpacing).toFixed(4)}</span> λ/d\n`;
+  statsHtml += `Envelope width: <span class="h2">${envWidth.toFixed(4)}</span> λ/a\n`;
+  statsHtml += `w_q / w_Fraunhofer: <span class="h3">${widthRatio.toFixed(4)}</span>\n`;
+  if (mode === 2) statsHtml += `Hausdorff dim d_H: <span class="h3">${dH.toFixed(3)}</span>\n`;
+  document.getElementById('stats').innerHTML = statsHtml.replace(/\n/g, '<br>');
+
+  // Formula
+  let fHtml = '';
+  if (mode === 1) {
+    fHtml = `<span class="fm">I_q(θ)</span> = cos²(ΔΦ_q/2) · sinc²(β_q)<br>`;
+    fHtml += `<span class="fm">ΔΦ_q</span> = q⁻¹·πd sinθ/λ + (1−q⁻¹)·Δφ_ξ<br>`;
+    fHtml += `<span class="fm">β_q</span> = q⁻¹·πa sinθ/λ + (1−q⁻¹)²·r_ξ·πa sinθ/λ<br>`;
+    fHtml += `<span class="ft">Reeb broadening</span>: (1−q⁻¹)² ≈ ${Math.pow(1-1/q,2).toFixed(6)}`;
+  } else {
+    fHtml = `<span class="fd">I_photon(θ)</span> = cos²(qd sinθ/2R) · E_J(θ)<br>`;
+    fHtml += `<span class="fd">E_J</span> = Julia-set measure (f_q: z→z²+c)<br>`;
+    fHtml += `<span class="fd">c</span> = (q−1)·e^{iπ/4} = ${((q-1)*0.707).toFixed(4)}+${((q-1)*0.707).toFixed(4)}i<br>`;
+    fHtml += `<span class="ft">d_H</span> = ${dH.toFixed(3)}`;
+  }
+  document.getElementById('formula-text').innerHTML = fHtml;
+
+  // Redraw buildup
+  drawBuildup();
+}
+
+// ── Buildup animation ──────────────────────────────────────────────
+
+function sampleTheta() {
+  // Rejection sampling from current intensity distribution
+  const thetaMax = 0.015;
+  const { q, a, d, lam, rxi } = P;
+  for (let tries = 0; tries < 200; tries++) {
+    const theta = (Math.random() * 2 - 1) * thetaMax;
+    const I = mode === 1
+      ? intensityMassive(theta, q, a, d, lam, rxi)
+      : intensityPhoton(theta, q, a, d);
+    if (Math.random() < I) return theta;
+  }
+  return 0;
+}
+
+function drawBuildup() {
+  const W = buCanvas.offsetWidth;
+  const H = 140;
+  const ctx = buCtx;
+  const isDark = !document.body.classList.contains('light');
+
+  ctx.fillStyle = isDark ? 'rgba(0,3,10,0.8)' : 'rgba(240,244,255,0.9)';
+  ctx.fillRect(0, 0, W, H);
+
+  const thetaMax = 0.015;
+  const mainColor = mode === 1 ? [58, 144, 255] : [255, 85, 51];
+
+  for (const theta of detections) {
+    const x = W / 2 + (theta / thetaMax) * (W / 2);
+    const y = 10 + Math.random() * (H - 20);
+    ctx.fillStyle = `rgba(${mainColor[0]},${mainColor[1]},${mainColor[2]},0.6)`;
+    ctx.beginPath();
+    ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  document.getElementById('v_count').textContent = detections.length + ' detections';
+}
+
+function togglePlay() {
+  playing = !playing;
+  document.getElementById('btn_play').textContent = playing ? '⏸ Pause' : '▶ Play';
+  if (playing) tick();
+}
+
+function resetBuildup() {
+  detections = [];
+  drawBuildup();
+}
+
+function tick() {
+  if (!playing) return;
+  const speed = parseInt(document.getElementById('sl_speed').value);
+  for (let i = 0; i < speed; i++) {
+    detections.push(sampleTheta());
+  }
+  drawBuildup();
+  animId = requestAnimationFrame(tick);
+}
+
+// ── Mode switching ─────────────────────────────────────────────────
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('btn_m1').classList.toggle('active', m === 1);
+  document.getElementById('btn_m2').classList.toggle('active', m === 2);
+  document.getElementById('mode-desc').textContent = m === 1
+    ? 'q-harmonic form · q-Laplacian envelope · Reeb broadening'
+    : 'Exceptional-divisor flux · chiral twist · Julia-set envelope';
+  resetBuildup();
+  draw();
+}
+
+// ── Presets ─────────────────────────────────────────────────────────
+
+function preset(name) {
+  if (name === 'bach') {
+    setSliders({ q: 1.02, a: 50, d: 280, lam: 50, rxi: 0.1 });
+    setMode(1);
+    document.getElementById('cb_bach').checked = true;
+    document.getElementById('cb_fraunhofer').checked = true;
+  } else if (name === 'c60') {
+    setSliders({ q: 1.05, a: 50, d: 100, lam: 2.5, rxi: 0.25 });
+    setMode(1);
+    document.getElementById('cb_bach').checked = false;
+  } else if (name === 'photon') {
+    setSliders({ q: 1.02, a: 200, d: 500, lam: 100, rxi: 0.1 });
+    setMode(2);
+    document.getElementById('cb_bach').checked = false;
+  } else if (name === 'classical') {
+    setSliders({ q: 1.0, a: 62, d: 272, lam: 50, rxi: 0.1 });
+    setMode(1);
+    document.getElementById('cb_bach').checked = false;
+  }
+  draw();
+}
+
+function setSliders(vals) {
+  for (const [sid, vid, key, fmt] of sliders) {
+    if (vals[key] !== undefined) {
+      P[key] = vals[key];
+      document.getElementById(sid).value = vals[key];
+      document.getElementById(vid).textContent = fmt(vals[key]);
+    }
+  }
+}
+
+// ── Events ─────────────────────────────────────────────────────────
+
+window.addEventListener('resize', draw);
+document.getElementById('cb_fraunhofer').addEventListener('change', draw);
+document.getElementById('cb_envelope').addEventListener('change', draw);
+document.getElementById('cb_bach').addEventListener('change', draw);
+
+// ── Theme sync with viewer ───────────────────────────────────────
+(function(){
+  var p = new URLSearchParams(location.search);
+  if (p.get('theme') === 'light') document.body.classList.add('light');
+  else document.body.classList.remove('light');
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'folio-theme') {
+      if (e.data.theme === 'light') document.body.classList.add('light');
+      else document.body.classList.remove('light');
+      draw();
+    }
+  });
+})();
+
+// ── Init ───────────────────────────────────────────────────────────
+draw();
+</script>
+</body>
+</html>

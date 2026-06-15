@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valley of Stability — Stability Cubic Explorer</title>
+<style>
+:root {
+  --bg:#020710; --panel:rgba(3,10,30,0.93); --border:rgba(60,120,255,0.20);
+  --accent:#3a90ff; --accent2:#ff5533; --accent3:#33ffaa; --accent4:#ffaa33;
+  --text:#b8ccff; --dim:#3a4a78;
+}
+body.light {
+  --bg:#f0f4ff; --panel:rgba(235,240,255,0.96); --border:rgba(60,80,180,0.25);
+  --accent:#1a5fcc; --accent2:#cc3300; --accent3:#006633; --accent4:#885500;
+  --text:#1a2855; --dim:#6070a0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;overflow:hidden;user-select:none;}
+
+#title{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-family:'Rajdhani',sans-serif;font-weight:300;font-size:18px;letter-spacing:.25em;color:var(--accent);text-transform:uppercase;text-shadow:0 0 18px rgba(58,144,255,.5);pointer-events:none;white-space:nowrap;}
+#subtitle{position:absolute;top:32px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.20em;color:var(--dim);text-transform:uppercase;pointer-events:none;white-space:nowrap;}
+
+.panel{position:absolute;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:10px;backdrop-filter:blur(18px);z-index:10;}
+.panel-title{font-family:'Rajdhani',sans-serif;font-weight:300;font-size:11px;letter-spacing:.20em;color:var(--accent);text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.row{display:grid;grid-template-columns:60px 1fr 50px;align-items:center;gap:5px;margin:4px 0;}
+.lbl{color:#6070a0;font-size:10px;}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:rgba(58,144,255,0.15);border-radius:2px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:9px;height:9px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 7px rgba(58,144,255,.8);}
+.val{color:var(--accent);font-size:10px;text-align:right;}
+
+#theme-btn{position:absolute;top:10px;right:12px;z-index:20;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:4px 8px;cursor:pointer;color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:10px;}
+
+canvas{position:absolute;top:50px;left:200px;right:12px;bottom:12px;border:1px solid var(--border);border-radius:3px;}
+body.light canvas{background:rgba(255,255,255,0.3);}
+
+#ctrl{top:50px;left:8px;width:184px;max-height:calc(100vh - 60px);overflow-y:auto;}
+#ctrl::-webkit-scrollbar{width:3px;}
+#ctrl::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+#info{position:absolute;bottom:18px;left:208px;font-size:10px;color:var(--dim);z-index:10;pointer-events:none;}
+.tooltip{position:absolute;background:var(--panel);border:1px solid var(--accent);border-radius:3px;padding:6px 10px;font-size:11px;pointer-events:none;z-index:30;display:none;max-width:200px;}
+</style>
+</head>
+<body>
+<div id="title">Valley of Stability</div>
+<div id="subtitle">Stability Cubic &middot; t&sup3; = 2Q(1 + ct&sup2;)</div>
+<button id="theme-btn" onclick="document.body.classList.toggle('light')">◑</button>
+
+<div class="panel" id="ctrl">
+  <div class="panel-title">Parameters</div>
+  <div class="row">
+    <span class="lbl">q</span>
+    <input type="range" id="sl-q" min="1.001" max="2.0" step="0.001" value="1.110">
+    <span class="val" id="v-q">1.110</span>
+  </div>
+  <div class="row">
+    <span class="lbl">a_C</span>
+    <span class="val" id="v-ac" style="grid-column:2/4;text-align:left;color:var(--dim)">0.697</span>
+  </div>
+  <div class="row">
+    <span class="lbl">a_A</span>
+    <input type="range" id="sl-aA" min="15" max="35" step="0.1" value="23.29">
+    <span class="val" id="v-aA">23.29</span>
+  </div>
+  <div class="row">
+    <span class="lbl">λ_C</span>
+    <input type="range" id="sl-lC" min="1" max="8" step="0.01" value="3.334">
+    <span class="val" id="v-lC">3.334</span>
+  </div>
+  <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:8px;">
+    <div class="panel-title">View</div>
+    <div class="row" style="grid-template-columns:1fr 1fr;">
+      <label><input type="radio" name="view" value="pn" checked> p vs n</label>
+      <label><input type="radio" name="view" value="pA"> p vs A</label>
+    </div>
+    <div class="row" style="grid-template-columns:1fr;">
+      <label><input type="checkbox" id="cb-labels" checked> Element labels</label>
+    </div>
+    <div class="row" style="grid-template-columns:1fr;">
+      <label><input type="checkbox" id="cb-diagonal" checked> n = p diagonal</label>
+    </div>
+    <div class="row" style="grid-template-columns:1fr;">
+      <label><input type="checkbox" id="cb-stability"> Stability pairs</label>
+    </div>
+  </div>
+</div>
+
+<canvas id="cv"></canvas>
+<div id="info"></div>
+<div class="tooltip" id="tip"></div>
+
+<script>
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const tip = document.getElementById('tip');
+
+const ELEMENTS = [
+  [1,0,'H'],[2,2,'He'],[3,4,'Li'],[4,5,'Be'],[5,6,'B'],[6,6,'C'],
+  [7,7,'N'],[8,8,'O'],[9,10,'F'],[10,10,'Ne'],[11,12,'Na'],[12,12,'Mg'],
+  [13,14,'Al'],[14,14,'Si'],[15,16,'P'],[16,16,'S'],[17,18,'Cl'],
+  [18,22,'Ar'],[19,20,'K'],[20,20,'Ca'],[21,24,'Sc'],[22,26,'Ti'],
+  [23,28,'V'],[24,28,'Cr'],[25,30,'Mn'],[26,30,'Fe'],[27,32,'Co'],
+  [28,30,'Ni'],[29,34,'Cu'],[30,34,'Zn'],[31,38,'Ga'],[32,42,'Ge'],
+  [33,42,'As'],[34,46,'Se'],[35,44,'Br'],[36,48,'Kr'],[37,48,'Rb'],
+  [38,50,'Sr'],[39,50,'Y'],[40,50,'Zr'],[41,52,'Nb'],[42,56,'Mo'],
+  [43,55,'Tc'],[44,58,'Ru'],[45,58,'Rh'],[46,60,'Pd'],[47,60,'Ag'],
+  [48,66,'Cd'],[49,66,'In'],[50,70,'Sn'],[51,70,'Sb'],[52,78,'Te'],
+  [53,74,'I'],[54,78,'Xe'],[55,78,'Cs'],[56,82,'Ba'],[57,82,'La'],
+  [58,82,'Ce'],[59,82,'Pr'],[60,82,'Nd'],[62,90,'Sm'],[63,90,'Eu'],
+  [64,94,'Gd'],[65,94,'Tb'],[66,98,'Dy'],[67,98,'Ho'],[68,98,'Er'],
+  [70,104,'Yb'],[72,108,'Hf'],[74,110,'W'],[76,116,'Os'],[78,117,'Pt'],
+  [79,118,'Au'],[80,122,'Hg'],[82,126,'Pb'],[83,126,'Bi'],[92,146,'U']
+];
+
+const STABILITY_PAIRS = [2, 8, 20, 28, 50, 82, 126];
+
+function getParams() {
+  const q = parseFloat(document.getElementById('sl-q').value);
+  const aA = parseFloat(document.getElementById('sl-aA').value);
+  const lC = parseFloat(document.getElementById('sl-lC').value);
+  const aC = (q - 1/q) * lC;
+  const c = aC / (2 * aA);
+  document.getElementById('v-q').textContent = q.toFixed(3);
+  document.getElementById('v-aA').textContent = aA.toFixed(2);
+  document.getElementById('v-lC').textContent = lC.toFixed(3);
+  document.getElementById('v-ac').textContent = aC.toFixed(3);
+  return { q, aA, lC, aC, c };
+}
+
+function stableQ(A, c) {
+  return A / (2 + c * Math.pow(A, 2/3));
+}
+
+function stableN(Q, c) {
+  // Solve A/(2 + c*A^{2/3}) = Q for A, then N = A - Q
+  // Newton's method
+  let A = 2 * Q;
+  for (let i = 0; i < 50; i++) {
+    const f = A / (2 + c * Math.pow(A, 2/3)) - Q;
+    const dfdA = (2 + c * Math.pow(A, 2/3) - c * (2/3) * Math.pow(A, -1/3) * A) /
+                 Math.pow(2 + c * Math.pow(A, 2/3), 2);
+    A -= f / dfdA;
+    if (Math.abs(f) < 1e-10) break;
+  }
+  return Math.round(A - Q);
+}
+
+function draw() {
+  const rect = cv.getBoundingClientRect();
+  cv.width = rect.width * devicePixelRatio;
+  cv.height = rect.height * devicePixelRatio;
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+  const W = rect.width, H = rect.height;
+
+  const { q, aA, lC, aC, c } = getParams();
+  const viewQN = document.querySelector('input[name=view]:checked').value === 'pn';
+  const showLabels = document.getElementById('cb-labels').checked;
+  const showDiag = document.getElementById('cb-diagonal').checked;
+  const showSP = document.getElementById('cb-stability').checked;
+
+  const maxQ = 100, maxN = viewQN ? 160 : 260;
+  const mx = 45, my = 25, mr = 15, mb = 35;
+  const pw = W - mx - mr, ph = H - my - mb;
+
+  const toX = v => mx + (v / maxQ) * pw;
+  const toY = v => H - mb - (v / maxN) * ph;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid
+  const gs = getComputedStyle(document.body);
+  ctx.strokeStyle = gs.getPropertyValue('--border');
+  ctx.lineWidth = 0.5;
+  for (let g = 0; g <= maxQ; g += 10) {
+    ctx.beginPath(); ctx.moveTo(toX(g), my); ctx.lineTo(toX(g), H - mb); ctx.stroke();
+  }
+  for (let g = 0; g <= maxN; g += 20) {
+    ctx.beginPath(); ctx.moveTo(mx, toY(g)); ctx.lineTo(W - mr, toY(g)); ctx.stroke();
+  }
+
+  // Axis labels
+  ctx.fillStyle = gs.getPropertyValue('--dim');
+  ctx.font = '10px "Share Tech Mono"';
+  ctx.textAlign = 'center';
+  for (let g = 0; g <= maxQ; g += 20) ctx.fillText(g, toX(g), H - mb + 15);
+  ctx.fillText('p (protons)', mx + pw/2, H - 5);
+  ctx.textAlign = 'right';
+  for (let g = 0; g <= maxN; g += 20) ctx.fillText(g, mx - 5, toY(g) + 3);
+  ctx.save(); ctx.translate(12, my + ph/2); ctx.rotate(-Math.PI/2);
+  ctx.textAlign = 'center';
+  ctx.fillText(viewQN ? 'n (neutrons)' : 'A = p + n', 0, 0);
+  ctx.restore();
+
+  // n = p diagonal
+  if (showDiag && viewQN) {
+    ctx.strokeStyle = gs.getPropertyValue('--dim');
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(toX(0), toY(0)); ctx.lineTo(toX(maxQ), toY(maxQ)); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Stability pairs vertical lines
+  if (showSP) {
+    ctx.strokeStyle = 'rgba(255,170,50,0.2)';
+    ctx.lineWidth = 1;
+    for (const sp of STABILITY_PAIRS) {
+      if (sp <= maxQ) {
+        ctx.beginPath(); ctx.moveTo(toX(sp), my); ctx.lineTo(toX(sp), H - mb); ctx.stroke();
+      }
+      if (sp <= maxN) {
+        ctx.beginPath(); ctx.moveTo(mx, toY(sp)); ctx.lineTo(W - mr, toY(sp)); ctx.stroke();
+      }
+    }
+  }
+
+  // Stability cubic curve
+  ctx.strokeStyle = gs.getPropertyValue('--accent');
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  let first = true;
+  for (let Q = 0.5; Q <= maxQ; Q += 0.5) {
+    const N = stableN(Q, c);
+    const yVal = viewQN ? N : Q + N;
+    if (yVal >= 0 && yVal <= maxN) {
+      if (first) { ctx.moveTo(toX(Q), toY(yVal)); first = false; }
+      else ctx.lineTo(toX(Q), toY(yVal));
+    }
+  }
+  ctx.stroke();
+
+  // Observed lattice points (atoms)
+  for (const [Z, N, sym] of ELEMENTS) {
+    if (Z > maxQ) continue;
+    const yVal = viewQN ? N : Z + N;
+    if (yVal > maxN) continue;
+    const x = toX(Z), y = toY(yVal);
+
+    // Predicted N
+    const Npred = stableN(Z, c);
+    const delta = Math.abs(N - Npred);
+
+    // Color by accuracy
+    if (delta === 0) ctx.fillStyle = gs.getPropertyValue('--accent3');
+    else if (delta <= 1) ctx.fillStyle = gs.getPropertyValue('--accent4');
+    else ctx.fillStyle = gs.getPropertyValue('--accent2');
+
+    // Is it a stability pair?
+    const isSP = STABILITY_PAIRS.includes(Z) || STABILITY_PAIRS.includes(N);
+
+    ctx.beginPath();
+    if (isSP) {
+      // Diamond for stability pairs
+      ctx.moveTo(x, y - 5); ctx.lineTo(x + 5, y);
+      ctx.lineTo(x, y + 5); ctx.lineTo(x - 5, y); ctx.closePath();
+    } else {
+      ctx.arc(x, y, 3, 0, Math.PI * 2);
+    }
+    ctx.fill();
+
+    // Labels
+    if (showLabels && (Z <= 30 || Z % 4 === 0 || isSP)) {
+      ctx.fillStyle = gs.getPropertyValue('--text');
+      ctx.font = '9px "Share Tech Mono"';
+      ctx.textAlign = 'left';
+      ctx.fillText(sym, x + 6, y + 3);
+    }
+  }
+
+  // Info
+  const phi2 = (3 - Math.sqrt(5)) / 2;
+  document.getElementById('info').innerHTML =
+    `c = ${c.toFixed(5)} &middot; a<sub>C</sub> = ${aC.toFixed(3)} MeV &middot; ` +
+    `q<sub>gold</sub> = 1/φ² = ${phi2.toFixed(3)} &middot; ` +
+    `<span style="color:var(--accent3)">●</span> ΔN=0 ` +
+    `<span style="color:var(--accent4)">●</span> ΔN=1 ` +
+    `<span style="color:var(--accent2)">●</span> ΔN≥2 ` +
+    `<span style="color:var(--accent4)">◆</span> stability pair`;
+}
+
+// Slider events
+document.querySelectorAll('input[type=range], input[type=radio], input[type=checkbox]')
+  .forEach(el => el.addEventListener('input', draw));
+window.addEventListener('resize', draw);
+
+// Hover tooltip
+cv.addEventListener('mousemove', e => {
+  const rect = cv.getBoundingClientRect();
+  const mx2 = e.clientX - rect.left, my2 = e.clientY - rect.top;
+  const { c } = getParams();
+  const viewQN = document.querySelector('input[name=view]:checked').value === 'pn';
+  const maxQ = 100, maxN = viewQN ? 160 : 260;
+  const mxo = 45, myo = 25, mro = 15, mbo = 35;
+  const pw = rect.width - mxo - mro, ph = rect.height - myo - mbo;
+
+  let found = null;
+  for (const [Z, N, sym] of ELEMENTS) {
+    const yVal = viewQN ? N : Z + N;
+    const x = mxo + (Z / maxQ) * pw;
+    const y = rect.height - mbo - (yVal / maxN) * ph;
+    if (Math.abs(mx2 - x) < 8 && Math.abs(my2 - y) < 8) {
+      found = { Z, N, sym, x: e.clientX, y: e.clientY };
+      break;
+    }
+  }
+
+  if (found) {
+    const Npred = stableN(found.Z, c);
+    const A = found.Z + found.N;
+    tip.style.display = 'block';
+    tip.style.left = (found.x + 15) + 'px';
+    tip.style.top = (found.y - 10) + 'px';
+    tip.innerHTML = `<b>${found.sym}</b> (Z=${found.Z})<br>` +
+      `n<sub>obs</sub>=${found.N}, n<sub>pred</sub>=${Npred}<br>` +
+      `A=${A}, n/p=${(found.N/found.Z).toFixed(3)}<br>` +
+      `ΔN=${Math.abs(found.N - Npred)}`;
+  } else {
+    tip.style.display = 'none';
+  }
+});
+
+draw();
+</script>
+</body>
+</html>
