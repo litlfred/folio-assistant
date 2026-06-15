@@ -197,9 +197,10 @@ jobs:
           changed=true
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             base="$BASE_SHA"
+            if git fetch origin "$base" --depth=1 || true; then :; fi
             if git cat-file -e "$base" 2>/dev/null && \
                [ -z "$(git diff --name-only "$base"...HEAD -- \
-                        folio-assistant/computations tools 2>/dev/null \
+                        computations 2>/dev/null \
                         | grep -E '\.py$')" ]; then
               changed=false
             fi

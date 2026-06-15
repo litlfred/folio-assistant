@@ -35,7 +35,7 @@ sudo apt-get update
 
 echo "install-tex: installing texlive-full + latexmk (~5 GB)…"
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-  texlive-full latexmk
+  texlive-full latexmk latexdiff texlive-extra-utils
 
 # Verify the packages the LaTeX build cache needs actually resolved.
 missing=0
