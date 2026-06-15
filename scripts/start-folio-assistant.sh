@@ -12,22 +12,23 @@
 #
 set -euo pipefail
 
+TARGET_REPO="${PWD}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-ASSISTANT_DIR="$REPO_ROOT/folio-assistant"
+ASSISTANT_DIR="$REPO_ROOT"
 # Legacy path (fallback if folio-assistant/ not yet set up)
 MCP_DIR="$REPO_ROOT/scripts/mcp-server"
 
 # ── Auto-commit dirty feedback files before anything else ──────
 # Prevents "untracked working tree files would be overwritten" errors
 # when switching branches.
-if [ -d "$REPO_ROOT/folio-assistant/feedback" ]; then
+if [ -d "$REPO_ROOT/feedback" ]; then
   cd "$REPO_ROOT"
-  if git diff --name-only HEAD -- folio-assistant/feedback/ 2>/dev/null | grep -q . ||
-     git diff --cached --name-only -- folio-assistant/feedback/ 2>/dev/null | grep -q . ||
-     git ls-files --others --exclude-standard -- folio-assistant/feedback/ 2>/dev/null | grep -q .; then
-    git add folio-assistant/feedback/
-    git commit -m "auto-save feedback before startup" --no-verify -- folio-assistant/feedback/ 2>/dev/null && \
+  if git diff --name-only HEAD -- feedback/ 2>/dev/null | grep -q . ||
+     git diff --cached --name-only -- feedback/ 2>/dev/null | grep -q . ||
+     git ls-files --others --exclude-standard -- feedback/ 2>/dev/null | grep -q .; then
+    git add feedback/
+    git commit -m "auto-save feedback before startup" --no-verify -- feedback/ 2>/dev/null && \
       echo "[start-folio-assistant] auto-committed dirty feedback files" >&2 || true
   fi
 fi
@@ -153,9 +154,9 @@ fi
 if $USE_NEW; then
   echo "[start-folio-assistant] Starting folio-assistant (new architecture)..." >&2
   cd "$ASSISTANT_DIR"
-  exec bun run src/index.ts "$MODE"
+  exec bun run src/index.ts "$MODE" --repo "$TARGET_REPO"
 else
   echo "[start-folio-assistant] Starting legacy MCP server..." >&2
   cd "$MCP_DIR"
-  exec bun run server.ts "$MODE"
+  exec bun run server.ts "$MODE" --repo "$TARGET_REPO"
 fi
