@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Beta-Decay Half-Life — Transfer Matrix Calculator</title>
+<style>
+:root {
+  --bg:#020710; --panel:rgba(3,10,30,0.93); --border:rgba(60,120,255,0.20);
+  --accent:#3a90ff; --accent2:#ff5533; --accent3:#33ffaa; --accent4:#ffaa33;
+  --text:#b8ccff; --dim:#3a4a78;
+}
+body.light {
+  --bg:#f0f4ff; --panel:rgba(235,240,255,0.96); --border:rgba(60,80,180,0.25);
+  --accent:#1a5fcc; --accent2:#cc3300; --accent3:#006633; --accent4:#885500;
+  --text:#1a2855; --dim:#6070a0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;overflow:hidden;user-select:none;}
+#title{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-family:'Rajdhani',sans-serif;font-weight:300;font-size:18px;letter-spacing:.25em;color:var(--accent);text-transform:uppercase;text-shadow:0 0 18px rgba(58,144,255,.5);pointer-events:none;white-space:nowrap;}
+#subtitle{position:absolute;top:32px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.20em;color:var(--dim);text-transform:uppercase;pointer-events:none;white-space:nowrap;}
+.panel{position:absolute;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:10px;backdrop-filter:blur(18px);z-index:10;}
+.panel-title{font-family:'Rajdhani',sans-serif;font-weight:300;font-size:11px;letter-spacing:.20em;color:var(--accent);text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.row{display:grid;grid-template-columns:55px 1fr 50px;align-items:center;gap:5px;margin:4px 0;}
+.lbl{color:#6070a0;font-size:10px;}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:rgba(58,144,255,0.15);border-radius:2px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:9px;height:9px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 7px rgba(58,144,255,.8);}
+.val{color:var(--accent);font-size:10px;text-align:right;}
+select,input[type=number]{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:2px;padding:2px 4px;font-family:'Share Tech Mono',monospace;font-size:10px;width:100%;}
+#theme-btn{position:absolute;top:10px;right:12px;z-index:20;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:4px 8px;cursor:pointer;color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:10px;}
+canvas{position:absolute;top:50px;left:200px;right:12px;bottom:140px;border:1px solid var(--border);border-radius:3px;}
+body.light canvas{background:rgba(255,255,255,0.3);}
+#ctrl{top:50px;left:8px;width:184px;max-height:calc(100vh - 60px);overflow-y:auto;}
+#ctrl::-webkit-scrollbar{width:3px;}
+#ctrl::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+#results{position:absolute;bottom:12px;left:200px;right:12px;height:120px;overflow-y:auto;}
+#results table{width:100%;border-collapse:collapse;font-size:10px;}
+#results td{padding:2px 6px;border-bottom:1px solid var(--border);}
+#results td:first-child{color:var(--dim);width:130px;}
+#results td:nth-child(2){color:var(--accent);text-align:right;}
+#results td:nth-child(3){color:var(--dim);font-size:9px;padding-left:8px;}
+#info{position:absolute;bottom:2px;left:208px;font-size:10px;color:var(--dim);z-index:10;pointer-events:none;}
+.tooltip{position:absolute;background:var(--panel);border:1px solid var(--accent);border-radius:3px;padding:6px 10px;font-size:11px;pointer-events:none;z-index:30;display:none;max-width:240px;}
+label{font-size:10px;color:var(--dim);cursor:pointer;}
+input[type=radio],input[type=checkbox]{margin-right:4px;cursor:pointer;}
+.custom-inputs{display:none;margin-top:4px;}
+.custom-inputs.show{display:block;}
+.custom-inputs .row{grid-template-columns:20px 1fr;}
+</style>
+</head>
+<body>
+<div id="title">Beta-Decay Half-Life</div>
+<div id="subtitle">Transfer Matrix &middot; Skein Polynomial &middot; t&frac12; from q</div>
+<button id="theme-btn" onclick="document.body.classList.toggle('light')">&#9681;</button>
+<div class="panel" id="ctrl">
+  <div class="panel-title">Parameters</div>
+  <div class="row">
+    <span class="lbl">q</span>
+    <input type="range" id="sl-q" min="1.005" max="2.0" step="0.001" value="1.110">
+    <span class="val" id="v-q">1.110</span>
+  </div>
+  <div class="row" style="grid-template-columns:55px 1fr;">
+    <span class="lbl">Nucleus</span>
+    <select id="sel-nuc">
+      <option value="0">&#xB3;H (Z=1,N=2)</option>
+      <option value="1">&#xB9;&#x2074;C (Z=6,N=8)</option>
+      <option value="2">&#x2076;&#x2070;Co (Z=27,N=33)</option>
+      <option value="3">&#x2079;&#x2070;Sr (Z=38,N=52)</option>
+      <option value="4">&#xB9;&#xB3;&#x2077;Cs (Z=55,N=82)</option>
+      <option value="5">&#xB2;&#xB9;&#x2070;Bi (Z=83,N=127)</option>
+      <option value="custom">Custom...</option>
+    </select>
+  </div>
+  <div class="custom-inputs" id="custom-div">
+    <div class="row">
+      <span class="lbl">Z</span>
+      <input type="number" id="in-Z" min="1" max="120" value="1">
+    </div>
+    <div class="row">
+      <span class="lbl">N</span>
+      <input type="number" id="in-N" min="1" max="200" value="2">
+    </div>
+  </div>
+  <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:8px;">
+    <div class="panel-title">Q-value source</div>
+    <div style="margin:4px 0;"><label><input type="radio" name="mode" value="from-q" checked> From q (transfer matrix)</label></div>
+    <div style="margin:4px 0;"><label><input type="radio" name="mode" value="from-Qexp"> From Q_exp (NNDC)</label></div>
+  </div>
+  <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:8px;">
+    <div class="panel-title">Options</div>
+    <div style="margin:4px 0;"><label><input type="checkbox" id="cb-shell" checked> Knot operator F(T<sub>k*</sub>)</label></div>
+  </div>
+</div>
+<canvas id="cv"></canvas>
+<div class="panel" id="results"></div>
+<div id="info"></div>
+<div class="tooltip" id="tip"></div>
+<script>
+// ── Constants ───────────────────────────────────────────────────
+// VOL_FIG8 = hyperbolic volume Vol(4_1) of the figure-eight knot
+//   complement. Canonical 50-dps witness:
+//   folio-assistant/computations/meson-mass-from-hecke.witness.json
+//   ("Vol_4_1": "2.02988321281930725004240510854904057188...").
+//   The literal below agrees to 16 decimals; refresh from the
+//   witness if a more precise value is ever required.
+// MASS_RATIO = m_mu / m_e (CODATA 2022); MAGIC = nuclear shell
+//   closures (Mayer-Jensen).
+const VOL_FIG8 = 2.029883212819307;
+const MASS_RATIO = 206.7682830;
+const HBAR_Q_SQ = VOL_FIG8 / MASS_RATIO;
+let M_E = 0.51099895; // CODATA fallback (the exact value required is 0.51099895)
+let G_F = 1.1663787e-11; // CODATA fallback (the exact value required is 1.1663787e-11)
+const HBAR = 6.582119569e-22;
+const YR = 3.15576e7;
+const MAGIC = [0, 2, 8, 20, 28, 50, 82, 126];
+
+const NUCLEI = [
+  {name:"\u00B3H",    Z:1,  N:2,   t_obs:12.32,   unit:"yr", conv:YR, Z_d:2,  Q_exp:0.01861},
+  {name:"\u00B9\u2074C",   Z:6,  N:8,   t_obs:5730.0,  unit:"yr", conv:YR, Z_d:7,  Q_exp:0.15648},
+  {name:"\u2076\u2070Co",  Z:27, N:33,  t_obs:5.2714,  unit:"yr", conv:YR, Z_d:28, Q_exp:0.31817},
+  {name:"\u2079\u2070Sr",  Z:38, N:52,  t_obs:28.79,   unit:"yr", conv:YR, Z_d:39, Q_exp:0.54590},
+  {name:"\u00B9\u00B3\u2077Cs", Z:55, N:82, t_obs:30.17, unit:"yr", conv:YR, Z_d:56, Q_exp:0.51400},
+  {name:"\u00B2\u00B9\u2070Bi", Z:83, N:127, t_obs:5.012, unit:"d", conv:86400, Z_d:84, Q_exp:1.16270},
+];
+
+// ── q-dependent helpers ─────────────────────────────────────────
+function qInt(n, q) {
+  const qi = 1/q;
+  return (Math.pow(q,n) - Math.pow(qi,n)) / (q - qi);
+}
+
+function derivedConsts(q) {
+  const qi = 1/q;
+  const ha = q - qi;
+  const s = Math.sqrt(q) - 1/Math.sqrt(q);
+  const z = 1 / (Math.sqrt(q) + 1/Math.sqrt(q));
+  const E_cross = 0.5 * ha;
+  const mu_0 = M_E / (3 * E_cross);
+  const TWO_Q = q + qi;
+  const alpha = qi / (qInt(9,q) * qInt(10,q));
+  const hbar_q = 1 - qi;
+  return {q, qi, ha, s, z, E_cross, mu_0, TWO_Q, alpha, hbar_q};
+}
+
+// ── 2x2 matrix ops ──────────────────────────────────────────────
+function matMul(A, B) {
+  return [
+    [A[0][0]*B[0][0]+A[0][1]*B[1][0], A[0][0]*B[0][1]+A[0][1]*B[1][1]],
+    [A[1][0]*B[0][0]+A[1][1]*B[1][0], A[1][0]*B[0][1]+A[1][1]*B[1][1]]
+  ];
+}
+function tMat(c, d, ha) {
+  return [[c*ha+d, c], [c, d]];
+}
+
+// ── Transfer matrix Skein polynomial ────────────────────────────
+function crossCoeffs(ti, tj, q, s) {
+  if (ti==='p' && tj==='p') return [1, 0];
+  if (ti==='n' && tj==='n') return [q*q, -q*s];
+  return [0.5*(1+q*q), -0.5*q*s];
+}
+
+function skeinPoly(Z, N, q) {
+  const A = Z + N;
+  if (A < 2) return {logP:0, volumes:[], sign:1};
+  const dc = derivedConsts(q);
+  const ord = Array(Z).fill('p').concat(Array(N).fill('n'));
+  const volumes = [];
+  let logP = 0;
+  let signCount = 0;
+  for (let i = 0; i < A-1; i++) {
+    let M = [[1,0],[0,1]];
+    for (let j = i+1; j < A; j++) {
+      const [c, d] = crossCoeffs(ord[i], ord[j], q, dc.s);
+      M = matMul(M, tMat(c, d, dc.ha));
+    }
+    const V = dc.z * M[0][0] + M[1][0];
+    volumes.push(V);
+    if (V < 0) signCount++;
+    if (V !== 0) logP += Math.log(Math.abs(V));
+  }
+  return {logP, volumes, sign: signCount % 2 === 0 ? 1 : -1};
+}
+
+// ── Knot operator correction (spectral-decomposition-qvalue) ────
+// Shell table: [start, end, size, degree]
+// degree 1 → F = 1 (bare coefficients already capture it)
+// degree 2, partial → F = 0.5904 (Rosso--Jones weighted average)
+// degree 2, full (N at magic) → F = 0.5904 × 0.6382 = 0.3768
+const SHELLS = [
+  [0,   2,  2,  1],  // Shell 1: T₂,₃
+  [2,   8,  6,  1],  // Shell 2: T₂,₅
+  [8,  20, 12,  1],  // Shell 3: T₂,₇
+  [20, 28,  8,  1],  // Shell 4: T₃,₅
+  [28, 50, 22,  2],  // Shell 5: T₂,₉
+  [50, 82, 32,  2],  // Shell 6: T₃,₄
+  [82,126, 44,  2],  // Shell 7: T₂,₉
+];
+const F_DEG2_PARTIAL = 0.5904;
+const F_DEG2_FULL = 0.3768;
+
+function getShellDegree(X) {
+  for (const [start, end, , deg] of SHELLS) {
+    if (X > start && X <= end) return deg;
+  }
+  return X > 126 ? 2 : 1;
+}
+
+function isMagic(X) { return MAGIC.indexOf(X) >= 0; }
+
+function knotOperatorF(N_converting) {
+  // The converting neutron's shell determines the correction.
+  // degree-1 shells: F = 1 (already in bare Q)
+  // degree-2 shells, partial occupancy: F = 0.5904
+  // degree-2 shells, fully occupied (N at magic): F = 0.3768
+  const deg = getShellDegree(N_converting);
+  if (deg === 1) return {F: 1, label: 'deg-1', deg: 1};
+  if (isMagic(N_converting))
+    return {F: F_DEG2_FULL, label: 'deg-2 full', deg: 2};
+  return {F: F_DEG2_PARTIAL, label: 'deg-2 partial', deg: 2};
+}
+
+// ── Phase space integral with Coulomb ───────────────────────────
+function phaseSpace(Z_d, Q_MeV, q) {
+  const W0 = 1 + Q_MeV / M_E;
+  if (W0 <= 1) return 0;
+  const alpha = (1/q) / (qInt(9,q) * qInt(10,q));
+  const nSteps = 3000;
+  const dW = (W0 - 1) / nSteps;
+  let total = 0;
+  for (let k = 0; k < nSteps; k++) {
+    const W = 1 + (k + 0.5) * dW;
+    const pe = Math.sqrt(W*W - 1);
+    const beta = pe / W;
+    const eta = alpha * Z_d / beta;
+    const F = Math.abs(eta) > 1e-12 ? 2*Math.PI*eta / (1 - Math.exp(-2*Math.PI*eta)) : 1;
+    total += F * pe * W * (W0-W)*(W0-W) * dW;
+  }
+  return total;
+}
+
+// ── Half-life computation ───────────────────────────────────────
+function computeHalfLife(Z, N, q, useQexp, useKnotOp) {
+  const dc = derivedConsts(q);
+  const A = Z + N;
+  const Z_d = Z + 1;
+
+  // Skein polynomials
+  const par = skeinPoly(Z, N, q);
+  const dau = skeinPoly(Z+1, N-1, q);
+  const lnRatio = dau.logP - par.logP;
+
+  // Q_bare = |ln(P_dau/P_par)| × E_× × μ₀
+  const Q_bare = Math.abs(lnRatio) * dc.E_cross * dc.mu_0;
+
+  // Knot operator correction: Q_corrected = Q_bare × F(T_k*, N)
+  // The converting neutron is at position N; its shell determines F.
+  const kop = knotOperatorF(N);
+  const Q_knot = Q_bare * kop.F;
+
+  // Which Q to use for half-life
+  let Q_use;
+  let Q_exp = null;
+  const nucIdx = NUCLEI.findIndex(n => n.Z === Z && n.N === N);
+  if (useQexp && nucIdx >= 0) {
+    Q_exp = NUCLEI[nucIdx].Q_exp;
+    Q_use = Q_exp;
+  } else {
+    Q_use = useKnotOp ? Q_knot : Q_bare;
+  }
+
+  // Phase space
+  const f_val = phaseSpace(Z_d, Q_use, q);
+
+  // Rate
+  const rate_base = G_F*G_F * Math.pow(M_E, 5) / (2 * Math.pow(Math.PI, 3) * HBAR);
+  const dq = (A-1)/(A*A) * HBAR_Q_SQ;
+  const q_corr = 1 - 48 * dq / q;
+  const Gamma = rate_base * f_val * dc.TWO_Q * q_corr;
+  const t_half_s = Gamma > 0 ? Math.LN2 / Gamma : Infinity;
+
+  // Sensitivity
+  const sens = (q*q-1)/(q*q+1) + 5*(q*q+1)/(q*q-1);
+
+  return {
+    par, dau, lnRatio, Q_bare, Q_knot, Q_use, Q_exp, kop,
+    f_val, Gamma, t_half_s, dc, sens, Z_d, A
+  };
+}
+
+// ── Formatting helpers ──────────────────────────────────────────
+function fmtTime(seconds) {
+  if (!isFinite(seconds) || seconds <= 0) return "∞";
+  if (seconds < 1) return (seconds*1e3).toFixed(2) + " ms";
+  if (seconds < 60) return seconds.toFixed(3) + " s";
+  if (seconds < 3600) return (seconds/60).toFixed(2) + " min";
+  if (seconds < 86400) return (seconds/3600).toFixed(2) + " hr";
+  if (seconds < YR) return (seconds/86400).toFixed(3) + " d";
+  if (seconds < 1e3*YR) return (seconds/YR).toFixed(3) + " yr";
+  if (seconds < 1e6*YR) return (seconds/YR/1e3).toFixed(2) + " kyr";
+  if (seconds < 1e9*YR) return (seconds/YR/1e6).toFixed(2) + " Myr";
+  return (seconds/YR/1e9).toExponential(2) + " Gyr";
+}
+function sci(x, d) {
+  if (!isFinite(x)) return "∞";
+  if (Math.abs(x) < 1e-3 || Math.abs(x) > 1e5) return x.toExponential(d||3);
+  return x.toPrecision(d||4);
+}
+
+// ── UI state ────────────────────────────────────────────────────
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const tip = document.getElementById('tip');
+
+function getState() {
+  const q = parseFloat(document.getElementById('sl-q').value);
+  document.getElementById('v-q').textContent = q.toFixed(3);
+  const selVal = document.getElementById('sel-nuc').value;
+  const useQexp = document.querySelector('input[name=mode]:checked').value === 'from-Qexp';
+  const useKnotOp = document.getElementById('cb-shell').checked;
+  let Z, N;
+  if (selVal === 'custom') {
+    Z = parseInt(document.getElementById('in-Z').value) || 1;
+    N = parseInt(document.getElementById('in-N').value) || 2;
+    document.getElementById('custom-div').classList.add('show');
+  } else {
+    const nuc = NUCLEI[parseInt(selVal)];
+    Z = nuc.Z; N = nuc.N;
+    document.getElementById('custom-div').classList.remove('show');
+  }
+  return {q, Z, N, useQexp, useKnotOp};
+}
+
+// ── Draw ────────────────────────────────────────────────────────
+let sweepCache = null;
+
+function computeSweep(Z, N, useQexp, useKnotOp) {
+  const A = Z + N;
+  const nPts = A > 30 ? 60 : 150;
+  const pts = [];
+  for (let i = 0; i < nPts; i++) {
+    const q = 1.005 + (2.0 - 1.005) * i / (nPts - 1);
+    const r = computeHalfLife(Z, N, q, useQexp, useKnotOp);
+    if (r.t_half_s > 0 && isFinite(r.t_half_s)) {
+      pts.push({q, logT: Math.log10(r.t_half_s)});
+    }
+  }
+  return pts;
+}
+
+function draw() {
+  const {q, Z, N, useQexp, useKnotOp} = getState();
+  const r = computeHalfLife(Z, N, q, useQexp, useKnotOp);
+
+  // Sweep (cached by Z,N,mode)
+  const key = `${Z},${N},${useQexp},${useKnotOp}`;
+  if (!sweepCache || sweepCache.key !== key) {
+    sweepCache = {key, pts: computeSweep(Z, N, useQexp, useKnotOp)};
+  }
+  const pts = sweepCache.pts;
+
+  // Canvas setup
+  const rect = cv.getBoundingClientRect();
+  cv.width = rect.width * devicePixelRatio;
+  cv.height = rect.height * devicePixelRatio;
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+  const W = rect.width, H = rect.height;
+  const gs = getComputedStyle(document.body);
+  const mx = 55, my = 20, mr = 15, mb = 30;
+  const pw = W - mx - mr, ph = H - my - mb;
+
+  // Y range
+  let yMin = Infinity, yMax = -Infinity;
+  for (const p of pts) {
+    if (p.logT < yMin) yMin = p.logT;
+    if (p.logT > yMax) yMax = p.logT;
+  }
+  if (!isFinite(yMin)) { yMin = -5; yMax = 20; }
+  const yPad = (yMax - yMin) * 0.1 || 5;
+  yMin -= yPad; yMax += yPad;
+  const xMin = 1.0, xMax = 2.05;
+
+  const toX = v => mx + (v - xMin) / (xMax - xMin) * pw;
+  const toY = v => H - mb - (v - yMin) / (yMax - yMin) * ph;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid
+  ctx.strokeStyle = gs.getPropertyValue('--border');
+  ctx.lineWidth = 0.5;
+  for (let g = 1.0; g <= 2.0; g += 0.1) {
+    ctx.beginPath(); ctx.moveTo(toX(g), my); ctx.lineTo(toX(g), H-mb); ctx.stroke();
+  }
+  const yStep = Math.max(1, Math.ceil((yMax-yMin)/10));
+  for (let g = Math.ceil(yMin); g <= yMax; g += yStep) {
+    ctx.beginPath(); ctx.moveTo(mx, toY(g)); ctx.lineTo(W-mr, toY(g)); ctx.stroke();
+  }
+
+  // Axis labels
+  ctx.fillStyle = gs.getPropertyValue('--dim');
+  ctx.font = '10px "Share Tech Mono"';
+  ctx.textAlign = 'center';
+  for (let g = 1.0; g <= 2.0; g += 0.2) ctx.fillText(g.toFixed(1), toX(g), H-mb+15);
+  ctx.fillText('q (substrate parameter)', mx + pw/2, H-3);
+  ctx.textAlign = 'right';
+  for (let g = Math.ceil(yMin); g <= yMax; g += yStep) {
+    ctx.fillText('10^'+g, mx-5, toY(g)+3);
+  }
+  ctx.save(); ctx.translate(12, my+ph/2); ctx.rotate(-Math.PI/2);
+  ctx.textAlign = 'center';
+  ctx.fillText('t\u00BD (seconds)', 0, 0);
+  ctx.restore();
+
+  // Sweep curve
+  if (pts.length > 1) {
+    ctx.strokeStyle = gs.getPropertyValue('--accent');
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(toX(pts[0].q), toY(pts[0].logT));
+    for (let i = 1; i < pts.length; i++) {
+      ctx.lineTo(toX(pts[i].q), toY(pts[i].logT));
+    }
+    ctx.stroke();
+  }
+
+  // Vertical line at current q
+  ctx.strokeStyle = gs.getPropertyValue('--accent3');
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(toX(q), my); ctx.lineTo(toX(q), H-mb); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Horizontal line at observed t_1/2
+  const nucIdx = NUCLEI.findIndex(n => n.Z === Z && n.N === N);
+  if (nucIdx >= 0) {
+    const tObs_s = NUCLEI[nucIdx].t_obs * NUCLEI[nucIdx].conv;
+    const logTobs = Math.log10(tObs_s);
+    if (logTobs >= yMin && logTobs <= yMax) {
+      ctx.strokeStyle = gs.getPropertyValue('--accent2');
+      ctx.setLineDash([4,4]);
+      ctx.beginPath(); ctx.moveTo(mx, toY(logTobs)); ctx.lineTo(W-mr, toY(logTobs)); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = gs.getPropertyValue('--accent2');
+      ctx.textAlign = 'left';
+      ctx.fillText('t\u00BD obs = ' + fmtTime(tObs_s), mx+5, toY(logTobs)-5);
+    }
+  }
+
+  // Current point
+  if (r.t_half_s > 0 && isFinite(r.t_half_s)) {
+    const logT = Math.log10(r.t_half_s);
+    ctx.fillStyle = gs.getPropertyValue('--accent3');
+    ctx.beginPath();
+    ctx.arc(toX(q), toY(logT), 5, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = gs.getPropertyValue('--accent3');
+    ctx.textAlign = 'left';
+    ctx.fillText(fmtTime(r.t_half_s), toX(q)+8, toY(logT)-5);
+  }
+
+  // Regime labels
+  ctx.font = '9px "Rajdhani"';
+  ctx.fillStyle = gs.getPropertyValue('--dim');
+  ctx.globalAlpha = 0.6;
+  ctx.textAlign = 'left';
+  ctx.fillText('Classical (q\u21921): no decay', toX(1.02), my+15);
+  ctx.textAlign = 'right';
+  ctx.fillText('Deep quantum: fast decay', toX(1.95), my+15);
+  ctx.globalAlpha = 1;
+
+  // Results table
+  updateResults(r, Z, N, nucIdx);
+
+  // Info bar
+  document.getElementById('info').innerHTML =
+    `Sensitivity: \u2202ln\u0393/\u2202lnq \u2248 ${r.sens.toFixed(1)} &middot; ` +
+    `A = ${r.A} &middot; \u03B1<sub>EM</sub> = 1/${(1/r.dc.alpha).toFixed(2)} &middot; ` +
+    `[2]<sub>q</sub> = ${r.dc.TWO_Q.toFixed(4)}`;
+}
+
+function updateResults(r, Z, N, nucIdx) {
+  const el = document.getElementById('results');
+  let rows = '';
+  const a = (l,v,u) => `<tr><td>${l}</td><td>${v}</td><td>${u||''}</td></tr>`;
+  rows += a('E_\u00d7', sci(r.dc.E_cross), 'MeV');
+  rows += a('\u03bc\u2080', sci(r.dc.mu_0), 'MeV/Skein');
+  rows += a('ln P_par', r.par.logP.toFixed(4), '');
+  rows += a('ln P_dau', r.dau.logP.toFixed(4), '');
+  rows += a('ln(P_d/P_p)', r.lnRatio.toFixed(6), '');
+  rows += a('Q_bare', sci(r.Q_bare), 'MeV');
+  if (document.getElementById('cb-shell').checked) {
+    rows += a('T_k* shell', r.kop.label, 'deg ' + r.kop.deg);
+    rows += a('F(T_k*, N)', r.kop.F.toFixed(4), r.kop.F < 1 ? 'suppressed' : 'unity');
+    rows += a('Q_knot', sci(r.Q_knot), 'MeV');
+  }
+  if (r.Q_exp !== null) rows += a('Q_exp', sci(r.Q_exp), 'MeV');
+  rows += a('Q_used', sci(r.Q_use), 'MeV');
+  rows += a('f(Z,Q)', sci(r.f_val), '');
+  rows += a('t\u00BD pred', fmtTime(r.t_half_s), '');
+  if (nucIdx >= 0) {
+    const nuc = NUCLEI[nucIdx];
+    const tObs_s = nuc.t_obs * nuc.conv;
+    rows += a('t\u00BD obs', nuc.t_obs.toFixed(3) + ' ' + nuc.unit, '');
+    const ratio = r.t_half_s / tObs_s;
+    const color = Math.abs(ratio-1) < 0.05 ? 'var(--accent3)' : Math.abs(ratio-1) < 0.2 ? 'var(--accent4)' : 'var(--accent2)';
+    rows += `<tr><td>pred/obs</td><td style="color:${color}">${ratio.toFixed(4)}</td><td></td></tr>`;
+  }
+  el.innerHTML = '<table>' + rows + '</table>';
+}
+
+// ── URL parameter parsing and state synchronization ─────────────
+function findKeyCaseInsensitive(obj, keyToFind) {
+  if (!obj || typeof obj !== 'object') return undefined;
+  const lowerKey = keyToFind.toLowerCase();
+  for (const k in obj) {
+    if (k.toLowerCase() === lowerKey) {
+      return obj[k];
+    }
+  }
+  for (const k in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, k)) {
+      const val = findKeyCaseInsensitive(obj[k], keyToFind);
+      if (val !== undefined) return val;
+    }
+  }
+  return undefined;
+}
+
+function loadStateFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  
+  if (params.has('q')) {
+    const qVal = parseFloat(params.get('q'));
+    if (!isNaN(qVal)) {
+      document.getElementById('sl-q').value = qVal;
+      document.getElementById('v-q').textContent = qVal.toFixed(3);
+    }
+  }
+  
+  if (params.has('nucleus')) {
+    const nucVal = params.get('nucleus');
+    const selNuc = document.getElementById('sel-nuc');
+    let found = false;
+    for (let i = 0; i < selNuc.options.length; i++) {
+      if (selNuc.options[i].value === nucVal) {
+        selNuc.value = nucVal;
+        found = true;
+        break;
+      }
+    }
+    if (!found && nucVal !== 'custom') {
+      selNuc.value = '0';
+    }
+
+    if (nucVal === 'custom') {
+      document.getElementById('custom-div').classList.add('show');
+      if (params.has('Z')) {
+        const zVal = parseInt(params.get('Z'));
+        if (!isNaN(zVal)) document.getElementById('in-Z').value = zVal;
+      }
+      if (params.has('N')) {
+        const nVal = parseInt(params.get('N'));
+        if (!isNaN(nVal)) document.getElementById('in-N').value = nVal;
+      }
+    } else if (found) {
+      document.getElementById('custom-div').classList.remove('show');
+    }
+  }
+  
+  if (params.has('mode')) {
+    const modeVal = params.get('mode');
+    const radios = document.querySelectorAll('input[name="mode"]');
+    radios.forEach(radio => {
+      if (radio.value === modeVal) {
+        radio.checked = true;
+      }
+    });
+  }
+  
+  if (params.has('shell')) {
+    const shellVal = params.get('shell');
+    const cbShell = document.getElementById('cb-shell');
+    if (shellVal === 'true' || shellVal === '1') {
+      cbShell.checked = true;
+    } else if (shellVal === 'false' || shellVal === '0') {
+      cbShell.checked = false;
+    }
+  }
+}
+
+function syncStateToURL() {
+  const params = new URLSearchParams();
+  
+  const q = document.getElementById('sl-q').value;
+  params.set('q', q);
+  
+  const nucleus = document.getElementById('sel-nuc').value;
+  params.set('nucleus', nucleus);
+  if (nucleus === 'custom') {
+    params.set('Z', document.getElementById('in-Z').value);
+    params.set('N', document.getElementById('in-N').value);
+  }
+  
+  const checkedMode = document.querySelector('input[name="mode"]:checked');
+  if (checkedMode) {
+    params.set('mode', checkedMode.value);
+  }
+  
+  const shell = document.getElementById('cb-shell').checked;
+  params.set('shell', shell ? 'true' : 'false');
+  
+  const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + params.toString();
+  window.history.replaceState({ path: newurl }, '', newurl);
+}
+
+// ── Event listeners ─────────────────────────────────────────────
+document.querySelectorAll('input[type=range],select,input[type=radio],input[type=checkbox],input[type=number]')
+  .forEach(el => {
+    const updateHandler = () => {
+      sweepCache = null;
+      syncStateToURL();
+      draw();
+    };
+    el.addEventListener('input', updateHandler);
+    el.addEventListener('change', updateHandler);
+  });
+window.addEventListener('resize', draw);
+
+// Hover tooltip on canvas
+cv.addEventListener('mousemove', e => {
+  if (!sweepCache || !sweepCache.pts.length) { tip.style.display='none'; return; }
+  const rect = cv.getBoundingClientRect();
+  const mx2 = e.clientX - rect.left;
+  const xMin = 1.0, xMax = 2.05;
+  const mxo = 55, mro = 15;
+  const pw = rect.width - mxo - mro;
+  const qHover = xMin + (mx2 - mxo) / pw * (xMax - xMin);
+  if (qHover < 1.005 || qHover > 2.0) { tip.style.display='none'; return; }
+
+  // Find closest sweep point
+  let best = null, bestDist = Infinity;
+  for (const p of sweepCache.pts) {
+    const d = Math.abs(p.q - qHover);
+    if (d < bestDist) { bestDist = d; best = p; }
+  }
+  if (best) {
+    tip.style.display = 'block';
+    tip.style.left = (e.clientX + 12) + 'px';
+    tip.style.top = (e.clientY - 10) + 'px';
+    tip.innerHTML = `q = ${best.q.toFixed(3)}<br>t\u00BD = ${fmtTime(Math.pow(10, best.logT))}`;
+  }
+});
+cv.addEventListener('mouseleave', () => { tip.style.display='none'; });
+
+// Window load trigger
+window.addEventListener('load', async () => {
+  // Parse URL parameters and update UI controls before initial render
+  loadStateFromURL();
+  
+  // Render using fallback constants initially
+  sweepCache = null;
+  draw();
+  
+  // Asynchronously fetch witness file
+  try {
+    const response = await fetch('../computations/codata-masses.witness.json');
+    if (response.ok) {
+      const payload = await response.json();
+      if (payload && payload.data && payload.data.m_e_MeV) {
+        M_E = parseFloat(payload.data.m_e_MeV);
+      }
+      
+      const gfVal = findKeyCaseInsensitive(payload, 'G_F');
+      if (gfVal !== undefined) {
+        G_F = parseFloat(gfVal);
+      } else {
+        G_F = 1.1663787e-11;
+      }
+      
+      // Re-render after constants are updated from JSON
+      sweepCache = null;
+      draw();
+    }
+  } catch (err) {
+    console.error('Failed to fetch CODATA masses:', err);
+  }
+});
+</script>
+</body>
+</html>

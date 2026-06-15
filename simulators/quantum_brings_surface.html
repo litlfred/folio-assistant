@@ -1,0 +1,3860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quantum Bring's Surface</title>
+<style>
+
+:root {
+  --bg:      #020710;
+  --panel:   rgba(3,10,30,0.93);
+  --border:  rgba(60,120,255,0.20);
+  --accent:  #3a90ff;
+  --accent2: #ff5533;
+  --accent3: #33ffaa;
+  --accent4: #ffaa33;
+  --accent5: #cc44ff;
+  --text:    #b8ccff;
+  --dim:     #3a4a78;
+  --red:     #ff4444;
+  --grn:     #44ff88;
+  --blu:     #4488ff;
+  --brn:     #c8834a;
+}
+body.light {
+  --bg:      #f0f4ff;
+  --panel:   rgba(235,240,255,0.96);
+  --border:  rgba(60,80,180,0.25);
+  --accent:  #1a5fcc;
+  --accent2: #cc3300;
+  --accent3: #006633;
+  --accent4: #885500;
+  --accent5: #770099;
+  --text:    #1a2855;
+  --dim:     #6070a0;
+  --red:     #cc0000;
+  --grn:     #006622;
+  --blu:     #0044cc;
+  --brn:     #7a3a10;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background:var(--bg); color:var(--text);
+  font-family:'Share Tech Mono',monospace; font-size:11px;
+  overflow:hidden; user-select:none;
+}
+#canvas-wrap { position:fixed; inset:0; }
+
+/* ── Title ─────────────────────────────────────────────────────── */
+#title {
+  position:absolute; top:12px; left:50%; transform:translateX(-50%);
+  font-family:'Rajdhani',sans-serif; font-weight:300;
+  font-size:20px; letter-spacing:.30em; color:var(--accent);
+  text-transform:uppercase;
+  text-shadow:0 0 22px rgba(58,144,255,.55), 0 0 6px rgba(58,144,255,.3);
+  pointer-events:none; white-space:nowrap;
+}
+#subtitle {
+  position:absolute; top:38px; left:50%; transform:translateX(-50%);
+  font-size:9px; letter-spacing:.22em; color:var(--dim);
+  text-transform:uppercase; pointer-events:none; white-space:nowrap;
+}
+
+/* ── Panels ─────────────────────────────────────────────────────── */
+.panel {
+  position:absolute; background:var(--panel);
+  border:1px solid var(--border); border-radius:3px;
+  padding:12px; backdrop-filter:blur(18px);
+}
+.panel-title {
+  font-family:'Rajdhani',sans-serif; font-weight:300;
+  font-size:11px; letter-spacing:.22em; color:var(--accent);
+  text-transform:uppercase; margin-bottom:9px;
+  padding-bottom:5px; border-bottom:1px solid var(--border);
+  position:relative; cursor:move; user-select:none;
+}
+.panel-close {
+  position:absolute; right:0; top:50%; transform:translateY(-50%);
+  background:none; border:none; cursor:pointer;
+  color:var(--dim); font-size:14px; line-height:1; padding:0 2px;
+}
+.panel-close:hover { color:var(--red); }
+.sec { font-size:9px; letter-spacing:.18em; color:var(--dim); margin:9px 0 3px; }
+.row { display:grid; grid-template-columns:106px 1fr 46px; align-items:center; gap:6px; margin:3px 0; }
+.lbl { color:#6070a0; font-size:10px; }
+
+input[type=range] {
+  -webkit-appearance:none; width:100%; height:3px;
+  background:rgba(58,144,255,0.15); border-radius:2px; outline:none; cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:9px; height:9px; border-radius:50%;
+  background:var(--accent); cursor:pointer; box-shadow:0 0 7px rgba(58,144,255,.8);
+}
+.val { color:var(--accent); font-size:10px; text-align:right; }
+
+#vis-opts { display:flex; gap:7px; flex-wrap:wrap; margin-top:9px; }
+.ck { display:flex; align-items:center; gap:4px; cursor:pointer; font-size:9px; color:var(--dim); }
+.ck input { accent-color:var(--accent); }
+
+/* ── Stats ──────────────────────────────────────────────────────── */
+#stats { top:64px; left:14px; width:222px; }
+#stats-body { line-height:1.95; color:#4a5a80; font-size:10px; }
+#stats-body .h1 { color:var(--accent3); }
+#stats-body .h2 { color:var(--accent4); }
+#stats-body .h3 { color:var(--accent5); }
+#stats-body .hr { color:var(--red); }
+#stats-body .hg { color:var(--grn); }
+#stats-body .hb { color:var(--blu); }
+#stats-body .hb2 { color:var(--brn); }
+
+/* ── Info ───────────────────────────────────────────────────────── */
+#info { bottom:14px; left:14px; width:230px; font-size:10px; line-height:1.85; }
+.cgrid { display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:6px; }
+.ci { background:rgba(58,144,255,.04); border:1px solid rgba(58,144,255,.09); border-radius:2px; padding:4px 6px; }
+.ci-lbl { color:var(--dim); font-size:8px; margin-bottom:1px; }
+.ci-val { color:var(--accent3); font-size:10px; font-weight:bold; }
+
+/* ── Formula ────────────────────────────────────────────────────── */
+#formula { bottom:14px; right:14px; width:258px; font-size:10px; line-height:1.88; }
+#formula .fm  { color:rgba(58,144,255,.80); }
+#formula .fd  { color:rgba(255,85,51,.80);  }
+#formula .ft  { color:rgba(51,255,170,.80); }
+#formula .fdm { color:rgba(204,68,255,.70); }
+#formula .fr  { color:var(--red); }
+#formula .fg  { color:var(--grn); }
+#formula .fb  { color:var(--blu); }
+
+/* ── Chiral grid ─────────────────────────────────────────────────── */
+#chiral { bottom:14px; left:258px; width:214px; }
+.cgrid2 { display:grid; grid-template-columns:1fr 1fr; gap:3px; margin-top:6px; }
+.cgrid2 canvas { border:1px solid rgba(58,144,255,.10); border-radius:2px; display:block; }
+.cgrid2-lbl { font-size:8px; letter-spacing:.10em; text-align:center; margin-top:2px; }
+
+/* ── Weierstrass panel ───────────────────────────────────────────── */
+#weierstrass { bottom:14px; left:480px; width:230px; }
+#weierstrass canvas { display:block; border:1px solid rgba(58,144,255,.10); border-radius:2px; }
+#weierstrass .wf-eq { font-size:9px; line-height:1.8; margin-top:6px; color:#4a5a80; }
+#weierstrass .wf-val { color:var(--accent3); }
+#weierstrass .wf-del { color:var(--accent4); }
+#weierstrass .wf-j   { color:var(--accent5); }
+
+/* ── Affine coordinate chart panel ──────────────────────────────── */
+#affine { bottom:14px; left:718px; width:230px; }
+#affine canvas { display:block; border:1px solid rgba(58,144,255,.10); border-radius:2px; }
+#affine .af-eq  { font-size:9px; line-height:1.8; margin-top:6px; color:#4a5a80; }
+#affine .af-val { color:var(--accent3); }
+
+/* ── Fiber CP1 panel ─────────────────────────────────────────────── */
+#fibercp1 { bottom:14px; left:958px; width:236px; }
+#fibercp1 canvas { display:block; border:1px solid rgba(58,144,255,.10); border-radius:2px; }
+#fibercp1 .fc-eq  { font-size:9px; line-height:1.8; margin-top:5px; color:#4a5a80; }
+#fibercp1 .fc-val { color:var(--accent3); }
+#fibercp1 .fc-int { color:#ffffff; font-weight:bold; }
+
+/* ── Julia set panel ─────────────────────────────────────────────── */
+#juliapnl { bottom:14px; left:1204px; width:250px; }
+#juliapnl canvas { display:block; border:1px solid rgba(58,144,255,.10); border-radius:2px; }
+#juliapnl .jl-eq  { font-size:9px; line-height:1.7; margin-top:5px; color:#4a5a80; }
+#juliapnl .jl-val { color:var(--accent3); }
+#juliapnl .jl-key { color:var(--accent); }
+
+/* ── Möbius spectral panel ──────────────────────────────────────── */
+#mobiuspnl { top:14px; right:360px; width:232px; font-size:10px; }
+.mob-row  { display:flex; align-items:baseline; gap:5px; margin:2px 0; }
+.mob-key  { width:130px; color:var(--dim); font-size:9px; flex-shrink:0; }
+.mob-val  { color:var(--accent3); }
+.mob-type { font-size:11px; font-weight:bold; letter-spacing:.06em; }
+.type-E   { color:var(--accent3); }
+.type-P   { color:var(--accent4); }
+.type-H   { color:var(--accent2); }
+.mob-mat  { color:var(--dim); font-size:9px; margin-top:6px;
+            border-top:1px solid var(--border); padding-top:5px; line-height:1.65; }
+
+#tip {
+  position:fixed; background:var(--panel); border:1px solid var(--border);
+  border-radius:3px; padding:5px 9px; font-size:10px; pointer-events:none;
+  display:none; line-height:1.8;
+}
+
+/* ── Feedback sidebar ────────────────────────────────────────────── */
+#feedback-sidebar {
+  position:absolute; top:64px; left:280px; width:260px; z-index:12;
+  max-height: calc(100vh - 80px); overflow-y:auto;
+}
+#feedback-sidebar .fb-item {
+  background:rgba(58,144,255,.05); border:1px solid rgba(58,144,255,.12);
+  border-radius:3px; padding:6px 8px; margin:4px 0; position:relative;
+}
+#feedback-sidebar .fb-item.pri-high {
+  border-left:3px solid var(--accent2);
+}
+#feedback-sidebar .fb-item.pri-medium {
+  border-left:3px solid var(--accent4);
+}
+#feedback-sidebar .fb-item.pri-low {
+  border-left:3px solid var(--dim);
+}
+.fb-block-tag {
+  font-size:7px; letter-spacing:.10em; color:var(--dim);
+  text-transform:uppercase; margin-bottom:2px;
+}
+.fb-text {
+  color:var(--text); font-size:10px; line-height:1.5;
+  white-space:pre-wrap; word-break:break-word;
+}
+.fb-text[contenteditable=true] {
+  background:rgba(20,30,60,0.5); border:1px solid rgba(58,144,255,.25);
+  border-radius:2px; padding:2px 4px; outline:none; min-height:1.5em;
+}
+.fb-controls {
+  display:flex; gap:3px; align-items:center; margin-top:3px;
+}
+.fb-btn {
+  background:rgba(58,144,255,0.10); border:1px solid rgba(58,144,255,0.20);
+  color:var(--dim); font-size:8px; cursor:pointer; border-radius:2px;
+  padding:1px 5px; font-family:'Share Tech Mono',monospace;
+}
+.fb-btn:hover { background:rgba(58,144,255,0.22); color:var(--accent); }
+.fb-btn.fb-del:hover { color:var(--red); }
+.fb-pri-sel {
+  background:rgba(20,30,60,0.8); border:1px solid rgba(58,144,255,0.22);
+  color:var(--accent); font-size:8px; padding:1px 3px; border-radius:2px;
+  font-family:'Share Tech Mono',monospace; outline:none; cursor:pointer;
+}
+.fb-add-row {
+  display:flex; gap:4px; margin-top:6px;
+}
+.fb-add-input {
+  flex:1; background:rgba(20,30,60,0.8); border:1px solid rgba(58,144,255,0.22);
+  color:var(--accent); font-size:9px; padding:3px 5px; border-radius:2px;
+  font-family:'Share Tech Mono',monospace; outline:none;
+}
+.fb-add-input::placeholder { color:var(--dim); }
+.fb-empty { color:var(--dim); font-size:9px; font-style:italic; margin:6px 0; }
+.fb-filter-row {
+  display:flex; gap:4px; align-items:center; margin-bottom:4px;
+  font-size:8px; color:var(--dim);
+}
+.fb-filter-row select {
+  background:rgba(20,30,60,0.8); border:1px solid rgba(58,144,255,0.22);
+  color:var(--accent); font-size:8px; padding:1px 3px; border-radius:2px;
+  font-family:'Share Tech Mono',monospace; outline:none;
+}
+
+/* ── Bundle scenarios panel ──────────────────────────────────────── */
+#bundle-panel { top:64px; left:14px; width:252px; z-index:10; }
+#bundle-panel .bp-scenario {
+  background:rgba(58,144,255,.06); border:1px solid rgba(58,144,255,.12);
+  border-radius:2px; padding:5px 7px; margin:3px 0; cursor:pointer;
+  transition: background .15s;
+}
+#bundle-panel .bp-scenario:hover { background:rgba(58,144,255,.14); }
+#bundle-panel .bp-scenario.active {
+  border-color:var(--accent); background:rgba(58,144,255,.12);
+}
+.bp-name { color:var(--accent); font-size:10px; font-weight:bold; letter-spacing:.06em; }
+.bp-desc { color:var(--dim); font-size:8px; margin-top:1px; line-height:1.4; }
+.bp-pairs { color:#4a5a80; font-size:9px; margin-top:3px; line-height:1.6; }
+.bp-knot { display:inline-block; width:8px; height:8px; border-radius:50%;
+           margin-right:3px; vertical-align:middle; }
+.bp-time-row {
+  display:grid; grid-template-columns:auto 1fr auto; gap:6px;
+  align-items:center; margin:6px 0 2px;
+}
+.bp-time-row input[type=range] { width:100%; }
+.bp-play {
+  background:rgba(58,144,255,0.14); border:1px solid rgba(58,144,255,0.30);
+  color:var(--accent); font-size:11px; cursor:pointer; border-radius:2px;
+  padding:1px 7px; font-family:'Share Tech Mono',monospace; line-height:1.4;
+}
+.bp-play:hover { background:rgba(58,144,255,0.25); }
+.bp-speed-row {
+  display:flex; gap:4px; align-items:center; margin:2px 0 6px;
+  font-size:8px; color:var(--dim);
+}
+.bp-speed-row input { width:50px; }
+#bundle-trail-canvas {
+  display:block; width:100%; height:120px;
+  border:1px solid rgba(58,144,255,.10); border-radius:2px;
+  margin-top:4px; background:rgba(0,5,15,0.6);
+}
+.bp-legend { font-size:8px; color:var(--dim); margin-top:3px; line-height:1.5; }
+
+/* ── Axis labels ─────────────────────────────────────────────────── */
+.axl {
+  position:fixed; font-size:12px; font-weight:bold; pointer-events:none;
+  text-shadow:0 0 8px currentColor; transform:translate(-50%,-50%);
+}
+</style>
+</head>
+<body>
+<div id="canvas-wrap"></div>
+
+<!-- Title -->
+<div id="title">Quantum Bring's Surface</div>
+<div id="subtitle">Chiral Tubes on the Projective Space-Time Brane  ·  §3.1 Leitner 2026</div>
+
+<!-- Top toolbar (theme + hide) -->
+
+<!-- CONTROLS -->
+<div class="panel" id="ctrl" style="top:64px; right:14px; width:264px;">
+  <div class="panel-title">Parameters</div>
+
+  <div class="sec">── Torsion ─────────────────────────────────</div>
+  <div class="row">
+    <span class="lbl">q  (torsion)</span>
+    <input type="range" id="q_val" min="0" max="40" step="0.05" value="0.55">
+    <input type="number" id="q_num" min="0" step="0.05" value="0.55"
+      style="width:52px;background:rgba(20,30,60,0.8);border:1px solid rgba(60,120,255,0.22);
+             color:var(--accent);padding:1px 4px;border-radius:2px;
+             font-family:'Share Tech Mono',monospace;font-size:10px;outline:none;">
+  </div>
+
+  <div class="row" style="margin-top:5px;">
+    <span class="lbl">ζ_n  (root snap)</span>
+    <input type="number" id="root_n" min="1" max="30" step="1" value="5"
+      style="width:100%;background:rgba(20,30,60,0.8);border:1px solid rgba(60,120,255,0.22);
+             color:var(--accent);padding:2px 5px;border-radius:2px;
+             font-family:'Share Tech Mono',monospace;font-size:10px;outline:none;">
+    <button id="snap_root"
+      style="background:rgba(58,144,255,0.14);border:1px solid rgba(58,144,255,0.30);
+             color:var(--accent);font-size:9px;cursor:pointer;border-radius:2px;
+             padding:2px 5px;white-space:nowrap;font-family:'Share Tech Mono',monospace;">
+      snap</button>
+  </div>
+  <div style="font-size:8px;color:var(--dim);margin:1px 0 6px;text-align:right;
+              letter-spacing:.08em;">q_eff = cos(2π/n) = Re(ζₙ)</div>
+
+  <div class="sec">── Weierstrass / j-invariant ────────────</div>
+  <div class="row">
+    <span class="lbl">j preset</span>
+    <select id="j_preset"
+      style="width:100%;background:rgba(20,30,60,0.8);border:1px solid rgba(60,120,255,0.22);
+             color:var(--accent);padding:2px 4px;border-radius:2px;
+             font-family:'Share Tech Mono',monospace;font-size:9px;outline:none;">
+      <option value="">— select —</option>
+      <option value="golden">φ-spiral  (r=φ, N≈81)</option>
+      <option value="hexagonal">Hexagonal  (j≈0, P≈0)</option>
+      <option value="square">Square  (j≈1728)</option>
+      <option value="custom">Custom j…</option>
+    </select>
+  </div>
+  <div class="row" id="j_custom_row" style="display:none">
+    <span class="lbl">j value</span>
+    <input type="number" id="j_target" value="1728"
+      style="width:100%;background:rgba(20,30,60,0.8);border:1px solid rgba(60,120,255,0.22);
+             color:var(--accent);padding:2px 5px;border-radius:2px;
+             font-family:'Share Tech Mono',monospace;font-size:10px;outline:none;">
+    <button id="j_snap"
+      style="background:rgba(58,144,255,0.14);border:1px solid rgba(58,144,255,0.30);
+             color:var(--accent);font-size:9px;cursor:pointer;border-radius:2px;
+             padding:2px 5px;white-space:nowrap;font-family:'Share Tech Mono',monospace;">
+      snap</button>
+  </div>
+  <div style="font-size:8px;color:var(--dim);margin:1px 0 6px;text-align:right;
+              letter-spacing:.08em;">current j = <span id="j_display">—</span></div>
+
+  <div id="cone_nrange">
+  <div class="sec">── Tube segment (× ℓ_P) ───────────────────</div>
+  <div class="row">
+    <span class="lbl">N<sub>min</sub>  start</span>
+    <input type="range" id="n_min" min="0" max="190" step="1" value="4">
+    <span class="val" id="v_nmin">4</span>
+  </div>
+  <div class="row">
+    <span class="lbl">N<sub>max</sub>  end</span>
+    <input type="range" id="n_max" min="10" max="200" step="1" value="60">
+    <span class="val" id="v_nmax">60</span>
+  </div>
+  </div>
+
+  <div class="sec">── Chiral space projection ─────────────────</div>
+  <div id="cone_opts" style="display:none">
+  <div class="row">
+    <span class="lbl">σ  (cone width)</span>
+    <input type="range" id="sigma" min="0.001" max="1.0" step="0.001" value="0.020">
+    <span class="val" id="v_sigma">0.020</span>
+  </div>
+  <div class="row">
+    <span class="lbl">γ  (pitch scale)</span>
+    <input type="range" id="pitch" min="0.01" max="5.0" step="0.05" value="1.0">
+    <span class="val" id="v_pitch">1.00</span>
+  </div>
+  </div>
+  <div class="row">
+    <span class="lbl">α  (opacity)</span>
+    <input type="range" id="tube_opacity" min="0.05" max="1.0" step="0.01" value="0.72">
+    <span class="val" id="v_opacity">0.72</span>
+  </div>
+
+  <div class="sec">── Selected point  p ∈ S³ ──────────────────</div>
+  <div class="row">
+    <span class="lbl">x_p</span>
+    <input type="range" id="x_p" min="-4" max="4" step="0.01" value="-3.30">
+    <span class="val" id="v_xp">-3.30</span>
+  </div>
+  <div class="row">
+    <span class="lbl">y_p</span>
+    <input type="range" id="y_p" min="-4" max="4" step="0.01" value="-1.10">
+    <span class="val" id="v_yp">-1.10</span>
+  </div>
+  <div class="row">
+    <span class="lbl">z_p</span>
+    <input type="range" id="z_p" min="-4" max="4" step="0.01" value="-1.98">
+    <span class="val" id="v_zp">-1.98</span>
+  </div>
+  <!-- Playwright test placeholders -->
+  <input type="hidden" id="rMin" value="">
+  <input type="hidden" id="rMax" value="">
+  <input type="hidden" id="deltaR" value="">
+  <input type="hidden" id="deltaZeta" value="">
+  <input type="hidden" id="N" value="">
+  <input type="hidden" id="projection" value="">
+  <div style="margin:5px 0 2px;font-size:9px;color:var(--dim);letter-spacing:.10em;">CP¹ chart  [1 : z]</div>
+  <div style="display:grid;grid-template-columns:38px 1fr 6px 1fr auto;gap:3px;align-items:center;margin-bottom:5px;">
+    <span style="font-size:9px;color:var(--dim);">Re(z)</span>
+    <input type="number" id="cp1_re" step="0.1" value="0"
+      style="background:rgba(20,30,60,0.8);border:1px solid rgba(60,120,255,0.22);
+             color:var(--accent);padding:2px 4px;border-radius:2px;
+             font-family:'Share Tech Mono',monospace;font-size:9px;outline:none;width:100%;">
+    <span style="font-size:9px;color:var(--dim);text-align:center;">+</span>
+    <input type="number" id="cp1_im" step="0.1" value="0"
+      style="background:rgba(20,30,60,0.8);border:1px solid rgba(60,120,255,0.22);
+             color:var(--accent);padding:2px 4px;border-radius:2px;
+             font-family:'Share Tech Mono',monospace;font-size:9px;outline:none;width:100%;">
+    <span style="font-size:8px;color:var(--dim);">i</span>
+  </div>
+  <div style="display:flex;gap:5px;margin-bottom:5px;">
+    <button id="cp1_go"
+      style="flex:1;background:rgba(58,144,255,0.14);border:1px solid rgba(58,144,255,0.30);
+             color:var(--accent);font-size:9px;cursor:pointer;border-radius:2px;
+             padding:2px 0;font-family:'Share Tech Mono',monospace;">→ set p</button>
+    <span id="cp1_z_display" style="flex:2;font-size:8px;color:var(--dim);
+          align-self:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+  </div>
+
+  <div id="vis-opts">
+    <label class="ck"><input type="checkbox" id="cb_brane"  checked> Brane</label>
+    <label class="ck"><input type="checkbox" id="cb_tubes"  checked> Tubes</label>
+    <label class="ck"><input type="checkbox" id="cb_axes"   checked> Axes</label>
+    <label class="ck"><input type="checkbox" id="cb_stars"  checked> Stars</label>
+    <label class="ck"><input type="checkbox" id="cb_auto"> Rotate</label>
+    <label class="ck"><input type="checkbox" id="cb_click"  checked> Click→p</label>
+    <label class="ck"><input type="checkbox" id="cb_cp1" checked> CP1 fibre</label>
+    <label class="ck"><input type="checkbox" id="cb_axispts"> ±Axis pts</label>
+    <label class="ck"><input type="checkbox" id="cb_blowup"> Blowup E_p</label>
+    <label class="ck"><input type="checkbox" id="cb_primes"> Primes</label>
+    <label class="ck"><input type="checkbox" id="cb_fiber"> Fiber CP1</label>
+  </div>
+  <div class="sec">── Panels ──────────────────────────────</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:3px;">
+    <label class="ck"><input type="checkbox" id="cb_pnl_stats"> State</label>
+    <label class="ck"><input type="checkbox" id="cb_pnl_info"> Local q</label>
+    <label class="ck"><input type="checkbox" id="cb_pnl_fmla"> Formula</label>
+    <label class="ck"><input type="checkbox" id="cb_pnl_chrl"> Chiral</label>
+    <label class="ck"><input type="checkbox" id="cb_pnl_wstr"> Wstrss</label>
+    <label class="ck"><input type="checkbox" id="cb_pnl_afin"> Affine z</label>
+    <label class="ck"><input type="checkbox" id="cb_pnl_vizjson"> View JSON</label>
+    <label class="ck"><input type="checkbox" id="cb_pnl_fcp1"> Fiber CP1</label>
+    <label class="ck"><input type="checkbox" id="cb_pnl_julia"> Julia set</label>
+    <label class="ck"><input type="checkbox" id="cb_pnl_mobius"> Möbius</label>
+    <label class="ck"><input type="checkbox" id="cb_pnl_bundle" checked> Bundle</label>
+    <label class="ck"><input type="checkbox" id="cb_pnl_feedback"> Feedback</label>
+  </div>
+  <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;">
+    <button id="btn_theme" title="Toggle dark/light mode (T)"
+      style="flex:1;background:rgba(58,144,255,0.11);border:1px solid rgba(58,144,255,0.26);
+             color:var(--accent);font-size:9px;cursor:pointer;border-radius:3px;
+             padding:3px 0;font-family:'Share Tech Mono',monospace;">☀ Light</button>
+    <button id="btn_hide" title="Hide/show info panels (H)"
+      style="flex:1;background:rgba(58,144,255,0.11);border:1px solid rgba(58,144,255,0.26);
+             color:var(--accent);font-size:9px;cursor:pointer;border-radius:3px;
+             padding:3px 0;font-family:'Share Tech Mono',monospace;">⊞ Info</button>
+    <button id="btn_sigma_auto" title="Auto-scale sigma (A)"
+      style="flex:1;background:rgba(58,144,255,0.11);border:1px solid rgba(58,144,255,0.26);
+             color:var(--accent);font-size:9px;cursor:pointer;border-radius:3px;
+             padding:3px 0;font-family:'Share Tech Mono',monospace;">⟳ Auto σ</button>
+
+    <button id="btn_resetcam" title="Reset camera pan to origin"
+      style="flex:1;background:rgba(58,144,255,0.11);border:1px solid rgba(58,144,255,0.26);
+             color:var(--accent);font-size:9px;cursor:pointer;border-radius:3px;
+             padding:3px 0;font-family:'Share Tech Mono',monospace;">⌖ Reset cam</button>
+  </div>
+  <div style="font-size:8px;color:var(--dim);margin-top:4px;text-align:right;letter-spacing:.05em;">
+    shift+drag: pan · scroll: zoom · drag sphere: move p
+  </div>
+</div>
+
+<!-- FEEDBACK SIDEBAR -->
+<div class="panel" id="feedback-sidebar" style="display:none">
+  <div class="panel-title">Feedback / Notes
+    <button class="panel-close" onclick="togglePanel('feedback-sidebar')">×</button>
+  </div>
+  <div class="fb-filter-row">
+    <span>block:</span>
+    <select id="fb-block-filter">
+      <option value="_all">all blocks</option>
+      <option value="_active">active scenario</option>
+    </select>
+    <span style="margin-left:auto;">priority:</span>
+    <select id="fb-pri-filter">
+      <option value="all">all</option>
+      <option value="high">high</option>
+      <option value="medium">medium</option>
+      <option value="low">low</option>
+    </select>
+  </div>
+  <div id="fb-items"></div>
+  <div class="fb-add-row">
+    <input class="fb-add-input" id="fb-add-text" placeholder="Add feedback..." />
+    <select class="fb-pri-sel" id="fb-add-pri">
+      <option value="medium">med</option>
+      <option value="high">high</option>
+      <option value="low">low</option>
+    </select>
+    <button class="fb-btn" id="fb-add-btn">+</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="panel" id="stats">
+  <div class="panel-title">State<button class="panel-close" onclick="togglePanel('stats')">×</button></div>
+  <div id="stats-body">Initialising…</div>
+</div>
+
+<!-- BUNDLE SCENARIOS -->
+<div class="panel" id="bundle-panel">
+  <div class="panel-title">Bundle E → CP¹  ·  Big Bang Conditions
+    <button class="panel-close" onclick="togglePanel('bundle-panel')">×</button>
+  </div>
+  <div class="sec">── Scenario ────────────────────────────────</div>
+  <select id="bundle-preset"
+    style="width:100%;background:rgba(20,30,60,0.8);border:1px solid rgba(60,120,255,0.22);
+           color:var(--accent);padding:3px 5px;border-radius:2px;
+           font-family:'Share Tech Mono',monospace;font-size:9px;outline:none;margin-bottom:4px;">
+  </select>
+  <div id="bundle-desc"></div>
+  <div id="bundle-pairs"></div>
+
+  <div class="sec">── Time Evolution ──────────────────────────</div>
+  <div class="bp-time-row">
+    <button class="bp-play" id="bp-play" title="Play/pause (Space)">▶</button>
+    <input type="range" id="bp-time" min="0" max="1000" step="1" value="0">
+    <span class="val" id="bp-time-val" style="width:40px;">t=0</span>
+  </div>
+  <div class="bp-speed-row">
+    <span>speed:</span>
+    <input type="range" id="bp-speed" min="0.1" max="5.0" step="0.1" value="1.0">
+    <span id="bp-speed-val">1.0×</span>
+    <span style="margin-left:auto;">
+      <button class="bp-play" id="bp-reset" title="Reset to t=0" style="font-size:9px;padding:1px 5px;">⌖ t=0</button>
+    </span>
+  </div>
+
+  <div class="sec">── CP¹ Projection ─────────────────────────</div>
+  <canvas id="bundle-trail-canvas" width="240" height="120"></canvas>
+  <div class="bp-legend" id="bundle-legend"></div>
+</div>
+
+<!-- INFO -->
+<div class="panel" id="info">
+  <div class="panel-title">Bring's Surface · Local q-Values<button class="panel-close" onclick="togglePanel('info')">×</button></div>
+  <div id="info-body">Hover brane to inspect local substrate values</div>
+  <div class="cgrid" id="info-grid" style="display:none">
+    <div class="ci"><div class="ci-lbl">q_sub = e⁻ʳ</div><div class="ci-val" id="ci_qsub">—</div></div>
+    <div class="ci"><div class="ci-lbl">ℏ_q = 1−q_sub</div><div class="ci-val" id="ci_hbar">—</div></div>
+    <div class="ci"><div class="ci-lbl">expq(r)−1</div><div class="ci-val" id="ci_expq">—</div></div>
+    <div class="ci"><div class="ci-lbl">cosq(r)</div><div class="ci-val" id="ci_cosq">—</div></div>
+    <div class="ci"><div class="ci-lbl">lnq(1+r)</div><div class="ci-val" id="ci_lnq">—</div></div>
+    <div class="ci"><div class="ci-lbl">r = ‖L∧F⁺‖</div><div class="ci-val" id="ci_r">—</div></div>
+  </div>
+</div>
+
+<!-- FORMULA -->
+<div class="panel" id="formula">
+  <div class="panel-title">Chiral Sector Coordinates  ·  Def 3.21<button class="panel-close" onclick="togglePanel('formula')">×</button></div>
+  <span class="fm">ω₁ = i · (w₁ + i) / lnq(1+r)</span><br>
+  <span class="fd">ω₂ = j · (w₂ + i) · (expq(r)−1)</span><br>
+  <span class="ft">ω₃ = k · (w₃ + i) · (expq(r)−1)</span><br>
+  <span class="fm">E_p = π⁻¹(p)  [exceptional divisor at p]</span><br>
+  <span class="fm">O = p + R·N,  R = R<sub>CP1</sub> = |S³|/5</span><br>
+  <span class="fr">𝔯(φ,ψ) = O + R·(sinφ·(cos(ψ+qφ)·T₁ + sin(ψ+qφ)·T₂) − cosφ·N)</span><br>
+  <span class="fg">𝔤(φ,ψ) = 𝔯 with ψ → ψ + 2π/3</span><br>
+  <span class="fb">𝔟(φ,ψ) = 𝔯 with ψ → ψ + 4π/3</span><br>
+  <span style="color:var(--dim)">ψ ∈ [0, 2π/3],  φ ∈ [0,π],  q-twist: qφ</span><br>
+  <span style="color:var(--dim)">E_p = 𝔯 ∪ 𝔤 ∪ 𝔟  (strict tiling, shared boundaries only)</span><br>
+  <span class="fd">cone: c(s)=p+sℓ_P·N,  ρ(s)=sℓ_P·σ·Ξ_q,  ψᵢ(s)=2πi/3+q·2πs·Q·γ</span><br>
+  <span style="color:var(--dim)">[n]_q=(1−qⁿ)/(1−q)  ·  ℏ_q=1−q</span>
+</div>
+
+<!-- VIEWPORT JSON EXPORT -->
+<div class="panel" id="vizjson" style="bottom:14px; left:340px; width:330px; display:none;">
+  <div class="panel-title">Viewport JSON  ·  viz schema<button class="panel-close" onclick="togglePanel('vizjson')">×</button></div>
+  <textarea id="vizjson-text" readonly
+    style="width:100%;height:188px;background:rgba(0,0,20,0.7);border:1px solid rgba(58,144,255,0.18);
+           border-radius:2px;color:var(--accent3);font-family:'Share Tech Mono',monospace;
+           font-size:9px;line-height:1.55;padding:5px;resize:none;outline:none;"></textarea>
+  <div style="display:flex;gap:6px;margin-top:5px;align-items:center;">
+    <button id="vizjson-copy"
+      style="flex:1;background:rgba(58,144,255,0.14);border:1px solid rgba(58,144,255,0.30);
+             color:var(--accent);font-size:9px;cursor:pointer;border-radius:2px;
+             padding:3px 6px;font-family:'Share Tech Mono',monospace;">
+      ⊕ Copy JSON</button>
+    <span style="font-size:8px;color:var(--dim);flex:2;text-align:right;">
+      $schema: litlfred.github.io/qou/schema/viz.json</span>
+  </div>
+</div>
+
+<!-- CHIRAL COORDINATES (2×2 grid, one cell per colour + composite) -->
+<div class="panel" id="chiral">
+  <div class="panel-title">Chiral Coordinates  ·  EC at z<button class="panel-close" onclick="togglePanel('chiral')">×</button></div>
+  <div class="cgrid2">
+    <div>
+      <canvas id="cc_r" width="98" height="88"></canvas>
+      <div class="cgrid2-lbl" style="color:var(--red)">■ Red  i=0</div>
+    </div>
+    <div>
+      <canvas id="cc_g" width="98" height="88"></canvas>
+      <div class="cgrid2-lbl" style="color:var(--grn)">■ Green  i=1</div>
+    </div>
+    <div>
+      <canvas id="cc_b" width="98" height="88"></canvas>
+      <div class="cgrid2-lbl" style="color:var(--blu)">■ Blue  i=2</div>
+    </div>
+    <div>
+      <canvas id="cc_cmp" width="98" height="88"></canvas>
+      <div class="cgrid2-lbl" style="color:var(--accent4)">⊕ Composite</div>
+    </div>
+  </div>
+</div>
+
+<!-- AFFINE COORDINATE CHART AT z -->
+<div class="panel" id="affine">
+  <div class="panel-title">Affine Coord Chart at z  ·  E_p[ℝ]<button class="panel-close" onclick="togglePanel('affine')">×</button></div>
+  <canvas id="ac_main" width="210" height="120"></canvas>
+  <div class="af-eq" id="ac-text">—</div>
+</div>
+
+<!-- WEIERSTRASS FORM + EMBEDDING -->
+<div class="panel" id="weierstrass">
+  <div class="panel-title">Weierstrass Form  ·  S₃ Embedding<button class="panel-close" onclick="togglePanel('weierstrass')">×</button></div>
+  <canvas id="wc_main" width="210" height="110"></canvas>
+  <div class="wf-eq" id="wf-text">—</div>
+</div>
+
+<!-- FIBER CP1 PANEL: three ECs in the same ℂP¹ via x₂=x₃=x₄ diagonal -->
+<div class="panel" id="fibercp1" style="display:none">
+  <div class="panel-title">Fiber ℂP¹  ·  x₂=x₃=x₄ diagonal<button class="panel-close" onclick="togglePanel('fibercp1')">×</button></div>
+  <canvas id="fc_main" width="220" height="165"></canvas>
+  <div class="fc-eq" id="fc-text">—</div>
+</div>
+
+<div class="panel" id="juliapnl" style="display:none">
+  <div class="panel-title">Julia Set  ·  Böttcher ψ<button class="panel-close" onclick="togglePanel('juliapnl')">×</button></div>
+  <canvas id="julia_canvas" width="234" height="175"></canvas>
+  <div class="jl-eq" id="julia_text">—</div>
+</div>
+
+<div class="panel" id="mobiuspnl" style="display:none">
+  <div class="panel-title">Möbius Spectral  ·  Rmk 3.24<button class="panel-close" onclick="togglePanel('mobiuspnl')">×</button></div>
+  <div id="mobius-body"><span style="color:var(--dim);font-size:9px">Waiting for state…</span></div>
+</div>
+
+<!-- Axis labels -->
+<div class="axl" id="ax0" style="color:#ff5555">+x</div>
+<div class="axl" id="ax1" style="color:#55ff55">+y</div>
+<div class="axl" id="ax2" style="color:#5588ff">+z</div>
+
+<div id="tip"></div>
+
+<script src="./three.min.js"></script>
+<script>
+// ════════════════════════════════════════════════════════════════════
+//   QUANTUM BRING'S SURFACE
+//   Chiral tubes on the projective space-time brane
+//   §3.1, Definition 3.21 (Leitner 2026)
+//
+//   Brane M ≅ S³ (brown sphere) — the CR manifold
+//   Chiral tubes: vortex filaments of the SU(2) connection
+//     i=0 Red, i=1 Green, i=2 Blue  (3 colour charges, S₃⊂S₅ from Bring)
+//
+//   Tube parameterisation at point p ∈ M:
+//     N = outward normal = p/|p|
+//     c(s) = p + s·ℓ_P · N
+//     ρ(s) = s·ℓ_P · σ · Ξ_q(s)
+//     ψᵢ(s) = 2πi/3 + q · 2πs / Γ    (torsion phase)
+//     v(s,θ) = c(s) + ρ(s)·(cos(θ+ψᵢ)·T₁ + sin(θ+ψᵢ)·T₂)
+//   where Ξ_q(s) = 1 + 0.3·q·cosq(2πs/Γ)  (q-modulated cross-section)
+//
+//   q-series (substrate parameter r = ‖L∧F⁺‖, q_sub = e^{-r}):
+//     [n]_q = (1−q^n)/(1−q)
+//     expq(x), cosq(x), sinq(x), lnq(1+x)
+// ════════════════════════════════════════════════════════════════════
+
+const TAU      = 2 * Math.PI;
+const SPHERE_R = 4.0;
+const LP       = 0.020;         // 1 Planck length in visual units = SPHERE_R/200
+const QN       = 18;            // q-series truncation
+const TUBE_AX  = 70;            // axial steps per tube
+const TUBE_RG  = 16;            // ring steps per tube cross-section
+
+// ── q-deformed functions ────────────────────────────────────────────
+function qInt(n, q) {
+  if (Math.abs(1 - q) < 1e-10) return n;
+  return (1 - Math.pow(q, n)) / (1 - q);
+}
+function qFact(n, q) {
+  let f = 1;
+  for (let k = 1; k <= n; k++) f *= qInt(k, q);
+  return f;
+}
+function expQ(x, q, N) {
+  let sum = 1, xn = 1;
+  for (let n = 1; n <= N; n++) {
+    xn *= x;
+    const qf = qFact(n, q);
+    if (Math.abs(qf) < 1e-15) break;
+    const t = xn / qf;
+    sum += t;
+    if (n > 6 && Math.abs(t) < 1e-14 * (1 + Math.abs(sum))) break;
+  }
+  return sum;
+}
+function lnQ(x, q, N) {
+  // Clamp |x| to 1.8 to keep the q-log series in a numerically stable regime.
+  // Callers that display an argument corresponding to this value (e.g. "lnq(1+r)")
+  // should apply the same clamp so the UI reflects what is actually computed.
+  const xc = Math.min(Math.abs(x), 1.8) * Math.sign(x + 1e-30);
+  let sum = 0, xn = 1;
+  for (let n = 1; n <= N; n++) {
+    xn *= xc;
+    const qn = qInt(n, q);
+    if (Math.abs(qn) < 1e-15) break;
+    const t = Math.pow(-1, n + 1) * xn / qn;
+    sum += t;
+    if (n > 8 && Math.abs(t) < 1e-13 * (1 + Math.abs(sum))) break;
+  }
+  return sum;
+}
+function cosQ(x, q, N) {
+  let sum = 1, xn = 1, x2 = x * x;
+  for (let n = 1; n <= N; n++) {
+    xn *= -x2;
+    const qf = qFact(2 * n, q);
+    if (Math.abs(qf) < 1e-15) break;
+    const t = xn / qf;
+    sum += t;
+    if (n > 4 && Math.abs(t) < 1e-14 * (1 + Math.abs(sum))) break;
+  }
+  return sum;
+}
+function sinQ(x, q, N) {
+  let sum = x, xn = x, x2 = x * x;
+  for (let n = 1; n <= N; n++) {
+    xn *= -x2;
+    const qf = qFact(2 * n + 1, q);
+    if (Math.abs(qf) < 1e-15) break;
+    const t = xn / qf;
+    sum += t;
+    if (n > 4 && Math.abs(t) < 1e-14 * (1 + Math.abs(sum))) break;
+  }
+  return sum;
+}
+
+// Read true q value: q_num is the authoritative source; q_val slider is capped display
+function getQ() {
+  const el = document.getElementById('q_num');
+  if (!el) return parseFloat(document.getElementById('q_val').value) || 0;
+  const v = parseFloat(el.value);
+  return isNaN(v) ? 0 : Math.max(0, v);
+}
+
+// q_eff for q-series: maps torsion q (0=classical,1+=quantum) to series q
+// q=0 → q_eff=0.98 (near-classical), q≥1 → q_eff=0.08 (deep quantum)
+function qEff(q_slider) {
+  return Math.max(0.08, 0.98 - 0.90 * q_slider);
+}
+
+// ── Three.js scene ───────────────────────────────────────────────────
+const scene    = new THREE.Scene();
+scene.fog      = new THREE.FogExp2(0x020710, 0.022);
+const camera   = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.01, 200);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setClearColor(0x020710);
+document.getElementById('canvas-wrap').appendChild(renderer.domElement);
+
+// Lighting
+scene.add(new THREE.AmbientLight(0x112240, 0.65));
+const dL1 = new THREE.DirectionalLight(0xffc080, 1.35); dL1.position.set(7, 10, 5);  scene.add(dL1);
+const dL2 = new THREE.DirectionalLight(0x4466ff, 0.55); dL2.position.set(-5, 2,  -4); scene.add(dL2);
+const dL3 = new THREE.DirectionalLight(0x33ffaa, 0.30); dL3.position.set(0,  -6, 1);  scene.add(dL3);
+const ptL  = new THREE.PointLight(0xffeedd, 0.6, 18);   ptL.position.set(0,  0,  0);  scene.add(ptL);
+
+// Stars
+const starGroup = new THREE.Group();
+scene.add(starGroup);
+{
+  const sg = new THREE.BufferGeometry();
+  const sp = new Float32Array(2800 * 3);
+  for (let i = 0; i < sp.length; i++) sp[i] = (Math.random() - .5) * 170;
+  sg.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+  starGroup.add(new THREE.Points(sg, new THREE.PointsMaterial({
+    color: 0x99aadd, size: .18, transparent: true, opacity: .70
+  })));
+}
+
+// Axes
+const axHelper = new THREE.AxesHelper(SPHERE_R + 1.5);
+scene.add(axHelper);
+
+// ── Brane sphere (brown) ─────────────────────────────────────────────
+const braneGeo = new THREE.SphereGeometry(SPHERE_R, 72, 72);
+const braneMat = new THREE.MeshPhongMaterial({
+  color:     0x8B4513,   // SaddleBrown
+  emissive:  0x2a0e04,
+  specular:  0x5a2e12,
+  shininess: 22,
+  transparent: true,
+  opacity:   0.80,
+});
+const braneMesh = new THREE.Mesh(braneGeo, braneMat);
+scene.add(braneMesh);
+
+// Subtle equator/meridian wireframe overlay
+let braneWireOverlayMesh = null;
+{
+  const wg = new THREE.SphereGeometry(SPHERE_R * 1.002, 24, 12);
+  const wm = new THREE.MeshBasicMaterial({
+    color: 0xaa6633, wireframe: true, transparent: true, opacity: 0.08
+  });
+  braneWireOverlayMesh = new THREE.Mesh(wg, wm);
+  scene.add(braneWireOverlayMesh);
+}
+
+// ── Point marker (selected p on brane) ──────────────────────────────
+const markerMesh = new THREE.Mesh(
+  new THREE.SphereGeometry(0.14, 20, 20),
+  new THREE.MeshPhongMaterial({ color: 0xffee44, emissive: 0x886600, shininess: 90 })
+);
+scene.add(markerMesh);
+
+// Marker glow ring
+const ringMesh = new THREE.Mesh(
+  new THREE.TorusGeometry(0.30, 0.025, 8, 40),
+  new THREE.MeshBasicMaterial({ color: 0xffdd00, transparent: true, opacity: 0.6 })
+);
+scene.add(ringMesh);
+
+// ── Camera orbit ─────────────────────────────────────────────────────
+// Initial viewport from §screenshot: θ_cam=281.8°, φ_cam=125.2°
+const orb = { th: 281.8 * Math.PI / 180, ph: 125.2 * Math.PI / 180, r: 11,
+              target: { x: 0, y: 0, z: 0 } };
+function applyCam() {
+  camera.position.set(
+    orb.target.x + orb.r * Math.sin(orb.ph) * Math.sin(orb.th),
+    orb.target.y + orb.r * Math.cos(orb.ph),
+    orb.target.z + orb.r * Math.sin(orb.ph) * Math.cos(orb.th)
+  );
+  updateVizJSON();
+  camera.lookAt(orb.target.x, orb.target.y, orb.target.z);
+}
+applyCam();
+
+// ── Selected point ───────────────────────────────────────────────────
+const selPt = new THREE.Vector3(0, SPHERE_R, 0);
+
+function updateSelPt() {
+  const xv = parseFloat(document.getElementById('x_p').value);
+  const yv = parseFloat(document.getElementById('y_p').value);
+  const zv = parseFloat(document.getElementById('z_p').value);
+  const len = Math.sqrt(xv*xv + yv*yv + zv*zv) || 1;
+  selPt.set(xv / len * SPHERE_R, yv / len * SPHERE_R, zv / len * SPHERE_R);
+  markerMesh.position.copy(selPt);
+
+  // Orient glow ring perpendicular to the normal at selected point
+  const N = selPt.clone().normalize();
+  ringMesh.position.copy(selPt);
+  ringMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), N);
+}
+updateSelPt();
+
+// ── Tangent frame at normal N ─────────────────────────────────────────
+function getFrame(N) {
+  const ref = (Math.abs(N.y) < 0.85)
+    ? new THREE.Vector3(0, 1, 0)
+    : new THREE.Vector3(1, 0, 0);
+  const T1 = new THREE.Vector3().crossVectors(ref, N).normalize();
+  const T2 = new THREE.Vector3().crossVectors(N, T1).normalize();
+  return { T1, T2 };
+}
+
+// ── Tube colours (RGB = 3 colour charges) ────────────────────────────
+const TUBE_COL = [
+  new THREE.Color(1.0,  0.12, 0.12),  // Red   – 1st S₃ ⊂ S₅
+  new THREE.Color(0.10, 1.0,  0.35),  // Green – 2nd S₃ ⊂ S₅
+  new THREE.Color(0.18, 0.40, 1.0),   // Blue  – 3rd S₃ ⊂ S₅
+];
+
+// ── Build one chiral tube geometry ───────────────────────────────────
+// gamma_scale: dimensionless pitch scale; effective pitch = gamma_scale / Q(s)
+function buildTubeGeo(tubeIndex, P, N, T1, T2, q, N_min, N_max, sigma, gamma_scale) {
+  const AX   = TUBE_AX;
+  const RG   = TUBE_RG;
+  const RG1  = RG + 1;
+  const NV   = (AX + 1) * RG1;
+  const pos  = new Float32Array(NV * 3);
+  const col  = new Float32Array(NV * 3);
+  const tc   = TUBE_COL[tubeIndex];
+  const phi0 = TAU * tubeIndex / 3;  // base phase offset (120° per tube)
+
+  // Height renorm: visual tube height always = SPHERE_R/5, independent of N_min/N_max
+  const h_norm  = (SPHERE_R * 0.2) / Math.max(1e-4, (N_max - N_min) * LP);
+
+  // Reference Q at endpoint for normalization (keeps torsion_s bounded to gamma_scale turns)
+  const r_max   = N_max * LP;
+  const Q_end_r = Math.max(1e-4, 2 * (expQ(r_max, Math.exp(-r_max), QN) - 1));
+
+  for (let i = 0; i <= AX; i++) {
+    const s_N = N_min + (N_max - N_min) * (i / AX);  // Planck multiples
+    const s   = s_N * LP;                             // physical distance along N
+    const s_v = s * h_norm;                           // visual distance (renormed)
+
+    // Local Weierstrass Q(s) = 2·(expq(s,q_sub(s)) − 1)  [time-like growth factor]
+    const q_sub_l = Math.exp(-s);
+    const Q_local = Math.max(1e-4, 2 * (expQ(s, q_sub_l, QN) - 1));
+
+    // Torsion: gamma_scale full turns at the endpoint; Q(s)/Q_end modulates rate along tube
+    const Q_norm    = Q_local / Q_end_r;
+    const torsion_s = TAU * gamma_scale * (s_N / Math.max(N_max, 1)) * Q_norm;
+
+    // Centre of this ring (visual position along outward normal)
+    const cx = P.x + N.x * s_v;
+    const cy = P.y + N.y * s_v;
+    const cz = P.z + N.z * s_v;
+
+    // q-modulated cone width: Ξ_q = 1 + 0.3·q·cos(torsion_s)
+    const xi_q   = 1.0 + 0.30 * q * Math.cos(torsion_s);
+    const ring_r = Math.max(0.0005, s_v * sigma * xi_q);
+
+    // Sector start: ψᵢ(s) = 2πi/3 + q·torsion_s; each tube covers exactly 120°
+    const sec_start = phi0 + q * torsion_s;
+
+    for (let j = 0; j <= RG; j++) {
+      const theta = sec_start + (j / RG) * (TAU / 3);
+      const ct    = Math.cos(theta);
+      const st    = Math.sin(theta);
+      const vi    = i * RG1 + j;
+      pos[vi*3  ] = cx + ring_r * (T1.x * ct + T2.x * st);
+      pos[vi*3+1] = cy + ring_r * (T1.y * ct + T2.y * st);
+      pos[vi*3+2] = cz + ring_r * (T1.z * ct + T2.z * st);
+      col[vi*3  ] = tc.r;
+      col[vi*3+1] = tc.g;
+      col[vi*3+2] = tc.b;
+    }
+  }
+
+  // Quad-strip index buffer
+  const idx = [];
+  for (let i = 0; i < AX; i++) {
+    for (let j = 0; j < RG; j++) {
+      const a = i * RG1 + j,    b = (i + 1) * RG1 + j;
+      const c = i * RG1 + j+1,  d = (i + 1) * RG1 + j+1;
+      idx.push(a, c, b,  c, d, b);
+    }
+  }
+
+  // Area-weighted vertex normals
+  const acc = new Float32Array(NV * 3);
+  for (let k = 0; k < idx.length; k += 3) {
+    const ia = idx[k], ib = idx[k+1], ic = idx[k+2];
+    const ax=pos[ia*3], ay=pos[ia*3+1], az=pos[ia*3+2];
+    const bx=pos[ib*3], by=pos[ib*3+1], bz=pos[ib*3+2];
+    const cx=pos[ic*3], cy=pos[ic*3+1], cz=pos[ic*3+2];
+    const ex=bx-ax, ey=by-ay, ez=bz-az;
+    const fx=cx-ax, fy=cy-ay, fz=cz-az;
+    const nx=ey*fz-ez*fy, ny=ez*fx-ex*fz, nz=ex*fy-ey*fx;
+    for (const ii of [ia, ib, ic]) {
+      acc[ii*3] += nx; acc[ii*3+1] += ny; acc[ii*3+2] += nz;
+    }
+  }
+  const nrm = new Float32Array(NV * 3);
+  for (let i = 0; i < NV; i++) {
+    const l = Math.sqrt(acc[i*3]**2 + acc[i*3+1]**2 + acc[i*3+2]**2) + 1e-10;
+    nrm[i*3] = acc[i*3]/l; nrm[i*3+1] = acc[i*3+1]/l; nrm[i*3+2] = acc[i*3+2]/l;
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('normal',   new THREE.BufferAttribute(nrm, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+  geo.setIndex(idx);
+  return geo;
+}
+
+// ── Tube end-cap (disc) ───────────────────────────────────────────────
+function buildCapGeo(P, N, T1, T2, s_N, sigma, q, gamma_scale, tubeIndex, N_max) {
+  const s       = s_N * LP;
+  const h_norm  = (SPHERE_R * 0.2) / Math.max(1e-4, N_max * LP);
+  const s_v     = s * h_norm;
+  const q_sub_l = Math.exp(-s);
+  const Q_local = Math.max(1e-4, 2 * (expQ(s, q_sub_l, QN) - 1));
+  const r_max   = s_N * LP;  // cap is at a fixed s_N
+  const Q_end_r = Math.max(1e-4, 2 * (expQ(r_max, Math.exp(-r_max), QN) - 1));
+  const Q_norm  = Q_local / Q_end_r;
+  const torsion = TAU * gamma_scale * (s_N / Math.max(s_N, 1)) * Q_norm;
+  const xi_q    = 1.0 + 0.30 * q * Math.cos(torsion);
+  const ring_r  = Math.max(0.0005, s_v * sigma * xi_q);
+  const sec_start = TAU * tubeIndex / 3 + q * torsion;
+  const cx = P.x + N.x * s_v, cy = P.y + N.y * s_v, cz = P.z + N.z * s_v;
+  const tc = TUBE_COL[tubeIndex];
+
+  const RG  = TUBE_RG;
+  const NV  = RG + 2;  // centre + ring + closed
+  const pos = new Float32Array(NV * 3);
+  const col = new Float32Array(NV * 3);
+
+  // Centre vertex
+  pos[0] = cx; pos[1] = cy; pos[2] = cz;
+  col[0] = tc.r; col[1] = tc.g; col[2] = tc.b;
+
+  for (let j = 0; j <= RG; j++) {
+    const theta = sec_start + (j / RG) * (TAU / 3);
+    const ct = Math.cos(theta), st = Math.sin(theta);
+    const vi = j + 1;
+    pos[vi*3  ] = cx + ring_r * (T1.x * ct + T2.x * st);
+    pos[vi*3+1] = cy + ring_r * (T1.y * ct + T2.y * st);
+    pos[vi*3+2] = cz + ring_r * (T1.z * ct + T2.z * st);
+    col[vi*3  ] = tc.r; col[vi*3+1] = tc.g; col[vi*3+2] = tc.b;
+  }
+
+  const idx = [];
+  for (let j = 0; j < RG; j++) idx.push(0, j+1, j+2);
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+  geo.setIndex(idx);
+  geo.computeVertexNormals();
+  return geo;
+}
+
+// ── CP1 ghost sphere (wireframe tangent to brane at p) ───────────────
+let cp1GhostMesh = null;
+
+function buildCP1Ghost(P, N, R_CP1) {
+  if (cp1GhostMesh) { scene.remove(cp1GhostMesh); cp1GhostMesh = null; }
+  // Grid spacing = ℓ_P / R_CP1 (one Planck length per cell)
+  const lonSegs = Math.round(TAU * R_CP1 / LP);
+  const latSegs = Math.round(Math.PI * R_CP1 / LP);
+  const geo = new THREE.SphereGeometry(R_CP1, lonSegs, latSegs);
+  const mat = new THREE.MeshBasicMaterial({
+    color: 0x88ccff, wireframe: true, transparent: true, opacity: 0.20
+  });
+  cp1GhostMesh = new THREE.Mesh(geo, mat);
+  // Center at p + N·R_CP1  (south pole = p = touching point)
+  cp1GhostMesh.position.set(
+    P.x + N.x * R_CP1,
+    P.y + N.y * R_CP1,
+    P.z + N.z * R_CP1
+  );
+  scene.add(cp1GhostMesh);
+}
+
+// ── Exceptional divisor E_p = π⁻¹(p) ≅ ℂP¹ (solid surface, blowup mode) ──
+// Replaces the point p with the full ℂP¹ sphere; coloured tile sectors
+// (𝔯, 𝔤, 𝔟) are rendered on top (renderOrder=2).
+let exceptDivMesh = null;
+
+function buildExceptionalDiv(P, N, R_CP1) {
+  if (exceptDivMesh) { scene.remove(exceptDivMesh); exceptDivMesh = null; }
+  if (!document.getElementById('cb_blowup').checked) return;
+  const geo = new THREE.SphereGeometry(R_CP1 * 0.998, 48, 32);
+  const mat = new THREE.MeshPhongMaterial({
+    color:       0xc0c8ff,
+    emissive:    0x080818,
+    transparent: true,
+    opacity:     0.42,
+    side:        THREE.DoubleSide,
+    shininess:   12,
+    depthWrite:  false,
+  });
+  exceptDivMesh = new THREE.Mesh(geo, mat);
+  exceptDivMesh.position.set(
+    P.x + N.x * R_CP1,
+    P.y + N.y * R_CP1,
+    P.z + N.z * R_CP1
+  );
+  exceptDivMesh.renderOrder = 1;
+  scene.add(exceptDivMesh);
+}
+
+// ── CP1 fibre band: one coloured sector covering 1/3 of the CP1 sphere ─
+// The CP1 sphere (radius R_CP1) is tangent to the brane at p (south pole).
+// Center O = p + N·R_CP1.  Parameterisation:
+//   v(φ_lat, ψ) = O + R_CP1·( sin(φ_lat)·(cos(ψ)·T1 + sin(ψ)·T2) − cos(φ_lat)·N )
+// φ_lat ∈ [0,π]:  0 = south pole (p),  π = north pole (p + 2R·N)
+// ψ ∈ sector [2πi/3, 2π(i+1)/3]  + q·TAU chiral twist pole-to-pole; grid spacing = ℓ_P / R_CP1
+function buildTubeGeoCP1(tubeIndex, P, N, T1, T2, q) {
+  const R_CP1  = SPHERE_R * 0.2;  // always 1/5 of spacetime sphere
+  const Ox = P.x + N.x * R_CP1;
+  const Oy = P.y + N.y * R_CP1;
+  const Oz = P.z + N.z * R_CP1;
+
+  // Planck-derived grid: one cell per ℓ_P of arc length on S²
+  const dAng = LP / R_CP1;
+  const AX  = Math.round(Math.PI / dAng);    // latitude steps  (0 → π)
+  const RG  = Math.round((TAU / 3) / dAng);  // longitude steps per 120° sector
+  const RG1 = RG + 1;
+  const NV  = (AX + 1) * RG1;
+  const pos = new Float32Array(NV * 3);
+  const col = new Float32Array(NV * 3);
+  const tc  = TUBE_COL[tubeIndex];
+
+  const psi_base = TAU * tubeIndex / 3;  // 120° sector start
+  const psi_span = TAU / 3;              // 120° sector width
+
+  for (let i = 0; i <= AX; i++) {
+    const t       = i / AX;
+    const phi_lat = t * Math.PI;
+    const sinPhi  = Math.sin(phi_lat);
+    const cosPhi  = Math.cos(phi_lat);
+
+    for (let j = 0; j <= RG; j++) {
+      const psi    = psi_base + (j / RG) * psi_span + t * q * TAU;
+      const cosPsi = Math.cos(psi);
+      const sinPsi = Math.sin(psi);
+
+      const vi = i * RG1 + j;
+      pos[vi*3  ] = Ox + R_CP1 * (sinPhi * (T1.x*cosPsi + T2.x*sinPsi) - cosPhi*N.x);
+      pos[vi*3+1] = Oy + R_CP1 * (sinPhi * (T1.y*cosPsi + T2.y*sinPsi) - cosPhi*N.y);
+      pos[vi*3+2] = Oz + R_CP1 * (sinPhi * (T1.z*cosPsi + T2.z*sinPsi) - cosPhi*N.z);
+      col[vi*3  ] = tc.r;
+      col[vi*3+1] = tc.g;
+      col[vi*3+2] = tc.b;
+    }
+  }
+
+  const idx = [];
+  for (let i = 0; i < AX; i++)
+    for (let j = 0; j < RG; j++) {
+      const a = i*RG1+j, b = (i+1)*RG1+j, c = i*RG1+j+1, d = (i+1)*RG1+j+1;
+      idx.push(a, c, b,  c, d, b);
+    }
+
+  const acc = new Float32Array(NV * 3);
+  for (let k = 0; k < idx.length; k += 3) {
+    const ia=idx[k], ib=idx[k+1], ic=idx[k+2];
+    const ax=pos[ia*3],ay=pos[ia*3+1],az=pos[ia*3+2];
+    const bx=pos[ib*3],by=pos[ib*3+1],bz=pos[ib*3+2];
+    const cx=pos[ic*3],cy=pos[ic*3+1],cz=pos[ic*3+2];
+    const ex=bx-ax,ey=by-ay,ez=bz-az, fx=cx-ax,fy=cy-ay,fz=cz-az;
+    const nx=ey*fz-ez*fy, ny=ez*fx-ex*fz, nz=ex*fy-ey*fx;
+    for (const ii of [ia,ib,ic]) { acc[ii*3]+=nx; acc[ii*3+1]+=ny; acc[ii*3+2]+=nz; }
+  }
+  const nrm = new Float32Array(NV * 3);
+  for (let i = 0; i < NV; i++) {
+    const l = Math.sqrt(acc[i*3]**2+acc[i*3+1]**2+acc[i*3+2]**2)+1e-10;
+    nrm[i*3]=acc[i*3]/l; nrm[i*3+1]=acc[i*3+1]/l; nrm[i*3+2]=acc[i*3+2]/l;
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('normal',   new THREE.BufferAttribute(nrm, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+  geo.setIndex(idx);
+  return geo;
+}
+
+// ── Active tube meshes ───────────────────────────────────────────────
+let activeTubes = [];
+
+function buildTubes() {
+  for (const m of activeTubes) {
+    if (m.geometry && typeof m.geometry.dispose === 'function') {
+      m.geometry.dispose();
+    }
+    if (m.material) {
+      if (Array.isArray(m.material)) {
+        for (const mat of m.material) {
+          if (mat && typeof mat.dispose === 'function') {
+            mat.dispose();
+          }
+        }
+      } else if (typeof m.material.dispose === 'function') {
+        m.material.dispose();
+      }
+    }
+    scene.remove(m);
+  }
+  activeTubes = [];
+  if (cp1GhostMesh)  { scene.remove(cp1GhostMesh);  cp1GhostMesh  = null; }
+  if (exceptDivMesh) { scene.remove(exceptDivMesh); exceptDivMesh = null; }
+  for (const m of activePrimeGhosts)  scene.remove(m); activePrimeGhosts  = [];
+  for (const m of activeFiberMarkers) scene.remove(m); activeFiberMarkers = [];
+
+  if (!document.getElementById('cb_tubes').checked) return;
+
+  const q       = getQ();
+  const N_min   = parseInt(document.getElementById('n_min').value);
+  const N_max   = parseInt(document.getElementById('n_max').value);
+  const sigma      = parseFloat(document.getElementById('sigma').value);
+  const gamma_scale = parseFloat(document.getElementById('pitch').value);
+  const cp1Mode    = document.getElementById('cb_cp1').checked;
+
+  const N_vec   = selPt.clone().normalize();
+  const { T1, T2 } = getFrame(N_vec);
+
+  const tubeOpacity = parseFloat(document.getElementById('tube_opacity').value);
+  const tubeTransparent = tubeOpacity < 0.999;
+
+  // E_p blowup and prime ghosts work in both CP1 and cone modes
+  const R_CP1 = SPHERE_R * 0.2;
+  buildExceptionalDiv(selPt, N_vec, R_CP1);
+  buildPrimeGhosts(selPt, N_vec, T1, T2);
+
+  if (cp1Mode) {
+    // ── CP1 fibre view: three Planck-gridded bands on the CP1 sphere ──
+    // Sectors 𝔯 (i=0), 𝔤 (i=1), 𝔟 (i=2) tile E_p exactly (strict, shared boundaries)
+    buildCP1Ghost(selPt, N_vec, R_CP1);
+    buildFiberMarkers();
+    for (let ti = 0; ti < 3; ti++) {
+      const geo = buildTubeGeoCP1(ti, selPt, N_vec, T1, T2, q);
+      const mat = new THREE.MeshPhongMaterial({
+        vertexColors: true, side: THREE.DoubleSide,
+        shininess: 70, specular: new THREE.Color(0.28, 0.30, 0.38),
+        transparent: tubeTransparent, opacity: tubeOpacity,
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.renderOrder = 2;  // render 𝔯/𝔤/𝔟 on top of exceptional divisor
+      scene.add(mesh);
+      activeTubes.push(mesh);
+    }
+  } else {
+    // ── Cone-tube chiral view (original) ──────────────────────────
+    if (N_min >= N_max) return;
+    for (let ti = 0; ti < 3; ti++) {
+      const geo = buildTubeGeo(ti, selPt, N_vec, T1, T2, q, N_min, N_max, sigma, gamma_scale);
+      const mat = new THREE.MeshPhongMaterial({
+        vertexColors: true,
+        side:         THREE.DoubleSide,
+        shininess:    70,
+        specular:     new THREE.Color(0.28, 0.30, 0.38),
+        transparent: tubeTransparent, opacity: tubeOpacity,
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      scene.add(mesh);
+      activeTubes.push(mesh);
+
+      // End caps (opaque discs closing the tube ends)
+      for (const s_end of [N_min > 0 ? N_min : null, N_max]) {
+        if (s_end === null) continue;
+        const cgeo = buildCapGeo(selPt, N_vec, T1, T2, s_end, sigma, q, gamma_scale, ti, N_max);
+        const cmat = new THREE.MeshPhongMaterial({
+          vertexColors: true, side: THREE.DoubleSide, shininess: 40
+        });
+        const cmesh = new THREE.Mesh(cgeo, cmat);
+        scene.add(cmesh);
+        activeTubes.push(cmesh);
+      }
+    }
+  }
+}
+
+// ── Axis intersection points: ±x, ±y, ±z on the brane sphere ────────
+const AXIS_POLES = [
+  new THREE.Vector3( SPHERE_R, 0, 0),
+  new THREE.Vector3(-SPHERE_R, 0, 0),
+  new THREE.Vector3(0,  SPHERE_R, 0),
+  new THREE.Vector3(0, -SPHERE_R, 0),
+  new THREE.Vector3(0, 0,  SPHERE_R),
+  new THREE.Vector3(0, 0, -SPHERE_R),
+];
+
+function buildAxisTubes() {
+  // Remove previous axis-pole tubes (tagged with .isAxisTube)
+  for (let i = activeTubes.length - 1; i >= 0; i--) {
+    if (activeTubes[i].userData.isAxisTube) {
+      scene.remove(activeTubes[i]);
+      activeTubes.splice(i, 1);
+    }
+  }
+  if (!document.getElementById('cb_axispts').checked) return;
+  if (!document.getElementById('cb_tubes').checked) return;
+
+  const q           = getQ();
+  const N_min       = parseInt(document.getElementById('n_min').value);
+  const N_max       = parseInt(document.getElementById('n_max').value);
+  const sigma       = parseFloat(document.getElementById('sigma').value);
+  const gamma_scale = parseFloat(document.getElementById('pitch').value);
+  const cp1Mode     = document.getElementById('cb_cp1').checked;
+  const axOpacity   = parseFloat(document.getElementById('tube_opacity').value) * 0.70;
+  if (!cp1Mode && N_min >= N_max) return;
+
+  for (const pole of AXIS_POLES) {
+    // Skip if too close to selected point (already rendered there)
+    if (pole.distanceTo(selPt) < 0.05) continue;
+    const N_vec = pole.clone().normalize();
+    const { T1, T2 } = getFrame(N_vec);
+    for (let ti = 0; ti < 3; ti++) {
+      const geo = cp1Mode
+        ? buildTubeGeoCP1(ti, pole, N_vec, T1, T2, q)
+        : buildTubeGeo(ti, pole, N_vec, T1, T2, q, N_min, N_max, sigma, gamma_scale);
+      const mat = new THREE.MeshPhongMaterial({
+        vertexColors: true, side: THREE.DoubleSide,
+        shininess: 55, transparent: true, opacity: axOpacity,
+        specular: new THREE.Color(0.20, 0.22, 0.30),
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.userData.isAxisTube = true;
+      scene.add(mesh);
+      activeTubes.push(mesh);
+    }
+  }
+}
+
+// ── Full rebuild ─────────────────────────────────────────────────────
+function rebuild() {
+  updateSelPt();
+  buildTubes();
+  buildAxisTubes();
+  updateStats();
+  updateChiralPanels();
+  updateVizJSON();
+  updateCP1ZDisplay();
+  if (bundleState.preset) rebuildBundleMarkers();
+}
+
+// ── Stats panel ──────────────────────────────────────────────────────
+function updateStats() {
+  const q       = getQ();
+  const N_min   = parseInt(document.getElementById('n_min').value);
+  const N_max   = parseInt(document.getElementById('n_max').value);
+  const sigma   = parseFloat(document.getElementById('sigma').value);
+  const gamma_scale = parseFloat(document.getElementById('pitch').value);
+
+  const hbar_q  = (1 - q).toFixed(3);
+  const q_e     = qEff(q);
+  const camThDeg = ((orb.th * 180 / Math.PI) % 360 + 360) % 360;
+  const camPhDeg = orb.ph * 180 / Math.PI;
+
+  // Tube values at N_max (visual endpoint r for q-series)
+  const r_end   = N_max * LP;
+  const q_sub   = Math.exp(-r_end);
+  const ev_end  = expQ(r_end, q_sub, QN) - 1;
+  const cq_end  = cosQ(r_end, q_sub, QN);
+  // Q-derived effective pitch at N_max
+  const Q_end      = Math.max(1e-4, 2 * ev_end);
+  const pitch_eff  = (gamma_scale / Q_end).toFixed(1);  // ℓ_P per turn
+  const torsion_end = TAU * gamma_scale;  // normalized: gamma_scale turns at endpoint
+  const spiral_deg  = ((q * torsion_end) * 180 / Math.PI % 360).toFixed(1);
+
+  // Cone max radius (visual)
+  const xi_q_end   = 1.0 + 0.30 * q * Math.cos(torsion_end);
+  const r_cone_max = (N_max * LP * sigma * xi_q_end).toFixed(4);
+
+  const cp1Mode = document.getElementById('cb_cp1').checked;
+  const R_CP1   = Math.max(0.1, (N_max - N_min) * LP * 0.55);
+  const modeStr = cp1Mode
+    ? `<span class="h3">CP1 fibre</span>  R_CP1=<span class="h2">${R_CP1.toFixed(3)}</span>`
+    : `<span class="h3">cone-tube</span>`;
+
+  document.getElementById('stats-body').innerHTML =
+    `<b style="color:var(--dim)">── Mode ───────────────────</b><br>`+
+    `${modeStr}<br>`+
+    `<b style="color:var(--dim)">── Viewpoint ──────────────</b><br>`+
+    `θ_cam = <span class="h1">${camThDeg.toFixed(1)}°</span>  `+
+    `φ_cam = <span class="h1">${camPhDeg.toFixed(1)}°</span><br>`+
+    `r_cam = <span class="h2">${orb.r.toFixed(3)}</span> (vis)<br>`+
+    `<b style="color:var(--dim)">── Point  p ∈ S³ ──────────</b><br>`+
+    `p = (<span class="h3">${selPt.x.toFixed(3)}</span>, `+
+       `<span class="h3">${selPt.y.toFixed(3)}</span>, `+
+       `<span class="h3">${selPt.z.toFixed(3)}</span>)<br>`+
+    `<b style="color:var(--dim)">── Torsion parameter ──────</b><br>`+
+    `q = <span class="h1">${q.toFixed(3)}</span>  `+
+    `ℏ_q = 1−q = <span class="h2">${hbar_q}</span><br>`+
+    `q_eff (series) = <span class="h3">${q_e.toFixed(3)}</span><br>`+
+    `<b style="color:var(--dim)">── Tube segment ───────────</b><br>`+
+    `[N_min, N_max] = [<span class="h1">${N_min}</span>, <span class="h1">${N_max}</span>] × ℓ_P<br>`+
+    `σ = <span class="h3">${sigma.toFixed(3)}</span>  `+
+    `γ = <span class="h3">${gamma_scale.toFixed(2)}</span><br>`+
+    `Γ_eff = <span class="h2">${pitch_eff}</span> ℓ_P/turn  `+
+    `Q = <span class="h1">${Q_end.toFixed(4)}</span><br>`+
+    `<b style="color:var(--dim)">── @ N_max endpoint ───────</b><br>`+
+    `twist = <span class="h2">${spiral_deg}°</span>  `+
+    `ρ_max = <span class="h1">${r_cone_max}</span><br>`+
+    `q_sub = e⁻ʳ = <span class="h1">${q_sub.toFixed(4)}</span><br>`+
+    `expq(r)−1 = <span class="h2">${ev_end.toFixed(4)}</span>  `+
+    `cosq(r) = <span class="h3">${cq_end.toFixed(4)}</span><br>`+
+    `<b style="color:var(--dim)">── Colour charges ─────────</b><br>`+
+    `<span class="hr">■ Red  </span> ψ₀ = 0° + twist<br>`+
+    `<span class="hg">■ Green</span> ψ₁ = 120° + twist<br>`+
+    `<span class="hb">■ Blue </span> ψ₂ = 240° + twist`;
+}
+
+// ── Raycaster / hover ────────────────────────────────────────────────
+const ray  = new THREE.Raycaster();
+const mPos = new THREE.Vector2(-9999, -9999);
+const tip  = document.getElementById('tip');
+
+window.addEventListener('mousemove', e => {
+  mPos.x = (e.clientX / innerWidth)  *  2 - 1;
+  mPos.y = -(e.clientY / innerHeight) * 2 + 1;
+  tip.style.left = (e.clientX + 14) + 'px';
+  tip.style.top  = (e.clientY - 38) + 'px';
+});
+
+function updateHover() {
+  ray.setFromCamera(mPos, camera);
+  const hits = ray.intersectObject(braneMesh);
+  if (!hits.length) {
+    tip.style.display = 'none';
+    document.getElementById('info-body').style.display = 'block';
+    document.getElementById('info-grid').style.display = 'none';
+    return;
+  }
+  const hp    = hits[0].point;
+  const r_val = hp.length() / SPHERE_R;   // normalised ~1 on brane
+  const r_sub = Math.max(0.01, r_val * 2.5);
+  const q_sub = Math.exp(-r_sub);
+  const hb_q  = 1 - q_sub;
+  const ev    = expQ(r_sub, q_sub, QN) - 1;
+  const cq    = cosQ(r_sub, q_sub, QN);
+  const lv    = lnQ(r_sub, q_sub, QN);
+
+  document.getElementById('info-body').style.display = 'none';
+  document.getElementById('info-grid').style.display = 'grid';
+  document.getElementById('ci_qsub').textContent = q_sub.toFixed(4);
+  document.getElementById('ci_hbar').textContent = hb_q.toFixed(4);
+  document.getElementById('ci_expq').textContent = ev.toFixed(4);
+  document.getElementById('ci_cosq').textContent = cq.toFixed(4);
+  document.getElementById('ci_lnq').textContent  = lv.toFixed(4);
+  document.getElementById('ci_r').textContent    = r_sub.toFixed(4);
+
+  tip.style.display = 'block';
+  tip.innerHTML =
+    `q_sub=${q_sub.toFixed(3)}  ℏ_q=${hb_q.toFixed(3)}<br>`+
+    `expq(r)=${(ev+1).toFixed(3)}  cosq(r)=${cq.toFixed(3)}`;
+}
+
+// ── Axis labels 3D→2D ────────────────────────────────────────────────
+const axPts = [
+  { id: 'ax0', v: new THREE.Vector3(SPHERE_R + 1.8, 0,              0            ) },
+  { id: 'ax1', v: new THREE.Vector3(0,              SPHERE_R + 1.8, 0            ) },
+  { id: 'ax2', v: new THREE.Vector3(0,              0,              SPHERE_R + 1.8) },
+];
+function updateAxLabels() {
+  for (const { id, v } of axPts) {
+    const p = v.clone().project(camera);
+    document.getElementById(id).style.left = ((p.x + 1) / 2 * innerWidth)  + 'px';
+    document.getElementById(id).style.top  = ((1 - p.y) / 2 * innerHeight) + 'px';
+  }
+}
+
+// ── Slider event listeners ────────────────────────────────────────────
+const rebuildIds = ['q_val','n_min','sigma','pitch','x_p','y_p','z_p'];
+rebuildIds.forEach(id => {
+  document.getElementById(id).addEventListener('input', () => {
+    // Update display values
+    const q_v  = parseFloat(document.getElementById('q_val').value);
+    const nm   = parseInt(document.getElementById('n_min').value);
+    const nx   = parseInt(document.getElementById('n_max').value);
+    const sg   = parseFloat(document.getElementById('sigma').value);
+    const pt   = parseFloat(document.getElementById('pitch').value);
+    const xv   = parseFloat(document.getElementById('x_p').value);
+    const yv   = parseFloat(document.getElementById('y_p').value);
+    const zv   = parseFloat(document.getElementById('z_p').value);
+
+    // Sync q_num only when the slider itself moved (not if q_num drove the update)
+    if (document.activeElement !== document.getElementById('q_num'))
+      document.getElementById('q_num').value = q_v.toFixed(3);
+    document.getElementById('v_nmin').textContent = nm;
+    document.getElementById('v_nmax').textContent = nx;
+    document.getElementById('v_sigma').textContent = sg.toFixed(2);
+    document.getElementById('v_pitch').textContent = pt.toFixed(2);
+    document.getElementById('v_xp').textContent = xv.toFixed(2);
+    document.getElementById('v_yp').textContent = yv.toFixed(2);
+    document.getElementById('v_zp').textContent = zv.toFixed(2);
+
+    rebuild();
+  });
+});
+
+// q number input ↔ slider sync (allows arbitrary values above slider max)
+document.getElementById('q_num').addEventListener('input', () => {
+  const v = Math.max(0, parseFloat(document.getElementById('q_num').value) || 0);
+  // Clamp slider display to its max (40), but pass actual value to rebuild via q_num
+  document.getElementById('q_val').value = Math.min(40, v);
+  rebuild();
+});
+
+// Visibility toggles (don't need full rebuild)
+document.getElementById('cb_brane').addEventListener('change', e => {
+  braneMesh.visible = e.target.checked;
+});
+document.getElementById('cb_axes').addEventListener('change', e => {
+  axHelper.visible = e.target.checked;
+  ['ax0','ax1','ax2'].forEach(id =>
+    document.getElementById(id).style.display = e.target.checked ? 'block' : 'none');
+});
+document.getElementById('cb_stars').addEventListener('change', e => {
+  starGroup.visible = e.target.checked;
+});
+document.getElementById('cb_tubes').addEventListener('change', () => { buildTubes(); buildAxisTubes(); });
+document.getElementById('cb_cp1').addEventListener('change', () => { buildTubes(); buildAxisTubes(); });
+document.getElementById('cb_axispts').addEventListener('change', () => buildAxisTubes());
+
+// Root-of-unity snap: sets q_eff = cos(2π/n), solves back for slider value
+document.getElementById('snap_root').addEventListener('click', () => {
+  const n = Math.max(1, parseInt(document.getElementById('root_n').value) || 5);
+  const q_eff_target = Math.cos(TAU / n);
+  // Invert qEff(q) = max(0.08, 0.98 - 0.90·q):  q = (0.98 - q_eff) / 0.90
+  const q_slider = Math.max(0, Math.min(1, (0.98 - q_eff_target) / 0.90));
+  document.getElementById('q_val').value = q_slider.toFixed(4);
+  document.getElementById('q_num').value = q_slider.toFixed(3);
+  rebuild();
+});
+
+// CP1 chart [1:z] → brane point via stereographic projection from north pole
+// [1:z] with z=a+bi: p = SPHERE_R · (2a, 2b, r²−1) / (1+r²)
+function cp1ZtoP() {
+  const a  = parseFloat(document.getElementById('cp1_re').value) || 0;
+  const b  = parseFloat(document.getElementById('cp1_im').value) || 0;
+  const r2 = a*a + b*b;
+  const d  = 1 + r2;
+  const xn = SPHERE_R * 2*a / d;
+  const yn = SPHERE_R * 2*b / d;
+  const zn = SPHERE_R * (r2 - 1) / d;
+  document.getElementById('x_p').value = xn.toFixed(3);
+  document.getElementById('y_p').value = yn.toFixed(3);
+  document.getElementById('z_p').value = zn.toFixed(3);
+  document.getElementById('v_xp').textContent = xn.toFixed(2);
+  document.getElementById('v_yp').textContent = yn.toFixed(2);
+  document.getElementById('v_zp').textContent = zn.toFixed(2);
+  // Display z in CP1 notation
+  const bSign = b >= 0 ? '+' : '−';
+  document.getElementById('cp1_z_display').textContent =
+    `[1 : ${a.toFixed(2)} ${bSign} ${Math.abs(b).toFixed(2)}i]`;
+  selPt.set(xn, yn, zn);
+  rebuild();
+}
+// Also update z display when sliders move (inverse stereographic)
+function updateCP1ZDisplay() {
+  const x = selPt.x / SPHERE_R, y = selPt.y / SPHERE_R, z = selPt.z / SPHERE_R;
+  if (z >= 0.9999) { document.getElementById('cp1_z_display').textContent = '[1:∞] (N pole)'; return; }
+  const denom = 1 - z;
+  const a = x / denom, b = y / denom;
+  const bSign = b >= 0 ? '+' : '−';
+  document.getElementById('cp1_z_display').textContent =
+    `[1 : ${a.toFixed(2)} ${bSign} ${Math.abs(b).toFixed(2)}i]`;
+}
+document.getElementById('cp1_go').addEventListener('click', cp1ZtoP);
+['cp1_re','cp1_im'].forEach(id =>
+  document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') cp1ZtoP(); })
+);
+
+// Spacebar: toggle auto-rotate
+window.addEventListener('keydown', e => {
+  if (e.key === ' ' || e.code === 'Space') {
+    e.preventDefault();
+    const cb = document.getElementById('cb_auto');
+    cb.checked = !cb.checked;
+  }
+});
+
+// ── Camera orbit + pan ────────────────────────────────────────────────
+// orb.target set in orb definition above; shift+drag pans, drag sphere moves p
+document.getElementById('btn_resetcam').addEventListener('click', () => {
+  orb.target.x = 0; orb.target.y = 0; orb.target.z = 0;
+  orb.r = 11; applyCam();
+});
+
+let drag = false, didDrag = false, canvasDrag = false;
+let ptDragMode = false;   // true when dragging the selected point on sphere
+let pMouse = { x: 0, y: 0 };
+
+renderer.domElement.addEventListener('mousedown', e => {
+  canvasDrag = true; didDrag = false;
+  pMouse = { x: e.clientX, y: e.clientY };
+  // If Click→p is enabled, check if mousedown is on the sphere
+  if (document.getElementById('cb_click').checked && !e.shiftKey) {
+    ray.setFromCamera(
+      new THREE.Vector2((e.clientX / innerWidth)*2-1, -(e.clientY/innerHeight)*2+1),
+      camera
+    );
+    ptDragMode = ray.intersectObject(braneMesh).length > 0;
+  } else {
+    ptDragMode = false;
+  }
+  drag = true;
+});
+window.addEventListener('mouseup', e => {
+  if (canvasDrag && !didDrag && !ptDragMode && document.getElementById('cb_click').checked) {
+    ray.setFromCamera(
+      new THREE.Vector2((e.clientX / innerWidth)*2-1, -(e.clientY/innerHeight)*2+1),
+      camera
+    );
+    const hits = ray.intersectObject(braneMesh);
+    if (hits.length) {
+      const hp = hits[0].point;
+      document.getElementById('x_p').value = hp.x.toFixed(2);
+      document.getElementById('y_p').value = hp.y.toFixed(2);
+      document.getElementById('z_p').value = hp.z.toFixed(2);
+      document.getElementById('v_xp').textContent = hp.x.toFixed(2);
+      document.getElementById('v_yp').textContent = hp.y.toFixed(2);
+      document.getElementById('v_zp').textContent = hp.z.toFixed(2);
+      rebuild();
+    }
+  }
+  drag = false; canvasDrag = false; ptDragMode = false;
+});
+window.addEventListener('mousemove', e => {
+  if (!drag) return;
+  const dx = e.clientX - pMouse.x, dy = e.clientY - pMouse.y;
+  if (Math.abs(dx) + Math.abs(dy) > 2) didDrag = true;
+  pMouse = { x: e.clientX, y: e.clientY };
+
+  if (ptDragMode) {
+    // Drag point along sphere surface
+    ray.setFromCamera(
+      new THREE.Vector2((e.clientX / innerWidth)*2-1, -(e.clientY/innerHeight)*2+1),
+      camera
+    );
+    const hits = ray.intersectObject(braneMesh);
+    if (hits.length) {
+      const hp = hits[0].point;
+      document.getElementById('x_p').value = hp.x.toFixed(2);
+      document.getElementById('y_p').value = hp.y.toFixed(2);
+      document.getElementById('z_p').value = hp.z.toFixed(2);
+      document.getElementById('v_xp').textContent = hp.x.toFixed(2);
+      document.getElementById('v_yp').textContent = hp.y.toFixed(2);
+      document.getElementById('v_zp').textContent = hp.z.toFixed(2);
+      rebuild();
+    }
+  } else if (e.shiftKey) {
+    // Shift+drag: pan camera target in screen-aligned plane
+    const panFactor = orb.r * 0.0015;
+    const cosT = Math.cos(orb.th), sinT = Math.sin(orb.th);
+    orb.target.x -= cosT * dx * panFactor;
+    orb.target.z += sinT * dx * panFactor;
+    orb.target.y += dy * panFactor;
+    applyCam();
+  } else {
+    orb.th += dx * .008;
+    orb.ph += dy * .008;
+    applyCam();
+  }
+});
+renderer.domElement.addEventListener('wheel', e => {
+  orb.r = Math.max(SPHERE_R + 1.5, Math.min(60, orb.r * (1 + e.deltaY * .001)));
+  applyCam(); e.preventDefault();
+}, { passive: false });
+
+// ── Touch orbit ───────────────────────────────────────────────────────
+let lastTouch = null;
+renderer.domElement.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+});
+renderer.domElement.addEventListener('touchmove', e => {
+  if (e.touches.length === 1 && lastTouch) {
+    const dx = e.touches[0].clientX - lastTouch.x;
+    const dy = e.touches[0].clientY - lastTouch.y;
+    orb.th += dx * .008;
+    orb.ph += dy * .008;
+    lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    applyCam();
+  }
+  e.preventDefault();
+}, { passive: false });
+
+// ── Resize ────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+// ── Dark / Light mode ─────────────────────────────────────────────────
+let lightMode = false;
+function applyTheme() {
+  document.body.classList.toggle('light', lightMode);
+  const bgHex = lightMode ? 0xf0f4ff : 0x020710;
+  renderer.setClearColor(bgHex);
+  scene.fog.color.setHex(bgHex);
+  document.getElementById('btn_theme').textContent = lightMode ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('btn_theme').addEventListener('click', () => {
+  lightMode = !lightMode; applyTheme();
+});
+
+// ── Per-panel show/hide ───────────────────────────────────────────────
+const PANEL_CB = {
+  stats: 'cb_pnl_stats', info: 'cb_pnl_info', formula: 'cb_pnl_fmla',
+  chiral: 'cb_pnl_chrl', weierstrass: 'cb_pnl_wstr', affine: 'cb_pnl_afin',
+  vizjson: 'cb_pnl_vizjson', fibercp1: 'cb_pnl_fcp1', juliapnl: 'cb_pnl_julia',
+  mobiuspnl: 'cb_pnl_mobius', 'bundle-panel': 'cb_pnl_bundle',
+  'feedback-sidebar': 'cb_pnl_feedback',
+};
+function togglePanel(id, forceShow) {
+  const el = document.getElementById(id);
+  const cb = document.getElementById(PANEL_CB[id]);
+  const show = (forceShow !== undefined) ? forceShow : (el.style.display === 'none');
+  el.style.display = show ? '' : 'none';
+  if (cb) cb.checked = show;
+  if (id === 'vizjson' && show) updateVizJSON();
+}
+// Wire panel checkboxes
+Object.entries(PANEL_CB).forEach(([panelId, cbId]) => {
+  document.getElementById(cbId).addEventListener('change', e => {
+    document.getElementById(panelId).style.display = e.target.checked ? '' : 'none';
+    if (panelId === 'vizjson' && e.target.checked) updateVizJSON();
+    // Save bundle state when hiding, restore markers when showing
+    if (panelId === 'bundle-panel') {
+      if (!e.target.checked) {
+        saveBundleState();
+      } else if (bundleState.preset) {
+        rebuildBundleMarkers();
+        drawBundleTrailCanvas();
+        updateBundlePairsDisplay();
+      }
+    }
+  });
+});
+
+// ── Hide / show all info panels ───────────────────────────────────────
+let infoPanelsHidden = true;  // start hidden
+const INFO_PANEL_IDS = ['stats','info','chiral','weierstrass','affine','formula','vizjson','fibercp1','juliapnl','mobiuspnl'];
+function applyHide() {
+  const show = !infoPanelsHidden;
+  INFO_PANEL_IDS.forEach(id => togglePanel(id, show));
+  document.getElementById('btn_hide').textContent = infoPanelsHidden ? '⊟ Show Info' : '⊞ Hide Info';
+}
+document.getElementById('btn_hide').addEventListener('click', () => {
+  infoPanelsHidden = !infoPanelsHidden; applyHide();
+});
+
+// ── Draggable panels ──────────────────────────────────────────────────
+function makeDraggable(panel) {
+  const handle = panel.querySelector('.panel-title');
+  if (!handle) return;
+  let sx, sy, sl, st;
+  handle.addEventListener('mousedown', e => {
+    if (e.target.classList.contains('panel-close')) return;
+    e.stopPropagation();   // don't trigger canvas orbit
+    const r = panel.getBoundingClientRect();
+    sx = e.clientX; sy = e.clientY; sl = r.left; st = r.top;
+    panel.style.left = sl + 'px'; panel.style.top = st + 'px';
+    panel.style.right = 'auto'; panel.style.bottom = 'auto';
+    const onMove = ev => {
+      panel.style.left = (sl + ev.clientX - sx) + 'px';
+      panel.style.top  = (st + ev.clientY - sy) + 'px';
+    };
+    const onUp = () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup',   onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup',   onUp);
+  });
+}
+document.querySelectorAll('.panel').forEach(makeDraggable);
+
+// ── Auto-scale sigma so cone max width ≈ 12% of SPHERE_R ─────────────
+// visual tube height is always SPHERE_R*0.2 (h_norm renorms regardless of N_max)
+function autoSigma() {
+  const q           = getQ();
+  const torsion_end = TAU * 1.0;  // pitch fixed at 1
+  const xi_q_max    = 1.0 + 0.30 * q * (1 + Math.abs(Math.cos(torsion_end)));
+  const s_vis_max   = SPHERE_R * 0.2;
+  const target_r    = SPHERE_R * 0.12;
+  const sigma_new   = target_r / Math.max(1e-6, s_vis_max * xi_q_max);
+  const clamped     = Math.max(0.001, Math.min(1.0, sigma_new));
+  document.getElementById('sigma').value = clamped.toFixed(4);
+  document.getElementById('v_sigma').textContent = clamped.toFixed(2);
+  rebuild();
+}
+document.getElementById('btn_sigma_auto').addEventListener('click', autoSigma);
+// Auto-rescale sigma whenever N_max changes so the tube never blows up
+document.getElementById('n_max').addEventListener('input', () => {
+  document.getElementById('v_nmax').textContent = document.getElementById('n_max').value;
+  autoSigma();
+});
+// Opacity slider: live-update existing tube materials without full rebuild
+document.getElementById('tube_opacity').addEventListener('input', () => {
+  const op = parseFloat(document.getElementById('tube_opacity').value);
+  document.getElementById('v_opacity').textContent = op.toFixed(2);
+  activeTubes.forEach(m => {
+    m.material.transparent = op < 0.999;
+    m.material.opacity = m.userData.isAxisTube ? op * 0.70 : op;
+    m.material.needsUpdate = true;
+  });
+});
+
+// ── Blowup toggle ─────────────────────────────────────────────────────
+document.getElementById('cb_blowup').addEventListener('change', () => {
+  buildTubes(); buildAxisTubes();
+});
+document.getElementById('cb_primes').addEventListener('change', () => {
+  buildTubes(); buildAxisTubes();
+});
+document.getElementById('cb_fiber').addEventListener('change', () => {
+  buildTubes(); buildAxisTubes();
+});
+
+// ── j-invariant / Weierstrass presets ────────────────────────────────
+function computeJForN(N_max) {
+  const r    = N_max * LP;
+  const q_s  = Math.exp(-r);
+  const cq_r = cosQ(r, q_s, QN);
+  const ev_r = Math.min(MAX_G, expQ(r, q_s, QN) - 1);
+  const P    = -3.0 * Math.max(0.05, cq_r);
+  const Q    =  2.0 * Math.max(0.05, ev_r);
+  const disc = -16 * (4*P*P*P + 27*Q*Q);
+  if (Math.abs(disc) < 1e-12) return Infinity;
+  return -1728 * Math.pow(4*P, 3) / disc;
+}
+
+function snapNmaxToJ(j_target) {
+  let best = 4, bestDist = Infinity;
+  for (let n = 2; n <= 200; n++) {
+    const j = computeJForN(n);
+    if (!isFinite(j)) continue;
+    const d = Math.abs(j - j_target);
+    if (d < bestDist) { bestDist = d; best = n; }
+  }
+  return best;
+}
+
+function applyNmax(N_new) {
+  N_new = Math.max(2, Math.min(200, N_new));
+  document.getElementById('n_max').value = N_new;
+  document.getElementById('v_nmax').textContent = N_new;
+  autoSigma();
+}
+
+document.getElementById('j_preset').addEventListener('change', () => {
+  const val = document.getElementById('j_preset').value;
+  const customRow = document.getElementById('j_custom_row');
+  customRow.style.display = (val === 'custom') ? '' : 'none';
+  if (!val || val === 'custom') return;
+  if (val === 'golden') {
+    // r_end = φ (golden ratio): N_max = round(φ / LP)
+    applyNmax(Math.round((1 + Math.sqrt(5)) / 2 / LP));
+  } else if (val === 'hexagonal') {
+    applyNmax(snapNmaxToJ(0));       // j ≈ 0: P ≈ 0
+  } else if (val === 'square') {
+    applyNmax(snapNmaxToJ(1728));    // j ≈ 1728
+  }
+  document.getElementById('j_preset').value = '';  // reset after applying
+});
+
+document.getElementById('j_snap').addEventListener('click', () => {
+  const j_t = parseFloat(document.getElementById('j_target').value);
+  if (!isNaN(j_t)) applyNmax(snapNmaxToJ(j_t));
+});
+
+// ── Prime ghost spheres on E_p at stereographic positions of [1:p] ───
+// Each prime p maps to the stereographic preimage of z=p on CP1 ≅ S²:
+//   φ_p = 2·arctan(1/p)  (from north pole),  ψ_p = 0  (on 0-meridian)
+// This places small primes near the equator and large primes near
+// the north pole (z → ∞), reflecting the distribution on the real line.
+const PRIMES = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67];
+let activePrimeGhosts = [];
+
+function buildPrimeGhosts(P_brane, N_vec, T1, T2) {
+  for (const m of activePrimeGhosts) scene.remove(m);
+  activePrimeGhosts = [];
+  if (!document.getElementById('cb_primes').checked) return;
+  if (!document.getElementById('cb_cp1').checked) return;
+
+  const R_CP1 = SPHERE_R * 0.2;
+  const Ox = P_brane.x + N_vec.x * R_CP1;
+  const Oy = P_brane.y + N_vec.y * R_CP1;
+  const Oz = P_brane.z + N_vec.z * R_CP1;
+
+  const q = getQ();
+
+  for (const p of PRIMES) {
+    // Stereographic position of z = p on S² (CP1)
+    const phi_p = 2 * Math.atan(1 / p);         // colatitude from north pole
+    const t     = phi_p / Math.PI;               // 0..1
+    const psi_p = t * q * TAU;                   // apply chiral twist (same as tiling)
+    const sinPhi = Math.sin(phi_p);
+    const cosPhi = Math.cos(phi_p);
+    const cosPsi = Math.cos(psi_p);
+    const sinPsi = Math.sin(psi_p);
+
+    const px = Ox + R_CP1 * (sinPhi * (T1.x*cosPsi + T2.x*sinPsi) - cosPhi*N_vec.x);
+    const py = Oy + R_CP1 * (sinPhi * (T1.y*cosPsi + T2.y*sinPsi) - cosPhi*N_vec.y);
+    const pz = Oz + R_CP1 * (sinPhi * (T1.z*cosPsi + T2.z*sinPsi) - cosPhi*N_vec.z);
+
+    const geo = new THREE.SphereGeometry(R_CP1 * 0.065, 10, 8);
+    const mat = new THREE.MeshBasicMaterial({
+      color: 0xffcc44, transparent: true, opacity: 0.85,
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(px, py, pz);
+    mesh.renderOrder = 3;  // above tiles and exceptional divisor
+    scene.add(mesh);
+    activePrimeGhosts.push(mesh);
+  }
+}
+
+// ── Fiber CP1: 3D markers on E_p, all on the same twisted meridian ───
+// All three markers share ψ = q·φᵢ (no sector offset), so when their
+// latitudes converge (x_r = x_g = x_b) they visually coincide on the sphere.
+let activeFiberMarkers = [];
+
+function buildFiberMarkers() {
+  for (const m of activeFiberMarkers) scene.remove(m);
+  activeFiberMarkers = [];
+  if (!document.getElementById('cb_fiber').checked) return;
+  if (!document.getElementById('cb_cp1').checked)   return;
+
+  const state   = getChiralState();
+  const { pts, r_end } = state;
+  const x_scale = Math.max(0.01, Math.min(2.8, r_end + 0.6));
+  const R_CP1   = SPHERE_R * 0.2;
+  const N_vec   = selPt.clone().normalize();
+  const { T1, T2 } = getFrame(N_vec);
+  const Ox = selPt.x + N_vec.x * R_CP1;
+  const Oy = selPt.y + N_vec.y * R_CP1;
+  const Oz = selPt.z + N_vec.z * R_CP1;
+  const q  = getQ();
+
+  for (let ti = 0; ti < 3; ti++) {
+    const pt = pts[ti];  if (!pt) continue;
+    // Latitude from x via stereographic; all share ψ = q·φ (same meridian)
+    const phi    = Math.PI / 2 - Math.atan(pt.x / x_scale);
+    const psi    = q * phi;   // NO sector offset — common meridian
+    const sinPhi = Math.sin(phi), cosPhi = Math.cos(phi);
+    const cosPsi = Math.cos(psi), sinPsi = Math.sin(psi);
+    const mx = Ox + R_CP1*(sinPhi*(T1.x*cosPsi+T2.x*sinPsi) - cosPhi*N_vec.x);
+    const my = Oy + R_CP1*(sinPhi*(T1.y*cosPsi+T2.y*sinPsi) - cosPhi*N_vec.y);
+    const mz = Oz + R_CP1*(sinPhi*(T1.z*cosPsi+T2.z*sinPsi) - cosPhi*N_vec.z);
+    const tc  = TUBE_COL[ti];
+    const geo = new THREE.SphereGeometry(R_CP1 * 0.11, 12, 8);
+    const mat = new THREE.MeshBasicMaterial({
+      color: new THREE.Color(tc.r, tc.g, tc.b), transparent: true, opacity: 0.95,
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(mx, my, mz);
+    mesh.renderOrder = 4;
+    scene.add(mesh);
+    activeFiberMarkers.push(mesh);
+  }
+
+  // Glow ring when all three x-values are close (x₂≈x₃≈x₄)
+  const xs     = pts.filter(Boolean).map(p => p.x);
+  const spread = xs.length === 3 ? Math.max(...xs) - Math.min(...xs) : Infinity;
+  const t_norm = Math.max(0, 1 - spread / (x_scale * 0.25));
+  if (t_norm > 0.05) {
+    const x_mid   = xs.reduce((a,b)=>a+b,0) / 3;
+    const phi_mid = Math.PI / 2 - Math.atan(x_mid / x_scale);
+    const rTorus  = R_CP1 * Math.max(0.01, Math.sin(phi_mid));
+    const geo = new THREE.TorusGeometry(rTorus, R_CP1 * 0.018, 8, 48);
+    const mat = new THREE.MeshBasicMaterial({
+      color: 0xffffff, transparent: true, opacity: 0.60 * t_norm,
+    });
+    const torus = new THREE.Mesh(geo, mat);
+    const off   = -R_CP1 * Math.cos(phi_mid);
+    torus.position.set(Ox+N_vec.x*off, Oy+N_vec.y*off, Oz+N_vec.z*off);
+    torus.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), N_vec);
+    torus.renderOrder = 4;
+    scene.add(torus);
+    activeFiberMarkers.push(torus);
+  }
+}
+
+// ── Draw the 2D Fiber CP1 canvas ──────────────────────────────────────
+// Shows all three color tubes' points (xᵣ,yᵣ), (x_g,y_g), (x_b,y_b) on
+// the SAME elliptic curve y² = x³ + Px + Q.  As q twists the endpoint
+// phases, the three points orbit the curve and can coincide (= intersection
+// at x₂=x₃=x₄).  The x-coordinate range auto-scales to keep all points
+// visible; a glow highlight fires when any two points are within 5% of the
+// x-range.
+function drawFiberCP1(state) {
+  const canvas = document.getElementById('fc_main');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#010409'; ctx.fillRect(0,0,W,H);
+
+  const { pts, P, Q, r_end } = state;
+  const validPts = pts.filter(Boolean);
+  if (!validPts.length) return;
+
+  // ── Auto-scale to contain all three points + curve critical values ──
+  const allX = validPts.map(p => p.x);
+  const allY = validPts.map(p => Math.abs(p.y));
+  // Include cubic critical points x where dy²/dx = 3x²+P = 0
+  if (P < 0) {
+    const xc = Math.sqrt(-P / 3);
+    allX.push(xc, -xc);
+    allY.push(Math.sqrt(Math.max(0, xc**3 + P*xc + Q)));
+  }
+  const xMid  = (Math.max(...allX) + Math.min(...allX)) / 2;
+  const xHW   = Math.max(0.5, (Math.max(...allX) - Math.min(...allX)) * 0.75 + 0.4);
+  const yHW   = Math.max(0.3, Math.max(...allY) * 1.35);
+  const xLo = xMid - xHW, xHi = xMid + xHW;
+  const SX = W / (2 * xHW), SY = H / (2 * yHW);
+  const ox = W / 2 - xMid * SX, oy = H / 2;
+  const tx = x => ox + x * SX;
+  const ty = y => oy - y * SY;
+
+  // ── Faint grid ──────────────────────────────────────────────────────
+  ctx.strokeStyle = 'rgba(58,144,255,0.07)'; ctx.lineWidth = 0.5;
+  for (let v = Math.ceil(xLo); v <= xHi; v++) {
+    ctx.beginPath(); ctx.moveTo(tx(v),0); ctx.lineTo(tx(v),H); ctx.stroke();
+  }
+
+  // ── Axes ────────────────────────────────────────────────────────────
+  ctx.strokeStyle = 'rgba(58,144,255,0.22)'; ctx.lineWidth = 0.8;
+  if (xLo < 0 && xHi > 0) {
+    ctx.beginPath(); ctx.moveTo(tx(0),0); ctx.lineTo(tx(0),H); ctx.stroke();
+  }
+  ctx.beginPath(); ctx.moveTo(0,oy); ctx.lineTo(W,oy); ctx.stroke();
+
+  // ── Elliptic curve y² = x³ + Px + Q (both branches) ────────────────
+  const STEPS = 400;
+  for (const sgn of [1,-1]) {
+    ctx.strokeStyle = 'rgba(58,144,255,0.50)'; ctx.lineWidth = 1.3;
+    ctx.beginPath(); let first = true;
+    for (let k = 0; k <= STEPS; k++) {
+      const xv = xLo + (xHi-xLo)*k/STEPS;
+      const y2 = xv**3 + P*xv + Q;
+      if (y2 < 0) { first=true; continue; }
+      const px = tx(xv), py = ty(sgn*Math.sqrt(y2));
+      if (first) { ctx.moveTo(px,py); first=false; } else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+  }
+
+  // ── S₃-orbit lines between the three points ─────────────────────────
+  ctx.setLineDash([3,3]);
+  ctx.strokeStyle = 'rgba(255,255,255,0.10)'; ctx.lineWidth = 0.8;
+  for (let i = 0; i < 3; i++) {
+    const j = (i+1)%3;
+    if (!pts[i] || !pts[j]) continue;
+    ctx.beginPath(); ctx.moveTo(tx(pts[i].x),ty(pts[i].y));
+    ctx.lineTo(tx(pts[j].x),ty(pts[j].y)); ctx.stroke();
+  }
+  ctx.setLineDash([]);
+
+  // ── Pairwise intersection glow: highlight when two points are close ──
+  const CLRS = ['#ff4444','#44ff88','#4488ff'];
+  const LBLS = ['𝔯','𝔤','𝔟'];
+  const xRange = Math.max(...allX) - Math.min(...allX);
+  for (let i = 0; i < 3; i++) {
+    for (let j = i+1; j < 3; j++) {
+      if (!pts[i] || !pts[j]) continue;
+      const dist = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
+      const alpha = Math.max(0, 1 - dist / (xRange * 0.20 + 0.01));
+      if (alpha > 0.05) {
+        const mx = (pts[i].x + pts[j].x) / 2, my = (pts[i].y + pts[j].y) / 2;
+        ctx.fillStyle = `rgba(255,255,180,${0.25*alpha})`;
+        ctx.shadowBlur = 14; ctx.shadowColor = 'rgba(255,255,180,0.7)';
+        ctx.beginPath(); ctx.arc(tx(mx),ty(my), 10*alpha, 0, TAU); ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+  }
+
+  // ── Three colored dots ───────────────────────────────────────────────
+  for (let ti = 0; ti < 3; ti++) {
+    const pt = pts[ti];  if (!pt) continue;
+    ctx.fillStyle = CLRS[ti];
+    ctx.shadowBlur = 9; ctx.shadowColor = CLRS[ti];
+    ctx.beginPath(); ctx.arc(tx(pt.x), ty(pt.y), 4, 0, TAU); ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = CLRS[ti]; ctx.font = '8px "Share Tech Mono"';
+    // Label offset: push left/right to avoid overlap
+    const lx = pt.x < xMid ? tx(pt.x)+5 : tx(pt.x)-34;
+    ctx.fillText(`${LBLS[ti]}(${pt.x.toFixed(2)},${pt.y.toFixed(2)})`, lx, ty(pt.y)-4);
+  }
+
+  // ── Status text ──────────────────────────────────────────────────────
+  const minDist = Math.min(
+    ...[[0,1],[1,2],[0,2]].map(([i,j]) =>
+      (pts[i]&&pts[j]) ? Math.hypot(pts[i].x-pts[j].x, pts[i].y-pts[j].y) : Infinity)
+  );
+  const intStr = minDist < (xRange * 0.08 + 0.01) ? ' ← intersection' : '';
+  document.getElementById('fc-text').innerHTML =
+    `<span style="color:var(--dim)">y²=x³+Px+Q · all three tubes · same coords</span><br>`+
+    `P=<span class="fc-val">${state.P.toFixed(3)}</span>  `+
+    `Q=<span class="fc-val">${state.Q.toFixed(3)}</span>  `+
+    `min d=<span class="fc-val">${minDist.toFixed(3)}</span>`+
+    `<span class="fc-int">${intStr}</span>`;
+}
+
+// ── Viewport JSON export ──────────────────────────────────────────────
+function getViewportJSON() {
+  const q = getQ();
+  const cp1Mode = document.getElementById('cb_cp1').checked;
+  const xv = parseFloat(document.getElementById('x_p').value);
+  const yv = parseFloat(document.getElementById('y_p').value);
+  const zv = parseFloat(document.getElementById('z_p').value);
+  return {
+    "$schema": "https://litlfred.github.io/qou/schema/viz.json",
+    "q":      +q.toFixed(4),
+    "mode":   cp1Mode ? "CP1" : "cone",
+    "blowup": document.getElementById('cb_blowup').checked,
+    "brane_point": {
+      "x": +xv.toFixed(4), "y": +yv.toFixed(4), "z": +zv.toFixed(4)
+    },
+    "camera": {
+      "theta":  +orb.th.toFixed(5),
+      "phi":    +orb.ph.toFixed(5),
+      "r":      +orb.r.toFixed(4),
+      "target": {
+        "x": +orb.target.x.toFixed(4),
+        "y": +orb.target.y.toFixed(4),
+        "z": +orb.target.z.toFixed(4)
+      }
+    },
+    "tubes": {
+      "visible": document.getElementById('cb_tubes').checked,
+      "opacity": +parseFloat(document.getElementById('tube_opacity').value).toFixed(3)
+    },
+    "cone": {
+      "N_min":  parseInt(document.getElementById('n_min').value),
+      "N_max":  parseInt(document.getElementById('n_max').value),
+      "sigma":  +parseFloat(document.getElementById('sigma').value).toFixed(5),
+      "gamma":  +parseFloat(document.getElementById('pitch').value).toFixed(4)
+    },
+    "visibility": {
+      "brane":   document.getElementById('cb_brane').checked,
+      "axes":    document.getElementById('cb_axes').checked,
+      "stars":   document.getElementById('cb_stars').checked,
+      "axispts": document.getElementById('cb_axispts').checked
+    }
+  };
+}
+
+function updateVizJSON() {
+  const panel = document.getElementById('vizjson');
+  if (!panel || panel.style.display === 'none') return;
+  document.getElementById('vizjson-text').value =
+    JSON.stringify(getViewportJSON(), null, 2);
+}
+
+document.getElementById('vizjson-copy').addEventListener('click', () => {
+  const txt = document.getElementById('vizjson-text').value;
+  navigator.clipboard.writeText(txt).catch(() => {
+    // fallback: select all
+    const el = document.getElementById('vizjson-text');
+    el.select(); document.execCommand('copy');
+  });
+  const btn = document.getElementById('vizjson-copy');
+  btn.textContent = '✓ Copied'; setTimeout(() => { btn.textContent = '⊕ Copy JSON'; }, 1800);
+});
+
+// ── CP1 mode toggle: show/hide cone-only controls ────────────────────
+function syncConeOpts() {
+  const cp1 = document.getElementById('cb_cp1').checked;
+  const hide = cp1 ? 'none' : 'block';
+  document.getElementById('cone_opts').style.display   = hide;
+  document.getElementById('cone_nrange').style.display = hide;
+}
+document.getElementById('cb_cp1').addEventListener('change', () => { syncConeOpts(); rebuild(); });
+syncConeOpts();  // apply on load
+
+
+// ── Keyboard shortcuts ────────────────────────────────────────────────
+window.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 't' || e.key === 'T') { lightMode = !lightMode; applyTheme(); }
+  if (e.key === 'h' || e.key === 'H') { infoPanelsHidden = !infoPanelsHidden; applyHide(); }
+  if (e.key === 'a' || e.key === 'A') autoSigma();
+});
+
+// ════════════════════════════════════════════════════════════════════
+//   CHIRAL COORDINATES  &  WEIERSTRASS FORM
+//
+//   At the tube endpoint (s = N_max):
+//     q_sub = e^{-r},  r = N_max·ℓ_P
+//     Weierstrass:  y² = x³ + P·x + Q
+//       P = -3·cosq(r, q_sub)
+//       Q =  2·(expq(r, q_sub) − 1)
+//
+//   For each tube i ∈ {R,G,B}:
+//     phase  ψᵢ = 2πi/3 + q·2π·N_max/Γ
+//     x_raw  = cosq(ψᵢ, q_eff) · r_scale
+//     x      = clamp(x_raw, –2.5, 2.5)
+//     y      = sign(sinq(ψᵢ,q_eff)) · √max(0, x³+P·x+Q)
+//   → (x,y) lies on the same EC for all three tubes (S₃ quotient)
+//
+//   Composite = group-law sum  p_R ⊕ p_G ⊕ p_B  on E(P,Q)
+//
+//   Δ = -16(4P³ + 27Q²),  j = -1728·(4P)³/Δ
+// ════════════════════════════════════════════════════════════════════
+
+const MAX_G = 45;
+
+// ── Elliptic-curve group law on  y² = x³ + P·x + Q ──────────────────
+function ecAdd(pt1, pt2, P, Q) {
+  if (!pt1) return pt2;
+  if (!pt2) return pt1;
+  const { x: x1, y: y1 } = pt1;
+  const { x: x2, y: y2 } = pt2;
+  if (Math.abs(x1 - x2) < 1e-9) {
+    if (Math.abs(y1 + y2) < 1e-9) return null;  // inverse (point at ∞)
+    // Doubling
+    if (Math.abs(y1) < 1e-12) return null;
+    const m = (3 * x1 * x1 + P) / (2 * y1);
+    const x3 = m * m - 2 * x1;
+    return { x: x3, y: m * (x1 - x3) - y1 };
+  }
+  const m  = (y2 - y1) / (x2 - x1);
+  const x3 = m * m - x1 - x2;
+  return { x: x3, y: m * (x1 - x3) - y1 };
+}
+
+// ── Compute current Weierstrass parameters & chiral points ───────────
+function getChiralState() {
+  const q_tor      = getQ();
+  const N_max      = parseInt(document.getElementById('n_max').value);
+  const gamma_scale = parseFloat(document.getElementById('pitch').value);
+
+  const r_end = N_max * LP;
+  const q_sub = Math.exp(-r_end);
+  const q_e   = qEff(q_tor);
+
+  // Weierstrass coefficients from Bring's growth factors
+  const cq_r = cosQ(r_end, q_sub, QN);
+  const ev_r = Math.min(MAX_G, expQ(r_end, q_sub, QN) - 1);
+  const P    = -3.0 * Math.max(0.05, cq_r);
+  const Q    =  2.0 * Math.max(0.05, ev_r);
+
+  // Discriminant & j-invariant
+  const disc = -16 * (4 * P * P * P + 27 * Q * Q);
+  const j_inv = Math.abs(disc) > 1e-12
+    ? -1728 * Math.pow(4 * P, 3) / disc
+    : Infinity;
+
+  // Chiral coordinates for each tube at endpoint
+  const r_scale = Math.min(2.8, r_end + 0.6);
+  const pts = [];
+  for (let ti = 0; ti < 3; ti++) {
+    // Torsion phase at tube endpoint: gamma_scale full turns (matches buildTubeGeo)
+    const psi   = TAU * ti / 3 + q_tor * TAU * gamma_scale;
+    const x_raw = Math.cos(psi) * r_scale;
+    const x     = Math.max(-2.8, Math.min(2.8, x_raw));
+    const y2    = x * x * x + P * x + Q;
+    const y_sgn = (Math.sin(psi) >= 0) ? 1 : -1;
+    const y     = y_sgn * Math.sqrt(Math.max(0, y2));
+    pts.push({ x, y, color: ['#ff4444', '#44ff88', '#4488ff'][ti] });
+  }
+
+  // Composite: p_R ⊕ p_G ⊕ p_B
+  let composite = ecAdd(pts[0], pts[1], P, Q);
+  composite     = ecAdd(composite, pts[2], P, Q);
+  if (composite) composite.color = '#ffee44';
+
+  return { P, Q, disc, j_inv, r_end, q_sub, cq_r, ev_r, pts, composite };
+}
+
+// ── Draw one mini elliptic-curve plot ─────────────────────────────────
+function drawEC(canvas, P, Q, highlightPts, labelPts) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#010409';
+  ctx.fillRect(0, 0, W, H);
+
+  // Scale: x ∈ [-3,3], y ∈ [-3,3]
+  const SX = W / 6.0, SY = H / 6.0;
+  const ox = W / 2, oy = H / 2;
+  const tx = x => ox + x * SX;
+  const ty = y => oy - y * SY;
+
+  // Faint grid
+  ctx.strokeStyle = 'rgba(58,144,255,0.07)';
+  ctx.lineWidth = 0.5;
+  for (const v of [-2, -1, 0, 1, 2]) {
+    ctx.beginPath(); ctx.moveTo(tx(v), 0);     ctx.lineTo(tx(v), H); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, ty(v));     ctx.lineTo(W, ty(v)); ctx.stroke();
+  }
+
+  // Axes
+  ctx.strokeStyle = 'rgba(58,144,255,0.25)';
+  ctx.lineWidth = 0.8;
+  ctx.beginPath(); ctx.moveTo(0, oy); ctx.lineTo(W, oy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ox, 0); ctx.lineTo(ox, H); ctx.stroke();
+
+  // Elliptic curve  y² = x³ + P·x + Q  (both branches)
+  const STEPS = 300;
+  const xMin = -W / 2 / SX, xMax = W / 2 / SX;
+  for (const sgn of [1, -1]) {
+    ctx.strokeStyle = 'rgba(58,144,255,0.50)';
+    ctx.lineWidth = 1.3;
+    ctx.beginPath();
+    let first = true;
+    for (let k = 0; k <= STEPS; k++) {
+      const xv = xMin + (xMax - xMin) * k / STEPS;
+      const y2 = xv * xv * xv + P * xv + Q;
+      if (y2 < 0) { first = true; continue; }
+      const yv = sgn * Math.sqrt(y2);
+      const px = tx(xv), py = ty(yv);
+      if (first) { ctx.moveTo(px, py); first = false; }
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+  }
+
+  // Highlighted points
+  if (highlightPts) {
+    for (const pt of highlightPts) {
+      if (!pt) continue;
+      const { x, y, color } = pt;
+      ctx.fillStyle = color;
+      ctx.shadowBlur = 6; ctx.shadowColor = color;
+      ctx.beginPath(); ctx.arc(tx(x), ty(y), 3.5, 0, TAU); ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+}
+
+// ── Draw Weierstrass main canvas (all points + labelled curve) ───────
+// ── Nice tick-step helper ─────────────────────────────────────────────
+function niceStep(rough) {
+  if (rough <= 0 || !isFinite(rough)) return 1;
+  const mag = Math.pow(10, Math.floor(Math.log10(rough)));
+  const f = rough / mag;
+  return f < 1.5 ? mag : f < 3.5 ? 2*mag : f < 7.5 ? 5*mag : 10*mag;
+}
+
+function drawWeierstrass(state) {
+  const { P, Q, disc, j_inv, pts, composite } = state;
+  const canvas = document.getElementById('wc_main');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#010409'; ctx.fillRect(0, 0, W, H);
+
+  // Auto-scale: always show curve critical points + all EC points
+  const _ap = pts.filter(Boolean);
+  if (composite) _ap.push(composite);
+  const _axs = _ap.map(p => Math.abs(p.x));
+  const _ays = _ap.map(p => Math.abs(p.y));
+  // Critical x where d(y²)/dx=0: 3x²+P=0 → x=±√(-P/3) when P<0
+  if (P < 0) {
+    const xc = Math.sqrt(-P / 3);
+    _axs.push(xc);
+    _ays.push(Math.sqrt(Math.max(0, xc**3 + P*xc + Q)));
+  }
+  const xHW = Math.max(3.5, Math.max(..._axs, 0) + 0.8);
+  const yHW = Math.max(3.0, Math.max(..._ays, 0) + 0.8);
+
+  const SX = W / (2 * xHW);
+  const SY = H / (2 * yHW);
+  const ox = W / 2, oy = H / 2;
+  const tx = x => ox + x * SX;
+  const ty = y => oy - y * SY;
+
+  // Adaptive grid + tick labels
+  const xStep = niceStep(xHW / 3);
+  const yStep = niceStep(yHW / 2);
+  ctx.strokeStyle = 'rgba(58,144,255,0.07)'; ctx.lineWidth = 0.5;
+  for (let v = -Math.ceil(xHW/xStep)*xStep; v <= xHW+1e-9; v += xStep) {
+    ctx.beginPath(); ctx.moveTo(tx(v),0); ctx.lineTo(tx(v),H); ctx.stroke();
+  }
+  for (let v = -Math.ceil(yHW/yStep)*yStep; v <= yHW+1e-9; v += yStep) {
+    ctx.beginPath(); ctx.moveTo(0,ty(v)); ctx.lineTo(W,ty(v)); ctx.stroke();
+  }
+
+  // Axes
+  ctx.strokeStyle = 'rgba(58,144,255,0.22)'; ctx.lineWidth = 0.8;
+  ctx.beginPath(); ctx.moveTo(0, oy); ctx.lineTo(W, oy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ox, 0); ctx.lineTo(ox, H); ctx.stroke();
+
+  // Tick labels
+  ctx.fillStyle = 'rgba(58,144,255,0.32)'; ctx.font = '7px "Share Tech Mono"';
+  for (let v = -Math.ceil(xHW/xStep)*xStep; v <= xHW+1e-9; v += xStep) {
+    if (Math.abs(v) < 1e-9) continue;
+    ctx.fillText(v.toFixed(xStep < 1 ? 1 : 0), tx(v)+1, oy-2);
+  }
+
+  // Curve (both branches)
+  const STEPS = 400;
+  const xMin = -xHW, xMax = xHW;
+  for (const sgn of [1,-1]) {
+    ctx.strokeStyle = 'rgba(80,140,255,0.55)'; ctx.lineWidth = 1.4;
+    ctx.beginPath(); let first = true;
+    for (let k = 0; k <= STEPS; k++) {
+      const xv = xMin + (xMax - xMin) * k / STEPS;
+      const y2 = xv*xv*xv + P*xv + Q;
+      if (y2 < 0) { first = true; continue; }
+      const yv = sgn * Math.sqrt(y2);
+      const px = tx(xv), py = ty(yv);
+      if (first) { ctx.moveTo(px,py); first=false; } else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+  }
+
+  // S₃-orbit lines connecting the three R,G,B points (shows the S₃ quotient)
+  if (pts.every(p => p)) {
+    ctx.setLineDash([3,3]);
+    ctx.strokeStyle = 'rgba(255,255,255,0.10)'; ctx.lineWidth = 0.8;
+    for (let i = 0; i < 3; i++) {
+      const j = (i+1) % 3;
+      ctx.beginPath();
+      ctx.moveTo(tx(pts[i].x), ty(pts[i].y));
+      ctx.lineTo(tx(pts[j].x), ty(pts[j].y));
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+
+  // All points
+  const allPts = [...pts];
+  if (composite) allPts.push(composite);
+  for (const pt of allPts) {
+    if (!pt) continue;
+    const r = pt.color === '#ffee44' ? 5 : 3.5;
+    ctx.fillStyle = pt.color;
+    ctx.shadowBlur = 8; ctx.shadowColor = pt.color;
+    ctx.beginPath(); ctx.arc(tx(pt.x), ty(pt.y), r, 0, TAU); ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  // Composite chord (R+G → intermediate → +B)
+  if (pts[0] && pts[1]) {
+    const rg = ecAdd(pts[0], pts[1], P, Q);
+    if (rg) {
+      ctx.strokeStyle = 'rgba(255,238,68,0.25)'; ctx.lineWidth = 0.8;
+      ctx.beginPath(); ctx.moveTo(tx(pts[0].x), ty(pts[0].y));
+      ctx.lineTo(tx(rg.x), ty(rg.y)); ctx.stroke();
+      if (pts[2]) {
+        ctx.beginPath(); ctx.moveTo(tx(rg.x), ty(rg.y));
+        ctx.lineTo(tx(pts[2].x), ty(pts[2].y)); ctx.stroke();
+      }
+      if (composite) {
+        ctx.beginPath(); ctx.moveTo(tx(pts[2].x), ty(pts[2].y));
+        ctx.lineTo(tx(composite.x), ty(composite.y)); ctx.stroke();
+      }
+    }
+  }
+
+  // Axis labels
+  ctx.fillStyle = 'rgba(58,144,255,0.40)'; ctx.font = '8px "Share Tech Mono"';
+  ctx.fillText('x', W - 8, oy - 3);
+  ctx.fillText('y', ox + 3, 8);
+
+  // Update Weierstrass text
+  const fmt2 = v => (v < 0 ? v.toFixed(3) : '+' + v.toFixed(3));
+  const disc_fmt = disc < 0 ? disc.toExponential(2) : disc.toFixed(3);
+  const j_fmt  = isFinite(j_inv) ? j_inv.toFixed(1) : '∞';
+  document.getElementById('wf-text').innerHTML =
+    `y² = x³ <span class="wf-val">${fmt2(P)}</span>x `+
+    `<span class="wf-val">${fmt2(Q)}</span><br>`+
+    `Δ = <span class="wf-del">${disc_fmt}</span>  `+
+    `j = <span class="wf-j">${j_fmt}</span><br>`+
+    `<span style="color:#ff4444">●R</span>&thinsp;`+
+    `<span style="color:#44ff88">●G</span>&thinsp;`+
+    `<span style="color:#4488ff">●B</span>`+
+    ` ⊕ = <span style="color:#ffee44">●composite</span><br>`+
+    `S₃ ↪ S₅ = Aut(Σ₄)  [Thm 3.22]`;
+}
+
+// ── Affine coordinate chart at z ─────────────────────────────────────
+// Shows the local real slice of the elliptic fibre E_p, auto-scaled to fit
+// all chiral points; axes labelled in Planck lengths (ℓ_P = LP).
+function drawAffine(state) {
+  const { P, Q, pts, composite } = state;
+  const canvas = document.getElementById('ac_main');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#010409'; ctx.fillRect(0,0,W,H);
+
+  // Collect all valid points
+  const allPts = pts.filter(Boolean);
+  if (composite) allPts.push(composite);
+  if (!allPts.length) return;
+
+  // Auto-scale bounding box from point positions + curve critical x values
+  const xs   = allPts.map(p => p.x);
+  const absYs = allPts.map(p => Math.abs(p.y));
+  if (P < 0) {
+    const xc = Math.sqrt(-P / 3);
+    xs.push(xc, -xc);
+    absYs.push(Math.sqrt(Math.max(0, xc**3 + P*xc + Q)));
+  }
+  const xLo_pts = Math.min(...xs), xHi_pts = Math.max(...xs);
+  const absYMax  = Math.max(0.2, Math.max(...absYs));
+
+  const xPad = Math.max(LP * 5, (xHi_pts - xLo_pts) * 0.35);
+  const yPad = Math.max(LP * 5, absYMax * 0.35);
+  const xLo = xLo_pts - xPad, xHi = xHi_pts + xPad;
+  const yLo = -(absYMax + yPad), yHi = absYMax + yPad;
+
+  const SX = W / (xHi - xLo);
+  const SY = H / (yHi - yLo);
+  const tx = x => (x - xLo) * SX;
+  const ty = y => H - (y - yLo) * SY;
+
+  // Grid lines at Planck-length multiples
+  const xRangeP = (xHi - xLo) / LP;   // range in Planck units
+  const yRangeP = (yHi - yLo) / LP;
+  const xTickP  = niceStep(xRangeP / 5);  // tick spacing in ℓ_P
+  const yTickP  = niceStep(yRangeP / 4);
+  const xTickV  = xTickP * LP;            // in visual units
+  const yTickV  = yTickP * LP;
+
+  const xTS = Math.ceil(xLo / xTickV) * xTickV;
+  const yTS = Math.ceil(yLo / yTickV) * yTickV;
+
+  ctx.strokeStyle = 'rgba(58,144,255,0.10)'; ctx.lineWidth = 0.5;
+  for (let v = xTS; v <= xHi + 1e-10; v += xTickV) {
+    ctx.beginPath(); ctx.moveTo(tx(v),0); ctx.lineTo(tx(v),H); ctx.stroke();
+  }
+  for (let v = yTS; v <= yHi + 1e-10; v += yTickV) {
+    ctx.beginPath(); ctx.moveTo(0,ty(v)); ctx.lineTo(W,ty(v)); ctx.stroke();
+  }
+
+  // Axes (draw only if in range)
+  ctx.strokeStyle = 'rgba(58,144,255,0.25)'; ctx.lineWidth = 0.8;
+  if (xLo < 0 && xHi > 0) {
+    ctx.beginPath(); ctx.moveTo(tx(0),0); ctx.lineTo(tx(0),H); ctx.stroke();
+  }
+  if (yLo < 0 && yHi > 0) {
+    const y0 = ty(0);
+    ctx.beginPath(); ctx.moveTo(0,y0); ctx.lineTo(W,y0); ctx.stroke();
+  }
+
+  // Tick labels in Planck units
+  const y0screen = yLo < 0 && yHi > 0 ? ty(0) : H - 2;
+  ctx.fillStyle = 'rgba(58,144,255,0.40)'; ctx.font = '7px "Share Tech Mono"';
+  for (let v = xTS; v <= xHi + 1e-10; v += xTickV) {
+    const n_p = Math.round(v / LP);
+    const lbl = String(n_p);
+    const px = tx(v);
+    if (px > 4 && px < W - 4)
+      ctx.fillText(lbl, px + 1, Math.min(H - 1, y0screen + 9));
+  }
+  // y-axis labels (rightmost column)
+  for (let v = yTS; v <= yHi + 1e-10; v += yTickV) {
+    const n_p = Math.round(v / LP);
+    if (n_p === 0) continue;
+    const py = ty(v);
+    if (py > 4 && py < H - 4)
+      ctx.fillText(String(n_p), 2, py - 1);
+  }
+  // Unit tag
+  ctx.fillStyle = 'rgba(58,144,255,0.22)'; ctx.font = '7px "Share Tech Mono"';
+  ctx.fillText('ℓP', W - 14, H - 2);
+
+  // Curve (both branches) over [xLo, xHi]
+  const STEPS = 320;
+  for (const sgn of [1,-1]) {
+    ctx.strokeStyle = 'rgba(80,140,255,0.60)'; ctx.lineWidth = 1.3;
+    ctx.beginPath(); let first = true;
+    for (let k = 0; k <= STEPS; k++) {
+      const xv = xLo + (xHi - xLo) * k / STEPS;
+      const y2 = xv**3 + P*xv + Q;
+      if (y2 < 0) { first = true; continue; }
+      const yv = sgn * Math.sqrt(y2);
+      if (yv < yLo || yv > yHi) { first = true; continue; }
+      const px = tx(xv), py = ty(yv);
+      if (first) { ctx.moveTo(px,py); first=false; } else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+  }
+
+  // Cross-hair dashed guide lines from axes to each point
+  for (const pt of allPts) {
+    if (!pt) continue;
+    const px = tx(pt.x), py = ty(pt.y);
+    ctx.setLineDash([2,3]);
+    ctx.strokeStyle = pt.color + '55'; ctx.lineWidth = 0.7;
+    // Vertical from x-axis to point
+    const axY = yLo < 0 && yHi > 0 ? ty(0) : H;
+    ctx.beginPath(); ctx.moveTo(px, axY); ctx.lineTo(px, py); ctx.stroke();
+    // Horizontal from y-axis to point
+    const axX = xLo < 0 && xHi > 0 ? tx(0) : 0;
+    ctx.beginPath(); ctx.moveTo(axX, py); ctx.lineTo(px, py); ctx.stroke();
+    ctx.setLineDash([]);
+    // Point dot
+    const r = pt.color === '#ffee44' ? 5 : 3.5;
+    ctx.fillStyle = pt.color;
+    ctx.shadowBlur = 8; ctx.shadowColor = pt.color;
+    ctx.beginPath(); ctx.arc(px, py, r, 0, TAU); ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  // Text: (x, y) in Planck units for each point
+  const fmtP = v => (v / LP).toFixed(1);
+  const CLRS = ['#ff4444','#44ff88','#4488ff'];
+  const LBLS = ['R','G','B'];
+  let html = `<span style="color:var(--dim);font-size:8px">x, y  in ℓ_P  (×${LP.toFixed(3)})</span><br>`;
+  for (let i = 0; i < 3; i++) {
+    const pt = pts[i];
+    if (!pt) continue;
+    html += `<span style="color:${CLRS[i]}">●${LBLS[i]}</span>&thinsp;`+
+            `x=<span class="af-val">${fmtP(pt.x)}</span> `+
+            `y=<span class="af-val">${fmtP(pt.y)}</span><br>`;
+  }
+  if (composite) {
+    html += `<span style="color:#ffee44">●⊕</span>&thinsp;`+
+            `x=<span class="af-val">${fmtP(composite.x)}</span> `+
+            `y=<span class="af-val">${fmtP(composite.y)}</span>`;
+  }
+  document.getElementById('ac-text').innerHTML = html;
+}
+
+// ── Möbius spectral panel ─────────────────────────────────────────────
+// Rmk 3.24 (brings-surface.tex):  P(c,z) = c³+(4z+1)c²+(6z²+3z+1)c+(4z³+3z²+2z+1)
+// is the colour-tube cubic: its three real roots are x_r, x_g, x_b at spectral base z.
+// At a branch point where x_r = x_g = ρ (double root), the Puiseux split gives
+//   r(δ) = ρ+Cδ,  g(δ) = ρ−Cδ,  b(δ) = b_c;   C² = −∂_z P(ρ,z)/(ρ−b_c)
+// κ = ρ/C  →  Möbius μ(δ) = (κ+δ)/(κ−δ)  with matrix M = [[1,κ],[−1,κ]] ∈ GL₂
+// disc(μ) = (κ²−6κ+1)/2κ → E(lliptic)|P(arabolic)|H(yperbolic)
+
+// Roots of c³+Ac²+Bc+D = 0 via trigonometric / Cardano
+function colorTubeRoots(z) {
+  const A = 4*z+1, B = 6*z*z+3*z+1, D = 4*z*z*z+3*z*z+2*z+1;
+  const sh = -A/3;
+  const p  = B - A*A/3;
+  const q  = D + 2*A*A*A/27 - A*B/3;
+  const discC = -4*p*p*p - 27*q*q;  // > 0 ↔ three distinct real roots
+  if (discC >= 0) {
+    const m   = 2*Math.sqrt(Math.max(0, -p/3));
+    const arg = (Math.abs(p*m) < 1e-14) ? 0 : Math.max(-1, Math.min(1, 3*q/(p*m)));
+    const phi = Math.acos(arg) / 3;
+    return [
+      m*Math.cos(phi)               + sh,
+      m*Math.cos(phi - TAU/3)       + sh,
+      m*Math.cos(phi - 2*TAU/3)     + sh,
+    ].sort((a, b) => b - a);
+  }
+  const inner = Math.max(0, q*q/4 + p*p*p/27);
+  const sq    = Math.sqrt(inner);
+  const cbrt  = x => Math.sign(x)*Math.pow(Math.abs(x), 1/3);
+  const t = cbrt(-q/2+sq) + cbrt(-q/2-sq);
+  return [t+sh, t+sh, t+sh];
+}
+
+// Compute Möbius parameters from current chiral state
+// z = r_end (spectral base), pts = [{x,y,color}×3] are the three colour-tube x-values
+function mobiusParams(z, pts) {
+  const xr = pts[0].x, xg = pts[1].x, xb = pts[2].x;
+  const delta = xr - xg;                    // δ = x_r − x_g  (Puiseux coordinate)
+  const roots = colorTubeRoots(z);          // [r0≥r1≥r2] analytic roots of P(c,z)
+  // Find closest pair (proxy for double root at nearest branch point)
+  const d01 = roots[0]-roots[1], d12 = roots[1]-roots[2];
+  let ia, ib, ic;
+  if (d01 <= d12) { ia=0; ib=1; ic=2; } else { ia=1; ib=2; ic=0; }
+  const rho = (roots[ia]+roots[ib])/2;
+  const b_c = roots[ic];
+  // C² = −∂_z P(ρ,z) / (ρ−b_c);  ∂_z P(c,z) = (12z+3)c² + (12z²+6z+2) + 4c²...
+  // ∂_z P(c,z) = (4c²+2c·(12z+3)/...  let me use the explicit form:
+  // P(c,z) = c³+(4z+1)c²+(6z²+3z+1)c+(4z³+3z²+2z+1)
+  // ∂_z P = 4c² + (12z+3)c + (12z²+6z+2)
+  const dzP   = 4*rho*rho + (12*z+3)*rho + (12*z*z+6*z+2);
+  const denom = rho - b_c;
+  const C2    = (Math.abs(denom)<1e-9) ? NaN : -dzP/denom;
+  const kappa = (!isFinite(C2)||isNaN(C2)||C2<=0) ? NaN : rho/Math.sqrt(C2);
+  let disc_m = NaN, type = '—', typeClass = '';
+  if (isFinite(kappa) && !isNaN(kappa) && Math.abs(kappa)>1e-9) {
+    disc_m = (kappa*kappa - 6*kappa + 1) / (2*kappa);
+    const PAR = 0.012;  // ≈ threshold tolerance
+    if      (Math.abs(disc_m) < PAR) { type='PARABOLIC';  typeClass='type-P'; }
+    else if (disc_m < 0)             { type='ELLIPTIC';   typeClass='type-E'; }
+    else                             { type='HYPERBOLIC'; typeClass='type-H'; }
+  }
+  return { delta, z, rho, b_c, C2, kappa, disc_m, type, typeClass, xr, xg, xb };
+}
+
+function drawMobiusPanel(state) {
+  const el = document.getElementById('mobiuspnl');
+  if (!el || el.style.display === 'none') return;
+  const { r_end, pts } = state;
+  const mob  = mobiusParams(r_end, pts);
+  const fmtM = v => (!isFinite(v)||isNaN(v)) ? '—'
+                  : (Math.abs(v)>99 ? v.toExponential(2) : v.toFixed(4));
+  document.getElementById('mobius-body').innerHTML =
+    `<div class="sec" style="margin-top:0">── z = r_end = ${r_end.toFixed(4)} ──────</div>`+
+    `<div class="mob-row"><span class="mob-key">δ = x_𝔯 − x_𝔤</span>`+
+      `<span class="mob-val">${fmtM(mob.delta)}</span></div>`+
+    `<div class="mob-row"><span class="mob-key">ρ  (near double root)</span>`+
+      `<span class="mob-val">${fmtM(mob.rho)}</span></div>`+
+    `<div class="mob-row"><span class="mob-key">b_c  (simple root)</span>`+
+      `<span class="mob-val">${fmtM(mob.b_c)}</span></div>`+
+    `<div class="mob-row"><span class="mob-key">C² = −∂_zP/(ρ−b)</span>`+
+      `<span class="mob-val">${fmtM(mob.C2)}</span></div>`+
+    `<div class="mob-row"><span class="mob-key">κ = ρ/C</span>`+
+      `<span class="mob-val">${fmtM(mob.kappa)}</span></div>`+
+    `<div class="mob-row"><span class="mob-key">disc(μ) = (κ²−6κ+1)/2κ</span>`+
+      `<span class="mob-val">${fmtM(mob.disc_m)}</span></div>`+
+    `<div class="mob-row" style="margin-top:5px"><span class="mob-key">type</span>`+
+      `<span class="mob-type ${mob.typeClass}">${mob.type}</span></div>`+
+    `<div class="mob-mat">`+
+      `M = [[1,κ],[−1,κ]] ∈ GL₂(ℤ[κ,½κ])<br>`+
+      `κ ∈ ℤ[√2] at parabolic  (κ=(1±√2)²)<br>`+
+      `M = C₀·diag(1,κ),  C₀∈GL₂(ℤ)  (Cayley)<br>`+
+      `<span style="color:var(--dim);font-size:8px">`+
+      `x_𝔯=${fmtM(mob.xr)}  x_𝔤=${fmtM(mob.xg)}  x_𝔟=${fmtM(mob.xb)}</span></div>`;
+}
+
+// ── Julia set panel ──────────────────────────────────────────────────
+// c = main-cardioid parameterisation driven by q:
+//   c(θ) = ½e^{iθ} − ¼e^{2iθ},   θ = q·2π
+// Böttcher coordinate ψ: ℂ\D̄ → ℂ\K_c  satisfies  ψ(w²) = (ψ(w))² + c
+// We render two sub-panels side by side:
+//   Left:  z-plane escape-time Julia set for J_c
+//   Right: w-plane unit circle (Böttcher domain) mapped to J_c boundary
+function drawJuliaPanel(state) {
+  const el = document.getElementById('juliapnl');
+  if (!el || el.style.display === 'none') return;
+  const canvas = document.getElementById('julia_canvas');
+  const CW = canvas.width, CH = canvas.height;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, CW, CH);
+
+  // Derive c from q via main-cardioid parameterisation
+  const q = state.q;
+  const theta = q * TAU;
+  const cr = 0.5 * Math.cos(theta) - 0.25 * Math.cos(2 * theta);
+  const ci = 0.5 * Math.sin(theta) - 0.25 * Math.sin(2 * theta);
+
+  const HALF = Math.floor(CW / 2);  // left panel width
+  const BAILOUT2 = 4;               // escape radius² = 2²
+  const MAX_IT   = 96;
+
+  // ── Left: escape-time Julia set in z-plane ──────────────────────
+  const scale = 2.0;  // view window ±scale
+  const imgData = ctx.createImageData(HALF, CH);
+  const buf = imgData.data;
+
+  for (let py = 0; py < CH; py++) {
+    for (let px = 0; px < HALF; px++) {
+      // Map pixel to complex z
+      let zr = (px / HALF - 0.5) * 2 * scale;
+      let zi = (py / CH  - 0.5) * 2 * scale;
+      let it = 0;
+      while (it < MAX_IT && zr*zr + zi*zi < BAILOUT2) {
+        const zr2 = zr*zr - zi*zi + cr;
+        zi  = 2*zr*zi + ci;
+        zr  = zr2;
+        it++;
+      }
+      const idx = (py * HALF + px) * 4;
+      if (it === MAX_IT) {
+        // In set — deep blue
+        buf[idx  ] = 8;  buf[idx+1] = 14; buf[idx+2] = 38; buf[idx+3] = 255;
+      } else {
+        // Smooth colouring: map escape count to hue
+        const t = it / MAX_IT;
+        const h = (220 + 280 * t) % 360;
+        const s = 0.85, l = 0.10 + 0.55 * t;
+        // hsl to rgb inline
+        const C = (1 - Math.abs(2*l - 1)) * s;
+        const X = C * (1 - Math.abs((h/60) % 2 - 1));
+        const m = l - C/2;
+        let rr=0, gg=0, bb=0;
+        if      (h < 60)  { rr=C; gg=X; }
+        else if (h < 120) { rr=X; gg=C; }
+        else if (h < 180) { gg=C; bb=X; }
+        else if (h < 240) { gg=X; bb=C; }
+        else if (h < 300) { rr=X; bb=C; }
+        else              { rr=C; bb=X; }
+        buf[idx  ] = Math.round((rr+m)*255);
+        buf[idx+1] = Math.round((gg+m)*255);
+        buf[idx+2] = Math.round((bb+m)*255);
+        buf[idx+3] = 255;
+      }
+    }
+  }
+  ctx.putImageData(imgData, 0, 0);
+
+  // Label
+  ctx.fillStyle = 'rgba(0,0,0,0.45)';
+  ctx.fillRect(0, 0, HALF, 12);
+  ctx.fillStyle = '#6070a0'; ctx.font = '8px "Share Tech Mono"';
+  ctx.fillText('z-plane  J_c', 3, 9);
+
+  // Divider
+  ctx.strokeStyle = 'rgba(60,120,255,0.30)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(HALF, 0); ctx.lineTo(HALF, CH); ctx.stroke();
+
+  // ── Right: Böttcher w-plane unit circle + boundary estimate ─────
+  const RW = CW - HALF;  // right panel width
+  const cx2 = HALF + RW / 2, cy2 = CH / 2;
+  const pxPerUnit = Math.min(RW, CH) * 0.42;
+
+  // Background
+  ctx.fillStyle = '#060b1e';
+  ctx.fillRect(HALF, 0, RW, CH);
+  ctx.fillStyle = 'rgba(0,0,0,0.45)';
+  ctx.fillRect(HALF, 0, RW, 12);
+  ctx.fillStyle = '#6070a0'; ctx.font = '8px "Share Tech Mono"';
+  ctx.fillText('w-plane  ψ(∂D)', HALF + 3, 9);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(50,80,160,0.25)'; ctx.lineWidth = 0.5;
+  for (let d = -2; d <= 2; d++) {
+    const x = cx2 + d * pxPerUnit, y = cy2 + d * pxPerUnit;
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, CH); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(HALF, y); ctx.lineTo(CW, y); ctx.stroke();
+  }
+
+  // Unit circle in w-plane (Böttcher domain boundary)
+  ctx.strokeStyle = 'rgba(80,160,255,0.40)'; ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.arc(cx2, cy2, pxPerUnit, 0, TAU);
+  ctx.stroke();
+
+  // Implement the exact pullback algorithm:
+  function boettcherInverse(wReal, wImag, cReal, cImag, N = 12) {
+    const wList = [{r: wReal, i: wImag}];
+    for (let n = 1; n <= N; n++) {
+      const prev = wList[n-1];
+      wList.push({ r: prev.r*prev.r - prev.i*prev.i, i: 2*prev.r*prev.i });
+    }
+    let z = { r: wList[N].r, i: wList[N].i };
+    for (let n = N-1; n >= 0; n--) {
+      const diffR = z.r - cReal;
+      const diffI = z.i - cImag;
+      const mod = Math.sqrt(diffR*diffR + diffI*diffI);
+      const arg = Math.atan2(diffI, diffR);
+      const sqr = Math.sqrt(mod);
+      const r1 = sqr * Math.cos(arg / 2);
+      const i1 = sqr * Math.sin(arg / 2);
+      const r2 = -r1, i2 = -i1;
+      const target = wList[n];
+      const d1 = (r1 - target.r)**2 + (i1 - target.i)**2;
+      const d2 = (r2 - target.r)**2 + (i2 - target.i)**2;
+      z = (d1 < d2) ? {r: r1, i: i1} : {r: r2, i: i2};
+    }
+    return z;
+  }
+
+  // Exact Böttcher inverse mapping pullback algorithm evaluated for a sequence of 500-1000 points
+  const numPoints = 800;
+  const radius = 1 + 1e-5;
+  const unitCirclePts = [];
+  for (let k = 0; k <= numPoints; k++) {
+    const phi = (k * TAU) / numPoints;
+    const wReal = radius * Math.cos(phi);
+    const wImag = radius * Math.sin(phi);
+    unitCirclePts.push(boettcherInverse(wReal, wImag, cr, ci, 12));
+  }
+
+  // Draw Julia boundary as a continuous closed curve on the canvas using ctx.lineTo
+  ctx.strokeStyle = 'rgba(120,200,255,0.85)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  let first = true;
+  for (const p of unitCirclePts) {
+    const bx = cx2 + p.r * pxPerUnit;
+    const by = cy2 + p.i * pxPerUnit;
+    if (first) {
+      ctx.moveTo(bx, by);
+      first = false;
+    } else {
+      ctx.lineTo(bx, by);
+    }
+  }
+  ctx.closePath();
+  ctx.stroke();
+
+  // Mark c in z-plane (left)
+  {
+    const cpx = (cr / scale + 0.5) * HALF;
+    const cpy = (ci / scale + 0.5) * CH;
+    ctx.strokeStyle = '#ffee44'; ctx.lineWidth = 1; ctx.setLineDash([2,2]);
+    ctx.beginPath(); ctx.arc(cpx, cpy, 4, 0, TAU); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#ffee44'; ctx.font = '8px "Share Tech Mono"';
+    ctx.fillText('c', cpx + 5, cpy + 3);
+  }
+
+  // Text below
+  const bSign = ci >= 0 ? '+' : '−';
+  document.getElementById('julia_text').innerHTML =
+    `<span class="jl-key">c</span> = `+
+    `<span class="jl-val">${cr.toFixed(4)}</span> `+
+    `${bSign} <span class="jl-val">${Math.abs(ci).toFixed(4)}i</span>`+
+    `&emsp;<span style="color:var(--dim)">θ=q·2π</span><br>`+
+    `<span class="jl-key">ψ(w²)</span> = <span class="jl-val">(ψ(w))² + c</span><br>`+
+    `<span style="color:var(--dim)">left: J_c escape-time&nbsp;&nbsp;right: ∂K_c inverse iter</span>`;
+}
+
+// ── Redraw both info panels ──────────────────────────────────────────
+function updateChiralPanels() {
+  const state = getChiralState();
+  // Update j-display
+  const jEl = document.getElementById('j_display');
+  if (jEl) {
+    const j = state.j_inv;
+    jEl.textContent = isFinite(j) ? j.toFixed(1) : '∞';
+  }
+  const { P, Q, pts, composite } = state;
+  const CELL_IDS = ['cc_r', 'cc_g', 'cc_b'];
+
+  // Single-tube cells
+  for (let ti = 0; ti < 3; ti++) {
+    drawEC(document.getElementById(CELL_IDS[ti]), P, Q, [pts[ti]]);
+  }
+
+  // Composite cell: show all three + composite
+  const compPts = [...pts];
+  if (composite) compPts.push(composite);
+  drawEC(document.getElementById('cc_cmp'), P, Q, compPts);
+
+  // Weierstrass panel
+  drawWeierstrass(state);
+
+  // Affine coordinate chart panel
+  drawAffine(state);
+
+  // Fiber CP1 panel (x₂=x₃=x₄ diagonal)
+  drawFiberCP1(state);
+
+  // Julia set panel (Böttcher coordinate)
+  drawJuliaPanel(state);
+
+  // Möbius spectral panel (Rmk 3.24)
+  drawMobiusPanel(state);
+
+  // Sync 3D fiber markers with updated chiral state
+  if (document.getElementById('cb_fiber').checked &&
+      document.getElementById('cb_cp1').checked) {
+    buildFiberMarkers();
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  BUNDLE SCENARIOS — Big Bang Conditions on CP¹
+//
+//  A finite bundle E over CP¹ is described by pairs (p_i, k_i):
+//    p_i ∈ CP¹  —  position (stereographic → θ,φ on S²)
+//    k_i        —  knot type (crossing number, name, color)
+//
+//  Evolution: each knot carries intrinsic angular momentum proportional
+//  to its crossing number.  Motion is geodesic on S² with pairwise
+//  short-range interaction (Planck-scale repulsion).
+// ════════════════════════════════════════════════════════════════════
+
+const KNOT_TYPES = {
+  // name, crossing number, color (hex), Alexander polynomial eval at -1
+  '0_1':  { name: 'unknot',      symbol: '0₁', crossings: 0,  color: 0xaaaaaa, alex: 1,  particle: 'photon/ν'   },
+  '3_1':  { name: 'trefoil',     symbol: '3₁', crossings: 3,  color: 0x4488ff, alex: 3,  particle: 'electron'   },
+  '4_1':  { name: 'figure-eight', symbol: '4₁', crossings: 4, color: 0xff5533, alex: 5,  particle: 'muon'       },
+  '5_1':  { name: 'cinquefoil',  symbol: '5₁', crossings: 5,  color: 0x33ffaa, alex: 5,  particle: 'tau'        },
+  '5_2':  { name: 'three-twist', symbol: '5₂', crossings: 5,  color: 0xffaa33, alex: 7,  particle: 'strange'    },
+  '7_1':  { name: 'torus(7,2)',  symbol: '7₁', crossings: 7,  color: 0xcc44ff, alex: 7,  particle: 'charm'      },
+};
+
+// Planck-scale distance for interaction cutoff (in radians on S²)
+const PLANCK_ANG = LP / SPHERE_R;  // ≈ 0.005 rad
+
+// Bundle preset scenarios: array of { pos:[θ,φ], knot:string, vel:[dθ,dφ] }
+// θ ∈ [0,π], φ ∈ [0,2π) — spherical coords on CP¹ ≅ S²
+// vel = initial angular velocity (rad per unit time)
+const BUNDLE_PRESETS = [
+  {
+    id: 'electron_pair_close',
+    name: 'e⁻ e⁻  (close)',
+    desc: 'Two electrons at ~10 ℓ_P separation',
+    particles: [
+      { pos: [Math.PI/2, 0.00],            knot: '3_1', vel: [0, 0.012] },
+      { pos: [Math.PI/2, 10*PLANCK_ANG],   knot: '3_1', vel: [0, -0.012] },
+    ]
+  },
+  {
+    id: 'electron_muon_close',
+    name: 'e⁻ μ⁻  (close)',
+    desc: 'Electron + muon at ~8 ℓ_P separation',
+    particles: [
+      { pos: [Math.PI/2, 0.00],            knot: '3_1', vel: [0.005, 0.010] },
+      { pos: [Math.PI/2, 8*PLANCK_ANG],    knot: '4_1', vel: [-0.003, -0.014] },
+    ]
+  },
+  {
+    id: 'muon_pair_close',
+    name: 'μ⁻ μ⁻  (close)',
+    desc: 'Two muons at ~12 ℓ_P separation',
+    particles: [
+      { pos: [Math.PI/2 - 6*PLANCK_ANG, 0], knot: '4_1', vel: [0, 0.016] },
+      { pos: [Math.PI/2 + 6*PLANCK_ANG, 0], knot: '4_1', vel: [0, -0.016] },
+    ]
+  },
+  {
+    id: 'electron_far',
+    name: 'e⁻ e⁻  (far)',
+    desc: 'Two electrons at antipodal separation (~π/2)',
+    particles: [
+      { pos: [Math.PI/4, 0],       knot: '3_1', vel: [0.003, 0.008] },
+      { pos: [3*Math.PI/4, Math.PI], knot: '3_1', vel: [-0.003, -0.008] },
+    ]
+  },
+  {
+    id: 'three_family',
+    name: 'e⁻ μ⁻ τ⁻  (trio)',
+    desc: 'Three lepton generations, equally spaced',
+    particles: [
+      { pos: [Math.PI/2, 0],             knot: '3_1', vel: [0, 0.009] },
+      { pos: [Math.PI/2, TAU/3],         knot: '4_1', vel: [0, 0.012] },
+      { pos: [Math.PI/2, 2*TAU/3],       knot: '5_1', vel: [0, 0.015] },
+    ]
+  },
+  {
+    id: 'electron_photon',
+    name: 'e⁻ γ  (pair)',
+    desc: 'Electron + photon (unknot) at ~15 ℓ_P',
+    particles: [
+      { pos: [Math.PI/2, 0],              knot: '3_1', vel: [0.002, 0.010] },
+      { pos: [Math.PI/2, 15*PLANCK_ANG],  knot: '0_1', vel: [0, 0.030] },
+    ]
+  },
+  {
+    id: 'quark_cluster',
+    name: 's c  (quarks)',
+    desc: 'Strange + charm at close range',
+    particles: [
+      { pos: [Math.PI/3, Math.PI/4],       knot: '5_2', vel: [0.004, 0.018] },
+      { pos: [Math.PI/3, Math.PI/4 + 6*PLANCK_ANG], knot: '7_1', vel: [-0.002, -0.020] },
+    ]
+  },
+  {
+    id: 'five_particle',
+    name: 'e⁻ μ⁻ τ⁻ γ γ',
+    desc: 'Three leptons + two photons — crowded bundle',
+    particles: [
+      { pos: [Math.PI/2, 0],             knot: '3_1', vel: [0, 0.008] },
+      { pos: [Math.PI/3, TAU/5],         knot: '4_1', vel: [0.004, 0.011] },
+      { pos: [2*Math.PI/3, 2*TAU/5],     knot: '5_1', vel: [-0.003, 0.014] },
+      { pos: [Math.PI/4, 3*TAU/5],       knot: '0_1', vel: [0, 0.028] },
+      { pos: [3*Math.PI/4, 4*TAU/5],     knot: '0_1', vel: [0, -0.025] },
+    ]
+  },
+];
+
+// ── Bundle evolution state ──────────────────────────────────────────
+const bundleState = {
+  preset: null,          // current preset object
+  particles: [],         // live state: [{θ, φ, vθ, vφ, knot, trail:[]}]
+  time: 0,               // current time
+  playing: false,
+  speed: 1.0,
+  trailLen: 400,         // max trail points per particle
+};
+
+// ── Per-preset localStorage persistence ─────────────────────────────
+const BUNDLE_STORE_PREFIX = 'qou_bundle_';
+
+function saveBundleState() {
+  if (!bundleState.preset) return;
+  const key = BUNDLE_STORE_PREFIX + bundleState.preset.id;
+  const data = {
+    time: bundleState.time,
+    speed: bundleState.speed,
+    particles: bundleState.particles.map(p => ({
+      theta: p.theta, phi: p.phi,
+      vTheta: p.vTheta, vPhi: p.vPhi,
+      knot: p.knot,
+      trail: p.trail.slice(-200),  // cap stored trail length
+    })),
+  };
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch(e) {}
+}
+
+function loadBundleState(presetId) {
+  const key = BUNDLE_STORE_PREFIX + presetId;
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch(e) { return null; }
+}
+
+function clearBundleState(presetId) {
+  try { localStorage.removeItem(BUNDLE_STORE_PREFIX + presetId); } catch(e) {}
+}
+
+function initBundlePreset(preset) {
+  bundleState.preset = preset;
+
+  // Try to restore saved state for this preset
+  const saved = loadBundleState(preset.id);
+  if (saved && saved.particles && saved.particles.length === preset.particles.length) {
+    bundleState.time = saved.time || 0;
+    bundleState.speed = saved.speed || 1.0;
+    bundleState.particles = saved.particles.map(p => ({
+      theta: p.theta, phi: p.phi,
+      vTheta: p.vTheta, vPhi: p.vPhi,
+      knot: p.knot,
+      trail: p.trail || [{ theta: p.theta, phi: p.phi }],
+    }));
+    // Restore UI
+    document.getElementById('bp-time').value = Math.min(1000, bundleState.time);
+    document.getElementById('bp-time-val').textContent = `t=${bundleState.time.toFixed(0)}`;
+    document.getElementById('bp-speed').value = bundleState.speed;
+    document.getElementById('bp-speed-val').textContent = bundleState.speed.toFixed(1) + '×';
+  } else {
+    // Fresh init from preset definition
+    bundleState.time = 0;
+    bundleState.particles = preset.particles.map(p => ({
+      theta: p.pos[0],
+      phi:   p.pos[1],
+      vTheta: p.vel[0],
+      vPhi:   p.vel[1],
+      knot:   p.knot,
+      trail:  [{ theta: p.pos[0], phi: p.pos[1] }],
+    }));
+    document.getElementById('bp-time').value = 0;
+    document.getElementById('bp-time-val').textContent = 't=0';
+  }
+  rebuildBundleMarkers();
+  drawBundleTrailCanvas();
+  updateBundlePairsDisplay();
+}
+
+// Geodesic flow on S² with pairwise Planck-scale repulsion
+function stepBundle(dt) {
+  const parts = bundleState.particles;
+  const N = parts.length;
+
+  // Compute pairwise forces (short-range repulsion on S²)
+  const fTheta = new Float64Array(N);
+  const fPhi   = new Float64Array(N);
+
+  for (let i = 0; i < N; i++) {
+    for (let j = i + 1; j < N; j++) {
+      // Angular distance on S²
+      const dth = parts[j].theta - parts[i].theta;
+      const dph = parts[j].phi - parts[i].phi;
+      const sinTh = Math.sin((parts[i].theta + parts[j].theta) / 2);
+      const dist2 = dth*dth + (dph*sinTh)*(dph*sinTh);
+      const dist = Math.sqrt(dist2) + 1e-12;
+
+      // Repulsive force: F = A * crossings_product / dist²
+      // Only significant within ~50 Planck lengths
+      const ki = KNOT_TYPES[parts[i].knot];
+      const kj = KNOT_TYPES[parts[j].knot];
+      const strength = 0.0001 * (ki.alex + 1) * (kj.alex + 1);
+      const cutoff = 50 * PLANCK_ANG;
+
+      if (dist < cutoff) {
+        const F = strength / (dist2 + PLANCK_ANG * PLANCK_ANG);
+        const fx = F * dth / dist;
+        const fy = F * dph * sinTh / dist;
+        // Repel: push i away from j
+        fTheta[i] -= fx;  fPhi[i] -= fy / (Math.sin(parts[i].theta) + 0.01);
+        fTheta[j] += fx;  fPhi[j] += fy / (Math.sin(parts[j].theta) + 0.01);
+      }
+    }
+  }
+
+  // Integrate (symplectic Euler)
+  for (let i = 0; i < N; i++) {
+    const p = parts[i];
+    const kt = KNOT_TYPES[p.knot];
+    // Intrinsic angular momentum ∝ crossing number
+    const omega = (kt.crossings + 1) * 0.002;
+
+    p.vTheta += fTheta[i] * dt;
+    p.vPhi   += (fPhi[i] + omega) * dt;
+
+    // Damping (very gentle — preserves long-range dynamics)
+    p.vTheta *= 0.9997;
+    p.vPhi   *= 0.9997;
+
+    p.theta += p.vTheta * dt;
+    p.phi   += p.vPhi * dt;
+
+    // Boundary: θ ∈ (0, π), reflect at poles
+    if (p.theta < 0.01) { p.theta = 0.02 - p.theta; p.vTheta = Math.abs(p.vTheta); }
+    if (p.theta > Math.PI - 0.01) { p.theta = 2*(Math.PI - 0.01) - p.theta; p.vTheta = -Math.abs(p.vTheta); }
+    // φ wraps
+    p.phi = ((p.phi % TAU) + TAU) % TAU;
+
+    // Record trail
+    p.trail.push({ theta: p.theta, phi: p.phi });
+    if (p.trail.length > bundleState.trailLen) p.trail.shift();
+  }
+
+  bundleState.time += dt;
+
+  // Auto-save every ~60 steps (roughly once per second at 60fps)
+  if (Math.round(bundleState.time * 10) % 60 === 0) saveBundleState();
+}
+
+// ── 3D knot markers on the CP1 ghost sphere ─────────────────────────
+let bundleMarkerMeshes = [];
+
+function rebuildBundleMarkers() {
+  // Remove old markers
+  for (const m of bundleMarkerMeshes) {
+    scene.remove(m);
+    if (m.geometry) m.geometry.dispose();
+    if (m.material) m.material.dispose();
+  }
+  bundleMarkerMeshes = [];
+
+  if (!bundleState.preset) return;
+  if (!document.getElementById('cb_cp1').checked) return;
+  if (!document.getElementById('cb_pnl_bundle').checked) return;
+
+  const R_CP1 = SPHERE_R * 0.2;
+  const N_vec = selPt.clone().normalize();
+  const { T1, T2 } = getFrame(N_vec);
+  const Ox = selPt.x + N_vec.x * R_CP1;
+  const Oy = selPt.y + N_vec.y * R_CP1;
+  const Oz = selPt.z + N_vec.z * R_CP1;
+
+  for (const p of bundleState.particles) {
+    const kt = KNOT_TYPES[p.knot];
+    // Map (θ,φ) on CP1 ≅ S² to 3D position on the ghost sphere
+    const sinTh = Math.sin(p.theta);
+    const cosTh = Math.cos(p.theta);
+    const cosPh = Math.cos(p.phi);
+    const sinPh = Math.sin(p.phi);
+
+    // Position on unit S²: (sinθ cosφ, sinθ sinφ, cosθ)
+    // Map to the CP1 ghost sphere frame: T1, T2, N
+    const lx = sinTh * cosPh;
+    const ly = sinTh * sinPh;
+    const lz = cosTh;
+
+    const wx = Ox + R_CP1 * (lx * T1.x + ly * T2.x - lz * N_vec.x);
+    const wy = Oy + R_CP1 * (lx * T1.y + ly * T2.y - lz * N_vec.y);
+    const wz = Oz + R_CP1 * (lx * T1.z + ly * T2.z - lz * N_vec.z);
+
+    // Main marker sphere
+    const markerR = R_CP1 * 0.06 * (1 + kt.crossings * 0.15);
+    const geo = new THREE.SphereGeometry(markerR, 12, 8);
+    const mat = new THREE.MeshPhongMaterial({
+      color: kt.color,
+      emissive: kt.color,
+      emissiveIntensity: 0.35,
+      transparent: true,
+      opacity: 0.9,
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(wx, wy, wz);
+    mesh.renderOrder = 5;
+    scene.add(mesh);
+    bundleMarkerMeshes.push(mesh);
+
+    // Glow ring (knot winding indicator)
+    if (kt.crossings > 0) {
+      const ringGeo = new THREE.TorusGeometry(markerR * 1.6, markerR * 0.15, 8, kt.crossings * 8);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: kt.color, transparent: true, opacity: 0.4,
+      });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.position.set(wx, wy, wz);
+      // Orient ring to face camera (approximate: face outward from sphere center)
+      ring.lookAt(Ox, Oy, Oz);
+      ring.renderOrder = 4;
+      scene.add(ring);
+      bundleMarkerMeshes.push(ring);
+    }
+
+    // Trail line
+    if (p.trail.length > 1) {
+      const trailPts = [];
+      const step = Math.max(1, Math.floor(p.trail.length / 200));
+      for (let ti = 0; ti < p.trail.length; ti += step) {
+        const t = p.trail[ti];
+        const st = Math.sin(t.theta), ct = Math.cos(t.theta);
+        const cp = Math.cos(t.phi), sp = Math.sin(t.phi);
+        const tlx = st * cp, tly = st * sp, tlz = ct;
+        trailPts.push(new THREE.Vector3(
+          Ox + R_CP1 * (tlx * T1.x + tly * T2.x - tlz * N_vec.x),
+          Oy + R_CP1 * (tlx * T1.y + tly * T2.y - tlz * N_vec.y),
+          Oz + R_CP1 * (tlx * T1.z + tly * T2.z - tlz * N_vec.z),
+        ));
+      }
+      if (trailPts.length > 1) {
+        const tGeo = new THREE.BufferGeometry().setFromPoints(trailPts);
+        const tMat = new THREE.LineBasicMaterial({
+          color: kt.color, transparent: true, opacity: 0.35, linewidth: 1,
+        });
+        const tLine = new THREE.Line(tGeo, tMat);
+        tLine.renderOrder = 3;
+        scene.add(tLine);
+        bundleMarkerMeshes.push(tLine);
+      }
+    }
+  }
+}
+
+// ── 2D trail canvas (stereographic projection of CP1) ───────────────
+function drawBundleTrailCanvas() {
+  const canvas = document.getElementById('bundle-trail-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  ctx.fillStyle = 'rgba(0,5,15,0.85)';
+  ctx.fillRect(0, 0, W, H);
+
+  // Grid — φ horizontal [0,2π], θ vertical [0,π]
+  ctx.strokeStyle = 'rgba(50,80,160,0.20)'; ctx.lineWidth = 0.5;
+  for (let i = 1; i < 4; i++) {
+    const x = W * i / 4;
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  for (let i = 1; i < 3; i++) {
+    const y = H * i / 3;
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  // Labels
+  ctx.fillStyle = '#3a4a78'; ctx.font = '7px "Share Tech Mono"';
+  ctx.fillText('φ=0', 2, H - 2);
+  ctx.fillText('φ=2π', W - 28, H - 2);
+  ctx.fillText('θ=0', 2, 8);
+  ctx.fillText('θ=π', 2, H - 10);
+
+  if (!bundleState.preset) {
+    ctx.fillStyle = '#4a5a80'; ctx.font = '10px "Share Tech Mono"';
+    ctx.fillText('Select a scenario above', W/2 - 70, H/2);
+    return;
+  }
+
+  // Draw trails and current positions
+  for (const p of bundleState.particles) {
+    const kt = KNOT_TYPES[p.knot];
+    const hex = '#' + kt.color.toString(16).padStart(6, '0');
+
+    // Trail
+    if (p.trail.length > 1) {
+      ctx.strokeStyle = hex;
+      ctx.globalAlpha = 0.3;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      let first = true;
+      for (const t of p.trail) {
+        const x = (t.phi / TAU) * W;
+        const y = (t.theta / Math.PI) * H;
+        if (first) { ctx.moveTo(x, y); first = false; }
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.globalAlpha = 1.0;
+    }
+
+    // Current position
+    const cx = (p.phi / TAU) * W;
+    const cy = (p.theta / Math.PI) * H;
+    ctx.fillStyle = hex;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 3 + kt.crossings * 0.5, 0, TAU);
+    ctx.fill();
+
+    // Label
+    ctx.fillStyle = hex;
+    ctx.font = '8px "Share Tech Mono"';
+    ctx.fillText(kt.symbol, cx + 5, cy - 3);
+  }
+
+  // Time indicator
+  ctx.fillStyle = '#6070a0'; ctx.font = '8px "Share Tech Mono"';
+  ctx.fillText(`t = ${bundleState.time.toFixed(1)}`, W - 50, 10);
+}
+
+// ── UI: pairs display ───────────────────────────────────────────────
+function updateBundlePairsDisplay() {
+  const el = document.getElementById('bundle-pairs');
+  if (!el || !bundleState.preset) { if (el) el.innerHTML = ''; return; }
+  const lines = bundleState.particles.map((p, i) => {
+    const kt = KNOT_TYPES[p.knot];
+    const hex = '#' + kt.color.toString(16).padStart(6, '0');
+    return `<span class="bp-knot" style="background:${hex}"></span>` +
+      `<b style="color:${hex}">${kt.particle}</b> ` +
+      `<span style="color:#4a5a80">(${kt.symbol})</span> ` +
+      `at θ=${p.theta.toFixed(3)}, φ=${p.phi.toFixed(3)}`;
+  });
+  el.innerHTML = '<div class="bp-pairs">' + lines.join('<br>') + '</div>';
+}
+
+// ── Populate preset selector ────────────────────────────────────────
+function populateBundlePresets() {
+  const sel = document.getElementById('bundle-preset');
+  sel.innerHTML = '<option value="">— select scenario —</option>';
+  for (const p of BUNDLE_PRESETS) {
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.textContent = `${p.name}  —  ${p.desc}`;
+    sel.appendChild(opt);
+  }
+}
+
+function setupBundleUI() {
+  populateBundlePresets();
+
+  const sel = document.getElementById('bundle-preset');
+  sel.addEventListener('change', () => {
+    // Save current state before switching
+    saveBundleState();
+    const preset = BUNDLE_PRESETS.find(p => p.id === sel.value);
+    if (preset) {
+      try { localStorage.setItem(BUNDLE_STORE_PREFIX + '_active', preset.id); } catch(e) {}
+      initBundlePreset(preset);
+      const descEl = document.getElementById('bundle-desc');
+      descEl.innerHTML = `<div class="bp-desc">${preset.desc}</div>`;
+    }
+  });
+
+  // Play/pause
+  document.getElementById('bp-play').addEventListener('click', () => {
+    if (!bundleState.preset) return;
+    bundleState.playing = !bundleState.playing;
+    document.getElementById('bp-play').textContent = bundleState.playing ? '⏸' : '▶';
+    if (!bundleState.playing) saveBundleState();  // save when pausing
+  });
+
+  // Reset — clears saved state for this preset, re-inits from definition
+  document.getElementById('bp-reset').addEventListener('click', () => {
+    if (bundleState.preset) {
+      clearBundleState(bundleState.preset.id);
+      // Force fresh init by temporarily nulling preset
+      const p = bundleState.preset;
+      bundleState.preset = null;
+      initBundlePreset(p);
+    }
+    bundleState.playing = false;
+    document.getElementById('bp-play').textContent = '▶';
+  });
+
+  // Speed
+  document.getElementById('bp-speed').addEventListener('input', (e) => {
+    bundleState.speed = parseFloat(e.target.value);
+    document.getElementById('bp-speed-val').textContent = bundleState.speed.toFixed(1) + '×';
+    saveBundleState();
+  });
+
+  // Time scrub
+  document.getElementById('bp-time').addEventListener('input', (e) => {
+    if (!bundleState.preset) return;
+    // Scrubbing resets and fast-forwards to target time
+    const targetTime = parseFloat(e.target.value);
+    initBundlePreset(bundleState.preset);
+    const steps = Math.round(targetTime);
+    for (let i = 0; i < steps; i++) stepBundle(1.0);
+    bundleState.time = targetTime;
+    document.getElementById('bp-time-val').textContent = `t=${targetTime.toFixed(0)}`;
+    rebuildBundleMarkers();
+    drawBundleTrailCanvas();
+    updateBundlePairsDisplay();
+    saveBundleState();
+  });
+
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  FEEDBACK SIDEBAR — Per-block notes with priority, edit, delete
+//
+//  Data stored in localStorage keyed by block label.
+//  Each block has an array of feedback items:
+//    { id, text, priority, created, updated }
+// ════════════════════════════════════════════════════════════════════
+
+const FB_STORE_KEY = 'qou_feedback';
+
+function loadAllFeedback() {
+  try {
+    const raw = localStorage.getItem(FB_STORE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch(e) { return {}; }
+}
+
+function saveAllFeedback(data) {
+  try { localStorage.setItem(FB_STORE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+function getFeedbackForBlock(blockId) {
+  const all = loadAllFeedback();
+  return all[blockId] || [];
+}
+
+function setFeedbackForBlock(blockId, items) {
+  const all = loadAllFeedback();
+  if (items.length === 0) delete all[blockId];
+  else all[blockId] = items;
+  saveAllFeedback(all);
+}
+
+function addFeedbackItem(blockId, text, priority) {
+  const items = getFeedbackForBlock(blockId);
+  const now = new Date().toISOString();
+  items.push({
+    id: 'fb-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+    text,
+    priority: priority || 'medium',
+    created: now,
+    updated: now,
+  });
+  setFeedbackForBlock(blockId, items);
+}
+
+function updateFeedbackItem(blockId, itemId, updates) {
+  const items = getFeedbackForBlock(blockId);
+  const item = items.find(i => i.id === itemId);
+  if (item) {
+    Object.assign(item, updates, { updated: new Date().toISOString() });
+    setFeedbackForBlock(blockId, items);
+  }
+}
+
+function deleteFeedbackItem(blockId, itemId) {
+  let items = getFeedbackForBlock(blockId);
+  items = items.filter(i => i.id !== itemId);
+  setFeedbackForBlock(blockId, items);
+}
+
+function getActiveBlockId() {
+  if (bundleState.preset) return 'bundle:' + bundleState.preset.id;
+  return '_global';
+}
+
+function getAllBlockIds() {
+  const all = loadAllFeedback();
+  return Object.keys(all).sort();
+}
+
+function renderFeedbackSidebar() {
+  const container = document.getElementById('fb-items');
+  if (!container) return;
+
+  const blockFilter = document.getElementById('fb-block-filter').value;
+  const priFilter = document.getElementById('fb-pri-filter').value;
+
+  // Gather items
+  const all = loadAllFeedback();
+  let entries = [];  // [{blockId, item}]
+
+  if (blockFilter === '_all') {
+    for (const [blockId, items] of Object.entries(all)) {
+      for (const item of items) entries.push({ blockId, item });
+    }
+  } else if (blockFilter === '_active') {
+    const activeId = getActiveBlockId();
+    for (const item of (all[activeId] || [])) entries.push({ blockId: activeId, item });
+  } else {
+    for (const item of (all[blockFilter] || [])) entries.push({ blockId: blockFilter, item });
+  }
+
+  // Filter by priority
+  if (priFilter !== 'all') {
+    entries = entries.filter(e => e.item.priority === priFilter);
+  }
+
+  // Sort: high first, then medium, then low; within same priority by creation
+  const priOrder = { high: 0, medium: 1, low: 2 };
+  entries.sort((a, b) => (priOrder[a.item.priority] || 1) - (priOrder[b.item.priority] || 1)
+    || a.item.created.localeCompare(b.item.created));
+
+  if (entries.length === 0) {
+    container.innerHTML = '<div class="fb-empty">No feedback yet. Add one below.</div>';
+    return;
+  }
+
+  container.innerHTML = entries.map(({ blockId, item }) => {
+    const priClass = 'pri-' + item.priority;
+    const blockLabel = blockId.startsWith('bundle:') ? blockId.slice(7) : blockId;
+    return `<div class="fb-item ${priClass}" data-block="${blockId}" data-id="${item.id}">
+      <div class="fb-block-tag">${blockLabel}</div>
+      <div class="fb-text" contenteditable="false">${escapeHtml(item.text)}</div>
+      <div class="fb-controls">
+        <select class="fb-pri-sel fb-pri-change" data-id="${item.id}" data-block="${blockId}">
+          <option value="high" ${item.priority==='high'?'selected':''}>high</option>
+          <option value="medium" ${item.priority==='medium'?'selected':''}>med</option>
+          <option value="low" ${item.priority==='low'?'selected':''}>low</option>
+        </select>
+        <button class="fb-btn fb-edit" data-id="${item.id}" data-block="${blockId}">edit</button>
+        <button class="fb-btn fb-del" data-id="${item.id}" data-block="${blockId}">del</button>
+        <span style="flex:1"></span>
+        <span style="font-size:7px;color:var(--dim)">${new Date(item.updated).toLocaleTimeString()}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function setupFeedbackUI() {
+  // Update block filter options dynamically
+  function updateBlockFilterOptions() {
+    const sel = document.getElementById('fb-block-filter');
+    const current = sel.value;
+    // Keep fixed options, add dynamic ones
+    while (sel.options.length > 2) sel.remove(2);
+    for (const id of getAllBlockIds()) {
+      const opt = document.createElement('option');
+      opt.value = id;
+      opt.textContent = id.startsWith('bundle:') ? id.slice(7) : id;
+      sel.appendChild(opt);
+    }
+    // Restore selection
+    if ([...sel.options].some(o => o.value === current)) sel.value = current;
+  }
+
+  // Add feedback
+  document.getElementById('fb-add-btn').addEventListener('click', () => {
+    const textEl = document.getElementById('fb-add-text');
+    const text = textEl.value.trim();
+    if (!text) return;
+    const pri = document.getElementById('fb-add-pri').value;
+    addFeedbackItem(getActiveBlockId(), text, pri);
+    textEl.value = '';
+    updateBlockFilterOptions();
+    renderFeedbackSidebar();
+  });
+
+  // Enter key in input
+  document.getElementById('fb-add-text').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      document.getElementById('fb-add-btn').click();
+    }
+  });
+
+  // Filter changes
+  document.getElementById('fb-block-filter').addEventListener('change', renderFeedbackSidebar);
+  document.getElementById('fb-pri-filter').addEventListener('change', renderFeedbackSidebar);
+
+  // Delegated event handlers on container
+  document.getElementById('fb-items').addEventListener('click', (e) => {
+    const btn = e.target.closest('.fb-btn');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    const blockId = btn.dataset.block;
+
+    if (btn.classList.contains('fb-del')) {
+      deleteFeedbackItem(blockId, id);
+      updateBlockFilterOptions();
+      renderFeedbackSidebar();
+    } else if (btn.classList.contains('fb-edit')) {
+      const item = btn.closest('.fb-item');
+      const textEl = item.querySelector('.fb-text');
+      const isEditing = textEl.contentEditable === 'true';
+      if (isEditing) {
+        // Save
+        const newText = textEl.textContent.trim();
+        if (newText) {
+          updateFeedbackItem(blockId, id, { text: newText });
+        }
+        textEl.contentEditable = 'false';
+        btn.textContent = 'edit';
+        renderFeedbackSidebar();
+      } else {
+        // Start editing
+        textEl.contentEditable = 'true';
+        textEl.focus();
+        btn.textContent = 'save';
+        // Select all text
+        const range = document.createRange();
+        range.selectNodeContents(textEl);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    }
+  });
+
+  // Priority change via select
+  document.getElementById('fb-items').addEventListener('change', (e) => {
+    if (e.target.classList.contains('fb-pri-change')) {
+      const id = e.target.dataset.id;
+      const blockId = e.target.dataset.block;
+      updateFeedbackItem(blockId, id, { priority: e.target.value });
+      renderFeedbackSidebar();
+    }
+  });
+
+  updateBlockFilterOptions();
+  renderFeedbackSidebar();
+}
+
+setupFeedbackUI();
+
+setupBundleUI();
+
+// Restore last-used preset from localStorage, or default to first
+{
+  let restoreId = null;
+  try { restoreId = localStorage.getItem(BUNDLE_STORE_PREFIX + '_active'); } catch(e) {}
+  const restorePreset = BUNDLE_PRESETS.find(p => p.id === restoreId) || BUNDLE_PRESETS[0];
+  if (restorePreset) {
+    document.getElementById('bundle-preset').value = restorePreset.id;
+    initBundlePreset(restorePreset);
+    document.getElementById('bundle-desc').innerHTML =
+      `<div class="bp-desc">${restorePreset.desc}</div>`;
+  }
+}
+
+// ── URL Query Parameter Parsing ──────────────────────────────────────
+(function() {
+  const p = new URLSearchParams(location.search);
+  
+  // Set numeric/string inputs
+  const mapping = {
+    'q': ['q_val', 'q_num'],
+    'n_min': ['n_min'],
+    'n_max': ['n_max'],
+    'sigma': ['sigma'],
+    'pitch': ['pitch'],
+    'gamma': ['pitch'],
+    'x_p': ['x_p'],
+    'y_p': ['y_p'],
+    'z_p': ['z_p'],
+    'rMin': ['rMin'],
+    'rMax': ['rMax'],
+    'deltaR': ['deltaR'],
+    'deltaZeta': ['deltaZeta'],
+    'N': ['N'],
+    'projection': ['projection']
+  };
+
+  let hasParams = false;
+  for (const [key, targets] of Object.entries(mapping)) {
+    const val = p.get(key);
+    if (val !== null) {
+      hasParams = true;
+      targets.forEach(targetId => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.value = val;
+        }
+      });
+    }
+  }
+
+  // Checkbox parsing
+  const checkboxes = [
+    'cb_brane', 'cb_tubes', 'cb_axes', 'cb_stars', 'cb_auto', 'cb_click', 
+    'cb_cp1', 'cb_axispts', 'cb_blowup', 'cb_primes', 'cb_fiber'
+  ];
+  checkboxes.forEach(cb => {
+    const val = p.get(cb);
+    if (val !== null) {
+      hasParams = true;
+      const el = document.getElementById(cb);
+      if (el) {
+        el.checked = (val === 'true' || val === '1');
+        if (cb === 'cb_brane' && window.braneMesh) {
+          braneMesh.visible = el.checked;
+        }
+        if (cb === 'cb_axes' && window.axHelper) {
+          axHelper.visible = el.checked;
+          ['ax0','ax1','ax2'].forEach(id => {
+            const axEl = document.getElementById(id);
+            if (axEl) axEl.style.display = el.checked ? 'block' : 'none';
+          });
+        }
+        if (cb === 'cb_stars' && window.starGroup) {
+          starGroup.visible = el.checked;
+        }
+      }
+    }
+  });
+
+  if (hasParams) {
+    // Update display values (sync labels)
+    const q_val_el = document.getElementById('q_val');
+    const n_min_el = document.getElementById('n_min');
+    const n_max_el = document.getElementById('n_max');
+    const sigma_el = document.getElementById('sigma');
+    const pitch_el = document.getElementById('pitch');
+    const x_p_el = document.getElementById('x_p');
+    const y_p_el = document.getElementById('y_p');
+    const z_p_el = document.getElementById('z_p');
+
+    const q_v = q_val_el ? parseFloat(q_val_el.value) : 0.55;
+    const nm = n_min_el ? parseInt(n_min_el.value) : 4;
+    const nx = n_max_el ? parseInt(n_max_el.value) : 60;
+    const sg = sigma_el ? parseFloat(sigma_el.value) : 0.02;
+    const pt = pitch_el ? parseFloat(pitch_el.value) : 1.0;
+    const xv = x_p_el ? parseFloat(x_p_el.value) : -3.30;
+    const yv = y_p_el ? parseFloat(y_p_el.value) : -1.10;
+    const zv = z_p_el ? parseFloat(z_p_el.value) : -1.98;
+
+    const v_nmin_el = document.getElementById('v_nmin');
+    if (v_nmin_el) v_nmin_el.textContent = nm;
+    const v_nmax_el = document.getElementById('v_nmax');
+    if (v_nmax_el) v_nmax_el.textContent = nx;
+    const v_sigma_el = document.getElementById('v_sigma');
+    if (v_sigma_el) v_sigma_el.textContent = sg.toFixed(2);
+    const v_pitch_el = document.getElementById('v_pitch');
+    if (v_pitch_el) v_pitch_el.textContent = pt.toFixed(2);
+    const v_xp_el = document.getElementById('v_xp');
+    if (v_xp_el) v_xp_el.textContent = xv.toFixed(2);
+    const v_yp_el = document.getElementById('v_yp');
+    if (v_yp_el) v_yp_el.textContent = yv.toFixed(2);
+    const v_zp_el = document.getElementById('v_zp');
+    if (v_zp_el) v_zp_el.textContent = zv.toFixed(2);
+  }
+})();
+
+// ── Animation loop ────────────────────────────────────────────────────
+let frame = 0;
+applyHide();   // start with info panels hidden
+try {
+  rebuild();
+} catch (err) {
+  const sb = document.getElementById('stats-body');
+  if (sb) sb.innerHTML = '<span style="color:#ff4444">Init error: ' + err.message + '</span>';
+  console.error('rebuild() failed at startup:', err);
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  frame++;
+
+  if (document.getElementById('cb_auto').checked && !drag && !ptDragMode) {
+    orb.th += .00095;
+    applyCam();
+  }
+
+  // Bundle evolution tick
+  if (bundleState.playing && bundleState.preset) {
+    const dt = bundleState.speed * 0.5;
+    stepBundle(dt);
+    document.getElementById('bp-time').value = Math.min(1000, bundleState.time);
+    document.getElementById('bp-time-val').textContent = `t=${bundleState.time.toFixed(0)}`;
+    if (frame % 3 === 0) {
+      rebuildBundleMarkers();
+      drawBundleTrailCanvas();
+      updateBundlePairsDisplay();
+    }
+  }
+
+  if (frame % 4  === 0) updateHover();
+  if (frame % 12 === 0) updateChiralPanels();
+  updateAxLabels();
+
+  // Pulse the ring glow
+  const pulse = 0.45 + 0.25 * Math.sin(frame * 0.04);
+  ringMesh.material.opacity = pulse;
+
+  renderer.render(scene, camera);
+}
+animate();
+
+// ── Theme sync with viewer ───────────────────────────────────────
+(function(){
+  var p = new URLSearchParams(location.search);
+  if (p.get('theme') === 'light') { lightMode = true; applyTheme(); }
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'folio-theme') {
+      lightMode = (e.data.theme === 'light');
+      applyTheme();
+    }
+  });
+})();
+</script>
+</body>
+</html>

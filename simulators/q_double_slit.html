@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Q-Deformed Double Slit — Overhead Simulation</title>
+<style>
+:root {
+  --bg:#020710; --panel:rgba(3,10,30,0.93); --border:rgba(60,120,255,0.20);
+  --accent:#3a90ff; --accent2:#ff5533; --accent3:#33ffaa; --accent4:#ffaa33;
+  --text:#b8ccff; --dim:#3a4a78;
+}
+body.light {
+  --bg:#f0f4ff; --panel:rgba(235,240,255,0.96); --border:rgba(60,80,180,0.25);
+  --accent:#1a5fcc; --accent2:#cc3300; --accent3:#006633; --accent4:#885500;
+  --text:#1a2855; --dim:#6070a0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;overflow:hidden;user-select:none;}
+
+#title{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-family:'Rajdhani',sans-serif;font-weight:300;font-size:18px;letter-spacing:.25em;color:var(--accent);text-transform:uppercase;text-shadow:0 0 18px rgba(58,144,255,.5);pointer-events:none;white-space:nowrap;}
+#subtitle{position:absolute;top:32px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.20em;color:var(--dim);text-transform:uppercase;pointer-events:none;white-space:nowrap;}
+
+.panel{position:absolute;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:10px;backdrop-filter:blur(18px);z-index:10;}
+.panel-title{font-family:'Rajdhani',sans-serif;font-weight:300;font-size:11px;letter-spacing:.20em;color:var(--accent);text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.sec{font-size:9px;letter-spacing:.16em;color:var(--dim);margin:8px 0 3px;}
+.row{display:grid;grid-template-columns:90px 1fr 44px;align-items:center;gap:5px;margin:2px 0;}
+.lbl{color:#6070a0;font-size:10px;}
+.sub-lbl{color:var(--dim);font-size:9px;margin-top:1px;}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:rgba(58,144,255,0.15);border-radius:2px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:9px;height:9px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 7px rgba(58,144,255,.8);}
+.val{color:var(--accent);font-size:10px;text-align:right;}
+
+#theme-btn{position:absolute;top:10px;right:12px;z-index:20;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:4px 8px;cursor:pointer;color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:10px;}
+#clear-btn{position:absolute;top:10px;right:90px;z-index:20;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:4px 8px;cursor:pointer;color:var(--accent2);font-family:'Share Tech Mono',monospace;font-size:10px;}
+#pause-btn{position:absolute;top:10px;right:150px;z-index:20;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:4px 8px;cursor:pointer;color:var(--accent3);font-family:'Share Tech Mono',monospace;font-size:10px;}
+
+canvas{position:absolute;top:50px;left:220px;right:12px;bottom:12px;border:1px solid var(--border);border-radius:3px;}
+body.light canvas{background:rgba(255,255,255,0.3);}
+
+#ctrl{top:50px;left:8px;width:204px;max-height:calc(100vh - 60px);overflow-y:auto;}
+#ctrl::-webkit-scrollbar{width:3px;}
+#ctrl::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+#stats{position:absolute;bottom:18px;left:228px;font-size:10px;color:var(--dim);z-index:10;pointer-events:none;}
+</style>
+</head>
+<body>
+<div id="title">Q-Deformed Double Slit</div>
+<div id="subtitle">Overhead Diffraction &middot; Mode 1: Massive Particle</div>
+<button id="pause-btn" onclick="togglePause()">Pause</button>
+<button id="clear-btn" onclick="clearParticles()">Clear</button>
+<button id="theme-btn" onclick="toggleTheme()">Light</button>
+
+<div class="panel" id="ctrl">
+  <div class="panel-title">Parameters</div>
+  <div class="sec">q-deformation</div>
+  <div class="row"><span class="lbl">q</span><input type="range" id="sl_q" min="1.0" max="2.0" step="0.001" value="1.1097"><span class="val" id="v_q">1.110</span></div>
+  <div class="sub-lbl" id="v_hq">&#8463;q = 0.099</div>
+
+  <div class="sec">slit geometry</div>
+  <div class="row"><span class="lbl">D (spacing)</span><input type="range" id="sl_D" min="0.1" max="2.0" step="0.01" value="0.5"><span class="val" id="v_D">0.50mm</span></div>
+  <div class="row"><span class="lbl">d (width)</span><input type="range" id="sl_d" min="10" max="500" step="1" value="100"><span class="val" id="v_d">100&#181;m</span></div>
+  <div class="row"><span class="lbl">w (thick)</span><input type="range" id="sl_w" min="10" max="200" step="1" value="50"><span class="val" id="v_w">50&#181;m</span></div>
+
+  <div class="sec">wave / beam</div>
+  <div class="row"><span class="lbl">&#955;</span><input type="range" id="sl_lam" min="200" max="900" step="1" value="500"><span class="val" id="v_lam">500nm</span></div>
+  <div class="row"><span class="lbl">w&#8320; (beam)</span><input type="range" id="sl_beam" min="0.05" max="3.0" step="0.01" value="1.0"><span class="val" id="v_beam">1.0mm</span></div>
+  <div class="sub-lbl" style="margin-left:2px;color:var(--accent4);">Gaussian waist at barrier</div>
+
+  <div class="sec">torsion</div>
+  <div class="row"><span class="lbl">Vol(K)</span><input type="range" id="sl_volK" min="0" max="15" step="0.001" value="7.327724"><span class="val" id="v_volK">7.328</span></div>
+  <div class="row"><span class="lbl">Torsion</span><input type="range" id="sl_tNorm" min="0.01" max="5.0" step="0.01" value="1.0"><span class="val" id="v_tNorm">1.00</span></div>
+
+  <div class="sec">simulation</div>
+  <div class="row"><span class="lbl">Rate</span><input type="range" id="sl_rate" min="1" max="50" step="1" value="10"><span class="val" id="v_rate">10/f</span></div>
+  <div class="row"><span class="lbl">Speed</span><input type="range" id="sl_speed" min="1" max="12" step="0.5" value="4"><span class="val" id="v_speed">4</span></div>
+
+  <div class="sec" style="margin-top:12px;">propagation (&#167;1.9)</div>
+  <div style="font-size:9px;line-height:1.8;color:var(--dim);margin-top:4px;">
+    <span style="color:var(--accent);">&#119967;<sub>&#8711;</sub>&#968; = 0</span> (categorical Dirac)<br>
+    &#119967;<sub>&#8711;</sub> = q<sup>-1</sup>&#8711; + (1&#8722;q<sup>-1</sup>)&#953;<sub>&#958;</sub>&#8711;<br>
+    <span style="color:var(--dim);font-size:8px;">&#8463;<sub>q</sub> = 1&#8722;q<sup>-1</sup> (wavefront spread)</span>
+  </div>
+  <div class="sec">q-phase (&#167;11)</div>
+  <div style="font-size:9px;line-height:1.8;color:var(--dim);margin-top:4px;">
+    &#934;<sub>q</sub> = q<sup>-1</sup>&#934;<sub>geom</sub> + (1&#8722;q<sup>-1</sup>)&#934;<sub>Reeb</sub><br>
+    &#964;(y) = &#8463;<sub>q</sub> Vol(K) &#951;&#178; kw
+  </div>
+  <div class="sec" style="margin-top:6px;">
+    <a href="double_slit_simulator.html" style="color:var(--accent);font-size:8px;text-decoration:none;letter-spacing:.12em;">&#9654; ANALYTICAL VIEW</a>
+  </div>
+</div>
+
+<canvas id="cv"></canvas>
+<div id="stats">particles: 0</div>
+
+<script>
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const dpr = devicePixelRatio;
+
+// ── Slider wiring ───────────────────────────────────────────────
+const sl = {
+  q: document.getElementById('sl_q'),
+  D: document.getElementById('sl_D'),
+  d: document.getElementById('sl_d'),
+  w: document.getElementById('sl_w'),
+  lam: document.getElementById('sl_lam'),
+  beam: document.getElementById('sl_beam'),
+  volK: document.getElementById('sl_volK'),
+  tNorm: document.getElementById('sl_tNorm'),
+  rate: document.getElementById('sl_rate'),
+  speed: document.getElementById('sl_speed'),
+};
+const vl = {
+  q: document.getElementById('v_q'),
+  D: document.getElementById('v_D'),
+  d: document.getElementById('v_d'),
+  w: document.getElementById('v_w'),
+  lam: document.getElementById('v_lam'),
+  beam: document.getElementById('v_beam'),
+  volK: document.getElementById('v_volK'),
+  tNorm: document.getElementById('v_tNorm'),
+  rate: document.getElementById('v_rate'),
+  speed: document.getElementById('v_speed'),
+};
+
+function P() {
+  return {
+    q: +sl.q.value, D: +sl.D.value, d: +sl.d.value, w: +sl.w.value,
+    lam: +sl.lam.value, beam: +sl.beam.value,
+    volK: +sl.volK.value, tNorm: +sl.tNorm.value,
+    rate: +sl.rate.value, speed: +sl.speed.value,
+  };
+}
+
+function updateLabels(p) {
+  vl.q.textContent = p.q.toFixed(3);
+  vl.D.textContent = p.D.toFixed(2)+'mm';
+  vl.d.textContent = Math.round(p.d)+'\u00B5m';
+  vl.w.textContent = Math.round(p.w)+'\u00B5m';
+  vl.lam.textContent = Math.round(p.lam)+'nm';
+  vl.beam.textContent = p.beam.toFixed(2)+'mm';
+  vl.volK.textContent = p.volK.toFixed(3);
+  vl.tNorm.textContent = p.tNorm.toFixed(2);
+  vl.rate.textContent = Math.round(p.rate)+'/f';
+  vl.speed.textContent = p.speed.toFixed(1);
+  const hq = hbar_q(p.q);
+  document.getElementById('v_hq').innerHTML = '\u210Fq = '+hq.toFixed(4);
+}
+
+Object.values(sl).forEach(s => s.addEventListener('input', () => {
+  const p = P();
+  updateLabels(p);
+  recomputeDistribution(p);
+}));
+
+// ── Physics ─────────────────────────────────────────────────────
+function hbar_q(q) { return q === 1.0 ? 0 : 1 - 1/q; }
+
+function torsionPhase(y, slitHalf, q, volK, tNorm, k, w) {
+  const hq = hbar_q(q);
+  if (hq === 0) return 0;
+  const eta = Math.abs(y) / slitHalf;
+  return hq * volK * tNorm * eta * eta * k * w;
+}
+
+const N_SLIT = 80;
+const N_SCREEN = 600;
+
+function computePattern(q, D_mm, d_um, w_um, lam_nm, volK, tNorm, beam_mm) {
+  const lam = lam_nm * 1e-6;
+  const d = d_um * 1e-3;
+  const w = w_um * 1e-3;
+  const k = 2 * Math.PI / lam;
+  const slitHalf = d / 2;
+  const L = 50, H = 500;
+  const s1 = -D_mm/2, s2 = D_mm/2;
+  // Gaussian beam waist (mm) — weights each slit point by exp(-y²/w0²)
+  const w0 = beam_mm || 1.0;
+  const screenMax = 5.0;
+  const intensity = new Float64Array(N_SCREEN);
+  const screenPos = new Float64Array(N_SCREEN);
+  const dx = 2*screenMax/(N_SCREEN-1);
+  for (let i=0;i<N_SCREEN;i++) screenPos[i] = -screenMax + i*dx;
+
+  const slitY = new Float64Array(N_SLIT);
+  const dy = d/(N_SLIT-1);
+  for (let j=0;j<N_SLIT;j++) slitY[j] = -slitHalf + j*dy;
+
+  for (let i=0;i<N_SCREEN;i++) {
+    let re=0, im=0;
+    const xs = screenPos[i];
+    for (let s=0;s<2;s++) {
+      const sc = s===0?s1:s2;
+      for (let j=0;j<N_SLIT;j++) {
+        const ys = sc + slitY[j];
+        // Gaussian beam envelope: weight by exp(-ys²/w0²)
+        const gw = Math.exp(-(ys*ys)/(w0*w0));
+        const r1 = Math.sqrt(L*L+ys*ys);
+        const r2 = Math.sqrt(H*H+(xs-ys)*(xs-ys));
+        let phase = k*(r1+r2);
+        phase += torsionPhase(slitY[j], slitHalf, q, volK, tNorm, k, w);
+        re += gw * Math.cos(phase);
+        im += gw * Math.sin(phase);
+      }
+    }
+    intensity[i] = re*re + im*im;
+  }
+  let mx=0;
+  for (let i=0;i<N_SCREEN;i++) if(intensity[i]>mx) mx=intensity[i];
+  if(mx>0) for (let i=0;i<N_SCREEN;i++) intensity[i]/=mx;
+  return {screenPos, intensity};
+}
+
+// ── CDF for importance sampling ─────────────────────────────────
+let cachedCDF = null;
+let cachedPattern = null;
+let cdfKey = '';
+
+function recomputeDistribution(p) {
+  const key = [p.q,p.D,p.d,p.w,p.lam,p.beam,p.volK,p.tNorm].join(',');
+  if (key === cdfKey) return;
+  cdfKey = key;
+  cachedPattern = computePattern(p.q, p.D, p.d, p.w, p.lam, p.volK, p.tNorm, p.beam);
+  // build CDF
+  const cdf = new Float64Array(N_SCREEN);
+  cdf[0] = cachedPattern.intensity[0];
+  for (let i=1;i<N_SCREEN;i++) cdf[i] = cdf[i-1] + cachedPattern.intensity[i];
+  const total = cdf[N_SCREEN-1];
+  if (total>0) for (let i=0;i<N_SCREEN;i++) cdf[i]/=total;
+  cachedCDF = cdf;
+}
+
+function sampleScreenPos() {
+  const u = Math.random();
+  // binary search in CDF
+  let lo=0, hi=N_SCREEN-1;
+  while(lo<hi) {
+    const mid = (lo+hi)>>1;
+    if (cachedCDF[mid] < u) lo=mid+1; else hi=mid;
+  }
+  // interpolate
+  const frac = Math.random();
+  const sp = cachedPattern.screenPos;
+  if (lo < N_SCREEN-1) return sp[lo] + frac*(sp[lo+1]-sp[lo]);
+  return sp[lo];
+}
+
+// ── Particles ───────────────────────────────────────────────────
+let particles = [];    // {x, y, vx, vy, landed, screenY}
+let wallHits = [];     // landed y positions (in screen-space pixels)
+const HIST_BINS = 200;
+let histogram = new Float64Array(HIST_BINS);
+let totalLanded = 0;
+let paused = false;
+
+function clearParticles() {
+  particles = [];
+  wallHits = [];
+  histogram = new Float64Array(HIST_BINS);
+  totalLanded = 0;
+}
+
+// ── Layout geometry (in canvas pixels) ──────────────────────────
+// Overhead view: x runs left→right, y runs top→bottom (vertical = transverse axis)
+// Laser at x=laserX, barrier at x=barrierX, wall at x=wallX
+
+function layout(W, H) {
+  const pad = 30*dpr;
+  const laserX = pad + 30*dpr;
+  const wallX = W - pad - 80*dpr;  // leave room for analytic curve on right
+  const barrierX = laserX + (wallX - laserX) * 0.35;
+  const centerY = H / 2;
+  return { laserX, barrierX, wallX, centerY, W, H, pad,
+           curveRight: W - pad };
+}
+
+// ── Resize ──────────────────────────────────────────────────────
+function resize() {
+  const rect = cv.getBoundingClientRect();
+  cv.width = rect.width * dpr;
+  cv.height = rect.height * dpr;
+}
+
+// ── Color helper ────────────────────────────────────────────────
+function css(v) { return getComputedStyle(document.body).getPropertyValue(v).trim(); }
+
+// ── Draw ────────────────────────────────────────────────────────
+function draw() {
+  const W = cv.width, H = cv.height;
+  const c = ctx;
+  c.clearRect(0, 0, W, H);
+
+  const p = P();
+  const L = layout(W, H);
+  const accent = css('--accent');
+  const accent2 = css('--accent2');
+  const accent3 = css('--accent3');
+  const accent4 = css('--accent4');
+  const dim = css('--dim');
+  const text = css('--text');
+  const border = css('--border');
+  const isLight = document.body.classList.contains('light');
+
+  // Slit geometry in pixels
+  const slitSpan = H * 0.6;  // total vertical extent available for slits
+  const D_px = (p.D / 2.0) * slitSpan * 0.5;  // half-spacing in pixels
+  const d_px = (p.d / 500) * slitSpan * 0.12;  // slit opening half-width
+  if (d_px < 1) d_px_clamp = 2; else d_px_clamp = d_px;
+  const w_px = Math.max(3*dpr, (p.w / 200) * 20 * dpr);  // barrier thickness
+
+  const slit1_cy = L.centerY - D_px;  // upper slit center
+  const slit2_cy = L.centerY + D_px;  // lower slit center
+
+  // ── Draw laser source ─────────────────────────────────────
+  c.fillStyle = accent2;
+  c.shadowColor = accent2;
+  c.shadowBlur = 12*dpr;
+  c.fillRect(L.laserX - 6*dpr, L.centerY - 18*dpr, 12*dpr, 36*dpr);
+  c.shadowBlur = 0;
+
+  // laser label
+  c.fillStyle = accent2;
+  c.font = (9*dpr)+'px "Share Tech Mono"';
+  c.textAlign = 'center';
+  c.fillText('SOURCE', L.laserX, L.centerY + 30*dpr);
+
+  // ── Draw Gaussian beam envelope ─────────────────────────
+  // beam waist w0 in mm → pixel half-height at barrier
+  const beamHalfPx = (p.beam / 2.0) * slitSpan * 0.5;
+  // Draw filled Gaussian cone from laser to barrier
+  c.beginPath();
+  c.moveTo(L.laserX + 6*dpr, L.centerY);
+  c.lineTo(L.barrierX - w_px/2, L.centerY - beamHalfPx);
+  c.lineTo(L.barrierX - w_px/2, L.centerY + beamHalfPx);
+  c.closePath();
+  const beamGrad = c.createLinearGradient(L.laserX, 0, L.barrierX, 0);
+  beamGrad.addColorStop(0, 'rgba(255,85,51,0.12)');
+  beamGrad.addColorStop(1, 'rgba(255,85,51,0.04)');
+  c.fillStyle = beamGrad;
+  c.fill();
+  // beam edges
+  c.strokeStyle = accent2;
+  c.globalAlpha = 0.2;
+  c.lineWidth = 1*dpr;
+  c.setLineDash([4*dpr, 4*dpr]);
+  c.beginPath();
+  c.moveTo(L.laserX + 6*dpr, L.centerY);
+  c.lineTo(L.barrierX - w_px/2, L.centerY - beamHalfPx);
+  c.moveTo(L.laserX + 6*dpr, L.centerY);
+  c.lineTo(L.barrierX - w_px/2, L.centerY + beamHalfPx);
+  c.stroke();
+  c.setLineDash([]);
+  c.globalAlpha = 1;
+  // beam waist indicator at barrier
+  c.strokeStyle = accent2;
+  c.globalAlpha = 0.4;
+  c.lineWidth = 1.5*dpr;
+  c.beginPath();
+  c.moveTo(L.barrierX - w_px/2 - 8*dpr, L.centerY - beamHalfPx);
+  c.lineTo(L.barrierX - w_px/2 - 8*dpr, L.centerY + beamHalfPx);
+  c.stroke();
+  c.globalAlpha = 1;
+  // label w0
+  c.fillStyle = accent2;
+  c.globalAlpha = 0.6;
+  c.font = (7*dpr)+'px "Share Tech Mono"';
+  c.textAlign = 'right';
+  c.fillText('w\u2080', L.barrierX - w_px/2 - 10*dpr, L.centerY + 3*dpr);
+  c.globalAlpha = 1;
+
+  // ── Draw barrier ──────────────────────────────────────────
+  const barrierColor = isLight ? 'rgba(30,40,80,0.7)' : 'rgba(100,130,200,0.4)';
+  c.fillStyle = barrierColor;
+
+  // Top section (above upper slit)
+  c.fillRect(L.barrierX - w_px/2, 0, w_px, slit1_cy - d_px_clamp);
+
+  // Between slits
+  c.fillRect(L.barrierX - w_px/2, slit1_cy + d_px_clamp, w_px,
+             (slit2_cy - d_px_clamp) - (slit1_cy + d_px_clamp));
+
+  // Bottom section (below lower slit)
+  c.fillRect(L.barrierX - w_px/2, slit2_cy + d_px_clamp, w_px,
+             H - (slit2_cy + d_px_clamp));
+
+  // Slit openings — draw glowing gaps
+  for (let s = 0; s < 2; s++) {
+    const scy = s===0 ? slit1_cy : slit2_cy;
+    c.fillStyle = accent;
+    c.globalAlpha = 0.25;
+    c.shadowColor = accent;
+    c.shadowBlur = 6*dpr;
+    c.fillRect(L.barrierX - w_px/2 - 1, scy - d_px_clamp, w_px + 2, 2*d_px_clamp);
+    c.shadowBlur = 0;
+    c.globalAlpha = 1;
+  }
+
+  // barrier label
+  c.fillStyle = dim;
+  c.font = (8*dpr)+'px "Share Tech Mono"';
+  c.textAlign = 'center';
+  c.fillText('BARRIER', L.barrierX, H - 8*dpr);
+
+  // ── Draw detection wall ───────────────────────────────────
+  c.fillStyle = isLight ? 'rgba(30,40,80,0.15)' : 'rgba(100,130,200,0.08)';
+  c.fillRect(L.wallX - 2*dpr, 0, 4*dpr, H);
+
+  c.fillStyle = dim;
+  c.font = (8*dpr)+'px "Share Tech Mono"';
+  c.textAlign = 'center';
+  c.fillText('SCREEN', L.wallX, H - 8*dpr);
+
+  // ── Draw histogram on wall ────────────────────────────────
+  if (totalLanded > 0) {
+    let maxBin = 0;
+    for (let i=0;i<HIST_BINS;i++) if(histogram[i]>maxBin) maxBin=histogram[i];
+
+    const histWidth = 50 * dpr;  // max horizontal extent of histogram bars
+    c.fillStyle = accent;
+    c.globalAlpha = 0.5;
+    for (let i=0;i<HIST_BINS;i++) {
+      if (histogram[i] === 0) continue;
+      const frac = i / (HIST_BINS-1);
+      const py = H * 0.05 + frac * H * 0.9;
+      const barW = (histogram[i]/maxBin) * histWidth;
+      const barH = Math.max(1, (H*0.9)/HIST_BINS);
+      c.fillRect(L.wallX + 2*dpr, py - barH/2, barW, barH);
+    }
+    c.globalAlpha = 1;
+  }
+
+  // ── Draw analytic curve ───────────────────────────────────
+  if (cachedPattern) {
+    const sp = cachedPattern.screenPos;
+    const inten = cachedPattern.intensity;
+    const curveMaxX = L.curveRight;
+    const curveMinX = L.wallX + 4*dpr;
+    const curveW = curveMaxX - curveMinX;
+
+    // Map screen position range to vertical pixel range
+    const spMin = sp[0], spMax = sp[sp.length-1];
+
+    // Classical baseline (q=1)
+    const classical = computePattern(1.0, p.D, p.d, p.w, p.lam, 0, 0, p.beam);
+    c.beginPath();
+    c.strokeStyle = dim;
+    c.lineWidth = 1*dpr;
+    c.globalAlpha = 0.4;
+    for (let i=0;i<N_SCREEN;i++) {
+      const frac = (sp[i]-spMin)/(spMax-spMin);
+      const py = H*0.05 + frac * H*0.9;
+      const px = curveMinX + classical.intensity[i] * curveW;
+      if (i===0) c.moveTo(px, py); else c.lineTo(px, py);
+    }
+    c.stroke();
+    c.globalAlpha = 1;
+
+    // Q-deformed curve
+    c.beginPath();
+    c.strokeStyle = accent;
+    c.lineWidth = 1.5*dpr;
+    c.shadowColor = accent;
+    c.shadowBlur = 4*dpr;
+    for (let i=0;i<N_SCREEN;i++) {
+      const frac = (sp[i]-spMin)/(spMax-spMin);
+      const py = H*0.05 + frac * H*0.9;
+      const px = curveMinX + inten[i] * curveW;
+      if (i===0) c.moveTo(px, py); else c.lineTo(px, py);
+    }
+    c.stroke();
+    c.shadowBlur = 0;
+
+    // curve label
+    c.fillStyle = accent;
+    c.font = (8*dpr)+'px "Share Tech Mono"';
+    c.textAlign = 'left';
+    c.fillText('I(y)', curveMinX + 4*dpr, H*0.04);
+    c.fillStyle = dim;
+    c.fillText('q=1', curveMinX + 30*dpr, H*0.04);
+  }
+
+  // ── Draw flying particles ─────────────────────────────────
+  for (const pt of particles) {
+    if (pt.landed) continue;
+    c.beginPath();
+    c.arc(pt.x, pt.y, 1.5*dpr, 0, Math.PI*2);
+    const alpha = Math.min(1, 0.3 + 0.7 * ((pt.x - L.laserX) / (L.wallX - L.laserX)));
+    c.fillStyle = accent;
+    c.globalAlpha = alpha;
+    c.fill();
+  }
+  c.globalAlpha = 1;
+
+  // ── Draw landed dots on wall ──────────────────────────────
+  c.fillStyle = accent;
+  c.globalAlpha = 0.7;
+  for (const wy of wallHits) {
+    c.beginPath();
+    c.arc(L.wallX, wy, 1*dpr, 0, Math.PI*2);
+    c.fill();
+  }
+  c.globalAlpha = 1;
+
+  // ── Stats ─────────────────────────────────────────────────
+  document.getElementById('stats').textContent =
+    'particles: ' + totalLanded + '  |  q='+p.q.toFixed(3)+
+    '  \u210Fq='+hbar_q(p.q).toFixed(4);
+}
+
+// ── Simulation step ─────────────────────────────────────────────
+function step() {
+  const p = P();
+  const W = cv.width, H = cv.height;
+  const L = layout(W, H);
+
+  if (!paused) {
+    // Spawn new particles
+    for (let i = 0; i < p.rate; i++) {
+      // Sample where this particle will land on the screen
+      const screenY_mm = sampleScreenPos();
+      // Map to pixel y
+      const sp = cachedPattern.screenPos;
+      const spMin = sp[0], spMax = sp[sp.length-1];
+      const frac = (screenY_mm - spMin) / (spMax - spMin);
+      const targetY = H*0.05 + frac * H*0.9;
+
+      // Which slit? pick randomly weighted by proximity
+      const D_px = (p.D / 2.0) * H * 0.6 * 0.5 * 0.5;
+      const slit1_cy = L.centerY - D_px;
+      const slit2_cy = L.centerY + D_px;
+
+      // Choose slit probabilistically
+      const d1 = Math.abs(targetY - slit1_cy);
+      const d2 = Math.abs(targetY - slit2_cy);
+      const p1 = d2 / (d1 + d2 + 0.001);
+      const slitY = Math.random() < p1 ? slit1_cy : slit2_cy;
+
+      // Particle starts at laser, flies toward chosen slit, then curves to target
+      particles.push({
+        x: L.laserX + 6*dpr,
+        y: L.centerY,
+        // Phase 1: fly to slit
+        phase: 0,
+        slitY: slitY,
+        targetY: targetY,
+        speed: p.speed * dpr,
+      });
+    }
+
+    // Move particles
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const pt = particles[i];
+      if (pt.landed) continue;
+
+      if (pt.phase === 0) {
+        // Flying toward barrier
+        const dx = L.barrierX - pt.x;
+        const dy = pt.slitY - pt.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < pt.speed * 2) {
+          pt.phase = 1;
+          pt.x = L.barrierX;
+          pt.y = pt.slitY;
+        } else {
+          pt.x += (dx/dist) * pt.speed;
+          pt.y += (dy/dist) * pt.speed;
+        }
+      } else {
+        // Flying from slit to wall
+        const dx = L.wallX - pt.x;
+        const dy = pt.targetY - pt.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < pt.speed * 2) {
+          // Landed
+          pt.landed = true;
+          pt.x = L.wallX;
+          pt.y = pt.targetY;
+
+          // Add jitter
+          const jy = pt.targetY + (Math.random()-0.5) * 2 * dpr;
+          wallHits.push(jy);
+
+          // Update histogram
+          const binFrac = (jy - H*0.05) / (H*0.9);
+          const bin = Math.floor(binFrac * HIST_BINS);
+          if (bin >= 0 && bin < HIST_BINS) histogram[bin]++;
+          totalLanded++;
+
+          // Remove particle from active list (keep wallHits)
+          particles.splice(i, 1);
+        } else {
+          pt.x += (dx/dist) * pt.speed;
+          pt.y += (dy/dist) * pt.speed;
+        }
+      }
+    }
+
+    // Cap wall hits for performance (keep histogram, thin visual dots)
+    if (wallHits.length > 8000) {
+      wallHits = wallHits.filter((_, i) => i % 2 === 0);
+    }
+  }
+
+  draw();
+  requestAnimationFrame(step);
+}
+
+// ── Controls ────────────────────────────────────────────────────
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  document.getElementById('theme-btn').textContent =
+    document.body.classList.contains('light') ? 'Dark' : 'Light';
+}
+
+function togglePause() {
+  paused = !paused;
+  document.getElementById('pause-btn').textContent = paused ? 'Run' : 'Pause';
+}
+
+// ── Theme sync with viewer ───────────────────────────────────────
+(function(){
+  var p = new URLSearchParams(location.search);
+  if (p.get('theme') === 'light') document.body.classList.add('light');
+  else document.body.classList.remove('light');
+  var btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'folio-theme') {
+      if (e.data.theme === 'light') document.body.classList.add('light');
+      else document.body.classList.remove('light');
+      if (btn) btn.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
+    }
+  });
+})();
+
+// ── Init ────────────────────────────────────────────────────────
+resize();
+window.addEventListener('resize', resize);
+
+const p0 = P();
+updateLabels(p0);
+recomputeDistribution(p0);
+step();
+</script>
+</body>
+</html>

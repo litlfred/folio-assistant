@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bring's Surface — Quaternionic Spectral Resolvents</title>
+<style>
+
+:root {
+  --bg:      #020710;
+  --panel:   rgba(3,10,30,0.93);
+  --border:  rgba(60,120,255,0.20);
+  --accent:  #3a90ff;
+  --accent2: #ff5533;
+  --accent3: #33ffaa;
+  --accent4: #ffaa33;
+  --accent5: #cc44ff;
+  --text:    #b8ccff;
+  --dim:     #3a4a78;
+}
+body.light {
+  --bg:      #f0f4ff;
+  --panel:   rgba(235,240,255,0.96);
+  --border:  rgba(60,80,180,0.25);
+  --accent:  #1a5fcc;
+  --accent2: #cc3300;
+  --accent3: #006633;
+  --accent4: #885500;
+  --accent5: #770099;
+  --text:    #1a2855;
+  --dim:     #6070a0;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background:var(--bg); color:var(--text);
+  font-family:'Share Tech Mono',monospace; font-size:11px;
+  overflow:hidden; user-select:none;
+}
+#canvas-wrap { position:fixed; inset:0; }
+
+.panel {
+  position:absolute; background:var(--panel);
+  border:1px solid var(--border); border-radius:3px;
+  padding:13px; backdrop-filter:blur(18px);
+}
+.panel-title {
+  font-family:'Rajdhani',sans-serif; font-weight:300;
+  font-size:11px; letter-spacing:.22em; color:var(--accent);
+  text-transform:uppercase; margin-bottom:10px;
+  padding-bottom:6px; border-bottom:1px solid var(--border);
+}
+
+.sec { font-size:9px; letter-spacing:.18em; color:var(--dim); margin:10px 0 4px; }
+.row { display:grid; grid-template-columns:96px 1fr 46px; align-items:center; gap:6px; margin:4px 0; }
+.lbl { color:#6070a0; font-size:10px; }
+input[type=range] {
+  -webkit-appearance:none; width:100%; height:3px;
+  background:rgba(58,144,255,0.15); border-radius:2px; outline:none; cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:9px; height:9px; border-radius:50%;
+  background:var(--accent); cursor:pointer; box-shadow:0 0 7px rgba(58,144,255,.8);
+}
+.val { color:var(--accent); font-size:10px; text-align:right; }
+
+#vis-opts { display:flex; gap:7px; flex-wrap:wrap; margin-top:9px; }
+.ck { display:flex; align-items:center; gap:4px; cursor:pointer; font-size:9px; color:var(--dim); }
+.ck input { accent-color:var(--accent); }
+
+#legend { display:flex; gap:6px; flex-wrap:wrap; margin-top:9px; }
+.leg { display:flex; align-items:center; gap:4px; font-size:9px; color:#4a5a80; }
+.dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+
+#mode-row { display:flex; gap:5px; margin-top:10px; flex-wrap:wrap; }
+.pill {
+  padding:3px 8px; border-radius:12px; font-size:9px; cursor:pointer;
+  border:1px solid var(--border); color:var(--dim); transition:.15s;
+}
+.pill.active { background:rgba(58,144,255,.22); color:var(--accent); border-color:var(--accent); }
+
+#mstat { margin-top:8px; font-size:9px; color:var(--dim); }
+
+#stats { top:14px; left:14px; width:215px; }
+#stats-body { line-height:1.95; color:#4a5a80; font-size:10px; }
+#stats-body .h1 { color:var(--accent3); }
+#stats-body .h2 { color:var(--accent4); }
+#stats-body .h3 { color:var(--accent5); }
+
+#info { bottom:14px; left:14px; width:318px; }
+.cgrid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px; }
+.ci { background:rgba(58,144,255,.04); border:1px solid rgba(58,144,255,.09); border-radius:2px; padding:5px 7px; }
+.ci-lbl { color:var(--dim); font-size:8px; margin-bottom:1px; }
+.ci-val { color:var(--accent3); font-size:10px; font-weight:bold; }
+
+.gf-row { display:flex; align-items:center; gap:5px; margin:3px 0; }
+.gf-lbl { width:68px; font-size:9px; color:var(--dim); }
+.gf-track { flex:1; height:3px; background:rgba(255,255,255,.04); border-radius:2px; overflow:hidden; }
+.gf-fill  { height:100%; border-radius:2px; transition:width .08s; }
+.gf-num   { width:52px; font-size:9px; text-align:right; }
+
+#chart-wrap { margin-top:10px; }
+.chart-lbl { font-size:9px; color:var(--dim); margin-bottom:3px; }
+#growth-chart { border:1px solid var(--border); border-radius:2px; background:rgba(0,0,0,.35); display:block; }
+
+#formula { bottom:14px; right:14px; width:244px; font-size:10px; line-height:1.85; }
+#formula .fm  { color:rgba(58,144,255,.75); }
+#formula .fd  { color:rgba(255,85,51,.75); }
+#formula .ft  { color:rgba(51,255,170,.75); }
+#formula .fdm { color:rgba(204,68,255,.65); }
+
+.axl {
+  position:fixed; font-size:12px; font-weight:bold; pointer-events:none;
+  text-shadow:0 0 8px currentColor; transform:translate(-50%,-50%);
+}
+#tip {
+  position:fixed; background:var(--panel); border:1px solid var(--border);
+  border-radius:3px; padding:6px 10px; font-size:10px; pointer-events:none;
+  display:none; line-height:1.8;
+}
+</style>
+</head>
+<body>
+<div id="canvas-wrap"></div>
+
+<!-- CONTROLS -->
+<div class="panel" id="ctrl" style="top:14px;right:14px;width:256px;">
+  <div class="panel-title">Spectral Resolvents  §3.1</div>
+
+  <div class="sec">── Radial range  r = ‖L∧F⁺‖ ──────</div>
+  <div class="row">
+    <span class="lbl">r<sub>min</sub></span>
+    <input type="range" id="rmin" min="0.02" max="2.0"  step="0.01" value="0.12">
+    <span class="val" id="v_rmin">0.12</span>
+  </div>
+  <div class="row">
+    <span class="lbl">r<sub>max</sub></span>
+    <input type="range" id="rmax" min="0.2"  max="6.0"  step="0.05" value="2.5">
+    <span class="val" id="v_rmax">2.50</span>
+  </div>
+
+  <div class="sec">── Grid density ────────────────────</div>
+  <div class="row">
+    <span class="lbl">δr  (radial)</span>
+    <input type="range" id="dr"    min="0.02" max="0.80" step="0.01" value="0.14">
+    <span class="val" id="v_dr">0.14</span>
+  </div>
+  <div class="row">
+    <span class="lbl">δζ  (angular)</span>
+    <input type="range" id="dzeta" min="0.01"  max="0.50" step="0.005" value="0.09">
+    <span class="val" id="v_dzeta">0.090</span>
+  </div>
+
+  <div class="sec">── q-series truncation N ────────────</div>
+  <div class="row">
+    <span class="lbl">N  (precision)</span>
+    <input type="range" id="qN" min="4" max="28" step="1" value="18">
+    <span class="val" id="v_qN">18</span>
+  </div>
+
+  <div class="sec">── Projection mode ─────────────────</div>
+  <div id="mode-row">
+    <div class="pill active" data-mode="omega">ω-coords</div>
+    <div class="pill"        data-mode="sp1"  >+Sp(1) rot</div>
+    <div class="pill"        data-mode="raw"  >raw xⱼ</div>
+  </div>
+
+  <div id="vis-opts">
+    <label class="ck"><input type="checkbox" id="cb_surf" checked> Surface</label>
+    <label class="ck"><input type="checkbox" id="cb_grid" checked> Grid</label>
+    <label class="ck"><input type="checkbox" id="cb_tess" checked> Tess.</label>
+    <label class="ck"><input type="checkbox" id="cb_axes" checked> Axes</label>
+    <label class="ck"><input type="checkbox" id="cb_auto" checked> Rotate</label>
+    <label class="ck"><input type="checkbox" id="cb_all"  checked> All branches</label>
+  </div>
+
+  <div id="legend">
+    <div class="leg"><div class="dot" style="background:#3a90ff"></div>β₁=π−3α</div>
+    <div class="leg"><div class="dot" style="background:#ff5533"></div>β₂=(π+α)/3</div>
+    <div class="leg"><div class="dot" style="background:#33ffaa"></div>β₃=(3π+α)/3</div>
+    <div class="leg"><div class="dot" style="background:#ffaa33"></div>β₄=(5π+α)/3</div>
+  </div>
+  <div id="mstat">—</div>
+</div>
+
+<!-- STATS -->
+<div class="panel" id="stats">
+  <div class="panel-title">Resolvent State</div>
+  <div id="stats-body">Drag to orbit · Scroll to zoom<br>Hover surface for live values</div>
+</div>
+
+<!-- INFO -->
+<div class="panel" id="info">
+  <div class="panel-title">Coordinates &amp; Growth Factors</div>
+  <div class="cgrid">
+    <div class="ci"><div class="ci-lbl">|ω₁|  space-like</div><div class="ci-val" id="cw1">—</div></div>
+    <div class="ci"><div class="ci-lbl">|ω₂|  time-like</div><div class="ci-val" id="cw2">—</div></div>
+    <div class="ci"><div class="ci-lbl">|ω₃|  time-like</div><div class="ci-val" id="cw3">—</div></div>
+    <div class="ci"><div class="ci-lbl">r = ‖L∧F⁺‖</div><div class="ci-val" id="cr">—</div></div>
+    <div class="ci"><div class="ci-lbl">q = e⁻ʳ</div><div class="ci-val" id="cq">—</div></div>
+    <div class="ci"><div class="ci-lbl">ℏ_q = 1−q</div><div class="ci-val" id="chq">—</div></div>
+  </div>
+
+  <div style="margin-top:9px;">
+    <div class="sec" style="margin-top:0">── Growth factors (Def 3.21) ──────────────</div>
+    <div class="gf-row">
+      <span class="gf-lbl">g₁=1/lnq(1+r)</span>
+      <div class="gf-track"><div class="gf-fill" id="b_g1" style="background:var(--accent); width:0%"></div></div>
+      <span class="gf-num" id="n_g1" style="color:var(--accent)">—</span>
+    </div>
+    <div class="gf-row">
+      <span class="gf-lbl">g₂=expq(r)−1</span>
+      <div class="gf-track"><div class="gf-fill" id="b_g2" style="background:var(--accent2); width:0%"></div></div>
+      <span class="gf-num" id="n_g2" style="color:var(--accent2)">—</span>
+    </div>
+    <div class="gf-row">
+      <span class="gf-lbl">cos_q(r)</span>
+      <div class="gf-track"><div class="gf-fill" id="b_th" style="background:var(--accent5); width:0%"></div></div>
+      <span class="gf-num" id="n_th" style="color:var(--accent5)">—</span>
+    </div>
+    <div class="gf-row">
+      <span class="gf-lbl">mass ∝ g₁·g₂</span>
+      <div class="gf-track"><div class="gf-fill" id="b_mm" style="background:var(--accent3); width:0%"></div></div>
+      <span class="gf-num" id="n_mm" style="color:var(--accent3)">—</span>
+    </div>
+  </div>
+
+  <div id="chart-wrap">
+    <div class="chart-lbl">Growth profiles  g₁(r)  g₂(r)  cosq(r)  mass  vs r:</div>
+    <canvas id="growth-chart" width="290" height="74"></canvas>
+  </div>
+</div>
+
+<!-- FORMULA -->
+<div class="panel" id="formula">
+  <div class="panel-title">Def 3.21 + Rmk 3.23</div>
+  <span class="fm">ω₁ = i · (w₁ + i) / lnq(1+r)</span>   [space-like]<br>
+  <span class="fd">ω₂ = j · (w₂ + i) · (expq(r)−1)</span>  [time-like]<br>
+  <span class="ft">ω₃ = k · (w₃ + i) · (expq(r)−1)</span>  [time-like]<br>
+  <span class="fdm">xⱼ via cosq(α−2πj/5)+cosq(β−4πj/5)</span><br>
+  <span class="fdm">Sp(1): cosq(2θ), sinq(2θ),  θ=π/2·e⁻ʳ</span><br>
+  <span style="color:var(--dim)">q = e⁻ʳ,  ℏ_q = 1−q</span><br>
+  <span style="color:var(--dim)">[n]_q = (1−qⁿ)/(1−q)</span><br>
+  <span style="color:var(--dim)">r→0: ω₁→∞  ω₂→0  (primordial)</span><br>
+  <span style="color:var(--dim)">r→∞: ω₁→0  ω₂→∞  (classical)</span>
+</div>
+
+<!-- axis labels -->
+<div class="axl" id="ax0" style="color:#ff5555">Re(ω₁)</div>
+<div class="axl" id="ax1" style="color:#55ff55">Im(ω₁)</div>
+<div class="axl" id="ax2" style="color:#5588ff">Re(ω₂)</div>
+<div id="tip"></div>
+
+<script src="./three.min.js"></script>
+<script>
+// ════════════════════════════════════════════════════════════════════
+//   BRING'S SURFACE  —  Quaternionic Spectral Resolvent Coordinates
+//   §3.1, Definition 3.21 + Remark 3.23  (Leitner 2026)
+//
+//   Substrate parameter:  q(r) = e^{-r},  r = ‖L ∧ F⁺_A‖
+//   q-integers:           [n]_q = (1 − q^n) / (1 − q)
+//   q-factorial:          [n]_q! = ∏_{k=1}^n [k]_q
+//   q-exponential:        expq(x) = Σ x^n / [n]_q!
+//   q-logarithm:          lnq(1+x) = Σ (-1)^{n+1} x^n / [n]_q
+//   q-cosine:             cosq(x) = Σ (-1)^n x^{2n} / [2n]_q!
+//   q-sine:               sinq(x) = Σ (-1)^n x^{2n+1} / [2n+1]_q!
+//   (Euler: expq(ix) = cosq(x) + i·sinq(x))
+//
+//   DFT resolvents:  w_k = (1/√5) Σ_j ζ^{kj} x_j,  ζ = e^{2πi/5}
+//   x_j = (2r/√5)[cosq(α − 2πj/5) + cosq(β − 4πj/5)]   ← q-deformed
+//
+//   Growth factors (Def 3.21):
+//     g₁(r) = 1 / lnq(1+r)        → ∞ as r→0  (space-like)
+//     g₂(r) = expq(r) − 1         → 0 as r→0  (time-like)
+//
+//   3D embedding:
+//     X = Re(w₁) · g₁,   Y = Im(w₁) · g₁,   Z = Re(w₂) · g₂
+//
+//   Sp(1) rotation (Rmk 3.23):
+//     θ(r) = (π/2) e^{-r},  rotate by 2θ via cosq(2θ), sinq(2θ)
+//     maximum twist at r→0 (deep quantum), freezes as r→∞
+//
+//   Four β-branches from cubic constraint:
+//     β₁ = π − 3α
+//     β_{2,3,4} = (π + α)/3 + 2kπ/3,  k=0,1,2
+// ════════════════════════════════════════════════════════════════════
+
+const TAU   = 2 * Math.PI;
+const SQRT5 = Math.sqrt(5);
+
+let projMode = 'omega';   // 'omega' | 'sp1' | 'raw'
+
+// ── β branches ────────────────────────────────────────────────────
+const BETAS = [
+  a => Math.PI - 3 * a,
+  a => (Math.PI + a) / 3,
+  a => (3 * Math.PI + a) / 3,
+  a => (5 * Math.PI + a) / 3,
+];
+const BCOLS = [
+  [0.23, 0.56, 1.00],
+  [1.00, 0.33, 0.20],
+  [0.20, 1.00, 0.67],
+  [1.00, 0.67, 0.20],
+];
+
+// ── q-deformed functions ───────────────────────────────────────────
+function qInt(n, q) {
+  if (Math.abs(1 - q) < 1e-10) return n;
+  return (1 - Math.pow(q, n)) / (1 - q);
+}
+
+function qFact(n, q) {
+  let f = 1;
+  for (let k = 1; k <= n; k++) f *= qInt(k, q);
+  return f;
+}
+
+// expq(x) = Σ_{n≥0} x^n / [n]_q!
+function expQ(x, q, N) {
+  let sum = 1, xn = 1;
+  for (let n = 1; n <= N; n++) {
+    xn *= x;
+    const qf = qFact(n, q);
+    if (Math.abs(qf) < 1e-15) break;
+    const t = xn / qf;
+    if (!isFinite(t)) break;
+    sum += t;
+    if (n > 6 && Math.abs(t) < 1e-14 * (1 + Math.abs(sum))) break;
+  }
+  return sum;
+}
+
+// lnq(1+x) = Σ_{n≥1} (-1)^{n+1} x^n / [n]_q
+// Converges well for |x| < 1; we clamp x ≤ 1.8
+function lnQ(x, q, N) {
+  const xc = Math.min(Math.abs(x), 1.8) * Math.sign(x + 1e-30);
+  let sum = 0, xn = 1;
+  for (let n = 1; n <= N; n++) {
+    xn *= xc;
+    const qn = qInt(n, q);
+    if (Math.abs(qn) < 1e-15) break;
+    const t = Math.pow(-1, n + 1) * xn / qn;
+    if (!isFinite(t)) break;
+    sum += t;
+    if (n > 8 && Math.abs(t) < 1e-13 * (1 + Math.abs(sum))) break;
+  }
+  return sum;
+}
+
+// cosq(x) = Σ_{n≥0} (-1)^n x^{2n} / [2n]_q!
+function cosQ(x, q, N) {
+  let sum = 1, xn = 1, x2 = x * x;
+  for (let n = 1; n <= N; n++) {
+    xn *= -x2;
+    const qf = qFact(2 * n, q);
+    if (Math.abs(qf) < 1e-15) break;
+    const t = xn / qf;
+    if (!isFinite(t)) break;
+    sum += t;
+    if (n > 4 && Math.abs(t) < 1e-14 * (1 + Math.abs(sum))) break;
+  }
+  return sum;
+}
+
+// sinq(x) = Σ_{n≥0} (-1)^n x^{2n+1} / [2n+1]_q!
+function sinQ(x, q, N) {
+  let sum = x, xn = x, x2 = x * x;
+  for (let n = 1; n <= N; n++) {
+    xn *= -x2;
+    const qf = qFact(2 * n + 1, q);
+    if (Math.abs(qf) < 1e-15) break;
+    const t = xn / qf;
+    if (!isFinite(t)) break;
+    sum += t;
+    if (n > 4 && Math.abs(t) < 1e-14 * (1 + Math.abs(sum))) break;
+  }
+  return sum;
+}
+
+// ── Growth factors at radius r ─────────────────────────────────────
+const MAX_G = 45;   // clamp to avoid degeneracy near r→0
+
+function growthFactors(r, N) {
+  const q  = Math.exp(-r);
+  const lv = lnQ(r, q, N);
+  const ev = expQ(r, q, N);
+  const cq = cosQ(r, q, N);                  // q-cosine of r
+  const g1 = Math.abs(lv) < 1e-9
+    ? MAX_G
+    : Math.max(-MAX_G, Math.min(MAX_G, 1 / lv));
+  const g2 = Math.max(-MAX_G, Math.min(MAX_G, ev - 1));
+  const th = (Math.PI / 2) * Math.exp(-r);   // Sp(1) twist angle
+  return { q, g1, g2, th, cq, lv, ev };
+}
+
+// ── DFT resolvent w_k ─────────────────────────────────────────────
+function wk(xs, k) {
+  let re = 0, im = 0;
+  for (let j = 0; j < 5; j++) {
+    const a = TAU * k * j / 5;
+    re += xs[j] * Math.cos(a);
+    im += xs[j] * Math.sin(a);
+  }
+  return { re: re / SQRT5, im: im / SQRT5 };
+}
+
+// ── x_j from (r, α, β) via DFT inversion — q-deformed cosines ────
+function bringXj(r, alpha, beta, q, N) {
+  const xs = new Array(5);
+  for (let j = 0; j < 5; j++)
+    xs[j] = (2 * r / SQRT5) * (
+      cosQ(alpha - TAU * j / 5,     q, N) +
+      cosQ(beta  - TAU * 2 * j / 5, q, N)
+    );
+  return xs;
+}
+
+// ── Sp(1) rotation around ĵ by 2θ — q-deformed trig ──────────────
+function sp1Rot(X, Y, Z, th, q, N) {
+  const a  = 2 * th;
+  const ca = cosQ(a, q, N);
+  const sa = sinQ(a, q, N);
+  return { x: X * ca + Z * sa, y: Y, z: -X * sa + Z * ca };
+}
+
+// ── Quaternionic Multiplication ───────────────────────────────────
+function qMul(q, p) {
+  return [
+    q[0]*p[0] - q[1]*p[1] - q[2]*p[2] - q[3]*p[3],
+    q[0]*p[1] + q[1]*p[0] + q[2]*p[3] - q[3]*p[2],
+    q[0]*p[2] - q[1]*p[3] + q[2]*p[0] + q[3]*p[1],
+    q[0]*p[3] + q[1]*p[2] - q[2]*p[1] + q[3]*p[0]
+  ];
+}
+
+// ── Full 3D point in chosen projection mode ───────────────────────
+function point3D(r, alpha, b, gf, N) {
+  const beta    = BETAS[b](alpha);
+  const resolved = gf || growthFactors(r, N);
+  const { g1, g2, th, q } = resolved;
+  const xs = bringXj(r, alpha, beta, q, N);
+
+  if (projMode === 'raw') return { x: xs[0], y: xs[1], z: xs[2] };
+
+  const W1 = wk(xs, 1);
+  const W2 = wk(xs, 2);
+  const W3 = wk(xs, 3);
+
+  W1.im += 1.0;
+  W2.im += 1.0;
+  W3.im += 1.0;
+
+  const p_real = -g1 * W1.im;
+  const p_i = g1 * W1.re;
+  const p_j = g2 * (W2.re + W3.im);
+  const p_k = g2 * (W3.re - W2.im);
+
+  if (projMode === 'sp1') {
+    const ca = cosQ(th, q, N);
+    const sa = sinQ(th, q, N);
+    const R = [ca, 0, sa, 0];
+    const normSq = ca * ca + sa * sa;
+    if (normSq < 1e-15) return { x: 0, y: 0, z: 0 };
+    const R_inv = [ca / normSq, 0, -sa / normSq, 0];
+    const p = [p_real, p_i, p_j, p_k];
+    const p_prime = qMul(qMul(R, p), R_inv);
+    return { 
+      x: isFinite(p_prime[1]) ? p_prime[1] : 0, 
+      y: isFinite(p_prime[2]) ? p_prime[2] : 0, 
+      z: isFinite(p_prime[3]) ? p_prime[3] : 0 
+    };
+  }
+  return { 
+    x: isFinite(p_i) ? p_i : 0, 
+    y: isFinite(p_j) ? p_j : 0, 
+    z: isFinite(p_k) ? p_k : 0 
+  };
+}
+
+// ════════════════════════════════════════════════════════════════════
+//   Three.js scene
+// ════════════════════════════════════════════════════════════════════
+const scene    = new THREE.Scene();
+scene.fog      = new THREE.FogExp2(0x020710, 0.040);
+const camera   = new THREE.PerspectiveCamera(52, innerWidth / innerHeight, 0.01, 200);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setClearColor(0x020710);
+document.getElementById('canvas-wrap').appendChild(renderer.domElement);
+
+// Lighting
+scene.add(new THREE.AmbientLight(0x112250, 0.70));
+const dL1 = new THREE.DirectionalLight(0x4477ff, 1.55); dL1.position.set(6,9,5);  scene.add(dL1);
+const dL2 = new THREE.DirectionalLight(0xff6633, 0.65); dL2.position.set(-5,2,-4); scene.add(dL2);
+const dL3 = new THREE.DirectionalLight(0x33ffaa, 0.35); dL3.position.set(0,-5,0);  scene.add(dL3);
+
+// Stars
+{
+  const sg = new THREE.BufferGeometry();
+  const sp = new Float32Array(3200 * 3);
+  for (let i = 0; i < sp.length; i++) sp[i] = (Math.random() - .5) * 160;
+  sg.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+  scene.add(new THREE.Points(sg, new THREE.PointsMaterial({ color: 0x334488, size: .06, transparent: true, opacity: .50 })));
+}
+
+const axHelper = new THREE.AxesHelper(5);
+scene.add(axHelper);
+
+// ── Orbit camera ──────────────────────────────────────────────────
+const orb = { th: 0.60, ph: 0.90, r: 8 };
+function applyCam() {
+  camera.position.set(
+    orb.r * Math.sin(orb.ph) * Math.sin(orb.th),
+    orb.r * Math.cos(orb.ph),
+    orb.r * Math.sin(orb.ph) * Math.cos(orb.th)
+  );
+  camera.lookAt(0, 0, 0);
+}
+applyCam();
+
+let drag = false, pMouse = { x: 0, y: 0 };
+renderer.domElement.addEventListener('mousedown', e => { drag = true; pMouse = { x: e.clientX, y: e.clientY }; });
+window.addEventListener('mouseup', () => drag = false);
+window.addEventListener('mousemove', e => {
+  if (!drag) return;
+  orb.th += (e.clientX - pMouse.x) * .008;
+  orb.ph  = Math.max(.05, Math.min(Math.PI - .05, orb.ph + (e.clientY - pMouse.y) * .008));
+  pMouse  = { x: e.clientX, y: e.clientY };
+  applyCam();
+});
+renderer.domElement.addEventListener('wheel', e => {
+  orb.r = Math.max(1.5, Math.min(32, orb.r * (1 + e.deltaY * .001)));
+  applyCam(); e.preventDefault();
+}, { passive: false });
+
+// ════════════════════════════════════════════════════════════════════
+//   Build surface geometry
+// ════════════════════════════════════════════════════════════════════
+let activeMeshes = [], activeWires = [], activeTess = [];
+
+function buildSurface() {
+  for (const m of activeMeshes) scene.remove(m);
+  for (const w of activeWires)  scene.remove(w);
+  for (const t of activeTess)   scene.remove(t);
+  activeMeshes = []; activeWires = []; activeTess = [];
+
+  const rmin   = parseFloat(document.getElementById('rmin').value);
+  const rmax   = parseFloat(document.getElementById('rmax').value);
+  const dr     = parseFloat(document.getElementById('dr').value);
+  const dz     = parseFloat(document.getElementById('dzeta').value);
+  const qN     = parseInt(document.getElementById('qN').value);
+  if (rmin >= rmax) return;
+
+  // Update display values
+  document.getElementById('v_rmin').textContent  = rmin.toFixed(2);
+  document.getElementById('v_rmax').textContent  = rmax.toFixed(2);
+  document.getElementById('v_dr').textContent    = dr.toFixed(2);
+  document.getElementById('v_dzeta').textContent = dz.toFixed(3);
+  document.getElementById('v_qN').textContent    = qN;
+
+  // r grid
+  const rs = [];
+  for (let r = rmin; r <= rmax + 1e-9; r += dr) {
+    rs.push(Math.min(r, rmax));
+    if (rs.length > 700) break;
+  }
+  if (rs[rs.length - 1] < rmax - dr * .45) rs.push(rmax);
+
+  const nA     = Math.max(6, Math.min(700, Math.round(TAU / dz)));
+  const alphas = Array.from({ length: nA + 1 }, (_, i) => i * TAU / nA);
+  const nR     = rs.length;
+  const nAlpha = alphas.length;
+  const nBranch = document.getElementById('cb_all').checked ? 4 : 1;
+
+  if (isNaN(qN) || nR === 0 || nAlpha === 0) return;
+
+  // Pre-compute growth factors per r (independent of branch / α)
+  const GF = rs.map(r => growthFactors(r, qN));
+
+  let totalTris = 0;
+
+  for (let b = 0; b < nBranch; b++) {
+    const col = BCOLS[b];
+    const N   = nR * nAlpha;
+    const pos  = new Float32Array(N * 3);
+    const cols = new Float32Array(N * 3);
+
+    for (let i = 0; i < nR; i++) {
+      const gf     = GF[i];
+      const bright = 0.34 + 0.39 * (i / Math.max(1, nR - 1));
+      for (let j = 0; j < nAlpha; j++) {
+        const idx = (i * nAlpha + j) * 3;
+        const a   = alphas[j];
+        const p   = point3D(rs[i], a, b, gf, qN);
+        pos[idx] = p.x; pos[idx + 1] = p.y; pos[idx + 2] = p.z;
+
+        // Colour: branch hue + 5-fold angular shimmer + radial ramp
+        const t     = j / nAlpha;
+        const pulse = 0.10 * Math.sin(t * TAU * 5);
+        cols[idx]   = Math.max(0, Math.min(1, col[0] * bright + pulse));
+        cols[idx+1] = Math.max(0, Math.min(1, col[1] * bright + pulse * .7));
+        cols[idx+2] = Math.max(0, Math.min(1, col[2] * bright + pulse * .4));
+      }
+    }
+
+    // Triangle indices
+    const idx2 = [];
+    for (let i = 0; i < nR - 1; i++)
+      for (let j = 0; j < nAlpha - 1; j++) {
+        const a = i * nAlpha + j,  b2 = (i+1) * nAlpha + j;
+        const c = i * nAlpha + j+1, d = (i+1) * nAlpha + j+1;
+        idx2.push(a, c, b2,  c, d, b2);
+      }
+    totalTris += idx2.length / 3;
+
+    // Area-weighted vertex normals
+    const acc = new Float32Array(N * 3);
+    for (let k = 0; k < idx2.length; k += 3) {
+      const ia = idx2[k], ib = idx2[k+1], ic = idx2[k+2];
+      const ax = pos[ia*3], ay = pos[ia*3+1], az = pos[ia*3+2];
+      const bx = pos[ib*3], by = pos[ib*3+1], bz = pos[ib*3+2];
+      const cx = pos[ic*3], cy = pos[ic*3+1], cz = pos[ic*3+2];
+      const ex = bx-ax, ey = by-ay, ez = bz-az;
+      const fx = cx-ax, fy = cy-ay, fz = cz-az;
+      const nx = ey*fz-ez*fy, ny = ez*fx-ex*fz, nz = ex*fy-ey*fx;
+      for (const ii of [ia, ib, ic]) { acc[ii*3]+=nx; acc[ii*3+1]+=ny; acc[ii*3+2]+=nz; }
+    }
+    const nrm = new Float32Array(N * 3);
+    for (let i = 0; i < N; i++) {
+      const l = Math.sqrt(acc[i*3]**2 + acc[i*3+1]**2 + acc[i*3+2]**2) + 1e-10;
+      nrm[i*3] = acc[i*3]/l; nrm[i*3+1] = acc[i*3+1]/l; nrm[i*3+2] = acc[i*3+2]/l;
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos,  3));
+    geo.setAttribute('color',    new THREE.BufferAttribute(cols, 3));
+    geo.setAttribute('normal',   new THREE.BufferAttribute(nrm,  3));
+    geo.setIndex(idx2);
+
+    if (document.getElementById('cb_surf').checked) {
+      const mat = new THREE.MeshPhongMaterial({
+        vertexColors: true, side: THREE.DoubleSide,
+        shininess: 100, transparent: true, opacity: b === 0 ? 0.80 : 0.50,
+        specular: new THREE.Color(.3, .4, .6)
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      scene.add(mesh); activeMeshes.push(mesh);
+    }
+
+    if (document.getElementById('cb_grid').checked) {
+      const wg = new THREE.WireframeGeometry(geo);
+      const wm = new THREE.LineBasicMaterial({
+        color: new THREE.Color(col[0], col[1], col[2]),
+        transparent: true, opacity: .16
+      });
+      const wire = new THREE.LineSegments(wg, wm);
+      scene.add(wire); activeWires.push(wire);
+    }
+
+    // Tessellation rings (r=const) and radials (α=const)
+    if (document.getElementById('cb_tess').checked) {
+      for (let i = 0; i < nR; i++) {
+        const pts = [];
+        for (let j = 0; j <= nAlpha; j++) {
+          const a = alphas[Math.min(j, nAlpha-1)];
+          const p = point3D(rs[i], a, b, GF[i], qN);
+          pts.push(new THREE.Vector3(p.x, p.y, p.z));
+        }
+        const rg = new THREE.BufferGeometry().setFromPoints(pts);
+        const rm = new THREE.LineBasicMaterial({
+          color: new THREE.Color(col[0]*1.3, col[1]*1.3, col[2]*1.3),
+          transparent: true, opacity: .40
+        });
+        const ring = new THREE.Line(rg, rm);
+        scene.add(ring); activeTess.push(ring);
+      }
+
+      const rStep = Math.max(1, Math.floor(nAlpha / 22));
+      for (let j = 0; j < nAlpha; j += rStep) {
+        const pts = [];
+        for (let i = 0; i < nR; i++) {
+          const p = point3D(rs[i], alphas[j], b, GF[i], qN);
+          pts.push(new THREE.Vector3(p.x, p.y, p.z));
+        }
+        const rdg = new THREE.BufferGeometry().setFromPoints(pts);
+        const rdm = new THREE.LineBasicMaterial({
+          color: new THREE.Color(col[0]*.7, col[1]*.7, col[2]*.7),
+          transparent: true, opacity: .28
+        });
+        const rad = new THREE.Line(rdg, rdm);
+        scene.add(rad); activeTess.push(rad);
+      }
+    }
+  }
+
+  document.getElementById('mstat').textContent =
+    `mode: ${projMode}  ·  ${nR}×${nAlpha}  ·  ${nBranch}B  ·  ${totalTris.toLocaleString()} tris`;
+
+  drawGrowthChart();
+}
+
+// ════════════════════════════════════════════════════════════════════
+//   Growth profile chart
+// ════════════════════════════════════════════════════════════════════
+let chartAlpha = Math.PI / 5;
+
+function drawGrowthChart(alpha = chartAlpha) {
+  chartAlpha = alpha;
+  const cv  = document.getElementById('growth-chart');
+  const ctx = cv.getContext('2d');
+  const cW  = cv.width, cH = cv.height;
+  ctx.clearRect(0, 0, cW, cH);
+  ctx.fillStyle = '#010409'; ctx.fillRect(0, 0, cW, cH);
+
+  const rmin = parseFloat(document.getElementById('rmin').value);
+  const rmax = parseFloat(document.getElementById('rmax').value);
+  const qN   = parseInt(document.getElementById('qN').value);
+  if (rmin >= rmax) return;
+
+  const N  = 160;
+  const g1s = [], g2s = [], cqs = [], ms = [];
+  let maxG = 0;
+
+  for (let i = 0; i <= N; i++) {
+    const r    = rmin + (rmax - rmin) * i / N;
+    const { g1, g2, cq } = growthFactors(r, qN);
+    const cg1 = Math.min(Math.abs(g1), MAX_G);
+    const cg2 = Math.min(Math.abs(g2), MAX_G);
+    g1s.push(cg1); g2s.push(cg2); cqs.push(cq);
+    ms.push(Math.min(cg1 * cg2, MAX_G * MAX_G));
+    maxG = Math.max(maxG, cg1, cg2);
+  }
+  const maxM = Math.max(...ms) + 1e-9;
+  maxG = maxG + 1e-9;
+
+  const pL = 5, pR = 4, pT = 4, pB = 14, pW = cW-pL-pR, pH = cH-pT-pB;
+  const toX = i => pL + i * pW / N;
+
+  // grid lines
+  ctx.strokeStyle = 'rgba(58,144,255,0.07)'; ctx.lineWidth = .5;
+  [0, .25, .5, .75, 1].forEach(v => {
+    const y = pT + pH * (1 - v);
+    ctx.beginPath(); ctx.moveTo(pL, y); ctx.lineTo(pL+pW, y); ctx.stroke();
+  });
+
+  // traces
+  const traces = [
+    { data: g1s, max: maxG,  color: '#3a90ff', lbl: 'g₁(r)'    },
+    { data: g2s, max: maxG,  color: '#ff5533', lbl: 'g₂(r)'    },
+    { data: cqs, max: 1,     color: '#cc44ff', lbl: 'cosq(r)'  },
+    { data: ms,  max: maxM,  color: '#33ffaa', lbl: 'g₁g₂'     },
+  ];
+  for (const { data, max, color, lbl } of traces) {
+    ctx.strokeStyle = color; ctx.lineWidth = 1.4; ctx.beginPath();
+    for (let i = 0; i <= N; i++) {
+      const x = toX(i), y = pT + pH * (1 - Math.min(1, data[i] / max));
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    const li = Math.floor(N * .18);
+    ctx.fillStyle = color; ctx.font = '7px "Share Tech Mono"';
+    ctx.fillText(lbl, toX(li)+2, pT + pH*(1 - Math.min(1, data[li]/max)) - 2);
+  }
+
+  // r-axis
+  ctx.fillStyle = '#2a3a60'; ctx.font = '7px "Share Tech Mono"';
+  ctx.fillText(rmin.toFixed(2), pL,        cH - 2);
+  ctx.fillText(rmax.toFixed(2), pL+pW-20,  cH - 2);
+  ctx.fillText('r →',           pL+pW/2-8, cH - 2);
+}
+
+// ════════════════════════════════════════════════════════════════════
+//   Raycasting / hover
+// ════════════════════════════════════════════════════════════════════
+const ray  = new THREE.Raycaster();
+const mPos = new THREE.Vector2(-9999, -9999);
+const tip  = document.getElementById('tip');
+
+window.addEventListener('mousemove', e => {
+  mPos.x = (e.clientX / innerWidth)  * 2 - 1;
+  mPos.y = -(e.clientY / innerHeight) * 2 + 1;
+  tip.style.left = (e.clientX + 12) + 'px';
+  tip.style.top  = (e.clientY - 34) + 'px';
+});
+
+function updateHover() {
+  if (!activeMeshes.length) { tip.style.display = 'none'; return; }
+  ray.setFromCamera(mPos, camera);
+  const hits = ray.intersectObjects(activeMeshes);
+  if (!hits.length) { tip.style.display = 'none'; return; }
+
+  const hp   = hits[0].point;
+  const rmin = parseFloat(document.getElementById('rmin').value);
+  const rmax = parseFloat(document.getElementById('rmax').value);
+  const dr   = parseFloat(document.getElementById('dr').value);
+  const dz   = parseFloat(document.getElementById('dzeta').value);
+  const qN   = parseInt(document.getElementById('qN').value);
+
+  // Coarse nearest-point search
+  let bestR = (rmin+rmax)/2, bestA = 0, bestD = Infinity;
+  const nRs = Math.max(6, Math.min(55, Math.round((rmax-rmin)/dr)));
+  const nAs = Math.max(10, Math.min(100, Math.round(TAU/dz)));
+
+  for (let i = 0; i <= nRs; i++) {
+    const r  = rmin + (rmax-rmin)*i/nRs;
+    const gf = growthFactors(r, qN);
+    for (let j = 0; j <= nAs; j++) {
+      const a = j * TAU / nAs;
+      const p = point3D(r, a, 0, gf, qN);
+      const d = (p.x-hp.x)**2 + (p.y-hp.y)**2 + (p.z-hp.z)**2;
+      if (d < bestD) { bestD = d; bestR = r; bestA = a; }
+    }
+  }
+
+  const gf  = growthFactors(bestR, qN);
+  const { q, g1, g2, th, cq } = gf;
+  const hq  = 1 - q;
+  const beta = BETAS[0](bestA);
+  const xs  = bringXj(bestR, bestA, beta, q, qN);
+  const W1  = wk(xs, 1), W2 = wk(xs, 2), W3 = wk(xs, 3);
+  W1.im += 1.0;
+  W2.im += 1.0;
+  W3.im += 1.0;
+  const cg1 = Math.min(Math.abs(g1), 9999);
+  const cg2 = Math.min(Math.abs(g2), 9999);
+
+  // Coord panel
+  document.getElementById('cr').textContent  = bestR.toFixed(4);
+  document.getElementById('cq').textContent  = q.toFixed(4);
+  document.getElementById('chq').textContent = hq.toFixed(4);
+  document.getElementById('cw1').textContent = (Math.hypot(W1.re, W1.im) * cg1).toFixed(3);
+  document.getElementById('cw2').textContent = (Math.hypot(W2.re, W2.im) * cg2).toFixed(3);
+  document.getElementById('cw3').textContent = (Math.hypot(W3.re, W3.im) * cg2).toFixed(3);
+
+  // Growth bars
+  const maxBar = 20;
+  const mm = Math.min(cg1 * cg2, maxBar * maxBar);
+  document.getElementById('b_g1').style.width = Math.min(100, cg1/maxBar*100)     + '%';
+  document.getElementById('b_g2').style.width = Math.min(100, cg2/maxBar*100)     + '%';
+  document.getElementById('b_th').style.width = Math.min(100, Math.max(0, cq) * 100) + '%';
+  document.getElementById('b_mm').style.width = Math.min(100, mm/(maxBar*maxBar)*100) + '%';
+
+  const fmt = v => v > 100 ? v.toExponential(1) : v.toFixed(3);
+  document.getElementById('n_g1').textContent = fmt(cg1);
+  document.getElementById('n_g2').textContent = fmt(cg2);
+  document.getElementById('n_th').textContent = cq.toFixed(4);
+  document.getElementById('n_mm').textContent = mm > 100 ? mm.toExponential(1) : mm.toFixed(2);
+
+  // Stats panel
+  document.getElementById('stats-body').innerHTML =
+    `r = <span class="h1">${bestR.toFixed(4)}</span><br>`+
+    `α = <span class="h1">${(bestA*180/Math.PI).toFixed(2)}°</span><br>`+
+    `q = e⁻ʳ = <span class="h1">${q.toFixed(4)}</span><br>`+
+    `ℏ_q = 1−q = <span class="h2">${hq.toFixed(4)}</span><br>`+
+    `g₁ = 1/lnq(1+r) = <span class="h1">${fmt(cg1)}</span><br>`+
+    `g₂ = expq(r)−1  = <span class="h2">${fmt(cg2)}</span><br>`+
+    `cos_q(r) = <span class="h3">${cq.toFixed(4)}</span><br>`+
+    `β₁ = π−3α = <span class="h2">${(BETAS[0](bestA)*180/Math.PI).toFixed(1)}°</span><br>`+
+    `ζ-sector = <span class="h1">${Math.floor(bestA*5/TAU)}/5</span>`;
+
+  tip.style.display = 'block';
+  tip.innerHTML =
+    `r=${bestR.toFixed(3)}  q=${q.toFixed(3)}  ℏ_q=${hq.toFixed(3)}<br>`+
+    `g₁=${fmt(cg1)}  g₂=${fmt(cg2)}  cosq(r)=${cq.toFixed(4)}`;
+
+  drawGrowthChart(bestA);
+}
+
+// ── Axis label 3D→2D ──────────────────────────────────────────────
+const axPts = [
+  { id: 'ax0', v: new THREE.Vector3(5.2, 0,   0  ) },
+  { id: 'ax1', v: new THREE.Vector3(0,   5.2, 0  ) },
+  { id: 'ax2', v: new THREE.Vector3(0,   0,   5.2) },
+];
+function updateAxLabels() {
+  for (const { id, v } of axPts) {
+    const p = v.clone().project(camera);
+    document.getElementById(id).style.left = ((p.x+1)/2 * innerWidth)  + 'px';
+    document.getElementById(id).style.top  = ((1-p.y)/2 * innerHeight) + 'px';
+  }
+}
+
+// ── Listeners ─────────────────────────────────────────────────────
+['rmin','rmax','dr','dzeta','qN'].forEach(id =>
+  document.getElementById(id).addEventListener('input', buildSurface));
+['cb_surf','cb_grid','cb_tess','cb_all'].forEach(id =>
+  document.getElementById(id).addEventListener('change', buildSurface));
+document.getElementById('cb_axes').addEventListener('change', e => {
+  axHelper.visible = e.target.checked;
+  ['ax0','ax1','ax2'].forEach(id =>
+    document.getElementById(id).style.display = e.target.checked ? 'block' : 'none');
+});
+
+document.querySelectorAll('.pill[data-mode]').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.pill[data-mode]').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    projMode = pill.dataset.mode;
+    buildSurface();
+  });
+});
+
+// ── URL Query Parameter Parsing ───────────────────────────────────
+(function() {
+  const p = new URLSearchParams(location.search);
+  
+  // Numeric and string parameters
+  const params = ['rmin', 'rmax', 'dr', 'dzeta', 'qN'];
+  params.forEach(param => {
+    let val = p.get(param);
+    if (param === 'qN' && !val) {
+      val = p.get('N') || p.get('q');
+    }
+    if (param === 'dzeta' && !val && p.get('grid')) {
+      const g = parseInt(p.get('grid'));
+      if (!isNaN(g) && g > 0) val = (4 / g).toString();
+    }
+    if (val !== null) {
+      if (isNaN(parseFloat(val))) return;
+      const el = document.getElementById(param);
+      if (el) el.value = val;
+    }
+  });
+
+  // Checkboxes
+  const checkboxes = { 'cb_surf': 'surf', 'cb_grid': 'showGrid', 'cb_tess': 'tess', 'cb_axes': 'axes', 'cb_auto': 'auto', 'cb_all': 'all' };
+  Object.keys(checkboxes).forEach(cb => {
+    let val = p.get(cb);
+    if (val === null) val = p.get(checkboxes[cb]); // check short name
+
+    if (val !== null) {
+      const el = document.getElementById(cb);
+      if (el) {
+        el.checked = (val === 'true' || val === '1');
+        if (cb === 'cb_axes') {
+          axHelper.visible = el.checked;
+          ['ax0','ax1','ax2'].forEach(id => {
+            const axEl = document.getElementById(id);
+            if (axEl) axEl.style.display = el.checked ? 'block' : 'none';
+          });
+        }
+      }
+    }
+  });
+
+  // Mode
+  const modeVal = p.get('mode') || p.get('projection');
+  if (modeVal !== null) {
+    projMode = modeVal;
+    // Update UI pills
+    document.querySelectorAll('.pill[data-mode]').forEach(pill => {
+      if (pill.dataset.mode === projMode) {
+        pill.classList.add('active');
+      } else {
+        pill.classList.remove('active');
+      }
+    });
+  }
+})();
+
+// ── Boot ──────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => setTimeout(buildSurface, 100));
+
+let frame = 0;
+function animate() {
+  requestAnimationFrame(animate);
+  frame++;
+  if (document.getElementById('cb_auto').checked && !drag) {
+    orb.th += .0011; applyCam();
+  }
+  if (frame % 5 === 0) updateHover();
+  updateAxLabels();
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+// ── Theme sync with viewer ───────────────────────────────────────
+(function(){
+  function syncTheme(isLight) {
+    if (isLight) document.body.classList.add('light');
+    else document.body.classList.remove('light');
+    renderer.setClearColor(isLight ? 0xf0f4ff : 0x020710);
+  }
+  var p = new URLSearchParams(location.search);
+  syncTheme(p.get('theme') === 'light');
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'folio-theme') syncTheme(e.data.theme === 'light');
+  });
+})();
+</script>
+</body>
+</html>
