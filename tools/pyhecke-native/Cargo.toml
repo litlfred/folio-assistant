@@ -9,7 +9,7 @@ name = "pyhecke_native"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.25", features = ["extension-module"] }
+pyo3 = { version = "0.29", features = ["extension-module"] }
 nalgebra = { version = "0.33", default-features = false, features = ["std"] }
 hecke-engine = { path = "../hecke-engine" }
 
