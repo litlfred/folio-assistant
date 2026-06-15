@@ -1,0 +1,27 @@
+[package]
+name = "hecke-engine-r"
+version = "0.1.0"
+edition = "2021"
+description = "extendr bindings for hecke-engine — R consumers"
+license = "MIT"
+repository = "https://github.com/litlfred/qou"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "hecke_engine_r"
+
+[dependencies]
+# extendr is the canonical Rust↔R FFI bridge. Same Rust core,
+# idiomatic R API via #[extendr] proc macros.
+# https://extendr.github.io/extendr/
+extendr-api = "0.7"
+# Canonical hecke-engine core (mpfr on — R consumers run native
+# with system GMP/MPFR; CRAN-published packages can bundle them).
+hecke-engine = { path = "../../../hecke-engine" }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

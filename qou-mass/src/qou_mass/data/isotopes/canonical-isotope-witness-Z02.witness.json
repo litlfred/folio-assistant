@@ -1,0 +1,300 @@
+{
+  "engine": "python+mpmath",
+  "engineVersion": "python 3.11.15",
+  "computedAt": "2026-05-19T03:41:07.192095+00:00",
+  "commitSha": "387b1b7706fba84f5915dec4971f14f26520cbe7",
+  "assertions": [],
+  "allPassed": true,
+  "durationMs": 32,
+  "computation": "canonical-isotope-witness-Z02",
+  "scriptFile": "canonical_isotope_witness.py",
+  "scriptHash": "a771cb862c70",
+  "scriptCommitSha": "c9aa51f6f07d61e12bc58868010054ceb27fbc2d",
+  "description": "Per-Z=2 shard of the recursive atom-knot atlas. Element: He. Covers every (Z=2, N) in AME 2020. Each row carries: prediction_type ∈ {mass, binding_energy}; the prediction value (from L1 canonical |tr_M| via markov_peel+mpmath, OR L2 α-cluster recursion); the AME 2020 reference; err in MeV / % / ppm; L4 composite mass M = N·m_n + Z·m_p − B (when nucleon masses + B are available). L1 source: canonical-mass-table-extended.witness.json; L2 source: alpha-cluster-recursion.witness.json; nucleon masses: m-p-borromean-verification-50dps.witness.json.",
+  "parameters": {
+    "Z": 2,
+    "element": "He",
+    "q_0": "1.10997859555418057528159407960950937799328227995870",
+    "rows_total": 8,
+    "rows_with_prediction": 2,
+    "rows_with_composite_mass": 8
+  },
+  "data": {
+    "rows": [
+      {
+        "Z": 2,
+        "N": 1,
+        "A": 3,
+        "element": "He",
+        "prediction_type": "binding_energy",
+        "layer": "L1-canonical",
+        "prediction_MeV_50dps": 7.48891930977096,
+        "reference_MeV_50dps": 7.71804132,
+        "err_MeV": -0.2291220102290401,
+        "err_pct": -2.9686548792542626,
+        "err_ppm": -29686.548792542624,
+        "composite_mass": {
+          "M_pred_MeV": 2808.619970631595,
+          "M_AME_MeV": 2809.4135261408464,
+          "err_MeV": -0.7935555092512914,
+          "err_ppm": -282.46304855709855,
+          "formula": "N·m_n + Z·m_p − B(A,Z)",
+          "m_p_source": "borromean-tower (conj:borromean-baryon-mass-formula)",
+          "B_source": "L1-canonical"
+        },
+        "ame_reference": {
+          "B_AME_keV": 7718.04132,
+          "mass_excess_keV": 14931.21888,
+          "atomic_mass_u": 3.01602932197,
+          "Q_beta_keV": -13736.0,
+          "estimated": false
+        }
+      },
+      {
+        "Z": 2,
+        "N": 2,
+        "A": 4,
+        "element": "He",
+        "prediction_type": "binding_energy",
+        "layer": "L1-canonical",
+        "prediction_MeV_50dps": 29.95567723908384,
+        "reference_MeV_50dps": 28.2956624,
+        "err_MeV": 1.6600148390838392,
+        "err_pct": 5.866676014214247,
+        "err_ppm": 58666.76014214246,
+        "composite_mass": {
+          "M_pred_MeV": 3725.718397369987,
+          "M_AME_MeV": 3728.401325549195,
+          "err_MeV": -2.68292817920792,
+          "err_ppm": -719.5921106515334,
+          "formula": "N·m_n + Z·m_p − B(A,Z)",
+          "m_p_source": "borromean-tower (conj:borromean-baryon-mass-formula)",
+          "B_source": "L1-canonical"
+        },
+        "ame_reference": {
+          "B_AME_keV": 28295.6624,
+          "mass_excess_keV": 2424.91587,
+          "atomic_mass_u": 4.002603254129999,
+          "Q_beta_keV": -22898.274,
+          "estimated": false
+        }
+      },
+      {
+        "Z": 2,
+        "N": 3,
+        "A": 5,
+        "element": "He",
+        "prediction_type": "binding_energy",
+        "layer": "L?-pending",
+        "prediction_MeV_50dps": null,
+        "reference_MeV_50dps": 27.5606625,
+        "err_MeV": null,
+        "err_pct": null,
+        "err_ppm": null,
+        "composite_mass": {
+          "M_pred_MeV": 4667.6785967767755,
+          "M_AME_MeV": 4668.701745147557,
+          "err_MeV": -1.0231483707812004,
+          "err_ppm": -219.15051049140496,
+          "formula": "N·m_n + Z·m_p − B(A,Z)",
+          "m_p_source": "borromean-tower (conj:borromean-baryon-mass-formula)",
+          "B_source": null
+        },
+        "ame_reference": {
+          "B_AME_keV": 27560.6625,
+          "mass_excess_keV": 11231.234,
+          "atomic_mass_u": 5.012057224,
+          "Q_beta_keV": -447.6529,
+          "estimated": false
+        }
+      },
+      {
+        "Z": 2,
+        "N": 4,
+        "A": 6,
+        "element": "He",
+        "prediction_type": "binding_energy",
+        "layer": "L?-pending",
+        "prediction_MeV_50dps": null,
+        "reference_MeV_50dps": 29.271119400000003,
+        "err_MeV": null,
+        "err_pct": null,
+        "err_ppm": null,
+        "composite_mass": {
+          "M_pred_MeV": 5605.53332454448,
+          "M_AME_MeV": 5606.55670874246,
+          "err_MeV": -1.0233841979797944,
+          "err_ppm": -182.53346057911142,
+          "formula": "N·m_n + Z·m_p − B(A,Z)",
+          "m_p_source": "borromean-tower (conj:borromean-baryon-mass-formula)",
+          "B_source": null
+        },
+        "ame_reference": {
+          "B_AME_keV": 29271.119400000003,
+          "mass_excess_keV": 17592.095,
+          "atomic_mass_u": 6.018885889000001,
+          "Q_beta_keV": 3505.2147,
+          "estimated": false
+        }
+      },
+      {
+        "Z": 2,
+        "N": 5,
+        "A": 7,
+        "element": "He",
+        "prediction_type": "binding_energy",
+        "layer": "L?-pending",
+        "prediction_MeV_50dps": null,
+        "reference_MeV_50dps": 28.861404599999997,
+        "err_MeV": null,
+        "err_pct": null,
+        "err_ppm": null,
+        "composite_mass": {
+          "M_pred_MeV": 6545.508224012184,
+          "M_AME_MeV": 6546.53184420089,
+          "err_MeV": -1.0236201887064453,
+          "err_ppm": -156.36068273511847,
+          "formula": "N·m_n + Z·m_p − B(A,Z)",
+          "m_p_source": "borromean-tower (conj:borromean-baryon-mass-formula)",
+          "B_source": null
+        },
+        "ame_reference": {
+          "B_AME_keV": 28861.404599999998,
+          "mass_excess_keV": 26073.128,
+          "atomic_mass_u": 7.027990652,
+          "Q_beta_keV": 11166.0229,
+          "estimated": false
+        }
+      },
+      {
+        "Z": 2,
+        "N": 6,
+        "A": 8,
+        "element": "He",
+        "prediction_type": "binding_energy",
+        "layer": "L?-pending",
+        "prediction_MeV_50dps": null,
+        "reference_MeV_50dps": 31.396168000000003,
+        "err_MeV": null,
+        "err_pct": null,
+        "err_ppm": null,
+        "composite_mass": {
+          "M_pred_MeV": 7482.538645279888,
+          "M_AME_MeV": 7483.562501651232,
+          "err_MeV": -1.0238563713437543,
+          "err_ppm": -136.81403357262568,
+          "formula": "N·m_n + Z·m_p − B(A,Z)",
+          "m_p_source": "borromean-tower (conj:borromean-baryon-mass-formula)",
+          "B_source": null
+        },
+        "ame_reference": {
+          "B_AME_keV": 31396.168,
+          "mass_excess_keV": 31609.683,
+          "atomic_mass_u": 8.033934388,
+          "Q_beta_keV": 10663.8784,
+          "estimated": false
+        }
+      },
+      {
+        "Z": 2,
+        "N": 7,
+        "A": 9,
+        "element": "He",
+        "prediction_type": "binding_energy",
+        "layer": "L?-pending",
+        "prediction_MeV_50dps": null,
+        "reference_MeV_50dps": 30.141342,
+        "err_MeV": null,
+        "err_pct": null,
+        "err_ppm": null,
+        "composite_mass": {
+          "M_pred_MeV": 8423.358655947593,
+          "M_AME_MeV": 8424.382747243508,
+          "err_MeV": -1.0240912959143316,
+          "err_ppm": -121.56276924257963,
+          "formula": "N·m_n + Z·m_p − B(A,Z)",
+          "m_p_source": "borromean-tower (conj:borromean-baryon-mass-formula)",
+          "B_source": null
+        },
+        "ame_reference": {
+          "B_AME_keV": 30141.342,
+          "mass_excess_keV": 40935.826,
+          "atomic_mass_u": 9.043946414,
+          "Q_beta_keV": 15980.9213,
+          "estimated": false
+        }
+      },
+      {
+        "Z": 2,
+        "N": 8,
+        "A": 10,
+        "element": "He",
+        "prediction_type": "binding_energy",
+        "layer": "L?-pending",
+        "prediction_MeV_50dps": null,
+        "reference_MeV_50dps": 29.951340000000002,
+        "err_MeV": null,
+        "err_pct": null,
+        "err_ppm": null,
+        "composite_mass": {
+          "M_pred_MeV": 9363.1138426153,
+          "M_AME_MeV": 9364.138170256507,
+          "err_MeV": -1.024327641207492,
+          "err_ppm": -109.38835187856195,
+          "formula": "N·m_n + Z·m_p − B(A,Z)",
+          "m_p_source": "borromean-tower (conj:borromean-baryon-mass-formula)",
+          "B_source": null
+        },
+        "ame_reference": {
+          "B_AME_keV": 29951.34,
+          "mass_excess_keV": 49197.147,
+          "atomic_mass_u": 10.052815306,
+          "Q_beta_keV": 16144.5191,
+          "estimated": false
+        }
+      }
+    ],
+    "upstream_witness_hashes": [
+      {
+        "path": "canonical-mass-table-extended.witness.json",
+        "sha256": "57df6337be3c69c31ad0d42b57337309d663a67cc4025867ca74eacea6d0bb99",
+        "size_bytes": 51159,
+        "commitSha": "b41477565ae1913f64d6b37c3a4b530b5823513a",
+        "scriptCommitSha": "b41477565ae1913f64d6b37c3a4b530b5823513a",
+        "computedAt": "2026-05-19T03:04:06.897651+00:00"
+      },
+      {
+        "path": "alpha-cluster-recursion.witness.json",
+        "sha256": "d5127042edf2c47dd972c0e1c2897c4f11e877ea7fe5e8fcdd26a41c9a0d4216",
+        "size_bytes": 3620,
+        "commitSha": null,
+        "scriptCommitSha": null,
+        "computedAt": "2026-05-19T03:17:28.931573+00:00"
+      },
+      {
+        "path": "low-isotope-binding-sweep.witness.json",
+        "sha256": "317d839b8a837e2f5b09bc1fb11c9dd45f824ee642f2d7eb5ffcf3e0b3439a82",
+        "size_bytes": 7903,
+        "commitSha": null,
+        "scriptCommitSha": null,
+        "computedAt": null
+      },
+      {
+        "path": "m-p-borromean-verification-50dps.witness.json",
+        "sha256": "b261735cf47e1504b996894e6ccfc4944ab1ed43d4157dd12a9e28f5a60dde0a",
+        "size_bytes": 4501,
+        "commitSha": "e620f607034d0b81d92b999f5ff2cc68907352b4",
+        "scriptCommitSha": "c30da51bea8725add6b37e84c3e6d14cc94ce01e",
+        "computedAt": "2026-05-19T00:34:55.990181+00:00"
+      },
+      {
+        "path": "ame2020.json",
+        "sha256": "a55ad891687504323ac32e3041bf05ac5e44e9237473079c43496948e4f857ab",
+        "size_bytes": 2404361,
+        "commitSha": null,
+        "scriptCommitSha": null,
+        "computedAt": null
+      }
+    ]
+  }
+}

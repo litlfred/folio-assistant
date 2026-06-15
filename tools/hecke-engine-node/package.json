@@ -1,0 +1,53 @@
+{
+  "name": "@litlfred/hecke-engine-node",
+  "version": "0.1.0",
+  "description": "napi-rs Node.js native bindings for hecke-engine — Gram + Markov-trace primitives for H_n(q). Tier-3 sibling of pyhecke-native (PyO3) and hecke-engine-wasm (wasm-bindgen).",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/litlfred/qou.git",
+    "directory": "tools/hecke-engine-node"
+  },
+  "homepage": "https://github.com/litlfred/qou/tree/main/tools/hecke-engine-node",
+  "bugs": "https://github.com/litlfred/qou/issues",
+  "keywords": [
+    "hecke",
+    "qou",
+    "napi-rs",
+    "node-native",
+    "gram-matrix",
+    "markov-trace"
+  ],
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "*.node",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "napi": {
+    "name": "hecke-engine-node",
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "aarch64-apple-darwin",
+        "aarch64-unknown-linux-gnu",
+        "x86_64-pc-windows-msvc"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "pretest": "napi build --platform",
+    "test": "node --test test/",
+    "version": "napi version"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.0"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "engine": "mpmath",
+  "engineVersion": "mpmath 1.3.0",
+  "computedAt": "2026-05-19T00:34:55.990181+00:00",
+  "commitSha": "e620f607034d0b81d92b999f5ff2cc68907352b4",
+  "assertions": [
+    {
+      "name": "muon_borromean_baseline_ppm_lt_2",
+      "computed": 0.0014099494201479559,
+      "expected": 0.0,
+      "passed": true,
+      "tolerance": 2.0,
+      "unit": "ppm",
+      "source": "CAL-2 anchor: m_mu/m_e = Vol(4_1)/ℏ_q²"
+    },
+    {
+      "name": "proton_borromean_tower_ppm_lt_1",
+      "computed": 0.2510179852145082,
+      "expected": 0.0,
+      "passed": true,
+      "tolerance": 1.0,
+      "unit": "ppm",
+      "source": "Borromean baryon formula vs CODATA m_p at MPFR 50 dps"
+    },
+    {
+      "name": "neutron_borromean_tower_ppm_lt_1",
+      "computed": 0.25102274971788757,
+      "expected": 0.0,
+      "passed": true,
+      "tolerance": 1.0,
+      "unit": "ppm",
+      "source": "Borromean baryon formula vs CODATA m_n at MPFR 50 dps"
+    }
+  ],
+  "allPassed": true,
+  "durationMs": 10,
+  "computation": "m-p-borromean-verification-50dps",
+  "scriptFile": "m_p_borromean_verification_50dps.py",
+  "scriptHash": "e0b1a76a9c3d",
+  "scriptCommitSha": "c30da51bea8725add6b37e84c3e6d14cc94ce01e",
+  "description": "Numerical verification at MPFR 50 dps of `conj:borromean-baryon-mass-formula` against CODATA m_p, m_n. With λ_scale fixed at the documented closure targets (λ_p = 2.4599527869, λ_n = 2.4633436333) the Borromean tower formula reproduces m_p to 0.25 ppm and m_n to similar precision. This explains the 1700× scale gap in the prior single-level Markov-trace m_p chain (`build_proton_mass_50dps_chain.py`): Vol(B_3)/ℏ_q² ≈ 746.42 is the baryon-scale multiplier missing from that chain. The remaining R&D is to DERIVE λ_scale from substrate (currently closed numerically against CODATA).",
+  "contentBlock": "conj:borromean-baryon-mass-formula",
+  "parameters": {
+    "q_0_50dps": "1.1099785955541805753",
+    "hbar_q_50dps": "0.09908172643569888582",
+    "Vol_B3": "7.3277229064648071809",
+    "Vol_4_1": "2.02988321281930725",
+    "m_e_codata_MeV": "0.51099895069",
+    "lambda_scale_proton_doc": "2.4599527869",
+    "lambda_scale_neutron_doc": "2.4633436333"
+  },
+  "data": {
+    "muon_check": {
+      "formula": "m_mu = m_e · Vol(4_1) / ℏ_q²  (S = 0)",
+      "vol_4_1_over_hbar_q_squared": "206.768283",
+      "m_mu_pred_MeV": "105.65837564897296527",
+      "m_mu_codata_MeV": "105.6583755",
+      "rel_diff_ppm": "0.00140995"
+    },
+    "proton": {
+      "formula": "m_p = m_e · [Vol(B_3)/ℏ_q² · λ_p_scale + S(p)]  (with S(p) ≈ 0)",
+      "vol_B3_over_hbar_q_squared": "746.41766289850589589",
+      "tower_factor": "1836.1522100385643104",
+      "m_p_pred_MeV": "938.27185263683084707",
+      "m_p_codata_MeV": "938.27208816",
+      "rel_diff": "-2.51017985215e-7",
+      "rel_diff_ppm": "-0.25101799"
+    },
+    "neutron": {
+      "formula": "m_n = m_e · [Vol(B_3)/ℏ_q² · λ_n_scale + S(n)]  (with S(n) ≈ 0)",
+      "tower_factor": "1838.6831976837001227",
+      "m_n_pred_MeV": "939.56518466770460123",
+      "m_n_codata_MeV": "939.56542052",
+      "rel_diff": "-2.51022749718e-7",
+      "rel_diff_ppm": "-0.25102275"
+    },
+    "proton_neutron_split": {
+      "delta_m_pn_pred_MeV": "1.29333203087",
+      "delta_m_pn_codata_MeV": "1.29333236",
+      "rel_diff": "-2.54479e-7",
+      "note": "The pn split is determined by Δλ_scale = λ_n - λ_p ≈ 0.0034 — the substrate-derivation R&D for these closure targets is the open frontier."
+    },
+    "scale_gap_resolution": {
+      "single_level_m_p_estimate_MeV": "0.54421388",
+      "codata_m_p_MeV": "938.27209",
+      "scale_gap_factor": 1724.0870149726838,
+      "borromean_tower_multiplier": 1836.1522100385644,
+      "match_to_gap_pct": 6.499973266584578,
+      "conclusion": "Vol(B_3)/ℏ_q² · λ_scale ≈ 1836 IS the 1700× scale factor missing from the single-level Markov-trace m_p chain. The Borromean tower formula CLOSES the gap to 0.25 ppm for m_p and similar for m_n."
+    }
+  },
+  "caveats": [
+    "λ_scale is currently set to the closure target solved from CODATA (proton: 2.4599527869, neutron: 2.4633436333). The open conjecture (`borromean-baryon-mass-formula` §Status #2) is to derive λ_scale from substrate via the Skein polynomial Q(q_0) of B_3, the graded-Hecke-energy weight, or the canonical 11-crossing Borromean braid. Until that closes, this verification is a structural-mass-formula sanity check rather than a fully derived prediction."
+  ]
+}

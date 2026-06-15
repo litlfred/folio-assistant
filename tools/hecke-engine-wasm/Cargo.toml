@@ -1,0 +1,54 @@
+[package]
+name = "hecke-engine-wasm"
+version = "0.1.0"
+edition = "2021"
+description = "WASM-bindgen exports of the pure-Rust canonical surface of hecke-engine"
+license = "MIT"
+repository = "https://github.com/litlfred/qou"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Depend on the rug-free WASM-targetable surface of hecke-engine.
+# default-features = false disables `mpfr` (rug) and `clarabel-sdp`
+# (system OpenBLAS/LAPACK/gfortran). The `wasm-core` flag is a no-op
+# marker for build-script intent — see hecke-engine/Cargo.toml.
+hecke-engine = { path = "../hecke-engine", default-features = false, features = ["wasm-core"] }
+num-bigint = "0.4"
+num-rational = "0.4"
+num-traits = "0.2"
+
+wasm-bindgen = "0.2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Note: serde-wasm-bindgen will be added in Phase B when the API
+# starts accepting JS arrays / objects directly (for qou_lr_coefficient
+# and the future Gram matrix surface). Not used in Phase A — current
+# wrappers pass JSON-encoded strings. Per PR #1094 review.
+console_error_panic_hook = { version = "0.1", optional = true }
+
+[features]
+default = ["console_error_panic_hook"]
+# Enable detailed Rust-panic stack traces in the browser console.
+# Slightly larger wasm binary; recommended for development builds.
+
+[profile.release]
+opt-level = "z"  # optimize for size (WASM artifact size matters)
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+
+# Tell wasm-pack to skip `wasm-opt` post-processing. The Binaryen
+# build that wasm-pack ships fails validation on the recent
+# wasm-bindgen output (multivalue / reference-types features it
+# doesn't yet recognise). The release profile above already runs
+# LLVM at -Oz + LTO, so wasm-opt is purely additional and we lose
+# nothing by skipping it. See:
+# https://github.com/rustwasm/wasm-pack/issues/1411
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
+[package.metadata.wasm-pack.profile.dev]
+wasm-opt = false

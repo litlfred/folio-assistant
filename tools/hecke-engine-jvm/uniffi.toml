@@ -1,0 +1,21 @@
+# UniFFI per-language binding generator config.
+#
+# Phase A targets Kotlin (JVM / Android) and Swift (iOS / macOS) as
+# the headline consumers. Python / Ruby are auto-generatable from
+# the same .udl too — but pyhecke-native already gives Python a more
+# idiomatic surface (PyO3), so we leave the Python path off by default.
+
+[bindings.kotlin]
+# Standard Kotlin gradle-friendly package layout.
+package_name = "org.litlfred.qou.hecke_engine"
+# Generated Kotlin code uses `coroutines = false` by default — fine
+# for these synchronous primitive calls.
+
+[bindings.swift]
+# Swift module name; consumers add via SPM:
+#   .package(url: "https://github.com/litlfred/qou", from: "0.1.0")
+module_name = "HeckeEngineJVM"
+
+# Python (off by default — pyhecke-native is the canonical Python path)
+# [bindings.python]
+# package_name = "hecke_engine_jvm"
