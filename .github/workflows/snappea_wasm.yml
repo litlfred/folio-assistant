@@ -1,0 +1,151 @@
+name: SnapPea WASM Build, Test & Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish to npm after successful build + tests'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+permissions:
+  contents: read
+  id-token: write  # required for npm provenance
+
+defaults:
+  run:
+    working-directory: folio-assistant/snappea-wasm
+
+jobs:
+  build:
+    name: Build WASM Module
+    runs-on: ubuntu-latest
+    container:
+      image: emscripten/emsdk:latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache GMP/PARI build
+        uses: actions/cache@v4
+        with:
+          path: folio-assistant/snappea-wasm/build/local
+          key: wasm-deps-gmp6.2.1-pari2.13.2-${{ runner.os }}
+
+      - name: Build GMP
+        run: bash scripts/build-gmp.sh
+        continue-on-error: false
+
+      - name: Build PARI
+        run: bash scripts/build-pari.sh
+        continue-on-error: true  # PARI build may need tuning
+
+      - name: Build SnapPea kernel
+        run: bash scripts/build-snappea.sh
+
+      - name: Link WASM module
+        run: bash scripts/link.sh
+
+      - name: Copy JS/TS to dist
+        run: cp src/index.js dist/ && cp src/index.d.ts dist/
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: snappea-wasm-dist
+          path: folio-assistant/snappea-wasm/dist/
+          retention-days: 30
+
+  test-node:
+    name: Test (Node.js)
+    runs-on: ubuntu-latest
+    needs: build
+    defaults:
+      run:
+        working-directory: folio-assistant/snappea-wasm
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: snappea-wasm-dist
+          path: folio-assistant/snappea-wasm/dist/
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npx vitest run --reporter=verbose
+
+  test-browser:
+    name: Test (Browser)
+    runs-on: ubuntu-latest
+    needs: build
+    defaults:
+      run:
+        working-directory: folio-assistant/snappea-wasm
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: snappea-wasm-dist
+          path: folio-assistant/snappea-wasm/dist/
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run: npx playwright install chromium
+
+      - name: Run browser tests
+        run: npx vitest run --browser.name=chromium
+        continue-on-error: true  # Browser tests may need additional setup
+
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    # test-browser is `continue-on-error: true` (browser setup is best-
+    # effort), so listing it in `needs` waits for it to finish without
+    # treating a browser failure as a publish blocker. test-node is
+    # the gating signal.
+    needs: [build, test-node, test-browser]
+    if: ${{ github.event.inputs.publish == 'true' }}
+    defaults:
+      run:
+        working-directory: folio-assistant/snappea-wasm
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: snappea-wasm-dist
+          path: folio-assistant/snappea-wasm/dist/
+
+      - name: Publish to npm
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

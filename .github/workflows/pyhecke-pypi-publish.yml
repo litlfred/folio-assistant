@@ -1,0 +1,126 @@
+name: Publish pyhecke to PyPI
+
+# Tier-1 item 1a from
+# docs/workplans/2026-05-24-library-reuse-production-readiness.md.
+# Builds + publishes the pure-Python `pyhecke` package to PyPI (or
+# TestPyPI on dry-run).
+#
+# Gating:
+# - Manual `workflow_dispatch` only — no automatic publish on push.
+#   Owner triggers from the Actions UI when a release-worthy version
+#   has been pinned in `tools/pyhecke/pyproject.toml`.
+# - `target` input selects between `pypi` (real) and `testpypi`
+#   (dry-run sandbox at https://test.pypi.org/).
+# - Uses Trusted Publishers (OIDC) — no API token in secrets. Repo
+#   admin must register pyhecke on PyPI under
+#   `litlfred/qou` → workflow `pyhecke-pypi-publish.yml` →
+#   environment `pypi` (or `testpypi`). Setup docs:
+#   https://docs.pypi.org/trusted-publishers/
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Publish to PyPI or TestPyPI?'
+        required: true
+        default: 'testpypi'
+        type: choice
+        options:
+          - 'testpypi'
+          - 'pypi'
+
+permissions:
+  contents: read
+  id-token: write  # required for PyPI Trusted Publishers (OIDC)
+
+jobs:
+  build:
+    name: Build sdist + wheel
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install build tooling
+        run: pip install --upgrade build hatch
+
+      - name: Read pyhecke version
+        id: version
+        working-directory: tools/pyhecke
+        run: |
+          v=$(grep -E '^version\s*=' pyproject.toml | head -1 | sed -E 's/.*"([^"]+)".*/\1/')
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "::notice::pyhecke version = $v"
+
+      - name: Build sdist + wheel
+        working-directory: tools/pyhecke
+        run: python -m build --sdist --wheel --outdir dist/
+
+      - name: Sanity check — install from wheel + import
+        working-directory: tools/pyhecke
+        run: |
+          pip install dist/pyhecke-*.whl
+          python -c "
+          import pyhecke
+          print(f'pyhecke {pyhecke.__version__} imports OK')
+          # Touch a stable re-export from each submodule
+          from pyhecke import G, hm, partitions_of, q_dimension
+          print(f'  G[0][0] = {G[0][0]}')
+          print(f'  q_dimension([2,1]) = {q_dimension((2,1)):.6f}')
+          assert len(list(partitions_of(4))) == 5
+          print('OK: pyhecke surface importable from wheel')
+          "
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pyhecke-dist-${{ steps.version.outputs.version }}
+          path: tools/pyhecke/dist/
+          retention-days: 30
+
+  publish-testpypi:
+    name: Publish to TestPyPI (dry-run)
+    if: github.event.inputs.target == 'testpypi'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/project/pyhecke/
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: pyhecke-dist-${{ needs.build.outputs.version }}
+          path: dist/
+
+      - name: Upload to TestPyPI via Trusted Publishers (OIDC)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          # No `password:` — uses the workflow's OIDC token to mint a
+          # short-lived PyPI API token via Trusted Publishers.
+          skip-existing: true
+
+  publish-pypi:
+    name: Publish to PyPI (production)
+    if: github.event.inputs.target == 'pypi'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/pyhecke/
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: pyhecke-dist-${{ needs.build.outputs.version }}
+          path: dist/
+
+      - name: Upload to PyPI via Trusted Publishers (OIDC)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # repository-url defaults to https://upload.pypi.org/legacy/
+          skip-existing: false  # production: do NOT silently skip duplicates

@@ -1,0 +1,149 @@
+name: Witness refresh (commit-back to main)
+
+# Regenerates stale `*.witness.json` files under
+# `folio-assistant/computations/` and commits the refreshed witnesses
+# back to `main`.
+#
+# Why
+# ───
+# `publish.yml` runs `run_pipeline.py --content-only --timeout 120` on
+# every PR but its artifact is ephemeral (retention-days: 1) and the
+# workflow never pushes the regenerated witnesses back to the repo.
+# That means every CI run re-detects the same scripts as stale and
+# re-spends 6+ minutes regenerating them. This workflow persists the
+# regenerated witnesses on `main` so subsequent CI passes (PRs included)
+# observe them as current and skip the rerun.
+#
+# Triggers
+# ────────
+#   - push to `main` touching any computation source / witness file or
+#     this workflow file.
+#   - workflow_dispatch — manual rerun.
+#   - schedule — nightly safety net so the witness set never drifts more
+#     than a day from `main`.
+#
+# Commit-back is intentionally restricted to runs whose `GITHUB_REF` is
+# `refs/heads/main` (push, dispatch from main, schedule). PRs are *not*
+# routed through this workflow — they keep using publish.yml's regen
+# step, which now succeeds against an up-to-date baseline.
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Comma-separated list of scripts to force-rerun (e.g. "a.py,b.py"). Leave blank to use staleness detection.'
+        required: false
+        default: ''
+        type: string
+      timeout:
+        description: 'Per-script timeout in seconds (default 300).'
+        required: false
+        default: '300'
+        type: string
+concurrency:
+  group: witness-refresh-${{ github.ref }}
+  cancel-in-progress: false  # don't drop in-flight regen mid-commit
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    name: Regenerate + commit witnesses
+    runs-on: ubuntu-latest
+    # Hard ceiling: 210 content-only scripts × 120s timeout = 7h worst-case,
+    # but typical wall-clock is ~10-15 min. Cap at 90 min to fail loud rather
+    # than burn budget on a hang.
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # We need write access via the default token; fetch full history
+          # so the commit-back is a clean fast-forward.
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python scientific dependencies
+        run: |
+          pip install --no-cache-dir \
+            'numpy>=2.1' 'sympy>=1.13' 'scipy>=1.14' 'mpmath>=1.3'
+
+      - name: Regenerate stale witnesses
+        id: regen
+        env:
+          FORCE_LIST: ${{ github.event.inputs.force }}
+          TIMEOUT: ${{ github.event.inputs.timeout || '300' }}
+        run: |
+          set -o pipefail
+          cd folio-assistant/computations
+          python3 hecke_startup_cache.py 2>/dev/null || true
+
+          args=( --content-only --timeout "${TIMEOUT}" )
+          if [ -n "${FORCE_LIST}" ]; then
+            # Translate comma-separated input into individual --force args.
+            IFS=',' read -r -a forced <<< "${FORCE_LIST}"
+            args+=( --force "${forced[@]}" )
+          fi
+
+          python3 run_pipeline.py "${args[@]}" 2>&1 \
+            | tee /tmp/witness-pipeline.log \
+            | grep -E '^\[|^Done:|FAILED|TIMEOUT|OK' \
+            || echo "::warning::Some witness computations failed"
+          echo ""
+          echo "── Summary ──"
+          tail -3 /tmp/witness-pipeline.log
+
+      - name: Detect changed witnesses
+        id: diff
+        run: |
+          # Restrict the commit to JSON sidecars under computations/.
+          # We intentionally do NOT pick up incidental changes elsewhere.
+          changed=$(git status --porcelain -- \
+            'folio-assistant/computations/*.witness.json' \
+            'folio-assistant/computations/*.derivation.json' \
+            | wc -l)
+          echo "changed=${changed}" >> "$GITHUB_OUTPUT"
+          if [ "${changed}" -gt 0 ]; then
+            echo "Changed witness files:"
+            git status --short -- \
+              'folio-assistant/computations/*.witness.json' \
+              'folio-assistant/computations/*.derivation.json'
+          else
+            echo "No witness drift — nothing to commit."
+          fi
+
+      - name: Commit + push refreshed witnesses
+        if: steps.diff.outputs.changed != '0' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          git add \
+            'folio-assistant/computations/*.witness.json' \
+            'folio-assistant/computations/*.derivation.json'
+
+          # Trailer marks the commit as automated so other workflows (and
+          # humans) can recognise / skip it. We intentionally do not add
+          # `[skip ci]` — downstream gates (e.g. provenance audits) still
+          # need to run against the refreshed sidecars.
+          git commit -m "chore(witnesses): refresh regenerated *.witness.json [auto]
+
+Triggered by ${{ github.event_name }} on ${{ github.sha }}.
+Regenerated by .github/workflows/witness-refresh.yml so that subsequent
+CI passes observe witnesses as current and skip the ~6 min regen step
+in publish.yml.
+
+Co-authored-by: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+
+          # Retry once on push race (another commit landed first).
+          if ! git push origin HEAD:main; then
+            echo "::warning::push failed — rebasing and retrying once"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi

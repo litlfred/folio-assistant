@@ -1,0 +1,106 @@
+# Code-quality gates — cheap, fast static checks that protect compute infra.
+#
+# Three gates (per docs/handover/2026-06-09-affectionate-hopper-handover.md §2):
+#
+#   1. Lean bare-import gate — HARD FAIL on `import Mathlib` (the whole
+#      library). A bare `import Mathlib` pulls the entire Mathlib build cone
+#      into a single content-block / lib file, which is what drives the
+#      >9-min full-library `lake build` timeout. Targeted imports keep the
+#      per-file dependency cone (and CI build) small. Zero offenders today
+#      (the 2 historical ones — alpha-k-derivation-procedure.lean and
+#      AppendixSurreals/FigureEightCasimirWeight.lean — were narrowed), so
+#      this is a true regression gate.
+#
+#   2. Python unused / wildcard imports — WARN-ONLY ratchet. ruff F401
+#      (unused import) + F403 (`from x import *`) over the compute tree.
+#      Warn-only on the current baseline; tighten to a hard gate once the
+#      live offenders (universal-ilp.py wildcard; substrate facade
+#      re-exports) are resolved or annotated (`# noqa: F403` / `__all__`).
+#
+#   3. Rust wildcard imports — WARN-ONLY ratchet. Lightweight grep report
+#      of non-test `use ...::*;` in tools/ (full `clippy -D
+#      clippy::wildcard_imports` is the eventual upgrade, but a cargo build
+#      on every PR is too heavy for a static gate; the grep ratchet flags
+#      new wildcard imports cheaply).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lean-bare-import:
+    name: Lean bare-import gate (hard)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # HARD GATE: a bare `import Mathlib` (optionally trailing whitespace)
+      # at the start of a line is forbidden in content Lean files. Use
+      # targeted imports (run `#min_imports` after a clean build to find
+      # them).
+      - name: No bare `import Mathlib`
+        run: |
+          set -euo pipefail
+          if matches=$(grep -rnE '^import Mathlib[[:space:]]*$' \
+                content --include='*.lean' 2>/dev/null); then
+            echo "::error::Bare 'import Mathlib' found — use targeted imports (#min_imports). Offenders:"
+            echo "$matches" | while IFS= read -r line; do
+              echo "::error::$line"
+              echo "  $line"
+            done
+            exit 1
+          fi
+          echo "OK — no bare 'import Mathlib' in content/**/*.lean"
+
+  python-imports:
+    name: Python unused/wildcard imports (warn-only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ruff
+        run: pip install "ruff>=0.5"
+
+      # WARN-ONLY: report F401 (unused) + F403 (wildcard) but never fail CI
+      # on the current baseline. Flip `continue-on-error` off (and drop the
+      # `|| true`) to make it a hard gate once the baseline is clean.
+      - name: ruff F401,F403 (report)
+        continue-on-error: true
+        # `continue-on-error` (above) keeps the job green; do NOT add `|| true`
+        # — that would mask the step's own failed status in the Actions UI.
+        run: |
+          ruff check --select F401,F403 --output-format=github \
+            --exclude '**/_deprecated/**' \
+            folio-assistant/computations tools
+
+  rust-wildcard:
+    name: Rust wildcard imports (warn-only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
+      # tools/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
+      # of the legitimate baseline, so they're reported but not failed.
+      - name: Wildcard `use ...::*;` report
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          # Char class covers digits too (e.g. base64::prelude::*, sha2::*) and
+          # underscores (wasm_bindgen::prelude::*, extendr_api::prelude::*).
+          matches=$(grep -rnE '^[[:space:]]*use [A-Za-z0-9_:]+::\*;' \
+            tools --include='*.rs' 2>/dev/null | grep -vE 'use super::\*;' || true)
+          if [ -n "$matches" ]; then
+            echo "::warning::Non-test wildcard imports in tools/ (ratchet — narrow when touched):"
+            echo "$matches" | while IFS= read -r line; do
+              echo "::warning::$line"
+              echo "  $line"
+            done
+          else
+            echo "OK — no non-test wildcard imports in tools/**/*.rs"
+          fi

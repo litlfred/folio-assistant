@@ -1,0 +1,171 @@
+# QA-sweep nightly — keeps the integration-watcher sidecars current
+#
+# Why this exists
+# ────────────────
+# Session 017uTFqMEnyAuPwyUtUQZ6oU (2026-06-02) found that ~60-70% of
+# open fails in the integration-watcher sidecars were STALE — content
+# had been fixed by merged PRs but the QA sweep was never re-run.
+# Documented in `docs/audits/2026-06-02-lean-discharge-queue-staleness-audit.md`
+# and `docs/audits/2026-06-02-qa-backlog-canonical-axis-staleness-audit.md`,
+# and confirmed empirically by PR #1737 (75 of 80 stale fails cleared
+# by a single post-merge re-sweep).
+#
+# This workflow runs the sweep nightly so the staleness doesn't
+# re-accumulate. The PR #1729 description recommended exactly this
+# (search "schedule `qa-sweep` as a nightly cron job").
+#
+# Triggers
+# ────────
+#   schedule — daily at 04:30 UTC (off-peak; after any other nightly
+#     content jobs have settled)
+#   workflow_dispatch — manual run for ad-hoc refresh
+#
+# Steps
+# ─────
+#   1. Check out main with full history.
+#   2. Set up bun + install content deps.
+#   3. Run `bun content/pipeline/qa-sweep.ts content --axis <axis>` for
+#      each of the 5 non-proof axes (canonical / one-voice / q-usage /
+#      compute / detangler). Proof-lean-compiles is excluded; that one
+#      needs `./scripts/lean-compile-audit.sh` (full Lean toolchain;
+#      separate cron, owner-run).
+#   4. If any `*.qa.json` or `script-sidecars/*.script.json` changed:
+#      create branch `auto/qa-sweep-nightly-YYYY-MM-DD`, commit, push,
+#      open (or update) the rolling PR.
+#   5. If nothing changed: exit cleanly, no commit, no PR.
+#
+# What the workflow NEVER does
+# ────────────────────────────
+# - Never pushes to `main` directly.
+# - Never modifies content blocks (.md / .ts / .lean).
+# - Never modifies witnesses or computation scripts.
+# - Only touches `content/**/*.qa.json` + `content/pipeline/script-sidecars/`.
+
+name: QA sweep nightly
+
+on:
+  workflow_dispatch:
+    inputs:
+      axes:
+        description: "Comma-separated axes to sweep (default: canonical,one-voice,q-usage,compute,detangler)"
+        required: false
+        default: "canonical,one-voice,q-usage,compute,detangler"
+
+permissions:
+  contents: write       # branch + commit + push
+  pull-requests: write  # open / update the rolling PR
+
+jobs:
+  qa-sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.11"
+
+      - name: Install content deps
+        working-directory: content
+        run: bun install --frozen-lockfile || bun install
+
+      - name: Run QA sweep across non-proof axes
+        env:
+          AXES: ${{ github.event.inputs.axes || 'canonical,one-voice,q-usage,compute,detangler' }}
+        run: |
+          set -e
+          IFS=',' read -ra AXIS_LIST <<< "$AXES"
+          for axis in "${AXIS_LIST[@]}"; do
+            axis_trim="$(echo "$axis" | xargs)"
+            echo "::group::axis $axis_trim"
+            bun run content/pipeline/qa-sweep.ts content --axis "$axis_trim" --ci
+            echo "::endgroup::"
+          done
+
+      - name: Detect changes
+        id: changes
+        run: |
+          changed=$(git status --porcelain \
+            'content/**/*.qa.json' \
+            'content/pipeline/script-sidecars/' \
+            2>/dev/null | wc -l)
+          echo "count=$changed" >> "$GITHUB_OUTPUT"
+          if [ "$changed" -eq 0 ]; then
+            echo "No sidecar changes — exiting cleanly."
+          else
+            echo "$changed sidecar entries changed."
+          fi
+
+      - name: Branch + commit + push
+        if: steps.changes.outputs.count != '0'
+        id: push
+        env:
+          BRANCH: auto/qa-sweep-nightly-${{ github.run_id }}
+        run: |
+          set -e
+          git config user.name "qa-sweep-bot"
+          git config user.email "qa-sweep-bot@users.noreply.github.com"
+
+          # Use a run-id-stamped branch so concurrent / repeat runs
+          # don't collide. The PR step below dedupes via head-branch
+          # lookup so the rolling PR cycles through these branches
+          # cleanly.
+          git checkout -B "$BRANCH"
+          git add 'content/**/*.qa.json' content/pipeline/script-sidecars/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "(post-stage diff is clean; nothing to commit)"
+            echo "branch=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "qa-sweep: nightly refresh ($(date -u +%Y-%m-%d))"
+          git push -u origin "$BRANCH"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Open (or surface existing) PR
+        if: steps.push.outputs.branch != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ steps.push.outputs.branch }}
+        run: |
+          set -e
+          # Close any prior open nightly PRs so we only ever have one
+          # active at a time (the rolling-PR convention).
+          prior=$(gh pr list \
+            --search 'head:auto/qa-sweep-nightly is:open' \
+            --json number,headRefName --jq \
+            '.[] | select(.headRefName != "'"$BRANCH"'") | .number')
+          for pr in $prior; do
+            echo "Closing prior nightly PR #$pr"
+            gh pr close "$pr" --comment "Superseded by today's nightly sweep on \`$BRANCH\`."
+          done
+
+          # Write the PR body to a temp file. Using --body-file avoids
+          # YAML multi-line escaping inside the run: | block (single
+          # --body argument with embedded newlines de-indents lines
+          # that break out of the YAML block-literal).
+          BODY_FILE=$(mktemp)
+          cat > "$BODY_FILE" <<'PRBODY_EOF'
+          Automated nightly QA-sweep refresh per the recommendation in #1729 / #1737.
+
+          Refreshes `*.qa.json` sidecars + script-sidecar caches for the 5 non-proof axes (canonical / one-voice / q-usage / compute / detangler). Proof-lean-compiles is owner-run via `./scripts/lean-compile-audit.sh`.
+
+          If this PR has zero new fail signals (just metadata churn), it's safe to rebase-merge. If new fails surfaced, triage the offending blocks before merging.
+
+          This PR is auto-generated by `.github/workflows/qa-sweep-nightly.yml`. Any prior open nightly PR was closed in favor of this one.
+          PRBODY_EOF
+
+          # Open today's PR (or no-op if already open from a same-day rerun)
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "qa-sweep: nightly refresh ($(date -u +%Y-%m-%d))" \
+            --body-file "$BODY_FILE" \
+            || echo "(PR already exists for $BRANCH — no-op)"
+
+          rm -f "$BODY_FILE"

@@ -1,0 +1,157 @@
+# Deploy or update the QOU Folio service on Hetzner Cloud.
+#
+# Zero SSH required. Secrets come from GitHub repo secrets, injected
+# into the server via cloud-init (first deploy) or hcloud ssh (updates).
+#
+# Required GitHub secrets:
+#   HETZNER_API_TOKEN    — Hetzner Cloud API token
+#   GOOGLE_CLIENT_ID     — Google OAuth client ID (viewer auth)
+#   GOOGLE_CLIENT_SECRET — Google OAuth client secret
+#   GH_OAUTH_CLIENT_ID         — GitHub OAuth client ID (collaborator auth)
+#   GH_OAUTH_CLIENT_SECRET     — GitHub OAuth client secret
+#
+# Triggers:
+#   push to main     — Auto-update (secrets + restart) if server exists
+#   workflow_run     — After Docker image build completes
+#   workflow_dispatch — Manual provision / update / destroy
+#
+# After first provision, point DNS to the printed IP. Caddy handles TLS.
+# Updates are fully automated — no cron self-updater needed.
+
+name: Deploy Folio
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'What to do'
+        required: true
+        type: choice
+        options:
+          - provision
+          - update
+          - reprovision
+          - destroy
+        default: update
+
+env:
+  SERVER_NAME: qou-folio
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install hcloud CLI
+        run: |
+          curl -fsSL -o /tmp/hcloud.tar.gz \
+            https://github.com/hetznercloud/cli/releases/latest/download/hcloud-linux-amd64.tar.gz
+          tar xzf /tmp/hcloud.tar.gz -C /usr/local/bin hcloud
+          hcloud version
+
+      - name: Resolve action
+        id: action
+        env:
+          INPUT_ACTION: ${{ inputs.action }}
+        run: |
+          EVENT="${{ github.event_name }}"
+          if [ "$EVENT" = "workflow_run" ]; then
+            if [ "${{ github.event.workflow_run.conclusion }}" != "success" ]; then
+              echo "Image build did not succeed — skipping deploy."
+              echo "action=skip" >> "$GITHUB_OUTPUT"
+            else
+              echo "action=update" >> "$GITHUB_OUTPUT"
+            fi
+            echo "auto=true" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT" = "push" ]; then
+            echo "action=update" >> "$GITHUB_OUTPUT"
+            echo "auto=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "action=$INPUT_ACTION" >> "$GITHUB_OUTPUT"
+            echo "auto=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Parse config
+        id: config
+        run: python3 deploy/parse-config.py
+
+      # ── PROVISION ─────────────────────────────────────────────────
+      - name: Provision server
+        if: steps.action.outputs.action == 'provision'
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HETZNER_API_TOKEN }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
+          GH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+          REPO_URL: https://github.com/${{ github.repository }}.git
+          DOMAIN: ${{ steps.config.outputs.domain }}
+          IMAGE: ${{ steps.config.outputs.image }}
+          MCP_PORT: ${{ steps.config.outputs.mcp_port }}
+          OWNER_USERNAME: ${{ steps.config.outputs.owner_username }}
+          SESSION_MAX_AGE: ${{ steps.config.outputs.session_max_age }}
+          SERVER_TYPE: ${{ steps.config.outputs.server_type }}
+          SERVER_LOC: ${{ steps.config.outputs.location }}
+          SERVER_IMG: ${{ steps.config.outputs.server_image }}
+        run: deploy/provision.sh
+
+      # ── UPDATE ────────────────────────────────────────────────────
+      # continue-on-error: Hetzner deploy is best-effort.  The static
+      # gh-pages SPA (published by publish.yml) must never be blocked
+      # by a hosted-service failure.
+      - name: Update server
+        continue-on-error: true
+        if: steps.action.outputs.action == 'update'
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HETZNER_API_TOKEN }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
+          GH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+          DOMAIN: ${{ steps.config.outputs.domain }}
+          IMAGE: ${{ steps.config.outputs.image }}
+          MCP_PORT: ${{ steps.config.outputs.mcp_port }}
+          OWNER_USERNAME: ${{ steps.config.outputs.owner_username }}
+          SESSION_MAX_AGE: ${{ steps.config.outputs.session_max_age }}
+          AUTO: ${{ steps.action.outputs.auto }}
+        run: deploy/update-server.sh
+
+      # ── REPROVISION (destroy + provision in one step) ────────────
+      - name: Destroy existing server (reprovision)
+        if: steps.action.outputs.action == 'reprovision'
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HETZNER_API_TOKEN }}
+          DOMAIN: ${{ steps.config.outputs.domain }}
+        run: deploy/destroy-server.sh
+
+      - name: Provision fresh server (reprovision)
+        if: steps.action.outputs.action == 'reprovision'
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HETZNER_API_TOKEN }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
+          GH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+          REPO_URL: https://github.com/${{ github.repository }}.git
+          DOMAIN: ${{ steps.config.outputs.domain }}
+          IMAGE: ${{ steps.config.outputs.image }}
+          MCP_PORT: ${{ steps.config.outputs.mcp_port }}
+          OWNER_USERNAME: ${{ steps.config.outputs.owner_username }}
+          SESSION_MAX_AGE: ${{ steps.config.outputs.session_max_age }}
+          SERVER_TYPE: ${{ steps.config.outputs.server_type }}
+          SERVER_LOC: ${{ steps.config.outputs.location }}
+          SERVER_IMG: ${{ steps.config.outputs.server_image }}
+        run: deploy/provision.sh
+
+      # ── DESTROY ───────────────────────────────────────────────────
+      - name: Destroy server
+        if: steps.action.outputs.action == 'destroy'
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HETZNER_API_TOKEN }}
+          DOMAIN: ${{ steps.config.outputs.domain }}
+        run: deploy/destroy-server.sh

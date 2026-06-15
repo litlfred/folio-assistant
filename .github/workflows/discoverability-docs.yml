@@ -1,0 +1,149 @@
+name: Discoverability docs (cargo doc + pdoc + TypeDoc)
+
+# Tier-1 items 1e + 1f + 1g from workplan v2 — bundled:
+#   1e: cargo doc --no-deps for hecke-engine → gh-pages /rust-api/
+#   1f: pdoc for pyhecke + pyhecke-native     → gh-pages /python-api/
+#   1g: TypeDoc for folio-assistant schemas    → gh-pages /schema-docs/
+#
+# All three publish under the SAME gh-pages root using
+# `peaceiris/actions-gh-pages@v4` with `keep_files: true` so they
+# coexist with the existing publish.yml outputs (papers/, blueprint/,
+# drafts/, etc.).
+#
+# Triggers: any change to the documented surface re-publishes that
+# tile. The 3 jobs run independently — a failure in one (e.g. cargo
+# doc) does not block the others.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write  # required for gh-pages publish via peaceiris/actions-gh-pages
+
+concurrency:
+  group: discoverability-docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── 1e: Rust API docs ───────────────────────────────────────────
+  rust-api:
+    name: cargo doc → /rust-api/
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install GMP + MPFR (for rug)
+        run: sudo apt-get update -qq && sudo apt-get install -y libgmp-dev libmpfr-dev
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: 'tools/hecke-engine -> target'
+
+      # --no-deps so we don't generate ~5 GB of dep docs; --document-private-items
+      # off because the public surface is what consumers care about.
+      - name: cargo doc
+        working-directory: tools/hecke-engine
+        run: cargo doc --no-deps --lib --release
+        # mpfr is on by default; full surface gets documented.
+
+      - name: Stage for gh-pages
+        run: |
+          mkdir -p _site/rust-api
+          cp -r tools/hecke-engine/target/doc/* _site/rust-api/
+          # Add a top-level index.html that redirects to the hecke_engine crate
+          cat > _site/rust-api/index.html << 'EOF'
+          <!DOCTYPE html>
+          <meta http-equiv="refresh" content="0; url=hecke_engine/index.html">
+          <title>QOU Rust API — hecke-engine</title>
+          <a href="hecke_engine/index.html">redirecting to hecke_engine/</a>
+          EOF
+
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true
+          commit_message: 'docs(rust-api): cargo doc from ${{ github.sha }}'
+
+  # ── 1f: Python API docs ─────────────────────────────────────────
+  python-api:
+    name: pdoc → /python-api/
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pdoc + pyhecke deps
+        run: |
+          pip install --upgrade pip
+          pip install pdoc numpy mpmath jsonschema sympy
+          # pyhecke is editable-installed so pdoc can import it
+          pip install -e tools/pyhecke
+          pip install -e tools/qou-substrate
+          pip install -e tools/witness-schema
+
+      - name: Generate pdoc for pyhecke + qou-substrate + witness-schema
+        run: |
+          mkdir -p _site/python-api
+          # Three submodules under one tile
+          pdoc --output-directory _site/python-api/ \
+               --logo "https://github.com/litlfred/qou/raw/main/assets/qou-logo.png" \
+               --no-show-source \
+               pyhecke qou_substrate witness_schema || \
+            pdoc --output-directory _site/python-api/ \
+                 --no-show-source \
+                 pyhecke qou_substrate witness_schema
+          # Add a top-level index that lists the three packages
+          cat > _site/python-api/index.html << 'EOF'
+          <!DOCTYPE html>
+          <meta charset="utf-8">
+          <title>QOU Python API</title>
+          <h1>QOU Python API</h1>
+          <ul>
+            <li><a href="pyhecke.html">pyhecke</a> — Hecke + Gram + Wedderburn canonical surface</li>
+            <li><a href="qou_substrate.html">qou_substrate</a> — WitnessBuilder + precision + q parameter</li>
+            <li><a href="witness_schema.html">witness_schema</a> — Pydantic models for the witness JSON format</li>
+          </ul>
+          EOF
+
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true
+          commit_message: 'docs(python-api): pdoc from ${{ github.sha }}'
+
+  # ── 1g: TypeScript schema docs ──────────────────────────────────
+  schema-docs:
+    name: TypeDoc → /schema-docs/
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install + run TypeDoc
+        working-directory: folio-assistant
+        run: |
+          bun install || npm install
+          # Use TypeDoc to document the schemas/ exports + adapters/paper/schemas/
+          npx typedoc \
+            --out ../_site/schema-docs \
+            --entryPointStrategy expand \
+            --readme none \
+            --hideGenerator \
+            schemas/ adapters/paper/schemas/ 2>&1 | tail -20
+
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true
+          commit_message: 'docs(schema-docs): TypeDoc from ${{ github.sha }}'
