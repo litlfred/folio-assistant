@@ -1,0 +1,93 @@
+# Dockerfile.paper-builder — prebuilt image for the publish.yml pipeline.
+#
+# Bakes in TeX Live + bun + Python scientific stack + auxiliary tools
+# that publish.yml currently apt-installs on every run (~5-10 min per
+# job). Pre-pulled, the same install reduces to a ~2-3 min image pull,
+# net savings of ~5 min per job — and a precondition for the 8-job
+# parallel DAG (without pre-baked tools, each parallel job would
+# duplicate the install).
+#
+# See: docs/workplans/2026-05-24-publish-yml-parallelization-plan.md
+# (PR #1099 — Phase A doc) for the rationale.
+
+# Pin to a specific Ubuntu LTS for reproducibility. 24.04 matches
+# the `runs-on: ubuntu-latest` baseline GH Actions uses today
+# (LTS rotation Apr 2024).
+FROM ubuntu:24.04
+
+LABEL org.opencontainers.image.source="https://github.com/litlfred/qou"
+LABEL org.opencontainers.image.description="Pre-baked builder image for the QOU folio publish pipeline (TeX Live + bun + Python scientific stack)."
+# Match the QOU repo LICENSE (Creative Commons Attribution 4.0).
+# Per PR #1104 review (Copilot) — earlier MIT label was incorrect.
+LABEL org.opencontainers.image.licenses="CC-BY-4.0"
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+# ── System deps + TeX Live ──
+# Mirrors publish.yml's "Install TeX Live, latexdiff, latexmk, latexpand"
+# step verbatim. `texlive-full` is a meta-package that already includes
+# `texlive-extra-utils`, `latexdiff`, and `latexmk` — the explicit
+# listing is retained as documentation of intent (and to make the
+# `apt show texlive-full | grep -i depends` audit chain obvious),
+# but is technically redundant per PR #1104 review (Gemini).
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates curl unzip git \
+        texlive-full texlive-extra-utils latexdiff latexmk \
+        graphviz ripgrep jq \
+        python3 python3-pip python3-venv \
+        build-essential pkg-config \
+        && rm -rf /var/lib/apt/lists/*
+
+# ── Python scientific stack ──
+# Mirrors publish.yml's "Install Python scientific dependencies" +
+# "Install pypdf" steps. **Pinned to specific versions** for build
+# reproducibility (per PR #1104 review, Gemini). Floating versions
+# would let different image rebuilds pick up different numpy/sympy
+# minor versions and re-introduce non-determinism into the publish
+# pipeline. Bump these pins in lockstep with the publish.yml /
+# witness-pipeline matrix when the scientific-stack baseline rolls.
+RUN pip3 install --break-system-packages --no-cache-dir \
+        'pypdf==5.1.0' \
+        'numpy==2.1.3' \
+        'sympy==1.13.3' \
+        'scipy==1.14.1' \
+        'mpmath==1.3.0'
+
+# ── bun (content pipeline) ──
+# bun is the JS runtime that drives content/pipeline/. Pin to a
+# specific version (per PR #1104 review, Gemini) to keep the image
+# reproducible. publish.yml currently uses `oven-sh/setup-bun@v2`
+# with `bun-version: latest` — a follow-up will align both to the
+# same pinned version.
+ENV BUN_INSTALL=/opt/bun
+ENV PATH=$BUN_INSTALL/bin:$PATH
+ENV BUN_VERSION=1.1.34
+RUN curl -fsSL https://bun.sh/install | bash -s "bun-v${BUN_VERSION}"
+
+# ── Sanity check: surface every baked tool's version into the image log ──
+# Strict fail-fast — no `|| true` masks. If any binary is missing or
+# version-broken, the image build fails here rather than silently
+# producing a broken image (per PR #1104 review, Gemini + Copilot).
+# Each tool is verified with `command -v` (presence) + a `--version`
+# call (functional), then the surfaced versions become the build log.
+RUN set -eux && \
+    echo "=== Image tool versions ===" && \
+    command -v pdflatex && pdflatex --version | head -1 && \
+    command -v latexmk && latexmk --version | head -1 && \
+    command -v latexdiff && latexdiff --version | head -1 && \
+    command -v latexpand && \
+    command -v dot && dot -V && \
+    command -v rg && rg --version | head -1 && \
+    command -v jq && jq --version && \
+    command -v bun && bun --version && \
+    command -v python3 && python3 --version && \
+    command -v git && git --version && \
+    pip3 show numpy sympy scipy mpmath pypdf | grep -E '^Name|^Version'
+
+# Default working directory mirrors the GH Actions runner's checkout
+# path; consumers override via `workdir:`.
+WORKDIR /workspace
+
+CMD ["/bin/bash"]
