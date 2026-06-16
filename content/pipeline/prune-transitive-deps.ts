@@ -18,7 +18,7 @@
 
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, resolve } from "path";
-import type { Paper, Chapter, Section, Block } from "../schema/types";
+import type { Paper, Chapter, Section, Block } from "../../schemas/types";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");
 const CONTENT_ROOT = join(REPO_ROOT, "content");

@@ -22,7 +22,7 @@
 
 import { readFileSync, existsSync, readdirSync, writeFileSync } from "fs";
 import { resolve, join, extname } from "path";
-import { references, referenceMap } from "../schema/references";
+import { references, referenceMap } from "../../schemas/references";
 import type { Data as CSLData, Person as CSLPerson } from "csl-json";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");

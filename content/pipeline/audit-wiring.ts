@@ -30,8 +30,8 @@
 
 import { readdirSync, readFileSync, existsSync, statSync } from "fs";
 import { resolve, join, basename, dirname } from "path";
-import { BlockSchema } from "../schema/constraints";
-import type { Block } from "../schema/types";
+import { BlockSchema } from "../../schemas/constraints";
+import type { Block } from "../../schemas/types";
 
 const PAPER_DIR = resolve(__dirname, "../quantum-observable-universe");
 const REPO_ROOT = resolve(__dirname, "../..");

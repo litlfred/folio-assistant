@@ -31,8 +31,8 @@ import {
   gfmStrikethroughFromMarkdown,
   gfmStrikethroughToMarkdown,
 } from "mdast-util-gfm-strikethrough";
-import type { Block, Chapter, Section, RenderOptions } from "../schema/types";
-import { isCrossPaperRef } from "../schema/types";
+import type { Block, Chapter, Section, RenderOptions } from "../../schemas/types";
+import { isCrossPaperRef } from "../../schemas/types";
 import { parseLeanRef } from "../../folio-assistant/schemas/lean-packages";
 import { extractCitations } from "./citations";
 import {

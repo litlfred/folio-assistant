@@ -22,7 +22,7 @@
 
 import { readFileSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
-import type { Paper } from "../schema/types";
+import type { Paper } from "../../schemas/types";
 import { escapeLatex } from "./render-latex";
 
 /**
