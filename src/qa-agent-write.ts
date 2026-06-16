@@ -43,7 +43,7 @@ import {
 import type {
   BlockQaReport,
   QaCriterionEntry,
-} from "../../folio-assistant/schemas/block-qa";
+} from "../../schemas/block-qa";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");
 

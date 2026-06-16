@@ -20,7 +20,7 @@ import type {
   TestResult,
   TestSummary,
   TestCategory,
-} from "../../folio-assistant/schemas/qou-types";
+} from "../../schemas/qou-types";
 
 const startTime = Date.now();
 const now = new Date().toISOString();

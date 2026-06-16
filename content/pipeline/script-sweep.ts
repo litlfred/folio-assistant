@@ -56,11 +56,11 @@ import type { CheckerResult } from "./qa-checkers-voice";
 import type {
   ScriptQaReport,
   ScriptLanguage,
-} from "../../folio-assistant/schemas/script-qa";
+} from "../../schemas/script-qa";
 import type {
   QaCriterionEntry,
   QaScriptSidecar,
-} from "../../folio-assistant/schemas/block-qa";
+} from "../../schemas/block-qa";
 
 // ─── Dispatch ──────────────────────────────────────────────────
 
