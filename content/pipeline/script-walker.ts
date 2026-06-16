@@ -19,7 +19,7 @@ import {
 } from "fs";
 import { createHash } from "crypto";
 import { join, relative, basename, extname, dirname } from "path";
-import type { ScriptLanguage } from "../../folio-assistant/schemas/script-qa";
+import type { ScriptLanguage } from "../../schemas/script-qa";
 
 export interface ScriptTarget {
   /** Absolute path on disk. */

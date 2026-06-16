@@ -33,7 +33,7 @@ import {
 } from "mdast-util-gfm-strikethrough";
 import type { Block, Chapter, Section, RenderOptions } from "../../schemas/types";
 import { isCrossPaperRef } from "../../schemas/types";
-import { parseLeanRef } from "../../folio-assistant/schemas/lean-packages";
+import { parseLeanRef } from "../../schemas/lean-packages";
 import { extractCitations } from "./citations";
 import {
   renderValue,
