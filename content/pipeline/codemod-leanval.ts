@@ -55,7 +55,7 @@ import {
   WITNESSED_VALUES,
   lookupValue,
   type WitnessedValueEntry,
-} from "../values/registry";
+} from "./value-registry-di";
 import { resolvePath } from "./render-value";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
