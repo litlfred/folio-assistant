@@ -15,7 +15,7 @@
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import { resolve, join } from "path";
 import type { Data as CSLData, Person as CSLPerson } from "csl-json";
-import { references } from "../schema/references";
+import { references } from "../../schemas/references";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");
 const CONTENT_DIR = resolve(import.meta.dir, "..");

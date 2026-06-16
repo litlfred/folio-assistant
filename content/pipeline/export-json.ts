@@ -26,9 +26,9 @@ import type {
   Block,
   RenderedAsset,
   LeanRef,
-} from "../schema/types";
+} from "../../schemas/types";
 import type { Data as CSLData } from "csl-json";
-import { references, referenceMap } from "../schema/references";
+import { references, referenceMap } from "../../schemas/references";
 import { mergeCitations } from "./citations";
 import { isWitnessed, leanFileHash } from "../../scripts/lean-witness";
 import { leanPackageByName, parseLeanRef } from "../../folio-assistant/schemas/lean-packages";

@@ -23,8 +23,8 @@
  */
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { basename, join, resolve } from "path";
-import type { Block, Chapter, Paper, Section } from "../schema/types";
-import { ChapterSchema, PaperSchema } from "../schema/constraints";
+import type { Block, Chapter, Paper, Section } from "../../schemas/types";
+import { ChapterSchema, PaperSchema } from "../../schemas/constraints";
 
 // ── Types ────────────────────────────────────────────────────────
 

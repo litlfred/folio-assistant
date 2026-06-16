@@ -24,8 +24,8 @@ import {
   ChapterSchema,
   CONSTRAINT_RULES,
   type ConstraintContext,
-} from "../schema/constraints";
-import type { Block, Paper, Chapter, Section, ValidationIssue, ValidationResult } from "../schema/types";
+} from "../../schemas/constraints";
+import type { Block, Paper, Chapter, Section, ValidationIssue, ValidationResult } from "../../schemas/types";
 import { renderBlock, validateLatexAst, markdownToLatex } from "./render-latex";
 import { validateDefterms } from "./validate-defterm";
 import { validateValueDirectives } from "./validate-value";

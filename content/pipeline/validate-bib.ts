@@ -46,7 +46,7 @@
  * source of truth; this script verifies external correctness of every
  * entry beyond schema-shape validation.
  */
-import { references } from "../schema/references";
+import { references } from "../../schemas/references";
 import * as fs from "fs";
 import * as path from "path";
 import { glob } from "fs/promises";
