@@ -25,7 +25,7 @@
 import { readFileSync, existsSync } from "fs";
 import { resolve } from "path";
 import { createHash } from "crypto";
-import { references } from "../schema/references";
+import { references } from "../../schemas/references";
 import type { Data as CSLData } from "csl-json";
 
 const STATUS_ENUM = [
@@ -51,7 +51,7 @@ interface ReviewSidecar {
   reviews: Record<string, ReviewEntry>;
 }
 
-const SIDECAR_PATH = resolve(import.meta.dir, "../schema/references.review.json");
+const SIDECAR_PATH = resolve(import.meta.dir, "../../schemas/references.review.json");
 
 /** Recursively key-sorted JSON, so the hash is independent of source key order.
  *  Mimics `JSON.stringify` semantics for the non-JSON values that can appear in a

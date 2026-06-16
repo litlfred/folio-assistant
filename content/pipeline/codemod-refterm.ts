@@ -42,8 +42,8 @@ import { gfmTable } from "micromark-extension-gfm-table";
 import { gfmTableFromMarkdown, gfmTableToMarkdown } from "mdast-util-gfm-table";
 import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough";
 import { gfmStrikethroughFromMarkdown, gfmStrikethroughToMarkdown } from "mdast-util-gfm-strikethrough";
-import type { Block, Chapter, Paper, Section } from "../schema/types";
-import { ChapterSchema, PaperSchema } from "../schema/constraints";
+import type { Block, Chapter, Paper, Section } from "../../schemas/types";
+import { ChapterSchema, PaperSchema } from "../../schemas/constraints";
 import { buildGlossary } from "./build-glossary";
 
 // Round-trip parser/serializer with directive support. Must mirror

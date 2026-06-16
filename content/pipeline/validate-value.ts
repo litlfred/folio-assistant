@@ -34,7 +34,7 @@ import {
   referencedWitnessFiles,
   type ValOccurrence,
 } from "./render-value";
-import type { Block, ValidationIssue } from "../schema/types";
+import type { Block, ValidationIssue } from "../../schemas/types";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 

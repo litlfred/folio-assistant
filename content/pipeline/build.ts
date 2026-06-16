@@ -13,8 +13,8 @@
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
 import { join, dirname, resolve, relative } from "path";
-import type { Paper, Chapter, Section, Block, RenderOptions } from "../schema/types";
-import { extractBlockLabel, isCrossPaperRef } from "../schema/types";
+import type { Paper, Chapter, Section, Block, RenderOptions } from "../../schemas/types";
+import { extractBlockLabel, isCrossPaperRef } from "../../schemas/types";
 import { renderChapter, validateLatexAst } from "./render-latex";
 import { generateMainTex } from "./generate-main-tex";
 import { runPreflight } from "./latex-preflight";

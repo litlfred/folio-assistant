@@ -10,7 +10,7 @@
  * @module content/pipeline/validate-defterm
  */
 import { visit } from "unist-util-visit";
-import type { Block, ValidationIssue } from "../schema/types";
+import type { Block, ValidationIssue } from "../../schemas/types";
 import { parseMdCached } from "./render-latex";
 
 /** Resolve the slug for a defterm/refterm node. */
