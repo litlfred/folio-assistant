@@ -22,7 +22,7 @@ import {
   lookupValue,
   type WitnessedValueEntry,
   type WitnessedValueFormat,
-} from "../values/registry";
+} from "./value-registry-di";
 
 // Repo root is two levels up from this file (content/pipeline/).
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");

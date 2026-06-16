@@ -27,7 +27,7 @@ import {
   WITNESSED_VALUES,
   lookupValue,
   type WitnessedValueEntry,
-} from "../values/registry";
+} from "./value-registry-di";
 import {
   extractValOccurrences,
   resolvePath,
