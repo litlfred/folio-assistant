@@ -52,7 +52,7 @@ import {
   WITNESSED_VALUES,
   verifiedNames,
   type WitnessedValueEntry,
-} from "../values/registry";
+} from "./value-registry-di";
 import { resolvePath } from "./render-value";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
