@@ -183,3 +183,7 @@ export type RemoteSyncConfig = z.infer<typeof RemoteSyncConfigSchema>;
  * that provides `SkillPackageManifest`-compatible Docker requirements.
  */
 export type RemotePackageRef = z.infer<typeof RemotePackageRefSchema>;
+
+export function isCrossPaperRef(label: string): boolean {
+  return label.includes(":");
+}
