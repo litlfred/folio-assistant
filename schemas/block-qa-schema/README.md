@@ -15,7 +15,7 @@ All three describe the same two sidecar shapes emitted by the QOU QA pipeline (`
 - **`<block>.qa.json`** (`$schema: "block-qa/v1"`) — one per content block. Under each QA criterion sits an append-only array of reviewer verdicts (script / agent / human), each pinned to the content hashes it judged so it auto-stales on edit.
 - **`<criterion-id>.script.json`** (`$schema: "qa-script/v1"`) — one per automated criterion, recording the checker's own source hash so a checker bug fix invalidates every verdict it ever wrote, corpus-wide.
 
-The JSON Schema is the authoritative interchange spec; the Pydantic and Zod schemas are hand-maintained mirrors kept in sync with it. The producing implementation lives in-repo at [`folio-assistant/schemas/block-qa.ts`](../../folio-assistant/schemas/block-qa.ts).
+The JSON Schema is the authoritative interchange spec; the Pydantic and Zod schemas are hand-maintained mirrors kept in sync with it. The producing implementation lives in-repo at [`folio-assistant/schemas/block-qa.ts`](../../schemas/block-qa.ts).
 
 ## Why a standalone package?
 
