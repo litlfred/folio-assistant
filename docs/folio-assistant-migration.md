@@ -122,12 +122,15 @@ Handoff item **A** is qou-only (no `settings.json` exists here).
   a CLI-independent `.beans/` fallback (and the hook now parses at all — see §4).
   *Residual:* if a `.claude/settings.json` harness is adopted (5.6), decide
   whether the richer `session-status.sh` dashboard folds in or is retired.
-- **5.6 Own the generic session-start harness** — ⏳ **open; needs an owner
-  decision.** This repo currently wires SessionStart via the skill-hook
-  `.claude/skills/hooks/session-start.sh`, **not** a `.claude/settings.json` hook
-  set. Establishing a generic `settings.json` harness (and migrating the 4
-  platform scripts `39fc90f6` deleted) overlaps with the existing mechanism —
-  **see open question Q2 below.**
+- **5.6 Own the generic session-start harness** — ✅ **landed for Claude
+  (Q2 decided, §8).** `.claude/settings.json` now declares a native `SessionStart`
+  hook that runs the shared primer (`scripts/session-start-coord-sweep.sh`), which
+  was generalized (de-qou-ified, default-branch auto-detect, beans priming with
+  CLI-independent fallback). Beans priming was removed from the capability prober
+  (`.claude/skills/hooks/session-start.sh`) so it lives in a single place. The 4
+  platform scripts `39fc90f6` deleted are restored only **if still wanted** — open
+  item, not blocking. Gemini/Antigravity hook configs + the MCP resource are §8
+  layers 2 (other CLIs) / 3.
 
 ### Open questions for the maintainer
 - **Q1 (5.4):** ✅ **Resolved** — no separate todos platform; beans is the todo
@@ -275,8 +278,10 @@ Claude sessions → `.claude/settings.json` SessionStart. Platform/MCP sessions 
 the MCP resource. Don't also let folio's framework run the script for a Claude
 session that already has the settings.json hook.
 
-**Status:** Layer 1 landed (`AGENTS.md` + `CLAUDE.md` stub). Layers 2–3 pending —
-small, but they touch folio's existing harness and the MCP, so left for an explicit
-go-ahead. Sources: agents.md (openai/agents.md, Linux Foundation AAIF); Claude Code
+**Status:** Layer 1 landed (`AGENTS.md` + `CLAUDE.md` stub). Layer 2 landed for
+Claude (`.claude/settings.json` SessionStart → generalized shared primer); the
+Gemini/Antigravity hook configs reuse the same script and remain to be added.
+Layer 3 (expose `beans prime` as an MCP resource) in progress. Sources: agents.md
+(openai/agents.md, Linux Foundation AAIF); Claude Code
 hooks/memory docs; Gemini CLI hooks reference + GEMINI.md docs; Antigravity SDK /
 MCP guides.

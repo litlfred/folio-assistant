@@ -70,35 +70,10 @@ for cap_file in "$SKILLS_DIR/capabilities/"*.json; do
   esac
 done
 
-# ─── Work-plan priming (beans) ───────────────────────────────────────────────
-# Prime the agent with the current beans work-plan. Prefer the CLI (`beans
-# prime` emits agent instructions, `beans list` the open items), but fall back
-# to parsing .beans/ directly so a fresh container that booted without the CLI
-# on PATH is still primed — those are exactly the sessions that most need the
-# work-plan. Never let a priming hiccup break session init.
-echo ""
-echo "Work-plan (beans):"
-BEANS_DIR="$REPO_ROOT/.beans"
-if command -v beans >/dev/null 2>&1; then
-  beans prime 2>/dev/null || true
-  beans list 2>/dev/null || echo "  (beans list returned nothing)"
-elif [ -d "$BEANS_DIR" ]; then
-  echo "  (beans CLI not on PATH — reading $BEANS_DIR directly;"
-  echo "   run scripts/install-beans.sh for full priming)"
-  found=0
-  for f in "$BEANS_DIR"/*.md; do
-    [ -f "$f" ] || continue
-    found=1
-    title=$(sed -n 's/^# //p' "$f" 2>/dev/null | head -1)
-    status=$(grep -m1 -iE '^(status|state):' "$f" 2>/dev/null | sed 's/^[^:]*:[[:space:]]*//')
-    printf '  - %s%s\n' "${title:-$(basename "$f" .md)}" "${status:+ [$status]}"
-  done
-  if [ "$found" -eq 0 ]; then
-    echo "  (no beans found in $BEANS_DIR)"
-  fi
-else
-  echo "  (no .beans/ store and no beans CLI — nothing to prime)"
-fi
+# Work-plan priming lives in the shared primer (scripts/session-start-coord-sweep.sh,
+# wired from each CLI's SessionStart hook), not here — single ownership avoids
+# double-priming when both the capability prober and the primer run. See
+# docs/folio-assistant-migration.md §8.
 
 echo ""
 echo "Session initialized."
