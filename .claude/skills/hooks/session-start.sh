@@ -23,8 +23,13 @@ for cap_file in "$SKILLS_DIR/capabilities/"*.json; do
   case "$method" in
     command)
       cmd=$(jq -r '.detection.command // ""' "$cap_file")
-      # Only allow known safe detection commands (no shell metacharacters)
-      if [[ "$cmd" =~ [;\|\&\$\`\(] ]]; then
+      # Only allow known safe detection commands (no shell metacharacters).
+      # Hold the bracket pattern in a variable: inlining it as an `[[ =~ ]]`
+      # literal makes bash's conditional lexer choke on the metacharacters
+      # themselves ("syntax error near `;'"), which silently broke this whole
+      # hook. Inside [...] these are all literal, so no escaping is needed.
+      unsafe_meta='[;|&$`()]'
+      if [[ "$cmd" =~ $unsafe_meta ]]; then
         echo "  ⚠ $cap_name (unsafe detection command, skipped)"
         continue
       fi
@@ -64,6 +69,11 @@ for cap_file in "$SKILLS_DIR/capabilities/"*.json; do
       ;;
   esac
 done
+
+# Work-plan priming lives in the shared primer (scripts/session-start-coord-sweep.sh,
+# wired from each CLI's SessionStart hook), not here — single ownership avoids
+# double-priming when both the capability prober and the primer run. See
+# docs/folio-assistant-migration.md §8.
 
 echo ""
 echo "Session initialized."
