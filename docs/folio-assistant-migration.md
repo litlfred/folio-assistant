@@ -237,3 +237,46 @@ the tracking beans (`j8el`, `bmwh`, `17ht`, `kpzd`, `d9nu`). Do **not** delete
 qou's remaining `todos/` files until the §5.4 / qou readers are repointed
 (`/api/todos` route + the 3 goal queues and their `coordinate.md` / `STATUS.md`
 links; leave the QA sidecar as bulk JSON).
+
+## §8 Cross-agent session-start design (resolves Q2)
+
+Goal: an **agent-generic** startup surface that primes any CLI — Claude Code,
+Gemini CLI, Antigravity — with the beans work-plan, without duplicating logic.
+
+**Findings (2026-06, confidence high for Claude/Gemini, medium for Antigravity):**
+- All three expose a `SessionStart` **command hook** that runs a shell script and
+  injects its stdout into model context (Claude: stdout→context; Gemini:
+  `hookSpecificOutput.additionalContext`; Antigravity: session-start lifecycle
+  hook). Gemini CLI and Antigravity share essentially the same JSON hook format.
+- All three read **`AGENTS.md` natively** — now a Linux Foundation standard
+  (Agentic AI Foundation), also read by Cursor, Copilot, Codex, Aider, etc.
+- All three support **MCP servers**.
+- `.claude/skills/hooks/session-start.sh` is **not** a native Claude Code trigger;
+  Claude only auto-runs `SessionStart` hooks declared in `.claude/settings.json`.
+  (Today that script runs only if folio-assistant's own framework invokes it.)
+
+**Design — three layers, no live logic duplicated:**
+1. **Discipline (universal, static): `AGENTS.md`** at repo root — read natively by
+   every agent. Carries the beans-for-todos rules. Tool files are thin stubs
+   (`CLAUDE.md` → `@AGENTS.md`; `GEMINI.md` → "See AGENTS.md"). *(landed)*
+2. **Live state (per-CLI hook over one shared script):** generalize
+   `session-start-coord-sweep.sh` into the single primer (emits `beans prime` +
+   CLI-independent bean list + main-delta as markdown to stdout). Wire it from each
+   CLI's `SessionStart` command hook — the hook config differs per tool
+   (`.claude/settings.json` vs Gemini/Antigravity `hooks.json`) but invokes the
+   **same** script.
+3. **Live state (platform): expose `beans prime` as an MCP resource/tool** from
+   folio-assistant's MCP. Any MCP-connected agent of any flavor then gets identical
+   live priming — the cleanest cross-tool path, and the fallback for CLIs without a
+   usable session hook.
+
+**Trigger-per-CLI (avoid double-fire):** pick one live trigger per CLI. Native
+Claude sessions → `.claude/settings.json` SessionStart. Platform/MCP sessions →
+the MCP resource. Don't also let folio's framework run the script for a Claude
+session that already has the settings.json hook.
+
+**Status:** Layer 1 landed (`AGENTS.md` + `CLAUDE.md` stub). Layers 2–3 pending —
+small, but they touch folio's existing harness and the MCP, so left for an explicit
+go-ahead. Sources: agents.md (openai/agents.md, Linux Foundation AAIF); Claude Code
+hooks/memory docs; Gemini CLI hooks reference + GEMINI.md docs; Antigravity SDK /
+MCP guides.
