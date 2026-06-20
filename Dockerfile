@@ -100,6 +100,19 @@ RUN curl -fSL -o /tmp/elan-init.sh \
 ENV LEAN_HOME=/root/.elan
 ENV PATH="/root/.elan/bin:${PATH}"
 
+# ─── beans work-plan tracker CLI ─────────────────────────────────────────────
+# Generic agent session work-plan / cross-agent coordination tracker
+# (https://github.com/hmans/beans; see .claude/skills/local/todo-manager.md).
+# Build it from source with a throwaway Go toolchain installed into /usr/local/bin
+# (already on PATH), then purge the toolchain + module cache so the CLI ships in
+# the image without the ~500MB Go install. `command -v beans` gates the build so
+# a provisioning regression fails fast instead of shipping a CLI-less image.
+RUN apt-get update && apt-get install -y --no-install-recommends golang-go \
+    && GOBIN=/usr/local/bin go install github.com/hmans/beans@latest \
+    && apt-get purge -y golang-go && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/* /root/go /root/.cache/go-build \
+    && command -v beans
+
 # ─── Application setup ───────────────────────────────────────────────────────
 WORKDIR /workspace
 

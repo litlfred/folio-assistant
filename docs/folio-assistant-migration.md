@@ -69,8 +69,23 @@ settings.json hook set.
   residual backtrace cannot reach the transcript (the timing report still reads
   the log).
 - **Dangling-ref repair:** created `.claude/skills/local/todo-manager.md`, the
-  beans-discipline / `bean-coordination` skill doc that `install-beans.sh`
-  already referenced but which did not exist (the exact §2 failure mode).
+  beans-discipline skill doc that `install-beans.sh` already referenced but which
+  did not exist (the exact §2 failure mode).
+- **§5.1 (bean-coordination skill):** added the canonical generic
+  `.claude/skills/local/bean-coordination.md` (multi-agent claim/coordination
+  discipline) alongside `todo-manager.md`.
+- **§5.3 (beans in the MCP image):** `Dockerfile` now builds `beans` from source
+  with a throwaway Go toolchain into `/usr/local/bin` (on PATH) and purges the
+  toolchain; `command -v beans` gates the build.
+- **§5.5 (SessionStart priming):** `.claude/skills/hooks/session-start.sh` now
+  emits a beans work-plan surface — `beans prime` + `beans list` when the CLI is
+  present, with a CLI-independent fallback that parses `.beans/*.md` directly so
+  a fresh container is still primed.
+- **Hook-parse bug fix (blocker for §5.5):** that same hook did not parse at all
+  on `main` — an inline `[[ "$cmd" =~ [;\|\&\$\`\(] ]]` made bash's conditional
+  lexer error out, silently disabling the entire SessionStart capability prober.
+  Moved the pattern into a variable; the metacharacter filter still blocks
+  `;`/`|`/`&`/`$`/`` ` ``/`(`.
 - **This document** added as the canonical migration record.
 
 **Deliberately NOT done here (and why):** Handoff item **C** ("retire
@@ -82,24 +97,44 @@ apply and deleting it would discard working code a future wiring pass may want.
 It is therefore left in place and tracked as a §5/§6 generalization item.
 Handoff item **A** is qou-only (no `settings.json` exists here).
 
-## §5 Tasks for the folio-assistant agent (priority order)
+## §5 Tasks for the folio-assistant agent (mirrors the qou handoff §5)
 
-1. **Own the `bean-coordination` skill** — `.claude/skills/local/todo-manager.md`
-   is the seed (this session). Flesh it out and sync the canonical version back to
-   qou. *(started)*
-2. **Own / generalize `install-beans.sh`** as the one source of truth.
-3. **Provision the `beans` CLI in the MCP Docker image** (`Dockerfile`).
-4. **Generalize the QOU-specific paths** in `lean-build-bg.sh`,
-   `session-status.sh`, and `session-start-coord-sweep.sh` (drop the `/tmp/qou-*`
-   and `content/quantum-observable-universe/` hard-coding; parameterize the goal
-   ledger / queue locations).
-5. **Own the permanent SessionStart surface** — consolidate to `beans prime`,
-   **keep a CLI-independent fallback** (`session-start-coord-sweep.sh` is that
-   fallback; `session-status.sh` is the richer CLI-dependent surface — decide
-   whether to keep, fold, or retire it once a `settings.json` exists here).
-6. **Own the generic session-start harness** — establish this repo's
-   `.claude/settings.json` hook set so a future platform move cannot strand hook
-   references again (§2).
+- **5.1 Own the generic `bean-coordination` skill** — ✅ **done.** Canonical
+  `.claude/skills/local/bean-coordination.md` + `todo-manager.md` now live here;
+  qou should sync from these rather than hand-maintain. *Acceptance:* qou's copy
+  regenerates from folio-assistant source via the nightly skill-sync.
+- **5.2 Own / generalize `install-beans.sh`** — ✅ **effectively done.**
+  `scripts/install-beans.sh` is present and generic (`go install …@latest` →
+  writable PATH dir); it is the one source of truth, qou vendors/mirrors it.
+- **5.3 Provision the `beans` CLI in the MCP Docker image** — ✅ **done.** See §4.
+  *Acceptance:* `beans list`/`command -v beans` works inside the built image.
+- **5.4 Repoint remaining `todos/` → `.beans/` runtime readers** — ⏳ **open;
+  needs an owner decision.** The MCP `/api/todos` route + `/todos` dashboard and
+  the `content-todos.ts` store **do not yet exist in this repo** (only
+  `src/skills/todo-review.md` references todos). The 3 qou goal queues
+  (`1ppq-qbeta`, `lean-discharge`, `research`) and the QA sidecar live in qou and
+  are linked from its `coordinate.md` / `STATUS.md`. This is net-new platform
+  work here, not a repoint — **see open question Q1 below.**
+- **5.5 Own the permanent SessionStart surface (`beans prime`)** — ✅ **done** for
+  the priming surface: `session-start.sh` runs `beans prime` + `beans list` with
+  a CLI-independent `.beans/` fallback (and the hook now parses at all — see §4).
+  *Residual:* if a `.claude/settings.json` harness is adopted (5.6), decide
+  whether the richer `session-status.sh` dashboard folds in or is retired.
+- **5.6 Own the generic session-start harness** — ⏳ **open; needs an owner
+  decision.** This repo currently wires SessionStart via the skill-hook
+  `.claude/skills/hooks/session-start.sh`, **not** a `.claude/settings.json` hook
+  set. Establishing a generic `settings.json` harness (and migrating the 4
+  platform scripts `39fc90f6` deleted) overlaps with the existing mechanism —
+  **see open question Q2 below.**
+
+### Open questions for the maintainer
+- **Q1 (5.4):** Should the `/api/todos` route + `/todos` dashboard be *built* in
+  folio-assistant now, or does that platform layer land elsewhere first? No
+  reader exists here to repoint yet.
+- **Q2 (5.6):** Is the canonical generic harness a new `.claude/settings.json`
+  hook set, or the existing `.claude/skills/hooks/` mechanism? Both should not
+  fire the same hooks. This determines whether `session-status.sh` is kept,
+  folded, or retired (the handoff's item C, deliberately not actioned here — §4).
 
 ## §6 Requirements for the qou-side / `settings.json` agent
 
