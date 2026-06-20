@@ -162,9 +162,13 @@ fi
 # release.lean-lang.org. In restricted-egress sandboxes that fails with a
 # "failed to parse release data" backtrace on *every* resume, flooding the
 # transcript. Probe the toolchain functionally (bounded by `timeout` so a hung
-# elan download can't stall the hook) and bail cleanly when it is broken and
-# the release server is unreachable.
-if ! timeout 15 lean --version >/dev/null 2>&1; then
+# elan download can't stall the hook, when available) and bail cleanly when it
+# is broken and the release server is unreachable. `timeout` is not present on
+# every system (macOS, minimal containers); fall back to a bare probe rather
+# than treating its absence (exit 127) as a broken toolchain.
+lean_probe=(lean --version)
+has timeout && lean_probe=(timeout 15 "${lean_probe[@]}")
+if ! "${lean_probe[@]}" >/dev/null 2>&1; then
     if ! curl -sfI --max-time 5 https://release.lean-lang.org > /dev/null 2>&1; then
         write_status "unavailable" "Lean toolchain present but unusable and release.lean-lang.org unreachable (sandbox egress?)" "check" 0
         exit 0
