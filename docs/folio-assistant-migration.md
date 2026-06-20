@@ -107,35 +107,86 @@ This section is self-contained: an agent with access to the **qou** repo can act
 on it without reading the originating session transcripts.
 
 ### A — Strip dangling hook references from qou `settings.json`
-- **Where:** qou `.claude/settings.json` (this file does **not** exist in
-  folio-assistant — do not look for it here).
-- **What:** remove the 4 hook references whose backing scripts were deleted by
-  commit `39fc90f6` (the §2 failure mode). Verify each removed reference has no
-  remaining backing script; if a script *should* exist, restore the script
-  instead of dropping the reference.
-- **Done when:** `settings.json` parses and every remaining hook reference
-  resolves to a present, executable script.
 
-### B — Quiet the Lean hooks in qou (parity with this repo's fix)
-- **Where:** qou's copy of `scripts/lean-build-bg.sh` (and any sibling Lean hook).
-- **What:** apply the same two-part fix landed here:
-  1. After the existing elan-toolchain dir check, add a `timeout`-bounded
-     `lean --version` probe; if it fails **and** `release.lean-lang.org` is
-     unreachable, `write_status unavailable` and `exit 0`.
-  2. Change `lake build 2>&1 | tee "$LOG"` to `lake build > "$LOG" 2>&1` so the
-     background hook's stdout no longer pipes elan backtraces into the transcript.
-- **Done when:** resuming a firewalled session produces no "failed to parse
-  release data" backtrace flood.
+**Repo:** qou. **File:** `.claude/settings.json` (does **not** exist in
+folio-assistant — do not look here).
+
+Steps:
+1. List what the offending commit removed:
+   `git show 39fc90f6 --stat | grep -E '\.sh|\.ts'`.
+2. For every hook entry in `.claude/settings.json` (`SessionStart`, `Stop`,
+   `PreToolUse`, `PostToolUse`, …) extract the script path from its `command`.
+3. Test each path: if the script file does **not** exist on `HEAD`, it is a
+   dangling reference (expect 4).
+4. Resolve each — **move wiring and script together** (§2):
+   - If the script is genuinely retired → delete the whole hook entry.
+   - If it should still run → restore it from history
+     (`git checkout 39fc90f6^ -- <path>`) rather than dropping the reference.
+5. **Done when:** `python3 -m json.tool .claude/settings.json >/dev/null` parses
+   cleanly **and** every remaining hook `command` resolves to a present,
+   executable script (`test -x <path>` for each).
+
+### B — Quiet the Lean hooks in qou (parity with this repo's landed fix)
+
+**Repo:** qou. **File:** qou's copy of `scripts/lean-build-bg.sh` (and any
+sibling Lean SessionStart hook). This is a direct port of what landed in
+folio-assistant PR #14. Both changes are required.
+
+**B.1** — Immediately *after* the existing `elan_toolchain_dir` dir-emptiness
+check and *before* `cd "$LEAN_DIR"`, insert a functional toolchain probe. The
+script already `source`s `lib/lean-env.sh`, which provides the `has` helper:
+
+```bash
+# The dir-emptiness check above only catches a *missing* toolchain. But
+# `setup-lean-toolchain` can bootstrap an elan shim whose toolchains/ dir
+# exists yet cannot resolve a usable toolchain — the dir is non-empty, so the
+# guard is bypassed, and every following `lake` call tries to fetch from
+# release.lean-lang.org. In restricted-egress sandboxes that fails with a
+# "failed to parse release data" backtrace on *every* resume, flooding the
+# transcript. Probe the toolchain functionally (bounded by `timeout`, so a hung
+# elan download can't stall the hook, when available) and bail cleanly when it
+# is broken and the release server is unreachable. `timeout` is not present on
+# every system (macOS, minimal containers); fall back to a bare probe rather
+# than treating its absence (exit 127) as a broken toolchain.
+lean_probe=(lean --version)
+has timeout && lean_probe=(timeout 15 "${lean_probe[@]}")
+if ! "${lean_probe[@]}" >/dev/null 2>&1; then
+    if ! curl -sfI --max-time 5 https://release.lean-lang.org > /dev/null 2>&1; then
+        write_status "unavailable" "Lean toolchain present but unusable and release.lean-lang.org unreachable (sandbox egress?)" "check" 0
+        exit 0
+    fi
+fi
+```
+
+**B.2** — Change the build invocation so the background hook's stdout no longer
+pipes elan/lake backtraces into the transcript (the timing report still reads
+the log file, so nothing is lost):
+
+```diff
+-    if lake build 2>&1 | tee "$LOG_DIR/qou-lake-build.log"; then
++    if lake build > "$LOG_DIR/qou-lake-build.log" 2>&1; then
+```
+
+**Done when:** `bash -n scripts/lean-build-bg.sh` passes **and** resuming a
+firewalled session produces no "failed to parse release data" backtrace flood.
 
 ### C — Retire qou `session-status.sh`, keep one CLI-independent surface
-- **Where:** qou.
-- **What:** retire `session-status.sh` in favor of the single CLI-independent
-  beans surface (qou's `coord-sweep §4b`). **Re-confirm before deleting** that no
-  live `settings.json` hook or doc still points at `session-status.sh`; repoint or
-  remove those references in the same change (move wiring + script together).
-- **Note:** Do **not** delete folio-assistant's `session-status.sh` as part of
-  this — see §4 "Deliberately NOT done here." It is unwired here and handled by
-  §5.5.
+
+**Repo:** qou.
+
+Steps:
+1. Find every live reference before deleting:
+   `grep -rn 'session-status\.sh' .claude/ scripts/ docs/ *.md`.
+2. For each reference (especially the `.claude/settings.json` SessionStart hook
+   and any docs), repoint it to the single CLI-independent beans surface —
+   qou's `coord-sweep §4b` — in the **same change** (move wiring + script
+   together).
+3. `git rm scripts/session-status.sh`.
+4. **Done when:** no dangling references to `session-status.sh` remain, session
+   start still emits the beans/coord surface, and `settings.json` parses.
+
+**Do NOT** delete folio-assistant's `session-status.sh` as part of this — see
+§4 "Deliberately NOT done here." It is unwired here and handled by §5.5.
 
 ### Consolidated document
 - This file is the canonical f-a doc. The qou agent should replace any remaining
