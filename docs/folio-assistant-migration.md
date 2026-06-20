@@ -281,7 +281,9 @@ session that already has the settings.json hook.
 **Status:** Layer 1 landed (`AGENTS.md` + `CLAUDE.md` stub). Layer 2 landed for
 Claude (`.claude/settings.json` SessionStart → generalized shared primer); the
 Gemini/Antigravity hook configs reuse the same script and remain to be added.
-Layer 3 (expose `beans prime` as an MCP resource) in progress. Sources: agents.md
+Layer 3 landed: `work_plan_prime` MCP tool (`src/tools/beans-prime.ts`, wired in
+`src/server.ts`) exposes `beans prime` + `beans list` (with a `.beans/` fallback)
+to any MCP-connected agent. Sources: agents.md
 (openai/agents.md, Linux Foundation AAIF); Claude Code
 hooks/memory docs; Gemini CLI hooks reference + GEMINI.md docs; Antigravity SDK /
 MCP guides.

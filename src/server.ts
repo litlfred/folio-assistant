@@ -21,6 +21,7 @@ import { handleBranchGet, handleBranchPost } from "./routes/branches.js";
 import { handleFeedbackGet, handleFeedbackPost } from "./routes/feedback.js";
 import { handleChatPost } from "./routes/chat.js";
 import { handleGlossaryGet, handleGlossaryPost } from "./routes/glossary.js";
+import { registerBeansTools } from "./tools/beans-prime.js";
 
 // ── MIME types for static serving ────────────────────────────────
 
@@ -105,6 +106,9 @@ export class FolioServer {
       };
       return origTool(...args);
     } as typeof origTool;
+
+    // Core, adapter-independent MCP tools (agent-generic work-plan priming).
+    registerBeansTools(this.mcpServer, config.repoRoot);
 
     // Register adapter-specific MCP tools
     if (this.adapter.registerMcpTools) {
