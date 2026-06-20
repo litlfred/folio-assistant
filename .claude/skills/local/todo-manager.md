@@ -30,6 +30,32 @@ beans show <id>               # read an item
 beans <id> --status in-progress   # claim an item (durable, visible to siblings)
 ```
 
+## Using beans for todos (session + cross-session)
+
+Beans **is** the todo mechanism for agent work. Do not stand up a separate todo
+store — no API route, dashboard, or `todos/*.json` work-plan. One mechanism,
+agent-generic, durable.
+
+**Session todos (your work-plan for this session).** Track anything you want to
+persist as beans, not in your agent's ephemeral in-memory todo tool (e.g.
+Claude's `TodoWrite`, or equivalents). The in-memory list is fine for
+throwaway intra-turn scratch, but it evaporates when the container is reclaimed.
+Open a bean per task, mark it `in-progress` as you start, close it when done —
+because `.beans/` is committed, the plan survives a resume in a fresh container.
+
+**Cross-session / cross-agent coordinated todos.** The same committed `.beans/`
+store is the shared work-plan across sibling sessions and across different agent
+CLIs. Claim before you work (set `in-progress` + note your branch) so two
+sessions don't pick the same item; never resolve or delete a sibling's bean. See
+`bean-coordination.md` for the full claim/handoff lifecycle.
+
+**What beans is *not* for:**
+- Bulk machine-generated queues (QA `*.qa.json`, witness `*.witness.json`,
+  watcher drain queues) — `beans ≠ sidecars`; keep those as bulk JSON.
+- Content-review feedback on *published documents* — that is a separate domain
+  workflow (the `todo-review` skill over `feedback/<paper>/*.ts`), not the agent
+  work-plan. Don't conflate the two.
+
 ## Coordination discipline
 
 1. **Claim before you work.** Mark the bean `in-progress` so sibling sessions

@@ -108,13 +108,15 @@ Handoff item **A** is qou-only (no `settings.json` exists here).
   writable PATH dir); it is the one source of truth, qou vendors/mirrors it.
 - **5.3 Provision the `beans` CLI in the MCP Docker image** — ✅ **done.** See §4.
   *Acceptance:* `beans list`/`command -v beans` works inside the built image.
-- **5.4 Repoint remaining `todos/` → `.beans/` runtime readers** — ⏳ **open;
-  needs an owner decision.** The MCP `/api/todos` route + `/todos` dashboard and
-  the `content-todos.ts` store **do not yet exist in this repo** (only
-  `src/skills/todo-review.md` references todos). The 3 qou goal queues
-  (`1ppq-qbeta`, `lean-discharge`, `research`) and the QA sidecar live in qou and
-  are linked from its `coordinate.md` / `STATUS.md`. This is net-new platform
-  work here, not a repoint — **see open question Q1 below.**
+- **5.4 Repoint remaining `todos/` → `.beans/` runtime readers** — ✅ **resolved:
+  won't build (Q1 decided).** A separate todos platform (MCP `/api/todos` route,
+  `/todos` dashboard, `content-todos.ts` store) is **intentionally not ported** —
+  beans *is* the todo mechanism for both session and cross-session/cross-agent
+  coordinated work. Guidance lives in `.claude/skills/local/todo-manager.md`
+  ("Using beans for todos"). Note: the content-review feedback workflow (the
+  `todo-review` skill over `feedback/<paper>/*.ts`) is a **separate domain
+  feature** and is left untouched. The 3 qou goal queues and QA sidecar remain a
+  qou-side disposition (§6 / §7).
 - **5.5 Own the permanent SessionStart surface (`beans prime`)** — ✅ **done** for
   the priming surface: `session-start.sh` runs `beans prime` + `beans list` with
   a CLI-independent `.beans/` fallback (and the hook now parses at all — see §4).
@@ -128,13 +130,14 @@ Handoff item **A** is qou-only (no `settings.json` exists here).
   **see open question Q2 below.**
 
 ### Open questions for the maintainer
-- **Q1 (5.4):** Should the `/api/todos` route + `/todos` dashboard be *built* in
-  folio-assistant now, or does that platform layer land elsewhere first? No
-  reader exists here to repoint yet.
+- **Q1 (5.4):** ✅ **Resolved** — no separate todos platform; beans is the todo
+  mechanism (session + cross-session). See 5.4 above.
 - **Q2 (5.6):** Is the canonical generic harness a new `.claude/settings.json`
-  hook set, or the existing `.claude/skills/hooks/` mechanism? Both should not
-  fire the same hooks. This determines whether `session-status.sh` is kept,
-  folded, or retired (the handoff's item C, deliberately not actioned here — §4).
+  hook set, or the existing `.claude/skills/hooks/` mechanism — and how does it
+  stay **agent-generic** across CLIs (Claude Code, Gemini CLI, Antigravity)?
+  Both should not fire the same hooks. This determines whether `session-status.sh`
+  is kept, folded, or retired (the handoff's item C, deliberately not actioned
+  here — §4). See the cross-agent session-start analysis appended below.
 
 ## §6 Requirements for the qou-side / `settings.json` agent
 
