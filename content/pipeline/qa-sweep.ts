@@ -82,7 +82,7 @@ import type {
   BlockQaReport,
   QaCriterionEntry,
   QaScriptSidecar,
-} from "../../folio-assistant/schemas/block-qa";
+} from "../../schemas/block-qa";
 
 // ── CLI parsing ─────────────────────────────────────────────────
 

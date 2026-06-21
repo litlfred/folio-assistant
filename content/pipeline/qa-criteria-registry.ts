@@ -41,7 +41,7 @@
  * @module content/pipeline/qa-criteria-registry
  */
 
-import type { QaCriterionDefinition } from "../../folio-assistant/schemas/block-qa";
+import type { QaCriterionDefinition } from "../../schemas/block-qa";
 
 // ── Domain: voice ───────────────────────────────────────────────
 

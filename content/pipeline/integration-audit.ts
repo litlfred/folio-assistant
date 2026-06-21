@@ -40,7 +40,7 @@ import {
   QA_CRITERIA_REGISTRY,
   WATCHER_CRITERIA_BY_AXIS,
 } from "./qa-criteria-registry";
-import type { BlockQaReport } from "../../folio-assistant/schemas/block-qa";
+import type { BlockQaReport } from "../../schemas/block-qa";
 
 interface Args {
   root: string;
