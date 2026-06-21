@@ -17,7 +17,7 @@ import { execFileSync } from "child_process";
 import {
   parseLeanRef,
   leanPackageByName,
-} from "../../folio-assistant/schemas/lean-packages";
+} from "../../schemas/lean-packages";
 import { mkdirSync } from "fs";
 import { dirname } from "path";
 import type {
@@ -25,7 +25,7 @@ import type {
   QaFieldHash,
   QaCriterionEntry,
   QaScriptSidecar,
-} from "../../folio-assistant/schemas/block-qa";
+} from "../../schemas/block-qa";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 
 // ── Hashing ─────────────────────────────────────────────────────
