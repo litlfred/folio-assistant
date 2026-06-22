@@ -17,6 +17,7 @@
 
 import { readFileSync, existsSync } from "fs";
 import { resolve, dirname } from "path";
+import { findContentRepoRoot } from "./repo-root";
 import {
   WITNESSED_VALUES,
   lookupValue,
@@ -24,8 +25,10 @@ import {
   type WitnessedValueFormat,
 } from "./value-registry-di";
 
-// Repo root is two levels up from this file (content/pipeline/).
-const REPO_ROOT = resolve(import.meta.dir, "..", "..");
+// Content repo root (the downstream repo embedding folio-assistant); witness
+// files are resolved relative to this.  See ./repo-root for why import-relative
+// resolution is wrong under the symlinked-subdir layout.
+const REPO_ROOT = findContentRepoRoot();
 
 // ── Witness JSON cache ───────────────────────────────────────────
 
