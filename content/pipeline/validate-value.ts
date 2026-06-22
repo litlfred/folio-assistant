@@ -23,6 +23,7 @@
 
 import { existsSync, readFileSync } from "fs";
 import { resolve } from "path";
+import { findContentRepoRoot } from "./repo-root";
 import {
   WITNESSED_VALUES,
   lookupValue,
@@ -36,7 +37,10 @@ import {
 } from "./render-value";
 import type { Block, ValidationIssue } from "../../schemas/types";
 
-const REPO_ROOT = resolve(import.meta.dir, "..", "..");
+// Content repo root (the downstream repo embedding folio-assistant); witness
+// files are resolved relative to this.  See ./repo-root for why import-relative
+// resolution is wrong under the symlinked-subdir layout.
+const REPO_ROOT = findContentRepoRoot();
 
 // ── Witness shape inspection ─────────────────────────────────────
 

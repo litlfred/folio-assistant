@@ -54,8 +54,9 @@ import {
   type WitnessedValueEntry,
 } from "./value-registry-di";
 import { resolvePath } from "./render-value";
+import { findContentRepoRoot } from "./repo-root";
 
-const REPO_ROOT = resolve(import.meta.dir, "..", "..");
+const REPO_ROOT = findContentRepoRoot();
 
 // Round-trip parser/serializer with directive support — mirrors the
 // renderer's configuration so round-tripping preserves all formatting.
