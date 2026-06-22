@@ -508,6 +508,26 @@ const Q_USAGE: QaCriterionDefinition[] = [
 
 const PROOF: QaCriterionDefinition[] = [
   {
+    id: "proof-no-placeholder-stub",
+    domain: "proof",
+    description:
+      "Block's `.lean` file is NOT a bare placeholder stub marked with " +
+      "`# QOU... — placeholder stub`. These files contain no mathematical " +
+      "content and exist only to satisfy `lean.ref` linking constraints " +
+      "while formalisation is pending.",
+    default_severity: "critical",
+    depends_on: ["lean"],
+    automated: true,
+    applies_to: [
+      "theorem",
+      "lemma",
+      "proposition",
+      "corollary",
+      "definition",
+      "conjecture",
+    ],
+  },
+  {
     id: "proof-no-bare-sorries",
     domain: "proof",
     description:
