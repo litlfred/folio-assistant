@@ -88,7 +88,7 @@
         "agent_model": { "type": "string", "description": "LLM model identifier (kind: agent), e.g. 'claude-opus-4-7'." },
         "agent_session": { "type": "string", "description": "Reviewing agent's session id, if available." },
         "agent_date": { "type": "string", "description": "ISO date of the agent review." },
-        "agent_skill": { "type": "string", "description": "Skill that dispatched the review, e.g. 'local/one-voice-audit'." }
+        "agent_skill": { "type": "string", "description": "Skill that dispatched the review, e.g. 'local/one-voice-audit', 'local/devils-advocate-watcher'." }
       },
       "description": "Identity + provenance of the reviewer that produced an entry."
     },
@@ -158,9 +158,68 @@
           "type": "string",
           "description": "Repo HEAD at audit time (full git SHA). Recommended; legacy agent entries (pre-2026-06) may omit it."
         },
-        "notes": { "type": "string", "description": "Free-form notes." }
+        "notes": { "type": "string", "description": "Free-form notes." },
+        "scope": { "$ref": "#/$defs/daScope" },
+        "ruling": { "$ref": "#/$defs/daRuling" },
+        "referee_argument": {
+          "type": "string",
+          "description": "The objection stated in the referee's voice (1-3 sentences). On a da-referee-verdict rollup entry this holds the strongest objection."
+        },
+        "rebuttal": {
+          "type": "string",
+          "description": "What rebuts the objection, or 'none — survived because <why>'. For structural scope, must name the proved invariant."
+        },
+        "verdict": { "$ref": "#/$defs/daVerdict" }
       },
+      "allOf": [
+        {
+          "description": "result must agree with ruling on finding entries.",
+          "if": { "required": ["ruling"], "properties": { "ruling": { "const": "surviving" } } },
+          "then": { "properties": { "result": { "const": "fail" } } }
+        },
+        {
+          "if": { "required": ["ruling"], "properties": { "ruling": { "const": "partial" } } },
+          "then": { "properties": { "result": { "const": "warn" } } }
+        },
+        {
+          "if": { "required": ["ruling"], "properties": { "ruling": { "const": "rebutted" } } },
+          "then": { "properties": { "result": { "const": "pass" } } }
+        },
+        {
+          "description": "result must agree with verdict on the rollup entry.",
+          "if": { "required": ["verdict"], "properties": { "verdict": { "const": "open-objection" } } },
+          "then": { "properties": { "result": { "const": "fail" } } }
+        },
+        {
+          "if": { "required": ["verdict"], "properties": { "verdict": { "const": "survivable-objection" } } },
+          "then": { "properties": { "result": { "const": "warn" } } }
+        },
+        {
+          "if": { "required": ["verdict"], "properties": { "verdict": { "const": "clean" } } },
+          "then": { "properties": { "result": { "const": "pass" } } }
+        },
+        {
+          "description": "structural scope requires a non-empty rebuttal naming the invariant.",
+          "if": { "required": ["scope"], "properties": { "scope": { "const": "structural" } } },
+          "then": { "required": ["rebuttal", "referee_argument"] }
+        }
+      ],
       "description": "The outcome of one reviewer evaluating one criterion on one block."
+    },
+    "daScope": {
+      "type": "string",
+      "enum": ["limited", "structural"],
+      "description": "Refutation scope per AGENTS.md 'Before declaring refuted'. 'limited' = this construction ALONE fails as stated (default). 'structural' = cannot hold in any closure; PERMITTED ONLY when referee_argument/rebuttal cite a proved invariant (parity/sign, dimension/degree/orbit-count bound, Lean-proved impossibility, entropy/precision bound)."
+    },
+    "daRuling": {
+      "type": "string",
+      "enum": ["surviving", "rebutted", "partial"],
+      "description": "Adjudicator's verdict on a single objection after the block's own text/Lean/refs/corpus-grep were given the chance to rebut. surviving = no rebuttal found; rebutted = block defeats it; partial = block mitigates but does not fully defeat it."
+    },
+    "daVerdict": {
+      "type": "string",
+      "enum": ["clean", "survivable-objection", "open-objection"],
+      "description": "Block-level rollup (criterion id da-referee-verdict). clean = all objections rebutted; survivable-objection = >=1 partial, 0 surviving; open-objection = >=1 surviving."
     }
   }
 }

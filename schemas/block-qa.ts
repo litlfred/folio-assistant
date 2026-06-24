@@ -74,7 +74,7 @@ export interface QaReviewer {
   agent_session?: string;
   /** ISO date of the agent review. */
   agent_date?: string;
-  /** Skill that dispatched the review, e.g. "local/one-voice-audit". */
+  /** Skill that dispatched the review, e.g. "local/one-voice-audit", "local/devils-advocate-watcher". */
   agent_skill?: string;
 }
 
@@ -138,6 +138,21 @@ export interface QaCriterionEntry {
    * the sidecar carries the heuristic snapshot, not just pass/fail.
    */
   metrics?: Record<string, number | string>;
+
+  // ── da-axis extension fields ──
+  /** Refutation scope (AGENTS.md "Before declaring refuted"). */
+  scope?: "limited" | "structural";
+  /** Adjudicator ruling on a single objection. */
+  ruling?: "surviving" | "rebutted" | "partial";
+  /** The objection in the referee's voice (1-3 sentences). On a
+   *  da-referee-verdict rollup entry, the strongest objection. */
+  referee_argument?: string;
+  /** What rebuts the objection, or "none — survived because …".
+   *  For scope:"structural" this must name the proved invariant. */
+  rebuttal?: string;
+  /** Block-level rollup verdict. Set ONLY on da-referee-verdict entries. */
+  verdict?: "clean" | "survivable-objection" | "open-objection";
+
   /** Reviewer identity + provenance. */
   reviewer: QaReviewer;
   /** When the audit ran (ISO-8601 UTC). */

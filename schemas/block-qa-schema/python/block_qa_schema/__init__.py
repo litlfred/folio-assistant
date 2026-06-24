@@ -25,7 +25,7 @@ from __future__ import annotations
 
 from typing import Literal, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 __version__ = "0.1.0"
 
@@ -34,6 +34,10 @@ QaReviewerKind = Literal["script", "agent", "human"]
 QaResult = Literal["pass", "fail", "warn", "n/a"]
 
 QaSeverity = Literal["critical", "major", "minor"]
+
+DaScope = Literal["limited", "structural"]
+DaRuling = Literal["surviving", "rebutted", "partial"]
+DaVerdict = Literal["clean", "survivable-objection", "open-objection"]
 
 
 class QaReviewer(BaseModel):
@@ -124,11 +128,43 @@ class QaCriterionEntry(BaseModel):
     # (e.g. the detangler axis's tanglement_score / cone_size / pagerank /
     # graph_energy snapshot) — not a quality score.
     metrics: Optional[dict[str, Union[int, float, str]]] = None
+    
+    # ── da-axis extension fields ──
+    scope: Optional[DaScope] = None
+    ruling: Optional[DaRuling] = None
+    referee_argument: Optional[str] = None
+    rebuttal: Optional[str] = None
+    verdict: Optional[DaVerdict] = None
+
     reviewer: QaReviewer
     # ISO-8601 UTC datetime; legacy agent entries may carry a bare ISO date.
     reviewed_at: str
     reviewed_sha: Optional[str] = None
     notes: Optional[str] = None
+
+    @model_validator(mode="after")
+    def validate_da_constraints(self) -> "QaCriterionEntry":
+        if self.ruling == "surviving" and self.result != "fail":
+            raise ValueError("result must be 'fail' when ruling is 'surviving'")
+        if self.ruling == "partial" and self.result != "warn":
+            raise ValueError("result must be 'warn' when ruling is 'partial'")
+        if self.ruling == "rebutted" and self.result != "pass":
+            raise ValueError("result must be 'pass' when ruling is 'rebutted'")
+            
+        if self.verdict == "open-objection" and self.result != "fail":
+            raise ValueError("result must be 'fail' when verdict is 'open-objection'")
+        if self.verdict == "survivable-objection" and self.result != "warn":
+            raise ValueError("result must be 'warn' when verdict is 'survivable-objection'")
+        if self.verdict == "clean" and self.result != "pass":
+            raise ValueError("result must be 'pass' when verdict is 'clean'")
+            
+        if self.scope == "structural":
+            if not self.rebuttal:
+                raise ValueError("structural scope requires a non-empty rebuttal")
+            if not self.referee_argument:
+                raise ValueError("structural scope requires a non-empty referee_argument")
+                
+        return self
 
 
 class QaPaths(BaseModel):
@@ -188,6 +224,9 @@ __all__ = [
     "QaReviewerKind",
     "QaResult",
     "QaSeverity",
+    "DaScope",
+    "DaRuling",
+    "DaVerdict",
     "QaReviewer",
     "QaFieldHash",
     "QaScore",
