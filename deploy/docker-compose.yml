@@ -42,11 +42,41 @@ services:
       - MCP_PORT=${MCP_INTERNAL_PORT:-8080}
     expose:
       - "${MCP_INTERNAL_PORT:-8080}"
+    # Shared scratch workspace for exchanging computation inputs/outputs with
+    # opt-in compute services (e.g. sage). Mounted at /shared (NOT /workspace,
+    # which is the app's own dir in the image).
+    volumes:
+      - sage_workspace:/shared
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:${MCP_INTERNAL_PORT:-8080}/health"]
       interval: 30s
       timeout: 5s
       retries: 3
+
+  # ── SageMath (algebra / number theory compute) — lazy, opt-in ────
+  # NOT started by a plain `docker compose up`. The ~2 GB sagemath/sagemath
+  # image is pulled only when the `sage` profile is first activated, e.g.:
+  #
+  #   docker compose --profile sage up -d sage          # persistent service
+  #
+  # or spawn the Sage MCP server (stdio) on demand, sharing the workspace:
+  #
+  #   docker compose --profile sage run --rm -i sage \
+  #     python3 /repo/folio-assistant/src/sage-mcp-server.py --stdio
+  #
+  # Inside this container `sage` is native, so the MCP server uses it directly
+  # (no nested Docker). Files written under /shared are visible to
+  # folio-assistant; the repo is mounted read-only at /repo.
+  sage:
+    image: ${SAGE_DOCKER_IMAGE:-sagemath/sagemath:latest}
+    container_name: sage
+    profiles: ["sage"]
+    restart: unless-stopped
+    working_dir: /shared
+    command: ["sleep", "infinity"]
+    volumes:
+      - sage_workspace:/shared
+      - ../:/repo:ro
 
   # ── Auth Gateway (dual OAuth + role-based sessions) ──────────────
   auth-gateway:
@@ -84,3 +114,6 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+  # Shared scratch workspace between folio-assistant and opt-in compute
+  # services (sage). Empty until the `sage` profile is used.
+  sage_workspace:
