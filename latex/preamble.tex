@@ -8,7 +8,7 @@
 %% Do NOT put paper-specific definitions here.
 %%
 
-\documentclass[12pt,a4paper]{report}
+\documentclass[11pt,a4paper]{report}
 
 % ── Packages ──────────────────────────────────────────────────────────────────
 \usepackage[utf8]{inputenc}
@@ -27,12 +27,14 @@
 \usepackage[dvipsnames]{xcolor}  % Extended colour names (teal, etc.)
 \usepackage{booktabs}            % Professional table rules (\toprule, \midrule, \bottomrule)
 \usepackage{enumitem}            % Customised list labels (label=, leftmargin=)
+\setlist{noitemsep,topsep=0.5ex} % Condensed layout for lists
 \usepackage{mathrsfs}            % \mathscr script letters
 \usepackage{textcomp}            % \textdegree, \textbullet, etc.
 \usepackage{newunicodechar}      % Map Unicode glyphs to LaTeX commands
 \usepackage{algorithm}           % Float environment for pseudocode (algorithm)
 \usepackage{algpseudocode}       % Algorithmic constructs (\State, \For, \If, …)
 \usepackage[normalem]{ulem}      % latexdiff markup (\sout/\uwave); normalem keeps \emph italic
+\usepackage{microtype}           % Typographic enhancements (character protrusion, font expansion)
 \usepackage{hyperref}            % Loaded last (after cite, xcolor, etc.)
 
 % ── Unicode character mappings ───────────────────────────────────────────────
@@ -211,8 +213,8 @@
 % are handled by \newunicodechar in the block above.
 
 \geometry{
-  left=1in, right=1.7in, top=1in, bottom=1in,
-  marginparwidth=1.3in, marginparsep=0.15in,
+  left=0.8in, right=1.5in, top=0.8in, bottom=0.8in,
+  marginparwidth=1.1in, marginparsep=0.15in,
 }
 \usepackage{marginnote}
 \renewcommand*{\marginfont}{\scriptsize}
@@ -323,15 +325,15 @@
 \newtheorem{algorithmblock}[theorem]{Algorithm}
 
 % ── Proof environment formatting ───────────────────────────────────────────────
-% Solid black square for QED, bold 'Proof' heading
-\renewcommand{\qedsymbol}{$\blacksquare$}
+% Hollow square for QED, italic 'Proof' heading to distinguish from bold theorems
+\renewcommand{\qedsymbol}{$\square$}
 \makeatletter
 \renewenvironment{proof}[1][\proofname]{\par
   \pushQED{\qed}%
   \normalfont \topsep0.8ex\@plus0.2ex\@minus0.1ex\relax
   \trivlist
   \item[\hskip\labelsep
-        \bfseries
+        \itshape
     #1\@addpunct{.}]\ignorespaces
 }{%
   \popQED\endtrivlist\@endpefalse
