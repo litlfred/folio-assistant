@@ -1406,6 +1406,27 @@ const SCRIPT_QUALITY: QaCriterionDefinition[] = [
   },
 ];
 
+// ── Domain: devils-advocate ─────────────────────────────────────
+//
+// Owned by `local/devils-advocate-watcher` (adversarial review).
+// All criteria are agent-only (automated: false).
+
+const DEVILS_ADVOCATE: QaCriterionDefinition[] = [
+  { id: "da-false-claim", domain: "devils-advocate", description: "Stated proposition is mathematically false (counterexample / quantifier slip / failing special case).", default_severity: "critical", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-vacuous", domain: "devils-advocate", description: "True but content-free: ': True := trivial', self-assuming projection, tautology, or trivializing hypothesis.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-circular", domain: "devils-advocate", description: "Derivation assumes its conclusion: back-fitted target, smuggled calibration, self-referential justification.", default_severity: "critical", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-overclaim", domain: "devils-advocate", description: "Conclusion stronger than the argument supports: scope-limited negative as structural, fitted-as-derived, conditional-as-proved, approximate-as-absolute.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-hidden-dof", domain: "devils-advocate", description: "Undisclosed free parameter: 4th calibration, off-menu coefficient, constant with no canonical-chain origin.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-non-sequitur", domain: "devils-advocate", description: "Logical gap: step B does not follow from step A; 'therefore' with a missing lemma.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-lean-narrative-divergence", domain: "devils-advocate", description: "Lean proves something weaker/different/vacuously-implied vs the .md claim (proof-statement-integrity).", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-citation-misuse", domain: "devils-advocate", description: "Cited reference (cites[] or -- Ref:) does not contain / is mis-attributed for the invoked result.", default_severity: "minor", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-definitional-ambiguity", domain: "devils-advocate", description: "Key term undefined / multiple incompatible readings / 'the unique X' without uniqueness / implicit regime or base ring.", default_severity: "minor", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-empirical-fragility", domain: "devils-advocate", description: "Numerical match inside fit noise / cherry-picked precision / hidden cross-anchor swing / stale vs current q0 pin.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-physical-implausibility", domain: "devils-advocate", description: "Physics claim a domain expert rejects: wrong units, broken conservation, contradiction with a measurement.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-reproducibility", domain: "devils-advocate", description: "Backing compute/witness irreproducible / stale (scriptHash or scriptCommitSha drift) / value contradicts prose approximate.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
+  { id: "da-referee-verdict", domain: "devils-advocate", description: "Block-level rollup; carries the 'verdict' field + the strongest objection in 'referee_argument'.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false }
+];
+
 // ── Exported registry ───────────────────────────────────────────
 
 export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
@@ -1420,6 +1441,7 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...DETANGLER,
   ...BIBLIOGRAPHY,
   ...SCRIPT_QUALITY,
+  ...DEVILS_ADVOCATE,
 ];
 
 export const SCRIPT_QUALITY_CRITERIA: string[] = SCRIPT_QUALITY.map(

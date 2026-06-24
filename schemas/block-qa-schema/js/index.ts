@@ -77,6 +77,15 @@ export const QaEvidenceItem = z
   .passthrough();
 export type QaEvidenceItem = z.infer<typeof QaEvidenceItem>;
 
+export const DaScope = z.enum(["limited", "structural"]);
+export type DaScope = z.infer<typeof DaScope>;
+
+export const DaRuling = z.enum(["surviving", "rebutted", "partial"]);
+export type DaRuling = z.infer<typeof DaRuling>;
+
+export const DaVerdict = z.enum(["clean", "survivable-objection", "open-objection"]);
+export type DaVerdict = z.infer<typeof DaVerdict>;
+
 export const QaCriterionEntry = z
   .object({
     field_hash: QaFieldHash,
@@ -88,6 +97,14 @@ export const QaCriterionEntry = z
     // (e.g. the detangler axis's tanglement_score / cone_size / pagerank /
     // graph_energy snapshot) — not a quality score.
     metrics: z.record(z.string(), z.union([z.number(), z.string()])).optional(),
+    
+    // ── da-axis extension fields ──
+    scope: DaScope.optional(),
+    ruling: DaRuling.optional(),
+    referee_argument: z.string().optional(),
+    rebuttal: z.string().optional(),
+    verdict: DaVerdict.optional(),
+
     reviewer: QaReviewer,
     // ISO-8601 UTC datetime; legacy agent entries may carry a bare ISO date.
     reviewed_at: z.string(),
@@ -96,7 +113,15 @@ export const QaCriterionEntry = z
     reviewed_sha: z.string().optional(),
     notes: z.string().optional(),
   })
-  .passthrough();
+  .passthrough()
+  .refine(val => !(val.ruling === "surviving" && val.result !== "fail"), { message: "result must agree with ruling on finding entries.", path: ["result"] })
+  .refine(val => !(val.ruling === "partial" && val.result !== "warn"), { message: "result must agree with ruling on finding entries.", path: ["result"] })
+  .refine(val => !(val.ruling === "rebutted" && val.result !== "pass"), { message: "result must agree with ruling on finding entries.", path: ["result"] })
+  .refine(val => !(val.verdict === "open-objection" && val.result !== "fail"), { message: "result must agree with verdict on the rollup entry.", path: ["result"] })
+  .refine(val => !(val.verdict === "survivable-objection" && val.result !== "warn"), { message: "result must agree with verdict on the rollup entry.", path: ["result"] })
+  .refine(val => !(val.verdict === "clean" && val.result !== "pass"), { message: "result must agree with verdict on the rollup entry.", path: ["result"] })
+  .refine(val => !(val.scope === "structural" && (!val.rebuttal || !val.referee_argument)), { message: "structural scope requires a non-empty rebuttal naming the invariant.", path: ["rebuttal"] });
+
 export type QaCriterionEntry = z.infer<typeof QaCriterionEntry>;
 
 export const BlockQaReport = z
