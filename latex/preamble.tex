@@ -313,18 +313,31 @@
 \newcommand{\leandocsbase}{https://litlfred.github.io/qou/lean/}
 % GitHub source URL for Lean files
 \newcommand{\leansrcbase}{https://github.com/litlfred/qou/blob/main/lean/}
+% Repo-scoped GitHub code-search base.  We only carry the declaration name
+% (not a reliable file path), so the ∀ status mark links here: it lands on a
+% GitHub view of the declaration's source within the repo.
+\newcommand{\leansrcsearchbase}{https://github.com/litlfred/qou/search?q=}
+%
+% ── Lean formalisation-status palette ───────────────────────────────────────
+% Single source of truth for the three-state ∀ colour code.  Tweak here.
+% Orange is deliberately avoided: it reads poorly on white and sits too close
+% to red.  The short text tag (stub/draft/ok) carries the status regardless of
+% how distinguishable the colours are on a given display/print.
+\colorlet{leanstubcolor}{BrickRed}     % stubbed  — sorry/placeholder, or QA-vacuous/trivial
+\colorlet{leandraftcolor}{Purple}      % drafted  — genuine statement in Lean, not yet sorry-free
+\colorlet{leanokcolor}{ForestGreen}    % compiled — built sorry-free
 %
 % Internal flag: tracks whether \lean was called in the current environment.
 \newif\ifleantagged
 %
-% \lean{Decl.Name} — renders a clickable ∀ icon linking to the Lean declaration.
-% Colour depends on formalization status (set by \leanok / default).
-% Default: goldenrod (stated); override to forest green with \leanok.
+% \lean{Decl.Name} — renders a clickable, bold ∀ icon linking to the Lean
+% declaration's source on GitHub.  Standalone, this is the "drafted" state
+% (statement stated in Lean); a following \leanok adds the green compiled mark.
 \newcommand{\lean}[1]{%
   \global\leantaggedtrue%
   \texorpdfstring{%
-    \href{\leandocsbase#1}{%
-      \textsuperscript{\textcolor{BurntOrange}{$\forall$}}%
+    \href{\leansrcsearchbase#1}{%
+      \textsuperscript{\textcolor{leandraftcolor}{$\boldsymbol{\forall}$}}%
     }%
   }{(Lean: #1)}%
 }
@@ -390,18 +403,39 @@
 % \blockannot (catcode-12 @ stops the control-word scan), which causes
 % "Command \blockannot already defined" and a subsequent parameter-stack
 % overflow when \blockannot recurses into itself.
+% \leanstatusmark{status}{decl} — the Lean formalisation indicator: a BOLD,
+% colour-coded ∀ plus a short text tag, the whole thing hyperlinked to the
+% declaration's source on GitHub.  The tag makes the status legible even when
+% the colours are hard to tell apart on a given display or in print.
+%   status = stubbed  → red    ∀ stub   (sorry/placeholder, or vacuous/trivial per QA)
+%   status = drafted  → purple ∀ draft  (genuine statement in Lean, not yet sorry-free)
+%   status = compiled → green  ∀ ok     (built sorry-free)
 \makeatletter
-\newcommand{\blockannot}[3]{\blockannot@i{}{#1}{#2}{#3}}
-\newcommand{\blockannotok}[3]{\blockannot@i{ok}{#1}{#2}{#3}}
+\newcommand{\leanstatusmark}[2]{%
+  \def\lsm@s{#1}%
+  \def\lsm@stub{stubbed}\def\lsm@comp{compiled}%
+  \ifx\lsm@s\lsm@stub
+    \def\lsm@col{leanstubcolor}\def\lsm@tag{stub}%
+  \else\ifx\lsm@s\lsm@comp
+    \def\lsm@col{leanokcolor}\def\lsm@tag{ok}%
+  \else
+    \def\lsm@col{leandraftcolor}\def\lsm@tag{draft}%
+  \fi\fi
+  \href{\leansrcsearchbase #2}{%
+    \textcolor{\lsm@col}{$\boldsymbol{\forall}$\,\textbf{\tiny\lsm@tag}}%
+  }%
+}
+% \blockannot[status]{label}{leanDecl}{mdRelPath}
+%   Optional status keyword (default "drafted") drives the ∀ colour + tag.
+% \blockannotok{label}{leanDecl}{mdRelPath}  ==  \blockannot[compiled]{...}
+%   (kept for back-compat with previously generated content).
+\newcommand{\blockannot}[4][drafted]{\blockannot@i{#1}{#2}{#3}{#4}}
+\newcommand{\blockannotok}[3]{\blockannot@i{compiled}{#1}{#2}{#3}}
 \newcommand{\blockannot@i}[4]{%
   \mbox{}\marginnote{%
     \raggedright\scriptsize
     \ifx\relax#3\relax\else
-      \href{\leandocsbase #3}{\textcolor{BurntOrange}{$\forall$}}%
-      \def\@tmp{#1}\ifx\@tmp\@empty\else
-        \textcolor{ForestGreen}{\checkmark}%
-      \fi
-      \,%
+      \leanstatusmark{#1}{#3}\,%
     \fi
     \ifx\relax#4\relax\else
       \href{\sourcebase #4}{\textcolor{NavyBlue}{$\nabla$}}\,%
@@ -482,12 +516,17 @@
 %
 % ── Proof-status legend (printed once in the document) ───────────────────────
 \newcommand{\proofstatuslegend}{%
-  \bigskip\noindent\textbf{Proof-status key}\par\smallskip\noindent
+  \bigskip\noindent\textbf{Lean formalisation key} — the bold ∀ beside each
+  block links to its source on GitHub; its colour and tag give the status:%
+  \par\smallskip\noindent
   \begin{tabular}{@{}cl@{\qquad}cl@{}}
-    \textcolor{ForestGreen}{\checkmark} & Fully proved (sorry-free)
-    & \textcolor{BurntOrange}{$\forall$} & Stated in Lean (has \texttt{sorry})\\
-    \textcolor{OliveGreen}{\checkmark\kern-0.3em\checkmark} & Merged into Mathlib
-    & \textcolor{BrickRed}{$\times$} & Not ready to formalize\\
+    \textcolor{leanstubcolor}{$\boldsymbol{\forall}$\,\textbf{\footnotesize stub}}
+      & Stub: \texttt{sorry}/placeholder, or vacuous/trivial per QA
+    & \textcolor{leandraftcolor}{$\boldsymbol{\forall}$\,\textbf{\footnotesize draft}}
+      & Drafted: genuine statement in Lean, not yet sorry-free\\
+    \textcolor{leanokcolor}{$\boldsymbol{\forall}$\,\textbf{\footnotesize ok}}
+      & Compiled: built sorry-free
+    & \textcolor{OliveGreen}{\checkmark\kern-0.3em\checkmark} & Merged into Mathlib\\
   \end{tabular}\bigskip
 }
 
