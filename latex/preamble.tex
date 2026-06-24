@@ -283,19 +283,60 @@
 \setcounter{tocdepth}{1}
 
 % ── Theorem environments ───────────────────────────────────────────────────────
+% Condensed spacing to reduce vertical footprint
+\newtheoremstyle{condensed}
+  {0.8ex plus 0.2ex minus 0.1ex} % Space above
+  {0.8ex plus 0.2ex minus 0.1ex} % Space below
+  {\itshape}                     % Body font (italic for theorems)
+  {}                             % Indent amount
+  {\bfseries}                    % Theorem head font
+  {.}                            % Punctuation after theorem head
+  {0.5em}                        % Space after theorem head
+  {}                             % Theorem head spec
+
+\newtheoremstyle{condenseddef}
+  {0.8ex plus 0.2ex minus 0.1ex} % Space above
+  {0.8ex plus 0.2ex minus 0.1ex} % Space below
+  {\normalfont}                  % Body font (roman for definitions)
+  {}                             % Indent amount
+  {\bfseries}                    % Theorem head font
+  {.}                            % Punctuation after theorem head
+  {0.5em}                        % Space after theorem head
+  {}                             % Theorem head spec
+
+\theoremstyle{condensed}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{condenseddef}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
 \newtheorem{remark}[theorem]{Remark}
-\newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{observation}[theorem]{Observation}
+
 % `algorithmblock` (theorem-like) — separate from the `algorithm`
 % float package, which is reserved for pseudocode floats elsewhere
 % in the paper.
 \newtheorem{algorithmblock}[theorem]{Algorithm}
+
+% ── Proof environment formatting ───────────────────────────────────────────────
+% Solid black square for QED, bold 'Proof' heading
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep0.8ex\@plus0.2ex\@minus0.1ex\relax
+  \trivlist
+  \item[\hskip\labelsep
+        \bfseries
+    #1\@addpunct{.}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
 
 % ── LeanBlueprint macros ──────────────────────────────────────────────────────
 % These macros annotate theorem-like environments with Lean 4 declaration
