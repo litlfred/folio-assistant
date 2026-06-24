@@ -134,6 +134,40 @@ function transliterateForVerbatim(text: string): string {
   return out;
 }
 
+/**
+ * Collapse a block's Lean status into the three buckets the PDF ∀ mark
+ * colour-codes (see `\leanstatusmark` / `\proofstatuslegend` in
+ * latex/preamble.tex):
+ *
+ *   - "compiled"  green  — built sorry-free.
+ *   - "stubbed"   red    — `sorry`/placeholder, or a vacuous/trivial goal
+ *                          flagged by machine QA (these are not genuine
+ *                          formalisations, so they read as stubs).
+ *   - "drafted"   purple — a genuine statement stated in Lean that is neither
+ *                          a stub nor yet sorry-free-compiled.
+ *
+ * `sorryFree` wins outright; otherwise we map the `validation` enum. An
+ * unknown/absent validation on a block that *does* carry a Lean ref defaults
+ * to "drafted" (it is stated, just not yet checked).
+ */
+function leanStatusBucket(
+  lean: { sorryFree?: boolean; validation?: string } | undefined,
+): "stubbed" | "drafted" | "compiled" {
+  if (!lean) return "stubbed";
+  if (lean.sorryFree === true) return "compiled";
+  switch (lean.validation) {
+    case "leanok":
+    case "validated":
+      return "compiled";
+    case "stub":
+    case "trivial":
+    case "error":
+      return "stubbed";
+    default:
+      // not_checked / external / axioms_only / undefined
+      return "drafted";
+  }
+}
 
 /**
  * Escape special LaTeX characters in titles, captions, etc.,
@@ -803,14 +837,15 @@ export function renderBlock(
       lines.push(`\\begin{${envName}}${titleArg}`);
 
       // Label + margin annotation (4-icon strip in the right margin:
-      //   ∀ → Lean docs page (if any)
+      //   ∀ → bold, colour-coded Lean status mark (red stub / purple draft /
+      //       green ok) linking to the declaration's source on GitHub (if any)
       //   ∇ → .md source on GitHub
       //   # → GitHub issues filtered by label
       //   + → "add comment" pre-filled with block label
-      // The annotation strip is emitted as a single \blockannot /
-      // \blockannotok macro call so adjacent block annotations don't
-      // collide in the margin.  See latex/preamble.tex for the macro
-      // definitions.
+      // The annotation strip is emitted as a single \blockannot macro call
+      // (with the formalisation status as its optional first argument) so
+      // adjacent block annotations don't collide in the margin.  See
+      // latex/preamble.tex for the macro definitions.
       if ("label" in block && block.label) {
         lines.push(`  \\label{${block.label}}`);
 
@@ -824,9 +859,12 @@ export function renderBlock(
           }
         }
 
-        const sorryFree = "lean" in block && block.lean?.sorryFree === true;
-        const macro = sorryFree ? "blockannotok" : "blockannot";
-        lines.push(`  \\${macro}{${block.label}}{${leanDecl}}{${mdRelPath}}`);
+        // Formalisation status drives the colour + tag of the margin ∀ mark
+        // (red stub / purple draft / green ok); empty leanDecl omits the mark.
+        const leanStatus = "lean" in block ? leanStatusBucket(block.lean) : "drafted";
+        lines.push(
+          `  \\blockannot[${leanStatus}]{${block.label}}{${leanDecl}}{${mdRelPath}}`,
+        );
       }
 
       // Uses
