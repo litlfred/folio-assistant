@@ -480,7 +480,7 @@ jobs:
           retention-days: 1
           if-no-files-found: ignore
 
-  # ── 2c. schema-docs (parallel with 2a, 2b) ─────────────────────
+  # ── 2c. schema-docs (parallel with 2a, 2b, 2d) ─────────────────────
   schema-docs:
     name: TypeDoc — schema-docs/
     needs: content-pipeline
@@ -507,6 +507,52 @@ jobs:
           name: schema-docs-${{ needs.content-pipeline.outputs.filename-base }}
           path: schema-docs/
           retention-days: 1
+
+  # ── 2d. blueprint-html (parallel with 2a, 2b, 2c) ──────────────────
+  blueprint-html:
+    name: Build leanblueprint HTML
+    needs: content-pipeline
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/litlfred/qou-paper-builder:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: content-pipeline-${{ needs.content-pipeline.outputs.filename-base }}
+
+      - name: Create plastex.cfg
+        run: |
+          cat << 'EOF' > plastex.cfg
+          [general]
+          plugins = leanblueprint
+          [document]
+          toc-depth = 2
+          EOF
+
+      - name: Flatten \input includes
+        # plasTeX sometimes struggles with nested \inputs if they aren't fully resolved.
+        # We flatten it just to be safe.
+        run: latexpand main.tex > main-flat.tex 2>/dev/null || true
+
+      - name: Build HTML blueprint
+        run: |
+          plasTeX --dir=blueprint-out main-flat.tex 2>&1 | tail -50 || \
+            echo "::warning::blueprint compile failed or had warnings"
+
+      - name: Upload blueprint artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: blueprint-html-${{ needs.content-pipeline.outputs.filename-base }}
+          path: blueprint-out/
+          retention-days: 1
+          if-no-files-found: ignore
 
   # ── 3a. diff-pdf (depends on paper-pdf) ────────────────────────
   diff-pdf:
@@ -583,10 +629,10 @@ jobs:
           retention-days: 1
           if-no-files-found: ignore
 
-  # ── 4. assemble (fan-in from 2a/2b/2c/3a/3b) ───────────────────
+  # ── 4. assemble (fan-in from 2a/2b/2c/2d/3a/3b) ───────────────────
   assemble:
     name: Assemble site/ + builds.json
-    needs: [content-pipeline, paper-pdf, appendix-pdfs, schema-docs, per-chapter-split]
+    needs: [content-pipeline, paper-pdf, appendix-pdfs, schema-docs, blueprint-html, per-chapter-split]
     # Note: `diff-pdf` intentionally OMITTED from needs[] — it's
     # pull_request-only and `continue-on-error: true`. Including it
     # in needs[] would cancel the assemble job on push/dispatch
@@ -602,11 +648,12 @@ jobs:
 
       - name: Assemble _site/
         run: |
-          mkdir -p _site/papers _site/chapters _site/appendices _site/schema-docs
+          mkdir -p _site/papers _site/chapters _site/appendices _site/schema-docs _site/blueprint
           cp artefacts/main.pdf _site/ 2>/dev/null || true
           cp -r artefacts/*.pdf _site/chapters/ 2>/dev/null || true
           cp -r artefacts/appendix-* _site/appendices/ 2>/dev/null || true
           cp -r artefacts/schema-docs _site/ 2>/dev/null || true
+          cp -r artefacts/blueprint-out/* _site/blueprint/ 2>/dev/null || true
           ls -la _site/
 
       - name: Upload site artefacts
@@ -630,6 +677,7 @@ jobs:
             - \`diff-pdf-${{ needs.content-pipeline.outputs.filename-base }}\` (vs ${{ github.event.pull_request.base.ref }})
             - \`per-chapter-${{ needs.content-pipeline.outputs.filename-base }}\`
             - \`schema-docs-${{ needs.content-pipeline.outputs.filename-base }}\`
+            - \`blueprint-html-${{ needs.content-pipeline.outputs.filename-base }}\`
 
             Manual gh-pages deploy: trigger this workflow via workflow_dispatch.`;
             github.rest.issues.createComment({
