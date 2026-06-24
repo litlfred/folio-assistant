@@ -1,26 +1,43 @@
 #!/bin/bash
-# Setup SageMath for QOU witness computations.
+# Setup SageMath for QOU computations.
 #
 # Copy-paste from repo root:
 #
-#   ./scripts/setup-sage.sh
+#   ./scripts/setup-sage.sh           # detect / install a native Sage
+#   ./scripts/setup-sage.sh --pull    # pre-warm the Docker image (~2 GB)
 #
-# Then run all witness computations:
+# YOU MAY NOT NEED THIS. The Sage MCP server (src/sage-mcp-server.py, registered
+# in .mcp.json) resolves its backend LAZILY: if `sage` is on PATH it uses it,
+# otherwise it pulls and runs the `sagemath/sagemath` Docker image — but only on
+# the FIRST actual tool call. If you never invoke a Sage tool, nothing downloads.
+# Run this script only to install a native Sage, or `--pull` to download the
+# Docker image ahead of time so the first call isn't slow.
 #
-#   ./scripts/run-sage-witnesses.sh
-#
-# NOTE: SageMath requires Python <= 3.12. If your system Python is 3.13+,
+# NOTE: native SageMath requires Python <= 3.12. If your system Python is 3.13+,
 # this script creates a dedicated conda environment with Python 3.12.
 
 set -e
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 ENV_NAME="qou-sage"
+SAGE_IMAGE="${SAGE_DOCKER_IMAGE:-sagemath/sagemath:latest}"
 
 echo "═══════════════════════════════════════════════════════════"
-echo "SageMath setup for QOU witness computations"
+echo "SageMath setup"
 echo "═══════════════════════════════════════════════════════════"
 echo
+
+# ── --pull: pre-warm the Docker image (optional) ─────────────────
+if [[ "${1:-}" == "--pull" ]]; then
+    if ! command -v docker &>/dev/null; then
+        echo "✗ docker not found — cannot pre-pull. Install Docker or a native Sage."
+        exit 1
+    fi
+    echo "▸ Pre-pulling Sage Docker image '$SAGE_IMAGE' (~2 GB, one time)…"
+    docker pull "$SAGE_IMAGE"
+    echo "✓ Image ready. The Sage MCP server will use it without further downloads."
+    exit 0
+fi
 
 # ── Check if sage is already available ───────────────────────────
 if command -v sage &>/dev/null; then
