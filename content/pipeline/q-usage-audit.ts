@@ -23,22 +23,30 @@
  * @module content/pipeline/q-usage-audit
  */
 
-import { existsSync, readdirSync, readFileSync, statSync, writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
-import { dirname, join, resolve, basename, relative } from "node:path";
+import { dirname, join, resolve, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   Q_USAGE_AUTOMATED_CHECKERS,
   Q_USAGE_CRITERION_IDS,
   CHAPTER_EXPECTED_REGIMES,
+  chapterFromPath,
+  detectRegimes,
+  checkQUsagePositivityImplicit,
   type QRegime,
   type QUsageResult,
 } from "./qa-checkers-q-usage.ts";
+import { checkWallSide, checkBaseRingMinimal } from "./qa-checkers-voice.ts";
+// Single source of truth for block discovery + candidate-1→candidate-2
+// `lean.ref` resolution + library-tree enumeration. q-usage-audit MUST
+// NOT reimplement these (it used to carry a private copy — removed so the
+// resolution logic can never drift from qa-sweep / qa-utils).
 import {
-  LEAN_PACKAGES,
-  parseLeanRef,
-  leanPackageByName,
-} from "../../folio-assistant/schemas/lean-packages.ts";
+  walkBlocks as utilWalkBlocks,
+  resolveCanonicalLean,
+  listPackageLeanFiles,
+} from "./qa-utils.ts";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(SCRIPT_DIR, "..", "..");
@@ -50,6 +58,7 @@ const args = process.argv.slice(2);
 const noWrite = args.includes("--no-write");
 const strict = args.includes("--strict");
 const jsonReport = args.includes("--json");
+const noOrphans = args.includes("--no-orphans");
 const chapterFilterIdx = args.indexOf("--chapter");
 const chapterFilter = chapterFilterIdx >= 0 ? args[chapterFilterIdx + 1] : undefined;
 
@@ -64,120 +73,28 @@ interface BlockTriple {
   lean?: string;
 }
 
-const PROVABLE_KINDS = new Set([
-  "definition",
-  "theorem",
-  "lemma",
-  "proposition",
-  "corollary",
-  "conjecture",
-  "remark",
-  "example",
-  "simulator",
-  "prose",
-  "diagram",
-  "equation",
-]);
-
+/**
+ * Discover every content block under PAPER_ROOT via the shared
+ * `qa-utils.walkBlocks` — the single source of truth for block discovery
+ * AND candidate-1 (sibling) → candidate-2 (library/Lake tree) `lean.ref`
+ * resolution. The owning chapter is read from the block's `.ts` path, NOT
+ * from the resolved Lean file's directory, so the regime profile stays
+ * content-based (CLAUDE.md §7c — never infer the regime from the
+ * lean-tree directory name).
+ */
 function walkBlocks(): BlockTriple[] {
   const out: BlockTriple[] = [];
-
-  // Per-Lake-package basename cache. Some blocks have been promoted
-  // from sibling .lean files into the Lake-buildable tree (per the
-  // cluster-migration pattern, e.g. lean/QOU/BraidKnot/...). When the
-  // sibling check fails, fall back to resolving the lean.ref URI via
-  // (a) the parsed module path, or (b) a basename match anywhere
-  // under the package's Lake root.
-  const lakeTreeBasenameCache = new Map<string, Set<string>>();
-  function lakeTreeContains(lakeRoot: string, base: string): boolean {
-    const abs = resolve(REPO_ROOT, lakeRoot);
-    let cached = lakeTreeBasenameCache.get(abs);
-    if (!cached) {
-      cached = new Set<string>();
-      try {
-        const stack: string[] = [abs];
-        while (stack.length) {
-          const dir = stack.pop()!;
-          for (const e of readdirSync(dir, { withFileTypes: true })) {
-            const full = join(dir, e.name);
-            if (e.isDirectory()) stack.push(full);
-            else if (e.isFile() && e.name.endsWith(".lean")) cached.add(e.name);
-          }
-        }
-      } catch { /* Lake root missing — empty cache */ }
-      lakeTreeBasenameCache.set(abs, cached);
-    }
-    return cached.has(base);
-  }
-  function resolveLakeTreePath(ref: string | undefined): string | undefined {
-    if (!ref) return undefined;
-    try {
-      const parsed = parseLeanRef(ref);
-      const pkg = leanPackageByName(parsed.package);
-      if (!pkg) return undefined;
-      // Try direct module-path resolution first.
-      const modulePath = parsed.module.replace(/\./g, "/");
-      const direct = resolve(REPO_ROOT, pkg.lakeRoot, `${modulePath}.lean`);
-      if (existsSync(direct)) return direct;
-      // Basename fallback under the Lake tree.
-      if (lakeTreeContains(pkg.lakeRoot, `${parsed.name}.lean`)) {
-        // Find the actual path via scan.
-        const stack: string[] = [resolve(REPO_ROOT, pkg.lakeRoot)];
-        while (stack.length) {
-          const dir = stack.pop()!;
-          for (const e of readdirSync(dir, { withFileTypes: true })) {
-            const full = join(dir, e.name);
-            if (e.isDirectory()) stack.push(full);
-            else if (e.isFile() && e.name === `${parsed.name}.lean`) return full;
-          }
-        }
-      }
-    } catch { /* parseLeanRef failed — fall through */ }
-    return undefined;
-  }
-
-  const chapters = readdirSync(PAPER_ROOT, { withFileTypes: true })
-    .filter((d) => d.isDirectory())
-    .map((d) => d.name);
-  for (const chapter of chapters) {
+  for (const b of utilWalkBlocks(PAPER_ROOT)) {
+    const chapter = chapterFromPath(b.ts) ?? "";
     if (chapterFilter && chapter !== chapterFilter) continue;
-    const chDir = join(PAPER_ROOT, chapter);
-    let files: string[];
-    try {
-      files = readdirSync(chDir);
-    } catch {
-      continue;
-    }
-    for (const f of files) {
-      if (!f.endsWith(".ts")) continue;
-      if (f === `${chapter}.ts`) continue; // chapter manifest, not a block
-      const tsPath = join(chDir, f);
-      const root = f.replace(/\.ts$/, "");
-      const mdPath = join(chDir, `${root}.md`);
-      const leanPath = join(chDir, `${root}.lean`);
-      const ts = readFileSync(tsPath, "utf-8");
-      const kindMatch = ts.match(
-        /export\s+default\s+(definition|theorem|lemma|proposition|corollary|conjecture|remark|example|simulator|prose|diagram|equation)\s*\(/,
-      );
-      if (!kindMatch) continue;
-      const kind = kindMatch[1];
-      const labelMatch = ts.match(/label:\s*["']([^"']+)["']/);
-      const label = labelMatch ? labelMatch[1] : root;
-      // Resolve .lean: (1) sibling, (2) Lake-tree mirror via lean.ref.
-      let leanResolved: string | undefined = existsSync(leanPath) ? leanPath : undefined;
-      if (!leanResolved) {
-        const refMatch = ts.match(/ref:\s*["']([^"']+)["']/);
-        leanResolved = resolveLakeTreePath(refMatch?.[1]);
-      }
-      out.push({
-        label,
-        kind,
-        chapter,
-        ts: tsPath,
-        md: existsSync(mdPath) ? mdPath : undefined,
-        lean: leanResolved,
-      });
-    }
+    out.push({
+      label: b.label,
+      kind: b.kind,
+      chapter,
+      ts: b.ts,
+      md: b.md,
+      lean: b.lean,
+    });
   }
   return out;
 }
@@ -409,10 +326,83 @@ function hasHumanDispensation(
   return false;
 }
 
+// ── Orphan library-tree coverage ────────────────────────────────
+//
+// Block-driven auditing only reaches Lean files referenced by some
+// block's `lean.ref`. Library-tree files that NO block references
+// (orphans) would otherwise go unswept — exactly how a gratuitous
+// `(q : ℝ)` can slip in unseen. We audit them with the CONTENT-BASED,
+// chapter-INDEPENDENT checkers only: an orphan has no owning content
+// block, hence no chapter, and CLAUDE.md §7c forbids inferring the
+// regime from the lean-tree directory name (the path heuristic
+// over-fires — `lean/QOU/BraidKnot/` legitimately holds archimedean
+// files like the QBeta ladder). So the chapter-relative checkers
+// (`*-in-categorical-chapter`, `fixed-q0-leak`, `narrative-chapter-
+// mismatch`) are NOT run on orphans; only same-file content signals are:
+//   - wall-side-correct          — mixed archimedean + generic-R in one file
+//   - wall-base-ring-minimal     — field/inverse restatable over ℤ[q,q⁻¹]
+//   - q-usage-positivity-implicit — Real.* on q without a positivity hyp
+// plus the detected regime vector (reported, never used to fail).
+
+/** Minimal shape shared by CheckerResult and QUsageResult. */
+type MiniResult = {
+  result: "pass" | "fail" | "warn" | "n/a";
+  hits: Array<{ file: string; line: number; text: string }>;
+};
+
+interface OrphanFinding {
+  file: string;
+  criterion: string;
+  result: "fail" | "warn";
+  regimes: string[];
+  evidence: string;
+}
+
+export function scanOrphanLeanFiles(coveredLean: Set<string>): {
+  scanned: number;
+  orphans: number;
+  findings: OrphanFinding[];
+} {
+  const all = listPackageLeanFiles(REPO_ROOT);
+  const findings: OrphanFinding[] = [];
+  let orphans = 0;
+  for (const file of all) {
+    if (coveredLean.has(resolve(file))) continue; // referenced by a block
+    orphans++;
+    const regimes = [
+      ...detectRegimes(undefined, undefined, file).regimes,
+    ].sort();
+    const checks: Array<{ id: string; r: MiniResult }> = [
+      { id: "wall-side-correct", r: checkWallSide(undefined, file) },
+      { id: "wall-base-ring-minimal", r: checkBaseRingMinimal(file) },
+      {
+        id: "q-usage-positivity-implicit",
+        r: checkQUsagePositivityImplicit(undefined, undefined, file),
+      },
+    ];
+    for (const { id, r } of checks) {
+      if (r.result === "fail" || r.result === "warn") {
+        findings.push({
+          file: relative(REPO_ROOT, file),
+          criterion: id,
+          result: r.result,
+          regimes,
+          evidence: r.hits
+            .slice(0, 3)
+            .map((h) => `${relative(REPO_ROOT, h.file)}:${h.line} — ${h.text}`)
+            .join(" | "),
+        });
+      }
+    }
+  }
+  return { scanned: all.length, orphans, findings };
+}
+
 function main(): void {
   const blocks = walkBlocks();
   const stats: Map<string, ChapterStat> = new Map();
   const findings: BlockFinding[] = [];
+  const coveredLean = new Set<string>();
   let touchedSidecars = 0;
   let dispensationsHonored = 0;
 
@@ -426,6 +416,7 @@ function main(): void {
       regime_dist: {},
     };
     stat.n_blocks++;
+    if (b.lean) coveredLean.add(resolve(b.lean));
     const currentHashes = {
       ts: hashFile(b.ts),
       md: b.md ? hashFile(b.md) : undefined,
@@ -476,6 +467,14 @@ function main(): void {
     if (!noWrite) touchedSidecars++;
   }
 
+  // Orphan library-tree coverage — Lean files reachable by no block's
+  // lean.ref. Skipped for a single-chapter run (--chapter) since the
+  // library tree is paper-wide, and on demand via --no-orphans.
+  const orphan =
+    noOrphans || chapterFilter
+      ? { scanned: 0, orphans: 0, findings: [] as OrphanFinding[] }
+      : scanOrphanLeanFiles(coveredLean);
+
   // Global witness
   const witnessPath = join(
     REPO_ROOT,
@@ -485,7 +484,9 @@ function main(): void {
   );
   const witness = {
     $schema: "q-usage-audit/v1",
-    description: "Per-block q-usage regime audit + chapter-mismatch sweep",
+    description:
+      "Per-block q-usage regime audit + chapter-mismatch sweep + orphan " +
+      "library-tree coverage (content-based, chapter-independent)",
     audited_at: NOW_ISO,
     script: SCRIPT_PATH,
     script_hash: SCRIPT_HASH,
@@ -493,6 +494,9 @@ function main(): void {
     n_chapters: stats.size,
     n_fails: findings.filter((f) => f.result === "fail").length,
     n_warns: findings.filter((f) => f.result === "warn").length,
+    lean_tree_scanned: orphan.scanned,
+    n_orphan_files: orphan.orphans,
+    n_orphan_findings: orphan.findings.length,
     by_chapter: Object.fromEntries(
       [...stats.entries()].sort().map(([k, v]) => [k, v]),
     ),
@@ -503,6 +507,9 @@ function main(): void {
       if (da !== db) return da - db;
       return (a.chapter + a.label).localeCompare(b.chapter + b.label);
     }),
+    orphan_findings: orphan.findings.sort((a, b) =>
+      a.file.localeCompare(b.file) || a.criterion.localeCompare(b.criterion),
+    ),
   };
   if (!noWrite) {
     mkdirSync(dirname(witnessPath), { recursive: true });
@@ -516,6 +523,11 @@ function main(): void {
     console.error(
       `  fails=${witness.n_fails}  warns=${witness.n_warns}  sidecars-touched=${touchedSidecars}  dispensations-honored=${dispensationsHonored}`,
     );
+    if (!noOrphans && !chapterFilter) {
+      console.error(
+        `  lean-tree-scanned=${orphan.scanned}  orphan-files=${orphan.orphans}  orphan-findings=${orphan.findings.length}`,
+      );
+    }
     console.error("");
     console.error("Chapter regime distribution (top tags only):");
     for (const stat of [...stats.values()].sort((a, b) => a.chapter.localeCompare(b.chapter))) {
@@ -537,13 +549,29 @@ function main(): void {
     if (witness.findings.length > 40) {
       console.error(`  …and ${witness.findings.length - 40} more (see witness JSON)`);
     }
+    if (orphan.findings.length > 0) {
+      console.error("");
+      console.error("Orphan library-tree findings (no owning block):");
+      for (const f of orphan.findings.slice(0, 40)) {
+        console.error(`  [${f.result.padEnd(4)}] ${f.criterion}  ${f.file}  [${f.regimes.join(",")}]`);
+        if (f.evidence) console.error(`            ${f.evidence.slice(0, 200)}`);
+      }
+      if (orphan.findings.length > 40) {
+        console.error(`  …and ${orphan.findings.length - 40} more (see witness JSON)`);
+      }
+    }
     if (!noWrite) {
       console.error("");
       console.error(`Witness written to ${relative(REPO_ROOT, witnessPath)}`);
     }
   }
 
-  if (strict && witness.n_fails > 0) process.exit(1);
+  // Orphan `fail`s are real §7c violations (mixed-substrate files); count
+  // them toward strict exit. Orphan `warn`s (base-ring advisories) do not.
+  const orphanFails = orphan.findings.filter((f) => f.result === "fail").length;
+  if (strict && witness.n_fails + orphanFails > 0) process.exit(1);
 }
 
-main();
+// Run as a CLI only when invoked directly; importing the module (e.g. in
+// tests) must not execute the audit or write a witness.
+if (import.meta.main) main();

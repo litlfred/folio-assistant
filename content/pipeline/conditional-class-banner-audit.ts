@@ -29,7 +29,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { leanPackageByName } from "../../folio-assistant/schemas/lean-packages.ts";
+import { leanPackageByName } from "../../schemas/lean-packages.ts";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(SCRIPT_DIR, "..", "..");

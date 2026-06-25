@@ -26,7 +26,7 @@ import {
 import type {
   BlockQaReport,
   QaCriterionEntry,
-} from "../../folio-assistant/schemas/block-qa";
+} from "../../schemas/block-qa";
 
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = resolve(dirname(__filename), "..", "..");

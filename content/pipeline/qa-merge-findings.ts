@@ -45,7 +45,7 @@ import type {
   BlockQaReport,
   QaCriterionEntry,
   QaReviewer,
-} from "../../folio-assistant/schemas/block-qa";
+} from "../../schemas/block-qa";
 
 interface FindingInput {
   block_md?: string;

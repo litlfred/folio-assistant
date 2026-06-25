@@ -4,7 +4,7 @@
  *                   → `lean: { ref: "qou:QOU.Foo", ... }`
  *
  * Mapping from paper directory to package prefix is derived from
- * `folio-assistant/schemas/lean-packages.ts` (LEAN_PACKAGES).
+ * `schemas/lean-packages.ts` (LEAN_PACKAGES).
  *
  * Transforms every `.ts` under `content/` that contains a `decl:` field
  * inside a `lean:` object.  The `file:` field is dropped (it was only
@@ -22,7 +22,7 @@
 
 import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { join, relative } from "path";
-import { LEAN_PACKAGES } from "../../folio-assistant/schemas/lean-packages";
+import { LEAN_PACKAGES } from "../../schemas/lean-packages";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
 const CONTENT_ROOT = join(REPO_ROOT, "content");

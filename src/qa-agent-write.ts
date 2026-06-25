@@ -39,11 +39,11 @@ import {
   saveQaReport,
   readBlockManifest,
   resolveCanonicalLean,
-} from "../../content/pipeline/qa-utils";
+} from "../content/pipeline/qa-utils";
 import type {
   BlockQaReport,
   QaCriterionEntry,
-} from "../../schemas/block-qa";
+} from "../schemas/block-qa";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");
 

@@ -17,6 +17,7 @@ import { execFileSync } from "child_process";
 import {
   parseLeanRef,
   leanPackageByName,
+  LEAN_PACKAGES,
 } from "../../schemas/lean-packages";
 import { mkdirSync } from "fs";
 import { dirname } from "path";
@@ -206,7 +207,59 @@ export function computeCriterionScriptHashes(
   };
 }
 
-// ── Canonical lean.ref resolution ───────────────────────────────
+// ── Canonical lean.ref resolution (single source of truth) ──────
+//
+// This is THE resolver for `lean.ref` → on-disk Lean file. Every QA
+// consumer — `walkBlocks` (used by qa-sweep), `q-usage-audit`,
+// `qa-agent-write`, and orphan-coverage scans — routes through
+// `resolveCanonicalLean` so the candidate-1 (sibling) → candidate-2
+// (Lake/library tree) resolution can never drift between tools. Do not
+// reimplement this walk anywhere else; pass a `LakeTreeCache` for bulk
+// callers and reuse the same function.
+
+/**
+ * Per-package basename → first-path index for one Lake root, keyed by
+ * the absolute Lake-root path. Bulk callers (walking many blocks) build
+ * this once and reuse it so the library tree is scanned a single time
+ * rather than once per ref.
+ */
+export type LakeTreeCache = Map<string, Map<string, string>>;
+
+/** Walk one Lake root once, indexing `*.lean` basename → absolute path. */
+function buildLakeBasenameMap(absRoot: string): Map<string, string> {
+  const map = new Map<string, string>();
+  try {
+    const stack: string[] = [absRoot];
+    while (stack.length) {
+      const dir = stack.pop()!;
+      for (const e of readdirSync(dir, { withFileTypes: true })) {
+        const full = join(dir, e.name);
+        if (e.isDirectory()) stack.push(full);
+        // First occurrence wins for ambiguous basenames; the common
+        // case (one file per basename) is unambiguous.
+        else if (e.isFile() && e.name.endsWith(".lean") && !map.has(e.name))
+          map.set(e.name, full);
+      }
+    }
+  } catch {
+    /* Lake root missing — empty map */
+  }
+  return map;
+}
+
+/** Fetch (or lazily build + cache) the basename index for a Lake root. */
+function lakeBasenameMap(
+  absRoot: string,
+  cache?: LakeTreeCache,
+): Map<string, string> {
+  if (!cache) return buildLakeBasenameMap(absRoot);
+  let m = cache.get(absRoot);
+  if (!m) {
+    m = buildLakeBasenameMap(absRoot);
+    cache.set(absRoot, m);
+  }
+  return m;
+}
 
 /**
  * Resolve a content block's package-qualified `lean.ref` URI (e.g.
@@ -222,14 +275,15 @@ export function computeCriterionScriptHashes(
  * declaration rather than an uncompiled sibling stub: a content block's
  * `<root>.lean` may be a `True := by trivial` placeholder while the real
  * statement lives in the library module named by `lean.ref` (CLAUDE.md
- * §3b-cond — the sibling stub is not the integrity gate). `walkBlocks`
- * applies the same fallback (with a per-package basename cache) on the
- * read path; this standalone form serves single-block callers such as
- * `qa-agent-write`.
+ * §3b-cond — the sibling stub is not the integrity gate).
+ *
+ * Pass a shared `cache` when resolving many refs (e.g. a corpus sweep)
+ * so the Lake tree is scanned once; omit it for single-block callers.
  */
 export function resolveCanonicalLean(
   ref: string | undefined,
   repoRoot: string,
+  cache?: LakeTreeCache,
 ): string | undefined {
   if (!ref) return undefined;
   let parsed: ReturnType<typeof parseLeanRef>;
@@ -247,23 +301,37 @@ export function resolveCanonicalLean(
     `${parsed.module.replace(/\./g, "/")}.lean`,
   );
   if (existsSync(direct)) return direct;
-  // (b) Basename fallback under the Lake tree (uncached — single-use).
-  const target = `${parsed.name}.lean`;
+  // (b) Basename fallback under the Lake tree.
   const lakeRootAbs = resolve(repoRoot, pkg.lakeRoot);
-  const stack: string[] = [lakeRootAbs];
-  try {
-    while (stack.length) {
-      const dir = stack.pop()!;
-      for (const e of readdirSync(dir, { withFileTypes: true })) {
-        const full = join(dir, e.name);
-        if (e.isDirectory()) stack.push(full);
-        else if (e.isFile() && e.name === target) return full;
+  return lakeBasenameMap(lakeRootAbs, cache).get(`${parsed.name}.lean`);
+}
+
+/**
+ * Enumerate every `*.lean` file under every configured package's Lake
+ * tree (absolute paths). Single source for "what library-tree files
+ * exist", consumed by orphan-coverage scans that audit Lean files
+ * reachable by **no** block's `lean.ref`. Returns `[]` when no packages
+ * are configured (e.g. the framework repo with no content injected).
+ */
+export function listPackageLeanFiles(repoRoot: string): string[] {
+  const out: string[] = [];
+  for (const pkg of LEAN_PACKAGES) {
+    const absRoot = resolve(repoRoot, pkg.lakeRoot);
+    try {
+      const stack: string[] = [absRoot];
+      while (stack.length) {
+        const dir = stack.pop()!;
+        for (const e of readdirSync(dir, { withFileTypes: true })) {
+          const full = join(dir, e.name);
+          if (e.isDirectory()) stack.push(full);
+          else if (e.isFile() && e.name.endsWith(".lean")) out.push(full);
+        }
       }
+    } catch {
+      /* Lake root missing — skip this package */
     }
-  } catch {
-    /* Lake root missing */
   }
-  return undefined;
+  return out;
 }
 
 // ── Block discovery ─────────────────────────────────────────────
@@ -310,56 +378,16 @@ export function readBlockManifest(
  * file that is not a single-block manifest.
  */
 export function* walkBlocks(rootDir: string): Generator<BlockPaths> {
-  // Per-Lake-package basename cache, populated lazily.  When a block's
-  // sibling `<root>.lean` is missing but its `lean.ref` URI points at
-  // a file in the package's Lake tree (the cluster-migration pattern,
-  // e.g. lean/QOU/BraidKnot/MarkovAxiomsPrimitive.lean), fall back to
-  // resolving the Lake-tree path so qa-checkers that consume the
+  // When a block's sibling `<root>.lean` is missing but its `lean.ref`
+  // URI points at a file in the package's Lake tree (the cluster-
+  // migration pattern, e.g. lean/QOU/BraidKnot/MarkovAxiomsPrimitive.lean),
+  // fall back to the canonical resolver so qa-checkers that consume the
   // .lean source (wall-side, voice, q-usage, …) don't silently skip.
+  // `resolveCanonicalLean` is the single source of truth for that walk;
+  // a shared cache scans each Lake tree once across the whole block walk.
   // Resolve REPO_ROOT relative to qa-utils.ts (= content/pipeline/).
   const REPO_ROOT = resolve(import.meta.dir, "../..");
-  const lakeTreeBasenameToPath = new Map<string, Map<string, string>>();
-  function lakeTreePathFor(
-    lakeRoot: string,
-    base: string,
-  ): string | undefined {
-    const absRoot = resolve(REPO_ROOT, lakeRoot);
-    let cached = lakeTreeBasenameToPath.get(absRoot);
-    if (!cached) {
-      cached = new Map<string, string>();
-      try {
-        const stack: string[] = [absRoot];
-        while (stack.length) {
-          const dir = stack.pop()!;
-          for (const e of readdirSync(dir, { withFileTypes: true })) {
-            const full = join(dir, e.name);
-            if (e.isDirectory()) stack.push(full);
-            else if (e.isFile() && e.name.endsWith(".lean")) {
-              // First occurrence wins for ambiguous basenames; the
-              // common case (one file per basename) is unambiguous.
-              if (!cached.has(e.name)) cached.set(e.name, full);
-            }
-          }
-        }
-      } catch { /* Lake root missing — empty map */ }
-      lakeTreeBasenameToPath.set(absRoot, cached);
-    }
-    return cached.get(base);
-  }
-  function resolveLakeTreeLean(ref: string | undefined): string | undefined {
-    if (!ref) return undefined;
-    try {
-      const parsed = parseLeanRef(ref);
-      const pkg = leanPackageByName(parsed.package);
-      if (!pkg) return undefined;
-      // (a) Direct module-path resolution.
-      const modulePath = parsed.module.replace(/\./g, "/");
-      const direct = resolve(REPO_ROOT, pkg.lakeRoot, `${modulePath}.lean`);
-      if (existsSync(direct)) return direct;
-      // (b) Basename fallback under the Lake tree.
-      return lakeTreePathFor(pkg.lakeRoot, `${parsed.name}.lean`);
-    } catch { return undefined; }
-  }
+  const lakeCache: LakeTreeCache = new Map();
 
   function* recurse(d: string): Generator<BlockPaths> {
     if (!existsSync(d)) return;
@@ -385,7 +413,7 @@ export function* walkBlocks(rootDir: string): Generator<BlockPaths> {
           // via a regex over the raw file (mirrors q-usage-audit).
           const tsSrc = readFileSync(full, "utf-8");
           const refMatch = tsSrc.match(/ref:\s*["']([^"']+)["']/);
-          leanResolved = resolveLakeTreeLean(refMatch?.[1]);
+          leanResolved = resolveCanonicalLean(refMatch?.[1], REPO_ROOT, lakeCache);
         }
         yield {
           label: manifest.label,
