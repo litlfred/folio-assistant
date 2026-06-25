@@ -34,9 +34,15 @@ the one recipe.
      pushes).
 4. **Prove it merges cleanly** (no assumptions):
    - `git merge-base --is-ancestor origin/<base> HEAD` → success means a clean
-     fast-forward, zero conflict potential.
-   - Otherwise dry-run: `git merge-tree $(git merge-base HEAD origin/<base>)
-     origin/<base> HEAD` and confirm no `<<<<<<<` / "changed in both" markers.
+     fast-forward: git fast-forwards without running a merge, so conflicts are
+     impossible. This alone is sufficient.
+   - Otherwise (base moved, not yet rebased) dry-run with the modern form and
+     trust its **exit code**: `git merge-tree --write-tree origin/<base> HEAD`
+     (exit 0 = clean; non-zero = conflicts; add `--name-only` to list the
+     conflicted paths). Do **not** grep the old three-arg output for
+     `<<<<<<<` / "changed in both" — that false-positives on files which
+     legitimately contain those literals (docs about merge conflicts, test
+     fixtures — this very skill tripped that check when it was first run).
 5. **Green check.** Run the project's tests/build (here: `bun test`, plus
    `bun build <file> --target=bun` for type-checking touched files). Report
    **honestly**: distinguish failures you caused from pre-existing ones (diff the
