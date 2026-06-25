@@ -62,3 +62,5 @@ a background subagent, not the foreground.
 
 - Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
+- Shipping a branch — verify → confirm mergeable → push → (only if asked) open a
+  PR via the deferred GitHub MCP tools: `.claude/skills/local/prepare-merge.md`.
