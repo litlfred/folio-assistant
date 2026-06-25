@@ -280,6 +280,14 @@ const WALL: QaCriterionDefinition[] = [
     // The automated checker scans .lean imports and the .md narrative
     // for an archimedean acknowledgement banner. The .ts manifest is
     // not read — kept out of depends_on to avoid spurious staleness.
+    //
+    // Coverage scope: the `.lean` read here is the block's *resolved*
+    // file — candidate-1 sibling OR candidate-2 library/Lake-tree module
+    // named by `lean.ref` (`qa-utils.resolveCanonicalLean`, the single
+    // resolver shared with qa-sweep + q-usage-audit). Library-tree
+    // declarations referenced by a block are therefore in scope. Files
+    // referenced by NO block (orphans) are swept separately, content-
+    // based + chapter-independent, by `q-usage-audit`'s orphan pass.
     depends_on: ["md", "lean"],
     automated: true,
   },
@@ -426,6 +434,13 @@ const Q_USAGE: QaCriterionDefinition[] = [
     // present on nearly every block so anchoring on md catches the
     // common case without forcing n/a on lean-less blocks
     // (#1640-Copilot @ qa-criteria-registry.ts:333).
+    //
+    // Coverage scope: the lean side is the block's *resolved* file —
+    // sibling OR library/Lake-tree module via `lean.ref`
+    // (`qa-utils.resolveCanonicalLean`). The chapter profile is derived
+    // from the owning block's path, NEVER the lean-tree directory, so a
+    // library decl is audited against its referencing chapter's regime
+    // (CLAUDE.md §7c — do not infer the regime from the lean-tree path).
     depends_on: ["md"],
     automated: true,
     source_file: "content/pipeline/qa-checkers-q-usage.ts",
@@ -1234,7 +1249,7 @@ const BIBLIOGRAPHY: QaCriterionDefinition[] = [
 //
 // Audits **script files** (not content blocks). Sidecar is
 // per-script `.script-qa.json`, schema in
-// `folio-assistant/schemas/script-qa.ts`. Driven by
+// `schemas/script-qa.ts`. Driven by
 // `content/pipeline/script-sweep.ts`.
 //
 // Planned criteria (one PR per checker):
