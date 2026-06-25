@@ -241,7 +241,7 @@ import {
   leanPackageByName,
   parseLeanRef,
   type ParsedLeanRef,
-} from "../../folio-assistant/schemas/lean-packages.js";
+} from "../../schemas/lean-packages.js";
 
 /**
  * Parse a block's `lean.ref` URI; returns `undefined` on missing or

@@ -28,8 +28,8 @@ const outPath = outIdx >= 0 ? resolve(args[outIdx + 1]) : join(REPO_ROOT, "refer
 // `annotation = {...}` field that LaTeX / biblatex / pandoc can
 // display in the rendered bibliography.
 
-import type { Verifier } from "../../folio-assistant/schemas/bib-verification";
-import { verifierLabel } from "../../folio-assistant/schemas/bib-verification";
+import type { Verifier } from "../../schemas/bib-verification";
+import { verifierLabel } from "../../schemas/bib-verification";
 
 interface VerifEntry {
   id: string;

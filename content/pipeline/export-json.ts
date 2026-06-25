@@ -31,7 +31,7 @@ import type { Data as CSLData } from "csl-json";
 import { references, referenceMap } from "../../schemas/references";
 import { mergeCitations } from "./citations";
 import { isWitnessed, leanFileHash } from "../../scripts/lean-witness";
-import { leanPackageByName, parseLeanRef } from "../../folio-assistant/schemas/lean-packages";
+import { leanPackageByName, parseLeanRef } from "../../schemas/lean-packages";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");
 const CONTENT_ROOT = join(REPO_ROOT, "content");
