@@ -386,6 +386,9 @@ function htmlTableToLatex(html: string): string {
   }).join(" ");
 
   const lines: string[] = [];
+  // Wrap in adjustbox so an over-wide table scales down to \textwidth.
+  // `max width` only shrinks — tables already within the margin are untouched.
+  lines.push("\\begin{adjustbox}{max width=\\textwidth}");
   lines.push(`\\begin{tabular}{${colSpec}}`);
   lines.push("\\toprule");
   for (let r = 0; r < rows.length; r++) {
@@ -397,6 +400,7 @@ function htmlTableToLatex(html: string): string {
   }
   lines.push("\\bottomrule");
   lines.push("\\end{tabular}");
+  lines.push("\\end{adjustbox}");
   return lines.join("\n");
 }
 
@@ -617,6 +621,9 @@ function renderTable(node: any): string {
 
   const colspec = aligns.join(" ");
   const lines: string[] = [];
+  // Wrap in adjustbox so an over-wide table scales down to \textwidth.
+  // `max width` only shrinks — tables already within the margin are untouched.
+  lines.push("\\begin{adjustbox}{max width=\\textwidth}");
   lines.push(`\\begin{tabular}{${colspec}}`);
   lines.push("\\toprule");
 
@@ -631,6 +638,7 @@ function renderTable(node: any): string {
 
   lines.push("\\bottomrule");
   lines.push("\\end{tabular}");
+  lines.push("\\end{adjustbox}");
   return lines.join("\n");
 }
 

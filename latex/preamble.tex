@@ -35,7 +35,10 @@
 \usepackage{algpseudocode}       % Algorithmic constructs (\State, \For, \If, …)
 \usepackage[normalem]{ulem}      % latexdiff markup (\sout/\uwave); normalem keeps \emph italic
 \usepackage{microtype}           % Typographic enhancements (character protrusion, font expansion)
+\usepackage{adjustbox}           % Scale over-wide tables down to \textwidth (loaded after microtype)
+\setlength{\emergencystretch}{3em} % Last-resort inter-word stretch for unbreakable long words/code/URLs
 \usepackage{hyperref}            % Loaded last (after cite, xcolor, etc.)
+\usepackage{xurl}                % MUST be after hyperref: allow long URLs to break at any character
 
 % ── Unicode character mappings ───────────────────────────────────────────────
 % Allow Unicode symbols in .md content to pass through pdflatex.
