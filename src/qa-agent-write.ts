@@ -45,7 +45,10 @@ import type {
   QaCriterionEntry,
 } from "../schemas/block-qa";
 
-const REPO_ROOT = resolve(import.meta.dir, "../..");
+const initialCwd = process.cwd();
+const REPO_ROOT = existsSync(resolve(initialCwd, "content/quantum-observable-universe"))
+  ? initialCwd
+  : resolve(import.meta.dir, "../..");
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);

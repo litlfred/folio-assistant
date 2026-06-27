@@ -19,7 +19,7 @@
  *
  * @module content/pipeline/qa-agent-drain-queue
  */
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { walkBlocks, hashFile, loadQaReport } from "../content/pipeline/qa-utils";
 import { QA_CRITERIA_REGISTRY } from "../content/pipeline/qa-criteria-registry";
@@ -32,7 +32,11 @@ import { QA_CRITERIA_REGISTRY } from "../content/pipeline/qa-criteria-registry";
 // invocation from a subdirectory (e.g. `cd content && bun run …`)
 // resolves the default root to a nonexistent path and silently emits a
 // 0-gap queue. chdir makes the script cwd-independent.
-process.chdir(resolve(import.meta.dir, "..", ".."));
+const initialCwd = process.cwd();
+const repoRoot = existsSync(resolve(initialCwd, "content/quantum-observable-universe"))
+  ? initialCwd
+  : resolve(import.meta.dir, "..", "..");
+process.chdir(repoRoot);
 
 const root = process.argv[2] ?? "content/quantum-observable-universe";
 const bsIdx = process.argv.indexOf("--batch-size");
