@@ -21,8 +21,8 @@
  */
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { walkBlocks, hashFile, loadQaReport } from "./qa-utils";
-import { QA_CRITERIA_REGISTRY } from "./qa-criteria-registry";
+import { walkBlocks, hashFile, loadQaReport } from "../content/pipeline/qa-utils";
+import { QA_CRITERIA_REGISTRY } from "../content/pipeline/qa-criteria-registry";
 
 // Resolve to the repo root (this file lives at content/pipeline/) and
 // chdir there before any path work. The default `root` and `--out`
