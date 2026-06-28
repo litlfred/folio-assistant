@@ -7,7 +7,7 @@
  *   - the GFM-table renderer (`renderTable`)
  *   - the HTML-`<table>` converter (`htmlTableToLatex`)
  *
- * The wrapper only ever *shrinks* (`max width=\textwidth`), so narrow tables
+ * The wrapper only ever *shrinks* (`max width=\linewidth`), so narrow tables
  * are visually untouched — but the markup is still emitted unconditionally,
  * which is what these tests pin.
  */
@@ -33,7 +33,7 @@ const HTML_TABLE = `<table>
 /** Assertions shared by both table-rendering paths. */
 function expectAdjustboxWrapped(out: string): void {
   // The wrapper is present, scaling down to the text width.
-  expect(out).toContain("\\begin{adjustbox}{max width=\\textwidth}");
+  expect(out).toContain("\\begin{adjustbox}{max width=\\linewidth}");
   expect(out).toContain("\\end{adjustbox}");
 
   // Exactly one wrapper per table (no double-wrapping).
