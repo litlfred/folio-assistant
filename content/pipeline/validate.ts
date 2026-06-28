@@ -443,9 +443,7 @@ export async function validateObjects(
   // with a given basename exists anywhere under a package's Lake root —
   // the cluster-migration pattern allows the file path to differ from
   // the `lean.ref` decl prefix, so we fall back to a basename scan.
-  // `LEAN_PACKAGES.lakeRoot` is repo-root-relative; resolve against the
-  // repo root (two levels up from `content/pipeline/`).
-  const REPO_ROOT = resolve(import.meta.dir, "../..");
+  const REPO_ROOT = existsSync(resolve(process.cwd(), "content")) ? process.cwd() : resolve(import.meta.dir, "../..");
   const lakeTreeBasenameCache = new Map<string, Set<string>>();
   function lakeTreeContainsBasename(lakeRoot: string, basename: string): boolean {
     const absRoot = resolve(REPO_ROOT, lakeRoot);

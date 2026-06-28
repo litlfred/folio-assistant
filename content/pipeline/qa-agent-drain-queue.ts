@@ -75,7 +75,8 @@ for (const b of walkBlocks(root)) {
         (e.reviewer.kind === "agent" || e.reviewer.kind === "human") &&
         e.field_hash?.md === curmd,
     );
-    if (!fresh) need.push(def.id);
+    // Ignore freshness; do ALL agent audits as requested
+    need.push(def.id);
   }
   if (need.length) {
     const parts = b.ts.split("/");
