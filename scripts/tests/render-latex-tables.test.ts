@@ -126,4 +126,16 @@ describe("smart column sizing for over-wide tables", () => {
     );
     expect(spec).toMatch(/^l>\{\\raggedright\\arraybackslash\}p\{0\.\d+\\linewidth\}$/);
   });
+
+  test("water-fill: a huge column does not crush the other wrapped columns", () => {
+    const huge = "lorem ipsum ".repeat(60); // very wide, breakable prose
+    const spec = chooseColumnSpec(
+      [["A moderately long heading here", huge]],
+      ["l", "l"],
+    );
+    const fracs = [...spec.matchAll(/p\{([\d.]+)\\linewidth\}/g)].map((m) => Number(m[1]));
+    expect(fracs.length).toBe(2); // both text columns wrap
+    expect(fracs.every((f) => f >= 0.1)).toBe(true); // neither crushed to a sliver
+    expect(fracs[0]).toBeLessThan(fracs[1]); // the huge column gets the surplus
+  });
 });

@@ -326,20 +326,22 @@ export function extractMathContent(md: string): string {
 //
 // Over-wide tables are the dominant source of "Overfull \hbox" warnings in the
 // build. Every generated table is wrapped in `adjustbox{max width=\linewidth}`
-// (see renderTable / htmlTableToLatex), which already makes horizontal overflow
-// impossible — a no-op when the table fits, a scale-down when it does not.
-// Scaling shrinks the font, though; when a table is wide only because of one
-// long *prose* column, wrapping that column reads far better than shrinking
-// everything. `chooseColumnSpec` decides, from the rendered cell text, between
-// the plain l/c/r spec (fits, or dense/non-prose → let adjustbox scale) and a
-// spec with genuinely-long prose columns converted to computed
-// `p{<frac>\linewidth}` widths so they wrap at full font.
+// (see renderTable / htmlTableToLatex) so a table with no wrappable column
+// scales to fit. But scaling shrinks the font, and a table that is wide because
+// of long *text* columns reads far better wrapped at full font than shrunk.
+// `chooseColumnSpec` decides, from the rendered cell text, between the plain
+// l/c/r spec (the table fits, or nothing can wrap) and a spec whose text
+// columns become computed `p{<frac>\linewidth}` widths.
 //
-// Because the outer adjustbox guarantees no overflow regardless, the width
-// estimate only governs *when* to wrap — a wrong estimate degrades to "scaled
-// instead of wrapped", never to an overfull box. Constants are tuned on the
-// real 877-table qou build and are deliberately pessimistic to absorb the
-// proxy's under-counting of dense math.
+// Column widths are water-filled (max-min fair): short columns get exactly what
+// they need; the remainder is split equally among the wide columns so one huge
+// math column cannot starve the others. Per the owner's call (PR #24 review),
+// full font is preferred over scaling — a column whose content is genuinely
+// wider than the page lets its oversized math / identifier runs spill rather
+// than drag the whole table down to an unreadable size. The over-wide
+// *decision* uses a pessimistic glyph width (to absorb the proxy's
+// under-counting of dense math); column *allocation* uses a realistic one. All
+// constants are tuned on the real 877-table qou build.
 
 /** Proxy for the rendered width (in visible glyphs) of a LaTeX cell string. */
 function cellVisualWidth(cell: string): number {
@@ -372,13 +374,13 @@ function cellHasWrappableText(cell: string): boolean {
 }
 
 // Tuning constants (proxy units; \linewidth for the folio a4 geometry).
-const TBL_CHAR_PT = 7;      // avg advance per visible glyph @11pt (pessimistic)
-const TBL_PAD_PT = 12;      // 2*\tabcolsep per column
-const TBL_LINE_PT = 426;    // \linewidth (a4, 0.8in/1.5in margins)
-const TBL_WRAP_MIN = 45;    // a column needs a cell >= this wide to be worth wrapping
-const TBL_ATOMIC_MAX = 0.8; // short columns must leave >= 20% of the line for prose
-const TBL_MAX_FILL = 0.97;  // prose columns claim at most this fraction of \linewidth
-const TBL_MIN_FRAC = 0.28;  // min \linewidth fraction per wrapped column, else scale
+const TBL_CHAR_FIT = 7;      // pessimistic glyph advance @11pt for the OVER-WIDE decision
+const TBL_CHAR_COL = 5;      // realistic glyph advance for COLUMN allocation
+const TBL_PAD_PT = 12;       // 2*\tabcolsep per column
+const TBL_LINE_PT = 426;     // \linewidth (a4, 0.8in/1.5in margins)
+const TBL_WRAP_MIN = 20;     // a column needs a cell >= this wide (glyphs) to wrap
+const TBL_ATOMIC_MAX = 0.85; // non-wrappable columns alone must stay under this × line
+const TBL_MAX_FILL = 0.97;   // a single column claims at most this fraction of \linewidth
 
 /**
  * Choose the tabular column spec for a rendered table.
@@ -386,10 +388,10 @@ const TBL_MIN_FRAC = 0.28;  // min \linewidth fraction per wrapped column, else 
  * @param cellRows every row's cells as already-rendered LaTeX strings (the
  *                 header row is included — it constrains column width too)
  * @param aligns   the base l/c/r alignment per column
- * @returns either `aligns.join(" ")` (plain — the table fits, or is dense and
- *          left for the outer adjustbox to scale) or a spec whose long prose
- *          columns are `>{\raggedright\arraybackslash}p{<frac>\linewidth}` so
- *          they wrap at full font instead of the whole table shrinking.
+ * @returns either `aligns.join(" ")` (plain — the table fits, or nothing can
+ *          wrap so the outer adjustbox scales it) or a spec whose text columns
+ *          are `>{\raggedright\arraybackslash}p{<frac>\linewidth}` (widths
+ *          water-filled) so the table wraps at full font instead of shrinking.
  */
 export function chooseColumnSpec(cellRows: string[][], aligns: string[]): string {
   const ncols = aligns.length;
@@ -405,35 +407,58 @@ export function chooseColumnSpec(cellRows: string[][], aligns: string[]): string
     }
   }
 
-  const natural = TBL_CHAR_PT * widths.reduce((a, b) => a + b, 0) + TBL_PAD_PT * ncols;
+  const natural = TBL_CHAR_FIT * widths.reduce((a, b) => a + b, 0) + TBL_PAD_PT * ncols;
   if (natural <= TBL_LINE_PT) return plain; // fits → adjustbox is a no-op
 
-  // Wrap only genuinely-long prose columns; everything else stays atomic.
+  // Over-wide: wrap the text columns to full font (rather than shrinking the
+  // whole table). A column is wrappable if it can line-break (has a space) and
+  // is non-trivial; very short / spaceless columns (numbers, lone symbols) stay
+  // atomic at natural width.
   const wrapCols: number[] = [];
   for (let j = 0; j < ncols; j++) {
     if (widths[j] >= TBL_WRAP_MIN && wrappable[j]) wrapCols.push(j);
   }
-  if (wrapCols.length === 0) return plain; // dense/non-prose → adjustbox scales
+  if (wrapCols.length === 0) return plain; // nothing can wrap → adjustbox scales it
 
   let atomicPt = TBL_PAD_PT * ncols;
   for (let j = 0; j < ncols; j++) {
-    if (!wrapCols.includes(j)) atomicPt += TBL_CHAR_PT * widths[j];
+    if (!wrapCols.includes(j)) atomicPt += TBL_CHAR_COL * widths[j];
   }
-  if (atomicPt > TBL_LINE_PT * TBL_ATOMIC_MAX) return plain; // no room left → scale
+  if (atomicPt > TBL_LINE_PT * TBL_ATOMIC_MAX) return plain; // non-wrap cols fill the line → scale
 
-  const avail = Math.min(TBL_MAX_FILL, (TBL_LINE_PT - atomicPt) / TBL_LINE_PT);
-  const vsum = wrapCols.reduce((a, j) => a + widths[j], 0) || 1;
-  const fracs = wrapCols.map((j) => (avail * widths[j]) / vsum);
-  if (Math.min(...fracs) < TBL_MIN_FRAC) return plain; // would be too narrow → scale
+  // Water-fill (max-min fair) the remaining width among the wrap columns by
+  // natural content width: a short column gets exactly what it needs, and the
+  // rest is split equally among the wide columns so one huge (math) column
+  // cannot starve the others. A wide column whose content still does not fit
+  // lets its oversized runs spill — full font is preferred over scaling the
+  // whole table to an unreadable size.
+  const avail = TBL_LINE_PT - atomicPt;
+  const natw = new Map<number, number>(wrapCols.map((j) => [j, TBL_CHAR_COL * widths[j]]));
+  const alloc = new Map<number, number>();
+  const left = new Set(wrapCols);
+  let remaining = avail;
+  let changed = true;
+  while (changed && left.size > 0) {
+    changed = false;
+    const share = remaining / left.size;
+    for (const j of [...left]) {
+      const w = natw.get(j) ?? 0;
+      if (w <= share) {
+        alloc.set(j, w);
+        remaining -= w;
+        left.delete(j);
+        changed = true;
+      }
+    }
+  }
+  for (const j of left) alloc.set(j, remaining / left.size);
 
-  const fracOf = new Map<number, number>();
-  wrapCols.forEach((j, k) => fracOf.set(j, fracs[k]));
   const cols: string[] = [];
   for (let j = 0; j < ncols; j++) {
-    const f = fracOf.get(j);
-    if (f !== undefined) {
-      const r = Math.round(f * 1000) / 1000;
-      cols.push(`>{\\raggedright\\arraybackslash}p{${r}\\linewidth}`);
+    const w = alloc.get(j);
+    if (w !== undefined) {
+      const f = Math.round(Math.min(TBL_MAX_FILL, w / TBL_LINE_PT) * 1000) / 1000;
+      cols.push(`>{\\raggedright\\arraybackslash}p{${f}\\linewidth}`);
     } else {
       cols.push("lcr".includes(aligns[j]) ? aligns[j] : "l");
     }
