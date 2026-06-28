@@ -322,6 +322,125 @@ export function extractMathContent(md: string): string {
 
 // ── HTML table → LaTeX conversion ────────────────────────────────
 
+// ── Smart table column sizing ───────────────────────────────────
+//
+// Over-wide tables are the dominant source of "Overfull \hbox" warnings in the
+// build. Every generated table is wrapped in `adjustbox{max width=\linewidth}`
+// (see renderTable / htmlTableToLatex), which already makes horizontal overflow
+// impossible — a no-op when the table fits, a scale-down when it does not.
+// Scaling shrinks the font, though; when a table is wide only because of one
+// long *prose* column, wrapping that column reads far better than shrinking
+// everything. `chooseColumnSpec` decides, from the rendered cell text, between
+// the plain l/c/r spec (fits, or dense/non-prose → let adjustbox scale) and a
+// spec with genuinely-long prose columns converted to computed
+// `p{<frac>\linewidth}` widths so they wrap at full font.
+//
+// Because the outer adjustbox guarantees no overflow regardless, the width
+// estimate only governs *when* to wrap — a wrong estimate degrades to "scaled
+// instead of wrapped", never to an overfull box. Constants are tuned on the
+// real 877-table qou build and are deliberately pessimistic to absorb the
+// proxy's under-counting of dense math.
+
+/** Proxy for the rendered width (in visible glyphs) of a LaTeX cell string. */
+function cellVisualWidth(cell: string): number {
+  let s = cell.trim();
+  // Math: estimate rendered glyphs — a command (\alpha, \mathbf) is ~1 glyph.
+  s = s.replace(/\$(.+?)\$/g, (_m, inner: string) => {
+    const t = inner
+      .replace(/\\[a-zA-Z]+/g, "x")
+      .replace(/[{}\\^_$~,]/g, "")
+      .replace(/\s+/g, "");
+    return "x".repeat(t.length);
+  });
+  // Formatting wrappers: keep the argument text.
+  s = s.replace(/\\(?:textbf|emph|texttt|textit|mathrm|text|underline)\{([^{}]*)\}/g, "$1");
+  s = s.replace(/\\[a-zA-Z]+\*?\{([^{}]*)\}/g, "$1");
+  s = s.replace(/\\[a-zA-Z]+\*?/g, "");
+  s = s.replace(/[{}]/g, "");
+  s = s.replace(/\\([&%_#$])/g, "$1");
+  return s.trim().length;
+}
+
+/** Whether a cell's visible text contains a space — i.e. it can line-break. */
+function cellHasWrappableText(cell: string): boolean {
+  const s = cell
+    .replace(/\$(.+?)\$/g, " ")
+    .replace(/\\[a-zA-Z]+\*?/g, "")
+    .replace(/[{}]/g, "")
+    .trim();
+  return s.includes(" ");
+}
+
+// Tuning constants (proxy units; \linewidth for the folio a4 geometry).
+const TBL_CHAR_PT = 7;      // avg advance per visible glyph @11pt (pessimistic)
+const TBL_PAD_PT = 12;      // 2*\tabcolsep per column
+const TBL_LINE_PT = 426;    // \linewidth (a4, 0.8in/1.5in margins)
+const TBL_WRAP_MIN = 45;    // a column needs a cell >= this wide to be worth wrapping
+const TBL_ATOMIC_MAX = 0.8; // short columns must leave >= 20% of the line for prose
+const TBL_MAX_FILL = 0.97;  // prose columns claim at most this fraction of \linewidth
+const TBL_MIN_FRAC = 0.28;  // min \linewidth fraction per wrapped column, else scale
+
+/**
+ * Choose the tabular column spec for a rendered table.
+ *
+ * @param cellRows every row's cells as already-rendered LaTeX strings (the
+ *                 header row is included — it constrains column width too)
+ * @param aligns   the base l/c/r alignment per column
+ * @returns either `aligns.join(" ")` (plain — the table fits, or is dense and
+ *          left for the outer adjustbox to scale) or a spec whose long prose
+ *          columns are `>{\raggedright\arraybackslash}p{<frac>\linewidth}` so
+ *          they wrap at full font instead of the whole table shrinking.
+ */
+export function chooseColumnSpec(cellRows: string[][], aligns: string[]): string {
+  const ncols = aligns.length;
+  const plain = aligns.join(" ");
+  if (ncols === 0 || cellRows.length === 0) return plain;
+
+  const widths = new Array<number>(ncols).fill(0);
+  const wrappable = new Array<boolean>(ncols).fill(false);
+  for (const row of cellRows) {
+    for (let j = 0; j < Math.min(ncols, row.length); j++) {
+      widths[j] = Math.max(widths[j], cellVisualWidth(row[j]));
+      if (cellHasWrappableText(row[j])) wrappable[j] = true;
+    }
+  }
+
+  const natural = TBL_CHAR_PT * widths.reduce((a, b) => a + b, 0) + TBL_PAD_PT * ncols;
+  if (natural <= TBL_LINE_PT) return plain; // fits → adjustbox is a no-op
+
+  // Wrap only genuinely-long prose columns; everything else stays atomic.
+  const wrapCols: number[] = [];
+  for (let j = 0; j < ncols; j++) {
+    if (widths[j] >= TBL_WRAP_MIN && wrappable[j]) wrapCols.push(j);
+  }
+  if (wrapCols.length === 0) return plain; // dense/non-prose → adjustbox scales
+
+  let atomicPt = TBL_PAD_PT * ncols;
+  for (let j = 0; j < ncols; j++) {
+    if (!wrapCols.includes(j)) atomicPt += TBL_CHAR_PT * widths[j];
+  }
+  if (atomicPt > TBL_LINE_PT * TBL_ATOMIC_MAX) return plain; // no room left → scale
+
+  const avail = Math.min(TBL_MAX_FILL, (TBL_LINE_PT - atomicPt) / TBL_LINE_PT);
+  const vsum = wrapCols.reduce((a, j) => a + widths[j], 0) || 1;
+  const fracs = wrapCols.map((j) => (avail * widths[j]) / vsum);
+  if (Math.min(...fracs) < TBL_MIN_FRAC) return plain; // would be too narrow → scale
+
+  const fracOf = new Map<number, number>();
+  wrapCols.forEach((j, k) => fracOf.set(j, fracs[k]));
+  const cols: string[] = [];
+  for (let j = 0; j < ncols; j++) {
+    const f = fracOf.get(j);
+    if (f !== undefined) {
+      const r = Math.round(f * 1000) / 1000;
+      cols.push(`>{\\raggedright\\arraybackslash}p{${r}\\linewidth}`);
+    } else {
+      cols.push("lcr".includes(aligns[j]) ? aligns[j] : "l");
+    }
+  }
+  return cols.join("");
+}
+
 /**
  * Convert an HTML `<table>` to LaTeX `\begin{tabular}`.
  *
@@ -377,13 +496,15 @@ function htmlTableToLatex(html: string): string {
 
   const colCount = Math.max(...rows.map(r => r.length));
 
-  // Determine column alignment from first row's align attributes
-  const colSpec = Array.from({ length: colCount }, (_, i) => {
+  // Determine column alignment from first row's align attributes, then let the
+  // smart sizer pick plain l/c/r vs wrapping prose columns (see chooseColumnSpec).
+  const aligns = Array.from({ length: colCount }, (_, i) => {
     const align = cellAligns[0]?.[i];
     if (align === "center") return "c";
     if (align === "right") return "r";
     return "l";
-  }).join(" ");
+  });
+  const colSpec = chooseColumnSpec(rows, aligns);
 
   const lines: string[] = [];
   // Wrap in adjustbox so an over-wide table scales down to \linewidth — the
@@ -621,7 +742,11 @@ function renderTable(node: any): string {
   // Pad if align array is shorter than column count
   while (aligns.length < ncols) aligns.push("l");
 
-  const colspec = aligns.join(" ");
+  // Render every cell once — used for both width estimation and emission.
+  const cellRows: string[][] = rows.map((row: any) =>
+    (row.children ?? []).map((cell: any) => renderChildren(cell).join("")),
+  );
+  const colspec = chooseColumnSpec(cellRows, aligns);
   const lines: string[] = [];
   // Wrap in adjustbox so an over-wide table scales down to \linewidth — the
   // local line width, narrower than \textwidth inside lists/quotes, so a
@@ -631,11 +756,8 @@ function renderTable(node: any): string {
   lines.push(`\\begin{tabular}{${colspec}}`);
   lines.push("\\toprule");
 
-  for (let i = 0; i < rows.length; i++) {
-    const cells = (rows[i].children ?? []).map((cell: any) =>
-      renderChildren(cell).join("")
-    );
-    lines.push(cells.join(" & ") + " \\\\");
+  for (let i = 0; i < cellRows.length; i++) {
+    lines.push(cellRows[i].join(" & ") + " \\\\");
     // Add midrule after header row
     if (i === 0) lines.push("\\midrule");
   }
