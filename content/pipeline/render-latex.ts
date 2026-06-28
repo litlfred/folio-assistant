@@ -450,6 +450,7 @@ const TBL_LINE_PT = 426;     // \linewidth (a4, 0.8in/1.5in margins)
 const TBL_WRAP_MIN = 20;     // a column needs a cell >= this wide (glyphs) to wrap
 const TBL_ATOMIC_MAX = 0.85; // non-wrappable columns alone must stay under this × line
 const TBL_MAX_FILL = 0.97;   // a single column claims at most this fraction of \linewidth
+const TBL_MIN_COL_PT = 55;   // below this, an equal-split wrap column is unreadable → scale instead
 
 /**
  * Choose the tabular column spec for a rendered table.
@@ -520,6 +521,10 @@ export function chooseColumnSpec(cellRows: string[][], aligns: string[]): string
       }
     }
   }
+  // If the remaining wide columns would each be narrower than a legible
+  // minimum, the table has too many wide columns to wrap — scale it instead of
+  // cramming them into unreadable, overflowing slivers (e.g. an 8-column table).
+  if (left.size > 0 && remaining / left.size < TBL_MIN_COL_PT) return plain;
   for (const j of left) alloc.set(j, remaining / left.size);
 
   const cols: string[] = [];

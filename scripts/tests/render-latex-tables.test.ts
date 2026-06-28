@@ -139,6 +139,15 @@ describe("smart column sizing for over-wide tables", () => {
     expect(fracs.every((f) => f >= 0.1)).toBe(true); // neither crushed to a sliver
     expect(fracs[0]).toBeLessThan(fracs[1]); // the huge column gets the surplus
   });
+
+  test("a many-column wide table scales rather than cram unreadable slivers", () => {
+    // 8 wide prose columns can't wrap legibly in one line width → scale (no p{}).
+    const header = Array.from({ length: 8 }, (_, i) => `Heading ${i} fairly long`);
+    const row = Array.from({ length: 8 }, (_, i) => `Categorical structure ${i} value`);
+    const spec = chooseColumnSpec([header, row], Array(8).fill("l"));
+    expect(spec).not.toContain("p{");
+    expect(spec).toBe("l l l l l l l l");
+  });
 });
 
 describe("breaking non-breaking blobs (long math + identifiers)", () => {
