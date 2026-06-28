@@ -386,9 +386,11 @@ function htmlTableToLatex(html: string): string {
   }).join(" ");
 
   const lines: string[] = [];
-  // Wrap in adjustbox so an over-wide table scales down to \textwidth.
+  // Wrap in adjustbox so an over-wide table scales down to \linewidth — the
+  // local line width, narrower than \textwidth inside lists/quotes, so a
+  // nested table scales to its context rather than the full page width.
   // `max width` only shrinks — tables already within the margin are untouched.
-  lines.push("\\begin{adjustbox}{max width=\\textwidth}");
+  lines.push("\\begin{adjustbox}{max width=\\linewidth}");
   lines.push(`\\begin{tabular}{${colSpec}}`);
   lines.push("\\toprule");
   for (let r = 0; r < rows.length; r++) {
@@ -621,9 +623,11 @@ function renderTable(node: any): string {
 
   const colspec = aligns.join(" ");
   const lines: string[] = [];
-  // Wrap in adjustbox so an over-wide table scales down to \textwidth.
+  // Wrap in adjustbox so an over-wide table scales down to \linewidth — the
+  // local line width, narrower than \textwidth inside lists/quotes, so a
+  // nested table scales to its context rather than the full page width.
   // `max width` only shrinks — tables already within the margin are untouched.
-  lines.push("\\begin{adjustbox}{max width=\\textwidth}");
+  lines.push("\\begin{adjustbox}{max width=\\linewidth}");
   lines.push(`\\begin{tabular}{${colspec}}`);
   lines.push("\\toprule");
 
