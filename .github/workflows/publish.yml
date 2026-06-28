@@ -430,6 +430,23 @@ jobs:
           wc -l < latex-warnings.txt || true
           cat latex-warnings.txt | head -30 || true
 
+      # Turn the raw "Overfull \hbox" lines above into a ranked, file-attributed
+      # report (which chapter / table each spill belongs to). Report-only for
+      # now; add `--max <pt>` to gate the build once the content-side residuals
+      # (math abutting text, bare URLs) are fixed. Non-blocking: the TeX image
+      # has no bun, so a setup hiccup must not fail the paper build.
+      - name: Set up Bun (for the overfull reporter)
+        uses: oven-sh/setup-bun@v2
+        continue-on-error: true
+      - name: Overfull-\hbox report (auto-detect table/math spills)
+        continue-on-error: true
+        run: |
+          if command -v bun >/dev/null 2>&1; then
+            bun run content/pipeline/latex-overfull-report.ts main.log --min 10
+          else
+            echo "bun unavailable in image; raw Overfull lines are in latex-warnings.txt"
+          fi
+
       - name: Flatten \input includes
         run: latexpand main.tex > main-flat.tex 2>/dev/null || true
 
