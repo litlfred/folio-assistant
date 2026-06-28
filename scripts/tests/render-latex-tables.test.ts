@@ -17,6 +17,7 @@ import {
   markdownToLatex,
   validateLatexAst,
   chooseColumnSpec,
+  splitLongMath,
 } from "../../content/pipeline/render-latex";
 
 const GFM_TABLE = `
@@ -137,5 +138,34 @@ describe("smart column sizing for over-wide tables", () => {
     expect(fracs.length).toBe(2); // both text columns wrap
     expect(fracs.every((f) => f >= 0.1)).toBe(true); // neither crushed to a sliver
     expect(fracs[0]).toBeLessThan(fracs[1]); // the huge column gets the surplus
+  });
+});
+
+describe("breaking non-breaking blobs (long math + identifiers)", () => {
+  test("splitLongMath breaks top-level operators, not inside \\frac / groups", () => {
+    const out = splitLongMath(
+      "\\frac{a+b}{c+d} + \\frac{e}{f} - \\frac{g}{h} = \\frac{i}{j} + somethinglongx",
+    );
+    expect(out).toContain("\\frac{a+b}{c+d}"); // nested + is untouched
+    expect(out).toContain("+\\allowbreak{}"); // top-level + becomes breakable
+    expect((out.match(/\\allowbreak/g) ?? []).length).toBeGreaterThanOrEqual(3);
+  });
+
+  test("short math is returned unchanged", () => {
+    expect(splitLongMath("a + b")).toBe("a + b");
+  });
+
+  test("a long polynomial cell makes its column wrap and breakable", () => {
+    const md =
+      "| Cell | Value |\n|--|--|\n| $G$ | $(u^{12} + u^{11} - 2u^{10} - u^9 + 2u^8 + u^7 - u^6 - u^5 + 2u^4 + u^3 - 2u^2 - u + 1)/u^6$ |";
+    const out = markdownToLatex(md);
+    expect(out).toContain("p{"); // the wide math column wraps
+    expect(out).toContain("\\allowbreak{}"); // and the math can break
+    expect(validateLatexAst(out).errors).toEqual([]);
+  });
+
+  test("long inline-code identifier is breakable", () => {
+    const out = markdownToLatex("`canonical_braid_crossings.atom_canonical_crossings`");
+    expect(out).toMatch(/texttt\{[^}]*\\allowbreak/);
   });
 });
