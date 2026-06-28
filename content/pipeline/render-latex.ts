@@ -14,6 +14,7 @@
 import { readFileSync, existsSync } from "fs";
 import { join, dirname, basename, extname } from "path";
 import { parse } from "@unified-latex/unified-latex-util-parse";
+import { printRaw } from "@unified-latex/unified-latex-util-print-raw";
 import { remark } from "remark";
 import remarkMath from "remark-math";
 import remarkDirective from "remark-directive";
@@ -191,6 +192,71 @@ export function escapeLatex(text: string): string {
     .join("");
 }
 
+// ── Breaking "non-breaking blobs": long math + long identifiers ──
+//
+// A long inline formula (e.g. a degree-12 polynomial) and a long \texttt
+// identifier are each a single unbreakable box; in a narrow p{} table cell they
+// overflow the column. We insert zero-width break opportunities so they wrap.
+
+/** Top-level binary operators / relations a long formula may break after. */
+const MATH_BREAK_STR = new Set(["+", "-", "=", "<", ">"]);
+const MATH_BREAK_MACRO = new Set([
+  "le", "ge", "leq", "geq", "to", "mapsto", "approx", "sim", "simeq",
+  "equiv", "cong", "neq", "pm", "mp", "oplus",
+]);
+
+function isMathOperand(n: any): boolean {
+  if (!n) return false;
+  if (n.type === "group") return true;
+  if (n.type === "macro") return !MATH_BREAK_MACRO.has(n.content);
+  if (n.type === "string") return !MATH_BREAK_STR.has(n.content) && !"(,[".includes(n.content);
+  return false;
+}
+
+/**
+ * Insert `\allowbreak{}` after each TOP-LEVEL binary operator in a long inline
+ * formula so it can wrap across lines (inside a p{} cell). Parses with the
+ * unified-latex AST so operators nested in `{...}`, `\frac{}{}`, `\left(\right)`
+ * etc. are left intact — only the outermost operator chain becomes breakable.
+ * Short formulae and ones with no top-level operator are returned unchanged.
+ */
+export function splitLongMath(math: string, minLen = 36): string {
+  if (math.length < minLen) return math;
+  let ast: any;
+  try {
+    ast = parse(math);
+  } catch {
+    return math;
+  }
+  const content: any[] = ast.content ?? [];
+  const out: any[] = [];
+  let prevOperand = false;
+  let inserted = 0;
+  for (const n of content) {
+    const isOp =
+      (n.type === "string" && MATH_BREAK_STR.has(n.content)) ||
+      (n.type === "macro" && MATH_BREAK_MACRO.has(n.content));
+    out.push(n);
+    if (isOp && prevOperand) {
+      out.push({ type: "string", content: "\\allowbreak{}" });
+      inserted++;
+      prevOperand = false; // a run of operators shouldn't each break
+    } else if (n.type !== "whitespace") {
+      prevOperand = isMathOperand(n);
+    }
+  }
+  return inserted ? printRaw({ ...ast, content: out }) : math;
+}
+
+/**
+ * Render inline-code text with a zero-width break opportunity after each
+ * separator (`_ : . / -`) so a long identifier wraps inside a narrow p{} cell
+ * instead of overflowing. Inert at normal text width.
+ */
+function breakableCode(text: string): string {
+  return escapeLatexSegment(text).replace(/(\\_|[:./-])/g, "$1\\allowbreak{}");
+}
+
 // ── Markdown → LaTeX conversion (AST-based) ─────────────────────
 
 /** Shared remark parser instance with math + selective GFM (no autolink).
@@ -363,8 +429,11 @@ function cellVisualWidth(cell: string): number {
   return s.trim().length;
 }
 
-/** Whether a cell's visible text contains a space — i.e. it can line-break. */
+/** Whether a cell can line-break: it has spaces, or carries an explicit break
+ *  opportunity (`\allowbreak`, inserted by splitLongMath / breakableCode into
+ *  long math / identifiers). */
 function cellHasWrappableText(cell: string): boolean {
+  if (cell.includes("\\allowbreak")) return true;
   const s = cell
     .replace(/\$(.+?)\$/g, " ")
     .replace(/\\[a-zA-Z]+\*?/g, "")
@@ -583,14 +652,15 @@ function renderMdastNode(node: any): string {
       return `\\emph{${renderChildren(node).join("")}}`;
 
     case "inlineMath":
-      return `$${substituteValuesInMath(node.value)}$`;
+      return `$${splitLongMath(substituteValuesInMath(node.value))}$`;
 
     case "math":
       return `\\[\n${substituteValuesInMath(node.value)}\n\\]`;
 
     case "inlineCode":
-      // Inline code: `text` → \texttt{escaped text}
-      return `\\texttt{${escapeLatexSegment(node.value)}}`;
+      // Inline code: `text` → \texttt{...} with break opportunities so long
+      // identifiers wrap in narrow table cells instead of overflowing.
+      return `\\texttt{${breakableCode(node.value)}}`;
 
     case "code":
       if (node.lang === "tex") {
