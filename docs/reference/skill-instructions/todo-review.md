@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`src/skills/todo-review.md`](https://github.com/litlfred/folio-assistant/blob/main/src/skills/todo-review.md) — do not edit here.
 
+{% raw %}
 # Todo Review Skill
 
 > **Disambiguation:**
@@ -197,3 +198,4 @@ bootstrap an initial set by scanning for issues:
 | `scientific-accuracy` | Review comments become feedback |
 | `proof-triage` | Lean sorry stubs generate high-priority feedback |
 | `content-block-review` | Cross-reference issues become feedback |
+{% endraw %}

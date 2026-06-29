@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`skills/content-lifecycle/content-test.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-test.md) — do not edit here. Typed contract: [schema reference](../skills/content-test.html).
 
+{% raw %}
 # Content Testing
 
 End-to-end testing of content artifacts in realistic scenarios.
@@ -36,3 +37,4 @@ End-to-end testing of content artifacts in realistic scenarios.
 - Coverage metrics
 - Regression comparison
 - Issue list (if failures)
+{% endraw %}

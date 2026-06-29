@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`src/skills/readability-editing.md`](https://github.com/litlfred/folio-assistant/blob/main/src/skills/readability-editing.md) — do not edit here.
 
+{% raw %}
 # Readability Editing Skill
 
 ## Purpose
@@ -157,3 +158,4 @@ consistency, and forward-reference hygiene.
 - **Suggestions**: Numbered list of improvements.
 - **Verdict**: APPROVE, REQUEST_CHANGES, or NEEDS_DISCUSSION.
 ```
+{% endraw %}

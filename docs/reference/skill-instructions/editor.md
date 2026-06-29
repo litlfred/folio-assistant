@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`src/skills/editor.md`](https://github.com/litlfred/folio-assistant/blob/main/src/skills/editor.md) — do not edit here.
 
+{% raw %}
 # Editor Skill
 
 ## Heavy-proof discipline (MANDATORY)
@@ -781,3 +782,4 @@ Before merging a branch to main, run these checks:
 ## Current plan
 
 See `/root/.claude/plans/twinkling-nibbling-treehouse.md` for the active workplan.
+{% endraw %}

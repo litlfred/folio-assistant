@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`skills/content-lifecycle/content-author.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-author.md) — do not edit here. Typed contract: [schema reference](../skills/content-author.html).
 
+{% raw %}
 # Content Authoring
 
 Create and develop content artifacts according to the project plan.
@@ -34,3 +35,4 @@ Create and develop content artifacts according to the project plan.
 ## Outputs
 - Authored content artifacts
 - Draft versions ready for validation
+{% endraw %}

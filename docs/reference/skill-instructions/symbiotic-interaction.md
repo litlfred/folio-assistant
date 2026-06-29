@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`src/skills/symbiotic-interaction.md`](https://github.com/litlfred/folio-assistant/blob/main/src/skills/symbiotic-interaction.md) — do not edit here.
 
+{% raw %}
 # symbiotic-interaction — the three registers of author input
 
 ## 0. Why this skill exists
@@ -78,3 +79,4 @@ records expand them with observed phrasings, usage counts, and
 outcomes; updates land as `skills(mining):` PRs citing source
 sessions. This skill is adapter-generic and joins the Phase-5 move
 list into the folio-assistant skill registry.
+{% endraw %}
