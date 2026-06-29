@@ -1,0 +1,53 @@
+# Jekyll configuration for the folio-assistant documentation site.
+#
+# Published to GitHub Pages at https://litlfred.github.io/folio-assistant/
+# Built and deployed by .github/workflows/docs-site.yml.
+#
+# Theme: just-the-docs (via remote_theme — the jekyll-remote-theme plugin is
+# whitelisted by the github-pages gem, so this works on GitHub Pages).
+
+title: folio-assistant
+description: >-
+  Content-agnostic agent skills framework — author scientific papers, WHO SMART
+  Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a
+  typed content-object model.
+
+remote_theme: just-the-docs/just-the-docs
+
+# Site lives under /folio-assistant/ on litlfred.github.io.
+baseurl: "/folio-assistant"
+url: "https://litlfred.github.io"
+
+# just-the-docs options
+search_enabled: true
+heading_anchors: true
+color_scheme: dark
+
+# Enable Mermaid diagrams in pages (workflow diagrams in the guides).
+mermaid:
+  version: "10.9.0"
+
+aux_links:
+  "GitHub":
+    - "https://github.com/litlfred/folio-assistant"
+aux_links_new_tab: true
+
+footer_content: >-
+  folio-assistant — MIT licensed. Generated schema and API references are
+  rebuilt from source on every push to main.
+
+# The TypeDoc API reference is generated HTML; let it pass through untouched
+# rather than being processed as Jekyll pages.
+keep_files:
+  - api
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - folio-assistant-migration.md
+  - qou-migration-checklist.md
+  - sage-mcp.md
+
+plugins:
+  - jekyll-remote-theme

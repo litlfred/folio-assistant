@@ -1,0 +1,83 @@
+name: Docs site (GitHub Pages)
+
+# Builds and deploys the folio-assistant documentation site to GitHub Pages at
+# https://litlfred.github.io/folio-assistant/.
+#
+# Pipeline:
+#   1. Regenerate the skill schema reference from JSON Schema (bun).
+#   2. Build the Jekyll site under docs/ (just-the-docs via remote_theme).
+#   3. Generate the TypeScript API reference with TypeDoc into _site/api/.
+#   4. Deploy the combined _site to GitHub Pages.
+#
+# Generated pages (docs/reference/skills/*) are also committed to the repo so
+# they are browsable on GitHub directly; this job keeps the published copy fresh.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'schemas/**'
+      - 'scripts/gen-schema-docs.ts'
+      - '.github/workflows/docs-site.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; don't cancel an in-progress production deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install deps
+        run: bun install --frozen-lockfile || bun install
+
+      - name: Regenerate skill schema reference
+        run: bun run scripts/gen-schema-docs.ts
+
+      - uses: actions/configure-pages@v5
+
+      # Build the Jekyll site from docs/ using the github-pages gem
+      # (whitelists jekyll-remote-theme, so just-the-docs works).
+      - name: Build Jekyll site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./_site
+
+      - name: Generate TypeScript API reference (TypeDoc)
+        run: |
+          npx --yes typedoc \
+            --out ./_site/api \
+            --entryPointStrategy expand \
+            --readme none \
+            --hideGenerator \
+            --name "folio-assistant API" \
+            schemas/ 2>&1 | tail -20
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
