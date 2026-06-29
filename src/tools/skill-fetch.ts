@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -35,45 +35,58 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
   },
 };
 
-const LOCAL_SKILLS = [
-  "corpus-grep",
-  "deployment-auth",
-  "editor",
-  "todo-review",
-  "readability-editing",
-  "symbiotic-interaction"
-];
+// Locally-served skill packages (no network fetch). Each maps a package name to
+// the directory holding its `<skill>.md` instruction bodies. The skill lists are
+// read from disk so they stay in sync with the files — no hardcoded names.
+//   - folio-assistant       : the agent skills under src/skills/
+//   - folio-core            : content-agnostic platform bundle (skills/folio-core)
+//   - folio-paper-adapter   : formal-math paper-adapter bundle (skills/folio-paper-adapter)
+const LOCAL_PACKAGES: Record<string, string> = {
+  "folio-assistant": resolve(__dirname, "..", "skills"),
+  "folio-core": resolve(__dirname, "..", "..", "skills", "folio-core"),
+  "folio-paper-adapter": resolve(__dirname, "..", "..", "skills", "folio-paper-adapter"),
+};
+
+/** List skill ids (`<name>` of `<name>.md`) available in a local package dir. */
+function listLocalSkills(dir: string): string[] {
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => f.slice(0, -3))
+    .sort();
+}
 export function registerSkillFetchTools(server: McpServer): void {
   server.tool(
     "skill_fetch",
-    "Fetch an external skill definition from a reference package (not synced locally). " +
-    "Returns the skill's markdown content for the agent to follow. " +
-    "Use for Tier 2 escalation: academic-paper-reviewer (multi-perspective review), " +
-    "deep-research (evidence grading, fact-check), academic-pipeline (integrity verification).",
+    "Fetch a skill's instruction body for the agent to follow. Serves the local " +
+    "platform bundles (package_name 'folio-assistant' = agent skills, 'folio-core' = " +
+    "content-agnostic platform skills, 'folio-paper-adapter' = formal-math paper skills) " +
+    "and external reference packages (Tier 2 escalation: academic-paper-reviewer, " +
+    "deep-research, academic-pipeline).",
     {
       skill: z.string().describe(
-        "Skill identifier. Examples: 'academic-paper-reviewer', 'deep-research', " +
-        "'academic-pipeline/integrity-verification', 'academic-paper-reviewer/quality-rubrics'"
+        "Skill identifier. Examples: 'lean-generation' (package_name 'folio-paper-adapter'), " +
+        "'bean-coordination' (package_name 'folio-core'), 'editor' (package_name 'folio-assistant'), " +
+        "'academic-paper-reviewer' (package_name 'academic-research-skills')"
       ),
-      package_name: z.string().default("academic-research-skills").describe(
-        "Package name from the reference registry. Default: 'academic-research-skills'"
+      package_name: z.string().default("folio-core").describe(
+        "Package name. Local: 'folio-assistant' | 'folio-core' | 'folio-paper-adapter'. " +
+        "Reference: 'academic-research-skills'."
       ),
     },
     async ({ skill, package_name }) => {
-      if (package_name === "folio-assistant") {
-        if (!LOCAL_SKILLS.includes(skill)) {
+      const localDir = LOCAL_PACKAGES[package_name];
+      if (localDir) {
+        const available = listLocalSkills(localDir);
+        if (!available.includes(skill)) {
           return {
             content: [{
               type: "text" as const,
-              text: `Error: Unknown local skill '${skill}'. Available: ${LOCAL_SKILLS.join(", ")}`,
+              text: `Error: Unknown skill '${skill}' in package '${package_name}'. Available: ${available.join(", ")}`,
             }],
           };
         }
-        
-        // Since skill-fetch.ts is in src/tools/, skills are in src/skills/
-        const srcDir = resolve(__dirname, "..");
-        const skillPath = join(srcDir, "skills", `${skill}.md`);
-        
+        const skillPath = join(localDir, `${skill}.md`);
         if (!existsSync(skillPath)) {
           return {
             content: [{
@@ -82,12 +95,11 @@ export function registerSkillFetchTools(server: McpServer): void {
             }],
           };
         }
-        
         const content = readFileSync(skillPath, "utf-8");
         return {
           content: [{
             type: "text" as const,
-            text: `# ${skill} (served locally from folio-assistant)\n\n${content}`,
+            text: `# ${skill} (served locally from ${package_name})\n\n${content}`,
           }],
         };
       }
@@ -97,7 +109,7 @@ export function registerSkillFetchTools(server: McpServer): void {
         return {
           content: [{
             type: "text" as const,
-            text: `Error: Unknown package '${package_name}'. Available: ${Object.keys(REFERENCE_PACKAGES).join(", ")}, folio-assistant`,
+            text: `Error: Unknown package '${package_name}'. Available: ${[...Object.keys(LOCAL_PACKAGES), ...Object.keys(REFERENCE_PACKAGES)].join(", ")}`,
           }],
         };
       }
@@ -157,17 +169,20 @@ export function registerSkillFetchTools(server: McpServer): void {
 
   server.tool(
     "skill_list",
-    "List available external skills from reference packages (Tier 2 escalation skills). " +
-    "Shows what can be fetched via skill_fetch.",
+    "List available skills — the local platform bundles (folio-assistant, folio-core, " +
+    "folio-paper-adapter) and external reference packages — that can be fetched via skill_fetch.",
     {},
     async () => {
-      const lines: string[] = ["# Available External Skills (Reference Packages)\n"];
-      
-      lines.push(`## folio-assistant (local)`);
-      for (const localSkill of LOCAL_SKILLS) {
-        lines.push(`- **${localSkill}** — \`folio-assistant/src/skills/${localSkill}.md\``);
+      const lines: string[] = ["# Available Skills\n"];
+
+      for (const [pkgName, dir] of Object.entries(LOCAL_PACKAGES)) {
+        const skills = listLocalSkills(dir);
+        lines.push(`## ${pkgName} (local, ${skills.length} skills)\n`);
+        for (const s of skills) {
+          lines.push(`- **${s}** — \`skill_fetch skill="${s}" package_name="${pkgName}"\``);
+        }
+        lines.push("");
       }
-      lines.push("");
 
       for (const [pkgName, pkg] of Object.entries(REFERENCE_PACKAGES)) {
         lines.push(`## ${pkgName} (${pkg.repo})\n`);

@@ -1,0 +1,100 @@
+{
+  "name": "folio-core",
+  "version": "0.1.0",
+  "description": "Content-agnostic platform skills: agent coordination, the watcher framework, QA/render/bibliography/glossary pipeline, docs, and deployment. Synced into a content repo as a folio-core bundle.",
+  "skills": [
+    "bean-coordination",
+    "bib-human-review",
+    "bib-photo-ingestion-watcher",
+    "bib-qa",
+    "block-density",
+    "canonical-watcher",
+    "chapter-complexity-review",
+    "compute-integration-watcher",
+    "content-graph",
+    "continual-progress",
+    "coordinate",
+    "delivery-summary",
+    "deployment-auth",
+    "detangler-integration-watcher",
+    "devils-advocate-watcher",
+    "diff",
+    "docs-generation",
+    "editor",
+    "glossary-build",
+    "html-rendering-qc",
+    "idle-backlog",
+    "integration-audit",
+    "integration-backlog",
+    "integration-watch",
+    "integration-watcher",
+    "markdown-render-check",
+    "md-authoring",
+    "one-voice-audit",
+    "one-voice-integration-watcher",
+    "one-voice-style-guide",
+    "ontologist",
+    "pending-show",
+    "pickup",
+    "prepare-merge-auto",
+    "production-vs-exploratory-discipline",
+    "readability-editing",
+    "scientific-accuracy",
+    "session-intent",
+    "symbiotic-interaction",
+    "test-engineer",
+    "todo-manager",
+    "todo-review",
+    "watch"
+  ],
+  "docker": {
+    "baseImage": "ubuntu:24.04",
+    "aptPackages": [
+      "curl",
+      "git",
+      "git-lfs",
+      "python3",
+      "python3-pip",
+      "python3-venv",
+      "nodejs",
+      "npm",
+      "jq",
+      "ripgrep",
+      "ca-certificates"
+    ],
+    "pipPackages": [
+      "jsonschema",
+      "pyyaml",
+      "requests"
+    ],
+    "npmPackages": [
+      "typescript",
+      "ts-node"
+    ],
+    "labels": {
+      "org.opencontainers.image.title": "folio-assistant-core",
+      "org.opencontainers.image.description": "Content-agnostic platform agent skills (coordination, watchers, QA pipeline)",
+      "org.opencontainers.image.source": "https://github.com/litlfred/folio-assistant"
+    }
+  },
+  "providesCapabilities": [
+    "git-push",
+    "python3",
+    "node-runtime"
+  ],
+  "requiresCapabilities": [],
+  "lifecycleStages": [
+    "plan",
+    "author",
+    "validate",
+    "review",
+    "test",
+    "publish",
+    "feedback",
+    "retire"
+  ],
+  "schemas": [
+    "schemas/assistant-types.ts",
+    "schemas/formalization-types.ts"
+  ]
+}

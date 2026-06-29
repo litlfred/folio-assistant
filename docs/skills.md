@@ -134,6 +134,21 @@ Skills the LLM uses to work effectively in the repo (loaded via `skill_fetch`):
 | `bean-coordination` | Multi-agent claim/coordination discipline |
 | `todo-manager` | beans-as-todos discipline |
 
+### Platform skill bundles (`skills/folio-core`, `skills/folio-paper-adapter`)
+
+Two larger **platform bundles** migrated from the qou content repo (see
+[migration record](migrations/2026-06-29-platform-skills-migration.html) and
+issue [#27](https://github.com/litlfred/folio-assistant/issues/27)). These are
+content-agnostic and meant to be synced into any folio:
+
+| Bundle | Skills | Scope |
+|--------|-------:|-------|
+| **`folio-core`** | 43 | Agent coordination, the watcher framework, QA / render / bibliography / glossary pipeline, docs, deployment — applies to *any* content type. |
+| **`folio-paper-adapter`** | 40 | Formal-math paper-adapter (any Lean 4 + LaTeX paper): Lean workflow, proof tooling, content-object validation, LaTeX, paper structure, import, simulators. |
+
+Irreducible QOU physics skills were skipped; QOU-specific examples in the rest
+were generalized. Each bundle ships a `package-manifest.json`.
+
 > Skill **schemas** (typed input/output for the authoring skills) are generated
 > into the [Skill schema reference](reference/skills/) — never drift from what
 > the framework validates.
