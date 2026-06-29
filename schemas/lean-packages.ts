@@ -11,7 +11,7 @@ export interface LeanPackage {
   paperDir: string;
   /** Path to the paper's Lake package root, relative to repo root. */
   lakeRoot: string;
-  /** Default `[[lean_lib]]` name (module root, e.g. "QOU"). */
+  /** Default `[[lean_lib]]` name (module root, e.g. "MyPaper"). */
   lib: string;
 }
 

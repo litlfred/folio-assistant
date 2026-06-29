@@ -8,8 +8,8 @@
  *   GET  /api/glossary/curation?paper=<dir>     → current decisions JSON
  *   POST /api/glossary/curation                  → save decisions (collaborator+)
  *
- * The candidates JSON is regenerated on every GET (cheap walk; ~1s on
- * QOU). Decisions are persisted to
+ * The candidates JSON is regenerated on every GET (cheap walk; ~1s on a
+ * typical paper). Decisions are persisted to
  * `<repo>/content/<paper>/glossary-curation.json`. A separate apply
  * script (`bun run pipeline/apply-glossary-curation.ts`) writes the
  * `defines: [...]` fields into the chosen blocks' `.ts` files.

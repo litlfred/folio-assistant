@@ -87,4 +87,19 @@ flowchart TD
     CT --> Ref[Skill schema reference]
     Ref --> API[TypeScript API reference]
     Home --> Arch[Architecture]
+
+    click Install "installation.html" "Installation"
+    click GS "getting-started.html" "Getting started"
+    click Tut "guides/writing-a-paper.html" "Tutorial: writing a paper"
+    click CT "content-types.html" "Content types"
+    click Guides "guides/" "Authoring guides"
+    click Paper "guides/writing-a-paper.html" "Papers: Lean + LaTeX"
+    click DAK "guides/who-smart-dak.html" "WHO SMART DAK (L2)"
+    click IG "guides/who-smart-ig.html" "WHO SMART IG (L3 FHIR)"
+    click New "guides/new-content-type.html" "Add a content type"
+    click Ref "reference/skills/" "Skill schema reference"
+    click API "api/" "TypeScript API reference"
+    click Arch "architecture.html" "Architecture"
 ```
+
+> The map nodes are clickable on the docs site.

@@ -28,7 +28,16 @@ flowchart LR
     C -->|WHO SMART DAK| E[L2 BPMN / DMN / Excel]
     C -->|WHO SMART IG| F[L3 FHIR / FSH]
     D & E & F --> G[Published PDF / site / IG]
+
+    click B "https://litlfred.github.io/folio-assistant/" "Docs home" _blank
+    click D "https://litlfred.github.io/folio-assistant/guides/writing-a-paper.html" "Writing a paper" _blank
+    click E "https://litlfred.github.io/folio-assistant/guides/who-smart-dak.html" "WHO SMART DAK (L2)" _blank
+    click F "https://litlfred.github.io/folio-assistant/guides/who-smart-ig.html" "WHO SMART IG (L3)" _blank
 ```
+
+> The diagram nodes link to the docs (clickable on the
+> [docs site](https://litlfred.github.io/folio-assistant/) and in Mermaid-aware
+> viewers). On GitHub itself, use the clickable map below.
 
 | Content type | Artifacts | Skill package |
 |--------------|-----------|---------------|
