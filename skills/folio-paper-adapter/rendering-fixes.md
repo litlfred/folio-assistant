@@ -66,13 +66,13 @@ processes content inside math delimiters).
 
 ```md
 <!-- BROKEN: bare \eqref in prose -->
-diagram \eqref{eq:su2-emergence-diagram} from the top-left
+diagram \eqref{eq:some-diagram} from the top-left
 
 <!-- FIX OPTION 1: markdown cross-ref (preferred) -->
-diagram [above](#eq:su2-emergence-diagram) from the top-left
+diagram [above](#eq:some-diagram) from the top-left
 
 <!-- FIX OPTION 2: wrap in math (if equation number needed) -->
-diagram $\eqref{eq:su2-emergence-diagram}$ from the top-left
+diagram $\eqref{eq:some-diagram}$ from the top-left
 ```
 
 **Detection**: `grep -n '\\eqref' *.md | grep -v '\$'`
