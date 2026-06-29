@@ -65,7 +65,7 @@ A skill is defined across a few layers — not a single file. For any skill:
 |-------|----------|--------|
 | **Definition** (roles, required capabilities, requirements, routing patterns, lifecycle stages, schema ref) | `.claude/skills/local/<skill>.json` | ✅ all 18 authoring skills |
 | **Typed contract** (input/output JSON Schema) | `schemas/skills/<skill>/` | ✅ all 18 — see [reference](reference/skills/) |
-| **Instruction body** (prose how-to the LLM loads) | `skills/content-lifecycle/*.md`, `src/skills/*.md` | ✅ lifecycle + agent skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages currently ship the manifest + JSON definitions) |
+| **Instruction body** (prose how-to the LLM loads) — browse them in the [Skill instructions](reference/skill-instructions/) reference | `skills/content-lifecycle/*.md`, `src/skills/*.md` | ✅ lifecycle + agent skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages currently ship the manifest + JSON definitions) |
 | **Package** (Docker/runtime deps) | `skills/<package>/package-manifest.json` | ✅ all three packages |
 
 So *yes, the skills exist* — as structured definitions + typed schemas, with prose
@@ -223,6 +223,7 @@ by priority. The shipped defaults:
 
 ## See also
 
+- [Skill instructions](reference/skill-instructions/) — the prose how-to bodies the LLM loads
 - [Skill schema reference](reference/skills/) — typed input/output for each skill
 - [Content types](content-types.html) — which skills each content type uses
 - [Architecture](architecture.html) — RBAC, adapters, and the MCP server

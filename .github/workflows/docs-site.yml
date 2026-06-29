@@ -49,6 +49,9 @@ jobs:
       - name: Regenerate skill schema reference
         run: bun run scripts/gen-schema-docs.ts
 
+      - name: Regenerate skill instruction pages
+        run: bun run scripts/gen-skill-docs.ts
+
       # Build the Jekyll site from docs/ using the github-pages gem
       # (whitelists jekyll-remote-theme, so just-the-docs works).
       - name: Build Jekyll site

@@ -219,7 +219,7 @@ function main(): void {
   index.push("---");
   index.push("layout: default");
   index.push("title: Skill schema reference");
-  index.push("nav_order: 6");
+  index.push("nav_order: 7");
   index.push("has_children: true");
   index.push("---");
   index.push("");
@@ -233,8 +233,9 @@ function main(): void {
   index.push("|-------|----|-------------|");
   index.push(...indexRows);
   index.push("");
-  index.push("See also the [TypeScript API reference](../../api/) for the content-object model");
-  index.push("(`Block`, `Chapter`, `Paper`, builders, and runtime Zod constraints).");
+  index.push("See also the [Skill instructions](../skill-instructions/) (the prose how-to");
+  index.push("bodies the LLM loads) and the [TypeScript API reference](../../api/) for the");
+  index.push("content-object model (`Block`, `Chapter`, `Paper`, builders, and Zod constraints).");
   index.push("");
   writeFileSync(join(OUT_DIR, "index.md"), index.join("\n"));
   console.log(`  ✓ index.md (${indexRows.length} skills)`);
