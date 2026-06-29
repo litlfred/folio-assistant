@@ -14,6 +14,7 @@
 import { readFileSync, existsSync } from "fs";
 import { join, dirname, basename, extname } from "path";
 import { parse } from "@unified-latex/unified-latex-util-parse";
+import { printRaw } from "@unified-latex/unified-latex-util-print-raw";
 import { remark } from "remark";
 import remarkMath from "remark-math";
 import remarkDirective from "remark-directive";
@@ -191,6 +192,71 @@ export function escapeLatex(text: string): string {
     .join("");
 }
 
+// ── Breaking "non-breaking blobs": long math + long identifiers ──
+//
+// A long inline formula (e.g. a degree-12 polynomial) and a long \texttt
+// identifier are each a single unbreakable box; in a narrow p{} table cell they
+// overflow the column. We insert zero-width break opportunities so they wrap.
+
+/** Top-level binary operators / relations a long formula may break after. */
+const MATH_BREAK_STR = new Set(["+", "-", "=", "<", ">"]);
+const MATH_BREAK_MACRO = new Set([
+  "le", "ge", "leq", "geq", "to", "mapsto", "approx", "sim", "simeq",
+  "equiv", "cong", "neq", "pm", "mp", "oplus",
+]);
+
+function isMathOperand(n: any): boolean {
+  if (!n) return false;
+  if (n.type === "group") return true;
+  if (n.type === "macro") return !MATH_BREAK_MACRO.has(n.content);
+  if (n.type === "string") return !MATH_BREAK_STR.has(n.content) && !"(,[".includes(n.content);
+  return false;
+}
+
+/**
+ * Insert `\allowbreak{}` after each TOP-LEVEL binary operator in a long inline
+ * formula so it can wrap across lines (inside a p{} cell). Parses with the
+ * unified-latex AST so operators nested in `{...}`, `\frac{}{}`, `\left(\right)`
+ * etc. are left intact — only the outermost operator chain becomes breakable.
+ * Short formulae and ones with no top-level operator are returned unchanged.
+ */
+export function splitLongMath(math: string, minLen = 36): string {
+  if (math.length < minLen) return math;
+  let ast: any;
+  try {
+    ast = parse(math);
+  } catch {
+    return math;
+  }
+  const content: any[] = ast.content ?? [];
+  const out: any[] = [];
+  let prevOperand = false;
+  let inserted = 0;
+  for (const n of content) {
+    const isOp =
+      (n.type === "string" && MATH_BREAK_STR.has(n.content)) ||
+      (n.type === "macro" && MATH_BREAK_MACRO.has(n.content));
+    out.push(n);
+    if (isOp && prevOperand) {
+      out.push({ type: "string", content: "\\allowbreak{}" });
+      inserted++;
+      prevOperand = false; // a run of operators shouldn't each break
+    } else if (n.type !== "whitespace") {
+      prevOperand = isMathOperand(n);
+    }
+  }
+  return inserted ? printRaw({ ...ast, content: out }) : math;
+}
+
+/**
+ * Render inline-code text with a zero-width break opportunity after each
+ * separator (`_ : . / -`) so a long identifier wraps inside a narrow p{} cell
+ * instead of overflowing. Inert at normal text width.
+ */
+function breakableCode(text: string): string {
+  return escapeLatexSegment(text).replace(/(\\_|[:./-])/g, "$1\\allowbreak{}");
+}
+
 // ── Markdown → LaTeX conversion (AST-based) ─────────────────────
 
 /** Shared remark parser instance with math + selective GFM (no autolink).
@@ -322,6 +388,158 @@ export function extractMathContent(md: string): string {
 
 // ── HTML table → LaTeX conversion ────────────────────────────────
 
+// ── Smart table column sizing ───────────────────────────────────
+//
+// Over-wide tables are the dominant source of "Overfull \hbox" warnings in the
+// build. Every generated table is wrapped in `adjustbox{max width=\linewidth}`
+// (see renderTable / htmlTableToLatex) so a table with no wrappable column
+// scales to fit. But scaling shrinks the font, and a table that is wide because
+// of long *text* columns reads far better wrapped at full font than shrunk.
+// `chooseColumnSpec` decides, from the rendered cell text, between the plain
+// l/c/r spec (the table fits, or nothing can wrap) and a spec whose text
+// columns become computed `p{<frac>\linewidth}` widths.
+//
+// Column widths are water-filled (max-min fair): short columns get exactly what
+// they need; the remainder is split equally among the wide columns so one huge
+// math column cannot starve the others. Per the owner's call (PR #24 review),
+// full font is preferred over scaling — a column whose content is genuinely
+// wider than the page lets its oversized math / identifier runs spill rather
+// than drag the whole table down to an unreadable size. The over-wide
+// *decision* uses a pessimistic glyph width (to absorb the proxy's
+// under-counting of dense math); column *allocation* uses a realistic one. All
+// constants are tuned on the real 877-table qou build.
+
+/** Proxy for the rendered width (in visible glyphs) of a LaTeX cell string. */
+function cellVisualWidth(cell: string): number {
+  let s = cell.trim();
+  // Math: estimate rendered glyphs — a command (\alpha, \mathbf) is ~1 glyph.
+  s = s.replace(/\$(.+?)\$/g, (_m, inner: string) => {
+    const t = inner
+      .replace(/\\[a-zA-Z]+/g, "x")
+      .replace(/[{}\\^_$~,]/g, "")
+      .replace(/\s+/g, "");
+    return "x".repeat(t.length);
+  });
+  // Formatting wrappers: keep the argument text.
+  s = s.replace(/\\(?:textbf|emph|texttt|textit|mathrm|text|underline)\{([^{}]*)\}/g, "$1");
+  s = s.replace(/\\[a-zA-Z]+\*?\{([^{}]*)\}/g, "$1");
+  s = s.replace(/\\[a-zA-Z]+\*?/g, "");
+  s = s.replace(/[{}]/g, "");
+  s = s.replace(/\\([&%_#$])/g, "$1");
+  return s.trim().length;
+}
+
+/** Whether a cell can line-break: it has spaces, or carries an explicit break
+ *  opportunity (`\allowbreak`, inserted by splitLongMath / breakableCode into
+ *  long math / identifiers). */
+function cellHasWrappableText(cell: string): boolean {
+  if (cell.includes("\\allowbreak")) return true;
+  const s = cell
+    .replace(/\$(.+?)\$/g, " ")
+    .replace(/\\[a-zA-Z]+\*?/g, "")
+    .replace(/[{}]/g, "")
+    .trim();
+  return s.includes(" ");
+}
+
+// Tuning constants (proxy units; \linewidth for the folio a4 geometry).
+const TBL_CHAR_FIT = 7;      // pessimistic glyph advance @11pt for the OVER-WIDE decision
+const TBL_CHAR_COL = 5;      // realistic glyph advance for COLUMN allocation
+const TBL_PAD_PT = 12;       // 2*\tabcolsep per column
+const TBL_LINE_PT = 426;     // \linewidth (a4, 0.8in/1.5in margins)
+const TBL_WRAP_MIN = 20;     // a column needs a cell >= this wide (glyphs) to wrap
+const TBL_ATOMIC_MAX = 0.85; // non-wrappable columns alone must stay under this × line
+const TBL_MAX_FILL = 0.97;   // a single column claims at most this fraction of \linewidth
+const TBL_MIN_COL_PT = 55;   // below this, an equal-split wrap column is unreadable → scale instead
+
+/**
+ * Choose the tabular column spec for a rendered table.
+ *
+ * @param cellRows every row's cells as already-rendered LaTeX strings (the
+ *                 header row is included — it constrains column width too)
+ * @param aligns   the base l/c/r alignment per column
+ * @returns either `aligns.join(" ")` (plain — the table fits, or nothing can
+ *          wrap so the outer adjustbox scales it) or a spec whose text columns
+ *          are `>{\raggedright\arraybackslash}p{<frac>\linewidth}` (widths
+ *          water-filled) so the table wraps at full font instead of shrinking.
+ */
+export function chooseColumnSpec(cellRows: string[][], aligns: string[]): string {
+  const ncols = aligns.length;
+  const plain = aligns.join(" ");
+  if (ncols === 0 || cellRows.length === 0) return plain;
+
+  const widths = new Array<number>(ncols).fill(0);
+  const wrappable = new Array<boolean>(ncols).fill(false);
+  for (const row of cellRows) {
+    for (let j = 0; j < Math.min(ncols, row.length); j++) {
+      widths[j] = Math.max(widths[j], cellVisualWidth(row[j]));
+      if (cellHasWrappableText(row[j])) wrappable[j] = true;
+    }
+  }
+
+  const natural = TBL_CHAR_FIT * widths.reduce((a, b) => a + b, 0) + TBL_PAD_PT * ncols;
+  if (natural <= TBL_LINE_PT) return plain; // fits → adjustbox is a no-op
+
+  // Over-wide: wrap the text columns to full font (rather than shrinking the
+  // whole table). A column is wrappable if it can line-break (has a space) and
+  // is non-trivial; very short / spaceless columns (numbers, lone symbols) stay
+  // atomic at natural width.
+  const wrapCols: number[] = [];
+  for (let j = 0; j < ncols; j++) {
+    if (widths[j] >= TBL_WRAP_MIN && wrappable[j]) wrapCols.push(j);
+  }
+  if (wrapCols.length === 0) return plain; // nothing can wrap → adjustbox scales it
+
+  let atomicPt = TBL_PAD_PT * ncols;
+  for (let j = 0; j < ncols; j++) {
+    if (!wrapCols.includes(j)) atomicPt += TBL_CHAR_COL * widths[j];
+  }
+  if (atomicPt > TBL_LINE_PT * TBL_ATOMIC_MAX) return plain; // non-wrap cols fill the line → scale
+
+  // Water-fill (max-min fair) the remaining width among the wrap columns by
+  // natural content width: a short column gets exactly what it needs, and the
+  // rest is split equally among the wide columns so one huge (math) column
+  // cannot starve the others. A wide column whose content still does not fit
+  // lets its oversized runs spill — full font is preferred over scaling the
+  // whole table to an unreadable size.
+  const avail = TBL_LINE_PT - atomicPt;
+  const natw = new Map<number, number>(wrapCols.map((j) => [j, TBL_CHAR_COL * widths[j]]));
+  const alloc = new Map<number, number>();
+  const left = new Set(wrapCols);
+  let remaining = avail;
+  let changed = true;
+  while (changed && left.size > 0) {
+    changed = false;
+    const share = remaining / left.size;
+    for (const j of [...left]) {
+      const w = natw.get(j) ?? 0;
+      if (w <= share) {
+        alloc.set(j, w);
+        remaining -= w;
+        left.delete(j);
+        changed = true;
+      }
+    }
+  }
+  // If the remaining wide columns would each be narrower than a legible
+  // minimum, the table has too many wide columns to wrap — scale it instead of
+  // cramming them into unreadable, overflowing slivers (e.g. an 8-column table).
+  if (left.size > 0 && remaining / left.size < TBL_MIN_COL_PT) return plain;
+  for (const j of left) alloc.set(j, remaining / left.size);
+
+  const cols: string[] = [];
+  for (let j = 0; j < ncols; j++) {
+    const w = alloc.get(j);
+    if (w !== undefined) {
+      const f = Math.round(Math.min(TBL_MAX_FILL, w / TBL_LINE_PT) * 1000) / 1000;
+      cols.push(`>{\\raggedright\\arraybackslash}p{${f}\\linewidth}`);
+    } else {
+      cols.push("lcr".includes(aligns[j]) ? aligns[j] : "l");
+    }
+  }
+  return cols.join("");
+}
+
 /**
  * Convert an HTML `<table>` to LaTeX `\begin{tabular}`.
  *
@@ -377,15 +595,22 @@ function htmlTableToLatex(html: string): string {
 
   const colCount = Math.max(...rows.map(r => r.length));
 
-  // Determine column alignment from first row's align attributes
-  const colSpec = Array.from({ length: colCount }, (_, i) => {
+  // Determine column alignment from first row's align attributes, then let the
+  // smart sizer pick plain l/c/r vs wrapping prose columns (see chooseColumnSpec).
+  const aligns = Array.from({ length: colCount }, (_, i) => {
     const align = cellAligns[0]?.[i];
     if (align === "center") return "c";
     if (align === "right") return "r";
     return "l";
-  }).join(" ");
+  });
+  const colSpec = chooseColumnSpec(rows, aligns);
 
   const lines: string[] = [];
+  // Wrap in adjustbox so an over-wide table scales down to \linewidth — the
+  // local line width, narrower than \textwidth inside lists/quotes, so a
+  // nested table scales to its context rather than the full page width.
+  // `max width` only shrinks — tables already within the margin are untouched.
+  lines.push("\\begin{adjustbox}{max width=\\linewidth}");
   lines.push(`\\begin{tabular}{${colSpec}}`);
   lines.push("\\toprule");
   for (let r = 0; r < rows.length; r++) {
@@ -397,6 +622,7 @@ function htmlTableToLatex(html: string): string {
   }
   lines.push("\\bottomrule");
   lines.push("\\end{tabular}");
+  lines.push("\\end{adjustbox}");
   return lines.join("\n");
 }
 
@@ -431,14 +657,15 @@ function renderMdastNode(node: any): string {
       return `\\emph{${renderChildren(node).join("")}}`;
 
     case "inlineMath":
-      return `$${substituteValuesInMath(node.value)}$`;
+      return `$${splitLongMath(substituteValuesInMath(node.value))}$`;
 
     case "math":
       return `\\[\n${substituteValuesInMath(node.value)}\n\\]`;
 
     case "inlineCode":
-      // Inline code: `text` → \texttt{escaped text}
-      return `\\texttt{${escapeLatexSegment(node.value)}}`;
+      // Inline code: `text` → \texttt{...} with break opportunities so long
+      // identifiers wrap in narrow table cells instead of overflowing.
+      return `\\texttt{${breakableCode(node.value)}}`;
 
     case "code":
       if (node.lang === "tex") {
@@ -615,22 +842,29 @@ function renderTable(node: any): string {
   // Pad if align array is shorter than column count
   while (aligns.length < ncols) aligns.push("l");
 
-  const colspec = aligns.join(" ");
+  // Render every cell once — used for both width estimation and emission.
+  const cellRows: string[][] = rows.map((row: any) =>
+    (row.children ?? []).map((cell: any) => renderChildren(cell).join("")),
+  );
+  const colspec = chooseColumnSpec(cellRows, aligns);
   const lines: string[] = [];
+  // Wrap in adjustbox so an over-wide table scales down to \linewidth — the
+  // local line width, narrower than \textwidth inside lists/quotes, so a
+  // nested table scales to its context rather than the full page width.
+  // `max width` only shrinks — tables already within the margin are untouched.
+  lines.push("\\begin{adjustbox}{max width=\\linewidth}");
   lines.push(`\\begin{tabular}{${colspec}}`);
   lines.push("\\toprule");
 
-  for (let i = 0; i < rows.length; i++) {
-    const cells = (rows[i].children ?? []).map((cell: any) =>
-      renderChildren(cell).join("")
-    );
-    lines.push(cells.join(" & ") + " \\\\");
+  for (let i = 0; i < cellRows.length; i++) {
+    lines.push(cellRows[i].join(" & ") + " \\\\");
     // Add midrule after header row
     if (i === 0) lines.push("\\midrule");
   }
 
   lines.push("\\bottomrule");
   lines.push("\\end{tabular}");
+  lines.push("\\end{adjustbox}");
   return lines.join("\n");
 }
 

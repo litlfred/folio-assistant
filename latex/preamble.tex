@@ -26,6 +26,7 @@
 \usepackage{tikz-cd}          % Commutative diagrams (tikzcd environment)
 \usepackage[dvipsnames]{xcolor}  % Extended colour names (teal, etc.)
 \usepackage{booktabs}            % Professional table rules (\toprule, \midrule, \bottomrule)
+\usepackage{array}               % >{...} column prefixes + \arraybackslash for p{} wrapping columns (renderer)
 \usepackage{enumitem}            % Customised list labels (label=, leftmargin=)
 \setlist{noitemsep,topsep=0.5ex} % Condensed layout for lists
 \usepackage{mathrsfs}            % \mathscr script letters
@@ -35,7 +36,17 @@
 \usepackage{algpseudocode}       % Algorithmic constructs (\State, \For, \If, …)
 \usepackage[normalem]{ulem}      % latexdiff markup (\sout/\uwave); normalem keeps \emph italic
 \usepackage{microtype}           % Typographic enhancements (character protrusion, font expansion)
+\usepackage{adjustbox}           % Scale over-wide tables down to \linewidth (loaded after microtype)
+\setlength{\emergencystretch}{3em} % Last-resort inter-word stretch for unbreakable long words/code/URLs
 \usepackage{hyperref}            % Loaded last (after cite, xcolor, etc.)
+\usepackage{xurl}                % MUST be after hyperref: break long URLs at any character
+% KNOWN RESIDUAL: xurl/hyperref only break URLs typeset via \url{}/\href{} — e.g.
+% author-note `see` links and the margin-annotation macros below. Bare URLs in
+% running prose are emitted as PLAIN TEXT by the renderer (gfm-autolink-literal is
+% disabled in content/pipeline/render-latex.ts to avoid OOM on dotted identifiers),
+% so they are NOT broken here and remain a residual Overfull \hbox source. Folded in
+% with the deeper residuals (wide display math, long \texttt identifiers) for a
+% follow-up pass — to cover them, wrap bare prose URLs in \url{} at render time.
 
 % ── Unicode character mappings ───────────────────────────────────────────────
 % Allow Unicode symbols in .md content to pass through pdflatex.
