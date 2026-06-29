@@ -1,0 +1,114 @@
+{
+  "name": "folio-paper-adapter",
+  "version": "0.1.0",
+  "description": "Paper-adapter platform skills for formal-math papers (domain-agnostic: any Lean 4 + LaTeX paper). Lean workflow, proof tooling, content-object validation, LaTeX rendering, paper structure, import, and simulators.",
+  "skills": [
+    "category-theory",
+    "chapter-analysis",
+    "compute-audit",
+    "compute-author",
+    "content-block-review",
+    "content-validation",
+    "critical-path-analysis",
+    "definition-clarity-audit",
+    "document-intake",
+    "ffi-roundtrip-audit",
+    "formalizer",
+    "groebner-basis",
+    "latex-build-cache",
+    "latex-validation",
+    "lean-build-fix",
+    "lean-completeness-audit",
+    "lean-environment-setup",
+    "lean-generation",
+    "lean-mathlibext-curator",
+    "lean-proof-review",
+    "lean-proof-vacuity-audit",
+    "lean-substantive-pass",
+    "lean-witness-audit",
+    "paper-importer",
+    "proof-conciseness",
+    "proof-editor",
+    "proof-exposition-review",
+    "proof-gap-audit",
+    "proof-integration-watcher",
+    "proof-narrative-lean-equivalence",
+    "proof-simplifier",
+    "proof-status-tracking",
+    "proof-triage",
+    "proposition-consolidation-audit",
+    "remark-audit",
+    "rendering-auditor",
+    "rendering-fixes",
+    "simulator",
+    "verify-local-substrate",
+    "witnessed-values"
+  ],
+  "docker": {
+    "baseImage": "ubuntu:24.04",
+    "aptPackages": [
+      "curl",
+      "git",
+      "git-lfs",
+      "build-essential",
+      "cmake",
+      "pkg-config",
+      "libgmp-dev",
+      "python3",
+      "python3-pip",
+      "python3-venv",
+      "nodejs",
+      "npm",
+      "texlive-full",
+      "latexmk",
+      "biber",
+      "pandoc",
+      "graphviz",
+      "ca-certificates",
+      "wget",
+      "unzip"
+    ],
+    "pipPackages": [
+      "matplotlib",
+      "numpy",
+      "sympy"
+    ],
+    "npmPackages": [
+      "typescript",
+      "ts-node"
+    ],
+    "setupCommands": [
+      "curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none"
+    ],
+    "env": {
+      "LEAN_HOME": "/root/.elan",
+      "PATH": "/root/.elan/bin:${PATH}"
+    },
+    "labels": {
+      "org.opencontainers.image.title": "folio-assistant-paper-adapter",
+      "org.opencontainers.image.description": "Formal-math paper-adapter skills (Lean, proof tooling, LaTeX, content validation)",
+      "org.opencontainers.image.source": "https://github.com/litlfred/folio-assistant"
+    }
+  },
+  "providesCapabilities": [
+    "lean-toolchain",
+    "latex-compiler",
+    "python3",
+    "graphviz"
+  ],
+  "requiresCapabilities": [
+    "git-push"
+  ],
+  "lifecycleStages": [
+    "author",
+    "validate",
+    "review",
+    "test"
+  ],
+  "schemas": [
+    "schemas/types.ts",
+    "schemas/constraints.ts",
+    "schemas/formalization-types.ts",
+    "schemas/lean-packages.ts"
+  ]
+}

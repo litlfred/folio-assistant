@@ -283,7 +283,7 @@ Pull the current inventory at the start of each triage pass:
 | All sorry sites with file/line/category | `lean_diagnostic_messages` per file (MCP), or `grep -rn 'sorry' content/<paper>/lean/` as fallback |
 | Per-block formalization status | Read `proof-objects.json` (CI artefact, derived from Lean diagnostics) |
 | Axiom dependencies for any theorem | `lean_verify` |
-| Bibliographic backing of each sorry | `grep -B2 'sorry' <file>.lean` — every sorry must carry a `-- Ref: [key]` line per AGENTS.md §1 |
+| Bibliographic backing of each sorry | `grep -B2 'sorry' <file>.lean` — every sorry must carry a `-- Ref: [key]` line per the project authoring conventions |
 
 When triaging, classify each live sorry into the four categories from
 Phase 1 (type stub / proof stub / field stub / axiom placeholder) and

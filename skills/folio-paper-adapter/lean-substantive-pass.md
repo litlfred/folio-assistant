@@ -77,7 +77,7 @@ for the paper at hand; the *shape* of the encoding is what generalises:
 | a reference weight | `w : Idx → ℝ` |
 | a deformed weight | `w_tilde : Idx → ℝ` |
 
-Per AGENTS.md §7c (archimedean wall), keep types generic unless the
+Per the project authoring conventions (archimedean wall), keep types generic unless the
 specific construction requires `ℝ`. `Matrix R d₁ d₂`,
 `Polynomial R`, `Finset.sum` are all generic-typeclass-friendly.
 

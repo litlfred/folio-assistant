@@ -189,7 +189,7 @@ Per AGENTS.md: every `sorry` must have a `-- Ref: [key]` comment.
 
 #### §3b-cond conditional-class carve-out (do NOT discharge these)
 
-Per AGENTS.md §3b-cond, a `sorry` inside a Lean `class` body **is the
+Per the project authoring conventions-cond, a `sorry` inside a Lean `class` body **is the
 conjectural input** — it is permanent by design, NOT a missing-proof
 gap. Maintain a catalogue of class-body sorries so a sweep can
 distinguish them from missing proofs.

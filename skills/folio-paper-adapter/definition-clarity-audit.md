@@ -82,7 +82,7 @@ blocks — `def:atomic-primitive`, `def:some-concept` (the concept only, term
   `**Interpretation.**` / `**Remark.**` sub-section *inside* the proposition
   (`prop:some-result-1`, `prop:some-result-2`, …). The proposition should be just
   its claim; the interpretation becomes a follow-on `rem:…` with `interprets:`
-  set to the proposition's label (`AGENTS.md §3a` structure).
+  set to the proposition's label (`the project authoring conventions` structure).
 - **`clarity-grad-style`.** Some blocks carry results-table check marks
   (`✓`, U+2713) — a register slip caught as **major**; others carry a
   sentence-final `!`. The fix is to drop the table glyph / exclamation and state
@@ -186,11 +186,11 @@ heuristics are deliberately high-recall. For a durable disposition the agent:
 
 | Criterion | Fix |
 |---|---|
-| `clarity-defterm-bold` | bold the term at first definition: `the **some-concept**` (or register it in `defines[]` + wrap with `:defterm[…]{#slug}` per `AGENTS.md §4c`, the stronger glossary form). |
+| `clarity-defterm-bold` | bold the term at first definition: `the **some-concept**` (or register it in `defines[]` + wrap with `:defterm[…]{#slug}` per `the project authoring conventions`, the stronger glossary form). |
 | `clarity-defn-single` | split the block — one `definition` per definiendum; demote interpretation sub-sections to `remark` blocks with `interprets:`; promote sub-statements to their own `proposition`/`lemma`. Mind the `uses[]` graph: downstream blocks that cite the old label point at the *primary* split product. |
 | `clarity-defn-tight` | move motivation to a sibling `prose`/`remark` block; lead with the definition; push "downstream realisation" / "physical meaning" paragraphs out to `remark` blocks (`interprets:` the definition). |
 | `clarity-stmt-tight` | strip preamble from the statement block; the hypotheses + conclusion only. Motivation → a preceding `prose` block; consequences → a following `remark`. |
-| `clarity-stmt-pure` | cut the interpretive sub-section / lead-in from the statement block and re-home it as a **follow-on `remark`** block (`interprets: "<this label>"`), per `AGENTS.md §3a`. The provable/conjectural block keeps only its hypotheses + conclusion; the physical / geometric / intuition prose lives in the remark. (A `conjecture` may keep a short scope caveat that is *part of the claim*; what moves is *interpretation*, not the conditional banner.) |
+| `clarity-stmt-pure` | cut the interpretive sub-section / lead-in from the statement block and re-home it as a **follow-on `remark`** block (`interprets: "<this label>"`), per `the project authoring conventions`. The provable/conjectural block keeps only its hypotheses + conclusion; the physical / geometric / intuition prose lives in the remark. (A `conjecture` may keep a short scope caveat that is *part of the claim*; what moves is *interpretation*, not the conditional banner.) |
 | `clarity-grad-style` | rewrite to the formal register: spell out contractions, drop second-person address (impersonal "one" / passive), delete hype adjectives, replace colloquialisms, remove `!`/emoji (a results-table `✓`/`✗` becomes prose or is dropped). Overlaps `one-voice-audit` Category B/E (AI-slop / emoji) — if a one-voice sidecar already flagged the same emoji, fix once. |
 | `clarity-rhetorical-header` | reword the header to a noun phrase in academic register; keep the body. `Why X is canonical.` → `Canonicity of X.`; `Why genus 4?` → `The genus-4 selection.`; `What the ML picture was.` → `Relation to the Mittag-Leffler picture.`; `Consequence.` → `Corollary.` (or fold the consequence into the preceding text / promote to its own `corollary` block). Pairs with the `clarity-stmt-pure` fix when the rhetorical header also fronts embedded interpretation. |
 | `clarity-defn-misplaced` | promote the hidden definition to its own `definition` block (with a `.lean` sibling, per the type system); leave behind a `remark`/`prose` that `uses:` (or `interprets:`) it. Move the `defines[]` entry and the `:defterm[…]` site to the new block. If the block legitimately defines terminology as a Mathlib wrapper, retag it `"glossary"` instead. |
@@ -202,7 +202,7 @@ heuristics are deliberately high-recall. For a durable disposition the agent:
 
 ## Relationship to existing systems
 
-- **Complements `AGENTS.md §4c` (`\defterm`/`:defterm`).** §4c enforces that any
+- **Complements `the project authoring conventions` (`\defterm`/`:defterm`).** §4c enforces that any
   term in a block's `defines[]` is wrapped *everywhere*. `clarity-defterm-bold`
   is upstream of that: it catches a `definition` whose principal term is never
   emphasised *at all* — including the common case (e.g. `def:some-concept`)
@@ -218,7 +218,7 @@ heuristics are deliberately high-recall. For a durable disposition the agent:
   `clarity-grad-style` *register* signals (contractions, second-person, hype,
   colloquialism) are finer-grained than one-voice and specific to the
   "graduate-level formal math book" bar the owner set.
-- **`clarity-stmt-pure` complements `AGENTS.md §3a` (remark authoring).** §3a
+- **`clarity-stmt-pure` complements `the project authoring conventions` (remark authoring).** §3a
   says interpretation lives in a `remark` that `interprets:` the statement;
   `clarity-stmt-pure` is the detector that catches the interpretation *still
   embedded inside* the theorem/prop/lemma/conjecture, before it has been split

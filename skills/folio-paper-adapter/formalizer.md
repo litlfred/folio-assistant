@@ -68,7 +68,7 @@ cd content && bun run migrate-lean-refs
 When authoring the `.ts` manifest for a new block, set
 `lean: { ref: "<pkg>:<Decl>" }` (never the legacy `decl:` / `file:`
 shape).  Use `<pkg>` from `LEAN_PACKAGES` in
-`folio-assistant/schemas/lean-packages.ts`.  See AGENTS.md §0a for the
+`folio-assistant/schemas/lean-packages.ts`.  See the project authoring conventions for the
 URI grammar and §0b for the rebase workflow.
 
 ## When to Use This Skill
@@ -187,7 +187,7 @@ published reference exists, use `[manuscript]` and cite the chapter/section.
 This is enforced by the axiom report's Theoretical Gap Report.
 
 **Conditional-class carve-out.** Class-body sorries are NOT missing
-proofs — they are conjectural inputs per AGENTS.md §3b-cond, permanent
+proofs — they are conjectural inputs per the project authoring conventions-cond, permanent
 by design. Before adding a `-- Ref:` to a `sorry`, check whether you are
 inside a `class` body — if yes, the `sorry` is the conjectural
 axiomatisation and no external citation is required (the conjecture
@@ -199,7 +199,7 @@ counted).
 
 ## Base ring convention — generic `R` vs archimedean `ℝ` (STRICT)
 
-Per **AGENTS.md §7c**: every Lean declaration that holds in a generic
+Per **the project authoring conventions**: every Lean declaration that holds in a generic
 commutative ring must be stated over a **type variable**, never silently
 specialised to `ℝ`. The archimedean wall is the structural cut:
 
@@ -628,7 +628,7 @@ content/<paper>/<chapter>/
    formalized first (dependency DAG ordering)
 3. **Write/update the sibling `.lean` file** in `content/<paper>/<chapter>/`
 4. **Update the `.ts` manifest**: set `lean.ref` to the package-qualified
-   URI `"<pkg>:<Decl.Path>"` (per AGENTS.md §0a; legacy `lean.decl` /
+   URI `"<pkg>:<Decl.Path>"` (per the project authoring conventions; legacy `lean.decl` /
    `lean.file` shape is removed)
 5. **Run validation**: `bun run content/pipeline/validate.ts` to check
    cross-references and constraint rules

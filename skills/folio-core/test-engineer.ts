@@ -10,7 +10,7 @@ export const testEngineer: SkillDefinition = {
   ],
   routingPatterns: ["test", "unit\\s+test", "coverage"],
   schemas: [
-    { module: "schemas/test-types", types: ["TestDefinition", "TestResult", "TestReport", "CoverageManifest"], access: "read-write" },
+    { module: "schemas/formalization-types", types: ["TestDefinition", "TestResult", "TestReport", "CoverageManifest"], access: "read-write" },
   ],
   tags: ["testing", "coverage"],
 };

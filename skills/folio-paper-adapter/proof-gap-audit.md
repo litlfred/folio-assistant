@@ -81,7 +81,7 @@ file. Flag any of the following:
 
 | Pattern | Check |
 |--------|-------|
-| `sorry` | Must carry a `-- Ref:` citation per AGENTS.md §1 |
+| `sorry` | Must carry a `-- Ref:` citation per the project authoring conventions |
 | `admit` | Same as sorry — must be resolved or cited |
 | Implicit arguments hiding definitional unfolding | `unfold`/`dsimp` is fine, but omission of a structure projection is a gap |
 | `decide` / `native_decide` on non-trivial goals | Document why it's decidable in the remark |
@@ -97,7 +97,7 @@ and a gap that *is* the target is not a proof at all.
 
 | Tag | Meaning | Severity | Audit action |
 |-----|---------|----------|--------------|
-| `routine` | Defers a standard / technical step (a Mathlib-shaped lemma, a finite computation, a bookkeeping inequality). The proof's **idea is present**; only labour is deferred. | minor (major if load-bearing for a downstream chain) | Acceptable to defer — **must** still carry `-- Ref:` (AGENTS.md §1). |
+| `routine` | Defers a standard / technical step (a Mathlib-shaped lemma, a finite computation, a bookkeeping inequality). The proof's **idea is present**; only labour is deferred. | minor (major if load-bearing for a downstream chain) | Acceptable to defer — **must** still carry `-- Ref:` (the project authoring conventions). |
 | `core` | Defers the **key insight** — the step carrying the result's novelty (the "miracle"). Only scaffolding is present. | critical / major | Chase **first** in triage; never let it sit behind `routine` gaps. |
 | `restates-target` | The deferred lemma **is** the target, or a trivial rephrasing / re-hypothesised form of it — the gap *is* the theorem. | critical | **AUTO-FAIL.** This is the AlphaProof Nexus failure mode (a): hiding the hard part in a helper that restates the goal. Not a proof. Demote the block to `conjecture`, or replace the helper with the real argument. |
 
@@ -163,7 +163,7 @@ Flag when multiple proofs rely on an unstated shared assumption:
   declared in a block
 - Two proofs both assume a construction that is nowhere defined
 
-### I. Conjectural propagation (STRICT — see AGENTS.md §3b)
+### I. Conjectural propagation (STRICT — see the project authoring conventions)
 
 | Check | Action |
 |-------|--------|

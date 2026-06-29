@@ -23,7 +23,7 @@ export const docsGeneration: SkillDefinition = {
   ],
   mcpServices: ["paper-assistant"],
   schemas: [
-    { module: "schemas/output-types", types: ["ProofObjectsManifest", "GlossaryManifest"], access: "read" },
+    { module: "schemas/formalization-types", types: ["ProofObjectsManifest", "GlossaryManifest"], access: "read" },
   ],
   tags: ["docs", "generation", "build"],
 };

@@ -201,7 +201,7 @@ theorem <name> ... := ...
 - [B] Lean takes `h : n = 3`; narrative says "for any $n$"
 - [C] Lean hypothesis list misses the ambient structure hypothesis
 - [D] `γ` in paper is `gamma` in Lean (should match the paper's
-  register conventions, AGENTS.md §7)
+  register conventions, the project authoring conventions)
 
 **Fix options**:
 1. Strengthen Lean statement to match narrative; add sorry with -- Ref:
@@ -238,7 +238,7 @@ grep -rn ': True :=' content/**/*.lean
 ```
 
 Most Class-D notation drift is reported by comparing tags against the
-paper's register conventions (AGENTS.md §7): blocks in a given topic
+paper's register conventions (the project authoring conventions): blocks in a given topic
 should use the canonical symbol for that topic, not an ASCII or
 alternate-symbol stand-in. Compare each block's tags to the convention
 table and flag mismatches.
@@ -270,7 +270,7 @@ blocks and extrapolate.
 - [ ] Class-A stubs identified via bulk grep
 - [ ] Class-B/C/D findings produced with quoted statements
 - [ ] Each finding has verified file paths + line numbers
-- [ ] Class-D findings cross-checked against AGENTS.md §7 register
+- [ ] Class-D findings cross-checked against the project authoring conventions register
 - [ ] Report includes per-class counts
 - [ ] GitHub blob URLs included (default `.md` per AGENTS.md)
 - [ ] No edits made; fixes are proposed, not applied

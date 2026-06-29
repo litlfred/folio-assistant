@@ -87,7 +87,7 @@ Verifies:
 - **No axiom injection.** `lean_verify` on the (sorry-free) declaration
   shows no `sorryAx` and no axioms beyond the declared set — no laundering a
   hole through a `Classical`-shaped placeholder or an axiomatised helper
-  that is not a registered conjecture class (AGENTS.md §3b-cond).
+  that is not a registered conjecture class (the project authoring conventions-cond).
 - **No degenerate conditional-class projection.** A §3b-cond block must
   *derive* its conclusion from class-axiomatised **hypotheses** — it must not
   carry the conclusion itself as a class field and project it

@@ -68,7 +68,7 @@ vacuous `theorem X : True := trivial` as `def X : True := trivial` (or
 A trivial-bodied `: True` `def` is flagged as pattern **`def-disguised-true`**.
 Carve-outs: a shadow-stub (real decl resolves elsewhere) or a
 `conjecture`-block Lean placeholder (sibling `.ts` is `conjecture(...)`) →
-exempt. Per **AGENTS.md §1a**, dodging an audit this way is a review failure;
+exempt. Per **the project authoring conventions**, dodging an audit this way is a review failure;
 the honest dispositions are *prove it* / *state the real proposition with
 `sorry` + `-- Ref:`* / *demote to `conjecture`* — never a vacuous `def : True`.
 
@@ -142,7 +142,7 @@ Do **not** flag these legitimate patterns:
   fields or **applies lemmas** to *derive* the conclusion — `Iff.intro h.fwd
   h.bwd`, `h.step1.trans h.step2`, `by rw [h.a]; exact h.b`, `by linarith
   [h.x, h.y]`. The class fields encode *hypotheses*; the theorem *derives*. This
-  is exactly AGENTS.md §3b-cond item 5's required shape.
+  is exactly the project authoring conventions-cond item 5's required shape.
 - **Honest named axiom with `-- Ref:`** for a genuine external input, where
   downstream theorems **`obtain`/consume** it rather than re-assuming the
   conclusion. Resting on a cited upstream axiom is sound; smuggling the
@@ -167,7 +167,7 @@ silently bless a bare `: True`:
 
 - **Shadow** — the ref's decl-path resolves to a real library decl. The stub is
   pure shadowing: **delete it** (the block then resolves to the real proof). Do
-  NOT exempt. See the **no-shadowing-stubs** directive in AGENTS.md §0a.
+  NOT exempt. See the **no-shadowing-stubs** directive in the project authoring conventions.
 - **Genuine placeholder** — no library formalisation exists. The block is an
   *unformalised* proposition asserting `: True` — **flag it** (honest fix: state
   the real proposition with `sorry` + `-- Ref:`, or demote to `conjecture`).
