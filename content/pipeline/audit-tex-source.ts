@@ -30,8 +30,9 @@
  * @module content/pipeline/audit-tex-source
  */
 
-import { readFileSync, readdirSync, statSync, existsSync } from "fs";
+import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from "fs";
 import { resolve, join, relative } from "path";
+import { findMathTextSeams } from "./render-latex";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");
 const args = process.argv.slice(2);
@@ -209,6 +210,25 @@ function auditDoubleSubscripts(file: string) {
   }
 }
 
+// ── Rule: $…$word seam (a formula abutting a word with no space) ──────────────
+// A dropped space such as `$V$discharged` renders as one unbreakable box that
+// overflows a narrow table cell. The renderer bridges it with a zero-width break
+// (render-latex renderChildren), but a genuine typo still *reads* run-together,
+// so flag the seam to add the space in the source. Intentional suffixes
+// (`$n$th`), punctuation-led runs (`$\mathbb{Z}$-module`) and spaced text don't
+// match (shared detector: findMathTextSeams).
+function auditMathTextSeams(file: string) {
+  let seams: ReturnType<typeof findMathTextSeams>;
+  try {
+    seams = findMathTextSeams(readFileSync(file, "utf-8"));
+  } catch {
+    return;
+  }
+  for (const s of seams) {
+    report("math-text-seam", file, s.line, `formula abutting a word (missing space?): "${s.context}"`);
+  }
+}
+
 // ── Run ──────────────────────────────────────────────────────────────────────
 console.log("Auditing TeX-source hazards...");
 auditReferencesTs();
@@ -220,6 +240,7 @@ for (const f of mdFiles) {
   auditMarkdownTablePipes(f);
   auditMarkdownLinkInTexFence(f);
   auditDoubleSubscripts(f);
+  auditMathTextSeams(f);
 }
 
 // ── Report ───────────────────────────────────────────────────────────────────
@@ -228,6 +249,19 @@ for (const f of findings) {
   if (!byRule.has(f.rule)) byRule.set(f.rule, []);
   byRule.get(f.rule)!.push(f);
 }
+
+// Sidecar: machine-readable findings (e.g. the math-text-seam list) for
+// downstream tooling / a content-fix worklist. Written every run.
+const OUT_JSON = resolve(REPO_ROOT, "content/audit-tex-source.json");
+writeFileSync(
+  OUT_JSON,
+  JSON.stringify(
+    { total: findings.length, byRule: Object.fromEntries([...byRule].map(([r, i]) => [r, i.length])), findings },
+    null,
+    2,
+  ),
+);
+console.log(`Sidecar: ${relative(REPO_ROOT, OUT_JSON)}`);
 
 if (findings.length === 0) {
   console.log("✓ No TeX-source hazards detected.");
