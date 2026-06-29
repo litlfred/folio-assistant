@@ -69,5 +69,7 @@ a background subagent, not the foreground.
   `.claude/commands/watch.md`.
 - User-facing docs site (README + install + guides + generated schema/API
   reference): `docs/` → published to <https://litlfred.github.io/folio-assistant/>
-  by `.github/workflows/docs-site.yml`. Regenerate the skill schema reference with
-  `bun run scripts/gen-schema-docs.ts` (never hand-edit `docs/reference/skills/*`).
+  by `.github/workflows/docs-site.yml`. Regenerate the generated references with
+  `bun run scripts/gen-schema-docs.ts` (schema reference → `docs/reference/skills/*`)
+  and `bun run scripts/gen-skill-docs.ts` (instruction bodies →
+  `docs/reference/skill-instructions/*`). Never hand-edit either generated dir.
