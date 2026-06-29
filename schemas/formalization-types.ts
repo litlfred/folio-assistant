@@ -1,12 +1,14 @@
 /**
- * QOU Type Definitions — Proof Objects, Glossary, and Formalization Pipeline
+ * Formalization Pipeline Types — Proof Objects, Glossary, and Test Reports.
  *
- * TypeScript type definitions replacing JSON schemas for the Quantum Observable
- * Universe formalization pipeline.  These types define the data structures for
- * proof tracking, semantic glossary, narrative-to-Lean mapping, and proof state
- * export.
+ * TypeScript type definitions for the paper content type's formalization
+ * pipeline.  These types define the data structures for proof tracking,
+ * semantic glossary, narrative-to-Lean mapping, test reporting, and proof
+ * state export — consumed by CI pipelines and the published blueprint.
  *
- * @module schemas/qou-types
+ * Content-agnostic: nothing here is specific to a particular paper.
+ *
+ * @module schemas/formalization-types
  */
 
 // =============================================================================

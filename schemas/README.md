@@ -1,6 +1,7 @@
-# QOU Schema Documentation
+# folio-assistant Schema Documentation
 
-Type definitions and validation schemas for the **Quantum Observable Universe** paper system.
+Type definitions and validation schemas for the folio-assistant content-object
+model. Content-agnostic: nothing here is specific to a particular paper.
 
 ## Content-Object Model
 
@@ -14,7 +15,7 @@ The core document model, organized as atomic knowledge units:
 
 Types consumed by CI pipelines and published to GitHub Pages:
 
-- **[qou-types.ts](./qou-types.ts)** — Proof objects, glossary, coverage, test infrastructure
+- **[formalization-types.ts](./formalization-types.ts)** — Proof objects, glossary, coverage, test infrastructure
 
 ## Block Kinds
 

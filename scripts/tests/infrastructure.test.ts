@@ -202,13 +202,13 @@ describe(".gitignore", () => {
 // ── Schema files ────────────────────────────────────────────────
 
 describe("Schema files", () => {
-  test("qou-types.ts exists", () => {
-    expect(existsSync(join(REPO_ROOT, "folio-assistant/schemas/qou-types.ts"))).toBe(true);
+  test("formalization-types.ts exists", () => {
+    expect(existsSync(join(REPO_ROOT, "folio-assistant/schemas/formalization-types.ts"))).toBe(true);
   });
 
-  test("qou-types.ts exports all key types", () => {
+  test("formalization-types.ts exports all key types", () => {
     const content = readFileSync(
-      join(REPO_ROOT, "folio-assistant/schemas/qou-types.ts"),
+      join(REPO_ROOT, "folio-assistant/schemas/formalization-types.ts"),
       "utf-8"
     );
     // Proof pipeline types

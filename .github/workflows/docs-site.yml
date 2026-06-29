@@ -3,11 +3,15 @@ name: Docs site (GitHub Pages)
 # Builds and deploys the folio-assistant documentation site to GitHub Pages at
 # https://litlfred.github.io/folio-assistant/.
 #
+# Serving model: the built static site is published to the **gh-pages branch**
+# (with .nojekyll so it is served exactly as built). Enable it once under
+# Settings → Pages → "Deploy from a branch" → gh-pages → / (root).
+#
 # Pipeline:
 #   1. Regenerate the skill schema reference from JSON Schema (bun).
 #   2. Build the Jekyll site under docs/ (just-the-docs via remote_theme).
 #   3. Generate the TypeScript API reference with TypeDoc into _site/api/.
-#   4. Deploy the combined _site to GitHub Pages.
+#   4. Publish the combined _site to the gh-pages branch (peaceiris).
 #
 # Generated pages (docs/reference/skills/*) are also committed to the repo so
 # they are browsable on GitHub directly; this job keeps the published copy fresh.
@@ -23,17 +27,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write  # required to push to the gh-pages branch
 
-# Allow one concurrent deployment; don't cancel an in-progress production deploy.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: docs-site-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -47,8 +48,6 @@ jobs:
 
       - name: Regenerate skill schema reference
         run: bun run scripts/gen-schema-docs.ts
-
-      - uses: actions/configure-pages@v5
 
       # Build the Jekyll site from docs/ using the github-pages gem
       # (whitelists jekyll-remote-theme, so just-the-docs works).
@@ -65,19 +64,22 @@ jobs:
             --entryPointStrategy expand \
             --readme none \
             --hideGenerator \
+            --skipErrorChecking \
             --name "folio-assistant API" \
-            schemas/ 2>&1 | tail -20
+            schemas/types.ts schemas/constraints.ts schemas/builders.ts \
+            schemas/assistant-types.ts schemas/assistant-package.ts \
+            schemas/assistant-workflow.ts schemas/formalization-types.ts \
+            schemas/lean-packages.ts 2>&1 | tail -20
 
-      - uses: actions/upload-pages-artifact@v3
+      # Serve the prebuilt static output as-is (just-the-docs is already rendered;
+      # /api is TypeDoc HTML).
+      - name: Disable Jekyll on the published branch
+        run: touch ./_site/.nojekyll
+
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: ./_site
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
+          commit_message: 'docs(gh-pages): site from ${{ github.sha }}'
