@@ -33,11 +33,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Corpus-Grep](corpus-grep.html) | `corpus-grep` | — | > **Disambiguation.** This skill formalizes the **backward** check |
-| [Deployment & Auth](deployment-auth.html) | `deployment-auth` | — |  |
-| [Editor](editor.html) | `editor` | — | git diff --name-only main...HEAD -- 'content/**/*.ts' 'content/**/*.md' 'content/**/*.lean' |
-| [Readability Editing](readability-editing.html) | `readability-editing` | — |  |
-| [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
-| [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
 
 ## Platform core (folio-core)
 
@@ -55,12 +50,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
 | [/coordinate](coordinate.html) | `coordinate` | — | When several Claude branches are converging on the same long-term goal |
 | [Delivery Summary](delivery-summary.html) | `delivery-summary` | — | After completing a feature or edit (i.e., after pushing changes), provide: |
-| [deployment-auth](deployment-auth.html) | `deployment-auth` | — | _also in Agent skills (same page)_ |
+| [Deployment & Auth](deployment-auth.html) | `deployment-auth` | — |  |
 | [/detangler-integration-watcher](detangler-integration-watcher.html) | `detangler-integration-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [/devils-advocate-watcher](devils-advocate-watcher.html) | `devils-advocate-watcher` | — | A concrete instance of [`integration-watcher`](integration-watcher.md). |
 | [Diff](diff.html) | `diff` | — | Show what changed at the content-block level, with viewer links and |
 | [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
-| [editor](editor.html) | `editor` | — | _also in Agent skills (same page)_ |
+| [Editor](editor.html) | `editor` | — |  |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises the AGENTS.md §"5-minute idle trigger" / "Work the queue while idle" |
@@ -78,13 +73,13 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Pickup](pickup.html) | `pickup` | — | Continue work on existing open PRs with minimal wasted tokens. This skill |
 | [/prepare-merge-auto](prepare-merge-auto.html) | `prepare-merge-auto` | — | Runs the full `/prepare-merge` workflow PLUS: |
 | [Production vs exploratory vs numerology](production-vs-exploratory-discipline.html) | `production-vs-exploratory-discipline` | — | N_TRUNCATION = 5 |
-| [readability-editing](readability-editing.html) | `readability-editing` | — | _also in Agent skills (same page)_ |
+| [Readability Editing](readability-editing.html) | `readability-editing` | — |  |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
-| [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — | _also in Agent skills (same page)_ |
+| [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
-| [todo-review](todo-review.html) | `todo-review` | — | _also in Agent skills (same page)_ |
+| [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 
 ## Paper adapter (folio-paper-adapter)

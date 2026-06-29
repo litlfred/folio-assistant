@@ -5,17 +5,17 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`src/skills/readability-editing.md`](https://github.com/litlfred/folio-assistant/blob/main/src/skills/readability-editing.md) — do not edit here.
+> Generated from [`skills/folio-core/readability-editing.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/readability-editing.md) — do not edit here.
 
 {% raw %}
 # Readability Editing Skill
 
 ## Purpose
 
-Review LaTeX manuscripts for narrative clarity, prose quality, and
-editorial polish.  This skill is less concerned with mathematical
-correctness and more concerned with how well the text communicates
-ideas to a graduate-level reader.
+Review manuscripts for narrative clarity, prose quality, and editorial
+polish.  This skill is less concerned with subject-matter correctness
+and more concerned with how well the text communicates ideas to its
+intended reader.
 
 ## Checks
 
@@ -30,26 +30,18 @@ ideas to a graduate-level reader.
 - Technical terms are introduced with `\emph{...}` on first use and
   are not re-defined later.
 - Every non-trivial definition is followed by at least one example.
-- **Witnessed-value drift check**: in any block (definition, example,
-  remark, prose), a numerical literal derived from the substrate
-  (`q_0`, `\hbar_q`, `Vol(4_1)`, `m_μ/m_e`, binding energies, etc.)
-  must be cited via `:val[name]`, not hard-coded.  This applies to
-  propositions, theorems, lemmas, conjectures, and proofs as well.
-  See [`witnessed-values.md`](./witnessed-values.md) for the
-  registry, directive syntax, and codemod that rewrites legacy
-  literals.
+- **Computed-value drift check**: in any block (definition, example,
+  remark, prose), a value that is derived elsewhere in the project
+  should be cited via a value directive (e.g. `:val[name]`), not
+  hard-coded.  This applies to propositions, theorems, lemmas, and
+  proofs as well, so that a single source of truth governs the value.
 
 ### 2a. Forward-Reference Hygiene
 - An example, remark, or definition must **not** reference a lemma,
   theorem, or proposition that has not yet been stated.
 - **Fix pattern**: remove the forward reference from the earlier
-  environment; add a remark immediately after the later result's proof
-  that back-references the earlier environment and explains the
-  connection.
-- *Example*: Example 1.6 referenced Lemma 1.8 ("This is the content of
-  Lemma …"). Fix: trim the forward reference, add
-  `\begin{remark}[…via the lemma]` after Lemma 1.8's proof that ties
-  the two together.
+  environment; add a remark immediately after the later result that
+  back-references the earlier environment and explains the connection.
 
 ### 3. Spelling and Grammar
 - Identify misspelled words (including common LaTeX-adjacent typos).
@@ -65,32 +57,33 @@ ideas to a graduate-level reader.
 
 ### 5. Consistency
 - Notation introduced in one section is used consistently throughout.
-- Categories use bold ($\mathbf{C}$, $\mathbf{Rep}$), never calligraphic
-  $\mathcal{C}$. Calligraphic is reserved for sheaves, sites, algebras.
-- The fibre functor is $\tau$ throughout; minimise its appearance where the
-  QOU datum $(\mathbf{C}, A)$ suffices.
+- Notation conventions follow the project's notation register (e.g.
+  bold vs. calligraphic for distinct kinds of object); deviations are
+  flagged.
 - Acronyms are expanded on first use and used bare thereafter.
 - Displayed equations ending a sentence include a period inside the
   environment.
 
 ### 6. Blueprint and Citation Consistency
 - Every `\label{def:foo}` / `\label{thm:foo}` in chapter files should
-  have a corresponding entry in `blueprint/src/content.tex` with a
-  `\lean{}` macro.  Flag missing blueprint entries as minor issues.
-- Verify that `\cite{key}` keys are consistent with `content/schema/references.ts`
-  naming convention (`<firstauthorlastname><year>`).
+  have a corresponding entry in the project's blueprint / formal index
+  where one exists.  Flag missing entries as minor issues.
+- Verify that `\cite{key}` keys are consistent with
+  `content/schema/references.ts` naming convention
+  (`<firstauthorlastname><year>`).
 - When narrative text introduces a definition that appears in the
-  glossary, the first use should reference it with `\emph{}` and the
-  term should match the glossary entry name in `Glossary.lean`.
+  glossary, the first use should reference it and the term should match
+  the glossary entry name.
 - Cross-check: if a theorem is described as "proved" or "established",
-  verify that the blueprint entry carries `\leanok` (or flag that it
-  does not yet).
+  verify that the corresponding formal-proof index marks it complete
+  (or flag that it does not yet).
 
 ## Content Object Integration
 
 Narrative content lives in `.md` files that are part of content object
-triples (`.ts` manifest + `.md` content + optional `.lean` formalization).
-Readability edits target the `.md` files but may require `.ts` updates.
+triples (`.ts` manifest + `.md` content + optional formal-proof
+file).  Readability edits target the `.md` files but may require `.ts`
+updates.
 
 **Editing `.md` files.** Content uses markdown conventions: inline math
 `$...$`, display math `$$...$$`, cross-references `[text](#label)` (which
@@ -139,15 +132,15 @@ enforces resolution. Plain rephrasing is fine — just keep the wrapper
 intact, e.g. `:refterm[rigid monoidal category]` may move within the
 sentence but should not be unwrapped. New term mentions in edited
 prose should be wrapped via `bun run pipeline/codemod-refterm.ts`
-after editing. See `local/glossary-build` skill.
+after editing. See `glossary-build` skill.
 
 ## Mandatory fallback participation
 
-This skill is invoked automatically by the editor's **content-change fallback**
-(see `editor.md § Content-change fallback`). Whenever any content is modified
-during a session — `.md`, `.ts`, `.lean`, `.tex`, or supporting files — the
-editor triggers a readability pass before the task is considered complete. When
-invoked as a fallback, focus on the changed blocks: prose quality, notation
+This skill is invoked automatically by the editor's **content-change fallback**.
+Whenever any content is modified during a session — `.md`, `.ts`,
+proof files, `.tex`, or supporting files — the editor triggers a
+readability pass before the task is considered complete. When invoked
+as a fallback, focus on the changed blocks: prose quality, notation
 consistency, and forward-reference hygiene.
 
 ## Output Format
