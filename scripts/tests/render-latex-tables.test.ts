@@ -177,4 +177,15 @@ describe("breaking non-breaking blobs (long math + identifiers)", () => {
     const out = markdownToLatex("`canonical_braid_crossings.atom_canonical_crossings`");
     expect(out).toMatch(/texttt\{[^}]*\\allowbreak/);
   });
+
+  test("a formula abutting a word (dropped space) gets a zero-width break", () => {
+    // math/code touching a long word → \allowbreak{} so it can wrap
+    expect(markdownToLatex("at $V_{(2,1)}$discharged by it")).toContain(
+      "$\\allowbreak{}discharged",
+    );
+    // intentional suffix, leading punctuation, and already-spaced text are untouched
+    expect(markdownToLatex("the $n$th case")).not.toContain("allowbreak{}th");
+    expect(markdownToLatex("a $\\mathbb{Z}$-module")).not.toContain("allowbreak{}-");
+    expect(markdownToLatex("at $V$ discharged")).not.toContain("allowbreak{}discharged");
+  });
 });
