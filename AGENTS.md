@@ -64,3 +64,10 @@ a background subagent, not the foreground.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — verify → confirm mergeable → push → (only if asked) open a
   PR via the deferred GitHub MCP tools: `.claude/skills/local/prepare-merge.md`.
+- Watching a sibling PR — `/watch <pr|branch>` subscribes to a PR's CI / review /
+  comment activity and follows through until it's merged or closed:
+  `.claude/commands/watch.md`.
+- User-facing docs site (README + install + guides + generated schema/API
+  reference): `docs/` → published to <https://litlfred.github.io/folio-assistant/>
+  by `.github/workflows/docs-site.yml`. Regenerate the skill schema reference with
+  `bun run scripts/gen-schema-docs.ts` (never hand-edit `docs/reference/skills/*`).

@@ -1,6 +1,6 @@
 /**
  * Test report generator — runs bun test with JUnit XML output,
- * converts to TestReport JSON matching schemas/qou-types.ts.
+ * converts to TestReport JSON matching schemas/formalization-types.ts.
  *
  * Usage:
  *   bun run report.ts                     # JSON to stdout
@@ -20,7 +20,7 @@ import type {
   TestResult,
   TestSummary,
   TestCategory,
-} from "../../schemas/qou-types";
+} from "../../schemas/formalization-types";
 
 const startTime = Date.now();
 const now = new Date().toISOString();

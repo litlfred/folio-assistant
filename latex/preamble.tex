@@ -189,7 +189,9 @@
 
 % ── Custom symbols ───────────────────────────────────────────────────────────
 \newcommand{\bigbowtie}{\mathop{\triangleright\!\!\!\triangleleft}}
-% Contact form (pseudo-Hermitian structure) in the QOU archimedean 4-tuple.
+% Contact form (pseudo-Hermitian structure) symbol.  NOTE: paper-specific —
+% per this file's header, such macros belong in a paper's generated preamble,
+% not in the shared template; left here pending migration to the content repo.
 % \varTheta is the upright capital theta, visually distinct from the
 % lowercase contact-form letter θ and from italic \Theta.
 % Some recent TeX Live distributions predefine \varTheta; redefine safely.
@@ -358,19 +360,25 @@
 %
 % Usage:
 %   \begin{theorem}\label{thm:my-result}
-%     \lean{QOU.Chapter.my_result}      % Lean declaration name
+%     \lean{MyPaper.Chapter.my_result}      % Lean declaration name
 %     \leanok                            % proof is sorry-free
 %     \uses{def:prerequisite}            % dependency labels
 %     Statement here.
 %   \end{theorem}
+% Repository identity — content-agnostic. A real build MUST inject the folio's
+% own repo/pages base; the content pipeline (content/pipeline/render-latex.ts)
+% does this per paper, or override at compile time via \renewcommand. The
+% defaults below are deliberate placeholders, never a specific paper's repo.
+\providecommand{\foliorepobase}{https://github.com/OWNER/REPO}
+\providecommand{\foliopagesbase}{https://OWNER.github.io/REPO}
 % Base URL for Lean documentation (doc-gen4 pages on GitHub Pages)
-\newcommand{\leandocsbase}{https://litlfred.github.io/qou/lean/}
+\newcommand{\leandocsbase}{\foliopagesbase/lean/}
 % GitHub source URL for Lean files
-\newcommand{\leansrcbase}{https://github.com/litlfred/qou/blob/main/lean/}
+\newcommand{\leansrcbase}{\foliorepobase/blob/main/lean/}
 % Repo-scoped GitHub code-search base.  We only carry the declaration name
 % (not a reliable file path), so the ∀ status mark links here: it lands on a
 % GitHub view of the declaration's source within the repo.
-\newcommand{\leansrcsearchbase}{https://github.com/litlfred/qou/search?q=}
+\newcommand{\leansrcsearchbase}{\foliorepobase/search?q=}
 %
 % ── Lean formalisation-status palette ───────────────────────────────────────
 % Single source of truth for the three-state ∀ colour code.  Tweak here.
@@ -437,10 +445,11 @@
 % Empty arguments hide the corresponding icon, so a block without a
 % Lean ref still gets ∇ # +, etc.
 
-% Base URLs.  Override at compile time via \renewcommand{...}.
-\newcommand{\trackerbase}{https://github.com/litlfred/qou/issues?q=}
-\newcommand{\sourcebase}{https://github.com/litlfred/qou/blob/main/content/}
-\newcommand{\commentbase}{https://github.com/litlfred/qou/issues/new?title=Comment+on+}
+% Base URLs.  Derived from \foliorepobase (injected per-folio); override at
+% compile time via \renewcommand{...} if needed.
+\newcommand{\trackerbase}{\foliorepobase/issues?q=}
+\newcommand{\sourcebase}{\foliorepobase/blob/main/content/}
+\newcommand{\commentbase}{\foliorepobase/issues/new?title=Comment+on+}
 
 % \blockannot{label}{leanDecl}{mdRelPath}
 % \blockannotok{label}{leanDecl}{mdRelPath}   — same but adds green ✓

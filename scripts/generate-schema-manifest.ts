@@ -17,7 +17,7 @@ import { join, dirname } from "path";
 
 const ROOT = join(import.meta.dir, "..");
 const TYPES_FILE = join(ROOT, "folio-assistant/schemas/types.ts");
-const QOU_TYPES_FILE = join(ROOT, "folio-assistant/schemas/qou-types.ts");
+const QOU_TYPES_FILE = join(ROOT, "folio-assistant/schemas/formalization-types.ts");
 const OUT_DIR = join(ROOT, "build");
 const OUT_FILE = join(OUT_DIR, "schema-manifest.json");
 
@@ -105,7 +105,7 @@ function parseInterfaces(source: string, filename: string): TypeInfo[] {
         i++;
       }
 
-      const module = filename.includes("qou-types") ? "schemas_qou-types" : "content_schema_types";
+      const module = filename.includes("formalization-types") ? "schemas_formalization-types" : "content_schema_types";
       types.push({
         name,
         kind: "interface",
@@ -135,7 +135,7 @@ function parseInterfaces(source: string, filename: string): TypeInfo[] {
         if (val && !val.startsWith("//")) values.push(val);
       }
 
-      const module = filename.includes("qou-types") ? "schemas_qou-types" : "content_schema_types";
+      const module = filename.includes("formalization-types") ? "schemas_formalization-types" : "content_schema_types";
       // Determine if it's a string union (enum-like) or type alias
       const isStringUnion = values.every(v => v.startsWith('"') || v.startsWith("'"));
       types.push({
@@ -153,7 +153,7 @@ function parseInterfaces(source: string, filename: string): TypeInfo[] {
     if (inlineTypeMatch) {
       const name = inlineTypeMatch[1];
       const body = inlineTypeMatch[2].trim();
-      const module = filename.includes("qou-types") ? "schemas_qou-types" : "content_schema_types";
+      const module = filename.includes("formalization-types") ? "schemas_formalization-types" : "content_schema_types";
       types.push({
         name,
         kind: "type",
@@ -175,7 +175,7 @@ const typesSource = readFileSync(TYPES_FILE, "utf-8");
 const qouSource = readFileSync(QOU_TYPES_FILE, "utf-8");
 
 const contentTypes = parseInterfaces(typesSource, "types.ts");
-const qouTypes = parseInterfaces(qouSource, "qou-types.ts");
+const qouTypes = parseInterfaces(qouSource, "formalization-types.ts");
 
 // Map block kind → TypeDoc interface name
 const BLOCK_KIND_MAP: Record<string, string> = {

@@ -223,7 +223,7 @@ export interface SkillValidator {
  * with their data models.
  */
 export interface SkillSchemaRef {
-  /** Schema module (e.g., "schemas/types", "schemas/qou-types"). */
+  /** Schema module (e.g., "schemas/types", "schemas/formalization-types"). */
   module: string;
   /** Type name(s) within the module. */
   types: string[];

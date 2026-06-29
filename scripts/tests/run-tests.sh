@@ -9,7 +9,7 @@
 #   ./scripts/tests/run-tests.sh infra        # run only infrastructure tests
 #
 # Tests are TypeScript files using bun:test. Schema types are shared
-# with the build pipeline via schemas/qou-types.ts.
+# with the build pipeline via schemas/formalization-types.ts.
 
 set -uo pipefail
 

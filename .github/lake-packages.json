@@ -1,0 +1,9 @@
+{
+  "$comment": "Lake package roster for the lake-cache-refresh workflow. CONTENT CONFIG, not platform: a downstream repo edits this list to match its own Lean packages. Each entry is one orphan-branch cache family. 'mathlib' (lake-root '.') warms the workspace-root Mathlib oleans and is the conventional first entry. The workflow (.github/workflows/lake-cache-refresh.yml) reads this file to build its matrix — it hardcodes no package names.",
+  "packages": [
+    { "package": "mathlib", "lake-root": "." },
+    { "package": "qou", "lake-root": "content/quantum-observable-universe/lean" },
+    { "package": "ugb", "lake-root": "content/unital-groebner-bases/lean" },
+    { "package": "fred2005", "lake-root": "content/fred2005-formal-groups/lean" }
+  ]
+}
