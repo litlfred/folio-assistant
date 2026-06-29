@@ -56,8 +56,12 @@ the old copies once the bundles are wired into `skill_fetch` / `skills-config`.
 
 ## Follow-ups
 
-1. Wire the bundles into `skill_fetch` and a `skills-config.json` sync entry
-   (`folio-core`, `folio-paper-adapter`) so qou/ugb/fred2005 consume them.
+1. ✅ **Done:** `skill_fetch` now serves the bundles. `src/tools/skill-fetch.ts`
+   exposes three local packages — `folio-assistant` (agent skills, `src/skills/`),
+   `folio-core`, and `folio-paper-adapter` — reading each bundle dir from disk, so
+   `skill_list` and `skill_fetch skill=<id> package_name=<bundle>` work without
+   hardcoded names. **Remaining (consumer-side):** add `mode:"sync"` entries
+   (`folio-core`, `folio-paper-adapter`) to qou/ugb/fred2005 `skills-config.json`.
 2. Render the bundle bodies on the docs site (extend `scripts/gen-skill-docs.ts`).
 3. Retire the duplicate copies listed above.
 4. Align the residual `AGENTS.md §<section>` cross-refs in a few skill bodies to
