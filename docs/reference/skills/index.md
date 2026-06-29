@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Skill schema reference
-nav_order: 6
+nav_order: 7
 has_children: true
 ---
 
@@ -32,5 +32,6 @@ published reference can never drift from what the framework actually validates.
 | [Quality Control](quality-control.html) | `quality-control` | Input schema for quality control checks across content lifecycle. |
 | [Terminology Management](terminology-management.html) | `terminology-management` | Input schema for terminology management — CodeSystems, ValueSets, ConceptMaps. |
 
-See also the [TypeScript API reference](../../api/) for the content-object model
-(`Block`, `Chapter`, `Paper`, builders, and runtime Zod constraints).
+See also the [Skill instructions](../skill-instructions/) (the prose how-to
+bodies the LLM loads) and the [TypeScript API reference](../../api/) for the
+content-object model (`Block`, `Chapter`, `Paper`, builders, and Zod constraints).
