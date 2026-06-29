@@ -72,7 +72,9 @@ adapter — see [Adding a content type](guides/new-content-type.html).
 A **skill** is a documented, schema-bounded unit of work (e.g.
 `lean-formalization`). Skills are grouped into **packages** that declare their
 Docker/runtime dependencies via a `package-manifest.json`. The LLM discovers
-skills with `skill_list` and loads instructions with `skill_fetch`. Each skill's
+skills with `skill_list` and loads instructions with `skill_fetch`. The full
+list of skills and roles — and how they compose with the LLM (RBAC, capabilities,
+requirements) — is on the [Skills & roles](skills.html) page; each skill's
 input/output contract is published in the
 [Skill schema reference](reference/skills/).
 

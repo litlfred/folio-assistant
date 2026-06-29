@@ -219,7 +219,7 @@ function main(): void {
   index.push("---");
   index.push("layout: default");
   index.push("title: Skill schema reference");
-  index.push("nav_order: 5");
+  index.push("nav_order: 6");
   index.push("has_children: true");
   index.push("---");
   index.push("");

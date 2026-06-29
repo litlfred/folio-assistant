@@ -147,6 +147,7 @@ work-plan priming.
 | [Getting started](https://litlfred.github.io/folio-assistant/getting-started.html) | first skill run |
 | [Tutorial: writing a paper](https://litlfred.github.io/folio-assistant/guides/writing-a-paper.html) | LLM-driven walk-through with a mock session |
 | [Content types](https://litlfred.github.io/folio-assistant/content-types.html) | the authoring formalism per domain |
+| [Skills & roles](https://litlfred.github.io/folio-assistant/skills.html) | all skills + roles, and how they work with the LLM |
 | [Skill schema reference](https://litlfred.github.io/folio-assistant/reference/skills/) | generated input/output contracts |
 | [TypeScript API reference](https://litlfred.github.io/folio-assistant/api/) | the content-object model |
 | [Architecture](https://litlfred.github.io/folio-assistant/architecture.html) | adapters, MCP, RBAC, blocks |

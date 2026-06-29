@@ -68,7 +68,9 @@ load one. Behind the scenes it calls `skill_list` and `skill_fetch`:
 >
 > **Assistant:** *(calls `skill_fetch content-plan`, then drafts a plan)* …
 
-Each skill has a typed **input/output contract** — browse them in the
+See the **[Skills & roles](skills.html)** page for the full list of skills and
+roles and how they work together with the LLM. Each skill has a typed
+**input/output contract** — browse them in the
 [Skill schema reference](reference/skills/).
 
 ## 5. Track work with `beans`
@@ -91,6 +93,7 @@ connected agent.
 ## Next steps
 
 - **[Tutorial — writing a paper with folio-assistant](guides/writing-a-paper.html)** (LLM-driven, with a mock chat session)
+- **[Skills & roles](skills.html)** — all skills/roles and how they work with the LLM
 - **[Content types](content-types.html)** — the formalism for each domain
 - **[Authoring guides](guides/)** — papers, WHO SMART DAKs, WHO SMART IGs
 - **[Architecture](architecture.html)** — how adapters, skills, and the block model fit together

@@ -66,6 +66,7 @@ applies to every content type.
 - **[Getting started](getting-started.html)** — connect the MCP server to your LLM and run your first skill.
 - **[Tutorial: Writing a paper with folio-assistant](guides/writing-a-paper.html)** — a full, LLM-driven walk-through with a mock chat session.
 - **[Content types](content-types.html)** — the formalism of each authoring domain.
+- **[Skills & roles](skills.html)** — every skill and role, and how they work together with the LLM.
 - **[Skill schema reference](reference/skills/)** — generated input/output contracts for every skill.
 - **[TypeScript API reference](api/)** — the content-object model (`Block`, `Chapter`, `Paper`, builders, Zod constraints).
 - **[Architecture](architecture.html)** — adapters, MCP server, RBAC, the block model.
@@ -79,15 +80,18 @@ flowchart TD
     Install --> GS
     GS --> Tut[Tutorial: writing a paper]
     GS --> CT[Content types]
+    CT --> Skills[Skills & roles]
     CT --> Guides[Authoring guides]
     Guides --> Paper[Papers: Lean + LaTeX]
     Guides --> DAK[WHO SMART DAK / L2]
     Guides --> IG[WHO SMART IG / L3 FHIR]
     Guides --> New[Add a content type]
-    CT --> Ref[Skill schema reference]
+    Skills --> Ref[Skill schema reference]
+    CT --> Ref
     Ref --> API[TypeScript API reference]
     Home --> Arch[Architecture]
 
+    click Skills "skills.html" "Skills & roles"
     click Install "installation.html" "Installation"
     click GS "getting-started.html" "Getting started"
     click Tut "guides/writing-a-paper.html" "Tutorial: writing a paper"

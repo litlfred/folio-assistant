@@ -44,7 +44,8 @@ flowchart LR
 | retire | `content-retire` | Deprecate or archive an artifact |
 
 The lifecycle stages are the same regardless of content type — what differs is
-the *authoring* skills and the *artifacts* each type produces.
+the *authoring* skills and the *artifacts* each type produces. For the full list
+of skills and the roles that drive them, see **[Skills & roles](skills.html)**.
 
 ---
 
