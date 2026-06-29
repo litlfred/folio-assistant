@@ -868,9 +868,74 @@ function renderTable(node: any): string {
   return lines.join("\n");
 }
 
-/** Render all children of a node. */
+/** An inline formula/code mdast node. */
+function isFormulaNode(n: any): boolean {
+  return !!n && (n.type === "inlineMath" || n.type === "inlineCode");
+}
+
+/**
+ * A formula/code node abutting a >=4-letter word with no space at the boundary
+ * in the source — a `$V$discharged`-style seam (a dropped space). Shared by
+ * renderChildren (which bridges it with a zero-width break) and
+ * findMathTextSeams (which reports it). Intentional suffixes (`$n$th`),
+ * punctuation-led runs (`$\mathbb{Z}$-module`), and already-spaced text don't
+ * match.
+ */
+function isMathTextSeam(prev: any, cur: any): boolean {
+  if (!prev || !cur) return false;
+  if (isFormulaNode(prev) && cur.type === "text" && /^[A-Za-z]{4,}/.test(cur.value)) return true;
+  if (prev.type === "text" && isFormulaNode(cur) && /[A-Za-z]{4,}$/.test(prev.value)) return true;
+  return false;
+}
+
+/** Render all children of a node, inserting a zero-width break (`\allowbreak{}`)
+ *  at any math↔word seam (see isMathTextSeam) so it doesn't form one unbreakable
+ *  box that overflows a narrow cell. It inserts a *break*, not a space; the
+ *  missing space itself, if a typo, is a content fix (see findMathTextSeams). */
 function renderChildren(node: any): string[] {
-  return (node.children ?? []).map((child: any) => renderMdastNode(child));
+  const kids: any[] = node.children ?? [];
+  return kids.map((child: any, i: number) => {
+    const s = renderMdastNode(child);
+    return isMathTextSeam(kids[i - 1], child) ? "\\allowbreak{}" + s : s;
+  });
+}
+
+export interface MathTextSeam {
+  line: number;
+  column: number;
+  /** Short source context around the seam, e.g. "$V$discharged". */
+  context: string;
+}
+
+/**
+ * Find every math↔word seam (a formula abutting a word with no space — a likely
+ * dropped space) in a markdown string, with source positions. renderChildren
+ * bridges these with a zero-width break so they don't overflow; this surfaces
+ * them so the space can be added in the content (the run-together still *reads*
+ * wrong when it doesn't wrap).
+ */
+export function findMathTextSeams(md: string): MathTextSeam[] {
+  const seams: MathTextSeam[] = [];
+  const raw = (n: any): string =>
+    n.type === "inlineMath" ? `$${n.value}$`
+      : n.type === "inlineCode" ? "`" + n.value + "`"
+        : String(n.value ?? "");
+  const visit = (node: any): void => {
+    const kids: any[] = node.children ?? [];
+    for (let i = 1; i < kids.length; i++) {
+      if (isMathTextSeam(kids[i - 1], kids[i])) {
+        const pos = kids[i].position?.start ?? kids[i - 1].position?.end ?? { line: 0, column: 0 };
+        seams.push({
+          line: pos.line ?? 0,
+          column: pos.column ?? 0,
+          context: (raw(kids[i - 1]) + raw(kids[i])).replace(/\s+/g, " ").slice(0, 60),
+        });
+      }
+    }
+    for (const k of kids) if (k && k.children) visit(k);
+  };
+  visit(parseMdCached(md));
+  return seams;
 }
 
 /** Render a list item's content (unwrap single-paragraph items). */

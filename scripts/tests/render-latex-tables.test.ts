@@ -18,6 +18,7 @@ import {
   validateLatexAst,
   chooseColumnSpec,
   splitLongMath,
+  findMathTextSeams,
 } from "../../content/pipeline/render-latex";
 
 const GFM_TABLE = `
@@ -176,5 +177,24 @@ describe("breaking non-breaking blobs (long math + identifiers)", () => {
   test("long inline-code identifier is breakable", () => {
     const out = markdownToLatex("`canonical_braid_crossings.atom_canonical_crossings`");
     expect(out).toMatch(/texttt\{[^}]*\\allowbreak/);
+  });
+
+  test("a formula abutting a word (dropped space) gets a zero-width break", () => {
+    // math/code touching a long word → \allowbreak{} so it can wrap
+    expect(markdownToLatex("at $V_{(2,1)}$discharged by it")).toContain(
+      "$\\allowbreak{}discharged",
+    );
+    // intentional suffix, leading punctuation, and already-spaced text are untouched
+    expect(markdownToLatex("the $n$th case")).not.toContain("allowbreak{}th");
+    expect(markdownToLatex("a $\\mathbb{Z}$-module")).not.toContain("allowbreak{}-");
+    expect(markdownToLatex("at $V$ discharged")).not.toContain("allowbreak{}discharged");
+  });
+
+  test("findMathTextSeams reports dropped-space seams (for the audit sidecar)", () => {
+    const md = "Intro line.\n\nat $V$discharged here, $n$th is fine, $A$ spaced too.";
+    const seams = findMathTextSeams(md);
+    expect(seams.length).toBe(1);
+    expect(seams[0].context).toContain("discharged");
+    expect(seams[0].line).toBe(3); // 1-based source line
   });
 });
