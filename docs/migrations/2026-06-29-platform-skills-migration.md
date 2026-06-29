@@ -37,15 +37,21 @@ Tier-3 QOU-physics skills that *did* yield a reusable mechanism were generalized
 `verify-local-substrate` → generic `uses[]`-connectivity check;
 `witnessed-values` → generic computed-value provenance).
 
-## Duplicates to reconcile (not deleted in this pass)
+## Duplicates reconciled
 
-These migrated skills already had a copy elsewhere in the repo; the bundle copy
-is intended to become canonical, but the existing copies were **left intact** to
-avoid breaking `skill_fetch` (which serves `src/skills/*.md`). Follow-up: retire
-the old copies once the bundles are wired into `skill_fetch` / `skills-config`.
-
-- `.claude/skills/local/`: `bean-coordination`, `todo-manager`
-- `src/skills/`: `deployment-auth`, `editor`, `readability-editing`, `symbiotic-interaction`, `todo-review`
+- **`src/skills/` — ✅ retired.** `deployment-auth`, `editor`, `readability-editing`,
+  `symbiotic-interaction`, `todo-review` are removed from `src/skills/` now that
+  the generalized copies live in `folio-core` and `skill_fetch` serves that
+  bundle. `corpus-grep` (not duplicated) stays as the lone `folio-assistant`
+  package skill. The removed `.ts` companions were inert metadata (imported
+  nowhere in `src/`); `skill_fetch` / `gen-skill-docs` read the dir dynamically,
+  so removal needed no code change.
+- **`.claude/skills/local/`: `bean-coordination`, `todo-manager` — kept (by design).**
+  These are this repo's *local agent-discipline* docs, referenced directly by
+  `AGENTS.md` and `scripts/install-beans.sh`; the `folio-core` copies are the
+  *distributable* bundle versions. They serve different roles, so both stay.
+  Retiring the local copies would mean repointing every `AGENTS.md` / script
+  reference — out of scope here.
 
 ## Not migrated (by design)
 

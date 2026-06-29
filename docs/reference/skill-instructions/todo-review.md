@@ -5,17 +5,17 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`src/skills/todo-review.md`](https://github.com/litlfred/folio-assistant/blob/main/src/skills/todo-review.md) — do not edit here.
+> Generated from [`skills/folio-core/todo-review.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/todo-review.md) — do not edit here.
 
 {% raw %}
 # Todo Review Skill
 
 > **Disambiguation:**
 > - `todo-review` (this file) = triage of **content feedback** stored
->   in `todos/content-todos.ts` (paper-scope; persistent across
+>   under `feedback/<paper>/` (paper-scope; persistent across
 >   sessions; surfaced via `/todos` dashboard).
-> - `todo-manager` = the agent's **session work-plan** via TodoWrite
->   (in-memory; per-session).
+> - `todo-manager` = the agent's **session work-plan** via beans
+>   (durable, committed under `.beans/`).
 >
 > Both can be active in one session: the agent's work-plan
 > (`todo-manager`) may include "process N feedback items via
@@ -36,15 +36,15 @@ a feedback cycle until the author is satisfied.
 
 ## Feedback Storage
 
-Feedback lives in `folio-assistant/feedback/<paper-dir>/` (**tracked in
-git**, committed to main via worktree). Each content block with feedback
-has a TypeScript file:
+Feedback lives in `feedback/<paper-dir>/` (**tracked in git**,
+committed to main via worktree). Each content block with feedback has
+a TypeScript file:
 
 ```
-folio-assistant/feedback/
-  quantum-observable-universe/
-    rigid-monoidal-category.ts
-    bundle-initial-conditions.ts
+feedback/
+  <paper-dir>/
+    <block-a>.ts
+    <block-b>.ts
     ...
 ```
 
@@ -57,8 +57,8 @@ import type { FeedbackItem } from "../../schemas/types";
 export default [
   {
     "id": "todo-mn159z53",
-    "summary": "this does not need to be finite in general",
-    "comment": "this does not need to be finite in general",
+    "summary": "short description of the issue",
+    "comment": "longer description of the issue",
     "status": "open",
     "priority": "medium",
     "origin": "human",
@@ -94,9 +94,9 @@ Show a quick summary grouped by chapter:
 
 | Chapter | Open | Critical/High | Sample |
 |---------|------|---------------|--------|
-| Ch 1: Quantum Observable Universe | 12 | 3 | "this does not need to be finite" |
-| Ch 4: Path Integrals | 4 | 1 | "missing cross-ref to braiding" |
-| Ch 11: Experimental Evidence | 6 | 0 | "clarify mass ratio derivation" |
+| Ch 1: Introduction | 12 | 3 | "this does not need to hold in general" |
+| Ch 4: Methods | 4 | 1 | "missing cross-ref to prior section" |
+| Ch 11: Results | 6 | 0 | "clarify the derivation" |
 ```
 
 Then ask:
@@ -117,9 +117,9 @@ Show the filtered items as a table:
 
 | # | Priority | Block | Summary |
 |---|----------|-------|---------|
-| 1 | high | bundle-initial-conditions | this does not need to be finite |
-| 2 | high | categorical-point | need proposition for quantum gauge field |
-| 3 | medium | rigid-monoidal-category | clarify notation convention |
+| 1 | high | initial-conditions | this does not need to hold in general |
+| 2 | high | main-point | need a supporting statement for the claim |
+| 3 | medium | core-definition | clarify notation convention |
 | ... |
 ```
 
@@ -142,7 +142,7 @@ For each selected feedback item:
 
 After completing (or skipping) an item:
 
-> **Done with "this does not need to be finite".**
+> **Done with "this does not need to hold in general".**
 > What next?
 
 Options (context-aware):
@@ -167,35 +167,35 @@ When the author says "done" or all items in scope are addressed:
 ## Resolving Feedback
 
 **Only the human author** may resolve or remove a FeedbackItem
-(see CLAUDE.md §4a). Agents must never set status to `resolved` or
-`wontfix`, and must never delete items. Agents *may* set status to
-`in_progress` after making edits.
+(see AGENTS.md feedback-resolution rule). Agents must never set status
+to `resolved` or `wontfix`, and must never delete items. Agents *may*
+set status to `in_progress` after making edits.
 
 Resolution happens in the viewer's feedback panel (click the status
 badge on any feedback item).
 
 ## Seeding Feedback
 
-When `folio-assistant/feedback/` is empty or doesn't exist for a paper, the skill can
+When `feedback/` is empty or doesn't exist for a paper, the skill can
 bootstrap an initial set by scanning for issues:
 
 | Source | How to scan | Priority |
 |--------|-------------|----------|
 | Content validation errors | `content_validate` MCP tool | high |
 | Unresolved `uses[]` refs | Validation output | high |
-| Missing `.lean` files for definitions | Check block kind vs siblings | medium |
+| Missing formal-layer files for definitions | Check block kind vs siblings | medium |
 | Missing `.md` files | Blocks without narrative | medium |
-| `sorry` in Lean files | `grep sorry lean/` | medium |
+| Unproved-gap markers in formal layer | grep the formal-layer tree | medium |
 
 ## Integration with Other Skills
 
 | Skill | Integration |
 |-------|-------------|
 | `editor` | Session start triage includes feedback check |
-| `formalizer` | Creates feedback when sorry bridges need attention |
+| `formalizer` | Creates feedback when formal-layer gaps need attention |
 | `proof-status-tracking` | Feedback tracks formalization gaps |
 | `content-validation` | Validation errors seed feedback |
 | `scientific-accuracy` | Review comments become feedback |
-| `proof-triage` | Lean sorry stubs generate high-priority feedback |
+| `proof-triage` | Formal-layer gap stubs generate high-priority feedback |
 | `content-block-review` | Cross-reference issues become feedback |
 {% endraw %}

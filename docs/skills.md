@@ -115,16 +115,16 @@ The lifecycle stages that apply to **every** content type:
 
 ### Agent/platform skills (`src/skills`)
 
-Skills the LLM uses to work effectively in the repo (loaded via `skill_fetch`):
+Skills the LLM uses to work effectively in the repo (loaded via `skill_fetch`,
+package `folio-assistant`):
 
 | Skill | Purpose |
 |-------|---------|
-| `editor` | Structured editing of content blocks |
-| `readability-editing` | Prose/readability passes |
 | `corpus-grep` | Search across the content corpus |
-| `todo-review` | The content-review feedback workflow |
-| `symbiotic-interaction` | Human↔agent collaboration patterns |
-| `deployment-auth` | Deployment & auth operations |
+
+> `editor`, `readability-editing`, `todo-review`, `symbiotic-interaction`, and
+> `deployment-auth` now live (generalized) in the **`folio-core`** bundle below —
+> fetch them with `package_name="folio-core"`.
 
 ### Local coordination skills (`.claude/skills/local`)
 

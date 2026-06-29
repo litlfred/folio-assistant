@@ -5,7 +5,7 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`src/skills/deployment-auth.md`](https://github.com/litlfred/folio-assistant/blob/main/src/skills/deployment-auth.md) — do not edit here.
+> Generated from [`skills/folio-core/deployment-auth.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/deployment-auth.md) — do not edit here.
 
 {% raw %}
 # Deployment & Auth Skill
@@ -20,7 +20,7 @@ OAuth authentication, role-based access control, and server management.
 ```
 Internet → Caddy (:443, auto TLS)
          → auth-gateway (:4180, Bun) — dual OAuth + role sessions
-         → lean-mcp (:8080) — Lean LSP + content API
+         → folio-mcp (:8080) — content API + MCP
          → static viewer/assistant files
 ```
 
@@ -47,7 +47,7 @@ Internet → Caddy (:443, auto TLS)
 
 CLI/API clients can skip OAuth entirely:
 ```
-curl -H 'Authorization: Bearer <FOLIO_API_TOKEN>' https://folio.litlfred.org/mcp
+curl -H 'Authorization: Bearer <FOLIO_API_TOKEN>' https://<folio-domain>/mcp
 ```
 
 ## CRITICAL: Whitelist Protection
@@ -74,67 +74,67 @@ self-updater will pick up changes within 60 seconds.
 ## Unified Docker Image
 
 The folio deployment uses the **same Docker image** as all CI/CD
-workflows: `ghcr.io/litlfred/qou/paper-assistant:latest`.
+workflows: the **paper-assistant** image.
 
-Built by `.github/workflows/build-lean-mcp.yml` from
+Built by `.github/workflows/build-folio-mcp.yml` from
 `scripts/mcp-server/Dockerfile`, it includes everything needed to
-run the MCP server, build PDFs, compile Lean, and execute CI scripts —
-all offline once pulled.
+run the MCP server, build outputs, run the content pipeline, and
+execute CI scripts — all offline once pulled.
 
 ### Image build triggers
 
 | Trigger | Frequency |
 |---------|-----------|
-| Push to main (content, Lean, MCP, CI scripts) | On change |
+| Push to main (content, MCP, CI scripts) | On change |
 | Weekly schedule | Sunday 06:00 UTC |
-| Manual dispatch | `build-lean-mcp.yml` |
+| Manual dispatch | `build-folio-mcp.yml` |
 
 ### Auto-deployment
 
 The `deploy/self-update-folio.sh` cron script (runs every 60s on the
-Hetzner server) polls GHCR for new image digests and auto-deploys.
+server) polls the registry for new image digests and auto-deploys.
 Typical latency from merge to live: ~2-3 minutes.
 
 ### LLM provider config
 
-The `llm` section in `lean-mcp.config.json` configures which LLM
+The `llm` section in `folio-mcp.config.json` configures which LLM
 backend the MCP server uses:
 
 ```json
 "llm": {
-  "provider": "anthropic",   // "anthropic" | "openai" | "local"
+  "provider": "<provider>",
   "providers": {
-    "anthropic": { "model": "claude-sonnet-4-6", "api_base": "https://api.anthropic.com" },
-    "openai":    { "model": "gpt-4o", "api_base": "https://api.openai.com/v1" },
-    "local":     { "model": "llama3", "api_base": "http://localhost:11434/v1" }
+    "<provider-a>": { "model": "<model>", "api_base": "https://..." },
+    "<provider-b>": { "model": "<model>", "api_base": "https://..." },
+    "local":        { "model": "<model>", "api_base": "http://localhost:11434/v1" }
   }
 }
 ```
 
-Switch provider by changing `"provider"`. For local LLMs, start
-Ollama (`ollama serve`) before the MCP server.
+Switch provider by changing `"provider"`. For local LLMs, start the
+local server before the MCP server.
 
 ## Key Files
 
 | File | Purpose |
 |------|---------|
-| `lean-mcp.config.json` | Central config (auth, LLM, Lean, image, domain) |
+| `folio-mcp.config.json` | Central config (auth, LLM, image, domain) |
 | `scripts/mcp-server/Dockerfile` | **Unified Docker image** (MCP + CI + build) |
-| `.github/workflows/build-lean-mcp.yml` | Image build workflow |
-| `deploy/auth-gateway/server.ts` | Auth gateway service (Bun, ~520 lines) |
-| `deploy/docker-compose.folio.yml` | Service orchestration (Caddy + auth-gateway + lean-mcp) |
+| `.github/workflows/build-folio-mcp.yml` | Image build workflow |
+| `deploy/auth-gateway/server.ts` | Auth gateway service (Bun) |
+| `deploy/docker-compose.folio.yml` | Service orchestration (Caddy + auth-gateway + folio-mcp) |
 | `deploy/Caddyfile.folio.template` | Reverse proxy config template |
 | `deploy/generate-config.sh` | Generate .env + Caddyfile from config |
 | `deploy/self-update-folio.sh` | Auto-update cron script |
-| `.github/workflows/deploy-folio.yml` | CI: provision/update/destroy Hetzner server |
+| `.github/workflows/deploy-folio.yml` | CI: provision/update/destroy server |
 | `deploy/google-viewers.txt` | Google viewer whitelist (PROTECTED) |
 | `deploy/github-collaborators.txt` | GitHub collaborator whitelist (PROTECTED) |
 
-## GitHub Secrets Required
+## CI/CD Secrets Required
 
 | Secret | Purpose |
 |--------|---------|
-| `HETZNER_API_TOKEN` | Hetzner Cloud infrastructure |
+| `CLOUD_API_TOKEN` | Cloud infrastructure provisioning |
 | `GOOGLE_CLIENT_ID` | Google OAuth (viewers) |
 | `GOOGLE_CLIENT_SECRET` | Google OAuth (viewers) |
 | `GITHUB_OAUTH_CLIENT_ID` | GitHub OAuth (collaborators) |
@@ -143,13 +143,13 @@ Ollama (`ollama serve`) before the MCP server.
 ## Common Tasks
 
 ### Add a new viewer
-Instruct the repo owner to add their Gmail to `deploy/google-viewers.txt` and push.
+Instruct the repo owner to add their Google email to `deploy/google-viewers.txt` and push.
 
 ### Add a new collaborator
 Instruct the repo owner to add their GitHub username to `deploy/github-collaborators.txt` and push.
 
 ### Rotate OAuth credentials
-Run the "update" action in the Deploy Folio workflow after updating GitHub Secrets.
+Run the "update" action in the Deploy Folio workflow after updating CI/CD secrets.
 
 ### Debug auth issues
 1. Check `/health` endpoint (no auth)
