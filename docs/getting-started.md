@@ -51,6 +51,8 @@ only when the matching adapter is active):
 | `formula_render` | Render a single formula to an image |
 | `lean_setup` / `lean_build` / `lean_check` / `lean_status` | Lean formalization lifecycle (paper adapter) |
 | `qa_sweep` / `proof_status` / `latex_preflight` / `bib_qa` / `glossary_check` / `content_export` | Mechanical QA / publication / transform checks → structured findings (paper adapter) |
+| `bib_validate` / `references_validate` / `bib_export` | Bibliography QA + BibTeX export (paper adapter) |
+| `codemod` / `prune_deps` / `migrate_lean_refs` | Content transforms — dry-run by default, `apply=true` to write (paper adapter) |
 | `paper_preferences` | Per-folio rendering preferences |
 
 ## 4. Run your first skill

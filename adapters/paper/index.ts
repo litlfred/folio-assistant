@@ -14,6 +14,8 @@ import { registerRenderTools } from "./tools/render.js";
 import { registerValidateTools } from "./tools/validate.js";
 import { registerLeanTools } from "./tools/lean.js";
 import { registerQaTools } from "./tools/qa.js";
+import { registerBibTools } from "./tools/bib.js";
+import { registerTransformTools } from "./tools/transform.js";
 import { registerDepsTools } from "../../src/tools/check-deps.js";
 import { registerPreferenceTools } from "../../src/tools/preferences.js";
 import { registerPreviewTools } from "../../src/tools/preview.js";
@@ -1027,6 +1029,8 @@ End every response with suggested follow-ups:
     registerValidateTools(server);
     registerLeanTools(server);
     registerQaTools(server);
+    registerBibTools(server);
+    registerTransformTools(server);
 
     // Generic tools
     registerDepsTools(server);
