@@ -13,6 +13,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { registerRenderTools } from "./tools/render.js";
 import { registerValidateTools } from "./tools/validate.js";
 import { registerLeanTools } from "./tools/lean.js";
+import { registerQaTools } from "./tools/qa.js";
 import { registerDepsTools } from "../../src/tools/check-deps.js";
 import { registerPreferenceTools } from "../../src/tools/preferences.js";
 import { registerPreviewTools } from "../../src/tools/preview.js";
@@ -1025,6 +1026,7 @@ End every response with suggested follow-ups:
     registerRenderTools(server);
     registerValidateTools(server);
     registerLeanTools(server);
+    registerQaTools(server);
 
     // Generic tools
     registerDepsTools(server);

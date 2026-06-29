@@ -50,6 +50,7 @@ only when the matching adapter is active):
 | `paper_render_pdf` / `paper_render_html` / `paper_preview` | Render a paper (paper adapter) |
 | `formula_render` | Render a single formula to an image |
 | `lean_setup` / `lean_build` / `lean_check` / `lean_status` | Lean formalization lifecycle (paper adapter) |
+| `qa_sweep` / `proof_status` / `latex_preflight` / `bib_qa` / `glossary_check` / `content_export` | Mechanical QA / publication / transform checks → structured findings (paper adapter) |
 | `paper_preferences` | Per-folio rendering preferences |
 
 ## 4. Run your first skill
