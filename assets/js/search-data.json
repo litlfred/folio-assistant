@@ -1,0 +1,912 @@
+{"0": {
+    "doc": "Architecture",
+    "title": "Architecture",
+    "content": ". | Overview | Repository layout | The MCP server | Content adapters | Skills and skill packages | The content-object model | RBAC | Work-plan priming (cross-harness) | Deployment | . ",
+    "url": "/folio-assistant/architecture.html",
+    
+    "relUrl": "/architecture.html"
+  },"1": {
+    "doc": "Architecture",
+    "title": "Overview",
+    "content": "folio-assistant is an MCP server with a pluggable content adapter layer, a skill system, a typed content-object model, RBAC, and a deploy story. The content it operates on lives in a separate repository — the platform is content-agnostic. flowchart TD subgraph Harness[LLM harness · Claude Code / Antigravity / Gemini] LLM[Agent] end LLM &lt;--&gt;|MCP stdio/http| Server[FolioServer · src/server.ts] Server --&gt; Tools[Core tools&lt;br/&gt;check-deps · skill-fetch · preview · preferences · work_plan_prime] Server --&gt; Adapter{Content adapter} Adapter --&gt; Paper[paper adapter&lt;br/&gt;lean · validate · render] Adapter --&gt; Future[other adapters …] Server --&gt; RBAC[RBAC · src/core/rbac.ts] Server --&gt; Git[Git helper · src/core/git.ts] Server --&gt; Feedback[Feedback store · src/core/feedback.ts] Tools --&gt; Skills[Skill packages&lt;br/&gt;schemas/skills/*] Paper --&gt; Model[Content-object model&lt;br/&gt;schemas/types.ts · constraints.ts · builders.ts] . ",
+    "url": "/folio-assistant/architecture.html#overview",
+    
+    "relUrl": "/architecture.html#overview"
+  },"2": {
+    "doc": "Architecture",
+    "title": "Repository layout",
+    "content": "| Path | What lives here | . | src/ | The MCP server (server.ts), entry point (index.ts), core (git, rbac, cache, feedback, logging), and core tools (tools/) | . | adapters/ | Content adapters — paper/ (Lean + LaTeX) and the standalone mcp-server/ | . | schemas/ | The content-object model (types.ts, constraints.ts, builders.ts) and per-skill JSON Schemas (schemas/skills/*) | . | skills/ | Skill packages (content-lifecycle, authoring-math, authoring-who-smart-guidelines) with their Docker manifests | . | content/ | Content pipeline tooling (validators, QA, render helpers) — not content itself | . | ui/, viewer/, home_page/ | Web UI, interactive viewer, and the example Pages site | . | deploy/ | Deployment (Caddy, docker-compose, provisioning, OAuth) | . | docs/ | This documentation site | . | .github/ | CI workflows and scripts (build, publish, QA, docs) | . | .claude/skills/ | Local agent skills + capability hooks | . ",
+    "url": "/folio-assistant/architecture.html#repository-layout",
+    
+    "relUrl": "/architecture.html#repository-layout"
+  },"3": {
+    "doc": "Architecture",
+    "title": "The MCP server",
+    "content": "FolioServer (src/server.ts) registers the core tools, then asks the active content adapter to register its tools. It supports two transports — --stdio (what harnesses launch) and --http (a shared long-running instance). Tool calls are logged with timing. ",
+    "url": "/folio-assistant/architecture.html#the-mcp-server",
+    
+    "relUrl": "/architecture.html#the-mcp-server"
+  },"4": {
+    "doc": "Architecture",
+    "title": "Content adapters",
+    "content": "A content adapter encapsulates everything type-specific: which artifacts exist, how to validate them, how to build/render them, and which extra MCP tools to register. The paper adapter (adapters/paper/) provides Lean lifecycle tools (lean_setup/build/check/status), validation, and rendering (paper_render_pdf/html, formula_render). New content types add a new adapter — see Adding a content type. ",
+    "url": "/folio-assistant/architecture.html#content-adapters",
+    
+    "relUrl": "/architecture.html#content-adapters"
+  },"5": {
+    "doc": "Architecture",
+    "title": "Skills and skill packages",
+    "content": "A skill is a documented, schema-bounded unit of work (e.g. lean-formalization). Skills are grouped into packages that declare their Docker/runtime dependencies via a package-manifest.json. The LLM discovers skills with skill_list and loads instructions with skill_fetch. Each skill’s input/output contract is published in the Skill schema reference. ",
+    "url": "/folio-assistant/architecture.html#skills-and-skill-packages",
+    
+    "relUrl": "/architecture.html#skills-and-skill-packages"
+  },"6": {
+    "doc": "Architecture",
+    "title": "The content-object model",
+    "content": "For papers, content is a tree of typed blocks validated at runtime with Zod: . | schemas/types.ts — Block, Section, Chapter, Paper, and block kinds | schemas/constraints.ts — Zod schemas and constraint rules | schemas/builders.ts — validated constructors (definition(), theorem(), …) | . These are documented in the generated TypeScript API reference. ",
+    "url": "/folio-assistant/architecture.html#the-content-object-model",
+    
+    "relUrl": "/architecture.html#the-content-object-model"
+  },"7": {
+    "doc": "Architecture",
+    "title": "RBAC",
+    "content": "src/core/rbac.ts provides role-based access control so multi-actor workflows (business analyst, FHIR modeller, terminologist, clinical SME, …) have scoped permissions over lifecycle stages. ",
+    "url": "/folio-assistant/architecture.html#rbac",
+    
+    "relUrl": "/architecture.html#rbac"
+  },"8": {
+    "doc": "Architecture",
+    "title": "Work-plan priming (cross-harness)",
+    "content": "The work-plan is stored in beans and surfaced three ways so any harness is primed identically: . | AGENTS.md — static discipline, read natively by every agent. | SessionStart hook — each harness runs the shared scripts/session-start-coord-sweep.sh primer. | work_plan_prime MCP tool — live priming for any MCP-connected agent. | . See docs/folio-assistant-migration.md for the full cross-agent design. ",
+    "url": "/folio-assistant/architecture.html#work-plan-priming-cross-harness",
+    
+    "relUrl": "/architecture.html#work-plan-priming-cross-harness"
+  },"9": {
+    "doc": "Architecture",
+    "title": "Deployment",
+    "content": "deploy/ contains a Caddy reverse-proxy template, docker-compose.yml, a provisioning script, Google OAuth setup, and a self-update script for running a shared HTTP instance. The skill-package Docker manifests aggregate apt/pip/npm dependencies into a single image per active package set. ",
+    "url": "/folio-assistant/architecture.html#deployment",
+    
+    "relUrl": "/architecture.html#deployment"
+  },"10": {
+    "doc": "BPMN Authoring",
+    "title": "BPMN Authoring",
+    "content": "Skill id: bpmn-authoring . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/bpmn-authoring.html",
+    
+    "relUrl": "/reference/skills/bpmn-authoring.html"
+  },"11": {
+    "doc": "BPMN Authoring",
+    "title": "Input",
+    "content": "Input schema for BPMN 2.0 business process authoring. | Field | Type | Required | Description | . | processName | string | yes | Name of the business process to model. | . | sourceWorkflow | string | no | Textual description or reference to the workflow to model. | . | existingBpmn | string | no | Path to existing BPMN file to update. | . | participants | array | no | Actor/participant IDs involved in the process. | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/bpmn-authoring.html#input",
+    
+    "relUrl": "/reference/skills/bpmn-authoring.html#input"
+  },"12": {
+    "doc": "BPMN Authoring",
+    "title": "Output",
+    "content": "Output schema for BPMN 2.0 business process authoring. | Field | Type | Required | Description | . | bpmnFile | string | yes | Path to the generated/updated BPMN file. | . | diagramFile | string | no | Path to the rendered diagram (SVG/PNG). | . | taskCount | integer | no |   | . | gatewayCount | integer | no |   | . | participantCount | integer | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/bpmn-authoring.html#output",
+    
+    "relUrl": "/reference/skills/bpmn-authoring.html#output"
+  },"13": {
+    "doc": "Content Author",
+    "title": "Content Author",
+    "content": "Skill id: content-author . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/content-author.html",
+    
+    "relUrl": "/reference/skills/content-author.html"
+  },"14": {
+    "doc": "Content Author",
+    "title": "Input",
+    "content": "Input schema for general content authoring. | Field | Type | Required | Description | . | contentType | \"document\" | \"fhir-ig\" | \"lean-proof\" | \"bpmn\" | \"data-dictionary\" | yes | Type of content to author. | . | sourceRef | string | no | Reference to source material. | . | outputDir | string | no | Output directory for authored content. | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-author.html#input",
+    
+    "relUrl": "/reference/skills/content-author.html#input"
+  },"15": {
+    "doc": "Content Author",
+    "title": "Output",
+    "content": "Output schema for general content authoring. | Field | Type | Required | Description | . | artifacts | array | yes |   | . artifacts[] . | Field | Type | Required | Description | . | path | string | yes |   | . | type | string | yes |   | . | status | \"draft\" | \"ready-for-validation\" | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-author.html#output",
+    
+    "relUrl": "/reference/skills/content-author.html#output"
+  },"16": {
+    "doc": "Content Feedback",
+    "title": "Content Feedback",
+    "content": "Skill id: content-feedback . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/content-feedback.html",
+    
+    "relUrl": "/reference/skills/content-feedback.html"
+  },"17": {
+    "doc": "Content Feedback",
+    "title": "Input",
+    "content": "Input schema for feedback collection and triage. | Field | Type | Required | Description | . | source | \"github-issues\" | \"survey\" | \"implementation-report\" | \"clinical-review\" | yes | Source of feedback. | . | publishedVersion | string | no | Version the feedback relates to. | . | feedbackItems | array | no |   | . feedbackItems[] . | Field | Type | Required | Description | . | description | string | yes |   | . | severity | \"critical\" | \"major\" | \"minor\" | \"enhancement\" | no |   | . | component | string | no |   | . | reporter | string | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-feedback.html#input",
+    
+    "relUrl": "/reference/skills/content-feedback.html#input"
+  },"18": {
+    "doc": "Content Feedback",
+    "title": "Output",
+    "content": "Output schema for triaged feedback. | Field | Type | Required | Description | . | triagedItems | array | yes |   | . | summary | object | no |   | . triagedItems[] . | Field | Type | Required | Description | . | id | string | yes |   | . | priority | \"P0\" | \"P1\" | \"P2\" | \"P3\" | yes |   | . | disposition | \"backlog\" | \"next-sprint\" | \"wont-fix\" | \"duplicate\" | \"needs-info\" | yes |   | . | assignee | string | no |   | . | linkedIssue | string | no |   | . summary . | Field | Type | Required | Description | . | total | integer | no |   | . | critical | integer | no |   | . | major | integer | no |   | . | minor | integer | no |   | . | enhancement | integer | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-feedback.html#output",
+    
+    "relUrl": "/reference/skills/content-feedback.html#output"
+  },"19": {
+    "doc": "Content Plan",
+    "title": "Content Plan",
+    "content": "Skill id: content-plan . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/content-plan.html",
+    
+    "relUrl": "/reference/skills/content-plan.html"
+  },"20": {
+    "doc": "Content Plan",
+    "title": "Input",
+    "content": "Input schema for content planning — scope, team, timeline, governance. | Field | Type | Required | Description | . | projectName | string | yes |   | . | scope | string | no | Description of the content scope. | . | targetDate | string (date) | no |   | . | teamSize | integer | no | min: 1 | . | sprintDuration | \"1w\" | \"2w\" | \"3w\" | \"4w\" | no | default: \"2w\" | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-plan.html#input",
+    
+    "relUrl": "/reference/skills/content-plan.html#input"
+  },"21": {
+    "doc": "Content Plan",
+    "title": "Output",
+    "content": "Output schema for content planning. | Field | Type | Required | Description | . | plan | object | yes |   | . plan . | Field | Type | Required | Description | . | projectName | string | yes |   | . | sprints | array | yes |   | . | team | array | yes |   | . plan.sprints[] . | Field | Type | Required | Description | . | number | integer | no |   | . | startDate | string (date) | no |   | . | endDate | string (date) | no |   | . | goals | array | no |   | . plan.team[] . | Field | Type | Required | Description | . | actorId | string | no |   | . | name | string | no |   | . | responsibilities | array | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-plan.html#output",
+    
+    "relUrl": "/reference/skills/content-plan.html#output"
+  },"22": {
+    "doc": "Content Publish",
+    "title": "Content Publish",
+    "content": "Skill id: content-publish . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/content-publish.html",
+    
+    "relUrl": "/reference/skills/content-publish.html"
+  },"23": {
+    "doc": "Content Publish",
+    "title": "Input",
+    "content": "Input schema for content publication. | Field | Type | Required | Description | . | versionIncrement | \"major\" | \"minor\" | \"patch\" | yes |   | . | releaseNotes | string | no |   | . | target | \"github-release\" | \"npm\" | \"fhir-registry\" | \"arxiv\" | no | Publication target. | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-publish.html#input",
+    
+    "relUrl": "/reference/skills/content-publish.html#input"
+  },"24": {
+    "doc": "Content Publish",
+    "title": "Output",
+    "content": "Output schema for content publication. | Field | Type | Required | Description | . | version | string | yes |   | . | status | \"published\" | \"failed\" | yes |   | . | publishedUrl | string | no |   | . | releaseTag | string | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-publish.html#output",
+    
+    "relUrl": "/reference/skills/content-publish.html#output"
+  },"25": {
+    "doc": "Content Review",
+    "title": "Content Review",
+    "content": "Skill id: content-review . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/content-review.html",
+    
+    "relUrl": "/reference/skills/content-review.html"
+  },"26": {
+    "doc": "Content Review",
+    "title": "Input",
+    "content": "Input schema for formal content review and approval workflow. | Field | Type | Required | Description | . | reviewType | \"l2-to-l3-gate\" | \"l3-to-publish-gate\" | \"change-assessment\" | \"final-signoff\" | yes | Type of review phase gate. | . | contentRef | string | yes | Git ref or path to the content being reviewed. | . | previousVersion | string | no | Git ref of the previous approved version (for diff). | . | validationReport | string | no | Path to the validation report for this content. | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-review.html#input",
+    
+    "relUrl": "/reference/skills/content-review.html#input"
+  },"27": {
+    "doc": "Content Review",
+    "title": "Output",
+    "content": "Output schema for content review decisions. | Field | Type | Required | Description | . | decision | \"approve\" | \"request-changes\" | \"reject\" | yes |   | . | reviewer | string | no |   | . | reviewDate | string (date-time) | no |   | . | comments | array | no |   | . | conditions | array | no | Conditions that must be met before the approval is final. | . comments[] . | Field | Type | Required | Description | . | location | string | no |   | . | severity | \"blocking\" | \"suggestion\" | \"praise\" | no |   | . | comment | string | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-review.html#output",
+    
+    "relUrl": "/reference/skills/content-review.html#output"
+  },"28": {
+    "doc": "Content Test",
+    "title": "Content Test",
+    "content": "Skill id: content-test . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/content-test.html",
+    
+    "relUrl": "/reference/skills/content-test.html"
+  },"29": {
+    "doc": "Content Test",
+    "title": "Input",
+    "content": "Input schema for end-to-end content testing. | Field | Type | Required | Description | . | targetPath | string | yes |   | . | testPlan | string | no | Path to test plan file. | . | testData | string | no | Path to test data directory. | . | regressionBaseline | string | no | Git ref for regression baseline. | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-test.html#input",
+    
+    "relUrl": "/reference/skills/content-test.html#input"
+  },"30": {
+    "doc": "Content Test",
+    "title": "Output",
+    "content": "Output schema for content testing results. | Field | Type | Required | Description | . | overallStatus | \"pass\" | \"fail\" | yes |   | . | testResults | array | yes |   | . | coverage | object | no |   | . testResults[] . | Field | Type | Required | Description | . | testId | string | yes |   | . | status | \"pass\" | \"fail\" | \"skipped\" | yes |   | . | message | string | no |   | . | duration | number | no |   | . coverage . | Field | Type | Required | Description | . | total | integer | no |   | . | passed | integer | no |   | . | failed | integer | no |   | . | skipped | integer | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-test.html#output",
+    
+    "relUrl": "/reference/skills/content-test.html#output"
+  },"31": {
+    "doc": "Content types",
+    "title": "Content types",
+    "content": "folio-assistant is content-agnostic: the platform knows nothing about any particular paper or guideline. Each kind of content is supported by a content adapter (code that knows how to validate/build/render that kind) and a skill package (the authoring formalism — what an author and the LLM do). This page describes the formalism of each content type. It is intentionally kept separate from any concrete content; concrete artifacts live in their own content repository. | The content lifecycle | Scientific papers &amp; books | WHO SMART Guidelines DAKs (L2) | WHO SMART Implementation Guides (L3) | Others — extending folio-assistant | . ",
+    "url": "/folio-assistant/content-types.html",
+    
+    "relUrl": "/content-types.html"
+  },"32": {
+    "doc": "Content types",
+    "title": "The content lifecycle",
+    "content": "Every content type moves through the same lifecycle, provided by the cross-cutting content-lifecycle skill package: . flowchart LR plan --&gt; author --&gt; validate --&gt; review --&gt; test --&gt; publish --&gt; feedback --&gt; retire feedback -.-&gt; author . | Stage | Skill | What happens | . | plan | content-plan | Scope the work, identify artifacts and actors | . | author | content-author | Create structured artifacts from source material | . | validate | content-validate | Check against schema + constraints | . | review | content-review | Human / SME review against criteria | . | test | content-test | Automated QA, build green, proofs/validators pass | . | publish | content-publish | Render and deploy the published form | . | feedback | content-feedback | Capture and route reviewer feedback | . | retire | content-retire | Deprecate or archive an artifact | . The lifecycle stages are the same regardless of content type — what differs is the authoring skills and the artifacts each type produces. ",
+    "url": "/folio-assistant/content-types.html#the-content-lifecycle",
+    
+    "relUrl": "/content-types.html#the-content-lifecycle"
+  },"33": {
+    "doc": "Content types",
+    "title": "Scientific papers &amp; books",
+    "content": "Skill package: authoring-math · Adapter: paper · Guide: Writing a paper . Rigorous scientific papers and books where prose and mathematics are backed by a machine-checked Lean 4 formalization and rendered through LaTeX. | Source model — content is a tree of typed blocks (definition, theorem, lemma, proof, equation, prose, …). See the TypeScript API reference for Block, Chapter, and Paper. | Formalization — lean-formalization and proof-verification skills drive Lean; each theorem-like block can be tracked against its Lean counterpart, and every sorry is auditable. | Rendering — latex-authoring plus the paper adapter’s paper_render_pdf / paper_render_html tools. | . | Block kind | Label prefix | Lean? | . | definition | def: | required | . | theorem / lemma / proposition / corollary | thm: / lem: / … | expected | . | conjecture | conj: | optional | . | example / remark / proof | ex: / rem: / prf: | optional | . | prose / equation / diagram | — / eq: / fig: | n/a | . Relevant skill schemas: latex-authoring, lean-formalization, proof-verification. ",
+    "url": "/folio-assistant/content-types.html#scientific-papers--books",
+    
+    "relUrl": "/content-types.html#scientific-papers--books"
+  },"34": {
+    "doc": "Content types",
+    "title": "WHO SMART Guidelines DAKs (L2)",
+    "content": "Skill package: authoring-who-smart-guidelines · Guide: Authoring a WHO SMART DAK . A Digital Adaptation Kit (DAK) is the L2 (machine-readable, but implementation-neutral) representation of a WHO guideline. folio-assistant authors the L2 artifacts: . | Business processes — BPMN 2.0 workflows (bpmn-authoring) | Decision logic — DMN decision tables (dmn-authoring) | Data dictionaries / core data elements — Excel / structured tables | Terminology — code systems and value sets (terminology-management) | Personas, scenarios, indicators, requirements | . Relevant skill schemas: l2-dak-authoring, bpmn-authoring, dmn-authoring, terminology-management. ",
+    "url": "/folio-assistant/content-types.html#who-smart-guidelines-daks-l2",
+    
+    "relUrl": "/content-types.html#who-smart-guidelines-daks-l2"
+  },"35": {
+    "doc": "Content types",
+    "title": "WHO SMART Implementation Guides (L3)",
+    "content": "Skill package: authoring-who-smart-guidelines · Guide: Authoring a WHO SMART IG . The L3 layer turns an L2 DAK into a computable FHIR Implementation Guide: . | FHIR resources authored as FSH (FHIR Shorthand) and compiled with SUSHI (l3-fhir-authoring) | Validation against FHIR profiles (fhir-validation) | Publication with the HL7 FHIR IG Publisher (ig-publication) | Quality control gates (quality-control) | . Relevant skill schemas: l3-fhir-authoring, fhir-validation, ig-publication, quality-control. flowchart LR G[WHO guideline] --&gt; L2[L2 DAK&lt;br/&gt;BPMN · DMN · data dict] L2 --&gt; L3[L3 FHIR IG&lt;br/&gt;FSH · profiles · IG Publisher] L3 --&gt; Pub[Published IG site] . ",
+    "url": "/folio-assistant/content-types.html#who-smart-implementation-guides-l3",
+    
+    "relUrl": "/content-types.html#who-smart-implementation-guides-l3"
+  },"36": {
+    "doc": "Content types",
+    "title": "Others — extending folio-assistant",
+    "content": "New content types are first-class: add a content adapter and a skill package, and the lifecycle, RBAC, and MCP plumbing come for free. See Adding a content type. ",
+    "url": "/folio-assistant/content-types.html#others--extending-folio-assistant",
+    
+    "relUrl": "/content-types.html#others--extending-folio-assistant"
+  },"37": {
+    "doc": "Content Validate",
+    "title": "Content Validate",
+    "content": "Skill id: content-validate . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/content-validate.html",
+    
+    "relUrl": "/reference/skills/content-validate.html"
+  },"38": {
+    "doc": "Content Validate",
+    "title": "Input",
+    "content": "Input schema for content validation. | Field | Type | Required | Description | . | targetPath | string | yes | Path to content to validate. | . | validationRules | array | no | Specific validation rule IDs to run (empty = all applicable). | . | schemaRefs | array | no | Schema files to validate against. | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-validate.html#input",
+    
+    "relUrl": "/reference/skills/content-validate.html#input"
+  },"39": {
+    "doc": "Content Validate",
+    "title": "Output",
+    "content": "Output schema for content validation results. | Field | Type | Required | Description | . | overallStatus | \"pass\" | \"warnings\" | \"errors\" | yes |   | . | results | array | yes |   | . results[] . | Field | Type | Required | Description | . | rule | string | yes |   | . | status | \"pass\" | \"fail\" | \"warning\" | \"skipped\" | yes |   | . | message | string | no |   | . | location | string | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/content-validate.html#output",
+    
+    "relUrl": "/reference/skills/content-validate.html#output"
+  },"40": {
+    "doc": "Contributing",
+    "title": "Contributing",
+    "content": ". | Development setup | Work-plan with beans | Agent guidance | Documentation | Shipping a change | . ",
+    "url": "/folio-assistant/contributing.html",
+    
+    "relUrl": "/contributing.html"
+  },"41": {
+    "doc": "Contributing",
+    "title": "Development setup",
+    "content": "git clone https://github.com/litlfred/folio-assistant.git cd folio-assistant bun install bun test # unit tests bun run lint # eslint bunx playwright test # e2e (test:e2e) . ",
+    "url": "/folio-assistant/contributing.html#development-setup",
+    
+    "relUrl": "/contributing.html#development-setup"
+  },"42": {
+    "doc": "Contributing",
+    "title": "Work-plan with beans",
+    "content": "This project uses beans as the single todo/work-plan mechanism (see AGENTS.md). Do not stand up a separate todo store. scripts/install-beans.sh beans list beans create \"&lt;title&gt;\" beans &lt;id&gt; --status in-progress # claim before you work . beans ≠ sidecars: never beans create bulk machine-generated queues (QA, witness, watcher) — those stay as bulk JSON. ",
+    "url": "/folio-assistant/contributing.html#work-plan-with-beans",
+    
+    "relUrl": "/contributing.html#work-plan-with-beans"
+  },"43": {
+    "doc": "Contributing",
+    "title": "Agent guidance",
+    "content": "AGENTS.md is the agent-generic source of truth (read natively by Claude Code, Gemini CLI, Antigravity, Cursor, Copilot). CLAUDE.md / GEMINI.md are thin stubs that point to it. Update AGENTS.md rather than a tool-specific file when changing agent guidance. ",
+    "url": "/folio-assistant/contributing.html#agent-guidance",
+    
+    "relUrl": "/contributing.html#agent-guidance"
+  },"44": {
+    "doc": "Contributing",
+    "title": "Documentation",
+    "content": ". | Prose docs live under docs/ (this Jekyll site). | Skill schema reference is generated — never hand-edit docs/reference/skills/*.md. Edit the JSON Schemas under schemas/skills/&lt;skill&gt;/ and regenerate: . bun run scripts/gen-schema-docs.ts . | The TypeScript API reference (/api/) is generated by TypeDoc in CI. | The site is built and deployed to GitHub Pages by .github/workflows/docs-site.yml on every push to main that touches docs, schemas, or the source. | . Preview locally: . cd docs bundle install bundle exec jekyll serve . ",
+    "url": "/folio-assistant/contributing.html#documentation",
+    
+    "relUrl": "/contributing.html#documentation"
+  },"45": {
+    "doc": "Contributing",
+    "title": "Shipping a change",
+    "content": "Verify → confirm mergeable → push → (only if asked) open a PR. See .claude/skills/local/prepare-merge.md. Keep the formalism of the framework separate from content — content belongs in its own repository, and any content in these docs is illustrative only. ",
+    "url": "/folio-assistant/contributing.html#shipping-a-change",
+    
+    "relUrl": "/contributing.html#shipping-a-change"
+  },"46": {
+    "doc": "DMN Authoring",
+    "title": "DMN Authoring",
+    "content": "Skill id: dmn-authoring . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/dmn-authoring.html",
+    
+    "relUrl": "/reference/skills/dmn-authoring.html"
+  },"47": {
+    "doc": "DMN Authoring",
+    "title": "Input",
+    "content": "Input schema for DMN (Decision Model and Notation) decision table authoring. | Field | Type | Required | Description | . | decisionName | string | yes | Name of the decision to model. | . | inputVariables | array | yes |   | . | sourceLogic | string | no | Reference to the clinical decision logic being modeled. | . inputVariables[] . | Field | Type | Required | Description | . | name | string | yes |   | . | type | \"string\" | \"integer\" | \"boolean\" | \"date\" | \"codeable-concept\" | yes |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/dmn-authoring.html#input",
+    
+    "relUrl": "/reference/skills/dmn-authoring.html#input"
+  },"48": {
+    "doc": "DMN Authoring",
+    "title": "Output",
+    "content": "Output schema for DMN decision table authoring. | Field | Type | Required | Description | . | dmnFile | string | yes |   | . | decisionTableCount | integer | no |   | . | ruleCount | integer | no |   | . | hitPolicy | \"UNIQUE\" | \"FIRST\" | \"PRIORITY\" | \"ANY\" | \"COLLECT\" | \"RULE ORDER\" | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/dmn-authoring.html#output",
+    
+    "relUrl": "/reference/skills/dmn-authoring.html#output"
+  },"49": {
+    "doc": "FHIR Validation",
+    "title": "FHIR Validation",
+    "content": "Skill id: fhir-validation . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/fhir-validation.html",
+    
+    "relUrl": "/reference/skills/fhir-validation.html"
+  },"50": {
+    "doc": "FHIR Validation",
+    "title": "Input",
+    "content": "Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks. | Field | Type | Required | Description | . | igRoot | string | yes | Path to the IG repository root. | . | validationLevel | \"sushi-only\" | \"publisher-qa\" | \"full\" | no | Level of validation to perform. (default: \"full\") | . | targetProfiles | array | no | Specific CRMI profiles to validate against (Shareable, Publishable, Computable, Executable). | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/fhir-validation.html#input",
+    
+    "relUrl": "/reference/skills/fhir-validation.html#input"
+  },"51": {
+    "doc": "FHIR Validation",
+    "title": "Output",
+    "content": "Output schema for FHIR validation results. | Field | Type | Required | Description | . | overallStatus | \"pass\" | \"warnings\" | \"errors\" | yes |   | . | sushiResult | object | no |   | . | publisherResult | object | no |   | . | conformanceResults | array | no |   | . sushiResult . | Field | Type | Required | Description | . | status | string | no |   | . | errors | integer | no |   | . | warnings | integer | no |   | . publisherResult . | Field | Type | Required | Description | . | status | string | no |   | . | qaHtmlPath | string | no |   | . | errorCount | integer | no |   | . | warningCount | integer | no |   | . | infoCount | integer | no |   | . conformanceResults[] . | Field | Type | Required | Description | . | resource | string | no |   | . | profile | string | no |   | . | status | \"conformant\" | \"non-conformant\" | no |   | . | issues | array | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/fhir-validation.html#output",
+    
+    "relUrl": "/reference/skills/fhir-validation.html#output"
+  },"52": {
+    "doc": "Getting started",
+    "title": "Getting started",
+    "content": "This page takes you from a fresh install to running your first skill with an LLM. If you want the full narrative walk-through of authoring a paper, jump to the Writing a paper tutorial. | 1. Install and verify | 2. Connect your LLM harness | 3. The tools the agent gets | 4. Run your first skill | 5. Track work with beans | Next steps | . ",
+    "url": "/folio-assistant/getting-started.html",
+    
+    "relUrl": "/getting-started.html"
+  },"53": {
+    "doc": "Getting started",
+    "title": "1. Install and verify",
+    "content": "Follow Installation, then confirm the framework runs: . bun run check-deps . You should see bun reported as present. Anything your content type needs but is missing will be listed with an install hint. ",
+    "url": "/folio-assistant/getting-started.html#1-install-and-verify",
+    
+    "relUrl": "/getting-started.html#1-install-and-verify"
+  },"54": {
+    "doc": "Getting started",
+    "title": "2. Connect your LLM harness",
+    "content": "Register folio-assistant as an MCP server in your harness — see Connecting an LLM harness for Claude Code, Antigravity, Gemini CLI, and generic MCP clients. Once connected, the agent can call the folio-assistant tools directly. ",
+    "url": "/folio-assistant/getting-started.html#2-connect-your-llm-harness",
+    
+    "relUrl": "/getting-started.html#2-connect-your-llm-harness"
+  },"55": {
+    "doc": "Getting started",
+    "title": "3. The tools the agent gets",
+    "content": "When connected, the LLM has these MCP tools available (content-type tools appear only when the matching adapter is active): . | Tool | Purpose | . | work_plan_prime | Surface the current work-plan (beans) for the session | . | check_dependencies | Probe which toolchains are installed | . | skill_list / skill_fetch | Discover and load a skill’s instructions | . | content_list | List content artifacts in the folio | . | content_validate | Validate artifacts against their schema/constraints | . | content_build | Build/assemble the content | . | paper_render_pdf / paper_render_html / paper_preview | Render a paper (paper adapter) | . | formula_render | Render a single formula to an image | . | lean_setup / lean_build / lean_check / lean_status | Lean formalization lifecycle (paper adapter) | . | paper_preferences | Per-folio rendering preferences | . ",
+    "url": "/folio-assistant/getting-started.html#3-the-tools-the-agent-gets",
+    
+    "relUrl": "/getting-started.html#3-the-tools-the-agent-gets"
+  },"56": {
+    "doc": "Getting started",
+    "title": "4. Run your first skill",
+    "content": "Skills are discoverable and self-describing. Ask the agent to list them, then to load one. Behind the scenes it calls skill_list and skill_fetch: . You: What skills are available for authoring? . Assistant: (calls skill_list) The active packages expose: content-plan, content-author, content-validate, content-review, content-test, content-publish, plus the math package (lean-formalization, latex-authoring, proof-verification). You: Load content-plan and draft a plan for a short paper on X. Assistant: (calls skill_fetch content-plan, then drafts a plan) … . Each skill has a typed input/output contract — browse them in the Skill schema reference. ",
+    "url": "/folio-assistant/getting-started.html#4-run-your-first-skill",
+    
+    "relUrl": "/getting-started.html#4-run-your-first-skill"
+  },"57": {
+    "doc": "Getting started",
+    "title": "5. Track work with beans",
+    "content": "folio-assistant uses beans as the single work-plan / todo mechanism — durable across sessions and shared across agents. scripts/install-beans.sh # install the CLI if missing beans prime # emit work-plan priming for agents beans list # current open items beans create \"draft chapter 1\" # open an item beans &lt;id&gt; --status in-progress # claim an item . The SessionStart hook surfaces the plan automatically at the start of each session, and the work_plan_prime MCP tool exposes the same surface to any connected agent. ",
+    "url": "/folio-assistant/getting-started.html#5-track-work-with-beans",
+    
+    "relUrl": "/getting-started.html#5-track-work-with-beans"
+  },"58": {
+    "doc": "Getting started",
+    "title": "Next steps",
+    "content": ". | Tutorial — writing a paper with folio-assistant (LLM-driven, with a mock chat session) | Content types — the formalism for each domain | Authoring guides — papers, WHO SMART DAKs, WHO SMART IGs | Architecture — how adapters, skills, and the block model fit together | . ",
+    "url": "/folio-assistant/getting-started.html#next-steps",
+    
+    "relUrl": "/getting-started.html#next-steps"
+  },"59": {
+    "doc": "IG Publication",
+    "title": "IG Publication",
+    "content": "Skill id: ig-publication . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/ig-publication.html",
+    
+    "relUrl": "/reference/skills/ig-publication.html"
+  },"60": {
+    "doc": "IG Publication",
+    "title": "Input",
+    "content": "Input schema for FHIR Implementation Guide publication. | Field | Type | Required | Description | . | igRoot | string | yes | Path to the IG repository root. | . | versionIncrement | \"major\" | \"minor\" | \"patch\" | yes | Semantic version increment type. | . | releaseNotes | string | no | Release notes for this publication. | . | publicationTarget | \"github-pages\" | \"smart-who-int\" | \"both\" | no | default: \"github-pages\" | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/ig-publication.html#input",
+    
+    "relUrl": "/reference/skills/ig-publication.html#input"
+  },"61": {
+    "doc": "IG Publication",
+    "title": "Output",
+    "content": "Output schema for FHIR IG publication. | Field | Type | Required | Description | . | version | string | yes |   | . | publishedUrl | string | yes |   | . | releaseTag | string | no |   | . | releaseBranch | string | no |   | . | publicationRequestPath | string | no |   | . | buildStatus | \"success\" | \"failed\" | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/ig-publication.html#output",
+    
+    "relUrl": "/reference/skills/ig-publication.html#output"
+  },"62": {
+    "doc": "Skill schema reference",
+    "title": "Skill schema reference",
+    "content": "Every folio-assistant skill declares a typed input and output contract as JSON Schema (draft-07). These pages are generated from those schemas so the published reference can never drift from what the framework actually validates. | Skill | Id | Description | . | BPMN Authoring | bpmn-authoring | Input schema for BPMN 2.0 business process authoring. | . | Content Author | content-author | Input schema for general content authoring. | . | Content Feedback | content-feedback | Input schema for feedback collection and triage. | . | Content Plan | content-plan | Input schema for content planning — scope, team, timeline, governance. | . | Content Publish | content-publish | Input schema for content publication. | . | Content Review | content-review | Input schema for formal content review and approval workflow. | . | Content Test | content-test | Input schema for end-to-end content testing. | . | Content Validate | content-validate | Input schema for content validation. | . | DMN Authoring | dmn-authoring | Input schema for DMN (Decision Model and Notation) decision table authoring. | . | FHIR Validation | fhir-validation | Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks. | . | IG Publication | ig-publication | Input schema for FHIR Implementation Guide publication. | . | L2 DAK Authoring | l2-dak-authoring | Input schema for L2 Digital Adaptation Kit authoring. Translates WHO clinical guidelines into structured digital artifacts. | . | L3 FHIR Authoring | l3-fhir-authoring | Input schema for L3 FHIR IG authoring. Creates machine-readable FHIR artifacts from L2 DAK specifications. | . | LaTeX Authoring | latex-authoring | Input schema for the latex-authoring skill. | . | Lean Formalization | lean-formalization | Input schema for the lean-formalization skill. Describes source material to be formalized in Lean 4. | . | Proof Verification | proof-verification | Input schema for the proof-verification skill. Verifies Lean proofs and tracks sorry obligations. | . | Quality Control | quality-control | Input schema for quality control checks across content lifecycle. | . | Terminology Management | terminology-management | Input schema for terminology management — CodeSystems, ValueSets, ConceptMaps. | . See also the TypeScript API reference for the content-object model (Block, Chapter, Paper, builders, and runtime Zod constraints). ",
+    "url": "/folio-assistant/reference/skills/",
+    
+    "relUrl": "/reference/skills/"
+  },"63": {
+    "doc": "Authoring guides",
+    "title": "Authoring guides",
+    "content": "Step-by-step guides for each content type. These describe the authoring formalism and the LLM-driven workflow — they are kept separate from any specific content, and any content shown is illustrative only. | Writing a paper with folio-assistant — the flagship tutorial: a full LLM-driven walk-through with a mock chat session and workflow diagrams. | Authoring a WHO SMART DAK (L2) — BPMN, DMN, data dictionaries. | Authoring a WHO SMART IG (L3) — FHIR / FSH / SUSHI / IG Publisher. | Adding a new content type — extend the platform with a new adapter + skill package. | . ",
+    "url": "/folio-assistant/guides/",
+    
+    "relUrl": "/guides/"
+  },"64": {
+    "doc": "Home",
+    "title": "folio-assistant",
+    "content": "A content-agnostic agent skills framework for authoring rigorous content with a large language model — scientific papers and books, WHO SMART Guidelines, and FHIR Implementation Guides — backed by an MCP server, role-based access control, and a typed content-object model. Get started Install View on GitHub . ",
+    "url": "/folio-assistant/#folio-assistant",
+    
+    "relUrl": "/#folio-assistant"
+  },"65": {
+    "doc": "Home",
+    "title": "What is folio-assistant?",
+    "content": "folio-assistant is the platform — it does not contain content. It provides the skills, schemas, tooling, and an MCP (Model Context Protocol) server that an LLM-driven agent uses to plan, author, validate, review, test, and publish a folio of content that lives in a separate repository. Separation of concerns. This documentation describes the formalism of the framework and how to use folio-assistant — deliberately kept separate from any specific content. Where content appears in these pages, it is purely illustrative (an example), never the canonical artifact. flowchart LR A[Author + LLM] --&gt;|chat / MCP tools| B(folio-assistant) B --&gt; C{Content adapter} C --&gt;|paper| D[Lean + LaTeX repo] C --&gt;|WHO SMART DAK| E[L2 BPMN / DMN / Excel] C --&gt;|WHO SMART IG| F[L3 FHIR / FSH] B --&gt; G[Skills + Schemas + RBAC] D &amp; E &amp; F --&gt; H[Published site / PDF / IG] . ",
+    "url": "/folio-assistant/#what-is-folio-assistant",
+    
+    "relUrl": "/#what-is-folio-assistant"
+  },"66": {
+    "doc": "Home",
+    "title": "Supported content types",
+    "content": "folio-assistant is pluggable — each content type is handled by a content adapter and a matching skill package. The currently supported types: . | Content type | Artifacts | Skill package | . | Scientific papers &amp; books | Lean 4 formalization + LaTeX/Markdown | authoring-math | . | WHO SMART Guidelines DAKs | L2 artifacts — BPMN, DMN, Excel data dictionaries, personas | authoring-who-smart-guidelines | . | WHO SMART Implementation Guides | L3 FHIR resources, FSH, IG Publisher output | authoring-who-smart-guidelines | . | Others | Pluggable — add a new adapter + skill package | Adding a content type | . The cross-cutting content-lifecycle package (plan → author → validate → review → test → publish → feedback → retire) applies to every content type. ",
+    "url": "/folio-assistant/#supported-content-types",
+    
+    "relUrl": "/#supported-content-types"
+  },"67": {
+    "doc": "Home",
+    "title": "Where to go next",
+    "content": ". | Installation — prerequisites, clone, bun install, capability check. | Getting started — connect the MCP server to your LLM and run your first skill. | Tutorial: Writing a paper with folio-assistant — a full, LLM-driven walk-through with a mock chat session. | Content types — the formalism of each authoring domain. | Skill schema reference — generated input/output contracts for every skill. | TypeScript API reference — the content-object model (Block, Chapter, Paper, builders, Zod constraints). | Architecture — adapters, MCP server, RBAC, the block model. | . ",
+    "url": "/folio-assistant/#where-to-go-next",
+    
+    "relUrl": "/#where-to-go-next"
+  },"68": {
+    "doc": "Home",
+    "title": "Documentation map",
+    "content": "flowchart TD Home --&gt; Install[Installation] Home --&gt; GS[Getting started] Install --&gt; GS GS --&gt; Tut[Tutorial: writing a paper] GS --&gt; CT[Content types] CT --&gt; Guides[Authoring guides] Guides --&gt; Paper[Papers: Lean + LaTeX] Guides --&gt; DAK[WHO SMART DAK / L2] Guides --&gt; IG[WHO SMART IG / L3 FHIR] Guides --&gt; New[Add a content type] CT --&gt; Ref[Skill schema reference] Ref --&gt; API[TypeScript API reference] Home --&gt; Arch[Architecture] . ",
+    "url": "/folio-assistant/#documentation-map",
+    
+    "relUrl": "/#documentation-map"
+  },"69": {
+    "doc": "Home",
+    "title": "Home",
+    "content": " ",
+    "url": "/folio-assistant/",
+    
+    "relUrl": "/"
+  },"70": {
+    "doc": "Installation",
+    "title": "Installation",
+    "content": ". | Prerequisites | Clone and install | Check your environment | Run the server | Configure for your folio | Connecting an LLM harness . | Claude Code | Antigravity | Gemini CLI | Any other MCP client | . | . ",
+    "url": "/folio-assistant/installation.html",
+    
+    "relUrl": "/installation.html"
+  },"71": {
+    "doc": "Installation",
+    "title": "Prerequisites",
+    "content": "folio-assistant runs on Bun and connects to an LLM agent over MCP. The platform itself only needs Bun; individual content types pull in heavier toolchains (LaTeX, Lean, the FHIR IG Publisher) which are checked at runtime and can be installed on demand. | Requirement | Needed for | Install | . | Bun ≥ 1.0 | the framework (always) | curl -fsSL https://bun.sh/install \\| bash | . | Git + git-lfs | content repositories | apt install git git-lfs | . | LaTeX (latexmk, texlive) | rendering papers | apt install texlive-full latexmk biber | . | Lean 4 (via elan) | formalizing papers | curl …/elan-init.sh \\| sh -s -- -y | . | Java 21 + IG Publisher + SUSHI | WHO SMART IGs (L3) | see WHO SMART IG guide | . | pandoc, ripgrep | conversions, search | apt install pandoc ripgrep | . You do not need all of these — install only what the content types you author require. The built-in capability probe tells you what is missing. ",
+    "url": "/folio-assistant/installation.html#prerequisites",
+    
+    "relUrl": "/installation.html#prerequisites"
+  },"72": {
+    "doc": "Installation",
+    "title": "Clone and install",
+    "content": "git clone https://github.com/litlfred/folio-assistant.git cd folio-assistant bun install . ",
+    "url": "/folio-assistant/installation.html#clone-and-install",
+    
+    "relUrl": "/installation.html#clone-and-install"
+  },"73": {
+    "doc": "Installation",
+    "title": "Check your environment",
+    "content": "The --check-deps probe reports which capabilities are present and gives an install hint for anything missing: . bun run src/index.ts --check-deps # or via the npm script bun run check-deps . ",
+    "url": "/folio-assistant/installation.html#check-your-environment",
+    
+    "relUrl": "/installation.html#check-your-environment"
+  },"74": {
+    "doc": "Installation",
+    "title": "Run the server",
+    "content": "folio-assistant is an MCP server. It speaks two transports: . # stdio transport — what LLM harnesses (Claude Code, etc.) launch bun run src/index.ts --stdio # HTTP transport — for a long-running shared instance / the web UI bun run src/index.ts --http # point it at the content repo you are authoring (defaults to ../.. ) bun run src/index.ts --stdio --repo /path/to/your/content-repo . There are convenience scripts in package.json: . bun run start # default (stdio) bun run start:http # HTTP transport bun run test # unit tests (bun test) bun run test:e2e # Playwright end-to-end tests bun run lint # eslint . ",
+    "url": "/folio-assistant/installation.html#run-the-server",
+    
+    "relUrl": "/installation.html#run-the-server"
+  },"75": {
+    "doc": "Installation",
+    "title": "Configure for your folio",
+    "content": "Copy the example config into your content repository (not into folio-assistant) and adjust it for your content type: . cp folio.config.example.json /path/to/your/content-repo/folio.config.json . { \"contentType\": \"paper\", \"adapter\": \"paper\", \"adapterModule\": \"./adapters/paper/index.ts\", \"feedbackDir\": \"folio-assistant/feedback\", \"skills\": \".claude/skills/local\" } . ",
+    "url": "/folio-assistant/installation.html#configure-for-your-folio",
+    
+    "relUrl": "/installation.html#configure-for-your-folio"
+  },"76": {
+    "doc": "Installation",
+    "title": "Connecting an LLM harness",
+    "content": "folio-assistant exposes its tools over MCP, so any MCP-capable agent harness can drive it. Below are configurations for the common ones. In every case the agent launches the server over stdio. Claude Code . Add folio-assistant as an MCP server. Project-scoped config lives in .mcp.json at the root of your content repo: . { \"mcpServers\": { \"folio-assistant\": { \"command\": \"bun\", \"args\": [\"run\", \"/path/to/folio-assistant/src/index.ts\", \"--stdio\", \"--repo\", \".\"] } } } . Or register it from the CLI: . claude mcp add folio-assistant -- bun run /path/to/folio-assistant/src/index.ts --stdio --repo . Claude Code also reads AGENTS.md / CLAUDE.md natively and honours the SessionStart hook in .claude/settings.json — so the work-plan primer runs automatically when a session starts. Antigravity . Antigravity reads AGENTS.md natively and supports MCP servers and a SessionStart lifecycle hook. Add the server to its MCP config (JSON format shared with Gemini CLI): . { \"mcpServers\": { \"folio-assistant\": { \"command\": \"bun\", \"args\": [\"run\", \"/path/to/folio-assistant/src/index.ts\", \"--stdio\", \"--repo\", \".\"] } } } . Wire the session-start primer to Antigravity’s SessionStart hook so each session is primed with the work-plan — point the hook command at the shared script scripts/session-start-coord-sweep.sh (the same script every harness uses; only the hook-config format differs per tool). Gemini CLI . Gemini CLI reads AGENTS.md / GEMINI.md natively. Register the MCP server in its settings and reuse the same SessionStart script: . { \"mcpServers\": { \"folio-assistant\": { \"command\": \"bun\", \"args\": [\"run\", \"/path/to/folio-assistant/src/index.ts\", \"--stdio\", \"--repo\", \".\"] } } } . Any other MCP client . Point your client at the stdio command above, or run the HTTP transport (bun run start:http) and connect over HTTP. The MCP server exposes a work_plan_prime tool that any MCP-connected agent can call to get identical live work-plan priming, regardless of harness. Why this works across harnesses. The discipline lives in AGENTS.md (a Linux Foundation agent standard read natively by Claude Code, Gemini CLI, Antigravity, Cursor, Copilot, and others); the live state is exposed both as a per-harness SessionStart hook over one shared script and as the work_plan_prime MCP tool. See the architecture page. ",
+    "url": "/folio-assistant/installation.html#connecting-an-llm-harness",
+    
+    "relUrl": "/installation.html#connecting-an-llm-harness"
+  },"77": {
+    "doc": "L2 DAK Authoring",
+    "title": "L2 DAK Authoring",
+    "content": "Skill id: l2-dak-authoring . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/l2-dak-authoring.html",
+    
+    "relUrl": "/reference/skills/l2-dak-authoring.html"
+  },"78": {
+    "doc": "L2 DAK Authoring",
+    "title": "Input",
+    "content": "Input schema for L2 Digital Adaptation Kit authoring. Translates WHO clinical guidelines into structured digital artifacts. | Field | Type | Required | Description | . | dakComponent | \"personas\" | \"user-scenarios\" | \"business-processes\" | \"data-dictionary\" | \"decision-logic\" | \"scheduling-logic\" | \"indicators\" | \"functional-requirements\" | \"non-functional-requirements\" | yes | Which DAK component to author. | . | sourceGuideline | string | yes | Reference to the WHO L1 guideline being adapted. | . | existingContent | string | no | Path to existing content being iterated on (if any). | . | sprintNumber | integer | no | Current sprint/iteration number. (min: 1) | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/l2-dak-authoring.html#input",
+    
+    "relUrl": "/reference/skills/l2-dak-authoring.html#input"
+  },"79": {
+    "doc": "L2 DAK Authoring",
+    "title": "Output",
+    "content": "Output schema for L2 DAK authoring. | Field | Type | Required | Description | . | artifacts | array | yes |   | . | status | \"draft\" | \"ready-for-review\" | \"approved\" | yes |   | . | validationIssues | array | no |   | . artifacts[] . | Field | Type | Required | Description | . | path | string | yes |   | . | type | \"bpmn\" | \"dmn\" | \"spreadsheet\" | \"markdown\" | \"fsh\" | yes |   | . | description | string | no |   | . validationIssues[] . | Field | Type | Required | Description | . | severity | \"error\" | \"warning\" | \"info\" | no |   | . | message | string | no |   | . | location | string | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/l2-dak-authoring.html#output",
+    
+    "relUrl": "/reference/skills/l2-dak-authoring.html#output"
+  },"80": {
+    "doc": "L3 FHIR Authoring",
+    "title": "L3 FHIR Authoring",
+    "content": "Skill id: l3-fhir-authoring . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/l3-fhir-authoring.html",
+    
+    "relUrl": "/reference/skills/l3-fhir-authoring.html"
+  },"81": {
+    "doc": "L3 FHIR Authoring",
+    "title": "Input",
+    "content": "Input schema for L3 FHIR IG authoring. Creates machine-readable FHIR artifacts from L2 DAK specifications. | Field | Type | Required | Description | . | artifactType | \"logical-model\" | \"profile\" | \"questionnaire\" | \"cql-library\" | \"structure-map\" | \"plan-definition\" | \"measure\" | \"test-case\" | \"actor-definition\" | \"requirements\" | yes | Type of FHIR artifact to author. | . | l2Source | string | yes | Path or reference to the L2 DAK source material. | . | fshOutputDir | string | no | Directory for FSH output files. (default: \"input/fsh\") | . | igRoot | string | no | IG repository root directory. | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/l3-fhir-authoring.html#input",
+    
+    "relUrl": "/reference/skills/l3-fhir-authoring.html#input"
+  },"82": {
+    "doc": "L3 FHIR Authoring",
+    "title": "Output",
+    "content": "Output schema for L3 FHIR IG authoring. | Field | Type | Required | Description | . | fshFiles | array | yes |   | . | sushiResult | object | yes |   | . | generatedResources | array | no |   | . fshFiles[] . | Field | Type | Required | Description | . | path | string | yes |   | . | resourceType | string | yes |   | . | resourceId | string | no |   | . sushiResult . | Field | Type | Required | Description | . | status | \"success\" | \"warnings\" | \"errors\" | no |   | . | resourceCount | integer | no |   | . | errorCount | integer | no |   | . | warningCount | integer | no |   | . generatedResources[] . | Field | Type | Required | Description | . | path | string | no |   | . | resourceType | string | no |   | . | url | string | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/l3-fhir-authoring.html#output",
+    
+    "relUrl": "/reference/skills/l3-fhir-authoring.html#output"
+  },"83": {
+    "doc": "LaTeX Authoring",
+    "title": "LaTeX Authoring",
+    "content": "Skill id: latex-authoring . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/latex-authoring.html",
+    
+    "relUrl": "/reference/skills/latex-authoring.html"
+  },"84": {
+    "doc": "LaTeX Authoring",
+    "title": "Input",
+    "content": "Input schema for the latex-authoring skill. | Field | Type | Required | Description | . | documentClass | \"article\" | \"book\" | \"report\" | \"beamer\" | yes | LaTeX document class. | . | mainFile | string | yes | Path to the main .tex file. | . | bibliographyFile | string | no | Path to the .bib bibliography file. | . | outputFormat | \"pdf\" | \"dvi\" | \"ps\" | no | default: \"pdf\" | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/latex-authoring.html#input",
+    
+    "relUrl": "/reference/skills/latex-authoring.html#input"
+  },"85": {
+    "doc": "LaTeX Authoring",
+    "title": "Output",
+    "content": "Output schema for the latex-authoring skill. | Field | Type | Required | Description | . | outputFile | string | yes | Path to the compiled output (PDF, etc.). | . | buildStatus | \"success\" | \"warnings\" | \"errors\" | yes |   | . | warnings | array | no |   | . | pageCount | integer | no | min: 0 | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/latex-authoring.html#output",
+    
+    "relUrl": "/reference/skills/latex-authoring.html#output"
+  },"86": {
+    "doc": "Lean Formalization",
+    "title": "Lean Formalization",
+    "content": "Skill id: lean-formalization . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/lean-formalization.html",
+    
+    "relUrl": "/reference/skills/lean-formalization.html"
+  },"87": {
+    "doc": "Lean Formalization",
+    "title": "Input",
+    "content": "Input schema for the lean-formalization skill. Describes source material to be formalized in Lean 4. | Field | Type | Required | Description | . | sourceFile | string | yes | Path to the source material (LaTeX, markdown, or existing Lean file) to formalize. | . | targetModule | string | yes | Lean module path for the output (e.g. ‘Qou.CategoryTheory.Functors’). | . | proofStrategy | \"tactic\" | \"term\" | \"mixed\" | no | Preferred proof style. (default: \"tactic\") | . | dependencies | array | no | Lean package dependencies (lake packages). | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/lean-formalization.html#input",
+    
+    "relUrl": "/reference/skills/lean-formalization.html#input"
+  },"88": {
+    "doc": "Lean Formalization",
+    "title": "Output",
+    "content": "Output schema for the lean-formalization skill. | Field | Type | Required | Description | . | leanFiles | array | yes |   | . | buildStatus | \"success\" | \"warnings\" | \"errors\" | yes |   | . | diagnostics | array | no |   | . leanFiles[] . | Field | Type | Required | Description | . | path | string | yes |   | . | module | string | yes |   | . | sorryCount | integer | no | min: 0 | . diagnostics[] . | Field | Type | Required | Description | . | file | string | no |   | . | line | integer | no |   | . | severity | \"error\" | \"warning\" | \"info\" | no |   | . | message | string | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/lean-formalization.html#output",
+    
+    "relUrl": "/reference/skills/lean-formalization.html#output"
+  },"89": {
+    "doc": "Adding a new content type",
+    "title": "Adding a new content type",
+    "content": "folio-assistant is content-agnostic by design. A new content type (“others” in the supported-types list) is added by providing two things — a content adapter and a skill package — after which the lifecycle, RBAC, MCP transport, and work-plan plumbing all apply for free. | What you provide | 1. The content adapter | 2. The skill package | 3. The skill schemas | 4. Reuse the lifecycle | Checklist | . ",
+    "url": "/folio-assistant/guides/new-content-type.html",
+    
+    "relUrl": "/guides/new-content-type.html"
+  },"90": {
+    "doc": "Adding a new content type",
+    "title": "What you provide",
+    "content": "flowchart LR New[New content type] --&gt; A[Content adapter&lt;br/&gt;adapters/your-type/] New --&gt; P[Skill package&lt;br/&gt;skills/authoring-your-type/] A --&gt; Server[FolioServer registers adapter tools] P --&gt; Schemas[schemas/skills/your-skill/*] P --&gt; Manifest[package-manifest.json · Docker deps] . ",
+    "url": "/folio-assistant/guides/new-content-type.html#what-you-provide",
+    
+    "relUrl": "/guides/new-content-type.html#what-you-provide"
+  },"91": {
+    "doc": "Adding a new content type",
+    "title": "1. The content adapter",
+    "content": "Model the paper adapter (adapters/paper/). An adapter: . | implements the content-adapter interface the FolioServer expects (list / validate / build, plus any type-specific tools); | registers its MCP tools via server.tool(...) (e.g. the paper adapter adds paper_render_pdf, lean_build, …); | resolves paths in the content repo, not in folio-assistant. | . Wire it up by selecting it through the folio config: . { \"contentType\": \"your-type\", \"adapter\": \"your-type\", \"adapterModule\": \"./adapters/your-type/index.ts\" } . ",
+    "url": "/folio-assistant/guides/new-content-type.html#1-the-content-adapter",
+    
+    "relUrl": "/guides/new-content-type.html#1-the-content-adapter"
+  },"92": {
+    "doc": "Adding a new content type",
+    "title": "2. The skill package",
+    "content": "Create skills/authoring-your-type/package-manifest.json declaring the skills and the Docker/runtime dependencies (apt/pip/npm, setup commands, env). Follow the existing manifests (authoring-math, authoring-who-smart-guidelines): . { \"name\": \"authoring-your-type\", \"version\": \"0.1.0\", \"description\": \"…\", \"skills\": [\"your-authoring\", \"your-validation\"], \"docker\": { \"baseImage\": \"ubuntu:24.04\", \"aptPackages\": [\"…\"] }, \"providesCapabilities\": [\"…\"], \"lifecycleStages\": [\"plan\", \"author\", \"validate\", \"review\", \"test\", \"publish\"] } . ",
+    "url": "/folio-assistant/guides/new-content-type.html#2-the-skill-package",
+    
+    "relUrl": "/guides/new-content-type.html#2-the-skill-package"
+  },"93": {
+    "doc": "Adding a new content type",
+    "title": "3. The skill schemas",
+    "content": "For each skill, add schemas/skills/&lt;skill&gt;/input.schema.json and output.schema.json (JSON Schema draft-07). These are the typed contract the LLM works against. Then regenerate the reference: . bun run scripts/gen-schema-docs.ts . Your skill pages appear automatically in the Skill schema reference. ",
+    "url": "/folio-assistant/guides/new-content-type.html#3-the-skill-schemas",
+    
+    "relUrl": "/guides/new-content-type.html#3-the-skill-schemas"
+  },"94": {
+    "doc": "Adding a new content type",
+    "title": "4. Reuse the lifecycle",
+    "content": "You do not re-implement plan/author/validate/review/test/publish — the cross-cutting content-lifecycle package already provides those stages. Your package only adds the authoring skills unique to the type. ",
+    "url": "/folio-assistant/guides/new-content-type.html#4-reuse-the-lifecycle",
+    
+    "relUrl": "/guides/new-content-type.html#4-reuse-the-lifecycle"
+  },"95": {
+    "doc": "Adding a new content type",
+    "title": "Checklist",
+    "content": ". | Adapter under adapters/&lt;type&gt;/ implementing list/validate/build + tools | folio.config.json points at the adapter | Skill package + package-manifest.json with Docker deps | JSON Schemas under schemas/skills/&lt;skill&gt;/ | bun run scripts/gen-schema-docs.ts regenerated | Capabilities probed by check_dependencies | Tests (bun test) and lint (eslint .) green | . ",
+    "url": "/folio-assistant/guides/new-content-type.html#checklist",
+    
+    "relUrl": "/guides/new-content-type.html#checklist"
+  },"96": {
+    "doc": "Proof Verification",
+    "title": "Proof Verification",
+    "content": "Skill id: proof-verification . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/proof-verification.html",
+    
+    "relUrl": "/reference/skills/proof-verification.html"
+  },"97": {
+    "doc": "Proof Verification",
+    "title": "Input",
+    "content": "Input schema for the proof-verification skill. Verifies Lean proofs and tracks sorry obligations. | Field | Type | Required | Description | . | projectRoot | string | yes | Path to the Lean project root (containing lakefile.lean). | . | targetFiles | array | no | Specific files to verify (empty = entire project). | . | trackSorries | boolean | no | Whether to track and report sorry placeholders. (default: true) | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/proof-verification.html#input",
+    
+    "relUrl": "/reference/skills/proof-verification.html#input"
+  },"98": {
+    "doc": "Proof Verification",
+    "title": "Output",
+    "content": "Output schema for the proof-verification skill. | Field | Type | Required | Description | . | verified | boolean | yes |   | . | sorryCount | integer | yes | min: 0 | . | sorries | array | no |   | . | errors | array | no |   | . sorries[] . | Field | Type | Required | Description | . | file | string | yes |   | . | line | integer | yes |   | . | obligation | string | yes |   | . | reference | string | no |   | . errors[] . | Field | Type | Required | Description | . | file | string | no |   | . | line | integer | no |   | . | message | string | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/proof-verification.html#output",
+    
+    "relUrl": "/reference/skills/proof-verification.html#output"
+  },"99": {
+    "doc": "Quality Control",
+    "title": "Quality Control",
+    "content": "Skill id: quality-control . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/quality-control.html",
+    
+    "relUrl": "/reference/skills/quality-control.html"
+  },"100": {
+    "doc": "Quality Control",
+    "title": "Input",
+    "content": "Input schema for quality control checks across content lifecycle. | Field | Type | Required | Description | . | checkType | \"qa-report\" | \"publication-checklist\" | \"conformance-validation\" | \"functionality-test\" | \"cross-component-consistency\" | yes | Type of QC check to perform. | . | targetPath | string | yes | Path to content being checked. | . | checklistSections | array&lt;\"L1\" | \"L2\" | \"L3\" | \"L4\" | \"global\"&gt; | no | Publication checklist sections to review. | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/quality-control.html#input",
+    
+    "relUrl": "/reference/skills/quality-control.html#input"
+  },"101": {
+    "doc": "Quality Control",
+    "title": "Output",
+    "content": "Output schema for quality control results. | Field | Type | Required | Description | . | overallResult | \"pass\" | \"pass-with-warnings\" | \"fail\" | yes |   | . | findings | array | no |   | . | checklistResults | object | no |   | . findings[] . | Field | Type | Required | Description | . | severity | \"error\" | \"warning\" | \"info\" | yes |   | . | category | string | yes |   | . | message | string | yes |   | . | location | string | no |   | . | remediation | string | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/quality-control.html#output",
+    
+    "relUrl": "/reference/skills/quality-control.html#output"
+  },"102": {
+    "doc": "Terminology Management",
+    "title": "Terminology Management",
+    "content": "Skill id: terminology-management . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
+    "url": "/folio-assistant/reference/skills/terminology-management.html",
+    
+    "relUrl": "/reference/skills/terminology-management.html"
+  },"103": {
+    "doc": "Terminology Management",
+    "title": "Input",
+    "content": "Input schema for terminology management — CodeSystems, ValueSets, ConceptMaps. | Field | Type | Required | Description | . | operation | \"create-codesystem\" | \"create-valueset\" | \"create-conceptmap\" | \"validate-bindings\" | \"map-to-standard\" | yes | Terminology operation to perform. | . | targetStandard | \"ICD-11\" | \"SNOMED-CT\" | \"LOINC\" | \"IPS\" | \"WHO-FIC\" | \"WHO-ATC\" | no | Target standard terminology for mapping. | . | inputFile | string | no | Path to input terminology resource (FSH, JSON, CSV). | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/terminology-management.html#input",
+    
+    "relUrl": "/reference/skills/terminology-management.html#input"
+  },"104": {
+    "doc": "Terminology Management",
+    "title": "Output",
+    "content": "Output schema for terminology management operations. | Field | Type | Required | Description | . | resources | array | yes |   | . | unmappedConcepts | array | no | Concepts that could not be mapped to the target standard. | . resources[] . | Field | Type | Required | Description | . | path | string | yes |   | . | resourceType | \"CodeSystem\" | \"ValueSet\" | \"ConceptMap\" | yes |   | . | url | string | no |   | . | conceptCount | integer | no |   | . Raw schema . ",
+    "url": "/folio-assistant/reference/skills/terminology-management.html#output",
+    
+    "relUrl": "/reference/skills/terminology-management.html#output"
+  },"105": {
+    "doc": "Authoring a WHO SMART DAK (L2)",
+    "title": "Authoring a WHO SMART DAK (L2)",
+    "content": "A Digital Adaptation Kit (DAK) is the L2 — machine-readable but implementation-neutral — representation of a WHO SMART Guideline. This guide covers authoring the L2 artifacts with folio-assistant and an LLM. Skill package: authoring-who-smart-guidelines . | The L2 artifacts | Workflow | A mock session | Next | . ",
+    "url": "/folio-assistant/guides/who-smart-dak.html",
+    
+    "relUrl": "/guides/who-smart-dak.html"
+  },"106": {
+    "doc": "Authoring a WHO SMART DAK (L2)",
+    "title": "The L2 artifacts",
+    "content": "flowchart TD G[WHO guideline / recommendations] --&gt; P[Personas &amp; scenarios] G --&gt; BP[Business processes · BPMN 2.0] G --&gt; DL[Decision logic · DMN] G --&gt; DD[Data dictionary · core data elements] G --&gt; T[Terminology · code systems / value sets] G --&gt; I[Indicators &amp; requirements] P &amp; BP &amp; DL &amp; DD &amp; T &amp; I --&gt; L2[(L2 DAK)] . | Artifact | Skill | Format | . | Business processes | bpmn-authoring | BPMN 2.0 XML | . | Decision logic | dmn-authoring | DMN tables | . | Data dictionary | l2-dak-authoring | Excel / structured | . | Terminology | terminology-management | code systems / value sets | . | Review | content-review | criteria-based | . ",
+    "url": "/folio-assistant/guides/who-smart-dak.html#the-l2-artifacts",
+    
+    "relUrl": "/guides/who-smart-dak.html#the-l2-artifacts"
+  },"107": {
+    "doc": "Authoring a WHO SMART DAK (L2)",
+    "title": "Workflow",
+    "content": ". | Plan — content-plan: enumerate the processes, decisions, and data elements the guideline implies; identify actors (business analyst, clinical SME, terminologist). | Author business processes — ask the agent to draft BPMN for each clinical workflow (bpmn-authoring); it produces valid BPMN 2.0. | Author decision logic — capture recommendations as DMN decision tables (dmn-authoring), linked to the data dictionary. | Author the data dictionary — define core data elements with types, cardinality, and terminology bindings (l2-dak-authoring). | Manage terminology — define code systems / value sets and bind them (terminology-management). | Validate &amp; review — content-validate then content-review against the DAK criteria. | . ",
+    "url": "/folio-assistant/guides/who-smart-dak.html#workflow",
+    
+    "relUrl": "/guides/who-smart-dak.html#workflow"
+  },"108": {
+    "doc": "Authoring a WHO SMART DAK (L2)",
+    "title": "A mock session",
+    "content": "You: Plan the L2 DAK for the immunization guideline — I need the “administer vaccine” process and the “is the client due” decision. Assistant: (loads content-plan) Proposed: 1 BPMN process administer-vaccine, 1 DMN decision client-due-for-vaccine, 4 core data elements (client id, antigen, dose number, date administered), 1 value set (antigen codes). Scaffold it? . You: Yes. Assistant: (loads bpmn-authoring, dmn-authoring, l2-dak-authoring) Created the BPMN with start → check eligibility → administer → record, the DMN table keyed on age/last-dose, and the data dictionary. (calls content_validate) All artifacts valid. ",
+    "url": "/folio-assistant/guides/who-smart-dak.html#a-mock-session",
+    
+    "relUrl": "/guides/who-smart-dak.html#a-mock-session"
+  },"109": {
+    "doc": "Authoring a WHO SMART DAK (L2)",
+    "title": "Next",
+    "content": "Turn the L2 DAK into a computable FHIR Implementation Guide → Authoring a WHO SMART IG (L3). ",
+    "url": "/folio-assistant/guides/who-smart-dak.html#next",
+    
+    "relUrl": "/guides/who-smart-dak.html#next"
+  },"110": {
+    "doc": "Authoring a WHO SMART IG (L3)",
+    "title": "Authoring a WHO SMART IG (L3)",
+    "content": "The L3 layer turns an L2 DAK into a computable FHIR Implementation Guide. This guide covers authoring FHIR artifacts as FSH, compiling with SUSHI, validating, and publishing with the HL7 IG Publisher — all driven by the LLM. Skill package: authoring-who-smart-guidelines . | Prerequisites | The L3 pipeline | Workflow | A mock session | Next | . ",
+    "url": "/folio-assistant/guides/who-smart-ig.html",
+    
+    "relUrl": "/guides/who-smart-ig.html"
+  },"111": {
+    "doc": "Authoring a WHO SMART IG (L3)",
+    "title": "Prerequisites",
+    "content": "The L3 toolchain is heavier than the platform baseline. The authoring-who-smart-guidelines package’s Docker manifest provisions it; to run locally you need: . | Tool | Purpose | Install | . | Java 21 (JRE) | IG Publisher | apt install openjdk-21-jre-headless | . | FHIR IG Publisher | build the IG | download publisher.jar from HL7/fhir-ig-publisher | . | SUSHI (fsh-sushi) | compile FSH → FHIR | npm i -g fsh-sushi | . | Jekyll | IG site rendering | gem install jekyll bundler | . Run bun run check-deps and the agent’s check_dependencies tool to confirm. ",
+    "url": "/folio-assistant/guides/who-smart-ig.html#prerequisites",
+    
+    "relUrl": "/guides/who-smart-ig.html#prerequisites"
+  },"112": {
+    "doc": "Authoring a WHO SMART IG (L3)",
+    "title": "The L3 pipeline",
+    "content": "flowchart LR L2[(L2 DAK)] --&gt; FSH[Author FSH&lt;br/&gt;profiles · extensions · value sets] FSH --&gt; SUSHI[SUSHI compile&lt;br/&gt;→ FHIR JSON] SUSHI --&gt; VAL[fhir-validation] VAL --&gt; QC[quality-control] QC --&gt; IGP[IG Publisher] IGP --&gt; Site[Published IG site] . | Step | Skill | . | Author FSH (profiles, extensions, value sets, examples) | l3-fhir-authoring | . | Validate against FHIR profiles | fhir-validation | . | QC gates | quality-control | . | Publish the IG | ig-publication | . ",
+    "url": "/folio-assistant/guides/who-smart-ig.html#the-l3-pipeline",
+    
+    "relUrl": "/guides/who-smart-ig.html#the-l3-pipeline"
+  },"113": {
+    "doc": "Authoring a WHO SMART IG (L3)",
+    "title": "Workflow",
+    "content": ". | Map L2 → L3 — l3-fhir-authoring: turn each data element into a FHIR profile, each value set into a ValueSet, each decision into a PlanDefinition / Library as appropriate. | Author FSH — the agent writes FHIR Shorthand; SUSHI compiles it to FHIR resources. | Validate — fhir-validation runs the validator against the profiles. | QC — quality-control enforces the IG’s quality gates. | Publish — ig-publication runs the IG Publisher and renders the site. | . ",
+    "url": "/folio-assistant/guides/who-smart-ig.html#workflow",
+    
+    "relUrl": "/guides/who-smart-ig.html#workflow"
+  },"114": {
+    "doc": "Authoring a WHO SMART IG (L3)",
+    "title": "A mock session",
+    "content": "You: Generate the FHIR profile and value set for the immunization data dictionary from the L2 DAK, then build the IG. Assistant: (loads l3-fhir-authoring) Authored ImmunizationRecord profile + AntigenCodes value set as FSH. (runs SUSHI) Compiled to FHIR R4. (loads fhir-validation) Validator: 0 errors, 2 warnings. (loads ig-publication) Built the IG with the HL7 publisher — site is in output/. You: Show me the QA report. Assistant: (loads quality-control) QA: broken links 0, profile conformance ✓, terminology bindings resolved ✓. ",
+    "url": "/folio-assistant/guides/who-smart-ig.html#a-mock-session",
+    
+    "relUrl": "/guides/who-smart-ig.html#a-mock-session"
+  },"115": {
+    "doc": "Authoring a WHO SMART IG (L3)",
+    "title": "Next",
+    "content": ". | Content types — WHO SMART IGs | Authoring a WHO SMART DAK (L2) — the upstream L2 layer | . ",
+    "url": "/folio-assistant/guides/who-smart-ig.html#next",
+    
+    "relUrl": "/guides/who-smart-ig.html#next"
+  },"116": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Tutorial — writing a paper with folio-assistant",
+    "content": "This tutorial walks through authoring a rigorous scientific paper with an LLM driving folio-assistant: the agent plans the paper, drafts blocks, formalizes theorems in Lean 4, renders LaTeX, and publishes — while you steer. It uses a small running example — “A note on the harmonic series” — purely to illustrate the workflow. The content is not the point; the formalism and the LLM workflow are. | The end-to-end workflow | Before you start | Step 1 — Plan the paper | Step 2 — Scaffold the repository | Step 3 — Author the content | Step 4 — Formalize in Lean | Step 5 — Validate | Step 6 — Render | Step 7 — Review &amp; feedback | Step 8 — Publish | What you end up with | Where to go deeper | . ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#tutorial--writing-a-paper-with-folio-assistant",
+    
+    "relUrl": "/guides/writing-a-paper.html#tutorial--writing-a-paper-with-folio-assistant"
+  },"117": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "The end-to-end workflow",
+    "content": "flowchart LR plan[1 · Plan] --&gt; scaffold[2 · Scaffold repo] scaffold --&gt; author[3 · Author blocks] author --&gt; lean[4 · Formalize in Lean] lean --&gt; validate[5 · Validate] validate --&gt; render[6 · Render PDF/HTML] render --&gt; review[7 · Review + feedback] review -.-&gt;|iterate| author review --&gt; publish[8 · Publish] . Every step is something the LLM does for you by calling folio-assistant’s MCP tools — you converse in natural language and approve the work. ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#the-end-to-end-workflow",
+    
+    "relUrl": "/guides/writing-a-paper.html#the-end-to-end-workflow"
+  },"118": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Before you start",
+    "content": ". | Install folio-assistant and run bun run check-deps. For papers you want bun, latexmk/texlive, and Lean (elan). | Connect your LLM harness (Claude Code, Antigravity, …) so the agent has the MCP tools. | Create an (empty) content repository for your paper and add a folio.config.json with \"contentType\": \"paper\". | . ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#before-you-start",
+    
+    "relUrl": "/guides/writing-a-paper.html#before-you-start"
+  },"119": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Step 1 — Plan the paper",
+    "content": "Start by asking the agent to load the planning skill and propose a structure. Behind the scenes it calls skill_fetch content-plan. You: I want to write a short paper, “A note on the harmonic series”. It should define the partial sums, state and prove that the series diverges, and include one worked example. Plan it out. Assistant: (loads content-plan) Here’s a proposed plan: . | prose — Introduction &amp; motivation | definition def:harmonic-partial-sum — the partial sum $H_n$ | theorem thm:harmonic-diverges — $H_n \\to \\infty$ | proof prf:harmonic-diverges — Oresme’s grouping argument | example ex:H4 — compute $H_4$ | . The definition and theorem will get Lean counterparts. Shall I scaffold the repo and create these blocks as drafts? . You: Yes, go ahead. This is also where you’d open work-plan items so the plan survives across sessions: . beans create \"Draft harmonic-series paper: blocks + Lean\" beans &lt;id&gt; --status in-progress . ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#step-1--plan-the-paper",
+    
+    "relUrl": "/guides/writing-a-paper.html#step-1--plan-the-paper"
+  },"120": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Step 2 — Scaffold the repository",
+    "content": "The agent creates the block files and a main.tex, then confirms with content_list. Assistant: (creates blocks, calls content_list) Scaffolded 5 blocks under content/harmonic-series/. Current artifacts: . content/harmonic-series/ ├── 00-intro.prose.md ├── 10-def-partial-sum.definition.md ├── 20-thm-diverges.theorem.md ├── 21-prf-diverges.proof.md └── 30-ex-h4.example.md . Each block carries typed front-matter validated against the content-object model. A definition block, for example: . --- kind: definition id: def:harmonic-partial-sum title: Harmonic partial sum lean: HarmonicSeries.partialSum --- For $n \\ge 1$, the *$n$-th harmonic partial sum* is $$ H_n = \\sum_{k=1}^{n} \\frac{1}{k}. $$ . ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#step-2--scaffold-the-repository",
+    
+    "relUrl": "/guides/writing-a-paper.html#step-2--scaffold-the-repository"
+  },"121": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Step 3 — Author the content",
+    "content": "Ask the agent to draft prose and statements; review and refine conversationally. You: Draft the introduction and the divergence theorem statement. Assistant: (loads content-author, edits the blocks) Done. The theorem reads: “The sequence $(H_n)$ is unbounded; equivalently $\\sum 1/k$ diverges.” I kept the statement Lean-friendly so it maps cleanly to Filter.Tendsto. A mock of the chat-driven authoring session: . ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#step-3--author-the-content",
+    
+    "relUrl": "/guides/writing-a-paper.html#step-3--author-the-content"
+  },"122": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Step 4 — Formalize in Lean",
+    "content": "Now the agent sets up Lean and formalizes the definition and theorem, calling lean_setup, lean_build, and lean_check. You: Formalize the definition and theorem in Lean and make it build. Assistant: (loads lean-formalization; calls lean_setup) Toolchain ready (Lean 4.16.0). I added: . namespace HarmonicSeries def partialSum (n : ℕ) : ℝ := ∑ k ∈ Finset.range n, 1 / (k + 1 : ℝ) theorem diverges : ¬ ∃ B, ∀ n, partialSum n ≤ B := by sorry -- Ref: [oresme] grouping argument . (calls lean_build) Build is green with 1 sorry remaining. (calls lean_status) Proof coverage: 1/2 blocks fully proved. You: Discharge the sorry using the grouping bound. Assistant: (edits, lean_build) ✅ Build green, 0 sorries. proof-verification reports the axiom set is clean (no sorryAx). sequenceDiagram participant You participant LLM as Assistant participant MCP as folio-assistant You-&gt;&gt;LLM: Formalize + make it build LLM-&gt;&gt;MCP: lean_setup MCP--&gt;&gt;LLM: toolchain ready LLM-&gt;&gt;MCP: lean_build MCP--&gt;&gt;LLM: green, 1 sorry LLM-&gt;&gt;MCP: lean_check / lean_status MCP--&gt;&gt;LLM: coverage 1/2 You-&gt;&gt;LLM: discharge the sorry LLM-&gt;&gt;MCP: lean_build MCP--&gt;&gt;LLM: green, 0 sorries . ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#step-4--formalize-in-lean",
+    
+    "relUrl": "/guides/writing-a-paper.html#step-4--formalize-in-lean"
+  },"123": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Step 5 — Validate",
+    "content": "Validation checks every block against its schema and the project’s constraint rules (label prefixes, required Lean links, citation resolution, …). You: Validate the whole paper. Assistant: (calls content_validate) All 5 blocks valid. Constraints: def: block has its required Lean link ✓, theorem has a proof block ✓, example references a defined symbol ✓. ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#step-5--validate",
+    
+    "relUrl": "/guides/writing-a-paper.html#step-5--validate"
+  },"124": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Step 6 — Render",
+    "content": "The agent renders a PDF (and/or HTML) with the paper adapter. You: Render the PDF and show me a preview. Assistant: (calls paper_render_pdf, then paper_preview) Rendered harmonic-series.pdf (3 pages). Preview below. You can set rendering preferences (engine, scope, math renderer) via the paper_preferences tool: . You: Use lualatex and render only the theorem section next time. Assistant: (calls paper_preferences action=set latex_engine=lualatex render_scope=section) Saved. ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#step-6--render",
+    
+    "relUrl": "/guides/writing-a-paper.html#step-6--render"
+  },"125": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Step 7 — Review &amp; feedback",
+    "content": "Reviewer feedback is captured in the feedback store and routed back into the authoring loop (content-review / content-feedback). You: A reviewer says the example should also show $H_8$. Log it and address it. Assistant: (records feedback, edits ex:H4 → adds $H_8$, re-validates, re-renders) Done; feedback item resolved. ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#step-7--review--feedback",
+    
+    "relUrl": "/guides/writing-a-paper.html#step-7--review--feedback"
+  },"126": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Step 8 — Publish",
+    "content": "Finally, publish the rendered artifacts. In CI this is the publish workflow; locally the agent runs content_build and the render tools, then commits. You: Publish it. Assistant: (loads content-publish, content_build, commits + pushes) Published. PDF, HTML, and the Lean blueprint are built; the work-plan item is marked resolved. beans &lt;id&gt; --status resolved . ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#step-8--publish",
+    
+    "relUrl": "/guides/writing-a-paper.html#step-8--publish"
+  },"127": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "What you end up with",
+    "content": ". | A paper as a tree of typed, validated blocks | A Lean 4 formalization with zero sorrys and a clean axiom audit | PDF + HTML renders and an interactive blueprint | A reproducible CI pipeline (validate → build → render → publish) | . ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#what-you-end-up-with",
+    
+    "relUrl": "/guides/writing-a-paper.html#what-you-end-up-with"
+  },"128": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Where to go deeper",
+    "content": ". | Content types — papers &amp; books | Skill contracts: latex-authoring, lean-formalization, proof-verification | TypeScript API reference — the block model in detail | Architecture — how the paper adapter is wired | . Note on the screenshots. The images above are mockups illustrating the chat-driven workflow and the viewer. Replace them with real screenshots from your own session under docs/assets/img/ to keep the tutorial current. ",
+    "url": "/folio-assistant/guides/writing-a-paper.html#where-to-go-deeper",
+    
+    "relUrl": "/guides/writing-a-paper.html#where-to-go-deeper"
+  },"129": {
+    "doc": "Writing a paper with folio-assistant",
+    "title": "Writing a paper with folio-assistant",
+    "content": " ",
+    "url": "/folio-assistant/guides/writing-a-paper.html",
+    
+    "relUrl": "/guides/writing-a-paper.html"
+  }
+}
