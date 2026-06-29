@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`src/skills/deployment-auth.md`](https://github.com/litlfred/folio-assistant/blob/main/src/skills/deployment-auth.md) — do not edit here.
 
+{% raw %}
 # Deployment & Auth Skill
 
 ## Role
@@ -155,3 +156,4 @@ Run the "update" action in the Deploy Folio workflow after updating GitHub Secre
 2. Check auth-gateway logs: `docker logs auth-gateway`
 3. Verify whitelist files are mounted: `docker exec auth-gateway cat /etc/auth-gateway/google-viewers.txt`
 4. Check cookie in browser DevTools → Application → Cookies
+{% endraw %}

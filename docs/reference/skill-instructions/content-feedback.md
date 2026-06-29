@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`skills/content-lifecycle/content-feedback.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-feedback.md) — do not edit here. Typed contract: [schema reference](../skills/content-feedback.html).
 
+{% raw %}
 # Content Feedback Collection
 
 Gather and triage feedback on published content for future iterations.
@@ -35,3 +36,4 @@ Gather and triage feedback on published content for future iterations.
 - Triaged feedback log
 - Prioritized backlog for next iteration
 - Change requests linked to feedback
+{% endraw %}

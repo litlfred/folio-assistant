@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`src/skills/corpus-grep.md`](https://github.com/litlfred/folio-assistant/blob/main/src/skills/corpus-grep.md) — do not edit here.
 
+{% raw %}
 # Corpus-Grep Skill
 
 > **Disambiguation.** This skill formalizes the **backward** check
@@ -145,3 +146,4 @@ Source-file status notes lag the corpus by weeks; the corpus is the
 source of truth. Post-mortem:
 `docs/audits/2026-05-31-binding-magic-A-wireup.md` §"Why was the
 resolution missed?".
+{% endraw %}

@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`skills/content-lifecycle/content-review.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-review.md) — do not edit here. Typed contract: [schema reference](../skills/content-review.html).
 
+{% raw %}
 # Content Review
 
 Formal review and approval of validated content before publication.
@@ -34,3 +35,4 @@ Formal review and approval of validated content before publication.
 - Review decision (approve / request-changes / reject)
 - Review comments and required modifications
 - Approval record (who, when, conditions)
+{% endraw %}

@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`skills/content-lifecycle/content-validate.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-validate.md) — do not edit here. Typed contract: [schema reference](../skills/content-validate.html).
 
+{% raw %}
 # Content Validation
 
 Validate authored content against schemas, standards, and clinical accuracy.
@@ -34,3 +35,4 @@ Validate authored content against schemas, standards, and clinical accuracy.
 ## Outputs
 - Validation report (pass/fail per artifact)
 - Issue list with severity and remediation guidance
+{% endraw %}

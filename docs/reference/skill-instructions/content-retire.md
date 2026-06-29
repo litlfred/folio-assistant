@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`skills/content-lifecycle/content-retire.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-retire.md) — do not edit here.
 
+{% raw %}
 # Content Retirement
 
 Deprecate and retire content that is no longer current or needed.
@@ -34,3 +35,4 @@ Deprecate and retire content that is no longer current or needed.
 - Archived content
 - Updated redirects
 - Retirement record
+{% endraw %}

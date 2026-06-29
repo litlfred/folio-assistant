@@ -39,6 +39,8 @@ interface Group {
 const GROUPS: Group[] = [
   { category: "Lifecycle skills", dir: join(REPO_ROOT, "skills", "content-lifecycle"), repoPrefix: "skills/content-lifecycle" },
   { category: "Agent skills", dir: join(REPO_ROOT, "src", "skills"), repoPrefix: "src/skills" },
+  { category: "Platform core (folio-core)", dir: join(REPO_ROOT, "skills", "folio-core"), repoPrefix: "skills/folio-core" },
+  { category: "Paper adapter (folio-paper-adapter)", dir: join(REPO_ROOT, "skills", "folio-paper-adapter"), repoPrefix: "skills/folio-paper-adapter" },
 ];
 
 /** Strip a leading YAML front-matter block (`---\n…\n---`) if present. */
@@ -70,6 +72,10 @@ function main(): void {
   mkdirSync(OUT_DIR, { recursive: true });
 
   const indexRows: Record<string, string[]> = {};
+  // One page per skill id in a flat output dir; if a skill appears in more than
+  // one source group (e.g. an agent skill that also has a folio-core copy), the
+  // first group wins and later duplicates are listed as a cross-reference.
+  const written = new Map<string, string>(); // skill name → category that emitted it
 
   for (const group of GROUPS) {
     indexRows[group.category] = [];
@@ -78,6 +84,11 @@ function main(): void {
 
     for (const file of files) {
       const name = basename(file, ".md");
+      if (written.has(name)) {
+        indexRows[group.category].push(`| [${name}](${name}.html) | \`${name}\` | — | _also in ${written.get(name)} (same page)_ |`);
+        console.log(`  ↪ ${name} (dup — kept ${written.get(name)})`);
+        continue;
+      }
       const raw = readFileSync(join(group.dir, file), "utf-8");
       const body = stripFrontMatter(raw).replace(/^\n+/, "");
       const title = deriveTitle(body, name);
@@ -98,9 +109,14 @@ function main(): void {
           (hasSchema ? ` Typed contract: [schema reference](../skills/${name}.html).` : ""),
       );
       page.push("");
+      // Wrap the body in a Liquid raw block so prose containing `{{ }}` / `{% %}`
+      // (math, code, templates) is emitted verbatim, not parsed by Jekyll.
+      page.push("{% raw %}");
       page.push(body.trimEnd());
+      page.push("{% endraw %}");
       page.push("");
       writeFileSync(join(OUT_DIR, `${name}.md`), page.join("\n"));
+      written.set(name, group.category);
 
       const desc = escapePipes((body.match(/^#\s+.+\n+([^\n#].*)$/m)?.[1] ?? "").slice(0, 100));
       const schemaCell = hasSchema ? `[schema](../skills/${name}.html)` : "—";

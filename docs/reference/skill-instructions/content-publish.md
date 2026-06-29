@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`skills/content-lifecycle/content-publish.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-publish.md) — do not edit here. Typed contract: [schema reference](../skills/content-publish.html).
 
+{% raw %}
 # Content Publication
 
 Package, version, and publish approved content.
@@ -34,3 +35,4 @@ Package, version, and publish approved content.
 - GitHub release with tags
 - Publication URL
 - Updated version in development branch
+{% endraw %}

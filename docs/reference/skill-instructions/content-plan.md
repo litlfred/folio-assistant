@@ -7,6 +7,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`skills/content-lifecycle/content-plan.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-plan.md) — do not edit here. Typed contract: [schema reference](../skills/content-plan.html).
 
+{% raw %}
 # Content Planning
 
 Plan content development by defining scope, team, timeline, and sprint cadence.
@@ -33,3 +34,4 @@ Plan content development by defining scope, team, timeline, and sprint cadence.
 - Team roster with role assignments
 - Sprint/iteration schedule
 - Governance model (RASCI)
+{% endraw %}
