@@ -57,6 +57,23 @@ tools.
 
 ## Skills
 
+### Where skills live (and their status)
+
+A skill is defined across a few layers — not a single file. For any skill:
+
+| Layer | Location | Status |
+|-------|----------|--------|
+| **Definition** (roles, required capabilities, requirements, routing patterns, lifecycle stages, schema ref) | `.claude/skills/local/<skill>.json` | ✅ all 18 authoring skills |
+| **Typed contract** (input/output JSON Schema) | `schemas/skills/<skill>/` | ✅ all 18 — see [reference](reference/skills/) |
+| **Instruction body** (prose how-to the LLM loads) | `skills/content-lifecycle/*.md`, `src/skills/*.md` | ✅ lifecycle + agent skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages currently ship the manifest + JSON definitions) |
+| **Package** (Docker/runtime deps) | `skills/<package>/package-manifest.json` | ✅ all three packages |
+
+So *yes, the skills exist* — as structured definitions + typed schemas, with prose
+bodies shipped for the lifecycle and agent skills. The `skill_fetch` MCP tool
+currently serves the `src/skills/*.md` bodies; the authoring-skill prose bodies
+are the next thing to fill in (the definitions and contracts they'd attach to
+are already in place).
+
 ### Cross-cutting: `content-lifecycle`
 
 The lifecycle stages that apply to **every** content type:
