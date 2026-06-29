@@ -18,6 +18,7 @@ import {
   validateLatexAst,
   chooseColumnSpec,
   splitLongMath,
+  findMathTextSeams,
 } from "../../content/pipeline/render-latex";
 
 const GFM_TABLE = `
@@ -187,5 +188,13 @@ describe("breaking non-breaking blobs (long math + identifiers)", () => {
     expect(markdownToLatex("the $n$th case")).not.toContain("allowbreak{}th");
     expect(markdownToLatex("a $\\mathbb{Z}$-module")).not.toContain("allowbreak{}-");
     expect(markdownToLatex("at $V$ discharged")).not.toContain("allowbreak{}discharged");
+  });
+
+  test("findMathTextSeams reports dropped-space seams (for the audit sidecar)", () => {
+    const md = "Intro line.\n\nat $V$discharged here, $n$th is fine, $A$ spaced too.";
+    const seams = findMathTextSeams(md);
+    expect(seams.length).toBe(1);
+    expect(seams[0].context).toContain("discharged");
+    expect(seams[0].line).toBe(3); // 1-based source line
   });
 });
