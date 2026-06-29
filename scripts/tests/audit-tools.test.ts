@@ -13,6 +13,8 @@ describe("registerAuditTools", () => {
     "latex_overfull", "qa_staleness", "tex_source_audit", "dangling_remarks",
     "conditional_class_audit", "section_title_audit", "wall_violations",
     "defterm_validate", "value_validate", "glossary_candidates", "lean_compile_audit",
+    "wiring_audit", "conjectural_propagation", "trivial_skeleton_audit",
+    "tex_validate", "proof_narrative_equiv", "status_sections_audit",
   ];
 
   test("registers all audit tools with handlers + descriptions", () => {
