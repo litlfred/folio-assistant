@@ -1,59 +1,79 @@
 name: Lake cache refresh (orphan-branch family)
 
 # Refreshes the `lake-cache/<package>-<toolchain>` family of orphan
-# branches on every main commit that changes a Lake manifest or the
-# Lean toolchain. Tier-2 of the hybrid Lean-cache strategy
+# branches. Tier-2 of the hybrid Lean-cache strategy
 # (.github/actions/lake-cache-restore/).
 #
-# Branch family is intentionally bounded: 4 packages × ≤2 active
-# toolchain versions = ≤8 branches. The "cleanup" job at the end
-# enforces the cap by deleting the oldest orphan branches per package
-# beyond N=2 retained.
+# Content-agnostic: the package roster (names + Lake roots) is NOT
+# hardcoded here — it is read from .github/lake-packages.json, which a
+# downstream repo edits to match its own Lean packages. The branch family
+# is bounded: N packages × ≤2 active toolchain versions; the "cleanup" job
+# enforces a keep-2-per-package cap.
 
 on:
   workflow_dispatch:
     inputs:
       package:
-        description: 'Single package to refresh (or "all")'
+        description: 'Single package to refresh (must match a name in .github/lake-packages.json), or "all"'
         required: false
         default: 'all'
-        type: choice
-        options:
-          - 'all'
-          - 'mathlib'
-          - 'qou'
-          - 'ugb'
-          - 'fred2005'
+        type: string
 
 permissions:
   contents: write  # required to push orphan branches
 
 jobs:
+  # Read the package roster from config and emit it as a dynamic matrix so
+  # the workflow hardcodes no package names.
+  setup:
+    name: Load package roster
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.read.outputs.matrix }}
+      packages: ${{ steps.read.outputs.packages }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: read
+        run: |
+          set -euo pipefail
+          cfg=".github/lake-packages.json"
+          if [ ! -f "$cfg" ]; then
+            echo "::error::$cfg not found — define the Lake package roster there."
+            exit 1
+          fi
+          # Optionally narrow to a single requested package.
+          sel='${{ github.event.inputs.package }}'
+          if [ -n "$sel" ] && [ "$sel" != "all" ]; then
+            matrix=$(jq -c --arg p "$sel" '{include: [.packages[] | select(.package == $p)]}' "$cfg")
+          else
+            matrix=$(jq -c '{include: .packages}' "$cfg")
+          fi
+          if [ "$(echo "$matrix" | jq '.include | length')" -eq 0 ]; then
+            echo "::error::No matching packages in $cfg (requested: '$sel')"
+            exit 1
+          fi
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+          echo "packages=$(jq -c '[.packages[].package]' "$cfg")" >> "$GITHUB_OUTPUT"
+
   refresh:
     name: ${{ matrix.package }} cache
+    needs: setup
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        package: [mathlib, qou, ugb, fred2005]
+      matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # need full history to push orphan branches
 
-      - name: Skip if not selected (workflow_dispatch path)
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.package != 'all' && github.event.inputs.package != matrix.package }}
-        run: echo "SKIP_REFRESH=1" >> "$GITHUB_ENV"
-
       - name: Install elan + Lean toolchain
-        if: env.SKIP_REFRESH != '1'
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
       - name: Compute toolchain slug
         id: slug
-        if: env.SKIP_REFRESH != '1'
         run: |
           toolchain=$(grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' lean-toolchain | head -1 || cat lean-toolchain | tr -d ' \n' | head -c 20)
           slug=$(echo "$toolchain" | tr '.' '-' | tr -cd 'a-zA-Z0-9-')
@@ -66,24 +86,8 @@ jobs:
           echo "lake-cache/${{ matrix.package }}-$slug" >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
 
-      - name: Resolve Lake root for package
-        id: paths
-        if: env.SKIP_REFRESH != '1'
-        run: |
-          case "${{ matrix.package }}" in
-            mathlib) root="." ;;  # workspace-root build pulls Mathlib oleans
-            qou)     root="content/quantum-observable-universe/lean" ;;
-            ugb)     root="content/unital-groebner-bases/lean" ;;
-            fred2005) root="content/fred2005-formal-groups/lean" ;;
-          esac
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "lake-root<<$EOF" >> "$GITHUB_OUTPUT"
-          echo "$root" >> "$GITHUB_OUTPUT"
-          echo "$EOF" >> "$GITHUB_OUTPUT"
-
       - name: Build the package (populates .lake/)
-        if: env.SKIP_REFRESH != '1'
-        working-directory: ${{ steps.paths.outputs.lake-root }}
+        working-directory: ${{ matrix.lake-root }}
         run: |
           if [ "${{ matrix.package }}" = "mathlib" ]; then
             lake exe cache get
@@ -93,15 +97,14 @@ jobs:
           fi
 
       - name: Push .lake/ to orphan branch
-        if: env.SKIP_REFRESH != '1'
         env:
           BRANCH: ${{ steps.slug.outputs.orphan-branch }}
-          LAKE_ROOT: ${{ steps.paths.outputs.lake-root }}
+          LAKE_ROOT: ${{ matrix.lake-root }}
         run: |
           set -e
           # Configure git author for the orphan-branch commit.
-          git config user.name  "qou-lake-cache-bot"
-          git config user.email "qou-lake-cache-bot@users.noreply.github.com"
+          git config user.name  "folio-lake-cache-bot"
+          git config user.email "folio-lake-cache-bot@users.noreply.github.com"
 
           # Stage only the .lake/ directory in a temporary worktree-style
           # operation. Use a single orphan-branch commit so the branch
@@ -131,8 +134,8 @@ jobs:
           echo "::notice::Pushed cache to orphan branch $BRANCH (size: $(du -sh .lake | cut -f1))"
 
   cleanup:
-    name: Prune orphan-branch family to ≤ 8 branches
-    needs: refresh
+    name: Prune orphan-branch family (keep 2 per package)
+    needs: [setup, refresh]
     if: always() && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
@@ -143,10 +146,12 @@ jobs:
       - name: List + prune lake-cache/* branches
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGES: ${{ needs.setup.outputs.packages }}
         run: |
           # Per package, keep the 2 most-recent cache branches (current
-          # + previous toolchain). Delete older ones. 4 packages × 2 =
-          # 8 total cap.
+          # + previous toolchain). Delete older ones. The package list
+          # comes from .github/lake-packages.json (via the setup job),
+          # so nothing is hardcoded here.
           #
           # NOTE: do NOT use `set -e` — the wildcard fetch below exits
           # non-zero when there are no remote refs matching the pattern
@@ -159,7 +164,8 @@ jobs:
           git fetch origin --quiet 'refs/heads/lake-cache/*:refs/remotes/origin/lake-cache/*' 2>/dev/null \
             || echo "(no lake-cache/* refs to fetch — first run or no remote branches yet)"
 
-          for pkg in mathlib qou ugb fred2005; do
+          mapfile -t pkgs < <(echo "$PACKAGES" | jq -r '.[]')
+          for pkg in "${pkgs[@]}"; do
             branches=$(git branch -r --list "origin/lake-cache/$pkg-*" \
                        --sort=-committerdate 2>/dev/null | sed 's|.*origin/||' | head -50)
             if [ -z "$branches" ]; then
@@ -176,9 +182,8 @@ jobs:
             done
           done
 
-          # Hard cap of 20 branches across the family (paranoia for the
-          # case where the per-package keep-2 still leaves stale entries
-          # from a deleted package).
+          # Hard cap (paranoia for the case where per-package keep-2 still
+          # leaves stale entries from a removed package).
           total=$(git branch -r --list 'origin/lake-cache/*' 2>/dev/null | wc -l)
           if [ "$total" -gt 20 ]; then
             echo "::warning::lake-cache/* branch count = $total (> 20 cap). Manual cleanup recommended."
