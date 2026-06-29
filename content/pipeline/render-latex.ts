@@ -868,9 +868,24 @@ function renderTable(node: any): string {
   return lines.join("\n");
 }
 
-/** Render all children of a node. */
+/** Render all children of a node, inserting a zero-width break (`\allowbreak{}`)
+ *  where a formula/code abuts a word with no space in the source. Such a seam —
+ *  e.g. `$V$discharged` (a dropped space) — otherwise renders as one unbreakable
+ *  box that overflows a narrow cell. Detected via mdast adjacency, so intentional
+ *  suffixes (`$n$th`) and already-spaced text are untouched. It inserts a
+ *  *break*, not a space: a real space would be wrong for `$n$th` /
+ *  `$\mathbb{Z}$-module`; the missing space, if any, is a content fix. */
 function renderChildren(node: any): string[] {
-  return (node.children ?? []).map((child: any) => renderMdastNode(child));
+  const kids: any[] = node.children ?? [];
+  const isFormula = (n: any) => n && (n.type === "inlineMath" || n.type === "inlineCode");
+  return kids.map((child: any, i: number) => {
+    const s = renderMdastNode(child);
+    const prev = kids[i - 1];
+    const seam =
+      (isFormula(prev) && child.type === "text" && /^[A-Za-z]{4,}/.test(child.value)) ||
+      (prev?.type === "text" && isFormula(child) && /[A-Za-z]{4,}$/.test(prev.value));
+    return seam ? "\\allowbreak{}" + s : s;
+  });
 }
 
 /** Render a list item's content (unwrap single-paragraph items). */
