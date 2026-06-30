@@ -21,7 +21,7 @@
 
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { runPipeline, asToolText } from "./_pipeline.js";
+import { runPipeline, asToolText, autoPaper } from "./_pipeline.js";
 
 /** Uniform read-only audits: no required args (optionally `--json`). */
 const AUDITS: { tool: string; script: string; json?: boolean; desc: string }[] = [
@@ -45,6 +45,14 @@ const AUDITS: { tool: string; script: string; json?: boolean; desc: string }[] =
     desc: "Validate computed/derived-value consistency across the corpus. Read-only." },
   { tool: "glossary_candidates", script: "glossary-candidates",
     desc: "Propose glossary candidate terms from the corpus. Read-only." },
+  { tool: "wiring_audit", script: "audit-wiring",
+    desc: "Audit script/hook wiring (no dangling references). Read-only." },
+  { tool: "conjectural_propagation", script: "conjectural-propagation-audit",
+    desc: "Audit propagation of conjectural status through dependent results. Read-only." },
+  { tool: "trivial_skeleton_audit", script: "trivial-skeleton-audit",
+    desc: "Flag trivial/placeholder proof skeletons. Read-only (prints to stdout)." },
+  { tool: "tex_validate", script: "validate-tex", json: true,
+    desc: "Structural validation of rendered .tex (no compile). Read-only." },
 ];
 
 export function registerAuditTools(server: McpServer): void {
@@ -63,5 +71,28 @@ export function registerAuditTools(server: McpServer): void {
       mode: z.enum(["list", "stale"]).default("list").describe("list | stale (both read-only)"),
     },
     async ({ mode }) => asToolText("lean_compile_audit", runPipeline("lean-compile-audit", [`--${mode}`])),
+  );
+
+  // proof ↔ narrative equivalence sweep (read-only via --dry-run --json).
+  server.tool(
+    "proof_narrative_equiv",
+    "Audit that each block's narrative proof matches its Lean counterpart " +
+      "(read-only: runs as a dry-run, JSON findings).",
+    {},
+    async () => asToolText("proof_narrative_equiv", runPipeline("proof-narrative-lean-equiv-sweep", ["--dry-run", "--json"])),
+  );
+
+  // status-section audit (per paper).
+  server.tool(
+    "status_sections_audit",
+    "Audit the per-block status sections for the paper (read-only).",
+    {
+      paper: z.string().optional().describe("Paper name (auto-detected if only one)"),
+    },
+    async ({ paper }) => {
+      const p = autoPaper(paper);
+      const args = p ? ["--paper", p] : [];
+      return asToolText("status_sections_audit", runPipeline("audit-status-sections", args));
+    },
   );
 }

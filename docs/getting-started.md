@@ -53,7 +53,7 @@ only when the matching adapter is active):
 | `qa_sweep` / `proof_status` / `latex_preflight` / `bib_qa` / `glossary_check` / `content_export` | Mechanical QA / publication / transform checks → structured findings (paper adapter) |
 | `bib_validate` / `references_validate` / `bib_export` | Bibliography QA + BibTeX export (paper adapter) |
 | `codemod` / `prune_deps` / `migrate_lean_refs` | Content transforms — dry-run by default, `apply=true` to write (paper adapter) |
-| `latex_overfull` / `tex_source_audit` / `dangling_remarks` / `conditional_class_audit` / `section_title_audit` / `wall_violations` / `defterm_validate` / `value_validate` / `qa_staleness` / `glossary_candidates` / `lean_compile_audit` | Read-only content/Lean audits → structured findings (paper adapter) |
+| `latex_overfull` / `tex_source_audit` / `tex_validate` / `dangling_remarks` / `conditional_class_audit` / `section_title_audit` / `status_sections_audit` / `wall_violations` / `defterm_validate` / `value_validate` / `qa_staleness` / `glossary_candidates` / `wiring_audit` / `conjectural_propagation` / `trivial_skeleton_audit` / `lean_compile_audit` / `proof_narrative_equiv` | Read-only content/Lean audits → structured findings (paper adapter) |
 | `paper_preferences` | Per-folio rendering preferences |
 
 ## 4. Run your first skill
