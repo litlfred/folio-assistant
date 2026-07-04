@@ -90,6 +90,27 @@ describe("preserveNonScriptEntries", () => {
     preserveNonScriptEntries(input);
     expect(input.length).toBe(before);
   });
+
+  test("does not throw on malformed / legacy sidecar entries; preserves them", () => {
+    // Sidecars are external JSON that loadQaReport does not shape-validate,
+    // so a hand-edited / legacy entry may be null or lack a `reviewer`.
+    // preserveNonScriptEntries must not crash, and (being unable to prove
+    // such an entry is a script entry) must PRESERVE it rather than drop it
+    // — dropping a malformed human entry would break "human always preserved".
+    const malformed = [
+      null,
+      undefined,
+      {} as unknown, // no reviewer
+      { reviewer: {} } as unknown, // reviewer without kind
+      entry("script"),
+      entry("human"),
+    ] as unknown as QaCriterionEntry[];
+    const kept = preserveNonScriptEntries(malformed);
+    // the one well-formed script entry is dropped; everything else kept
+    expect(kept.length).toBe(malformed.length - 1);
+    expect(kept).toContain(malformed[5]); // human preserved
+    expect(kept).not.toContain(malformed[4]); // script dropped
+  });
 });
 
 // ── the REPLACE-not-append invariant (task §5) ───────────────────
