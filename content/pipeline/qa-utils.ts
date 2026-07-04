@@ -524,7 +524,13 @@ export function entryIsFresh(
 export function preserveNonScriptEntries(
   existing: QaCriterionEntry[],
 ): QaCriterionEntry[] {
-  return existing.filter((e) => e.reviewer.kind !== "script");
+  // Optional chaining guards against malformed / legacy / hand-edited
+  // sidecar entries (a null entry, or one missing its `reviewer`): the
+  // `.qa.json` files are external JSON that `loadQaReport` does not
+  // shape-validate. Such an entry is NOT a recognizable script entry, so
+  // it is PRESERVED rather than dropped — dropping a malformed `human`
+  // entry would violate the "human always preserved" invariant above.
+  return existing.filter((e) => e?.reviewer?.kind !== "script");
 }
 
 /**
