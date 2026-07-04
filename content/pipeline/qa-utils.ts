@@ -506,6 +506,28 @@ export function entryIsFresh(
 }
 
 /**
+ * Entries a script sweep must NOT drop when it re-runs a criterion.
+ *
+ * A script re-run is a REFRESH, not a new opinion: it must REPLACE the
+ * prior `kind: "script"` entry rather than append a duplicate. So when
+ * a sweep writes a fresh script entry it keeps only the non-script
+ * entries — `kind: "agent"` (the multi-reviewer audit trail across
+ * agent passes is meaningful and co-exists) and `kind: "human"` (final
+ * authority; never dropped) — and appends the one fresh script entry.
+ *
+ * Filtering the stale script entry here is what keeps `<block>.qa.json`
+ * criterion arrays from growing unboundedly on every sweep. This mirrors
+ * the invalidation contract in the `integration-audit` skill ("Pure
+ * script: delete every `kind:"script"` reviewer entry; sweep re-runs" /
+ * "Human: always preserved").
+ */
+export function preserveNonScriptEntries(
+  existing: QaCriterionEntry[],
+): QaCriterionEntry[] {
+  return existing.filter((e) => e.reviewer.kind !== "script");
+}
+
+/**
  * Per-criterion freshness summary for one block.
  *
  * - `fresh-entries`: reviewer entries whose field_hash matches.

@@ -31,8 +31,11 @@
  *   - For each automated criterion:
  *       - If a fresh entry exists (field_hash matches current),
  *         skip — no need to re-audit.
- *       - Otherwise, run the checker and append a new reviewer
- *         entry with reviewer.kind="script", reviewer.id="qa-sweep".
+ *       - Otherwise, run the checker and write a reviewer entry with
+ *         reviewer.kind="script", reviewer.id="qa-sweep". A script
+ *         re-run is a REFRESH: the fresh entry REPLACES the prior
+ *         script entry (agent/human entries are preserved) so the
+ *         criterion array does not grow unboundedly across sweeps.
  *   - Non-automated criteria (scholarly-default, ai-slop, fit-...)
  *     are reported as `needs-agent` in the summary but NOT written
  *     to the sidecar — the watcher dispatches an agent to fill those.
@@ -66,6 +69,7 @@ import {
   loadQaReport,
   saveQaReport,
   entryIsFresh,
+  preserveNonScriptEntries,
   computeCriterionScriptHashes,
   saveQaScriptSidecar,
   type CriterionScriptHashes,
@@ -267,6 +271,15 @@ function run(): void {
       // relaxed in the registry) must NOT short-circuit the sweep;
       // it has to be re-evaluated against the actual checker.
       const existing = report.criteria[criterionId] ?? [];
+      // A script re-run is a REFRESH, not a new opinion: it must REPLACE the
+      // prior script entry rather than append. Only agent-kind reviewers
+      // append (their multi-reviewer audit trail is meaningful); human
+      // adjudications are always kept. Dropping stale script entries here
+      // keeps sidecars from growing unboundedly on every sweep. NOTE: the
+      // freshness gate below still scans the FULL `existing` array (including
+      // the old script entry) so an unchanged block still short-circuits as
+      // `fresh-skip`.
+      const nonScriptExisting = preserveNonScriptEntries(existing);
       const scriptHashes = scriptHashesByCriterion[criterionId];
       const freshExisting = existing.find((e) =>
         entryIsFresh(e, currentHashes, def.depends_on, scriptHashes),
@@ -323,7 +336,7 @@ function run(): void {
           reviewed_sha: headSha,
           notes: "block has no .md sibling",
         };
-        report.criteria[criterionId] = [...existing, naEntry];
+        report.criteria[criterionId] = [...nonScriptExisting, naEntry];
         sweepResult.details.push({
           criterion: criterionId,
           outcome: "n/a-no-md",
@@ -339,7 +352,7 @@ function run(): void {
           reviewed_sha: headSha,
           notes: "block has no .lean sibling",
         };
-        report.criteria[criterionId] = [...existing, naEntry];
+        report.criteria[criterionId] = [...nonScriptExisting, naEntry];
         sweepResult.details.push({
           criterion: criterionId,
           outcome: "n/a-no-lean",
@@ -386,8 +399,9 @@ function run(): void {
         }
       }
 
-      // Append the new entry (multiple reviewer entries co-exist).
-      report.criteria[criterionId] = [...existing, entry];
+      // Write the fresh script entry, REPLACING the prior script entry
+      // (agent + human entries are preserved via `nonScriptExisting`).
+      report.criteria[criterionId] = [...nonScriptExisting, entry];
 
       sweepResult.details.push({
         criterion: criterionId,
