@@ -277,9 +277,11 @@ const WALL: QaCriterionDefinition[] = [
       "explicitly. Each block belongs in either the algebraic substrate " +
       "or the archimedean specialisation, never both.",
     default_severity: "critical",
-    // The automated checker scans .lean imports and the .md narrative
-    // for an archimedean acknowledgement banner. The .ts manifest is
-    // not read — kept out of depends_on to avoid spurious staleness.
+    // The automated checker scans the .lean body for archimedean markers
+    // and looks for an archimedean-specialisation acknowledgement in EITHER
+    // the .md narrative OR the .ts `authorNotes` (per CLAUDE.md §4d, §7c
+    // banners migrate out of prose into authorNotes) — so `ts` is a genuine
+    // input and belongs in depends_on for correct staleness tracking.
     //
     // Coverage scope: the `.lean` read here is the block's *resolved*
     // file — candidate-1 sibling OR candidate-2 library/Lake-tree module
@@ -288,7 +290,7 @@ const WALL: QaCriterionDefinition[] = [
     // declarations referenced by a block are therefore in scope. Files
     // referenced by NO block (orphans) are swept separately, content-
     // based + chapter-independent, by `q-usage-audit`'s orphan pass.
-    depends_on: ["md", "lean"],
+    depends_on: ["md", "lean", "ts"],
     automated: true,
   },
   {

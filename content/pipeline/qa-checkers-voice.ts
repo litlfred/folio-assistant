@@ -231,6 +231,12 @@ const EDITORIALIZING_RE =
 const MATH_IDIOM_EXEMPT =
   /(?:naturally|trivially|easily|cleanly|simply|nicely|just)\s+(?:an?|the)\s+\S+|(?:decomposes|attaches|factors|contributes?|contribute|extends|embeds|maps|acts|commutes|generates|bar-classify|generate)\s+(?:naturally|trivially|easily|cleanly|nicely|simply)\b|(?:naturally|trivially|easily|cleanly|nicely|simply)\s+\$|(?:non|un|tri|semi|quasi|bi|sub|super|hyper|inter|intra|pre|post)-(?:simply|naturally|trivially|easily|cleanly|nicely)|(?:simply|naturally|trivially|easily|cleanly|nicely)-(?:laced|connected|graded|ordered)/i;
 
+// Domain-terminology exemption: fixed scientific noun-phrases in which a
+// flagged adverb is bound into a standard term of art, not editorializing.
+// e.g. "naturally occurring elements/isotopes" (natural vs. synthetic) —
+// removing the adverb would break the terminology.
+const DOMAIN_PHRASE_EXEMPT = /\bnaturally\s+occurring\b/i;
+
 export function checkEditorializing(mdPath: string): CheckerResult {
   // Skip lines that are clearly in fenced code (Lean / TeX snippets).
   const lines = readLines(mdPath);
@@ -247,6 +253,9 @@ export function checkEditorializing(mdPath: string): CheckerResult {
     // construction (e.g. "naturally an algebra", "non-simply-laced",
     // "contribute trivially"), it's canonical math language.
     if (MATH_IDIOM_EXEMPT.test(l)) return;
+    // Domain-terminology exemption: fixed scientific noun-phrases
+    // ("naturally occurring elements") are standard terms, not opinion.
+    if (DOMAIN_PHRASE_EXEMPT.test(l)) return;
     hits.push({ file: mdPath, line: i + 1, text: l.trim().slice(0, 200) });
   });
   return { result: hits.length > 0 ? "fail" : "pass", hits };
@@ -335,9 +344,38 @@ const ALGEBRAIC_LEAN_RE = /\b(CommRing|Field|GroupWithZero|\{R : Type\*\}|\(R :=
  * archimedean markers without the .md acknowledging archimedean
  * specialisation) get flagged.
  */
+/**
+ * Extract the text of a block's `authorNotes` array literal from its
+ * `.ts` manifest (best-effort, bracket-depth aware). Per CLAUDE.md §4d,
+ * §7c archimedean-specialisation acknowledgements migrate OUT of prose
+ * INTO `authorNotes`, so the wall-side acknowledgement check must read
+ * them too — otherwise a correctly-migrated note reads as a false fail.
+ */
+function readAuthorNotesText(tsPath: string | undefined): string {
+  if (!tsPath || !existsSync(tsPath)) return "";
+  const src = readFileSync(tsPath, "utf-8");
+  const m = src.match(/authorNotes\s*:\s*\[/);
+  if (!m || m.index === undefined) return "";
+  let depth = 0;
+  let out = "";
+  for (let i = m.index + m[0].length - 1; i < src.length; i++) {
+    const ch = src[i];
+    if (ch === "[") depth++;
+    else if (ch === "]") {
+      depth--;
+      out += ch;
+      if (depth === 0) break;
+      continue;
+    }
+    out += ch;
+  }
+  return out;
+}
+
 export function checkWallSide(
   mdPath: string | undefined,
   leanPath: string | undefined,
+  tsPath?: string | undefined,
 ): CheckerResult {
   if (!leanPath || !existsSync(leanPath)) {
     return { result: "pass", hits: [] };
@@ -371,22 +409,27 @@ export function checkWallSide(
     });
   }
 
-  if (isArchimedean && mdPath && existsSync(mdPath)) {
-    const md = readFileSync(mdPath, "utf-8");
-    // Archimedean is fine if the .md acknowledges the specialisation.
-    // Without acknowledgement we flag for review.
+  const mdReadable = mdPath && existsSync(mdPath);
+  const tsReadable = tsPath && existsSync(tsPath);
+  if (isArchimedean && (mdReadable || tsReadable)) {
+    const md = mdReadable ? readFileSync(mdPath!, "utf-8") : "";
+    // Archimedean is fine if the specialisation is acknowledged — either
+    // in the .md narrative OR in the .ts `authorNotes` (per CLAUDE.md §4d,
+    // §7c banners migrate out of prose into authorNotes).
+    const ack = (md + "\n" + readAuthorNotesText(tsPath)).toLowerCase();
     const acknowledged =
-      /archimedean|over\s+\\?mathbb\{R\}|over\s+ℝ|specialise|specialize|numerical evaluation|codata|experimental/.test(
-        md.toLowerCase(),
+      /archimedean|over\s+\\?mathbb\{R\}|over\s+ℝ|specialise|specialize|numerical evaluation|codata|experimental|§7c|base.?ring/.test(
+        ack,
       );
     if (!acknowledged) {
       hits.push({
         file: leanPath,
         line: 1,
         text:
-          "Lean file uses archimedean constructs but .md narrative does " +
-          "not acknowledge archimedean specialisation. Add a §7c-style " +
-          "banner or move the archimedean evaluation to a sibling block.",
+          "Lean file uses archimedean constructs but neither the .md " +
+          "narrative nor the .ts authorNotes acknowledge archimedean " +
+          "specialisation. Add a §7c-style note (in authorNotes, per §4d) " +
+          "or move the archimedean evaluation to a sibling block.",
       });
     }
   }
@@ -912,7 +955,7 @@ export const AUTOMATED_CHECKERS: Record<
       : { result: "pass", hits: [] },
   "framework-canonical": (p) =>
     p.md ? checkFrameworkCanonical(p.md) : { result: "pass", hits: [] },
-  "wall-side-correct": (p) => checkWallSide(p.md, p.lean),
+  "wall-side-correct": (p) => checkWallSide(p.md, p.lean, p.ts),
   "wall-base-ring-minimal": (p) => checkBaseRingMinimal(p.lean),
   // Extended checkers for the non-voice integration axes
   // (proof, canonical, compute, detangler, bibliography). The
