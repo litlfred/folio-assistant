@@ -325,19 +325,72 @@ const ARCHIMEDEAN_LEAN_RE =
 const ALGEBRAIC_LEAN_RE = /\b(CommRing|Field|GroupWithZero|\{R : Type\*\}|\(R := |variable \{R\b)/;
 
 /**
+ * Extract the text of a block's `authorNotes` array from its `.ts`
+ * manifest source. The §7c→authorNotes migration (2026-05-24) moves
+ * archimedean-specialisation banners out of the `.md` prose and into
+ * `authorNotes: [{ kind, body }]`, so the wall-side acknowledgement
+ * `checkWallSide` looks for may now live here rather than in the `.md`.
+ *
+ * We scope to the `authorNotes` array (via bracket matching, honouring
+ * string/template literals) rather than scanning the whole `.ts`, so an
+ * acknowledgement keyword appearing elsewhere in the manifest — e.g. the
+ * `lean.ref` URI `qou:QOU.Archimedean.foo` — does NOT spuriously count
+ * as an acknowledgement.
+ */
+export function extractAuthorNotesText(tsPath: string | undefined): string {
+  if (!tsPath || !existsSync(tsPath)) return "";
+  const src = readFileSync(tsPath, "utf-8");
+  const key = src.indexOf("authorNotes");
+  if (key === -1) return "";
+  const open = src.indexOf("[", key);
+  if (open === -1) return "";
+  let depth = 0;
+  let quote: string | null = null;
+  for (let i = open; i < src.length; i++) {
+    const ch = src[i];
+    if (quote) {
+      if (ch === "\\") {
+        i++; // skip escaped char
+        continue;
+      }
+      if (ch === quote) quote = null;
+      continue;
+    }
+    if (ch === '"' || ch === "'" || ch === "`") {
+      quote = ch;
+      continue;
+    }
+    if (ch === "[") depth++;
+    else if (ch === "]") {
+      depth--;
+      if (depth === 0) return src.slice(open, i + 1);
+    }
+  }
+  // Unbalanced (malformed manifest) — return the tail so a present
+  // acknowledgement is still detected rather than silently dropped.
+  return src.slice(open);
+}
+
+/** Archimedean-specialisation acknowledgement, in the `.md` narrative
+ *  or (post §7c→authorNotes migration) the block's `authorNotes`. */
+const WALL_ACK_RE =
+  /archimedean|over\s+\\?mathbb\{R\}|over\s+ℝ|specialise|specialize|numerical evaluation|codata|experimental/;
+
+/**
  * Block is wall-correct iff:
  *   - it has no .lean, OR
  *   - .lean is purely algebraic (no archimedean markers), OR
  *   - .lean is purely archimedean (no generic-R markers in same file),
- *     and the .md does not contradict the placement.
+ *     and the .md / authorNotes do not contradict the placement.
  *
  * Mixed signals (both archimedean AND generic-R markers, or
- * archimedean markers without the .md acknowledging archimedean
- * specialisation) get flagged.
+ * archimedean markers without the .md OR `authorNotes` acknowledging
+ * archimedean specialisation) get flagged.
  */
 export function checkWallSide(
   mdPath: string | undefined,
   leanPath: string | undefined,
+  tsPath?: string | undefined,
 ): CheckerResult {
   if (!leanPath || !existsSync(leanPath)) {
     return { result: "pass", hits: [] };
@@ -373,20 +426,21 @@ export function checkWallSide(
 
   if (isArchimedean && mdPath && existsSync(mdPath)) {
     const md = readFileSync(mdPath, "utf-8");
-    // Archimedean is fine if the .md acknowledges the specialisation.
-    // Without acknowledgement we flag for review.
+    // Archimedean is fine if the specialisation is acknowledged in the
+    // .md narrative OR (post §7c→authorNotes migration, 2026-05-24) the
+    // block's `authorNotes`. Without acknowledgement we flag for review.
     const acknowledged =
-      /archimedean|over\s+\\?mathbb\{R\}|over\s+ℝ|specialise|specialize|numerical evaluation|codata|experimental/.test(
-        md.toLowerCase(),
-      );
+      WALL_ACK_RE.test(md.toLowerCase()) ||
+      WALL_ACK_RE.test(extractAuthorNotesText(tsPath).toLowerCase());
     if (!acknowledged) {
       hits.push({
         file: leanPath,
         line: 1,
         text:
-          "Lean file uses archimedean constructs but .md narrative does " +
-          "not acknowledge archimedean specialisation. Add a §7c-style " +
-          "banner or move the archimedean evaluation to a sibling block.",
+          "Lean file uses archimedean constructs but neither the .md " +
+          "narrative nor the .ts authorNotes acknowledge archimedean " +
+          "specialisation. Add a §7c-style banner (authorNotes) or move " +
+          "the archimedean evaluation to a sibling block.",
       });
     }
   }
@@ -912,7 +966,7 @@ export const AUTOMATED_CHECKERS: Record<
       : { result: "pass", hits: [] },
   "framework-canonical": (p) =>
     p.md ? checkFrameworkCanonical(p.md) : { result: "pass", hits: [] },
-  "wall-side-correct": (p) => checkWallSide(p.md, p.lean),
+  "wall-side-correct": (p) => checkWallSide(p.md, p.lean, p.ts),
   "wall-base-ring-minimal": (p) => checkBaseRingMinimal(p.lean),
   // Extended checkers for the non-voice integration axes
   // (proof, canonical, compute, detangler, bibliography). The
