@@ -234,8 +234,11 @@ const MATH_IDIOM_EXEMPT =
 // Domain-terminology exemption: fixed scientific noun-phrases in which a
 // flagged adverb is bound into a standard term of art, not editorializing.
 // e.g. "naturally occurring elements/isotopes" (natural vs. synthetic) —
-// removing the adverb would break the terminology.
-const DOMAIN_PHRASE_EXEMPT = /\bnaturally\s+occurring\b/i;
+// removing the adverb would break the terminology. Applied by STRIPPING the
+// phrase from a scratch copy of the line before the editorializing test, so
+// it never masks a genuine hit elsewhere on the same line (global flag →
+// every occurrence removed; used only in `.replace`, never stateful `.test`).
+const DOMAIN_PHRASE_EXEMPT = /\bnaturally\s+occurring\b/gi;
 
 export function checkEditorializing(mdPath: string): CheckerResult {
   // Skip lines that are clearly in fenced code (Lean / TeX snippets).
@@ -248,14 +251,15 @@ export function checkEditorializing(mdPath: string): CheckerResult {
       return;
     }
     if (inFence) return;
-    if (!EDITORIALIZING_RE.test(l)) return;
+    // Strip fixed scientific noun-phrases ("naturally occurring") from a
+    // scratch copy first, so an adverb bound inside one is not flagged
+    // WITHOUT masking other editorializing terms elsewhere on the line.
+    const scan = l.replace(DOMAIN_PHRASE_EXEMPT, "");
+    if (!EDITORIALIZING_RE.test(scan)) return;
     // Math-idiom exemption: if the editorial adverb is in a math
     // construction (e.g. "naturally an algebra", "non-simply-laced",
     // "contribute trivially"), it's canonical math language.
-    if (MATH_IDIOM_EXEMPT.test(l)) return;
-    // Domain-terminology exemption: fixed scientific noun-phrases
-    // ("naturally occurring elements") are standard terms, not opinion.
-    if (DOMAIN_PHRASE_EXEMPT.test(l)) return;
+    if (MATH_IDIOM_EXEMPT.test(scan)) return;
     hits.push({ file: mdPath, line: i + 1, text: l.trim().slice(0, 200) });
   });
   return { result: hits.length > 0 ? "fail" : "pass", hits };
@@ -354,20 +358,30 @@ const ALGEBRAIC_LEAN_RE = /\b(CommRing|Field|GroupWithZero|\{R : Type\*\}|\(R :=
 function readAuthorNotesText(tsPath: string | undefined): string {
   if (!tsPath || !existsSync(tsPath)) return "";
   const src = readFileSync(tsPath, "utf-8");
-  const m = src.match(/authorNotes\s*:\s*\[/);
+  const m = src.match(/\bauthorNotes\s*:\s*\[/);
   if (!m || m.index === undefined) return "";
   let depth = 0;
   let out = "";
+  // Active string delimiter ('"' | "'" | "`") or null when outside a string.
+  // Bracket depth is only tracked OUTSIDE string literals, so a `]` inside a
+  // note body (markdown links `[t](u)`, footnotes `[1]`, refterms) does not
+  // prematurely terminate the array extraction.
+  let quote: string | null = null;
   for (let i = m.index + m[0].length - 1; i < src.length; i++) {
     const ch = src[i];
-    if (ch === "[") depth++;
-    else if (ch === "]") {
-      depth--;
-      out += ch;
-      if (depth === 0) break;
+    out += ch;
+    if (quote) {
+      if (ch === quote && src[i - 1] !== "\\") quote = null;
       continue;
     }
-    out += ch;
+    if (ch === '"' || ch === "'" || ch === "`") {
+      quote = ch;
+    } else if (ch === "[") {
+      depth++;
+    } else if (ch === "]") {
+      depth--;
+      if (depth === 0) break;
+    }
   }
   return out;
 }
@@ -416,9 +430,12 @@ export function checkWallSide(
     // Archimedean is fine if the specialisation is acknowledged — either
     // in the .md narrative OR in the .ts `authorNotes` (per CLAUDE.md §4d,
     // §7c banners migrate out of prose into authorNotes).
-    const ack = (md + "\n" + readAuthorNotesText(tsPath)).toLowerCase();
+    // Keep original casing and use a case-insensitive regex: lowercasing
+    // `ack` would turn `\mathbb{R}` into `\mathbb{r}`, which the (uppercase-R)
+    // alternative cannot then match — a latent false-fail source.
+    const ack = md + "\n" + readAuthorNotesText(tsPath);
     const acknowledged =
-      /archimedean|over\s+\\?mathbb\{R\}|over\s+ℝ|specialise|specialize|numerical evaluation|codata|experimental|§7c|base.?ring/.test(
+      /archimedean|over\s+\$?\\?mathbb\{R\}|over\s+ℝ|specialise|specialize|numerical evaluation|codata|experimental|§7c|base.?ring/i.test(
         ack,
       );
     if (!acknowledged) {
