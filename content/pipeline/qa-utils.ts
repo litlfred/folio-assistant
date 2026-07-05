@@ -385,8 +385,12 @@ export function* walkBlocks(rootDir: string): Generator<BlockPaths> {
   // .lean source (wall-side, voice, q-usage, …) don't silently skip.
   // `resolveCanonicalLean` is the single source of truth for that walk;
   // a shared cache scans each Lake tree once across the whole block walk.
-  // Resolve REPO_ROOT relative to qa-utils.ts (= content/pipeline/).
-  const REPO_ROOT = resolve(import.meta.dir, "../..");
+  // Resolve REPO_ROOT relative to qa-utils.ts (= content/pipeline/), unless
+  // an explicit `QA_REPO_ROOT` override is set (the miga sibling-checkout
+  // layout, where the pipeline is not vendored inside the content repo).
+  const REPO_ROOT = process.env.QA_REPO_ROOT
+    ? resolve(process.env.QA_REPO_ROOT)
+    : resolve(import.meta.dir, "../..");
   const lakeCache: LakeTreeCache = new Map();
 
   function* recurse(d: string): Generator<BlockPaths> {

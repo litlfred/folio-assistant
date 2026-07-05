@@ -29,7 +29,17 @@ import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
 import { hashFile } from "./qa-utils";
 
 const __filename = fileURLToPath(import.meta.url);
-const REPO_ROOT = resolve(dirname(__filename), "..", "..");
+// The pipeline normally lives vendored inside the content repo
+// (`<repo>/content/pipeline/`), so REPO_ROOT is two levels up. When the
+// pipeline runs as a *sibling* checkout (the miga layout: content repo and
+// folio-assistant side by side, wired by a symlink), that heuristic points
+// at the folio-assistant clone instead of the content repo — the compile-
+// diagnostics / witness / computations paths then resolve to the wrong tree.
+// Honour an explicit `QA_REPO_ROOT` override for that case (defaults to the
+// legacy behaviour, so vendored / CI runs are unchanged).
+const REPO_ROOT = process.env.QA_REPO_ROOT
+  ? resolve(process.env.QA_REPO_ROOT)
+  : resolve(dirname(__filename), "..", "..");
 const CONTENT_DIR = resolve(dirname(__filename), "..");
 const COMPUTATIONS_DIR = join(REPO_ROOT, "folio-assistant", "computations");
 const BIB_QA_IMAGES_DIR = join(CONTENT_DIR, "bib-qa-images");
