@@ -352,12 +352,15 @@ const ALGEBRAIC_LEAN_RE = /\b(CommRing|Field|GroupWithZero|\{R : Type\*\}|\(R :=
  *
  * The remaining tokens are IDENTICAL to `ARCHIMEDEAN_LEAN_RE` (no
  * broadening), so the split's coverage is unchanged. NB the `\b(…)\b`
- * framing is inherited verbatim, and its known limitation is inherited too:
- * the punctuation-leading alternatives (`\(ℝ\)`, `: ℝ`, `: Real`) cannot
- * actually match in JS (`\b` is ASCII-word-based and cannot sit before `(`
- * or `:`), so the EFFECTIVE markers are `Real.<fn>` and `LinearOrderedField`
- * — exactly the effective set `ARCHIMEDEAN_LEAN_RE` already uses. Broadening
- * ℝ detection to catch `(x : ℝ)` / `→ ℝ` forms is a deliberately SEPARATE
+ * framing is inherited verbatim, along with its known limitation: the
+ * punctuation-leading alternatives (`\(ℝ\)`, `: ℝ`, `: Real`) match only in
+ * uncommon spacings and MISS the common spaced Lean forms (`x : ℝ`,
+ * `(x : ℝ)`, `: ℝ :=`). (`\b` is ASCII-`\w`-based: the leading `\b` needs a
+ * word char immediately before `(`/`:`, and the trailing `\b` needs a word
+ * char immediately after ℝ — a space on either side breaks the match.) So
+ * the reliably-matched markers are `Real.<fn>` and `LinearOrderedField` —
+ * the same effective set `ARCHIMEDEAN_LEAN_RE` already uses. Broadening ℝ
+ * detection to catch `(x : ℝ)` / `→ ℝ` forms is a deliberately SEPARATE
  * follow-up: corpus-wide it newly flags 12 genuine ℝ+generic-R mixes the
  * heuristic currently misses, which belongs in its own change.
  *
