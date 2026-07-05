@@ -84,7 +84,7 @@ export interface ResolvedBlock {
   uses?: string[];
   examples?: string[];
   proofs?: string[];
-  lean?: { decl: string; file?: string; validation?: string; source?: string };
+  lean?: { ref: string; file?: string; validation?: string; source?: string };
   status?: string;
   tex?: string;
   caption?: string;
@@ -174,7 +174,7 @@ export interface SectionStub {
     label?: string;
     title?: string;
     status?: string;
-    lean?: { decl?: string; file?: string; validation?: string };
+    lean?: { ref?: string; file?: string; validation?: string };
     todoCount: number;
   }>;
 }

@@ -35,8 +35,8 @@ import { createHmac, timingSafeEqual } from "crypto";
 
 const PORT = parseInt(process.env.AUTH_GATEWAY_PORT || "4180", 10);
 const DOMAIN = process.env.FOLIO_DOMAIN || "localhost";
-const COOKIE_SECRET = process.env.COOKIE_SECRET;
-if (!COOKIE_SECRET || COOKIE_SECRET.length < 32) {
+const COOKIE_SECRET: string = process.env.COOKIE_SECRET ?? "";
+if (COOKIE_SECRET.length < 32) {
   console.error("FATAL: COOKIE_SECRET not set or too short (32+ chars required).");
   process.exit(1);
 }

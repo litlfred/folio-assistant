@@ -1,4 +1,4 @@
-import type { SkillDefinition } from "../framework/types.js";
+import type { SkillDefinition } from "../../skills/framework/types.js";
 
 export const corpusGrep: SkillDefinition = {
   id: "corpus-grep",

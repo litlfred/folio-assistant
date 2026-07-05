@@ -316,10 +316,19 @@ export function detectRegimes(
   const lean = readMaybe(leanPath);
   const mdClean = stripFraming(md);
   const allText = `${mdClean}\n${ts}\n${lean}`;
+  // For the loose bare-`q` na-guard, scan only the math sources (narrative +
+  // Lean), NOT the `.ts` manifest. Kebab-case cross-reference labels such as
+  // `rem:toffoli-q-and` in `uses[]` / `label` / `tags` embed a standalone
+  // "q" that `\bq\b` matches (hyphens are word boundaries), which would
+  // mis-classify a genuinely q-free block as `symbolic` (via the size===0
+  // fallback below) and trip `q-usage-narrative-chapter-mismatch`. The
+  // precise `MENTIONS_Q_RE` (requires `$q`, `q:`, `q^`, `q_0`) still scans
+  // `allText`, so real q-math in a `.ts` title stays detected.
+  const mathText = `${mdClean}\n${lean}`;
 
   const regimes = new Set<QRegime>();
 
-  if (!MENTIONS_Q_RE.test(allText) && !/\bq\b/.test(allText)) {
+  if (!MENTIONS_Q_RE.test(allText) && !/\bq\b/.test(mathText)) {
     regimes.add("na");
     return { regimes, chapter: chapterFromPath(mdPath ?? tsPath ?? leanPath) };
   }

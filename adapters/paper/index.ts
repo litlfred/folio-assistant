@@ -889,7 +889,11 @@ End every response with suggested follow-ups:
 
           // Save uploaded files
           const savedFiles: string[] = [];
-          for (const [key, value] of formData.entries()) {
+          for (
+            const [key, value] of formData.entries() as IterableIterator<
+              [string, string | File]
+            >
+          ) {
             if (value instanceof File) {
               const filename = value.name || `${key}.bin`;
               const buffer = Buffer.from(await value.arrayBuffer());

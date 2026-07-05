@@ -119,7 +119,7 @@ export function registerPreviewTools(server: McpServer): void {
         };
       }
 
-      spawnSync(openCmd, [fullPath], { stdio: "pipe", detached: true });
+      spawnSync(openCmd, [fullPath], { stdio: "pipe" });
 
       return {
         content: [{
