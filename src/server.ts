@@ -242,11 +242,26 @@ export class FolioServer {
 
   async startHttp(): Promise<void> {
     const port = parseInt(process.env.MCP_PORT || "8080", 10);
-    const { StreamableHTTPServerTransport } = await import(
-      "@modelcontextprotocol/sdk/server/streamableHttp.js"
+    // Use the Web-Standard transport (Request/Response), not the Node
+    // Express/http one: Bun.serve's `fetch` speaks the fetch API, and this
+    // transport's `handleRequest(req: Request): Promise<Response>` matches it
+    // directly. The Node `StreamableHTTPServerTransport` expects
+    // `(IncomingMessage, ServerResponse)` and returns `void`, which is
+    // incompatible with Bun.serve.
+    const { WebStandardStreamableHTTPServerTransport } = await import(
+      "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js"
     );
 
-    const httpTransport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
+    // Stateful mode (one transport, reused across requests, session-routed via
+    // the Mcp-Session-Id header) — matches the SDK's canonical single-transport
+    // usage. A *stateless* transport (sessionIdGenerator: undefined) MAY NOT be
+    // reused: since SDK 1.26 it throws "Stateless transport cannot be reused
+    // across requests" on the 2nd call (guards against JSON-RPC id collisions /
+    // response misrouting), which would break every request after the first
+    // because this transport is connected once at startup and shared by Bun.serve.
+    const httpTransport = new WebStandardStreamableHTTPServerTransport({
+      sessionIdGenerator: () => crypto.randomUUID(),
+    });
     await this.mcpServer.connect(httpTransport);
 
     const self = this;
