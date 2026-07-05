@@ -117,4 +117,31 @@ describe("checkWallSide — §7c acknowledgement via .ts authorNotes", () => {
     const ts = tmp("mix.ts", `export const b = { title: "t" };`);
     expect(checkWallSide(plainMd(), lean, ts).result).toBe("fail");
   });
+
+  test("broadened ℝ detection: `(x : ℝ)` spaced form alongside generic-R is flagged", () => {
+    // The narrow `: ℝ\\b` token missed `(x : ℝ)`; the broadened bare-ℝ
+    // matcher catches it, so an unacknowledged R→ℝ mix is now flagged.
+    const lean = tmp(
+      "spaced.lean",
+      "variable {R : Type*} [CommRing R]\nnoncomputable def m (x : ℝ) : ℝ := x\n",
+    );
+    const ts = tmp("spaced.ts", `export const b = { title: "m" };`);
+    expect(checkWallSide(plainMd(), lean, ts).result).toBe("fail");
+  });
+
+  test("mixed-signal ACK-ESCAPE: `(x : ℝ)` + generic-R WITH a §7c ack → pass", () => {
+    // A legitimate R→ℝ realisation that acknowledges the specialisation is
+    // not forced to split (an acknowledged mix passes, mirroring the ack
+    // branch's philosophy).
+    const lean = tmp(
+      "escape.lean",
+      "variable {R : Type*} [CommRing R]\nnoncomputable def m (x : ℝ) : ℝ := x\n",
+    );
+    const mdAck = tmp(
+      "escape.md",
+      "**Archimedean specialisation (§7c).** the R→ℝ realisation at q₀.",
+    );
+    const ts = tmp("escape.ts", `export const b = { title: "m" };`);
+    expect(checkWallSide(mdAck, lean, ts).result).toBe("pass");
+  });
 });

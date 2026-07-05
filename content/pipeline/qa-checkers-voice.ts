@@ -338,39 +338,37 @@ const ARCHIMEDEAN_LEAN_RE =
 const ALGEBRAIC_LEAN_RE = /\b(CommRing|Field|GroupWithZero|\{R : Type\*\}|\(R := |variable \{R\b)/;
 
 /**
- * Archimedean-side TYPE markers used for the mixed-signal split — this is
- * `ARCHIMEDEAN_LEAN_RE` with the four arithmetic tactics (`norm_num` /
- * `linarith` / `positivity` / `nlinarith`) removed. Those tactics discharge
- * goals over ANY ordered field (or ℕ/ℤ numeric literals) and are NOT by
- * themselves evidence of an archimedean specialisation, so they must not
- * drive the "split this file" flag: a generic `[Field R]` file that merely
- * closes a literal identity with `norm_num` is purely algebraic, not a file
- * "mixing ℝ with generic-R" (the `bring-residue-resolvent` false-positive).
- * (`LinearOrderedField` is an ordered-field structure, not ℝ-specific; it is
- * kept for parity with `ARCHIMEDEAN_LEAN_RE` as the archimedean-ordering
- * side of the §7c wall.)
+ * Archimedean-side TYPE markers used for the mixed-signal split — a genuine
+ * real-field TYPE in ANY form: the bare `ℝ` (so `(x : ℝ)`, `→ ℝ`, `ℝ³`,
+ * `: ℝ` are all caught — the common spaced Lean forms the old narrow
+ * `\(ℝ\)` / `: ℝ\b` tokens missed), the `Real` namespace/type, or
+ * `LinearOrderedField`. This is a deliberate BROADENING over the earlier
+ * narrow variant (see folio #42, which flagged the `\b` limitation and
+ * scoped the broadening to a follow-up — this is that follow-up).
  *
- * The remaining tokens are IDENTICAL to `ARCHIMEDEAN_LEAN_RE` (no
- * broadening), so the split's coverage is unchanged. NB the `\b(…)\b`
- * framing is inherited verbatim, along with its known limitation: the
- * punctuation-leading alternatives (`\(ℝ\)`, `: ℝ`, `: Real`) match only in
- * uncommon spacings and MISS the common spaced Lean forms (`x : ℝ`,
- * `(x : ℝ)`, `: ℝ :=`). (`\b` is ASCII-`\w`-based: the leading `\b` needs a
- * word char immediately before `(`/`:`, and the trailing `\b` needs a word
- * char immediately after ℝ — a space on either side breaks the match.) So
- * the reliably-matched markers are `Real.<fn>` and `LinearOrderedField` —
- * the same effective set `ARCHIMEDEAN_LEAN_RE` already uses. Broadening ℝ
- * detection to catch `(x : ℝ)` / `→ ℝ` forms is a deliberately SEPARATE
- * follow-up: corpus-wide it newly flags 12 genuine ℝ+generic-R mixes the
- * heuristic currently misses, which belongs in its own change.
+ * It deliberately OMITS the arithmetic tactics `norm_num` / `linarith` /
+ * `positivity` / `nlinarith`: those discharge goals over ANY ordered field
+ * (or ℕ/ℤ literals) and are not evidence of an ℝ specialisation, so a
+ * generic `[Field R]` file that merely closes a literal with `norm_num` is
+ * purely algebraic, not a mix (the `bring-residue-resolvent` false-positive).
  *
- * The acknowledgement check below keeps the full `ARCHIMEDEAN_LEAN_RE`
- * signal (tactics included), so ℝ-typed blocks whose ℝ is caught only via a
- * soft tactic still owe an acknowledgement — no acknowledgement coverage is
- * lost.
+ * Because the broadening newly detects genuine `ℝ`+generic-R coexistence
+ * that the narrow tokens missed, the mixed-signal split below carries an
+ * ACKNOWLEDGEMENT-ESCAPE (`!acknowledged`): a file that mixes ℝ and generic-R
+ * but carries a §7c acknowledgement is not forced to split. This makes the
+ * split consistent with the acknowledgement branch's own philosophy (an
+ * archimedean file may acknowledge instead of split) and covers the
+ * legitimate patterns — an `R → ℝ` realisation map, or a conjecture whose
+ * real claim carries generic support — that cannot be cleanly separated.
  */
-const ARCHIMEDEAN_TYPE_RE =
-  /\b(Real\.sqrt|Real\.rpow|Real\.log|Real\.exp|Real\.cos|Real\.sin|Real\.pi|\(ℝ\)|: ℝ\b|: Real\b|LinearOrderedField)\b/;
+const ARCHIMEDEAN_TYPE_RE = /ℝ|\bReal\b|LinearOrderedField/;
+
+/** Acknowledgement of an archimedean specialisation (§7c), matched against
+ *  the `.md` narrative + the `.ts` `authorNotes`. Case-insensitive so
+ *  `\mathbb{R}` (uppercase R) still matches. Shared by the mixed-signal
+ *  ack-escape and the acknowledgement branch below. */
+const WALL_ACK_RE =
+  /archimedean|over\s+\$?\\?mathbb\{R\}|over\s+ℝ|specialise|specialize|numerical evaluation|codata|experimental|§7c|base.?ring/i;
 
 /**
  * Block is wall-correct iff:
@@ -447,48 +445,47 @@ export function checkWallSide(
   const isAlgebraic = ALGEBRAIC_LEAN_RE.test(stripped);
   const hits: CheckerHit[] = [];
 
-  // Mixed-signal split keys on a genuine ℝ / Real TYPE, not on arithmetic
-  // tactics: only a real-field type coexisting with generic-R markers is a
-  // "split this file" placement. A soft tactic (norm_num / linarith / …)
-  // over a generic `[Field R]` file is the legitimate algebraic pattern,
-  // not a wall violation (the bring-residue-resolvent false-positive).
-  if (ARCHIMEDEAN_TYPE_RE.test(stripped) && isAlgebraic) {
+  // Acknowledgement of an archimedean specialisation — in the `.md` narrative
+  // OR the `.ts` `authorNotes` (§4d: §7c banners migrate out of prose into
+  // authorNotes). Computed once and shared: it satisfies BOTH the
+  // mixed-signal split (as an escape) and the acknowledgement requirement.
+  const mdReadable = mdPath && existsSync(mdPath);
+  const tsReadable = tsPath && existsSync(tsPath);
+  const md = mdReadable ? readFileSync(mdPath!, "utf-8") : "";
+  const acknowledged =
+    (!!mdReadable || !!tsReadable) &&
+    WALL_ACK_RE.test(md + "\n" + readAuthorNotesText(tsPath));
+
+  // Mixed-signal split: a genuine ℝ / Real TYPE (in any form) coexisting with
+  // generic-R markers is a "split this file per §7c" placement — UNLESS the
+  // block acknowledges the specialisation (§7c), in which case a legitimate
+  // generic construction + its ℝ realisation may coexist (an `R → ℝ`
+  // realisation map, or a conjecture whose real claim carries generic
+  // support), which cannot be cleanly separated. Arithmetic tactics do NOT
+  // trigger the split (the bring-residue-resolvent false-positive).
+  if (ARCHIMEDEAN_TYPE_RE.test(stripped) && isAlgebraic && !acknowledged) {
     hits.push({
       file: leanPath,
       line: 1,
       text:
-        "Lean file mixes a real-field type (Real.* / LinearOrderedField) " +
+        "Lean file mixes a real-field type (ℝ / Real.* / LinearOrderedField) " +
         "with generic-R (CommRing / {R : Type*}) markers — split into two " +
-        "files per CLAUDE.md §7c.",
+        "files per CLAUDE.md §7c, OR acknowledge the specialisation (a §7c " +
+        "note in authorNotes/.md) if the ℝ realisation legitimately consumes " +
+        "the generic construction.",
     });
   }
 
-  const mdReadable = mdPath && existsSync(mdPath);
-  const tsReadable = tsPath && existsSync(tsPath);
-  if (isArchimedean && (mdReadable || tsReadable)) {
-    const md = mdReadable ? readFileSync(mdPath!, "utf-8") : "";
-    // Archimedean is fine if the specialisation is acknowledged — either
-    // in the .md narrative OR in the .ts `authorNotes` (per CLAUDE.md §4d,
-    // §7c banners migrate out of prose into authorNotes).
-    // Keep original casing and use a case-insensitive regex: lowercasing
-    // `ack` would turn `\mathbb{R}` into `\mathbb{r}`, which the (uppercase-R)
-    // alternative cannot then match — a latent false-fail source.
-    const ack = md + "\n" + readAuthorNotesText(tsPath);
-    const acknowledged =
-      /archimedean|over\s+\$?\\?mathbb\{R\}|over\s+ℝ|specialise|specialize|numerical evaluation|codata|experimental|§7c|base.?ring/i.test(
-        ack,
-      );
-    if (!acknowledged) {
-      hits.push({
-        file: leanPath,
-        line: 1,
-        text:
-          "Lean file uses archimedean constructs but neither the .md " +
-          "narrative nor the .ts authorNotes acknowledge archimedean " +
-          "specialisation. Add a §7c-style note (in authorNotes, per §4d) " +
-          "or move the archimedean evaluation to a sibling block.",
-      });
-    }
+  if (isArchimedean && (mdReadable || tsReadable) && !acknowledged) {
+    hits.push({
+      file: leanPath,
+      line: 1,
+      text:
+        "Lean file uses archimedean constructs but neither the .md " +
+        "narrative nor the .ts authorNotes acknowledge archimedean " +
+        "specialisation. Add a §7c-style note (in authorNotes, per §4d) " +
+        "or move the archimedean evaluation to a sibling block.",
+    });
   }
 
   return { result: hits.length > 0 ? "fail" : "pass", hits };
