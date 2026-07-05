@@ -27,9 +27,18 @@ import { resolve, dirname, join, relative } from "path";
 import { fileURLToPath } from "url";
 import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
 import { hashFile } from "./qa-utils";
+import { findContentRepoRoot } from "./repo-root";
 
 const __filename = fileURLToPath(import.meta.url);
-const REPO_ROOT = resolve(dirname(__filename), "..", "..");
+// Resolve content-repo paths (witnesses under <repo>/computations, Lean
+// under <repo>/content, the i1 audit) against the CONTENT repo — not the
+// folio-assistant tree the pipeline lives in. The old
+// `resolve(dirname(__filename), "..", "..")` landed inside folio-assistant
+// (a symlinked subdir of the content repo), so witness/Lean existence checks
+// resolved to non-existent paths and false-failed compute-integration
+// criteria (compute-witness-exists, compute-prop-has-probe/-consumer). See
+// repo-root.ts.
+const REPO_ROOT = findContentRepoRoot();
 const CONTENT_DIR = resolve(dirname(__filename), "..");
 const COMPUTATIONS_DIR = join(REPO_ROOT, "folio-assistant", "computations");
 const BIB_QA_IMAGES_DIR = join(CONTENT_DIR, "bib-qa-images");
@@ -309,8 +318,8 @@ function getComputationField(tsSrc: string): {
 // `folio-assistant/computations/audits/i1_no_probe_audit.py`.
 const I1_NO_PROBE_AUDIT = join(
   REPO_ROOT,
-  "folio-assistant",
   "computations",
+  "audits",
   "i1-no-probe-audit.witness.json",
 );
 let i1AuditCache: Map<string, string> | null = null;
