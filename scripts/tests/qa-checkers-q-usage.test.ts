@@ -13,13 +13,18 @@
  *
  * Run via `bun test`.
  */
-import { describe, test, expect } from "bun:test";
-import { writeFileSync, mkdtempSync } from "fs";
+import { describe, test, expect, afterAll } from "bun:test";
+import { writeFileSync, mkdtempSync, rmSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
 import { detectRegimes } from "../../content/pipeline/qa-checkers-q-usage.ts";
 
-const DIR = mkdtempSync(join(tmpdir(), "qa-qusage-"));
+const DIR = mkdtempSync(join(tmpdir(), "qa-q-usage-"));
+afterAll(() => {
+  try {
+    rmSync(DIR, { recursive: true, force: true });
+  } catch {}
+});
 let seq = 0;
 function tmp(name: string, contents: string): string {
   const p = join(DIR, `${seq++}-${name}`);
