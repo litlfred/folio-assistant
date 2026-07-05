@@ -11,7 +11,7 @@
  * @module folio-assistant/routes/feedback
  */
 
-import type { FeedbackStore } from "../core/feedback.js";
+import { FeedbackStore } from "../core/feedback.js";
 import type { ContentAdapter } from "../types.js";
 import { getUserName, getUserEmail, hasRole, forbidden } from "../core/rbac.js";
 import { log } from "../core/logging.js";

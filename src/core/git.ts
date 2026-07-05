@@ -123,7 +123,7 @@ export class GitHelper {
    * Writes the file to a temp location, imports it, then cleans up.
    */
   private tsCache = new Map<string, { head: string; value: unknown }>();
-  private tmpDir: string;
+  private tmpDir: string | undefined;
 
   private getTmpDir(): string {
     if (!this.tmpDir) {
