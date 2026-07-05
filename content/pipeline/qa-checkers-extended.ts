@@ -37,10 +37,14 @@ const __filename = fileURLToPath(import.meta.url);
 // diagnostics / witness / computations paths then resolve to the wrong tree.
 // Honour an explicit `QA_REPO_ROOT` override for that case (defaults to the
 // legacy behaviour, so vendored / CI runs are unchanged).
-const REPO_ROOT = process.env.QA_REPO_ROOT
-  ? resolve(process.env.QA_REPO_ROOT)
+const QA_REPO_ROOT_OVERRIDE = process.env.QA_REPO_ROOT?.trim();
+const REPO_ROOT = QA_REPO_ROOT_OVERRIDE
+  ? resolve(QA_REPO_ROOT_OVERRIDE)
   : resolve(dirname(__filename), "..", "..");
-const CONTENT_DIR = resolve(dirname(__filename), "..");
+// CONTENT_DIR must honour the override too, so bibliography / detangler
+// checkers (references.ts, bib-qa.json, chapter manifests) read from the
+// content repo rather than the folio-assistant clone in the sibling layout.
+const CONTENT_DIR = join(REPO_ROOT, "content");
 const COMPUTATIONS_DIR = join(REPO_ROOT, "folio-assistant", "computations");
 const BIB_QA_IMAGES_DIR = join(CONTENT_DIR, "bib-qa-images");
 const BIB_QA_REPORT = join(CONTENT_DIR, "bib-qa.json");

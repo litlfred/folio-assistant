@@ -388,8 +388,9 @@ export function* walkBlocks(rootDir: string): Generator<BlockPaths> {
   // Resolve REPO_ROOT relative to qa-utils.ts (= content/pipeline/), unless
   // an explicit `QA_REPO_ROOT` override is set (the miga sibling-checkout
   // layout, where the pipeline is not vendored inside the content repo).
-  const REPO_ROOT = process.env.QA_REPO_ROOT
-    ? resolve(process.env.QA_REPO_ROOT)
+  const qaRepoRootOverride = process.env.QA_REPO_ROOT?.trim();
+  const REPO_ROOT = qaRepoRootOverride
+    ? resolve(qaRepoRootOverride)
     : resolve(import.meta.dir, "../..");
   const lakeCache: LakeTreeCache = new Map();
 
