@@ -338,20 +338,33 @@ const ARCHIMEDEAN_LEAN_RE =
 const ALGEBRAIC_LEAN_RE = /\b(CommRing|Field|GroupWithZero|\{R : Type\*\}|\(R := |variable \{R\b)/;
 
 /**
- * Archimedean real-field TYPE markers — `ARCHIMEDEAN_LEAN_RE` MINUS the
- * four arithmetic tactics (`norm_num` / `linarith` / `positivity` /
- * `nlinarith`). Those tactics discharge goals over ANY ordered field (or
- * ℕ/ℤ numeric literals) and are NOT by themselves evidence of an ℝ
- * specialisation, so they must not drive the mixed-signal split: a generic
- * `[Field R]` file that merely closes a literal identity with `norm_num`
- * is purely algebraic, not a file "mixing ℝ with generic-R" (the
- * `bring-residue-resolvent` false-positive).
+ * Archimedean-side TYPE markers used for the mixed-signal split — this is
+ * `ARCHIMEDEAN_LEAN_RE` with the four arithmetic tactics (`norm_num` /
+ * `linarith` / `positivity` / `nlinarith`) removed. Those tactics discharge
+ * goals over ANY ordered field (or ℕ/ℤ numeric literals) and are NOT by
+ * themselves evidence of an archimedean specialisation, so they must not
+ * drive the "split this file" flag: a generic `[Field R]` file that merely
+ * closes a literal identity with `norm_num` is purely algebraic, not a file
+ * "mixing ℝ with generic-R" (the `bring-residue-resolvent` false-positive).
+ * (`LinearOrderedField` is an ordered-field structure, not ℝ-specific; it is
+ * kept for parity with `ARCHIMEDEAN_LEAN_RE` as the archimedean-ordering
+ * side of the §7c wall.)
  *
- * Token set is otherwise IDENTICAL to `ARCHIMEDEAN_LEAN_RE` (no broadening),
- * so the split's coverage of genuine ℝ+generic-R files is unchanged. The
- * acknowledgement check below keeps the full `ARCHIMEDEAN_LEAN_RE` signal
- * (tactics included), so ℝ-typed blocks whose ℝ is caught only via a soft
- * tactic still owe an acknowledgement — no acknowledgement coverage is lost.
+ * The remaining tokens are IDENTICAL to `ARCHIMEDEAN_LEAN_RE` (no
+ * broadening), so the split's coverage is unchanged. NB the `\b(…)\b`
+ * framing is inherited verbatim, and its known limitation is inherited too:
+ * the punctuation-leading alternatives (`\(ℝ\)`, `: ℝ`, `: Real`) cannot
+ * actually match in JS (`\b` is ASCII-word-based and cannot sit before `(`
+ * or `:`), so the EFFECTIVE markers are `Real.<fn>` and `LinearOrderedField`
+ * — exactly the effective set `ARCHIMEDEAN_LEAN_RE` already uses. Broadening
+ * ℝ detection to catch `(x : ℝ)` / `→ ℝ` forms is a deliberately SEPARATE
+ * follow-up: corpus-wide it newly flags 12 genuine ℝ+generic-R mixes the
+ * heuristic currently misses, which belongs in its own change.
+ *
+ * The acknowledgement check below keeps the full `ARCHIMEDEAN_LEAN_RE`
+ * signal (tactics included), so ℝ-typed blocks whose ℝ is caught only via a
+ * soft tactic still owe an acknowledgement — no acknowledgement coverage is
+ * lost.
  */
 const ARCHIMEDEAN_TYPE_RE =
   /\b(Real\.sqrt|Real\.rpow|Real\.log|Real\.exp|Real\.cos|Real\.sin|Real\.pi|\(ℝ\)|: ℝ\b|: Real\b|LinearOrderedField)\b/;
@@ -441,9 +454,9 @@ export function checkWallSide(
       file: leanPath,
       line: 1,
       text:
-        "Lean file contains both archimedean (ℝ / Real.* / linarith) AND " +
-        "generic-R (CommRing / {R : Type*}) markers — split into two files " +
-        "per CLAUDE.md §7c.",
+        "Lean file mixes a real-field type (Real.* / LinearOrderedField) " +
+        "with generic-R (CommRing / {R : Type*}) markers — split into two " +
+        "files per CLAUDE.md §7c.",
     });
   }
 
