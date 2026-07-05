@@ -252,8 +252,15 @@ export class FolioServer {
       "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js"
     );
 
+    // Stateful mode (one transport, reused across requests, session-routed via
+    // the Mcp-Session-Id header) — matches the SDK's canonical single-transport
+    // usage. A *stateless* transport (sessionIdGenerator: undefined) MAY NOT be
+    // reused: since SDK 1.26 it throws "Stateless transport cannot be reused
+    // across requests" on the 2nd call (guards against JSON-RPC id collisions /
+    // response misrouting), which would break every request after the first
+    // because this transport is connected once at startup and shared by Bun.serve.
     const httpTransport = new WebStandardStreamableHTTPServerTransport({
-      sessionIdGenerator: undefined,
+      sessionIdGenerator: () => crypto.randomUUID(),
     });
     await this.mcpServer.connect(httpTransport);
 
