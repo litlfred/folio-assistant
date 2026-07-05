@@ -1464,6 +1464,62 @@ const DEVILS_ADVOCATE: QaCriterionDefinition[] = [
   { id: "da-referee-verdict", domain: "devils-advocate", description: "Block-level rollup; carries the 'verdict' field + the strongest objection in 'referee_argument'.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false }
 ];
 
+// ── Domain: expo (Milnor exposition raters) ─────────────────────
+//
+// Agent-judged exposition criteria held to John Milnor's expository
+// standard. The full rubric + agent prompt for each lives in the
+// requirements doc `docs/requirements/2026-07-04-folio-assistant-
+// proof-narrative-checkers.md` (§5A expo-milnor-clarity, §5B
+// milnor-brevity), not in this registry — the `description` here is
+// the one-liner; the rater carries the rubric.
+//
+// Narrative-bearing kinds only; `n/a` on pure equation / diagram /
+// simulator / glossary blocks and near-empty (< ~50-word) prose.
+
+const EXPO_NARRATIVE_KINDS = [
+  "definition",
+  "theorem",
+  "proposition",
+  "lemma",
+  "corollary",
+  "remark",
+  "prose",
+  "example",
+  "conjecture",
+];
+
+const EXPO: QaCriterionDefinition[] = [
+  {
+    id: "expo-milnor-clarity",
+    domain: "expo",
+    description:
+      "Reads with the clarity of John Milnor's exposition (H1–H8: economy, " +
+      "concrete-before-abstract, why-before-what, uncluttered notation, linear " +
+      "argument, prose-carries-argument, right-tool framing, respect for the " +
+      "reader). STRICT gate: pass iff a perfect 16/16 (§5A).",
+    default_severity: "major",
+    depends_on: ["md"],
+    automated: false,
+    applies_to: EXPO_NARRATIVE_KINDS,
+  },
+  {
+    id: "milnor-brevity",
+    domain: "expo",
+    description:
+      "Companion to expo-milnor-clarity: no content is repeated / duplicated " +
+      "within the block. Resolve discipline is STRICTER than clarity — a repeat " +
+      "may be deleted ONLY when the two occurrences are semantically identical " +
+      "(content unchanged); if the content DIFFERS you may NOT delete, and never " +
+      "delete math content (diagram / equation / derivation). When de-duplication " +
+      "would lose distinct content, keep it or SPLIT the block into multiple " +
+      "blocks if that aids explication (§5B).",
+    default_severity: "major",
+    depends_on: ["md"],
+    automated: false,
+    applies_to: EXPO_NARRATIVE_KINDS,
+  },
+];
+
 // ── Exported registry ───────────────────────────────────────────
 
 export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
@@ -1479,6 +1535,7 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...BIBLIOGRAPHY,
   ...SCRIPT_QUALITY,
   ...DEVILS_ADVOCATE,
+  ...EXPO,
 ];
 
 export const SCRIPT_QUALITY_CRITERIA: string[] = SCRIPT_QUALITY.map(
@@ -1522,9 +1579,10 @@ export const BIBLIOGRAPHY_WATCHER_CRITERIA: string[] = BIBLIOGRAPHY.map(
   (c) => c.id,
 );
 export const Q_USAGE_WATCHER_CRITERIA: string[] = Q_USAGE.map((c) => c.id);
+export const EXPO_WATCHER_CRITERIA: string[] = EXPO.map((c) => c.id);
 
 /**
- * All 7 watcher buckets, keyed by watcher short name (matches the
+ * All watcher buckets, keyed by watcher short name (matches the
  * `/integration-watch` / `/integration-backlog` axis arguments).
  */
 export const WATCHER_CRITERIA_BY_AXIS: Record<string, string[]> = {
@@ -1535,6 +1593,7 @@ export const WATCHER_CRITERIA_BY_AXIS: Record<string, string[]> = {
   detangler: DETANGLER_WATCHER_CRITERIA,
   bibliography: BIBLIOGRAPHY_WATCHER_CRITERIA,
   "q-usage": Q_USAGE_WATCHER_CRITERIA,
+  expo: EXPO_WATCHER_CRITERIA,
 };
 
 // ── Source-file + extra-input declaration (script staleness) ────
