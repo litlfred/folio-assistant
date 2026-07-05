@@ -338,6 +338,25 @@ const ARCHIMEDEAN_LEAN_RE =
 const ALGEBRAIC_LEAN_RE = /\b(CommRing|Field|GroupWithZero|\{R : Type\*\}|\(R := |variable \{R\b)/;
 
 /**
+ * Archimedean real-field TYPE markers — `ARCHIMEDEAN_LEAN_RE` MINUS the
+ * four arithmetic tactics (`norm_num` / `linarith` / `positivity` /
+ * `nlinarith`). Those tactics discharge goals over ANY ordered field (or
+ * ℕ/ℤ numeric literals) and are NOT by themselves evidence of an ℝ
+ * specialisation, so they must not drive the mixed-signal split: a generic
+ * `[Field R]` file that merely closes a literal identity with `norm_num`
+ * is purely algebraic, not a file "mixing ℝ with generic-R" (the
+ * `bring-residue-resolvent` false-positive).
+ *
+ * Token set is otherwise IDENTICAL to `ARCHIMEDEAN_LEAN_RE` (no broadening),
+ * so the split's coverage of genuine ℝ+generic-R files is unchanged. The
+ * acknowledgement check below keeps the full `ARCHIMEDEAN_LEAN_RE` signal
+ * (tactics included), so ℝ-typed blocks whose ℝ is caught only via a soft
+ * tactic still owe an acknowledgement — no acknowledgement coverage is lost.
+ */
+const ARCHIMEDEAN_TYPE_RE =
+  /\b(Real\.sqrt|Real\.rpow|Real\.log|Real\.exp|Real\.cos|Real\.sin|Real\.pi|\(ℝ\)|: ℝ\b|: Real\b|LinearOrderedField)\b/;
+
+/**
  * Block is wall-correct iff:
  *   - it has no .lean, OR
  *   - .lean is purely algebraic (no archimedean markers), OR
@@ -412,7 +431,12 @@ export function checkWallSide(
   const isAlgebraic = ALGEBRAIC_LEAN_RE.test(stripped);
   const hits: CheckerHit[] = [];
 
-  if (isArchimedean && isAlgebraic) {
+  // Mixed-signal split keys on a genuine ℝ / Real TYPE, not on arithmetic
+  // tactics: only a real-field type coexisting with generic-R markers is a
+  // "split this file" placement. A soft tactic (norm_num / linarith / …)
+  // over a generic `[Field R]` file is the legitimate algebraic pattern,
+  // not a wall violation (the bring-residue-resolvent false-positive).
+  if (ARCHIMEDEAN_TYPE_RE.test(stripped) && isAlgebraic) {
     hits.push({
       file: leanPath,
       line: 1,

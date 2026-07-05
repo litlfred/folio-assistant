@@ -86,4 +86,35 @@ describe("checkWallSide — §7c acknowledgement via .ts authorNotes", () => {
     const ts = tmp("bare2.ts", `export const b = { title: "f" };`);
     expect(checkWallSide(plainMd(), lean, ts).result).toBe("pass");
   });
+
+  test("generic [Field R] closing a literal with norm_num is NOT a mixed-signal fail (bring-residue pattern)", () => {
+    // No ℝ / Real TYPE anywhere — only `[Field R]` + `norm_num`. The
+    // arithmetic tactics (`norm_num` / `linarith` / `positivity` /
+    // `nlinarith`) discharge goals over any ordered field / ℕ / ℤ and are
+    // NOT evidence of an ℝ specialisation, so they must not drive the
+    // mixed-signal split. Under the old heuristic `norm_num` alongside
+    // `[Field R]` tripped "split into two files"; the block is purely
+    // algebraic and, with its acknowledgement, must pass.
+    const lean = tmp(
+      "field.lean",
+      "def r {R : Type*} [Field R] (n : ℕ) (q : R) : R := 1 / (1 - q ^ n)\nexample : ((-3 : ℚ)) * (1 / 4) = -3 / 4 := by norm_num\n",
+    );
+    const mdAck = tmp(
+      "fieldack.md",
+      "The resolvent specialises to the substrate q-character.",
+    );
+    const ts = tmp("field.ts", `export const b = { title: "r" };`);
+    expect(checkWallSide(mdAck, lean, ts).result).toBe("pass");
+  });
+
+  test("genuine ℝ-TYPE marker (Real.*) alongside generic-R is still flagged as mixed", () => {
+    // A real-field type (here `Real.pi`) coexisting with generic-R markers
+    // IS a real mixed placement — the split flag must survive.
+    const lean = tmp(
+      "mix.lean",
+      "variable {R : Type*} [CommRing R]\nnoncomputable def t : Real := Real.pi\n",
+    );
+    const ts = tmp("mix.ts", `export const b = { title: "t" };`);
+    expect(checkWallSide(plainMd(), lean, ts).result).toBe("fail");
+  });
 });
