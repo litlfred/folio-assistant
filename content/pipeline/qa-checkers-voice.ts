@@ -441,20 +441,30 @@ export function checkWallSide(
   const stripped = leanSrc
     .replace(/\/-[\s\S]*?-\/|--.*$/gm, "")
     .replace(/^\s*import\s+[^\n]*$/gm, "");
+  // Narrow (tactic-inclusive) archimedean signal vs the broadened real-field
+  // TYPE signal. Both feed the acknowledgement requirement so that a
+  // spaced-`(x : ℝ)` / `→ ℝ` specialisation cannot slip through unacknowledged
+  // just because its ℝ is not in a `Real.*` / tactic form.
   const isArchimedean = ARCHIMEDEAN_LEAN_RE.test(stripped);
+  const hasRealType = ARCHIMEDEAN_TYPE_RE.test(stripped);
   const isAlgebraic = ALGEBRAIC_LEAN_RE.test(stripped);
   const hits: CheckerHit[] = [];
 
   // Acknowledgement of an archimedean specialisation — in the `.md` narrative
   // OR the `.ts` `authorNotes` (§4d: §7c banners migrate out of prose into
-  // authorNotes). Computed once and shared: it satisfies BOTH the
-  // mixed-signal split (as an escape) and the acknowledgement requirement.
-  const mdReadable = mdPath && existsSync(mdPath);
-  const tsReadable = tsPath && existsSync(tsPath);
-  const md = mdReadable ? readFileSync(mdPath!, "utf-8") : "";
-  const acknowledged =
-    (!!mdReadable || !!tsReadable) &&
-    WALL_ACK_RE.test(md + "\n" + readAuthorNotesText(tsPath));
+  // authorNotes). Computed LAZILY (memoised) so the `.md`/`.ts` reads happen
+  // only when a mixed-signal or archimedean-ack check actually needs them;
+  // a purely-algebraic block pays no acknowledgement IO.
+  const mdReadable = !!(mdPath && existsSync(mdPath));
+  const tsReadable = !!(tsPath && existsSync(tsPath));
+  let ackCache: boolean | undefined;
+  const acknowledged = (): boolean => {
+    if (ackCache === undefined) {
+      const md = mdReadable ? readFileSync(mdPath!, "utf-8") : "";
+      ackCache = WALL_ACK_RE.test(md + "\n" + readAuthorNotesText(tsPath));
+    }
+    return ackCache;
+  };
 
   // Mixed-signal split: a genuine ℝ / Real TYPE (in any form) coexisting with
   // generic-R markers is a "split this file per §7c" placement — UNLESS the
@@ -463,7 +473,7 @@ export function checkWallSide(
   // realisation map, or a conjecture whose real claim carries generic
   // support), which cannot be cleanly separated. Arithmetic tactics do NOT
   // trigger the split (the bring-residue-resolvent false-positive).
-  if (ARCHIMEDEAN_TYPE_RE.test(stripped) && isAlgebraic && !acknowledged) {
+  if (hasRealType && isAlgebraic && !acknowledged()) {
     hits.push({
       file: leanPath,
       line: 1,
@@ -476,7 +486,14 @@ export function checkWallSide(
     });
   }
 
-  if (isArchimedean && (mdReadable || tsReadable) && !acknowledged) {
+  // Archimedean-without-acknowledgement. Deliberately keyed on the NARROW
+  // `isArchimedean` (tactic-inclusive), NOT the broadened `hasRealType`:
+  // extending this requirement to every spaced `(x : ℝ)` block would newly
+  // flag ~100 pre-existing ℝ-specialised blocks corpus-wide, a large backlog
+  // that belongs in its own change (each needs a §7c note), not this one —
+  // whose scope is the mixed-signal broadening + ack-escape. (Mirrors folio
+  // #42, which likewise deferred the ℝ broadening it identified.)
+  if (isArchimedean && (mdReadable || tsReadable) && !acknowledged()) {
     hits.push({
       file: leanPath,
       line: 1,
