@@ -362,8 +362,9 @@ function loadI1Audit(): Map<string, string> {
 const CONDITIONAL_CLASS_BANNER =
   /\*\*(?:Proposition|Theorem|Lemma|Corollary)\s*\((?:conditional on|assuming|given)\b/i;
 function isConditionalClassProp(mdPath: string | undefined): boolean {
-  if (!mdPath || !existsSync(mdPath)) return false;
-  return CONDITIONAL_CLASS_BANNER.test(readFileSync(mdPath, "utf-8").slice(0, 600));
+  // readMaybe degrades to "" on undefined / missing / unreadable (avoids a
+  // TOCTOU throw that would abort the whole sweep) → test("") is false.
+  return CONDITIONAL_CLASS_BANNER.test(readMaybe(mdPath).slice(0, 600));
 }
 
 export function checkComputePropHasProbe(
