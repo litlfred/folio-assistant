@@ -77,3 +77,42 @@ export function formatLeanRef(parts: { package: string; decl: string }): string 
 }
 
 export const LEAN_REF_PATTERN = /^[a-z][a-z0-9-]*:[^\s:]+$/;
+
+/**
+ * Standard folio paper packages, applied at import time so the runtime
+ * pipelines (qa-sweep, validate, q-usage, …) that never call
+ * `configureLeanPackages()` still resolve library-tree `lean.ref` URIs.
+ *
+ * Before this default, the DI registry stayed EMPTY at runtime (only the
+ * unit test injected it), so `resolveCanonicalLean` returned `undefined`
+ * for every library-only block (no sibling `.lean`) and wall-side / voice /
+ * q-usage / compute-prop silently skipped them corpus-wide.
+ *
+ * Downstream repos with a different paper set may override by calling
+ * `configureLeanPackages(...)` after import (as the test does). Ideally this
+ * list is injected by the content repo; keeping it here as a default unbreaks
+ * the pipeline without a config-discovery mechanism. Mirrors AGENTS.md §0 and
+ * the qou-side static `schemas/lean-packages.ts`.
+ */
+export const DEFAULT_LEAN_PACKAGES: readonly LeanPackage[] = [
+  {
+    name: "qou",
+    paperDir: "quantum-observable-universe",
+    lakeRoot: "content/quantum-observable-universe/lean",
+    lib: "QOU",
+  },
+  {
+    name: "ugb",
+    paperDir: "unital-groebner-bases",
+    lakeRoot: "content/unital-groebner-bases/lean",
+    lib: "UGB",
+  },
+  {
+    name: "fred2005",
+    paperDir: "fred2005-formal-groups",
+    lakeRoot: "content/fred2005-formal-groups/lean",
+    lib: "Fred2005",
+  },
+];
+
+configureLeanPackages(DEFAULT_LEAN_PACKAGES);

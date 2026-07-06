@@ -28,6 +28,7 @@ import type {
   QaScriptSidecar,
 } from "../../schemas/block-qa";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
+import { findContentRepoRoot } from "./repo-root";
 
 // ── Hashing ─────────────────────────────────────────────────────
 
@@ -385,8 +386,13 @@ export function* walkBlocks(rootDir: string): Generator<BlockPaths> {
   // .lean source (wall-side, voice, q-usage, …) don't silently skip.
   // `resolveCanonicalLean` is the single source of truth for that walk;
   // a shared cache scans each Lake tree once across the whole block walk.
-  // Resolve REPO_ROOT relative to qa-utils.ts (= content/pipeline/).
-  const REPO_ROOT = resolve(import.meta.dir, "../..");
+  // The Lake tree lives in the CONTENT repo (e.g. qou/content/**/lean), not
+  // the folio-assistant tree this pipeline lives in — resolve against the
+  // content-repo root (findContentRepoRoot), else `resolve(import.meta.dir,
+  // "../..")` lands in folio-assistant and library-only blocks (no sibling
+  // .lean) resolve to `undefined`, silently skipping every checker that reads
+  // the .lean (wall-side, compute-prop-has-probe/-consumer, voice, q-usage).
+  const REPO_ROOT = findContentRepoRoot();
   const lakeCache: LakeTreeCache = new Map();
 
   function* recurse(d: string): Generator<BlockPaths> {
