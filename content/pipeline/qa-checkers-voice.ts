@@ -486,14 +486,24 @@ export function checkWallSide(
     });
   }
 
-  // Archimedean-without-acknowledgement. Deliberately keyed on the NARROW
-  // `isArchimedean` (tactic-inclusive), NOT the broadened `hasRealType`:
-  // extending this requirement to every spaced `(x : ℝ)` block would newly
-  // flag ~100 pre-existing ℝ-specialised blocks corpus-wide, a large backlog
-  // that belongs in its own change (each needs a §7c note), not this one —
-  // whose scope is the mixed-signal broadening + ack-escape. (Mirrors folio
-  // #42, which likewise deferred the ℝ broadening it identified.)
-  if (isArchimedean && (mdReadable || tsReadable) && !acknowledged()) {
+  // Archimedean-without-acknowledgement. Keyed on the real-field TYPE signal
+  // `hasRealType` (`ℝ` / `Real.*` / `LinearOrderedField`), NOT the
+  // tactic-inclusive `isArchimedean`. Rationale: `hasRealType`'s `\bReal\b`
+  // already subsumes every genuine archimedean construct — the `Real.sqrt` /
+  // `Real.exp` / `Real.pi` real-analysis functions all contain `Real` — while
+  // deliberately EXCLUDING the bare arithmetic tactics `norm_num` / `linarith`
+  // / `positivity` / `nlinarith`, which discharge goals over ℕ/ℤ/ℚ or any
+  // ordered ring and are NOT evidence of an ℝ specialisation. Keying on
+  // `isArchimedean` (as the prior narrow form did) false-flagged purely
+  // algebraic blocks whose only "archimedean" marker was a `norm_num` closing
+  // an integer identity (e.g. a partition-function count) — a §7c note there
+  // would mislabel generic-ring algebra as archimedean. The broadening from
+  // the narrow `\(ℝ\)` / `: ℝ\b` tokens to the bare-`ℝ` `hasRealType` newly
+  // requires acknowledgement on every spaced `(x : ℝ)` / `→ ℝ` block; those
+  // pre-existing ℝ-specialised blocks are §7c-noted in the same mechanical
+  // sweep as this change (the deferred backlog from folio #42/#48 is drained
+  // here, minus the tactic-only false positives which now correctly pass).
+  if (hasRealType && (mdReadable || tsReadable) && !acknowledged()) {
     hits.push({
       file: leanPath,
       line: 1,

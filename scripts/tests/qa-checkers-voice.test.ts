@@ -145,3 +145,61 @@ describe("checkWallSide — §7c acknowledgement via .ts authorNotes", () => {
     expect(checkWallSide(mdAck, lean, ts).result).toBe("pass");
   });
 });
+
+describe("checkWallSide — ack branch keyed on hasRealType, not tactic-inclusive isArchimedean", () => {
+  const plainMd = () => tmp("p.md", "The statement holds.");
+
+  test("tactic-only block (norm_num, NO ℝ / Real / generic-R) → pass (false-positive drop)", () => {
+    // The prior ack branch keyed on the tactic-inclusive `isArchimedean`, so a
+    // purely-algebraic block whose only "archimedean" marker was a `norm_num`
+    // closing an integer identity (e.g. a partition-function count) was
+    // wrongly flagged as needing a §7c note. `norm_num` / `linarith` /
+    // `positivity` / `nlinarith` discharge goals over ℕ / ℤ / ℚ or any ordered
+    // ring and are NOT evidence of an ℝ specialisation. Keyed on `hasRealType`
+    // this now correctly passes with no acknowledgement.
+    const lean = tmp(
+      "tacticonly.lean",
+      "theorem a8 : (2 : ℕ) + 2 = 4 := by norm_num\nexample : 0 ≤ (3 : ℤ) := by positivity\n",
+    );
+    const ts = tmp("tacticonly.ts", `export const b = { title: "a8" };`);
+    expect(checkWallSide(plainMd(), lean, ts).result).toBe("pass");
+  });
+
+  test("colonless bare-ℝ return type `→ ℝ` (no `: ℝ` token), no ack → fail (broadening)", () => {
+    // The narrow `: ℝ\\b` token required a colon, so a colonless `→ ℝ` /
+    // `ℝ³` form slipped through the ack requirement. The bare-`ℝ`
+    // `hasRealType` matcher catches it: an unacknowledged real-valued block
+    // is now flagged regardless of the ℝ's surface form.
+    const lean = tmp(
+      "colonless.lean",
+      "noncomputable def energy : ℕ → ℝ := fun n => (n : ℝ)\n",
+    );
+    const ts = tmp("colonless.ts", `export const b = { title: "energy" };`);
+    expect(checkWallSide(plainMd(), lean, ts).result).toBe("fail");
+  });
+
+  test("colonless bare-ℝ `→ ℝ` WITH a §7c ack → pass (ack escape)", () => {
+    const lean = tmp(
+      "colonlessack.lean",
+      "noncomputable def energy : ℕ → ℝ := fun n => (n : ℝ)\n",
+    );
+    const mdAck = tmp(
+      "colonlessack.md",
+      "**Archimedean specialisation (§7c).** real-valued at q₀.",
+    );
+    const ts = tmp("colonlessack.ts", `export const b = { title: "energy" };`);
+    expect(checkWallSide(mdAck, lean, ts).result).toBe("pass");
+  });
+
+  test("Real.exp (real-analysis fn, subsumed by \\bReal\\b) with no ack → fail", () => {
+    // hasRealType's `\\bReal\\b` already subsumes every `Real.*` real-analysis
+    // function, so dropping the explicit `Real.exp` alternative from the ack
+    // key loses no genuine coverage.
+    const lean = tmp(
+      "realexp.lean",
+      "noncomputable def k (t : ℝ) : ℝ := Real.exp (-t)\n",
+    );
+    const ts = tmp("realexp.ts", `export const b = { title: "k" };`);
+    expect(checkWallSide(plainMd(), lean, ts).result).toBe("fail");
+  });
+});
