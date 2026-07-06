@@ -1015,7 +1015,9 @@ const COMPUTE: QaCriterionDefinition[] = [
       "13-pattern audit: a numerical check that the proposition's claim " +
       "holds at a representative parameter point.",
     default_severity: "major",
-    depends_on: ["ts"],
+    // `lean` — sorry-free-proof exemption; `md` — §3b-cond conditional-banner
+    // exemption (a conditional result is not a numerical prediction).
+    depends_on: ["ts", "lean", "md"],
     automated: true,
     applies_to: ["theorem", "lemma", "proposition", "corollary"],
   },
@@ -1027,7 +1029,7 @@ const COMPUTE: QaCriterionDefinition[] = [
       "I13 of the 13-pattern audit). A prop with a probe but no consumer " +
       "is a NOT-WIRED prop. Routes to `compute-integration-watcher §B`.",
     default_severity: "major",
-    depends_on: ["ts"],
+    depends_on: ["ts", "lean", "md"],
     automated: true,
     applies_to: ["theorem", "lemma", "proposition", "corollary"],
   },
