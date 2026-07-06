@@ -351,12 +351,30 @@ function loadI1Audit(): Map<string, string> {
   return m;
 }
 
+/**
+ * A §3b-cond *conditional* proposition/theorem — one whose statement is
+ * explicitly gated on a conjectural hypothesis (the CLAUDE.md §4d banner
+ * `**Proposition (conditional on …)**`, which §4d keeps in prose) — is not a
+ * numerical prediction, so it needs no I1 compute probe / I2 consumer. The
+ * `sorry` in such a block's Lean is the intended conjectural class instance,
+ * not a missing proof. Detect the banner in the opening line of the `.md`.
+ */
+const CONDITIONAL_CLASS_BANNER =
+  /\*\*(?:Proposition|Theorem|Lemma|Corollary)\s*\((?:conditional on|assuming|given)\b/i;
+function isConditionalClassProp(mdPath: string | undefined): boolean {
+  if (!mdPath || !existsSync(mdPath)) return false;
+  return CONDITIONAL_CLASS_BANNER.test(readFileSync(mdPath, "utf-8").slice(0, 600));
+}
+
 export function checkComputePropHasProbe(
   tsPath: string | undefined,
   leanPath?: string | undefined,
+  mdPath?: string | undefined,
 ): CheckerResult {
   const ts = readTs(tsPath);
   if (!ts) return { result: "n/a", hits: [] };
+  // §3b-cond conditional results are not numerical predictions — exempt.
+  if (isConditionalClassProp(mdPath)) return { result: "pass", hits: [] };
   // Blocks with sorry-free Lean proofs are formally verified —
   // a computational probe is redundant for structural/algebraic
   // results. Only blocks making numerical predictions (those with
@@ -477,9 +495,12 @@ function loadI2AuditByWitness(): Map<
 export function checkComputePropHasConsumer(
   tsPath: string | undefined,
   leanPath?: string | undefined,
+  mdPath?: string | undefined,
 ): CheckerResult {
   const ts = readTs(tsPath);
   if (!ts) return { result: "n/a", hits: [] };
+  // §3b-cond conditional results need no compute consumer (see probe checker).
+  if (isConditionalClassProp(mdPath)) return { result: "pass", hits: [] };
   // Same exemption as compute-prop-has-probe: sorry-free Lean
   // proofs are formally verified — no compute consumer needed.
   if (leanPath && existsSync(resolve(REPO_ROOT, leanPath))) {
@@ -2563,8 +2584,9 @@ export const EXTENDED_AUTOMATED_CHECKERS: Record<
   "bib-cited-ref-has-screenshot": (p) =>
     checkBibCitedRefHasScreenshot(p.md, p.lean),
   // compute
-  "compute-prop-has-probe": (p) => checkComputePropHasProbe(p.ts, p.lean),
-  "compute-prop-has-consumer": (p) => checkComputePropHasConsumer(p.ts, p.lean),
+  "compute-prop-has-probe": (p) => checkComputePropHasProbe(p.ts, p.lean, p.md),
+  "compute-prop-has-consumer": (p) =>
+    checkComputePropHasConsumer(p.ts, p.lean, p.md),
   "compute-witness-exists": (p) => checkComputeWitnessExists(p.ts),
   "compute-lp-dual-present": (p) => checkComputeLpDualPresent(p.ts),
   // canonical
