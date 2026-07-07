@@ -1006,6 +1006,67 @@ export function checkStatusSectionHeader(mdPath: string): CheckerResult {
   return { result: hits.length > 0 ? "fail" : "pass", hits };
 }
 
+// ── voice-title-scholarly ───────────────────────────────────────
+//
+// A content block's `title:` should be a scholarly NOUN PHRASE naming
+// its subject ("Borromean baryon", "Quantum lifting condition"), not a
+// relational header ("Relation to X"), a question, a first-person aside,
+// an imperative, or a casual marker. The relational-header form is the
+// one the DAG-only detangler and the other voice checks miss: it renders
+// as "Remark (Relation to Peña et al. …)", reading like a section
+// cross-reference rather than a titled result.
+const TITLE_FAIL_PATTERNS: { re: RegExp; why: string }[] = [
+  {
+    re: /^\s*(relation(ship)?|connection|link)\s+(to|with|between)\b/i,
+    why: "relational header — retitle to a noun phrase naming the subject",
+  },
+  { re: /\?\s*$/, why: "question title — use a declarative noun phrase" },
+  {
+    re: /^\s*(why|how|what|when|whether)\b/i,
+    why: "interrogative/rhetorical opener",
+  },
+  {
+    re: /^\s*we\s+[a-z]+/i,
+    why: "first-person aside — name the object, not the action",
+  },
+  {
+    re: /^\s*(quick|brief)\s+(note|remark|aside)\b|^\s*notes?\s+on\b|^\s*remarks?\s+on\b/i,
+    why: "casual marker",
+  },
+  {
+    re: /^\s*(compute|derive|show|prove|recall|consider|note that)\b/i,
+    why: "imperative — name the result, not the instruction",
+  },
+];
+
+/** Extract the first `title: "..."` literal from a block `.ts` manifest,
+ *  tolerating escaped inner quotes. Returns null if absent. */
+function extractBlockTitle(tsPath: string): string | null {
+  const src = readFileSync(tsPath, "utf-8");
+  const m = src.match(/\btitle:\s*"((?:[^"\\]|\\.)*)"/);
+  return m ? m[1] : null;
+}
+
+export function checkTitleScholarly(tsPath: string): CheckerResult {
+  const title = extractBlockTitle(tsPath);
+  if (!title) return { result: "pass", hits: [] };
+  for (const { re, why } of TITLE_FAIL_PATTERNS) {
+    if (re.test(title)) {
+      return {
+        result: "fail",
+        hits: [
+          {
+            file: tsPath,
+            line: 1,
+            text: `non-scholarly title (${why}): "${title}"`,
+          },
+        ],
+      };
+    }
+  }
+  return { result: "pass", hits: [] };
+}
+
 // ── Dispatch table ──────────────────────────────────────────────
 
 export const AUTOMATED_CHECKERS: Record<
@@ -1028,6 +1089,8 @@ export const AUTOMATED_CHECKERS: Record<
     p.md ? checkAuthorNotesPollution(p.md) : { result: "pass", hits: [] },
   "voice-status-section": (p) =>
     p.md ? checkStatusSectionHeader(p.md) : { result: "pass", hits: [] },
+  "voice-title-scholarly": (p) =>
+    p.ts ? checkTitleScholarly(p.ts) : { result: "pass", hits: [] },
   "voice-ai-slop": (p) =>
     p.md ? checkAiSlop(p.md) : { result: "pass", hits: [] },
   "voice-scholarly-default": (p) =>

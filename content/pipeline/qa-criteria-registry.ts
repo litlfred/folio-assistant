@@ -132,9 +132,12 @@ const VOICE: QaCriterionDefinition[] = [
     description:
       "Content block `title:` field is a scholarly noun-phrase (e.g. " +
       "\"Borromean baryon\", \"Quantum-deformed Reeb flow\"), NOT a " +
-      "question (\"Why is this important?\"), an imperative " +
+      "relational header (\"Relation to Peña et al.\", \"Connection to X\"), " +
+      "a question (\"Why is this important?\"), an imperative " +
       "(\"Compute the Markov trace\"), a first-person aside " +
       "(\"We derive…\"), or a casual marker (\"Quick note on …\"). " +
+      "Retitle a relational header to the noun phrase naming its subject " +
+      "(\"Deterministic cellular-automaton models of Peña et al.\"). " +
       "Scanned by extracting the `title:` value from the block's `.ts` " +
       "manifest and applying scholarly-form patterns.",
     default_severity: "minor",
