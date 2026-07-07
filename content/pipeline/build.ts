@@ -94,11 +94,20 @@ export async function buildPaper(
       chapterSlugs.set(chIdx, slug);
       chapterMeta.set(chIdx, { slug, title: chapter.title, tabLabel: chapter.tabLabel });
 
-      // Load blocks from the chapter directory
+      // Load blocks from the chapter directory. Sections may nest one
+      // level of `subsections`, each carrying its own `blocks`; the render
+      // side (renderSection) flattens those, so the loader must too — else
+      // subsection-only blocks are never loaded into the block map and
+      // silently drop from the paper (their labels come out undefined).
       for (const sec of chapter.sections) {
         if (!("blocks" in sec)) continue;
         const section = sec as Section;
-        for (const rootName of section.blocks) {
+        const subBlocks = Array.isArray(section.subsections)
+          ? section.subsections.flatMap((s) =>
+              "blocks" in s ? (s as Section).blocks : [],
+            )
+          : [];
+        for (const rootName of [...section.blocks, ...subBlocks]) {
           if (blocks.has(rootName)) continue;
 
           const tsPath = join(chDir, `${rootName}.ts`);
