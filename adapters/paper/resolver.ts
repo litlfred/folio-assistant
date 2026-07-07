@@ -43,6 +43,26 @@ function tryParseLeanRef(blk: any): ParsedLeanRef | undefined {
   }
 }
 
+/**
+ * Flatten a raw section manifest into the ordered list of block root-names
+ * it contributes: the section's own `blocks`, followed by each subsection's
+ * `blocks` in declaration order.
+ *
+ * The viewer / MCP resolution layer has no subsection nesting, so subsection
+ * content is surfaced inline under the parent section. The order mirrors the
+ * LaTeX renderer (`render-latex.ts`: parent blocks first, then each
+ * `\subsection` with its blocks), keeping the viewer and PDF block order in
+ * sync. Without this, blocks that live only inside `subsections[]` never reach
+ * any resolver consumer and the section renders empty in the viewer.
+ */
+function sectionBlockNames(sec: any): string[] {
+  const own: string[] = Array.isArray(sec?.blocks) ? sec.blocks : [];
+  const subs: string[] = Array.isArray(sec?.subsections)
+    ? sec.subsections.flatMap((s: any) => (s && Array.isArray(s.blocks) ? s.blocks : []))
+    : [];
+  return subs.length ? [...own, ...subs] : own;
+}
+
 export class PaperResolver {
   private outlineCache = new TtlCache<ContentOutline>();
   private chapterCache = new TtlCache<ChapterDetail>();
@@ -100,7 +120,7 @@ export class PaperResolver {
           const ch = (await this.gitHelper.importTsBranch(br, chRel)) as any;
           for (const sec of ch.sections || []) {
             if (!("blocks" in sec)) continue;
-            for (const rootName of sec.blocks) {
+            for (const rootName of sectionBlockNames(sec)) {
               const blkRel = `content/${ref.dir}/${chRef.dir}/${rootName}.ts`;
               if (!this.gitHelper.fileExistsBranch(br, blkRel)) continue;
               blockCount++;
@@ -164,7 +184,7 @@ export class PaperResolver {
       for (const sec of ch.sections || []) {
         if ("name" in sec && !("blocks" in sec)) continue;
         const section = sec as { title: string; label?: string; blocks: string[] };
-        sections.push({ title: section.title, label: section.label, blockCount: section.blocks.length });
+        sections.push({ title: section.title, label: section.label, blockCount: sectionBlockNames(section).length });
       }
 
       chapters.push({ number: chapterNumber, tabLabel: ch.tabLabel, title: ch.title, label: ch.label, dir: chRef.dir, sections });
@@ -204,7 +224,7 @@ export class PaperResolver {
       const section = sec as { title: string; label?: string; blocks: string[] };
 
       const blockStubs: SectionStub["blockStubs"] = [];
-      for (const rootName of section.blocks) {
+      for (const rootName of sectionBlockNames(section)) {
         const blkTsRel = `${chRel}/${rootName}.ts`;
         try {
           const blk = (await this.gitHelper.importTsBranch(br, blkTsRel)) as any;
@@ -223,7 +243,7 @@ export class PaperResolver {
         }
       }
 
-      sections.push({ title: section.title, label: section.label, blockCount: section.blocks.length, blockStubs });
+      sections.push({ title: section.title, label: section.label, blockCount: sectionBlockNames(section).length, blockStubs });
     }
 
     // Auto-derive chapter number from its position in the paper manifest
@@ -266,7 +286,7 @@ export class PaperResolver {
     if (sectionIndex < 0 || sectionIndex >= realSections.length) return null;
 
     const sec = realSections[sectionIndex] as { title: string; label?: string; blocks: string[] };
-    const blocks = await this.resolveBlocks(paperId, chRel, sec.blocks, br);
+    const blocks = await this.resolveBlocks(paperId, chRel, sectionBlockNames(sec), br);
 
     const result: ResolvedSection = { title: sec.title, label: sec.label, blocks };
     this.sectionCache.set(cacheKey, result);
@@ -300,7 +320,7 @@ export class PaperResolver {
       for (const sec of ch.sections || []) {
         if ("name" in sec && !("blocks" in sec)) continue;
         const section = sec as { title: string; label?: string; blocks: string[] };
-        const blocks = await this.resolveBlocks(id, chRel, section.blocks, br);
+        const blocks = await this.resolveBlocks(id, chRel, sectionBlockNames(section), br);
         sections.push({ title: section.title, label: section.label, blocks });
       }
 

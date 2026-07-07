@@ -369,6 +369,25 @@ interface FolioEntry {
   stats: { chapters: number; blocks: number; proved: number; todos: number };
 }
 
+/**
+ * Flatten a raw section manifest into the ordered list of block root-names it
+ * contributes: the section's own `blocks`, then each subsection's `blocks` in
+ * declaration order.
+ *
+ * The viewer / MCP resolution layer has no subsection nesting, so subsection
+ * content is surfaced inline under the parent section, in the same order the
+ * LaTeX renderer emits it (parent blocks first, then each `\subsection` with
+ * its blocks). Without this, blocks living only inside `subsections[]` never
+ * reach any resolver consumer and the section renders empty in the viewer.
+ */
+function sectionBlockNames(sec: any): string[] {
+  const own: string[] = Array.isArray(sec?.blocks) ? sec.blocks : [];
+  const subs: string[] = Array.isArray(sec?.subsections)
+    ? sec.subsections.flatMap((s: any) => (s && Array.isArray(s.blocks) ? s.blocks : []))
+    : [];
+  return subs.length ? [...own, ...subs] : own;
+}
+
 async function resolveFolio(branch?: string): Promise<{ title: string; papers: FolioEntry[]; branch: string }> {
   const br = branch;
   const folioRel = "content/folio.ts";
@@ -398,7 +417,7 @@ async function resolveFolio(branch?: string): Promise<{ title: string; papers: F
         const ch = (await importTsBranch(br, chRel)) as any;
         for (const sec of ch.sections || []) {
           if (!("blocks" in sec)) continue;
-          for (const rootName of sec.blocks) {
+          for (const rootName of sectionBlockNames(sec)) {
             const blkRel = `content/${ref.dir}/${chRef.dir}/${rootName}.ts`;
             if (!fileExistsBranch(br, blkRel)) continue;
             blockCount++;
@@ -463,7 +482,7 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
       const section = sec as { title: string; label?: string; blocks: string[] };
       const blocks: ResolvedBlock[] = [];
 
-      for (const rootName of section.blocks) {
+      for (const rootName of sectionBlockNames(section)) {
         const blkTsRel = `${chRel}/${rootName}.ts`;
         const blkMdRel = `${chRel}/${rootName}.md`;
         try {
@@ -641,7 +660,7 @@ async function resolvePaperOutline(id: string, branch?: string): Promise<PaperOu
     for (const sec of ch.sections || []) {
       if ("name" in sec && !("blocks" in sec)) continue;
       const section = sec as { title: string; label?: string; blocks: string[] };
-      sections.push({ title: section.title, label: section.label, blockCount: section.blocks.length });
+      sections.push({ title: section.title, label: section.label, blockCount: sectionBlockNames(section).length });
     }
 
     chapters.push({ number: chapterNumber, tabLabel: ch.tabLabel, title: ch.title, label: ch.label, dir: chRef.dir, sections });
@@ -701,7 +720,7 @@ async function resolveChapterDetail(
     const section = sec as { title: string; label?: string; blocks: string[] };
 
     const blockStubs: SectionStub["blockStubs"] = [];
-    for (const rootName of section.blocks) {
+    for (const rootName of sectionBlockNames(section)) {
       const blkTsRel = `${chRel}/${rootName}.ts`;
       try {
         const blk = (await importTsBranch(br, blkTsRel)) as any;
@@ -723,7 +742,7 @@ async function resolveChapterDetail(
     sections.push({
       title: section.title,
       label: section.label,
-      blockCount: section.blocks.length,
+      blockCount: sectionBlockNames(section).length,
       blockStubs,
     });
   }
@@ -772,7 +791,7 @@ async function resolveSection(
   const sec = realSections[sectionIndex] as { title: string; label?: string; blocks: string[] };
   const blocks: ResolvedBlock[] = [];
 
-  for (const rootName of sec.blocks) {
+  for (const rootName of sectionBlockNames(sec)) {
     const blkTsRel = `${chRel}/${rootName}.ts`;
     const blkMdRel = `${chRel}/${rootName}.md`;
     try {
