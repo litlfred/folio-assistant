@@ -542,6 +542,9 @@ const PROOF: QaCriterionDefinition[] = [
       "corollary",
       "definition",
       "conjecture",
+  "milnor",
+  "milnor-section",
+  "milnor-sub-section",
     ],
   },
   {
