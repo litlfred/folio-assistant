@@ -164,11 +164,16 @@ export function validateDefterms(
       }
     }
 
-    // defterm-marked (warning): every defines[] entry must have a defterm node
+    // defterm-marked (error): every defines[] entry must have a defterm node.
+    // Promoted warning → error 2026-07-07: as a warning this accumulated
+    // silently (17 unmarked terms piled up across the QOU corpus, only
+    // surfaced by a whole-paper validate). An unmarked defines[] term means
+    // the glossary/hyperref for that term is never emitted, so the block
+    // under-delivers on its own metadata — a hard authoring bug, not advisory.
     for (const slug of defines) {
       if (!usage.defs.has(slug)) {
         issues.push({
-          level: "warning",
+          level: "error",
           block: name,
           message: `defterm-marked: defines[] entry "${slug}" has no :defterm[${slug}] in this block's .md`,
           file: `${name}.md`,
