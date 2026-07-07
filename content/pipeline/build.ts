@@ -98,7 +98,14 @@ export async function buildPaper(
       for (const sec of chapter.sections) {
         if (!("blocks" in sec)) continue;
         const section = sec as Section;
-        for (const rootName of section.blocks) {
+        if (section.subsections) {
+          console.log(`Section ${section.title} has ${section.subsections.length} subsections`);
+        }
+        const allBlocks = [
+          ...section.blocks,
+          ...(Array.isArray(section.subsections) ? section.subsections.flatMap((s) => "blocks" in s ? (s as Section).blocks : []) : [])
+        ];
+        for (const rootName of allBlocks) {
           if (blocks.has(rootName)) continue;
 
           const tsPath = join(chDir, `${rootName}.ts`);

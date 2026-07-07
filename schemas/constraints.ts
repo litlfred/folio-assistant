@@ -608,7 +608,7 @@ export const SectionSchema = z.object({
   title: z.string().min(1),
   label: z.string().optional(),
   blocks: z.array(z.string().min(1)),
-});
+}).passthrough();
 
 export const SectionRefSchema = z.object({
   name: z.string().min(1),

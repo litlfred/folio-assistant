@@ -98,6 +98,7 @@ export interface ResolvedSection {
   title: string;
   label?: string;
   blocks: ResolvedBlock[];
+  subsections?: ResolvedSection[];
 }
 
 export interface ResolvedChapter {

@@ -285,10 +285,22 @@ export class PaperResolver {
     const realSections = (ch.sections || []).filter((s: any) => !("name" in s && !("blocks" in s)));
     if (sectionIndex < 0 || sectionIndex >= realSections.length) return null;
 
-    const sec = realSections[sectionIndex] as { title: string; label?: string; blocks: string[] };
-    const blocks = await this.resolveBlocks(paperId, chRel, sectionBlockNames(sec), br);
+    const sec = realSections[sectionIndex] as any;
+    const ownBlockNames = Array.isArray(sec.blocks) ? sec.blocks : [];
+    const blocks = await this.resolveBlocks(paperId, chRel, ownBlockNames, br);
 
-    const result: ResolvedSection = { title: sec.title, label: sec.label, blocks };
+    let subsections: ResolvedSection[] | undefined;
+    if (Array.isArray(sec.subsections)) {
+      subsections = [];
+      for (const sub of sec.subsections) {
+        if (!sub) continue;
+        const subBlockNames = Array.isArray(sub.blocks) ? sub.blocks : [];
+        const subBlocks = await this.resolveBlocks(paperId, chRel, subBlockNames, br);
+        subsections.push({ title: sub.title, label: sub.label, blocks: subBlocks });
+      }
+    }
+
+    const result: ResolvedSection = { title: sec.title, label: sec.label, blocks, subsections };
     this.sectionCache.set(cacheKey, result);
     return result;
   }
@@ -319,9 +331,22 @@ export class PaperResolver {
       const sections: ResolvedSection[] = [];
       for (const sec of ch.sections || []) {
         if ("name" in sec && !("blocks" in sec)) continue;
-        const section = sec as { title: string; label?: string; blocks: string[] };
-        const blocks = await this.resolveBlocks(id, chRel, sectionBlockNames(section), br);
-        sections.push({ title: section.title, label: section.label, blocks });
+        const section = sec as any;
+        const ownBlockNames = Array.isArray(section.blocks) ? section.blocks : [];
+        const blocks = await this.resolveBlocks(id, chRel, ownBlockNames, br);
+
+        let subsections: ResolvedSection[] | undefined;
+        if (Array.isArray(section.subsections)) {
+          subsections = [];
+          for (const sub of section.subsections) {
+            if (!sub) continue;
+            const subBlockNames = Array.isArray(sub.blocks) ? sub.blocks : [];
+            const subBlocks = await this.resolveBlocks(id, chRel, subBlockNames, br);
+            subsections.push({ title: sub.title, label: sub.label, blocks: subBlocks });
+          }
+        }
+
+        sections.push({ title: section.title, label: section.label, blocks, subsections });
       }
 
       const chTodos = this.feedbackStore.read(id, `__chapter:${chRef.dir}`);
@@ -336,10 +361,16 @@ export class PaperResolver {
     }
 
     const blocksByName = new Map<string, ResolvedBlock>();
-    for (const ch of chapters)
-      for (const sec of ch.sections)
-        for (const blk of sec.blocks)
-          blocksByName.set(blk.rootName, blk);
+    for (const ch of chapters) {
+      for (const sec of ch.sections) {
+        for (const blk of sec.blocks) blocksByName.set(blk.rootName, blk);
+        if (sec.subsections) {
+          for (const sub of sec.subsections) {
+            for (const blk of sub.blocks) blocksByName.set(blk.rootName, blk);
+          }
+        }
+      }
+    }
 
     const paperTodos = this.feedbackStore.read(id, "__paper");
     const result = {
