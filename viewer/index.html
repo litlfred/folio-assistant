@@ -1500,7 +1500,22 @@
           // Build block→chapter/section reverse lookup
           const blockChSec = new Map();
           if (paper) {
-            for (const ch of paper.chapters) for (const sec of ch.sections) for (const b of sec.blocks) {
+            const indexLightningBlock = (b) => {
+              if (b.label) bix.set(b.label, b);
+              if (b.examples) for (const ex of b.examples) childBlocks.add(ex);
+              if (b.proofs) for (const prf of b.proofs) childBlocks.add(prf);
+              if (b.uses) for (const dep of b.uses) {
+                if (!usedByIndex.has(dep)) usedByIndex.set(dep, []);
+                usedByIndex.get(dep).push({ label: b.label, kind: b.kind, title: b.title, rootName: b.rootName });
+              }
+            };
+            for (const ch of paper.chapters) {
+              for (const sec of ch.sections) {
+                for (const b of sec.blocks) indexLightningBlock(b);
+                if (sec.subsections) for (const sub of sec.subsections) for (const b of sub.blocks) indexLightningBlock(b);
+              }
+            }
+            if (false) {
               if (b.label) blockChSec.set(b.label, { chTitle: ch.title, chNum: ch.number, secTitle: sec.title });
             }
           }
@@ -2405,9 +2420,31 @@
       if (paper) {
         for (const ch of paper.chapters) {
           for (const sec of ch.sections) {
-            for (const b of sec.blocks) {
+            const addPrintBlock = (b) => {
+              if (b.label && childBlocks.has(b.label)) return;
+              blocks.push(b);
+              if (b.examples) for (const l of b.examples) {
+                const ex = bix.get(l);
+                if (ex) blocks.push(ex);
+              }
+              if (b.proofs) for (const l of b.proofs) {
+                const prf = bix.get(l);
+                if (prf) blocks.push(prf);
+              }
+            };
+            for (const b of sec.blocks) addPrintBlock(b);
+            if (sec.subsections) for (const sub of sec.subsections) for (const b of sub.blocks) addPrintBlock(b);
+            if (false) {
               if (b.label) blockChSec.set(b.label, { chTitle: ch.title, chNum: ch.number, secTitle: sec.title });
             }
+            if (sec.subsections) {
+              for (const sub of sec.subsections) {
+                for (const b of sub.blocks) {
+                  if (b.label === label) return chKey(ch);
+                }
+              }
+            }
+
           }
         }
       }
@@ -4024,7 +4061,8 @@
       const childBlocks = new Set(); // examples/proofs shown via parent's toggle
       usedByIndex.clear();
       // Index blocks that are already loaded (non-lazy path or already fetched)
-      for (const ch of p.chapters) for (const s of ch.sections) for (const b of s.blocks) {
+      for (const ch of p.chapters) for (const s of ch.sections) {
+        for (const b of s.blocks) {
         if (b.label) bix.set(b.label, b);
         if (b.examples) for (const ex of b.examples) childBlocks.add(ex);
         if (b.proofs) for (const prf of b.proofs) childBlocks.add(prf);
@@ -4032,6 +4070,17 @@
           if (!usedByIndex.has(dep)) usedByIndex.set(dep, []);
           usedByIndex.get(dep).push({ label: b.label, kind: b.kind, title: b.title, rootName: b.rootName });
         }
+        if (s.subsections) {
+          for (const sub of s.subsections) for (const b of s.blocks) {
+        if (b.label) bix.set(b.label, b);
+        if (b.examples) for (const ex of b.examples) childBlocks.add(ex);
+        if (b.proofs) for (const prf of b.proofs) childBlocks.add(prf);
+        if (b.uses) for (const dep of b.uses) {
+          if (!usedByIndex.has(dep)) usedByIndex.set(dep, []);
+          usedByIndex.get(dep).push({ label: b.label, kind: b.kind, title: b.title, rootName: b.rootName });
+        }
+        }
+      }
       }
 
       const isLazy = !!paperOutline; // true when using lazy-load path
@@ -4122,11 +4171,11 @@
             const ch = p.chapters.find(c => c._dir === chapterDir);
             if (ch) {
               const sec = ch.sections[sectionIndex];
-              if (sec) sec.blocks = secData.blocks;
+              if (sec) { sec.blocks = secData.blocks; sec.subsections = secData.subsections; }
             }
 
             // Index blocks into bix/usedByIndex
-            for (const b of secData.blocks) {
+            const indexBlock = (b) => {
               if (b.label) bix.set(b.label, b);
               if (b.examples) for (const ex of b.examples) childBlocks.add(ex);
               if (b.proofs) for (const prf of b.proofs) childBlocks.add(prf);
@@ -4134,6 +4183,10 @@
                 if (!usedByIndex.has(dep)) usedByIndex.set(dep, []);
                 usedByIndex.get(dep).push({ label: b.label, kind: b.kind, title: b.title, rootName: b.rootName });
               }
+            for (const b of secData.blocks) indexBlock(b);
+            if (secData.subsections) {
+              for (const sub of secData.subsections) for (const b of sub.blocks) indexBlock(b);
+            }
             }
 
             // Replace placeholder with rendered blocks
@@ -4142,6 +4195,20 @@
             for (const b of secData.blocks) {
               if ((b.kind === 'example' || b.kind === 'proof') && b.label && childBlocks.has(b.label) && pendingScroll !== b.label) continue;
               sectionDiv.appendChild(renderBlock(b));
+            }
+            if (secData.subsections) {
+              let subNum = 0;
+              for (const sub of secData.subsections) {
+                subNum++;
+                const subDiv = mk('div','subsection');
+                const secPrefix = sectionDiv.dataset.secNum ? sectionDiv.dataset.secNum + '.' + subNum : subNum;
+                subDiv.innerHTML = `<h4 class="subsec-t"><span class="subsec-title-text"><span class="sec-n">${secPrefix}</span> ${inl(sub.title)}</span></h4>`;
+                for (const b of sub.blocks) {
+                  if ((b.kind === 'example' || b.kind === 'proof') && b.label && childBlocks.has(b.label) && pendingScroll !== b.label) continue;
+                  subDiv.appendChild(renderBlock(b));
+                }
+                sectionDiv.appendChild(subDiv);
+              }
             }
           } catch (e) {
             const placeholder = sectionDiv.querySelector('.sec-loading');
@@ -4306,6 +4373,13 @@
             for (const b of sec.blocks) {
               if (b.label === label) return chKey(ch);
             }
+            if (sec.subsections) {
+              for (const sub of sec.subsections) {
+                for (const b of sub.blocks) {
+                  if (b.label === label) return chKey(ch);
+                }
+              }
+            }
           }
         }
         // In lazy mode, check chapter detail stubs
@@ -4355,12 +4429,15 @@
           if (!isLazy) {
             // Non-lazy: compute badges from loaded blocks
             let secTodos = 0, secLeanMiss = 0, secLeanErr = 0;
-            for (const b of sec.blocks) {
+            const checkBadges = (b) => {
               secTodos += (b.todos || []).filter(t => t.status === 'open').length;
               const nl = ['definition','theorem','lemma','proposition','corollary'].includes(b.kind);
               if (nl && (!b.lean || !b.lean.file)) secLeanMiss++;
               if (nl && b.lean && ((b.lean.validation === 'error') || b.status === 'has_sorry')) secLeanErr++;
             }
+            for (const b of sec.blocks) checkBadges(b);
+            if (sec.subsections) for (const sub of sec.subsections) for (const b of sub.blocks) checkBadges(b);
+
             const badges = [];
             if (secTodos) badges.push(`${secTodos} todo${secTodos > 1 ? 's' : ''}`);
             if (secLeanMiss) badges.push(`${secLeanMiss} no lean`);
@@ -4390,7 +4467,7 @@
 
           if (!isLazy) {
             // Non-lazy: populate block list immediately
-            for (const b of sec.blocks) {
+            const addSidebarBlock = (b) => {
               const kind = b.kind[0].toUpperCase();
               const bEl = mk('div','sb-blk');
               const nameSpan = mk('span','sb-name');
@@ -4430,6 +4507,9 @@
                     bEl.appendChild(rb);
                   }
                 }
+            for (const b of sec.blocks) addSidebarBlock(b);
+            if (sec.subsections) for (const sub of sec.subsections) for (const b of sub.blocks) addSidebarBlock(b);
+          }
               }
 
               bEl.onclick = () => {
@@ -4559,6 +4639,21 @@
               if ((b.kind === 'example' || b.kind === 'proof') && b.label && childBlocks.has(b.label) && pendingScroll !== b.label) continue;
               sd.appendChild(renderBlock(b));
             }
+            if (sec.subsections) {
+              let subNum = 0;
+              for (const sub of sec.subsections) {
+                subNum++;
+                const subDiv = mk('div','subsection');
+                const secPrefix = sd.dataset.secNum ? sd.dataset.secNum + '.' + subNum : subNum;
+                subDiv.innerHTML = `<h4 class="subsec-t"><span class="subsec-title-text"><span class="sec-n">${secPrefix}</span> ${inl(sub.title)}</span></h4>`;
+                for (const b of sub.blocks) {
+                  if ((b.kind === 'example' || b.kind === 'proof') && b.label && childBlocks.has(b.label) && pendingScroll !== b.label) continue;
+                  subDiv.appendChild(renderBlock(b));
+                }
+                sd.appendChild(subDiv);
+              }
+            }
+
           }
           cd.appendChild(sd);
         }
@@ -4579,11 +4674,20 @@
 
         // Build reverse index: ref id → blocks that cite it
         const refCitedBy = new Map();
-        for (const ch of p.chapters) for (const s of ch.sections) for (const b of s.blocks) {
+        for (const ch of p.chapters) for (const s of ch.sections) {
+          for (const b of s.blocks) {
           if (b.cites) for (const k of b.cites) {
             if (!refCitedBy.has(k)) refCitedBy.set(k, []);
             refCitedBy.get(k).push({ label: b.label, kind: b.kind, title: b.title, chapter: chKey(ch) });
           }
+          if (s.subsections) {
+            for (const sub of s.subsections) for (const b of sub.blocks) {
+          if (b.cites) for (const k of b.cites) {
+            if (!refCitedBy.has(k)) refCitedBy.set(k, []);
+            refCitedBy.get(k).push({ label: b.label, kind: b.kind, title: b.title, chapter: chKey(ch) });
+          }
+          }
+        }
         }
 
         // QA report
@@ -4690,7 +4794,7 @@
       ciDiv.style.display = 'none';
       ciDiv.innerHTML = `<h2 class="ch-t"><span class="ch-title-text">Content Index</span></h2>
         <p style="font-size:.7rem;color:var(--fg-d);margin:0 0 .8rem;font-family:var(--f-head)">All content blocks. Click to navigate.</p>
-        <div style="margin-bottom:.6rem"><input id="ci-search" type="text" placeholder="Filter blocks..." style="font-size:.7rem;padding:.3rem .5rem;width:100%;max-width:400px;border:1px solid var(--bd);border-radius:4px;background:var(--bg-r);color:var(--fg);font-family:var(--f-mono)"></div>
+        <div style="margin-bottom:.6rem"><input id="ci-search" type="text" placeholder="Filter blocks..." style="font-size:.7rem;padding:.3rem .5rem;width:100%;max-width:400px;border:1px solid var(--bd);border-radius:4px;background:var(--bg-r);color:var(--fg;font-family:var(--f-mono)"></div>
         <div id="ci-blocks" style="font-size:.65rem"></div>`;
       chapterDivs.set(ciNum, ciDiv);
       app.appendChild(ciDiv);
@@ -4705,7 +4809,7 @@
         if (!ciContainer) return;
         // Count currently-known blocks; skip rebuild if unchanged.
         let total = 0;
-        for (const ch of p.chapters) for (const sec of ch.sections) total += sec.blocks.length;
+        for (const ch of p.chapters) for (const sec of ch.sections) total += sec.blocks.length + (sec.subsections ? sec.subsections.reduce((a, s) => a + s.blocks.length, 0) : 0);
         if (total === _ciBuiltFromBlocks && ciContainer.childElementCount > 0) return;
         _ciBuiltFromBlocks = total;
         ciContainer.innerHTML = '';
@@ -4716,7 +4820,7 @@
           chHdr.textContent = `${ch.number != null ? 'Ch ' + ch.number + '. ' : ''}${ch.title}`;
           chGrp.appendChild(chHdr);
           for (const sec of ch.sections) {
-            for (const b of sec.blocks) {
+            const addCiBlock = (b) => {
               const stub = mk('div','ci-stub');
               stub.dataset.search = `${b.kind} ${b.label || ''} ${b.title || ''} ${(b.tags || []).join(' ')}`.toLowerCase();
               stub.style.cssText = 'display:flex;align-items:baseline;gap:.4rem;padding:.2rem .4rem;border-radius:3px;cursor:pointer;border-left:3px solid transparent';
@@ -4764,7 +4868,9 @@
               stub.onmouseover = () => { stub.style.background = 'var(--bg-r)'; };
               stub.onmouseout = () => { stub.style.background = ''; };
               chGrp.appendChild(stub);
-            }
+            };
+            for (const b of sec.blocks) addCiBlock(b);
+            if (sec.subsections) for (const sub of sec.subsections) for (const b of sub.blocks) addCiBlock(b);
           }
           ciContainer.appendChild(chGrp);
         }
@@ -4811,7 +4917,7 @@
               const secData = await cachedFetch(secUrl);
               loadedSections.add(key);
               const chObj = p.chapters.find(c => c._dir === ch._dir);
-              if (chObj) { const sec = chObj.sections[si]; if (sec) sec.blocks = secData.blocks; }
+              if (chObj) { const sec = chObj.sections[si]; if (sec) { sec.blocks = secData.blocks; sec.subsections = secData.subsections; } }
               for (const b of secData.blocks) {
                 if (b.label) bix.set(b.label, b);
                 if (b.examples) for (const ex of b.examples) childBlocks.add(ex);
@@ -4975,9 +5081,19 @@
         // Final fallback: scan paper chapters for blocks loaded in sections
         for (const ch of (paper?.chapters || [])) {
           for (const sec of (ch.sections || [])) {
-            for (const b of (sec.blocks || [])) {
-              if (b.label === simRef.ref) { openSimulator(b, simRef.view); return; }
+            const addScanBlock = (b) => {
+              if (b.label === simRef.ref) { openSimulator(b, simRef.view); return true; }
+              return false;
+            };
+            let found = false;
+            for (const b of (sec.blocks || [])) { if (addScanBlock(b)) { found = true; break; } }
+            if (!found && sec.subsections) {
+              for (const sub of sec.subsections) {
+                for (const b of sub.blocks) { if (addScanBlock(b)) { found = true; break; } }
+                if (found) break;
+              }
             }
+            if (found) return;
           }
         }
       };
@@ -5388,7 +5504,7 @@
         for (const ch of paper.chapters) {
           for (const sec of ch.sections) {
             let secTodos = 0;
-            for (const b of sec.blocks) {
+            const updateTodos = (b) => {
               const fresh = byRoot[b.rootName] || [];
               b.todos = fresh;
               const count = fresh.length;
@@ -5407,6 +5523,8 @@
                   if (firstBadge) blkEl.insertBefore(tb, firstBadge);
                   else blkEl.appendChild(tb);
                 }
+            for (const b of sec.blocks) updateTodos(b);
+            if (sec.subsections) for (const sub of sec.subsections) for (const b of sub.blocks) updateTodos(b);
               }
               // Update inline todo indicators in the rendered block
               if (b.label) {
@@ -6897,9 +7015,13 @@
           chapterOrder.push(chKey);
           chapterBlocks.set(chKey, []);
           const secBlocks = new Set();
-          for (const sec of ch.sections)
-            for (const blk of sec.blocks)
-              secBlocks.add(blk.rootName);
+          const processTodos = (blk) => {
+            secBlocks.add(blk.rootName);
+          };
+          for (const sec of ch.sections) {
+            for (const blk of sec.blocks) processTodos(blk);
+            if (sec.subsections) for (const sub of sec.subsections) for (const blk of sub.blocks) processTodos(blk);
+          }
           for (const d of changed) {
             if (secBlocks.has(d.rootName)) chapterBlocks.get(chKey).push(d);
           }

@@ -479,69 +479,53 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
     const sections: ResolvedSection[] = [];
     for (const sec of ch.sections || []) {
       if ("name" in sec && !("blocks" in sec)) continue;
-      const section = sec as { title: string; label?: string; blocks: string[] };
-      const blocks: ResolvedBlock[] = [];
-
-      for (const rootName of sectionBlockNames(section)) {
-        const blkTsRel = `${chRel}/${rootName}.ts`;
-        const blkMdRel = `${chRel}/${rootName}.md`;
-        try {
-          const blk = (await importTsBranch(br, blkTsRel)) as any;
-          const md = readFileBranch(br, blkMdRel) || "";
-
-          // Merge feedback todos from feedback/<paperId>/<rootName>.ts
-          // Build a fresh array each time — never mutate the cached ESM module object
-          const feedback = readFeedback(id, rootName);
-          const blockTodos = feedback.length ? [...feedback] : undefined;
-
-          // Read Lean source if available
-          const leanSource = resolveLeanSource(blk, chRel, rootName, br);
-
-          const rendered: ResolvedRenderedAsset[] | undefined = blk.rendered?.map(
-            (r: { mime: string; url: string; blockIndex: number; hash?: string }) => ({
-              ...r,
-              url: `/api/content-asset/${id}/${chRef.dir}/${r.url}`,
-            })
-          );
-
-          // Synthesize rendered entry for diagram blocks with meta.file (image figures)
-          const figFile = blk.kind === "diagram" && blk.meta?.file as string | undefined;
-          const figRendered: ResolvedRenderedAsset[] | undefined = figFile
-            ? [{
-                mime: figFile.endsWith(".svg") ? "image/svg+xml"
-                    : figFile.endsWith(".png") ? "image/png"
-                    : figFile.endsWith(".jpg") || figFile.endsWith(".jpeg") ? "image/jpeg"
-                    : "image/png",
-                url: `/api/content-asset/${id}/${chRef.dir}/${figFile}`,
-                blockIndex: 0,
-              }]
-            : undefined;
-
-          const finalRendered = rendered || figRendered;
-
-          blocks.push({
-            rootName,
-            kind: blk.kind,
-            label: blk.label,
-            title: blk.title,
-            uses: blk.uses,
-            examples: blk.examples,
-            proofs: blk.proofs,
-            lean: blk.lean ? { ...blk.lean, source: leanSource } : undefined,
-            status: blk.status,
-            tex: blk.tex,
-            caption: blk.caption,
-            tags: blk.tags,
-            rendered: finalRendered,
-            md,
-            todos: blockTodos,
-          });
-        } catch (e) {
-          blocks.push({ rootName, kind: "error", md: `Failed to load ${rootName}: ${e}` });
+      const section = sec as any;
+      const resolveBlocksList = async (blockNames: string[]) => {
+        const res: ResolvedBlock[] = [];
+        for (const rootName of blockNames) {
+          const blkTsRel = `${chRel}/${rootName}.ts`;
+          const blkMdRel = `${chRel}/${rootName}.md`;
+          try {
+            const blk = (await importTsBranch(br, blkTsRel)) as any;
+            const md = readFileBranch(br, blkMdRel) || "";
+            const feedback = readFeedback(id, rootName);
+            const blockTodos = feedback.length ? [...feedback] : undefined;
+            const leanSource = resolveLeanSource(blk, chRel, rootName, br);
+            const rendered = blk.rendered?.map(
+              (r: any) => ({ ...r, url: `/api/content-asset/${id}/${chRef.dir}/${r.url}` })
+            );
+            const figFile = blk.kind === "diagram" && blk.meta?.file as string | undefined;
+            const figRendered = figFile ? [{
+              mime: figFile.endsWith(".svg") ? "image/svg+xml" : figFile.endsWith(".png") ? "image/png" : "image/jpeg",
+              url: `/api/content-asset/${id}/${chRef.dir}/${figFile}`,
+              blockIndex: 0
+            }] : undefined;
+            res.push({
+              rootName, kind: blk.kind, label: blk.label, title: blk.title, uses: blk.uses,
+              examples: blk.examples, proofs: blk.proofs, lean: blk.lean ? { ...blk.lean, source: leanSource } : undefined,
+              status: blk.status, tex: blk.tex, caption: blk.caption, tags: blk.tags, rendered: rendered || figRendered,
+              md, todos: blockTodos
+            });
+          } catch (e) { res.push({ rootName, kind: "error", md: `Failed to load ${rootName}: ${e}` }); }
+        }
+        return res;
+      };
+      
+      const ownBlockNames = Array.isArray(section.blocks) ? section.blocks : [];
+      const blocks = await resolveBlocksList(ownBlockNames);
+      
+      let subsections: ResolvedSection[] | undefined;
+      if (Array.isArray(section.subsections)) {
+        subsections = [];
+        for (const sub of section.subsections) {
+          if (!sub) continue;
+          const subBlockNames = Array.isArray(sub.blocks) ? sub.blocks : [];
+          const subBlocks = await resolveBlocksList(subBlockNames);
+          subsections.push({ title: sub.title, label: sub.label, blocks: subBlocks });
         }
       }
 
-      sections.push({ title: section.title, label: section.label, blocks });
+      sections.push({ title: section.title, label: section.label, blocks, subsections });
     }
 
     const chTodos = readFeedback(id, `__chapter:${chRef.dir}`);
@@ -553,10 +537,16 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
 
   // Build flattened block lookup map
   const blocksByName = new Map<string, ResolvedBlock>();
-  for (const ch of chapters)
-    for (const sec of ch.sections)
-      for (const blk of sec.blocks)
-        blocksByName.set(blk.rootName, blk);
+  for (const ch of chapters) {
+    for (const sec of ch.sections) {
+      for (const blk of sec.blocks) blocksByName.set(blk.rootName, blk);
+      if (sec.subsections) {
+        for (const sub of sec.subsections) {
+          for (const blk of sub.blocks) blocksByName.set(blk.rootName, blk);
+        }
+      }
+    }
+  }
 
   const paperTodos = readFeedback(id, "__paper");
   const result = {
