@@ -206,6 +206,27 @@ function inspectLean(leanPath: string): { hasSorry: boolean; hasClass: boolean }
 }
 
 /**
+ * Collapse a resolved `.lean` file into the render-side margin buckets:
+ *   - stub    → a trivial `: True (∧ True) :=` placeholder (not a real proof)
+ *   - sorry   → carries an (uncited-or-cited) `sorry` hole
+ *   - compiled→ neither: a genuine sorry-free proof
+ * Used by the build to set each block's live `lean.sorryFree`/`validation`
+ * so the PDF ∀ margin marks reflect the actual Lean, not a hand-set field.
+ */
+function leanFileStatus(
+  leanPath: string,
+): { sorryFree: boolean; validation: "stub" | "leanok" | "not_checked" } {
+  const stripped = stripLeanComments(readFileSync(leanPath, "utf-8"));
+  if (/:\s*True\s*(?:∧\s*True\s*)?:=/.test(stripped)) {
+    return { sorryFree: false, validation: "stub" };
+  }
+  if (/\bsorry\b/.test(stripped)) {
+    return { sorryFree: false, validation: "not_checked" };
+  }
+  return { sorryFree: true, validation: "leanok" };
+}
+
+/**
  * Does the transitive `uses[]` cone of conjecture `label` reach *another*
  * conjecture? Restricted to conjecture-labelled nodes (per CLAUDE.md §3b the
  * relevant dependency is on other conjectures). Labels are matched with and
@@ -408,5 +429,5 @@ if (import.meta.main) {
   }
 }
 
-export { computeStats, resolveLeanFile, inspectLean };
+export { computeStats, resolveLeanFile, inspectLean, leanFileStatus };
 export type { Stats };
