@@ -76,6 +76,22 @@ const VOICE: QaCriterionDefinition[] = [
     automated: true,
   },
   {
+    id: "cite-named-theorem",
+    domain: "voice",
+    description:
+      "ADVISORY. A named external result invoked in prose — a proper-noun " +
+      "'X theorem / lemma / conjecture / inequality / duality / criterion' " +
+      "(e.g. 'the Gröbner–Shirshov normal-form theorem', \"Ladyzhenskaya's " +
+      "inequality\") — should carry a citation. High-recall CANDIDATE " +
+      "detector: an agent confirms whether the result is genuinely external " +
+      "(needs a cite) vs ubiquitous (needs none, e.g. Stokes' theorem). Fires " +
+      "only when the block cites NOTHING; excludes QOU-coined namesakes " +
+      "(Descartes) + tool names (Lean, Mathlib, …).",
+    default_severity: "minor",
+    depends_on: ["md"],
+    automated: true,
+  },
+  {
     id: "voice-agent-speak",
     domain: "voice",
     description:

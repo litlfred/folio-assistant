@@ -178,6 +178,42 @@ export function checkAgentSpeak(mdPath: string): CheckerResult {
   return { result: hits.length > 0 ? "fail" : "pass", hits };
 }
 
+// ── cite-named-theorem ──────────────────────────────────────────
+//
+// ADVISORY (minor). A named external result invoked in prose — a
+// proper-noun-attributed "X theorem / lemma / conjecture / inequality /
+// duality / criterion" (e.g. "the Gröbner–Shirshov normal-form theorem",
+// "Ladyzhenskaya's inequality") — should carry a citation. High-recall
+// CANDIDATE detector, not a hard gate: an agent confirms whether the
+// result is genuinely external-needing-a-cite vs a ubiquitous result that
+// needs none. Conservative to keep noise down:
+//   - only fires when the block cites NOTHING (\cite / \[key1234] / a link);
+//   - excludes QOU-coined namesakes (Descartes) + tool names (Lean, …);
+//   - requires a ≥3-letter capitalised proper noun.
+const NAMED_RESULT_RE =
+  /\b([A-Z][a-zà-öø-ÿ]{2,}(?:[-–][A-Z][a-zà-öø-ÿ]{2,})*)(?:['’]s)?\s+(theorem|lemma|conjecture|inequality|duality|criterion)\b/g;
+const NAMED_RESULT_EXCLUDE =
+  /^(Descartes|Lean|Mathlib|Python|Rust|Main|This|That|Our|Its|Their|First|Second|Third|Next|Last|Following|Above|Below|Same|Key|Central|Only|Both|Each|Every|Such|Above|New|Old|Left|Right|Upper|Lower|Master|Trace|Quantum|Categorical|Archimedean)$/;
+const HAS_CITATION_RE = /\\cite\{|\\?\[[a-z][a-z0-9-]*\d{4}[a-z0-9-]*\]|\]\([^)]/;
+
+export function checkCiteNamedTheorem(mdPath: string): CheckerResult {
+  const { src, lines } = readSource(mdPath);
+  if (!src || HAS_CITATION_RE.test(src)) return { result: "pass", hits: [] };
+  const hits: CheckerHit[] = [];
+  lines.forEach((raw, i) => {
+    // skip code fences
+    let inFence = false;
+    for (let j = 0; j < i; j++) if (/^```/.test(lines[j].trim())) inFence = !inFence;
+    if (inFence) return;
+    const l = raw.replace(/`[^`]+`/g, "").replace(/\]\([^)]*\)/g, "]");
+    for (const m of l.matchAll(NAMED_RESULT_RE)) {
+      if (NAMED_RESULT_EXCLUDE.test(m[1]) || m[1].length < 4) continue;
+      hits.push({ file: mdPath, line: i + 1, text: `${m[1]} ${m[2]} — named result, no citation in block` });
+    }
+  });
+  return { result: hits.length > 0 ? "fail" : "pass", hits };
+}
+
 // ── voice-emoji-content ─────────────────────────────────────────
 
 // Status-marker emoji that don't belong in scholarly prose. The `u`
@@ -1084,6 +1120,8 @@ export const AUTOMATED_CHECKERS: Record<
     p.md ? checkProbeNarrative(p.md) : { result: "pass", hits: [] },
   "voice-agent-speak": (p) =>
     p.md ? checkAgentSpeak(p.md) : { result: "pass", hits: [] },
+  "cite-named-theorem": (p) =>
+    p.md ? checkCiteNamedTheorem(p.md) : { result: "pass", hits: [] },
   "voice-emoji-content": (p) =>
     p.md ? checkEmojiContent(p.md) : { result: "pass", hits: [] },
   "voice-first-person-work": (p) =>
