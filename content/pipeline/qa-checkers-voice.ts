@@ -88,27 +88,93 @@ function scan(
 
 // ── voice-status-leak ───────────────────────────────────────────
 
+// Work-tracker / implementation-status markers that never belong in the
+// manuscript — in ANY block kind, conjectures included.
 const STATUS_LEAK_RE =
-  /(\*\*Done\*\*|\*\*Completed\*\*|\*\*Pending\*?\*?|\*\*Blocked\*?\*?|\*\*Deferred\*?\*?|\*\*In progress\*?\*?|\*\*Punted\*?\*?|\(TODO\)|\(TBD\)|\(TBA\)|\(WIP\)|\(stub\)|\(placeholder\)|\bTODO:|\bFIXME:|\bXXX:|\bHACK:|\bWIP\b|\bTO-DO\b|\bTBD\b|\bplaceholder\b|\b(?:stub(?:bed)?|punt(?:ed|ing)?)\s+(?:for\s+now|until|pending)|\bneeds\s+(?:work|fixing|attention|review|filling\s+in)|\bkick\s+the\s+can|\bnot\s+yet\s+(?:implemented|written|filled\s+in))/i;
+  /(\*\*Done\*\*|\*\*Completed\*\*|\*\*Pending\*?\*?|\*\*Blocked\*?\*?|\*\*Deferred\*?\*?|\*\*In progress\*?\*?|\*\*Punted\*?\*?|\(TODO\)|\(TBD\)|\(TBA\)|\(WIP\)|\(stub\)|\(placeholder\)|\bTODO:|\bFIXME:|\bXXX:|\bHACK:|\bWIP\b|\bTO-DO\b|\bTBD\b|\bplaceholder\b|\b(?:stub(?:bed)?|punt(?:ed|ing)?)\s+(?:for\s+now|until|pending)|\bneeds\s+(?:work|fixing|attention|review|filling\s+in)|\bkick\s+the\s+can|\bnot\s+yet\s+(?:implemented|written|filled\s+in|wired)|\bdeferred\s+via\s+sorry\b)/i;
 
-export function checkStatusLeak(mdPath: string): CheckerResult {
-  // Skip fenced code blocks (```...```) AND inline backtick spans —
-  // status-marker keywords like "placeholder" inside Lean code blocks
-  // (e.g. `True  -- placeholder`) are legitimate code, not prose
-  // status-leak.
-  const hits = scan(mdPath, STATUS_LEAK_RE, (l, i, lines) => {
-    // Detect whether this line is inside a fenced block by counting
-    // fence transitions up to this line. (Cheaper than threading
-    // state through scan().)
+// Derivation-status / open-status speech ("would prove the …", "pending
+// the derivation", "exact closure remains open", "near-match to a
+// derivation"). These belong in audit docs, NOT the paper — UNLESS the
+// block is a formal `conjecture`, where stating what remains open and what
+// would settle it is legitimate, author-approved content.
+const OPEN_DERIVATION_RE =
+  /\bwould\s+(?:cohomologically\s+)?prove\s+the\b|\bpending\s+(?:the\s+)?derivation\b|\bexact\s+closure\s+remains\s+open\b|\bnear-match\s+to\s+a\s+derivation\b/i;
+
+/** True when the block's `.ts` manifest is `export default conjecture(...)`. */
+function isConjectureBlock(tsPath?: string): boolean {
+  if (!tsPath || !existsSync(tsPath)) return false;
+  return /\bexport\s+default\s+conjecture\s*\(/.test(readFileSync(tsPath, "utf-8"));
+}
+
+export function checkStatusLeak(mdPath: string, tsPath?: string): CheckerResult {
+  // Conjecture blocks are exempt from the open-derivation patterns (a
+  // conjecture legitimately says what remains open); the hard work-tracker
+  // markers apply to every block. Code fences / backticks / link URLs are
+  // stripped by scanProse so a status word inside code or a filename is
+  // not a prose hit.
+  const re = isConjectureBlock(tsPath)
+    ? STATUS_LEAK_RE
+    : new RegExp(`${STATUS_LEAK_RE.source}|${OPEN_DERIVATION_RE.source}`, "i");
+  const hits = scanProse(mdPath, re);
+  return { result: hits.length > 0 ? "fail" : "pass", hits };
+}
+
+/**
+ * Scan a `.md` for `re`, skipping fenced code blocks and inline
+ * backtick spans (so a keyword inside a code sample is not a prose hit).
+ * Shared by the prose-voice checkers below and `checkStatusLeak`'s idiom.
+ */
+function scanProse(mdPath: string, re: RegExp): CheckerHit[] {
+  return scan(mdPath, re, (l, i, lines) => {
     let inFence = false;
     for (let j = 0; j < i; j++) {
       if (/^```/.test(lines[j].trim())) inFence = !inFence;
     }
     if (inFence) return false;
-    // Strip inline backticks before re-testing.
-    const stripped = l.replace(/`[^`]+`/g, "");
-    return STATUS_LEAK_RE.test(stripped);
+    // Strip code spans AND markdown link targets `](…)` / autolinks
+    // `<…>` before testing — a hyphenated filename in a URL
+    // (e.g. `…script-rewire-handoff.md`) is not prose and must not
+    // trip a prose-vocabulary pattern.
+    const stripped = l
+      .replace(/`[^`]+`/g, "")
+      .replace(/\]\([^)]*\)/g, "]")
+      .replace(/<[^>\s]+>/g, "");
+    return re.test(stripped);
   });
+}
+
+// ── voice-probe-narrative ───────────────────────────────────────
+//
+// Paper prose should present results, not narrate the exploratory PROBE
+// that produced them. Flag experiment-writeup voice that belongs in an
+// audit / probe doc, not the manuscript: an inline `witness:` reference,
+// "We test whether …", "We compare N models", or "overshoots CODATA by
+// N×". (The numeric conclusion stays; only the probe framing is the leak.)
+// Match only unambiguous exploratory-PROBE framing. A `(witness: …)` label or
+// a bare `*.witness.json` reference is NOT used: a witnessed-value citation is
+// legitimate scholarly provenance, indistinguishable by regex from probe-run
+// bookkeeping, so keying on it over-flags real content.
+const PROBE_NARRATIVE_RE =
+  /\bWe\s+test\s+whether\b|\bWe\s+compare\s+\w+\s+models?\b|\bovershoot(?:s|ing)?\b[^.]{0,40}\bCODATA\b|\bCODATA\b[^.]{0,40}\bovershoot/i;
+
+export function checkProbeNarrative(mdPath: string): CheckerResult {
+  const hits = scanProse(mdPath, PROBE_NARRATIVE_RE);
+  return { result: hits.length > 0 ? "fail" : "pass", hits };
+}
+
+// ── voice-agent-speak ───────────────────────────────────────────
+//
+// Informal agent / working-session vocabulary that reads as slop in a
+// manuscript. TIGHT token list only — deliberately excludes "keystone"
+// (established paper terminology: the B1 / gb-depth-period keystone
+// conjecture, 27 legitimate uses) and other domain words that a blanket
+// scan would false-positive on.
+const AGENT_SPEAK_RE =
+  /\bwired?\s+in\b|\bun-?wir(?:e|ed|ing)\b|\brewir(?:e|ed|ing)\b|\bflip-?flops?\b|\bflip-?flopp(?:ed|ing)\b|\bwhack-?a-?mole\b|\bnumerical\s+rainbows?\b|\brabbit\s+holes?\b|\bplumbing\s+it\s+in\b/i;
+
+export function checkAgentSpeak(mdPath: string): CheckerResult {
+  const hits = scanProse(mdPath, AGENT_SPEAK_RE);
   return { result: hits.length > 0 ? "fail" : "pass", hits };
 }
 
@@ -1013,7 +1079,11 @@ export const AUTOMATED_CHECKERS: Record<
   (paths: { md?: string; ts?: string; lean?: string }) => CheckerResult
 > = {
   "voice-status-leak": (p) =>
-    p.md ? checkStatusLeak(p.md) : { result: "pass", hits: [] },
+    p.md ? checkStatusLeak(p.md, p.ts) : { result: "pass", hits: [] },
+  "voice-probe-narrative": (p) =>
+    p.md ? checkProbeNarrative(p.md) : { result: "pass", hits: [] },
+  "voice-agent-speak": (p) =>
+    p.md ? checkAgentSpeak(p.md) : { result: "pass", hits: [] },
   "voice-emoji-content": (p) =>
     p.md ? checkEmojiContent(p.md) : { result: "pass", hits: [] },
   "voice-first-person-work": (p) =>

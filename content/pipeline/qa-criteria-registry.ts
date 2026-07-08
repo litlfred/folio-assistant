@@ -50,9 +50,41 @@ const VOICE: QaCriterionDefinition[] = [
     id: "voice-status-leak",
     domain: "voice",
     description:
-      "No status markers in body prose (✅ Done, (TODO), (TBD), **Pending.**). " +
-      "Work-tracker speech belongs in todos/, not in the paper.",
+      "No status markers in body prose (✅ Done, (TODO), (TBD), **Pending.**, " +
+      "'deferred via sorry', 'not yet wired') in ANY block, and no " +
+      "derivation-status speech ('would prove the …', 'pending the " +
+      "derivation', 'exact closure remains open', 'near-match to a " +
+      "derivation') EXCEPT inside a formal `conjecture` block, where stating " +
+      "what remains open and what would settle it is author-approved content. " +
+      "Work-tracker + audit-status speech belongs in todos/ / authorNotes / " +
+      "audit docs, not in the paper.",
     default_severity: "critical",
+    depends_on: ["md", "ts"],
+    automated: true,
+  },
+  {
+    id: "voice-probe-narrative",
+    domain: "voice",
+    description:
+      "Paper prose presents results, not the exploratory PROBE that produced " +
+      "them. FAIL on experiment-writeup voice that belongs in an audit / probe " +
+      "doc: an inline `witness:` / `*.witness.json` reference, 'We test " +
+      "whether …', 'We compare N models', or 'overshoots CODATA by N×'. The " +
+      "numeric conclusion stays; only the probe framing is the leak.",
+    default_severity: "major",
+    depends_on: ["md"],
+    automated: true,
+  },
+  {
+    id: "voice-agent-speak",
+    domain: "voice",
+    description:
+      "No informal agent / working-session vocabulary in prose ('wired in', " +
+      "'un-wire', 'flip-flop', 'whack-a-mole', 'numerical rainbow', 'rabbit " +
+      "hole'). Tight token list only — 'keystone' is NOT flagged (it is " +
+      "established paper terminology: the B1 / gb-depth-period keystone " +
+      "conjecture).",
+    default_severity: "major",
     depends_on: ["md"],
     automated: true,
   },
