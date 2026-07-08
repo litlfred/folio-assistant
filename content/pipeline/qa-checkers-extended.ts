@@ -2471,6 +2471,18 @@ const NON_SCHOLARLY_TITLE_PATTERNS: Array<{
 }> = [
   { re: /\?$/, what: "ends in '?' — title is a question" },
   {
+    re: /^\s*(?:relation(?:ship)?|connection|link)\s+(?:to|with|between)\b/i,
+    what: "relational header — retitle to a noun phrase naming the subject",
+  },
+  {
+    re: /^\s*(?:Why|What|How|When|Whether)\b/i,
+    what: "interrogative / rhetorical opener — use a declarative noun phrase",
+  },
+  {
+    re: /^\s*(?:Compute|Derive|Show|Prove|Recall|Consider)\b/i,
+    what: "imperative opener — name the result, not the instruction",
+  },
+  {
     re: /^(?:Why|How(?:\s+does|\s+do|\s+can|\s+is|\s+are|\s+to)|What(?:\s+is|\s+are|\s+does|\s+do|\s+if)|When|Where|Should|Could|Would|Do(?:es)?|Is|Are|Can)\b/i,
     what: "starts with a question word",
   },

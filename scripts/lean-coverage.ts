@@ -206,10 +206,17 @@ function inspectLean(leanPath: string): { hasSorry: boolean; hasClass: boolean }
 }
 
 /**
- * Collapse a resolved `.lean` file into the render-side margin buckets:
- *   - stub    → a trivial `: True (∧ True) :=` placeholder (not a real proof)
- *   - sorry   → carries an (uncited-or-cited) `sorry` hole
- *   - compiled→ neither: a genuine sorry-free proof
+ * Collapse a resolved `.lean` file into the render-side margin buckets
+ * (see `leanStatusBucket` in render-latex.ts):
+ *   - `stub`        → a trivial `: True (∧ True) :=` placeholder (NOT a real
+ *                     proof) → render-side "stubbed" (red).
+ *   - `not_checked` → a genuine statement carrying a `sorry` hole → render-side
+ *                     "drafted" (purple, "stated, not yet proved"). We
+ *                     deliberately do NOT collapse a cited `sorry` into `stub`:
+ *                     a referenced deferral is a genuine statement, not a
+ *                     vacuous placeholder, and the whole point of the ∀ marks
+ *                     is to distinguish the two.
+ *   - `leanok`      → neither: a genuine sorry-free proof → "compiled" (green).
  * Used by the build to set each block's live `lean.sorryFree`/`validation`
  * so the PDF ∀ margin marks reflect the actual Lean, not a hand-set field.
  */
@@ -290,6 +297,17 @@ function computeStats(paperDir: string, contentRoot: string): Stats {
   const repoRoot = resolve(contentRoot, "..");
   const root = join(contentRoot, paperDir);
   const leanRoot = join(root, "lean");
+  // Fail fast with an actionable message: in the two-repo split this repo
+  // holds no paper content, so a bare `<repo>/content` resolves to the
+  // pipeline dir and `root` won't exist. A raw ENOENT from readdirSync
+  // below is opaque.
+  if (!existsSync(root)) {
+    throw new Error(
+      `lean-coverage: paper content not found at ${root}. ` +
+      `Pass --content-root <paper-repo>/content (this repo has no paper ` +
+      `content in the two-repo split).`,
+    );
+  }
   const blocks: Block[] = [];
   for (const tsPath of walk(root)) {
     // Skip chapter and paper manifests

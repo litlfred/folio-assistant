@@ -141,11 +141,14 @@ function transliterateForVerbatim(text: string): string {
  * latex/preamble.tex):
  *
  *   - "compiled"  green  — built sorry-free.
- *   - "stubbed"   red    — `sorry`/placeholder, or a vacuous/trivial goal
- *                          flagged by machine QA (these are not genuine
- *                          formalisations, so they read as stubs).
+ *   - "stubbed"   red    — a `: True`/placeholder or vacuous/trivial goal
+ *                          flagged by machine QA (`validation: stub/trivial/
+ *                          error`): NOT a genuine formalisation.
  *   - "drafted"   purple — a genuine statement stated in Lean that is neither
- *                          a stub nor yet sorry-free-compiled.
+ *                          a stub nor yet sorry-free-compiled — including a
+ *                          block whose `.lean` carries a (cited) `sorry`
+ *                          (`validation: not_checked`). A referenced `sorry`
+ *                          is a deliberate deferral, not a vacuous stub.
  *
  * `sorryFree` wins outright; otherwise we map the `validation` enum. An
  * unknown/absent validation on a block that *does* carry a Lean ref defaults
