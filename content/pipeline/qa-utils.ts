@@ -281,6 +281,144 @@ function lakeBasenameMap(
  * Pass a shared `cache` when resolving many refs (e.g. a corpus sweep)
  * so the Lake tree is scanned once; omit it for single-block callers.
  */
+/**
+ * Does `file` textually declare a top-level `name` (theorem/def/…)?
+ *
+ * Used to reject the **import-only aggregator** trap: a ref like
+ * `qou:QOU.BraidKnot.foo` has module `QOU.BraidKnot`, whose direct
+ * module-path `QOU/BraidKnot.lean` is an `import …`-only aggregator that
+ * declares nothing. Candidate (a) must not return it — the decl `foo`
+ * lives in a leaf file under `QOU/BraidKnot/`. Lenient (comment-blind) on
+ * purpose: it only *gates* candidate (a), and a false positive there is no
+ * worse than the pre-fix behaviour.
+ */
+function fileDeclaresName(file: string, name: string): boolean {
+  let body: string;
+  try {
+    body = readFileSync(file, "utf-8");
+  } catch {
+    return false;
+  }
+  const short = name.includes(".") ? name.split(".").pop()! : name;
+  const esc = short.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(
+    `\\b(?:theorem|lemma|def|abbrev|instance|structure|class|inductive|opaque|axiom)\\s+(?:[\\w'.\\u00C0-\\uFFFF]*\\.)?${esc}\\b`,
+    "u",
+  ).test(body);
+}
+
+const _DECL_RE =
+  /^(?:@\[[^\]]*\]\s*)*(?:(?:private|protected|scoped|local|noncomputable|partial|unsafe|nonrec)\s+)*(?:theorem|lemma|def|abbrev|instance|structure|class|inductive|opaque|axiom)\s+([A-Za-z_À-￿][^\s:({\[⦃⟨]*)/u;
+const _NS_RE = /^namespace\s+([A-Za-z_À-￿][\w'.À-￿]*)/u;
+const _END_RE = /^end\b/;
+const _SEC_RE = /^section\b/;
+const _SHORT = " short ";
+
+/**
+ * Walk one Lake root once, indexing **fully-qualified declaration name →
+ * file** (namespace-aware). This is candidate (c): it resolves a
+ * `lean.ref` whose last segment is a *declaration* name whose file
+ * basename differs (e.g. `binding_isovector_mirror_from_chiral` living in
+ * `BindingIsovectorChiralResidue.lean`) — the case candidates (a) and (b)
+ * both miss. Unambiguous short names are also indexed under a sentinel key
+ * as a looser fallback. Comment/section aware so a keyword inside `/- … -/`
+ * or a `namespace … end` scope is handled correctly.
+ */
+function buildLakeDeclMap(absRoot: string): Map<string, string> {
+  const map = new Map<string, string>();
+  const short = new Map<string, string | null>();
+  const files: string[] = [];
+  try {
+    const stack: string[] = [absRoot];
+    while (stack.length) {
+      const dir = stack.pop()!;
+      for (const e of readdirSync(dir, { withFileTypes: true })) {
+        const full = join(dir, e.name);
+        if (e.isDirectory()) stack.push(full);
+        else if (e.isFile() && e.name.endsWith(".lean")) files.push(full);
+      }
+    }
+  } catch {
+    return map;
+  }
+  for (const file of files) {
+    let body: string;
+    try {
+      body = readFileSync(file, "utf-8");
+    } catch {
+      continue;
+    }
+    const nsStack: string[] = [];
+    const openKind: ("ns" | "sec")[] = [];
+    let blockDepth = 0;
+    for (const rawLine of body.split("\n")) {
+      // Strip block comments (`/- … -/`, nesting) and `--` line comments.
+      let line = "";
+      let i = 0;
+      while (i < rawLine.length) {
+        if (blockDepth > 0) {
+          if (rawLine.startsWith("-/", i)) {
+            blockDepth--;
+            i += 2;
+          } else if (rawLine.startsWith("/-", i)) {
+            blockDepth++;
+            i += 2;
+          } else i++;
+        } else if (rawLine.startsWith("/-", i)) {
+          blockDepth++;
+          i += 2;
+        } else if (rawLine.startsWith("--", i)) {
+          break;
+        } else {
+          line += rawLine[i];
+          i++;
+        }
+      }
+      const t = line.trim();
+      if (!t) continue;
+      let m: RegExpMatchArray | null;
+      if ((m = t.match(_NS_RE))) {
+        nsStack.push(m[1]);
+        openKind.push("ns");
+        continue;
+      }
+      if (_SEC_RE.test(t)) {
+        openKind.push("sec");
+        continue;
+      }
+      if (_END_RE.test(t)) {
+        if (openKind.pop() === "ns") nsStack.pop();
+        continue;
+      }
+      if ((m = t.match(_DECL_RE))) {
+        const declName = m[1];
+        const full = [nsStack.join("."), declName].filter(Boolean).join(".");
+        if (!map.has(full)) map.set(full, file);
+        const s = declName.includes(".") ? declName.split(".").pop()! : declName;
+        if (!short.has(s)) short.set(s, file);
+        else if (short.get(s) !== file) short.set(s, null);
+      }
+    }
+  }
+  for (const [k, v] of short) if (v && !map.has(_SHORT + k)) map.set(_SHORT + k, v);
+  return map;
+}
+
+/** Fetch (or lazily build + cache) the decl-name index for a Lake root. */
+function lakeDeclMap(
+  absRoot: string,
+  cache?: LakeTreeCache,
+): Map<string, string> {
+  const key = `${absRoot} decls`;
+  if (!cache) return buildLakeDeclMap(absRoot);
+  let m = cache.get(key);
+  if (!m) {
+    m = buildLakeDeclMap(absRoot);
+    cache.set(key, m);
+  }
+  return m;
+}
+
 export function resolveCanonicalLean(
   ref: string | undefined,
   repoRoot: string,
@@ -295,16 +433,31 @@ export function resolveCanonicalLean(
   }
   const pkg = leanPackageByName(parsed.package);
   if (!pkg) return undefined;
-  // (a) Direct module-path resolution.
+  const lakeRootAbs = resolve(repoRoot, pkg.lakeRoot);
+  // (a) Direct module-path — trust ONLY if the file actually declares the
+  //     decl. This rejects the import-only aggregator (`QOU/BraidKnot.lean`)
+  //     that a module-with-subdirectory shares its name with.
   const direct = resolve(
-    repoRoot,
-    pkg.lakeRoot,
+    lakeRootAbs,
     `${parsed.module.replace(/\./g, "/")}.lean`,
   );
-  if (existsSync(direct)) return direct;
+  const directExists = existsSync(direct);
+  if (directExists && fileDeclaresName(direct, parsed.name)) return direct;
   // (b) Basename fallback under the Lake tree.
-  const lakeRootAbs = resolve(repoRoot, pkg.lakeRoot);
-  return lakeBasenameMap(lakeRootAbs, cache).get(`${parsed.name}.lean`);
+  const byBasename = lakeBasenameMap(lakeRootAbs, cache).get(
+    `${parsed.name}.lean`,
+  );
+  if (byBasename) return byBasename;
+  // (c) Fully-qualified decl → file scan (decl-named ref whose file basename
+  //     differs AND whose module path is an aggregator).
+  const declMap = lakeDeclMap(lakeRootAbs, cache);
+  const byDecl = declMap.get(parsed.decl) ?? declMap.get(_SHORT + parsed.name);
+  if (byDecl) return byDecl;
+  // (safe fallback) preserve legacy behaviour: a ref that resolved to the
+  //   direct module-path before the (a)-gate still resolves to it, so no
+  //   previously-resolving ref regresses to `undefined`.
+  if (directExists) return direct;
+  return undefined;
 }
 
 /**
