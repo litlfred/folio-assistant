@@ -312,7 +312,7 @@ const _DECL_RE =
 const _NS_RE = /^namespace\s+([A-Za-z_À-￿][\w'.À-￿]*)/u;
 const _END_RE = /^end\b/;
 const _SEC_RE = /^section\b/;
-const _SHORT = " short ";
+const _SHORT = "|short|";
 
 /**
  * Walk one Lake root once, indexing **fully-qualified declaration name →
@@ -409,7 +409,7 @@ function lakeDeclMap(
   absRoot: string,
   cache?: LakeTreeCache,
 ): Map<string, string> {
-  const key = `${absRoot} decls`;
+  const key = `${absRoot}|decls`;
   if (!cache) return buildLakeDeclMap(absRoot);
   let m = cache.get(key);
   if (!m) {
