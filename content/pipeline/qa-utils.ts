@@ -628,7 +628,13 @@ export function entryIsFresh(
   // absent now (the criterion's lean-side / md-side did not apply
   // then and still does not), OR (b) the hashes match.
   for (const k of depends_on) {
-    const expected = entry.field_hash[k];
+    // Legacy / older-schema entries (e.g. agent-authored `n/a` verdicts
+    // written before the per-entry field_hash convention) may lack
+    // `field_hash` entirely. Optional-chain so a missing hash is treated
+    // as "not verifiable ⇒ stale": any currently-present depended-on file
+    // then trips the `!expected && actual` branch below (re-review), and
+    // the sweep no longer crashes with `undefined is not an object`.
+    const expected = entry.field_hash?.[k];
     const actual = current[k];
     if (!expected && !actual) continue; // both absent — still inapplicable
     if (!expected && actual) return false; // file appeared since audit
