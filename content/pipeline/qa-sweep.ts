@@ -49,8 +49,8 @@
  * @module content/pipeline/qa-sweep
  */
 
-import { existsSync } from "fs";
-import { resolve, relative, dirname } from "path";
+import { existsSync, statSync } from "fs";
+import { resolve, relative, dirname, join } from "path";
 import { fileURLToPath } from "url";
 
 // Stable anchor for path normalisation: repo root, computed from
@@ -62,6 +62,40 @@ import { fileURLToPath } from "url";
 // noisy diffs in CI vs local). The repo-root anchor is invariant.
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = resolve(dirname(__filename), "..", "..");
+
+/**
+ * Root of the CONTENT repo that owns the swept blocks, discovered by
+ * walking up from the sweep target until a directory containing `.git`
+ * (a dir in a normal checkout, a file in a git worktree) or
+ * `folio.config.json` is found.
+ *
+ * Sidecar `paths` must be anchored HERE, not at `REPO_ROOT` (this
+ * platform checkout): anchoring at REPO_ROOT bakes the content
+ * checkout's *directory name* into every recorded path
+ * (`../qou/content/...`), which poisons sidecars when the sweep runs
+ * against a git worktree (`../agent-<id>/content/...` — dangling once
+ * the worktree is pruned; observed live in qou PR #3604). Paths
+ * relative to the content repo root (`content/...`) are invariant
+ * across checkout names, worktrees, and invocation cwd.
+ *
+ * REPO_ROOT remains the right anchor for the *checker script* hashes
+ * and script sidecars — those genuinely live in this platform repo.
+ */
+function findContentRepoRoot(startAbs: string): string {
+  let dir = statSync(startAbs).isDirectory() ? startAbs : dirname(startAbs);
+  while (true) {
+    if (existsSync(join(dir, ".git")) || existsSync(join(dir, "folio.config.json"))) {
+      return dir;
+    }
+    const parent = dirname(dir);
+    if (parent === dir) {
+      // Fell off the filesystem root: fall back to the legacy anchor so
+      // the sweep still runs (paths then match the pre-fix behaviour).
+      return REPO_ROOT;
+    }
+    dir = parent;
+  }
+}
 import {
   hashBlockFiles,
   gitHeadSha,
@@ -156,6 +190,9 @@ interface BlockSweepResult {
 function run(): void {
   const args = parseArgs(process.argv.slice(2));
   const rootAbs = resolve(args.root);
+  // Anchor for recorded block paths: the content repo that owns the
+  // swept blocks (NOT this platform checkout — see findContentRepoRoot).
+  const contentRepoRoot = findContentRepoRoot(rootAbs);
   if (!existsSync(rootAbs)) {
     console.error(`qa-sweep: root not found: ${rootAbs}`);
     process.exit(2);
@@ -209,9 +246,9 @@ function run(): void {
     const qaPath = block.root + ".qa.json";
     const existingReport = loadQaReport(qaPath);
     const newPaths = {
-      ts: relative(REPO_ROOT, block.ts),
-      md: block.md ? relative(REPO_ROOT, block.md) : undefined,
-      lean: block.lean ? relative(REPO_ROOT, block.lean) : undefined,
+      ts: relative(contentRepoRoot, block.ts),
+      md: block.md ? relative(contentRepoRoot, block.md) : undefined,
+      lean: block.lean ? relative(contentRepoRoot, block.lean) : undefined,
     };
     let report: BlockQaReport = existingReport ?? {
       $schema: "block-qa/v1",
