@@ -179,6 +179,56 @@ describe("lean.ref candidate-2 (library tree) resolution", () => {
     }
   });
 
+  test("decl-named ref resolves to the leaf decl file, NOT an import-only aggregator (candidate c)", () => {
+    const { tmp, lake } = makeWorkspace();
+    try {
+      // An import-only aggregator sits at the ref's module path
+      // (`QOU/BraidKnot.lean`), sharing its name with the `BraidKnot/`
+      // subdirectory that holds the real decl file.
+      writeLake(
+        lake,
+        "QOU/BraidKnot.lean",
+        "import QOU.BraidKnot.BindingIsovectorChiralResidue\n",
+      );
+      // The decl lives in a leaf file whose basename ≠ the decl name.
+      const leaf = writeLake(
+        lake,
+        "QOU/BraidKnot/BindingIsovectorChiralResidue.lean",
+        [
+          "import Mathlib",
+          "namespace QOU.BraidKnot",
+          "theorem binding_isovector_mirror_from_chiral {R : Type*} [CommRing R] :",
+          "    True := trivial",
+          "end QOU.BraidKnot",
+        ].join("\n"),
+      );
+      const got = resolveCanonicalLean(
+        "qou:QOU.BraidKnot.binding_isovector_mirror_from_chiral",
+        REPO_ROOT,
+      );
+      // Resolves to the decl-bearing leaf, not the aggregator.
+      expect(got).toBe(leaf);
+      expect((got ?? "").replace(/\\/g, "/")).not.toMatch(/\/QOU\/BraidKnot\.lean$/);
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
+  test("(a) direct module-path still wins when the module file declares the decl", () => {
+    const { tmp, lake } = makeWorkspace();
+    try {
+      const modFile = writeLake(
+        lake,
+        "QOU/Basic.lean",
+        "import Mathlib\nnamespace QOU\ntheorem foo : True := trivial\nend QOU\n",
+      );
+      // `QOU/Basic.lean` genuinely declares `foo` → candidate (a) returns it.
+      expect(resolveCanonicalLean("qou:QOU.Basic.foo", REPO_ROOT)).toBe(modFile);
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
   test("unknown package / malformed ref resolves to undefined", () => {
     makeWorkspace();
     expect(resolveCanonicalLean("nope:QOU.X", REPO_ROOT)).toBeUndefined();
