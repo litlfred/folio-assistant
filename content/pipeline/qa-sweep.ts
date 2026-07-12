@@ -82,7 +82,12 @@ const REPO_ROOT = resolve(dirname(__filename), "..", "..");
  * and script sidecars — those genuinely live in this platform repo.
  */
 function findContentRepoRoot(startAbs: string): string {
-  let dir = statSync(startAbs).isDirectory() ? startAbs : dirname(startAbs);
+  // The sweep target may be a block-path PREFIX (`.../<block>` with no
+  // extension) rather than an existing file or directory — statSync on
+  // it would throw ENOENT. Walk up from the nearest existing directory.
+  let dir = existsSync(startAbs) && statSync(startAbs).isDirectory()
+    ? startAbs
+    : dirname(startAbs);
   while (true) {
     if (existsSync(join(dir, ".git")) || existsSync(join(dir, "folio.config.json"))) {
       return dir;
