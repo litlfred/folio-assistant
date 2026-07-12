@@ -198,9 +198,26 @@ function run(): void {
   // Anchor for recorded block paths: the content repo that owns the
   // swept blocks (NOT this platform checkout — see findContentRepoRoot).
   const contentRepoRoot = findContentRepoRoot(rootAbs);
-  if (!existsSync(rootAbs)) {
-    console.error(`qa-sweep: root not found: ${rootAbs}`);
-    process.exit(2);
+  // Single-block targets: accept a sibling file path (`<block>.ts`,
+  // `.md`, `.lean`, `.qa.json`) or an extension-less block-path prefix
+  // in addition to a chapter/paper directory. The walk then starts at
+  // the block's directory, filtered down to that one block root.
+  let walkRoot = rootAbs;
+  let blockRootFilter: string | undefined;
+  if (!existsSync(rootAbs) || !statSync(rootAbs).isDirectory()) {
+    const blockRoot = rootAbs.replace(/\.(qa\.json|ts|md|lean)$/, "");
+    if (existsSync(blockRoot + ".ts")) {
+      walkRoot = dirname(blockRoot);
+      blockRootFilter = blockRoot;
+    } else if (existsSync(rootAbs)) {
+      console.error(
+        `qa-sweep: target has no block manifest (${blockRoot}.ts): ${rootAbs}`,
+      );
+      process.exit(2);
+    } else {
+      console.error(`qa-sweep: root not found: ${rootAbs}`);
+      process.exit(2);
+    }
   }
 
   const headSha = gitHeadSha();
@@ -242,7 +259,8 @@ function run(): void {
   let totalMinor = 0;
   let totalNeedsAgent = 0;
 
-  for (const block of walkBlocks(rootAbs)) {
+  for (const block of walkBlocks(walkRoot)) {
+    if (blockRootFilter && block.root !== blockRootFilter) continue;
     totalBlocks++;
     const paths = { md: block.md, ts: block.ts, lean: block.lean };
     const currentHashes = hashBlockFiles(paths);
