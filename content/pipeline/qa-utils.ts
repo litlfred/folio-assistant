@@ -596,6 +596,21 @@ export function loadQaReport(path: string): BlockQaReport | undefined {
   try {
     const raw = JSON.parse(readFileSync(path, "utf-8"));
     if (raw?.$schema !== "block-qa/v1") return undefined;
+    // Normalize malformed criterion values at the IO boundary: some
+    // agent-written sidecars carry a bare entry OBJECT where block-qa/v1
+    // requires a single-entry ARRAY (observed corpus-wide in qou on
+    // 2026-07-12: 83 sidecars × 13 `da-*` criteria). Downstream code
+    // (entryIsFresh iteration, preserveNonScriptEntries) assumes arrays
+    // and crashed with `existing.filter is not a function`. Wrapping here
+    // preserves the entry verbatim; any other non-array shape (string,
+    // number, null) is dropped as unrecoverable.
+    if (raw.criteria && typeof raw.criteria === "object") {
+      for (const [id, value] of Object.entries(raw.criteria)) {
+        if (Array.isArray(value)) continue;
+        if (value && typeof value === "object") raw.criteria[id] = [value];
+        else delete raw.criteria[id];
+      }
+    }
     return raw as BlockQaReport;
   } catch {
     return undefined;
