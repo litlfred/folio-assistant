@@ -474,6 +474,9 @@ export function entryIsFresh(
   // depends on is "stable" iff (a) it was absent at audit AND is
   // absent now (the criterion's lean-side / md-side did not apply
   // then and still does not), OR (b) the hashes match.
+  if (!entry.field_hash) {
+    return false;
+  }
   for (const k of depends_on) {
     const expected = entry.field_hash[k];
     const actual = current[k];

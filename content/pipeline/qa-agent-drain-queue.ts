@@ -69,7 +69,8 @@ for (const b of walkBlocks(root)) {
   for (const def of AGENT_CRITS) {
     if (def.applies_to && def.applies_to.length && !def.applies_to.includes(b.kind))
       continue;
-    const entries = crit[def.id] ?? [];
+    const rawEntries = crit[def.id];
+    const entries = Array.isArray(rawEntries) ? rawEntries : (rawEntries ? [rawEntries] : []);
     const fresh = entries.some(
       (e) =>
         (e.reviewer.kind === "agent" || e.reviewer.kind === "human") &&

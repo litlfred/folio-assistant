@@ -545,6 +545,9 @@ const PROOF: QaCriterionDefinition[] = [
   "milnor",
   "milnor-section",
   "milnor-sub-section",
+  "milnor",
+  "milnor-section",
+  "milnor-sub-section",
     ],
   },
   {
