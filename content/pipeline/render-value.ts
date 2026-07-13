@@ -327,7 +327,7 @@ export function renderValue(
       }
     }
     const valStr = formatScalar(scalar, precision, "decimal");
-    body = errStr ? `${valStr} \\pm ${errStr}` : valStr;
+    body = errStr ? `${valStr} $\\pm$ ${errStr}` : valStr;
   } else {
     const fmt = format === "measured" ? "decimal" : format;
     body = formatScalar(scalar, precision, fmt);
