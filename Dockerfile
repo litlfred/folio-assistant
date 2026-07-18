@@ -46,6 +46,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     # Diagramming
     graphviz \
     plantuml \
+    # PDF text extraction (pdftotext; MIT-safe subprocess CLI, not an AGPL import)
+    poppler-utils \
     # LaTeX (for math authoring)
     texlive-full \
     latexmk \
@@ -73,6 +75,7 @@ RUN pip3 install --no-cache-dir --break-system-packages \
     pyyaml \
     jsonschema \
     lxml \
+    pypdf \
     leanblueprint
 
 # ─── Ruby gems ───────────────────────────────────────────────────────────────
