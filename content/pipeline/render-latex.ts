@@ -1424,6 +1424,9 @@ export function renderChapter(
   // Chapters with tabLabel are unnumbered (\chapter*); all others are auto-numbered by LaTeX.
   const star = chapter.tabLabel != null ? "*" : "";
   lines.push(`\\chapter${star}{${escapeLatex(chapter.title)}}\n${labelLine}`);
+  if (star === "*") {
+    lines.push(`\\addcontentsline{toc}{chapter}{${escapeLatex(chapter.title)}}`);
+  }
   // Chapter-level margin annotation: link to the chapter directory + tracker.
   // We use the chapter's own label as the tracker filter; if the chapter
   // has no label, fall back to filtering by the chapter dir name so
