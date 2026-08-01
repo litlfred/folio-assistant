@@ -78,10 +78,11 @@ function stripAnnotations(latex: string): string {
 
 /**
  * Escape text for use in LaTeX metadata fields (title, author).
- * Only structural chars — does NOT escape intentional LaTeX in titles.
+ * Backslash is escaped first to avoid double-escaping subsequent replacements.
  */
 function escapeLatexMeta(text: string): string {
   return text
+    .replace(/\\/g, "\\textbackslash{}")
     .replace(/&/g, "\\&")
     .replace(/#/g, "\\#")
     .replace(/%/g, "\\%")

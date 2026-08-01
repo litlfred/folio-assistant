@@ -281,13 +281,18 @@ def check_auth_status() -> dict:
         get_service()
         return {"authenticated": True, "error": None}
     except Exception as e:
-        return {"authenticated": False, "error": str(e),
-                "hint": (
-                    "Set GOOGLE_APPLICATION_CREDENTIALS to a service account key, "
-                    "or place OAuth2 client credentials at "
-                    f"{_OAUTH_CREDS}, "
-                    "or run: gcloud auth application-default login"
-                )}
+        # Redact the raw exception string to avoid leaking credential path/content.
+        error_type = type(e).__name__
+        return {
+            "authenticated": False,
+            "error": error_type,
+            "hint": (
+                "Set GOOGLE_APPLICATION_CREDENTIALS to a service account key, "
+                "or place OAuth2 client credentials at "
+                "~/.config/google-drive-mcp/credentials.json, "
+                "or run: gcloud auth application-default login"
+            ),
+        }
 
 
 # ── Manifest sync ─────────────────────────────────────────────────────────────
