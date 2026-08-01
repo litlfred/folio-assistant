@@ -8,6 +8,9 @@ dist/
 *.log
 .DS_Store
 
+# Build outputs — regenerate locally, never commit
+build/
+
 # Generated files — regenerate with `npm run generate:all`
 schemas/generated/
 content/audit-tex-source.json

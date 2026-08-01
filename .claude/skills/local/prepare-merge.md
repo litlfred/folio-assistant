@@ -48,6 +48,16 @@ the one recipe.
    **honestly**: distinguish failures you caused from pre-existing ones (diff the
    counts against a baseline run on the merge-base). Do not call a branch green
    by silently inheriting red.
+   For `contentType: paper` branches that touch content blocks, also run the
+   **`block_pdf_render`** gate:
+   ```
+   bun run scripts/render-changed-blocks.ts --upload-drive
+   ```
+   This compiles a standalone PDF for every changed block, scrapes the LaTeX
+   log for errors and overfull warnings, and (if Drive is configured) pushes
+   clean PDFs to Google Drive. Exits 1 on LaTeX errors (fix required); exits 0
+   with warnings only (advisory). See `.claude/skills/local/prepare-merge.md`
+   for the full gate description.
 6. **Push** the feature branch (retry/backoff as in step 2):
    `git push -u origin <branch>`.
 7. **Stop here** unless a PR / merge was explicitly requested. If a PR *was*
