@@ -12,7 +12,7 @@
 import { z } from "zod";
 import { execSync, spawnSync } from "child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { join, basename } from "path";
+import { join, basename, resolve, dirname } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { REPO_ROOT, BUILD_DIR, MAIN_TEX, CHAPTERS_DIR } from "../paths.js";
 // Note: paths are resolved from the paper adapter's paths module.
@@ -33,21 +33,26 @@ export function registerRenderTools(server: McpServer): void {
 
   server.tool(
     "paper_render_pdf",
-    "Render the paper (or a chapter/section) to PDF using latexmk. " +
-    "Returns the path to the generated PDF.",
+    "Render the paper (or a chapter/section/block) to PDF using latexmk. " +
+    "Returns the path to the generated PDF and a scraped log summary.",
     {
-      scope: z.enum(["full", "chapter", "section"]).default("full")
-        .describe("What to render: full paper, single chapter, or section"),
+      scope: z.enum(["full", "chapter", "section", "block"]).default("full")
+        .describe("What to render: full paper, single chapter, section, or individual content block"),
       target: z.string().optional()
-        .describe("Chapter or section identifier (e.g. 'quantum-observable-universe'). Required if scope != full."),
+        .describe("Chapter, section, or block identifier. Required if scope != full. " +
+          "For blocks, use the block root name (e.g. 'def-observable')."),
       engine: z.enum(["pdflatex", "lualatex", "xelatex"]).default("pdflatex")
         .describe("LaTeX engine to use"),
       clean: z.boolean().default(false)
         .describe("Run latexmk -C first to clean auxiliary files"),
       print_mode: z.enum(["formal", "compact"]).default("compact")
         .describe("Print mode: formal (with affiliations) or compact (dense, no affiliations)"),
+      upload_drive: z.boolean().default(false)
+        .describe("Push the rendered PDF to Google Drive (requires Drive MCP configured)"),
+      drive_folder: z.string().optional()
+        .describe("Override Drive destination folder (default: from folio.config.json googleDrive.folderPath)"),
     },
-    async ({ scope, target, engine, clean, print_mode }) => {
+    async ({ scope, target, engine, clean, print_mode, upload_drive, drive_folder }) => {
       // Check deps
       if (!hasCommand("latexmk")) {
         return {
@@ -61,8 +66,121 @@ export function registerRenderTools(server: McpServer): void {
 
       if (!existsSync(BUILD_DIR)) mkdirSync(BUILD_DIR, { recursive: true });
 
+      // Helper: push a PDF to Drive (fire-and-forget, returns link or error string)
+      const pushToDrive = (pdfPath: string, subfolder: string): string => {
+        const gdriveMcp = join(REPO_ROOT, "src", "google-drive-mcp.py");
+        if (!existsSync(gdriveMcp)) return "(Drive MCP not found)";
+        // Read base folder from folio.config.json or env
+        let baseFolder = process.env.GDRIVE_FOLDER_PATH ?? "";
+        if (!baseFolder) {
+          const cfgPath = join(REPO_ROOT, "folio.config.json");
+          if (existsSync(cfgPath)) {
+            try {
+              const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));
+              baseFolder = cfg?.googleDrive?.folderPath ?? "";
+            } catch { /* ignore */ }
+          }
+        }
+        const folder = drive_folder ?? (baseFolder ? `${baseFolder}/${subfolder}` : subfolder);
+        const r = spawnSync("python3", [gdriveMcp, "--upload", pdfPath, "--folder", folder, "--json"], {
+          stdio: "pipe", timeout: 60_000,
+        });
+        if (r.status !== 0) return `Drive upload failed: ${r.stderr?.toString().trim()}`;
+        try {
+          const out = JSON.parse(r.stdout.toString().trim());
+          return out.webViewLink ?? out.link ?? "(uploaded, no link returned)";
+        } catch {
+          return "(upload complete, response not JSON)";
+        }
+      };
+
       try {
-        // Determine what to build
+        // ── Block render ─────────────────────────────────────────────────────
+        if (scope === "block") {
+          if (!target) {
+            return { content: [{ type: "text" as const, text: "Error: --target required for scope=block (block root name, e.g. 'def-observable')" }] };
+          }
+          const blockPdfsDir = join(BUILD_DIR, "block-pdfs");
+          mkdirSync(blockPdfsDir, { recursive: true });
+
+          // Find the block's .ts and .md in content/
+          const contentDir = join(REPO_ROOT, "content");
+          const found = spawnSync("find", [contentDir, "-name", `${target}.ts`, "-not", "-path", "*/node_modules/*"], {
+            stdio: "pipe",
+          });
+          const tsPath = found.stdout?.toString().trim().split("\n").find(p => p);
+          if (!tsPath || !existsSync(tsPath)) {
+            return { content: [{ type: "text" as const, text: `Error: block '${target}' not found under content/` }] };
+          }
+          const blockDir = dirname(tsPath);
+          const mdPath = join(blockDir, `${target}.md`);
+          const preamblePath = join(REPO_ROOT, "latex", "preamble.tex");
+
+          // Load paper manifest (first parent .ts in the paper dir)
+          const paperDirParts = blockDir.replace(contentDir + "/", "").split("/");
+          const paperSlug = paperDirParts[0];
+          const paperManifestPath = join(contentDir, paperSlug, `${paperSlug}.ts`);
+          let paper: any;
+          try {
+            const paperMod = await import(paperManifestPath);
+            paper = paperMod.default;
+          } catch {
+            return { content: [{ type: "text" as const, text: `Error: could not load paper manifest: ${paperManifestPath}` }] };
+          }
+
+          const blockMod = await import(tsPath);
+          const block = blockMod.default;
+          const mdContent = existsSync(mdPath) ? readFileSync(mdPath, "utf-8") : "";
+          const sourceDir = resolve(blockDir).replace(REPO_ROOT + "/", "");
+
+          const { generateBlockStandaloneTex } = await import(
+            join(REPO_ROOT, "content", "pipeline", "generate-block-tex.ts")
+          );
+          const texContent = generateBlockStandaloneTex(
+            paper, block, mdContent, target, sourceDir,
+            { preamblePath, bibliographyPath: join(REPO_ROOT, "references") },
+          );
+          const texPath = join(blockPdfsDir, `${target}.tex`);
+          writeFileSync(texPath, texContent);
+
+          const engineFlag = engine === "pdflatex" ? "-pdf" : engine === "lualatex" ? "-lualatex" : "-xelatex";
+          const compileResult = spawnSync("latexmk", [
+            engineFlag,
+            `-jobname=${target}`,
+            `-output-directory=${blockPdfsDir}`,
+            "-interaction=nonstopmode",
+            "-file-line-error",
+            texPath,
+          ], { cwd: REPO_ROOT, stdio: "pipe", timeout: 120_000 });
+
+          const pdfPath = join(blockPdfsDir, `${target}.pdf`);
+          const logPath = join(blockPdfsDir, `${target}.log`);
+          const logText = existsSync(logPath) ? readFileSync(logPath, "utf-8") : compileResult.stdout?.toString() ?? "";
+
+          // Scrape log for human-relevant output only
+          const relevantLog = logText.split("\n")
+            .filter(l => /^! |^Overfull \\[hv]box|LaTeX Warning: Reference|LaTeX Error:/.test(l))
+            .slice(0, 40).join("\n");
+
+          const ok = compileResult.status === 0 && existsSync(pdfPath);
+          let driveMsg = "";
+          if (upload_drive && ok) {
+            const link = pushToDrive(pdfPath, "blocks");
+            driveMsg = `\nDrive: ${link}`;
+          }
+
+          return {
+            content: [{
+              type: "text" as const,
+              text: ok
+                ? `Block PDF: ${pdfPath}\nSize: ${(readFileSync(pdfPath).length / 1024).toFixed(0)} KB${driveMsg}` +
+                  (relevantLog ? `\n\nLog issues:\n${relevantLog}` : "")
+                : `Block compilation failed (exit ${compileResult.status}).\n\nLog issues:\n${relevantLog || logText.slice(-2000)}`,
+            }],
+          };
+        }
+
+        // ── Full / chapter render ────────────────────────────────────────────
         let texFile = MAIN_TEX;
         let jobName = "quantum-observable-universe";
 
@@ -127,11 +245,17 @@ export function registerRenderTools(server: McpServer): void {
         const log = result.stderr?.toString().slice(-2000) || "";
 
         if (result.status === 0 && existsSync(pdfPath)) {
+          let driveMsg = "";
+          if (upload_drive) {
+            const subfolder = scope === "chapter" ? "chapters" : "";
+            const link = pushToDrive(pdfPath, subfolder);
+            driveMsg = `\nDrive: ${link}`;
+          }
           return {
             content: [{
               type: "text" as const,
               text: `PDF rendered successfully: ${pdfPath}\n` +
-                `Size: ${(readFileSync(pdfPath).length / 1024).toFixed(0)} KB`,
+                `Size: ${(readFileSync(pdfPath).length / 1024).toFixed(0)} KB${driveMsg}`,
             }],
           };
         } else {

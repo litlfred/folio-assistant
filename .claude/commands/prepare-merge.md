@@ -48,6 +48,10 @@ Prefer the MCP tools (structured findings) when connected; otherwise the scripts
 - `proof_status` — no regression in sorry/coverage for changed blocks.
 - `latex_preflight` — no new unknown macros / overfull boxes.
 - `lean_build` / `lean_check` — build green (or unchanged) for touched packages.
+- `block_pdf_render` — for each changed block, compile a standalone PDF,
+  resolve all LaTeX errors, and confirm no overfull boxes on changed content.
+  Run: `bun run scripts/render-changed-blocks.ts --upload-drive` (Drive push
+  included if `googleDrive.folderPath` is configured in `folio.config.json`).
 
 **`contentType: who-smart-dak` (L2):**
 - BPMN/DMN well-formedness; data-dictionary + value-set validation

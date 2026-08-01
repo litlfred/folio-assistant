@@ -12,5 +12,9 @@
   "simulators": {
     "dir": "folio-assistant/simulators",
     "pyodideCache": true
+  },
+  "googleDrive": {
+    "_comment": "Optional. Set folderPath to auto-push PDFs to Google Drive on every content edit and full build. Credentials are resolved from GOOGLE_APPLICATION_CREDENTIALS env var, ~/.config/google-drive-mcp/credentials.json (OAuth2), or gcloud ADC — never stored here.",
+    "folderPath": ""
   }
 }
