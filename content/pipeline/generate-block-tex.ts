@@ -78,15 +78,18 @@ function stripAnnotations(latex: string): string {
 
 /**
  * Escape text for use in LaTeX metadata fields (title, author).
- * Backslash is escaped first to avoid double-escaping subsequent replacements.
+ * Uses a single-pass function callback so backslash is never interpreted
+ * as a replacement pattern (avoids incomplete-sanitization).
  */
 function escapeLatexMeta(text: string): string {
-  return text
-    .replace(/\\/g, "\\textbackslash{}")
-    .replace(/&/g, "\\&")
-    .replace(/#/g, "\\#")
-    .replace(/%/g, "\\%")
-    .replace(/_/g, "\\_");
+  const escapes: Record<string, string> = {
+    "\\": "\\textbackslash{}",
+    "&": "\\&",
+    "#": "\\#",
+    "%": "\\%",
+    "_": "\\_",
+  };
+  return text.replace(/[\\&#%_]/g, (ch) => escapes[ch] ?? ch);
 }
 
 export interface BlockStandaloneOptions {
