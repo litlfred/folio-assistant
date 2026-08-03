@@ -485,6 +485,7 @@ export const RemarkSchema = BlockBaseSchema.extend({
   interprets: z.string().min(1).optional(),
 });
 
+// Keep in sync with the `ComputationEngine` union in `types.ts`.
 const ComputationEngineSchema = z.enum([
   "snappea", "sympy", "mpmath", "sage", "python", "numpy", "scipy",
   "closed-form", "python+mpmath", "python+numpy+cvxpy",

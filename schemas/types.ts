@@ -267,6 +267,13 @@ export type LeanValidation =
  * - sympy: Symbolic algebra (identities, polynomial evaluation)
  * - mpmath: Arbitrary-precision floating-point (Clausen functions, dilogarithms)
  * - sage: SageMath for number theory, algebraic geometry
+ * - rust: The `hecke-engine` crate (Layer 1 canonical compute core)
+ *
+ * Keep this union in sync with `ComputationEngineSchema` in
+ * `constraints.ts` — the Zod enum is what actually gates validation, so
+ * a value missing here fails silently at the type level rather than at
+ * validation time. That is how `rust` / `python+rust` came to be live in
+ * the schema but absent from this union.
  */
 export type ComputationEngine =
   | "snappea"
@@ -278,7 +285,9 @@ export type ComputationEngine =
   | "scipy"
   | "closed-form"
   | "python+mpmath"
-  | "python+numpy+cvxpy";
+  | "python+numpy+cvxpy"
+  | "rust"
+  | "python+rust";
 
 /**
  * Status of a computational verification.
