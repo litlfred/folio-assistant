@@ -171,49 +171,37 @@ grep route answers the same questions in seconds.
 403 forbidden on every mathlib oleans shard, and `lean_diagnostic_messages`
 MCP times out at 60 s because no prebuilt oleans are available.
 
-> **⚡ FIRST RESORT — restore prebuilt oleans (≈2 min). Do NOT build from
-> source until you have tried this.** If your project preserves a full build
-> on an orphan cache branch (see §"PRESERVE THE BUILD" below), restoring it
-> skips the 30–60 min from-source Mathlib build entirely. **This is the
-> single most common wasted hour** (the from-source sections below are a
-> *fallback*, not the default). RESTORE before anything else, deriving the
-> branch slug from the pinned toolchain so it never goes stale:
+> **⚡ FIRST RESORT — restore prebuilt oleans (~2 min). Do NOT build from
+> source until you have tried this.**
 >
-> ```bash
-> # leanprover/lean4:v4.24.0 -> lake-cache/<package>-v4-24-0
-> ROOT=$(git rev-parse --show-toplevel); TGZ=$(mktemp)
-> SLUG=$(cut -d: -f2 "$ROOT/lean-toolchain" | tr -d '\r' | tr . -)
-> BR="lake-cache/<package>-$SLUG"
-> git fetch --depth=1 origin "$BR" \
->   && git ls-tree --name-only FETCH_HEAD | grep '^lake-oleans\.tgz\.part' | sort \
->      | while read -r p; do git show "FETCH_HEAD:$p"; done > "$TGZ" \
->   && tar xzf "$TGZ" -C "$ROOT" \
->   && echo "restored .lake oleans from $BR — NO rebuild needed"
+> ```sh
+> scripts/lake-cache.sh restore
 > ```
 >
-> The tarball goes to a `mktemp` file and extracts with `-C "$ROOT"` (repo
-> root), not the current directory.
+> That is the whole procedure — it derives the package and branch from
+> `lean-toolchain` plus the branch family, fetches into a private ref
+> (no `FETCH_HEAD` race), handles both on-disk cache formats, and
+> **verifies oleans actually landed** instead of trusting that an
+> extract implies a usable cache. Exit `1` = miss, `3` = corrupt.
 >
-> **⚠ `FETCH_HEAD` is global — do NOT run another `git fetch` concurrently
-> during the restore.** The recipe resolves the parts via the mutable
-> `FETCH_HEAD` ref. If a second fetch repoints `FETCH_HEAD` mid-loop, the
-> `git show FETCH_HEAD:…part0N` calls silently resolve against the wrong
-> commit, the assembled tarball is truncated, and `tar` fails (`gzip: not in
-> gzip format`) — looking exactly like a corrupt cache. Run the restore
-> **serially**, or make it race-proof by fetching into a private ref:
-> `git fetch --depth=1 origin "$BR:refs/restore-tmp"` then read
-> `refs/restore-tmp:$p` in the loop instead of `FETCH_HEAD:$p`.
+> Full command set and failure guide: the `lean-cache-restore` skill.
 >
-> Only if the fetch fails (branch unseeded) or the oleans are a
-> toolchain/`lakefile.toml` **miss** do you fall back to the source-clone +
-> from-source build below — and **SEED the cache branch afterwards** so the
-> next agent restores in 2 min instead of rebuilding.
+> **This is the single most common wasted hour** — the from-source
+> sections below are a *fallback*, not the default. If you do end up
+> building, run `scripts/lake-cache.sh seed` afterwards so the next
+> agent restores in 2 minutes instead of rebuilding.
 >
-> **Out-of-cone modules.** A base cache branch carries only the oleans in the
-> paper's dependency closure. Modules outside it (e.g. a representation-theory
-> import a new file pulls in) are not present and must be built/staged
-> separately, then either folded into the base cache on next reseed or kept on
-> an addon branch.
+> The hand-written git recipe that used to live here has been removed:
+> it carried a `FETCH_HEAD` race that silently truncated the tarball
+> (surfacing as `gzip: not in gzip format`, indistinguishable from a
+> corrupt cache), and a `git ls-tree` call that returned nothing when
+> run from a package subdirectory — reporting a perfectly good branch as
+> empty. Both are fixed in the script; do not reconstruct the recipe.
+>
+> **Out-of-cone modules.** A cache branch carries only the oleans in the
+> paper's dependency closure at seed time. A module outside it (e.g. a
+> representation-theory import a new file pulls in) still compiles from
+> source — that is not a broken restore. Fold it into the next reseed.
 
 **Fallback workaround — source clone + from-source build (only when the
 cache-branch restore above misses):**
@@ -461,16 +449,11 @@ you on switch-back).
 
 **RESTORE first (before any from-source build):**
 ```bash
-SLUG=$(cut -d: -f2 lean-toolchain | tr -d '\r' | tr . -)
-BR="lake-cache/<package>-$SLUG"
-if git fetch --depth=1 origin "$BR" 2>/dev/null; then
-  git ls-tree --name-only FETCH_HEAD | grep '^lake-oleans\.tgz\.part' | sort \
-    | while read -r p; do git show "FETCH_HEAD:$p"; done > /tmp/lake-oleans.tgz \
-    && tar xzf /tmp/lake-oleans.tgz \
-    && echo "restored .lake from cache branch — skip the rebuild"
-else
-  echo "cache branch not seeded yet — build from source, then SEED it (below)"
-fi
+scripts/lake-cache.sh restore     # exit 1 = not seeded yet; 3 = corrupt
+```
+Do not hand-roll this. The earlier hand-written version raced on
+`FETCH_HEAD` and used a cwd-relative `git ls-tree` that returned nothing
+when run from a package subdirectory — reporting a good branch as empty.
 ```
 
 > **⚠ Post-restore hazard — verify mathlib's origin URL BEFORE running
@@ -530,12 +513,10 @@ git worktree remove --force "$WT"                      # main branch never left
 > downstream session, so prove the pushed branch restores before trusting it:
 > ```bash
 > T=/tmp/restore-check; rm -rf "$T"; mkdir -p "$T"
-> git fetch --depth=1 origin "$BR"
-> git ls-tree --name-only FETCH_HEAD | grep '^lake-oleans\.tgz\.part' | sort \
->   | while read -r p; do git cat-file -p "FETCH_HEAD:$p"; done > /tmp/rc.tgz
-> tar xzf /tmp/rc.tgz -C "$T"
-> # MUST be non-zero — if 0, the tar glob missed the nested paper build dir:
-> find "$T" -path '*/lib/lean/MyPaper/*.olean' | wc -l
+> # Restore into a scratch Lake root and let the script do the verifying:
+> # it counts oleans and exits 3 if the extract produced none, which is
+> # exactly the paper-oleans-missing bug this step exists to catch.
+> scripts/lake-cache.sh restore --lake-root "$T" --branch "$BR"; echo "exit=$?"
 > ```
 > Seeding to a `-test` branch suffix first (then a ref-only force-push
 > cutover to production — the blobs are already on the remote, so the cutover

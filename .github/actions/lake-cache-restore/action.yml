@@ -92,51 +92,38 @@ runs:
         restore-keys: |
           ${{ steps.keys.outputs.ac-restore-key }}
 
-    - name: Tier 2 — fetch orphan-branch cache (only if Tier 1 missed)
+    - name: Tier 2 — orphan-branch cache (only if Tier 1 missed)
       id: tier2
       if: steps.tier1.outputs.cache-hit != 'true'
       shell: bash
       env:
         BRANCH: ${{ steps.keys.outputs.orphan-branch }}
         LAKE_ROOT: ${{ inputs.lake-root }}
+        PACKAGE: ${{ inputs.package }}
       run: |
-        # NOTE: do NOT use `set -e` here — every failure case below
-        # needs to fall through to Tier 3 (write hit=false and exit 0),
-        # not abort the action. We check exit codes explicitly.
-        # Per PR #1097 review (Gemini + Copilot).
-        echo "Tier 1 missed; trying orphan branch: $BRANCH"
-
-        # Shallow-fetch only the cache branch (no history). Tolerate
-        # fetch failure (e.g. branch does not exist yet on a first run).
-        if ! git fetch --depth=1 origin "$BRANCH" 2>&1; then
-          echo "Orphan branch $BRANCH does not exist — falling through to Tier 3"
+        # Delegates to scripts/lake-cache.sh so CI and agents run the
+        # SAME restore. They previously diverged: this step read a
+        # committed `.lake/` tree via `git archive`, while the branches
+        # actually carry split `lake-oleans.tgz.part*` tarballs. The
+        # archive found no `.lake` path, `archive_ok` stayed 0, and the
+        # step "fell through" on every run — so for non-mathlib packages
+        # (Tier 3 is mathlib-only) CI silently did a full rebuild every
+        # time while reporting a normal-looking fall-through.
+        #
+        # No `set -e`: a miss must fall through to Tier 3, not abort.
+        if [ ! -x scripts/lake-cache.sh ]; then
+          echo "::warning::scripts/lake-cache.sh not found — skipping Tier 2"
           echo "hit=false" >> "$GITHUB_OUTPUT"
           exit 0
         fi
-
-        # Extract the .lake/ tree from the orphan-branch tip into a
-        # temp dir. `git archive` exits non-zero if the path does not
-        # exist in the tree; tolerate that to allow fall-through.
-        tmp=$(mktemp -d)
-        archive_ok=0
-        if git archive --format=tar "FETCH_HEAD" -- '.lake' 2>/dev/null \
-              | tar -xC "$tmp" 2>/dev/null; then
-          archive_ok=1
-        fi
-
-        if [ "$archive_ok" -eq 1 ] && [ -d "$tmp/.lake" ]; then
-          mkdir -p "$LAKE_ROOT"
-          # Replace the destination atomically — `cp -r src dst` when
-          # dst exists creates dst/src nesting (i.e. `.lake/.lake/`),
-          # which corrupts the cache restore. Per PR #1097 review.
-          rm -rf "$LAKE_ROOT/.lake"
-          mv "$tmp/.lake" "$LAKE_ROOT/.lake"
-          rm -rf "$tmp"
-          echo "Restored .lake/ from orphan branch $BRANCH"
+        scripts/lake-cache.sh restore \
+          --lake-root "$LAKE_ROOT" --package "$PACKAGE" --branch "$BRANCH"
+        rc=$?
+        # 0 = restored (or already present); 1 = miss; 3 = corrupt.
+        if [ "$rc" -eq 0 ]; then
           echo "hit=true" >> "$GITHUB_OUTPUT"
         else
-          echo "Orphan branch $BRANCH missing/corrupt .lake/ tree — falling through"
-          rm -rf "$tmp"
+          [ "$rc" -eq 3 ] && echo "::warning::cache branch $BRANCH is corrupt — reseed it"
           echo "hit=false" >> "$GITHUB_OUTPUT"
         fi
 

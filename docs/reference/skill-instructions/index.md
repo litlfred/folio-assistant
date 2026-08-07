@@ -106,6 +106,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [LaTeX build performance](latex-build-cache.html) | `latex-build-cache` | — | A from-scratch compile re-parses the heavy preamble on **every latexmk |
 | [LaTeX Validation](latex-validation.html) | `latex-validation` | — |  |
 | [Lean Build Fix](lean-build-fix.html) | `lean-build-fix` | — |  |
+| [Lean / olean cache restore](lean-cache-restore.html) | `lean-cache-restore` | — |  |
 | [Lean Completeness Audit](lean-completeness-audit.html) | `lean-completeness-audit` | — | find content/<paper>/lean/ -name '*.lean' -not -path '*/.lake/*' \| sort |
 | [Lean Environment Setup](lean-environment-setup.html) | `lean-environment-setup` | — | cd .. && git clone https://github.com/leanprover-community/mathlib4.git |
 | [Lean File Generation](lean-generation.html) | `lean-generation` | — | Description here. |
