@@ -479,16 +479,19 @@ export async function validateObjects(
   }
 
   // Phase 2: Constraint rules
-  for (const [name, { block }] of allBlocks) {
+  // `dir` comes from the MAP ENTRY, not from the enclosing scope. Every
+  // `allBlocks.set` stores the directory the block was loaded from, and in
+  // paper mode that is the block's CHAPTER dir — `objectsDir` is the paper
+  // root, where none of the companion `.md` files live. The destructuring
+  // dropped it, leaving a bare `dir` that resolved to nothing:
+  // `ReferenceError: dir is not defined` on any run reaching a single block.
+  // Restoring the binding is the fix; substituting `objectsDir` would silence
+  // the crash and make `md-exists` fail for every block in the paper.
+  for (const [name, { block, dir }] of allBlocks) {
     const mdContent = mdCache.get(name);
     const ctx: ConstraintContext = {
       rootName: name,
-      // `objectsDir`, not `dir`: the parameter was renamed and this site was
-      // missed, so every run over a NON-EMPTY corpus threw
-      // `ReferenceError: dir is not defined`. It went unnoticed because the
-      // default path found zero blocks and returned "valid" before reaching
-      // here — the validator has never actually validated anything.
-      dir: objectsDir,
+      dir,
       allLabels,
       fileExists: (p: string) => existsSync(p),
       lakeTreeContainsBasename,
