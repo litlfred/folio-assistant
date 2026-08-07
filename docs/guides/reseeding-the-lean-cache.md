@@ -67,6 +67,31 @@ sessions with `--target QOU.SubTree`, resume with `--phase <name>`.
 The manual steps below are the same procedure, for when you want to
 drive it yourself or something goes wrong.
 
+## A from-source build seeds a NARROWER cache than the CDN
+
+The two routes to a traced Mathlib do not produce the same tree, and the
+seed guards cannot tell them apart:
+
+| route | what lands |
+|---|---|
+| `lake exe cache get` | Mathlib's full published set (~7300 modules) |
+| `lake build` from source | only the modules this package's imports reach |
+
+Both are correctly traced, both satisfy `seed`'s guards — which check
+that the package's own oleans exist and that the oleans present carry
+their traces. Neither guard measures **breadth**, because there is no
+baseline to measure against.
+
+So a cache seeded from a source build makes *this* package build fast,
+while anything reaching a Mathlib module outside its import closure still
+rebuilds. That is fine for a single package's branch and is worth saying
+out loud before publishing to a **shared** one, since the branch outlives
+the session that seeded it.
+
+If you have the CDN, prefer it: it is both faster and wider. Use the
+source build when the CDN is unreachable, and say which route produced a
+branch when you promote it.
+
 ## Prerequisites
 
 - Network access to `github.com` release assets and Mathlib's cache host.

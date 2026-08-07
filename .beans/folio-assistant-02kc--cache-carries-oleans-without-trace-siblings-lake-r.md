@@ -119,3 +119,26 @@ needlessly is cheap while skipping it wrongly costs hours.
 
 4 tests pin all of this. Verified they FAIL against the old formula
 (3 of 4) rather than merely passing against the new one.
+
+## The two routes do not produce the same cache — and no guard notices
+
+Seeding from a from-source `lake build` (the route available when the CDN
+is blocked) yields only the Mathlib modules this package's imports reach.
+Seeding from `lake exe cache get` yields Mathlib's full published set.
+
+    lake exe cache get        ~7300 modules
+    lake build from source    only the import closure
+
+Both are correctly traced; both pass `seed`'s guards. Those guards check
+own-package oleans and trace coverage — neither measures BREADTH, because
+there is no baseline to compare against.
+
+Consequence: a source-seeded branch makes its own package build fast while
+anything reaching outside that closure still rebuilds. Acceptable for a
+single package's branch; worth stating explicitly before promoting to a
+shared one, which outlives the session that seeded it.
+
+Possible follow-up, not built: `seed` could compare the candidate's olean
+count against the branch it is about to replace and warn on a large drop.
+That is a real computable check, unlike an absolute breadth threshold.
+Deferred rather than added mid-reseed.
