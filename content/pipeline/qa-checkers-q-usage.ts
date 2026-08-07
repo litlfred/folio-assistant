@@ -252,6 +252,27 @@ function readMaybe(path: string | undefined): string {
  * block's current claim — and they routinely contain phrases like
  * "q_0 ≈ 1.1097" inside narrative-history.
  */
+/**
+ * Blank Lean comments — `--` line comments and `/- … -/` blocks, including
+ * `/-! … -/` module docs and `/-- … -/` docstrings — while PRESERVING line
+ * numbers, so reported hit lines stay accurate.
+ *
+ * Without this, prose describing archimedean behaviour counts as archimedean
+ * code. Measured on the qou corpus: five `appendix-surreals` conjectures
+ * failed on `QOU/AppendixSurreals/Conjectures.lean:105/206/208`, all three of
+ * which are inside comments explaining that `surrealExp` is a
+ * standard-part-projection PLACEHOLDER (`ofReal ∘ Real.exp ∘ st`) and what it
+ * loses. Documenting a limitation is not committing it.
+ *
+ * The tactic scan below already skipped comment lines; the `Real.*` scan
+ * beside it did not.
+ */
+function stripLeanComments(lean: string): string {
+  return lean
+    .replace(/\/-[\s\S]*?-\//g, (m) => "\n".repeat((m.match(/\n/g) ?? []).length))
+    .replace(/--[^\n]*/g, "");
+}
+
 function stripFraming(md: string): string {
   let out = md;
   // Strip fenced code (text inside ``` ... ```)
@@ -482,7 +503,9 @@ export function checkQUsageArchimedeanInCategoricalChapter(
   // No .ts tag-read — dispensations live in the sidecar as a human
   // reviewer entry. See q-usage-watcher.md §Dispensations.
 
-  const lean = readMaybe(leanPath);
+  const leanRaw = readMaybe(leanPath);
+  // Comments are prose, not code — see stripLeanComments.
+  const lean = stripLeanComments(leanRaw);
   const md = readMaybe(mdPath);
   const mdClean = stripFraming(md);
   const hits: QUsageHit[] = [];
@@ -490,24 +513,51 @@ export function checkQUsageArchimedeanInCategoricalChapter(
   // Real.* applied to q (or to a context that mentions q) is a strong signal.
   // Plain integer/Nat norm_num is not archimedean — only fire on tactics
   // when the file ALSO contains an archimedean-type marker.
-  const fileHasReal =
-    /\b(ℝ|Real\.|q\s*:\s*ℝ|q\s*:\s*Real\b|noncomputable def)/.test(lean);
-  for (const m of matchLines(lean, REAL_FN_RE)) {
-    hits.push({
-      file: leanPath!,
-      line: m.line,
-      text: `archimedean Real.* in categorical chapter — ${m.text}`,
-    });
-  }
-  if (fileHasReal) {
-    for (const m of matchLines(lean, /\b(linarith|positivity)\b/)) {
-      // Skip if line is just a comment.
-      if (/^\s*--/.test(m.text)) continue;
+  //
+  // `noncomputable def` used to be in this set and is not an archimedean
+  // marker at all: `noncomputable` means Lean cannot generate executable code,
+  // which is what classical choice, quotients, `Module`/`finrank` and inverses
+  // over an abstract field all produce. Live example — after comment
+  // stripping, `braids-and-knots/knot-eigenbasis-complete.lean` contains ZERO
+  // `ℝ` and zero `Real.`, and its two `noncomputable def`s were the whole
+  // reason its `positivity` / `linarith` calls were reported. Those calls
+  // prove partition-size facts over ℚ (`(a - b) / 2 ≤ n / 2` from
+  // `Nat.cast_nonneg`), which is ordered-field combinatorics on integer casts,
+  // not the substrate being evaluated.
+  const fileHasReal = /\b(ℝ|Real\.|q\s*:\s*ℝ|q\s*:\s*Real\b)/.test(lean);
+
+  // This criterion is about the SUBSTRATE PARAMETER q being evaluated
+  // archimedean-ly. A Lean file that never mentions `q` cannot be doing that,
+  // so its use of ℝ is ordinary mathematics rather than a wall crossing.
+  //
+  // Live example: `QOU/Machinery/CoxeterGeometricRepresentationFull.lean`
+  // failed on `Real.sin` / `Real.cos` and mentions `q` ZERO times — it is the
+  // classical geometric representation of a Coxeter group, which is *defined*
+  // over ℝ via cos(π/m). Flagging it as archimedean q-usage was outside the
+  // criterion's own stated intent (the comment directly above).
+  //
+  // This gates the LEAN scans only. The prose scan below is about the block's
+  // own narrative and does not depend on what its sibling Lean file contains.
+  const leanMentionsQ = MENTIONS_Q_RE.test(lean) || /\bq\b/.test(lean);
+
+  if (leanMentionsQ) {
+    for (const m of matchLines(lean, REAL_FN_RE)) {
       hits.push({
         file: leanPath!,
         line: m.line,
-        text: `archimedean tactic in categorical chapter — ${m.text}`,
+        text: `archimedean Real.* in categorical chapter — ${m.text}`,
       });
+    }
+    if (fileHasReal) {
+      for (const m of matchLines(lean, /\b(linarith|positivity)\b/)) {
+        // Skip if line is just a comment.
+        if (/^\s*--/.test(m.text)) continue;
+        hits.push({
+          file: leanPath!,
+          line: m.line,
+          text: `archimedean tactic in categorical chapter — ${m.text}`,
+        });
+      }
     }
   }
   // MeV / CODATA only fires when the block prose actively mentions a
