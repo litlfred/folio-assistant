@@ -73,3 +73,49 @@ again.
 
 `reseed-lean-cache.sh` phase 2 now probes the CDN up front and dies with
 the host names, instead of emitting ~7300 identical failures.
+
+## The coverage metric this bean turns on was itself wrong
+
+Dry-running the reseed against a real tree reported **192% trace
+coverage**. Coverage cannot exceed 100%, so the number every gate here
+depends on was not measuring what it claimed.
+
+`trace_coverage_pct` was `total .trace files * 100 / oleans`. But most
+`.trace` files in a Lake tree do not belong to an olean. From the qou
+tree, 13 oleans and 25 traces, of which twelve were:
+
+    .c.o.export.trace       (compiled object files)
+    cache.trace             (a linked binary)
+    ProofWidgets4.tar.gz.trace
+    lake.trace
+    package-lock.json.trace
+
+True coverage there was 13/13 = 100%, reported as 192%.
+
+Both consumers fail **OPEN** on an inflated figure, which is the
+dangerous direction:
+
+- reseed phase 2 skips fetching the upstream cache at >= 90% — so an
+  inflated ratio sends you into an hours-long from-source build instead
+  of a minutes-long fetch, the exact outcome this bean exists to avoid;
+- the seed guard admits a cache it should refuse.
+
+Fixed to measure real pairing — for each `X.olean`, does its own trace
+exist? Two sibling forms, both counted:
+
+    build/lib/lean/Cache/IO.olean  ->  build/lib/lean/Cache/IO.trace
+    .lake/lakefile.olean           ->  .lake/lakefile.olean.trace
+
+`status` now prints `traced: 13/13 oleans (100%)` rather than a raw trace
+count beside a percentage computed from a different population.
+
+### And a ratio alone is still not enough
+
+With coverage correct, the same tree — 13 oleans — passed a `>= 90%`
+gate and skipped fetching ~7300 modules. A ratio says nothing about
+size. Phase 2 now requires high coverage AND a substantial olean count
+before skipping; `lake exe cache get` is idempotent, so running it
+needlessly is cheap while skipping it wrongly costs hours.
+
+4 tests pin all of this. Verified they FAIL against the old formula
+(3 of 4) rather than merely passing against the new one.

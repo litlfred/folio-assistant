@@ -407,3 +407,69 @@ describe.skipIf(!HAS_ZSTD)("lake-cache.sh — install-toolchain (install path)",
     rmSync(home, { recursive: true, force: true });
   });
 });
+
+describe("lake-cache.sh — trace coverage is a real pairing, not a ratio of counts", () => {
+  /** Lake tree with `n` module oleans, `traced` of them carrying a sibling. */
+  function makeTraced(dir: string, n: number, traced: number, decoys = 0) {
+    const lib = join(dir, ".lake", "build", "lib", "lean", "TestPkg");
+    mkdirSync(lib, { recursive: true });
+    for (let i = 0; i < n; i++) {
+      writeFileSync(join(lib, `M${i}.olean`), "x");
+      if (i < traced) writeFileSync(join(lib, `M${i}.trace`), "x");
+    }
+    // `.trace` files that belong to NON-olean artifacts. A real tree is
+    // full of these: .c.o.export.trace, a binary's .trace, .tar.gz.trace,
+    // package-lock.json.trace …
+    const ir = join(dir, ".lake", "build", "ir", "TestPkg");
+    mkdirSync(ir, { recursive: true });
+    for (let i = 0; i < decoys; i++) writeFileSync(join(ir, `M${i}.c.o.export.trace`), "x");
+  }
+
+  function statusOf(dir: string) {
+    writeFileSync(join(dir, "lakefile.toml"), `name = "${PKG}"\n`);
+    writeFileSync(join(dir, "lean-toolchain"), "leanprover/lean4:v4.24.0\n");
+    git(["init", "-q"], dir);
+    return run(["status", "--package", PKG, "--lake-root", dir], dir);
+  }
+
+  test("decoy traces cannot push coverage above 100%", () => {
+    // The regression: total .trace / oleans. A partially built qou tree
+    // had 13 oleans and 25 traces and reported 192% coverage — which then
+    // sailed past every >= 90% gate.
+    const d = mkdtempSync(join(tmpdir(), "lakecache-cov-"));
+    makeTraced(d, 5, 5, 20); // 5 oleans, all traced, 20 unrelated traces
+    const r = statusOf(d);
+    expect(r.out).toContain("traced:     5/5 oleans  (100%)");
+    const pct = Number(r.out.match(/oleans\s+\((\d+)%\)/)?.[1]);
+    expect(pct).toBeLessThanOrEqual(100); // 192% is what this pins
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("counts only oleans that carry their OWN trace", () => {
+    const d = mkdtempSync(join(tmpdir(), "lakecache-cov-"));
+    makeTraced(d, 10, 4, 30); // decoys must not make up the shortfall
+    const r = statusOf(d);
+    expect(r.out).toContain("traced:     4/10 oleans  (40%)");
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("an untraced tree reads 0%, not 'plenty of traces'", () => {
+    // lake-cache/qou-v4-24-0's actual shape: oleans present, no traces,
+    // so Lake rebuilds and evicts every one.
+    const d = mkdtempSync(join(tmpdir(), "lakecache-cov-"));
+    makeTraced(d, 8, 0, 12);
+    const r = statusOf(d);
+    expect(r.out).toContain("traced:     0/8 oleans  (0%)");
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("the lakefile.olean form (X.olean -> X.olean.trace) also counts", () => {
+    const d = mkdtempSync(join(tmpdir(), "lakecache-cov-"));
+    mkdirSync(join(d, ".lake"), { recursive: true });
+    writeFileSync(join(d, ".lake", "lakefile.olean"), "x");
+    writeFileSync(join(d, ".lake", "lakefile.olean.trace"), "x");
+    const r = statusOf(d);
+    expect(r.out).toContain("traced:     1/1 oleans  (100%)");
+    rmSync(d, { recursive: true, force: true });
+  });
+});

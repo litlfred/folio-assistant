@@ -240,9 +240,22 @@ if phase_wanted cache; then
   cov=$(cd "$REPO" && bash "$CACHE_SVC" status --package "$PACKAGE" --lake-root "$ABS_LAKE" 2>/dev/null \
         | sed -n 's/.*traces:.*(\([0-9]*\)% coverage).*/\1/p')
   cov="${cov:-0}"
-  if [ "$cov" -ge 90 ]; then
-    info "trace coverage already ${cov}% — skipping"
+  nol=$(cd "$REPO" && bash "$CACHE_SVC" status --package "$PACKAGE" --lake-root "$ABS_LAKE" 2>/dev/null \
+        | sed -n 's/^ *oleans: *\([0-9]*\).*/\1/p' | head -1)
+  nol="${nol:-0}"
+  # Coverage is a RATIO, so a nearly-empty tree scores 100% on a handful
+  # of oleans and would skip fetching thousands. Observed: a partially
+  # built tree with 13 oleans, all traced, sailing past a 90% gate while
+  # Mathlib's ~7300 modules were absent. Require both.
+  #
+  # The floor is deliberately crude — any Mathlib-backed tree has
+  # thousands — and erring low is safe because `lake exe cache get` is
+  # idempotent and returns quickly when everything is already present.
+  if [ "$cov" -ge 90 ] && [ "$nol" -ge 1000 ]; then
+    info "trace coverage already ${cov}% over $nol oleans — skipping"
   else
+    [ "$cov" -ge 90 ] && [ "$nol" -lt 1000 ] \
+      && info "coverage ${cov}% but only $nol oleans — ratio is high because the tree is nearly empty"
     # Reachability FIRST. `cache get` resolves every module before it
     # downloads, so an unreachable CDN surfaces as ~7300 individual
     # "Transfer failed … CONNECT tunnel failed, response 403" lines and a

@@ -19,10 +19,6 @@
 #   scripts/lake-cache.sh restore  [--lake-root DIR] [--package NAME] [--branch BR]
 #   scripts/lake-cache.sh restore-toolchain [--branch BR]
 #   scripts/lake-cache.sh install-toolchain [--toolchain PIN] [--force]
-#
-# `install-toolchain` fetches the Lean toolchain straight from its GitHub
-# release, for hosts where elan's own download hosts are unreachable.
-# Honours $LEAN_RELEASE_BASE (mirror / file:// tree) and $ELAN_HOME.
 #   scripts/lake-cache.sh seed     [--lake-root DIR] [--package NAME] [--branch BR] [--push]
 #   scripts/lake-cache.sh list
 #   scripts/lake-cache.sh doctor   [--lake-root DIR]
@@ -30,6 +26,10 @@
 # The package and branch are derived automatically from
 # `.github/lake-packages.json` + `lean-toolchain`; pass them only to
 # override.
+#
+# `install-toolchain` fetches the Lean toolchain straight from its GitHub
+# release, for hosts where elan's own download hosts are unreachable.
+# Honours $LEAN_RELEASE_BASE (mirror / file:// tree) and $ELAN_HOME.
 #
 # EXIT CODES
 #   0  success / cache present
@@ -240,11 +240,42 @@ count_traces() {
 
 # Trace coverage as a percentage of oleans. Below ~90% a `lake build`
 # will rebuild — and evict — the shortfall.
+# Fraction of oleans that actually have their OWN trace sibling.
+#
+# This used to be `total .trace files * 100 / oleans`, which is not a
+# coverage at all: most `.trace` files in a Lake tree do not belong to an
+# olean. A real tree carries `.c.o.export.trace`, `cache.trace` (a
+# binary), `.tar.gz.trace`, `lake.trace`, `package-lock.json.trace` …
+# Measured on a partially built qou tree: 13 oleans, 25 traces, reported
+# as 192% coverage when the true figure was 100%.
+#
+# Both consumers fail OPEN on an inflated number — phase 2 of the reseed
+# skips fetching the upstream cache at >= 90%, and the seed guard lets a
+# cache through — so an over-count is the dangerous direction.
+#
+# Two sibling forms exist, and both count:
+#   build/lib/lean/Cache/IO.olean  ->  build/lib/lean/Cache/IO.trace
+#   .lake/lakefile.olean           ->  .lake/lakefile.olean.trace
+count_paired_traces() {  # root -> oleans that have their own trace
+  { find "$1/.lake" -name '*.trace' -type f 2>/dev/null | head -40000
+    printf '@@\n'
+    find "$1/.lake" -name '*.olean' -type f 2>/dev/null | head -20000
+  } | awk '
+    /^@@$/   { mode = 1; next }
+    mode == 0 { seen[$0] = 1; next }
+    {
+      base = $0; sub(/\.olean$/, "", base)
+      if ((base ".trace") in seen || ($0 ".trace") in seen) n++
+    }
+    END { print n + 0 }'
+}
+
 trace_coverage_pct() {  # root
-  local o t
-  o=$(count_oleans "$1"); t=$(count_traces "$1")
+  local o paired
+  o=$(count_oleans "$1")
   [ "$o" -eq 0 ] && { printf '0\n'; return; }
-  printf '%s\n' $(( t * 100 / o ))
+  paired=$(count_paired_traces "$1")
+  printf '%s\n' $(( paired * 100 / o ))
 }
 
 # A restore stamps how many oleans it laid down. Counting alone cannot
@@ -292,10 +323,10 @@ cmd_status() {
   info "toolchain:  $slug"
   info "branch:     lake-cache/$pkg-$slug"
   local own; own=$(count_own_oleans "$root")
-  local tr cov; tr=$(count_traces "$root"); cov=$(trace_coverage_pct "$root")
+  local tr cov; tr=$(count_paired_traces "$root"); cov=$(trace_coverage_pct "$root")
   info "oleans:     $n  (deps + own)"
   info "own pkg:    $own"
-  info "traces:     $tr  (${cov}% coverage)"
+  info "traced:     $tr/$n oleans  (${cov}%)"
   # Gutting is checked first: an evicted tree is the more urgent of the
   # two failures, and it is repairable by re-running restore.
   if is_gutted "$root" "$n"; then
@@ -481,7 +512,7 @@ Seeding this would reproduce the bug it is meant to fix."
   # 775 traces). Catching it at seed time is the only place it is cheap.
   local cov; cov=$(trace_coverage_pct "$root")
   if [ "$cov" -lt 90 ]; then
-    die "refusing to seed '$br': trace coverage is only ${cov}% ($(count_traces "$root") traces for $n oleans).
+    die "refusing to seed '$br': trace coverage is only ${cov}% ($(count_paired_traces "$root") of $n oleans carry their trace).
 Lake reads .trace to decide staleness, so it would rebuild — and evict —
 everything untraced. Seed from a tree where a real \`lake build\`
 produced the traces alongside the oleans."
