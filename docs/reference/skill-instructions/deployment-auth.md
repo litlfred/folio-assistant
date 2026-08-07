@@ -77,7 +77,7 @@ The folio deployment uses the **same Docker image** as all CI/CD
 workflows: the **paper-assistant** image.
 
 Built by `.github/workflows/build-folio-mcp.yml` from
-`scripts/mcp-server/Dockerfile`, it includes everything needed to
+`adapters/mcp-server/Dockerfile`, it includes everything needed to
 run the MCP server, build outputs, run the content pipeline, and
 execute CI scripts — all offline once pulled.
 
@@ -119,7 +119,7 @@ local server before the MCP server.
 | File | Purpose |
 |------|---------|
 | `folio-mcp.config.json` | Central config (auth, LLM, image, domain) |
-| `scripts/mcp-server/Dockerfile` | **Unified Docker image** (MCP + CI + build) |
+| `adapters/mcp-server/Dockerfile` | **Unified Docker image** (MCP + CI + build) |
 | `.github/workflows/build-folio-mcp.yml` | Image build workflow |
 | `deploy/auth-gateway/server.ts` | Auth gateway service (Bun) |
 | `deploy/docker-compose.folio.yml` | Service orchestration (Caddy + auth-gateway + folio-mcp) |

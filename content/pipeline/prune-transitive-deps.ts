@@ -9,6 +9,23 @@
  * for each block, remove any uses[] entry that is reachable through
  * another uses[] entry.
  *
+ * ## Editorial relation only
+ *
+ * `uses[]` is the **editorial** relation — what a reader must have read
+ * first (see `BlockBase.uses` in `schemas/types.ts`). Transitive
+ * reduction is sound HERE precisely because reading-order is transitive:
+ * a reader sent to B, who is in turn sent to C, has read C. Listing C
+ * directly adds nothing.
+ *
+ * It is NOT sound on the **formal** relation, and this script must never
+ * be pointed at one. A direct formal dependency is a fact about the
+ * proof term — that this declaration mentions that one — and remains
+ * true no matter what else the proof also invokes. Reducing it would
+ * discard real structure.
+ *
+ * The `uses-editorial-hygiene` QA criterion reports (as `warn`) blocks
+ * this script would change.
+ *
  * Usage:
  *   bun run content/pipeline/prune-transitive-deps.ts              # dry-run (report only)
  *   bun run content/pipeline/prune-transitive-deps.ts --apply      # rewrite .ts files

@@ -50,6 +50,14 @@ Full discipline: `.claude/skills/local/todo-manager.md` and
 > `todo-review` skill over `feedback/<paper>/*.ts`) — that is a separate domain
 > feature, not the agent work-plan.
 
+## New here? Read the onboarding guide
+
+`docs/guides/agent-onboarding.md` — what repo you are in, first five
+minutes, how to find the right skill, the content-object model, the two
+dependency relations, QA sidecars/axes, and where to look things up.
+Published at
+<https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html>.
+
 ## At session start
 
 Surface the work-plan before starting: run `beans prime` (and `beans list`), or
@@ -60,6 +68,20 @@ a background subagent, not the foreground.
 
 ## More
 
+- **`uses[]` is the EDITORIAL relation** — what a *reader* must have read to
+  follow a block. Agent/human maintained, part of the authored content.
+  It is **not** the formal dependency graph; that is machine-derived from
+  `lean.ref`. The two diverge legitimately in both directions (a proof invokes
+  `simp` lemmas nobody reads about; a theorem is motivated by an example it
+  never cites). **Never populate `uses[]` from Lean** — it destroys the signal
+  every ordering metric is computed from. For impact questions ("what breaks if
+  this changes?") use the union via `content/pipeline/content-graph.ts`, whose
+  accessors default to it. Auditing: the `uses` QA axis (mechanical) plus the
+  `uses-editorial-review` skill (human/agent). Contract: `BlockBase.uses` in
+  `schemas/types.ts`.
+- Lean tooling roadmap (Lean Atlas / Compass, Nazrin, refactor cluster,
+  LeanDojo) — where each earns a place and how it wires into existing skills:
+  `docs/proposals/llm-authoring-tool-integration.md`.
 - Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this

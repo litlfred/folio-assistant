@@ -1,0 +1,8 @@
+{
+  "id": "lean-atlas",
+  "name": "Lean Atlas",
+  "description": "Extracts the Lean constant-dependency graph, classified into type (statement-level) and value (proof-level) edges — the authoritative source for the formal dependency relation. MIT. Added as a Lake require in the CONTENT repo's lakefile.toml (scope NyxFoundation, https://github.com/NyxFoundation/lean-atlas), not installed as a standalone binary, so `lake update` needs github.com egress. Export with `lake exe atlas graph-data --output graph.json --pretty`, then adapt to JSONL for `content/pipeline/lean-atlas-ingest.ts --ingest`. Requires Lean >= 4.17.0 (v4.28.0 tested); the folio image and CI now pin v4.24.0, matching qou. When unavailable, `lean-atlas-ingest.ts --scan` gives an approximate syntactic fallback and every consumer degrades to n/a rather than a false pass.",
+  "install": "scripts/install-lean-atlas.sh [content-repo-root]",
+  "detection": { "method": "command", "command": "lake exe atlas --help" },
+  "requires": ["lean-toolchain"]
+}

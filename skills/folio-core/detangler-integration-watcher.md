@@ -22,6 +22,20 @@ allowed-tools: Read Edit Write Bash Grep Glob Agent Monitor Skill
 A concrete instance of `local/integration-watcher`. The parent encodes
 the shared mechanics. This file fills the nine domain-specific slots A–I.
 
+## Scope: editorial edges only
+
+Every metric this watcher owns — forward references, graph energy, edge
+span, section bands, topic coherence, dependency cycles — is computed
+over the **editorial** relation (`uses[]`), and must stay that way.
+Ordering is a question about *reading order*, so folding in formal Lean
+dependencies would make the answers wrong rather than richer: a `simp`
+lemma invoked mid-proof implies nothing about where a section belongs.
+
+The formal relation is a separate edge kind in
+`content/pipeline/content-graph.ts`; pass `"editorial"` explicitly when
+querying it from this watcher. The `uses` QA axis owns whether `uses[]`
+is *well used* — that is `uses-editorial-review`, not this watcher.
+
 **Setup:** use `NAME=detangler-integration-watcher` everywhere the
 parent's §1 references `${NAME}`. Files at
 `.beans/detangler-integration-watcher-queue.json` and

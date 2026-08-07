@@ -23,10 +23,14 @@
 import { readFileSync, existsSync, readdirSync, writeFileSync } from "fs";
 import { resolve, join, extname } from "path";
 import { references, referenceMap } from "../../schemas/references";
+import { findContentRepoRoot } from "./repo-root";
 import type { Data as CSLData, Person as CSLPerson } from "csl-json";
 
-const REPO_ROOT = resolve(import.meta.dir, "../..");
-const CONTENT_DIR = resolve(import.meta.dir, "..");
+// Content repo root (was import-relative, which pointed at
+// folio-assistant and made every content path below miss).
+const REPO_ROOT = findContentRepoRoot();
+// Content repo's content/, not folio-assistant's — see qa-checkers-extended.
+const CONTENT_DIR = join(findContentRepoRoot(), "content");
 const IMAGES_DIR = join(CONTENT_DIR, "bib-qa-images");
 
 const args = process.argv.slice(2);

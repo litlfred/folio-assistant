@@ -54,8 +54,10 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/detangler-integration-watcher](detangler-integration-watcher.html) | `detangler-integration-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [/devils-advocate-watcher](devils-advocate-watcher.html) | `devils-advocate-watcher` | — | A concrete instance of [`integration-watcher`](integration-watcher.md). |
 | [Diff](diff.html) | `diff` | — | Show what changed at the content-block level, with viewer links and |
+| [/dispatch-agent](dispatch-agent.html) | `dispatch-agent` | — | The expensive failure mode of multi-agent dispatch is **going dark**: you |
 | [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
 | [Editor](editor.html) | `editor` | — |  |
+| [/exposition-swarm-drain](exposition-swarm-drain.html) | `exposition-swarm-drain` | — | Bring every narrative block up to the **Milnor exposition standard** |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises the AGENTS.md §"5-minute idle trigger" / "Work the queue while idle" |
@@ -80,12 +82,15 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
+| [`uses[]` Editorial Review](uses-editorial-review.html) | `uses-editorial-review` | — |  |
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 
 ## Paper adapter (folio-paper-adapter)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [/build-docs](build-docs.html) | `build-docs` | — | Builds the Lean HTML documentation using `doc-gen4` locally, to save CI |
+| [/build-pdf](build-pdf.html) | `build-pdf` | — | Builds the PDF locally to save CI minutes: the monolithic `main.pdf` and |
 | [Category Theory Formalization](category-theory.html) | `category-theory` | — |  |
 | [Chapter Analysis & Formalization](chapter-analysis.html) | `chapter-analysis` | — |  |
 | [Compute Audit](compute-audit.html) | `compute-audit` | — | python3 script.py --args ... |
@@ -116,13 +121,15 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Proof Gap Audit](proof-gap-audit.html) | `proof-gap-audit` | — |  |
 | [/proof-integration-watcher](proof-integration-watcher.html) | `proof-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](integration-watcher.md). |
 | [Proof Narrative ↔ Lean Equivalence Audit](proof-narrative-lean-equivalence.html) | `proof-narrative-lean-equivalence` | — | grep -rn ':= by \(rfl\\|trivial\\|True.intro\)' content/**/*.lean |
-| [Proof Simplifier](proof-simplifier.html) | `proof-simplifier` | — |  |
+| [Proof Simplifier](proof-simplifier.html) | `proof-simplifier` | — | bun run content/pipeline/refactor-strategy.ts --lean 4.24.0 --applicable |
 | [Proof Status Tracking](proof-status-tracking.html) | `proof-status-tracking` | — |  |
 | [Proof Triage & Resolution](proof-triage.html) | `proof-triage` | — | [[require]] |
 | [/proposition-consolidation-audit](proposition-consolidation-audit.html) | `proposition-consolidation-audit` | — | grep -lE "^export default (proposition\|theorem\|lemma\|corollary)" \ |
+| [/q-usage-watcher](q-usage-watcher.html) | `q-usage-watcher` | — | > **Folio-optional axis.** The `q-usage` criteria encode a substrate |
 | [Remark Audit](remark-audit.html) | `remark-audit` | — | cd content && grep -rl '"remark"' --include='*.ts' \| sort |
 | [Rendering Auditor](rendering-auditor.html) | `rendering-auditor` | — | cd content && bun run pipeline/build.ts <paper>/<paper>.ts \ |
 | [Rendering Fixes](rendering-fixes.html) | `rendering-fixes` | — |  |
+| [Simulator Math Audit](simulator-math-audit.html) | `simulator-math-audit` | — |  |
 | [Simulator](simulator.html) | `simulator` | — |  |
 | [Verify Anchor Connectivity](verify-local-substrate.html) | `verify-local-substrate` | — |  |
 | [Witnessed Values](witnessed-values.html) | `witnessed-values` | — |  |

@@ -514,12 +514,54 @@ interface BlockBase {
   /** Optional display title. */
   title?: string;
   /**
-   * Labels of **immediate** dependencies (\uses{} in LaTeX).
+   * Labels of **immediate EDITORIAL dependencies** — the blocks a
+   * reader must already have in hand to follow this one. Rendered as
+   * `\uses{}` in the LaTeX blueprint.
+   *
+   * ## This is the editorial relation, not the formal one
+   *
+   * `uses[]` answers an **expository** question: "what does a reader
+   * need to have read first?" It is **agent/human maintained** — a
+   * deliberate editorial judgement about narrative order, and part of
+   * the authored content.
+   *
+   * It is NOT the formal dependency graph. The formal relation — what
+   * a proof actually depends on — is **machine-derived** from the
+   * `lean.ref` sibling declaration and its Lean dependencies. It is
+   * never hand-written and never stored here.
+   *
+   * The two relations genuinely differ, in both directions:
+   *
+   * - A proof may formally invoke a lemma that needs no exposition
+   *   (a `simp` set, a Mathlib instance). Formal edge, no editorial
+   *   edge. That is correct and must not be "fixed".
+   * - A block may depend editorially on a definition it never formally
+   *   cites — motivation, notation, a worked example the argument
+   *   reads against. Editorial edge, no formal edge. Also correct.
+   *
+   * **Do not populate `uses[]` from Lean.** Copying formal dependencies
+   * in here destroys the editorial signal and inflates every ordering
+   * metric that reads it. Tooling that surfaces formal-vs-editorial
+   * divergence (`uses-formal-coverage`) is advisory only: it flags a
+   * possible *exposition gap* for a human to judge, and never edits
+   * `uses[]` or fails a build.
+   *
+   * Consumers that want the whole picture (impact analysis, blast
+   * radius, triage ordering) take the **union** of both edge sets via
+   * `content/pipeline/content-graph.ts` — see `ContentGraph`, where
+   * every edge carries an `EdgeKind` provenance tag. Read that graph
+   * rather than this field directly whenever the question is "what
+   * breaks if this changes?" rather than "what must a reader read
+   * first?".
+   *
+   * ## Form
    *
    * List only direct neighbors — not the full transitive chain.
    * If A→B and B→C, then A lists only B; C is derived by walking
    * the graph. Run `bun run pipeline/prune-transitive-deps.ts` to
-   * enforce this.
+   * enforce this. (Transitive pruning is sound on the editorial
+   * relation, where reading-order is genuinely transitive; it is NOT
+   * applied to formal edges.)
    *
    * Within the same paper: bare label (e.g. "def:quantum-universe").
    * Cross-paper (same folio): qualified "paper-dir:label"

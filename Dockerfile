@@ -93,16 +93,61 @@ ENV IG_PUBLISHER_JAR=/opt/ig-publisher/publisher.jar
 
 # ─── Lean 4 toolchain ────────────────────────────────────────────────────────
 # Download the installer, verify it's a shell script, then execute it.
+#
+# LEAN_TOOLCHAIN_VERSION should TRACK THE CONTENT REPO's `lean-toolchain`, not
+# drift independently — elan will otherwise download the content repo's pin on
+# first `lake build` anyway, and the image's own version only serves to make
+# capability probes lie. (It had drifted to v4.16.0 while qou was on v4.24.0.)
+#
+# Floor: >= v4.17.0, required by the lean-atlas capability below.
 ARG ELAN_VERSION=v3.1.1
+ARG LEAN_TOOLCHAIN_VERSION=v4.24.0
 RUN curl -fSL -o /tmp/elan-init.sh \
        "https://raw.githubusercontent.com/leanprover/elan/${ELAN_VERSION}/elan-init.sh" \
     && head -1 /tmp/elan-init.sh | grep -q '^#!' \
-    && sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.16.0 \
+    && sh /tmp/elan-init.sh -y --default-toolchain "leanprover/lean4:${LEAN_TOOLCHAIN_VERSION}" \
     && rm /tmp/elan-init.sh \
     && echo 'export PATH="$HOME/.elan/bin:$PATH"' >> /etc/profile.d/lean.sh
 
 ENV LEAN_HOME=/root/.elan
 ENV PATH="/root/.elan/bin:${PATH}"
+
+# ─── External Lean tooling (network egress required) ─────────────────────────
+# Some pipeline capabilities depend on third-party Lean projects fetched from
+# github.com. They are NOT installed as image binaries — Lean tooling is
+# consumed as Lake requires declared in the *content* repo's lakefile.toml, so
+# the fetch happens at `lake update` time in that repo, not here.
+#
+# What that means for provisioning:
+#
+#   * The image must allow outbound HTTPS to github.com (and the Lake reservoir)
+#     at container runtime, not just at build time. A build-time-only egress
+#     policy will produce an image where `lake update` fails.
+#   * Nothing below is required for folio-assistant itself to run. Every
+#     dependent capability is probed (.claude/skills/capabilities/*.json) and
+#     degrades to `n/a` when absent — see the `--scan` fallback in
+#     content/pipeline/lean-atlas-ingest.ts.
+#
+# Currently declared:
+#
+#   lean-atlas (MIT) — https://github.com/NyxFoundation/lean-atlas
+#     Formal dependency graph, type/value edge split.
+#     Content-repo lakefile.toml:
+#       [[require]]
+#       name  = "lean-atlas"
+#       scope = "NyxFoundation"
+#       git   = "https://github.com/NyxFoundation/lean-atlas"
+#       rev   = "main"          # pin a commit for reproducibility
+#     Then: lake update lean-atlas
+#           lake exe atlas graph-data --output graph.json --pretty
+#
+#     REQUIRES Lean >= 4.17.0 (v4.28.0 tested). Satisfied by the
+#     LEAN_TOOLCHAIN_VERSION above (v4.24.0, matching qou). If a content repo
+#     pins below 4.17.0, the probe fails closed there and the ingest script's
+#     --scan fallback supplies an approximate graph instead.
+#
+#     Node 18+ / pnpm are needed only for Atlas's web viewer, not for
+#     graph-data export, so they are deliberately not provisioned here.
 
 # ─── beans work-plan tracker CLI ─────────────────────────────────────────────
 # Generic agent session work-plan / cross-agent coordination tracker

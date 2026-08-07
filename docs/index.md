@@ -66,6 +66,7 @@ applies to every content type.
 - **[Getting started](getting-started.html)** — connect the MCP server to your LLM and run your first skill.
 - **[Tutorial: Writing a paper with folio-assistant](guides/writing-a-paper.html)** — a full, LLM-driven walk-through with a mock chat session.
 - **[Content types](content-types.html)** — the formalism of each authoring domain.
+- **[Agent onboarding](guides/agent-onboarding.html)** — orientation for an LLM agent dropped into a folio: first steps, finding skills, the content-object model, QA sidecars.
 - **[Skills & roles](skills.html)** — every skill and role, and how they work together with the LLM.
 - **[Skill schema reference](reference/skills/)** — generated input/output contracts for every skill.
 - **[TypeScript API reference](api/)** — the content-object model (`Block`, `Chapter`, `Paper`, builders, Zod constraints).

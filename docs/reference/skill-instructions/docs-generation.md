@@ -159,7 +159,7 @@ python3 .github/scripts/generate_dependency_graph.py \
 ## Unified Docker image
 
 All CI/CD workflows use the same **paper-assistant** Docker image
-(`scripts/mcp-server/Dockerfile`), which is also the folio MCP server.
+(`adapters/mcp-server/Dockerfile`), which is also the folio MCP server.
 This eliminates per-workflow tool installation and ensures consistent
 build environments. The image bundles the PDF engine, the content
 pipeline runtime (Bun), pandoc, graph tooling, and CI scripts.
