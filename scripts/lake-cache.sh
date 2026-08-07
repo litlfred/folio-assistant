@@ -18,7 +18,7 @@
 #   scripts/lake-cache.sh status   [--lake-root DIR]
 #   scripts/lake-cache.sh restore  [--lake-root DIR] [--package NAME] [--branch BR]
 #   scripts/lake-cache.sh restore-toolchain [--branch BR]
-#   scripts/lake-cache.sh seed     [--lake-root DIR] [--package NAME] [--branch BR]
+#   scripts/lake-cache.sh seed     [--lake-root DIR] [--package NAME] [--branch BR] [--push]
 #   scripts/lake-cache.sh list
 #   scripts/lake-cache.sh doctor   [--lake-root DIR]
 #
@@ -65,11 +65,13 @@ CMD="${1:-}"; shift || true
 LAKE_ROOT=""
 PACKAGE=""
 BRANCH=""
+PUSH=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --lake-root) LAKE_ROOT="${2:-}"; shift 2 ;;
     --package)   PACKAGE="${2:-}";   shift 2 ;;
     --branch)    BRANCH="${2:-}";    shift 2 ;;
+    --push)      PUSH=1; shift ;;
     -h|--help)   CMD="help"; shift ;;
     *) die "unknown option: $1" ;;
   esac
@@ -383,7 +385,23 @@ cmd_seed() {
 Seeding an empty cache is worse than none: the next agent gets a hit,
 skips the build, and fails with no oleans."
 
-  printf 'seeding %s from %s (%s oleans)\n' "$br" "$root/.lake" "$n"
+  # Refuse to seed a package whose OWN modules are absent.
+  #
+  # This is the exact defect that shipped on lake-cache/qou-v4-24-0:
+  # 7268 oleans, every one a dependency, zero QOU.*. The total looked
+  # healthy, so nothing caught it, and every consumer since has
+  # rebuilt the paper from source while believing the cache was warm.
+  # `mathlib` is exempt — for that package the dependencies ARE the
+  # payload and `.lake/build` is legitimately thin.
+  local own; own=$(count_own_oleans "$root")
+  if [ "$pkg" != "mathlib" ] && [ "$own" -eq 0 ]; then
+    die "refusing to seed '$br': $n oleans present but ZERO belong to '$pkg'.
+Only .lake/packages/ was populated — .lake/build/lib is empty, so the
+package itself never built. Run a full \`lake build\` in $root first.
+Seeding this would reproduce the bug it is meant to fix."
+  fi
+
+  printf 'seeding %s from %s (%s oleans, %s own)\n' "$br" "$root/.lake" "$n" "$own"
   local tmp; tmp=$(mktemp -d) || die "mktemp failed"
   # shellcheck disable=SC2064
   trap "rm -rf '$tmp'" RETURN
@@ -393,13 +411,38 @@ skips the build, and fails with no oleans."
     || die "failed to create the split tarball"
   ( cd "$tmp" && for f in lake-oleans.tgz.part*; do mv "$f" "$(printf '%s' "$f")"; done )
 
+  if [ "$PUSH" -eq 1 ]; then
+    # CI path. Uses a detached worktree so the caller's working tree is
+    # never switched — `git switch --orphan` in the main tree leaves
+    # every file untracked and strands the job on switch-back.
+    local wt; wt=$(mktemp -d) || die "mktemp failed"
+    git worktree add --detach "$wt" >/dev/null 2>&1 || die "git worktree add failed"
+    (
+      cd "$wt" || exit 1
+      git checkout --orphan "$br" >/dev/null 2>&1
+      git rm -rf . >/dev/null 2>&1 || true
+      cp "$tmp"/lake-oleans.tgz.part* .
+      git add lake-oleans.tgz.part*
+      git -c user.name=folio-lake-cache-bot \
+          -c user.email=folio-lake-cache-bot@users.noreply.github.com \
+          commit -q -m "lake-cache: $pkg at $slug ($n oleans, $own own)"
+      git push -f origin "$br"
+    )
+    local rc=$?
+    git worktree remove --force "$wt" >/dev/null 2>&1 || true
+    [ "$rc" -ne 0 ] && die "push to '$br' failed"
+    printf '\npushed %s (%s oleans, %s own)\n' "$br" "$n" "$own"
+    return 0
+  fi
+
   printf '\nParts written to %s\n' "$tmp"
   printf 'Push them to the orphan branch with:\n\n'
   printf '  git checkout --orphan %s\n  git rm -rf . >/dev/null\n  cp %s/lake-oleans.tgz.part* .\n' "$br" "$tmp"
   printf '  git add lake-oleans.tgz.part* && git commit -m "lake cache: %s"\n' "$br"
   printf '  git push -f origin %s\n\n' "$br"
-  printf 'Left as explicit steps: seeding force-pushes an orphan branch,\n'
-  printf 'which is destructive and should be a deliberate act.\n'
+  printf 'Or pass --push to do it automatically (CI).\n'
+  printf 'Manual by default: seeding force-pushes an orphan branch, which is\n'
+  printf 'destructive and should be a deliberate act.\n'
 }
 
 # ── Toolchain restore ───────────────────────────────────────────────
@@ -474,9 +517,21 @@ cmd_restore_toolchain() {
 
 # ── List / doctor ───────────────────────────────────────────────────
 
+# Cached for the process: `resolve_package` may consult this, and status
+# / doctor call it again. Also TIMED OUT — `git ls-remote` blocks
+# indefinitely against an unreachable or auth-prompting remote, which
+# would hang a CI job (and did hang an interactive run) with no output.
+# An empty list degrades gracefully: package inference declines and the
+# caller is told to pass --package.
+_LIST_CACHE=""
+_LIST_DONE=0
 cmd_list_names() {
-  git ls-remote --heads origin 'refs/heads/lake-cache/*' 2>/dev/null \
-    | sed 's#.*refs/heads/##' | sort
+  if [ "$_LIST_DONE" -eq 0 ]; then
+    _LIST_DONE=1
+    _LIST_CACHE=$(timeout 30 git ls-remote --heads origin 'refs/heads/lake-cache/*' 2>/dev/null \
+      | sed 's#.*refs/heads/##' | sort)
+  fi
+  printf '%s\n' "$_LIST_CACHE"
 }
 
 cmd_list() {
