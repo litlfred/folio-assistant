@@ -169,12 +169,18 @@ const VOICE: QaCriterionDefinition[] = [
       "paper-past-tense narration. Borderline cases are confirmed / overruled " +
       "by an agent reviewer entry on the same sidecar.",
     default_severity: "major",
-    // Applies to narrative prose independently of proofs; relaxed
-    // to `["md"]` so prose-only blocks (no `.lean` sibling) still
-    // run through the scholarly check.  Lean-docstring scanning is
-    // dispatched per-block when the `.lean` is present (see the
-    // dispatcher in `qa-checkers-voice.ts`).
+    // Applies to narrative prose independently of proofs, so `.lean`
+    // must NOT be in `depends_on`: that gates applicability, and listing
+    // it would `n/a` every prose-only block (no `.lean` sibling) — the
+    // majority of what this criterion exists to check.
     depends_on: ["md"],
+    // But the checker DOES read Lean docstrings when a `.lean` is present
+    // (see the dispatcher in `qa-checkers-voice.ts`), so a Lean-only edit
+    // has to invalidate the cached verdict. Without this, a docstring
+    // could both introduce a finding and — worse — fail to CLEAR one:
+    // reflowing the offending line left the stale `fail` in place because
+    // the `.md` hash had not moved. Observed live on qou #4673.
+    also_invalidated_by: ["lean"],
     automated: true,
   },
   {

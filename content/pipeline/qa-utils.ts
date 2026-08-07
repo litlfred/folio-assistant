@@ -631,6 +631,24 @@ export function saveQaReport(path: string, report: BlockQaReport): void {
 // ── Staleness check ─────────────────────────────────────────────
 
 /**
+ * The files whose hashes invalidate a cached verdict for `def`:
+ * `depends_on` (which also gates applicability) UNION
+ * `also_invalidated_by` (which does not).
+ *
+ * Always use this — not `depends_on` alone — when computing freshness.
+ * A criterion that reads a file it cannot list in `depends_on` (because
+ * doing so would `n/a` the blocks it exists to check) is otherwise
+ * unable to clear its own stale verdict when that file is the only
+ * thing that changed.
+ */
+export function freshnessKeys(def: {
+  depends_on: Array<"md" | "ts" | "lean">;
+  also_invalidated_by?: Array<"md" | "ts" | "lean">;
+}): Array<"md" | "ts" | "lean"> {
+  return [...new Set([...def.depends_on, ...(def.also_invalidated_by ?? [])])];
+}
+
+/**
  * A criterion entry is "fresh" iff every file the criterion depends
  * on has the same current hash as the entry's field_hash. Otherwise
  * the entry is stale (the source files have changed since the audit).
@@ -758,7 +776,7 @@ export function summariseFreshness(
   const out: CriterionFreshness[] = [];
   for (const [criterion, entries] of Object.entries(report.criteria)) {
     const def = QA_CRITERIA_BY_ID[criterion];
-    const dependsOn = def?.depends_on ?? ["md"];
+    const dependsOn = def ? freshnessKeys(def) : (["md"] as Array<"md" | "ts" | "lean">);
     const sh = scriptHashesByCriterion?.[criterion];
     const fresh: QaCriterionEntry[] = [];
     const stale: QaCriterionEntry[] = [];

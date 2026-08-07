@@ -37,6 +37,7 @@ import {
   gitHeadSha,
   computeCriterionScriptHashes,
   entryIsFresh,
+  freshnessKeys,
   saveQaScriptSidecar,
   type CriterionScriptHashes,
 } from "./qa-utils";
@@ -283,7 +284,7 @@ async function run(): Promise<void> {
       const sh = scriptHashesByCriterion[cid];
       const prevEntries = report.criteria[cid] ?? [];
       const freshExisting = prevEntries.find((e) =>
-        entryIsFresh(e, currentHashes, def.depends_on, sh, def.lean_granularity),
+        entryIsFresh(e, currentHashes, freshnessKeys(def), sh, def.lean_granularity),
       );
       if (freshExisting) {
         sweepRow.criteria_skipped_fresh++;

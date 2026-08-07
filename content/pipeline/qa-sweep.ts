@@ -108,6 +108,7 @@ import {
   loadQaReport,
   saveQaReport,
   entryIsFresh,
+  freshnessKeys,
   preserveNonScriptEntries,
   computeCriterionScriptHashes,
   saveQaScriptSidecar,
@@ -342,7 +343,7 @@ function run(): void {
       const nonScriptExisting = preserveNonScriptEntries(existing);
       const scriptHashes = scriptHashesByCriterion[criterionId];
       const freshExisting = existing.find((e) =>
-        entryIsFresh(e, currentHashes, def.depends_on, scriptHashes, def.lean_granularity),
+        entryIsFresh(e, currentHashes, freshnessKeys(def), scriptHashes, def.lean_granularity),
       );
       const dependsOnSatisfied = def.depends_on.every(
         (k) => currentHashes[k] !== undefined,
