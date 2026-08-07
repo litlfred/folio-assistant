@@ -59,3 +59,21 @@ accepts either scheme so a hand-seeded branch still restores.
 
 No second qou PR needed — the workflow calls
 `folio-assistant/scripts/lake-cache.sh`, so this fix reaches CI directly.
+
+## qou#4680 merged
+
+Merged 2026-08-07T13:38:32Z. The refresh workflow now delegates to
+`lake-cache.sh seed --push`, so the format cannot drift again and the
+own-package guard is in the CI path.
+
+## The "needs CI" premise no longer holds
+
+That item read "needs CI — 1582 modules is hours, not feasible in an
+authoring container", which inherited ga7e's conclusion that no linkable
+toolchain could be had locally. It can (ga7e, resolved): the toolchain is
+a GitHub release asset and that host is reachable, so `lake exe cache get`
+— the minutes-not-hours route to a traced Mathlib — runs here.
+
+What remains genuinely expensive is building the paper's OWN modules,
+which the upstream Mathlib cache does not supply. That is the real cost,
+not the toolchain.
