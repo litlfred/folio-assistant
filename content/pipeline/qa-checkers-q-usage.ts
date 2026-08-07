@@ -123,7 +123,7 @@ const CHAPTER_EXPECTED_REGIMES: Record<string, ReadonlySet<QRegime>> = {
     "fixed-q0",
   ]),
   "fluid-dynamics": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
   "stochastic-mechanics": new Set<QRegime>([
     "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
@@ -133,37 +133,37 @@ const CHAPTER_EXPECTED_REGIMES: Record<string, ReadonlySet<QRegime>> = {
     "na", "symbolic", "generic-R", "real-positive", "fixed-q0",
   ]),
   "mass-theory": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
   "mass-endomorphism": new Set<QRegime>([
     "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
     "fixed-q0",
   ]),
   "particle-interactions": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
   "gravity-spacetime": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
 
   // ── Part III — Descartes universe + observations ─────────────
   "climax-volume-mass": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
   observations: new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
   "predicted-spectra": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
   "measurement-observation": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
   "molecular-construction": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
   "organic-chemistry": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
 
   // ── Ch 11 — q-geometric Langlands (root-of-unity territory) ──
@@ -174,10 +174,10 @@ const CHAPTER_EXPECTED_REGIMES: Record<string, ReadonlySet<QRegime>> = {
 
   // ── Appendices ────────────────────────────────────────────────
   "appendix-qvalues": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
   "appendix-atomic-mass-calculations": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
+    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
   ]),
   "appendix-knot-operations": new Set<QRegime>([
     "na", "symbolic", "generic-R", "mod-lt-1", "mod-gt-1",
