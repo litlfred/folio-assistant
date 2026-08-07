@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-08-07T12:10:50Z
-updated_at: 2026-08-07T13:07:53Z
+updated_at: 2026-08-07T13:41:21Z
 ---
 
 The production cache branch has 7268 oleans, all dependencies, none QOU.*. Every restore still rebuilds the paper, and sibling .lean files cannot elaborate standalone. lake-cache.sh status now detects and reports this.
@@ -38,3 +38,24 @@ interactive run and would hang a CI job silently.
 - [ ] Run lake-cache-refresh to actually reseed (needs CI — 1582 modules
       is hours, not feasible in an authoring container).
 - [ ] Re-run the triviality probe over the full corpus once reseeded (nimj).
+
+## Caught in time: the reseed would have produced an unreadable cache
+
+Writing a test suite for `lake-cache.sh` (13 tests, local git remote, no
+network) immediately found a bug in `seed` that qou#4680 had just wired
+into CI:
+
+`split` defaults to ALPHABETIC suffixes (`lake-oleans.tgz.partaa`), while
+the restore matched `\.tgz\.part[0-9]+$` — numeric. So the very first
+`lake-cache-refresh` run would have published parts the restore cannot
+see, reporting the fresh branch as carrying neither parts nor a tree.
+
+The live branches ARE numeric (`part00`…), which is further confirmation
+they were never produced by this code path.
+
+Fixed: `split -d -a 3` on the write side (`-a 3` for 1000-part headroom;
+the default width errors out rather than extending), and the read side now
+accepts either scheme so a hand-seeded branch still restores.
+
+No second qou PR needed — the workflow calls
+`folio-assistant/scripts/lake-cache.sh`, so this fix reaches CI directly.

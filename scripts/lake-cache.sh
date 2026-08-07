@@ -320,7 +320,10 @@ Known packages: $(cmd_list_names | tr '\n' ' ')"
   # exist there, and return NOTHING. The restore then reports "carries
   # neither parts nor a tree" against a perfectly good cache.
   local names; names=$(git ls-tree --full-tree --name-only "$PRIVATE_REF")
-  local parts; parts=$(printf '%s\n' "$names" | grep -E '\.tgz\.part[0-9]+$' | sort)
+  # Accept numeric OR alphabetic suffixes. `sort` orders both correctly
+  # within a scheme, and tolerating both means a branch seeded by hand
+  # with a default `split` still restores instead of reading as empty.
+  local parts; parts=$(printf '%s\n' "$names" | grep -E '\.tgz\.part([0-9]+|[a-z]+)$' | sort)
 
   if [ -n "$parts" ]; then
     info "format: split tarball ($(printf '%s\n' "$parts" | wc -l | tr -d ' ') parts)"
@@ -407,7 +410,17 @@ Seeding this would reproduce the bug it is meant to fix."
   trap "rm -rf '$tmp'" RETURN
 
   # 90 MB parts: GitHub rejects blobs over 100 MB.
-  tar czf - -C "$root" .lake | split -b 90m - "$tmp/lake-oleans.tgz.part" \
+  #
+  # `-d` is REQUIRED, not cosmetic. Without it `split` emits alphabetic
+  # suffixes (`partaa`, `partab`), and the restore matches
+  # `\.tgz\.part[0-9]+$` — so a seed made without `-d` produces parts
+  # the restore cannot see, and reports the branch as carrying neither
+  # parts nor a tree. The live branches are numeric (`part00`…), i.e.
+  # they were NOT produced by this code path.
+  #
+  # `-a 3` gives headroom to 1000 parts (~90 GB); the default width of 2
+  # errors out rather than extending once it runs out of suffixes.
+  tar czf - -C "$root" .lake | split -d -a 3 -b 90m - "$tmp/lake-oleans.tgz.part" \
     || die "failed to create the split tarball"
   ( cd "$tmp" && for f in lake-oleans.tgz.part*; do mv "$f" "$(printf '%s' "$f")"; done )
 
@@ -476,7 +489,7 @@ cmd_restore_toolchain() {
 
   local parts
   parts=$(git ls-tree --full-tree --name-only "$PRIVATE_REF" \
-          | grep -E '\.tgz\.part[0-9]+$' | sort)
+          | grep -E '\.tgz\.part([0-9]+|[a-z]+)$' | sort)
   [ -z "$parts" ] && { warn "branch '$br' has no tarball parts"; return 3; }
 
   local tgz="$tmp/toolchain.tgz" p
