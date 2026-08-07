@@ -47,10 +47,33 @@ import {
   resolveCanonicalLean,
   listPackageLeanFiles,
 } from "./qa-utils.ts";
+// Shared content-root + paper discovery. The pipeline lives in
+// folio-assistant but audits a downstream content repo; deriving the root
+// from this file's own location lands inside the platform tree instead.
+import { findContentRepoRoot, findPapers } from "./repo-root.ts";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(SCRIPT_DIR, "..", "..");
-const PAPER_ROOT = join(REPO_ROOT, "content", "quantum-observable-universe");
+
+/**
+ * Root of the PLATFORM checkout (folio-assistant). Correct anchor for the
+ * *checker script* hash below — `qa-checkers-q-usage.ts` genuinely lives
+ * here — and for nothing else.
+ */
+const PLATFORM_ROOT = resolve(SCRIPT_DIR, "..", "..");
+
+/**
+ * Root of the CONTENT repo being audited.
+ *
+ * This used to be `resolve(SCRIPT_DIR, "..", "..")` — i.e. PLATFORM_ROOT —
+ * with the paper hardcoded to `quantum-observable-universe`. That was
+ * correct only while the pipeline lived inside the content repo. Once it
+ * moved to folio-assistant, `<platform>/content/quantum-observable-universe`
+ * stopped existing, `walkBlocks` found nothing, and the audit reported
+ * "0 blocks across 0 chapters" and **exited 0** — a silent no-op that made
+ * the seven `q-usage-*` criteria unrefreshable in every downstream sidecar.
+ * Observed live on qou #4673.
+ */
+const REPO_ROOT = findContentRepoRoot();
 
 // ── CLI args ────────────────────────────────────────────────────
 
@@ -61,6 +84,17 @@ const jsonReport = args.includes("--json");
 const noOrphans = args.includes("--no-orphans");
 const chapterFilterIdx = args.indexOf("--chapter");
 const chapterFilter = chapterFilterIdx >= 0 ? args[chapterFilterIdx + 1] : undefined;
+const paperFilterIdx = args.indexOf("--paper");
+const paperFilter = paperFilterIdx >= 0 ? args[paperFilterIdx + 1] : undefined;
+
+/**
+ * Papers to audit: `--paper <name>` if given, else every paper in the
+ * folio. The platform must not privilege one paper by name — a folio may
+ * hold several (`findPapers` is the shared discovery used by the rest of
+ * the pipeline).
+ */
+const PAPERS: string[] = paperFilter ? [paperFilter] : findPapers(REPO_ROOT);
+const PAPER_ROOTS: string[] = PAPERS.map((p) => join(REPO_ROOT, "content", p));
 
 // ── Walk block files ────────────────────────────────────────────
 
@@ -74,7 +108,7 @@ interface BlockTriple {
 }
 
 /**
- * Discover every content block under PAPER_ROOT via the shared
+ * Discover every content block under each paper root via the shared
  * `qa-utils.walkBlocks` — the single source of truth for block discovery
  * AND candidate-1 (sibling) → candidate-2 (library/Lake tree) `lean.ref`
  * resolution. The owning chapter is read from the block's `.ts` path, NOT
@@ -84,7 +118,7 @@ interface BlockTriple {
  */
 function walkBlocks(): BlockTriple[] {
   const out: BlockTriple[] = [];
-  for (const b of utilWalkBlocks(PAPER_ROOT)) {
+  for (const b of PAPER_ROOTS.flatMap((r) => [...utilWalkBlocks(r)])) {
     const chapter = chapterFromPath(b.ts) ?? "";
     if (chapterFilter && chapter !== chapterFilter) continue;
     out.push({
@@ -149,7 +183,9 @@ const CRITERION_SEVERITY: Record<string, "critical" | "major" | "minor"> = {
 };
 
 const SCRIPT_PATH = "content/pipeline/qa-checkers-q-usage.ts";
-const SCRIPT_HASH = hashFile(join(REPO_ROOT, SCRIPT_PATH));
+// Anchored at PLATFORM_ROOT, not REPO_ROOT: the checker source lives in
+// folio-assistant, not in the content repo being audited.
+const SCRIPT_HASH = hashFile(join(PLATFORM_ROOT, SCRIPT_PATH));
 const NOW_ISO = new Date().toISOString();
 const REVIEWER_ID = "q-usage-audit";
 
@@ -400,6 +436,26 @@ export function scanOrphanLeanFiles(coveredLean: Set<string>): {
 
 function main(): void {
   const blocks = walkBlocks();
+
+  // A sweep that discovers nothing is a BROKEN sweep, not a clean one.
+  // Exiting 0 here is what let the root-resolution bug hide: callers and
+  // CI read the zero exit as "audited, nothing wrong" while the seven
+  // q-usage criteria silently went unrefreshed everywhere. Fail loudly,
+  // and say which root was searched so the cause is obvious.
+  if (blocks.length === 0) {
+    console.error("q-usage-audit: found NO blocks to audit — refusing to report success.");
+    console.error(`  content repo root : ${REPO_ROOT}`);
+    console.error(`  papers            : ${PAPERS.length ? PAPERS.join(", ") : "(none discovered)"}`);
+    if (chapterFilter) console.error(`  --chapter         : ${chapterFilter}`);
+    if (paperFilter) console.error(`  --paper           : ${paperFilter}`);
+    console.error(
+      PAPERS.length === 0
+        ? "  No `content/<paper>/<paper>.ts` manifest found. Run from the content repo root."
+        : "  Papers resolved but no blocks matched. Check --chapter / --paper spelling.",
+    );
+    process.exit(2);
+  }
+
   const stats: Map<string, ChapterStat> = new Map();
   const findings: BlockFinding[] = [];
   const coveredLean = new Set<string>();
