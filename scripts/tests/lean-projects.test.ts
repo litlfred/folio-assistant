@@ -16,6 +16,7 @@
 
 import { describe, test, expect } from "bun:test";
 import { readFileSync, existsSync } from "fs";
+import { execSync } from "child_process";
 import { join, relative } from "path";
 import {
   LEAN_DIR,
@@ -160,7 +161,6 @@ for (const pkg of LEAN_PACKAGES) {
 
     // Build artifacts not tracked
     test("no .lake/ artifacts tracked in git", () => {
-      const { execSync } = require("child_process");
       try {
         const tracked = execSync(`git ls-files --cached ${pkg.lakeRoot}/.lake/`, {
           cwd: REPO_ROOT,

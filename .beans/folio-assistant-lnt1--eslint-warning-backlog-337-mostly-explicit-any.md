@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lnt1
-title: 'ESLint warning backlog: 226 remaining, all no-explicit-any family'
+title: 'ESLint warning backlog: 213 remaining, 201 of them no-explicit-any'
 status: todo
 type: task
 priority: normal
 created_at: 2026-08-07T18:00:00Z
-updated_at: 2026-08-07T18:40:00Z
+updated_at: 2026-08-07T19:35:00Z
 ---
 
 `bun run lint` now runs (it never could before — no config, and neither
@@ -99,3 +99,41 @@ removed the bindings, kept the reasoning.
 `no-explicit-any` (201) is the only substantial one left. It is a per-site
 typing decision rather than a sweep, and probably wants a plan before anyone
 starts. `no-require-imports` (13) is the cheapest next ratchet.
+
+
+## Second rung: `no-require-imports` 13 -> 0, promoted to ERROR
+
+226 -> 213 warnings. Verified with a probe file that a new `require()` now
+fails the lint.
+
+All 13 were lazy inline `require()` of Node builtins (`fs`, `child_process`)
+inside function bodies — a CommonJS idiom in an ESM/TS codebase. Deferring a
+builtin's load buys nothing, and six of the eight files already imported the
+same module at top level, so this was mostly widening an existing member list:
+
+| file | hoisted |
+|---|---|
+| `adapters/mcp-server/git.ts` | `symlinkSync`, `readdirSync` -> existing `fs` import |
+| `src/core/git.ts` | `symlinkSync`, `readdirSync` -> existing `fs` import |
+| `adapters/mcp-server/server.ts` | `readdirSync` -> existing `fs` import |
+| `adapters/paper/index.ts` | 3 sites -> one `child_process` import |
+| `adapters/mcp-server/paths.ts` | inline `require("fs").readFileSync(…)` -> named import |
+| `content/pipeline/proof-axis-dashboard.ts` | `execSync` |
+| `scripts/tests/lean-projects.test.ts` | `execSync` |
+| `src/routes/branches.ts` | 2 sites -> one `child_process` import |
+
+No behaviour change: the `try` blocks around these calls guard the OPERATION
+(a symlink that may already exist, a `git` that may be absent), not the module
+load.
+
+## Remaining: 213
+
+| rule | count |
+|---|---:|
+| `no-explicit-any` | 201 |
+| `no-unsafe-function-type` | 10 |
+| `no-this-alias` | 2 |
+
+`no-this-alias` (2) and `no-unsafe-function-type` (10) are the next cheap
+rungs. `no-explicit-any` is the only substantial one and is a per-site typing
+decision rather than a sweep — it wants a plan before anyone starts.

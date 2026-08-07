@@ -9,7 +9,7 @@
  */
 
 import { REPO_ROOT } from "./paths.js";
-import { readFileSync, existsSync, writeFileSync, unlinkSync, mkdirSync } from "fs";
+import { readFileSync, existsSync, writeFileSync, unlinkSync, mkdirSync, symlinkSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 import { spawnSync } from "child_process";
 
@@ -228,7 +228,6 @@ export async function gitImportTs(branch: string, relPath: string): Promise<unkn
     if (!existsSync(schemaLink) && existsSync(realSchema)) {
       mkdirSync(join(branchTmpDir, "content"), { recursive: true });
       try {
-        const { symlinkSync } = require("fs") as typeof import("fs");
         symlinkSync(realSchema, schemaLink, "dir");
       } catch {}
     }
@@ -287,7 +286,6 @@ export async function importTsBranch(branch: string | undefined, relPath: string
  */
 export function listDirBranch(branch: string | undefined, relDir: string): string[] {
   if (isCurrentBranch(branch)) {
-    const { readdirSync } = require("fs") as typeof import("fs");
     const absPath = resolve(REPO_ROOT, relDir);
     if (!existsSync(absPath)) return [];
     return readdirSync(absPath);

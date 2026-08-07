@@ -65,15 +65,19 @@ export default tseslint.config(
         },
       ],
 
+      // Driven to 0 from 13. All were lazy inline `require()` of Node
+      // builtins (`fs`, `child_process`) inside functions — a CommonJS idiom
+      // in an ESM/TS codebase, and deferring a builtin's load buys nothing.
+      // Hoisted to top-level imports.
+      "@typescript-eslint/no-require-imports": "error",
+
       // ── Warnings: acknowledged debt, tracked not enforced ──────
       // Remaining counts over 194 files:
       //   no-explicit-any        201  (gradual typing — a per-site typing
       //                                decision, wants its own plan)
-      //   no-require-imports      13
       //   no-unsafe-function-type 10
       //   no-this-alias            2
       "@typescript-eslint/no-explicit-any": "warn",
-      "@typescript-eslint/no-require-imports": "warn",
       "@typescript-eslint/no-unsafe-function-type": "warn",
       "@typescript-eslint/no-this-alias": "warn",
     },

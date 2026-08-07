@@ -11,6 +11,7 @@
 
 import type { GitHelper } from "../core/git.js";
 import { log, logDebug } from "../core/logging.js";
+import { spawnSync } from "child_process";
 
 const CORS = { "Access-Control-Allow-Origin": "*" };
 
@@ -36,7 +37,6 @@ export function handleBranchGet(url: URL, gitHelper: GitHelper): Response | null
 
   if (path === "/api/git/status") {
     try {
-      const { spawnSync } = require("child_process") as typeof import("child_process");
       const r = spawnSync("git", ["status", "--porcelain"], {
         cwd: gitHelper["repoRoot"],
         stdio: "pipe",
@@ -60,7 +60,6 @@ export async function handleBranchPost(url: URL, req: Request, gitHelper: GitHel
   if (url.pathname !== "/api/git/checkout") return null;
 
   try {
-    const { spawnSync } = require("child_process") as typeof import("child_process");
     const body = (await req.json()) as {
       branch: string;
       action?: "switch" | "stash" | "commit" | "discard";

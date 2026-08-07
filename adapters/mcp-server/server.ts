@@ -33,7 +33,7 @@ import {
   readFileBranch, fileExistsBranch, importTsBranch, listDirBranch,
   mergeBase, gitLogFiles, gitShowBinaryAt, gitShowAt,
 } from "./git.js";
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
 import { join, resolve, extname } from "path";
 import Anthropic from "@anthropic-ai/sdk";
 
@@ -215,7 +215,6 @@ function commitFeedbackToMain(paperId: string, rootName: string, content: string
 function listAllFeedback(status?: string): { paperId: string; rootName: string; todo: any }[] {
   const results: { paperId: string; rootName: string; todo: any }[] = [];
   if (!existsSync(FEEDBACK_DIR)) return results;
-  const { readdirSync } = require("fs") as typeof import("fs");
   for (const paperId of readdirSync(FEEDBACK_DIR)) {
     const paperFbDir = join(FEEDBACK_DIR, paperId);
     try {
