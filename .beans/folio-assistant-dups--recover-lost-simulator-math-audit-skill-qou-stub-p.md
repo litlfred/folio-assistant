@@ -1,10 +1,11 @@
 ---
 # folio-assistant-dups
 title: Recover lost simulator-math-audit skill (qou stub points nowhere)
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-08-07T10:07:17Z
-updated_at: 2026-08-07T10:07:17Z
+updated_at: 2026-08-07T10:17:10Z
 ---
 
 
@@ -27,3 +28,24 @@ fetch of qou (`git log --diff-filter=D -- '*simulator-math-audit*'`) or
 the content re-authored.
 
 Either way the dangling stub in qou should be removed or repointed.
+
+## Fixed — recovered
+
+`git fetch --unshallow` on qou, then hunted every rev touching the path.
+The pre-stub content survived at
+`69f8e470bc:folio-assistant/.claude/skills/local/simulator-math-audit.md`
+(19 lines) — recovered and landed at
+`skills/folio-paper-adapter/simulator-math-audit.md`.
+
+Generalised while restoring: the original named one folio's compute
+substrate (`qou-mass`) and its constants. Now it says to resolve the
+substrate from the folio, and reframes the no-hardcoded-constants rule
+with the reason it matters — a hardcoded constant is a silent divergence,
+because the paper's value can be corrected while the simulator keeps
+showing the old one and nothing fails.
+
+Findings now go to the block's `.qa.json` sidecar rather than a
+free-standing report, so they travel with the content and reach the
+watchers.
+
+Still open for the qou side: its stub should be deleted or repointed.

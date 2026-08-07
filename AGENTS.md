@@ -50,6 +50,14 @@ Full discipline: `.claude/skills/local/todo-manager.md` and
 > `todo-review` skill over `feedback/<paper>/*.ts`) — that is a separate domain
 > feature, not the agent work-plan.
 
+## New here? Read the onboarding guide
+
+`docs/guides/agent-onboarding.md` — what repo you are in, first five
+minutes, how to find the right skill, the content-object model, the two
+dependency relations, QA sidecars/axes, and where to look things up.
+Published at
+<https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html>.
+
 ## At session start
 
 Surface the work-plan before starting: run `beans prime` (and `beans list`), or

@@ -1839,68 +1839,47 @@ export function checkDetanglerGraphEnergy(
 // chapter than for its own home chapter is a candidate for relocation
 // or splitting. Soft (warn) — keyword overlap is noisy — but the
 // metrics payload records the scores so a reviewer can adjudicate.
-//
-// PORTABILITY: the table below is CONTENT, not platform. Its keys are
-// one folio's chapter directory names and its values that folio's
-// vocabulary, so `detangler-topic-coherence` is inert for every other
-// folio — `homeChapter in DETANGLER_CHAPTER_KEYWORDS` is false, and the
-// checker returns `n/a` (correct, but permanently). Moving it to a
-// folio-supplied data file (`content/<paper>/topic-keywords.json`, with
-// this as a shipped example) is tracked as a bean; it is left in place
-// here rather than half-migrated, since deleting it would silently drop
-// the one folio where the checker currently works.
-const DETANGLER_CHAPTER_KEYWORDS: Record<string, string[]> = {
-  introduction: ["overview", "outline", "motivation"],
-  "quantum-universes": [
-    "quantum universe", "fibre functor", "Tannaka", "monoidal",
-    "dagger", "Frobenius",
-  ],
-  "quantum-observable-universes": [
-    "observable", "QOU", "theta", "state bundle", "jet bundle",
-    "q-codifferential",
-  ],
-  "lifting-and-descent": [
-    "lifting", "descent", "torsion", "jet", "prolongation",
-    "brane tower",
-  ],
-  "braids-and-knots": [
-    "braid", "knot", "Hecke", "Markov trace", "skein", "crossing",
-    "Jones polynomial", "SU(2)", "SO(3)", "vertex operator",
-    "transfer matrix", "trefoil",
-  ],
-  "models-of-qous": [
-    "Calabi-Yau", "ALE", "instanton", "Reeb", "Riemannian", "Webster",
-    "inner product",
-  ],
-  "descartes-universe": [
-    "Bring", "Descartes", "color tube", "coral", "shell", "hadron",
-    "proton", "neutron", "quark", "beta decay", "nucleus", "nuclear",
-    "half-life", "periodic table", "torus knot T_{",
-  ],
-  "algebraic-substrate": [
-    "substrate", "Collatz", "algebraic", "classical limit",
-    "Hasse-Weil", "Birch", "rigid dualizing",
-  ],
-  "fluid-dynamics": [
-    "fluid", "Navier--Stokes", "vortex", "turbulence", "Reynolds",
-    "helicity", "Madelung",
-  ],
-  "information-theory": [
-    "information", "entropy", "Planck", "speed of light",
-    "gravitational constant", "Bekenstein", "horizon", "CMB",
-    "big bang", "aeon",
-  ],
-  observations: [
-    "CODATA", "PDG", "experiment", "measurement", "prediction",
-    "crystal", "photonic Hall", "fine structure", "lepton",
-    "proton radius",
-  ],
-  "organic-chemistry": [
-    "benzene", "covalent", "carbon", "organic", "molecular",
-    "ring closure",
-  ],
-  glossary: ["glossary"],
-};
+/**
+ * Chapter topic-keyword profiles, loaded from FOLIO-SUPPLIED data.
+ *
+ * This table used to be a literal in this file, keyed by one folio's
+ * chapter directory names and filled with that folio's vocabulary — so
+ * `detangler-topic-coherence` was permanently `n/a` for every other
+ * folio while appearing to be a platform feature.
+ *
+ * A folio now supplies `content/<paper>/topic-keywords.json`:
+ *
+ *   { "$schema": "topic-keywords/v1",
+ *     "chapters": { "<chapter-dir>": ["keyword", ...] } }
+ *
+ * Absent ⇒ the checker reports `n/a`, which is the honest answer: no
+ * keyword profile means no basis for judging topic fit. A sample lives
+ * at `content/pipeline/topic-keywords/` for reference.
+ *
+ * Merged across every paper in the folio; keys are bare chapter
+ * directory names, matching how `homeChapter` is derived.
+ */
+let _topicKeywords: Record<string, string[]> | null = null;
+
+function topicKeywords(): Record<string, string[]> {
+  if (_topicKeywords) return _topicKeywords;
+  const merged: Record<string, string[]> = {};
+  for (const paper of findPapers(REPO_ROOT)) {
+    const f = join(CONTENT_DIR, paper, "topic-keywords.json");
+    if (!existsSync(f)) continue;
+    try {
+      const parsed = JSON.parse(readFileSync(f, "utf-8"));
+      for (const [ch, kws] of Object.entries(parsed.chapters ?? {})) {
+        if (Array.isArray(kws)) merged[ch] = kws as string[];
+      }
+    } catch {
+      // A malformed profile is "no profile" — never a silent partial.
+    }
+  }
+  _topicKeywords = merged;
+  return merged;
+}
+
 
 // Topic-coherence is only meaningful signal for LOAD-BEARING logical
 // blocks: a `definition`/`proposition`/`theorem`/`lemma`/`corollary`
@@ -1953,12 +1932,13 @@ export function checkDetanglerTopicCoherence(
   // hit would spuriously "win". Report n/a rather than a false warn.
   // (The ported keyword map predates some current chapters, e.g.
   // particle-interactions; absence ⇒ undecidable, not a mismatch.)
-  if (!(homeChapter in DETANGLER_CHAPTER_KEYWORDS))
+  const KEYWORDS = topicKeywords();
+  if (!(homeChapter in KEYWORDS))
     return { result: "n/a", hits: [] };
   const lower = content.toLowerCase();
 
   const scores: Record<string, number> = {};
-  for (const [ch, kws] of Object.entries(DETANGLER_CHAPTER_KEYWORDS)) {
+  for (const [ch, kws] of Object.entries(KEYWORDS)) {
     let hits = 0;
     for (const kw of kws) if (lower.includes(kw.toLowerCase())) hits++;
     if (hits > 0) scores[ch] = hits;

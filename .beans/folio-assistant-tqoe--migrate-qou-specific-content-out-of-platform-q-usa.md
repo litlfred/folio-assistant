@@ -1,10 +1,11 @@
 ---
 # folio-assistant-tqoe
 title: 'Migrate qou-specific content out of platform: q-usage, topic-keywords'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-08-07T10:07:23Z
-updated_at: 2026-08-07T10:07:23Z
+updated_at: 2026-08-07T10:17:10Z
 ---
 
 
@@ -38,3 +39,24 @@ Move both to folio-supplied data:
 
 Not done unilaterally: deleting Q_USAGE would drop 7 live criteria from
 the one folio using them, and that is the owner's call.
+
+## Fixed
+
+**Topic keywords** — extracted to folio-supplied data. A folio provides
+`content/<paper>/topic-keywords.json` (`topic-keywords/v1`, merged across
+papers); absent ⇒ `n/a`, the honest answer. qou's table ships as a sample
+under `content/pipeline/topic-keywords/`, clearly labelled as an example
+rather than platform behaviour. Verified both ways: with the profile
+installed, 10 pass / 390 n/a on a 400-block qou sample (identical to the
+old hardcoded behaviour); without it, 400 n/a.
+
+**Q_USAGE** — now a folio-optional axis. `folioOptionalAxes()` reads
+`qaAxes` from the folio's `folio.config.json`; the 7 criteria and the
+`q-usage` watcher axis are registered only on opt-in. Fails closed: absent
+or malformed config ⇒ no optional axes, since a folio that has not asked
+for an axis should not be audited against it. Verified: 94 criteria
+without, 101 with `{"qaAxes":["q-usage"]}`.
+
+`q-usage-watcher` migrated from qou to `skills/folio-paper-adapter/`,
+annotated with the opt-in requirement — the criteria and their watcher
+now live together instead of straddling the two repos.

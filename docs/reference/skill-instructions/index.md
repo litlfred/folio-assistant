@@ -125,9 +125,11 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Proof Status Tracking](proof-status-tracking.html) | `proof-status-tracking` | — |  |
 | [Proof Triage & Resolution](proof-triage.html) | `proof-triage` | — | [[require]] |
 | [/proposition-consolidation-audit](proposition-consolidation-audit.html) | `proposition-consolidation-audit` | — | grep -lE "^export default (proposition\|theorem\|lemma\|corollary)" \ |
+| [/q-usage-watcher](q-usage-watcher.html) | `q-usage-watcher` | — | > **Folio-optional axis.** The `q-usage` criteria encode a substrate |
 | [Remark Audit](remark-audit.html) | `remark-audit` | — | cd content && grep -rl '"remark"' --include='*.ts' \| sort |
 | [Rendering Auditor](rendering-auditor.html) | `rendering-auditor` | — | cd content && bun run pipeline/build.ts <paper>/<paper>.ts \ |
 | [Rendering Fixes](rendering-fixes.html) | `rendering-fixes` | — |  |
+| [Simulator Math Audit](simulator-math-audit.html) | `simulator-math-audit` | — |  |
 | [Simulator](simulator.html) | `simulator` | — |  |
 | [Verify Anchor Connectivity](verify-local-substrate.html) | `verify-local-substrate` | — |  |
 | [Witnessed Values](witnessed-values.html) | `witnessed-values` | — |  |

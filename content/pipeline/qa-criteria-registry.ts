@@ -1,3 +1,6 @@
+import { existsSync, readFileSync } from "fs";
+import { join } from "path";
+import { findContentRepoRoot } from "./repo-root";
 /**
  * Registry of QA criteria the per-block sweep recognises.
  *
@@ -1705,6 +1708,47 @@ const EXPO: QaCriterionDefinition[] = [
   },
 ];
 
+
+// ── Folio-optional axes ─────────────────────────────────────────
+//
+// Some criterion families encode a specific folio's subject matter
+// rather than platform concerns. Registering them unconditionally puts
+// permanently-inapplicable criteria into every other folio's sweep and
+// backlog, so a folio opts in explicitly:
+//
+//   // folio.config.json
+//   { "qaAxes": ["q-usage"] }
+//
+// Absent config ⇒ no optional axes. That default is deliberate: a folio
+// that has not asked for an axis should not be audited against it.
+//
+// Read once at module load. `qa-sweep` and the watchers import the
+// registry at startup, so a config change needs a fresh process — which
+// is the normal case for these CLIs.
+
+let _optionalAxes: string[] | null = null;
+
+export function folioOptionalAxes(): string[] {
+  if (_optionalAxes) return _optionalAxes;
+  const axes: string[] = [];
+  _optionalAxes = axes;
+  try {
+    const cfgPath = join(findContentRepoRoot(), "folio.config.json");
+    if (existsSync(cfgPath)) {
+      const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));
+      if (Array.isArray(cfg.qaAxes)) {
+        axes.push(
+          ...cfg.qaAxes.filter((a: unknown): a is string => typeof a === "string"),
+        );
+      }
+    }
+  } catch {
+    // Unreadable config ⇒ no optional axes, same as absent. Failing
+    // closed keeps a malformed file from silently enabling an axis.
+  }
+  return _optionalAxes;
+}
+
 // ── Exported registry ───────────────────────────────────────────
 
 export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
@@ -1712,7 +1756,12 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...FIT,
   ...FRAMEWORK,
   ...WALL,
-  ...Q_USAGE,
+  // Q_USAGE is FOLIO-OPTIONAL — see `folioOptionalAxes()` below. It
+  // encodes one folio's mathematics (a substrate deformation parameter
+  // `q` and its regimes), so it is registered only when the folio opts
+  // in. Spread unconditionally it would put 7 inapplicable criteria in
+  // every other folio's sweep.
+  ...(folioOptionalAxes().includes("q-usage") ? Q_USAGE : []),
   ...PROOF,
   ...CANONICAL,
   ...COMPUTE,
@@ -1780,7 +1829,10 @@ export const WATCHER_CRITERIA_BY_AXIS: Record<string, string[]> = {
   detangler: DETANGLER_WATCHER_CRITERIA,
   uses: USES_WATCHER_CRITERIA,
   bibliography: BIBLIOGRAPHY_WATCHER_CRITERIA,
-  "q-usage": Q_USAGE_WATCHER_CRITERIA,
+  // Present only when the folio opts in (see folioOptionalAxes).
+  ...(folioOptionalAxes().includes("q-usage")
+    ? { "q-usage": Q_USAGE_WATCHER_CRITERIA }
+    : {}),
   expo: EXPO_WATCHER_CRITERIA,
 };
 
