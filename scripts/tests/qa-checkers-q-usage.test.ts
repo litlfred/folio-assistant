@@ -175,3 +175,123 @@ describe("checkQUsageArchimedeanInCategoricalChapter — `noncomputable` is not 
     expect(r.result).toBe("fail");
   });
 });
+
+/**
+ * `lean.ref` resolves to a FILE, and the criteria scanned that whole file,
+ * attributing every hit to every block pointing into it. 1211 Lean files carry
+ * exactly one block, so this rarely mattered — but 15 files are shared by 44
+ * blocks, and `AppendixSurreals/Conjectures.lean` holds 69 declarations shared
+ * by 7. All five of its failing conjectures were failing on the same three
+ * lines, in `surrealExp`, `surrealLog` and `instProvable` — none of which is
+ * any of their declarations, and four of the five reach no archimedean helper
+ * at all.
+ */
+describe("declaration-scoped attribution", () => {
+  const CONJ = [
+    "noncomputable def surrealExp (x : K) : K :=",
+    "  SurrealField.ofReal (Real.exp (standardPart x))",
+    "",
+    "noncomputable def surrealLog (x : K) : K :=",
+    "  SurrealField.ofReal (Real.log (standardPart x))",
+    "",
+    "class BigBangHeatDeath where",
+    "  eventually_cold : ∀ t, aeon t = omegaSurreal K",
+    "",
+    "class KashaevSurreal where",
+    "  st_volume : standardPart (2 * surrealLog (jones K q)) = vol K",
+    "",
+  ].join("\n");
+
+  test("a block is not accountable for declarations it does not reach", () => {
+    const lean = inChapter("appendix-surreals", "Conjectures.lean", CONJ);
+    const ts = inChapter(
+      "appendix-surreals",
+      "bigbang-heatdeath.ts",
+      `export default conjecture({ lean: { ref: "qou:QOU.AppendixSurreals.BigBangHeatDeath" } });`,
+    );
+    const r = checkQUsageArchimedeanInCategoricalChapter(undefined, ts, lean);
+    expect(r.result).toBe("pass");
+  });
+
+  test("but IS accountable for the same-file helpers it calls", () => {
+    // `KashaevSurreal` routes through `surrealLog`'s `Real.log`. Scoping must
+    // narrow attribution, not manufacture an exemption.
+    //
+    // (The fixture puts `q` inside the class so the q-gate is not what decides
+    // this. On the real corpus `KashaevSurreal` mentions no `q` at all — it is
+    // about ω, the Jones polynomial and hyperbolic volume — so it passes on
+    // the gate before the helper closure is ever consulted.)
+    const lean = inChapter("appendix-surreals", "Conjectures.lean", CONJ);
+    const ts = inChapter(
+      "appendix-surreals",
+      "kashaev-surreal.ts",
+      `export default conjecture({ lean: { ref: "qou:QOU.AppendixSurreals.KashaevSurreal" } });`,
+    );
+    const r = checkQUsageArchimedeanInCategoricalChapter(undefined, ts, lean);
+    expect(r.hits.some((h) => /Real\.log/.test(h.text))).toBe(true);
+  });
+
+  test("a SIBLING .lean is owned whole — adjacent theorems still count", () => {
+    // `figure-eight-reeb-rotation.ts` ↔ `figure-eight-reeb-rotation.lean`.
+    // The ref names one theorem; the archimedean content sits in another. The
+    // block owns its own file, so scoping must NOT apply.
+    const lean = inChapter(
+      "braids-and-knots",
+      "fer.lean",
+      [
+        "theorem named_by_ref (n : Nat) : n = n := rfl",
+        "",
+        "noncomputable def trace (q : ℝ) : ℝ := Real.sqrt q",
+      ].join("\n"),
+    );
+    const ts = inChapter(
+      "braids-and-knots",
+      "fer.ts",
+      `export default proposition({ lean: { ref: "qou:QOU.BraidsAndKnots.named_by_ref" } });`,
+    );
+    const r = checkQUsageArchimedeanInCategoricalChapter(undefined, ts, lean);
+    expect(r.result).toBe("fail");
+  });
+
+  test("a file NAMED AFTER the ref is owned whole", () => {
+    // `qou:QOU.Braiding.TrMHopfSigma1SqClosedForm` → the class of that name in
+    // `TrMHopfSigma1SqClosedForm.lean`; the `Real.sqrt q` is in the sibling
+    // theorem `..._simplified`, which is still the block's content.
+    const lean = inChapter(
+      "braids-and-knots",
+      "TrMHopf.lean",
+      [
+        "class TrMHopf (q : ℝ) where",
+        "  closed_form : True",
+        "",
+        "theorem trm_simplified (q : ℝ) : True := by",
+        "  set u := Real.sqrt q with hu",
+        "  trivial",
+      ].join("\n"),
+    );
+    const ts = inChapter(
+      "braids-and-knots",
+      "trm-hopf-block.ts",
+      `export default proposition({ lean: { ref: "qou:QOU.Braiding.TrMHopf" } });`,
+    );
+    const r = checkQUsageArchimedeanInCategoricalChapter(undefined, ts, lean);
+    expect(r.result).toBe("fail");
+  });
+
+  test("an unresolvable ref falls back to the whole file", () => {
+    // A ref naming a MODULE (`qou:QOU.Aeon`) has no declaration to scope to.
+    // The fallback must be the permissive one — never silently scan nothing.
+    const lean = inChapter(
+      "braids-and-knots",
+      "Lib.lean",
+      "noncomputable def f (q : ℝ) : ℝ := Real.exp q\n",
+    );
+    const ts = inChapter(
+      "braids-and-knots",
+      "b.ts",
+      `export default proposition({ lean: { ref: "qou:QOU.NoSuchDeclaration" } });`,
+    );
+    const r = checkQUsageArchimedeanInCategoricalChapter(undefined, ts, lean);
+    expect(r.result).toBe("fail");
+  });
+});
