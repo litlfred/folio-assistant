@@ -36,7 +36,7 @@
  */
 
 import { existsSync, readFileSync } from "fs";
-import { dirname, basename, sep } from "path";
+import { sep } from "path";
 
 export interface QUsageHit {
   file: string;

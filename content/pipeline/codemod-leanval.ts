@@ -52,7 +52,6 @@
 import { readFileSync, writeFileSync, statSync, readdirSync } from "fs";
 import { resolve, join, extname } from "path";
 import {
-  WITNESSED_VALUES,
   lookupValue,
   type WitnessedValueEntry,
 } from "./value-registry-di";

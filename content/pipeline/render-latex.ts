@@ -12,7 +12,7 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { join, dirname, basename, extname } from "path";
+import { join } from "path";
 import { parse } from "@unified-latex/unified-latex-util-parse";
 import { printRaw } from "@unified-latex/unified-latex-util-print-raw";
 import { remark } from "remark";
@@ -25,12 +25,10 @@ import remarkDirective from "remark-directive";
 import { gfmTable } from "micromark-extension-gfm-table";
 import {
   gfmTableFromMarkdown,
-  gfmTableToMarkdown,
 } from "mdast-util-gfm-table";
 import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough";
 import {
   gfmStrikethroughFromMarkdown,
-  gfmStrikethroughToMarkdown,
 } from "mdast-util-gfm-strikethrough";
 import type { Block, Chapter, Section, RenderOptions } from "../../schemas/types";
 import { isCrossPaperRef } from "../../schemas/types";
@@ -185,7 +183,7 @@ export function escapeLatex(text: string): string {
   // Split on $ delimiters, preserving them
   const parts = text.split(/(\$[^$]*\$)/);
   return parts
-    .map((part, i) => {
+    .map((part) => {
       // Odd-indexed parts matched the $...$ pattern — pass through
       if (part.startsWith("$") && part.endsWith("$") && part.length > 1) {
         return part;

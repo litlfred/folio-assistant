@@ -23,9 +23,8 @@ import {
   writeFileSync,
   existsSync,
   mkdirSync,
-  statSync,
 } from "fs";
-import { join, dirname, basename, relative } from "path";
+import { join, dirname, basename } from "path";
 import { createHash } from "crypto";
 import { Glob } from "bun";
 

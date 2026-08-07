@@ -24,9 +24,7 @@ import {
   entryIsFresh,
 } from "./qa-utils";
 import type {
-  BlockQaReport,
-  QaCriterionEntry,
-} from "../../schemas/block-qa";
+  QaCriterionEntry } from "../../schemas/block-qa";
 
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = resolve(dirname(__filename), "..", "..");
@@ -108,24 +106,6 @@ function extractLeanDecls(leanText: string): LeanDecl[] {
     decls.push({ kind: m[1], name: m[2] });
   }
   return decls;
-}
-
-/** Extract the main statement sentence from .md content. */
-function extractMdStatement(mdText: string): string | undefined {
-  // Look for bold statement markers
-  const patterns = [
-    /\*\*(?:Theorem|Proposition|Lemma|Corollary|Definition|Conjecture)[^*]*\*\*\.?\s*([^\n]+)/i,
-    /^#+\s*Statement\s*\n+(.+)/m,
-  ];
-  for (const p of patterns) {
-    const m = mdText.match(p);
-    if (m) return m[1]?.trim();
-  }
-  // Fallback: first non-heading non-empty line
-  const lines = mdText.split("\n").filter(
-    (l) => l.trim() && !l.startsWith("#") && !l.startsWith(">")
-  );
-  return lines[0]?.trim();
 }
 
 /** Check if Lean has sorry (actual code, not comments). */
@@ -254,8 +234,6 @@ function checkEquivalence(
     return expectedSnake ? declBase === expectedSnake.toLowerCase() : false;
   });
 
-  // Check if .md has a statement
-  const mdStatement = extractMdStatement(mdText);
   const hasSorry = hasSorryInCode(leanText);
 
   // Check for kind-declaration alignment using structured decl kinds

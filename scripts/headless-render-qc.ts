@@ -76,7 +76,6 @@ for (const ch of paper.chapters) {
 console.log(`Selected ${testBlocks.length} test blocks`);
 
 // Build a standalone HTML page that renders these blocks
-const appJs = readFileSync(join(VIEWER_DIR, "app.js"), "utf-8");
 const stylesCss = readFileSync(join(VIEWER_DIR, "styles.css"), "utf-8");
 
 // Extract just mdToHtml + helpers from app.js

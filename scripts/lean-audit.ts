@@ -20,10 +20,10 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { resolve, basename, dirname, relative } from "path";
+import { resolve, basename, relative } from "path";
 import { globSync } from "glob";
 import { execSync } from "child_process";
-import { isWitnessed, leanFileHash, isStale } from "./lean-witness";
+import { isWitnessed, isStale } from "./lean-witness";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
 const CONTENT_ROOT = resolve(REPO_ROOT, "content");
@@ -99,18 +99,6 @@ interface AuditReport {
 function getCurrentCommitSha(): string {
   try {
     return execSync("git rev-parse HEAD", { cwd: REPO_ROOT })
-      .toString()
-      .trim();
-  } catch {
-    return "unknown";
-  }
-}
-
-function getFileCommitSha(filePath: string): string {
-  try {
-    return execSync(`git log -1 --format=%H -- "${filePath}"`, {
-      cwd: REPO_ROOT,
-    })
       .toString()
       .trim();
   } catch {
@@ -564,9 +552,7 @@ function printReport(report: AuditReport) {
 
     // Witness status
     const allFiles = [...ch.siblingFiles, ...ch.buildFiles];
-    const witnessedFiles = allFiles.filter((f) => f.witnessed && !f.stale);
     const staleFiles = allFiles.filter((f) => f.stale);
-    const pendingFiles = allFiles.filter((f) => !f.witnessed && !f.stale);
 
     if (staleFiles.length > 0) {
       console.log(`\n  Stale witnesses (need rebuild):`);

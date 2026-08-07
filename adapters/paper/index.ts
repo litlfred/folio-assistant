@@ -8,7 +8,6 @@
 
 import { existsSync, readFileSync, writeFileSync, readdirSync, mkdirSync } from "fs";
 import { join, resolve, extname } from "path";
-import Anthropic from "@anthropic-ai/sdk";
 
 import { registerRenderTools } from "./tools/render.js";
 import { registerValidateTools } from "./tools/validate.js";
@@ -24,10 +23,6 @@ import { registerSkillFetchTools } from "../../src/tools/skill-fetch.js";
 
 import type {
   ContentAdapter,
-  FolioItem,
-  ContentOutline,
-  ChapterDetail,
-  ResolvedSection,
   ResolvedDocument,
   ResolvedBlock,
   DocumentDiff,
@@ -35,12 +30,11 @@ import type {
   BranchCharacterization,
   TriageResult,
   FeedbackItem,
-  UserRole,
-} from "../../src/types.js";
+  UserRole } from "../../src/types.js";
 import type { GitHelper } from "../../src/core/git.js";
 import type { FeedbackStore } from "../../src/core/feedback.js";
 import { log } from "../../src/core/logging.js";
-import { hasRole, forbidden, getUserName, getUserEmail } from "../../src/core/rbac.js";
+import { hasRole, forbidden } from "../../src/core/rbac.js";
 import { PaperResolver } from "./resolver.js";
 import { getAnthropic } from "../../src/routes/chat.js";
 

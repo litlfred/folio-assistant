@@ -34,7 +34,6 @@ import {
   chapterFromPath,
   detectRegimes,
   checkQUsagePositivityImplicit,
-  type QRegime,
   type QUsageResult,
 } from "./qa-checkers-q-usage.ts";
 import { checkWallSide, checkBaseRingMinimal } from "./qa-checkers-voice.ts";
@@ -44,7 +43,6 @@ import { checkWallSide, checkBaseRingMinimal } from "./qa-checkers-voice.ts";
 // resolution logic can never drift from qa-sweep / qa-utils).
 import {
   walkBlocks as utilWalkBlocks,
-  resolveCanonicalLean,
   listPackageLeanFiles,
 } from "./qa-utils.ts";
 // Shared content-root + paper discovery. The pipeline lives in

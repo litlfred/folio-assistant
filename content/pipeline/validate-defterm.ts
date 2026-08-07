@@ -24,15 +24,6 @@ function nodeSlug(node: any): { slug: string; label: string } {
   return { slug, label };
 }
 
-/** Sluggify a visible label into a candidate slug (lowercase, hyphenated). */
-function slugifyText(s: string): string {
-  return s
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 /**
  * Per-block summary of glossary directives found in its `.md` body.
  * Keys are slugs; values are first-occurrence positions for diagnostics.

@@ -10,13 +10,12 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { existsSync, readFileSync } from "fs";
-import { join, resolve, extname } from "path";
+import { join, extname } from "path";
 
 import type { ContentAdapter } from "./types.js";
 import { FeedbackStore } from "./core/feedback.js";
 import { GitHelper } from "./core/git.js";
 import { log, logDebug } from "./core/logging.js";
-import { getUserRole, getUserName, getUserEmail, hasRole, forbidden } from "./core/rbac.js";
 import { handleBranchGet, handleBranchPost } from "./routes/branches.js";
 import { handleFeedbackGet, handleFeedbackPost } from "./routes/feedback.js";
 import { handleChatPost } from "./routes/chat.js";

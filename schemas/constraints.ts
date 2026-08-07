@@ -718,7 +718,7 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
       "definition", "theorem", "lemma", "proposition", "corollary",
       "conjecture", "example", "remark", "simulator", "prose",
     ],
-    check: (block, ctx) => {
+    check: (_block, _ctx) => {
       const mdPath = `${ctx.dir}/${ctx.rootName}.md`;
       return ctx.fileExists(mdPath) ? null : `Missing companion: ${mdPath}`;
     },
@@ -727,7 +727,7 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     id: "lean-file-exists",
     description: "Definitions must have a Lean formalization: sibling .lean OR a resolvable Lake-tree file via lean.ref",
     appliesTo: ["definition"],
-    check: (block, ctx) => {
+    check: (block, _ctx) => {
       const siblingPath = `${ctx.dir}/${ctx.rootName}.lean`;
       if (ctx.fileExists(siblingPath)) return null;
 
@@ -767,7 +767,7 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     id: "simulator-html-exists",
     description: "Simulators must have a companion .html file",
     appliesTo: ["simulator"],
-    check: (block, ctx) => {
+    check: (block, _ctx) => {
       if ("html" in block && block.html) return null;
       return `Simulator "${block.label}" requires an html field pointing to the simulator HTML file`;
     },
@@ -779,7 +779,7 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
       "definition", "theorem", "lemma", "proposition", "corollary",
       "conjecture", "example", "remark",
     ],
-    check: (block, ctx) => {
+    check: (block, _ctx) => {
       if (!("simulator" in block) || !block.simulator) return null;
       const ref = (block.simulator as { ref: string }).ref;
       if (!ctx.allLabels.has(ref)) {
@@ -795,7 +795,7 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
       "definition", "theorem", "lemma", "proposition", "corollary",
       "conjecture", "example", "remark", "simulator",
     ],
-    check: (block, ctx) => {
+    check: (block, _ctx) => {
       if (!("uses" in block) || !block.uses) return null;
       const missing = block.uses.filter((u: string) => {
         // Cross-paper qualified ref: "paper-dir:label" (contains exactly
@@ -830,7 +830,7 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
       "definition", "theorem", "lemma", "proposition", "corollary",
       "conjecture", "example", "remark", "prose",
     ],
-    check: (block, ctx) => {
+    check: (block, _ctx) => {
       if (!("cites" in block) || !block.cites || !ctx.allRefIds) return null;
       const missing = (block.cites as string[]).filter((c: string) => !ctx.allRefIds!.has(c));
       return missing.length === 0 ? null
@@ -854,7 +854,7 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     id: "interprets-resolve",
     description: "The `interprets` label must exist in the document",
     appliesTo: ["remark"],
-    check: (block, ctx) => {
+    check: (block, _ctx) => {
       if (!("interprets" in block) || !block.interprets) return null;
       const target = block.interprets as string;
       // Allow cross-paper refs
@@ -901,7 +901,7 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
       "where the .ts declares a provable kind but the Lean side encodes the content as a " +
       "sorry-as-conjecture class instance per CLAUDE.md §3b-cond.",
     appliesTo: ["proposition", "theorem", "lemma", "corollary"],
-    check: (block, ctx) => {
+    check: (block, _ctx) => {
       if (!ctx.leanContent) return null;
       // Match the §3b-cond stub signature.  Any of these three signals
       // is sufficient on its own; the generator-emitted phrase

@@ -51,18 +51,10 @@ export default tseslint.config(
       // `bun run lint` always means a regression rather than pre-existing
       // debt. Promote a rule from the warn block below when it reaches zero.
       "prefer-const": "error", // driven to 0 (15 auto-fixed)
-
-      // ── Warnings: acknowledged debt, tracked not enforced ──────
-      // Counts at the time this config landed, over 194 files:
-      //   no-explicit-any        201   (gradual typing — project-wide call)
-      //   no-unused-vars         111   (dead bindings — a real cleanup, but
-      //                                 111 hand-reviewed removals is its own
-      //                                 task, not a drive-by)
-      //   no-require-imports      13
-      //   no-unsafe-function-type 10
-      //   no-this-alias            2
+      // Driven to 0 from 111. Promoting it is the ratchet: the cleanup is
+      // only worth doing if it cannot silently come back.
       "@typescript-eslint/no-unused-vars": [
-        "warn",
+        "error",
         {
           // `_`-prefixed bindings are the conventional "deliberately unused"
           // marker and are used that way across the pipeline.
@@ -73,6 +65,13 @@ export default tseslint.config(
         },
       ],
 
+      // ── Warnings: acknowledged debt, tracked not enforced ──────
+      // Remaining counts over 194 files:
+      //   no-explicit-any        201  (gradual typing — a per-site typing
+      //                                decision, wants its own plan)
+      //   no-require-imports      13
+      //   no-unsafe-function-type 10
+      //   no-this-alias            2
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-require-imports": "warn",
       "@typescript-eslint/no-unsafe-function-type": "warn",

@@ -26,7 +26,7 @@
 
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { writeFileSync, mkdirSync, readdirSync, readFileSync, existsSync } from "fs";
-import { join, dirname, relative } from "path";
+import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
 import {

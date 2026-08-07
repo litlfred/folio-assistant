@@ -127,15 +127,6 @@ function enableMathlibRedirect(leanDir: string): string[] {
   return msgs;
 }
 
-/** Remove the local mathlib redirect. */
-function disableMathlibRedirect(leanDir: string): void {
-  const ml = getMathlibConfig();
-  const fileUrl = `file://${ml.localPath}`;
-  spawnSync("git", ["config", "--local", "--unset-all", `url.${fileUrl}.insteadOf`], {
-    cwd: leanDir, stdio: "pipe",
-  });
-}
-
 /** Update the local mathlib clone (git fetch --all). */
 function updateLocalMathlib(): string {
   const ml = getMathlibConfig();

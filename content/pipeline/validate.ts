@@ -16,8 +16,8 @@
  * @module content/pipeline/validate
  */
 
-import { readdirSync, readFileSync, existsSync, statSync } from "fs";
-import { resolve, join, basename, extname } from "path";
+import { readdirSync, readFileSync, existsSync } from "fs";
+import { resolve, join, basename } from "path";
 import {
   BlockSchema,
   PaperSchema,
@@ -26,7 +26,7 @@ import {
   type ConstraintContext,
 } from "../../schemas/constraints";
 import type { Block, Paper, Chapter, Section, ValidationIssue, ValidationResult } from "../../schemas/types";
-import { renderBlock, validateLatexAst, markdownToLatex } from "./render-latex";
+import { renderBlock, validateLatexAst } from "./render-latex";
 import { validateDefterms } from "./validate-defterm";
 import { validateValueDirectives } from "./validate-value";
 
@@ -38,11 +38,6 @@ function discoverManifests(dir: string): string[] {
   return readdirSync(dir)
     .filter(f => f.endsWith(".ts") && !f.startsWith("index") && !f.startsWith("_"))
     .map(f => basename(f, ".ts"));
-}
-
-/** Get root name from a file path. */
-function rootName(file: string): string {
-  return basename(file, extname(file));
 }
 
 type ManifestKind = "paper" | "chapter" | null;
@@ -422,7 +417,7 @@ export async function validateObjects(
   // targets and contain the actual equation labels. Collision-detect:
   // warn (don't error) if a \label{X} duplicates an existing label.
   const labelDecl = /\\label\{([^}]+)\}/g;
-  for (const [name, md] of mdCache) {
+  for (const [, md] of mdCache) {
     if (!md) continue;
     for (const m of md.matchAll(labelDecl)) {
       const lbl = m[1];
@@ -472,7 +467,7 @@ export async function validateObjects(
   }
 
   // Phase 2: Constraint rules
-  console.log("Starting Phase 2"); for (const [name, { block, dir }] of allBlocks) {
+  console.log("Starting Phase 2"); for (const [name, { block }] of allBlocks) {
     const mdContent = mdCache.get(name);
     const ctx: ConstraintContext = {
       rootName: name,
@@ -499,7 +494,7 @@ export async function validateObjects(
   }
 
   // Phase 3: AST validation (render → parse)
-  for (const [name, { block, dir }] of allBlocks) {
+  for (const [name, { block }] of allBlocks) {
     const mdContent = mdCache.get(name) ?? "";
 
     try {

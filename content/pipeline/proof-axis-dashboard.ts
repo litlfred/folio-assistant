@@ -10,7 +10,7 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { resolve, dirname, relative, basename } from "path";
+import { resolve, dirname, relative } from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);

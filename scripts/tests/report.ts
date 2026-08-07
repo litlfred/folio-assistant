@@ -14,7 +14,7 @@ import { execSync } from "child_process";
 import { readFileSync, writeFileSync, unlinkSync } from "fs";
 import { resolve, join } from "path";
 import { XMLParser } from "fast-xml-parser";
-import { REPO_ROOT, discoverLeanProjects, getCommitSha } from "./helpers";
+import { discoverLeanProjects, getCommitSha } from "./helpers";
 import type {
   TestReport,
   TestResult,

@@ -10,7 +10,7 @@
  *   bun run content/pipeline/generate-index.ts
  */
 
-import { readFileSync, writeFileSync } from "fs";
+import { writeFileSync } from "fs";
 import { join, resolve } from "path";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");

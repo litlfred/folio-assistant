@@ -17,7 +17,7 @@
  */
 
 import { readdirSync, existsSync, statSync } from "fs";
-import { resolve, join, basename } from "path";
+import { resolve, join } from "path";
 
 // ── Types ────────────────────────────────────────────────────────
 

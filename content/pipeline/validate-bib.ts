@@ -144,7 +144,6 @@ async function modeCrossCheck(): Promise<CheckResult[]> {
       const authorFamilies: string[] = (entry.author ?? [])
         .map((a: any) => (a.family ?? a.literal ?? "").toLowerCase())
         .filter((s: string) => s.length >= 3);
-      const yearMatch = desc.match(/\b(19|20)\d{2}\b/);
       const entryYear = entry.issued?.["date-parts"]?.[0]?.[0];
       checked++;
       // Strip URLs, DOIs, and punctuation; count remaining alphabetic words

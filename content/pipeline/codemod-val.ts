@@ -39,7 +39,7 @@
  */
 
 import { existsSync, readFileSync, writeFileSync, readdirSync, statSync } from "fs";
-import { basename, join, resolve, extname } from "path";
+import { join, resolve, extname } from "path";
 import { remark } from "remark";
 import remarkDirective from "remark-directive";
 import remarkMath from "remark-math";
@@ -51,7 +51,6 @@ import { gfmStrikethroughFromMarkdown, gfmStrikethroughToMarkdown } from "mdast-
 import {
   WITNESSED_VALUES,
   verifiedNames,
-  type WitnessedValueEntry,
 } from "./value-registry-di";
 import { resolvePath } from "./render-value";
 import { findContentRepoRoot } from "./repo-root";

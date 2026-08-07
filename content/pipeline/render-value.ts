@@ -16,7 +16,7 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { resolve, dirname } from "path";
+import { resolve } from "path";
 import { findContentRepoRoot } from "./repo-root";
 import {
   WITNESSED_VALUES,

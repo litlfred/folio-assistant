@@ -28,13 +28,12 @@
  * @module content/pipeline/audit-wiring
  */
 
-import { readdirSync, readFileSync, existsSync, statSync } from "fs";
-import { resolve, join, basename, dirname } from "path";
+import { readdirSync, readFileSync, existsSync } from "fs";
+import { resolve, join, basename } from "path";
 import { BlockSchema } from "../../schemas/constraints";
 import type { Block } from "../../schemas/types";
 
 const PAPER_DIR = resolve(__dirname, "../quantum-observable-universe");
-const REPO_ROOT = resolve(__dirname, "../..");
 const OUT_JSON = resolve(__dirname, "../audit-wiring.json");
 
 // Block kinds that don't require a .lean file.
@@ -112,7 +111,7 @@ function extractWitnessMentions(mdPath: string): string[] {
   return [...new Set(matches)];
 }
 
-function bucketFor(audit: BlockAudit, allLabels: Set<string>): Bucket {
+function bucketFor(audit: BlockAudit, _allLabels: Set<string>): Bucket {
   const reasons: string[] = [];
   const isLeanExempt = LEAN_EXEMPT_KINDS.has(audit.kind) ||
     (audit.kind === "remark");  // remarks may be glossary-only
