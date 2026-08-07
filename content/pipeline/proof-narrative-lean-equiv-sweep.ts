@@ -13,8 +13,8 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { resolve, dirname, basename, relative as pathRelative } from "path";
-import { fileURLToPath } from "url";
+import { resolve, basename, relative as pathRelative } from "path";
+import { findContentRepoRoot } from "./repo-root";
 import {
   hashBlockFiles,
   gitHeadSha,
@@ -26,8 +26,17 @@ import {
 import type {
   QaCriterionEntry } from "../../schemas/block-qa";
 
-const __filename = fileURLToPath(import.meta.url);
-const REPO_ROOT = resolve(dirname(__filename), "..", "..");
+/**
+ * Root of the CONTENT repo being swept.
+ *
+ * Recorded paths and the sweep target both anchor HERE, not at the platform
+ * checkout. Resolving it from this file's own location only worked while
+ * the pipeline lived inside the content repo; after the split it produced
+ * `<platform>/content/<paper>` and the sweep exited "Root not found" for
+ * every folio. Recorded `.qa.json` paths anchored at the platform would also
+ * have baked a foreign checkout's directory name into every sidecar.
+ */
+const REPO_ROOT = findContentRepoRoot();
 const CRITERION_ID = "proof-narrative-lean-equiv";
 const REVIEWER_ID = "proof-narrative-lean-equiv-sweep/v1";
 
@@ -53,11 +62,15 @@ function parseArgs(argv: string[]): Args {
 
 /** Extract the block kind from the .ts manifest text.
  *  Kind is inferred from the builder function: definition(), theorem(), etc. */
-function extractKind(tsText: string): string | undefined {
-  // Try explicit kind field first
-  const explicit = tsText.match(/kind:\s*["'](\w+)["']/);
-  if (explicit) return explicit[1];
-  // Infer from builder function call: export default <builder>({...})
+export function extractKind(tsText: string): string | undefined {
+  // Infer from the builder call FIRST: `export default definition({…})` is
+  // the authoritative statement of what a block IS.
+  //
+  // This used to try a bare `/kind:\s*"(\w+)"/` first, which is unanchored and
+  // therefore matched the FIRST `kind:` anywhere in the file — including the
+  // one inside `authorNotes: [{ kind: "note", … }]`. Every block carrying an
+  // author note was consequently typed `note` / `caveat` / `status`, and the
+  // kind-vs-declaration checks below silently compared against the wrong kind.
   const builder = tsText.match(
     /(?:export\s+default\s+|=\s*)(\w+)\s*\(/
   );
@@ -78,9 +91,13 @@ function extractKind(tsText: string): string | undefined {
       simulator: "simulator",
       proof: "proof",
     };
-    return mapping[name];
+    if (mapping[name]) return mapping[name];
   }
-  return undefined;
+  // Fallback: an explicit top-level `kind:` — anchored to the start of a line
+  // at the export's indentation so a nested `authorNotes` / directive entry
+  // cannot masquerade as the block kind.
+  const explicit = tsText.match(/^\s{0,2}kind:\s*["'](\w+)["']/m);
+  return explicit?.[1];
 }
 
 /** Extract label from .ts manifest. */
@@ -106,6 +123,84 @@ function extractLeanDecls(leanText: string): LeanDecl[] {
     decls.push({ kind: m[1], name: m[2] });
   }
   return decls;
+}
+
+// ── Narrative side ──────────────────────────────────────────────
+//
+// `checkEquivalence` took `mdText` and never read it: every check compared
+// `.ts` metadata against `.lean` declarations, so a sweep called
+// *narrative*–Lean equivalence had never looked at the narrative.
+//
+// Full semantic comparison — quantifier domains, hypothesis-by-hypothesis,
+// conclusion — is what the criterion's registry contract asks for, and it
+// stays an AGENT job. The two checks below are the part a script can decide
+// without understanding the mathematics, and both are deliberately silent
+// unless the narrative itself makes a checkable claim.
+
+/** Strip fences, directives and inline markup so prose can be inspected. */
+function mdProse(mdText: string): string {
+  return mdText
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/^:::.*$/gm, "")
+    .replace(/<!--[\s\S]*?-->/g, "");
+}
+
+/**
+ * The kind a narrative declares FOR ITSELF, normalised to block-kind
+ * vocabulary — `**Theorem.**`, `\begin{proposition}`, `### Lemma`.
+ *
+ * Returns undefined when the narrative makes no such claim, which is the
+ * common case and the reason this check is quiet: it can only fire on a
+ * genuine self-declaration.
+ */
+export function extractMdDeclaredKind(mdText: string): string | undefined {
+  const prose = mdProse(mdText);
+  const kinds = "theorem|proposition|lemma|corollary|definition|conjecture|remark|example";
+  const patterns = [
+    new RegExp(String.raw`\\begin\{(${kinds})\}`, "i"),
+    new RegExp(String.raw`\*\*\s*(${kinds})\b[^*]*\*\*`, "i"),
+    new RegExp(String.raw`^#{1,6}\s*(${kinds})\b`, "im"),
+  ];
+  for (const p of patterns) {
+    const m = prose.match(p);
+    if (m) return m[1].toLowerCase();
+  }
+  return undefined;
+}
+
+/**
+ * The narrative's statement sentence, if it has one.
+ *
+ * Used only to decide whether the narrative says ANYTHING — not to compare
+ * meaning. The fallback to "first substantive line" is deliberately generous
+ * so that `undefined` means genuinely empty prose (headings and directives
+ * only), not merely unconventional formatting.
+ */
+export function extractMdStatement(mdText: string): string | undefined {
+  const prose = mdProse(mdText);
+  const patterns = [
+    /\*\*(?:Theorem|Proposition|Lemma|Corollary|Definition|Conjecture)[^*]*\*\*\.?\s*([^\n]+)/i,
+    /^#+\s*Statement\s*\n+(.+)/m,
+  ];
+  for (const p of patterns) {
+    const m = prose.match(p);
+    const s = m?.[1]?.trim();
+    if (s) return s;
+  }
+  const lines = prose
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(
+      (l) =>
+        l &&
+        !l.startsWith("#") &&
+        !l.startsWith(">") &&
+        !l.startsWith("|") &&
+        !/^[-*_]{3,}$/.test(l) &&
+        // A lone emphasis/label line ("**Theorem.**") is a header, not a claim.
+        !/^\*{1,2}[^*]{0,40}\*{1,2}\.?$/.test(l),
+    );
+  return lines[0];
 }
 
 /** Check if Lean has sorry (actual code, not comments). */
@@ -177,7 +272,7 @@ function hasOnlyTrivialStubDecls(leanText: string): boolean {
 }
 
 /** Check structural equivalence between md and lean. */
-function checkEquivalence(
+export function checkEquivalence(
   mdText: string,
   leanText: string,
   tsText: string,
@@ -235,6 +330,52 @@ function checkEquivalence(
   });
 
   const hasSorry = hasSorryInCode(leanText);
+
+  // ── Narrative side ────────────────────────────────────────────
+  // The `.md` half of "narrative–Lean equivalence". Both checks are quiet
+  // by construction: they fire only when the narrative itself makes a
+  // checkable claim, so a block whose prose simply does not self-declare is
+  // never flagged.
+
+  // (a) The narrative declares a kind that contradicts the `.ts` kind.
+  //     `theorem`/`lemma`/`proposition`/`corollary` are mutually substitutable
+  //     in prose ("Theorem" heading over a block typed `proposition` is a
+  //     house-style choice, not a defect), so only cross-FAMILY disagreement
+  //     counts: provable vs definition vs conjecture vs commentary.
+  const mdKind = extractMdDeclaredKind(mdText);
+  const family = (k: string): string =>
+    ["theorem", "lemma", "proposition", "corollary"].includes(k)
+      ? "provable"
+      : ["definition"].includes(k)
+        ? "definition"
+        : ["conjecture"].includes(k)
+          ? "conjecture"
+          : "commentary";
+  if (mdKind && kind && family(mdKind) !== family(kind)) {
+    return {
+      result: "warn",
+      evidence: `Narrative declares itself a '${mdKind}' but the block is typed '${kind}'.`,
+      notes:
+        "Narrative/metadata kind mismatch: the .md and the .ts disagree about what " +
+        "this block IS, before any question of whether they state the same claim.",
+    };
+  }
+
+  // (b) A provable block whose narrative states nothing. The Lean carries a
+  //     real declaration and the reader gets no claim at all.
+  if (
+    kind &&
+    ["theorem", "lemma", "proposition", "corollary"].includes(kind) &&
+    !extractMdStatement(mdText)
+  ) {
+    return {
+      result: "warn",
+      evidence: "Narrative has no statement sentence (headings/directives only).",
+      notes:
+        "The .lean states a claim the .md does not. Equivalence cannot hold against " +
+        "an empty narrative.",
+    };
+  }
 
   // Check for kind-declaration alignment using structured decl kinds
   const provableKinds = ["theorem", "lemma", "proposition", "corollary"];
@@ -318,7 +459,15 @@ async function main() {
     process.exit(2);
   }
 
-  const rootPath = resolve(REPO_ROOT, "content", args.root);
+  // Accept a content-repo-relative path (`content/<paper>/<chapter>`, the
+  // form every other pipeline entry point takes), an absolute path, or the
+  // legacy `<paper>/<chapter>` shorthand this script used to require.
+  const candidates = [
+    resolve(args.root),
+    resolve(REPO_ROOT, args.root),
+    resolve(REPO_ROOT, "content", args.root),
+  ];
+  const rootPath = candidates.find((c) => existsSync(c)) ?? candidates[candidates.length - 1];
   if (!existsSync(rootPath)) {
     console.error(`Root not found: ${rootPath}`);
     process.exit(2);
@@ -458,7 +607,11 @@ async function main() {
   }
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+// Run as a CLI only when invoked directly; importing the module (e.g. from
+// tests, to exercise the pure extractors) must not execute the sweep.
+if (import.meta.main) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}
