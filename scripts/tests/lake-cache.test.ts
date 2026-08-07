@@ -236,3 +236,26 @@ describe("lake-cache.sh — seed guard", () => {
     rmSync(empty, { recursive: true, force: true });
   });
 });
+
+describe("lake-cache.sh — contribute (agentic loop)", () => {
+  test("contribute is a recognised command", () => {
+    // The loop's last step: restore -> draft -> build -> contribute.
+    const r = run(["contribute", "--package", PKG], lakeRoot);
+    expect(r.out).not.toContain("unknown command");
+  });
+
+  test("contribute inherits the seed guards", () => {
+    // A session that compiled nothing must not be able to publish. Same
+    // guard as `seed`, reached through the loop's verb.
+    const bare = mkdtempSync(join(tmpdir(), "lakecache-contrib-"));
+    execFileSync("bash", [
+      "-c",
+      `cp '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${bare}/'`,
+    ], { stdio: "pipe" });
+    git(["init", "-q"], bare);
+    const r = run(["contribute", "--package", PKG, "--lake-root", bare], bare);
+    expect(r.code).toBe(2);
+    expect(r.out).toContain("build before seeding");
+    rmSync(bare, { recursive: true, force: true });
+  });
+});

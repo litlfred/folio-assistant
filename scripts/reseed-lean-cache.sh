@@ -33,6 +33,10 @@
 #   --target T        Build only this Lake target — chip across sessions
 #   --phase P         Run one phase: toolchain|cache|build|seed|verify|promote
 #   --promote         Publish to the PRODUCTION branch (implies verify)
+#   --auto-promote    Same, but publish WITHOUT the final prompt, provided
+#                     verification AND the regression check both pass
+#   --force           Promote even if the candidate is smaller than the
+#                     branch it replaces (a deliberate downgrade)
 #   --yes             Do not prompt
 #   --dry-run         Print what would run, change nothing
 #
@@ -45,7 +49,7 @@ FA_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CACHE_SVC="$FA_ROOT/scripts/lake-cache.sh"
 
 REPO=""; PACKAGE="qou"; LAKE_ROOT=""; TARGET=""; PHASE=""
-PROMOTE=0; ASSUME_YES=0; DRY=0
+PROMOTE=0; AUTO_PROMOTE=0; FORCE=0; ASSUME_YES=0; DRY=0
 
 die()  { printf '%s: %s\n' "$PROG" "$*" >&2; exit 2; }
 say()  { printf '\n\033[1m== %s\033[0m\n' "$*"; }
@@ -61,6 +65,8 @@ while [ $# -gt 0 ]; do
     --target)    TARGET="${2:-}"; shift 2 ;;
     --phase)     PHASE="${2:-}"; shift 2 ;;
     --promote)   PROMOTE=1; shift ;;
+    --auto-promote) AUTO_PROMOTE=1; PROMOTE=1; shift ;;
+    --force)     FORCE=1; shift ;;
     --yes|-y)    ASSUME_YES=1; shift ;;
     --dry-run)   DRY=1; shift ;;
     -h|--help)   sed -n '2,40p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
@@ -263,19 +269,78 @@ That is the defect this reseed exists to fix — do not promote."
     [ "${cov:-0}" -ge 90 ] || die "verify FAILED: trace coverage ${cov:-0}%.
 A build would rebuild and evict the shortfall — do not promote."
     info "verified: own=$own, traces=${cov}% ✓"
+    # Carried into the regression check below.
+    VERIFIED_OLEANS=$(printf '%s' "$out" | sed -n 's/.*oleans: *\([0-9]*\).*/\1/p' | head -1)
+    VERIFIED_OWN="$own"
   fi
 fi
+
+
+# ── Regression guard ────────────────────────────────────────────────
+#
+# Verification proves the candidate is INTERNALLY sound (own oleans
+# present, traces complete). It says nothing about whether the candidate
+# is better than what it would replace — and with `--target` chipping,
+# a partial build passes verification while carrying a fraction of the
+# modules. Auto-promoting that would silently shrink the cache for
+# everyone.
+#
+# `seed` records counts in the branch's commit message, so the previous
+# figures are readable without downloading ~1.6 GB of tarball blobs:
+# `--filter=blob:none` fetches the commit and skips the payload.
+prod_counts() {  # -> "<oleans> <own>", empty when unreadable
+  local tmpref="refs/reseed-prodcheck"
+  git -C "$REPO" update-ref -d "$tmpref" 2>/dev/null || true
+  git -C "$REPO" fetch --depth=1 --filter=blob:none -q origin \
+      "+$PROD_BRANCH:$tmpref" 2>/dev/null || return 1
+  local msg; msg=$(git -C "$REPO" log -1 --format=%s "$tmpref" 2>/dev/null)
+  git -C "$REPO" update-ref -d "$tmpref" 2>/dev/null || true
+  printf '%s' "$msg" | sed -n 's/.*(\([0-9]*\) oleans, \([0-9]*\) own).*/\1 \2/p'
+}
+
+check_regression() {  # cand_oleans cand_own -> 0 ok, 1 regression
+  local co="$1" cw="$2"
+  local prev; prev=$(prod_counts) || { info "no readable production counts — nothing to compare"; return 0; }
+  [ -z "$prev" ] && { info "production branch predates count recording — nothing to compare"; return 0; }
+  local po pw; po=$(printf '%s' "$prev" | cut -d' ' -f1); pw=$(printf '%s' "$prev" | cut -d' ' -f2)
+  info "production now: $po oleans, $pw own"
+  info "candidate:      $co oleans, $cw own"
+  # 90%: tolerates churn between Mathlib revisions without tolerating a
+  # partial build replacing a complete one.
+  if [ "$co" -lt $(( po * 90 / 100 )) ] || [ "$cw" -lt $(( pw * 90 / 100 )) ]; then
+    return 1
+  fi
+  return 0
+}
 
 # ── Phase 6: promote ────────────────────────────────────────────────
 
 if [ "$PROMOTE" -eq 1 ] || [ "$PHASE" = "promote" ]; then
   say "Phase 6 — promote to $PROD_BRANCH"
-  warn "This FORCE-PUSHES the production cache branch. It has no history."
-  confirm "Publish to $PROD_BRANCH?" || die "stopped — nothing published"
+
+  if [ "$DRY" -eq 0 ] && [ -n "${VERIFIED_OLEANS:-}" ]; then
+    if ! check_regression "$VERIFIED_OLEANS" "$VERIFIED_OWN"; then
+      warn "the candidate is materially SMALLER than the branch it would replace."
+      info "Usually this means a partial build (--target) is about to overwrite a"
+      info "complete cache. Finish the build, or pass --force for a deliberate"
+      info "downgrade."
+      [ "$FORCE" -eq 1 ] || die "stopped — refusing to shrink $PROD_BRANCH"
+      warn "--force given; promoting a smaller cache anyway"
+    fi
+  fi
+
+  if [ "$AUTO_PROMOTE" -eq 1 ]; then
+    info "auto-promote: verification and regression checks passed"
+  else
+    warn "This FORCE-PUSHES the production cache branch. It has no history."
+    confirm "Publish to $PROD_BRANCH?" || die "stopped — nothing published"
+  fi
   run "cd '$REPO' && bash '$CACHE_SVC' seed --package '$PACKAGE' --lake-root '$ABS_LAKE' --branch '$PROD_BRANCH' --push"
   say "Done — $PROD_BRANCH published"
 else
   say "Stopped before promotion (by design)"
   info "Verified content is on $TEST_BRANCH."
   info "Publish with:  $PROG --repo '$REPO' --package '$PACKAGE' --promote"
+  info "Or in one pass:  … --auto-promote   (no prompt; still gated on"
+  info "                 verification AND the no-shrink regression check)"
 fi
