@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-07T09:13:35Z
-updated_at: 2026-08-07T11:33:48Z
+updated_at: 2026-08-07T12:11:25Z
 ---
 
 
@@ -53,3 +53,46 @@ never 'nothing trivial'.
       tactics, how many are substantive results?
 - [ ] Tune `TRIVIAL_STEP_THRESHOLD` — currently 3, a guess.
 - [ ] Only then decide whether the severity should rise above `minor`.
+
+## Measured — and the dependency was wrong
+
+Got a real Lean toolchain via `lake-cache.sh restore-toolchain` (which
+also exposed a bug in that command — see the commit). So this could
+actually be measured.
+
+**Nazrin is not needed.** The criterion needs *a cheap oracle*; folio
+already has one — Lean's own automation. `trivial / rfl / simp / decide /
+omega / aesop` is available, version-matched, already a dependency, and
+needs no research checkout or GPU. Nazrin's contribution was running
+cheaply WITHOUT Lean. folio has Lean.
+
+`content/pipeline/lean-triviality-probe.ts` substitutes each declaration's
+proof body with a ladder rung and elaborates; first rung that closes the
+goal is `steps`.
+
+### Result on qou (12 blocks probed)
+
+    probed 12, closed 0, skipped 16 (unelaborable)
+
+**Zero false positives — but also zero hits, so the FP rate is still
+unmeasured.** A zero-hit sample is evidence the criterion is not noisy
+here; it is NOT evidence the criterion is useful. Reassuring in one
+sense: none of 12 real qou theorems fall to cheap automation.
+
+### The bigger finding
+
+16 of 28 candidate blocks (57%) could not be probed at all: sibling
+`.lean` files import the paper's OWN package (`QOU.BraidKnot.*`), and the
+cache branch carries **zero** of the paper's oleans — 7268, all
+dependencies. Filed as 5d7z; `lake-cache.sh status` now detects and
+reports it.
+
+Until that is reseeded, any measurement here is over a biased 43% of the
+corpus — the blocks that happen not to import their own package.
+
+## Remaining
+
+- [ ] Reseed the cache (5d7z), then re-run the probe over the full corpus.
+- [ ] With hits in hand, measure the actual false-positive rate.
+- [ ] Tune the ladder / threshold on that evidence.
+- [ ] Only then consider raising severity above `minor`.

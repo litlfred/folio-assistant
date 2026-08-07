@@ -173,6 +173,18 @@ count_oleans() {
   find "$1/.lake" -name '*.olean' -type f 2>/dev/null | head -20000 | wc -l | tr -d ' '
 }
 
+# Oleans belonging to the package ITSELF, as opposed to its dependencies.
+#
+# This distinction is load-bearing and easy to miss. A cache branch can
+# carry thousands of Mathlib oleans and NONE of the paper's own modules —
+# `lake-cache/qou-v4-24-0` does exactly that: 7268 oleans, zero `QOU.*`.
+# Total count then looks healthy while every file importing the paper's
+# own package still fails to elaborate and every build still recompiles
+# the paper from scratch.
+count_own_oleans() {
+  find "$1/.lake/build/lib" -name '*.olean' -type f 2>/dev/null | head -20000 | wc -l | tr -d ' '
+}
+
 cmd_status() {
   local root; root=$(resolve_lake_root)
   local slug pkg
@@ -185,9 +197,17 @@ cmd_status() {
   info "package:    $pkg"
   info "toolchain:  $slug"
   info "branch:     lake-cache/$pkg-$slug"
-  info "oleans:     $n"
+  local own; own=$(count_own_oleans "$root")
+  info "oleans:     $n  (deps + own)"
+  info "own pkg:    $own"
   if [ "$n" -gt 0 ]; then
-    printf '\n  cache PRESENT — %s oleans on disk. No restore needed.\n' "$n"
+    printf '\n  cache PRESENT — %s oleans on disk.\n' "$n"
+    if [ "$own" -eq 0 ]; then
+      warn "but ZERO belong to this package — only its dependencies are cached."
+      info "Anything importing the package's own modules still rebuilds, and"
+      info "sibling .lean files will not elaborate standalone. Reseed with a"
+      info "build that includes the package: $PROG seed (after a full build)."
+    fi
     return 0
   fi
   printf '\n  cache ABSENT — run: %s restore\n' "$PROG"
@@ -278,7 +298,16 @@ Known packages: $(cmd_list_names | tr '\n' ' ')"
     info "different lake-root. Rebuild, then: $PROG seed --branch $br"
     return 3
   fi
-  printf '\nrestored %s oleans from %s — no rebuild needed.\n' "$n" "$br"
+  local own; own=$(count_own_oleans "$root")
+  printf '\nrestored %s oleans from %s.\n' "$n" "$br"
+  if [ "$own" -eq 0 ]; then
+    warn "ZERO of them belong to this package — dependencies only."
+    info "The package's own modules still need building, and sibling .lean"
+    info "files will not elaborate standalone until they are. Not a failed"
+    info "restore; an incompletely SEEDED branch."
+  else
+    info "$own are this package's own — no rebuild needed."
+  fi
   return 0
 }
 
