@@ -27,6 +27,7 @@ import type {
   QaCriterionEntry,
   QaScriptSidecar,
 } from "../../schemas/block-qa";
+import { BLOCK_KINDS } from "../../schemas/types";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 import { leanStatementHash } from "./lean-signature";
 import { findContentRepoRoot } from "./repo-root";
@@ -520,6 +521,25 @@ export interface BlockPaths {
 }
 
 /**
+ * `export default <kind>(` for every kind in the schema's `Block` union.
+ *
+ * Built from `BLOCK_KINDS` rather than written out, because writing it out is
+ * what went wrong: this regex listed 13 of the 15 kinds, omitting `algorithm`
+ * and `table`. `readBlockManifest` returns `undefined` for an unrecognised
+ * builder and `walkBlocks` skips whatever it returns `undefined` for, so on
+ * the qou corpus 461 blocks — 445 `table`, 16 `algorithm` — were never
+ * yielded to any QA tool. Never swept, never audited, no sidecar; ~13% of the
+ * corpus, excluded by a stale list rather than by a decision.
+ *
+ * Container kinds (`chapter`, `paper`, `folio`) are correctly absent: they are
+ * not in the `Block` union, and `readBlockManifest` is documented to reject
+ * them.
+ */
+const BLOCK_BUILDER_RE = new RegExp(
+  `export\\s+default\\s+(${BLOCK_KINDS.join("|")})\\s*\\(`,
+);
+
+/**
  * Read `export default <kind>({ ... label: "...", ... })` from a .ts
  * manifest. Returns the block's kind + label, or `undefined` if the
  * file is not a single-block manifest (chapter, paper, etc.).
@@ -532,9 +552,7 @@ export function readBlockManifest(
 ): { kind: string; label: string } | undefined {
   if (!existsSync(tsPath)) return undefined;
   const src = readFileSync(tsPath, "utf-8");
-  const kindMatch = src.match(
-    /export\s+default\s+(definition|theorem|lemma|proposition|corollary|conjecture|example|remark|proof|prose|equation|diagram|simulator)\s*\(/,
-  );
+  const kindMatch = src.match(BLOCK_BUILDER_RE);
   if (!kindMatch) return undefined;
   const labelMatch = src.match(/\blabel\s*:\s*"([^"]+)"/);
   if (!labelMatch) return undefined;
@@ -606,11 +624,50 @@ export function* walkBlocks(rootDir: string): Generator<BlockPaths> {
 
 // ── QA report IO ────────────────────────────────────────────────
 
+/** Paths already warned about, so a sweep reports each file once. */
+const warnedSidecars = new Set<string>();
+
 export function loadQaReport(path: string): BlockQaReport | undefined {
   if (!existsSync(path)) return undefined;
+  let raw: unknown;
   try {
-    const raw = JSON.parse(readFileSync(path, "utf-8"));
-    if (raw?.$schema !== "block-qa/v1") return undefined;
+    raw = JSON.parse(readFileSync(path, "utf-8"));
+  } catch (err) {
+    // A corrupt sidecar used to return `undefined` — the same answer as a file
+    // that does not exist. Callers treat that as "no QA has ever been done"
+    // and `qa-sweep` bootstraps a fresh report over the top of it, so a stray
+    // edit could destroy a block's recorded history without a word. Say so.
+    if (!warnedSidecars.has(path)) {
+      warnedSidecars.add(path);
+      console.error(
+        `qa: sidecar is not valid JSON, ignoring: ${path}\n` +
+          `    ${err instanceof Error ? err.message : String(err)}`,
+      );
+    }
+    return undefined;
+  }
+  try {
+    const rec = raw as Record<string, unknown>;
+    if (rec?.$schema !== "block-qa/v1") {
+      // The marker was introduced after some sidecars were written. Rejecting
+      // an unmarked file outright discarded real recorded state: 32 sidecars
+      // in the qou corpus carry 315 criterion entries between them and were
+      // invisible to every reader. Worse, once their blocks became reachable
+      // again, the next sweep would have bootstrapped empty reports over them.
+      //
+      // Accept on SHAPE instead — a `criteria` object is what block-qa/v1 is —
+      // and say the marker is missing so it gets added. Anything else (a
+      // paper-level `section-title-audit.qa.json` is `{criterion, paper,
+      // chapters}`) is genuinely not this schema and is still rejected.
+      if (!rec || typeof rec.criteria !== "object" || rec.criteria === null) {
+        return undefined;
+      }
+      if (!warnedSidecars.has(path)) {
+        warnedSidecars.add(path);
+        console.error(`qa: sidecar missing '$schema: "block-qa/v1"', reading anyway: ${path}`);
+      }
+      rec.$schema = "block-qa/v1";
+    }
     // Normalize malformed criterion values at the IO boundary: some
     // agent-written sidecars carry a bare entry OBJECT where block-qa/v1
     // requires a single-entry ARRAY (observed corpus-wide in qou on
@@ -619,14 +676,15 @@ export function loadQaReport(path: string): BlockQaReport | undefined {
     // and crashed with `existing.filter is not a function`. Wrapping here
     // preserves the entry verbatim; any other non-array shape (string,
     // number, null) is dropped as unrecoverable.
-    if (raw.criteria && typeof raw.criteria === "object") {
-      for (const [id, value] of Object.entries(raw.criteria)) {
+    const criteria = rec.criteria as Record<string, unknown> | undefined;
+    if (criteria && typeof criteria === "object") {
+      for (const [id, value] of Object.entries(criteria)) {
         if (Array.isArray(value)) continue;
-        if (value && typeof value === "object") raw.criteria[id] = [value];
-        else delete raw.criteria[id];
+        if (value && typeof value === "object") criteria[id] = [value];
+        else delete criteria[id];
       }
     }
-    return raw as BlockQaReport;
+    return rec as unknown as BlockQaReport;
   } catch {
     return undefined;
   }

@@ -15,6 +15,10 @@
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 import { extractCitations } from "./citations";
+import { BLOCK_KIND_ALT } from "../../schemas/types";
+
+/** Builder call identifying a block's kind — see `BLOCK_KIND_ALT`. */
+const BUILDER_RE = new RegExp(`(${BLOCK_KIND_ALT})\\(`);
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");
 const CONTENT_ROOT = join(REPO_ROOT, "content");
@@ -49,7 +53,7 @@ function processBlock(tsPath: string) {
   const mdContent = readFileSync(mdPath, "utf-8");
 
   // Only process files that use builder functions
-  if (!/(definition|theorem|lemma|proposition|corollary|conjecture|example|remark|proof|prose)\(/.test(tsContent)) return;
+  if (!BUILDER_RE.test(tsContent)) return;
 
   // Skip if cites already present
   if (/\bcites\s*:/.test(tsContent)) {

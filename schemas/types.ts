@@ -977,6 +977,67 @@ export type Block =
   | DiagramBlock
   | TableBlock;
 
+/**
+ * Every block kind, as a RUNTIME value.
+ *
+ * `Block` above is a type and is erased at compile time, so anything that has
+ * to recognise a block by reading its source — the QA pipeline's block
+ * discovery, the propagation sweeps, the viewer registry — needs a list it can
+ * actually iterate. Five such lists existed, hand-maintained and independent,
+ * and all five carried the same 13 of these 15: `algorithm` and `table` were
+ * added to the union and never propagated.
+ *
+ * The cost was silent. `readBlockManifest` returns `undefined` for an
+ * unrecognised builder and `walkBlocks` skips whatever it returns `undefined`
+ * for, so on the qou corpus 461 blocks — 445 `table`, 16 `algorithm` — were
+ * never yielded, never swept, and never audited. Roughly 13% of the corpus,
+ * excluded by a stale regex rather than by any decision.
+ *
+ * `_blockKindsAreExhaustive` below makes `tsc` fail if this array and the
+ * union ever disagree again, in either direction.
+ */
+export const BLOCK_KINDS = [
+  "definition",
+  "theorem",
+  "lemma",
+  "proposition",
+  "corollary",
+  "algorithm",
+  "conjecture",
+  "example",
+  "remark",
+  "proof",
+  "simulator",
+  "prose",
+  "equation",
+  "diagram",
+  "table",
+] as const;
+
+export type BlockKind = (typeof BLOCK_KINDS)[number];
+
+/**
+ * `BLOCK_KINDS` as a regex alternation, for the several places that identify a
+ * block by scanning its `.ts` source for the builder call.
+ *
+ * Those call sites need different surrounding patterns — anchored vs not,
+ * `export default` required or optional, followed by `(` or by `({` — so they
+ * build their own regex around this rather than sharing one. What they must
+ * NOT do is spell out the alternation, which is how five of them came to list
+ * 13 of the 15 kinds.
+ */
+export const BLOCK_KIND_ALT = BLOCK_KINDS.join("|");
+
+/**
+ * Compile-time proof that `BLOCK_KINDS` and `Block["kind"]` cover each other.
+ * Add a member to the union without adding it here (or vice versa) and this
+ * stops type-checking — which is the whole point, since the drift it replaces
+ * produced no error anywhere.
+ */
+type _MutuallyExhaustive<A, B> = [A] extends [B] ? ([B] extends [A] ? true : never) : never;
+const _blockKindsAreExhaustive: _MutuallyExhaustive<Block["kind"], BlockKind> = true;
+void _blockKindsAreExhaustive;
+
 /** Blocks that represent theorem-like environments. */
 export type EnvironmentBlock =
   | DefinitionBlock
