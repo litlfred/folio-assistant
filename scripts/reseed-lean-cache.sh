@@ -117,6 +117,20 @@ SLUG="$(printf '%s' "${TOOLCHAIN##*:}" | tr . -)"
 PROD_BRANCH="lake-cache/$PACKAGE-$SLUG"
 TEST_BRANCH="$PROD_BRANCH-test"
 
+# elan's on-disk name for a pin: `/` -> `--`, `:` -> `---`, giving
+# `leanprover--lean4---v4.24.0`.
+#
+# This was `tr '/:' '--'`, which replaces single characters and yields
+# `leanprover-lean4-v4.24.0` — a path no elan install ever has. So the
+# phase-1 guard against a non-linking toolchain tested a directory that
+# never exists and never fired, i.e. trap (1) in this script's header was
+# unenforced by the code meant to enforce it.
+TC_DIR="$HOME/.elan/toolchains/$(printf '%s' "$TOOLCHAIN" | sed -e 's#/#--#g' -e 's#:#---#g')"
+
+# A direct (non-elan) install has no `~/.elan/bin` shims, so the
+# toolchain's own bin must be on PATH or phases 2+ cannot find `lake`.
+export PATH="$TC_DIR/bin:$HOME/.elan/bin:$PATH"
+
 # ── Phase 0: preflight ──────────────────────────────────────────────
 #
 # Runs unconditionally, including under --phase, because every later
@@ -168,39 +182,52 @@ info "OK"
 
 if phase_wanted toolchain; then
   say "Phase 1 — toolchain"
-  export PATH="$HOME/.elan/bin:$PATH"
-  TC_DIR="$HOME/.elan/toolchains/$(printf '%s' "$TOOLCHAIN" | tr '/:' '--')"
 
-  if find "$HOME/.elan/toolchains" -name 'libleancpp.a' 2>/dev/null | grep -q .; then
-    info "a linkable toolchain is already installed — skipping"
+  # Scoped to THIS pin. A tree-wide `find ~/.elan/toolchains` is satisfied
+  # by a linkable install of some OTHER version, which then skips the
+  # install and leaves this build unable to link.
+  if find "$TC_DIR" -name 'libleancpp.a' -type f 2>/dev/null | grep -q .; then
+    info "a linkable $TOOLCHAIN is already installed — skipping"
   else
-    # THE trap. An extracted cache tree sits at exactly this path, so
-    # elan sees a toolchain and skips the download.
-    if [ -d "$TC_DIR" ]; then
-      warn "an existing toolchain at $TC_DIR has NO static libraries."
-      info "elan would see it and skip the download, leaving a lean that"
-      info "cannot link. It must be removed first."
-      confirm "Remove $TC_DIR?" || die "stopped — cannot proceed with a non-linking toolchain"
-      run "rm -rf '$TC_DIR'"
-    fi
-    if ! command -v elan >/dev/null 2>&1; then
-      info "installing elan"
-      run "curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain '$TOOLCHAIN'"
-    else
-      run "elan toolchain install '$TOOLCHAIN'"
+    # Direct from GitHub releases FIRST. elan's own hosts
+    # (elan.lean-lang.org, release.lean-lang.org) are unreachable behind
+    # some egress proxies — the failure that stalled this whole reseed
+    # and sent it to CI — while github.com release assets serve the very
+    # same toolchain. The service also removes a non-linking tree at
+    # $TC_DIR itself, so trap (1) is enforced where it is tested.
+    info "installing $TOOLCHAIN (direct from GitHub releases)"
+    if [ "$DRY" -eq 1 ]; then
+      info "[dry-run] bash $CACHE_SVC install-toolchain --toolchain '$TOOLCHAIN'"
+    elif ! ( cd "$REPO" && bash "$CACHE_SVC" install-toolchain --toolchain "$TOOLCHAIN" ); then
+      warn "direct install did not succeed — falling back to elan"
+      if [ -d "$TC_DIR" ] \
+         && ! find "$TC_DIR" -name 'libleancpp.a' -type f 2>/dev/null | grep -q .; then
+        warn "an existing toolchain at $TC_DIR has NO static libraries."
+        info "elan would see it and skip the download, leaving a lean that"
+        info "cannot link. It must be removed first."
+        confirm "Remove $TC_DIR?" || die "stopped — cannot proceed with a non-linking toolchain"
+        run "rm -rf '$TC_DIR'"
+      fi
+      if ! command -v elan >/dev/null 2>&1; then
+        info "installing elan"
+        run "curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain '$TOOLCHAIN'"
+      else
+        run "elan toolchain install '$TOOLCHAIN'"
+      fi
     fi
   fi
 
   if [ "$DRY" -eq 0 ]; then
-    find "$HOME/.elan/toolchains" -name 'libleancpp.a' 2>/dev/null | grep -q . \
-      || die "still no static libraries after install.
+    find "$TC_DIR" -name 'libleancpp.a' -type f 2>/dev/null | grep -q . \
+      || die "still no static libraries for $TOOLCHAIN.
 \`lean\` may elaborate but nothing will LINK, so \`lake exe cache get\`
-(phase 2) cannot run. Check network access to elan's download host."
+(phase 2) cannot run.
+Tried the direct GitHub-releases install, then elan. If both failed on
+the network: elan's hosts are blocked behind some proxies, but
+github.com release assets usually are not — check that first."
     info "static libs present ✓"
   fi
 fi
-
-export PATH="$HOME/.elan/bin:$PATH"
 
 # ── Phase 2: traced Mathlib ─────────────────────────────────────────
 

@@ -9,8 +9,15 @@ nav_order: 5
 {: .no_toc }
 
 The cache branches are currently unusable for builds. This is the exact
-procedure to rebuild them — on a machine with unrestricted network,
-since the cloud authoring container cannot reach elan's download host.
+procedure to rebuild them.
+
+> **This no longer needs a machine with unrestricted network.** The
+> blocker was elan: its hosts (`elan.lean-lang.org`,
+> `release.lean-lang.org`) are unreachable from the cloud authoring
+> container. But elan is only a fetcher, and the same toolchain is a
+> GitHub release asset, which *is* reachable. `lake-cache.sh
+> install-toolchain` fetches it directly — verified in-container, static
+> libs and all, with `lake exe` linking and running.
 
 1. TOC
 {:toc}
@@ -55,7 +62,9 @@ drive it yourself or something goes wrong.
 
 ## Prerequisites
 
-- Unrestricted network (elan's toolchain host and Mathlib's cache host).
+- Network access to `github.com` release assets and Mathlib's cache host.
+  elan's own hosts are **not** required — see step 1.
+- `zstd` on PATH (release assets are `.tar.zst`; there is no `.tar.gz`).
 - ~15 GB free disk, and hours for the first build.
 - Both repos checked out.
 
@@ -89,21 +98,33 @@ cd ~/src/qou
 ## Step 1 — a real toolchain
 
 ```sh
-# If a PREVIOUS restore-toolchain ran here, remove the incomplete tree
-# FIRST. It sits at exactly the path elan expects, so elan concludes the
-# toolchain is installed and skips the download — leaving you with a
-# lean that cannot link.
-rm -rf ~/.elan/toolchains/leanprover--lean4---v4.24.0
+bash "$CACHE" install-toolchain          # reads ./lean-toolchain
 
-curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
-  | sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
-export PATH="$HOME/.elan/bin:$PATH"
+export PATH="$HOME/.elan/toolchains/leanprover--lean4---v4.24.0/bin:$PATH"
 
 # MUST show static libs, or `lake exe` will fail later:
 find ~/.elan/toolchains -name 'libleancpp.a' | head -1
 ```
 
 If that `find` prints nothing, stop — the rest cannot work.
+
+`install-toolchain` downloads straight from
+`github.com/leanprover/lean4/releases`, so it works where elan's hosts
+are blocked. It also handles the trap that costs the most time here: an
+**incomplete** toolchain tree (what `restore-toolchain` leaves behind)
+sits at exactly the path elan expects, so elan concludes the toolchain is
+installed, skips the download, and leaves you with a `lean` that
+elaborates but cannot link. The command detects that by looking for the
+static libs rather than the directory, and replaces it.
+
+It verifies in a staging directory and only then publishes, so a
+truncated download never lands at the installed path. Re-running is a
+no-op; `--force` reinstalls. For a mirror or an air-gapped tree, set
+`LEAN_RELEASE_BASE`.
+
+Still prefer elan? It remains the right tool for **nightlies**, which are
+not published as `lean4` release assets — `install-toolchain` declines
+those and tells you so.
 
 ## Step 2 — a traced Mathlib, the fast way
 
