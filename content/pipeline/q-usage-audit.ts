@@ -320,13 +320,27 @@ interface BlockFinding {
  * Check the existing sidecar for a human dispensation on `criterion`
  * whose `field_hash` matches the present source files. Returns true
  * iff a human-pass entry exists that supersedes the script verdict
- * for the current source state. Per `block-qa/v1` schema, the
- * criterion's "current verdict" is the most recent matching entry;
- * a human-pass dated after the latest script-fail (and with matching
- * hashes) is the documented dispensation mechanism (see
- * `qa-checkers-q-usage.ts` line 435-436).
+ * for the current source state.
+ *
+ * PRECEDENCE. Among entries whose `field_hash` matches the current sources, a
+ * HUMAN entry outranks a script entry outright; `reviewed_at` only breaks ties
+ * within the same reviewer kind.
+ *
+ * This used to be a flat "most recent matching entry wins", which made a
+ * dispensation last exactly one run. Every audit appends its own `kind:
+ * "script"` entry stamped at run time, so the moment the audit that HONOURED a
+ * dispensation finished, its own fail entry was the newest matching entry and
+ * the next run read the dispensation as superseded. Measured: run 1
+ * `dispensations-honored=5, fails=1`; runs 2 and 3, byte-identical sources,
+ * `dispensations-honored=0, fails=6`.
+ *
+ * The flat rule cannot express the documented mechanism at all. The script
+ * re-runs and always stamps later, so under it no human entry can ever
+ * outlive the next sweep — the dispensation feature was unusable by
+ * construction, and silently so: the sidecar still showed the human entry,
+ * the audit just stopped reading it.
  */
-function hasHumanDispensation(
+export function hasHumanDispensation(
   b: BlockTriple,
   criterionId: string,
   currentHashes: { ts?: string; md?: string; lean?: string },
@@ -343,21 +357,24 @@ function hasHumanDispensation(
     sidecar = JSON.parse(readFileSync(sidecarPath, "utf-8"));
   } catch { return false; }
   const entries = sidecar.criteria?.[criterionId] ?? [];
-  // Most recent first.
-  const sorted = [...entries].sort((a, b) =>
-    (b.reviewed_at ?? "").localeCompare(a.reviewed_at ?? ""),
-  );
-  for (const e of sorted) {
+  const applicable = entries.filter((e) => {
     const fh = e.field_hash ?? {};
-    const matches =
+    return (
       fh.ts === currentHashes.ts &&
       fh.md === currentHashes.md &&
-      fh.lean === currentHashes.lean;
-    if (!matches) continue;
-    // Most recent matching entry decides. Stop at first match.
-    return e.reviewer?.kind === "human" && e.result === "pass";
-  }
-  return false;
+      fh.lean === currentHashes.lean
+    );
+  });
+  if (applicable.length === 0) return false;
+  // Human first, then most recent — see the precedence note above.
+  const [decisive] = [...applicable].sort((a, b) => {
+    const humanness = (e: typeof a) => (e.reviewer?.kind === "human" ? 0 : 1);
+    return (
+      humanness(a) - humanness(b) ||
+      (b.reviewed_at ?? "").localeCompare(a.reviewed_at ?? "")
+    );
+  });
+  return decisive.reviewer?.kind === "human" && decisive.result === "pass";
 }
 
 // ── Orphan library-tree coverage ────────────────────────────────
