@@ -26,6 +26,7 @@
 
 import { readFileSync, existsSync } from "fs";
 import { EXTENDED_AUTOMATED_CHECKERS } from "./qa-checkers-extended";
+import { USES_AUTOMATED_CHECKERS } from "./qa-checkers-uses";
 
 export interface CheckerHit {
   file: string;
@@ -1151,4 +1152,7 @@ export const AUTOMATED_CHECKERS: Record<
   // bodies live in `qa-checkers-extended.ts`; the spread below
   // pulls them in as a single source of truth.
   ...EXTENDED_AUTOMATED_CHECKERS,
+  // `uses` axis — editorial-relation hygiene + the advisory
+  // formal-coverage signal. Bodies in `qa-checkers-uses.ts`.
+  ...USES_AUTOMATED_CHECKERS,
 };

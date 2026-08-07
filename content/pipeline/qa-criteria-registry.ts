@@ -1245,6 +1245,98 @@ const DETANGLER: QaCriterionDefinition[] = [
   },
 ];
 
+// ── Domain: uses ────────────────────────────────────────────────
+//
+// Audits the *proper use of `uses[]`* — the *editorial* dependency
+// relation. `uses[]` records what a READER must have read to follow a
+// block. It is agent/human maintained and is NOT the formal
+// dependency graph; the formal relation is machine-derived from
+// `lean.ref` (see `content/pipeline/content-graph.ts` and the
+// `BlockBase.uses` doc comment in `schemas/types.ts`).
+//
+// The prime directive for this whole domain: **never pollute `uses[]`
+// with Lean dependencies.** A formal edge without an editorial
+// counterpart is usually correct — a `simp` lemma or library instance
+// nobody needs to read about. `uses-formal-coverage` surfaces that
+// divergence as an advisory exposition-gap signal for a human, and is
+// deliberately `minor` so it can never gate a build or motivate a
+// mechanical "fix".
+//
+// Mechanical + human split, as required: `uses-editorial-hygiene` is
+// script-checkable structure; `uses-editorial-completeness` is the
+// judgement call only a reader can make.
+
+const USES: QaCriterionDefinition[] = [
+  {
+    id: "uses-editorial-hygiene",
+    domain: "uses",
+    description:
+      "MECHANICAL. The block's `uses[]` is well-formed as an editorial " +
+      "dependency list: no self-reference; every entry resolves to a real " +
+      "block label (bare label in-paper, `paper-dir:label` cross-paper, or " +
+      "full URL cross-folio); no duplicate entries; and no transitively " +
+      "redundant entry (A uses B, B uses C ⇒ A must not also list C — run " +
+      "`prune-transitive-deps.ts`). Transitive pruning is sound HERE because " +
+      "reading-order is transitive; it is never applied to formal edges. " +
+      "Does NOT check agreement with Lean — `uses[]` is not the formal graph. " +
+      "STALENESS CAVEAT: the resolvability and transitive-redundancy checks " +
+      "read the whole-corpus editorial graph, so editing ANOTHER block's " +
+      "`uses[]` can change this block's verdict without changing this " +
+      "block's `field_hash`. `extra_inputs` cannot express a whole-corpus " +
+      "dependency; re-sweep the axis after any bulk `uses[]` edit.",
+    default_severity: "major",
+    depends_on: ["ts"],
+    automated: true,
+    extra_inputs: ["content/pipeline/content-graph.ts"],
+  },
+  {
+    id: "uses-editorial-completeness",
+    domain: "uses",
+    description:
+      "HUMAN/AGENT. Read the block's `.md` as a reader would and judge its " +
+      "`uses[]` on two counts. (1) COMPLETE: every block the narrative " +
+      "actually leans on — a definition whose notation it uses unexplained, " +
+      "a result it argues against, a construction it presumes — appears in " +
+      "`uses[]`. (2) EDITORIAL: every listed entry earns its place " +
+      "*expositionally*; a reader genuinely needs it first. FAIL (major) on " +
+      "a missing dependency a reader would stumble over. FAIL on an entry " +
+      "that is plainly a formal artefact copied in from Lean (a `simp` " +
+      "lemma, a typeclass instance, a library lemma the prose never " +
+      "mentions) — that is the pollution this domain exists to prevent. " +
+      "WARN on a defensible-but-marginal entry. PASS when the list reads " +
+      "as a deliberate editorial judgement. Do NOT consult the Lean " +
+      "dependency graph to answer this — the question is about the reader, " +
+      "not the proof term.",
+    default_severity: "major",
+    depends_on: ["md", "ts"],
+    automated: false,
+  },
+  {
+    id: "uses-formal-coverage",
+    domain: "uses",
+    description:
+      "ADVISORY ONLY — never a gate, never auto-fixed. Reports formal Lean " +
+      "dependencies (from the `lean.ref` decl graph via " +
+      "`content-graph.ts`) whose owning block is NOT reachable through this " +
+      "block's *editorial* cone. Each one is a candidate EXPOSITION GAP: " +
+      "the proof leans on something the narrative never asks the reader to " +
+      "have read. It is NOT a list of missing `uses[]` entries — most " +
+      "formal-only edges are correct and should stay absent from `uses[]`. " +
+      "A human decides, per edge, whether the narrative owes the reader an " +
+      "introduction. Emits `formal_only_count` / `formal_only_sample` / " +
+      "`editorial_only_count` to `metrics`. Returns `n/a` when the Lean " +
+      "Atlas cache (`docs/audits/lean-atlas-deps.json`) is absent — an " +
+      "empty formal edge set means 'unavailable', not 'clean'.",
+    default_severity: "minor",
+    depends_on: ["ts", "lean"],
+    automated: true,
+    extra_inputs: [
+      "docs/audits/lean-atlas-deps.json",
+      "content/pipeline/content-graph.ts",
+    ],
+  },
+];
+
 // ── Domain: bibliography ────────────────────────────────────────
 //
 // Block-level bibliography QA. Per-reference QA lives in the
@@ -1585,6 +1677,7 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...CANONICAL,
   ...COMPUTE,
   ...DETANGLER,
+  ...USES,
   ...BIBLIOGRAPHY,
   ...SCRIPT_QUALITY,
   ...DEVILS_ADVOCATE,
@@ -1628,6 +1721,7 @@ export const COMPUTE_WATCHER_CRITERIA: string[] = COMPUTE.map((c) => c.id);
 export const DETANGLER_WATCHER_CRITERIA: string[] = DETANGLER.map(
   (c) => c.id,
 );
+export const USES_WATCHER_CRITERIA: string[] = USES.map((c) => c.id);
 export const BIBLIOGRAPHY_WATCHER_CRITERIA: string[] = BIBLIOGRAPHY.map(
   (c) => c.id,
 );
@@ -1644,6 +1738,7 @@ export const WATCHER_CRITERIA_BY_AXIS: Record<string, string[]> = {
   canonical: CANONICAL_WATCHER_CRITERIA,
   compute: COMPUTE_WATCHER_CRITERIA,
   detangler: DETANGLER_WATCHER_CRITERIA,
+  uses: USES_WATCHER_CRITERIA,
   bibliography: BIBLIOGRAPHY_WATCHER_CRITERIA,
   "q-usage": Q_USAGE_WATCHER_CRITERIA,
   expo: EXPO_WATCHER_CRITERIA,
@@ -1665,6 +1760,12 @@ export const VOICE_CHECKER_FILE =
   "content/pipeline/qa-checkers-voice.ts";
 export const EXTENDED_CHECKER_FILE =
   "content/pipeline/qa-checkers-extended.ts";
+/**
+ * Hosts the `uses` axis checkers. Both read the typed content graph,
+ * so `content-graph.ts` is declared as an extra input below — a change
+ * to the graph builder must invalidate their sidecar entries.
+ */
+export const USES_CHECKER_FILE = "content/pipeline/qa-checkers-uses.ts";
 
 const VOICE_FILE_IDS = new Set<string>([
   "voice-status-leak",
@@ -1688,6 +1789,7 @@ export function getCriterionSourceFile(criterionId: string): string {
   const def = QA_CRITERIA_BY_ID[criterionId];
   if (def?.source_file) return def.source_file;
   if (VOICE_FILE_IDS.has(criterionId)) return VOICE_CHECKER_FILE;
+  if (criterionId.startsWith("uses-")) return USES_CHECKER_FILE;
   return EXTENDED_CHECKER_FILE;
 }
 
