@@ -37,6 +37,9 @@
 #      clippy::wildcard_imports` is the eventual upgrade, but a cargo build
 #      on every PR is too heavy for a static gate; the grep ratchet flags
 #      new wildcard imports cheaply).
+
+name: Code-quality gates
+
 on:
   workflow_dispatch:
 
