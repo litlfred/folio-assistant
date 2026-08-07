@@ -197,7 +197,9 @@ export function coneCoverage(
       // `depends_on` comes from the registry so freshness uses the same
       // file set the criterion was defined against.
       const dependsOn = QA_CRITERIA_BY_ID[cid]?.depends_on ?? ["md", "ts", "lean"];
-      const fresh = entries.some((e) => entryIsFresh(e, current, dependsOn));
+      const fresh = entries.some((e) =>
+        entryIsFresh(e, current, dependsOn, undefined, QA_CRITERIA_BY_ID[cid]?.lean_granularity),
+      );
       if (!fresh) missing.push(cid);
     }
     if (missing.length) rows.push({ label: b.label, missing });

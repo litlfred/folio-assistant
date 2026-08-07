@@ -283,7 +283,7 @@ async function run(): Promise<void> {
       const sh = scriptHashesByCriterion[cid];
       const prevEntries = report.criteria[cid] ?? [];
       const freshExisting = prevEntries.find((e) =>
-        entryIsFresh(e, currentHashes, def.depends_on, sh),
+        entryIsFresh(e, currentHashes, def.depends_on, sh, def.lean_granularity),
       );
       if (freshExisting) {
         sweepRow.criteria_skipped_fresh++;

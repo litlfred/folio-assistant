@@ -92,6 +92,27 @@ export interface QaFieldHash {
   md?: string;
   ts?: string;
   lean?: string;
+  /**
+   * Hash of only the **declaration signatures** in the `.lean` file —
+   * everything up to each declaration's `:=` / `where`.
+   *
+   * Some criteria care only about what a block *claims*, not how it is
+   * justified. `proof-narrative-lean-equiv` compares the narrative
+   * statement to the Lean signature; `proof-statement-integrity` guards
+   * against the signature changing. Rewriting a proof body cannot
+   * affect either verdict, yet under the whole-file `lean` hash it
+   * invalidated both — so every proof edit re-queued agent
+   * adjudications that could not have changed.
+   *
+   * Criteria opt in via `QaCriterionDefinition.lean_granularity`.
+   * Absent, a criterion keeps using the whole-file `lean` hash.
+   *
+   * Derived lexically (see `content/pipeline/lean-signature.ts`), so it
+   * is approximate. It is computed to fail SAFE: if the file cannot be
+   * lexed into declarations, this is left `undefined` and freshness
+   * falls back to the whole-file hash — over-invalidating, never under.
+   */
+  lean_statement?: string;
 }
 
 /**
@@ -227,6 +248,19 @@ export interface QaCriterionDefinition {
    * it requires agent / human adjudication (false).
    */
   automated: boolean;
+  /**
+   * How finely this criterion depends on its `.lean` file.
+   *
+   * - omitted / `"file"` — any byte change invalidates. The default,
+   *   and correct for anything that reads the proof.
+   * - `"statement"` — only the declaration SIGNATURES matter, so a
+   *   proof-body rewrite leaves the verdict fresh. Set this only when
+   *   the criterion genuinely cannot be affected by a proof body;
+   *   getting it wrong presents a stale verdict as current.
+   *
+   * Ignored unless `depends_on` includes `"lean"`.
+   */
+  lean_granularity?: "file" | "statement";
   /**
    * Optional gating: block kinds the criterion applies to.
    * Empty / undefined means "all kinds".

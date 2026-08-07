@@ -666,6 +666,10 @@ const PROOF: QaCriterionDefinition[] = [
       "correct narrative is the expected case — pass it.",
     default_severity: "major",
     depends_on: ["md", "lean"],
+    // Compares the narrative statement to the Lean SIGNATURE. A proof
+    // body cannot change the answer, so a proof rewrite must not
+    // re-queue this (agent-adjudicated) criterion.
+    lean_granularity: "statement",
     automated: false,
     applies_to: ["theorem", "lemma", "proposition", "corollary"],
   },
@@ -814,6 +818,14 @@ const PROOF: QaCriterionDefinition[] = [
       "SafeVerify / verify_integrity (arXiv 2605.22763).",
     default_severity: "critical",
     depends_on: ["lean"],
+    // The signature half is statement-level. NOTE the axiom half
+    // (`lean_verify` showing no sorryAx) IS proof-level — kept at
+    // statement granularity anyway because a body edit that introduces
+    // `sorry` also changes the file, and `proof-no-bare-sorries` /
+    // `proof-lean-compiles` (both file-granularity, both automated)
+    // catch it on the same sweep. If that ever stops holding, revert
+    // this to file granularity.
+    lean_granularity: "statement",
     automated: false,
     applies_to: ["theorem", "lemma", "proposition", "corollary"],
   },

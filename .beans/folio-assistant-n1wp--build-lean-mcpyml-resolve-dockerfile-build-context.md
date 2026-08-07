@@ -1,10 +1,11 @@
 ---
 # folio-assistant-n1wp
 title: 'build-lean-mcp.yml: resolve Dockerfile build-context mismatch'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-08-07T09:44:49Z
-updated_at: 2026-08-07T09:44:49Z
+updated_at: 2026-08-07T11:23:41Z
 ---
 
 

@@ -28,6 +28,7 @@ import type {
   QaScriptSidecar,
 } from "../../schemas/block-qa";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
+import { leanStatementHash } from "./lean-signature";
 import { findContentRepoRoot } from "./repo-root";
 
 // ── Hashing ─────────────────────────────────────────────────────
@@ -60,6 +61,12 @@ export function hashBlockFiles(paths: {
   if (paths.lean) {
     const h = hashFile(paths.lean);
     if (h) out.lean = h;
+    // Statement-level hash for criteria that only read the signature
+    // (`lean_granularity: "statement"`). `undefined` when the file has
+    // no lexable declarations — freshness then falls back to `lean`,
+    // which over-invalidates rather than under.
+    const sh = leanStatementHash(paths.lean);
+    if (sh) out.lean_statement = sh;
   }
   return out;
 }
@@ -637,6 +644,7 @@ export function entryIsFresh(
   current: QaFieldHash,
   depends_on: Array<"md" | "ts" | "lean">,
   current_script_hashes?: CriterionScriptHashes,
+  lean_granularity?: "file" | "statement",
 ): boolean {
   // Uniform rule for every result kind: a file the criterion
   // depends on is "stable" iff (a) it was absent at audit AND is
@@ -649,8 +657,20 @@ export function entryIsFresh(
     // as "not verifiable ⇒ stale": any currently-present depended-on file
     // then trips the `!expected && actual` branch below (re-review), and
     // the sweep no longer crashes with `undefined is not an object`.
-    const expected = entry.field_hash?.[k];
-    const actual = current[k];
+    // Statement-granularity criteria compare the SIGNATURE hash, so a
+    // proof-body rewrite leaves them fresh. Falls back to the
+    // whole-file hash whenever either side lacks a statement hash —
+    // an unlexable file, or an entry written before this field existed.
+    // That fallback over-invalidates, which is the safe direction: the
+    // alternative is presenting a stale verdict as current.
+    const useStatement =
+      k === "lean" &&
+      lean_granularity === "statement" &&
+      entry.field_hash?.lean_statement !== undefined &&
+      current.lean_statement !== undefined;
+    const key: keyof QaFieldHash = useStatement ? "lean_statement" : k;
+    const expected = entry.field_hash?.[key];
+    const actual = current[key];
     if (!expected && !actual) continue; // both absent — still inapplicable
     if (!expected && actual) return false; // file appeared since audit
     if (expected && !actual) return false; // file removed since audit
@@ -743,7 +763,7 @@ export function summariseFreshness(
     const fresh: QaCriterionEntry[] = [];
     const stale: QaCriterionEntry[] = [];
     for (const e of entries) {
-      if (entryIsFresh(e, current, dependsOn, sh)) fresh.push(e);
+      if (entryIsFresh(e, current, dependsOn, sh, def?.lean_granularity)) fresh.push(e);
       else stale.push(e);
     }
     const sorted = [...entries].sort((a, b) =>
