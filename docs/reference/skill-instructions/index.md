@@ -109,6 +109,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Lean / olean cache restore](lean-cache-restore.html) | `lean-cache-restore` | — |  |
 | [Lean Completeness Audit](lean-completeness-audit.html) | `lean-completeness-audit` | — | find content/<paper>/lean/ -name '*.lean' -not -path '*/.lake/*' \| sort |
 | [Lean Environment Setup](lean-environment-setup.html) | `lean-environment-setup` | — | cd .. && git clone https://github.com/leanprover-community/mathlib4.git |
+| [Lean formal dependency graph](lean-formal-graph.html) | `lean-formal-graph` | — | bun run content/pipeline/content-graph.ts content/<paper> |
 | [Lean File Generation](lean-generation.html) | `lean-generation` | — | Description here. |
 | [`MathlibExt` Curator](lean-mathlibext-curator.html) | `lean-mathlibext-curator` | — |  |
 | [Lean Proof Review](lean-proof-review.html) | `lean-proof-review` | — | git diff origin/main...HEAD -- '*.lean' \ |
@@ -130,6 +131,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Remark Audit](remark-audit.html) | `remark-audit` | — | cd content && grep -rl '"remark"' --include='*.ts' \| sort |
 | [Rendering Auditor](rendering-auditor.html) | `rendering-auditor` | — | cd content && bun run pipeline/build.ts <paper>/<paper>.ts \ |
 | [Rendering Fixes](rendering-fixes.html) | `rendering-fixes` | — |  |
+| [Semantic review scoping](semantic-review-scoping.html) | `semantic-review-scoping` | — |  |
 | [Simulator Math Audit](simulator-math-audit.html) | `simulator-math-audit` | — |  |
 | [Simulator](simulator.html) | `simulator` | — |  |
 | [Verify Anchor Connectivity](verify-local-substrate.html) | `verify-local-substrate` | — |  |
