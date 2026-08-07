@@ -536,7 +536,10 @@ produced the traces alongside the oleans."
   # errors out rather than extending once it runs out of suffixes.
   tar czf - -C "$root" .lake | split -d -a 3 -b 90m - "$tmp/lake-oleans.tgz.part" \
     || die "failed to create the split tarball"
-  ( cd "$tmp" && for f in lake-oleans.tgz.part*; do mv "$f" "$(printf '%s' "$f")"; done )
+  # (was: a `mv "$f" "$f"` loop renaming every part to itself — a no-op
+  #  left over from when `split` produced alphabetic suffixes. It emitted
+  #  "are the same file" once per part and did nothing. The `split -d`
+  #  above already writes the numeric names we want.)
 
   if [ "$PUSH" -eq 1 ]; then
     # CI path. Uses a detached worktree so the caller's working tree is
