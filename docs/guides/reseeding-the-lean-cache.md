@@ -31,6 +31,28 @@ modules**. Three independent defects:
 The cache has only ever worked for direct `lean` + `LEAN_PATH`. That is
 the whole "olean cache restore doesn't help" complaint.
 
+## Just run the script
+
+Everything below is automated:
+
+```sh
+# Dry run first — shows every command, changes nothing
+folio-assistant/scripts/reseed-lean-cache.sh --repo ~/src/qou --dry-run
+
+# Real run: stops after seeding to a -test branch and verifying it
+folio-assistant/scripts/reseed-lean-cache.sh --repo ~/src/qou
+
+# Publish, once you have read the verify output
+folio-assistant/scripts/reseed-lean-cache.sh --repo ~/src/qou --promote
+```
+
+Runs from any branch, never switches your working tree, and refuses to
+proceed on a dirty tree or a local branch collision. Chip across
+sessions with `--target QOU.SubTree`, resume with `--phase <name>`.
+
+The manual steps below are the same procedure, for when you want to
+drive it yourself or something goes wrong.
+
 ## Prerequisites
 
 - Unrestricted network (elan's toolchain host and Mathlib's cache host).
