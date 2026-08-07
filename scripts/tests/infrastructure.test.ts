@@ -141,25 +141,39 @@ describe("Unified paper-assistant image", () => {
     }
   });
 
-  test("every CONTAINERISED workflow uses a maintained image", () => {
-    // There are TWO maintained images, not one, and that is deliberate:
-    //   - `paper-assistant`  — built by build-lean-mcp.yml (lean-build, blueprint)
-    //   - `qou-paper-builder` — built by paper-builder-image.yml from
-    //     .github/docker/Dockerfile.paper-builder, with its own tag scheme and
-    //     monthly rebuild; publish.yml pinning it is Phase C of the documented
-    //     publish parallelisation plan.
+  test("no containerised workflow hardcodes a folio's image", () => {
+    // The platform builds exactly ONE image: `paper-assistant`. A builder
+    // image belonging to a folio (its TeX set and its licence are the
+    // folio's) must not be named here — publish.yml takes it as a required
+    // `builder_image` input instead, so the pipeline stays folio-agnostic.
     //
-    // The old assertion demanded `paper-assistant` in all three workflows,
-    // which stopped being true when the paper-builder split landed — the
-    // TEST's premise went stale, not the workflows. What still matters is
-    // that a containerised job uses one of the two maintained images rather
-    // than an ad-hoc or pre-unification one.
-    const MAINTAINED = ["paper-assistant", "qou-paper-builder"];
+    // Guard against the specific regression: `publish.yml` used to pin
+    // `ghcr.io/litlfred/qou-paper-builder:latest` in four container jobs,
+    // and the platform carried that image's Dockerfile — labelled with qou's
+    // CC-BY-4.0 licence inside an MIT repo.
     for (const wf of ["publish.yml", "lean-build.yml", "blueprint.yml"]) {
       const content = readFileSync(join(REPO_ROOT, `.github/workflows/${wf}`), "utf-8");
       if (!/^\s*container:/m.test(content)) continue;
-      expect(MAINTAINED.some((img) => content.includes(img))).toBe(true);
+      const images = [...content.matchAll(/^\s*image:\s*(\S+)/gm)].map((m) => m[1]);
+      for (const img of images) {
+        // Either the platform's own image, or an expression the caller fills.
+        expect(img.includes("paper-assistant") || img.includes("${{")).toBe(true);
+      }
     }
+  });
+
+  test("the platform ships no folio-specific builder Dockerfile", () => {
+    expect(existsSync(join(REPO_ROOT, ".github/docker/Dockerfile.paper-builder"))).toBe(false);
+    expect(existsSync(join(REPO_ROOT, ".github/workflows/paper-builder-image.yml"))).toBe(false);
+  });
+
+  test("publish.yml is callable by folios and takes builder_image", () => {
+    // It is invoked via `uses: .../publish.yml@main`, which requires a
+    // `workflow_call` trigger — absent until now, so every such call failed
+    // to start.
+    const content = readFileSync(join(REPO_ROOT, ".github/workflows/publish.yml"), "utf-8");
+    expect(content).toContain("workflow_call:");
+    expect(content).toContain("builder_image:");
   });
 
   test("deprecated workflows have no automatic triggers", () => {
