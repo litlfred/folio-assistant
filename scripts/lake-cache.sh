@@ -573,9 +573,29 @@ cmd_restore_toolchain() {
     return 3
   fi
 
+  # Elaborating is not the same as being usable. The toolchain cache
+  # branch carries `.trace` and `.hash` files for the static libraries
+  # but NONE of the `.a` files themselves, so `lean` runs while any
+  # LINK step fails:
+  #     /usr/bin/ld: cannot find -lleancpp
+  # That kills `lake exe <anything>` — including `lake exe cache get`,
+  # the standard way to obtain a properly-traced Mathlib. Reporting a
+  # bare version string here would hide it.
+  local libdir; libdir="$(dirname "$(dirname "$bin")")/lib/lean"
+  local nlibs; nlibs=$(find "$libdir" -name '*.a' -type f 2>/dev/null | wc -l | tr -d ' ')
+
   printf '\nrestored %s\n' "$ver"
   printf '  binary: %s\n' "$bin"
   printf '  PATH:   export PATH="%s:$PATH"\n' "$(dirname "$bin")"
+  if [ "$nlibs" -eq 0 ]; then
+    warn "no static libraries (*.a) under $libdir"
+    info "\`lean\` will elaborate, but every LINK fails (-lleancpp not found),"
+    info "so \`lake exe …\` — including \`lake exe cache get\` — cannot run."
+    info "Install the real toolchain for build work:"
+    info "  elan toolchain install \$(cat lean-toolchain)"
+    return 3
+  fi
+  info "static libs: $nlibs"
 }
 
 # ── List / doctor ───────────────────────────────────────────────────
