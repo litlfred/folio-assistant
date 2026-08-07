@@ -237,11 +237,21 @@ if phase_wanted cache; then
   # from `git rev-parse` in the current directory, so invoking it from
   # the platform checkout would resolve folio-assistant as the content
   # repo and read the wrong roster.
-  cov=$(cd "$REPO" && bash "$CACHE_SVC" status --package "$PACKAGE" --lake-root "$ABS_LAKE" 2>/dev/null \
-        | sed -n 's/.*traces:.*(\([0-9]*\)% coverage).*/\1/p')
-  cov="${cov:-0}"
-  nol=$(cd "$REPO" && bash "$CACHE_SVC" status --package "$PACKAGE" --lake-root "$ABS_LAKE" 2>/dev/null \
-        | sed -n 's/^ *oleans: *\([0-9]*\).*/\1/p' | head -1)
+  # Scraped from `status`'s human-readable output, so the two are
+  # COUPLED: renaming that line silently degrades this to 0. It already
+  # did once — `traces: N (P% coverage)` became
+  # `traced: N/M oleans (P%)` and this quietly reported 0% on a fully
+  # traced tree. Failing to 0 is the safe direction (it fetches, and
+  # `cache get` is idempotent), but silence hides the breakage, so say so.
+  status_out=$(cd "$REPO" && bash "$CACHE_SVC" status --package "$PACKAGE" --lake-root "$ABS_LAKE" 2>/dev/null)
+  cov=$(printf '%s\n' "$status_out" \
+        | sed -n 's/^ *traced: *[0-9]*\/[0-9]* oleans *(\([0-9]*\)%).*/\1/p' | head -1)
+  if [ -z "$cov" ]; then
+    warn "could not read trace coverage from \`$CACHE_SVC status\` — assuming 0%"
+    info "(its output format may have changed; this parser needs updating)"
+    cov=0
+  fi
+  nol=$(printf '%s\n' "$status_out" | sed -n 's/^ *oleans: *\([0-9]*\).*/\1/p' | head -1)
   nol="${nol:-0}"
   # Coverage is a RATIO, so a nearly-empty tree scores 100% on a handful
   # of oleans and would skip fetching thousands. Observed: a partially
