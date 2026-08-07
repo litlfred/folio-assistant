@@ -117,7 +117,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Proof Gap Audit](proof-gap-audit.html) | `proof-gap-audit` | — |  |
 | [/proof-integration-watcher](proof-integration-watcher.html) | `proof-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](integration-watcher.md). |
 | [Proof Narrative ↔ Lean Equivalence Audit](proof-narrative-lean-equivalence.html) | `proof-narrative-lean-equivalence` | — | grep -rn ':= by \(rfl\\|trivial\\|True.intro\)' content/**/*.lean |
-| [Proof Simplifier](proof-simplifier.html) | `proof-simplifier` | — |  |
+| [Proof Simplifier](proof-simplifier.html) | `proof-simplifier` | — | bun run content/pipeline/refactor-strategy.ts --lean 4.24.0 --applicable |
 | [Proof Status Tracking](proof-status-tracking.html) | `proof-status-tracking` | — |  |
 | [Proof Triage & Resolution](proof-triage.html) | `proof-triage` | — | [[require]] |
 | [/proposition-consolidation-audit](proposition-consolidation-audit.html) | `proposition-consolidation-audit` | — | grep -lE "^export default (proposition\|theorem\|lemma\|corollary)" \ |

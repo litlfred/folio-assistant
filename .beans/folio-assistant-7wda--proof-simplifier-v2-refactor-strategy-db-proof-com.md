@@ -1,10 +1,11 @@
 ---
 # folio-assistant-7wda
 title: 'proof-simplifier v2: refactor strategy DB + proof-compile-cost metric'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-08-07T09:13:35Z
-updated_at: 2026-08-07T09:13:35Z
+updated_at: 2026-08-07T09:50:58Z
 ---
 
 
