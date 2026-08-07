@@ -54,8 +54,10 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/detangler-integration-watcher](detangler-integration-watcher.html) | `detangler-integration-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [/devils-advocate-watcher](devils-advocate-watcher.html) | `devils-advocate-watcher` | — | A concrete instance of [`integration-watcher`](integration-watcher.md). |
 | [Diff](diff.html) | `diff` | — | Show what changed at the content-block level, with viewer links and |
+| [/dispatch-agent](dispatch-agent.html) | `dispatch-agent` | — | The expensive failure mode of multi-agent dispatch is **going dark**: you |
 | [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
 | [Editor](editor.html) | `editor` | — |  |
+| [/exposition-swarm-drain](exposition-swarm-drain.html) | `exposition-swarm-drain` | — | Bring every narrative block up to the **Milnor exposition standard** |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises the AGENTS.md §"5-minute idle trigger" / "Work the queue while idle" |
@@ -87,6 +89,8 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [/build-docs](build-docs.html) | `build-docs` | — | Builds the Lean HTML documentation using `doc-gen4` locally, to save CI |
+| [/build-pdf](build-pdf.html) | `build-pdf` | — | Builds the PDF locally to save CI minutes: the monolithic `main.pdf` and |
 | [Category Theory Formalization](category-theory.html) | `category-theory` | — |  |
 | [Chapter Analysis & Formalization](chapter-analysis.html) | `chapter-analysis` | — |  |
 | [Compute Audit](compute-audit.html) | `compute-audit` | — | python3 script.py --args ... |

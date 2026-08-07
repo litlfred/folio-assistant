@@ -22,12 +22,12 @@
  * @module content/pipeline/qa-checkers-extended
  */
 
-import { existsSync, readFileSync } from "fs";
+import { existsSync, readFileSync, readdirSync } from "fs";
 import { resolve, dirname, join, relative } from "path";
 import { fileURLToPath } from "url";
 import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
 import { hashFile } from "./qa-utils";
-import { findContentRepoRoot } from "./repo-root";
+import { findContentRepoRoot, findPapers } from "./repo-root";
 
 const __filename = fileURLToPath(import.meta.url);
 // Resolve content-repo paths (witnesses under <repo>/computations, Lean
@@ -39,7 +39,14 @@ const __filename = fileURLToPath(import.meta.url);
 // criteria (compute-witness-exists, compute-prop-has-probe/-consumer). See
 // repo-root.ts.
 const REPO_ROOT = findContentRepoRoot();
-const CONTENT_DIR = resolve(dirname(__filename), "..");
+// The CONTENT repo's content/ dir, not folio-assistant's. This was
+// `resolve(dirname(__filename), "..")` — import-relative, so it pointed at
+// folio-assistant/content (which holds only `pipeline/`). Every consumer
+// below wants the content repo: the bib-qa artefacts, content/schema/
+// references.ts, and the paper manifests. The paper lookup therefore always
+// missed and the ENTIRE detangler axis reported n/a on every folio,
+// silently, while looking healthy.
+const CONTENT_DIR = join(REPO_ROOT, "content");
 const COMPUTATIONS_DIR = join(REPO_ROOT, "computations");
 const BIB_QA_IMAGES_DIR = join(CONTENT_DIR, "bib-qa-images");
 const BIB_QA_REPORT = join(CONTENT_DIR, "bib-qa.json");
@@ -1435,67 +1442,95 @@ function loadChapterGraph(): void {
   const labelToChapter = new Map<string, string>();
   const usesGraph = new Map<string, string[]>();
 
-  const paperTs = join(CONTENT_DIR, "quantum-observable-universe", "quantum-observable-universe.ts");
-  if (!existsSync(paperTs)) return; // not loaded — _graphLoaded stays false
-  const src = readFileSync(paperTs, "utf-8");
-  const dirs = [...src.matchAll(/dir:\s*"([^"]+)"/g)].map(m => m[1]);
-  dirs.forEach((d, i) => chapterOrder.set(d, i));
-
-  // Build label→chapter + uses[] adjacency + slug→label by scanning
-  // all block .ts. (slug = filename without .ts; the chapter manifests
-  // order blocks by slug, while uses[] reference labels.)
-  const base = join(CONTENT_DIR, "quantum-observable-universe");
+  // Resolve the paper from the folio rather than hardcoding one. A
+  // folio may hold several papers and the platform must not privilege
+  // one; `soleFolioPaper` returns undefined for a multi-paper folio, in
+  // which case the graph stays unloaded and every detangler checker
+  // reports `n/a` instead of silently auditing nothing.
+  //
+  // (This previously hardcoded "quantum-observable-universe", so the
+  // whole detangler axis was inert in any other folio while still
+  // reporting `pass`.)
+  // Chapter keys are namespaced `"<paper>/<chapter>"` so a multi-paper
+  // folio cannot collide two same-named chapters, and the global
+  // chapter index keeps `blockPos` unique across papers.
+  const papers = findPapers(REPO_ROOT);
+  if (papers.length === 0) return; // not loaded — _graphLoaded stays false
   const slugToLabel = new Map<string, string>();
-  for (const dir of dirs) {
-    const chDir = join(base, dir);
-    if (!existsSync(chDir)) continue;
-    try {
-      const files = require("fs").readdirSync(chDir);
-      for (const f of files) {
-        if (!f.endsWith(".ts") || f === `${dir}.ts`) continue;
-        const content = readFileSync(join(chDir, f), "utf-8");
-        const m = content.match(/label:\s*"([^"]+)"/);
-        if (m) {
-          labelToChapter.set(m[1], dir);
-          slugToLabel.set(f.slice(0, -3), m[1]);
-          // Record the block's `uses:[...]` dependency edges (only the
-          // uses array — NOT cites/interprets/own-label) for cycle
-          // detection.
-          const usesM = content.match(/uses\s*:\s*\[([\s\S]*?)\]/);
-          // De-duplicate: a block listing the same `uses:` label twice
-          // must not inflate out-degree / in-degree / cone size — count
-          // unique dependency edges only.
-          const useLabels = usesM
-            ? [...new Set([...usesM[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]))]
-            : [];
-          usesGraph.set(m[1], useLabels);
-        }
-      }
-    } catch {}
-  }
-
-  // Build label→position from each chapter manifest's ordered
-  // `sections[].blocks[]` slug lists.
   const blockPos = new Map<string, number>();
   const blockSection = new Map<string, number>();
-  dirs.forEach((dir, ci) => {
-    const manifestPath = join(base, dir, `${dir}.ts`);
-    if (!existsSync(manifestPath)) return;
-    const mc = readFileSync(manifestPath, "utf-8");
-    let within = 0;
-    let sectionIdx = 0;
-    for (const bm of mc.matchAll(/blocks\s*:\s*\[([\s\S]*?)\]/g)) {
-      for (const sm of bm[1].matchAll(/"([^"]+)"/g)) {
-        const lbl = slugToLabel.get(sm[1]);
-        if (lbl && !blockPos.has(lbl)) {
-          blockPos.set(lbl, ci * CHAPTER_POS_STRIDE + within);
-          blockSection.set(lbl, ci * CHAPTER_POS_STRIDE + sectionIdx);
+  let chapterIndex = 0;
+  let sawAnyPaper = false;
+
+  for (const paper of papers) {
+    const paperTs = join(CONTENT_DIR, paper, `${paper}.ts`);
+    if (!existsSync(paperTs)) continue;
+    sawAnyPaper = true;
+    const src = readFileSync(paperTs, "utf-8");
+    const dirs = [...src.matchAll(/dir:\s*"([^"]+)"/g)].map(m => m[1]);
+    const base = join(CONTENT_DIR, paper);
+
+    // Reserve this paper's chapter index range up front so the block
+    // scan and the position pass agree on indices.
+    const firstIdx = chapterIndex;
+    dirs.forEach((d, i) => chapterOrder.set(`${paper}/${d}`, firstIdx + i));
+    chapterIndex += dirs.length;
+
+    // Build label→chapter + uses[] adjacency + slug→label by scanning
+    // all block .ts. (slug = filename without .ts; the chapter manifests
+    // order blocks by slug, while uses[] reference labels.)
+    for (const dir of dirs) {
+      const chDir = join(base, dir);
+      if (!existsSync(chDir)) continue;
+      try {
+        const files = readdirSync(chDir);
+        for (const f of files) {
+          if (!f.endsWith(".ts") || f === `${dir}.ts`) continue;
+          const content = readFileSync(join(chDir, f), "utf-8");
+          const m = content.match(/label:\s*"([^"]+)"/);
+          if (m) {
+            labelToChapter.set(m[1], `${paper}/${dir}`);
+            slugToLabel.set(f.slice(0, -3), m[1]);
+            // Record the block's `uses:[...]` dependency edges (only the
+            // uses array — NOT cites/interprets/own-label) for cycle
+            // detection.
+            const usesM = content.match(/uses\s*:\s*\[([\s\S]*?)\]/);
+            // De-duplicate: a block listing the same `uses:` label twice
+            // must not inflate out-degree / in-degree / cone size — count
+            // unique dependency edges only.
+            const useLabels = usesM
+              ? [...new Set([...usesM[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]))]
+              : [];
+            usesGraph.set(m[1], useLabels);
+          }
+        }
+      } catch {}
+    }
+
+    // Build label→position from each chapter manifest's ordered
+    // `sections[].blocks[]` slug lists.
+    dirs.forEach((dir, i) => {
+      const ci = firstIdx + i;
+      const manifestPath = join(base, dir, `${dir}.ts`);
+      if (!existsSync(manifestPath)) return;
+      const mc = readFileSync(manifestPath, "utf-8");
+      let within = 0;
+      let sectionIdx = 0;
+      for (const bm of mc.matchAll(/blocks\s*:\s*\[([\s\S]*?)\]/g)) {
+        for (const sm of bm[1].matchAll(/"([^"]+)"/g)) {
+          const lbl = slugToLabel.get(sm[1]);
+          if (lbl && !blockPos.has(lbl)) {
+            blockPos.set(lbl, ci * CHAPTER_POS_STRIDE + within);
+            blockSection.set(lbl, ci * CHAPTER_POS_STRIDE + sectionIdx);
         }
         within++;
       }
       sectionIdx++;
     }
-  });
+    });
+  }
+
+  if (!sawAnyPaper) return; // no paper manifest resolved — stays unloaded
 
   // Build the reverse adjacency (label -> users) once so per-block
   // in-degree is an O(1) lookup rather than a full corpus scan.
@@ -1642,9 +1677,11 @@ export function checkDetanglerBlockTanglement(
   const label = labelMatch[1];
 
   // Determine this block's chapter
-  const relPath = relative(join(CONTENT_DIR, "quantum-observable-universe"), tsPath);
-  // Platform-aware split: `relative()` yields `\` on Windows.
-  const thisChapter = relPath.split(/[\\/]/)[0];
+  // Chapter key is `"<paper>/<chapter>"`, matching loadChapterGraph's
+  // namespacing — a multi-paper folio must not collide two same-named
+  // chapters. Platform-aware split: `relative()` yields `\` on Windows.
+  const relSeg = relative(CONTENT_DIR, tsPath).split(/[\\/]/);
+  const thisChapter = relSeg.length >= 2 ? `${relSeg[0]}/${relSeg[1]}` : relSeg[0];
   const thisIdx = _chapterOrder.get(thisChapter) ?? 999;
 
   // Count forward refs emitted: LOGICAL dependencies (`uses[]`) whose
@@ -1802,6 +1839,16 @@ export function checkDetanglerGraphEnergy(
 // chapter than for its own home chapter is a candidate for relocation
 // or splitting. Soft (warn) — keyword overlap is noisy — but the
 // metrics payload records the scores so a reviewer can adjudicate.
+//
+// PORTABILITY: the table below is CONTENT, not platform. Its keys are
+// one folio's chapter directory names and its values that folio's
+// vocabulary, so `detangler-topic-coherence` is inert for every other
+// folio — `homeChapter in DETANGLER_CHAPTER_KEYWORDS` is false, and the
+// checker returns `n/a` (correct, but permanently). Moving it to a
+// folio-supplied data file (`content/<paper>/topic-keywords.json`, with
+// this as a shipped example) is tracked as a bean; it is left in place
+// here rather than half-migrated, since deleting it would silently drop
+// the one folio where the checker currently works.
 const DETANGLER_CHAPTER_KEYWORDS: Record<string, string[]> = {
   introduction: ["overview", "outline", "motivation"],
   "quantum-universes": [
@@ -1897,10 +1944,10 @@ export function checkDetanglerTopicCoherence(
   // short blocks rarely accumulate enough keyword signal to judge.
   if (nonBlank.length <= 20) return { result: "n/a", hits: [] };
 
-  const homeChapter = relative(
-    join(CONTENT_DIR, "quantum-observable-universe"),
-    mdPath,
-  ).split(/[\\/]/)[0]; // platform-aware (relative() yields `\` on Windows)
+  // Bare chapter name here (not the `paper/chapter` key): the keyword
+  // table below is keyed by chapter directory name.
+  const homeSeg = relative(CONTENT_DIR, mdPath).split(/[\\/]/);
+  const homeChapter = homeSeg.length >= 2 ? homeSeg[1] : homeSeg[0]; // platform-aware (relative() yields `\` on Windows)
   // If we have no keyword profile for the home chapter we cannot judge
   // coherence — its home score is structurally 0, so ANY other-chapter
   // hit would spuriously "win". Report n/a rather than a false warn.
