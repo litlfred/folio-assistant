@@ -1413,6 +1413,25 @@ const USES: QaCriterionDefinition[] = [
       "content/pipeline/content-graph.ts",
     ],
   },
+  {
+    id: "lean-ref-owns-decl",
+    domain: "uses",
+    description:
+      "MECHANICAL. A block's `lean.ref` declaration is not also claimed by " +
+      "another STATEMENT-BEARING block (definition / theorem / lemma / " +
+      "proposition / corollary / conjecture). A `prop:x` + `prf:x` pair " +
+      "sharing one declaration is LEGITIMATE and is not reported — the " +
+      "proposition is what the decl states and the proof block documents its " +
+      "proof. Two statement-bearing blocks claiming one decl IS a defect and " +
+      "a consequential one: the formal graph can attach a declaration to only " +
+      "one block, so the other silently loses every formal edge it should " +
+      "have had. In practice these are copy-paste errors. Reported from every " +
+      "claimant so the finding is visible on each side.",
+    default_severity: "major",
+    depends_on: ["ts"],
+    automated: true,
+    extra_inputs: ["content/pipeline/content-graph.ts"],
+  },
 ];
 
 // ── Domain: bibliography ────────────────────────────────────────
@@ -1920,7 +1939,8 @@ export function getCriterionSourceFile(criterionId: string): string {
   const def = QA_CRITERIA_BY_ID[criterionId];
   if (def?.source_file) return def.source_file;
   if (VOICE_FILE_IDS.has(criterionId)) return VOICE_CHECKER_FILE;
-  if (criterionId.startsWith("uses-")) return USES_CHECKER_FILE;
+  if (criterionId.startsWith("uses-") || criterionId === "lean-ref-owns-decl")
+    return USES_CHECKER_FILE;
   if (criterionId === "proof-compile-cost" || criterionId === "proof-no-cost-regression")
     return COST_CHECKER_FILE;
   if (criterionId === "proof-not-machine-trivial") return TRIVIALITY_CHECKER_FILE;

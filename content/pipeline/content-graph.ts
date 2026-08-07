@@ -207,6 +207,24 @@ export function refToDecl(ref: string | undefined): string | undefined {
   return i === -1 ? ref : ref.slice(i + 1);
 }
 
+/**
+ * Kinds that assert something — as opposed to `proof`, `prose`, and
+ * friends, which are *about* an assertion. Only these should own a Lean
+ * declaration in the graph.
+ */
+const STATEMENT_KINDS = new Set([
+  "definition",
+  "theorem",
+  "lemma",
+  "proposition",
+  "corollary",
+  "conjecture",
+]);
+
+export function isStatementKind(kind: string): boolean {
+  return STATEMENT_KINDS.has(kind);
+}
+
 export class ContentGraph {
   readonly nodes = new Map<string, ContentNode>();
   readonly edges: ContentEdge[] = [];
@@ -217,6 +235,15 @@ export class ContentGraph {
    * read an empty formal edge set as a clean result.
    */
   hasFormal = false;
+  /**
+   * Lean declaration -> every block whose `lean.ref` claims it.
+   *
+   * Usually one. Two entries are legitimate for a statement/proof pair
+   * (`prop:x` and `prf:x` both point at the decl the proposition IS).
+   * Two *statement-bearing* blocks claiming one decl is a defect —
+   * audited by `lean-ref-owns-decl`.
+   */
+  readonly declOwners = new Map<string, string[]>();
   /**
    * Provenance of the formal edge set — `undefined` when `hasFormal`
    * is false.
@@ -344,10 +371,19 @@ export function buildContentGraph(rootDir: string, repoRoot?: string): ContentGr
     const uses = parseUses(src);
     g.nodes.set(b.label, { label: b.label, kind: b.kind, ts: b.ts, leanRef, uses });
     const decl = refToDecl(leanRef);
-    // First writer wins: if two blocks claim the same decl that is a
-    // separate defect (`lean.ref` uniqueness), not this module's to
-    // adjudicate — but the graph must stay deterministic.
-    if (decl && !declToLabel.has(decl)) declToLabel.set(decl, b.label);
+    if (decl) {
+      g.declOwners.set(decl, [...(g.declOwners.get(decl) ?? []), b.label]);
+      // Prefer the STATEMENT-bearing block over a `proof` block when
+      // both claim a decl. A `prop:x` / `prf:x` pair legitimately shares
+      // one declaration — the proposition IS what the decl states — and
+      // a formal edge should attach to the proposition, not to its
+      // proof. (This was first-writer-wins, i.e. whichever the walk hit
+      // first, which made the graph's shape depend on filesystem order.)
+      const prev = declToLabel.get(decl);
+      if (!prev || (isStatementKind(b.kind) && !isStatementKind(g.nodes.get(prev)!.kind))) {
+        declToLabel.set(decl, b.label);
+      }
+    }
     for (const u of uses) g.addEdge({ from: b.label, to: u, kind: "editorial" });
   }
 

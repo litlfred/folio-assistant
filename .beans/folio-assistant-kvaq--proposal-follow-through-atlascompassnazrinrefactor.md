@@ -1,10 +1,11 @@
 ---
 # folio-assistant-kvaq
 title: 'Proposal follow-through: Atlas/Compass/Nazrin/refactor skills + checks'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-08-07T09:28:10Z
-updated_at: 2026-08-07T09:28:10Z
+updated_at: 2026-08-07T11:51:34Z
 ---
 
 
