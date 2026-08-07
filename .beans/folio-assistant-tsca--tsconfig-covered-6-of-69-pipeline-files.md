@@ -22,22 +22,38 @@ and `ctx.fileExists` — `md-exists`, `lean-file-exists`,
 validation, shipped under a green typecheck that never compiled the file. Fixed
 in the same change that widened the config.
 
-`schemas/**` is in scope now and is clean. `content/**` is not: **48 errors**,
+`schemas/**` is in scope now and is clean. `content/**` is not, but is
+draining: **48 -> 26 errors**.
 
-    21  content/pipeline/render-latex.ts
-     8  content/pipeline/validate-bib.ts
-     4  content/pipeline/audit-wiring.ts
-     3  content/pipeline/bib-qa.ts
-    12  spread over 9 more files
+    8  content/pipeline/validate-bib.ts
+    4  content/pipeline/audit-wiring.ts
+    3  content/pipeline/bib-qa.ts
+    2  content/pipeline/validate-references-human-review.ts
+    2  content/pipeline/export-json.ts
+    2  content/pipeline/export-bibtex.ts
+    5  spread over 5 more files
+
+`render-latex.ts` is done: 21 -> 0. Sixteen were unnarrowed reads of `content`
+/ `args` off the 13-member `LatexNode` union, now behind three accessors. One
+was a TS2367 that turned out to be a DEAD CHECK — see below.
 
 `scripts/**` is untried beyond a rough count (~15 more, several in test files).
 
 Drain `content/**` to zero, then add it to `include` — the ratchet
 `eslint.config.mjs` documents, so a red typecheck always means a regression.
 
-Adjacent, found while measuring and NOT yet fixed: `content/pipeline/validate.ts`
+Also found by widening: `checkBareHash` in `render-latex.ts` tested
+`node.type === "parameter"`, a node type unified-latex does not have (it has
+exactly thirteen, and that is not one), so the arm could never match. The
+`string` arm beside it does the work — confirmed against the parser, which
+emits `string:"#"` for a bare `#` in all four shapes tested. Arm removed
+rather than left as false reassurance about coverage.
+
+Adjacent, found while measuring and since FIXED (bean `folio-assistant-vald`):
+`content/pipeline/validate.ts`
 resolves its content root from its own file location, so run from a folio it
 looks in `<platform>/content/objects`, finds no manifests, and reports
 `✓ Valid — 1 issue(s)`. Same root-resolution defect class as the one fixed in
-`q-usage-audit.ts` (`findContentRepoRoot`); the content validator has been
-validating nothing.
+`q-usage-audit.ts` (`findContentRepoRoot`). With that and two further defects
+fixed, the folio validates end-to-end for the first time: `fred2005-formal-groups`
+0 issues, `quantum-observable-universe` 0 issues, exit 0.

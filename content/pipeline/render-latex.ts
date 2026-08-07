@@ -261,7 +261,12 @@ export function splitLongMath(math: string, minLen = 36): string {
       prevOperand = isMathOperand(n);
     }
   }
-  return inserted ? printRaw({ ...ast, content: out }) : math;
+  // `out` is rebuilt from `ast.content`, so it holds only root-level nodes —
+  // never an `Argument`, which is the union member `printRaw`'s `Printable`
+  // does not accept. The cast states that; `printRaw` itself is unchanged.
+  return inserted
+    ? printRaw({ ...ast, content: out } as Parameters<typeof printRaw>[0])
+    : math;
 }
 
 /**
@@ -648,6 +653,33 @@ function htmlTableToLatex(html: string): string {
  *  but the switch below renders it. */
 type MdNode = Root | RootContent;
 
+/** A leaf node's literal text, `""` when it has none.
+ *
+ *  Counterpart to `childrenOf` for the other half of the mdast split: `value`
+ *  exists on `text`, `code`, `inlineCode`, `html` and friends, and not on
+ *  parents. */
+function nodeValue(node: MdNode): string {
+  const v = (node as { value?: unknown }).value;
+  return typeof v === "string" ? v : "";
+}
+
+/** Directive attributes with the null/undefined entries dropped.
+ *
+ *  `mdast-util-directive` types them as
+ *  `Record<string, string | null | undefined> | null | undefined` — an
+ *  attribute written bare (`:val[x]{flag}`) has a null value. Consumers want
+ *  the ones that carry a string. */
+function definedAttrs(
+  attrs: Record<string, string | null | undefined> | null | undefined,
+): Record<string, string> | undefined {
+  if (!attrs) return undefined;
+  const out: Record<string, string> = {};
+  for (const [k, v] of Object.entries(attrs)) {
+    if (typeof v === "string") out[k] = v;
+  }
+  return out;
+}
+
 /** Children of a node that has them, `[]` for a leaf.
  *
  *  mdast splits nodes into `Parent` and leaves, and the renderer walks both
@@ -819,7 +851,11 @@ function renderMdastNode(node: MdNode): string {
       if (name === "val") {
         // :val[<registry-name>]{key=value ...}
         const valName = renderChildren(node).join("").trim();
-        const attrs = parseValAttrs(node.attributes);
+        // mdast-util-directive types attributes as
+        // `Record<string, string | null | undefined> | null | undefined`;
+        // `parseValAttrs` wants defined string values. Drop the empty ones
+        // rather than coercing them to "".
+        const attrs = parseValAttrs(definedAttrs(node.attributes));
         return renderValue(valName, attrs, "text");
       }
       if (name === "defterm" || name === "refterm") {
@@ -842,12 +878,16 @@ function renderMdastNode(node: MdNode): string {
       // Non-inline directives are not currently used; render children if any.
       return renderChildren(node).join("");
 
-    default:
-      // Unknown node — render children if any, otherwise empty
-      if (node.children) {
+    default: {
+      // Unknown node — render children if any, otherwise its literal value.
+      // `childrenOf` and `nodeValue` narrow; the bare property reads did not
+      // compile once this file entered the tsconfig program.
+      const kids = childrenOf(node);
+      if (kids.length > 0) {
         return renderChildren(node).join("");
       }
-      return node.value ?? "";
+      return nodeValue(node);
+    }
   }
 }
 
@@ -962,7 +1002,7 @@ export function findMathTextSeams(md: string): MathTextSeam[] {
         });
       }
     }
-    for (const k of kids) if (k && k.children) visit(k);
+    for (const k of kids) if (k && childrenOf(k).length > 0) visit(k);
   };
   visit(parseMdCached(md));
   return seams;
@@ -1561,18 +1601,40 @@ export function validateLatexAst(latex: string): AstValidationResult {
   };
 }
 
+// ── LatexNode accessors ──────────────────────────────────────────
+//
+// `LatexNode` is a union of 13 unified-latex node types and only some carry
+// `content` / `args` — and `content` is a child ARRAY on `environment`,
+// `group` and `root` but a plain STRING on `macro` (the macro's name),
+// `string`, `comment` and `verb`. Reading either field off the bare union is a
+// type error at every site; there were 16 of them here.
+//
+// One narrowing helper each, with the cast contained inside it, rather than a
+// cast at each use. `latexChildren` and `latexText` are also the honest
+// spelling of the distinction the walkers below actually depend on.
+
+/** Child nodes, when this node's `content` is an array. */
+function latexChildren(node: LatexNode): LatexNode[] {
+  const c = (node as { content?: unknown }).content;
+  return Array.isArray(c) ? (c as LatexNode[]) : [];
+}
+
+/** Argument nodes, when this node has any. */
+function latexArgs(node: LatexNode): LatexNode[] {
+  const a = (node as { args?: unknown }).args;
+  return Array.isArray(a) ? (a as LatexNode[]) : [];
+}
+
+/** `content` when it is a plain string — a macro name, or a string token. */
+function latexText(node: LatexNode): string {
+  const c = (node as { content?: unknown }).content;
+  return typeof c === "string" ? c : "";
+}
+
 function countNodes(node: LatexNode): number {
   let count = 1;
-  if (node.content && Array.isArray(node.content)) {
-    for (const child of node.content) {
-      count += countNodes(child);
-    }
-  }
-  if (node.args && Array.isArray(node.args)) {
-    for (const arg of node.args) {
-      count += countNodes(arg);
-    }
-  }
+  for (const child of latexChildren(node)) count += countNodes(child);
+  for (const arg of latexArgs(node)) count += countNodes(arg);
   return count;
 }
 
@@ -1581,9 +1643,7 @@ function checkEnvironmentBalance(nodes: LatexNode[], errors: string[]): void {
     if (node.type === "environment" && !node.env) {
       errors.push("Environment node with missing env name");
     }
-    if (node.content && Array.isArray(node.content)) {
-      checkEnvironmentBalance(node.content, errors);
-    }
+    checkEnvironmentBalance(latexChildren(node), errors);
   }
 }
 
@@ -1618,14 +1678,20 @@ function checkBareHash(
     if (node.type === "environment" && VERBATIM_ENVS.has(node.env)) {
       continue;
     }
-    // unified-latex tokenises bare `#` as a "parameter" node (or
-    // "string"/"macro" in some configurations). Flag it unless we're
-    // inside a macro-definition body.
-    if (
-      !inMacroDef &&
-      (node.type === "parameter" ||
-        (node.type === "string" && typeof node.content === "string" && /^#\d?$/.test(node.content)))
-    ) {
+    // unified-latex tokenises a bare `#` as a one-character `string` node —
+    // verified against the parser for `a # b`, `\text{x #1 y}`, `#1` and
+    // `\newcommand{\foo}[1]{#1}`, all of which yield `string:"#"` with the
+    // digit as a separate node.
+    //
+    // This condition also tested `node.type === "parameter"`, on the theory
+    // (recorded in the old comment) that some configurations emit one. There
+    // is no such node type: unified-latex has exactly thirteen — argument,
+    // comment, displaymath, environment, group, inlinemath, macro, parbreak,
+    // root, string, verb, verbatim, whitespace. The arm could never match, and
+    // said so as TS2367 once this file was type-checked. The `string` arm is
+    // the one that has been doing the work; removed rather than left as a
+    // false reassurance about what is covered.
+    if (!inMacroDef && node.type === "string" && /^#\d?$/.test(latexText(node))) {
       errors.push(
         `Bare # outside macro definition (use \\# to typeset the # character)`,
       );
@@ -1634,24 +1700,17 @@ function checkBareHash(
     // command-defining macros so #1…#9 inside `\newcommand{\foo}[1]{#1}`
     // is accepted.
     const enterMacroDef = inMacroDef ||
-      (node.type === "macro" && MACRO_DEF_NAMES.has(node.content));
-    if (node.content && Array.isArray(node.content)) {
-      checkBareHash(node.content, errors, enterMacroDef);
-    }
-    if (node.args && Array.isArray(node.args)) {
-      // URL macros (href, url, hyperref, …) read URL / label arguments
-      // where `#` is the legitimate URL-fragment delimiter. hyperref
-      // re-catcodes them internally so they don't reach the # check.
-      // Skip every argument of those macros — accepting that we won't
-      // catch `#` in the visible text, which is rare and caught by
-      // the math-link detector for the common case.
-      const isUrlMacro = node.type === "macro" && URL_MACROS.has(node.content);
-      if (isUrlMacro) continue;
-      for (const arg of node.args) {
-        if (arg && arg.content && Array.isArray(arg.content)) {
-          checkBareHash(arg.content, errors, enterMacroDef);
-        }
-      }
+      (node.type === "macro" && MACRO_DEF_NAMES.has(latexText(node)));
+    checkBareHash(latexChildren(node), errors, enterMacroDef);
+
+    // URL macros (href, url, hyperref, …) read URL / label arguments where `#`
+    // is the legitimate URL-fragment delimiter. hyperref re-catcodes them
+    // internally so they don't reach the # check. Skip every argument of those
+    // macros — accepting that we won't catch `#` in the visible text, which is
+    // rare and caught by the math-link detector for the common case.
+    if (node.type === "macro" && URL_MACROS.has(latexText(node))) continue;
+    for (const arg of latexArgs(node)) {
+      checkBareHash(latexChildren(arg), errors, enterMacroDef);
     }
   }
 }
