@@ -93,7 +93,7 @@ async function analyzeRemark(filePath: string): Promise<RemarkInfo | null> {
 
     // Check .md for ambiguous physics terms
     const mdPath = filePath.replace(/\.ts$/, ".md");
-    let ambiguousTerms: string[] = [];
+    const ambiguousTerms: string[] = [];
     if (existsSync(mdPath)) {
       const { readFileSync } = await import("fs");
       const mdContent = readFileSync(mdPath, "utf-8").toLowerCase();

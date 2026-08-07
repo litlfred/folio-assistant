@@ -1824,7 +1824,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
           const blkTsRel = `content/${paperId}`;
           // Find the chapter dir for this block
           let blockObj: any = null;
-          let mdContent = b.md || "";
+          const mdContent = b.md || "";
           for (const ch of paper.chapters) {
             for (const sec of ch.sections) {
               for (const sb of sec.blocks) {

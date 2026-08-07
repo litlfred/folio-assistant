@@ -203,7 +203,7 @@ let BLOB_REF: string =
  *  (set automatically in GitHub Actions) so links remain correct when the
  *  audit runs from a fork or mirrored repo.  Falls back to `litlfred/qou`
  *  for local runs against the canonical repository. */
-let BLOB_REPO: string = process.env.GITHUB_REPOSITORY || "litlfred/qou";
+const BLOB_REPO: string = process.env.GITHUB_REPOSITORY || "litlfred/qou";
 
 function setBlobRef(ref: string): void { BLOB_REF = ref; }
 

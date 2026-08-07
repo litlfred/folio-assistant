@@ -132,7 +132,7 @@ function formatLiteral(canonical: string, precision: number): string {
   // digits (post-leading-zero).
   const stripped = (intPart + fracRaw).replace(/^0+/, "") || "0";
   const visibleDigits = stripped.length;
-  let outInt = intPart;
+  const outInt = intPart;
   let outFrac = fracRaw;
   if (visibleDigits > precision) {
     const intDigits = intPart === "0" ? 0 : intPart.length;

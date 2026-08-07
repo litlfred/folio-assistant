@@ -274,7 +274,7 @@ function run(): void {
       md: block.md ? relative(contentRepoRoot, block.md) : undefined,
       lean: block.lean ? relative(contentRepoRoot, block.lean) : undefined,
     };
-    let report: BlockQaReport = existingReport ?? {
+    const report: BlockQaReport = existingReport ?? {
       $schema: "block-qa/v1",
       label: block.label,
       kind: block.kind,

@@ -103,7 +103,7 @@ function sigDigitString(str: string): string | null {
   if (!m) return null;
   const intPart = m[1];
   const fracPart = m[2] || "";
-  let digits = intPart + fracPart;
+  const digits = intPart + fracPart;
   // Strip leading zeros (preserve at least one digit so "0" → "0").
   let i = 0;
   while (i < digits.length - 1 && digits[i] === "0") i++;

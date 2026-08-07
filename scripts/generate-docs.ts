@@ -9,7 +9,7 @@
  *   4. ActorDefinition instances (.claude/skills/actors/*.json)
  *   5. CapabilityDefinition instances (.claude/skills/capabilities/*.json)
  *   6. Requirement instances (.claude/skills/requirements/*.json)
- *   7. Skill package manifests (skills/*/package-manifest.json) with Docker deps
+ *   7. Skill package manifests (skills/<pkg>/package-manifest.json) with Docker deps
  *
  * Produces:
  *   - schemas/generated/SCHEMAS.md       — complete schema reference

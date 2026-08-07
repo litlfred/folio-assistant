@@ -969,7 +969,7 @@ function extractLeanDocstrings(
   // except `-/`. We do a manual nested scan rather than a regex.
   let i = 0;
   const n = src.length;
-  let lineNum = 1;
+  const lineNum = 1;
   // Pre-compute newline positions so startLine is O(1) per opener.
   const newlineAt: number[] = [];
   for (let k = 0; k < n; k++) {

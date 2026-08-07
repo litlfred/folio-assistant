@@ -126,7 +126,7 @@ function applyMoveTable(content: string, table: MoveTable): {
   for (const [oldPath, newPath] of table) {
     if (oldPath === newPath) continue;
     let count = 0;
-    let next = out.split(oldPath).join(newPath);
+    const next = out.split(oldPath).join(newPath);
     if (next !== out) {
       count = (out.length - next.length + oldPath.length * 0) / 1;
       // Recompute count exactly:
