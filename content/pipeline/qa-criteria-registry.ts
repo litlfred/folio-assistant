@@ -894,6 +894,46 @@ const PROOF: QaCriterionDefinition[] = [
     automated: false,
     applies_to: ["theorem", "lemma", "proposition", "corollary"],
   },
+  // ── Elaboration cost (Lean Refactor adoption, arXiv 2605.20244) ──
+  //    Makes refactoring gains measurable. Checkers in
+  //    `qa-checkers-cost.ts`, data from `lean-profile-ingest.ts`.
+  {
+    id: "proof-compile-cost",
+    domain: "proof",
+    description:
+      "MEASUREMENT, not a gate — always `pass` when data exists. Records " +
+      "`elab_ms` / `tactic_count` (and `elab_ms_prev` / `elab_delta_pct` " +
+      "when a comparable baseline exists) into the entry's `metrics`, from " +
+      "`lean_profile_proof` via `docs/audits/lean-profile.json`. No " +
+      "\"too slow\" threshold is imposed: that bound is corpus-specific and " +
+      "inventing one here would be a policy nobody agreed to. Returns `n/a` " +
+      "when the measurement is missing OR stale — a cost compared across " +
+      "different source is a confident wrong answer, not a weak one.",
+    default_severity: "minor",
+    depends_on: ["lean"],
+    automated: true,
+    applies_to: ["theorem", "lemma", "proposition", "corollary", "definition"],
+    extra_inputs: ["docs/audits/lean-profile.json"],
+  },
+  {
+    id: "proof-no-cost-regression",
+    domain: "proof",
+    description:
+      "Elaboration cost did not regress materially (>25%) versus the prior " +
+      "measurement. Catches the standard refactoring trap: a proof that got " +
+      "SHORTER and SLOWER — `simp` searching where an explicit `rw` chain " +
+      "used to step — which reads as a pure win with no recorded cost. The " +
+      "threshold is deliberately loose because elaboration timing is noisy " +
+      "(machine load, cache state, Lake parallelism); a tight bound would " +
+      "emit false regressions until reviewers learned to ignore it. `n/a` " +
+      "with no comparable baseline — absence of a prior is NOT a pass. If a " +
+      "statement change justifies the cost, re-baseline.",
+    default_severity: "major",
+    depends_on: ["lean"],
+    automated: true,
+    applies_to: ["theorem", "lemma", "proposition", "corollary"],
+    extra_inputs: ["docs/audits/lean-profile.json"],
+  },
 ];
 
 // ── Domain: canonical ───────────────────────────────────────────
@@ -1766,6 +1806,8 @@ export const EXTENDED_CHECKER_FILE =
  * to the graph builder must invalidate their sidecar entries.
  */
 export const USES_CHECKER_FILE = "content/pipeline/qa-checkers-uses.ts";
+/** Hosts the elaboration-cost checkers. */
+export const COST_CHECKER_FILE = "content/pipeline/qa-checkers-cost.ts";
 
 const VOICE_FILE_IDS = new Set<string>([
   "voice-status-leak",
@@ -1790,6 +1832,8 @@ export function getCriterionSourceFile(criterionId: string): string {
   if (def?.source_file) return def.source_file;
   if (VOICE_FILE_IDS.has(criterionId)) return VOICE_CHECKER_FILE;
   if (criterionId.startsWith("uses-")) return USES_CHECKER_FILE;
+  if (criterionId === "proof-compile-cost" || criterionId === "proof-no-cost-regression")
+    return COST_CHECKER_FILE;
   return EXTENDED_CHECKER_FILE;
 }
 
