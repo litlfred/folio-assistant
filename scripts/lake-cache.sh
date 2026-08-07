@@ -354,13 +354,35 @@ cmd_restore_toolchain() {
     git show "$PRIVATE_REF:$p" >> "$tgz" || { warn "failed reading $p"; return 3; }
   done <<< "$parts"
 
-  mkdir -p "$dest"
-  if ! tar xzf "$tgz" -C "$dest" 2>/dev/null; then
+  # The tarball holds a TOOLCHAIN directory (`leanprover--lean4---vX.Y.Z/`),
+  # and elan looks for those under `$ELAN_HOME/toolchains/`. Extracting to
+  # `$ELAN_HOME` itself lands it one level too high, where nothing finds
+  # it — which is exactly what an earlier version of this did while
+  # reporting success.
+  mkdir -p "$dest/toolchains"
+  if ! tar xzf "$tgz" -C "$dest/toolchains" 2>/dev/null; then
     warn "toolchain tarball did not extract — branch '$br' is corrupt."
     return 3
   fi
-  printf '\nrestored toolchain to %s\n' "$dest"
-  printf 'Add to PATH:  export PATH="%s/bin:$PATH"\n' "$dest"
+
+  # VERIFY. Extraction succeeding says nothing about a usable toolchain;
+  # the same trap the olean restore has (`.lake/` present, zero oleans).
+  local bin
+  bin=$(find "$dest/toolchains" -maxdepth 3 -type f -name lean -perm -u+x 2>/dev/null | head -1)
+  if [ -z "$bin" ]; then
+    warn "extract produced no lean binary under $dest/toolchains — unusable."
+    info "Install normally: elan toolchain install \$(cat lean-toolchain)"
+    return 3
+  fi
+  local ver; ver=$("$bin" --version 2>/dev/null | head -1)
+  if [ -z "$ver" ]; then
+    warn "lean binary at $bin does not run (architecture mismatch?)."
+    return 3
+  fi
+
+  printf '\nrestored %s\n' "$ver"
+  printf '  binary: %s\n' "$bin"
+  printf '  PATH:   export PATH="%s:$PATH"\n' "$(dirname "$bin")"
 }
 
 # ── List / doctor ───────────────────────────────────────────────────
