@@ -6,7 +6,16 @@ name: Lake cache refresh (orphan-branch family)
 #
 # Content-agnostic: the package roster (names + Lake roots) is NOT
 # hardcoded here — it is read from .github/lake-packages.json, which a
-# downstream repo edits to match its own Lean packages. The branch family
+# downstream repo edits to match its own Lean packages.
+#
+# ⚠ THIS WORKFLOW BELONGS IN THE CONTENT REPO, NOT HERE (bean 8agu).
+# It pushes `lake-cache/<pkg>-<slug>` orphan branches, and those branches
+# live in the content repo — folio-assistant has ZERO of them. It also
+# needs `content/<paper>/lean/` to build, which the platform does not
+# have. Running it here can only no-op or fail. The copy that matters is
+# the one in the content repo; this one is kept as the maintained
+# source, and `.github/lake-packages.json` alongside it is a SAMPLE
+# roster (its lake-root paths resolve only in a content repo). The branch family
 # is bounded: N packages × ≤2 active toolchain versions; the "cleanup" job
 # enforces a keep-2-per-package cap.
 

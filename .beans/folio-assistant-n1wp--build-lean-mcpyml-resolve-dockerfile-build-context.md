@@ -1,11 +1,11 @@
 ---
 # folio-assistant-n1wp
 title: 'build-lean-mcp.yml: resolve Dockerfile build-context mismatch'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-07T09:44:49Z
-updated_at: 2026-08-07T11:23:41Z
+updated_at: 2026-08-07T11:31:32Z
 ---
 
 
@@ -51,3 +51,16 @@ way this goes.
 
 Blocks: any image rebuild, including picking up the Lean v4.16 -> v4.24
 bump on this branch.
+
+## Summary of Changes
+
+Resolved by option 1 (move the workflow to the content repo) — litlfred/qou#4678.
+
+`build-lean-mcp.yml` now lives in qou, where its Dockerfile's COPY paths
+(`lean-toolchain`, `lakefile.toml`, `content/<paper>/lean/lakefile.toml`,
+`tools/hecke-engine/`) actually resolve, with `file:` pointing at the
+embedded `folio-assistant/adapters/mcp-server/Dockerfile`.
+
+Two separate defects were compounding: the stale `scripts/mcp-server/`
+path (fixed earlier) AND the build-context mismatch. Either alone broke
+the build.

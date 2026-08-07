@@ -111,12 +111,20 @@ runs:
         # time while reporting a normal-looking fall-through.
         #
         # No `set -e`: a miss must fall through to Tier 3, not abort.
-        if [ ! -x scripts/lake-cache.sh ]; then
-          echo "::warning::scripts/lake-cache.sh not found — skipping Tier 2"
+        # Resolve the service script from either layout: folio-assistant
+        # as the repo root (platform CI), or embedded in a content repo
+        # at folio-assistant/ (the folio layout, which is where the
+        # cache branches actually live).
+        SVC=""
+        for c in scripts/lake-cache.sh folio-assistant/scripts/lake-cache.sh; do
+          [ -f "$c" ] && { SVC="$c"; break; }
+        done
+        if [ -z "$SVC" ]; then
+          echo "::warning::lake-cache.sh not found in either layout — skipping Tier 2"
           echo "hit=false" >> "$GITHUB_OUTPUT"
           exit 0
         fi
-        scripts/lake-cache.sh restore \
+        bash "$SVC" restore \
           --lake-root "$LAKE_ROOT" --package "$PACKAGE" --branch "$BRANCH"
         rc=$?
         # 0 = restored (or already present); 1 = miss; 3 = corrupt.
