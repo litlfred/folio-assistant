@@ -2,8 +2,16 @@
  * Lean project tests — compilation readiness, library presence, sorry audit.
  *
  * Walks every paper Lake package registered in the root workspace
- * (`folio-assistant/schemas/lean-packages.ts`) plus the root workspace
- * itself.
+ * (`schemas/lean-packages.ts`) plus the root workspace itself.
+ *
+ * EVERY assertion here is about the FOLIO (content repo): the Lake
+ * workspace, `lean-toolchain`, and the papers' `.lean` trees all live
+ * there, not in this platform repo. Before this guard the file asserted
+ * them against the platform root and contributed 17 permanent failures —
+ * red for a condition that is simply not knowable from here.
+ *
+ * With no folio attached these skip. Run them from a folio checkout (or
+ * with one as a sibling) to exercise them for real.
  */
 
 import { describe, test, expect } from "bun:test";
@@ -11,17 +19,22 @@ import { readFileSync, existsSync } from "fs";
 import { join, relative } from "path";
 import {
   LEAN_DIR,
+  FOLIO_ROOT,
   REPO_ROOT,
+  hasFolio,
   discoverLeanProjects,
   discoverDependencies,
   findLeanFiles,
 } from "./helpers";
 
+/** Skip content-repo assertions when no folio is attached. */
+const folio = hasFolio();
+
 import { LEAN_PACKAGES } from "../../schemas/lean-packages.js";
 
 // ── Root workspace ──────────────────────────────────────────────
 
-describe("Lean root workspace", () => {
+describe.skipIf(!folio)("Lean root workspace", () => {
   test("root lean-toolchain exists", () => {
     expect(existsSync(join(LEAN_DIR, "lean-toolchain"))).toBe(true);
   });
@@ -45,7 +58,7 @@ describe("Lean root workspace", () => {
 
 // ── Required dependencies ───────────────────────────────────────
 
-describe("Lean dependencies", () => {
+describe.skipIf(!folio)("Lean dependencies", () => {
   const deps = discoverDependencies();
 
   test("mathlib is declared", () => {
@@ -63,7 +76,7 @@ describe("Lean dependencies", () => {
 
 const projects = discoverLeanProjects();
 
-describe("Lean project discovery", () => {
+describe.skipIf(!folio)("Lean project discovery", () => {
   test("at least one project found", () => {
     expect(projects.length).toBeGreaterThan(0);
   });
@@ -76,8 +89,8 @@ describe("Lean project discovery", () => {
 });
 
 for (const pkg of LEAN_PACKAGES) {
-  describe(`Paper package: ${pkg.name} (lib: ${pkg.lib})`, () => {
-    const pkgRoot = join(REPO_ROOT, pkg.lakeRoot);
+  describe.skipIf(!folio)(`Paper package: ${pkg.name} (lib: ${pkg.lib})`, () => {
+    const pkgRoot = join(FOLIO_ROOT ?? REPO_ROOT, pkg.lakeRoot);
     const projDir = join(pkgRoot, pkg.lib);
     const leanFiles = findLeanFiles(projDir);
 

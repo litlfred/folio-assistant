@@ -400,20 +400,51 @@ describe("checkVariablesTyped", () => {
 // ─── has_references_to_paper ───────────────────────────────────
 
 describe("checkHasReferencesToPaper", () => {
-  test("passes with a `# Ref: [key]` citation", () => {
+  // CONTRACT: sidecar metadata ONLY. The checker deliberately does not grep
+  // source for citations — references live as structured metadata, mirroring
+  // how content blocks declare `uses: []` / `cites: []` in their manifests.
+  //
+  // The two tests that used to sit here asserted the opposite (a `# Ref:`
+  // comment in source was enough to pass). Checker and tests landed in the
+  // same merge, 109a4ff, and the tests were never updated with the contract —
+  // so they had been red ever since, asserting behaviour that was removed on
+  // purpose. Rewritten to pin the real contract, including the part the old
+  // pair was actually reaching for: a source comment is NOT a substitute.
+
+  test("a `# Ref: [key]` comment in SOURCE does not count — metadata only", () => {
     const r = withFixtureFile(
       "# Ref: [kassel1995] Quantum Groups\nx = 1\n",
       checkHasReferencesToPaper,
     );
-    expect(r.result).toBe("pass");
+    expect(r.result).toBe("fail");
   });
 
-  test("passes with an indented Ref comment", () => {
+  test("an indented Ref comment does not count either", () => {
     const r = withFixtureFile(
       "def f():\n    # Ref: [jones1985] doi:10.1090\n    pass\n",
       checkHasReferencesToPaper,
     );
+    expect(r.result).toBe("fail");
+  });
+
+  test("passes when the sidecar declares references", () => {
+    const r = withFixtureFile("x = 1\n", (p) =>
+      checkHasReferencesToPaper(p, ["prop:foo", "kassel1995"]),
+    );
     expect(r.result).toBe("pass");
+  });
+
+  test("an explicit empty array is a deliberate declaration and passes", () => {
+    // `[]` means "pure infrastructure, no paper backing" — distinct from
+    // `undefined`, which means the field was never filled in.
+    const r = withFixtureFile("x = 1\n", (p) => checkHasReferencesToPaper(p, []));
+    expect(r.result).toBe("pass");
+  });
+
+  test("the failure message tells the author what to add", () => {
+    const r = withFixtureFile("x = 1\n", checkHasReferencesToPaper);
+    expect(r.result).toBe("fail");
+    expect(r.hits[0]?.text).toContain("references");
   });
 
   test("fails with no Ref citation", () => {

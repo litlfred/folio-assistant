@@ -105,10 +105,11 @@ const SCRIPT_CHECKERS: Record<string, ScriptCheckerFn> = {
   },
   has_references_to_paper: (t, sidecar) => {
     if (t.language !== "python") return { result: "n/a", hits: [] };
-    // Pass the sidecar's structured `references` array to the
-    // checker. The checker fails only when the field is undefined
-    // AND no references can be extracted from source as a
-    // bootstrap fallback.
+    // Pass the sidecar's structured `references` array to the checker.
+    // It reads that field and NOTHING else: any defined array (including
+    // an empty one, a deliberate "no refs intended") passes; `undefined`
+    // fails. There is no source-side grep fallback — this comment used to
+    // describe one, left over from before the metadata-only contract.
     return checkHasReferencesToPaper(t.abs, sidecar?.references);
   },
   connected_to_ci_pipeline: (t) => {

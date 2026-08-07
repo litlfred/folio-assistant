@@ -8,19 +8,61 @@
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join, relative, resolve } from "path";
 import { execSync } from "child_process";
+import { findContentRepoRoot, findPapers } from "../../content/pipeline/repo-root";
+import { LEAN_PACKAGES } from "../../schemas/lean-packages";
 
 // ── Paths ───────────────────────────────────────────────────────
 
+/** Root of THIS repo — the folio-assistant platform checkout. */
 export const REPO_ROOT = resolve(import.meta.dir, "../..");
+
+/**
+ * Root of the CONTENT repo (the folio), when one is attached.
+ *
+ * folio-assistant is the platform; the Lean workspace, `proof-objects.json`,
+ * `lean-toolchain` and the papers themselves live in a SEPARATE repo which
+ * embeds this one (as a sibling clone plus a `folio-assistant/` symlink —
+ * see `scripts/setup-folio-assistant.sh` in the folio).
+ *
+ * A plain `bun test` here has no folio attached, so anything asserting a
+ * content artifact must SKIP rather than fail — see `hasFolio()`. Tests
+ * that hardcoded `REPO_ROOT + "content/quantum-observable-universe/..."`
+ * were asserting a path that cannot exist in this repo, which is most of
+ * why the suite carried 29 permanent failures.
+ */
+export const FOLIO_ROOT: string | undefined = (() => {
+  // Resolve from `process.cwd()`, NOT from this file's location. The folio
+  // embeds the platform as a SYMLINK (`<folio>/folio-assistant`), and
+  // `import.meta.dir` resolves through it to the real platform path — so
+  // walking up from here never reaches the folio, even when running from
+  // one. (Same trap that made `q-usage-audit.ts` sweep the wrong repo.)
+  //
+  // Reuses the pipeline's helpers rather than carrying a second copy of
+  // the walk: one implementation, already covered by tests.
+  const root = findContentRepoRoot();
+  return findPapers(root).length > 0 ? root : undefined;
+})();
+
+/** True when a content repo (folio) is attached and content assertions can run. */
+export function hasFolio(): boolean {
+  return FOLIO_ROOT !== undefined;
+}
+
 /**
  * Root Lake workspace directory.  `lake build` at this directory
  * builds every paper package registered in the root `lakefile.toml`.
  * Per-paper Lake roots are under `content/<paper>/lean/`; see
- * `folio-assistant/schemas/lean-packages.ts` for the authoritative map.
+ * `schemas/lean-packages.ts` for the authoritative map.
+ *
+ * Lives in the FOLIO, not the platform. Empty string when none is attached —
+ * guard with `hasFolio()` before using.
  */
-export const LEAN_DIR = REPO_ROOT;
+export const LEAN_DIR = FOLIO_ROOT ?? "";
 /** Legacy alias: default paper's Lake directory (QOU). */
-export const QOU_LEAN_DIR = join(REPO_ROOT, "content/quantum-observable-universe/lean");
+export const QOU_LEAN_DIR = join(
+  FOLIO_ROOT ?? REPO_ROOT,
+  "content/quantum-observable-universe/lean",
+);
 export const CHAPTERS_DIR = join(REPO_ROOT, "chapters");
 export const SCHEMAS_DIR = join(REPO_ROOT, "schemas");
 
@@ -37,11 +79,15 @@ const DEPENDENCY_NAMES = new Set([
  * library names like `["QOU", "UGB", "Fred2005"]`.
  */
 export function discoverLeanProjects(): string[] {
+  // Anchored at the FOLIO, and derived from LEAN_PACKAGES rather than a
+  // hand-listed set of paper paths: the old list was three hardcoded
+  // `REPO_ROOT + content/<paper>/lean` strings, so it pointed into the
+  // platform (where no paper exists) AND silently missed any paper added
+  // to the registry afterwards.
+  const root = FOLIO_ROOT ?? REPO_ROOT;
   const lakefiles = [
     join(LEAN_DIR, "lakefile.toml"),
-    join(REPO_ROOT, "content/quantum-observable-universe/lean/lakefile.toml"),
-    join(REPO_ROOT, "content/unital-groebner-bases/lean/lakefile.toml"),
-    join(REPO_ROOT, "content/fred2005-formal-groups/lean/lakefile.toml"),
+    ...LEAN_PACKAGES.map((p) => join(root, p.lakeRoot, "lakefile.toml")),
   ];
   const names = new Set<string>();
 
