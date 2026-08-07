@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lnt1
-title: 'ESLint backlog: 201 remaining, ALL no-explicit-any (needs a plan)'
+title: 'ESLint backlog: 171 no-explicit-any (track 2 AST partly drained)'
 status: todo
 type: task
 priority: normal
 created_at: 2026-08-07T18:00:00Z
-updated_at: 2026-08-07T20:10:00Z
+updated_at: 2026-08-07T20:35:00Z
 ---
 
 `bun run lint` now runs (it never could before — no config, and neither
@@ -222,3 +222,45 @@ The four drained rungs each had one obviously-correct rewrite, so a script plus
 to compile or pushes a cast to every call site, which is the same unsoundness
 with a longer name. Each site is a decision. Estimated at a few focused
 sessions per track, not one pass.
+
+
+## Track 2 started: `render-latex.ts` 30 -> 0
+
+201 -> 171. The file the plan nominated first, and it calibrated as hoped:
+the existing types fit, with one wrinkle worth recording.
+
+**It was TWO node families, not one.** The plan assumed mdast; the file also
+walks the unified-latex AST (`splitLongMath`, `countNodes`,
+`checkEnvironmentBalance`, `checkBareHash`). Both have real types —
+`@types/mdast` and `@unified-latex/unified-latex-types` — so both were typed,
+with the LaTeX one aliased on import (`LatexAstUnion` -> `LatexNode`) so the
+two families cannot be confused at a glance.
+
+**The mdast plugin node types needed explicit augmentation imports.** The
+renderer switches on `math` / `inlineMath` / the three directive kinds, which
+are not in base `@types/mdast`. `mdast-util-math` and `mdast-util-directive`
+declare `module 'mdast'` augmentations, but only if imported — hence two
+`import type {} from …` side-effect imports.
+
+**One helper was needed, and it explains why the signatures were `any` at
+all.** mdast splits nodes into `Parent` and leaves, and the renderer walks
+both through the same paths. The `node.children ?? []` idiom is a type ERROR
+on a leaf (no such property), not `undefined` — so `any` was the path of least
+resistance. `childrenOf(node)` does the `"children" in node` check once.
+
+**All three content-structure casts turned out to be unnecessary.**
+`(block as any).title` carried the comment "extra field from builders", and
+`(entry.block as any).cites` was similarly defensive. Both fields are on the
+declared types today; removing the casts type-checks. Stale, not a schema gap
+— the finding the plan told me to watch for did not materialise here.
+
+### Verified by output, not just by `tsc`
+
+Types should not change behaviour, but `childrenOf` and the `raw` narrowing
+did change expressions, so: rendered **3483 blocks** through the committed
+renderer and the typed one and diffed. **Byte-identical, zero differences.**
+
+## Remaining: 171
+
+Track 2 continues in the other AST files; track 1 (content structure,
+~55, start `adapters/paper/resolver.ts`) and track 3 (heterogeneous) unchanged.
