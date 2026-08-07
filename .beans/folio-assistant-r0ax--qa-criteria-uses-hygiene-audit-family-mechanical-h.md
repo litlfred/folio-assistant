@@ -1,11 +1,11 @@
 ---
 # folio-assistant-r0ax
 title: 'QA criteria: uses[] hygiene audit family (mechanical + human)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-07T09:13:26Z
-updated_at: 2026-08-07T09:15:08Z
+updated_at: 2026-08-07T09:28:10Z
 ---
 
 
@@ -31,3 +31,14 @@ Both mechanical and human/agent checks. Must not pollute `uses[]` with Lean.
   does not.
 
 Depends on 36f8 for the graph, 3cw6 for the semantics.
+
+## Landed
+
+All three criteria registered (`uses` domain + watcher axis), checkers in
+`content/pipeline/qa-checkers-uses.ts`, adjudicator skill
+`skills/folio-core/uses-editorial-review.md`.
+
+Verified on litlfred/qou (2958 blocks): 2611 pass / 339 warn / 8 fail.
+The 8 are genuine dangling labels (`def:hecke-algebra` cited 3x, no
+defining block). Severity is graded — broken edges fail, transitive
+redundancy warns — so ~340 lint findings don't bury 8 real breakages.

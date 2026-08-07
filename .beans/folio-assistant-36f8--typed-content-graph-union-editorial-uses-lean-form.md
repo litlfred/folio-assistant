@@ -1,11 +1,11 @@
 ---
 # folio-assistant-36f8
 title: 'Typed content graph: union editorial uses[] + Lean formal dep graph'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-07T09:13:26Z
-updated_at: 2026-08-07T09:15:08Z
+updated_at: 2026-08-07T09:28:10Z
 ---
 
 

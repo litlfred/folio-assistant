@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3cw6
 title: 'uses[] is editorial-only: clarify semantics across schema, skills, docs'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-07T09:13:26Z
-updated_at: 2026-08-07T09:15:08Z
+updated_at: 2026-08-07T09:28:10Z
 ---
 
 

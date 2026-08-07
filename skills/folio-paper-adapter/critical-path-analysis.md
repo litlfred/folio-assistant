@@ -11,6 +11,34 @@ allowed-tools: Read Edit Write Bash Grep Glob Agent
 
 # Critical Path Analysis & Context Review
 
+## Which graph to trace
+
+"What does the argument actually rest on?" is an **impact** question, so
+trace the **union** of both dependency relations — not `uses[]` alone:
+
+- **editorial** edges (`uses[]`) — what a reader must have read first.
+  Agent/human maintained.
+- **formal** edges (`lean.ref` → Lean dep graph) — what the proof
+  actually invokes. Machine-derived.
+
+A critical path built from `uses[]` alone is missing every formal
+dependency the narrative never introduces, and will understate what
+breaks when a block changes. Build the union with
+`content/pipeline/content-graph.ts` — its accessors (`out`, `in`,
+`cone`) default to the union and take an optional `EdgeKind` filter:
+
+```sh
+bun run content/pipeline/content-graph.ts content/<paper>
+```
+
+Check `hasFormal` before trusting a union result. When the Lean Atlas
+cache is absent the formal edge set is empty because the data was
+*unavailable*, not because the corpus has no formal structure — report
+that limitation rather than a confident path.
+
+**Do not "fix" divergence** between the two by editing `uses[]`. See
+`AGENTS.md` and the `uses-editorial-review` skill.
+
 ## Overview
 
 This skill traces the logical dependency chain of the paper from axioms
