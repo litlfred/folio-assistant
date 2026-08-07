@@ -48,7 +48,9 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  LEAN_VERSION: "leanprover/lean4:v4.16.0"
+  # Track the content repo's `lean-toolchain` (qou: v4.24.0). Floor is
+  # v4.17.0, required by the lean-atlas capability.
+  LEAN_VERSION: "leanprover/lean4:v4.24.0"
 
 jobs:
 

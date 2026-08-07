@@ -107,10 +107,25 @@ export interface ContentNode {
   uses: string[];
 }
 
-/** On-disk shape of the Lean Atlas ingest cache. */
+/**
+ * How the formal edge set was derived. See
+ * `content/pipeline/lean-atlas-ingest.ts` for the full contract.
+ *
+ * - `atlas` — elaborated by Lean Atlas. Authoritative; the type/value
+ *   split is real.
+ * - `scan` — the ingest script's syntactic fallback. **Approximate**:
+ *   misses `simp`/instance/unfolding dependencies and can over-report a
+ *   coincidental name match. Good enough for advisory signals; not good
+ *   enough to drive staleness invalidation.
+ * - `mixed` — both, per-declaration.
+ */
+export type FormalSource = "atlas" | "scan" | "mixed";
+
+/** On-disk shape of the formal dependency cache. */
 interface AtlasCache {
   $schema: string;
   generated_at: string;
+  source?: FormalSource;
   decls: Record<
     string,
     {
@@ -120,6 +135,7 @@ interface AtlasCache {
       value_deps?: string[];
       /** 12-char SHA of the owning `.lean` at extraction time. */
       lean_sha?: string;
+      source?: "atlas" | "scan";
     }
   >;
 }
@@ -201,6 +217,17 @@ export class ContentGraph {
    * read an empty formal edge set as a clean result.
    */
   hasFormal = false;
+  /**
+   * Provenance of the formal edge set — `undefined` when `hasFormal`
+   * is false.
+   *
+   * Consumers must branch on this where confidence matters. In
+   * particular, anything that invalidates downstream work on the
+   * strength of a **type** vs **value** edge (staleness propagation)
+   * requires `"atlas"`; under `"scan"` the split is a lexical guess and
+   * must be treated as unavailable rather than trusted.
+   */
+  formalSource?: FormalSource;
 
   private _out = new Map<string, ContentEdge[]>();
   private _in = new Map<string, ContentEdge[]>();
@@ -336,6 +363,13 @@ export function buildContentGraph(rootDir: string, repoRoot?: string): ContentGr
     return g;
   }
   g.hasFormal = true;
+  // Prefer the cache's own summary; otherwise derive it from the
+  // per-entry tags so a hand-assembled cache still reports honestly.
+  const perEntry = new Set(
+    Object.values(cache.decls ?? {}).map((d) => d.source ?? "scan"),
+  );
+  g.formalSource =
+    cache.source ?? (perEntry.size > 1 ? "mixed" : ((perEntry.values().next().value ?? "scan") as FormalSource));
 
   for (const [decl, entry] of Object.entries(cache.decls ?? {})) {
     const fromLabel = declToLabel.get(refToDecl(decl)!);

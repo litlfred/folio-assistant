@@ -17,7 +17,9 @@ FROM ubuntu:24.04
 LABEL org.opencontainers.image.source="https://github.com/litlfred/qou"
 LABEL org.opencontainers.image.description="CI image for the QOU LaTeX + Lean project"
 
-ARG LEAN_TOOLCHAIN=leanprover/lean4:v4.16.0
+# Track the content repo's `lean-toolchain` (qou: v4.24.0). Floor is v4.17.0,
+# required by the lean-atlas capability.
+ARG LEAN_TOOLCHAIN=leanprover/lean4:v4.24.0
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH="/root/.elan/bin:${PATH}"
