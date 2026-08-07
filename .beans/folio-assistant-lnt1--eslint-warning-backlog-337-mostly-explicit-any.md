@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lnt1
-title: 'ESLint warning backlog: 213 remaining, 201 of them no-explicit-any'
+title: 'ESLint backlog: 201 remaining, ALL no-explicit-any (needs a plan)'
 status: todo
 type: task
 priority: normal
 created_at: 2026-08-07T18:00:00Z
-updated_at: 2026-08-07T19:35:00Z
+updated_at: 2026-08-07T19:55:00Z
 ---
 
 `bun run lint` now runs (it never could before — no config, and neither
@@ -137,3 +137,38 @@ load.
 `no-this-alias` (2) and `no-unsafe-function-type` (10) are the next cheap
 rungs. `no-explicit-any` is the only substantial one and is a per-site typing
 decision rather than a sweep — it wants a plan before anyone starts.
+
+
+## Third + fourth rungs: `no-unsafe-function-type` 10 -> 0, `no-this-alias` 2 -> 0
+
+213 -> 201. Both promoted to ERROR; both ratchets verified with probe files.
+
+`no-unsafe-function-type` — every site was a redundant widening, not a real
+gap:
+- `src/server.ts` and `adapters/mcp-server/server.ts` cast an
+  ALREADY-typed handler `(...a: unknown[]) => Promise<unknown>` to `Function`
+  before calling it. In `src/server.ts` that cast turned out to be
+  load-bearing for the wrong reason: it also widened the RETURN, which is what
+  let the wrapper be assigned back into the SDK's typed slot. Fixed by moving
+  the cast to the assignment (`as ToolSlot`) where it belongs, so the call
+  keeps its signature.
+- three test files typed their tool-registration stubs as `Function`; replaced
+  with a real `ToolHandler` call signature.
+
+`no-this-alias` — both were `const self = this` forced by
+`Bun.serve({ async fetch(req) {…} })`. A method shorthand binds its own
+`this`; an arrow captures it lexically and the alias is unnecessary.
+
+## What is left: 201 `no-explicit-any`, and why it is not a sweep
+
+This is the only rule still on `warn`, and deliberately. The four drained so
+far were mechanical — dead bindings, CommonJS idiom, redundant casts, a
+`this` alias — each with one obviously-correct rewrite. `any` is not like
+that: every occurrence is a separate typing decision, and a blanket
+`any` -> `unknown` either fails to compile or pushes a cast to every call
+site, which is the same unsoundness wearing a longer name.
+
+**Do not start this as a sweep.** It needs a plan first: bucket the 201 by
+shape (JSON boundaries, third-party gaps, genuinely-dynamic dispatch, plain
+laziness), decide which buckets get real types and which get a documented
+`unknown` + narrowing, and drain per bucket with the ratchet.

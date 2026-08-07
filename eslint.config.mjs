@@ -70,16 +70,23 @@ export default tseslint.config(
       // in an ESM/TS codebase, and deferring a builtin's load buys nothing.
       // Hoisted to top-level imports.
       "@typescript-eslint/no-require-imports": "error",
+      // Driven to 0 from 10. Every site was a redundant widening: two servers
+      // cast an already-typed handler to `Function` (throwing away its return
+      // type), and the test stubs typed their tool registries as `Function`
+      // where a real call signature was available.
+      "@typescript-eslint/no-unsafe-function-type": "error",
+      // Driven to 0 from 2. Both were `const self = this` forced by
+      // `Bun.serve({ fetch(req) {…} })` — a method shorthand binds its own
+      // `this`. An arrow captures it lexically and the alias disappears.
+      "@typescript-eslint/no-this-alias": "error",
 
-      // ── Warnings: acknowledged debt, tracked not enforced ──────
-      // Remaining counts over 194 files:
-      //   no-explicit-any        201  (gradual typing — a per-site typing
-      //                                decision, wants its own plan)
-      //   no-unsafe-function-type 10
-      //   no-this-alias            2
+      // ── The remaining debt ─────────────────────────────────────
+      // `no-explicit-any`: 201 over 194 files, and the ONLY rule still on
+      // warn. Unlike the four above it is not a sweep — each `any` is a
+      // separate typing decision, and a blanket replacement with `unknown`
+      // would either not compile or push casts to every call site. It wants
+      // a plan (bean lnt1) before anyone starts.
       "@typescript-eslint/no-explicit-any": "warn",
-      "@typescript-eslint/no-unsafe-function-type": "warn",
-      "@typescript-eslint/no-this-alias": "warn",
     },
   },
 );

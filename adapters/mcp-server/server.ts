@@ -3035,7 +3035,7 @@ server.tool = function (...args: Parameters<typeof origTool>) {
     const start = Date.now();
     log('mcp', `→ ${toolName}`, JSON.stringify(handlerArgs[0] || {}).slice(0, 120));
     try {
-      const result = await (handler as Function)(...handlerArgs);
+      const result = await handler(...handlerArgs);
       log('mcp', `← ${toolName}`, `ok (${Date.now()-start}ms)`);
       return result;
     } catch {

@@ -7,9 +7,15 @@ import { test, expect, describe } from "bun:test";
 import { registerBibTools } from "../../adapters/paper/tools/bib.ts";
 import { registerTransformTools } from "../../adapters/paper/tools/transform.ts";
 
+/** An MCP tool handler, as the registration stubs below see it. */
+type ToolHandler = (
+  ...args: unknown[]
+) => Promise<{ content: Array<{ type: string; text: string }> }>;
+
+
 function collect(register: (s: any) => void) {
-  const reg: Record<string, { desc: string; schema: any; handler: Function }> = {};
-  register({ tool(name: string, desc: string, schema: any, handler: Function) { reg[name] = { desc, schema, handler }; } });
+  const reg: Record<string, { desc: string; schema: any; handler: ToolHandler }> = {};
+  register({ tool(name: string, desc: string, schema: any, handler: ToolHandler) { reg[name] = { desc, schema, handler }; } });
   return reg;
 }
 
