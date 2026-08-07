@@ -73,7 +73,22 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: scripts/mcp-server/Dockerfile
+          # Path corrected: `scripts/mcp-server/` was renamed to
+          # `adapters/mcp-server/` in the folio migration and this
+          # reference was left behind, so the build resolved a
+          # nonexistent Dockerfile.
+          #
+          # FIXME(build-context): this still cannot succeed from
+          # folio-assistant with `context: .`. The Dockerfile COPYs
+          # `lean-toolchain`, `lakefile.toml`,
+          # `content/<paper>/lean/lakefile.toml` and `tools/hecke-engine/`
+          # from the context root — all CONTENT-repo paths (they exist in
+          # qou, not here) — and internally still COPYs
+          # `scripts/mcp-server/package.json`. Resolving this needs an
+          # owner decision: either the workflow belongs in the content
+          # repo, or the Dockerfile is restructured to build from
+          # folio-assistant. Not guessed at here.
+          file: adapters/mcp-server/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

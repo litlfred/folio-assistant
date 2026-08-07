@@ -10,14 +10,46 @@ parent: Skill instructions
 {% raw %}
 # Content Graph — Editorial Organisation Skill
 
+## Two relations — read this first
+
+A block participates in **two different** dependency relations, and this
+skill is about the first one:
+
+| Relation | Source | Answers | Maintained by |
+|---|---|---|---|
+| **editorial** | `uses[]` | "what must a reader have read to follow this?" | agent / human — it is authored content |
+| **formal** | `lean.ref` → Lean dep graph | "what does this proof actually invoke?" | machine-derived, never hand-written |
+
+They diverge in both directions, legitimately: a proof invokes `simp`
+lemmas nobody needs to read about; a theorem is motivated by an example
+it never formally cites. **Never populate `uses[]` from Lean** — it
+destroys the editorial signal every heuristic below is computed from.
+
+The reorganisation heuristics in this skill (forward references,
+coupling, section balance) are **editorial-only** by design: reading
+order is a question about readers, so mixing formal edges in would make
+the answers wrong, not richer.
+
+Impact questions ("what breaks if this changes?") want the **union** of
+both. Build it with `content/pipeline/content-graph.ts`, whose accessors
+default to the union and take an optional `EdgeKind` filter:
+
+```sh
+bun run content/pipeline/content-graph.ts content/<paper>
+```
+
+Auditing whether `uses[]` is *well used* is a separate skill:
+`uses-editorial-review` (plus the mechanical `uses` QA axis).
+
 ## Overview
 
 This skill analyses the **full content graph** of the project at two levels:
 
 1. **Block graph** — Every content block is a node. Edges represent
-   relationships: `uses[]` (dependency), `interprets` (remark → statement),
-   `proofs[]` (proof → statement), `examples[]` (example → statement).
-   The block graph captures the logical argument structure.
+   **editorial** relationships: `uses[]` (reader-prerequisite),
+   `interprets` (remark → statement), `proofs[]` (proof → statement),
+   `examples[]` (example → statement). The block graph captures the
+   argument structure *as presented to a reader*.
 
 2. **Chapter/section graph** — Chapters and sections are nodes. A
    directed edge from section S₁ to section S₂ exists whenever a block in
