@@ -173,6 +173,38 @@ count_oleans() {
   find "$1/.lake" -name '*.olean' -type f 2>/dev/null | head -20000 | wc -l | tr -d ' '
 }
 
+# A restore stamps how many oleans it laid down. Counting alone cannot
+# distinguish a healthy cache from a GUTTED one: `lake build` re-resolves
+# the dep graph and can evict most of a restored Mathlib, leaving a count
+# that is nonzero — and so passes any `> 0` test — but far below what was
+# restored. Observed in the wild: 7268 -> 459, after which `restore`
+# reported "already present, nothing to do" and refused to repair.
+#
+# The stamp is written INTO `.lake/`, so it dies with the tree it
+# describes and needs no network to read. Checking against the cache
+# branch instead would mean fetching ~1.6 GB of split parts just to
+# answer `status`.
+STAMP_REL=".lake/.lake-cache-stamp"
+
+write_stamp() {  # root count branch
+  printf '%s %s\n' "$2" "$3" > "$1/$STAMP_REL" 2>/dev/null || true
+}
+
+# Echoes the stamped count, or nothing when unstamped (older caches, or
+# a tree built from source). Absence is not an error — it only means the
+# shortfall check cannot run.
+read_stamp_count() {
+  [ -f "$1/$STAMP_REL" ] || return 1
+  awk 'NR==1{print $1}' "$1/$STAMP_REL" 2>/dev/null | grep -E '^[0-9]+$'
+}
+
+# Exit 0 = gutted. A build may legitimately ADD oleans (a package's own
+# modules compile on top of restored deps), so only a SHORTFALL counts.
+is_gutted() {  # root have
+  local want; want=$(read_stamp_count "$1") || return 1
+  [ -n "$want" ] && [ "$2" -lt "$want" ]
+}
+
 cmd_status() {
   local root; root=$(resolve_lake_root)
   local slug pkg
@@ -186,6 +218,13 @@ cmd_status() {
   info "toolchain:  $slug"
   info "branch:     lake-cache/$pkg-$slug"
   info "oleans:     $n"
+  if is_gutted "$root" "$n"; then
+    local want; want=$(read_stamp_count "$root")
+    printf '\n  cache GUTTED — %s oleans on disk, %s were restored.\n' "$n" "$want"
+    printf '  Something evicted them; `lake build` is the usual culprit.\n'
+    printf '  Repair with: %s restore\n' "$PROG"
+    return 3
+  fi
   if [ "$n" -gt 0 ]; then
     printf '\n  cache PRESENT — %s oleans on disk. No restore needed.\n' "$n"
     return 0
@@ -207,9 +246,24 @@ Known packages: $(cmd_list_names | tr '\n' ' ')"
   local br="${BRANCH:-lake-cache/$pkg-$slug}"
 
   local have; have=$(count_oleans "$root")
-  if [ "$have" -gt 0 ]; then
+  if is_gutted "$root" "$have"; then
+    # Repair rather than no-op: the old `> 0` test called this "present"
+    # and refused, so the only recovery was `rm -rf .lake`. Extraction
+    # overlays the existing tree, restoring exactly the evicted files.
+    local want; want=$(read_stamp_count "$root")
+    warn "cache GUTTED — $have oleans on disk, $want were restored. Repairing."
+  elif [ "$have" -gt 0 ]; then
     printf 'cache already present (%s oleans) — nothing to do.\n' "$have"
     printf 'Force a re-restore by removing %s/.lake first.\n' "$root"
+    # Adopt an unstamped tree as its own baseline, so a cache restored by
+    # an older version of this script (or built from source) still gets
+    # shortfall protection from here on. Only ever written when absent —
+    # re-stamping on every call would ratchet the baseline upward and
+    # silently mask a gutting.
+    if ! read_stamp_count "$root" >/dev/null 2>&1; then
+      write_stamp "$root" "$have" "$br (adopted)"
+      info "stamped this tree at $have oleans as the shortfall baseline."
+    fi
     return 0
   fi
 
@@ -278,6 +332,7 @@ Known packages: $(cmd_list_names | tr '\n' ' ')"
     info "different lake-root. Rebuild, then: $PROG seed --branch $br"
     return 3
   fi
+  write_stamp "$root" "$n" "$br"
   printf '\nrestored %s oleans from %s — no rebuild needed.\n' "$n" "$br"
   return 0
 }
@@ -416,8 +471,20 @@ cmd_doctor() {
   printf '\nremote branches:\n'
   cmd_list | tail -n +2
   printf '\nnext step: '
-  if [ "$(count_oleans "$root")" -gt 0 ]; then
-    printf 'cache is present — build directly.\n'
+  local have; have=$(count_oleans "$root")
+  if is_gutted "$root" "$have"; then
+    printf 'cache GUTTED (%s on disk, %s restored) — run `%s restore` to repair.\n' \
+      "$have" "$(read_stamp_count "$root")" "$PROG"
+  elif [ "$have" -gt 0 ]; then
+    # Deliberately NOT "build directly": `lake build` re-resolves the dep
+    # graph and can evict most of a restored Mathlib (7268 -> 459 observed),
+    # so recommending it as the next step after a restore is what destroys
+    # the restore. To CHECK a file, `lean`-direct reuses the oleans and
+    # touches nothing.
+    printf 'cache is present.\n'
+    printf '  verify a file:  LEAN_PATH=<deps> lean path/to/File.lean\n'
+    printf '  build:          lake build  — WARNING: may evict restored oleans;\n'
+    printf '                  re-check with `%s status` afterwards.\n' "$PROG"
   else
     printf 'run `%s restore`.\n' "$PROG"
   fi
