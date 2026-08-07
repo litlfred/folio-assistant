@@ -912,6 +912,29 @@ const PROOF: QaCriterionDefinition[] = [
   // ── Elaboration cost (Lean Refactor adoption, arXiv 2605.20244) ──
   //    Makes refactoring gains measurable. Checkers in
   //    `qa-checkers-cost.ts`, data from `lean-profile-ingest.ts`.
+  // ── Machine-triviality oracle (Nazrin, arXiv 2602.18767) ────────
+  //    SCAFFOLD — the oracle's false-positive rate is UNMEASURED. Kept
+  //    `minor`/warn-only so it cannot gate anything until evaluated.
+  {
+    id: "proof-not-machine-trivial",
+    domain: "proof",
+    description:
+      "ADVISORY, warn-only. A weak CPU-cheap prover (Nazrin-class atomic-tactic " +
+      "oracle) did NOT close this goal in <= 3 atomic tactics from cold. When it " +
+      "does, that is a PROMPT to check whether the statement carries content — " +
+      "the same question the vacuity family asks, five of whose six criteria are " +
+      "agent-adjudicated and therefore expensive. It is NOT a verdict: genuine " +
+      "one-line results exist. Reads `docs/audits/lean-triviality.json`; returns " +
+      "`n/a` when unmeasured or stale, and an empty cache means 'not measured', " +
+      "not 'nothing trivial'. STATUS: the oracle's false-positive rate has not " +
+      "been measured on any corpus — evaluate before promoting the severity.",
+    default_severity: "minor",
+    depends_on: ["lean"],
+    automated: true,
+    applies_to: ["theorem", "lemma", "proposition", "corollary"],
+    lean_granularity: "statement",
+    extra_inputs: ["docs/audits/lean-triviality.json"],
+  },
   {
     id: "proof-compile-cost",
     domain: "proof",
@@ -1872,6 +1895,8 @@ export const EXTENDED_CHECKER_FILE =
 export const USES_CHECKER_FILE = "content/pipeline/qa-checkers-uses.ts";
 /** Hosts the elaboration-cost checkers. */
 export const COST_CHECKER_FILE = "content/pipeline/qa-checkers-cost.ts";
+/** Hosts the machine-triviality oracle checker (scaffold). */
+export const TRIVIALITY_CHECKER_FILE = "content/pipeline/qa-checkers-triviality.ts";
 
 const VOICE_FILE_IDS = new Set<string>([
   "voice-status-leak",
@@ -1898,6 +1923,7 @@ export function getCriterionSourceFile(criterionId: string): string {
   if (criterionId.startsWith("uses-")) return USES_CHECKER_FILE;
   if (criterionId === "proof-compile-cost" || criterionId === "proof-no-cost-regression")
     return COST_CHECKER_FILE;
+  if (criterionId === "proof-not-machine-trivial") return TRIVIALITY_CHECKER_FILE;
   return EXTENDED_CHECKER_FILE;
 }
 

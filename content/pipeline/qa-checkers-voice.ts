@@ -28,6 +28,7 @@ import { readFileSync, existsSync } from "fs";
 import { EXTENDED_AUTOMATED_CHECKERS } from "./qa-checkers-extended";
 import { USES_AUTOMATED_CHECKERS } from "./qa-checkers-uses";
 import { COST_AUTOMATED_CHECKERS } from "./qa-checkers-cost";
+import { TRIVIALITY_AUTOMATED_CHECKERS } from "./qa-checkers-triviality";
 
 export interface CheckerHit {
   file: string;
@@ -1159,4 +1160,6 @@ export const AUTOMATED_CHECKERS: Record<
   // Elaboration-cost measurement + regression guard. Bodies in
   // `qa-checkers-cost.ts`.
   ...COST_AUTOMATED_CHECKERS,
+  // Machine-triviality oracle (scaffold; inert without a cache).
+  ...TRIVIALITY_AUTOMATED_CHECKERS,
 };
