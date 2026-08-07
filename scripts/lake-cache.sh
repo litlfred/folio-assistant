@@ -188,6 +188,32 @@ count_own_oleans() {
   find "$1/.lake/build/lib" -name '*.olean' -type f 2>/dev/null | head -20000 | wc -l | tr -d ' '
 }
 
+# Trace files, which are what Lake actually consults for staleness.
+#
+# THE reason a cache can look full and still not help `lake build`. Lake
+# decides a module is up to date from its `.trace` sibling, not from the
+# `.olean`. An olean with no trace is "out-of-date and needs to be
+# rebuilt" — so Lake rebuilds it, and rebuilding EVICTS the untraced
+# neighbours.
+#
+# Measured on lake-cache/qou-v4-24-0: 7268 oleans, 775 traces. Building
+# ONE module ran 823 targets and left 772 oleans — every survivor had a
+# trace (494 mathlib oleans, 494 traces, zero of 200 sampled missing
+# one). The cache only ever worked for direct `lean` invocations with
+# LEAN_PATH, never for a build.
+count_traces() {
+  find "$1/.lake" -name '*.trace' -type f 2>/dev/null | head -20000 | wc -l | tr -d ' '
+}
+
+# Trace coverage as a percentage of oleans. Below ~90% a `lake build`
+# will rebuild — and evict — the shortfall.
+trace_coverage_pct() {  # root
+  local o t
+  o=$(count_oleans "$1"); t=$(count_traces "$1")
+  [ "$o" -eq 0 ] && { printf '0\n'; return; }
+  printf '%s\n' $(( t * 100 / o ))
+}
+
 # A restore stamps how many oleans it laid down. Counting alone cannot
 # distinguish a healthy cache from a GUTTED one: `lake build` re-resolves
 # the dep graph and can evict most of a restored Mathlib, leaving a count
@@ -233,8 +259,10 @@ cmd_status() {
   info "toolchain:  $slug"
   info "branch:     lake-cache/$pkg-$slug"
   local own; own=$(count_own_oleans "$root")
+  local tr cov; tr=$(count_traces "$root"); cov=$(trace_coverage_pct "$root")
   info "oleans:     $n  (deps + own)"
   info "own pkg:    $own"
+  info "traces:     $tr  (${cov}% coverage)"
   # Gutting is checked first: an evicted tree is the more urgent of the
   # two failures, and it is repairable by re-running restore.
   if is_gutted "$root" "$n"; then
@@ -251,6 +279,13 @@ cmd_status() {
       info "Anything importing the package's own modules still rebuilds, and"
       info "sibling .lean files will not elaborate standalone. Reseed with a"
       info "build that includes the package: $PROG seed (after a full build)."
+    fi
+    if [ "$cov" -lt 90 ]; then
+      warn "trace coverage is only ${cov}% — \`lake build\` WILL rebuild the rest."
+      info "Lake reads .trace, not .olean, to decide staleness, and rebuilding"
+      info "evicts the untraced neighbours. This cache is usable for direct"
+      info "\`lean\` + LEAN_PATH but NOT for a build. Reseed from a tree where"
+      info "traces accompany the oleans."
     fi
     return 0
   fi
@@ -404,7 +439,22 @@ package itself never built. Run a full \`lake build\` in $root first.
 Seeding this would reproduce the bug it is meant to fix."
   fi
 
-  printf 'seeding %s from %s (%s oleans, %s own)\n' "$br" "$root/.lake" "$n" "$own"
+  # Refuse to publish a cache Lake will not trust.
+  #
+  # Oleans without their `.trace` siblings are invisible to Lake's
+  # staleness check: it rebuilds them and evicts them in the process. A
+  # branch seeded that way restores a big number and helps no build —
+  # which is exactly the state lake-cache/qou-v4-24-0 is in (7268 oleans,
+  # 775 traces). Catching it at seed time is the only place it is cheap.
+  local cov; cov=$(trace_coverage_pct "$root")
+  if [ "$cov" -lt 90 ]; then
+    die "refusing to seed '$br': trace coverage is only ${cov}% ($(count_traces "$root") traces for $n oleans).
+Lake reads .trace to decide staleness, so it would rebuild — and evict —
+everything untraced. Seed from a tree where a real \`lake build\`
+produced the traces alongside the oleans."
+  fi
+
+  printf 'seeding %s from %s (%s oleans, %s own, %s%% traced)\n' "$br" "$root/.lake" "$n" "$own" "$cov"
   local tmp; tmp=$(mktemp -d) || die "mktemp failed"
   # shellcheck disable=SC2064
   trap "rm -rf '$tmp'" RETURN
