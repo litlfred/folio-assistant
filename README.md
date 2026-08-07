@@ -16,6 +16,13 @@ content-object model, and a per-content-type skill system.
 
 📖 **Full documentation:** **<https://litlfred.github.io/folio-assistant/>**
 
+🤖 **Are you an LLM agent?** Start with
+**[Agent onboarding](https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html)**
+(source: [`docs/guides/agent-onboarding.md`](docs/guides/agent-onboarding.md)) —
+which repo you are in, your first five minutes, how to find the right skill, the
+content-object model, and the QA sidecar system. `AGENTS.md` is the command and
+convention reference to come back to.
+
 ---
 
 ## What it does

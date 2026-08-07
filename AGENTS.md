@@ -5,6 +5,26 @@ detection). This file is the **agent-generic** source of truth, read natively by
 Claude Code, Gemini CLI, Antigravity, Cursor, Copilot, and others. Tool-specific
 files (`CLAUDE.md`, `GEMINI.md`) should be thin stubs that point here.
 
+> **folio-assistant is the platform, not the content.** It holds the skills,
+> schemas, pipeline, and MCP server an agent uses to author a *folio* — a paper,
+> a WHO SMART Guideline, an IG — which lives in a **separate** repository. If you
+> are about to write subject matter here (a chapter, a constant, a vocabulary),
+> you are either in the wrong repo or writing something that belongs in the
+> folio as data.
+
+## New here? Start with the onboarding guide
+
+**[`docs/guides/agent-onboarding.md`](docs/guides/agent-onboarding.md)** — the
+orientation this file is not. Which repo you are in and why it matters, what to
+run in your first five minutes, how to find the right skill instead of
+improvising one, the content-object triple, the two dependency relations, beans,
+QA sidecars and axes, and where to look things up.
+Published at
+<https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html>.
+
+Read that first. **The rest of this file is a reference** — commands and
+conventions to come back to, not a path through the project.
+
 ## Commands
 
 ```sh
@@ -49,14 +69,6 @@ Full discipline: `.claude/skills/local/todo-manager.md` and
 > Not to be confused with the content-review **feedback** workflow (the
 > `todo-review` skill over `feedback/<paper>/*.ts`) — that is a separate domain
 > feature, not the agent work-plan.
-
-## New here? Read the onboarding guide
-
-`docs/guides/agent-onboarding.md` — what repo you are in, first five
-minutes, how to find the right skill, the content-object model, the two
-dependency relations, QA sidecars/axes, and where to look things up.
-Published at
-<https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html>.
 
 ## At session start
 

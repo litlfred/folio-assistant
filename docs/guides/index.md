@@ -11,6 +11,9 @@ Step-by-step guides for each content type. These describe the **authoring
 formalism** and the **LLM-driven workflow** — they are kept separate from any
 specific content, and any content shown is illustrative only.
 
+- **[Agent onboarding](agent-onboarding.html)** — start here if you are an LLM
+  agent: which repo you are in, first steps, finding skills, the content-object
+  model, QA sidecars and axes, and where to look things up.
 - **[Writing a paper with folio-assistant](writing-a-paper.html)** — the flagship
   tutorial: a full LLM-driven walk-through with a mock chat session and workflow
   diagrams.

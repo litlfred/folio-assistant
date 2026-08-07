@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Agent onboarding
-parent: Guides
+parent: Authoring guides
 nav_order: 0
 ---
 
