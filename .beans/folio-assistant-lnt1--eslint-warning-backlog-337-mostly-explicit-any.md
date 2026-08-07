@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-08-07T18:00:00Z
-updated_at: 2026-08-07T19:55:00Z
+updated_at: 2026-08-07T20:10:00Z
 ---
 
 `bun run lint` now runs (it never could before — no config, and neither
@@ -172,3 +172,53 @@ site, which is the same unsoundness wearing a longer name.
 shape (JSON boundaries, third-party gaps, genuinely-dynamic dispatch, plain
 laziness), decide which buckets get real types and which get a documented
 `unknown` + narrowing, and drain per bucket with the ratchet.
+
+
+## The plan for the last 201 (this is the "plan first" the section above asks for)
+
+Bucketed all 201, and the useful cut is by DOMAIN, not by syntax. The headline:
+**108 of 201 (54%) annotate something this repo already has a type for.** They
+are not missing types; they are unused ones.
+
+| track | count | the type that already exists |
+|---|---:|---|
+| content structure | 55 | `Block`, `Section`, `Chapter`, `Paper` in `schemas/types.ts` (verified present, lines 963/1031/1084/1119) |
+| markdown / LaTeX AST | 53 | `Root`, `Parent`, `Node`, `RootContent` from `@types/mdast` (verified installed) |
+| genuinely heterogeneous | 93 | none — case by case |
+
+Most-annotated identifiers, which is what makes track 1 obvious:
+`block` ×19, `node` ×18, `nodes` ×7, `todo` ×5, `todos` ×4, `sec` ×4.
+
+Concentration — 32 files, but heavily skewed:
+
+    43  adapters/mcp-server/server.ts     (mixed: content structure + escape casts)
+    30  content/pipeline/render-latex.ts  (almost entirely AST)
+    20  adapters/paper/resolver.ts        (content structure)
+    11  scripts/generate-docs.ts
+    10  content/pipeline/validate-bib.ts
+
+### Suggested order
+
+1. **Track 2 (AST) first**, starting with `render-latex.ts` — 30 of the 53 in
+   one file, one type family (`mdast`), and the file is pure transformation so
+   the blast radius is contained. Good calibration for whether the mdast types
+   fit the actual traversal or need narrowing helpers.
+2. **Track 1 (content structure)**, starting with `adapters/paper/resolver.ts`
+   (20, homogeneous) then the content-structure half of `server.ts`. Watch for
+   the case where `any` is hiding a genuine schema gap — if `Block` does not
+   actually have the field the code reads, that is a finding, not a cast to
+   write.
+3. **Track 3 last**, per site, and expect some of it to stay `any` with a
+   comment saying why. That is a legitimate outcome.
+
+Ratchet per track: drive the track to zero in its files, keep the rule on
+`warn` until ALL 201 are gone, then promote once. Unlike the earlier rungs
+this rule cannot be promoted incrementally — a rule is global.
+
+### Why not a scripted sweep
+
+The four drained rungs each had one obviously-correct rewrite, so a script plus
+`tsc` + tests was a safe net. `any` -> `unknown` is not that: it either fails
+to compile or pushes a cast to every call site, which is the same unsoundness
+with a longer name. Each site is a decision. Estimated at a few focused
+sessions per track, not one pass.
