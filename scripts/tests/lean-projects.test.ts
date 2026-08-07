@@ -114,12 +114,29 @@ for (const pkg of LEAN_PACKAGES) {
         expect(content.trim().length).toBeGreaterThan(0);
       });
 
-      test(`${rel} has import or is root module`, () => {
+      test(`${rel} declares something or imports something`, () => {
+        // This used to assert `hasImport || isRoot`, on the theory that a
+        // module with no `import` was suspect. It is not: `Nat`, `ℕ`, `List`,
+        // `structure`, `inductive` and `class` are all core Lean, so a module
+        // can be entirely self-contained and correct. Checked against the
+        // five QOU modules it flagged — four compile clean and sorry-free
+        // with no imports at all. It caught the one genuinely broken file
+        // (`IsotopeRecord.lean`, accessors defined outside the structure's
+        // namespace so `r.A` could not resolve) only by coincidence: the
+        // defect was that it did not COMPILE, which no import check detects.
+        //
+        // What a cheap static test can honestly assert is that the file is
+        // not empty — it either declares something or pulls something in.
+        // Compilation is the Lean build's job, not this suite's.
         const content = readFileSync(file, "utf-8");
         const basename = file.split("/").pop()?.replace(".lean", "");
         const hasImport = /^import\s/m.test(content);
+        const hasDecl =
+          /^(private\s+|protected\s+|noncomputable\s+|partial\s+|unsafe\s+)*(theorem|lemma|def|abbrev|structure|inductive|class|instance|axiom|example|opaque)\s/m.test(
+            content,
+          );
         const isRoot = basename === pkg.lib;
-        expect(hasImport || isRoot).toBe(true);
+        expect(hasImport || hasDecl || isRoot).toBe(true);
       });
     }
 

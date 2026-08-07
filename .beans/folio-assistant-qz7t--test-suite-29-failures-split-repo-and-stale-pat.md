@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-08-07T16:30:00Z
-updated_at: 2026-08-07T17:05:00Z
+updated_at: 2026-08-07T17:45:00Z
 ---
 
 Claimed on branch `claude/agent-4673-validation-9hffrd`.
@@ -111,10 +111,42 @@ CONTAINERISED workflow must use one of the two maintained images.
   Same "platform must not privilege one folio" wart as the paper name in
   `q-usage-audit.ts`. Renaming it touches a live publish pipeline I cannot
   exercise here, so it is flagged, not fixed.
-- **6 real failures in qou's Lean tree**, surfaced once these tests actually
-  run against a folio: `.lean` files with no `import` that are not root
-  modules (`QOU/Mass/HeckeTowerMackey.lean`,
-  `QOU/MassTheory/DeuteronNaiveZMagnitude.lean`,
-  `QOU/QuantumObservableUniverse/exists_axiom_2_observability.lean`,
-  `UGB/UnitalGroebner/UnitalGroebnerBasis.lean`, +2). Genuine content
-  findings, qou-side, unclaimed.
+- **`qou-paper-builder`** — DONE, see the paired commits (platform bc8937a,
+  qou e0dce1e2). Image, Dockerfile and build workflow moved to qou;
+  `publish.yml` takes a required `builder_image` input.
+
+## Follow-up: the 6 Lean findings — resolved, and the heuristic was wrong
+
+Investigated all six. **One was a real bug; five were false positives**, and
+the check caught the real one only by coincidence.
+
+- `QOU/BraidKnot/IsotopeRecord.lean` — genuinely broken, did not compile.
+  `def A` / `def n_strands` were declared at `QOU.BraidKnot` level, so the
+  `r.A` dot-notation in `A_eq_Z_plus_N` resolved to
+  `QOU.BraidKnot.IsotopeRecord.A`, which did not exist. Wrapped the accessors
+  in `namespace IsotopeRecord`. Now compiles, zero warnings, zero sorry, and
+  both theorems depend on NO axioms. Also gave `canonicalKnotOperatorList`'s
+  unused binders underscores and documented that its body is `[]` for every
+  input — a signature placeholder, not a construction.
+- The other four QOU files compile **clean and sorry-free with no imports at
+  all**. `Nat`, `ℕ`, `List`, `structure`, `inductive`, `class` are core Lean;
+  a self-contained module is fine.
+- `UGB/UnitalGroebner/UnitalGroebnerBasis.lean` is a self-declared placeholder
+  (an empty `structure`).
+
+So `has import or is root module` was a bad proxy: the real defect was
+non-compilation, which no import check detects. Replaced with what a cheap
+static test can honestly assert — the file declares something or imports
+something (i.e. is not empty). Compilation is the Lean build's job.
+
+Against the qou folio these tests now run **3251 pass / 0 fail**.
+
+## Still open (owner's call, not mine)
+
+- **Two blocks claim one declaration.** `unital-groebner-basis.ts` and
+  `unital.ts` both set `lean.ref` to
+  `ugb:UGB.UnitalGroebner.UnitalGroebnerBasis`. `lean-ref-owns-decl` already
+  flags this as a **major fail** — pre-existing and detected, just unacted-on.
+  Deciding which block owns the declaration is an editorial call. Both also
+  record `validation: "not_checked"` where the schema's `"stub"` is exactly
+  accurate for an empty placeholder structure.
