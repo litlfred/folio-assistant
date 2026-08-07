@@ -511,7 +511,13 @@ function run(): void {
           hashes.extra_inputs.length > 0 ? hashes.extra_inputs : undefined,
         deps_hash: hashes.deps_hash,
         last_run_at: nowIso,
-        last_run_sha: headSha,
+        // The PLATFORM's HEAD, not `headSha`. This sidecar lives in and
+        // describes folio-assistant's own checker scripts; `headSha` is the
+        // CONTENT repo's HEAD (correct for a block's `reviewed_sha`, since
+        // that verdict is about content at that commit). Stamping the
+        // content SHA here recorded a foreign repo's commit as this repo's
+        // "HEAD at last run".
+        last_run_sha: gitHeadSha(REPO_ROOT),
         engine_version: engineVersion,
       };
       saveQaScriptSidecar(sidecar, REPO_ROOT);

@@ -85,9 +85,17 @@ export const GIT_SHA_UNKNOWN = "unknown";
  * Current HEAD SHA (full). Returns the `unknown` sentinel outside
  * a git repo.
  */
-export function gitHeadSha(): string {
+export function gitHeadSha(repoRoot?: string): string {
   try {
-    return execFileSync("git", ["rev-parse", "HEAD"], {
+    // `repoRoot` matters once the pipeline is run from a DIFFERENT repo
+    // than the one being described. Without `-C`, this reads
+    // `process.cwd()` — the content repo — which is right for a block
+    // verdict's `reviewed_sha` and wrong for anything recording the
+    // platform's own state.
+    const args = repoRoot
+      ? ["-C", repoRoot, "rev-parse", "HEAD"]
+      : ["rev-parse", "HEAD"];
+    return execFileSync("git", args, {
       stdio: ["ignore", "pipe", "ignore"],
     })
       .toString()
@@ -837,6 +845,30 @@ export function saveQaScriptSidecar(
   sidecar: QaScriptSidecar,
   repoRoot: string = process.cwd(),
 ): void {
+  // Skip the write when nothing SUBSTANTIVE changed.
+  //
+  // `last_run_at` is a fresh timestamp on every sweep, so an unconditional
+  // write dirtied every script sidecar in this repo each time any consumer
+  // ran a sweep — 76 modified files after one qou run, none of them a real
+  // change. That churn is not free: it is indistinguishable, in `git
+  // status`, from an actual checker-hash movement.
+  //
+  // Everything except the two `last_run_*` fields is content-derived, so
+  // comparing on those alone is the right test: identical hashes mean the
+  // recorded state is already accurate and the timestamp adds nothing.
+  const prev = loadQaScriptSidecar(sidecar.criterion_id, repoRoot);
+  if (
+    prev &&
+    prev.source_file === sidecar.source_file &&
+    prev.script_hash === sidecar.script_hash &&
+    prev.script_commit_sha === sidecar.script_commit_sha &&
+    prev.deps_hash === sidecar.deps_hash &&
+    prev.engine_version === sidecar.engine_version &&
+    JSON.stringify(prev.extra_inputs ?? []) ===
+      JSON.stringify(sidecar.extra_inputs ?? [])
+  ) {
+    return;
+  }
   const p = scriptSidecarPath(sidecar.criterion_id, repoRoot);
   // Use `dirname(p)` (not `join(p, "..")`) — the latter happens to
   // normalise to the parent on POSIX but reads as "go up from this
