@@ -11,13 +11,20 @@ nav_order: 5
 The cache branches are currently unusable for builds. This is the exact
 procedure to rebuild them.
 
-> **This no longer needs a machine with unrestricted network.** The
-> blocker was elan: its hosts (`elan.lean-lang.org`,
-> `release.lean-lang.org`) are unreachable from the cloud authoring
-> container. But elan is only a fetcher, and the same toolchain is a
-> GitHub release asset, which *is* reachable. `lake-cache.sh
-> install-toolchain` fetches it directly — verified in-container, static
-> libs and all, with `lake exe` linking and running.
+> **Step 1 no longer needs elan, or unrestricted network.** elan's hosts
+> (`elan.lean-lang.org`, `release.lean-lang.org`) are unreachable from
+> the cloud authoring container, but elan is only a fetcher and the same
+> toolchain is a GitHub release asset, which *is* reachable.
+> `lake-cache.sh install-toolchain` fetches it directly — verified
+> in-container, static libs and all, with `lake exe` linking and running
+> (mathlib's `cache:exe` builds and links there).
+>
+> **Step 2 still does.** Mathlib's cache CDN
+> (`mathlib4.lean-cache.cloud`, `lakecache.blob.core.windows.net`) is
+> blocked from that same container, and there is no GitHub-hosted mirror
+> of Mathlib's oleans to fall back on. These are two independent egress
+> restrictions — a working toolchain does **not** imply a reachable
+> cache. Step 2 onward still needs CI or a local machine.
 
 1. TOC
 {:toc}

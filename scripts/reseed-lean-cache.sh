@@ -243,6 +243,29 @@ if phase_wanted cache; then
   if [ "$cov" -ge 90 ]; then
     info "trace coverage already ${cov}% — skipping"
   else
+    # Reachability FIRST. `cache get` resolves every module before it
+    # downloads, so an unreachable CDN surfaces as ~7300 individual
+    # "Transfer failed … CONNECT tunnel failed, response 403" lines and a
+    # final "Downloaded: 0 file(s)" — minutes of output that looks like a
+    # cache problem and is actually egress. Observed here: the toolchain
+    # host is reachable and `cache:exe` links and runs, while the cache
+    # CDN itself is blocked. These are INDEPENDENT restrictions; do not
+    # infer one from the other.
+    if [ "$DRY" -eq 0 ] \
+       && ! curl -sS -o /dev/null --max-time 20 -I https://mathlib4.lean-cache.cloud/ 2>/dev/null; then
+      die "Mathlib's cache CDN is unreachable from here.
+
+  mathlib4.lean-cache.cloud        no route
+  lakecache.blob.core.windows.net  no route
+
+\`lake exe cache get\` would attempt every module and fail every one.
+This is separate from the toolchain: \`install-toolchain\` works over
+github.com, but no equivalent GitHub-hosted mirror of Mathlib's oleans
+exists, so there is nothing to fall back to.
+
+Run this phase where the CDN is reachable — CI, or a local machine —
+or build from source with --phase build (hours)."
+    fi
     info "coverage ${cov}% — fetching upstream cache (minutes, vs hours from source)"
     run "cd '$ABS_LAKE' && lake exe cache get"
   fi

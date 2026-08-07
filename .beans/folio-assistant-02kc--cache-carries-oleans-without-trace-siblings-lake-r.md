@@ -36,3 +36,40 @@ skips the download otherwise), then `lake exe cache get` for a traced
 Mathlib in minutes rather than an hours-long from-source build, then
 `lake build`, then seed to a `-test` branch and verify a restore from it
 before force-pushing production.
+
+## Still blocked — but the blocker has moved, and is now pinned exactly
+
+"Blocked on ga7e" is no longer right. ga7e is resolved: a linkable
+toolchain is obtainable locally from GitHub releases, and mathlib's
+`cache:exe` builds and LINKS here (20/20 targets).
+
+The fast route is still unavailable, for a **different and independent**
+reason — Mathlib's cache CDN is unreachable from this container:
+
+    mathlib4.lean-cache.cloud         no route
+    lakecache.blob.core.windows.net   no route
+    github.com release assets         200   (control — toolchain route)
+
+Measured: `lake exe cache get` in content/quantum-observable-universe/lean
+resolved 7335 modules, attempted every one, downloaded zero, each failing
+`CONNECT tunnel failed, response 403`.
+
+The toolchain had a reachable mirror because Lean publishes it as a
+GitHub release asset. Mathlib's oleans have no such mirror, so the same
+trick does not transfer.
+
+### What this means for the route choice
+
+Both routes in the "Blocked on ga7e" section above need revisiting:
+
+- `lake exe cache get` — now blocked at the CDN, not at the linker.
+  Works in CI, where the CDN is reachable.
+- `lake build` from source — unchanged; still hours, still evicts as it
+  goes while trace coverage is 0%.
+
+So the conclusion "belongs in CI" survives, but the REASON recorded for
+it was wrong, and would have sent the next session hunting the toolchain
+again.
+
+`reseed-lean-cache.sh` phase 2 now probes the CDN up front and dies with
+the host names, instead of emitting ~7300 identical failures.

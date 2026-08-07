@@ -77,3 +77,34 @@ created.
 A related one in the same block: the "already installed" probe searched
 `~/.elan/toolchains` tree-wide, so a linkable toolchain of any OTHER
 version satisfied it and skipped the install. Now scoped to the pin.
+
+## Correction — I overclaimed the downstream consequence
+
+The section above ends "So `lake exe cache get` … is available locally."
+**That is wrong**, and running it is what showed so.
+
+What is true: `lake exe cache get` now BUILDS and LINKS. In the real qou
+package it compiled all 20 targets and produced `cache:exe` — the
+strongest possible confirmation that ga7e itself is fixed, since that
+binary is exactly what could not be linked before.
+
+What is false: that it can then DOWNLOAD. Mathlib's cache CDN is blocked
+by the same egress policy, independently of elan:
+
+    mathlib4.lean-cache.cloud         no route
+    lakecache.blob.core.windows.net   no route
+    github.com release assets         200   (control)
+
+Result: 7335 modules attempted, 7335 failed, `Downloaded: 0 file(s)`,
+every one `CONNECT tunnel failed, response 403`.
+
+So there are TWO independent restrictions and I collapsed them into one.
+Fixing the toolchain does not imply a reachable cache, and no
+GitHub-hosted mirror of Mathlib's oleans exists to fall back on the way
+one did for the toolchain.
+
+**ga7e is still resolved** — its subject is the toolchain, and that is
+demonstrably fixed. What does not follow is 02kc's unblocking; see there.
+
+Phase 2 of `reseed-lean-cache.sh` now probes the CDN before starting, so
+this fails in one line instead of ~7300.
