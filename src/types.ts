@@ -19,18 +19,22 @@ export const ROLE_LEVELS: Record<UserRole, number> = {
 
 // ── Feedback types ───────────────────────────────────────────────
 
-export interface FeedbackItem {
-  id: string;
-  summary: string;
-  comment?: string;
-  status: "open" | "in_progress" | "blocked" | "resolved" | "wontfix";
-  priority: "low" | "medium" | "high" | "critical";
-  origin: "human" | "agent";
-  author: string;
-  authorEmail: string;
-  assignee: string;
-  createdAt: string;
-}
+/**
+ * Re-exported, not redeclared.
+ *
+ * This was a second, hand-written `FeedbackItem` that had drifted from the one
+ * in `schemas/types.ts` — the one `FeedbackItemSchema` validates against and
+ * the one every feedback file on disk is written as (`satisfies
+ * FeedbackItem[]`). The copy narrowed `origin` to `"human" | "agent"`, so a
+ * `"qc"`-origin item (the validation pipeline's own output, and a documented
+ * `TodoOrigin`) was a type error to pass through this layer; it also made
+ * `comment` optional and `author`/`authorEmail`/`assignee` required, both the
+ * opposite of the schema, and omitted `targetLabel`, `updatedAt`, `updatedBy`,
+ * `data` and `related` entirely. Nothing caught the divergence because every
+ * call site in between was typed `any`.
+ */
+import type { FeedbackItem, PaperMacro } from "../schemas/types.js";
+export type { FeedbackItem };
 
 export interface NewFeedback {
   summary: string;
@@ -116,9 +120,16 @@ export interface ResolvedDocument {
   authors: string[];
   affiliations?: string[];
   date?: string;
-  macros?: Record<string, string>;
+  /** `Paper.macros` is `Record<string, PaperMacro>` — `{ tex, unicode? }`
+   *  objects, which is what the viewer reads (`buildKatexMacros` uses
+   *  `def.tex`). This declared `Record<string, string>`; the values passed
+   *  through untouched so nothing broke at runtime, but the type was a lie and
+   *  any consumer doing string work on them would get "[object Object]". Same
+   *  correction as `PaperOutline` in the MCP resolver; surfaced here once the
+   *  paper import stopped being `as any`. */
+  macros?: Record<string, PaperMacro>;
   chapters: ResolvedChapter[];
-  todos?: unknown[];
+  todos?: FeedbackItem[];
   branch: string;
   /** Flattened O(1) lookup: rootName → block. */
   blocksByName?: Map<string, ResolvedBlock>;

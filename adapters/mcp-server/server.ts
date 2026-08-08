@@ -19,8 +19,18 @@
  * @module scripts/mcp-server/server
  */
 
-import type { Paper, Chapter, Block, PaperMacro } from "../../schemas/types";
-import { leanStatusBucket } from "../../content/pipeline/render-latex";
+import type { Paper, Chapter, Block, PaperMacro, FeedbackItem, Section, RenderedAsset, Folio } from "../../schemas/types";
+import { FeedbackItemSchema } from "../../schemas/constraints";
+import {
+  INVALID_ENUM, parseTodoPriority, parseTodoStatus, TODO_PRIORITIES, TODO_STATUSES,
+} from "../../src/core/feedback.js";
+// `renderBlock` was reached through `await import(join(REPO_ROOT, …))`, which
+// types as `any` — so nothing checked what was handed to it, and a
+// `ResolvedBlock` went in for two years where a `Block` was declared. The
+// module is already loaded eagerly for `leanStatusBucket`, so the dynamic
+// import deferred nothing; importing it here is what makes the call site
+// typecheck.
+import { leanStatusBucket, renderBlock } from "../../content/pipeline/render-latex";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { registerRenderTools } from "./tools/render.js";
@@ -100,18 +110,43 @@ function parseFeedbackTs(content: string): unknown[] {
 }
 
 /** Serialize feedback items to TypeScript source. */
-function serializeFeedbackTs(items: unknown[]): string {
+function serializeFeedbackTs(items: FeedbackItem[]): string {
   const json = JSON.stringify(items, null, 2);
   return `import type { FeedbackItem } from "../../schemas/types";\n\nexport default ${json} satisfies FeedbackItem[];\n`;
 }
 
-function readFeedback(paperId: string, rootName: string): unknown[] {
+/**
+ * Read one feedback file's items.
+ *
+ * The file is written only by `writeFeedback`, which serializes with
+ * `satisfies FeedbackItem[]` — so `FeedbackItem` is the contract, and an entry
+ * that fails it is a corruption rather than a supported shape. It is still
+ * RETURNED: every write path here is read-modify-write over the whole file
+ * (`/api/feedback/{create,update,delete}` read all items, touch one, and hand
+ * the array straight back to `writeFeedback`), so silently dropping a
+ * malformed entry at read time would delete somebody's feedback from `main` on
+ * the next unrelated edit. Non-conforming entries are logged instead, which is
+ * the part that was missing: this used to return `unknown[]` and every caller
+ * cast it to `any[]`, so a corrupt entry produced neither a type error nor a
+ * log line — just `undefined` flowing into a status filter.
+ */
+function readFeedback(paperId: string, rootName: string): FeedbackItem[] {
   const p = feedbackPath(paperId, rootName);
   if (!existsSync(p)) return [];
-  try { return parseFeedbackTs(readFileSync(p, "utf-8")); } catch { return []; }
+  let items: unknown[];
+  try { items = parseFeedbackTs(readFileSync(p, "utf-8")); } catch { return []; }
+  return items.map((item, i) => {
+    const parsed = FeedbackItemSchema.safeParse(item);
+    if (!parsed.success) {
+      log("feedback", `malformed item retained: ${paperId}/${rootName}[${i}]`,
+        parsed.error.issues.map((iss) => `${iss.path.join(".") || "<root>"}: ${iss.message}`).join("; "));
+    }
+    // Retained regardless — see the note above on read-modify-write.
+    return item as FeedbackItem;
+  });
 }
 
-function writeFeedback(paperId: string, rootName: string, todos: unknown[]): void {
+function writeFeedback(paperId: string, rootName: string, todos: FeedbackItem[]): void {
   const ts = serializeFeedbackTs(todos);
 
   // Write to main repo feedback/ (for immediate reads)
@@ -214,8 +249,8 @@ function commitFeedbackToMain(paperId: string, rootName: string, content: string
 }
 
 /** List all feedback items across all papers, optionally filtered by status. */
-function listAllFeedback(status?: string): { paperId: string; rootName: string; todo: any }[] {
-  const results: { paperId: string; rootName: string; todo: any }[] = [];
+function listAllFeedback(status?: string): { paperId: string; rootName: string; todo: FeedbackItem }[] {
+  const results: { paperId: string; rootName: string; todo: FeedbackItem }[] = [];
   if (!existsSync(FEEDBACK_DIR)) return results;
   for (const paperId of readdirSync(FEEDBACK_DIR)) {
     const paperFbDir = join(FEEDBACK_DIR, paperId);
@@ -224,7 +259,7 @@ function listAllFeedback(status?: string): { paperId: string; rootName: string; 
         if (!file.endsWith(".ts")) continue;
         const rootName = file.replace(/\.ts$/, "");
         const todos = readFeedback(paperId, rootName);
-        for (const t of todos as any[]) {
+        for (const t of todos) {
           if (!status || t.status === status) {
             results.push({ paperId, rootName, todo: t });
           }
@@ -238,25 +273,11 @@ function listAllFeedback(status?: string): { paperId: string; rootName: string; 
 // ── Content resolution (dynamic, no static JSON) ────────────────
 
 const CONTENT_DIR = resolve(REPO_ROOT, "content");
+import { leanPackageByName } from "../../schemas/lean-packages.js";
 import {
-  leanPackageByName,
-  parseLeanRef,
-  type ParsedLeanRef,
-} from "../../schemas/lean-packages.js";
-
-/**
- * Parse a block's `lean.ref` URI; returns `undefined` on missing or
- * malformed refs (so callers degrade to sibling-only resolution).
- */
-function tryParseLeanRef(blk: any): ParsedLeanRef | undefined {
-  const ref = blk?.lean?.ref;
-  if (typeof ref !== "string" || ref.length === 0) return undefined;
-  try {
-    return parseLeanRef(ref);
-  } catch {
-    return undefined;
-  }
-}
+  blockCaption, blockExamples, blockLean, blockProofs, blockTex,
+  isSectionRef, sectionBlockNames, tryParseLeanRef,
+} from "../manifest-entries.js";
 
 /**
  * Resolve the Lean source for a block across branch-backed storage.
@@ -264,7 +285,7 @@ function tryParseLeanRef(blk: any): ParsedLeanRef | undefined {
  * but operates against the MCP server's git helpers.
  */
 function resolveLeanSource(
-  blk: any,
+  blk: Block,
   chRel: string,
   rootName: string,
   // `string | undefined`, matching `readFileBranch` (which this forwards to)
@@ -272,7 +293,7 @@ function resolveLeanSource(
   // Declaring it `string` was simply narrower than every party involved.
   branch: string | undefined,
 ): string | undefined {
-  if (!blk?.lean) return undefined;
+  if (!bLean(blk)) return undefined;
   const parsed = tryParseLeanRef(blk);
 
   // 1. sibling .lean file
@@ -333,11 +354,12 @@ interface ResolvedRenderedAsset {
  * every `blockStatus(blk)` read in this file was `undefined`. It is derived from the
  * block's `lean` field here, via the one existing mapper.
  */
-const bLean = (b: Block) => ("lean" in b ? b.lean : undefined);
-const bProofs = (b: Block) => ("proofs" in b ? b.proofs : undefined);
-const bExamples = (b: Block) => ("examples" in b ? b.examples : undefined);
-const bTex = (b: Block) => ("tex" in b ? b.tex : undefined);
-const bCaption = (b: Block) => ("caption" in b ? b.caption : undefined);
+// Shared with `adapters/paper/resolver.ts`, which needs the same five.
+const bLean = blockLean;
+const bProofs = blockProofs;
+const bExamples = blockExamples;
+const bTex = blockTex;
+const bCaption = blockCaption;
 const bSimulator = (b: Block) => ("simulator" in b ? b.simulator : undefined);
 const bHtml = (b: Block) => ("html" in b ? b.html : undefined);
 const bViews = (b: Block) => ("views" in b ? b.views : undefined);
@@ -379,7 +401,7 @@ interface ResolvedBlock {
   tags?: string[];
   rendered?: ResolvedRenderedAsset[];
   md: string;
-  todos?: unknown[];
+  todos?: FeedbackItem[];
 }
 
 interface ResolvedSection {
@@ -403,7 +425,7 @@ interface ResolvedChapter {
    *  lookup — declared here for the first time. */
   dir?: string;
   sections: ResolvedSection[];
-  todos?: unknown[];
+  todos?: FeedbackItem[];
 }
 
 interface ResolvedPaper {
@@ -413,7 +435,7 @@ interface ResolvedPaper {
   affiliations?: string[];
   date?: string;
   chapters: ResolvedChapter[];
-  todos?: unknown[];
+  todos?: FeedbackItem[];
   /** Flattened O(1) lookup: rootName → block. Not serialized to API responses. */
   blocksByName?: Map<string, ResolvedBlock>;
 }
@@ -428,32 +450,13 @@ interface FolioEntry {
   stats: { chapters: number; blocks: number; proved: number; todos: number };
 }
 
-/**
- * Flatten a raw section manifest into the ordered list of block root-names it
- * contributes: the section's own `blocks`, then each subsection's `blocks` in
- * declaration order.
- *
- * The viewer / MCP resolution layer has no subsection nesting, so subsection
- * content is surfaced inline under the parent section, in the same order the
- * LaTeX renderer emits it (parent blocks first, then each `\subsection` with
- * its blocks). Without this, blocks living only inside `subsections[]` never
- * reach any resolver consumer and the section renders empty in the viewer.
- */
-function sectionBlockNames(sec: any): string[] {
-  const own: string[] = Array.isArray(sec?.blocks) ? sec.blocks : [];
-  const subs: string[] = Array.isArray(sec?.subsections)
-    ? sec.subsections.flatMap((s: any) => (s && Array.isArray(s.blocks) ? s.blocks : []))
-    : [];
-  return subs.length ? [...own, ...subs] : own;
-}
-
 async function resolveFolio(branch?: string): Promise<{ title: string; papers: FolioEntry[]; branch: string }> {
   const br = branch;
   const folioRel = "content/folio.ts";
-  let folioData: { title: string; papers: Array<{ dir: string; title?: string; description?: string; tags?: string[] }> };
+  let folioData: Folio;
 
   if (fileExistsBranch(br, folioRel)) {
-    folioData = (await importTsBranch(br, folioRel)) as any;
+    folioData = await importTsBranch<Folio>(br, folioRel);
   } else {
     // Auto-discover: scan content/ for directories with matching .ts manifests
     const dirs = listDirBranch(br, "content").filter(d => {
@@ -473,15 +476,20 @@ async function resolveFolio(branch?: string): Promise<{ title: string; papers: F
         const chRel = `content/${ref.dir}/${chRef.dir}/${chRef.dir}.ts`;
         if (!fileExistsBranch(br, chRel)) continue;
         chapCount++;
-        const ch = (await importTsBranch(br, chRel)) as any;
+        const ch = await importTsBranch<Chapter>(br, chRel);
         for (const sec of ch.sections || []) {
-          if (!("blocks" in sec)) continue;
+          // Was `!("blocks" in sec)`, which also skipped inline sections that
+          // keep all their blocks in `subsections[]` — so `sectionBlockNames`,
+          // whose entire job is to reach those, never saw one here and the
+          // folio landing page undercounted them. `resolvePaper` below already
+          // used the reference test; these now agree.
+          if (isSectionRef(sec)) continue;
           for (const rootName of sectionBlockNames(sec)) {
             const blkRel = `content/${ref.dir}/${chRef.dir}/${rootName}.ts`;
             if (!fileExistsBranch(br, blkRel)) continue;
             blockCount++;
             try {
-              const blk = (await importTsBranch(br, blkRel)) as any;
+              const blk = await importTsBranch<Block>(br, blkRel);
               // `blockStatus(blk)` does not exist. `FormalizationStatus` is
               // documented in the schema as "derived at build time from .lean
               // file content. NOT stored in content block .ts manifests", so
@@ -489,7 +497,7 @@ async function resolveFolio(branch?: string): Promise<{ title: string; papers: F
               // the signal, mapped by the one existing mapper.
               if (leanStatusBucket(bLean(blk)) === "compiled") provedCount++;
               const fb = readFeedback(ref.dir, rootName);
-              if (fb.length) todoCount += fb.filter((t: any) => t.status !== "resolved" && t.status !== "wontfix").length;
+              if (fb.length) todoCount += fb.filter((t) => t.status !== "resolved" && t.status !== "wontfix").length;
             } catch {}
           }
         }
@@ -542,8 +550,8 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
 
     const sections: ResolvedSection[] = [];
     for (const sec of ch.sections || []) {
-      if ("name" in sec && !("blocks" in sec)) continue;
-      const section = sec as any;
+      if (isSectionRef(sec)) continue;
+      const section = sec;
       const resolveBlocksList = async (blockNames: string[]) => {
         const res: ResolvedBlock[] = [];
         for (const rootName of blockNames) {
@@ -556,7 +564,7 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
             const blockTodos = feedback.length ? [...feedback] : undefined;
             const leanSource = resolveLeanSource(blk, chRel, rootName, br);
             const rendered = blk.rendered?.map(
-              (r: any) => ({ ...r, url: `/api/content-asset/${id}/${chRef.dir}/${r.url}` })
+              (r: RenderedAsset) => ({ ...r, url: `/api/content-asset/${id}/${chRef.dir}/${r.url}` })
             );
             const figFile = blk.kind === "diagram" && blk.meta?.file as string | undefined;
             const figRendered = figFile ? [{
@@ -583,9 +591,12 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
         subsections = [];
         for (const sub of section.subsections) {
           if (!sub) continue;
-          const subBlockNames = Array.isArray(sub.blocks) ? sub.blocks : [];
-          const subBlocks = await resolveBlocksList(subBlockNames);
-          subsections.push({ title: sub.title, label: sub.label, blocks: subBlocks });
+          // A bare `SectionRef` subsection is not resolvable at this level —
+          // nothing here reads `name`/`uri` — so it contributes no blocks,
+          // exactly as before when `sub.blocks` was simply absent.
+          const inline = isSectionRef(sub) ? undefined : sub;
+          const subBlocks = await resolveBlocksList(inline?.blocks ?? []);
+          subsections.push({ title: inline?.title ?? "", label: inline?.label, blocks: subBlocks });
         }
       }
 
@@ -638,10 +649,14 @@ interface CacheEntry<T> {
   ts: number;
 }
 
-const paperOutlineCache = new Map<string, CacheEntry<any>>();
-const chapterCache = new Map<string, CacheEntry<any>>();
+// Each cache holds exactly one shape; declaring that is what lets `cacheGet`
+// return it. While these were `CacheEntry<any>` the reader at the chapter
+// cache had to launder its result through `as unknown as ChapterDetail`, and
+// the writer through `as any` — two casts standing in for one type argument.
+const paperOutlineCache = new Map<string, CacheEntry<PaperOutline>>();
+const chapterCache = new Map<string, CacheEntry<ChapterDetail>>();
 const sectionCache = new Map<string, CacheEntry<ResolvedSection>>();
-const fullPaperCache = new Map<string, CacheEntry<any>>();
+const fullPaperCache = new Map<string, CacheEntry<ResolvedPaper & { branch: string }>>();
 
 function cacheGet<T>(cache: Map<string, CacheEntry<T>>, key: string): T | null {
   const entry = cache.get(key);
@@ -722,9 +737,8 @@ async function resolvePaperOutline(id: string, branch?: string): Promise<PaperOu
 
     const sections: ChapterOutline["sections"] = [];
     for (const sec of ch.sections || []) {
-      if ("name" in sec && !("blocks" in sec)) continue;
-      const section = sec as { title: string; label?: string; blocks: string[] };
-      sections.push({ title: section.title, label: section.label, blockCount: sectionBlockNames(section).length });
+      if (isSectionRef(sec)) continue;
+      sections.push({ title: sec.title, label: sec.label, blockCount: sectionBlockNames(sec).length });
     }
 
     chapters.push({ number: chapterNumber, tabLabel: ch.tabLabel, title: ch.title, label: ch.label, dir: chRef.dir, sections });
@@ -761,14 +775,14 @@ interface ChapterDetail {
   label?: string;
   dir: string;
   sections: SectionStub[];
-  todos?: unknown[];
+  todos?: FeedbackItem[];
 }
 
 async function resolveChapterDetail(
   paperId: string, chapterDir: string, branch?: string
 ): Promise<ChapterDetail | null> {
   const cacheKey = `${paperId}:${branch || "HEAD"}:ch:${chapterDir}`;
-  const cached = cacheGet(chapterCache, cacheKey) as unknown as ChapterDetail | null;
+  const cached = cacheGet(chapterCache, cacheKey);
   if (cached) return cached;
 
   const br = branch;
@@ -798,7 +812,7 @@ async function resolveChapterDetail(
           status: blockStatus(blk),
           // Bound once: TS narrows a const, not repeated calls.
           lean: blkLean ? { ref: blkLean.ref, validation: blkLean.validation, sorryFree: blkLean.sorryFree } : undefined,
-          todoCount: feedback.filter((t: any) => t.status === "open").length,
+          todoCount: feedback.filter((t) => t.status === "open").length,
         });
       } catch {
         blockStubs.push({ rootName, kind: "error", todoCount: 0 });
@@ -832,7 +846,7 @@ async function resolveChapterDetail(
     todos: chTodos.length ? chTodos : undefined,
   };
 
-  cacheSet(chapterCache, cacheKey, result as any);
+  cacheSet(chapterCache, cacheKey, result);
   return result;
 }
 
@@ -854,11 +868,11 @@ async function resolveSection(
 
   // Filter to real sections (skip name-only refs)
   const realSections = (ch.sections || []).filter(
-    (s: any) => !("name" in s && !("blocks" in s))
+    (s): s is Section => !isSectionRef(s)
   );
   if (sectionIndex < 0 || sectionIndex >= realSections.length) return null;
 
-  const sec = realSections[sectionIndex] as { title: string; label?: string; blocks: string[] };
+  const sec = realSections[sectionIndex];
   const blocks: ResolvedBlock[] = [];
 
   for (const rootName of sectionBlockNames(sec)) {
@@ -1044,7 +1058,7 @@ interface TriageResult {
 }
 
 async function triageFeedback(
-  todo: any,
+  todo: FeedbackItem,
   blockContent: string,
   blockKind: string,
   paperId: string,
@@ -1121,7 +1135,7 @@ interface BlockDiff {
   mdDiff?: { base: string; head: string };
   leanDiff?: { base: string; head: string };
   statusDiff?: { base: string; head: string };
-  todos?: unknown[];
+  todos?: FeedbackItem[];
 }
 
 interface PaperDiff {
@@ -1130,6 +1144,10 @@ interface PaperDiff {
   paperId: string;
   blocks: BlockDiff[];
   summary: { added: number; removed: number; changed: number; unchanged: number };
+  /** Fork point `base`/`head` were actually compared at, when one was found.
+   *  The `/api/diff` handler has always attached this; it did so through
+   *  `(diff as any).mergeBase = mb`, so it never appeared here. */
+  mergeBase?: string;
 }
 
 function computePaperDiff(
@@ -1428,7 +1446,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
           try {
             const secData = await resolveSection(id, chDir, si, branch);
             if (!secData || !secData.blocks) continue;
-            const found = secData.blocks.find((b: any) => b.label === label);
+            const found = secData.blocks.find((b) => b.label === label);
             if (found) return Response.json(found, { headers: { "Cache-Control": "max-age=300", "Access-Control-Allow-Origin": "*" } });
           } catch (e) { log('warn', `GET /api/paper/block resolveSection ${chDir}[${si}]: ${e}`); continue; }
         }
@@ -1505,7 +1523,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
         resolvePaper(id, head),
       ]);
       const diff = computePaperDiff(basePaper, headPaper, base, head);
-      if (mb) (diff as any).mergeBase = mb;
+      if (mb) diff.mergeBase = mb;
       return Response.json(diff, { headers: { "Cache-Control": "no-cache", "Access-Control-Allow-Origin": "*" } });
     } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
@@ -1921,34 +1939,37 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
         preamble = docIdx > 0 ? mainTex.slice(0, docIdx) : "";
       }
 
-      // Read the rendered LaTeX for blocks from chapters/*.tex
-      // We need to extract block LaTeX from the rendered chapters
-      // Alternative: render blocks directly using the pipeline
-      const { renderBlock } = await import(join(REPO_ROOT, "content/pipeline/render-latex.ts"));
+      // Which chapter owns each block — the one thing the nested search below
+      // used to walk `paper.chapters` for and then throw away.
+      const chapterDirOf = new Map<string, string>();
+      for (const ch of paper.chapters) {
+        if (!ch.dir) continue;
+        for (const sec of ch.sections) {
+          for (const sb of sec.blocks) chapterDirOf.set(sb.rootName, ch.dir);
+        }
+      }
 
-      // Render each block to LaTeX
+      // Render each block to LaTeX.
+      //
+      // This used to re-scan `paper.chapters` for a block matching `b` and
+      // render that — but `blockIndex`, and so `chainBlocks`, was built by
+      // walking those same `sec.blocks` arrays, so the search always handed
+      // back the object already in hand. It was rendering a `ResolvedBlock`:
+      // the viewer's projection, which carries `kind`/`label`/`tex`/`caption`
+      // and drops everything kind-specific `renderBlock` switches on
+      // (`simulator`, `html`, `views`, `of`, `interprets`, `meta`). Those
+      // blocks emitted their generic shell and lost their body, silently,
+      // because `as any` let a `ResolvedBlock` stand in for a `Block`. Load
+      // the block's own manifest, which is what `renderBlock` is typed for.
       const blockTexParts: string[] = [];
       for (const b of chainBlocks) {
+        const chDir = chapterDirOf.get(b.rootName);
+        if (!chDir) continue;
         try {
-          // Load the actual typed block for rendering
-              // Find the chapter dir for this block
-          let blockObj: any = null;
-          const mdContent = b.md || "";
-          for (const ch of paper.chapters) {
-            for (const sec of ch.sections) {
-              for (const sb of sec.blocks) {
-                if (sb.label === b.label || sb.rootName === b.rootName) {
-                  blockObj = sb;
-                  break;
-                }
-              }
-              if (blockObj) break;
-            }
-            if (blockObj) break;
-          }
-          if (blockObj) {
-            blockTexParts.push(renderBlock(blockObj as any, mdContent));
-          }
+          const blockObj = await importTsBranch<Block>(
+            undefined, `content/${paperId}/${chDir}/${b.rootName}.ts`,
+          );
+          blockTexParts.push(renderBlock(blockObj, b.md || ""));
         } catch (e) {
           blockTexParts.push(`% Error rendering ${b.label}: ${String(e)}`);
         }
@@ -2160,12 +2181,21 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
         summary: string; comment: string; priority: string; assignee: string;
       };
 
-      const todo = {
+      // `body.priority` is an unvalidated wire string; it used to be written
+      // through verbatim because the array it joined was `any[]`.
+      const priority = parseTodoPriority(body.priority || undefined);
+      if (priority === INVALID_ENUM) {
+        return Response.json({
+          error: `Invalid priority: must be one of ${TODO_PRIORITIES.join("|")}`,
+        }, { status: 400 });
+      }
+
+      const todo: FeedbackItem = {
         id: makeTodoId(),
         summary: body.summary,
         comment: body.comment,
         status: "open",
-        priority: body.priority || "medium",
+        priority: priority ?? "medium",
         origin: "human",
         author: getUserName(req),
         authorEmail: getUserEmail(req),
@@ -2384,7 +2414,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
                     const bucket = leanStatusBucket(blk.lean);
                     if (bucket === "stubbed") stats.hasSorry++;
                     if (bucket === "compiled") stats.proved++;
-                    stats.openTodos += (blk.todos || []).filter((t: any) => t.status === "open").length;
+                    stats.openTodos += (blk.todos || []).filter((t) => t.status === "open").length;
                   }
                 }
               }
@@ -2435,7 +2465,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
               const chNum = input.chapterNumber as number;
               const paper = pid ? await resolvePaper(pid) : null;
               if (!paper) return JSON.stringify({ error: "Paper not found" });
-              const ch = paper.chapters.find((c: any) => c.number === chNum);
+              const ch = paper.chapters.find((c) => c.number === chNum);
               if (!ch) return JSON.stringify({ error: `Chapter ${chNum} not found` });
               const blocks: unknown[] = [];
               for (const sec of ch.sections || []) {
@@ -2590,7 +2620,7 @@ These become clickable buttons so users don't have to type. Make them specific t
           if (ctx.blockLabel) {
             const rootName = ctx.blockLabel.replace(/^(def|thm|lem|prop|cor|rem|ex|conj):/, "");
             const blockTodos = readFeedback(ctx.paperId, rootName);
-            const openTodos = (blockTodos as any[]).filter((t: any) => t.status === "open" || t.status === "in_progress");
+            const openTodos = blockTodos.filter((t) => t.status === "open" || t.status === "in_progress");
             if (openTodos.length) {
               systemPrompt += `\n\nOpen todos/feedback for this block (${ctx.blockLabel}):\n${JSON.stringify(openTodos, null, 2)}`;
             }
@@ -2633,11 +2663,19 @@ These become clickable buttons so users don't have to type. Make them specific t
                 messages: apiMessages,
               });
 
-              const toolUses = response.content.filter(b => b.type === "tool_use");
+              // Predicate form, not a bare boolean: `Array.filter` only narrows
+              // the element type when the callback is a type guard, so the two
+              // `.map`s below had to re-open each block with `as any` to reach
+              // `.text` / `.name` — fields the SDK already declares.
+              const toolUses = response.content.filter(
+                (b): b is Anthropic.ToolUseBlock => b.type === "tool_use",
+              );
               if (toolUses.length === 0) {
                 // Final response — send text in chunks
-                const textBlocks = response.content.filter(b => b.type === "text");
-                const fullText = textBlocks.map(b => (b as any).text).join("");
+                const textBlocks = response.content.filter(
+                  (b): b is Anthropic.TextBlock => b.type === "text",
+                );
+                const fullText = textBlocks.map(b => b.text).join("");
                 const chunkSize = 20;
                 for (let i = 0; i < fullText.length; i += chunkSize) {
                   send({ text: fullText.slice(i, i + chunkSize) });
@@ -2650,7 +2688,7 @@ These become clickable buttons so users don't have to type. Make them specific t
               }
 
               // Tool calls — send progress with tool names
-              const toolNames = toolUses.map(t => (t as any).name);
+              const toolNames = toolUses.map(t => t.name);
               logDebug("chat:tools", `round ${toolRounds + 1}: ${toolUses.length} tool calls`, toolNames.join(", "));
               const friendlyNames: Record<string, string> = {
                 get_paper_status: "checking paper status",
@@ -3037,7 +3075,7 @@ These become clickable buttons so users don't have to type. Make them specific t
     try {
       const body = await req.json() as { paperId: string; rootName: string; todoId: string };
       const todos = readFeedback(body.paperId, body.rootName);
-      const todo = (todos as any[]).find(t => t.id === body.todoId);
+      const todo = todos.find(t => t.id === body.todoId);
       if (!todo) return Response.json({ error: "Todo not found" }, { status: 404 });
 
       // Read the block content for context (O(1) via blocksByName map)
@@ -3060,11 +3098,24 @@ These become clickable buttons so users don't have to type. Make them specific t
         paperId: string; rootName: string; todoId: string;
         priority?: string; status?: string;
       };
-      const todos = readFeedback(body.paperId, body.rootName) as any[];
-      const idx = todos.findIndex((t: any) => t.id === body.todoId);
+      // `priority` and `status` arrive off the wire as bare strings. Typing
+      // the array surfaced that neither was ever checked against its enum, so
+      // `{"status":"banana"}` was written to `main` verbatim and then read
+      // back as a status no filter in this file matches — the item silently
+      // vanished from every "open"/"resolved" view.
+      const priority = parseTodoPriority(body.priority);
+      const status = parseTodoStatus(body.status);
+      if (priority === INVALID_ENUM || status === INVALID_ENUM) {
+        return Response.json({
+          error: `Invalid update: priority must be one of ${TODO_PRIORITIES.join("|")}, ` +
+            `status one of ${TODO_STATUSES.join("|")}`,
+        }, { status: 400 });
+      }
+      const todos = readFeedback(body.paperId, body.rootName);
+      const idx = todos.findIndex((t) => t.id === body.todoId);
       if (idx < 0) return Response.json({ error: "Todo not found" }, { status: 404 });
-      if (body.priority !== undefined) todos[idx].priority = body.priority;
-      if (body.status !== undefined) todos[idx].status = body.status;
+      if (priority !== undefined) todos[idx].priority = priority;
+      if (status !== undefined) todos[idx].status = status;
       writeFeedback(body.paperId, body.rootName, todos);
       return Response.json({ ok: true, todo: todos[idx] });
     } catch (e) {
@@ -3081,8 +3132,7 @@ These become clickable buttons so users don't have to type. Make them specific t
       const body = await req.json() as {
         paperId: string; rootName: string; todoId: string;
       };
-      interface FeedbackTodo { id: string; summary: string; comment?: string; status: string; priority?: string; author?: string; assignee?: string; createdAt?: string; }
-      const todos = readFeedback(body.paperId, body.rootName) as FeedbackTodo[];
+      const todos = readFeedback(body.paperId, body.rootName);
       const idx = todos.findIndex((t) => t.id === body.todoId);
       if (idx < 0) return Response.json({ error: "Todo not found" }, { status: 404 });
       todos.splice(idx, 1);
