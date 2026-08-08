@@ -38,6 +38,7 @@ import { join} from "path";
 import type { Paper, Chapter, Section, Block } from "../../schemas/types";
 import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
+import { findUsesField, replaceUsesArray, removeUsesField } from "./uses-field";
 
 // Was rooted at this file's own location, which is the PLATFORM — but every
 // path below is folio content. `findContentRepoRoot()` walks up from cwd;
@@ -188,29 +189,24 @@ function applyPruning(
     const tsPath = block.tsPath;
     let content = readFileSync(tsPath, "utf-8");
 
-    // Match the uses array in the .ts file and replace it
-    // Pattern: uses: [ ... ] (possibly multiline)
-    const usesPattern = /uses:\s*\[[\s\S]*?\]/;
-    const match = content.match(usesPattern);
-    if (!match) {
+    // Locate the uses[] field. The previous pattern was
+    // `/uses:\s*\[[\s\S]*?\]/` — no word boundary, so on a block with a
+    // `causes:` field earlier in the object this WROTE OVER THAT FIELD,
+    // and non-greedy, so an entry containing `]` truncated the match
+    // mid-array. This is the write path; both mistakes edit content.
+    if (!findUsesField(content)) {
       console.warn(`  ⚠ Could not find uses[] in ${tsPath}`);
       continue;
     }
 
-    let newUses: string;
     if (pruned.length === 0) {
-      // Remove the uses field entirely
-      // Match uses: [...], with optional trailing comma
-      const removePattern = /\s*uses:\s*\[[\s\S]*?\],?\n?/;
-      content = content.replace(removePattern, "\n");
+      content = removeUsesField(content);
     } else if (pruned.length === 1) {
-      newUses = `uses: ["${pruned[0]}"]`;
-      content = content.replace(usesPattern, newUses);
+      content = replaceUsesArray(content, `["${pruned[0]}"]`);
     } else {
       const indent = "    ";
-      const entries = pruned.map(u => `${indent}"${u}",`).join("\n");
-      newUses = `uses: [\n${entries}\n  ]`;
-      content = content.replace(usesPattern, newUses);
+      const entries = pruned.map((u) => `${indent}"${u}",`).join("\n");
+      content = replaceUsesArray(content, `[\n${entries}\n  ]`);
     }
 
     writeFileSync(tsPath, content);

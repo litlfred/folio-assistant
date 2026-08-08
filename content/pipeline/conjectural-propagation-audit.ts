@@ -24,6 +24,7 @@ import { join } from "node:path";
 import { leanPackageByName } from "../../schemas/lean-packages.ts";
 import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
+import { parseUsesField } from "./uses-field";
 
 // Resolve repo root from this script's location:
 // content/pipeline/conjectural-propagation-audit.ts → repo root.
@@ -112,18 +113,7 @@ async function loadAll(): Promise<Map<string, Block>> {
       const labelMatch = text.match(/label:\s*"([^"]+)"/);
       if (!labelMatch) continue;
       const label = labelMatch[1];
-      // Extract uses[] — find first `uses: [` and read until matching `]`.
-      const usesIdx = text.indexOf("uses:");
-      let uses: string[] = [];
-      if (usesIdx >= 0) {
-        const afterUses = text.slice(usesIdx);
-        const arrStart = afterUses.indexOf("[");
-        const arrEnd = afterUses.indexOf("]", arrStart);
-        if (arrStart >= 0 && arrEnd > arrStart) {
-          const arr = afterUses.slice(arrStart + 1, arrEnd);
-          uses = [...arr.matchAll(/"([^"]+)"/g)].map((m) => m[1]);
-        }
-      }
+      const uses = parseUsesField(text);
       blocks.set(label, { label, kind, uses, file: path });
     }
   }
