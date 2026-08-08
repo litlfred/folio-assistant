@@ -2,26 +2,40 @@
  * Lean project tests — compilation readiness, library presence, sorry audit.
  *
  * Walks every paper Lake package registered in the root workspace
- * (`folio-assistant/schemas/lean-packages.ts`) plus the root workspace
- * itself.
+ * (`schemas/lean-packages.ts`) plus the root workspace itself.
+ *
+ * EVERY assertion here is about the FOLIO (content repo): the Lake
+ * workspace, `lean-toolchain`, and the papers' `.lean` trees all live
+ * there, not in this platform repo. Before this guard the file asserted
+ * them against the platform root and contributed 17 permanent failures —
+ * red for a condition that is simply not knowable from here.
+ *
+ * With no folio attached these skip. Run them from a folio checkout (or
+ * with one as a sibling) to exercise them for real.
  */
 
 import { describe, test, expect } from "bun:test";
 import { readFileSync, existsSync } from "fs";
+import { execSync } from "child_process";
 import { join, relative } from "path";
 import {
   LEAN_DIR,
+  FOLIO_ROOT,
   REPO_ROOT,
+  hasFolio,
   discoverLeanProjects,
   discoverDependencies,
   findLeanFiles,
 } from "./helpers";
 
+/** Skip content-repo assertions when no folio is attached. */
+const folio = hasFolio();
+
 import { LEAN_PACKAGES } from "../../schemas/lean-packages.js";
 
 // ── Root workspace ──────────────────────────────────────────────
 
-describe("Lean root workspace", () => {
+describe.skipIf(!folio)("Lean root workspace", () => {
   test("root lean-toolchain exists", () => {
     expect(existsSync(join(LEAN_DIR, "lean-toolchain"))).toBe(true);
   });
@@ -45,7 +59,7 @@ describe("Lean root workspace", () => {
 
 // ── Required dependencies ───────────────────────────────────────
 
-describe("Lean dependencies", () => {
+describe.skipIf(!folio)("Lean dependencies", () => {
   const deps = discoverDependencies();
 
   test("mathlib is declared", () => {
@@ -63,7 +77,7 @@ describe("Lean dependencies", () => {
 
 const projects = discoverLeanProjects();
 
-describe("Lean project discovery", () => {
+describe.skipIf(!folio)("Lean project discovery", () => {
   test("at least one project found", () => {
     expect(projects.length).toBeGreaterThan(0);
   });
@@ -76,8 +90,8 @@ describe("Lean project discovery", () => {
 });
 
 for (const pkg of LEAN_PACKAGES) {
-  describe(`Paper package: ${pkg.name} (lib: ${pkg.lib})`, () => {
-    const pkgRoot = join(REPO_ROOT, pkg.lakeRoot);
+  describe.skipIf(!folio)(`Paper package: ${pkg.name} (lib: ${pkg.lib})`, () => {
+    const pkgRoot = join(FOLIO_ROOT ?? REPO_ROOT, pkg.lakeRoot);
     const projDir = join(pkgRoot, pkg.lib);
     const leanFiles = findLeanFiles(projDir);
 
@@ -101,12 +115,29 @@ for (const pkg of LEAN_PACKAGES) {
         expect(content.trim().length).toBeGreaterThan(0);
       });
 
-      test(`${rel} has import or is root module`, () => {
+      test(`${rel} declares something or imports something`, () => {
+        // This used to assert `hasImport || isRoot`, on the theory that a
+        // module with no `import` was suspect. It is not: `Nat`, `ℕ`, `List`,
+        // `structure`, `inductive` and `class` are all core Lean, so a module
+        // can be entirely self-contained and correct. Checked against the
+        // five QOU modules it flagged — four compile clean and sorry-free
+        // with no imports at all. It caught the one genuinely broken file
+        // (`IsotopeRecord.lean`, accessors defined outside the structure's
+        // namespace so `r.A` could not resolve) only by coincidence: the
+        // defect was that it did not COMPILE, which no import check detects.
+        //
+        // What a cheap static test can honestly assert is that the file is
+        // not empty — it either declares something or pulls something in.
+        // Compilation is the Lean build's job, not this suite's.
         const content = readFileSync(file, "utf-8");
         const basename = file.split("/").pop()?.replace(".lean", "");
         const hasImport = /^import\s/m.test(content);
+        const hasDecl =
+          /^(private\s+|protected\s+|noncomputable\s+|partial\s+|unsafe\s+)*(theorem|lemma|def|abbrev|structure|inductive|class|instance|axiom|example|opaque)\s/m.test(
+            content,
+          );
         const isRoot = basename === pkg.lib;
-        expect(hasImport || isRoot).toBe(true);
+        expect(hasImport || hasDecl || isRoot).toBe(true);
       });
     }
 
@@ -130,7 +161,6 @@ for (const pkg of LEAN_PACKAGES) {
 
     // Build artifacts not tracked
     test("no .lake/ artifacts tracked in git", () => {
-      const { execSync } = require("child_process");
       try {
         const tracked = execSync(`git ls-files --cached ${pkg.lakeRoot}/.lake/`, {
           cwd: REPO_ROOT,

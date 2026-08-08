@@ -718,7 +718,7 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
       "definition", "theorem", "lemma", "proposition", "corollary",
       "conjecture", "example", "remark", "simulator", "prose",
     ],
-    check: (block, ctx) => {
+    check: (_block, ctx) => {
       const mdPath = `${ctx.dir}/${ctx.rootName}.md`;
       return ctx.fileExists(mdPath) ? null : `Missing companion: ${mdPath}`;
     },
@@ -767,7 +767,7 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     id: "simulator-html-exists",
     description: "Simulators must have a companion .html file",
     appliesTo: ["simulator"],
-    check: (block, ctx) => {
+    check: (block, _ctx) => {
       if ("html" in block && block.html) return null;
       return `Simulator "${block.label}" requires an html field pointing to the simulator HTML file`;
     },

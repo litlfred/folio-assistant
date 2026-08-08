@@ -19,7 +19,8 @@
 #   scripts/lake-cache.sh restore  [--lake-root DIR] [--package NAME] [--branch BR]
 #   scripts/lake-cache.sh restore-toolchain [--branch BR]
 #   scripts/lake-cache.sh install-toolchain [--toolchain PIN] [--force]
-#   scripts/lake-cache.sh seed     [--lake-root DIR] [--package NAME] [--branch BR] [--push]
+#   scripts/lake-cache.sh seed       [--lake-root DIR] [--package NAME] [--branch BR] [--push] [--force]
+#   scripts/lake-cache.sh contribute [--lake-root DIR] [--package NAME] [--force]
 #   scripts/lake-cache.sh list
 #   scripts/lake-cache.sh doctor   [--lake-root DIR]
 #
@@ -475,6 +476,38 @@ Known packages: $(cmd_list_names | tr '\n' ' ')"
 
 # ── Seed ────────────────────────────────────────────────────────────
 
+
+# ── No-shrink guard ─────────────────────────────────────────────────
+#
+# The enabling mechanism for agentic contribution, not just a safety net.
+#
+# If every authoring session can push its build back, the cache improves
+# continuously — but only if a session that compiled a SUBSET can never
+# replace a fuller cache. `seed` records its counts in the branch's
+# commit message, so the incumbent's figures are readable without
+# downloading ~1.6 GB of tarball blobs (`--filter=blob:none` fetches the
+# commit and skips the payload).
+#
+# Returns 0 when publishing is safe, 1 when it would shrink the branch.
+branch_counts() {  # branch -> "<oleans> <own>", empty if unreadable
+  local ref="refs/lake-cache-prevcheck"
+  git update-ref -d "$ref" 2>/dev/null || true
+  timeout 60 git fetch --depth=1 --filter=blob:none -q origin "+$1:$ref" 2>/dev/null || return 1
+  local msg; msg=$(git log -1 --format=%s "$ref" 2>/dev/null)
+  git update-ref -d "$ref" 2>/dev/null || true
+  printf '%s' "$msg" | sed -n 's/.*(\([0-9]*\) oleans, \([0-9]*\) own).*/\1 \2/p'
+}
+
+would_shrink() {  # branch cand_oleans cand_own
+  local prev; prev=$(branch_counts "$1") || return 1
+  [ -z "$prev" ] && return 1   # no recorded counts (new or legacy branch)
+  local po pw; po=${prev%% *}; pw=${prev##* }
+  info "incumbent $1: $po oleans, $pw own"
+  # 90% tolerates churn between Mathlib revisions without tolerating a
+  # partial build replacing a complete one.
+  [ "$2" -lt $(( po * 90 / 100 )) ] || [ "$3" -lt $(( pw * 90 / 100 )) ]
+}
+
 cmd_seed() {
   local root; root=$(resolve_lake_root)
   local slug pkg
@@ -516,6 +549,18 @@ Seeding this would reproduce the bug it is meant to fix."
 Lake reads .trace to decide staleness, so it would rebuild — and evict —
 everything untraced. Seed from a tree where a real \`lake build\`
 produced the traces alongside the oleans."
+  fi
+
+  # Never replace a fuller cache with a thinner one. This is what lets an
+  # agent contribute a partial build without risking everyone else's.
+  if [ "$PUSH" -eq 1 ] && would_shrink "$br" "$n" "$own"; then
+    if [ "$FORCE" -eq 0 ]; then
+      die "refusing to publish '$br': the candidate ($n oleans, $own own) is
+materially smaller than what is already there. Usually this means a
+partial build is about to overwrite a complete cache. Finish the build,
+or pass --force for a deliberate downgrade."
+    fi
+    warn "--force: publishing a smaller cache than the incumbent"
   fi
 
   printf 'seeding %s from %s (%s oleans, %s own, %s%% traced)\n' "$br" "$root/.lake" "$n" "$own" "$cov"
@@ -807,6 +852,29 @@ Use elan: elan toolchain install '$pin'" ;;
   info "PATH:        export PATH=\"$target/bin:\$PATH\""
 }
 
+# ── Contribute ──────────────────────────────────────────────────────
+
+# The agentic loop's last step: give this session's build back.
+#
+# An authoring session restores the cache, drafts and compiles Lean, and
+# ends holding a `.lake` that is strictly better than the one it started
+# from. `contribute` publishes that, so the next agent starts warmer.
+# Every guard `seed` has applies — own-package oleans, trace coverage,
+# and the no-shrink check — so a session that only compiled a subtree
+# cannot degrade the shared cache.
+cmd_contribute() {
+  local root; root=$(resolve_lake_root)
+  local slug pkg
+  slug=$(toolchain_slug "$root") || die "no lean-toolchain"
+  pkg=$(resolve_package "$root"); [ -z "$pkg" ] && die "pass --package NAME"
+
+  printf 'contributing this build to lake-cache/%s-%s\n' "$pkg" "$slug"
+  info "oleans: $(count_oleans "$root")   own: $(count_own_oleans "$root")   traces: $(trace_coverage_pct "$root")%"
+  PUSH=1
+  BRANCH="${BRANCH:-lake-cache/$pkg-$slug}"
+  cmd_seed
+}
+
 # ── List / doctor ───────────────────────────────────────────────────
 
 # Cached for the process: `resolve_package` may consult this, and status
@@ -879,8 +947,9 @@ case "$CMD" in
   restore-toolchain) cmd_restore_toolchain ;;
   install-toolchain) cmd_install_toolchain ;;
   seed)    cmd_seed ;;
+  contribute) cmd_contribute ;;
   list)    cmd_list ;;
   doctor)  cmd_doctor ;;
   ""|help|-h|--help) usage ;;
-  *) die "unknown command: $CMD (try: status restore restore-toolchain install-toolchain seed list doctor)" ;;
+  *) die "unknown command: $CMD (try: status restore restore-toolchain install-toolchain contribute seed list doctor)" ;;
 esac

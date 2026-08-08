@@ -12,8 +12,15 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { join, dirname, basename, extname } from "path";
+import { join } from "path";
 import { parse } from "@unified-latex/unified-latex-util-parse";
+// The LaTeX AST is a SECOND, unrelated node family alongside mdast — aliased
+// on import so the two cannot be confused at a glance.
+import type { Ast as LatexAstUnion } from "@unified-latex/unified-latex-types";
+
+/** One node of the unified-latex AST. `Ast` is a union that also admits an
+ *  array; the walkers below take the element type. */
+type LatexNode = Exclude<LatexAstUnion, unknown[]>;
 import { printRaw } from "@unified-latex/unified-latex-util-print-raw";
 import { remark } from "remark";
 import remarkMath from "remark-math";
@@ -25,13 +32,19 @@ import remarkDirective from "remark-directive";
 import { gfmTable } from "micromark-extension-gfm-table";
 import {
   gfmTableFromMarkdown,
-  gfmTableToMarkdown,
 } from "mdast-util-gfm-table";
 import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough";
 import {
   gfmStrikethroughFromMarkdown,
-  gfmStrikethroughToMarkdown,
 } from "mdast-util-gfm-strikethrough";
+import type { Root, RootContent, Parent, Table, TableRow, ListItem } from "mdast";
+// Type-only imports for their side effect: each augments mdast's
+// `RootContentMap` with the node types its remark plugin produces —
+// `math`/`inlineMath` and the three directive kinds — all of which the
+// renderer switches on below. Without them those `case` labels would not
+// type-check against the base union.
+import type {} from "mdast-util-math";
+import type {} from "mdast-util-directive";
 import type { Block, Chapter, Section, RenderOptions } from "../../schemas/types";
 import { isCrossPaperRef } from "../../schemas/types";
 import { parseLeanRef } from "../../schemas/lean-packages";
@@ -185,7 +198,7 @@ export function escapeLatex(text: string): string {
   // Split on $ delimiters, preserving them
   const parts = text.split(/(\$[^$]*\$)/);
   return parts
-    .map((part, i) => {
+    .map((part) => {
       // Odd-indexed parts matched the $...$ pattern — pass through
       if (part.startsWith("$") && part.endsWith("$") && part.length > 1) {
         return part;
@@ -208,7 +221,7 @@ const MATH_BREAK_MACRO = new Set([
   "equiv", "cong", "neq", "pm", "mp", "oplus",
 ]);
 
-function isMathOperand(n: any): boolean {
+function isMathOperand(n: LatexNode | undefined): boolean {
   if (!n) return false;
   if (n.type === "group") return true;
   if (n.type === "macro") return !MATH_BREAK_MACRO.has(n.content);
@@ -225,14 +238,14 @@ function isMathOperand(n: any): boolean {
  */
 export function splitLongMath(math: string, minLen = 36): string {
   if (math.length < minLen) return math;
-  let ast: any;
+  let ast: ReturnType<typeof parse>;
   try {
     ast = parse(math);
   } catch {
     return math;
   }
-  const content: any[] = ast.content ?? [];
-  const out: any[] = [];
+  const content: LatexNode[] = ast.content ?? [];
+  const out: LatexNode[] = [];
   let prevOperand = false;
   let inserted = 0;
   for (const n of content) {
@@ -248,7 +261,12 @@ export function splitLongMath(math: string, minLen = 36): string {
       prevOperand = isMathOperand(n);
     }
   }
-  return inserted ? printRaw({ ...ast, content: out }) : math;
+  // `out` is rebuilt from `ast.content`, so it holds only root-level nodes —
+  // never an `Argument`, which is the union member `printRaw`'s `Printable`
+  // does not accept. The cast states that; `printRaw` itself is unchanged.
+  return inserted
+    ? printRaw({ ...ast, content: out } as Parameters<typeof printRaw>[0])
+    : math;
 }
 
 /**
@@ -308,8 +326,8 @@ export function protectPipesInInlineMath(md: string): string {
  * avoids redundant parses.  Bounded to 512 entries to cap memory.
  */
 const MD_AST_CACHE_LIMIT = 512;
-const _mdAstCache = new Map<string, any>();
-export function parseMdCached(md: string): any {
+const _mdAstCache = new Map<string, Root>();
+export function parseMdCached(md: string): Root {
   let tree = _mdAstCache.get(md);
   if (!tree) {
     tree = mdParser.parse(protectPipesInInlineMath(md));
@@ -364,7 +382,7 @@ export function extractMathContent(md: string): string {
   const tree = parseMdCached(md);
   const parts: string[] = [];
 
-  for (const child of (tree as any).children ?? []) {
+  for (const child of tree.children) {
     if (child.type === "math") {
       // Display math: extract inner TeX (substituting :val[…] references).
       parts.push(substituteValuesInMath(child.value));
@@ -631,8 +649,49 @@ function htmlTableToLatex(html: string): string {
 
 // ── AST node → LaTeX rendering ──────────────────────────────────
 
+/** A node this renderer may be handed: `Root` is not itself `RootContent`,
+ *  but the switch below renders it. */
+type MdNode = Root | RootContent;
+
+/** A leaf node's literal text, `""` when it has none.
+ *
+ *  Counterpart to `childrenOf` for the other half of the mdast split: `value`
+ *  exists on `text`, `code`, `inlineCode`, `html` and friends, and not on
+ *  parents. */
+function nodeValue(node: MdNode): string {
+  const v = (node as { value?: unknown }).value;
+  return typeof v === "string" ? v : "";
+}
+
+/** Directive attributes with the null/undefined entries dropped.
+ *
+ *  `mdast-util-directive` types them as
+ *  `Record<string, string | null | undefined> | null | undefined` — an
+ *  attribute written bare (`:val[x]{flag}`) has a null value. Consumers want
+ *  the ones that carry a string. */
+function definedAttrs(
+  attrs: Record<string, string | null | undefined> | null | undefined,
+): Record<string, string> | undefined {
+  if (!attrs) return undefined;
+  const out: Record<string, string> = {};
+  for (const [k, v] of Object.entries(attrs)) {
+    if (typeof v === "string") out[k] = v;
+  }
+  return out;
+}
+
+/** Children of a node that has them, `[]` for a leaf.
+ *
+ *  mdast splits nodes into `Parent` and leaves, and the renderer walks both
+ *  through the same paths, so the `node.children ?? []` idiom this replaces
+ *  was the reason several signatures were `any`: a leaf has no `children`
+ *  property at all, which is a type error rather than `undefined`. */
+function childrenOf(node: MdNode): RootContent[] {
+  return "children" in node ? ((node as Parent).children as RootContent[]) : [];
+}
+
 /** Render a single mdast node to LaTeX. */
-function renderMdastNode(node: any): string {
+function renderMdastNode(node: MdNode): string {
   switch (node.type) {
     case "root":
       return renderChildren(node).join("\n\n");
@@ -700,7 +759,7 @@ function renderMdastNode(node: any): string {
     case "list": {
       const env = node.ordered ? "enumerate" : "itemize";
       const items = (node.children ?? [])
-        .map((item: any) => `  \\item ${renderListItem(item)}`)
+        .map((item) => `  \\item ${renderListItem(item)}`)
         .join("\n");
       return `\\begin{${env}}\n${items}\n\\end{${env}}`;
     }
@@ -792,7 +851,11 @@ function renderMdastNode(node: any): string {
       if (name === "val") {
         // :val[<registry-name>]{key=value ...}
         const valName = renderChildren(node).join("").trim();
-        const attrs = parseValAttrs(node.attributes);
+        // mdast-util-directive types attributes as
+        // `Record<string, string | null | undefined> | null | undefined`;
+        // `parseValAttrs` wants defined string values. Drop the empty ones
+        // rather than coercing them to "".
+        const attrs = parseValAttrs(definedAttrs(node.attributes));
         return renderValue(valName, attrs, "text");
       }
       if (name === "defterm" || name === "refterm") {
@@ -815,12 +878,16 @@ function renderMdastNode(node: any): string {
       // Non-inline directives are not currently used; render children if any.
       return renderChildren(node).join("");
 
-    default:
-      // Unknown node — render children if any, otherwise empty
-      if (node.children) {
+    default: {
+      // Unknown node — render children if any, otherwise its literal value.
+      // `childrenOf` and `nodeValue` narrow; the bare property reads did not
+      // compile once this file entered the tsconfig program.
+      const kids = childrenOf(node);
+      if (kids.length > 0) {
         return renderChildren(node).join("");
       }
-      return node.value ?? "";
+      return nodeValue(node);
+    }
   }
 }
 
@@ -830,8 +897,8 @@ function renderMdastNode(node: any): string {
  * Reads alignment from `node.align` (array of "left"|"right"|"center"|null)
  * and renders rows with `&` separators and `\\` terminators.
  */
-function renderTable(node: any): string {
-  const rows: any[] = node.children ?? [];
+function renderTable(node: Table): string {
+  const rows: TableRow[] = node.children ?? [];
   if (rows.length === 0) return "";
 
   // Determine column count and alignment from the first row
@@ -846,8 +913,8 @@ function renderTable(node: any): string {
   while (aligns.length < ncols) aligns.push("l");
 
   // Render every cell once — used for both width estimation and emission.
-  const cellRows: string[][] = rows.map((row: any) =>
-    (row.children ?? []).map((cell: any) => renderChildren(cell).join("")),
+  const cellRows: string[][] = rows.map((row) =>
+    (row.children ?? []).map((cell) => renderChildren(cell).join("")),
   );
   const colspec = chooseColumnSpec(cellRows, aligns);
   const lines: string[] = [];
@@ -872,7 +939,7 @@ function renderTable(node: any): string {
 }
 
 /** An inline formula/code mdast node. */
-function isFormulaNode(n: any): boolean {
+function isFormulaNode(n: MdNode): boolean {
   return !!n && (n.type === "inlineMath" || n.type === "inlineCode");
 }
 
@@ -884,7 +951,7 @@ function isFormulaNode(n: any): boolean {
  * punctuation-led runs (`$\mathbb{Z}$-module`), and already-spaced text don't
  * match.
  */
-function isMathTextSeam(prev: any, cur: any): boolean {
+function isMathTextSeam(prev: MdNode | undefined, cur: MdNode): boolean {
   if (!prev || !cur) return false;
   if (isFormulaNode(prev) && cur.type === "text" && /^[A-Za-z]{4,}/.test(cur.value)) return true;
   if (prev.type === "text" && isFormulaNode(cur) && /[A-Za-z]{4,}$/.test(prev.value)) return true;
@@ -895,9 +962,9 @@ function isMathTextSeam(prev: any, cur: any): boolean {
  *  at any math↔word seam (see isMathTextSeam) so it doesn't form one unbreakable
  *  box that overflows a narrow cell. It inserts a *break*, not a space; the
  *  missing space itself, if a typo, is a content fix (see findMathTextSeams). */
-function renderChildren(node: any): string[] {
-  const kids: any[] = node.children ?? [];
-  return kids.map((child: any, i: number) => {
+function renderChildren(node: MdNode): string[] {
+  const kids: RootContent[] = childrenOf(node);
+  return kids.map((child, i) => {
     const s = renderMdastNode(child);
     return isMathTextSeam(kids[i - 1], child) ? "\\allowbreak{}" + s : s;
   });
@@ -919,12 +986,12 @@ export interface MathTextSeam {
  */
 export function findMathTextSeams(md: string): MathTextSeam[] {
   const seams: MathTextSeam[] = [];
-  const raw = (n: any): string =>
+  const raw = (n: MdNode): string =>
     n.type === "inlineMath" ? `$${n.value}$`
       : n.type === "inlineCode" ? "`" + n.value + "`"
-        : String(n.value ?? "");
-  const visit = (node: any): void => {
-    const kids: any[] = node.children ?? [];
+        : String(("value" in n ? n.value : undefined) ?? "");
+  const visit = (node: MdNode): void => {
+    const kids: RootContent[] = childrenOf(node);
     for (let i = 1; i < kids.length; i++) {
       if (isMathTextSeam(kids[i - 1], kids[i])) {
         const pos = kids[i].position?.start ?? kids[i - 1].position?.end ?? { line: 0, column: 0 };
@@ -935,21 +1002,21 @@ export function findMathTextSeams(md: string): MathTextSeam[] {
         });
       }
     }
-    for (const k of kids) if (k && k.children) visit(k);
+    for (const k of kids) if (k && childrenOf(k).length > 0) visit(k);
   };
   visit(parseMdCached(md));
   return seams;
 }
 
 /** Render a list item's content (unwrap single-paragraph items). */
-function renderListItem(item: any): string {
+function renderListItem(item: ListItem): string {
   const children = item.children ?? [];
   // Single-paragraph list items: render inline (no extra \par)
   if (children.length === 1 && children[0].type === "paragraph") {
     return renderChildren(children[0]).join("");
   }
   // Multi-block list items: render each block
-  return children.map((c: any) => renderMdastNode(c)).join("\n");
+  return children.map((c) => renderMdastNode(c)).join("\n");
 }
 
 // ── Block → LaTeX rendering ──────────────────────────────────────
@@ -1063,7 +1130,7 @@ export function renderBlock(
         lines.push(`  \\includegraphics[width=\\textwidth]{${figPath}}`);
         if (block.label) lines.push(`  \\label{${block.label}}`);
         // Caption from block.caption or block title (extra field from builders)
-        const caption = block.caption || (block as any).title || "";
+        const caption = block.caption || block.title || "";
         if (caption) lines.push(`  \\caption{${escapeLatex(caption)}}`);
         lines.push("\\end{figure}");
       } else {
@@ -1467,8 +1534,8 @@ export function renderChapter(
         chapterCites.add(key);
       }
       if (entry.block && typeof entry.block === "object" &&
-          "cites" in entry.block && (entry.block as any).cites) {
-        for (const key of (entry.block as any).cites as string[]) {
+          "cites" in entry.block && entry.block.cites) {
+        for (const key of entry.block.cites) {
           chapterCites.add(key);
         }
       }
@@ -1534,29 +1601,49 @@ export function validateLatexAst(latex: string): AstValidationResult {
   };
 }
 
-function countNodes(node: any): number {
+// ── LatexNode accessors ──────────────────────────────────────────
+//
+// `LatexNode` is a union of 13 unified-latex node types and only some carry
+// `content` / `args` — and `content` is a child ARRAY on `environment`,
+// `group` and `root` but a plain STRING on `macro` (the macro's name),
+// `string`, `comment` and `verb`. Reading either field off the bare union is a
+// type error at every site; there were 16 of them here.
+//
+// One narrowing helper each, with the cast contained inside it, rather than a
+// cast at each use. `latexChildren` and `latexText` are also the honest
+// spelling of the distinction the walkers below actually depend on.
+
+/** Child nodes, when this node's `content` is an array. */
+function latexChildren(node: LatexNode): LatexNode[] {
+  const c = (node as { content?: unknown }).content;
+  return Array.isArray(c) ? (c as LatexNode[]) : [];
+}
+
+/** Argument nodes, when this node has any. */
+function latexArgs(node: LatexNode): LatexNode[] {
+  const a = (node as { args?: unknown }).args;
+  return Array.isArray(a) ? (a as LatexNode[]) : [];
+}
+
+/** `content` when it is a plain string — a macro name, or a string token. */
+function latexText(node: LatexNode): string {
+  const c = (node as { content?: unknown }).content;
+  return typeof c === "string" ? c : "";
+}
+
+function countNodes(node: LatexNode): number {
   let count = 1;
-  if (node.content && Array.isArray(node.content)) {
-    for (const child of node.content) {
-      count += countNodes(child);
-    }
-  }
-  if (node.args && Array.isArray(node.args)) {
-    for (const arg of node.args) {
-      count += countNodes(arg);
-    }
-  }
+  for (const child of latexChildren(node)) count += countNodes(child);
+  for (const arg of latexArgs(node)) count += countNodes(arg);
   return count;
 }
 
-function checkEnvironmentBalance(nodes: any[], errors: string[]): void {
+function checkEnvironmentBalance(nodes: LatexNode[], errors: string[]): void {
   for (const node of nodes) {
     if (node.type === "environment" && !node.env) {
       errors.push("Environment node with missing env name");
     }
-    if (node.content && Array.isArray(node.content)) {
-      checkEnvironmentBalance(node.content, errors);
-    }
+    checkEnvironmentBalance(latexChildren(node), errors);
   }
 }
 
@@ -1582,7 +1669,7 @@ const VERBATIM_ENVS = new Set([
 const URL_MACROS = new Set(["href", "url", "nolinkurl", "hyperref", "hyperlink", "hypertarget"]);
 
 function checkBareHash(
-  nodes: any[],
+  nodes: LatexNode[],
   errors: string[],
   inMacroDef: boolean,
 ): void {
@@ -1591,14 +1678,20 @@ function checkBareHash(
     if (node.type === "environment" && VERBATIM_ENVS.has(node.env)) {
       continue;
     }
-    // unified-latex tokenises bare `#` as a "parameter" node (or
-    // "string"/"macro" in some configurations). Flag it unless we're
-    // inside a macro-definition body.
-    if (
-      !inMacroDef &&
-      (node.type === "parameter" ||
-        (node.type === "string" && typeof node.content === "string" && /^#\d?$/.test(node.content)))
-    ) {
+    // unified-latex tokenises a bare `#` as a one-character `string` node —
+    // verified against the parser for `a # b`, `\text{x #1 y}`, `#1` and
+    // `\newcommand{\foo}[1]{#1}`, all of which yield `string:"#"` with the
+    // digit as a separate node.
+    //
+    // This condition also tested `node.type === "parameter"`, on the theory
+    // (recorded in the old comment) that some configurations emit one. There
+    // is no such node type: unified-latex has exactly thirteen — argument,
+    // comment, displaymath, environment, group, inlinemath, macro, parbreak,
+    // root, string, verb, verbatim, whitespace. The arm could never match, and
+    // said so as TS2367 once this file was type-checked. The `string` arm is
+    // the one that has been doing the work; removed rather than left as a
+    // false reassurance about what is covered.
+    if (!inMacroDef && node.type === "string" && /^#\d?$/.test(latexText(node))) {
       errors.push(
         `Bare # outside macro definition (use \\# to typeset the # character)`,
       );
@@ -1607,24 +1700,17 @@ function checkBareHash(
     // command-defining macros so #1…#9 inside `\newcommand{\foo}[1]{#1}`
     // is accepted.
     const enterMacroDef = inMacroDef ||
-      (node.type === "macro" && MACRO_DEF_NAMES.has(node.content));
-    if (node.content && Array.isArray(node.content)) {
-      checkBareHash(node.content, errors, enterMacroDef);
-    }
-    if (node.args && Array.isArray(node.args)) {
-      // URL macros (href, url, hyperref, …) read URL / label arguments
-      // where `#` is the legitimate URL-fragment delimiter. hyperref
-      // re-catcodes them internally so they don't reach the # check.
-      // Skip every argument of those macros — accepting that we won't
-      // catch `#` in the visible text, which is rare and caught by
-      // the math-link detector for the common case.
-      const isUrlMacro = node.type === "macro" && URL_MACROS.has(node.content);
-      if (isUrlMacro) continue;
-      for (const arg of node.args) {
-        if (arg && arg.content && Array.isArray(arg.content)) {
-          checkBareHash(arg.content, errors, enterMacroDef);
-        }
-      }
+      (node.type === "macro" && MACRO_DEF_NAMES.has(latexText(node)));
+    checkBareHash(latexChildren(node), errors, enterMacroDef);
+
+    // URL macros (href, url, hyperref, …) read URL / label arguments where `#`
+    // is the legitimate URL-fragment delimiter. hyperref re-catcodes them
+    // internally so they don't reach the # check. Skip every argument of those
+    // macros — accepting that we won't catch `#` in the visible text, which is
+    // rare and caught by the math-link detector for the common case.
+    if (node.type === "macro" && URL_MACROS.has(latexText(node))) continue;
+    for (const arg of latexArgs(node)) {
+      checkBareHash(latexChildren(arg), errors, enterMacroDef);
     }
   }
 }

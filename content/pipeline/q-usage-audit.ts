@@ -34,7 +34,6 @@ import {
   chapterFromPath,
   detectRegimes,
   checkQUsagePositivityImplicit,
-  type QRegime,
   type QUsageResult,
 } from "./qa-checkers-q-usage.ts";
 import { checkWallSide, checkBaseRingMinimal } from "./qa-checkers-voice.ts";
@@ -44,13 +43,35 @@ import { checkWallSide, checkBaseRingMinimal } from "./qa-checkers-voice.ts";
 // resolution logic can never drift from qa-sweep / qa-utils).
 import {
   walkBlocks as utilWalkBlocks,
-  resolveCanonicalLean,
   listPackageLeanFiles,
 } from "./qa-utils.ts";
+// Shared content-root + paper discovery. The pipeline lives in
+// folio-assistant but audits a downstream content repo; deriving the root
+// from this file's own location lands inside the platform tree instead.
+import { findContentRepoRoot, findPapers } from "./repo-root.ts";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(SCRIPT_DIR, "..", "..");
-const PAPER_ROOT = join(REPO_ROOT, "content", "quantum-observable-universe");
+
+/**
+ * Root of the PLATFORM checkout (folio-assistant). Correct anchor for the
+ * *checker script* hash below — `qa-checkers-q-usage.ts` genuinely lives
+ * here — and for nothing else.
+ */
+const PLATFORM_ROOT = resolve(SCRIPT_DIR, "..", "..");
+
+/**
+ * Root of the CONTENT repo being audited.
+ *
+ * This used to be `resolve(SCRIPT_DIR, "..", "..")` — i.e. PLATFORM_ROOT —
+ * with the paper hardcoded to `quantum-observable-universe`. That was
+ * correct only while the pipeline lived inside the content repo. Once it
+ * moved to folio-assistant, `<platform>/content/quantum-observable-universe`
+ * stopped existing, `walkBlocks` found nothing, and the audit reported
+ * "0 blocks across 0 chapters" and **exited 0** — a silent no-op that made
+ * the seven `q-usage-*` criteria unrefreshable in every downstream sidecar.
+ * Observed live on qou #4673.
+ */
+const REPO_ROOT = findContentRepoRoot();
 
 // ── CLI args ────────────────────────────────────────────────────
 
@@ -61,6 +82,17 @@ const jsonReport = args.includes("--json");
 const noOrphans = args.includes("--no-orphans");
 const chapterFilterIdx = args.indexOf("--chapter");
 const chapterFilter = chapterFilterIdx >= 0 ? args[chapterFilterIdx + 1] : undefined;
+const paperFilterIdx = args.indexOf("--paper");
+const paperFilter = paperFilterIdx >= 0 ? args[paperFilterIdx + 1] : undefined;
+
+/**
+ * Papers to audit: `--paper <name>` if given, else every paper in the
+ * folio. The platform must not privilege one paper by name — a folio may
+ * hold several (`findPapers` is the shared discovery used by the rest of
+ * the pipeline).
+ */
+const PAPERS: string[] = paperFilter ? [paperFilter] : findPapers(REPO_ROOT);
+const PAPER_ROOTS: string[] = PAPERS.map((p) => join(REPO_ROOT, "content", p));
 
 // ── Walk block files ────────────────────────────────────────────
 
@@ -74,7 +106,7 @@ interface BlockTriple {
 }
 
 /**
- * Discover every content block under PAPER_ROOT via the shared
+ * Discover every content block under each paper root via the shared
  * `qa-utils.walkBlocks` — the single source of truth for block discovery
  * AND candidate-1 (sibling) → candidate-2 (library/Lake tree) `lean.ref`
  * resolution. The owning chapter is read from the block's `.ts` path, NOT
@@ -84,7 +116,7 @@ interface BlockTriple {
  */
 function walkBlocks(): BlockTriple[] {
   const out: BlockTriple[] = [];
-  for (const b of utilWalkBlocks(PAPER_ROOT)) {
+  for (const b of PAPER_ROOTS.flatMap((r) => [...utilWalkBlocks(r)])) {
     const chapter = chapterFromPath(b.ts) ?? "";
     if (chapterFilter && chapter !== chapterFilter) continue;
     out.push({
@@ -149,7 +181,9 @@ const CRITERION_SEVERITY: Record<string, "critical" | "major" | "minor"> = {
 };
 
 const SCRIPT_PATH = "content/pipeline/qa-checkers-q-usage.ts";
-const SCRIPT_HASH = hashFile(join(REPO_ROOT, SCRIPT_PATH));
+// Anchored at PLATFORM_ROOT, not REPO_ROOT: the checker source lives in
+// folio-assistant, not in the content repo being audited.
+const SCRIPT_HASH = hashFile(join(PLATFORM_ROOT, SCRIPT_PATH));
 const NOW_ISO = new Date().toISOString();
 const REVIEWER_ID = "q-usage-audit";
 
@@ -286,13 +320,27 @@ interface BlockFinding {
  * Check the existing sidecar for a human dispensation on `criterion`
  * whose `field_hash` matches the present source files. Returns true
  * iff a human-pass entry exists that supersedes the script verdict
- * for the current source state. Per `block-qa/v1` schema, the
- * criterion's "current verdict" is the most recent matching entry;
- * a human-pass dated after the latest script-fail (and with matching
- * hashes) is the documented dispensation mechanism (see
- * `qa-checkers-q-usage.ts` line 435-436).
+ * for the current source state.
+ *
+ * PRECEDENCE. Among entries whose `field_hash` matches the current sources, a
+ * HUMAN entry outranks a script entry outright; `reviewed_at` only breaks ties
+ * within the same reviewer kind.
+ *
+ * This used to be a flat "most recent matching entry wins", which made a
+ * dispensation last exactly one run. Every audit appends its own `kind:
+ * "script"` entry stamped at run time, so the moment the audit that HONOURED a
+ * dispensation finished, its own fail entry was the newest matching entry and
+ * the next run read the dispensation as superseded. Measured: run 1
+ * `dispensations-honored=5, fails=1`; runs 2 and 3, byte-identical sources,
+ * `dispensations-honored=0, fails=6`.
+ *
+ * The flat rule cannot express the documented mechanism at all. The script
+ * re-runs and always stamps later, so under it no human entry can ever
+ * outlive the next sweep — the dispensation feature was unusable by
+ * construction, and silently so: the sidecar still showed the human entry,
+ * the audit just stopped reading it.
  */
-function hasHumanDispensation(
+export function hasHumanDispensation(
   b: BlockTriple,
   criterionId: string,
   currentHashes: { ts?: string; md?: string; lean?: string },
@@ -309,21 +357,24 @@ function hasHumanDispensation(
     sidecar = JSON.parse(readFileSync(sidecarPath, "utf-8"));
   } catch { return false; }
   const entries = sidecar.criteria?.[criterionId] ?? [];
-  // Most recent first.
-  const sorted = [...entries].sort((a, b) =>
-    (b.reviewed_at ?? "").localeCompare(a.reviewed_at ?? ""),
-  );
-  for (const e of sorted) {
+  const applicable = entries.filter((e) => {
     const fh = e.field_hash ?? {};
-    const matches =
+    return (
       fh.ts === currentHashes.ts &&
       fh.md === currentHashes.md &&
-      fh.lean === currentHashes.lean;
-    if (!matches) continue;
-    // Most recent matching entry decides. Stop at first match.
-    return e.reviewer?.kind === "human" && e.result === "pass";
-  }
-  return false;
+      fh.lean === currentHashes.lean
+    );
+  });
+  if (applicable.length === 0) return false;
+  // Human first, then most recent — see the precedence note above.
+  const [decisive] = [...applicable].sort((a, b) => {
+    const humanness = (e: typeof a) => (e.reviewer?.kind === "human" ? 0 : 1);
+    return (
+      humanness(a) - humanness(b) ||
+      (b.reviewed_at ?? "").localeCompare(a.reviewed_at ?? "")
+    );
+  });
+  return decisive.reviewer?.kind === "human" && decisive.result === "pass";
 }
 
 // ── Orphan library-tree coverage ────────────────────────────────
@@ -400,6 +451,26 @@ export function scanOrphanLeanFiles(coveredLean: Set<string>): {
 
 function main(): void {
   const blocks = walkBlocks();
+
+  // A sweep that discovers nothing is a BROKEN sweep, not a clean one.
+  // Exiting 0 here is what let the root-resolution bug hide: callers and
+  // CI read the zero exit as "audited, nothing wrong" while the seven
+  // q-usage criteria silently went unrefreshed everywhere. Fail loudly,
+  // and say which root was searched so the cause is obvious.
+  if (blocks.length === 0) {
+    console.error("q-usage-audit: found NO blocks to audit — refusing to report success.");
+    console.error(`  content repo root : ${REPO_ROOT}`);
+    console.error(`  papers            : ${PAPERS.length ? PAPERS.join(", ") : "(none discovered)"}`);
+    if (chapterFilter) console.error(`  --chapter         : ${chapterFilter}`);
+    if (paperFilter) console.error(`  --paper           : ${paperFilter}`);
+    console.error(
+      PAPERS.length === 0
+        ? "  No `content/<paper>/<paper>.ts` manifest found. Run from the content repo root."
+        : "  Papers resolved but no blocks matched. Check --chapter / --paper spelling.",
+    );
+    process.exit(2);
+  }
+
   const stats: Map<string, ChapterStat> = new Map();
   const findings: BlockFinding[] = [];
   const coveredLean = new Set<string>();

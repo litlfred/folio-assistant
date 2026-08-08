@@ -6,8 +6,33 @@
     "strict": true,
     "types": ["bun-types"],
     "outDir": "dist",
-    "rootDir": "."
+    "rootDir": ".",
+    // The codebase imports siblings as `./qa-utils.ts`, which bun resolves
+    // natively. Without this, every such import is a TS5097 error — 21 of
+    // them the moment anything outside `src/` enters the program.
+    "allowImportingTsExtensions": true
   },
-  "include": ["src/**/*.ts"],
+  // `include` used to be `["src/**/*.ts"]` alone, so `tsc --noEmit -p .`
+  // typechecked `src/` plus only what `src/` transitively imports: 6 of the
+  // 69 files in `content/pipeline`, and not `schemas/types.ts` at all. A
+  // green `tsc` therefore said nothing about most of the pipeline — including
+  // the block-kind exhaustiveness assertion in `schemas/types.ts`, which
+  // cannot fail if it is never compiled.
+  //
+  // `schemas/**` is in scope now — it is clean, and it is where the block-kind
+  // exhaustiveness assertion lives. Widening it here immediately caught a
+  // ReferenceError shipped in 958c29e: seven constraint checks had their `ctx`
+  // parameter renamed to `_ctx` during a lint drain while their bodies still
+  // read `ctx.dir` / `ctx.fileExists`. That commit claimed "`tsc --noEmit` …
+  // clean", which was true and meaningless, because the file was not in the
+  // program.
+  //
+  // `content/**` is NOT yet: 48 errors, 21 of them in `render-latex.ts`.
+  // Tracked in bean `folio-assistant-tsca`. Widen it there once its count is
+  // zero — the same ratchet `eslint.config.mjs` uses, so a red typecheck
+  // always means a regression rather than pre-existing debt. Note that the
+  // parts of `content/pipeline` reachable from `src/` are compiled either
+  // way; the gap is the 63 files nothing in `src/` imports.
+  "include": ["src/**/*.ts", "schemas/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }

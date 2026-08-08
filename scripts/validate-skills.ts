@@ -16,7 +16,6 @@ import {
   ActorDefinitionSchema,
   CapabilityDefinitionSchema,
   RequirementSchema,
-  SkillDefinitionSchema,
 } from "../schemas/constraints.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

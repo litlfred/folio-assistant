@@ -16,8 +16,8 @@
  * @module content/pipeline/validate
  */
 
-import { readdirSync, readFileSync, existsSync, statSync } from "fs";
-import { resolve, join, basename, extname } from "path";
+import { readdirSync, readFileSync, existsSync } from "fs";
+import { resolve, join, basename } from "path";
 import {
   BlockSchema,
   PaperSchema,
@@ -26,9 +26,10 @@ import {
   type ConstraintContext,
 } from "../../schemas/constraints";
 import type { Block, Paper, Chapter, Section, ValidationIssue, ValidationResult } from "../../schemas/types";
-import { renderBlock, validateLatexAst, markdownToLatex } from "./render-latex";
+import { renderBlock, validateLatexAst } from "./render-latex";
 import { validateDefterms } from "./validate-defterm";
 import { validateValueDirectives } from "./validate-value";
+import { findContentRepoRoot, findPapers } from "./repo-root";
 
 // ── File discovery ───────────────────────────────────────────────
 
@@ -38,11 +39,6 @@ function discoverManifests(dir: string): string[] {
   return readdirSync(dir)
     .filter(f => f.endsWith(".ts") && !f.startsWith("index") && !f.startsWith("_"))
     .map(f => basename(f, ".ts"));
-}
-
-/** Get root name from a file path. */
-function rootName(file: string): string {
-  return basename(file, extname(file));
 }
 
 type ManifestKind = "paper" | "chapter" | null;
@@ -395,19 +391,27 @@ export async function validateObjects(
     }
 
     if (allBlocks.size === 0 && issues.length === 0) {
+      // A run that validates NOTHING is a broken run, not a clean one. This
+      // was a `warning` returning `valid: true`, so the CLI printed
+      // "✓ Valid — 1 issue(s)" and exited 0 over an empty corpus — which is
+      // exactly what the default `objectsDir` produced when the pipeline ran
+      // from a folio, since it pointed into the platform's own tree.
       issues.push({
-        level: "warning",
+        level: "error",
         block: "(none)",
-        message: `No content manifests found in ${objectsDir}`,
+        message:
+          `No content manifests found in ${objectsDir} — refusing to report ` +
+          `success. Expected a paper directory (<dir>/<dir>.ts) or a chapter ` +
+          `directory. Run from the content repo, or pass the path explicitly.`,
       });
-      return { valid: true, issues };
+      return { valid: false, issues };
     }
   }
 
   // Pre-load all .md content once — avoids redundant filesystem reads
   // across Phase 2 (constraint rules) and Phase 3 (AST validation).
   // Store undefined for missing files to preserve the distinction from empty files.
-  console.log("Preloading MD cache"); const mdCache = new Map<string, string | undefined>();
+  const mdCache = new Map<string, string | undefined>();
   const leanCache = new Map<string, string | undefined>();
   for (const [name, { dir }] of allBlocks) {
     const mdPath = join(dir, `${name}.md`);
@@ -422,7 +426,7 @@ export async function validateObjects(
   // targets and contain the actual equation labels. Collision-detect:
   // warn (don't error) if a \label{X} duplicates an existing label.
   const labelDecl = /\\label\{([^}]+)\}/g;
-  for (const [name, md] of mdCache) {
+  for (const [, md] of mdCache) {
     if (!md) continue;
     for (const m of md.matchAll(labelDecl)) {
       const lbl = m[1];
@@ -443,9 +447,12 @@ export async function validateObjects(
   // with a given basename exists anywhere under a package's Lake root —
   // the cluster-migration pattern allows the file path to differ from
   // the `lean.ref` decl prefix, so we fall back to a basename scan.
-  // `LEAN_PACKAGES.lakeRoot` is repo-root-relative; resolve against the
-  // repo root (two levels up from `content/pipeline/`).
-  const REPO_ROOT = resolve(import.meta.dir, "../..");
+  // `LEAN_PACKAGES.lakeRoot` is CONTENT-repo-relative, so it must be resolved
+  // against the folio — not against `import.meta.dir`, which lands in
+  // folio-assistant's own tree because the folio embeds the platform as a
+  // symlink. With the old computation this scanned a Lake tree that does not
+  // exist here, so `lean-file-exists`'s basename fallback never found anything.
+  const REPO_ROOT = findContentRepoRoot();
   const lakeTreeBasenameCache = new Map<string, Set<string>>();
   function lakeTreeContainsBasename(lakeRoot: string, basename: string): boolean {
     const absRoot = resolve(REPO_ROOT, lakeRoot);
@@ -472,7 +479,15 @@ export async function validateObjects(
   }
 
   // Phase 2: Constraint rules
-  console.log("Starting Phase 2"); for (const [name, { block, dir }] of allBlocks) {
+  // `dir` comes from the MAP ENTRY, not from the enclosing scope. Every
+  // `allBlocks.set` stores the directory the block was loaded from, and in
+  // paper mode that is the block's CHAPTER dir — `objectsDir` is the paper
+  // root, where none of the companion `.md` files live. The destructuring
+  // dropped it, leaving a bare `dir` that resolved to nothing:
+  // `ReferenceError: dir is not defined` on any run reaching a single block.
+  // Restoring the binding is the fix; substituting `objectsDir` would silence
+  // the crash and make `md-exists` fail for every block in the paper.
+  for (const [name, { block, dir }] of allBlocks) {
     const mdContent = mdCache.get(name);
     const ctx: ConstraintContext = {
       rootName: name,
@@ -499,7 +514,7 @@ export async function validateObjects(
   }
 
   // Phase 3: AST validation (render → parse)
-  for (const [name, { block, dir }] of allBlocks) {
+  for (const [name, { block }] of allBlocks) {
     const mdContent = mdCache.get(name) ?? "";
 
     try {
@@ -544,17 +559,47 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const strict = args.includes("--strict");
   const positional = args.filter(a => !a.startsWith("--"));
-  const dir = resolve(positional[0] || join(import.meta.dir, "../objects"));
-  console.log(`Validating content objects in: ${dir}${strict ? " [strict]" : ""}\n`);
 
-  const result = await validateObjects(dir, { strict });
+  // With no explicit path, validate every paper in the FOLIO. The default used
+  // to be `join(import.meta.dir, "../objects")` — an import-relative path, so
+  // running the pipeline from a content repo pointed it at
+  // `<folio-assistant>/content/objects`, which does not exist. It found no
+  // manifests, called that a warning, and printed "✓ Valid" with exit 0. The
+  // content validator has been validating nothing.
+  const repoRoot = findContentRepoRoot();
+  const targets = positional.length > 0
+    ? positional.map(p => resolve(p))
+    : findPapers(repoRoot).map(p => join(repoRoot, "content", p));
 
-  for (const issue of result.issues) {
-    const icon = issue.level === "error" ? "✗" : issue.level === "warning" ? "⚠" : "ℹ";
-    const file = issue.file ? ` (${issue.file})` : "";
-    console.log(`  ${icon} [${issue.block}]${file}: ${issue.message}`);
+  if (targets.length === 0) {
+    console.error(
+      `✗ No paper found under ${join(repoRoot, "content")} — expected at least ` +
+      `one <paper>/<paper>.ts manifest.\n` +
+      `  folio-assistant is the PLATFORM; run this from a folio checkout, or ` +
+      `pass a paper/chapter directory explicitly.`,
+    );
+    process.exit(2);
   }
 
-  console.log(`\n${result.valid ? "✓ Valid" : "✗ Invalid"} — ${result.issues.length} issue(s)`);
-  process.exit(result.valid ? 0 : 1);
+  let allValid = true;
+  let total = 0;
+  for (const dir of targets) {
+    console.log(`Validating content objects in: ${dir}${strict ? " [strict]" : ""}\n`);
+    const result = await validateObjects(dir, { strict });
+
+    for (const issue of result.issues) {
+      const icon = issue.level === "error" ? "✗" : issue.level === "warning" ? "⚠" : "ℹ";
+      const file = issue.file ? ` (${issue.file})` : "";
+      console.log(`  ${icon} [${issue.block}]${file}: ${issue.message}`);
+    }
+
+    console.log(`\n${result.valid ? "✓ Valid" : "✗ Invalid"} — ${result.issues.length} issue(s)\n`);
+    allValid &&= result.valid;
+    total += result.issues.length;
+  }
+
+  if (targets.length > 1) {
+    console.log(`${allValid ? "✓ Valid" : "✗ Invalid"} — ${targets.length} papers, ${total} issue(s)`);
+  }
+  process.exit(allValid ? 0 : 1);
 }

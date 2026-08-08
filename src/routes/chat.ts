@@ -31,7 +31,7 @@ export async function handleChatPost(
   url: URL,
   req: Request,
   adapter: ContentAdapter,
-  feedbackStore: FeedbackStore,
+  _feedbackStore: FeedbackStore,
 ): Promise<Response | null> {
   if (url.pathname !== "/api/chat") return null;
 

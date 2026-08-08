@@ -5,6 +5,7 @@
  */
 
 import { resolve } from "path";
+import { readFileSync } from "fs";
 
 /** Repository root directory. */
 export const REPO_ROOT = resolve(import.meta.dir, "../..");
@@ -50,7 +51,7 @@ export const CONFIG_FILE = resolve(REPO_ROOT, "lean-mcp.config.json");
 /** Read viewer_port from lean-mcp.config.json (single source of truth). */
 function readViewerPort(): number {
   try {
-    const cfg = JSON.parse(require("fs").readFileSync(CONFIG_FILE, "utf-8"));
+    const cfg = JSON.parse(readFileSync(CONFIG_FILE, "utf-8"));
     return cfg.viewer_port ?? 8080;
   } catch {
     return 8080;

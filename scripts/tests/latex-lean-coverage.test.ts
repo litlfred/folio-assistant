@@ -11,18 +11,15 @@
  */
 
 import { describe, test, expect } from "bun:test";
-import { readFileSync, existsSync } from "fs";
-import { join, relative } from "path";
+import { readFileSync } from "fs";
+import { relative } from "path";
 import {
   LEAN_DIR,
-  CHAPTERS_DIR,
-  REPO_ROOT,
   findLeanFiles,
   findChapterFiles,
   extractEnvironments,
   type LatexEnvironment,
 } from "./helpers";
-
 // ── Collect all environments and Lean files once ────────────────
 
 const chapterFiles = findChapterFiles();

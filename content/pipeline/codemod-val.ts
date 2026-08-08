@@ -39,7 +39,7 @@
  */
 
 import { existsSync, readFileSync, writeFileSync, readdirSync, statSync } from "fs";
-import { basename, join, resolve, extname } from "path";
+import { join, resolve, extname } from "path";
 import { remark } from "remark";
 import remarkDirective from "remark-directive";
 import remarkMath from "remark-math";
@@ -51,7 +51,6 @@ import { gfmStrikethroughFromMarkdown, gfmStrikethroughToMarkdown } from "mdast-
 import {
   WITNESSED_VALUES,
   verifiedNames,
-  type WitnessedValueEntry,
 } from "./value-registry-di";
 import { resolvePath } from "./render-value";
 import { findContentRepoRoot } from "./repo-root";
@@ -103,7 +102,7 @@ function sigDigitString(str: string): string | null {
   if (!m) return null;
   const intPart = m[1];
   const fracPart = m[2] || "";
-  let digits = intPart + fracPart;
+  const digits = intPart + fracPart;
   // Strip leading zeros (preserve at least one digit so "0" → "0").
   let i = 0;
   while (i < digits.length - 1 && digits[i] === "0") i++;

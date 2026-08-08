@@ -12,7 +12,7 @@ import { execSync, spawnSync } from "child_process";
 import { existsSync, readdirSync } from "fs";
 import { join } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { BUILD_DIR, REPO_ROOT } from "../paths.js";
+import { BUILD_DIR } from "../paths.js";
 
 /** Detect the system's "open" command. */
 function getOpenCommand(): string | null {
@@ -76,9 +76,7 @@ export function registerPreviewTools(server: McpServer): void {
         }
 
         const listing = files.map(f => {
-          const path = join(BUILD_DIR, f);
-          const stat = Bun.file(path);
-          return `  ${f}`;
+                  return `  ${f}`;
         }).join("\n");
 
         if (list) {

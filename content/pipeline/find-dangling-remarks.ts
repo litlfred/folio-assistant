@@ -17,7 +17,7 @@
  */
 
 import { readdirSync, existsSync, statSync } from "fs";
-import { resolve, join, basename } from "path";
+import { resolve, join } from "path";
 
 // ── Types ────────────────────────────────────────────────────────
 
@@ -93,7 +93,7 @@ async function analyzeRemark(filePath: string): Promise<RemarkInfo | null> {
 
     // Check .md for ambiguous physics terms
     const mdPath = filePath.replace(/\.ts$/, ".md");
-    let ambiguousTerms: string[] = [];
+    const ambiguousTerms: string[] = [];
     if (existsSync(mdPath)) {
       const { readFileSync } = await import("fs");
       const mdContent = readFileSync(mdPath, "utf-8").toLowerCase();

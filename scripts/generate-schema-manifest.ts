@@ -13,7 +13,7 @@
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
-import { join, dirname } from "path";
+import { join } from "path";
 
 const ROOT = join(import.meta.dir, "..");
 const TYPES_FILE = join(ROOT, "folio-assistant/schemas/types.ts");
@@ -152,7 +152,6 @@ function parseInterfaces(source: string, filename: string): TypeInfo[] {
 
     if (inlineTypeMatch) {
       const name = inlineTypeMatch[1];
-      const body = inlineTypeMatch[2].trim();
       const module = filename.includes("formalization-types") ? "schemas_formalization-types" : "content_schema_types";
       types.push({
         name,

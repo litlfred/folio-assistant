@@ -10,11 +10,11 @@
  */
 
 import { z } from "zod";
-import { execSync, spawnSync } from "child_process";
+import { spawnSync } from "child_process";
 import { existsSync, readdirSync, readFileSync } from "fs";
 import { join, basename } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { REPO_ROOT, CONTENT_DIR, BUILD_DIR } from "../paths.js";
+import { REPO_ROOT, CONTENT_DIR } from "../paths.js";
 // Note: paths are resolved from the paper adapter's paths module.
 
 /** Find all paper directories under content/. */

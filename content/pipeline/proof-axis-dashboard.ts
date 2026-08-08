@@ -10,8 +10,9 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { resolve, dirname, relative, basename } from "path";
+import { resolve, dirname, relative } from "path";
 import { fileURLToPath } from "url";
+import { execSync } from "child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = resolve(dirname(__filename), "..", "..");
@@ -131,7 +132,6 @@ function main() {
 
   // Scan for actual sorry in code
   const sorries: SorryInfo[] = [];
-  const { execSync } = require("child_process");
   try {
     const grepOut = execSync(
       `find ${rootPath} -name '*.lean' ! -path '*/lean/*' -exec grep -l '\\bsorry\\b' {} +`,

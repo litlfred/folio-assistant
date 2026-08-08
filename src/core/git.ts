@@ -8,7 +8,7 @@
  * @module folio-assistant/core/git
  */
 
-import { readFileSync, existsSync, writeFileSync, unlinkSync, mkdirSync } from "fs";
+import { readFileSync, existsSync, writeFileSync, unlinkSync, mkdirSync, symlinkSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 import { spawnSync } from "child_process";
 
@@ -155,7 +155,6 @@ export class GitHelper {
       if (!existsSync(schemaLink) && existsSync(realSchema)) {
         mkdirSync(join(branchTmpDir, "content"), { recursive: true });
         try {
-          const { symlinkSync } = require("fs") as typeof import("fs");
           symlinkSync(realSchema, schemaLink, "dir");
         } catch {}
       }
@@ -211,7 +210,6 @@ export class GitHelper {
   /** List directory — from disk if current branch, via git otherwise. */
   listDirBranch(branch: string | undefined, relDir: string): string[] {
     if (this.isCurrentBranch(branch)) {
-      const { readdirSync } = require("fs") as typeof import("fs");
       const absPath = resolve(this.repoRoot, relDir);
       if (!existsSync(absPath)) return [];
       return readdirSync(absPath);

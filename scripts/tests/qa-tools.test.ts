@@ -15,6 +15,12 @@ import {
 } from "../../adapters/paper/tools/_pipeline.ts";
 import { registerQaTools } from "../../adapters/paper/tools/qa.ts";
 
+/** An MCP tool handler, as the registration stubs below see it. */
+type ToolHandler = (
+  ...args: unknown[]
+) => Promise<{ content: Array<{ type: string; text: string }> }>;
+
+
 describe("_pipeline helper", () => {
   test("pipelineScriptPath resolves under content/pipeline with .ts", () => {
     const p = pipelineScriptPath("qa-sweep");
@@ -53,9 +59,9 @@ describe("_pipeline helper", () => {
 
 describe("registerQaTools", () => {
   test("registers the expected mechanical tools with handlers", () => {
-    const registered: Record<string, { desc: string; schema: unknown; handler: Function }> = {};
+    const registered: Record<string, { desc: string; schema: unknown; handler: ToolHandler }> = {};
     const stub = {
-      tool(name: string, desc: string, schema: unknown, handler: Function) {
+      tool(name: string, desc: string, schema: unknown, handler: ToolHandler) {
         registered[name] = { desc, schema, handler };
       },
     };
@@ -77,8 +83,8 @@ describe("registerQaTools", () => {
   });
 
   test("glossary_check returns a graceful message when no paper resolves", async () => {
-    const registered: Record<string, Function> = {};
-    const stub = { tool(name: string, _d: string, _s: unknown, h: Function) { registered[name] = h; } };
+    const registered: Record<string, ToolHandler> = {};
+    const stub = { tool(name: string, _d: string, _s: unknown, h: ToolHandler) { registered[name] = h; } };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     registerQaTools(stub as any);
     // In this repo there is no content/<paper>, so auto-detect yields nothing.

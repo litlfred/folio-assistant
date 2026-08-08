@@ -16,7 +16,7 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { resolve, dirname } from "path";
+import { resolve } from "path";
 import { findContentRepoRoot } from "./repo-root";
 import {
   WITNESSED_VALUES,
@@ -173,8 +173,8 @@ function formatDecimalString(
   const rounded = roundHalfEven(significant, precision);
 
   // Rounding can carry: "999" → precision 2 → "10" but with mag+=1.
-  let outDigits = rounded.digits;
-  let outMag = mag + rounded.carry;
+  const outDigits = rounded.digits;
+  const outMag = mag + rounded.carry;
 
   if (format === "scientific") {
     const lead = outDigits[0] ?? "0";

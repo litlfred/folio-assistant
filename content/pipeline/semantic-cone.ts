@@ -63,7 +63,7 @@
 import { join } from "path";
 import { buildContentGraph, type ContentGraph, type FormalSource } from "./content-graph";
 import { findContentRepoRoot } from "./repo-root";
-import { walkBlocks, loadQaReport, hashBlockFiles, entryIsFresh } from "./qa-utils";
+import { walkBlocks, loadQaReport, hashBlockFiles, entryIsFresh, freshnessKeys } from "./qa-utils";
 import { QA_CRITERIA_REGISTRY, QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 
 /**
@@ -194,9 +194,11 @@ export function coneCoverage(
     const missing: string[] = [];
     for (const cid of criteria) {
       const entries = report?.criteria?.[cid] ?? [];
-      // `depends_on` comes from the registry so freshness uses the same
-      // file set the criterion was defined against.
-      const dependsOn = QA_CRITERIA_BY_ID[cid]?.depends_on ?? ["md", "ts", "lean"];
+      // The file set comes from the registry so freshness matches what the
+      // criterion was defined against — `depends_on` plus anything that
+      // invalidates without gating applicability.
+      const def = QA_CRITERIA_BY_ID[cid];
+      const dependsOn = def ? freshnessKeys(def) : (["md", "ts", "lean"] as const).slice();
       const fresh = entries.some((e) =>
         entryIsFresh(e, current, dependsOn, undefined, QA_CRITERIA_BY_ID[cid]?.lean_granularity),
       );

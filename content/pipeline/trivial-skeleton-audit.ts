@@ -42,7 +42,7 @@ const ROOT = join(REPO_ROOT, "content/quantum-observable-universe");
 // also treated as `--out`.
 const argv = process.argv.slice(2);
 let WITNESS_OUT = join(REPO_ROOT, "docs/audits/2026-05-08-trivial-skeleton-audit.json");
-let strictGates: Record<string, number> = {};
+const strictGates: Record<string, number> = {};
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
   if (a === "--out") WITNESS_OUT = argv[++i];

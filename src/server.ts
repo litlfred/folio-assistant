@@ -10,13 +10,12 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { existsSync, readFileSync } from "fs";
-import { join, resolve, extname } from "path";
+import { join, extname } from "path";
 
 import type { ContentAdapter } from "./types.js";
 import { FeedbackStore } from "./core/feedback.js";
 import { GitHelper } from "./core/git.js";
 import { log, logDebug } from "./core/logging.js";
-import { getUserRole, getUserName, getUserEmail, hasRole, forbidden } from "./core/rbac.js";
 import { handleBranchGet, handleBranchPost } from "./routes/branches.js";
 import { handleFeedbackGet, handleFeedbackPost } from "./routes/feedback.js";
 import { handleChatPost } from "./routes/chat.js";
@@ -91,19 +90,24 @@ export class FolioServer {
     const origTool = this.mcpServer.tool.bind(this.mcpServer);
     this.mcpServer.tool = function (...args: Parameters<typeof origTool>) {
       const toolName = args[0] as string;
+      // Typed as the SDK's own callback slot rather than widened to
+      // `Function`: the cast belongs on the ASSIGNMENT below (the slot is a
+      // union of overload shapes), not on the CALL, where throwing the
+      // signature away also threw away the return type.
+      type ToolSlot = (typeof args)[number];
       const handler = args[args.length - 1] as (...a: unknown[]) => Promise<unknown>;
-      args[args.length - 1] = async (...handlerArgs: unknown[]) => {
+      args[args.length - 1] = (async (...handlerArgs: unknown[]) => {
         const start = Date.now();
         log("mcp", `→ ${toolName}`, JSON.stringify(handlerArgs[0] || {}).slice(0, 120));
         try {
-          const result = await (handler as Function)(...handlerArgs);
+          const result = await handler(...handlerArgs);
           log("mcp", `← ${toolName}`, `ok (${Date.now() - start}ms)`);
           return result;
         } catch (e) {
           log("mcp", `✗ ${toolName}`, `error: ${e instanceof Error ? e.message : String(e)} (${Date.now() - start}ms)`);
           throw e;
         }
-      };
+      }) as ToolSlot;
       return origTool(...args);
     } as typeof origTool;
 
@@ -227,13 +231,9 @@ export class FolioServer {
     await this.mcpServer.connect(transport);
 
     const viewerPort = parseInt(process.env.VIEWER_PORT || String(this.config.viewerPort ?? 3200), 10);
-    const self = this;
-
     Bun.serve({
       port: viewerPort,
-      async fetch(req) {
-        return self.handleRequest(req);
-      },
+      fetch: async (req) => this.handleRequest(req),
     });
 
     log("init", `MCP server started (stdio, repo: ${this.config.repoRoot})`);
@@ -264,16 +264,14 @@ export class FolioServer {
     });
     await this.mcpServer.connect(httpTransport);
 
-    const self = this;
-
     Bun.serve({
       port,
-      async fetch(req) {
+      fetch: async (req) => {
         const url = new URL(req.url);
         if (url.pathname === "/mcp") {
           return httpTransport.handleRequest(req);
         }
-        return self.handleRequest(req);
+        return this.handleRequest(req);
       },
     });
 

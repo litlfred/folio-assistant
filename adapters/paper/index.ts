@@ -8,7 +8,7 @@
 
 import { existsSync, readFileSync, writeFileSync, readdirSync, mkdirSync } from "fs";
 import { join, resolve, extname } from "path";
-import Anthropic from "@anthropic-ai/sdk";
+import { execSync, spawnSync } from "child_process";
 
 import { registerRenderTools } from "./tools/render.js";
 import { registerValidateTools } from "./tools/validate.js";
@@ -24,10 +24,6 @@ import { registerSkillFetchTools } from "../../src/tools/skill-fetch.js";
 
 import type {
   ContentAdapter,
-  FolioItem,
-  ContentOutline,
-  ChapterDetail,
-  ResolvedSection,
   ResolvedDocument,
   ResolvedBlock,
   DocumentDiff,
@@ -35,12 +31,11 @@ import type {
   BranchCharacterization,
   TriageResult,
   FeedbackItem,
-  UserRole,
-} from "../../src/types.js";
+  UserRole } from "../../src/types.js";
 import type { GitHelper } from "../../src/core/git.js";
 import type { FeedbackStore } from "../../src/core/feedback.js";
 import { log } from "../../src/core/logging.js";
-import { hasRole, forbidden, getUserName, getUserEmail } from "../../src/core/rbac.js";
+import { hasRole, forbidden } from "../../src/core/rbac.js";
 import { PaperResolver } from "./resolver.js";
 import { getAnthropic } from "../../src/routes/chat.js";
 
@@ -698,7 +693,6 @@ End every response with suggested follow-ups:
     // Render PDF status
     if (path === "/api/render-pdf/status") {
       try {
-        const { execSync } = require("child_process") as typeof import("child_process");
         execSync("which latexmk", { stdio: "pipe" });
         return Response.json({ available: true }, { headers: CORS });
       } catch {
@@ -801,7 +795,6 @@ End every response with suggested follow-ups:
     // TeX export — build content pipeline and serve files as JSON manifest
     if (path === "/api/tex-export") {
       try {
-        const { spawnSync } = require("child_process") as typeof import("child_process");
 
         const buildResult = spawnSync("bun", ["run", join(this.repoRoot, "content/pipeline/build.ts")], {
           cwd: this.repoRoot, stdio: "pipe", timeout: 60_000,
@@ -989,7 +982,6 @@ End every response with suggested follow-ups:
     // Render PDF
     if (path === "/api/render-pdf") {
       try {
-        const { spawnSync, execSync } = require("child_process") as typeof import("child_process");
         try {
           execSync("which latexmk", { stdio: "pipe" });
         } catch {
