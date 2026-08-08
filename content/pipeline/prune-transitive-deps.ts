@@ -34,11 +34,12 @@
  */
 
 import { readFileSync, writeFileSync } from "fs";
-import { join} from "path";
+import { join } from "path";
 import type { Paper, Chapter, Section, Block } from "../../schemas/types";
 import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
 import { findUsesField, replaceUsesArray, removeUsesField } from "./uses-field";
+import { verifyEditedBlock } from "./block-module";
 
 // Was rooted at this file's own location, which is the PLATFORM — but every
 // path below is folio content. `findContentRepoRoot()` walks up from cwd;
@@ -174,11 +175,12 @@ function computePruning(
 
 // ── Apply changes to .ts files ──────────────────────────────────
 
-function applyPruning(
+async function applyPruning(
   blocks: BlockInfo[],
   pruning: Map<string, { pruned: string[] }>,
-): number {
+): Promise<number> {
   let filesChanged = 0;
+  let refused = 0;
   const blockByLabel = new Map<string, BlockInfo>();
   for (const b of blocks) blockByLabel.set(b.label, b);
 
@@ -209,10 +211,30 @@ function applyPruning(
       content = replaceUsesArray(content, `[\n${entries}\n  ]`);
     }
 
+    // Verify the edit against the module system before it lands.
+    //
+    // Every version of this write path has been a text edit trusted on
+    // faith. The block is a module, so its post-edit `uses[]` can simply
+    // be read rather than assumed — and that catches any way the splice
+    // could be wrong, including ones nobody anticipated, instead of only
+    // the two that have been found so far.
+    const verdict = await verifyEditedBlock(tsPath, content, pruned);
+    if (!verdict.ok) {
+      console.error(`  ✗ REFUSED to write ${tsPath}\n      ${verdict.reason}`);
+      refused++;
+      continue;
+    }
+
     writeFileSync(tsPath, content);
     filesChanged++;
   }
 
+  if (refused > 0) {
+    console.error(
+      `\n  ${refused} file(s) NOT written — the edit did not verify against the ` +
+        `loaded module. Nothing was changed for those blocks.`,
+    );
+  }
   return filesChanged;
 }
 
@@ -245,7 +267,7 @@ async function main() {
 
   if (APPLY) {
     console.log("\nApplying changes...");
-    const changed = applyPruning(blocks, pruning);
+    const changed = await applyPruning(blocks, pruning);
     console.log(`✓ ${changed} files updated.`);
   } else {
     console.log("\nDry run — pass --apply to rewrite files.");
