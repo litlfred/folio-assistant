@@ -49,8 +49,15 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const raw = JSON.parse(readFileSync(TARGET, "utf-8"));
-  const entries: any[] = raw.entries ?? [];
+  // The file is hand-edited JSON, so `verified_by` is either the legacy
+  // string or the `Verifier` union this script migrates it to.
+  interface VerificationEntry { id?: string; verified_by?: unknown }
+  const raw = JSON.parse(readFileSync(TARGET, "utf-8")) as {
+    entries?: VerificationEntry[];
+    _verified_by_caveat?: unknown;
+    _schema?: string;
+  };
+  const entries: VerificationEntry[] = raw.entries ?? [];
 
   let migrated = 0;
   let alreadyStructured = 0;
@@ -59,7 +66,7 @@ if (import.meta.main) {
   for (const e of entries) {
     const v = e.verified_by;
     if (v == null) continue;
-    if (typeof v === "object" && v.kind) {
+    if (typeof v === "object" && v !== null && "kind" in v) {
       alreadyStructured++;
       continue;
     }

@@ -7,6 +7,7 @@
  * Usage: npx ts-node scripts/validate-skills.ts
  */
 
+import type { z } from "zod";
 import { readFileSync, readdirSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -24,7 +25,7 @@ const rootDir = join(__dirname, "..");
 let errors = 0;
 let validated = 0;
 
-function validateDir(dir: string, schema: any, label: string): void {
+function validateDir(dir: string, schema: z.ZodType<unknown>, label: string): void {
   if (!existsSync(dir)) return;
   for (const file of readdirSync(dir).filter(f => f.endsWith(".json"))) {
     const path = join(dir, file);

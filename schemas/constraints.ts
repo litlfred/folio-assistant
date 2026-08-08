@@ -9,6 +9,7 @@
 import { z } from "zod";
 
 import { LEAN_REF_PATTERN, leanPackageByName, parseLeanRef } from "./lean-packages.js";
+import type { Block } from "./types.js";
 
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
@@ -722,7 +723,7 @@ export interface ConstraintRule {
   /** Which block kinds this rule applies to. */
   appliesTo: string[];
   /** Check function — returns error message or null. */
-  check: (block: z.infer<typeof BlockSchema>, context: ConstraintContext) => string | null;
+  check: (block: Block, context: ConstraintContext) => string | null;
 }
 
 export interface ConstraintContext {
