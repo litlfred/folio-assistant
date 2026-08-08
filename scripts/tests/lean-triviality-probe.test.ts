@@ -14,9 +14,10 @@
  * and say so loudly, because a suite that silently passes when its
  * subject is absent is the same defect one level up.
  */
-import { describe, test, expect } from "bun:test";
-import { existsSync, readdirSync } from "fs";
+import { describe, test, expect, beforeEach, afterEach } from "bun:test";
+import { existsSync, readdirSync, mkdirSync, mkdtempSync, rmSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 import { execFileSync } from "child_process";
 import {
   probeDeclaration,
@@ -240,5 +241,67 @@ describe("leanPathFor", () => {
     // pointing at a directory that exists but holds no oleans reads as
     // "unknown module prefix", which looks like a missing dependency.
     expect(leanPathFor("/nonexistent-lake-root")).toBe("");
+  });
+
+  // These need no Lean toolchain: `leanPathFor` only reads the filesystem.
+  describe("unioning the workspace root", () => {
+    let tmp: string;
+    let workspace: string;
+    let paper: string;
+
+    /** Create `<root>/.lake/build/lib/lean` and the named package dirs. */
+    const layout = (root: string, own: boolean, pkgs: string[]) => {
+      if (own) mkdirSync(join(root, ".lake", "build", "lib", "lean"), { recursive: true });
+      for (const p of pkgs) {
+        mkdirSync(join(root, ".lake", "packages", p, ".lake", "build", "lib", "lean"), {
+          recursive: true,
+        });
+      }
+    };
+
+    beforeEach(() => {
+      tmp = mkdtempSync(join(tmpdir(), "leanpath-"));
+      workspace = join(tmp, "ws");
+      paper = join(workspace, "content", "paper", "lean");
+      // The asymmetry this fix exists for: the paper root carries its own
+      // modules, the workspace root carries the dependencies — and the
+      // paper root ALSO holds near-empty stub copies of those same
+      // dependency packages.
+      layout(workspace, false, ["mathlib", "batteries"]);
+      layout(paper, true, ["mathlib", "batteries"]);
+    });
+
+    afterEach(() => rmSync(tmp, { recursive: true, force: true }));
+
+    test("emits workspace package dirs BEFORE the paper root's stubs", () => {
+      const parts = leanPathFor(paper, workspace).split(":");
+      const wsMathlib = parts.indexOf(
+        join(workspace, ".lake", "packages", "mathlib", ".lake", "build", "lib", "lean"),
+      );
+      const paperMathlib = parts.indexOf(
+        join(paper, ".lake", "packages", "mathlib", ".lake", "build", "lib", "lean"),
+      );
+      expect(wsMathlib).toBeGreaterThanOrEqual(0);
+      expect(paperMathlib).toBeGreaterThanOrEqual(0);
+      // LEAN_PATH resolves first-match by directory. If the stub wins,
+      // every Mathlib-importing file fails to elaborate — and the probe
+      // reports that as a fact about the corpus.
+      expect(wsMathlib).toBeLessThan(paperMathlib);
+    });
+
+    test("still includes the paper root's own module dir", () => {
+      const parts = leanPathFor(paper, workspace).split(":");
+      expect(parts).toContain(join(paper, ".lake", "build", "lib", "lean"));
+    });
+
+    test("omitting the workspace root preserves single-root behaviour", () => {
+      const parts = leanPathFor(paper).split(":");
+      expect(parts.every((p) => p.startsWith(paper))).toBe(true);
+    });
+
+    test("does not duplicate when both roots resolve to the same path", () => {
+      const parts = leanPathFor(paper, paper).split(":");
+      expect(new Set(parts).size).toBe(parts.length);
+    });
   });
 });

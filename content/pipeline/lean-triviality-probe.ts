@@ -77,7 +77,7 @@
  */
 
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
-import { join, dirname } from "path";
+import { join, dirname, resolve } from "path";
 import { execFileSync } from "child_process";
 import { tmpdir } from "os";
 import { mkdtempSync } from "fs";
@@ -99,18 +99,44 @@ const PROVABLE = /^\s*(?:@\[[^\]]*\]\s*)?(?:private\s+|protected\s+|noncomputabl
  * `.lake/build/lib` — pointing at the latter finds nothing and reads as
  * "unknown module prefix", which looks like a missing dependency rather
  * than a wrong path.
+ *
+ * Neither root is sufficient alone, so both are unioned. A restored
+ * cache splits across them: the paper root carries the paper's own
+ * modules, the workspace root carries the dependencies (in one measured
+ * checkout, 942 vs 5 own-oleans, against 5 vs 6990 for Mathlib). The
+ * paper root also holds near-empty *copies* of those dependency
+ * packages, and since LEAN_PATH resolves first-match by directory, those
+ * stubs shadow the complete copies if they come first — every
+ * Mathlib-importing file then fails to elaborate. So the workspace root
+ * is emitted FIRST, matching `scripts/lean-direct-env.sh`, which orders
+ * `.lake` before `content/<paper>/lean` for exactly this reason.
+ *
+ * Passing only `lakeRoot` reproduces the old single-root behaviour.
  */
-export function leanPathFor(lakeRoot: string): string {
-  const pkgs = join(lakeRoot, ".lake", "packages");
+export function leanPathFor(lakeRoot: string, workspaceRoot?: string): string {
   const out: string[] = [];
-  const own = join(lakeRoot, ".lake", "build", "lib", "lean");
-  if (existsSync(own)) out.push(own);
-  if (existsSync(pkgs)) {
-    for (const p of readdirSync(pkgs)) {
-      const d = join(pkgs, p, ".lake", "build", "lib", "lean");
-      if (existsSync(d)) out.push(d);
+  const seen = new Set<string>();
+  const push = (d: string) => {
+    if (existsSync(d) && !seen.has(d)) {
+      seen.add(d);
+      out.push(d);
     }
+  };
+  const addRoot = (root: string) => {
+    push(join(root, ".lake", "build", "lib", "lean"));
+    const pkgs = join(root, ".lake", "packages");
+    if (existsSync(pkgs)) {
+      for (const p of readdirSync(pkgs)) {
+        push(join(pkgs, p, ".lake", "build", "lib", "lean"));
+      }
+    }
+  };
+  // Workspace root first: its complete dependency copies must win the
+  // first-match over the paper root's vestigial stubs.
+  if (workspaceRoot && resolve(workspaceRoot) !== resolve(lakeRoot)) {
+    addRoot(workspaceRoot);
   }
+  addRoot(lakeRoot);
   return out.join(":");
 }
 
@@ -187,6 +213,7 @@ export function probeDeclaration(
   lakeRoot: string,
   leanBin: string,
   timeoutMs = 120_000,
+  workspaceRoot?: string,
 ): ProbeOutcome {
   const stripped = stripLeanComments(src);
   const decls = splitDeclarations(stripped);
@@ -196,7 +223,7 @@ export function probeDeclaration(
     return { status: "skipped", decl: declName, reason: "no-body" };
   }
 
-  const env = { ...process.env, LEAN_PATH: leanPathFor(lakeRoot) };
+  const env = { ...process.env, LEAN_PATH: leanPathFor(lakeRoot, workspaceRoot) };
   const dir = mkdtempSync(join(tmpdir(), "triv-probe-"));
   const file = join(dir, "P.lean");
 
@@ -315,7 +342,7 @@ Needs: scripts/lake-cache.sh restore-toolchain && ... restore`);
     if (!decl) continue;
     const short = decl.split(".").pop()!;
 
-    const r = probeDeclaration(src, short, abs, leanBin);
+    const r = probeDeclaration(src, short, abs, leanBin, 120_000, repoRoot);
     if (r.status === "skipped") {
       skipped++;
       skips[r.reason]++;
