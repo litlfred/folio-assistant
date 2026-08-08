@@ -42,6 +42,21 @@ export function configureReferenceRegistry(api: ReferenceRegistryAPI): void {
   currentApi = api;
 }
 
+/**
+ * Has a folio supplied references at all?
+ *
+ * `getReferenceRegistry` throws when unconfigured, which is right for a
+ * lookup that must succeed — but a caller that can legitimately proceed
+ * without references needs to ASK rather than catch. `validate.ts` is
+ * one: it builds the constraint context, and `cites-resolve` no-ops when
+ * `allRefIds` is absent. Without this predicate the validator could not
+ * tell "this folio has no bibliography" from "the citation check did not
+ * run", and reported the same clean result either way.
+ */
+export function referenceRegistryConfigured(): boolean {
+  return currentApi !== null;
+}
+
 export function getReferenceRegistry(): ReferenceRegistryAPI {
   if (!currentApi) {
     throw new Error(

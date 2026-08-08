@@ -30,6 +30,7 @@ import { renderBlock, validateLatexAst } from "./render-latex";
 import { validateDefterms } from "./validate-defterm";
 import { validateValueDirectives } from "./validate-value";
 import { findContentRepoRoot, findPapers } from "./repo-root";
+import { referenceRegistryConfigured, getReferenceRegistry } from "./references-registry-di";
 
 // ── File discovery ───────────────────────────────────────────────
 
@@ -494,12 +495,35 @@ export async function validateObjects(
   // `ReferenceError: dir is not defined` on any run reaching a single block.
   // Restoring the binding is the fix; substituting `objectsDir` would silence
   // the crash and make `md-exists` fail for every block in the paper.
+  // `cites-resolve` opens with `if (… || !ctx.allRefIds) return null`, and
+  // this context never supplied `allRefIds` — so the only rule that
+  // validates a block's `cites[]` against the bibliography could not fire
+  // for any block, ever. `bib-qa` does not cover it either: it scans
+  // `.tex` and `.md` for `\cite{}`, never the `.ts` manifest field.
+  //
+  // A folio with no bibliography is legitimate, so an absent registry is
+  // not an error — but it must not read as "citations checked" either.
+  const refsConfigured = referenceRegistryConfigured();
+  const allRefIds = refsConfigured
+    ? new Set(getReferenceRegistry().referenceMap.keys())
+    : undefined;
+  if (!refsConfigured) {
+    issues.push({
+      level: "info",
+      block: "(bibliography)",
+      message:
+        "no reference registry configured — cites-resolve did not run, so " +
+        "cites[] entries were NOT validated against references",
+    });
+  }
+
   for (const [name, { block, dir }] of allBlocks) {
     const mdContent = mdCache.get(name);
     const ctx: ConstraintContext = {
       rootName: name,
       dir,
       allLabels,
+      allRefIds,
       fileExists: (p: string) => existsSync(p),
       lakeTreeContainsBasename,
       mdContent,

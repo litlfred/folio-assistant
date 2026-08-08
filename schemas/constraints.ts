@@ -10,6 +10,9 @@ import { z } from "zod";
 
 import { LEAN_REF_PATTERN, leanPackageByName, parseLeanRef } from "./lean-packages.js";
 import type { Block } from "./types.js";
+// Leaf module — importing the kind list from `types.js` would be a runtime
+// cycle, and `appliesTo` is built at module init, exactly when that bites.
+import { BLOCK_KINDS } from "./block-kinds.js";
 
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
@@ -817,8 +820,11 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     id: "simulator-ref-resolve",
     description: "Blocks with simulator refs must reference an existing simulator label",
     appliesTo: [
-      "definition", "theorem", "lemma", "proposition", "corollary",
-      "conjecture", "example", "remark",
+      // `simulator` is a BlockBase field, so ANY kind can carry one. The
+      // check below returns null when the field is absent, so listing
+      // fewer kinds only creates blind spots — `validate.ts` skips an
+      // unlisted kind without a word.
+      ...BLOCK_KINDS,
     ],
     check: (block, ctx) => {
       if (!("simulator" in block) || !block.simulator) return null;
@@ -877,8 +883,10 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     id: "cites-resolve",
     description: "All citation keys in cites[] must exist in references.ts",
     appliesTo: [
-      "definition", "theorem", "lemma", "proposition", "corollary",
-      "conjecture", "example", "remark", "prose",
+      // `cites` is a BlockBase field — every kind can carry one. An
+      // `algorithm` or `table` block citing a key absent from
+      // references.ts used to pass by never being looked at.
+      ...BLOCK_KINDS,
     ],
     check: (block, ctx) => {
       if (!("cites" in block) || !block.cites || !ctx.allRefIds) return null;
@@ -922,8 +930,10 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     id: "md-crossref-resolve",
     description: "All [text](#label) cross-references in .md content must resolve to existing labels",
     appliesTo: [
-      "definition", "theorem", "lemma", "proposition", "corollary",
-      "conjecture", "example", "remark", "simulator", "prose",
+      // Guarded on `ctx.mdContent` below, so kinds without an .md are
+      // already no-ops. A `proof` block's .md with a broken
+      // `[text](#label)` was simply never checked.
+      ...BLOCK_KINDS,
     ],
     check: (_block, ctx) => {
       if (!ctx.mdContent) return null;
