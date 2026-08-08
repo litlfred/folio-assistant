@@ -59,3 +59,53 @@ accepts either scheme so a hand-seeded branch still restores.
 
 No second qou PR needed — the workflow calls
 `folio-assistant/scripts/lake-cache.sh`, so this fix reaches CI directly.
+
+## qou#4680 merged
+
+Merged 2026-08-07T13:38:32Z. The refresh workflow now delegates to
+`lake-cache.sh seed --push`, so the format cannot drift again and the
+own-package guard is in the CI path.
+
+## The "needs CI" premise no longer holds
+
+That item read "needs CI — 1582 modules is hours, not feasible in an
+authoring container", which inherited ga7e's conclusion that no linkable
+toolchain could be had locally. It can (ga7e, resolved): the toolchain is
+a GitHub release asset and that host is reachable, so `lake exe cache get`
+— the minutes-not-hours route to a traced Mathlib — runs here.
+
+What remains genuinely expensive is building the paper's OWN modules,
+which the upstream Mathlib cache does not supply. That is the real cost,
+not the toolchain.
+
+## Dispatch attempted — blocked on token scope, not on anything technical
+
+Tried to run `lake-cache-refresh.yml` (package=qou) from this session:
+
+    POST .../actions/workflows/lake-cache-refresh.yml/dispatches
+    403 Resource not accessible by integration
+
+The session's GitHub App can READ Actions but not dispatch them
+(`actions: write` not granted). Nothing about the workflow or the reseed
+is wrong — it needs a human or a token with that scope:
+
+    gh workflow run lake-cache-refresh.yml -R litlfred/qou -f package=qou
+
+or the Run workflow button at
+<https://github.com/litlfred/qou/actions/workflows/lake-cache-refresh.yml>.
+
+### Corroboration, from the same API call
+
+Listing that workflow's runs returns **`total_count: 0`** — it has never
+executed, not once.
+
+That independently confirms this bean's root-cause finding. The live
+cache branches carry split `lake-oleans.tgz.part*` tarballs while the
+workflow (before qou#4680) committed `.lake/` as a tree; if the workflow
+had ever produced them the formats would agree. They were hand-seeded,
+and the hand-seeding is what dropped `.lake/build/` and left 7268
+dependency oleans with zero `QOU.*`.
+
+So the first run of this workflow will also be its first real test.
+Two guards now stand in front of a bad publish — the own-package check
+and the trace-coverage check — and both were added since.

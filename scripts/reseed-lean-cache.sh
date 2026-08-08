@@ -123,6 +123,20 @@ SLUG="$(printf '%s' "${TOOLCHAIN##*:}" | tr . -)"
 PROD_BRANCH="lake-cache/$PACKAGE-$SLUG"
 TEST_BRANCH="$PROD_BRANCH-test"
 
+# elan's on-disk name for a pin: `/` -> `--`, `:` -> `---`, giving
+# `leanprover--lean4---v4.24.0`.
+#
+# This was `tr '/:' '--'`, which replaces single characters and yields
+# `leanprover-lean4-v4.24.0` — a path no elan install ever has. So the
+# phase-1 guard against a non-linking toolchain tested a directory that
+# never exists and never fired, i.e. trap (1) in this script's header was
+# unenforced by the code meant to enforce it.
+TC_DIR="$HOME/.elan/toolchains/$(printf '%s' "$TOOLCHAIN" | sed -e 's#/#--#g' -e 's#:#---#g')"
+
+# A direct (non-elan) install has no `~/.elan/bin` shims, so the
+# toolchain's own bin must be on PATH or phases 2+ cannot find `lake`.
+export PATH="$TC_DIR/bin:$HOME/.elan/bin:$PATH"
+
 # ── Phase 0: preflight ──────────────────────────────────────────────
 #
 # Runs unconditionally, including under --phase, because every later
@@ -174,39 +188,52 @@ info "OK"
 
 if phase_wanted toolchain; then
   say "Phase 1 — toolchain"
-  export PATH="$HOME/.elan/bin:$PATH"
-  TC_DIR="$HOME/.elan/toolchains/$(printf '%s' "$TOOLCHAIN" | tr '/:' '--')"
 
-  if find "$HOME/.elan/toolchains" -name 'libleancpp.a' 2>/dev/null | grep -q .; then
-    info "a linkable toolchain is already installed — skipping"
+  # Scoped to THIS pin. A tree-wide `find ~/.elan/toolchains` is satisfied
+  # by a linkable install of some OTHER version, which then skips the
+  # install and leaves this build unable to link.
+  if find "$TC_DIR" -name 'libleancpp.a' -type f 2>/dev/null | grep -q .; then
+    info "a linkable $TOOLCHAIN is already installed — skipping"
   else
-    # THE trap. An extracted cache tree sits at exactly this path, so
-    # elan sees a toolchain and skips the download.
-    if [ -d "$TC_DIR" ]; then
-      warn "an existing toolchain at $TC_DIR has NO static libraries."
-      info "elan would see it and skip the download, leaving a lean that"
-      info "cannot link. It must be removed first."
-      confirm "Remove $TC_DIR?" || die "stopped — cannot proceed with a non-linking toolchain"
-      run "rm -rf '$TC_DIR'"
-    fi
-    if ! command -v elan >/dev/null 2>&1; then
-      info "installing elan"
-      run "curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain '$TOOLCHAIN'"
-    else
-      run "elan toolchain install '$TOOLCHAIN'"
+    # Direct from GitHub releases FIRST. elan's own hosts
+    # (elan.lean-lang.org, release.lean-lang.org) are unreachable behind
+    # some egress proxies — the failure that stalled this whole reseed
+    # and sent it to CI — while github.com release assets serve the very
+    # same toolchain. The service also removes a non-linking tree at
+    # $TC_DIR itself, so trap (1) is enforced where it is tested.
+    info "installing $TOOLCHAIN (direct from GitHub releases)"
+    if [ "$DRY" -eq 1 ]; then
+      info "[dry-run] bash $CACHE_SVC install-toolchain --toolchain '$TOOLCHAIN'"
+    elif ! ( cd "$REPO" && bash "$CACHE_SVC" install-toolchain --toolchain "$TOOLCHAIN" ); then
+      warn "direct install did not succeed — falling back to elan"
+      if [ -d "$TC_DIR" ] \
+         && ! find "$TC_DIR" -name 'libleancpp.a' -type f 2>/dev/null | grep -q .; then
+        warn "an existing toolchain at $TC_DIR has NO static libraries."
+        info "elan would see it and skip the download, leaving a lean that"
+        info "cannot link. It must be removed first."
+        confirm "Remove $TC_DIR?" || die "stopped — cannot proceed with a non-linking toolchain"
+        run "rm -rf '$TC_DIR'"
+      fi
+      if ! command -v elan >/dev/null 2>&1; then
+        info "installing elan"
+        run "curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain '$TOOLCHAIN'"
+      else
+        run "elan toolchain install '$TOOLCHAIN'"
+      fi
     fi
   fi
 
   if [ "$DRY" -eq 0 ]; then
-    find "$HOME/.elan/toolchains" -name 'libleancpp.a' 2>/dev/null | grep -q . \
-      || die "still no static libraries after install.
+    find "$TC_DIR" -name 'libleancpp.a' -type f 2>/dev/null | grep -q . \
+      || die "still no static libraries for $TOOLCHAIN.
 \`lean\` may elaborate but nothing will LINK, so \`lake exe cache get\`
-(phase 2) cannot run. Check network access to elan's download host."
+(phase 2) cannot run.
+Tried the direct GitHub-releases install, then elan. If both failed on
+the network: elan's hosts are blocked behind some proxies, but
+github.com release assets usually are not — check that first."
     info "static libs present ✓"
   fi
 fi
-
-export PATH="$HOME/.elan/bin:$PATH"
 
 # ── Phase 2: traced Mathlib ─────────────────────────────────────────
 
@@ -216,12 +243,58 @@ if phase_wanted cache; then
   # from `git rev-parse` in the current directory, so invoking it from
   # the platform checkout would resolve folio-assistant as the content
   # repo and read the wrong roster.
-  cov=$(cd "$REPO" && bash "$CACHE_SVC" status --package "$PACKAGE" --lake-root "$ABS_LAKE" 2>/dev/null \
-        | sed -n 's/.*traces:.*(\([0-9]*\)% coverage).*/\1/p')
-  cov="${cov:-0}"
-  if [ "$cov" -ge 90 ]; then
-    info "trace coverage already ${cov}% — skipping"
+  # Scraped from `status`'s human-readable output, so the two are
+  # COUPLED: renaming that line silently degrades this to 0. It already
+  # did once — `traces: N (P% coverage)` became
+  # `traced: N/M oleans (P%)` and this quietly reported 0% on a fully
+  # traced tree. Failing to 0 is the safe direction (it fetches, and
+  # `cache get` is idempotent), but silence hides the breakage, so say so.
+  status_out=$(cd "$REPO" && bash "$CACHE_SVC" status --package "$PACKAGE" --lake-root "$ABS_LAKE" 2>/dev/null)
+  cov=$(printf '%s\n' "$status_out" \
+        | sed -n 's/^ *traced: *[0-9]*\/[0-9]* oleans *(\([0-9]*\)%).*/\1/p' | head -1)
+  if [ -z "$cov" ]; then
+    warn "could not read trace coverage from \`$CACHE_SVC status\` — assuming 0%"
+    info "(its output format may have changed; this parser needs updating)"
+    cov=0
+  fi
+  nol=$(printf '%s\n' "$status_out" | sed -n 's/^ *oleans: *\([0-9]*\).*/\1/p' | head -1)
+  nol="${nol:-0}"
+  # Coverage is a RATIO, so a nearly-empty tree scores 100% on a handful
+  # of oleans and would skip fetching thousands. Observed: a partially
+  # built tree with 13 oleans, all traced, sailing past a 90% gate while
+  # Mathlib's ~7300 modules were absent. Require both.
+  #
+  # The floor is deliberately crude — any Mathlib-backed tree has
+  # thousands — and erring low is safe because `lake exe cache get` is
+  # idempotent and returns quickly when everything is already present.
+  if [ "$cov" -ge 90 ] && [ "$nol" -ge 1000 ]; then
+    info "trace coverage already ${cov}% over $nol oleans — skipping"
   else
+    [ "$cov" -ge 90 ] && [ "$nol" -lt 1000 ] \
+      && info "coverage ${cov}% but only $nol oleans — ratio is high because the tree is nearly empty"
+    # Reachability FIRST. `cache get` resolves every module before it
+    # downloads, so an unreachable CDN surfaces as ~7300 individual
+    # "Transfer failed … CONNECT tunnel failed, response 403" lines and a
+    # final "Downloaded: 0 file(s)" — minutes of output that looks like a
+    # cache problem and is actually egress. Observed here: the toolchain
+    # host is reachable and `cache:exe` links and runs, while the cache
+    # CDN itself is blocked. These are INDEPENDENT restrictions; do not
+    # infer one from the other.
+    if [ "$DRY" -eq 0 ] \
+       && ! curl -sS -o /dev/null --max-time 20 -I https://mathlib4.lean-cache.cloud/ 2>/dev/null; then
+      die "Mathlib's cache CDN is unreachable from here.
+
+  mathlib4.lean-cache.cloud        no route
+  lakecache.blob.core.windows.net  no route
+
+\`lake exe cache get\` would attempt every module and fail every one.
+This is separate from the toolchain: \`install-toolchain\` works over
+github.com, but no equivalent GitHub-hosted mirror of Mathlib's oleans
+exists, so there is nothing to fall back to.
+
+Run this phase where the CDN is reachable — CI, or a local machine —
+or build from source with --phase build (hours)."
+    fi
     info "coverage ${cov}% — fetching upstream cache (minutes, vs hours from source)"
     run "cd '$ABS_LAKE' && lake exe cache get"
   fi
