@@ -14,6 +14,7 @@ export { isCrossPaperRef, KNOWN_LABEL_PREFIXES } from "./constraints.js";
  */
 
 import { z } from "zod";
+import type { BlockKind } from "./block-kinds.js";
 
 import {
   ActorTypeSchema,
@@ -987,55 +988,14 @@ export type Block =
   | TableBlock;
 
 /**
- * Every block kind, as a RUNTIME value.
- *
- * `Block` above is a type and is erased at compile time, so anything that has
- * to recognise a block by reading its source — the QA pipeline's block
- * discovery, the propagation sweeps, the viewer registry — needs a list it can
- * actually iterate. Five such lists existed, hand-maintained and independent,
- * and all five carried the same 13 of these 15: `algorithm` and `table` were
- * added to the union and never propagated.
- *
- * The cost was silent. `readBlockManifest` returns `undefined` for an
- * unrecognised builder and `walkBlocks` skips whatever it returns `undefined`
- * for, so on the qou corpus 461 blocks — 445 `table`, 16 `algorithm` — were
- * never yielded, never swept, and never audited. Roughly 13% of the corpus,
- * excluded by a stale regex rather than by any decision.
- *
- * `_blockKindsAreExhaustive` below makes `tsc` fail if this array and the
- * union ever disagree again, in either direction.
+ * `BLOCK_KINDS`, `BlockKind` and `BLOCK_KIND_ALT` now live in the leaf
+ * module `./block-kinds`, so `constraints.ts` can import them without a
+ * runtime cycle through this file. Re-exported here because that is
+ * where every existing consumer looks for them.
  */
-export const BLOCK_KINDS = [
-  "definition",
-  "theorem",
-  "lemma",
-  "proposition",
-  "corollary",
-  "algorithm",
-  "conjecture",
-  "example",
-  "remark",
-  "proof",
-  "simulator",
-  "prose",
-  "equation",
-  "diagram",
-  "table",
-] as const;
+export { BLOCK_KINDS, BLOCK_KIND_ALT } from "./block-kinds.js";
+export type { BlockKind } from "./block-kinds.js";
 
-export type BlockKind = (typeof BLOCK_KINDS)[number];
-
-/**
- * `BLOCK_KINDS` as a regex alternation, for the several places that identify a
- * block by scanning its `.ts` source for the builder call.
- *
- * Those call sites need different surrounding patterns — anchored vs not,
- * `export default` required or optional, followed by `(` or by `({` — so they
- * build their own regex around this rather than sharing one. What they must
- * NOT do is spell out the alternation, which is how five of them came to list
- * 13 of the 15 kinds.
- */
-export const BLOCK_KIND_ALT = BLOCK_KINDS.join("|");
 
 /**
  * Compile-time proof that `BLOCK_KINDS` and `Block["kind"]` cover each other.
