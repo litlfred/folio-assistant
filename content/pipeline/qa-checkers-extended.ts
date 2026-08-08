@@ -700,12 +700,30 @@ export function checkComputeLpDualPresent(
   const absPath = witness.startsWith("/")
     ? witness
     : resolve(REPO_ROOT, witness);
-  if (!existsSync(absPath)) return { result: "pass", hits: [] };
+  // Past this point the block IS an LP computation, so the witness is the
+  // evidence the criterion turns on. Missing or unparseable, the answer is
+  // unknown — `pass` for a corrupt witness is the criterion asserting a
+  // result it could not read. (A missing witness is separately a `fail`
+  // under `compute-witness-exists`, so the finding is not lost here.)
+  if (!existsSync(absPath)) {
+    return {
+      result: "n/a",
+      hits: [],
+      notes: `witness ${witness} not found — LP dual fields not checked`,
+    };
+  }
   let body: Record<string, unknown> = {};
   try {
     body = JSON.parse(readFileSync(absPath, "utf-8"));
-  } catch {
-    return { result: "pass", hits: [] };
+  } catch (e) {
+    return {
+      result: "n/a",
+      hits: [],
+      notes:
+        `witness ${witness} does not parse as JSON (${
+          e instanceof Error ? e.message.slice(0, 80) : "unknown"
+        }) — LP dual fields not checked`,
+    };
   }
   // LP fields may live at the top level OR nested anywhere reachable
   // by a shallow walk (the conventional layout for WitnessBuilder
@@ -988,12 +1006,24 @@ export function checkCanonicalScriptNotDeprecated(
   tsPath: string | undefined,
 ): CheckerResult {
   const ts = readMaybe(tsPath);
-  if (!ts) return { result: "pass", hits: [] };
+  // No manifest to read: nothing was examined, so nothing passed. Every
+  // other checker in this file spells this `n/a`.
+  if (!ts) return { result: "n/a", hits: [] };
   const scriptMatch = ts.match(/script:\s*["']([^"']+)["']/);
   if (!scriptMatch) return { result: "pass", hits: [] };
   const scriptRelPath = scriptMatch[1];
   const scriptAbsPath = resolve(REPO_ROOT, scriptRelPath);
-  if (!existsSync(scriptAbsPath)) return { result: "pass", hits: [] };
+  if (!existsSync(scriptAbsPath)) {
+    // The block NAMES a script and the file is not there. "Not
+    // deprecated" is then a claim about something unread — absence of
+    // the evidence, not evidence of absence. A block declaring no script
+    // at all is different, and still passes vacuously above.
+    return {
+      result: "n/a",
+      hits: [],
+      notes: `declared script ${scriptRelPath} not found — deprecation not checked`,
+    };
+  }
   const scriptSrc = readFileSync(scriptAbsPath, "utf-8");
   const hits: CheckerHit[] = [];
   // Check for script-level deprecation markers (first 10 lines or
