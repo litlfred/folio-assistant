@@ -136,4 +136,16 @@ for tex in standalone-*.tex; do
     latexmk $LATEXMK_FLAGS "$tex"
 done
 
+# ── Step 4: Split PDF by chapter ─────────────────────────────────
+PDF_SPLIT_DIR="$REPO_ROOT/build/pdf-split"
+if command -v python3 &>/dev/null; then
+  echo "==> Splitting main.pdf by chapter..."
+  mkdir -p "$PDF_SPLIT_DIR"
+  python3 "$REPO_ROOT/scripts/split-pdf-by-chapter.py" \
+    --pdf "$REPO_ROOT/main.pdf" \
+    --paper "$PAPER" \
+    --out-dir "$PDF_SPLIT_DIR" \
+    || echo "  ⚠ PDF split failed (non-fatal)"
+fi
+
 echo "==> Build complete."

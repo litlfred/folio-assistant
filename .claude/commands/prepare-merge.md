@@ -47,6 +47,11 @@ Prefer the MCP tools (structured findings) when connected; otherwise the scripts
 - `qa_sweep` — no critical findings (dry-run).
 - `proof_status` — no regression in sorry/coverage for changed blocks.
 - `latex_preflight` — no new unknown macros / overfull boxes.
+- `block_pdf_render` — for each changed block, compile a standalone PDF and
+  resolve LaTeX errors; overfull boxes on changed content are advisory.
+  Run: `bun run scripts/render-changed-blocks.ts`. Needs local `latexmk` —
+  when it is absent the gate cannot run, and that is reported as **not run**,
+  never as a pass.
 - `lean_build` / `lean_check` — build green (or unchanged) for touched packages.
   **Check what the target covers before quoting its result.** `lake build`
   compiles the root module plus its transitive imports, not the source tree
