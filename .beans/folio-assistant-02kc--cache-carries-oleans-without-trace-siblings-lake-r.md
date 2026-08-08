@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: critical
 created_at: 2026-08-07T13:56:17Z
-updated_at: 2026-08-08T11:54:20Z
+updated_at: 2026-08-08T15:40:00Z
 ---
 
 Root cause of the cache never helping lake build. Lake decides staleness from .trace files; an olean with no trace is out-of-date, so lake rebuilds it and evicts. Measured: restore laid 7268 oleans with only 775 traces; a single-module 'lake build' ran 823 targets and left 772 oleans — every survivor had a trace (494 mathlib oleans / 494 traces, 0 of 200 sampled lacking one). The cache only ever worked for direct lean+LEAN_PATH calls, which is why the triviality probe succeeded while builds did not.
@@ -176,3 +176,55 @@ unrestricted egress.** The runbook in
 `docs/guides/reseeding-the-lean-cache.md` is the artifact to run there. Nothing
 further is doable from an authoring container, and the next session should not
 spend turns re-confirming it.
+
+---
+
+## 2026-08-08 — blocker re-confirmed from a container that DOES carry the folio
+
+The re-test above closed with "there is no folio here… this container has the
+platform only". This one has both: `/home/user/folio-assistant` and a `qou`
+checkout at `/workspace/qou` with a populated `.lake`. So the untested half is
+now tested, and the conclusion is unchanged.
+
+### The denial is network POLICY, not routing
+
+The earlier probe recorded `no route` / `HTTP 000`. The proxy's own status
+endpoint names it exactly:
+
+    kind:   connect_rejected
+    detail: gateway answered 403 to CONNECT (policy denial or upstream failure)
+    hosts:  leanprover-community.github.io:443
+            mathlib4.lean-cache.cloud:443
+            lakecache.blob.core.windows.net:443
+            release.lean-lang.org:443
+
+That is the environment's network policy refusing CONNECT, not an unroutable
+host. It names the fix precisely: either allow those four hosts in the
+environment's network policy, or run the reseed in CI. Nothing in the container
+can be reconfigured around it, and nothing should try.
+
+### Trace coverage measured on real trees, with the corrected formula
+
+Both families, from the `qou` checkout:
+
+    qou family     950 oleans, 945 own,  traced   5/950   (0%)
+    mathlib family 7268 oleans,   0 own, traced   0/7268  (0%)
+
+Raw `.trace` files on disk: **6** under the paper's lake-root, **0** under the
+workspace root. So this bean's opening figure — "7268 oleans with only 775
+traces" — was itself the inflated pre-fix metric; the true pairing is nearer
+zero than 775. The diagnosis is unaffected and if anything understated.
+
+Corroborating from use: this session type-checked three modules, including a new
+one importing `QOU.QBeta.*`, via `scripts/lean-verify.sh` — `lean` + `LEAN_PATH`
+directly, no `lake`. Exactly the split this bean predicts: the cache works for
+direct `lean` calls and not for `lake build`.
+
+### Note on the mathlib family's `own pkg: 0`
+
+Not a defect — that roster entry's lake-root is `.`, where the own package is a
+shim. `status` used to raise the gutted-cache alarm on it anyway; fixed in
+`own_oleans_expected` (bean `folio-assistant-zq4t`, #77). See the correction on
+`folio-assistant-5d7z`, which had inherited that reading.
+
+Not resolving this bean — it is a sibling's, and the blocker stands.
