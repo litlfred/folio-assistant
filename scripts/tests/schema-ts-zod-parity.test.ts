@@ -1,0 +1,162 @@
+/**
+ * `schemas/types.ts` declares the `Block` union; `schemas/constraints.ts`
+ * declares the Zod schemas that actually validate content. They had drifted,
+ * in both directions:
+ *
+ *     kind        in TS not Zod     in Zod not TS
+ *     diagram     title, uses       —
+ *     prose       title, uses       —
+ *     equation    —                 tags
+ *
+ * plus `equation` carrying no `uses` on either side — the only member of the
+ * union with neither `uses` nor a base supplying it, while its three
+ * standalone siblings (`prose`, `diagram`, `table`) all declare it.
+ *
+ * The Zod objects are neither `.strict()` nor `.passthrough()`, so the default
+ * applies: an unknown key is **stripped, silently, and the parse succeeds**.
+ * Verified — a prose block carrying `uses: ["def:a"]` parsed clean and came
+ * back with `uses === undefined`. On the qou corpus that is 25 prose and 4
+ * diagram blocks whose editorial edges vanished at the validation boundary,
+ * and 106 blocks whose `title` did. AGENTS.md calls `uses[]` the relation
+ * "every ordering metric is computed from".
+ *
+ * A field-name comparison is crude — it does not check types — but it is
+ * exactly the class of drift that occurred, and it is cheap and total.
+ */
+import { describe, test, expect } from "bun:test";
+import { readFileSync } from "fs";
+import { join } from "path";
+
+const ROOT = join(import.meta.dir, "..", "..");
+const tsSrc = readFileSync(join(ROOT, "schemas", "types.ts"), "utf-8");
+const zodSrc = readFileSync(join(ROOT, "schemas", "constraints.ts"), "utf-8");
+
+/** Field names declared directly in an interface/object body. */
+function fieldNames(body: string, indent = 2): Set<string> {
+  return new Set(
+    [...body.matchAll(new RegExp(`^\\s{${indent}}(\\w+)\\??:`, "gm"))].map((m) => m[1]),
+  );
+}
+
+/** `interface X extends Y { … }` bodies, keyed by name. */
+function interfaces(src: string): Map<string, { ext?: string; fields: Set<string> }> {
+  const out = new Map<string, { ext?: string; fields: Set<string> }>();
+  for (const m of src.matchAll(
+    /(?:export )?interface (\w+)\s*(?:extends (\w+))?\s*\{([\s\S]*?)\n\}/g,
+  )) {
+    out.set(m[1], { ext: m[2], fields: fieldNames(m[3]) });
+  }
+  return out;
+}
+
+const ifaces = interfaces(tsSrc);
+
+/** A block interface's fields, including everything it inherits. */
+function tsFields(name: string): Set<string> {
+  const entry = ifaces.get(name);
+  if (!entry) return new Set();
+  const inherited = entry.ext ? tsFields(entry.ext) : new Set<string>();
+  return new Set([...entry.fields, ...inherited]);
+}
+
+/**
+ * Zod block schemas, keyed by the `kind` literal they pin.
+ *
+ * Most are `SomeBaseSchema.extend({ … })`, so the base's fields have to be
+ * followed the same way TS `extends` is. Only the four standalone kinds
+ * (`prose`, `equation`, `diagram`, `table`) are flat `z.object({ … })` — and
+ * those are exactly the four where drift was possible, and where it happened.
+ *
+ * Bodies are taken by brace counting rather than a non-greedy regex: several
+ * schemas nest `z.object({ … })` inside a field, and a lazy `\n\}` stops at
+ * the first inner brace.
+ */
+function zodSchemaBodies(): Map<string, { base?: string; fields: Set<string> }> {
+  const out = new Map<string, { base?: string; fields: Set<string> }>();
+  // The two base schemas are declared WITHOUT `export`, so requiring it
+  // silently produced empty field sets for every kind that extends them.
+  const re = /(?:export )?const (\w+Schema) = (?:(\w+Schema)\.extend\(|z\.object\()\{/g;
+  for (const m of zodSrc.matchAll(re)) {
+    const open = m.index! + m[0].length - 1;
+    let depth = 0, i = open;
+    for (; i < zodSrc.length; i++) {
+      if (zodSrc[i] === "{") depth++;
+      else if (zodSrc[i] === "}" && --depth === 0) break;
+    }
+    out.set(m[1], { base: m[2], fields: fieldNames(zodSrc.slice(open + 1, i)) });
+  }
+  return out;
+}
+
+const zodSchemas = zodSchemaBodies();
+
+/** A Zod schema's fields, including everything it extends. */
+function zodFields(name: string): Set<string> {
+  const e = zodSchemas.get(name);
+  if (!e) return new Set();
+  return new Set([...e.fields, ...(e.base ? zodFields(e.base) : [])]);
+}
+
+function zodBlockSchemas(): Map<string, Set<string>> {
+  const out = new Map<string, Set<string>>();
+  for (const [name] of zodSchemas) {
+    const all = zodFields(name);
+    if (!all.has("kind")) continue;
+    // Read the literal off this schema's OWN body, not an inherited one.
+    const body = zodSchemas.get(name)!;
+    void body;
+    const km = new RegExp(
+      `(?:export )?const ${name} = (?:\\w+Schema\\.extend\\(|z\\.object\\()\\{[\\s\\S]*?kind: z\\.literal\\("(\\w+)"\\)`,
+    ).exec(zodSrc);
+    if (km) out.set(km[1], all);
+  }
+  return out;
+}
+
+const zodByKind = zodBlockSchemas();
+
+/** `kind` literal → TS interface name, read off each interface's own body. */
+function tsBlockByKind(): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const [name, { fields }] of ifaces) {
+    if (!name.endsWith("Block") || !fields.has("kind")) continue;
+    const body = /interface ${name}/.source; // placeholder, resolved below
+    void body;
+    const m = new RegExp(`interface ${name}\\s*(?:extends \\w+)?\\s*\\{[\\s\\S]*?kind: "(\\w+)"`).exec(
+      tsSrc,
+    );
+    if (m) out.set(m[1], name);
+  }
+  return out;
+}
+
+const tsByKind = tsBlockByKind();
+
+describe("schema parity: TS interfaces vs Zod schemas", () => {
+  test("both sides describe the same block kinds", () => {
+    expect([...tsByKind.keys()].sort()).toEqual([...zodByKind.keys()].sort());
+  });
+
+  for (const [kind, ifaceName] of [...tsByKind].sort()) {
+    test(`${kind}: field sets agree`, () => {
+      const ts = tsFields(ifaceName);
+      const zod = zodByKind.get(kind) ?? new Set<string>();
+      // `md` is a filesystem companion, not a manifest field; `$schema` and
+      // refinement-only keys never appear in the TS interface.
+      const ignore = new Set(["md"]);
+      const onlyTs = [...ts].filter((f) => !zod.has(f) && !ignore.has(f)).sort();
+      const onlyZod = [...zod].filter((f) => !ts.has(f) && !ignore.has(f)).sort();
+      // A field present in TS but absent from Zod is the dangerous direction:
+      // authors can write it, it type-checks, and Zod silently strips it.
+      expect({ onlyTs, onlyZod }).toEqual({ onlyTs: [], onlyZod: [] });
+    });
+  }
+});
+
+describe("every block kind carries the editorial relation", () => {
+  test("`uses` is declared on all of them", () => {
+    // `equation` was the sole exception, in both TS and Zod.
+    const missing = [...tsByKind].filter(([, n]) => !tsFields(n).has("uses")).map(([k]) => k);
+    expect(missing).toEqual([]);
+  });
+});

@@ -15,47 +15,30 @@ already carries. **No sibling bean was edited to write this.**
 
 ## Ready to work — unclaimed
 
-**1. `folio-assistant-tsca` — 26 typecheck errors in `content/**`.**
-The highest-value one, because it closes a ratchet rather than paying down
-debt: `schemas/**` is in `tsconfig.json`'s `include` now, `content/**` is not,
-and until it is, most of the pipeline is still uncompiled. That gap has already
-shipped two `ReferenceError`s (`_ctx` in `constraints.ts`, unbound `dir` in
-`validate.ts`), both under commit messages claiming a clean `tsc`.
+**~~1. `folio-assistant-tsca`~~ — DONE.** 26 typecheck errors in `content/**`
+-> 0, and `content/**` is now in `tsconfig.json`'s `include`, so the ratchet is
+closed. Ten of the 26 were `Cannot find module`: the whole bibliography
+subsystem (six entry points) threw at import and could not run. Spun off
+`folio-assistant-zdrf` — TS/Zod schema drift that was silently stripping
+`lean` from every provable — which is also done.
 
-Measured on `2cfde74`, in descending size:
+**1. `folio-assistant-lnt1` — 171 `no-explicit-any`.** Now first in the queue.
+Wants the per-bucket plan already written in that bean; 108 of the original 201
+annotate something this repo already has a type for. Not a sweep — each `any`
+is a separate typing decision. `render-latex.ts` is done (30 -> 0, plus its 21
+structural errors, verified byte-identical over 3483 rendered qou blocks).
 
-    8  content/pipeline/validate-bib.ts
-    4  content/pipeline/audit-wiring.ts
-    3  content/pipeline/bib-qa.ts
-    2  content/pipeline/validate-references-human-review.ts
-    2  content/pipeline/export-json.ts
-    2  content/pipeline/export-bibtex.ts
-    5  across validate-references, validate, qa-sweep, qa-checkers-voice,
-       proof-axis-dashboard, codemod-refterm (1 each)
+**2. `folio-assistant-tnbf` — Lean workflow sprawl.**
+Cheaper than it looks: this session mapped all 33 workflows and their triggers
+while fixing two that did not parse. Only `atomic-mass-gen-check.yml` and
+`docs-site.yml` auto-trigger at all, so "which of these actually runs" has a
+short answer, and folding the redundant ones is mostly a question of what
+`lake-cache.sh` now subsumes. `scripts/tests/workflow-yaml.test.ts` catches a
+YAML mistake made while folding them.
 
-Reproduce with a throwaway config extending `tsconfig.json` and
-`"include": ["content/**/*.ts"]`. Drain to zero, then move `content/**` into
-the real `include` in the same change — the drain is only worth doing if it
-cannot silently come back.
-
-`scripts/**` is untried beyond a rough count (~15 more, several in tests).
-Widen it after `content/**`, not with it.
-
-**2. `folio-assistant-lnt1` — 171 `no-explicit-any`.**
-Bigger and genuinely wants the per-bucket plan already written in that bean;
-108 of the original 201 annotate something this repo already has a type for.
-Not a sweep — each `any` is a separate typing decision. `render-latex.ts` is
-done (30 -> 0, and its 21 structural errors too, verified byte-identical over
-3483 rendered qou blocks).
-
-**3. `folio-assistant-tnbf` — Lean workflow sprawl.**
-Cheaper than it looks now: this session mapped all 33 workflows and their
-triggers while fixing two that did not parse. Useful facts to start from —
-only `atomic-mass-gen-check.yml` and `docs-site.yml` auto-trigger at all;
-everything else is `workflow_dispatch`. So "which of these actually runs" has
-a short answer, and folding the redundant ones is mostly a question of what
-`lake-cache.sh` now subsumes. `scripts/tests/workflow-yaml.test.ts` will catch
-a YAML mistake made while folding them.
+**3. `scripts/**` into `tsconfig.json`'s `include`.** The next rung of the same
+ratchet, ~15 errors, several in test files. Drain to zero, then widen — never
+widen first.
 
 ## Do NOT claim — a sibling's active cluster
 
