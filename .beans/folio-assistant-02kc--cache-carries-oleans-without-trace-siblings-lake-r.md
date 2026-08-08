@@ -1,11 +1,11 @@
 ---
 # folio-assistant-02kc
 title: Cache carries oleans WITHOUT .trace siblings — lake rebuilds and evicts them
-status: in-progress
+status: scrapped
 type: bug
 priority: critical
 created_at: 2026-08-07T13:56:17Z
-updated_at: 2026-08-08T15:40:00Z
+updated_at: 2026-08-08T16:05:00Z
 ---
 
 Root cause of the cache never helping lake build. Lake decides staleness from .trace files; an olean with no trace is out-of-date, so lake rebuilds it and evicts. Measured: restore laid 7268 oleans with only 775 traces; a single-module 'lake build' ran 823 targets and left 772 oleans — every survivor had a trace (494 mathlib oleans / 494 traces, 0 of 200 sampled lacking one). The cache only ever worked for direct lean+LEAN_PATH calls, which is why the triviality probe succeeded while builds did not.
@@ -228,3 +228,32 @@ shim. `status` used to raise the gutted-cache alarm on it anyway; fixed in
 `folio-assistant-5d7z`, which had inherited that reading.
 
 Not resolving this bean — it is a sibling's, and the blocker stands.
+
+---
+
+## 2026-08-08 — SCRAPPED by owner decision: the defect is real and accepted
+
+Same ruling as `5d7z`, which this bean is the root cause of. Asked directly;
+the answer was **leave it**.
+
+Nothing above is retracted. Oleans without `.trace` siblings genuinely are
+invisible to Lake's staleness check, coverage genuinely is 0% on both families,
+and `lake build` genuinely does rebuild and evict. The diagnosis stands; what
+changed is that fixing it was weighed against what it buys and declined.
+
+It buys `lake build`. The paper is verified through `scripts/lean-verify.sh`,
+which calls `lean` with `LEAN_PATH` and never invokes `lake` — the split this
+bean itself predicted ("the cache only ever worked for direct lean+LEAN_PATH
+calls, which is why the triviality probe succeeded while builds did not"). That
+prediction is now the reason the fix is not needed: the working path is the one
+in use.
+
+Costs, for the record: widening the environment's network policy to four hosts,
+or hours of Actions time on a repo whose auto-triggers were disabled for
+billing.
+
+Marked `scrapped` rather than left `in-progress` specifically so it stops being
+re-tested. **Three sessions have now independently re-confirmed this blocker**
+— it is well established and needs no fourth. If `lake build` ever becomes
+load-bearing, reopen and follow
+`docs/guides/reseeding-the-lean-cache.md`.
