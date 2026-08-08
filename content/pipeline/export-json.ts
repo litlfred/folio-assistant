@@ -259,7 +259,10 @@ async function main() {
             : undefined;
 
           // Merge explicit cites[] with auto-extracted from .md
-          const explicitCites = "cites" in block ? (block as any).cites as string[] | undefined : undefined;
+          // The `in` test is real — `cites` is absent from `diagram`,
+          // `equation` and `table` in both the TS union and the Zod schema.
+          // Only the `as any` was surplus: `in` narrows on its own.
+          const explicitCites = "cites" in block ? block.cites : undefined;
           const cites = mergeCitations(explicitCites, md);
 
           blocks.push({
@@ -278,10 +281,10 @@ async function main() {
             md,
             mdModified: mdStat ? mdStat.mtime.toISOString() : "",
             meta: "meta" in block ? block.meta : undefined,
-            html: "html" in block ? (block as any).html : undefined,
-            defaultView: "defaultView" in block ? (block as any).defaultView : undefined,
-            views: "views" in block ? (block as any).views : undefined,
-            interprets: "interprets" in block ? (block as any).interprets : undefined,
+            html: "html" in block ? block.html : undefined,
+            defaultView: "defaultView" in block ? block.defaultView : undefined,
+            views: "views" in block ? block.views : undefined,
+            interprets: "interprets" in block ? block.interprets : undefined,
           });
         } catch (e) {
           blocks.push({
@@ -324,7 +327,7 @@ async function main() {
     date: paper.date,
     chapters,
     references,
-    macros: (paper as any).macros,
+    macros: paper.macros,
     meta: paper.meta,
     _built: new Date().toISOString(),
   };

@@ -42,6 +42,12 @@ import { gfmTable } from "micromark-extension-gfm-table";
 import { gfmTableFromMarkdown, gfmTableToMarkdown } from "mdast-util-gfm-table";
 import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough";
 import { gfmStrikethroughFromMarkdown, gfmStrikethroughToMarkdown } from "mdast-util-gfm-strikethrough";
+import type { PhrasingContent, Text } from "mdast";
+// Ambient: registers the directive node types on the mdast unions, the same
+// way `render-latex.ts` does. Without it `textDirective` is not a
+// `PhrasingContent` and every node built below needs a cast.
+import type {} from "mdast-util-directive";
+import type {} from "mdast-util-math";
 import type { Block, Chapter, Paper, Section } from "../../schemas/types";
 import { ChapterSchema, PaperSchema } from "../../schemas/constraints";
 import { buildGlossary } from "./build-glossary";
@@ -76,19 +82,19 @@ function phraseTable(slugs: string[]): PhraseEntry[] {
  * (text + directive nodes) when at least one replacement was made;
  * returns null if nothing changed.
  */
-function rewriteTextNode(value: string, phrases: PhraseEntry[]): any[] | null {
-  let segments: any[] = [{ type: "text", value }];
+function rewriteTextNode(value: string, phrases: PhraseEntry[]): PhrasingContent[] | null {
+  let segments: PhrasingContent[] = [{ type: "text", value }];
   let changed = false;
 
   for (const { slug, phrase } of phrases) {
-    const next: any[] = [];
+    const next: PhrasingContent[] = [];
     const re = new RegExp(`\\b${escapeRegExp(phrase)}\\b`, "gi");
     for (const seg of segments) {
       if (seg.type !== "text") {
         next.push(seg);
         continue;
       }
-      const text: string = seg.value;
+      const text: string = (seg as Text).value;
       let last = 0;
       let m: RegExpExecArray | null;
       let any = false;
@@ -137,24 +143,26 @@ export function rewriteMarkdown(
 
   let mutated = false;
 
-  // unist-util-visit passes `index` as `number | undefined`, not
-  // `number | null`. The mismatch made the whole visitor unassignable.
-  visit(tree as any, (node: any, index: number | undefined, parent: any) => {
+  // The `"text"` test narrows `node` to `Text` — the manual
+  // `node.type !== "text"` bail-out this replaces did the same at runtime.
+  visit(tree, "text", (node, index, parent) => {
     if (!parent || index === undefined) return;
-    if (node.type !== "text") return;
-    // Skip text nodes that are children of any directive — they are
+    // Skip text nodes that are children of an inline directive — they are
     // already part of a wrapped term.
-    if (parent.type === "textDirective" || parent.type === "leafDirective" ||
-        parent.type === "containerDirective") {
+    //
+    // The guard used to also list `containerDirective`, `code`, `inlineCode`,
+    // `math` and `inlineMath`, as "belt-and-braces against future additions".
+    // Typing `parent` answers that: the parent of a `text` node is one of
+    // link | strong | delete | root | heading | paragraph | emphasis |
+    // linkReference | tableCell | textDirective | leafDirective, and none of
+    // the five can ever appear. `code`/`inlineCode`/`math`/`inlineMath` are
+    // literal nodes carrying `value` and no `children` at all, and a
+    // `containerDirective` holds block content, so its text is a paragraph
+    // deeper. Five conditions that could not fire, kept alive by `any`.
+    if (parent.type === "textDirective" || parent.type === "leafDirective") {
       return;
     }
-    // Skip text nodes inside code/math contexts (different types, but
-    // belt-and-braces against future additions).
-    if (parent.type === "inlineCode" || parent.type === "code" ||
-        parent.type === "inlineMath" || parent.type === "math") {
-      return;
-    }
-    const replacement = rewriteTextNode(node.value as string, phrases);
+    const replacement = rewriteTextNode(node.value, phrases);
     if (replacement) {
       parent.children.splice(index, 1, ...replacement);
       mutated = true;
@@ -164,7 +172,7 @@ export function rewriteMarkdown(
   });
 
   if (!mutated) return null;
-  return String(proc.stringify(tree as any));
+  return String(proc.stringify(tree));
 }
 
 // ── Discovery ────────────────────────────────────────────────────
@@ -216,7 +224,10 @@ async function blockSelfDefines(blockTsPath: string): Promise<Set<string>> {
   try {
     const mod = await import(blockTsPath);
     const block: Block = mod.default;
-    return new Set(((block as any).defines as string[] | undefined) ?? []);
+    // `defines` is declared on the provable/definitional kinds but not on
+    // `diagram`/`equation`/`table`, in both the TS union and the Zod schema —
+    // so the `in` test is real and the cast was not.
+    return new Set(("defines" in block ? block.defines : undefined) ?? []);
   } catch {
     return new Set();
   }
