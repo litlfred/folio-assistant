@@ -381,15 +381,26 @@ function loadVerifications(): Map<string, VerificationEntry> {
   const path = join(CONTENT_DIR, "bib-qa-verifications.json");
   if (!existsSync(path)) return new Map();
   const raw = JSON.parse(readFileSync(path, "utf-8"));
-  const arr: VerificationEntry[] = raw.entries ?? [];
-  return new Map(arr.map((e) => [e.id, e]));
+  const arr: (VerificationEntry & { id: string | null })[] = raw.entries ?? [];
+  // Since the source-ledger migration (2026-08-08) the file also carries rows
+  // for uploaded documents that back no reference yet; those have `id: null`
+  // and would otherwise collide on a single null key.  Bib QA is per-
+  // reference, so they are not its business.
+  return new Map(
+    arr.filter((e): e is VerificationEntry => typeof e.id === "string").map((e) => [e.id, e]),
+  );
 }
 
 function localPdfPath(verif?: VerificationEntry, refId?: string): string | null {
-  // Prefer the explicit path in verifications JSON.
-  if (verif?.local_pdf) {
-    const abs = join(REPO_ROOT, verif.local_pdf);
-    if (existsSync(abs)) return verif.local_pdf;
+  // Prefer the explicit path recorded in the ledger.  `source` is the current
+  // shape; `local_pdf` is the deprecated pre-migration field.
+  const recorded =
+    (verif as { source?: { kind: string; file?: string } } | undefined)?.source?.kind === "upload"
+      ? (verif as unknown as { source: { file: string } }).source.file
+      : verif?.local_pdf;
+  if (recorded) {
+    const abs = join(REPO_ROOT, recorded);
+    if (existsSync(abs)) return recorded;
   }
   // Fallback: glob uploads/ for any file matching the ref id.
   if (refId) {

@@ -20,6 +20,7 @@ import { handleBranchGet, handleBranchPost } from "./routes/branches.js";
 import { handleFeedbackGet, handleFeedbackPost } from "./routes/feedback.js";
 import { handleChatPost } from "./routes/chat.js";
 import { handleGlossaryGet, handleGlossaryPost } from "./routes/glossary.js";
+import { handleRelevanceGet, handleRelevancePost } from "./routes/relevance.js";
 import { registerBeansTools } from "./tools/beans-prime.js";
 
 // ── MIME types for static serving ────────────────────────────────
@@ -153,6 +154,10 @@ export class FolioServer {
     const glossaryRes = await handleGlossaryGet(url, { repoRoot: this.config.repoRoot });
     if (glossaryRes) return glossaryRes;
 
+    // Source-relevance routes
+    const relevanceRes = await handleRelevanceGet(url, { repoRoot: this.config.repoRoot });
+    if (relevanceRes) return relevanceRes;
+
     // Content adapter routes
     const adapterRes = await this.adapter.handleGet(url);
     if (adapterRes) return adapterRes;
@@ -174,6 +179,10 @@ export class FolioServer {
     // Glossary curator operations
     const glossaryRes = await handleGlossaryPost(url, req, { repoRoot: this.config.repoRoot });
     if (glossaryRes) return glossaryRes;
+
+    // Source-relevance adjudication
+    const relevanceRes = await handleRelevancePost(req, url, { repoRoot: this.config.repoRoot });
+    if (relevanceRes) return relevanceRes;
 
     // Chat
     const chatRes = await handleChatPost(url, req, this.adapter, this.feedbackStore);
