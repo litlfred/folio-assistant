@@ -40,9 +40,14 @@
   // `conjectures.percent_class_axiomatized`, neither of which existed — so the
   // README and the authors' note were interpolating `undefined`.
   //
-  // `adapters/**` is the last tree still outside, and the largest: **81
-  // errors**, including the MCP server. Tracked in bean `folio-assistant-adpt`.
-  // Same ratchet — drain to zero, then widen; never widen first.
-  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts", "scripts/**/*.ts"],
+  // `adapters/**` is in scope now too, drained from 81 to zero. Its errors
+  // were not typing nits: 38 catch blocks referenced an `e` binding a lint
+  // drain had stripped (a ReferenceError each, all mine, shipped in 958c29e),
+  // `resolveOutline` had never existed, and `--http` mode used the SDK's NODE
+  // transport for a Bun `Request`.
+  //
+  // Every tree is now compiled. A green `bun run typecheck` finally means what
+  // it says.
+  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts", "scripts/**/*.ts", "adapters/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }

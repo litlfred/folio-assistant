@@ -158,7 +158,7 @@ function ensureWorktree(): boolean {
     }
     worktreeReady = true;
     return true;
-  } catch {
+  } catch (e) {
     log("feedback", "worktree error", String(e));
     return false;
   }
@@ -207,7 +207,7 @@ function commitFeedbackToMain(paperId: string, rootName: string, content: string
       }
       log("feedback", `push failed after retries: ${relPath}`);
     }
-  } catch {
+  } catch (e) {
     log("feedback", "commit error", String(e));
   }
 }
@@ -266,7 +266,10 @@ function resolveLeanSource(
   blk: any,
   chRel: string,
   rootName: string,
-  branch: string,
+  // `string | undefined`, matching `readFileBranch` (which this forwards to)
+  // and both call sites, where `br` is the optional `?branch=` query param.
+  // Declaring it `string` was simply narrower than every party involved.
+  branch: string | undefined,
 ): string | undefined {
   if (!blk?.lean) return undefined;
   const parsed = tryParseLeanRef(blk);
@@ -323,7 +326,12 @@ interface ResolvedBlock {
   uses?: string[];
   examples?: string[];
   proofs?: string[];
-  lean?: { ref: string; file?: string; validation?: string; source?: string };
+  /** `sorryFree` is a real `LeanRef` field (schemas/types.ts) and the
+   *  strongest proof-status signal — `render-latex` says it "wins outright"
+   *  over the `validation` enum. The `...blk.lean` spreads below carry it;
+   *  omitting it here made it invisible to every consumer and unreadable at
+   *  the one site that tried. */
+  lean?: { ref: string; file?: string; validation?: string; sorryFree?: boolean; source?: string };
   status?: string;
   tex?: string;
   caption?: string;
@@ -337,12 +345,22 @@ interface ResolvedSection {
   title: string;
   label?: string;
   blocks: ResolvedBlock[];
+  /** One structural level deeper. The resolver builds these and the block
+   *  lookup below reads them; the interface simply never declared it. */
+  subsections?: ResolvedSection[];
 }
 
 interface ResolvedChapter {
-  number: number;
+  /** Optional in practice: the resolver sets `undefined` for a chapter that
+   *  carries a `tabLabel` (appendices), auto-numbering only the rest. */
+  number?: number;
   title: string;
   label?: string;
+  /** Set for appendices instead of a number. */
+  tabLabel?: string;
+  /** Chapter directory. Pushed by `resolvePaper` and read by the block
+   *  lookup — declared here for the first time. */
+  dir?: string;
   sections: ResolvedSection[];
   todos?: unknown[];
 }
@@ -506,7 +524,7 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
               status: blk.status, tex: blk.tex, caption: blk.caption, tags: blk.tags, rendered: rendered || figRendered,
               md, todos: blockTodos
             });
-          } catch { res.push({ rootName, kind: "error", md: `Failed to load ${rootName}: ${e}` }); }
+          } catch (e) { res.push({ rootName, kind: "error", md: `Failed to load ${rootName}: ${e}` }); }
         }
         return res;
       };
@@ -607,9 +625,13 @@ function invalidatePaperCache(paperId?: string): void {
 // ── Paper outline (lightweight — no blocks/md/lean) ─────────────
 
 interface ChapterOutline {
-  number: number;
+  /** Undefined for a chapter carrying a `tabLabel` — same rule as
+   *  `ResolvedChapter.number`, which this mirrors. */
+  number?: number;
   title: string;
   label?: string;
+  /** Set for appendices instead of a number — the resolver pushes it. */
+  tabLabel?: string;
   dir: string;
   sections: { title: string; label?: string; blockCount: number }[];
 }
@@ -684,7 +706,7 @@ interface SectionStub {
   label?: string;
   blockCount: number;
   /** Lightweight block summaries for sidebar (no md/lean source). */
-  blockStubs: { rootName: string; kind: string; label?: string; title?: string; status?: string; lean?: { decl?: string; file?: string; validation?: string }; todoCount: number }[];
+  blockStubs: { rootName: string; kind: string; label?: string; title?: string; status?: string; lean?: { ref?: string; file?: string; validation?: string; sorryFree?: boolean }; todoCount: number }[];
 }
 
 interface ChapterDetail {
@@ -727,7 +749,7 @@ async function resolveChapterDetail(
           label: blk.label,
           title: blk.title,
           status: blk.status,
-          lean: blk.lean ? { ref: blk.lean.ref, validation: blk.lean.validation } : undefined,
+          lean: blk.lean ? { ref: blk.lean.ref, validation: blk.lean.validation, sorryFree: blk.lean.sorryFree } : undefined,
           todoCount: feedback.filter((t: any) => t.status === "open").length,
         });
       } catch {
@@ -745,7 +767,11 @@ async function resolveChapterDetail(
 
   // Auto-derive chapter number from outline
   let chapterNumber: number | undefined;
-  const outline = await resolveOutline(paperId, branch);
+  // `resolvePaperOutline`, the function that exists — this called
+  // `resolveOutline`, which never has. A ReferenceError on every request that
+  // reached it, so the chapter-number auto-derivation below has never run.
+  // Landed in 109a4ff and invisible because `adapters/**` was never compiled.
+  const outline = await resolvePaperOutline(paperId, branch);
   if (outline) {
     const idx = outline.chapters.findIndex((c: ChapterOutline) => c.dir === chapterDir);
     if (idx >= 0) chapterNumber = outline.chapters[idx].number;
@@ -841,7 +867,7 @@ async function resolveSection(
         ...(blk.defaultView ? { defaultView: blk.defaultView } : {}),
         ...(blk.views ? { views: blk.views } : {}),
       });
-    } catch {
+    } catch (e) {
       blocks.push({ rootName, kind: "error", md: `Failed to load ${rootName}: ${e}` });
     }
   }
@@ -929,7 +955,7 @@ Respond in JSON with exactly these fields:
       };
     }
     return fallbackCharacterization(diff);
-  } catch {
+  } catch (e) {
     return { ...fallbackCharacterization(diff), error: `Claude API error: ${e instanceof Error ? e.message : String(e)}` };
   }
 }
@@ -1027,7 +1053,7 @@ Respond in JSON with exactly these fields:
       };
     }
     return { assessment: "Failed to parse AI response.", actionable: false };
-  } catch {
+  } catch (e) {
     return {
       assessment: `Feedback: "${todo.summary}". Priority: ${todo.priority}.`,
       actionable: false,
@@ -1208,7 +1234,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
         dirty: changes.length > 0,
         changes,
       }, { headers: { "Cache-Control": "no-cache", "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       log('git', `status: error — ${e}`);
       return Response.json({ error: String(e) }, { status: 500, headers: { "Access-Control-Allow-Origin": "*" } });
     }
@@ -1246,7 +1272,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
         }
       }
       return Response.json(imports, { headers: { "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -1258,7 +1284,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
     try {
       const data = await resolveFolio(branch);
       return Response.json(data, { headers: { "Cache-Control": "no-cache", "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -1273,7 +1299,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
       const data = await resolvePaper(id, branch);
       if (!data) return Response.json({ error: `Paper not found: ${id}` }, { status: 404 });
       return Response.json(data, { headers: { "Cache-Control": "no-cache", "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       const msg = e instanceof Error ? e.stack || e.message : String(e);
       log('error', `GET /api/paper id=${id} branch=${branch}: ${msg}`);
       return Response.json({ error: msg }, { status: 500 });
@@ -1290,7 +1316,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
       const data = await resolvePaperOutline(id, branch);
       if (!data) return Response.json({ error: `Paper not found: ${id}` }, { status: 404 });
       return Response.json(data, { headers: { "Cache-Control": "max-age=300", "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       const msg = e instanceof Error ? e.stack || e.message : String(e);
       log('error', `GET /api/paper/outline id=${id} branch=${branch}: ${msg}`);
       return Response.json({ error: msg }, { status: 500 });
@@ -1308,7 +1334,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
       const data = await resolveChapterDetail(id, chapter, branch);
       if (!data) return Response.json({ error: `Chapter not found: ${chapter}` }, { status: 404 });
       return Response.json(data, { headers: { "Cache-Control": "max-age=300", "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       const msg = e instanceof Error ? e.stack || e.message : String(e);
       log('error', `GET /api/paper/chapter id=${id} chapter=${chapter}: ${msg}`);
       return Response.json({ error: msg }, { status: 500 });
@@ -1327,7 +1353,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
       const data = await resolveSection(id, chapter, parseInt(sectionIdx, 10), branch);
       if (!data) return Response.json({ error: `Section not found: ${chapter}[${sectionIdx}]` }, { status: 404 });
       return Response.json(data, { headers: { "Cache-Control": "max-age=300", "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       const msg = e instanceof Error ? e.stack || e.message : String(e);
       log('error', `GET /api/paper/section id=${id} chapter=${chapter} section=${sectionIdx}: ${msg}`);
       return Response.json({ error: msg }, { status: 500 });
@@ -1346,7 +1372,9 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
       if (!paperData) return Response.json({ error: `Paper not found: ${id}` }, { status: 404 });
       // Search all chapters and sections for the block
       for (const ch of paperData.chapters || []) {
-        const chDir = ch._dir || ch.dir;
+        // `_dir` is read nowhere else and assigned nowhere at all, so this
+        // always fell through to `ch.dir`. Dropped rather than declared.
+        const chDir = ch.dir;
         if (!chDir) continue;
         for (let si = 0; si < (ch.sections || []).length; si++) {
           try {
@@ -1354,11 +1382,11 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
             if (!secData || !secData.blocks) continue;
             const found = secData.blocks.find((b: any) => b.label === label);
             if (found) return Response.json(found, { headers: { "Cache-Control": "max-age=300", "Access-Control-Allow-Origin": "*" } });
-          } catch { log('warn', `GET /api/paper/block resolveSection ${chDir}[${si}]: ${e}`); continue; }
+          } catch (e) { log('warn', `GET /api/paper/block resolveSection ${chDir}[${si}]: ${e}`); continue; }
         }
       }
       return Response.json({ error: `Block not found: ${label}` }, { status: 404 });
-    } catch {
+    } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       return Response.json({ error: msg }, { status: 500 });
     }
@@ -1431,7 +1459,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
       const diff = computePaperDiff(basePaper, headPaper, base, head);
       if (mb) (diff as any).mergeBase = mb;
       return Response.json(diff, { headers: { "Cache-Control": "no-cache", "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -1455,7 +1483,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
       return Response.json({ ...summary, diff: diff.summary }, {
         headers: { "Cache-Control": "no-cache", "Access-Control-Allow-Origin": "*" },
       });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -1469,6 +1497,10 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
     if (!label) return Response.json({ error: "Missing ?label= parameter" }, { status: 400 });
     try {
       const paper = await resolvePaper(id);
+      // `resolvePaper` returns `ResolvedPaper | null`; the file's other
+      // handlers 404 on null, these two dereferenced it straight into
+      // `paper.chapters` — a TypeError on any unknown paper id.
+      if (!paper) return Response.json({ error: `Paper not found: ${id}` }, { status: 404 });
       // Find the block's rootName and chapter directory
       let rootName: string | null = null;
       let chapterDir: string | null = null;
@@ -1503,7 +1535,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
       return Response.json({ label, rootName, chapterDir, commits }, {
         headers: { "Cache-Control": "no-cache", "Access-Control-Allow-Origin": "*" },
       });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -1519,7 +1551,13 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
     const buf = gitShowBinaryAt(sha, filePath);
     if (!buf) return new Response("Not found at that commit", { status: 404 });
     const ext = extname(filePath);
-    return new Response(buf, {
+    // Node's `Buffer` IS a `Uint8Array` at
+    // runtime and Bun accepts it, but TS's `BodyInit` union does not name it,
+    // so the call resolved against the `URLSearchParams` overload and failed.
+    // A view over `buf.buffer` does not help either: that is `ArrayBufferLike`,
+    // which could be a `SharedArrayBuffer`, and `BufferSource` wants a plain
+    // `ArrayBuffer`. Copying is the honest fix, and these are static assets.
+    return new Response(new Uint8Array(buf), {
       headers: {
         "Content-Type": MIME[ext] || "application/octet-stream",
         "Cache-Control": "public, max-age=31536000, immutable",
@@ -1536,6 +1574,10 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
     if (!label) return Response.json({ error: "Missing ?label= parameter" }, { status: 400 });
     try {
       const paper = await resolvePaper(id);
+      // `resolvePaper` returns `ResolvedPaper | null`; the file's other
+      // handlers 404 on null, these two dereferenced it straight into
+      // `paper.chapters` — a TypeError on any unknown paper id.
+      if (!paper) return Response.json({ error: `Paper not found: ${id}` }, { status: 404 });
       // Build block index and reverse dependency map
       const allBlocks: Array<{ label: string; kind: string; title: string; uses: string[] }> = [];
       const reverseDeps = new Map<string, string[]>();
@@ -1576,7 +1618,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
           .map(b => ({ label: b.label, kind: b.kind, title: b.title })),
         totalAffected: transitive.length,
       }, { headers: { "Cache-Control": "no-cache", "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -1692,7 +1734,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
         latexLog: texLog || undefined,
         exitCode: latexResult.status,
       }, { status: 500, headers: { "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500, headers: { "Access-Control-Allow-Origin": "*" } });
     }
   }
@@ -1859,7 +1901,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
           if (blockObj) {
             blockTexParts.push(renderBlock(blockObj as any, mdContent));
           }
-        } catch {
+        } catch (e) {
           blockTexParts.push(`% Error rendering ${b.label}: ${String(e)}`);
         }
       }
@@ -1938,7 +1980,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
         blockCount: chainBlocks.length,
         exitCode: latexResult.status,
       }, { status: 500, headers: { "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500, headers: { "Access-Control-Allow-Origin": "*" } });
     }
   }
@@ -2019,7 +2061,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
       invalidatePaperCache(body.paperId);
       log('edit', `block saved: ${body.paperId}/${body.rootName}`, `${body.md.length} chars → ${mdPath}`);
       return Response.json({ ok: true, path: mdPath });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -2056,7 +2098,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
       invalidatePaperCache(body.paperId);
       log('revert', `block reverted: ${body.paperId}/${body.rootName}`, `to commit ${body.sha.slice(0, 8)}`);
       return Response.json({ ok: true, sha: body.sha, path: mdPath });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -2089,7 +2131,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
       log('feedback', `created: ${body.paperId}/${body.rootName}`, `id=${todo.id} priority=${todo.priority} assignee=${todo.assignee}`);
 
       return Response.json({ ok: true, todo });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -2155,7 +2197,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
         ok: true,
         branch: currentBranch(),
       }, { headers: { "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       log('git', `checkout: error — ${e}`);
       return Response.json({ error: String(e) }, { status: 500, headers: { "Access-Control-Allow-Origin": "*" } });
     }
@@ -2346,7 +2388,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
                   blocks.push({
                     kind: blk.kind, label: blk.label, title: blk.title,
                     status: blk.status,
-                    lean: blk.lean ? { ref: blk.lean.ref, validation: blk.lean.validation } : null,
+                    lean: blk.lean ? { ref: blk.lean.ref, validation: blk.lean.validation, sorryFree: blk.lean.sorryFree } : null,
                     section: sec.title,
                   });
                 }
@@ -2397,7 +2439,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
             default:
               return JSON.stringify({ error: `Unknown tool: ${name}` });
           }
-        } catch {
+        } catch (e) {
           return JSON.stringify({ error: String(e) });
         }
       }
@@ -2601,7 +2643,7 @@ These become clickable buttons so users don't have to type. Make them specific t
             controller.enqueue(encoder.encode(`data: [DONE]\n\n`));
             logDebug("chat", "stream complete (after tool rounds)");
             controller.close();
-          } catch {
+          } catch (e) {
             log("chat", "stream error", String(e));
             controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: String(e) })}\n\n`));
             controller.enqueue(encoder.encode(`data: [DONE]\n\n`));
@@ -2611,7 +2653,7 @@ These become clickable buttons so users don't have to type. Make them specific t
       });
 
       return new Response(readable, { headers: sseHeaders });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500, headers: { "Access-Control-Allow-Origin": "*" } });
     }
   }
@@ -2652,7 +2694,7 @@ These become clickable buttons so users don't have to type. Make them specific t
       return Response.json({ ok: true, paperId: id, uploadDir: `uploads/${id}`, meta }, {
         headers: { "Access-Control-Allow-Origin": "*" },
       });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -2715,7 +2757,7 @@ These become clickable buttons so users don't have to type. Make them specific t
             format = "latex";
           }
         }
-      } catch {
+      } catch (e) {
         log("import", `arXiv source fetch failed for ${arxivId}:`, String(e));
       }
 
@@ -2741,7 +2783,7 @@ These become clickable buttons so users don't have to type. Make them specific t
       return Response.json({ ok: true, paperId: id, uploadDir: `uploads/${id}`, meta }, {
         headers: { "Access-Control-Allow-Origin": "*" },
       });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -2844,7 +2886,7 @@ These become clickable buttons so users don't have to type. Make them specific t
       return Response.json({ ok: true, paperId: body.paperId, meta, blocks, summary }, {
         headers: { "Access-Control-Allow-Origin": "*" },
       });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -2924,7 +2966,7 @@ These become clickable buttons so users don't have to type. Make them specific t
         generated,
         path: `content/${body.paperId}/${chDir}`,
       }, { headers: { "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -2951,7 +2993,7 @@ These become clickable buttons so users don't have to type. Make them specific t
 
       const triage = await triageFeedback(todo, blockContent, blockKind, body.paperId, body.rootName);
       return Response.json(triage, { headers: { "Access-Control-Allow-Origin": "*" } });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -2970,7 +3012,7 @@ These become clickable buttons so users don't have to type. Make them specific t
       if (body.status !== undefined) todos[idx].status = body.status;
       writeFeedback(body.paperId, body.rootName, todos);
       return Response.json({ ok: true, todo: todos[idx] });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -2991,7 +3033,7 @@ These become clickable buttons so users don't have to type. Make them specific t
       todos.splice(idx, 1);
       writeFeedback(body.paperId, body.rootName, todos);
       return Response.json({ ok: true });
-    } catch {
+    } catch (e) {
       return Response.json({ error: String(e) }, { status: 500 });
     }
   }
@@ -3038,14 +3080,19 @@ server.tool = function (...args: Parameters<typeof origTool>) {
   const toolName = args[0] as string;
   // The handler is the last argument
   const handler = args[args.length - 1] as (...a: unknown[]) => Promise<unknown>;
-  args[args.length - 1] = async (...handlerArgs: unknown[]) => {
+  // `args` is a tuple whose last slot is a union of overload-specific handler
+  // shapes; TS has no way to say "same overload, different last element", so
+  // an in-place replacement cannot be expressed. Widen for the WRITE ONLY —
+  // one expression, not the whole wrapper — and `origTool(...args)` below is
+  // still checked against the real signature.
+  (args as unknown[])[args.length - 1] = async (...handlerArgs: unknown[]) => {
     const start = Date.now();
     log('mcp', `→ ${toolName}`, JSON.stringify(handlerArgs[0] || {}).slice(0, 120));
     try {
       const result = await handler(...handlerArgs);
       log('mcp', `← ${toolName}`, `ok (${Date.now()-start}ms)`);
       return result;
-    } catch {
+    } catch (e) {
       log('mcp', `✗ ${toolName}`, `error: ${e instanceof Error ? e.message : String(e)} (${Date.now()-start}ms)`);
       throw e;
     }
@@ -3150,11 +3197,21 @@ if (mode === "stdio") {
 } else {
   // HTTP mode — MCP + viewer on same port
   const port = FOLIO_PORT;
-  const { StreamableHTTPServerTransport } = await import(
-    "@modelcontextprotocol/sdk/server/streamableHttp.js"
+  // The WEB-STANDARD transport, whose `handleRequest(req: Request):
+  // Promise<Response>` is exactly what the `/mcp` route below calls.
+  //
+  // This imported `StreamableHTTPServerTransport`, whose `handleRequest` is
+  // Node's `(req: IncomingMessage, res: ServerResponse, body?)`. It was being
+  // handed a Bun `Request` and nothing else, so `--http` mode — documented as
+  // the remote/Docker deployment path — could never have served `/mcp`.
+  // Invisible because `adapters/**` was never type-checked.
+  const { WebStandardStreamableHTTPServerTransport } = await import(
+    "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js"
   );
 
-  const httpTransport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
+  const httpTransport = new WebStandardStreamableHTTPServerTransport({
+    sessionIdGenerator: undefined,
+  });
   await server.connect(httpTransport);
 
   Bun.serve({
