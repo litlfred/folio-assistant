@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-08-07T12:10:50Z
-updated_at: 2026-08-08T11:54:20Z
+updated_at: 2026-08-08T15:10:00Z
 ---
 
 The production cache branch has 7268 oleans, all dependencies, none QOU.*. Every restore still rebuilds the paper, and sibling .lean files cannot elaborate standalone. lake-cache.sh status now detects and reports this.
@@ -143,3 +143,76 @@ unrestricted egress.** The runbook in
 `docs/guides/reseeding-the-lean-cache.md` is the artifact to run there. Nothing
 further is doable from an authoring container, and the next session should not
 spend turns re-confirming it.
+
+---
+
+## 2026-08-08 — CORRECTION: the opening measurement is the *mathlib* family's
+
+Not resolving this bean — a sibling holds it. But its premise needs correcting
+before anyone spends a CI run on the stated justification.
+
+`lake-cache.sh status` run **without** `--lake-root`, from a `qou` checkout,
+resolves to the roster's first entry and prints:
+
+    lake root:  /workspace/qou
+    package:    mathlib
+    branch:     lake-cache/mathlib-v4-24-0
+    oleans:     7268  (deps + own)
+    own pkg:    0
+    ! but ZERO belong to this package — only its dependencies are cached.
+
+Those are the numbers this bean opens with. They belong to
+`lake-cache/mathlib-v4-24-0`, not `lake-cache/qou-v4-24-0`, and for that family
+the alarm is a **false positive**: lake-root is `.`, the "own package" is the
+workspace-root shim, and its `.lake/build/lib` is empty by construction. `seed`
+has always exempted `mathlib` for exactly this reason; `status` did not. Fixed
+in `own_oleans_expected` (bean `folio-assistant-zq4t`), with tests.
+
+Pointed at the paper's own lake-root, the same command reports:
+
+    lake root:  /workspace/qou/content/quantum-observable-universe/lean
+    package:    qou
+    branch:     lake-cache/qou-v4-24-0
+    oleans:     950  (deps + own)
+    own pkg:    945
+
+### The oleans were not built here
+
+- 942 of the 945 carry mtimes spread over 2026-06-09 … 2026-08-06 — preserved
+  from build time, which a local build cannot produce. The other three are
+  modules I rebuilt today.
+- `.lake` is gitignored (`.gitignore:64`), so a fresh clone brings none.
+- No restore stamp exists at either lake-root, so `lake-cache.sh restore` was
+  not the mechanism — this container was provisioned some other way
+  (`qou/scripts/lean-cache-restore.sh` extracts the same branch at repo root
+  and writes no stamp).
+- `lake-cache/qou-v4-24-0` was last seeded 2026-08-07T00:11Z; the newest
+  restored olean is 2026-08-06. Consistent.
+
+And operationally: this session elaborated three paper modules standalone
+against those oleans — including a new file, `QOU/QBeta/C1ThetaZeroLocus.lean`,
+which imports `QOU.QBeta.C1ConnectionPoles` — at roughly two minutes each. So
+"Every restore still rebuilds the paper, and sibling .lean files cannot
+elaborate standalone" does not hold in a container provisioned today.
+
+### What I did NOT establish
+
+I did not open the tarball on the branch — that is ~1.6 GB of split parts. The
+provenance above is inference (mtimes + gitignore + no local build), strong but
+indirect.
+
+### The reseed may still be wanted — for different reasons
+
+Two real findings survive, and neither is the one in the title:
+
+1. **The qou cache is partial.** 945 own oleans against the ~1582 modules this
+   bean cites. Some of the paper does still rebuild.
+2. **Trace coverage is 0%.** `status` reports `traced: 5/950 oleans (0%)` for
+   `qou` and `0/7268 (0%)` for `mathlib`. Lake reads `.trace`, not `.olean`, to
+   decide staleness — so `lake build` rebuilds regardless of how many oleans
+   are present. That is why `scripts/lean-verify.sh` (which bypasses `lake`
+   entirely) works here while `lake build` does not, and it is a better
+   justification for a reseed than the zero-own-oleans claim.
+
+Whoever holds this bean should re-decide on (1) and (2). Retitling it would be
+their call, not mine.

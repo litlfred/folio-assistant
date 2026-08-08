@@ -212,14 +212,30 @@ count_oleans() {
 # Oleans belonging to the package ITSELF, as opposed to its dependencies.
 #
 # A SECOND way a healthy-looking total lies, distinct from the gutting
-# check below. A cache branch can carry thousands of Mathlib oleans and
-# NONE of the paper's own modules — `lake-cache/qou-v4-24-0` does exactly
-# that: 7268 oleans, zero `QOU.*`. Nothing was evicted, so the stamp
-# check passes; the branch was simply seeded without the package. Every
-# build still recompiles the paper, and sibling `.lean` files cannot
+# check below. A cache branch can carry thousands of dependency oleans
+# and NONE of the package's own modules: nothing was evicted, so the
+# stamp check passes; the branch was simply seeded without the package.
+# Every build then recompiles it, and sibling `.lean` files cannot
 # elaborate standalone.
 count_own_oleans() {
   find "$1/.lake/build/lib" -name '*.olean' -type f 2>/dev/null | head -20000 | wc -l | tr -d ' '
+}
+
+# Exit 0 = this family SHOULD carry own-package oleans, so zero of them
+# is a defect worth reporting.
+#
+# `mathlib` is the exception: its roster entry has lake-root `.`, where
+# the "own package" is the workspace-root shim that exists only to pull
+# Mathlib in. Its `.lake/build/lib` is empty by construction and the
+# dependencies ARE the payload.
+#
+# `seed` has always exempted it. `status` did not, and so reported the
+# workspace-root cache as `7268 oleans / own pkg 0` under the alarm
+# "ZERO belong to this package" — a false positive that reads exactly
+# like a gutted per-package cache and was mistaken for one. Both callers
+# now ask here, so they cannot disagree again.
+own_oleans_expected() {  # pkg
+  [ "$1" != "mathlib" ]
 }
 
 # Trace files, which are what Lake actually consults for staleness.
@@ -339,7 +355,7 @@ cmd_status() {
   fi
   if [ "$n" -gt 0 ]; then
     printf '\n  cache PRESENT — %s oleans on disk.\n' "$n"
-    if [ "$own" -eq 0 ]; then
+    if [ "$own" -eq 0 ] && own_oleans_expected "$pkg"; then
       warn "but ZERO belong to this package — only its dependencies are cached."
       info "Anything importing the package's own modules still rebuilds, and"
       info "sibling .lean files will not elaborate standalone. Reseed with a"
@@ -520,16 +536,14 @@ cmd_seed() {
 Seeding an empty cache is worse than none: the next agent gets a hit,
 skips the build, and fails with no oleans."
 
-  # Refuse to seed a package whose OWN modules are absent.
+  # Refuse to seed a package whose OWN modules are absent: thousands of
+  # dependency oleans and none of the package's own makes the total look
+  # healthy while every consumer still rebuilds from source.
   #
-  # This is the exact defect that shipped on lake-cache/qou-v4-24-0:
-  # 7268 oleans, every one a dependency, zero QOU.*. The total looked
-  # healthy, so nothing caught it, and every consumer since has
-  # rebuilt the paper from source while believing the cache was warm.
-  # `mathlib` is exempt — for that package the dependencies ARE the
-  # payload and `.lake/build` is legitimately thin.
+  # Exemptions live in `own_oleans_expected` — `status` asks the same
+  # question, and the two used to answer it differently.
   local own; own=$(count_own_oleans "$root")
-  if [ "$pkg" != "mathlib" ] && [ "$own" -eq 0 ]; then
+  if own_oleans_expected "$pkg" && [ "$own" -eq 0 ]; then
     die "refusing to seed '$br': $n oleans present but ZERO belong to '$pkg'.
 Only .lake/packages/ was populated — .lake/build/lib is empty, so the
 package itself never built. Run a full \`lake build\` in $root first.
