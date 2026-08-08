@@ -11,3 +11,8 @@ dist/
 # Generated files — regenerate with `npm run generate:all`
 schemas/generated/
 content/audit-tex-source.json
+
+# Agent worktrees (Claude Code `isolation: worktree`). Live, locked git
+# worktrees created per background agent and removed when it finishes —
+# transient tooling state, never repository content.
+.claude/worktrees/
