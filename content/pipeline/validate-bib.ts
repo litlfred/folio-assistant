@@ -46,7 +46,8 @@
  * source of truth; this script verifies external correctness of every
  * entry beyond schema-shape validation.
  */
-import { references } from "../../schemas/references";
+import { references } from "./references-registry-di";
+import { findContentRepoRoot } from "./repo-root";
 import * as fs from "fs";
 import * as path from "path";
 import { glob } from "fs/promises";
@@ -68,8 +69,36 @@ if (MODES.size === 0) {
   process.exit(2);
 }
 
-const CONTENT_ROOT = path.resolve(__dirname, "..");
-const REPO_ROOT = path.resolve(CONTENT_ROOT, "..");
+// Both roots are the FOLIO's, not the platform's. `path.resolve(__dirname,
+// "..")` lands in `<folio-assistant>/content/`, which holds only `pipeline/` —
+// so the `**/*.lean` glob below had nothing to walk. Never noticed, because
+// this file threw `Cannot find module` at import and could not run at all.
+const REPO_ROOT = findContentRepoRoot();
+const CONTENT_ROOT = path.join(REPO_ROOT, "content");
+
+/**
+ * The year from a CSL `issued` date, as a number.
+ *
+ * CSL-JSON types `date-parts` entries as `LooseNumber = string | number` and
+ * the spec permits `"date-parts": [["2020"]]`. The two comparison sites below
+ * subtracted these directly; JS coerces a numeric string, so it happened to
+ * work, but it is unsound and silently yields `NaN` for anything non-numeric —
+ * and `Math.abs(NaN) > 1` is false, so a malformed year would read as a MATCH
+ * rather than a mismatch.
+ */
+function cslYear(parts: unknown): number | undefined {
+  // `unknown` rather than csl-json's `Date['date-parts']`: that is a
+  // fixed-arity tuple of optional LooseNumbers, and the Crossref response
+  // objects below carry their own near-identical shape. Narrowing here takes
+  // both without a cast at either call site.
+  if (!Array.isArray(parts)) return undefined;
+  const first = parts[0];
+  if (!Array.isArray(first)) return undefined;
+  const raw: unknown = first[0];
+  if (typeof raw !== "number" && typeof raw !== "string") return undefined;
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : undefined;
+}
 
 async function modeDoi(): Promise<CheckResult[]> {
   const out: CheckResult[] = [];
@@ -144,7 +173,7 @@ async function modeCrossCheck(): Promise<CheckResult[]> {
       const authorFamilies: string[] = (entry.author ?? [])
         .map((a: any) => (a.family ?? a.literal ?? "").toLowerCase())
         .filter((s: string) => s.length >= 3);
-      const entryYear = entry.issued?.["date-parts"]?.[0]?.[0];
+      const entryYear = cslYear(entry.issued?.["date-parts"]);
       checked++;
       // Strip URLs, DOIs, and punctuation; count remaining alphabetic words
       const descStripped = desc
@@ -234,12 +263,12 @@ async function modeCrossref(): Promise<CheckResult[]> {
       const msg = data.message ?? data;
       const cTitle = (msg.title?.[0] ?? "").toLowerCase();
       const cAuthor = (msg.author?.[0]?.family ?? "").toLowerCase();
-      const cYear = msg["published-print"]?.["date-parts"]?.[0]?.[0]
-                  ?? msg["published-online"]?.["date-parts"]?.[0]?.[0]
-                  ?? msg["created"]?.["date-parts"]?.[0]?.[0];
+      const cYear = cslYear(msg["published-print"]?.["date-parts"])
+                  ?? cslYear(msg["published-online"]?.["date-parts"])
+                  ?? cslYear(msg["created"]?.["date-parts"]);
       const eTitle = ((r as any).title ?? "").toLowerCase();
       const eAuthor = (r.author?.[0]?.family ?? "").toLowerCase();
-      const eYear = r.issued?.["date-parts"]?.[0]?.[0];
+      const eYear = cslYear(r.issued?.["date-parts"]);
       const issues: string[] = [];
       if (eTitle && cTitle && !cTitle.includes(eTitle.slice(0, 20)) && !eTitle.includes(cTitle.slice(0, 20))) {
         issues.push(`title mismatch: entry "${eTitle.slice(0, 60)}" vs Crossref "${cTitle.slice(0, 60)}"`);

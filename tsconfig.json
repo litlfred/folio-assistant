@@ -27,12 +27,16 @@
   // clean", which was true and meaningless, because the file was not in the
   // program.
   //
-  // `content/**` is NOT yet: 48 errors, 21 of them in `render-latex.ts`.
-  // Tracked in bean `folio-assistant-tsca`. Widen it there once its count is
-  // zero — the same ratchet `eslint.config.mjs` uses, so a red typecheck
-  // always means a regression rather than pre-existing debt. Note that the
-  // parts of `content/pipeline` reachable from `src/` are compiled either
-  // way; the gap is the 63 files nothing in `src/` imports.
-  "include": ["src/**/*.ts", "schemas/**/*.ts"],
+  // `content/**` is in scope now too, drained to zero (bean
+  // `folio-assistant-tsca`). Adding it here is the point of the drain: the
+  // 63 pipeline files nothing in `src/` imports were never compiled, and that
+  // is how `validate.ts` shipped a `ReferenceError` and how six bibliography
+  // entry points sat dead — importing `../../schemas/references`, a path that
+  // does not exist here — without anything reporting it.
+  //
+  // `scripts/**` is NOT yet: ~15 errors, several in test files. Widen it there
+  // once its count is zero — the same ratchet `eslint.config.mjs` uses, so a
+  // red typecheck always means a regression rather than pre-existing debt.
+  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }

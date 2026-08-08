@@ -122,6 +122,7 @@ import {
   getCriterionExtraInputs,
 } from "./qa-criteria-registry";
 import { AUTOMATED_CHECKERS } from "./qa-checkers-voice";
+import type { CheckerResult } from "./qa-checkers-extended";
 import type {
   BlockQaReport,
   QaCriterionEntry,
@@ -180,13 +181,21 @@ interface BlockSweepResult {
   fail_minor: number;
   details: Array<{
     criterion: string;
+    // `CheckerResult["result"]` is assigned here verbatim, so this union must
+    // contain all of it. It omitted `"warn"` and plain `"n/a"` — meaning a
+    // soft finding was written into the details JSON as a value the type said
+    // could not occur, and a consumer switching exhaustively on `outcome`
+    // would not handle it. `CheckerResult` documents that `warn` is
+    // "preserved end-to-end … without being silently coerced to `pass`", and
+    // an earlier `warn` -> `pass` coercion in the extended dispatch did
+    // silently drop chapter-mismatch warnings (#1640). Referencing the type
+    // rather than restating it is what stops the two drifting again.
     outcome:
       | "fresh-skip"
-      | "pass"
-      | "fail"
       | "needs-agent"
       | "n/a-no-md"
-      | "n/a-no-lean";
+      | "n/a-no-lean"
+      | CheckerResult["result"];
     severity?: "critical" | "major" | "minor";
     hits?: number;
     first_hit?: string;

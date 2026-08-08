@@ -22,7 +22,7 @@
 
 import { readFileSync, existsSync, readdirSync, writeFileSync } from "fs";
 import { resolve, join, extname } from "path";
-import { references } from "../../schemas/references";
+import { references } from "./references-registry-di";
 import { findContentRepoRoot } from "./repo-root";
 import type { Data as CSLData, Person as CSLPerson } from "csl-json";
 

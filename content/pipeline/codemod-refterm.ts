@@ -137,8 +137,10 @@ export function rewriteMarkdown(
 
   let mutated = false;
 
-  visit(tree as any, (node: any, index: number | null, parent: any) => {
-    if (!parent || index === null) return;
+  // unist-util-visit passes `index` as `number | undefined`, not
+  // `number | null`. The mismatch made the whole visitor unassignable.
+  visit(tree as any, (node: any, index: number | undefined, parent: any) => {
+    if (!parent || index === undefined) return;
     if (node.type !== "text") return;
     // Skip text nodes that are children of any directive — they are
     // already part of a wrapped term.
