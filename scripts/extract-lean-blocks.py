@@ -6,7 +6,6 @@ and writes individual .lean files alongside their .ts/.md siblings.
 """
 
 import re
-import os
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
