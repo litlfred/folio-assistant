@@ -120,3 +120,77 @@ the false-positive rate → only then tune the threshold or raise severity.**
 Nothing here is actionable from an authoring container. The criterion remains
 inert by construction in the meantime — no cache means `n/a`, and the note says
 "not measured", never "nothing trivial".
+
+
+---
+
+## Measured 2026-08-08 (session `3bada08b`) — the oracle works; three defects fixed
+
+The bean was blocked on the false-positive rate, which needs the `5d7z`
+reseed. But a second question was sitting underneath it, unnoticed and not
+blocked: **the first qou run reported `probed 12, closed 0`, and that was read
+here as "none of 12 real qou theorems fall to cheap automation". A probe that
+can never close anything prints the identical line.** Nothing in the output
+separated the two readings.
+
+Settled it with a control: core-Lean declarations of known difficulty, run
+through the real code path (no Mathlib, no folio, no cache — just the toolchain
+`ga7e` restored).
+
+    trivTrue     CLOSED step 1 (trivial)
+    simpAppend   CLOSED step 3 (simp)      <- trivial and rfl both lost first
+    omegaLinear  CLOSED step 5 (omega)     <- the ladder really walks
+    substantive  open                      <- and does not close everything
+
+So the probe discriminates, and qou's `closed 0` is a real measurement. That
+control is now `scripts/tests/lean-triviality-probe.test.ts`.
+
+Getting there surfaced three ways the probe reported a **mechanical failure as
+a substantive result** — each one scoring a block `pass`, "not machine-trivial":
+
+1. **A rung that is not installed.** `aesop` is not core Lean; without Mathlib
+   it errors `unknown tactic` and exits non-zero, which an exit-code check
+   scores as "ran and lost". The ladder silently had five rungs. Now recorded
+   as `ladder.unavailable`, and the criterion reads a short-ladder "not closed"
+   as `n/a` rather than `pass`.
+2. **A rung that ran out of time.** `execFileSync` reports a timeout by killing
+   the child, landing in the same catch as a failed proof. A tactic that did
+   not answer is not a tactic that lost — and `simp` is the rung most likely to
+   be slow on the goals most worth flagging. Now `ladder.timedOut`. Same for
+   the baseline: `baseline-timeout` is a distinct skip from `baseline-fails`,
+   because "too slow" must not print "restore the oleans".
+3. **A splice that landed inside the statement.** `splitDeclarations` cut at
+   the first `:=` *anywhere*, though its doc comment has always said "the first
+   **top-level** `:=`". A statement containing one — `(let x := 5; x) = 5`, a
+   structure instance — had the tactic written over its own type; the file
+   stopped elaborating, all six rungs failed, `closed: false`. Fixed at the
+   source with `topLevelCut`.
+
+**Defect 3 reached further than this bean.** `lean-signature` builds the QA
+**statement hash** from the same cut, so a truncated signature hashes a partial
+statement:
+
+    theorem t : (let x := 5; x) = 5 := by rfl     hash d1b45ae0f3e3
+    theorem t : (let x := 5; x) = 6 := by rfl     hash d1b45ae0f3e3
+
+A changed statement that never invalidates its QA sidecar — a staleness check
+passing by finding nothing. Equivalence-checked before landing: over 17
+declaration shapes the new cut agrees with the old on all 12 that were already
+correct, and differs only on the 5 it was getting wrong.
+
+The skip bucket is also classified now (`decl-not-found` / `no-body` /
+`baseline-fails` / `baseline-timeout`), because this bean's own headline number
+— 16 of 28 blocks (57%) unprobeable — came from an undifferentiated counter
+whose log line asserted one cause for all four. When the reseed lands, that
+number will say which fix it needs.
+
+### Remaining — unchanged, still gated on 5d7z
+
+- [ ] Reseed the cache (5d7z), then re-run the probe over the full corpus.
+- [ ] With hits in hand, measure the actual false-positive rate.
+- [ ] Tune the ladder / threshold on that evidence.
+- [ ] Only then consider raising severity above `minor`.
+
+What changed is that the measurement will now be trustworthy when it runs.
+Before this it would have been taken with a five-rung ladder, a timeout counted
+as a loss, and any statement containing `:=` silently scored "not trivial".

@@ -115,6 +115,41 @@ describe("proof-not-machine-trivial", () => {
     rmSync(root, { recursive: true, force: true });
   });
 
+  test("a `not closed` from a SHORT ladder is n/a, not pass", () => {
+    // The probe runs six rungs. `aesop` is not core Lean, so in a folio
+    // without Mathlib it errors with `unknown tactic` — which, to an
+    // exit-code check, looks exactly like "ran and did not close the
+    // goal". Every declaration aesop would have closed then reads as
+    // "not machine-trivial". A rung that never answered is not evidence.
+    const { root, tsPath } = makeRepo({
+      "P.foo": { closed: false, ladder_unavailable: ["aesop"] },
+    });
+    const r = inRepo(root, () => checkProofNotMachineTrivial(tsPath));
+    expect(r.result).toBe("n/a");
+    expect(r.notes).toContain("aesop");
+    expect(r.notes).toContain("short ladder");
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a `not closed` from the FULL ladder is still a pass", () => {
+    // The complement: the n/a path must not swallow real measurements.
+    const { root, tsPath } = makeRepo({ "P.foo": { closed: false } });
+    const r = inRepo(root, () => checkProofNotMachineTrivial(tsPath));
+    expect(r.result).toBe("pass");
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("an incomplete ladder does not suppress a goal that WAS closed", () => {
+    // If `simp` closed it at rung 3, aesop never running is irrelevant —
+    // the hit stands. Only "not closed" is weakened by a short ladder.
+    const { root, tsPath } = makeRepo({
+      "P.foo": { closed: true, steps: 3, ladder_unavailable: ["aesop"] },
+    });
+    const r = inRepo(root, () => checkProofNotMachineTrivial(tsPath));
+    expect(r.result).toBe("warn");
+    rmSync(root, { recursive: true, force: true });
+  });
+
   test("never returns fail — it is warn-only by construction", () => {
     for (const entry of [
       { closed: true, steps: 0 },

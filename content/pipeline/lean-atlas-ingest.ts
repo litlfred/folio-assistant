@@ -190,6 +190,80 @@ interface DeclSpan {
   signature: string;
   /** Body text (after `:=` / `where`), empty when there is none. */
   body: string;
+  /**
+   * Absolute offset of `body` within the stripped source, or -1 when the
+   * declaration has no body.
+   *
+   * Callers that need to splice the body (the triviality probe) must not
+   * re-find it with `indexOf`: bodies repeat verbatim across a file
+   * (`:= by rfl` is not distinctive), so a search can land on the wrong
+   * one and rewrite a different declaration than the one requested.
+   */
+  bodyAt: number;
+}
+
+/** Bracket pairs that can nest a `:=` inside a statement. */
+const OPEN = "([{⟨⦃";
+const CLOSE = ")]}⟩⦄";
+/** Lean identifier characters, for the `where` word boundary. */
+const IDENT = /[A-Za-z0-9_'.!?]/;
+
+/**
+ * Offset of the first **top-level** `:=` or `where` in `text`, or -1.
+ *
+ * Top-level means outside every bracket pair and outside string
+ * literals. A theorem *statement* may legitimately contain `:=` — a
+ * `let` (`(let x := 5; x) = 5`), a structure instance (`{ a := 1 }`), an
+ * anonymous constructor — and cutting at the first one anywhere puts
+ * statement text into the body. Measured consequences of getting this
+ * wrong, all three of which read as a clean result rather than an error:
+ *
+ * - `lean-signature` hashes only the truncated signature, so
+ *   `(let x := 5; x) = 5` and `... = 6` hash identically and a changed
+ *   statement never invalidates its QA sidecar;
+ * - `lean-triviality-probe` splices its tactic over the tail of the
+ *   statement, the file stops elaborating, every ladder rung fails, and
+ *   the declaration is recorded `closed: false` — "not machine-trivial";
+ * - scan mode files the statement's own text under `value_deps`.
+ *
+ * Char literals are deliberately NOT tracked: `'` is far more often a
+ * prime in an identifier (`h'`, `ih'`) than a delimiter, so treating it
+ * as a quote would miscut far more declarations than it rescues.
+ */
+export function topLevelCut(text: string): number {
+  let depth = 0;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === '"') {
+      i++;
+      while (i < text.length && text[i] !== '"') {
+        if (text[i] === "\\") i++;
+        i++;
+      }
+      continue;
+    }
+    if (OPEN.includes(c)) {
+      depth++;
+      continue;
+    }
+    if (CLOSE.includes(c)) {
+      // Clamp: a stray closer (the span boundary can chop mid-term) must
+      // not drive depth negative and mask every later top-level cut.
+      if (depth > 0) depth--;
+      continue;
+    }
+    if (depth !== 0) continue;
+    if (c === ":" && text[i + 1] === "=") return i;
+    if (
+      c === "w" &&
+      text.startsWith("where", i) &&
+      !IDENT.test(text[i - 1] ?? " ") &&
+      !IDENT.test(text[i + 5] ?? " ")
+    ) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
@@ -211,11 +285,12 @@ export function splitDeclarations(stripped: string): DeclSpan[] {
     const from = starts[i].at;
     const to = i + 1 < starts.length ? starts[i + 1].at : stripped.length;
     const text = stripped.slice(from, to);
-    const cut = text.search(/:=|\bwhere\b/);
+    const cut = topLevelCut(text);
     spans.push({
       name: starts[i].name,
       signature: cut === -1 ? text : text.slice(0, cut),
       body: cut === -1 ? "" : text.slice(cut),
+      bodyAt: cut === -1 ? -1 : from + cut,
     });
   }
   return spans;

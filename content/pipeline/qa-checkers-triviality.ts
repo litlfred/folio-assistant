@@ -18,12 +18,24 @@
  * sweep. A cheap pre-filter changes which blocks an agent looks at
  * first.
  *
- * ## Status: UNVALIDATED
+ * ## Status: the oracle works; its false-positive RATE is still unmeasured
  *
- * The oracle's false-positive rate has **not** been measured on any
- * corpus. Its entire value is that number: if it flags genuine results
- * as trivial, it costs more attention than it saves. Plenty of real
- * theorems are one-liners.
+ * Two different questions, and only the first has an answer.
+ *
+ * **Can the oracle discriminate at all?** Yes — pinned by controls in
+ * `scripts/tests/lean-triviality-probe.test.ts`: declarations of known
+ * difficulty run through the real code path, closing at the expected
+ * rung (`simp` at 3, `omega` at 5) while a substantive goal stays open.
+ * That control exists because the first qou run reported
+ * `probed 12, closed 0`, which was read as "no qou theorem falls to
+ * cheap automation" — and a probe that can never close anything emits
+ * the identical line. It could not have been told from the outside.
+ *
+ * **How often does it flag a genuine result?** Unmeasured. That number
+ * is the criterion's entire value: if it flags real theorems as trivial
+ * it costs more attention than it saves, and plenty of real theorems are
+ * one-liners. It needs hits on a real corpus, which needs the Lean cache
+ * reseed — bean `5d7z`. Until then, `TRIVIAL_STEP_THRESHOLD` is a guess.
  *
  * So this is deliberately inert until fed real data:
  *
@@ -45,9 +57,14 @@
  *
  *   { "$schema": "lean-triviality/v1",
  *     "generated_at": "...",
- *     "oracle": "nazrin@<rev>",
+ *     "oracle": "lean-tactic-ladder(trivial|rfl|simp|decide|omega|aesop)",
  *     "decls": { "<Decl>": { "closed": true, "steps": 3,
+ *                            "ladder_unavailable": ["aesop"],
  *                            "lean_path": "...", "lean_sha": "..." } } }
+ *
+ * `ladder_unavailable` lists rungs that gave no answer in the probe
+ * environment — absent, or killed by the timeout. A `closed: false`
+ * carrying one is `n/a`, not `pass`.
  *
  * @module content/pipeline/qa-checkers-triviality
  */
@@ -75,6 +92,13 @@ export interface TrivialityEntry {
   closed: boolean;
   /** Atomic tactic steps used. Absent when `closed` is false. */
   steps?: number;
+  /**
+   * Ladder rungs that could not run in the probe environment — `aesop`
+   * without Mathlib, say. A `closed: false` measured against a short
+   * ladder is not evidence the goal resists automation, so it must read
+   * as `n/a` rather than `pass`.
+   */
+  ladder_unavailable?: string[];
   lean_path?: string;
   lean_sha?: string;
   checked_at?: string;
@@ -158,7 +182,23 @@ export function checkProofNotMachineTrivial(tsPath?: string): CheckerResult {
   };
   if (e.steps !== undefined) metrics.atomic_steps_to_close = e.steps;
 
-  if (!e.closed) return { result: "pass", hits: [], metrics };
+  if (!e.closed) {
+    // "The ladder did not close it" is only a measurement if the whole
+    // ladder ran. A rung the environment could not offer fails
+    // indistinguishably from a rung that tried and lost, so a short
+    // ladder yields `n/a` — absence of data, not absence of triviality.
+    if (e.ladder_unavailable?.length) {
+      return {
+        result: "n/a",
+        hits: [],
+        metrics,
+        notes:
+          `ladder incomplete — ${e.ladder_unavailable.join(", ")} did not run in the probe ` +
+          `environment, so "not closed" was measured against a short ladder`,
+      };
+    }
+    return { result: "pass", hits: [], metrics };
+  }
   const steps = e.steps ?? 0;
   if (steps > TRIVIAL_STEP_THRESHOLD) return { result: "pass", hits: [], metrics };
 
