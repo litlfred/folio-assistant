@@ -176,9 +176,12 @@ async function modeCrossCheck(): Promise<CheckResult[]> {
       //      lowercased description.
       // This skips URL-only / DOI-only / topic-hint-only descriptions
       // (which v2's "always check" misclassified as FPs).
+      // `Person` is `{family} | {literal}`, but `PersonPartial` makes both
+      // optional on either arm, so the `??` chain is the right read — it was
+      // only the `any` that was surplus.
       const authorFamilies: string[] = (entry.author ?? [])
-        .map((a: any) => (a.family ?? a.literal ?? "").toLowerCase())
-        .filter((s: string) => s.length >= 3);
+        .map((a) => (a.family ?? a.literal ?? "").toLowerCase())
+        .filter((s) => s.length >= 3);
       const entryYear = cslYear(entry.issued?.["date-parts"]);
       checked++;
       // Strip URLs, DOIs, and punctuation; count remaining alphabetic words
@@ -198,7 +201,7 @@ async function modeCrossCheck(): Promise<CheckResult[]> {
       // cite the work by title rather than surname (e.g.
       // `[kauffman1991] Knots and Physics, World Scientific`); these are
       // genuine matches that v3 incorrectly flagged.
-      const entryTitle: string = ((entry as any).title ?? "").toLowerCase();
+      const entryTitle: string = (entry.title ?? "").toLowerCase();
       const stopwords = new Set([
         "a", "an", "the", "of", "and", "or", "in", "on", "for", "to", "from",
         "with", "by", "at", "as", "is", "are", "be",
@@ -265,14 +268,24 @@ async function modeCrossref(): Promise<CheckResult[]> {
         out.push({ entry: r.id, severity: "warn", note: `crossref ${resp.status} for ${r.DOI}` });
         continue;
       }
-      const data: any = await resp.json();
-      const msg = data.message ?? data;
+      // The fields this reads off a Crossref `/works/<DOI>` response.
+      // Everything else in the payload is ignored, and naming these is what
+      // keeps a typo in one of them from silently comparing "" to "".
+      interface CrossrefWork {
+        title?: string[];
+        author?: Array<{ family?: string }>;
+        "published-print"?: { "date-parts"?: unknown };
+        "published-online"?: { "date-parts"?: unknown };
+        created?: { "date-parts"?: unknown };
+      }
+      const data = await resp.json() as CrossrefWork & { message?: CrossrefWork };
+      const msg: CrossrefWork = data.message ?? data;
       const cTitle = (msg.title?.[0] ?? "").toLowerCase();
       const cAuthor = (msg.author?.[0]?.family ?? "").toLowerCase();
       const cYear = cslYear(msg["published-print"]?.["date-parts"])
                   ?? cslYear(msg["published-online"]?.["date-parts"])
                   ?? cslYear(msg["created"]?.["date-parts"]);
-      const eTitle = ((r as any).title ?? "").toLowerCase();
+      const eTitle = (r.title ?? "").toLowerCase();
       const eAuthor = (r.author?.[0]?.family ?? "").toLowerCase();
       const eYear = cslYear(r.issued?.["date-parts"]);
       const issues: string[] = [];
@@ -300,13 +313,13 @@ async function modeCrossref(): Promise<CheckResult[]> {
 
 async function modeArxiv(): Promise<CheckResult[]> {
   const out: CheckResult[] = [];
-  const withArxiv = references.filter((r) => (r as any).URL && /arxiv\.org/i.test((r as any).URL));
+  const withArxiv = references.filter((r) => r.URL && /arxiv\.org/i.test(r.URL));
   console.log(`\n[arxiv] checking ${withArxiv.length} arxiv-URL entries...`);
   for (const r of withArxiv) {
     try {
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), 5000);
-      const resp = await fetch((r as any).URL, { method: "HEAD", redirect: "follow", signal: ctrl.signal });
+      const resp = await fetch(r.URL!, { method: "HEAD", redirect: "follow", signal: ctrl.signal });
       clearTimeout(timer);
       if (resp.status === 200 || resp.status === 301 || resp.status === 302) {
         out.push({ entry: r.id, severity: "ok", note: `arxiv ${resp.status} OK` });

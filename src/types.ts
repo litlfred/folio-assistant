@@ -7,6 +7,9 @@
  * @module folio-assistant/types
  */
 
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { FeedbackItem, PaperMacro } from "../schemas/types.js";
+
 // ── Role-based access control ────────────────────────────────────
 
 export type UserRole = "viewer" | "collaborator" | "owner";
@@ -33,7 +36,6 @@ export const ROLE_LEVELS: Record<UserRole, number> = {
  * `data` and `related` entirely. Nothing caught the divergence because every
  * call site in between was typed `any`.
  */
-import type { FeedbackItem, PaperMacro } from "../schemas/types.js";
 export type { FeedbackItem };
 
 export interface NewFeedback {
@@ -95,7 +97,7 @@ export interface ResolvedBlock {
   tags?: string[];
   rendered?: Array<{ mime: string; url: string; blockIndex: number; hash?: string }>;
   md: string;
-  todos?: unknown[];
+  todos?: FeedbackItem[];
 }
 
 export interface ResolvedSection {
@@ -111,7 +113,7 @@ export interface ResolvedChapter {
   title: string;
   label?: string;
   sections: ResolvedSection[];
-  todos?: unknown[];
+  todos?: FeedbackItem[];
 }
 
 export interface ResolvedDocument {
@@ -144,7 +146,7 @@ export interface BlockDiff {
   mdDiff?: { base: string; head: string };
   leanDiff?: { base: string; head: string };
   statusDiff?: { base: string; head: string };
-  todos?: unknown[];
+  todos?: FeedbackItem[];
 }
 
 export interface DocumentDiff {
@@ -198,7 +200,7 @@ export interface ChapterDetail {
   label?: string;
   dir: string;
   sections: SectionStub[];
-  todos?: unknown[];
+  todos?: FeedbackItem[];
 }
 
 /**
@@ -284,7 +286,15 @@ export interface ContentAdapter {
   // ── Optional extensions ──────────────────────────────────────
 
   /** Register content-specific MCP tools on the server. */
-  registerMcpTools?(server: unknown): void;
+  /**
+   * Register the adapter's MCP tools.
+   *
+   * `unknown` until now, so the one implementation took `any` and every
+   * `register*Tools(server)` call inside it went unchecked. The only caller
+   * (`FolioServer`) has always passed its `McpServer`, and every callee has
+   * always required one.
+   */
+  registerMcpTools?(server: McpServer): void;
 }
 
 // ── Server config ────────────────────────────────────────────────
