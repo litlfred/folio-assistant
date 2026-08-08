@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: critical
 created_at: 2026-08-07T13:56:17Z
-updated_at: 2026-08-07T14:49:26Z
+updated_at: 2026-08-08T11:54:20Z
 ---
 
 Root cause of the cache never helping lake build. Lake decides staleness from .trace files; an olean with no trace is out-of-date, so lake rebuilds it and evicts. Measured: restore laid 7268 oleans with only 775 traces; a single-module 'lake build' ran 823 targets and left 772 oleans — every survivor had a trace (494 mathlib oleans / 494 traces, 0 of 200 sampled lacking one). The cache only ever worked for direct lean+LEAN_PATH calls, which is why the triviality probe succeeded while builds did not.
@@ -142,3 +142,37 @@ Possible follow-up, not built: `seed` could compare the candidate's olean
 count against the branch it is about to replace and warn on a large drop.
 That is a real computable check, unlike an absolute breadth threshold.
 Deferred rather than added mid-reseed.
+
+
+---
+
+## Blocker re-tested 2026-08-08 (session `3bada08b`) — still blocked, now measured
+
+Asked to work all open beans, so the claim was re-tested rather than inherited.
+
+**The toolchain half is genuinely resolved** (`ga7e` was right):
+`~/.elan/toolchains/leanprover--lean4---v4.24.0` is present and both binaries
+run — `lean --version` → 4.24.0, `lake --version` → Lake 5.0.0-src+797c613. So
+"no linkable toolchain" is no longer the blocker.
+
+**The network half is not.** Every host a reseed needs is unreachable from an
+authoring container:
+
+    https://release.lean-lang.org                  HTTP 000
+    https://leanprover-community.github.io         HTTP 000
+    https://github.com/leanprover-community/mathlib4   HTTP 403
+    https://api.github.com/repos/leanprover/elan/releases/latest   HTTP 403
+
+`lake exe cache get` fetches from the second of those, so the fast route is
+out; the from-source route is the hours-long build this bean already measured
+(823 targets for ONE module, not finished in 10 minutes at 0% trace coverage).
+
+**And there is no folio here.** `scripts/lake-cache.sh restore-toolchain`
+exits `no lean-toolchain` — that file is folio content, and this container has
+the platform only. So even with network there is nothing to build.
+
+Conclusion unchanged and now pinned: **this needs CI, or a machine with
+unrestricted egress.** The runbook in
+`docs/guides/reseeding-the-lean-cache.md` is the artifact to run there. Nothing
+further is doable from an authoring container, and the next session should not
+spend turns re-confirming it.

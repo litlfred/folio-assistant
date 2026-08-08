@@ -44,6 +44,15 @@
  */
 export type ChapterRegime = string;
 
+/**
+ * A rule mapping a Lean module path fragment to the chapter that owns it.
+ * Ordered: the first whose `pathFragment` occurs in the relative path wins.
+ */
+export interface LeanModuleChapterRule {
+  pathFragment: string;
+  chapter: string;
+}
+
 export interface ChapterProfileAPI {
   /** Chapter directory name → the q-regimes that chapter may use. */
   chapterExpectedRegimes: Readonly<Record<string, ReadonlySet<ChapterRegime>>>;
@@ -51,12 +60,22 @@ export interface ChapterProfileAPI {
   categoricalChapters: ReadonlySet<string>;
   /** Chapters whose narrative-expected profile is archimedean / fixed q_0. */
   archimedeanChapters: ReadonlySet<string>;
+  /**
+   * Prose terms that must be backed by a formal definition, mapped to the
+   * definition (or description) expected to back them. Editorial: which words
+   * a folio considers load-bearing is a judgement about its own subject.
+   */
+  termsNeedingDefinitions?: Readonly<Record<string, string>>;
+  /** Lean module path fragment → owning chapter, first match wins. */
+  leanModuleChapters?: readonly LeanModuleChapterRule[];
 }
 
 const EMPTY: ChapterProfileAPI = {
   chapterExpectedRegimes: {},
   categoricalChapters: new Set(),
   archimedeanChapters: new Set(),
+  termsNeedingDefinitions: {},
+  leanModuleChapters: [],
 };
 
 let currentApi: ChapterProfileAPI | null = null;
@@ -128,3 +147,20 @@ export const ARCHIMEDEAN_CHAPTERS: ReadonlySet<string> = new Proxy(new Set<strin
     return typeof v === "function" ? v.bind(s) : v;
   },
 });
+
+/** Prose terms a folio requires a formal definition for. Empty when unconfigured. */
+export function termsNeedingDefinitions(): Readonly<Record<string, string>> {
+  return getChapterProfiles().termsNeedingDefinitions ?? {};
+}
+
+/**
+ * The chapter owning a Lean module, by path fragment; `undefined` when no rule
+ * matches OR when no folio has supplied any — the caller must not read those
+ * as the same thing, so `chapterProfilesConfigured()` distinguishes them.
+ */
+export function leanModuleChapter(relPath: string): string | undefined {
+  for (const r of getChapterProfiles().leanModuleChapters ?? []) {
+    if (relPath.includes(r.pathFragment)) return r.chapter;
+  }
+  return undefined;
+}

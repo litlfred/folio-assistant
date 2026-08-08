@@ -187,6 +187,53 @@ export const ARCHIMEDEAN_CHAPTERS: ReadonlySet<string> = new Set([
 ]);
 
 /**
+ * Prose terms qou requires a formal definition for. Lifted verbatim from
+ * `find-dangling-remarks.ts`.
+ */
+export const TERMS_NEEDING_DEFINITIONS: Record<string, string> = {
+  "energy": "def:crossing-energy or similar",
+  "force": "categorical force definition",
+  "particle": "def:q-harmonic-form or def:fermion-boson-decomposition",
+  "observable": "def:quantum-observable-universe",
+  "measurement": "def:observation",
+  "degeneration": "formal Frobenius non-degeneracy failure",
+  "time reversal": "prop:fiber-adjoint-involution",
+  "virtual particle": "brane tower level definition",
+  "pair creation": "exceptional divisor passage",
+  "chirality flip": "formal chirality reversal definition",
+  "big bang": "initial object in QOU_deg",
+  "heat death": "terminal object / classical limit",
+};
+
+/**
+ * qou's Lean module layout: which namespace belongs to which chapter. Lifted
+ * verbatim from `mapBuildFileToChapter` in `scripts/lean-audit.ts`, in the same
+ * order — first match wins, and an unmatched path still falls back to `"core"`
+ * at the call site.
+ */
+export const LEAN_MODULE_CHAPTERS = [
+  { pathFragment: "QOU/QuantumObservableUniverse", chapter: "ch1-quantum-observable-universe" },
+  { pathFragment: "QOU/Torsion", chapter: "ch3-lifting-of-quantum-torsion" },
+  { pathFragment: "QOU/Descartes/", chapter: "ch6-descartes-universe" },
+  { pathFragment: "QOU/PathIntegrals", chapter: "ch4-path-integrals-and-braiding" },
+  { pathFragment: "QOU/KnotTheory", chapter: "ch4-path-integrals-and-braiding" },
+  { pathFragment: "QOU/KnotRegistry", chapter: "ch4-path-integrals-and-braiding" },
+  { pathFragment: "QOU/BringsSurface", chapter: "ch5-brings-surface" },
+  { pathFragment: "QOU/DescartesUniverse", chapter: "ch6-descartes-universe" },
+  { pathFragment: "QOU/GaugeFieldFluidDynamics", chapter: "ch10-fluid-dynamics" },
+  { pathFragment: "QOU/InformationTheory", chapter: "ch9-information-theory" },
+  { pathFragment: "QOU/QGeometricLanglands", chapter: "ch11-q-geometric-langlands" },
+  { pathFragment: "QOU/Glossary", chapter: "ch8-glossary" },
+  { pathFragment: "QOU/HadronicMass", chapter: "ch7-observations" },
+  { pathFragment: "QOU/AtomicMass", chapter: "ch7-observations" },
+  { pathFragment: "QOU/MassDerivation", chapter: "ch7-observations" },
+  { pathFragment: "QOU/CODATAChain", chapter: "ch7-observations" },
+  { pathFragment: "QOU/RepresentationTheory", chapter: "ch2-quantum-geometry" },
+  { pathFragment: "QOU/Calculations", chapter: "shared" },
+  { pathFragment: "QOU/MathConstants", chapter: "shared" },
+] as const;
+
+/**
  * Register qou's profiles as the registry default.
  *
  * Invoked for its side effect from `qa-checkers-q-usage.ts`. A folio calling
@@ -198,5 +245,7 @@ export function registerDefaultChapterProfiles(): void {
     chapterExpectedRegimes: CHAPTER_EXPECTED_REGIMES,
     categoricalChapters: CATEGORICAL_CHAPTERS,
     archimedeanChapters: ARCHIMEDEAN_CHAPTERS,
+    termsNeedingDefinitions: TERMS_NEEDING_DEFINITIONS,
+    leanModuleChapters: LEAN_MODULE_CHAPTERS,
   });
 }
