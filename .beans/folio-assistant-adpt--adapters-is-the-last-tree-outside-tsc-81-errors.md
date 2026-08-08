@@ -93,8 +93,45 @@ VERIFIED BY RUNNING BOTH MODES after 40+ edits to that file: HTTP `/mcp`
 returns a real `tools/list`, and stdio `initialize` returns a proper protocol
 response.
 
-Not done: the `<Block>` narrowing. Annotating the block imports still costs 27
-errors because the consuming code reads `examples` / `proofs` / `lean` / `tex`
-/ `caption` across kinds without narrowing the union. That is now the ONLY
-thing standing between here and the `no-explicit-any` bulk (88 `as any`), and
-it is a clean piece of work rather than a blocked one, since the tree compiles.
+## The `<Block>` narrowing: DONE
+
+Annotating the block imports cost 27 errors across ten fields. Ten narrowing
+accessors (`bLean`, `bProofs`, `bTex`, …) using the `in` operator — real checks,
+not casts — plus `withSource` for the one spread that widened a required `ref`
+to optional.
+
+A blanket regex over `blk.<field>` over-applied to loops where `blk` is a
+`ResolvedBlock` (which declares those fields directly), so those were reverted
+by line range. That is the third time in this session a blanket replace has
+over-reached; the lesson is not learned by writing it down, only by measuring
+after.
+
+**`blk.status` was a phantom.** Nine sites read it, including
+`if (blk.status === "proved" || blk.status === "mathlib_ok") provedCount++`.
+There is no block-level `status`: the schema says `FormalizationStatus` is
+"derived at build time from .lean file content. NOT stored in content block .ts
+manifests". So the MCP server's proof-status counters have always been 0, and
+its `status` response field always `undefined`. Now derived from the block's
+`lean` via `leanStatusBucket`, exported from `render-latex.ts` so there is one
+mapping rather than two.
+
+Measured live: 3124 blocks now report `stubbed: 2128, drafted: 967,
+compiled: 29`. Note what that means — it reflects what the MANIFESTS declare
+(`lean.validation` / `sorryFree`), not the build. The paper's 692/704
+sorry-free figure comes from `lean-coverage.ts` inspecting real `.lean` files,
+which is precisely why the schema keeps build-derived status out of manifests.
+
+## And the server was rooted in the wrong repo
+
+Found by trying to verify the above against the folio: `paths.ts` set
+`REPO_ROOT = resolve(import.meta.dir, "../..")`, the PLATFORM. Every constant
+derives from it — `CONTENT_DIR`, `CHAPTERS_DIR`, `MAIN_TEX`, `LEAN_DIR`,
+`BUILD_DIR`, `TODOS_DIR` — and all are folio concepts that do not exist there.
+Run from the qou checkout it answered `Paper not found` for every paper, and
+its git operations ran against the platform repo rather than the content
+branches it exists to switch between.
+
+Seventh instance of this defect class, after `q-usage-audit`, `validate`,
+`validate-bib`, `export-json`, `readme-metadata` and `refresh-authors-note`.
+Fixed with `findContentRepoRoot()`; the server now reports
+`repo: /workspace/qou` and serves 35 chapters / 3124 blocks.

@@ -19,7 +19,8 @@
  * @module scripts/mcp-server/server
  */
 
-import type { Paper, Chapter, PaperMacro } from "../../schemas/types";
+import type { Paper, Chapter, Block, PaperMacro } from "../../schemas/types";
+import { leanStatusBucket } from "../../content/pipeline/render-latex";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { registerRenderTools } from "./tools/render.js";
@@ -318,6 +319,46 @@ interface ResolvedRenderedAsset {
   hash?: string;
 }
 
+/**
+ * Field accessors for the `Block` discriminated union.
+ *
+ * Only some kinds carry `lean`, `proofs`, `tex`, `caption` and the simulator
+ * fields, so reading them off the bare union is a type error at every site —
+ * which is why the block imports were `as any`. The `in` operator narrows
+ * properly, so each of these is a real check rather than a cast.
+ *
+ * `blockStatus` is different: there IS no block-level `status`.
+ * `FormalizationStatus` is documented in the schema as "derived at build time
+ * from .lean file content. NOT stored in content block .ts manifests", so
+ * every `blockStatus(blk)` read in this file was `undefined`. It is derived from the
+ * block's `lean` field here, via the one existing mapper.
+ */
+const bLean = (b: Block) => ("lean" in b ? b.lean : undefined);
+const bProofs = (b: Block) => ("proofs" in b ? b.proofs : undefined);
+const bExamples = (b: Block) => ("examples" in b ? b.examples : undefined);
+const bTex = (b: Block) => ("tex" in b ? b.tex : undefined);
+const bCaption = (b: Block) => ("caption" in b ? b.caption : undefined);
+const bSimulator = (b: Block) => ("simulator" in b ? b.simulator : undefined);
+const bHtml = (b: Block) => ("html" in b ? b.html : undefined);
+const bViews = (b: Block) => ("views" in b ? b.views : undefined);
+const bDefaultView = (b: Block) => ("defaultView" in b ? b.defaultView : undefined);
+const blockStatus = (b: Block) => leanStatusBucket(bLean(b));
+
+/**
+ * A block's `lean` with the resolved source attached, in `ResolvedBlock`'s
+ * shape. Spreading `{ ...bLean(blk), source }` widens `ref` to optional —
+ * `LeanRef.ref` is required, but a spread of a possibly-undefined value is
+ * not — while `ResolvedBlock.lean.ref` requires it. Building it explicitly
+ * keeps both sides honest.
+ */
+function withSource(
+  lean: ReturnType<typeof bLean>,
+  source: string | undefined,
+): ResolvedBlock["lean"] {
+  if (!lean) return undefined;
+  return { ...lean, ref: lean.ref, source };
+}
+
 interface ResolvedBlock {
   rootName: string;
   kind: string;
@@ -328,7 +369,7 @@ interface ResolvedBlock {
   proofs?: string[];
   /** `sorryFree` is a real `LeanRef` field (schemas/types.ts) and the
    *  strongest proof-status signal — `render-latex` says it "wins outright"
-   *  over the `validation` enum. The `...blk.lean` spreads below carry it;
+   *  over the `validation` enum. The `...bLean(blk)` spreads below carry it;
    *  omitting it here made it invisible to every consumer and unreadable at
    *  the one site that tried. */
   lean?: { ref: string; file?: string; validation?: string; sorryFree?: boolean; source?: string };
@@ -441,7 +482,12 @@ async function resolveFolio(branch?: string): Promise<{ title: string; papers: F
             blockCount++;
             try {
               const blk = (await importTsBranch(br, blkRel)) as any;
-              if (blk.status === "proved" || blk.status === "mathlib_ok") provedCount++;
+              // `blockStatus(blk)` does not exist. `FormalizationStatus` is
+              // documented in the schema as "derived at build time from .lean
+              // file content. NOT stored in content block .ts manifests", so
+              // this counter has always been 0. The block's own `lean` field is
+              // the signal, mapped by the one existing mapper.
+              if (leanStatusBucket(bLean(blk)) === "compiled") provedCount++;
               const fb = readFeedback(ref.dir, rootName);
               if (fb.length) todoCount += fb.filter((t: any) => t.status !== "resolved" && t.status !== "wontfix").length;
             } catch {}
@@ -504,7 +550,7 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
           const blkTsRel = `${chRel}/${rootName}.ts`;
           const blkMdRel = `${chRel}/${rootName}.md`;
           try {
-            const blk = (await importTsBranch(br, blkTsRel)) as any;
+            const blk = await importTsBranch<Block>(br, blkTsRel);
             const md = readFileBranch(br, blkMdRel) || "";
             const feedback = readFeedback(id, rootName);
             const blockTodos = feedback.length ? [...feedback] : undefined;
@@ -520,8 +566,8 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
             }] : undefined;
             res.push({
               rootName, kind: blk.kind, label: blk.label, title: blk.title, uses: blk.uses,
-              examples: blk.examples, proofs: blk.proofs, lean: blk.lean ? { ...blk.lean, source: leanSource } : undefined,
-              status: blk.status, tex: blk.tex, caption: blk.caption, tags: blk.tags, rendered: rendered || figRendered,
+              examples: bExamples(blk), proofs: bProofs(blk), lean: withSource(bLean(blk), leanSource),
+              status: blockStatus(blk), tex: bTex(blk), caption: bCaption(blk), tags: blk.tags, rendered: rendered || figRendered,
               md, todos: blockTodos
             });
           } catch (e) { res.push({ rootName, kind: "error", md: `Failed to load ${rootName}: ${e}` }); }
@@ -741,15 +787,17 @@ async function resolveChapterDetail(
     for (const rootName of sectionBlockNames(section)) {
       const blkTsRel = `${chRel}/${rootName}.ts`;
       try {
-        const blk = (await importTsBranch(br, blkTsRel)) as any;
+        const blk = await importTsBranch<Block>(br, blkTsRel);
+        const blkLean = bLean(blk);
         const feedback = readFeedback(paperId, rootName);
         blockStubs.push({
           rootName,
           kind: blk.kind,
           label: blk.label,
           title: blk.title,
-          status: blk.status,
-          lean: blk.lean ? { ref: blk.lean.ref, validation: blk.lean.validation, sorryFree: blk.lean.sorryFree } : undefined,
+          status: blockStatus(blk),
+          // Bound once: TS narrows a const, not repeated calls.
+          lean: blkLean ? { ref: blkLean.ref, validation: blkLean.validation, sorryFree: blkLean.sorryFree } : undefined,
           todoCount: feedback.filter((t: any) => t.status === "open").length,
         });
       } catch {
@@ -817,7 +865,7 @@ async function resolveSection(
     const blkTsRel = `${chRel}/${rootName}.ts`;
     const blkMdRel = `${chRel}/${rootName}.md`;
     try {
-      const blk = (await importTsBranch(br, blkTsRel)) as any;
+      const blk = await importTsBranch<Block>(br, blkTsRel);
       const md = readFileBranch(br, blkMdRel) || "";
 
       const feedback = readFeedback(paperId, rootName);
@@ -851,21 +899,21 @@ async function resolveSection(
         label: blk.label,
         title: blk.title,
         uses: blk.uses,
-        examples: blk.examples,
-        proofs: blk.proofs,
-        lean: blk.lean ? { ...blk.lean, source: leanSource } : undefined,
-        status: blk.status,
-        tex: blk.tex,
-        caption: blk.caption,
+        examples: bExamples(blk),
+        proofs: bProofs(blk),
+        lean: withSource(bLean(blk), leanSource),
+        status: blockStatus(blk),
+        tex: bTex(blk),
+        caption: bCaption(blk),
         tags: blk.tags,
         rendered: rendered || figRendered2,
         md,
         todos: blockTodos,
         // Simulator fields
-        ...(blk.simulator ? { simulator: blk.simulator } : {}),
-        ...(blk.html ? { html: blk.html } : {}),
-        ...(blk.defaultView ? { defaultView: blk.defaultView } : {}),
-        ...(blk.views ? { views: blk.views } : {}),
+        ...(bSimulator(blk) ? { simulator: bSimulator(blk) } : {}),
+        ...(bHtml(blk) ? { html: bHtml(blk) } : {}),
+        ...(bDefaultView(blk) ? { defaultView: bDefaultView(blk) } : {}),
+        ...(bViews(blk) ? { views: bViews(blk) } : {}),
       });
     } catch (e) {
       blocks.push({ rootName, kind: "error", md: `Failed to load ${rootName}: ${e}` });
@@ -2327,8 +2375,15 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
                     if (nl && blk.lean?.file) stats.leanFormalized++;
                     if (nl && !blk.lean?.file) stats.leanMissing++;
                     if (blk.lean?.validation === "error") stats.leanError++;
-                    if (blk.status === "has_sorry") stats.hasSorry++;
-                    if (blk.status === "proved" || blk.status === "mathlib_ok") stats.proved++;
+                    // Same phantom `blk.status` as above — both counters
+                    // were always 0, while the two lines directly above already
+                    // read the correct `blk.lean`. `stubbed` is the closest
+                    // available analogue of `has_sorry`: per
+                    // `leanStatusBucket`'s own definition a *cited* sorry is
+                    // `drafted` (a deliberate deferral) rather than a stub.
+                    const bucket = leanStatusBucket(blk.lean);
+                    if (bucket === "stubbed") stats.hasSorry++;
+                    if (bucket === "compiled") stats.proved++;
                     stats.openTodos += (blk.todos || []).filter((t: any) => t.status === "open").length;
                   }
                 }
