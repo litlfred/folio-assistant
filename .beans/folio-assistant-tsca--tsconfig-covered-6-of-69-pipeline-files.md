@@ -108,3 +108,38 @@ touches validation, the viewer and content, so it is left for the owner.
 
 `scripts/**` is still outside `include` (~15 errors, several in test files).
 Same ratchet: drain to zero, then widen.
+
+
+## `scripts/**` rung: DONE, 15 -> 0
+
+Its errors were not typing nits either:
+
+- `computeStats(paperDir, contentRoot)` was called with ONE argument from
+  `readme-metadata.ts` and `refresh-authors-note.ts`, so `contentRoot` was
+  `undefined` at runtime.
+- Both read `conjectures.with_lean_file` and
+  `conjectures.percent_class_axiomatized`, NEITHER of which existed on `Stats`
+  — so the README and the authors' note were interpolating `undefined`. Both
+  are now computed in `lean-coverage.ts` beside their `provable` and
+  `definitions` siblings, from data already gathered.
+- Both scripts hardcoded `quantum-observable-universe` and derived their roots
+  from `import.meta.dir`, i.e. the platform. `refresh-authors-note` read the
+  note from `<platform>/content/…`, which does not exist.
+- `refresh-authors-note`'s `CONJECTURE_RE` no longer matched the note at all:
+  the prose was rewritten to distinguish PRIMARY conjectures ("famous external
+  open problems it connects to … are tallied separately") and the pattern still
+  expected the old wording. It now matches the two bold spans separately, so
+  the sentence between them can be reworded without breaking again, and it
+  computes from `primary_class_axiomatized` — using the all-conjectures figure
+  would have contradicted the sentence around it.
+- `fast-xml-parser` was imported by `scripts/tests/report.ts` and was not a
+  dependency. `run-tests.sh` invokes that file, so it was added rather than
+  the file excluded.
+
+Verified by RUNNING both, against the folio, not just by type-checking:
+`readme-metadata` emits real coverage numbers (`conjectures_with_lean: 166`,
+`conjectures_percent: 92.4` — the two previously-`undefined` fields), and
+`refresh-authors-note --check` reports "authors-note.md is up to date", which
+confirms the primary stats were the right choice.
+
+`adapters/**` is the last tree outside `include` — bean `folio-assistant-adpt`.

@@ -34,9 +34,15 @@
   // entry points sat dead — importing `../../schemas/references`, a path that
   // does not exist here — without anything reporting it.
   //
-  // `scripts/**` is NOT yet: ~15 errors, several in test files. Widen it there
-  // once its count is zero — the same ratchet `eslint.config.mjs` uses, so a
-  // red typecheck always means a regression rather than pre-existing debt.
-  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts"],
+  // `scripts/**` is in scope now too, drained to zero. Its 15 errors were not
+  // typing nits: `computeStats(paperDir, contentRoot)` was called with ONE
+  // argument from two scripts, and both read `conjectures.with_lean_file` and
+  // `conjectures.percent_class_axiomatized`, neither of which existed — so the
+  // README and the authors' note were interpolating `undefined`.
+  //
+  // `adapters/**` is the last tree still outside, and the largest: **81
+  // errors**, including the MCP server. Tracked in bean `folio-assistant-adpt`.
+  // Same ratchet — drain to zero, then widen; never widen first.
+  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts", "scripts/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }

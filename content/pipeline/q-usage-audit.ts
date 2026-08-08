@@ -341,7 +341,10 @@ interface BlockFinding {
  * the audit just stopped reading it.
  */
 export function hasHumanDispensation(
-  b: BlockTriple,
+  // Only the `.ts` path is read — the sidecar is derived from it. Taking the
+  // whole `BlockTriple` overstated the dependency and forced callers (and the
+  // regression test) to construct five fields this never looks at.
+  b: Pick<BlockTriple, "ts">,
   criterionId: string,
   currentHashes: { ts?: string; md?: string; lean?: string },
 ): boolean {

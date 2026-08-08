@@ -44,7 +44,11 @@ describe("session-status.sh", () => {
     if (status) {
       expect(status).toHaveProperty("lean_mode");
       const validModes = ["local", "remote", "local-degraded", "none"];
-      expect(validModes).toContain(status.lean_mode);
+      // `status` is `Record<string, unknown>`, and `expect` does not narrow,
+      // so assert the type first — that is worth checking in its own right —
+      // and the cast on the next line is then guarded rather than assumed.
+      expect(typeof status.lean_mode).toBe("string");
+      expect(validModes).toContain(status.lean_mode as string);
     }
   });
 
