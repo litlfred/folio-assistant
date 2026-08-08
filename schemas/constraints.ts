@@ -91,6 +91,13 @@ export const SkillValidatorSchema = z.object({
   scope: ValidatorScopeSchema,
 });
 
+/** Mirrors `SkillSchemaRef` — a TS module + the type names a skill touches. */
+export const SkillSchemaRefSchema = z.object({
+  module: z.string().min(1),
+  types: z.array(z.string()),
+  access: z.enum(["read", "write", "read-write"]),
+});
+
 export const SkillDefinitionSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
@@ -105,6 +112,10 @@ export const SkillDefinitionSchema = z.object({
   routingPatterns: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   package: z.string().optional(),
+  // `SkillDefinition.schemas` is documented and appears in the interface's own
+  // example, but had no counterpart here — so `.parse()` stripped it off any
+  // skill that used one. Same defect as `lean` on the provable blocks.
+  schemas: z.array(SkillSchemaRefSchema).optional(),
   lifecycleStages: z.array(LifecycleStageSchema).optional(),
   schemaRef: z.string().optional(),
 });
@@ -165,17 +176,6 @@ export const RoleAssignmentSchema = z.object({
   priority: z.number(),
 });
 
-export const SkillRegistrySchema = z.object({
-  schemaVersion: z.literal("1.0"),
-  repository: z.string(),
-  actors: z.array(ActorDefinitionSchema),
-  capabilities: z.array(CapabilityDefinitionSchema),
-  skills: z.array(SkillDefinitionSchema),
-  requirements: z.array(RequirementSchema),
-  packages: z.array(SkillPackageRefSchema),
-  hooks: z.array(SessionHookSchema),
-});
-
 // ─── Docker Requirements ─────────────────────────────────────────────────────
 
 export const DockerRequirementsSchema = z.object({
@@ -199,6 +199,24 @@ export const SkillPackageManifestSchema = z.object({
   requiresCapabilities: z.array(z.string()).optional(),
   lifecycleStages: z.array(LifecycleStageSchema).optional(),
   schemas: z.array(z.string()).optional(),
+});
+
+export const SkillRegistrySchema = z.object({
+  schemaVersion: z.literal("1.0"),
+  repository: z.string(),
+  actors: z.array(ActorDefinitionSchema),
+  capabilities: z.array(CapabilityDefinitionSchema),
+  skills: z.array(SkillDefinitionSchema),
+  requirements: z.array(RequirementSchema),
+  // Local `skills/<name>/package-manifest.json` files, which is what the
+  // generator has always written here — not `SkillPackageRefSchema`, whose
+  // required `repo`/`path`/`ref` made every generated registry invalid.
+  packages: z.array(SkillPackageManifestSchema),
+  hooks: z.array(SessionHookSchema),
+  // `SkillRegistry.roleAssignments` is required by the TS interface but was
+  // absent here, so the field was stripped by `.parse()` — on top of the
+  // generator never populating it in the first place.
+  roleAssignments: z.array(RoleAssignmentSchema),
 });
 
 // ─── Remote Package Reference ────────────────────────────────────────────────
