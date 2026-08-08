@@ -86,6 +86,12 @@ const CONTENT_ROOT = path.join(REPO_ROOT, "content");
  * and `Math.abs(NaN) > 1` is false, so a malformed year would read as a MATCH
  * rather than a mismatch.
  */
+/** An unknown thrown value as a message. `catch (e)` is `unknown` under
+ *  `strict`; these sites read `e.message ?? e`, which needs the narrowing. */
+function errMsg(e: unknown): string {
+  return e instanceof Error ? e.message : String(e);
+}
+
 function cslYear(parts: unknown): number | undefined {
   // `unknown` rather than csl-json's `Date['date-parts']`: that is a
   // fixed-arity tuple of optional LooseNumbers, and the Crossref response
@@ -130,8 +136,8 @@ async function modeDoi(): Promise<CheckResult[]> {
       } else {
         out.push({ entry: r.id, severity: "warn", note: `HTTP ${resp.status} for ${url}` });
       }
-    } catch (e: any) {
-      out.push({ entry: r.id, severity: "warn", note: `fetch failed: ${e.message ?? e}` });
+    } catch (e) {
+      out.push({ entry: r.id, severity: "warn", note: `fetch failed: ${errMsg(e)}` });
     }
     if (i % 25 === 0) console.log(`  …${i}/${withDoi.length}`);
   }
@@ -284,8 +290,8 @@ async function modeCrossref(): Promise<CheckResult[]> {
       } else {
         out.push({ entry: r.id, severity: "ok", note: "Crossref matches" });
       }
-    } catch (e: any) {
-      out.push({ entry: r.id, severity: "warn", note: `crossref fetch failed: ${e.message ?? e}` });
+    } catch (e) {
+      out.push({ entry: r.id, severity: "warn", note: `crossref fetch failed: ${errMsg(e)}` });
     }
     if (i % 25 === 0) console.log(`  …${i}/${withDoi.length}`);
   }
@@ -307,8 +313,8 @@ async function modeArxiv(): Promise<CheckResult[]> {
       } else {
         out.push({ entry: r.id, severity: "warn", note: `arxiv HTTP ${resp.status}` });
       }
-    } catch (e: any) {
-      out.push({ entry: r.id, severity: "warn", note: `arxiv fetch failed: ${e.message ?? e}` });
+    } catch (e) {
+      out.push({ entry: r.id, severity: "warn", note: `arxiv fetch failed: ${errMsg(e)}` });
     }
   }
   return out;

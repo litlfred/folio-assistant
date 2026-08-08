@@ -35,10 +35,14 @@ function run(
       timeout: 60_000,
     });
     return { code: 0, out };
-  } catch (e: any) {
+  } catch (e) {
+    // `execFileSync` throws an Error decorated with the child's exit status
+    // and captured streams. Node types that as plain `Error`, so the extra
+    // fields need naming rather than an `any`.
+    const err = e as Partial<{ status: number; stdout: string; stderr: string }>;
     return {
-      code: e.status ?? -1,
-      out: `${e.stdout ?? ""}${e.stderr ?? ""}`,
+      code: err.status ?? -1,
+      out: `${err.stdout ?? ""}${err.stderr ?? ""}`,
     };
   }
 }

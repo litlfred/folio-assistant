@@ -19,6 +19,7 @@
  * @module scripts/mcp-server/server
  */
 
+import type { Paper, Chapter, PaperMacro } from "../../schemas/types";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { registerRenderTools } from "./tools/render.js";
@@ -406,7 +407,7 @@ async function resolveFolio(branch?: string): Promise<{ title: string; papers: F
   const papers: FolioEntry[] = [];
   for (const ref of folioData.papers) {
     try {
-      const paperMod = (await importTsBranch(br, `content/${ref.dir}/${ref.dir}.ts`)) as any;
+      const paperMod = await importTsBranch<Paper>(br, `content/${ref.dir}/${ref.dir}.ts`);
       let blockCount = 0, provedCount = 0, todoCount = 0, chapCount = 0;
 
       for (const chRef of paperMod.chapters || []) {
@@ -463,7 +464,7 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
   const paperRel = `content/${id}/${id}.ts`;
   if (!fileExistsBranch(br, paperRel)) return null;
 
-  const paperMod = (await importTsBranch(br, paperRel)) as any;
+  const paperMod = await importTsBranch<Paper>(br, paperRel);
   const chapters: ResolvedChapter[] = [];
 
   // Auto-number chapters from manifest order
@@ -472,7 +473,7 @@ async function resolvePaper(id: string, branch?: string): Promise<(ResolvedPaper
     const chRel = `content/${id}/${chRef.dir}`;
     const chTsRel = `${chRel}/${chRef.dir}.ts`;
     if (!fileExistsBranch(br, chTsRel)) continue;
-    const ch = (await importTsBranch(br, chTsRel)) as any;
+    const ch = await importTsBranch<Chapter>(br, chTsRel);
     const chapterNumber = ch.tabLabel != null ? undefined : autoNum++;
 
     const sections: ResolvedSection[] = [];
@@ -619,7 +620,13 @@ interface PaperOutline {
   authors: string[];
   affiliations?: string[];
   date?: string;
-  macros?: Record<string, string>;
+  /** `Paper.macros` is `Record<string, PaperMacro>` — `{ tex, unicode? }`
+   *  objects, which is what the viewer reads (`buildKatexMacros` uses
+   *  `def.tex`). This declared `Record<string, string>`; the values passed
+   *  through untouched so nothing broke at runtime, but the type was a lie and
+   *  any consumer doing string work on them would get "[object Object]".
+   *  Surfaced only once the paper import stopped being `as any`. */
+  macros?: Record<string, PaperMacro>;
   chapters: ChapterOutline[];
   branch: string;
 }
@@ -633,7 +640,7 @@ async function resolvePaperOutline(id: string, branch?: string): Promise<PaperOu
   const paperRel = `content/${id}/${id}.ts`;
   if (!fileExistsBranch(br, paperRel)) return null;
 
-  const paperMod = (await importTsBranch(br, paperRel)) as any;
+  const paperMod = await importTsBranch<Paper>(br, paperRel);
   const chapters: ChapterOutline[] = [];
 
   // Auto-number chapters from manifest order
@@ -642,7 +649,7 @@ async function resolvePaperOutline(id: string, branch?: string): Promise<PaperOu
     const chRel = `content/${id}/${chRef.dir}`;
     const chTsRel = `${chRel}/${chRef.dir}.ts`;
     if (!fileExistsBranch(br, chTsRel)) continue;
-    const ch = (await importTsBranch(br, chTsRel)) as any;
+    const ch = await importTsBranch<Chapter>(br, chTsRel);
     const chapterNumber = ch.tabLabel != null ? undefined : autoNum++;
 
     const sections: ChapterOutline["sections"] = [];
@@ -701,7 +708,7 @@ async function resolveChapterDetail(
   const chTsRel = `${chRel}/${chapterDir}.ts`;
   if (!fileExistsBranch(br, chTsRel)) return null;
 
-  const ch = (await importTsBranch(br, chTsRel)) as any;
+  const ch = await importTsBranch<Chapter>(br, chTsRel);
   const sections: SectionStub[] = [];
 
   for (const sec of ch.sections || []) {
@@ -769,7 +776,7 @@ async function resolveSection(
   const chTsRel = `${chRel}/${chapterDir}.ts`;
   if (!fileExistsBranch(br, chTsRel)) return null;
 
-  const ch = (await importTsBranch(br, chTsRel)) as any;
+  const ch = await importTsBranch<Chapter>(br, chTsRel);
 
   // Filter to real sections (skip name-only refs)
   const realSections = (ch.sections || []).filter(

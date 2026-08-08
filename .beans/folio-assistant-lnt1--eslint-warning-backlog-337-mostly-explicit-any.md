@@ -1,7 +1,7 @@
 ---
 # folio-assistant-lnt1
 title: 'ESLint backlog: 171 no-explicit-any (track 2 AST partly drained)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-07T18:00:00Z
@@ -264,3 +264,44 @@ renderer and the typed one and diffed. **Byte-identical, zero differences.**
 
 Track 2 continues in the other AST files; track 1 (content structure,
 ~55, start `adapters/paper/resolver.ts`) and track 3 (heterogeneous) unchanged.
+
+
+## Chunk 2: `catch (e: any)` drained, `importTsBranch` made generic — 171 -> 158
+
+`catch (e: any)` (6) is gone: five were `e.message ?? e`, now behind an
+`errMsg(e)` helper using the `instanceof Error` idiom already used across the
+repo; the sixth reads `e.status` / `e.stdout` / `e.stderr` off an
+`execFileSync` throw, which Node types as plain `Error`, so the extra fields
+are named in a local `Partial<{…}>` rather than any-cast.
+
+`importTsBranch` returned `Promise<unknown>`, so all twelve call sites cast —
+and every one reached for `as any` rather than the `Chapter` / `Paper` the
+schema already defines. It is generic now (`T = unknown`, so an un-annotated
+call stays honest) and the cast moved to the type argument.
+
+TWO LESSONS, both worth keeping:
+
+1. `adapters/**` is NOT in the tsconfig program (only what `src/` transitively
+   imports is). A green project `tsc` says nothing about it. Checked directly:
+   **81 pre-existing errors** there. Any future work in `adapters/` must
+   measure against that baseline rather than trusting `bun run typecheck`.
+
+2. Annotating the BLOCK imports as `<Block>` added **27 errors**, because the
+   consuming code reads `examples` / `proofs` / `lean` / `tex` / `caption`
+   across kinds without narrowing the discriminated union. `Block` is the
+   correct type and the code is what is wrong, but fixing that is a real piece
+   of work in a file with 81 pre-existing errors and no tsc coverage. Reverted
+   to `as any` there, deliberately, rather than shipping 27 new errors or
+   inventing a looser type to paper over it.
+
+The `Paper` annotation DID pay off immediately: `PaperOutline.macros` was
+declared `Record<string, string>` while `Paper.macros` is
+`Record<string, PaperMacro>` — `{ tex, unicode? }` objects, which is what the
+viewer actually reads (`buildKatexMacros` uses `def.tex`). Values passed
+through untouched so nothing broke, but the type was a lie and any consumer
+doing string work on them would have got "[object Object]". Corrected; adapters
+back to its 81 baseline.
+
+Remaining 158, by shape: 88 `as any`, 39 `param: any`, 20 `any[]`, 18 other.
+The `as any` bucket is the bulk and is dominated by `adapters/`, which wants
+its own tsc baseline first — see lesson 1.

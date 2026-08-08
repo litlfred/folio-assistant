@@ -33,8 +33,8 @@ function validateDir(dir: string, schema: any, label: string): void {
       schema.parse(data);
       console.log(`  ✓ ${label}/${file}`);
       validated++;
-    } catch (e: any) {
-      console.error(`  ✗ ${label}/${file}: ${e.message}`);
+    } catch (e) {
+      console.error(`  ✗ ${label}/${file}: ${e instanceof Error ? e.message : String(e)}`);
       errors++;
     }
   }
@@ -74,8 +74,8 @@ if (existsSync(skillsDir)) {
         SkillPackageManifestSchema.parse(data);
         console.log(`  ✓ skills/${pkg.name}/package-manifest.json`);
         validated++;
-      } catch (e: any) {
-        console.error(`  ✗ skills/${pkg.name}/package-manifest.json: ${e.message}`);
+      } catch (e) {
+        console.error(`  ✗ skills/${pkg.name}/package-manifest.json: ${e instanceof Error ? e.message : String(e)}`);
         errors++;
       }
     }
