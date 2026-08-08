@@ -48,6 +48,13 @@ Prefer the MCP tools (structured findings) when connected; otherwise the scripts
 - `proof_status` — no regression in sorry/coverage for changed blocks.
 - `latex_preflight` — no new unknown macros / overfull boxes.
 - `lean_build` / `lean_check` — build green (or unchanged) for touched packages.
+  **Check what the target covers before quoting its result.** `lake build`
+  compiles the root module plus its transitive imports, not the source tree
+  (`lean_lib` globs default to `roots.map Glob.one`; `srcDir` only widens
+  where sources are found). In qou that is 853 of 1618 modules — so a module
+  you touched may be green-by-omission, and a corpus sorry count read off the
+  build is an undercount. `find .lake/build -name '*.olean' | wc -l` against
+  the source count takes a second and settles it.
 - **Dispatch the repo's Lean CI workflow on the pushed branch, and put its
   result in the PR.** A local `lake build` is not CI green: it runs on a warm
   `.lake`, your toolchain, your `moreLeanArgs`. Push first, then

@@ -48,6 +48,14 @@ the one recipe.
    **honestly**: distinguish failures you caused from pre-existing ones (diff the
    counts against a baseline run on the merge-base). Do not call a branch green
    by silently inheriting red.
+
+   **Know what the target covered.** Green is a claim about the files the build
+   compiled, which is usually fewer than the files on disk — build targets
+   default to a root plus its transitive imports. Confirm the files *you
+   touched* were in it (artifact count vs. source count, or build the module by
+   name), and scope any corpus-wide number you quote to what actually ran. In
+   qou, `lake build` reaches 853 of 1618 Lean modules, so a touched file can be
+   green purely by never having been compiled.
 6. **Push** the feature branch (retry/backoff as in step 2):
    `git push -u origin <branch>`.
 7. **Dispatch the repo's CI on the pushed branch, and fold the result into the
