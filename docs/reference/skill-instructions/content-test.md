@@ -44,6 +44,31 @@ qou's `lean_ci.yml` last ran 2026-04-25 and failed on `main`. Nothing
 dispatched it for four months, and 37 modules stopped compiling unnoticed —
 several with plain parse errors, i.e. files that had never compiled at all.
 
+## A green build only covers what the target reaches
+
+Before reading "build green" as a claim about the corpus, check what the build
+target actually compiles. Build systems default to **narrow roots**: Lake's
+`lean_lib` uses `globs := roots.map Glob.one`, so `lake build` compiles the
+root module plus its transitive `import`s — not the source directory.
+`srcDir` widens where sources are *found*, never what is *built*.
+
+Measured in qou on 2026-08-08: `lake build` reached **853 of the 1618**
+modules under `lean/QOU/`. The other 766 (47%) had no olean at all — among
+them the module holding the single `sorry` gating the Specht chain, which is
+why the package build's sorry-warning list omitted it.
+
+The check is cheap in any build system — count artifacts against sources:
+
+```sh
+find .lake/build/lib/lean/QOU -name '*.olean' | wc -l   # 860
+find QOU -name '*.lean' | wc -l                         # 1618
+```
+
+A ratio far from 1 means the green is scoped, and **any corpus-wide number
+read off that build — sorry counts, coverage, warning totals — is an
+undercount by construction.** Say what the build covered, not just that it
+passed.
+
 ## Actors
 - QC Reviewer (lead)
 - FHIR Modeller (technical testing)
