@@ -1,11 +1,11 @@
 ---
 # folio-assistant-quue
 title: 'Work queue after PR #68 — mine, a sibling''s, or already done'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-08T00:05:00Z
-updated_at: 2026-08-08T00:05:00Z
+updated_at: 2026-08-08T08:24:47Z
 ---
 
 Index bean, written by session `3bada08b` after folio-assistant #68 merged
@@ -73,3 +73,39 @@ dispatching it also publishes — `publish.yml`'s deploy job is gated on
 `github.event_name == 'workflow_dispatch'`, and under `workflow_call` that
 resolves to the caller's event, so a manual qou build pushes to `gh-pages`
 (`keep_files: true`, so a merge rather than a wipe).
+
+
+---
+
+## Update after `ec2b2aa` — the unclaimed queue is EMPTY
+
+All three "ready to work" items are done, and `main` has since moved 10 commits
+(through #70, the sibling lake-cache cluster, merged into this branch at
+`0092e8d` with `tsc`/lint/428 tests green).
+
+1. **`folio-assistant-lnt1`** — DONE. `no-explicit-any` 201 → 0 and the rule is
+   promoted to `error`, which empties the `warn` tier entirely: every eslint
+   rule is now an error. See that bean for what the drain surfaced — most
+   consequentially that the generated skill registry had never validated
+   against its own schema (15 issues), and three schemas had drifted from the
+   data they describe.
+2. **`folio-assistant-tnbf`** — DONE. The framing turned out to be wrong (they
+   are all FOLIO workflows, not overlapping platform ones); see the bean.
+3. **`scripts/**` into `tsconfig.json`'s `include`** — DONE, and `adapters/**`
+   with it (`folio-assistant-adpt`). All five trees are compiled; a green
+   `bun run typecheck` finally means what it says.
+
+Everything still open is either a sibling's or deferred by its own text:
+`02kc` / `5d7z` / `ga7e` (lake-cache cluster — `main` has since landed more of
+it), `nimj` (Nazrin, in progress elsewhere), `15gn` (LeanDojo, deferred).
+
+**Still outstanding and still not automatable from here:** qou #4673 needs a
+manual `build.yml` dispatch from the Actions tab — the GitHub App has
+`actions: read` on qou but not `actions: write`, so the dispatch endpoint
+returns 403. Dispatching also publishes (`publish.yml`'s deploy job is gated on
+`github.event_name == 'workflow_dispatch'`, which under `workflow_call`
+resolves to the caller's event), so a manual qou build pushes to `gh-pages` —
+`keep_files: true`, so a merge rather than a wipe.
+
+This bean has served its purpose as an index; closing it. A future session
+should start from `beans list` rather than from here.

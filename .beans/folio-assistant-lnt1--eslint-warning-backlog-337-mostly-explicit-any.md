@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lnt1
 title: 'ESLint backlog: 171 no-explicit-any (track 2 AST partly drained)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-07T18:00:00Z
-updated_at: 2026-08-07T20:35:00Z
+updated_at: 2026-08-08T08:23:05Z
 ---
 
 `bun run lint` now runs (it never could before — no config, and neither
@@ -305,3 +305,70 @@ back to its 81 baseline.
 Remaining 158, by shape: 88 `as any`, 39 `param: any`, 20 `any[]`, 18 other.
 The `as any` bucket is the bulk and is dominated by `adapters/`, which wants
 its own tsc baseline first — see lesson 1.
+
+
+---
+
+## Done — 201 → 0, and the rule is an error
+
+Drained to zero across five commits on `claude/agent-4673-validation-9hffrd`.
+`@typescript-eslint/no-explicit-any` is promoted to `error` in
+`eslint.config.mjs`, which empties the `warn` tier entirely — every rule is now
+an error. Verified the ratchet bites by planting an `any`.
+
+Gate at close: `tsc --noEmit` 0 errors over all five trees, 422 tests / 0 fail,
+`eslint .` exit 0, and the HTTP server boots.
+
+**Both lessons in the section above are resolved, not worked around.**
+
+Lesson 1 (`adapters/**` outside the tsconfig program) — closed by bean
+`folio-assistant-adpt`: all five trees are in `include` now, so a green
+`bun run typecheck` finally means what it says.
+
+Lesson 2 (annotating block imports as `<Block>` added 27 errors, reverted) —
+this was the right call at the time and the wrong resting place. `Block` IS the
+correct type; the consuming code reads `examples`/`proofs`/`lean`/`tex`/
+`caption` across kinds without narrowing. Fixed properly with one accessor per
+field (`blockLean`, `blockProofs`, `blockExamples`, `blockTex`, `blockCaption`
+in `adapters/manifest-entries.ts`), shared by both resolvers, and the imports
+are `<Block>` now.
+
+### What the drain surfaced
+
+Typing these was not cosmetic. In rough order of severity:
+
+- **The generated skill registry never validated against its own schema** — 15
+  issues, `packages.N.{repo,path,ref} Required`. `SkillRegistry.packages` was
+  declared as external package *references* while the generator has only ever
+  written local package *manifests*. `roleAssignments` was never emitted at all
+  despite being required and having three rules on disk. Hooks were emitted in
+  the raw `.claude/settings.json` shape rather than `SessionHook`.
+  `scripts/tests/registry.test.ts` now runs the generator and validates it.
+- **Two `LifecycleStage` enums**, and the hand-written one was wrong:
+  `develop`/`revise` in place of `plan`/`author`/`retire`. Across 18 skill
+  definitions and 5 package manifests, `author` appears 18 times and
+  `develop`/`revise` zero.
+- **A second `FeedbackItem`** in `src/types.ts`, drifted from the schema one in
+  four ways — including narrowing `origin` so a `qc`-origin item (the
+  validation pipeline's own output) could not pass through the layer.
+- **`SkillDefinition` missing `lifecycleStages` and `schemaRef`**, present on
+  18/18 files; and its documented `schemas` field had no Zod counterpart, so
+  `.parse()` stripped it.
+- **`blk.status` was a phantom in the paper resolver too** (already fixed in
+  the MCP server) — a derived field never stored in manifests, so the "proved"
+  counter was always 0 and every block stub's `status` was `undefined`.
+- **`renderBlock` was handed a `ResolvedBlock`** — the viewer's projection —
+  for the lightning-PDF path, silently dropping every kind-specific field it
+  switches on.
+- **Feedback status/priority were never validated**: `{"status":"banana"}` was
+  persisted to `main` verbatim and then matched no filter anywhere, so the item
+  vanished from every view of itself.
+- **PACKAGES.md had always shipped empty** — gated on loose `*.json` files in
+  `skills/` that have never existed.
+- **The two resolvers disagreed about which sections carry blocks**, so the
+  folio landing page undercounted papers the viewer rendered correctly.
+- **Five mdast guards could never fire** in the refterm codemod; `code`/`math`
+  are literal nodes with no children to reach.
+
+Pinned by four new test files: `manifest-entries`, `registry`,
+`codemod-refterm`, plus the existing parity/dispensation suites.
