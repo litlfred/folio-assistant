@@ -27,6 +27,14 @@ name: Witness refresh (commit-back to main)
 # routed through this workflow — they keep using publish.yml's regen
 # step, which now succeeds against an up-to-date baseline.
 
+#
+# TRIGGERS, ACTUAL: `workflow_dispatch` only.
+# The triggers described above are the FOLIO's. This file was copied into the
+# platform in the repo split (109a4ff) with every trigger neutered to
+# dispatch, and the prose left as it was. It is correct here: this workflow
+# refreshes a folio's witness set, and the platform carries no folio. The folio's copy holds the real
+# triggers. See bean `folio-assistant-5rfy`.
+
 on:
   workflow_dispatch:
     inputs:

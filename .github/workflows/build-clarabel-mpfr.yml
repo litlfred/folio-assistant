@@ -8,6 +8,13 @@
 # weekly rebuild to keep the cached artifact fresh.
 name: Build clarabel-MPFR binary
 
+#
+# TRIGGERS, ACTUAL: `workflow_dispatch` only.
+# The triggers described above are the FOLIO's — copied in at the repo split
+# (109a4ff) with the trigger neutered and the prose left alone. Correct here:
+# this workflow builds a `tools/` native artifact, and `tools/` does not exist in the platform.
+# See bean `folio-assistant-5rfy`.
+
 on:
   workflow_dispatch:
 permissions:
