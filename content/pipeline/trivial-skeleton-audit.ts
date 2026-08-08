@@ -26,8 +26,7 @@
  *   bun run content/pipeline/trivial-skeleton-audit.ts
  */
 import { readFile, writeFile, mkdir } from "node:fs/promises";
-import { join, dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { join, dirname } from "node:path";
 import { glob } from "glob";
 import { findContentRepoRoot, findPapers } from "./repo-root";
 

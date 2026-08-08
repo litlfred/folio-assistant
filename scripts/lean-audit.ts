@@ -24,8 +24,14 @@ import { resolve, basename, relative } from "path";
 import { globSync } from "glob";
 import { execSync } from "child_process";
 import { isWitnessed, isStale } from "./lean-witness";
+import { findContentRepoRoot } from "../content/pipeline/repo-root";
+import { requirePaper } from "../content/pipeline/repo-root";
 
-const REPO_ROOT = resolve(import.meta.dir, "..");
+// Was `import.meta.dir`-relative, i.e. the PLATFORM — but every path below is
+// folio content (`content/**`, `computations/**`), and this is used as the cwd
+// for those globs. `findContentRepoRoot()` walks up from the real cwd;
+// `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
+const REPO_ROOT = findContentRepoRoot();
 const CONTENT_ROOT = resolve(REPO_ROOT, "content");
 
 // ── Types ────────────────────────────────────────────────────────
@@ -615,7 +621,7 @@ if (import.meta.main) {
   const chapterFilter =
     chapterIdx >= 0 ? args[chapterIdx + 1] : undefined;
 
-  const report = runAudit("quantum-observable-universe", chapterFilter);
+  const report = runAudit(requirePaper(), chapterFilter);
 
   if (jsonMode) {
     console.log(JSON.stringify(report, null, 2));

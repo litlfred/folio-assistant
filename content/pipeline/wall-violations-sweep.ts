@@ -22,6 +22,7 @@
  */
 import { readdirSync, readFileSync, statSync, writeFileSync, mkdirSync } from "fs";
 import { join, dirname, basename, relative } from "path";
+import { requirePaper } from "./repo-root";
 
 type Hit = { file: string; line: number; pattern: string; text: string; triage: "citation" | "tau-side-label" | "appendix-surreals" | "verification-witness" | "candidate" };
 
@@ -97,7 +98,7 @@ function walk(dir: string, results: Hit[]) {
 }
 
 const results: Hit[] = [];
-walk("content/quantum-observable-universe", results);
+walk(join("content", requirePaper()), results);
 const seen = new Set<string>();
 const unique = results.filter(h => { const k = `${h.file}|${h.line}|${h.pattern}`; if (seen.has(k)) return false; seen.add(k); return true; });
 

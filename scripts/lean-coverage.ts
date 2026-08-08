@@ -44,8 +44,14 @@
 
 import { readdirSync, readFileSync, existsSync, writeFileSync } from "fs";
 import { join, resolve, relative, dirname, basename } from "path";
+import { findContentRepoRoot } from "../content/pipeline/repo-root";
+import { requirePaper } from "../content/pipeline/repo-root";
 
-const SCRIPT_REPO_ROOT = resolve(import.meta.dir, "..");
+// Was `import.meta.dir`-relative, i.e. the PLATFORM — but every path below is
+// folio content (`content/**`, `computations/**`), and this is used as the cwd
+// for those globs. `findContentRepoRoot()` walks up from the real cwd;
+// `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
+const SCRIPT_REPO_ROOT = findContentRepoRoot();
 
 const PROVABLE = new Set(["theorem", "lemma", "proposition", "corollary"]);
 
@@ -419,7 +425,7 @@ function resolveContentRoot(args: string[]): string {
 
 if (import.meta.main) {
   const args = process.argv.slice(2);
-  const paper = flagValue(args, "--paper") || "quantum-observable-universe";
+  const paper = requirePaper(flagValue(args, "--paper") ?? undefined);
   const jsonOnly = args.includes("--json");
   const outPath = flagValue(args, "--out");
   const contentRoot = resolveContentRoot(args);

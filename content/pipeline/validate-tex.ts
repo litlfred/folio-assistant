@@ -27,6 +27,7 @@ import { visit } from "unist-util-visit";
 import { parse as parseLatex } from "@unified-latex/unified-latex-util-parse";
 import { printRaw } from "@unified-latex/unified-latex-util-print-raw";
 import type { Ast as LatexAstUnion, Environment } from "@unified-latex/unified-latex-types";
+import { findContentRepoRoot } from "./repo-root";
 
 /** One node of the unified-latex AST — the second, unrelated node family
  *  alongside mdast in this file. Same alias as `render-latex.ts`. */
@@ -424,6 +425,11 @@ function formatText(report: ValidationReport): string {
       lines.push(`    snippet: ${preview}...`);
       lines.push("");
     }
+  } else if (report.snippetsFound === 0) {
+    // "No errors found" over zero snippets is the shape this whole sweep is
+    // about: it reads as a clean bill of health for a scan that never
+    // happened. Say which of the two facts it is.
+    lines.push("Nothing scanned — no TeX snippets found.");
   } else {
     lines.push("No errors found.");
   }
@@ -443,7 +449,9 @@ function formatWarningsLog(report: ValidationReport): string {
 
 // ── CLI ───────────────────────────────────────────────────────────
 
-const CONTENT_ROOT = join(import.meta.dir, "..");
+// Was `join(import.meta.dir, "..")` — `<platform>/content`, which holds only
+// `pipeline/`. The papers this validates live in the folio.
+const CONTENT_ROOT = join(findContentRepoRoot(), "content");
 
 if (import.meta.main) {
   const args = process.argv.slice(2);
@@ -501,6 +509,17 @@ if (import.meta.main) {
     }
   }
 
+  // An empty corpus is a broken run, not a clean one — the rule
+  // `validateObjects` settled. Before this the validator printed
+  // "No errors found." and exited 0 having read no files at all.
+  if (report.snippetsFound === 0) {
+    console.error(
+      `\nNo TeX snippets found under ${CONTENT_ROOT} — refusing to report success.\n` +
+      "This validates a FOLIO's .md content; folio-assistant is the platform.\n" +
+      "Run it from the content repo, or pass --paper.",
+    );
+    process.exit(1);
+  }
   process.exit(report.errors.length > 0 ? 1 : 0);
 }
 

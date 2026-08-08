@@ -25,6 +25,7 @@ import { globSync } from "glob";
 import { createHash } from "crypto";
 import { execSync } from "child_process";
 import type { ComputationWitness } from "../schemas/types.ts";
+import { findContentRepoRoot } from "../content/pipeline/repo-root";
 
 /**
  * A `.witness.json` as it appears on disk.
@@ -43,7 +44,11 @@ interface WitnessFile extends Partial<ComputationWitness> {
   git_sha?: string;
 }
 
-const REPO_ROOT = resolve(import.meta.dir, "..");
+// Was `import.meta.dir`-relative, i.e. the PLATFORM — but every path below is
+// folio content (`content/**`, `computations/**`), and this is used as the cwd
+// for those globs. `findContentRepoRoot()` walks up from the real cwd;
+// `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
+const REPO_ROOT = findContentRepoRoot();
 
 // ── Types ────────────────────────────────────────────────────────
 

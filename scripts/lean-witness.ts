@@ -24,8 +24,13 @@ import { readFileSync, writeFileSync, unlinkSync, existsSync } from "fs";
 import { resolve, basename } from "path";
 import { globSync } from "glob";
 import { execSync } from "child_process";
+import { findContentRepoRoot } from "../content/pipeline/repo-root";
 
-const REPO_ROOT = resolve(import.meta.dir, "..");
+// Was `import.meta.dir`-relative, i.e. the PLATFORM — but every path below is
+// folio content (`content/**`, `computations/**`), and this is used as the cwd
+// for those globs. `findContentRepoRoot()` walks up from the real cwd;
+// `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
+const REPO_ROOT = findContentRepoRoot();
 const HASH_LENGTH = 12;
 
 // ── Core functions (exported for use by other scripts) ───────────
