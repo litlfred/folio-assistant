@@ -239,6 +239,33 @@ describe("lake-cache.sh — seed guard", () => {
     rmSync(ml, { recursive: true, force: true });
   });
 
+  // `status` used to lack the exemption `seed` has, so pointing it at the
+  // workspace root printed `7268 oleans / own pkg 0` under "ZERO belong to
+  // this package". That is the mathlib family behaving correctly — deps are
+  // its payload — but it reads exactly like a gutted per-package cache, and
+  // was mistaken for one (bean folio-assistant-5d7z). Both callers now go
+  // through `own_oleans_expected`.
+  test("status applies the same mathlib exemption as seed", () => {
+    const ml = mkdtempSync(join(tmpdir(), "lakecache-mlstatus-"));
+    execFileSync("bash", ["-c", `cp -r '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${ml}/'`], { stdio: "pipe" });
+    makeLake(ml, 5, 0);
+    git(["init", "-q"], ml);
+    const r = run(["status", "--package", "mathlib", "--lake-root", ml], ml);
+    expect(r.out).toContain("cache PRESENT");
+    expect(r.out).not.toContain("ZERO belong to");
+    rmSync(ml, { recursive: true, force: true });
+  });
+
+  test("status still reports a genuinely gutted per-package cache", () => {
+    const bad = mkdtempSync(join(tmpdir(), "lakecache-badstatus-"));
+    execFileSync("bash", ["-c", `cp -r '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${bad}/'`], { stdio: "pipe" });
+    makeLake(bad, 5, 0);
+    git(["init", "-q"], bad);
+    const r = run(["status", "--package", PKG, "--lake-root", bad], bad);
+    expect(r.out).toContain("ZERO belong to");
+    rmSync(bad, { recursive: true, force: true });
+  });
+
   test("refuses to seed an empty tree", () => {
     const empty = mkdtempSync(join(tmpdir(), "lakecache-empty-"));
     execFileSync("bash", ["-c", `cp -r '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${empty}/'`], { stdio: "pipe" });
