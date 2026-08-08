@@ -46,7 +46,8 @@
  * source of truth; this script verifies external correctness of every
  * entry beyond schema-shape validation.
  */
-import { references } from "../../schemas/references";
+import { references } from "./references-registry-di";
+import { findContentRepoRoot } from "./repo-root";
 import * as fs from "fs";
 import * as path from "path";
 import { glob } from "fs/promises";
@@ -68,8 +69,42 @@ if (MODES.size === 0) {
   process.exit(2);
 }
 
-const CONTENT_ROOT = path.resolve(__dirname, "..");
-const REPO_ROOT = path.resolve(CONTENT_ROOT, "..");
+// Both roots are the FOLIO's, not the platform's. `path.resolve(__dirname,
+// "..")` lands in `<folio-assistant>/content/`, which holds only `pipeline/` —
+// so the `**/*.lean` glob below had nothing to walk. Never noticed, because
+// this file threw `Cannot find module` at import and could not run at all.
+const REPO_ROOT = findContentRepoRoot();
+const CONTENT_ROOT = path.join(REPO_ROOT, "content");
+
+/**
+ * The year from a CSL `issued` date, as a number.
+ *
+ * CSL-JSON types `date-parts` entries as `LooseNumber = string | number` and
+ * the spec permits `"date-parts": [["2020"]]`. The two comparison sites below
+ * subtracted these directly; JS coerces a numeric string, so it happened to
+ * work, but it is unsound and silently yields `NaN` for anything non-numeric —
+ * and `Math.abs(NaN) > 1` is false, so a malformed year would read as a MATCH
+ * rather than a mismatch.
+ */
+/** An unknown thrown value as a message. `catch (e)` is `unknown` under
+ *  `strict`; these sites read `e.message ?? e`, which needs the narrowing. */
+function errMsg(e: unknown): string {
+  return e instanceof Error ? e.message : String(e);
+}
+
+function cslYear(parts: unknown): number | undefined {
+  // `unknown` rather than csl-json's `Date['date-parts']`: that is a
+  // fixed-arity tuple of optional LooseNumbers, and the Crossref response
+  // objects below carry their own near-identical shape. Narrowing here takes
+  // both without a cast at either call site.
+  if (!Array.isArray(parts)) return undefined;
+  const first = parts[0];
+  if (!Array.isArray(first)) return undefined;
+  const raw: unknown = first[0];
+  if (typeof raw !== "number" && typeof raw !== "string") return undefined;
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : undefined;
+}
 
 async function modeDoi(): Promise<CheckResult[]> {
   const out: CheckResult[] = [];
@@ -101,8 +136,8 @@ async function modeDoi(): Promise<CheckResult[]> {
       } else {
         out.push({ entry: r.id, severity: "warn", note: `HTTP ${resp.status} for ${url}` });
       }
-    } catch (e: any) {
-      out.push({ entry: r.id, severity: "warn", note: `fetch failed: ${e.message ?? e}` });
+    } catch (e) {
+      out.push({ entry: r.id, severity: "warn", note: `fetch failed: ${errMsg(e)}` });
     }
     if (i % 25 === 0) console.log(`  …${i}/${withDoi.length}`);
   }
@@ -141,10 +176,13 @@ async function modeCrossCheck(): Promise<CheckResult[]> {
       //      lowercased description.
       // This skips URL-only / DOI-only / topic-hint-only descriptions
       // (which v2's "always check" misclassified as FPs).
+      // `Person` is `{family} | {literal}`, but `PersonPartial` makes both
+      // optional on either arm, so the `??` chain is the right read — it was
+      // only the `any` that was surplus.
       const authorFamilies: string[] = (entry.author ?? [])
-        .map((a: any) => (a.family ?? a.literal ?? "").toLowerCase())
-        .filter((s: string) => s.length >= 3);
-      const entryYear = entry.issued?.["date-parts"]?.[0]?.[0];
+        .map((a) => (a.family ?? a.literal ?? "").toLowerCase())
+        .filter((s) => s.length >= 3);
+      const entryYear = cslYear(entry.issued?.["date-parts"]);
       checked++;
       // Strip URLs, DOIs, and punctuation; count remaining alphabetic words
       const descStripped = desc
@@ -163,7 +201,7 @@ async function modeCrossCheck(): Promise<CheckResult[]> {
       // cite the work by title rather than surname (e.g.
       // `[kauffman1991] Knots and Physics, World Scientific`); these are
       // genuine matches that v3 incorrectly flagged.
-      const entryTitle: string = ((entry as any).title ?? "").toLowerCase();
+      const entryTitle: string = (entry.title ?? "").toLowerCase();
       const stopwords = new Set([
         "a", "an", "the", "of", "and", "or", "in", "on", "for", "to", "from",
         "with", "by", "at", "as", "is", "are", "be",
@@ -230,16 +268,26 @@ async function modeCrossref(): Promise<CheckResult[]> {
         out.push({ entry: r.id, severity: "warn", note: `crossref ${resp.status} for ${r.DOI}` });
         continue;
       }
-      const data: any = await resp.json();
-      const msg = data.message ?? data;
+      // The fields this reads off a Crossref `/works/<DOI>` response.
+      // Everything else in the payload is ignored, and naming these is what
+      // keeps a typo in one of them from silently comparing "" to "".
+      interface CrossrefWork {
+        title?: string[];
+        author?: Array<{ family?: string }>;
+        "published-print"?: { "date-parts"?: unknown };
+        "published-online"?: { "date-parts"?: unknown };
+        created?: { "date-parts"?: unknown };
+      }
+      const data = await resp.json() as CrossrefWork & { message?: CrossrefWork };
+      const msg: CrossrefWork = data.message ?? data;
       const cTitle = (msg.title?.[0] ?? "").toLowerCase();
       const cAuthor = (msg.author?.[0]?.family ?? "").toLowerCase();
-      const cYear = msg["published-print"]?.["date-parts"]?.[0]?.[0]
-                  ?? msg["published-online"]?.["date-parts"]?.[0]?.[0]
-                  ?? msg["created"]?.["date-parts"]?.[0]?.[0];
-      const eTitle = ((r as any).title ?? "").toLowerCase();
+      const cYear = cslYear(msg["published-print"]?.["date-parts"])
+                  ?? cslYear(msg["published-online"]?.["date-parts"])
+                  ?? cslYear(msg["created"]?.["date-parts"]);
+      const eTitle = (r.title ?? "").toLowerCase();
       const eAuthor = (r.author?.[0]?.family ?? "").toLowerCase();
-      const eYear = r.issued?.["date-parts"]?.[0]?.[0];
+      const eYear = cslYear(r.issued?.["date-parts"]);
       const issues: string[] = [];
       if (eTitle && cTitle && !cTitle.includes(eTitle.slice(0, 20)) && !eTitle.includes(cTitle.slice(0, 20))) {
         issues.push(`title mismatch: entry "${eTitle.slice(0, 60)}" vs Crossref "${cTitle.slice(0, 60)}"`);
@@ -255,8 +303,8 @@ async function modeCrossref(): Promise<CheckResult[]> {
       } else {
         out.push({ entry: r.id, severity: "ok", note: "Crossref matches" });
       }
-    } catch (e: any) {
-      out.push({ entry: r.id, severity: "warn", note: `crossref fetch failed: ${e.message ?? e}` });
+    } catch (e) {
+      out.push({ entry: r.id, severity: "warn", note: `crossref fetch failed: ${errMsg(e)}` });
     }
     if (i % 25 === 0) console.log(`  …${i}/${withDoi.length}`);
   }
@@ -265,21 +313,21 @@ async function modeCrossref(): Promise<CheckResult[]> {
 
 async function modeArxiv(): Promise<CheckResult[]> {
   const out: CheckResult[] = [];
-  const withArxiv = references.filter((r) => (r as any).URL && /arxiv\.org/i.test((r as any).URL));
+  const withArxiv = references.filter((r) => r.URL && /arxiv\.org/i.test(r.URL));
   console.log(`\n[arxiv] checking ${withArxiv.length} arxiv-URL entries...`);
   for (const r of withArxiv) {
     try {
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), 5000);
-      const resp = await fetch((r as any).URL, { method: "HEAD", redirect: "follow", signal: ctrl.signal });
+      const resp = await fetch(r.URL!, { method: "HEAD", redirect: "follow", signal: ctrl.signal });
       clearTimeout(timer);
       if (resp.status === 200 || resp.status === 301 || resp.status === 302) {
         out.push({ entry: r.id, severity: "ok", note: `arxiv ${resp.status} OK` });
       } else {
         out.push({ entry: r.id, severity: "warn", note: `arxiv HTTP ${resp.status}` });
       }
-    } catch (e: any) {
-      out.push({ entry: r.id, severity: "warn", note: `arxiv fetch failed: ${e.message ?? e}` });
+    } catch (e) {
+      out.push({ entry: r.id, severity: "warn", note: `arxiv fetch failed: ${errMsg(e)}` });
     }
   }
   return out;

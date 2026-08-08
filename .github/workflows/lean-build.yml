@@ -34,6 +34,23 @@ jobs:
         with:
           ref: ${{ inputs.ref || github.ref }}
 
+      # PREFLIGHT. This builds `content/<paper>/lean/`, which is FOLIO content —
+      # folio-assistant is the platform and has no papers, so a run here fails
+      # partway through `lake build` with an opaque error. Refuse up front and
+      # say which repo was expected. Mirrors `qa-sweep.yml`'s preflight, and the
+      # ⚠ already carried by `lake-cache-refresh.yml`.
+      - name: Preflight — a folio must be attached
+        run: |
+          roots=$(find content -mindepth 3 -maxdepth 3 -name lakefile.toml -path '*/lean/*' 2>/dev/null)
+          if [ -z "$roots" ]; then
+            echo "::error::no content/<paper>/lean/lakefile.toml found."
+            echo "::error::This is a FOLIO workflow: it builds a paper's Lean package."
+            echo "::error::folio-assistant is the PLATFORM and carries no papers."
+            echo "::error::Run it from the content repo, where content/<paper>/lean/ exists."
+            exit 1
+          fi
+          echo "lean packages: $(echo "$roots" | tr '\n' ' ')"
+
       # Lean is pre-installed in the paper-assistant image (via elan).
       - name: Verify Lean installation
         run: |

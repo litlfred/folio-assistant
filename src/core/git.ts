@@ -173,15 +173,24 @@ export class GitHelper {
     }
   }
 
-  /** Import a .ts module — from disk if current branch, via temp file otherwise. */
-  async importTsBranch(branch: string | undefined, relPath: string): Promise<unknown> {
+  /**
+   * Import a .ts module — from disk if current branch, via temp file otherwise.
+   *
+   * Generic, matching `adapters/mcp-server/git.ts`: every caller knows the
+   * manifest shape it asked for, and returning bare `unknown` meant each one
+   * re-asserted it with `as any` — nine of them in `adapters/paper/resolver.ts`
+   * alone, which is how `blk.status` (a field no block manifest carries) went
+   * unnoticed there. `T` defaults to `unknown`, so a caller that does not
+   * supply one is no worse off than before.
+   */
+  async importTsBranch<T = unknown>(branch: string | undefined, relPath: string): Promise<T> {
     if (this.isCurrentBranch(branch)) {
       const absPath = resolve(this.repoRoot, relPath);
       delete require.cache?.[absPath];
       const mod = await import(`${absPath}?t=${Date.now()}`);
-      return mod.default ?? mod;
+      return (mod.default ?? mod) as T;
     }
-    return this.gitImportTs(branch!, relPath);
+    return this.gitImportTs(branch!, relPath) as Promise<T>;
   }
 
   /** Get commits that touched any of the given files (relative paths). */

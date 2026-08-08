@@ -222,6 +222,8 @@ export interface SkillValidator {
  * enabling auto-generated documentation to cross-reference skills
  * with their data models.
  */
+import type { LifecycleStage, SkillPackageManifest } from "./types.js";
+
 export interface SkillSchemaRef {
   /** Schema module (e.g., "schemas/types", "schemas/formalization-types"). */
   module: string;
@@ -287,6 +289,21 @@ export interface SkillDefinition {
   package?: string;
   /** Schema types this skill reads/writes — for doc cross-referencing. */
   schemas?: SkillSchemaRef[];
+  /**
+   * Lifecycle stages this skill participates in.
+   *
+   * Present on all 18 skill definitions on disk and on `SkillDefinitionSchema`,
+   * but missing here — so `scripts/generate-docs.ts`, which renders it, had to
+   * read it off an `any`.
+   */
+  lifecycleStages?: LifecycleStage[];
+  /**
+   * Directory holding this skill's own JSON Schema files, relative to the repo
+   * root (e.g. `schemas/skills/content-author`). Also 18/18 on disk, also on
+   * the Zod schema, also missing here. Distinct from `schemas` above, which
+   * names TypeScript modules and types rather than a directory.
+   */
+  schemaRef?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -478,8 +495,22 @@ export interface SkillRegistry {
   skills: SkillDefinition[];
   /** All workflow requirements. */
   requirements: Requirement[];
-  /** External skill package references. */
-  packages: SkillPackageRef[];
+  /**
+   * Skill packages under `skills/`, with their Docker requirements.
+   *
+   * Declared `SkillPackageRef[]` until now — the type for an *external*
+   * package synced in from another repo, requiring `repo`/`path`/`ref`. The
+   * generator has only ever put local `skills/<name>/package-manifest.json`
+   * files here, which carry none of those, so no generated registry has ever
+   * satisfied `SkillRegistrySchema`: 15 issues, all `packages.N.{repo,path,ref}
+   * Required`. Nothing noticed because the generator's own output type was
+   * `any[]` and nothing validated the result. `scripts/tests/registry.test.ts`
+   * now does.
+   *
+   * External packages are `RemotePackageRef`s under `skills/remote-packages/`;
+   * they are rendered into the docs but are not yet part of the registry.
+   */
+  packages: SkillPackageManifest[];
   /** Lifecycle hooks. */
   hooks: SessionHook[];
   /** Identity-source → actor mapping rules, evaluated by priority (highest first). */

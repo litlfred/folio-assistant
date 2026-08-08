@@ -21,7 +21,7 @@
 
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { resolve, join } from "path";
-import { references, referenceMap, CSLEntrySchema } from "../../schemas/references";
+import { references, referenceMap, CSLEntrySchema } from "./references-registry-di";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");
 const args = process.argv.slice(2);

@@ -14,6 +14,17 @@ import {
   asToolText,
 } from "../../adapters/paper/tools/_pipeline.ts";
 import { registerQaTools } from "../../adapters/paper/tools/qa.ts";
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+
+/**
+ * A stand-in for `McpServer` that records what a `register*Tools` call
+ * registers. Only `tool` is exercised, so the cast to `McpServer` at each use
+ * is narrowed through `unknown` rather than `any` — the recorder itself stays
+ * typed, and a change to the `tool` signature still breaks here.
+ */
+interface ToolRecorder {
+  tool(name: string, desc: string, schema: unknown, handler: ToolHandler): void;
+}
 
 /** An MCP tool handler, as the registration stubs below see it. */
 type ToolHandler = (
@@ -60,13 +71,12 @@ describe("_pipeline helper", () => {
 describe("registerQaTools", () => {
   test("registers the expected mechanical tools with handlers", () => {
     const registered: Record<string, { desc: string; schema: unknown; handler: ToolHandler }> = {};
-    const stub = {
-      tool(name: string, desc: string, schema: unknown, handler: ToolHandler) {
+    const stub: ToolRecorder = {
+      tool(name, desc, schema, handler) {
         registered[name] = { desc, schema, handler };
       },
     };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    registerQaTools(stub as any);
+    registerQaTools(stub as unknown as McpServer);
 
     for (const name of [
       "qa_sweep",

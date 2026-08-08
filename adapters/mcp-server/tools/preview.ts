@@ -8,7 +8,7 @@
  */
 
 import { z } from "zod";
-import { execSync, spawnSync } from "child_process";
+import { execSync, spawn } from "child_process";
 import { existsSync, readdirSync } from "fs";
 import { join } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -113,7 +113,13 @@ export function registerPreviewTools(server: McpServer): void {
         };
       }
 
-      spawnSync(openCmd, [fullPath], { stdio: "pipe", detached: true });
+      // `spawn`, not `spawnSync`: `detached` is not a `spawnSync` option at
+      // all (hence the overload failure), and `spawnSync` BLOCKS until the
+      // child exits — so opening a viewer would have held the tool call open
+      // for as long as the user kept the window up. `unref` lets this process
+      // exit without waiting on it, which is what "open it and return" means.
+      const child = spawn(openCmd, [fullPath], { stdio: "ignore", detached: true });
+      child.unref();
 
       return {
         content: [{

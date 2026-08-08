@@ -43,7 +43,7 @@ import os
 import re
 import requests
 
-from qou_lib.config import REQUIRED_REVIEW_SECTIONS, VALID_VERDICTS
+from qou_lib.config import REQUIRED_REVIEW_SECTIONS
 from qou_lib.skills import load_all_skills, load_skill
 
 # ---------------------------------------------------------------------------

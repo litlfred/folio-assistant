@@ -26,6 +26,24 @@ import remarkMath from "remark-math";
 import { visit } from "unist-util-visit";
 import { parse as parseLatex } from "@unified-latex/unified-latex-util-parse";
 import { printRaw } from "@unified-latex/unified-latex-util-print-raw";
+import type { Ast as LatexAstUnion, Environment } from "@unified-latex/unified-latex-types";
+
+/** One node of the unified-latex AST — the second, unrelated node family
+ *  alongside mdast in this file. Same alias as `render-latex.ts`. */
+type LatexNode = Exclude<LatexAstUnion, unknown[]>;
+
+/** Child nodes, when this node's `content` is an array. On `macro`,
+ *  `string`, `comment` and `verb` it is a plain string instead. */
+function latexChildren(node: LatexNode): LatexNode[] {
+  const c = (node as { content?: unknown }).content;
+  return Array.isArray(c) ? (c as LatexNode[]) : [];
+}
+
+/** A node's arguments, for the kinds that take them. */
+function latexArgs(node: LatexNode): LatexNode[] {
+  const a = (node as { args?: unknown }).args;
+  return Array.isArray(a) ? (a as LatexNode[]) : [];
+}
 
 // ── Types ─────────────────────────────────────────────────────────
 
@@ -72,7 +90,7 @@ function extractSnippets(filepath: string, text: string): TexSnippet[] {
 
   const tree = remark().use(remarkMath).parse(text);
 
-  visit(tree, (node: any) => {
+  visit(tree, (node) => {
     const pos = node.position?.start ?? { line: 1, column: 1 };
 
     if (node.type === "inlineMath") {
@@ -141,7 +159,7 @@ function validateSnippetAst(snippet: TexSnippet): ValidationError[] {
     texToParse = snippet.content;
   }
 
-  let ast: any;
+  let ast: ReturnType<typeof parseLatex>;
   try {
     ast = parseLatex(texToParse);
   } catch (e) {
@@ -160,13 +178,12 @@ function validateSnippetAst(snippet: TexSnippet): ValidationError[] {
   // Walk AST for structural issues
   const envStack: string[] = [];
 
-  function walkNodes(nodes: any[]): void {
+  function walkNodes(nodes: LatexNode[]): void {
     for (const node of nodes) {
       // Check environment nodes
       if (node.type === "environment") {
-        const envName = typeof node.env === "string"
-          ? node.env
-          : printRaw(node.env ?? []);
+        const env = (node as Environment).env;
+        const envName = typeof env === "string" ? env : printRaw(env ?? []);
 
         // Check for non-math environments in math context
         if (isMathContext && NON_MATH_ENVS.has(envName)) {
@@ -184,43 +201,25 @@ function validateSnippetAst(snippet: TexSnippet): ValidationError[] {
         envStack.push(envName);
 
         // Recurse into environment content
-        if (node.content && Array.isArray(node.content)) {
-          walkNodes(node.content);
-        }
+        walkNodes(latexChildren(node));
 
         envStack.pop();
       }
 
-      // Check for unmatched braces (group nodes with issues)
-      if (node.type === "group" && node.content && Array.isArray(node.content)) {
-        walkNodes(node.content);
+      // Groups (brace scopes) and the three math node kinds carry children
+      // the same way; `latexChildren` returns [] for anything else, so the
+      // per-type `Array.isArray(node.content)` tests are what it replaces.
+      if (node.type === "group" || node.type === "inlinemath" ||
+          node.type === "displaymath" || node.type === "mathenv") {
+        walkNodes(latexChildren(node));
       }
 
       // Recurse into args
-      if (node.args && Array.isArray(node.args)) {
-        for (const arg of node.args) {
-          if (arg.content && Array.isArray(arg.content)) {
-            walkNodes(arg.content);
-          }
-        }
-      }
-
-      // Check inline/display math nodes for nested issues
-      if (node.type === "inlinemath" && node.content) {
-        walkNodes(node.content);
-      }
-      if (node.type === "displaymath" && node.content) {
-        walkNodes(node.content);
-      }
-      if (node.type === "mathenv" && node.content) {
-        walkNodes(node.content);
-      }
+      for (const arg of latexArgs(node)) walkNodes(latexChildren(arg));
     }
   }
 
-  if (ast.content && Array.isArray(ast.content)) {
-    walkNodes(ast.content);
-  }
+  walkNodes(latexChildren(ast));
 
   return errors;
 }

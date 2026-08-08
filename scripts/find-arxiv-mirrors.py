@@ -30,7 +30,6 @@ Usage:
 """
 
 import argparse
-import json
 import re
 import time
 import urllib.parse
@@ -38,7 +37,6 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Iterable
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 REFS_TS = REPO_ROOT / "content" / "schema" / "references.ts"

@@ -286,6 +286,13 @@ interface Stats {
     percent_primary_class_axiomatized: number;
     /** legacy: class-axiomatised among *all* conjecture blocks. */
     class_axiomatized: number;
+    /** legacy percentage matching `class_axiomatized`'s denominator. */
+    percent_class_axiomatized: number;
+    /** Conjecture blocks with a resolvable `.lean`, as for `provable` and
+     *  `definitions`. `readme-metadata.ts` and `refresh-authors-note.ts` both
+     *  read these two; neither existed, so the README and the authors' note
+     *  were interpolating `undefined`. */
+    with_lean_file: number;
   };
   definitions: {
     total: number;
@@ -350,6 +357,7 @@ function computeStats(paperDir: string, contentRoot: string): Stats {
   );
   const primaryAxiom = primary.filter(b => b.leanFile && b.leanHasClass);
   const allAxiom = conjectures.filter(b => b.leanFile && b.leanHasClass);
+  const conjWithFile = conjectures.filter(b => b.leanFile);
 
   const defs = blocks.filter(b => b.kind === "definition");
   const defsWithFile = defs.filter(b => b.leanFile);
@@ -377,6 +385,8 @@ function computeStats(paperDir: string, contentRoot: string): Stats {
       primary_class_axiomatized: primaryAxiom.length,
       percent_primary_class_axiomatized: pct(primaryAxiom.length, primary.length),
       class_axiomatized: allAxiom.length,
+      percent_class_axiomatized: pct(allAxiom.length, conjectures.length),
+      with_lean_file: conjWithFile.length,
     },
     definitions: {
       total: defs.length,

@@ -15,7 +15,7 @@
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import { resolve, join } from "path";
 import type { Data as CSLData, Person as CSLPerson } from "csl-json";
-import { references } from "../../schemas/references";
+import { references } from "./references-registry-di";
 import { findContentRepoRoot } from "./repo-root";
 
 // Content repo root (was import-relative, which pointed at

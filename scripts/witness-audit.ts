@@ -24,6 +24,24 @@ import { resolve, basename, dirname } from "path";
 import { globSync } from "glob";
 import { createHash } from "crypto";
 import { execSync } from "child_process";
+import type { ComputationWitness } from "../schemas/types.ts";
+
+/**
+ * A `.witness.json` as it appears on disk.
+ *
+ * Every field is optional and read defensively: these files are produced by
+ * the folio's Python `WitnessBuilder` and can be malformed (this script
+ * counts that case), so nothing here is guaranteed. `scriptFile`,
+ * `scriptHash`, `scriptCommitSha` and `git_sha` are written by the builder
+ * but are NOT on `ComputationWitness` in `schemas/types.ts` — the two have
+ * drifted, and the drift is only visible once this stops being `any`.
+ */
+interface WitnessFile extends Partial<ComputationWitness> {
+  scriptFile?: string;
+  scriptHash?: string;
+  scriptCommitSha?: string;
+  git_sha?: string;
+}
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
 
@@ -206,11 +224,13 @@ function auditPythonWitnesses(): WitnessStatus[] {
 
   // Pre-collect all script paths for batch git query
   const scriptPaths: string[] = [];
-  const witnessData: { wf: string; witness: any; scriptFile: string; scriptPath: string }[] = [];
+  // `witness` is null for a file that failed to parse — the loop below
+  // pushes that case explicitly, which `any` let pass unremarked.
+  const witnessData: { wf: string; witness: WitnessFile | null; scriptFile: string; scriptPath: string }[] = [];
 
   for (const wf of witnessFiles) {
     try {
-      const witness = JSON.parse(readFileSync(wf, "utf-8"));
+      const witness = JSON.parse(readFileSync(wf, "utf-8")) as WitnessFile;
       const witnessName = basename(wf, ".witness.json");
       const scriptFile = witness.scriptFile || `${witnessName}.py`;
       const scriptPath = resolve(dirname(wf), scriptFile);

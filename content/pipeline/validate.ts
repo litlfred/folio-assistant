@@ -41,8 +41,6 @@ function discoverManifests(dir: string): string[] {
     .map(f => basename(f, ".ts"));
 }
 
-type ManifestKind = "paper" | "chapter" | null;
-
 /**
  * Detect what kind of manifest a directory's eponymous .ts file is.
  * Returns "paper", "chapter", or null if no manifest exists.
@@ -51,15 +49,24 @@ type ManifestKind = "paper" | "chapter" | null;
  * exported object against PaperSchema and ChapterSchema. The data itself
  * determines the type — no source-text heuristics.
  */
-async function detectManifestKind(dir: string): Promise<{ kind: ManifestKind; path: string | null; data?: any }> {
+// Discriminated on `kind`: `data` is the manifest each branch just validated,
+// so callers get `Paper` or `Chapter` rather than re-asserting it.
+type ManifestDetection =
+  | { kind: "paper"; path: string; data: Paper }
+  | { kind: "chapter"; path: string; data: Chapter }
+  | { kind: null; path: null; data?: undefined };
+
+async function detectManifestKind(dir: string): Promise<ManifestDetection> {
   const dirName = basename(dir);
   const manifestPath = join(dir, `${dirName}.ts`);
   if (!existsSync(manifestPath)) return { kind: null, path: null };
   try {
     const mod = await import(manifestPath);
     const obj = mod.default;
-    if (PaperSchema.safeParse(obj).success) return { kind: "paper", path: manifestPath, data: obj };
-    if (ChapterSchema.safeParse(obj).success) return { kind: "chapter", path: manifestPath, data: obj };
+    const asPaper = PaperSchema.safeParse(obj);
+    if (asPaper.success) return { kind: "paper", path: manifestPath, data: obj as Paper };
+    const asChapter = ChapterSchema.safeParse(obj);
+    if (asChapter.success) return { kind: "chapter", path: manifestPath, data: obj as Chapter };
   } catch { /* import error — not a valid manifest */ }
   return { kind: null, path: null };
 }
@@ -501,7 +508,7 @@ export async function validateObjects(
 
     for (const rule of CONSTRAINT_RULES) {
       if (!rule.appliesTo.includes(block.kind)) continue;
-      const msg = rule.check(block as any, ctx);
+      const msg = rule.check(block, ctx);
       if (msg) {
         const isWarning = msg.startsWith("[warning]");
         issues.push({

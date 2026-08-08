@@ -27,7 +27,9 @@ export function configureLeanPackages(packages: readonly LeanPackage[]) {
 
 // Export the array as a proxy so it always reads the injected state
 export const LEAN_PACKAGES: readonly LeanPackage[] = new Proxy([] as LeanPackage[], {
-  get: (target, prop) => (configuredPackages as any)[prop],
+  // `Reflect.get` reads an arbitrary key off the injected array without
+  // reopening its element type.
+  get: (_target, prop) => Reflect.get(configuredPackages, prop),
   ownKeys: () => Reflect.ownKeys(configuredPackages),
   getOwnPropertyDescriptor: (_, prop) => Reflect.getOwnPropertyDescriptor(configuredPackages, prop),
   has: (_, key) => key in configuredPackages,

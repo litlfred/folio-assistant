@@ -5,7 +5,9 @@
 # ───
 # Lean builds are slow and verbose. Instead of building locally and
 # pasting terminal output, this workflow builds the root Lake workspace
-# in CI on every push to a working branch, then commits
+# in CI — on manual dispatch, NOT "on every push": the `on:` below is
+# `workflow_dispatch` only, per the 2026-06-30 auto-trigger directive — then
+# commits
 # `build-logs/lean-build-status.json` (per-paper pass/fail, failing
 # modules, extracted file:line:col errors + sorry locations) back to the
 # branch. An agent reads that sidecar straight from the branch.
@@ -49,6 +51,23 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.ref || github.ref }}
+
+      # PREFLIGHT. This builds `content/<paper>/lean/`, which is FOLIO content —
+      # folio-assistant is the platform and has no papers, so a run here fails
+      # partway through `lake build` with an opaque error. Refuse up front and
+      # say which repo was expected. Mirrors `qa-sweep.yml`'s preflight, and the
+      # ⚠ already carried by `lake-cache-refresh.yml`.
+      - name: Preflight — a folio must be attached
+        run: |
+          roots=$(find content -mindepth 3 -maxdepth 3 -name lakefile.toml -path '*/lean/*' 2>/dev/null)
+          if [ -z "$roots" ]; then
+            echo "::error::no content/<paper>/lean/lakefile.toml found."
+            echo "::error::This is a FOLIO workflow: it builds a paper's Lean package."
+            echo "::error::folio-assistant is the PLATFORM and carries no papers."
+            echo "::error::Run it from the content repo, where content/<paper>/lean/ exists."
+            exit 1
+          fi
+          echo "lean packages: $(echo "$roots" | tr '\n' ' ')"
 
       - name: Install Lean via elan
         run: |

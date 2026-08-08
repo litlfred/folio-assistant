@@ -25,14 +25,12 @@ from qou_lib.config import (
     CHAPTER_FILES,
     CHAPTER_LEAN_FILES,
     CHAPTERS_DIR,
-    ENV_TYPES,
     LABEL_RE,
     LEAN_DIR,
     LEAN_KEYWORDS,
     MAX_ENV_SCAN_LINES,
     REPO_ROOT,
 )
-from qou_lib.git_utils import get_commit_sha
 
 DEFAULT_GLOSSARY = REPO_ROOT / "glossary.json"
 

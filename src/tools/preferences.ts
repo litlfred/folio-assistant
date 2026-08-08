@@ -102,7 +102,12 @@ export function registerPreferenceTools(server: McpServer): void {
       const changed: string[] = [];
       for (const [key, value] of Object.entries(updates)) {
         if (value !== undefined && key in prefs) {
-          (prefs as any)[key] = value;
+          // `Object.entries` decorrelates key from value, so TS cannot
+          // check this assignment however it is written. Narrowing the
+          // target to `Record<string, unknown>` keeps the write dynamic
+          // without reopening the whole object: the `key in prefs` guard
+          // above is what makes it sound.
+          (prefs as Record<string, unknown>)[key] = value;
           changed.push(`${key} = ${JSON.stringify(value)}`);
         }
       }
