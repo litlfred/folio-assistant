@@ -38,6 +38,17 @@
 import { existsSync, readFileSync } from "fs";
 import { sep } from "path";
 
+// Chapter profiles are FOLIO content and now arrive through a registry, the
+// same way values and references do. Re-exported below so the checker's
+// import surface is unchanged for `q-usage-audit.ts` and the tests.
+import {
+  CHAPTER_EXPECTED_REGIMES, CATEGORICAL_CHAPTERS, ARCHIMEDEAN_CHAPTERS,
+} from "./chapter-profile-registry-di";
+// Side-effecting: registers qou's profiles as the default until the folio
+// supplies its own. `_folio-chapter-profiles.qou.ts` says how to finish that.
+import { registerDefaultChapterProfiles } from "./_folio-chapter-profiles.qou";
+registerDefaultChapterProfiles();
+
 export interface QUsageHit {
   file: string;
   line: number;
@@ -84,154 +95,11 @@ export type QRegime =
 // fixed-q0 numerical pin in `braids-and-knots`), not to flag every
 // borderline chapter.
 
-const CHAPTER_EXPECTED_REGIMES: Record<string, ReadonlySet<QRegime>> = {
-  // ── Front matter ───────────────────────────────────────────────
-  introduction: new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "mod-gt-1", "mod-lt-1", "root-of-unity", "fixed-q0",
-  ]),
-  notation: new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "real-lt-1", "mod-gt-1", "mod-lt-1", "unit-circle",
-    "root-of-unity", "fixed-q0",
-  ]),
 
-  // ── Part I — categorical foundations ──────────────────────────
-  // Symbolic / generic-R primary. fixed-q0 only in a specialisation
-  // block that explicitly carries an archimedean banner.
-  "quantum-universes": new Set<QRegime>([
-    "na", "symbolic", "generic-R",
-  ]),
-  "quantum-observable-universes": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive",
-  ]),
-  "models-of-qous": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "mod-gt-1", "mod-lt-1", "fixed-q0",
-  ]),
-  "lifting-and-descent": new Set<QRegime>([
-    "na", "symbolic", "generic-R",
-  ]),
 
-  // ── Part II — structural mechanics ───────────────────────────
-  "braids-and-knots": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "mod-gt-1",
-    "mod-lt-1",
-  ]),
-  "brings-surface": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "fixed-q0",
-  ]),
-  "fluid-dynamics": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "stochastic-mechanics": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "real-lt-1", "mod-lt-1", "fixed-q0",
-  ]),
-  "information-theory": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "fixed-q0",
-  ]),
-  "mass-theory": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "mass-endomorphism": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "fixed-q0",
-  ]),
-  "particle-interactions": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "gravity-spacetime": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
 
-  // ── Part III — Descartes universe + observations ─────────────
-  "climax-volume-mass": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  observations: new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "predicted-spectra": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "measurement-observation": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "molecular-construction": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "organic-chemistry": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
 
-  // ── Ch 11 — q-geometric Langlands (root-of-unity territory) ──
-  "q-geometric-langlands": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "root-of-unity", "unit-circle",
-    "mod-lt-1", "mod-gt-1",
-  ]),
 
-  // ── Appendices ────────────────────────────────────────────────
-  "appendix-qvalues": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "appendix-atomic-mass-calculations": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "appendix-knot-operations": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "mod-lt-1", "mod-gt-1",
-  ]),
-  "appendix-knot-periodic-table": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "fixed-q0",
-  ]),
-  "appendix-nf-witnesses": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "fixed-q0",
-  ]),
-  "appendix-surreals": new Set<QRegime>([
-    "na", "symbolic", "generic-R",
-  ]),
-  "appendix-transfer-matrices": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "fixed-q0",
-  ]),
-
-  // Glossary and notation entries are register tables — allow any.
-  glossary: new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "real-lt-1", "mod-gt-1", "mod-lt-1", "unit-circle",
-    "root-of-unity", "fixed-q0",
-  ]),
-  "index-of-definitions": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "real-lt-1", "mod-gt-1", "mod-lt-1", "unit-circle",
-    "root-of-unity", "fixed-q0",
-  ]),
-};
-
-/** Chapters whose narrative-expected profile is "categorical only". */
-const CATEGORICAL_CHAPTERS: ReadonlySet<string> = new Set([
-  "quantum-universes",
-  "lifting-and-descent",
-  "braids-and-knots",
-  "appendix-knot-operations",
-  "appendix-surreals",
-]);
-
-/** Chapters whose narrative-expected profile is "archimedean / fixed q_0". */
-const ARCHIMEDEAN_CHAPTERS: ReadonlySet<string> = new Set([
-  "mass-theory",
-  "particle-interactions",
-  "gravity-spacetime",
-  "climax-volume-mass",
-  "observations",
-  "predicted-spectra",
-  "measurement-observation",
-  "molecular-construction",
-  "organic-chemistry",
-  "fluid-dynamics",
-  "appendix-qvalues",
-  "appendix-atomic-mass-calculations",
-]);
 
 // ── Regime detectors ────────────────────────────────────────────
 

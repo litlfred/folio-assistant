@@ -48,9 +48,37 @@ the one recipe.
    **honestly**: distinguish failures you caused from pre-existing ones (diff the
    counts against a baseline run on the merge-base). Do not call a branch green
    by silently inheriting red.
+
+   **Know what the target covered.** Green is a claim about the files the build
+   compiled, which is usually fewer than the files on disk — build targets
+   default to a root plus its transitive imports. Confirm the files *you
+   touched* were in it (artifact count vs. source count, or build the module by
+   name), and scope any corpus-wide number you quote to what actually ran. In
+   qou, `lake build` reaches 853 of 1618 Lean modules, so a touched file can be
+   green purely by never having been compiled.
 6. **Push** the feature branch (retry/backoff as in step 2):
    `git push -u origin <branch>`.
-7. **Stop here** unless a PR / merge was explicitly requested. If a PR *was*
+7. **Dispatch the repo's CI on the pushed branch, and fold the result into the
+   PR.** Local green is not CI green — CI runs on a cold cache, its own
+   toolchain, and without whatever build flags you set locally. So after the
+   push, trigger the relevant workflow against your branch
+   (`gh workflow run <wf>.yml --ref <branch>`, or the `actions_run_trigger`
+   MCP tool), wait for it, and put the **run URL and conclusion** in the PR
+   body. Red → fix and re-dispatch. Do not open a PR citing a workflow nobody
+   ran.
+
+   If you lack `actions: write` and dispatch returns 403, do **not** quietly
+   skip it: state in the PR that CI was not run, and give the exact command a
+   maintainer should run.
+
+   *Why this is a step and not advice:* qou's `lean_ci.yml` last ran
+   2026-04-25 and failed on `main`. Nothing dispatched it for four months,
+   and 37 modules silently stopped compiling — several with plain parse
+   errors, i.e. files that had never compiled at all. The regression was
+   invisible precisely because a workflow existed and no one ran it. Check
+   when CI last ran (`actions_list` → `list_workflow_runs`) as part of this
+   step; "there is a workflow" is not evidence anything is being checked.
+8. **Stop here** unless a PR / merge was explicitly requested. If a PR *was*
    requested, see below.
 
 ## Opening the PR (only when asked)

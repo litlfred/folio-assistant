@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-08-07T12:10:50Z
-updated_at: 2026-08-07T13:41:21Z
+updated_at: 2026-08-08T11:54:20Z
 ---
 
 The production cache branch has 7268 oleans, all dependencies, none QOU.*. Every restore still rebuilds the paper, and sibling .lean files cannot elaborate standalone. lake-cache.sh status now detects and reports this.
@@ -109,3 +109,37 @@ dependency oleans with zero `QOU.*`.
 So the first run of this workflow will also be its first real test.
 Two guards now stand in front of a bad publish — the own-package check
 and the trace-coverage check — and both were added since.
+
+
+---
+
+## Blocker re-tested 2026-08-08 (session `3bada08b`) — still blocked, now measured
+
+Asked to work all open beans, so the claim was re-tested rather than inherited.
+
+**The toolchain half is genuinely resolved** (`ga7e` was right):
+`~/.elan/toolchains/leanprover--lean4---v4.24.0` is present and both binaries
+run — `lean --version` → 4.24.0, `lake --version` → Lake 5.0.0-src+797c613. So
+"no linkable toolchain" is no longer the blocker.
+
+**The network half is not.** Every host a reseed needs is unreachable from an
+authoring container:
+
+    https://release.lean-lang.org                  HTTP 000
+    https://leanprover-community.github.io         HTTP 000
+    https://github.com/leanprover-community/mathlib4   HTTP 403
+    https://api.github.com/repos/leanprover/elan/releases/latest   HTTP 403
+
+`lake exe cache get` fetches from the second of those, so the fast route is
+out; the from-source route is the hours-long build this bean already measured
+(823 targets for ONE module, not finished in 10 minutes at 0% trace coverage).
+
+**And there is no folio here.** `scripts/lake-cache.sh restore-toolchain`
+exits `no lean-toolchain` — that file is folio content, and this container has
+the platform only. So even with network there is nothing to build.
+
+Conclusion unchanged and now pinned: **this needs CI, or a machine with
+unrestricted egress.** The runbook in
+`docs/guides/reseeding-the-lean-cache.md` is the artifact to run there. Nothing
+further is doable from an authoring container, and the next session should not
+spend turns re-confirming it.

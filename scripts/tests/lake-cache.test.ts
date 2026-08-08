@@ -45,7 +45,17 @@ function run(
 }
 
 function git(args: string[], cwd: string) {
-  execFileSync("git", args, { cwd, stdio: "pipe" });
+  // `stdio: "pipe"` alone throws `Command failed: git push …` with git's own
+  // stderr discarded, so a fixture failure tells you nothing about why — which
+  // is exactly what happened when this suite went flaky under load. Capture it
+  // and put it in the message.
+  const r = spawnSync("git", args, { cwd, encoding: "utf-8" });
+  if (r.status !== 0) {
+    throw new Error(
+      `git ${args.join(" ")} (cwd ${cwd}) exited ${r.status}` +
+      `${r.signal ? ` on ${r.signal}` : ""}\n${r.stderr ?? ""}${r.stdout ?? ""}`,
+    );
+  }
 }
 
 /** A `.lake` tree with `count` dependency oleans and `own` package oleans. */
@@ -66,7 +76,9 @@ beforeAll(() => {
   // Bare remote.
   const bare = join(root, "origin.git");
   mkdirSync(bare);
-  git(["init", "--bare", "-q"], root);
+  // Was preceded by a stray `git init --bare -q` with cwd=root and NO path,
+  // which turned the temp root itself into a bare repo — an unwanted repo
+  // wrapping the working clone, created by a line that looks like setup.
   execFileSync("git", ["init", "--bare", "-q", bare], { stdio: "pipe" });
 
   // Working repo with a Lake package nested two levels down — the

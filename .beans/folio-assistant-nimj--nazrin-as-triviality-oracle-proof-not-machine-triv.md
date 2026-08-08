@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-07T09:13:35Z
-updated_at: 2026-08-07T12:11:25Z
+updated_at: 2026-08-08T11:54:20Z
 ---
 
 
@@ -96,3 +96,27 @@ corpus — the blocks that happen not to import their own package.
 - [ ] With hits in hand, measure the actual false-positive rate.
 - [ ] Tune the ladder / threshold on that evidence.
 - [ ] Only then consider raising severity above `minor`.
+
+
+---
+
+## Re-checked 2026-08-08 (session `3bada08b`) — blocked downstream of 5d7z
+
+Asked to work all open beans, so this was re-tested rather than inherited.
+
+The toolchain this bean once wanted is present and works (`lean` 4.24.0, `lake`
+5.0.0 under `~/.elan/toolchains/`), and the bean already established Nazrin
+itself is unnecessary — Lean's own automation is the oracle.
+
+What remains is the measurement, and it is gated on the cache reseed exactly as
+this bean says: 16 of 28 candidate blocks (57%) could not be probed because
+their sibling `.lean` files import the paper's own package and the cache branch
+carries zero of its oleans. Re-tested the reseed blocker under `5d7z` and
+`02kc`: every host it needs is unreachable from an authoring container (000 /
+403), and there is no folio checked out here at all.
+
+So the order is fixed and unchanged: **reseed in CI (5d7z) → re-probe → measure
+the false-positive rate → only then tune the threshold or raise severity.**
+Nothing here is actionable from an authoring container. The criterion remains
+inert by construction in the meantime — no cache means `n/a`, and the note says
+"not measured", never "nothing trivial".

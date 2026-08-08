@@ -1,10 +1,11 @@
 ---
 # folio-assistant-sklb
 title: Folio vocabulary hardcoded in platform code — 4 sites, needs a registry not a rename
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-08-08T09:54:51Z
-updated_at: 2026-08-08T09:54:51Z
+updated_at: 2026-08-08T12:00:50Z
 ---
 
 Spun out of `folio-assistant-dh4f`, which resolved the *path*-rooting instances
@@ -42,3 +43,56 @@ Nothing here is wrong for the current folio, and none of it silently reports
 success — unlike the path defects, which pointed at directories that did not
 exist. The cost is that a second folio would inherit qou's chapter vocabulary,
 and that the platform cannot be read as content-neutral.
+
+
+---
+
+## Summary of Changes
+
+All four sites moved behind a new third DI registry,
+`content/pipeline/chapter-profile-registry-di.ts`, matching
+`value-registry-di` and `references-registry-di`.
+
+| site | what moved |
+|---|---|
+| `qa-checkers-q-usage.ts` | 31-entry `CHAPTER_EXPECTED_REGIMES`, `CATEGORICAL_CHAPTERS` (5), `ARCHIMEDEAN_CHAPTERS` (12) |
+| `find-dangling-remarks.ts` | 13 prose terms → the definition expected to back them |
+| `scripts/lean-audit.ts` | 19 Lean path fragments → chapter slugs |
+| `qa-criteria-registry.ts` | left: prose inside criterion descriptions, not a lookup |
+
+**One deliberate departure from the other two registries: this one does not
+throw when unconfigured.** A values or bibliography lookup returning nothing is
+a bug; a folio declaring no chapter policy is a legitimate folio. That puts all
+the weight on one distinction — unconfigured must read as `n/a`, never as
+"expectation met" — which is the exact failure this whole session has been
+about. The empty default is verified empty rather than permissive: no
+membership test returns true, no lookup returns a set.
+
+The data is not deleted, because the other half is in a repo this change cannot
+touch. It sits in `_folio-chapter-profiles.qou.ts`, quarantined, named for what
+it is, registering itself as the default so qou's criteria do not silently go
+`n/a` first. That file carries the three-step finish and notes step 3 is safe
+the moment step 2 lands, since a later `configure` wins.
+
+**Behaviour-neutral, proven twice:**
+
+- chapter profiles: all 31 chapters and both sets dumped through the checker's
+  public exports before and after — byte-identical.
+- module map: the original function reproduced verbatim beside the new one and
+  both run over **525 paths** — every fragment in four shapes plus all 441
+  overlapping pairs, where an ordering difference would surface. 0 mismatches.
+
+Two mistakes en route, both caught by measuring: the first extraction dropped 6
+of 19 fragments (three rules are multi-line ORs, and a same-line regex missed
+them), and the rewrite defaulted to `"unmapped"` where the original defaults to
+`"core"`. Also a test-pollution bug of my own — `afterEach(resetChapterProfiles)`
+left the registry empty for later files, since the default registers as a
+module-load side effect that fires once per process.
+
+`scripts/tests/chapter-profile-registry-di.test.ts` — 9 tests, weighted on the
+unconfigured case and the Proxy plumbing.
+
+## Remaining (qou side, cannot be done from here)
+
+Copy the literals into the folio, call `configureChapterProfiles` from
+`scripts/run-validate.ts`, delete the quarantine file.
