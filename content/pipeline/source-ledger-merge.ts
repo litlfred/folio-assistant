@@ -68,9 +68,9 @@ interface Finding {
 }
 
 /** Create a bean and return its id, or null if the tracker is unavailable. */
-function createBean(title: string): string | null {
+function createBean(title: string, body: string): string | null {
   try {
-    const out = execFileSync("beans", ["create", title, "--type", "task"], {
+    const out = execFileSync("beans", ["create", title, "--type", "task", "--body", body], {
       cwd: REPO_ROOT,
       encoding: "utf-8",
     });
@@ -82,26 +82,58 @@ function createBean(title: string): string | null {
   }
 }
 
-/** A work item's title: the action and its target, never "read paper X". */
+/**
+ * A work item's title: the action and its target, never "read paper X".
+ *
+ * Kept short on purpose — the title is what `beans list` shows, and a queue
+ * whose every row wraps to four lines is a queue nobody scans.  The reasoning
+ * goes in the body.
+ */
 function beanTitle(a: ProposedAction, refId: string | null, file: string): string {
   const subject = refId ? `[${refId}]` : file.replace(/^uploads\//, "");
   const target = a.target ? ` at ${a.target}` : "";
-  switch (a.action) {
-    case "add-reference":
-      return `Add reference for ${subject} — ${a.rationale}`;
-    case "cite-in-block":
-      return `Cite ${subject}${target} — ${a.rationale}`;
-    case "aid-proof":
-      return `Apply ${subject}${target} — ${a.rationale}`;
-    case "new-remark":
-      return `Remark interpreting ${subject}${target} — ${a.rationale}`;
-    case "new-block":
-      return `Import block from ${subject}${target} — ${a.rationale}`;
-    case "compute-check":
-      return `Cross-check ${subject}${target} — ${a.rationale}`;
-    default:
-      return `${a.action}: ${subject}${target}`;
+  const verb: Record<string, string> = {
+    "add-reference": "Add reference for",
+    "cite-in-block": "Cite",
+    "aid-proof": "Apply",
+    "new-remark": "Remark interpreting",
+    "new-block": "Import block from",
+    "compute-check": "Cross-check",
+  };
+  const title = `${verb[a.action] ?? a.action} ${subject}${target}`;
+  return title.length > 100 ? `${title.slice(0, 97)}…` : title;
+}
+
+/** The bean body: why, what the source says, and where the source is. */
+function beanBody(
+  a: ProposedAction,
+  entry: LedgerEntry,
+  relevance: Finding["relevance"],
+  file: string,
+): string {
+  const lines = [a.rationale, ""];
+
+  // Only the results relevant to this action's target, when it names one.
+  const results = (relevance.keyResults ?? []).filter(
+    (k) => !a.target || !k.targets?.length || k.targets.includes(a.target),
+  );
+  if (results.length) {
+    lines.push("**From the source**");
+    for (const k of results) {
+      lines.push(`- ${k.locator} — ${k.statement}`);
+      lines.push(`  Use here: ${k.useForFolio}`);
+    }
+    lines.push("");
   }
+
+  lines.push(
+    `Source: \`${file}\`${entry.id ? ` (\`${entry.id}\`)` : " — no `references.ts` entry yet"}`,
+    `Relevance: **${relevance.verdict}** — agent assessment, not yet adjudicated.`,
+    "",
+    "Raised by `local/paper-relevance-triage`; the ledger row is in " +
+      "`content/bib-qa-verifications.json`.",
+  );
+  return lines.join("\n");
 }
 
 function main(): void {
@@ -159,7 +191,10 @@ function main(): void {
       if (doBeans) {
         for (const a of actions) {
           if (a.action === "no-action" || a.bean) continue;
-          const id = createBean(beanTitle(a, entry.id ?? null, f.file));
+          const id = createBean(
+            beanTitle(a, entry.id ?? null, f.file),
+            beanBody(a, entry, f.relevance, f.file),
+          );
           if (id) {
             a.bean = id;
             beansMade++;
