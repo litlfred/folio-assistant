@@ -39,6 +39,10 @@
 import { readFileSync, writeFileSync, readdirSync, statSync, mkdirSync } from "fs";
 import { join, dirname, basename } from "path";
 import { checkStatusSectionHeader } from "./qa-checkers-voice";
+import { BLOCK_KIND_ALT } from "../../schemas/types";
+
+/** Builder call identifying a block's kind — see `BLOCK_KIND_ALT`. */
+const BUILDER_RE = new RegExp(`\\b(${BLOCK_KIND_ALT})\\s*\\(`);
 
 const TODO_RE =
   /\b(?:TODO|FIXME|XXX|HACK|to-?do|pending|punt(?:ed|ing)?|kick\s+the\s+can|not\s+yet\s+(?:implemented|written|done|filled)|remaining\s+work|work\s+remaining|next\s+steps?|needs?\s+(?:work|fixing|attention|filling))\b/i;
@@ -86,9 +90,7 @@ function sniffKind(mdPath: string): string {
   const ts = mdPath.replace(/\.md$/, ".ts");
   try {
     const src = readFileSync(ts, "utf-8");
-    const m = src.match(
-      /\b(definition|theorem|lemma|proposition|corollary|conjecture|remark|example|prose|equation|diagram|simulator)\s*\(/,
-    );
+    const m = src.match(BUILDER_RE);
     return m ? m[1] : "unknown";
   } catch {
     return "unknown";

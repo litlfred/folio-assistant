@@ -21,7 +21,7 @@
  *
  * @module content/pipeline/build-glossary
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { basename, dirname, join, resolve } from "path";
 import type { Block, Chapter, Paper, Section } from "../../schemas/types";
 import { ChapterSchema, PaperSchema } from "../../schemas/constraints";

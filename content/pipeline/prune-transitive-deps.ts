@@ -33,7 +33,7 @@
  * @module content/pipeline/prune-transitive-deps
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 import type { Paper, Chapter, Section, Block } from "../../schemas/types";
 

@@ -148,7 +148,7 @@ function transform(src: string, pkg: string): { src: string; matches: number } {
     if (!declMatch) continue;
     const decl = declMatch[1];
 
-    let newBody = body
+    const newBody = body
       .replace(/\bdecl:\s*"[^"]+"\s*,?/, `ref: "${pkg}:${decl}",`)
       .replace(/^\s*file:\s*"[^"]*"\s*,?\s*\n/gm, "");
 

@@ -17,11 +17,29 @@
 #      live offenders (universal-ilp.py wildcard; substrate facade
 #      re-exports) are resolved or annotated (`# noqa: F403` / `__all__`).
 #
-#   3. Rust wildcard imports — WARN-ONLY ratchet. Lightweight grep report
+#   3. TypeScript gate — HARD FAIL on `bun test`, `bun run lint`, and
+#      `tsc --noEmit`. All three are green as of PR #68 and each is a real
+#      regression gate rather than a baseline report:
+#        - the suite went 201 pass / 29 fail -> 287 / 0 (the 29 were
+#          split-repo assertions that had been red long enough to read as
+#          background noise, which is exactly the cost — a genuine
+#          regression would not have stood out);
+#        - `bun run lint` had NEVER run (no config, no dependency) and now
+#          exits 0. Its config promotes a rule to `error` only once that
+#          rule's count is zero, so a red lint always means a regression
+#          rather than pre-existing debt. `no-explicit-any` is still on
+#          `warn` by design and does not fail this gate.
+#      Without this job none of that is enforced: the ratchet only works if
+#      something runs it.
+#
+#   4. Rust wildcard imports — WARN-ONLY ratchet. Lightweight grep report
 #      of non-test `use ...::*;` in tools/ (full `clippy -D
 #      clippy::wildcard_imports` is the eventual upgrade, but a cargo build
 #      on every PR is too heavy for a static gate; the grep ratchet flags
 #      new wildcard imports cheaply).
+
+name: Code-quality gates
+
 on:
   workflow_dispatch:
 
@@ -77,6 +95,32 @@ jobs:
           ruff check --select F401,F403 --output-format=github \
             --exclude '**/_deprecated/**' \
             folio-assistant/computations tools
+
+  typescript:
+    name: TypeScript — tests, lint, types (hard)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # Each step is a separate gate so the Actions UI names the one that
+      # broke, rather than a single opaque "quality" failure.
+      - name: bun test
+        run: bun test
+
+      # Exits 0 on warnings by design; a non-zero exit means a rule that had
+      # been driven to zero has regressed.
+      - name: bun run lint
+        run: bun run lint
+
+      - name: tsc --noEmit
+        run: bunx tsc --noEmit -p tsconfig.json
 
   rust-wildcard:
     name: Rust wildcard imports (warn-only)

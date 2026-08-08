@@ -145,7 +145,7 @@ export function stripComment(line: string): string {
  * first non-space char after the command.
  */
 function stripInlineVerb(line: string): string {
-  let out = line;
+  const out = line;
   const re = /\\(?:verb\*?|lstinline)(\S)/g;
   let m: RegExpExecArray | null;
   // Rebuild left-to-right to avoid index drift.

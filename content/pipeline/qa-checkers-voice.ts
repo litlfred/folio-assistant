@@ -550,7 +550,6 @@ export function checkWallSide(
   // TYPE signal. Both feed the acknowledgement requirement so that a
   // spaced-`(x : ℝ)` / `→ ℝ` specialisation cannot slip through unacknowledged
   // just because its ℝ is not in a `Real.*` / tactic form.
-  const isArchimedean = ARCHIMEDEAN_LEAN_RE.test(stripped);
   const hasRealType = ARCHIMEDEAN_TYPE_RE.test(stripped);
   const isAlgebraic = ALGEBRAIC_LEAN_RE.test(stripped);
   const hits: CheckerHit[] = [];
@@ -969,7 +968,7 @@ function extractLeanDocstrings(
   // except `-/`. We do a manual nested scan rather than a regex.
   let i = 0;
   const n = src.length;
-  let lineNum = 1;
+  const lineNum = 1;
   // Pre-compute newline positions so startLine is O(1) per opener.
   const newlineAt: number[] = [];
   for (let k = 0; k < n; k++) {

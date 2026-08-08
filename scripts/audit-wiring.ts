@@ -49,8 +49,8 @@
  * @module scripts/audit-wiring
  */
 
-import { readFileSync, existsSync, mkdirSync, writeFileSync } from "fs";
-import { resolve, basename, dirname, relative } from "path";
+import { readFileSync, mkdirSync, writeFileSync } from "fs";
+import { resolve, dirname, relative } from "path";
 import { globSync } from "glob";
 import { execSync } from "child_process";
 
@@ -88,18 +88,6 @@ function parseArgs(argv: string[]): Args {
 }
 
 // ── Helpers ──────────────────────────────────────────────────────
-
-function gitFileFirstSha(filePath: string): string {
-  try {
-    return execSync(`git log -n 1 --format=%H -- "${filePath}"`, {
-      cwd: REPO_ROOT,
-    })
-      .toString()
-      .trim() || "unknown";
-  } catch {
-    return "unknown";
-  }
-}
 
 function gitFileFirstShas(filePaths: string[]): Map<string, string> {
   const out = new Map<string, string>();

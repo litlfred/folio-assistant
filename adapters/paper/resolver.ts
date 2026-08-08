@@ -6,8 +6,8 @@
  * @module folio-assistant/adapters/paper/resolver
  */
 
-import { existsSync, readFileSync, readdirSync } from "fs";
-import { join, resolve } from "path";
+import { existsSync, readFileSync } from "fs";
+import { join } from "path";
 import type { GitHelper } from "../../src/core/git.js";
 import type { FeedbackStore } from "../../src/core/feedback.js";
 import { TtlCache } from "../../src/core/cache.js";
@@ -143,7 +143,7 @@ export class PaperResolver {
           date: paperMod.date,
           stats: { chapters: chapCount, blocks: blockCount, proved: provedCount, todos: todoCount },
         });
-      } catch (e) {
+      } catch {
         items.push({
           id: ref.dir,
           title: ref.title || ref.dir,

@@ -108,6 +108,7 @@ import {
   loadQaReport,
   saveQaReport,
   entryIsFresh,
+  freshnessKeys,
   preserveNonScriptEntries,
   computeCriterionScriptHashes,
   saveQaScriptSidecar,
@@ -273,7 +274,7 @@ function run(): void {
       md: block.md ? relative(contentRepoRoot, block.md) : undefined,
       lean: block.lean ? relative(contentRepoRoot, block.lean) : undefined,
     };
-    let report: BlockQaReport = existingReport ?? {
+    const report: BlockQaReport = existingReport ?? {
       $schema: "block-qa/v1",
       label: block.label,
       kind: block.kind,
@@ -342,7 +343,7 @@ function run(): void {
       const nonScriptExisting = preserveNonScriptEntries(existing);
       const scriptHashes = scriptHashesByCriterion[criterionId];
       const freshExisting = existing.find((e) =>
-        entryIsFresh(e, currentHashes, def.depends_on, scriptHashes, def.lean_granularity),
+        entryIsFresh(e, currentHashes, freshnessKeys(def), scriptHashes, def.lean_granularity),
       );
       const dependsOnSatisfied = def.depends_on.every(
         (k) => currentHashes[k] !== undefined,
@@ -510,7 +511,13 @@ function run(): void {
           hashes.extra_inputs.length > 0 ? hashes.extra_inputs : undefined,
         deps_hash: hashes.deps_hash,
         last_run_at: nowIso,
-        last_run_sha: headSha,
+        // The PLATFORM's HEAD, not `headSha`. This sidecar lives in and
+        // describes folio-assistant's own checker scripts; `headSha` is the
+        // CONTENT repo's HEAD (correct for a block's `reviewed_sha`, since
+        // that verdict is about content at that commit). Stamping the
+        // content SHA here recorded a foreign repo's commit as this repo's
+        // "HEAD at last run".
+        last_run_sha: gitHeadSha(REPO_ROOT),
         engine_version: engineVersion,
       };
       saveQaScriptSidecar(sidecar, REPO_ROOT);

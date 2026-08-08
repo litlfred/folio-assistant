@@ -12,9 +12,9 @@
  */
 
 import { readFileSync, writeFileSync, existsSync } from "fs";
-import { resolve, dirname, basename, relative } from "path";
+import { resolve, dirname, relative } from "path";
 import { fileURLToPath } from "url";
-import { walkBlocks, loadQaReport } from "./qa-utils";
+import { walkBlocks } from "./qa-utils";
 
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = resolve(dirname(__filename), "..", "..");

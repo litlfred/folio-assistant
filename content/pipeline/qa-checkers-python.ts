@@ -22,7 +22,7 @@
  */
 
 import { readFileSync, existsSync, readdirSync, statSync } from "fs";
-import { join, basename, dirname, relative } from "path";
+import { join, basename, dirname } from "path";
 import type { CheckerResult, CheckerHit } from "./qa-checkers-voice";
 
 // ─── does_not_default_to_float ─────────────────────────────────
@@ -239,7 +239,6 @@ export function checkDoesNotDefaultToFloat(
   let workingSource = masked;
   // Pre-split for per-line context lookup. masked preserves line
   // breaks so workingLines indexing matches lineForOffset() values.
-  const maskedLines = masked.split("\n");
   for (const m of masked.matchAll(FLOAT_CALL_RE)) {
     const startOfArg = m.index! + m[0].indexOf("(") + 1;
     const endOfArg = m.index! + m[0].lastIndexOf(")");
@@ -522,7 +521,7 @@ export function checkRespectsArchimedeanWall(
           `module under \`archimedean-universe/\` / \`observations/\``,
       });
     }
-    for (const m of lines[i].matchAll(NUMPY_FLOAT64_RE)) {
+    for (const _m of lines[i].matchAll(NUMPY_FLOAT64_RE)) {
       hits.push({
         file: scriptPath,
         line: i + 1,

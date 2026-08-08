@@ -48,7 +48,6 @@ const REPO_ROOT = findContentRepoRoot();
 // silently, while looking healthy.
 const CONTENT_DIR = join(REPO_ROOT, "content");
 const COMPUTATIONS_DIR = join(REPO_ROOT, "computations");
-const BIB_QA_IMAGES_DIR = join(CONTENT_DIR, "bib-qa-images");
 const BIB_QA_REPORT = join(CONTENT_DIR, "bib-qa.json");
 
 export interface CheckerHit {
@@ -947,8 +946,6 @@ export function checkCanonicalScriptNotDeprecated(
 ): CheckerResult {
   const ts = readMaybe(tsPath);
   if (!ts) return { result: "pass", hits: [] };
-  const { probe } = getComputationField(ts);
-  const witness = getComputationField(ts).witness;
   const scriptMatch = ts.match(/script:\s*["']([^"']+)["']/);
   if (!scriptMatch) return { result: "pass", hits: [] };
   const scriptRelPath = scriptMatch[1];

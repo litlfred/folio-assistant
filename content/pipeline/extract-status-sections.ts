@@ -147,7 +147,7 @@ function main() {
     }
 
     // APPLY. Remove sections bottom-up (also strip one preceding blank line).
-    let out = [...lines];
+    const out = [...lines];
     for (const s of removable) {
       let start = s.a;
       while (start > 0 && out[start - 1].trim() === "") start--;

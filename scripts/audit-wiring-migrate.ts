@@ -39,8 +39,8 @@
  * @module scripts/audit-wiring-migrate
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
-import { resolve, basename, relative, dirname } from "path";
+import { readFileSync, writeFileSync } from "fs";
+import { resolve, basename, relative } from "path";
 import { globSync } from "glob";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
@@ -196,7 +196,7 @@ function main(): void {
     let witness: Record<string, unknown>;
     try {
       witness = JSON.parse(readFileSync(wf, "utf-8"));
-    } catch (e) {
+    } catch {
       console.error(`  malformed JSON: ${wf} — skipped`);
       continue;
     }

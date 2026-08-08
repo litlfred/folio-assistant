@@ -54,7 +54,7 @@ if (import.meta.main) {
 
   let migrated = 0;
   let alreadyStructured = 0;
-  let unparseable: string[] = [];
+  const unparseable: string[] = [];
 
   for (const e of entries) {
     const v = e.verified_by;

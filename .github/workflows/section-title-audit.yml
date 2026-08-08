@@ -11,6 +11,9 @@
 # This workflow gates the MACHINE side (warn-only on the current
 # artifact baseline) and HARD-gates sidecar freshness, so a chapter
 # manifest can't change without the committed sidecars being updated.
+
+name: Section-title + structure audit
+
 on:
   workflow_dispatch:
 permissions:

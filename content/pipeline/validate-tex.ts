@@ -19,7 +19,7 @@
  */
 
 import { readFileSync, existsSync, writeFileSync } from "fs";
-import { join, relative, basename, extname } from "path";
+import { join } from "path";
 import { Glob } from "bun";
 import { remark } from "remark";
 import remarkMath from "remark-math";
@@ -108,11 +108,6 @@ function extractSnippets(filepath: string, text: string): TexSnippet[] {
 // ── unified-latex AST validation ──────────────────────────────────
 
 /** Known LaTeX environments that are valid in math mode. */
-const MATH_ENVS = new Set([
-  "aligned", "gathered", "split", "cases", "array",
-  "pmatrix", "bmatrix", "Bmatrix", "vmatrix", "Vmatrix",
-  "smallmatrix", "matrix", "tikzcd",
-]);
 
 /** Environments that must NOT appear in math mode. */
 const NON_MATH_ENVS = new Set([
@@ -449,7 +444,6 @@ function formatWarningsLog(report: ValidationReport): string {
 
 // ── CLI ───────────────────────────────────────────────────────────
 
-const REPO_ROOT = join(import.meta.dir, "../..");
 const CONTENT_ROOT = join(import.meta.dir, "..");
 
 if (import.meta.main) {

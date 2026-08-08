@@ -26,7 +26,7 @@ name: Build & Publish
 #
 # **Triggers**:
 #   - `pull_request` (paths-filtered) — every PR touching content / chapters /
-#     main.tex / tools / folio-assistant / this file / paper-builder image
+#     main.tex / tools / folio-assistant / this file / the folio's builder image
 #     runs the pipeline through `assemble`; `deploy` is gated to manual.
 #   - `workflow_dispatch` — manual run; with the optional source_branch /
 #     feature_branch / publish_branch inputs preserved from the legacy
@@ -65,6 +65,46 @@ on:
         required: false
         default: false
         type: boolean
+      builder_image:
+        description: >
+          Container image for the TeX jobs (paper-pdf, appendix-pdfs,
+          blueprint-html, diff-pdf). Supplied by the calling folio — this
+          workflow is folio-agnostic and does not name one.
+        required: true
+        type: string
+
+  # This workflow is INVOKED BY FOLIOS (e.g. qou's `build.yml` does
+  # `uses: litlfred/folio-assistant/.github/workflows/publish.yml@main`).
+  # A reusable workflow must declare `workflow_call` to be callable at all;
+  # without it every such call fails to start, which is why those calls have
+  # never run.
+  workflow_call:
+    inputs:
+      source_branch:
+        required: false
+        default: ''
+        type: string
+      feature_branch:
+        required: false
+        default: ''
+        type: string
+      publish_branch:
+        required: false
+        default: 'gh-pages'
+        type: string
+      skip_witnesses:
+        required: false
+        default: false
+        type: boolean
+      builder_image:
+        description: >
+          Container image for the TeX jobs. REQUIRED, and deliberately
+          without a default: the builder image is a FOLIO asset — its TeX
+          package set and its licence belong to the folio — so the platform
+          neither names one nor ships a Dockerfile for it. Each folio builds
+          its own image and passes it here.
+        required: true
+        type: string
 
 concurrency:
   group: publish-${{ github.event.pull_request.head.ref || github.ref_name }}
@@ -73,7 +113,7 @@ concurrency:
 permissions:
   contents: read
   pull-requests: write
-  packages: read   # pull the prebuilt ghcr.io/litlfred/qou-paper-builder image (TeX jobs)
+  packages: read   # pull the folio-supplied builder image (TeX jobs)
 
 jobs:
   # ── 1. content-pipeline (sequential prerequisite) ──────────────
@@ -351,7 +391,7 @@ jobs:
     # image is missing the job fails fast (pull error) rather than silently
     # compiling against a different TeX.
     container:
-      image: ghcr.io/litlfred/qou-paper-builder:latest
+      image: ${{ inputs.builder_image }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -467,7 +507,7 @@ jobs:
     runs-on: ubuntu-latest
     # See paper-pdf: prebuilt image replaces the per-job texlive-full install.
     container:
-      image: ghcr.io/litlfred/qou-paper-builder:latest
+      image: ${{ inputs.builder_image }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -531,7 +571,7 @@ jobs:
     needs: content-pipeline
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/litlfred/qou-paper-builder:latest
+      image: ${{ inputs.builder_image }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -579,7 +619,7 @@ jobs:
     if: github.event_name == 'pull_request'
     # See paper-pdf: prebuilt image replaces the per-job texlive-full install.
     container:
-      image: ghcr.io/litlfred/qou-paper-builder:latest
+      image: ${{ inputs.builder_image }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}

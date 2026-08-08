@@ -223,7 +223,7 @@ if (import.meta.main) {
       const file = resolve(rest[0]);
       // Clear stale witnesses first
       clearWitnesses(file);
-      const { hash, witnessFile } = stampWitness(file);
+      const { witnessFile } = stampWitness(file);
       console.log(`✓ Stamped ${basename(file)} → ${basename(witnessFile)}`);
       break;
     }

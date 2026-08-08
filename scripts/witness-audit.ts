@@ -125,11 +125,6 @@ function gitFileShas(filePaths: string[]): Map<string, string> {
   }
 }
 
-function gitFileSha(filePath: string): string {
-  const result = gitFileShas([filePath]);
-  return result.get(filePath) || "unknown";
-}
-
 // ── Lean witness audit ───────────────────────────────────────────
 
 function auditLeanWitnesses(): WitnessStatus[] {

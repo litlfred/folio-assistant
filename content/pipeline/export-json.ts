@@ -30,7 +30,7 @@ import type {
 import type { Data as CSLData } from "csl-json";
 import { references, referenceMap } from "../../schemas/references";
 import { mergeCitations } from "./citations";
-import { isWitnessed, leanFileHash } from "../../scripts/lean-witness";
+import { isWitnessed } from "../../scripts/lean-witness";
 import { leanPackageByName, parseLeanRef } from "../../schemas/lean-packages";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");

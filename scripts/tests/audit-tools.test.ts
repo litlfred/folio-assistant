@@ -5,9 +5,15 @@
 import { test, expect, describe } from "bun:test";
 import { registerAuditTools } from "../../adapters/paper/tools/audit.ts";
 
+/** An MCP tool handler, as the registration stubs below see it. */
+type ToolHandler = (
+  ...args: unknown[]
+) => Promise<{ content: Array<{ type: string; text: string }> }>;
+
+
 describe("registerAuditTools", () => {
-  const reg: Record<string, { desc: string; handler: Function }> = {};
-  registerAuditTools({ tool(name: string, desc: string, _s: any, handler: Function) { reg[name] = { desc, handler }; } } as any);
+  const reg: Record<string, { desc: string; handler: ToolHandler }> = {};
+  registerAuditTools({ tool(name: string, desc: string, _s: any, handler: ToolHandler) { reg[name] = { desc, handler }; } } as any);
 
   const expected = [
     "latex_overfull", "qa_staleness", "tex_source_audit", "dangling_remarks",

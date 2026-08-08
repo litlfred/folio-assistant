@@ -80,9 +80,7 @@ export function registerPreviewTools(server: McpServer): void {
         }
 
         const listing = files.map(f => {
-          const path = join(BUILD_DIR, f);
-          const stat = Bun.file(path);
-          return `  ${f}`;
+                  return `  ${f}`;
         }).join("\n");
 
         if (list) {
