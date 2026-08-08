@@ -4,7 +4,7 @@ title: Repoint remaining hand-rolled block scanners at the module loader
 status: todo
 type: task
 created_at: 2026-08-08T13:25:41Z
-updated_at: 2026-08-08T15:55:00Z
+updated_at: 2026-08-08T16:05:00Z
 ---
 
 Follow-up to jwd9, which replaced the source-text scan with module imports in conjectural-propagation-audit and conditional-class-banner-audit and added write-verification to prune-transitive-deps.
@@ -63,3 +63,32 @@ schema field and forgot this list", which the comment addresses.
 Bullet 2 (`readBlockManifest`) is untouched and still fine as filed.
 
 Leaving this bean `todo` — its actual subject, the repointing, is undone.
+
+## 2026-08-08 — bullet 1 closed by owner decision; the bean stays open for the loader
+
+Put to the owner with the three options and their trade-offs. The ruling:
+**leave the LP criterion as it now stands.**
+
+So bullet 1 is closed — not by being repointed, but by the defect underneath it
+being fixed and the remaining refactor being judged not worth its risk:
+
+- the **true allowlist** was declined because it narrows the gate. Reading only
+  `label`/`title`/`tags`/`script`/`witness` would stop checking a block whose
+  only LP token lives in an `authorNotes` body. Trading a known-safe behaviour
+  for a silent miss mode is the wrong direction for a criterion whose job is to
+  demand evidence.
+- the **complete denylist** stands as the honest middle: identical behaviour to
+  before except for the bug, tested in both directions, and inert across all
+  3523 blocks of the `qou` folio.
+
+Its remaining failure mode is "someone adds a reference field to the schema and
+forgets `REFERENCE_ARRAY_FIELDS`". That is now a comment away from the schema it
+mirrors, and a test file named for the criterion.
+
+**The bean stays `todo`, and its subject is now only the sync loader** — bullet
+1's original ask. That is worth doing when someone is already in loader work, as
+it retires the text-surgery class across every synchronous checker rather than
+one criterion. It is not worth opening on its own account, and it is not
+blocking anything.
+
+Bullet 2 (`readBlockManifest`) unchanged and still fine as filed.

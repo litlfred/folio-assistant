@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5d7z
 title: Reseed lake-cache/qou-v4-24-0 — it carries ZERO of the paper's own oleans
-status: in-progress
+status: scrapped
 type: bug
 priority: high
 created_at: 2026-08-07T12:10:50Z
-updated_at: 2026-08-08T15:10:00Z
+updated_at: 2026-08-08T16:05:00Z
 ---
 
 The production cache branch has 7268 oleans, all dependencies, none QOU.*. Every restore still rebuilds the paper, and sibling .lean files cannot elaborate standalone. lake-cache.sh status now detects and reports this.
@@ -216,3 +216,37 @@ Two real findings survive, and neither is the one in the title:
 
 Whoever holds this bean should re-decide on (1) and (2). Retitling it would be
 their call, not mine.
+
+---
+
+## 2026-08-08 — SCRAPPED by owner decision: the reseed is not worth its cost
+
+Asked directly, with the corrected premise and the real costs on the table.
+The ruling: **leave it.** Recording the reasoning so this is not re-opened by
+inference.
+
+What the reseed would have bought, and what it would have cost:
+
+| | |
+|---|---|
+| buys | `lake build` works; `nimj`'s triviality probe reaches the 57% of blocks it currently cannot |
+| costs | either widening the environment's network policy, or hours of Actions time on a repo whose auto-triggers were disabled for billing (owner directive, 2026-06-30) |
+
+The decisive point is that **the cache already serves the path the paper is
+verified on**. `scripts/lean-verify.sh` calls `lean` with `LEAN_PATH` directly
+and never touches `lake`; four modules were type-checked that way in the
+session that closed this. What the reseed fixes is `lake build`, which nothing
+in the verification path uses.
+
+The two findings that survive the correction above — 945 own oleans against
+~1582 modules, and 0% trace coverage — are real and stay recorded. They are
+the reasons this WOULD be worth doing if `lake build` ever became load-bearing.
+It is not today.
+
+`docs/guides/reseeding-the-lean-cache.md` stays as the runbook for whoever
+does want it, and `lake-cache.sh status` still reports the trace shortfall
+rather than hiding it. Nothing was ripped out; the work was declined, not
+undone.
+
+Status `in-progress` → `scrapped`. Flipping a bean I did not open, on an
+explicit owner decision rather than my own reading of it.

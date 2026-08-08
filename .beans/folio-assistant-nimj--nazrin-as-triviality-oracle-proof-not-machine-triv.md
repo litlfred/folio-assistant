@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nimj
 title: Nazrin as triviality oracle (proof-not-machine-trivial)
-status: in-progress
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-08-07T09:13:35Z
-updated_at: 2026-08-08T11:54:20Z
+updated_at: 2026-08-08T16:05:00Z
 ---
 
 
@@ -194,3 +194,39 @@ number will say which fix it needs.
 What changed is that the measurement will now be trustworthy when it runs.
 Before this it would have been taken with a five-rung ladder, a timeout counted
 as a loss, and any statement containing `:=` silently scored "not trivial".
+
+---
+
+## 2026-08-08 — SCRAPPED by owner decision, downstream of the reseed being declined
+
+Every remaining item here needs the `5d7z` reseed, and that was put to the
+owner with its costs and declined. So the false-positive rate stays
+**unmeasured by choice, not by blocker** — which is a different and more
+honest state than "blocked", and the reason this is being closed rather than
+left open to be re-tested a fourth time.
+
+The bean's own standard was right and is being held to: *"shipping the scaffold
+is not the same as adopting the idea."* The idea is not adopted.
+
+**Nothing is ripped out**, because nothing costs anything to keep:
+
+- `proof-not-machine-trivial` stays shipped at `minor`, warn-only, and inert by
+  construction — no cache means `n/a`, and the note says "not measured", never
+  "nothing trivial". It cannot produce a wrong answer; it can only decline to
+  produce one.
+- `lean-triviality-probe.ts` and its control test stay. The control is what
+  established the probe discriminates at all, and it runs on core Lean with no
+  cache, no Mathlib and no folio — so it keeps working regardless of this.
+- The three defects fixed along the way stay fixed, and one of them was never
+  about this bean: `topLevelCut` also repaired the QA **statement hash**, where
+  a statement containing `:=` hashed a truncated prefix and a changed statement
+  never invalidated its sidecar. That was a staleness check passing by finding
+  nothing, and it is fixed independently of anything decided here.
+
+So the ledger is: the criterion is real and safe, the probe is real and
+verified, one genuine bug in an unrelated system was caught, and the only thing
+not obtained is the tuning evidence — which needs the reseed nobody is buying.
+
+To reopen: land the reseed, re-run the probe over the full corpus, measure the
+FP rate at `TRIVIAL_STEP_THRESHOLD = 3`, then decide on severity. In that
+order, and not before.
