@@ -49,9 +49,10 @@ Prefer the MCP tools (structured findings) when connected; otherwise the scripts
 - `latex_preflight` — no new unknown macros / overfull boxes.
 - `block_pdf_render` — for each changed block, compile a standalone PDF and
   resolve LaTeX errors; overfull boxes on changed content are advisory.
-  Run: `bun run scripts/render-changed-blocks.ts`. Needs local `latexmk` —
-  when it is absent the gate cannot run, and that is reported as **not run**,
-  never as a pass.
+  Run: `bun run scripts/render-changed-blocks.ts` (add `--upload-drive` to
+  also push to Drive when `googleDrive.folderPath` is configured). Needs
+  local `latexmk` — when it is absent the gate cannot run, and that is
+  reported as **not run**, never as a pass.
 - `lean_build` / `lean_check` — build green (or unchanged) for touched packages.
   **Check what the target covers before quoting its result.** `lake build`
   compiles the root module plus its transitive imports, not the source tree

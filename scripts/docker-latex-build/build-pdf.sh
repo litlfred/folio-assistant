@@ -148,4 +148,52 @@ if command -v python3 &>/dev/null; then
     || echo "  ⚠ PDF split failed (non-fatal)"
 fi
 
+# ── Step 5: Sync PDFs to Google Drive (if configured) ────────────
+# Reads target folder from GDRIVE_FOLDER_PATH env var or
+# folio.config.json googleDrive.folderPath field. Unset = no egress.
+_gdrive_folder=""
+if [[ -n "${GDRIVE_FOLDER_PATH:-}" ]]; then
+  _gdrive_folder="$GDRIVE_FOLDER_PATH"
+elif [[ -f "$REPO_ROOT/folio.config.json" ]] && command -v python3 &>/dev/null; then
+  _gdrive_folder="$(python3 -c "
+import json
+try:
+  cfg=json.load(open('$REPO_ROOT/folio.config.json'))
+  print((cfg.get('googleDrive') or {}).get('folderPath',''))
+except Exception:
+  pass
+" 2>/dev/null || true)"
+fi
+
+if [[ -n "${_gdrive_folder:-}" ]] && command -v python3 &>/dev/null; then
+  GDRIVE_MCP="$REPO_ROOT/src/google-drive-mcp.py"
+  if [[ -f "$GDRIVE_MCP" ]]; then
+    echo "==> Syncing PDFs to Google Drive folder: $_gdrive_folder"
+
+    # main.pdf → root folder
+    python3 "$GDRIVE_MCP" --upload "$REPO_ROOT/main.pdf" \
+      --folder "$_gdrive_folder" || echo "  ⚠ main.pdf Drive upload failed (non-fatal)"
+
+    # standalone appendix PDFs → appendices/
+    for pdf in "$REPO_ROOT"/standalone-*.pdf; do
+      [ -f "$pdf" ] || continue
+      python3 "$GDRIVE_MCP" --upload "$pdf" \
+        --folder "$_gdrive_folder/appendices" || echo "  ⚠ appendix Drive upload failed (non-fatal)"
+    done
+
+    # Chapter/section PDFs from split manifest → chapters/ and root
+    if [[ -f "$PDF_SPLIT_DIR/pdf-split-manifest.json" ]]; then
+      python3 "$GDRIVE_MCP" \
+        --sync-manifest "$PDF_SPLIT_DIR/pdf-split-manifest.json" \
+        --folder "$_gdrive_folder" || echo "  ⚠ Split-manifest Drive sync failed (non-fatal)"
+    fi
+
+    echo "==> Drive sync complete."
+  else
+    echo "==> Drive MCP not found at $GDRIVE_MCP — skipping Drive sync"
+  fi
+else
+  echo "==> Google Drive not configured (set GDRIVE_FOLDER_PATH or folio.config.json googleDrive.folderPath to enable)"
+fi
+
 echo "==> Build complete."

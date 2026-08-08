@@ -48,8 +48,12 @@ export function registerRenderTools(server: McpServer): void {
         .describe("Run latexmk -C first to clean auxiliary files"),
       print_mode: z.enum(["formal", "compact"]).default("compact")
         .describe("Print mode: formal (with affiliations) or compact (dense, no affiliations)"),
+      upload_drive: z.boolean().default(false)
+        .describe("Push the rendered PDF to Google Drive (requires Drive MCP configured)"),
+      drive_folder: z.string().optional()
+        .describe("Override Drive destination folder (default: from folio.config.json googleDrive.folderPath)"),
     },
-    async ({ scope, target, engine, clean, print_mode }) => {
+    async ({ scope, target, engine, clean, print_mode, upload_drive, drive_folder }) => {
       // Check deps
       if (!hasCommand("latexmk")) {
         return {
@@ -62,6 +66,34 @@ export function registerRenderTools(server: McpServer): void {
       }
 
       if (!existsSync(BUILD_DIR)) mkdirSync(BUILD_DIR, { recursive: true });
+
+      // Helper: push a PDF to Drive (fire-and-forget, returns link or error string)
+      const pushToDrive = (pdfPath: string, subfolder: string): string => {
+        const gdriveMcp = join(REPO_ROOT, "src", "google-drive-mcp.py");
+        if (!existsSync(gdriveMcp)) return "(Drive MCP not found)";
+        // Read base folder from folio.config.json or env
+        let baseFolder = process.env.GDRIVE_FOLDER_PATH ?? "";
+        if (!baseFolder) {
+          const cfgPath = join(REPO_ROOT, "folio.config.json");
+          if (existsSync(cfgPath)) {
+            try {
+              const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));
+              baseFolder = cfg?.googleDrive?.folderPath ?? "";
+            } catch { /* ignore */ }
+          }
+        }
+        const folder = drive_folder ?? (baseFolder ? `${baseFolder}/${subfolder}` : subfolder);
+        const r = spawnSync("python3", [gdriveMcp, "--upload", pdfPath, "--folder", folder, "--json"], {
+          stdio: "pipe", timeout: 60_000,
+        });
+        if (r.status !== 0) return `Drive upload failed: ${r.stderr?.toString().trim()}`;
+        try {
+          const out = JSON.parse(r.stdout.toString().trim());
+          return out.webViewLink ?? out.link ?? "(uploaded, no link returned)";
+        } catch {
+          return "(upload complete, response not JSON)";
+        }
+      };
 
       try {
         // ── Block render ─────────────────────────────────────────────────────
@@ -132,12 +164,17 @@ export function registerRenderTools(server: McpServer): void {
             .slice(0, 40).join("\n");
 
           const ok = compileResult.status === 0 && existsSync(pdfPath);
+          let driveMsg = "";
+          if (upload_drive && ok) {
+            const link = pushToDrive(pdfPath, "blocks");
+            driveMsg = `\nDrive: ${link}`;
+          }
 
           return {
             content: [{
               type: "text" as const,
               text: ok
-                ? `Block PDF: ${pdfPath}\nSize: ${(readFileSync(pdfPath).length / 1024).toFixed(0)} KB` +
+                ? `Block PDF: ${pdfPath}\nSize: ${(readFileSync(pdfPath).length / 1024).toFixed(0)} KB${driveMsg}` +
                   (relevantLog ? `\n\nLog issues:\n${relevantLog}` : "")
                 : `Block compilation failed (exit ${compileResult.status}).\n\nLog issues:\n${relevantLog || logText.slice(-2000)}`,
             }],
@@ -209,11 +246,17 @@ export function registerRenderTools(server: McpServer): void {
         const log = result.stderr?.toString().slice(-2000) || "";
 
         if (result.status === 0 && existsSync(pdfPath)) {
+          let driveMsg = "";
+          if (upload_drive) {
+            const subfolder = scope === "chapter" ? "chapters" : "";
+            const link = pushToDrive(pdfPath, subfolder);
+            driveMsg = `\nDrive: ${link}`;
+          }
           return {
             content: [{
               type: "text" as const,
               text: `PDF rendered successfully: ${pdfPath}\n` +
-                `Size: ${(readFileSync(pdfPath).length / 1024).toFixed(0)} KB`,
+                `Size: ${(readFileSync(pdfPath).length / 1024).toFixed(0)} KB${driveMsg}`,
             }],
           };
         } else {
