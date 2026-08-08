@@ -63,7 +63,17 @@ export const QOU_LEAN_DIR = join(
   FOLIO_ROOT ?? REPO_ROOT,
   "content/quantum-observable-universe/lean",
 );
-export const CHAPTERS_DIR = join(REPO_ROOT, "chapters");
+/**
+ * `chapters/*.tex` — `content_build` output, which lives in the FOLIO.
+ *
+ * Was `join(REPO_ROOT, "chapters")`, i.e. the PLATFORM, so
+ * `findChapterFiles()` returned `[]` even with a folio attached and
+ * `latex-lean-coverage.test.ts` has never run a single one of its real
+ * assertions in either repo. `QOU_LEAN_DIR` directly above already resolves
+ * against `FOLIO_ROOT`; this is the same rule, and the same split-repo trap
+ * the `FOLIO_ROOT` comment warns about.
+ */
+export const CHAPTERS_DIR = join(FOLIO_ROOT ?? REPO_ROOT, "chapters");
 export const SCHEMAS_DIR = join(REPO_ROOT, "schemas");
 
 // ── Lean project discovery ──────────────────────────────────────

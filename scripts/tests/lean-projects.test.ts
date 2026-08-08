@@ -141,8 +141,12 @@ for (const pkg of LEAN_PACKAGES) {
       });
     }
 
-    // Sorry audit (informational — never fails the test run)
-    test("sorry audit", () => {
+    // A REPORT, not a gate: a nonzero `sorry` count is the expected state of
+    // a paper in progress, so asserting zero would be wrong. It used to end
+    // in `expect(true).toBe(true)` and so could not fail for ANY reason —
+    // including the one that matters, `findLeanFiles` returning nothing and
+    // the audit reporting a clean "0 sorry" over an empty directory.
+    test("sorry audit (report)", () => {
       let totalSorry = 0;
       const sorryFiles: string[] = [];
       for (const file of leanFiles) {
@@ -156,7 +160,8 @@ for (const pkg of LEAN_PACKAGES) {
       if (totalSorry > 0) {
         console.log(`    ℹ ${pkg.lib}: ${totalSorry} sorry in ${sorryFiles.length} files: ${sorryFiles.join(", ")}`);
       }
-      expect(true).toBe(true);
+      // The one thing that can go wrong unnoticed: an audit of no files.
+      expect(leanFiles.length).toBeGreaterThan(0);
     });
 
     // Build artifacts not tracked
