@@ -23,7 +23,7 @@ interface Args {
 }
 
 function parseArgs(argv: string[]): Args {
-  const out: Args = { root: "quantum-observable-universe", json: false };
+  const out: Args = { root: requirePaper(), json: false };
   for (const a of argv) {
     if (a === "--json") out.json = true;
     else if (!a.startsWith("-")) out.root = a;
@@ -65,6 +65,7 @@ interface SorryInfo {
 
 import { walkBlocks, loadQaReport } from "./qa-utils";
 import { WATCHER_CRITERIA_BY_AXIS } from "./qa-criteria-registry";
+import { requirePaper } from "./repo-root";
 
 /** `evidence` as searchable text, whichever of its two shapes it is. */
 function evidenceText(ev: string | Array<{ line?: number; text?: string }> | undefined): string {

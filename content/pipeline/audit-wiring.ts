@@ -32,8 +32,11 @@ import { readdirSync, readFileSync, existsSync } from "fs";
 import { resolve, join, basename } from "path";
 import { BlockSchema } from "../../schemas/constraints";
 import type { Block } from "../../schemas/types";
+import { requirePaper, findContentRepoRoot } from "./repo-root";
 
-const PAPER_DIR = resolve(__dirname, "../quantum-observable-universe");
+// Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
+const PAPER = requirePaper();
+const PAPER_DIR = join(findContentRepoRoot(), "content", PAPER);
 const OUT_JSON = resolve(__dirname, "../audit-wiring.json");
 
 // Block kinds that don't require a .lean file.
@@ -255,7 +258,7 @@ async function auditPaper(): Promise<AuditReport> {
     }
   }
 
-  return { paper: "quantum-observable-universe", totalBlocks: blocks.length, byBucket, byChapter, blocks, strictFindings };
+  return { paper: PAPER, totalBlocks: blocks.length, byBucket, byChapter, blocks, strictFindings };
 }
 
 function formatTable(report: AuditReport): string {

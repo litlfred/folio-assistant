@@ -18,6 +18,7 @@
 
 import { readdirSync, existsSync, statSync } from "fs";
 import { resolve, join } from "path";
+import { requirePaper } from "./repo-root";
 
 // ── Types ────────────────────────────────────────────────────────
 
@@ -130,7 +131,7 @@ async function analyzeRemark(filePath: string): Promise<RemarkInfo | null> {
 // ── Main ─────────────────────────────────────────────────────────
 
 async function main() {
-  const paperDir = process.argv[2] || "quantum-observable-universe";
+  const paperDir = requirePaper(process.argv[2]);
   const contentDir = resolve(import.meta.dir, "..", paperDir);
 
   if (!existsSync(contentDir)) {

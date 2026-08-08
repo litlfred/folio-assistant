@@ -23,9 +23,14 @@
  */
 
 import { readFileSync, writeFileSync, existsSync } from "fs";
-import { resolve, join } from "path";
+import { join } from "path";
+import { findContentRepoRoot } from "./repo-root";
 
-const REPO_ROOT = resolve(import.meta.dir, "../..");
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
 const TARGET = join(REPO_ROOT, "content/bib-qa-verifications.json");
 
 /** Parse legacy "Claude (model-name)" pattern → `{ kind: "agent", model }`. */
