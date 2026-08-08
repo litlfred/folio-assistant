@@ -27,8 +27,17 @@ import {
   CATEGORICAL_CHAPTERS,
   ARCHIMEDEAN_CHAPTERS,
 } from "../../content/pipeline/chapter-profile-registry-di.ts";
+import { registerDefaultChapterProfiles }
+  from "../../content/pipeline/_folio-chapter-profiles.qou.ts";
 
-afterEach(() => resetChapterProfiles());
+// Restore the shipped default rather than leaving the registry empty.
+// `registerDefaultChapterProfiles()` runs as a module-load side effect of
+// importing the checker, so it fires ONCE per process — a bare
+// `resetChapterProfiles()` here would leave every later test file (e.g.
+// `q-usage-chapter-regimes.test.ts`, which reads all three exports) looking
+// at an empty registry, with the failure landing in whichever file happened
+// to run next. Found exactly that way: green alone, red in the suite.
+afterEach(() => registerDefaultChapterProfiles());
 
 const FIXTURE = {
   chapterExpectedRegimes: {
@@ -112,9 +121,11 @@ describe("configured", () => {
 
 describe("the shipped qou default", () => {
   test("registers the profiles the checker used to hold inline", async () => {
-    // Importing the checker runs `registerDefaultChapterProfiles()`, so the
-    // 31 chapters remain scored exactly as before the extraction.
+    // Call the entry point directly. Relying on the import side effect would
+    // pass alone and fail in the suite, where the module is already cached
+    // and the side effect will not fire again.
     resetChapterProfiles();
+    registerDefaultChapterProfiles();
     const mod = await import("../../content/pipeline/qa-checkers-q-usage.ts");
     expect(chapterProfilesConfigured()).toBe(true);
     expect(Object.keys(mod.CHAPTER_EXPECTED_REGIMES).length).toBeGreaterThan(20);
