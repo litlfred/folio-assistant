@@ -28,6 +28,7 @@ import { fileURLToPath } from "url";
 import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
 import { hashFile } from "./qa-utils";
 import { findContentRepoRoot, findPapers } from "./repo-root";
+import { stripArrayField } from "./uses-field";
 
 const __filename = fileURLToPath(import.meta.url);
 // Resolve content-repo paths (witnesses under <repo>/computations, Lean
@@ -632,10 +633,14 @@ export function checkComputeLpDualPresent(
   // do not imply the block's OWN witness must carry LP dual fields.
   // Strip uses: array + cites: array + interprets: field — these are
   // downstream references, not evidence the block computes LP duals.
-  const tsStripped = ts
-    .replace(/\buses\s*:\s*\[[\s\S]*?\]/g, "")
-    .replace(/\bcites\s*:\s*\[[\s\S]*?\]/g, "")
-    .replace(/\binterprets\s*:\s*"[^"]*"/g, "");
+  // Non-greedy `[\s\S]*?\]` stopped at the FIRST `]`, so an entry
+  // containing one (`"def:family[0]"`) left the rest of the array in
+  // place — and a stray LP hint inside it then read as evidence about
+  // this block. `stripArrayField` scans to the matching bracket.
+  const tsStripped = stripArrayField(stripArrayField(ts, "uses"), "cites").replace(
+    /\binterprets\s*:\s*"[^"]*"/g,
+    "",
+  );
   if (!LP_DUAL_HINT_RE.test(tsStripped)) {
     return { result: "pass", hits: [] };
   }
