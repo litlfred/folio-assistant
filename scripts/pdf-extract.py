@@ -28,11 +28,20 @@ was the only thing that read the papers.  It has no dependencies beyond the
 standard library by design -- it is the rung that still works when the
 environment is broken.
 
-SCAN DETECTION.  Before declaring failure, the script inspects the PDF's
-structure: a file whose pages are `CCITTFaxDecode` / `JBIG2Decode` /
-`DCTDecode` images with little or no `/Font` has **no text layer at all**, and
-no amount of parser-swapping will help.  Saying that explicitly is the
-difference between "try another library" and "you need OCR or a vision model".
+SCAN DETECTION, AND ITS ONE TRAP.  The script inspects the PDF's structure:
+pages made of `CCITTFaxDecode` / `JBIG2Decode` / `DCTDecode` images with little
+`/Font` indicate a scan.  **But "is a scan" does NOT imply "has no text
+layer."**  Publisher scans very often carry an embedded OCR sidecar, which
+`pdftotext` reads perfectly while every other rung here returns nothing --
+including rung 4, because the sidecar is not laid out like pdflatex content
+streams.  This was found the hard way: a 1985 Elsevier scan (658 CCITTFax
+blocks) was reported "no parser will ever read this", and then poppler read
+79,231 characters out of it.
+
+So a scan verdict is only ever reported ALONGSIDE which rungs were actually
+available, and if `pdftotext` was missing the script says to install poppler
+FIRST rather than reaching for OCR or a vision model.  Never conclude "no text
+layer" from the image counts alone.
 
 Usage:
     pdf-extract.py FILE.pdf                 # text to stdout
@@ -275,11 +284,28 @@ def main() -> int:
     if text is None:
         print(format_diagnosis(args.pdf, d), file=sys.stderr)
         if d["looks_like_scan"]:
+            have_poppler = shutil.which("pdftotext") is not None
+            if not have_poppler:
+                # The important case: a scan may still carry an embedded OCR
+                # sidecar that ONLY pdftotext reads. Do not send the user to
+                # OCR or a vision model before that has been tried.
+                print(
+                    "\nSCAN-LIKE STRUCTURE, and `pdftotext` is NOT INSTALLED --\n"
+                    "so this is NOT yet evidence that the file lacks a text layer.\n"
+                    "Publisher scans frequently embed an OCR sidecar that poppler\n"
+                    "reads and the other rungs cannot. Do this FIRST:\n"
+                    "    apt-get install -y poppler-utils\n"
+                    "then re-run. Only if rung 1 also comes back empty is the file\n"
+                    "genuinely imageonly, and OCR/vision the right answer:\n"
+                    "    apt-get install -y tesseract-ocr\n",
+                    file=sys.stderr)
+                return 2
             print(
-                "\nNO TEXT LAYER. This file is a scan, so no parser will ever read\n"
-                "it -- swapping PDF libraries is wasted effort. Options:\n"
+                "\nNO TEXT LAYER. `pdftotext` IS installed and still found nothing,\n"
+                "so this file is image-only -- swapping PDF libraries is wasted\n"
+                "effort. Options:\n"
                 "  * install OCR:  apt-get install -y tesseract-ocr poppler-utils\n"
-                "                  then re-run this script (the OCR rung will fire)\n"
+                "                  then re-run (the OCR rung will fire)\n"
                 "  * or read the pages with a vision model, per\n"
                 "    document-intake.md's routing table.\n",
                 file=sys.stderr)
