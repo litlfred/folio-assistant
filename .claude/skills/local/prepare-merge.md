@@ -60,10 +60,11 @@ the one recipe.
    For `contentType: paper` branches that touch content blocks, also run the
    **`block_pdf_render`** gate:
    ```
-   bun run scripts/render-changed-blocks.ts
+   bun run scripts/render-changed-blocks.ts [--upload-drive]
    ```
    This compiles a standalone PDF for every changed block and scrapes the
-   LaTeX log. Exits 1 on LaTeX errors (fix required); exits 0 with warnings
+   LaTeX log; `--upload-drive` additionally pushes clean PDFs to Google Drive
+   when it is configured. Exits 1 on LaTeX errors (fix required); exits 0 with warnings
    only (advisory); exits 2 on setup problems — including **no local
    `latexmk`**, which is the common case in a container. Exit 2 means the gate
    did **not run**; report it that way rather than folding it into a green,

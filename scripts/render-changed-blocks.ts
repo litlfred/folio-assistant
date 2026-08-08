@@ -2,20 +2,25 @@
 /**
  * render-changed-blocks.ts — Render per-block standalone PDFs for every
  * content block touched by the current branch (or an explicit file list),
- * and scrape the LaTeX logs for human-relevant feedback.
+ * scrape the LaTeX logs for human-relevant feedback, and optionally push
+ * the clean PDFs to Google Drive.
  *
  * This script is the key loop in the `block_pdf_render` prepare-merge gate
  * (see .claude/commands/prepare-merge.md) and is also called from the
  * render-on-change hook after every content edit.
  *
- * Output is local only: PDFs land under `build/block-pdfs/` and a JSON
- * report beside them. Nothing leaves the machine.
+ * By default output is local: PDFs land under `build/block-pdfs/` with a
+ * JSON report beside them, and nothing leaves the machine. `--upload-drive`
+ * additionally pushes each clean PDF to Google Drive — third-party egress,
+ * so it is opt-in at the call site.
  *
  * Usage:
  *   bun run scripts/render-changed-blocks.ts
  *   bun run scripts/render-changed-blocks.ts --paper quantum-observable-universe
  *   bun run scripts/render-changed-blocks.ts --base main
  *   bun run scripts/render-changed-blocks.ts --files content/paper/ch/block.ts
+ *   bun run scripts/render-changed-blocks.ts --upload-drive
+ *   bun run scripts/render-changed-blocks.ts --upload-drive --drive-folder "QOU/blocks"
  *   bun run scripts/render-changed-blocks.ts --all   # render every block in paper
  *
  * Exit codes:
@@ -42,6 +47,7 @@ const REPO_ROOT = resolve(import.meta.dir, "..");
 const CONTENT_DIR = join(REPO_ROOT, "content");
 const PREAMBLE_PATH = join(REPO_ROOT, "latex", "preamble.tex");
 const BLOCK_PDFS_DIR = join(REPO_ROOT, "build", "block-pdfs");
+const GOOGLE_DRIVE_MCP = join(REPO_ROOT, "src", "google-drive-mcp.py");
 
 // ── Arg parsing ──────────────────────────────────────────────────────────────
 
@@ -57,10 +63,28 @@ function hasFlag(flag: string): boolean {
 
 const PAPER = argVal("--paper", "quantum-observable-universe")!;
 const BASE = argVal("--base", "");               // git base ref for diff
+const UPLOAD_DRIVE = hasFlag("--upload-drive");
+const DRIVE_FOLDER = argVal("--drive-folder")    // explicit folder override
+  ?? resolveConfigDriveFolder()
+  ?? "folio-pdfs/blocks";
 const RENDER_ALL = hasFlag("--all");
 const EXPLICIT_FILES = args.filter(a => !a.startsWith("--") && (a.endsWith(".ts") || a.endsWith(".md")));
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
+
+function resolveConfigDriveFolder(): string | undefined {
+  // Read folio.config.json if present.
+  const cfgPath = join(REPO_ROOT, "folio.config.json");
+  if (!existsSync(cfgPath)) return undefined;
+  try {
+    const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));
+    if (cfg?.googleDrive?.folderPath) {
+      const base = String(cfg.googleDrive.folderPath).replace(/\/$/, "");
+      return `${base}/blocks`;
+    }
+  } catch { /* ignore */ }
+  return undefined;
+}
 
 function hasCommand(cmd: string): boolean {
   const r = spawnSync("which", [cmd], { stdio: "pipe" });
@@ -270,6 +294,36 @@ export function scrapeLog(logText: string): LogIssue[] {
   return issues;
 }
 
+// ── Drive upload ─────────────────────────────────────────────────────────────
+
+function uploadToDrive(localPath: string, driveFolder: string): {
+  ok: boolean;
+  link?: string;
+  error?: string;
+} {
+  if (!existsSync(GOOGLE_DRIVE_MCP)) {
+    return { ok: false, error: "google-drive-mcp.py not found — Drive upload skipped" };
+  }
+  const py = spawnSync("python3", [
+    GOOGLE_DRIVE_MCP,
+    "--upload", localPath,
+    "--folder", driveFolder,
+    "--json",
+  ], { stdio: "pipe", timeout: 60_000 });
+
+  if (py.status !== 0) {
+    const err = py.stderr?.toString().trim() || "unknown error";
+    return { ok: false, error: err };
+  }
+
+  try {
+    const out = JSON.parse(py.stdout.toString().trim());
+    return { ok: true, link: out.webViewLink ?? out.link };
+  } catch {
+    return { ok: false, error: `Drive upload returned non-JSON: ${py.stdout.toString().trim()}` };
+  }
+}
+
 // ── Compile a single block ───────────────────────────────────────────────────
 
 interface BlockResult {
@@ -277,6 +331,8 @@ interface BlockResult {
   texPath: string;
   pdfPath: string | null;
   issues: LogIssue[];
+  driveLink?: string;
+  driveError?: string;
   compileOk: boolean;
 }
 
@@ -325,11 +381,25 @@ async function renderBlock(entry: BlockEntry, paper: Paper): Promise<BlockResult
   const issues = scrapeLog(logText);
   const compileOk = compile.status === 0 && existsSync(pdfPath);
 
+  let driveLink: string | undefined;
+  let driveError: string | undefined;
+
+  if (UPLOAD_DRIVE && compileOk) {
+    const up = uploadToDrive(pdfPath, DRIVE_FOLDER);
+    if (up.ok) {
+      driveLink = up.link;
+    } else {
+      driveError = up.error;
+    }
+  }
+
   return {
     blockName: entry.blockName,
     texPath,
     pdfPath: compileOk ? pdfPath : null,
     issues,
+    driveLink,
+    driveError,
     compileOk,
   };
 }
@@ -348,6 +418,7 @@ async function main(): Promise<void> {
   }
 
   console.log(`[render-changed-blocks] Paper: ${PAPER}`);
+  if (UPLOAD_DRIVE) console.log(`[render-changed-blocks] Drive folder: ${DRIVE_FOLDER}`);
 
   // Load paper
   const { paper, entries } = await loadAllBlocks();
@@ -399,7 +470,10 @@ async function main(): Promise<void> {
       const status = result.compileOk
         ? (errors.length === 0 ? "✓" : "✗")
         : "✗";
-      process.stdout.write(`${status}\n`);
+      process.stdout.write(`${status}`);
+      if (result.driveLink) process.stdout.write(` → ${result.driveLink}`);
+      if (result.driveError) process.stdout.write(` ⚠ Drive: ${result.driveError}`);
+      process.stdout.write("\n");
 
       if (errors.length > 0) {
         anyError = true;
@@ -434,6 +508,8 @@ function writeJsonReport(results: BlockResult[], outDir: string): void {
   const report = {
     timestamp: new Date().toISOString(),
     paper: PAPER,
+    uploadDrive: UPLOAD_DRIVE,
+    driveFolderBase: UPLOAD_DRIVE ? DRIVE_FOLDER : null,
     blocks: results.map(r => ({
       blockName: r.blockName,
       compileOk: r.compileOk,
@@ -441,6 +517,8 @@ function writeJsonReport(results: BlockResult[], outDir: string): void {
       errorCount: r.issues.filter(i => i.kind === "error").length,
       warningCount: r.issues.filter(i => i.kind === "warning").length,
       issues: r.issues,
+      driveLink: r.driveLink ?? null,
+      driveError: r.driveError ?? null,
     })),
   };
   writeFileSync(join(outDir, "render-report.json"), JSON.stringify(report, null, 2));
