@@ -269,16 +269,26 @@ export function fileExistsBranch(branch: string | undefined, relPath: string): b
 
 /**
  * Import a .ts module — from disk if current branch, via temp file otherwise.
+ *
+ * Generic in the module's default export. It returned `Promise<unknown>`, so
+ * every one of the dozen call sites cast the result — and they all reached for
+ * `as any` rather than `as Chapter` / `as Block` / `as Paper`, which the schema
+ * already defines. The cast moves to the type argument, where it is at least
+ * named. Still a claim about a dynamically imported module, not a check: `T`
+ * defaults to `unknown` so an un-annotated call stays honest.
  */
-export async function importTsBranch(branch: string | undefined, relPath: string): Promise<unknown> {
+export async function importTsBranch<T = unknown>(
+  branch: string | undefined,
+  relPath: string,
+): Promise<T> {
   if (isCurrentBranch(branch)) {
     const absPath = resolve(REPO_ROOT, relPath);
     delete require.cache?.[absPath];
     // Bust ESM module cache with timestamp query param
     const mod = await import(`${absPath}?t=${Date.now()}`);
-    return mod.default ?? mod;
+    return (mod.default ?? mod) as T;
   }
-  return gitImportTs(branch!, relPath);
+  return gitImportTs(branch!, relPath) as Promise<T>;
 }
 
 /**

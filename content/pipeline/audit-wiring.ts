@@ -32,8 +32,11 @@ import { readdirSync, readFileSync, existsSync } from "fs";
 import { resolve, join, basename } from "path";
 import { BlockSchema } from "../../schemas/constraints";
 import type { Block } from "../../schemas/types";
+import { requirePaper, findContentRepoRoot } from "./repo-root";
 
-const PAPER_DIR = resolve(__dirname, "../quantum-observable-universe");
+// Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
+const PAPER = requirePaper();
+const PAPER_DIR = join(findContentRepoRoot(), "content", PAPER);
 const OUT_JSON = resolve(__dirname, "../audit-wiring.json");
 
 // Block kinds that don't require a .lean file.
@@ -49,7 +52,13 @@ const PROVABLE_KINDS = new Set([
 type Bucket = "wired-end-to-end" | "wired-partially" | "stub/skeleton" | "math-only";
 
 interface BlockAudit {
-  label: string;
+  /** Optional, because `label` is optional on several block kinds. It was
+   *  typed `string` while `block.label` is `string | undefined`, so an
+   *  unlabelled block keyed `blocksByLabel` under `undefined` — and every
+   *  unlabelled block collided on that one key, silently discarding all but
+   *  the last. `allLabels` is derived from those keys, so the `uses[]`
+   *  resolution below inherited the damage. */
+  label?: string;
   kind: string;
   chapter: string;
   blockName: string;
@@ -187,7 +196,10 @@ async function auditPaper(): Promise<AuditReport> {
         citedWitnesses,
         usesUnresolved: [],
       };
-      blocksByLabel.set(block.label, audit);
+      // Only labelled blocks enter the label index: an unlabelled block
+      // cannot be the target of a `uses[]` edge, so it has no place in
+      // `allLabels`. It is still audited — it just isn't addressable.
+      if (block.label) blocksByLabel.set(block.label, audit);
       blocks.push(audit);
     }
   }
@@ -200,8 +212,16 @@ async function auditPaper(): Promise<AuditReport> {
     try {
       block = (await import(tsPath)).default;
     } catch {}
-    if (block && block.uses) {
-      for (const u of block.uses) {
+    // `uses` is on `BlockBase`, which every block kind extends EXCEPT
+    // `EquationBlock` — the one standalone interface in the union. Reading it
+    // off the bare union is a type error, and an equation genuinely has no
+    // editorial dependencies to resolve, so an absent `uses` is correct here
+    // rather than something to work around. (Whether `EquationBlock` SHOULD
+    // carry the editorial relation is a schema question, recorded in bean
+    // `folio-assistant-tsca` rather than decided here.)
+    const blockUses = block && "uses" in block ? block.uses : undefined;
+    if (blockUses) {
+      for (const u of blockUses) {
         // Skip qualified cross-paper references (paper-dir:label or https://).
         if (u.includes(":") && !u.startsWith("def:") && !u.startsWith("prop:") &&
             !u.startsWith("thm:") && !u.startsWith("lem:") && !u.startsWith("cor:") &&
@@ -238,7 +258,7 @@ async function auditPaper(): Promise<AuditReport> {
     }
   }
 
-  return { paper: "quantum-observable-universe", totalBlocks: blocks.length, byBucket, byChapter, blocks, strictFindings };
+  return { paper: PAPER, totalBlocks: blocks.length, byBucket, byChapter, blocks, strictFindings };
 }
 
 function formatTable(report: AuditReport): string {

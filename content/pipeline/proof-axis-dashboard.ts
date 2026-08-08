@@ -23,7 +23,7 @@ interface Args {
 }
 
 function parseArgs(argv: string[]): Args {
-  const out: Args = { root: "quantum-observable-universe", json: false };
+  const out: Args = { root: requirePaper(), json: false };
   for (const a of argv) {
     if (a === "--json") out.json = true;
     else if (!a.startsWith("-")) out.root = a;
@@ -65,6 +65,14 @@ interface SorryInfo {
 
 import { walkBlocks, loadQaReport } from "./qa-utils";
 import { WATCHER_CRITERIA_BY_AXIS } from "./qa-criteria-registry";
+import { requirePaper } from "./repo-root";
+
+/** `evidence` as searchable text, whichever of its two shapes it is. */
+function evidenceText(ev: string | Array<{ line?: number; text?: string }> | undefined): string {
+  if (typeof ev === "string") return ev;
+  if (!Array.isArray(ev)) return "";
+  return ev.map((h) => `${h.line ?? ""}:${h.text ?? ""}`).join(" | ");
+}
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
@@ -104,7 +112,13 @@ function main() {
       if (r === "fail") s.failBlocks.push(report.label);
       if (r === "warn") {
         s.warnBlocks.push(report.label);
-        const ev = latest.evidence ?? "";
+        // `QaCriterionEntry.evidence` is `string | Array<{line?, text?}>`.
+        // This was used directly as a string: `ev.includes("no declarations")`
+        // on the ARRAY form is Array.prototype.includes — exact-element
+        // membership, not substring — so it was always false and the
+        // "no declarations" mismatch silently never fired for array-form
+        // evidence. Flatten to text first.
+        const ev = evidenceText(latest.evidence);
         const notes = latest.notes ?? "";
         if (ev.includes("no declarations")) {
           const relTs = relative(rootPath, block.ts);

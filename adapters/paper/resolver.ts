@@ -22,46 +22,13 @@ import type {
   ChapterDetail,
   SectionStub,
 } from "../../src/types.js";
+import { leanPackageByName } from "../../schemas/lean-packages.js";
+import type { Block, Chapter, Folio, Paper, Section } from "../../schemas/types.js";
 import {
-  leanPackageByName,
-  parseLeanRef,
-  type ParsedLeanRef,
-} from "../../schemas/lean-packages.js";
-
-/**
- * Parse a block's `lean.ref` URI to its components.  Returns
- * `undefined` when the block has no lean ref, or when parsing fails
- * (malformed content — logged but non-fatal).
- */
-function tryParseLeanRef(blk: any): ParsedLeanRef | undefined {
-  const ref = blk?.lean?.ref;
-  if (typeof ref !== "string" || ref.length === 0) return undefined;
-  try {
-    return parseLeanRef(ref);
-  } catch {
-    return undefined;
-  }
-}
-
-/**
- * Flatten a raw section manifest into the ordered list of block root-names
- * it contributes: the section's own `blocks`, followed by each subsection's
- * `blocks` in declaration order.
- *
- * The viewer / MCP resolution layer has no subsection nesting, so subsection
- * content is surfaced inline under the parent section. The order mirrors the
- * LaTeX renderer (`render-latex.ts`: parent blocks first, then each
- * `\subsection` with its blocks), keeping the viewer and PDF block order in
- * sync. Without this, blocks that live only inside `subsections[]` never reach
- * any resolver consumer and the section renders empty in the viewer.
- */
-function sectionBlockNames(sec: any): string[] {
-  const own: string[] = Array.isArray(sec?.blocks) ? sec.blocks : [];
-  const subs: string[] = Array.isArray(sec?.subsections)
-    ? sec.subsections.flatMap((s: any) => (s && Array.isArray(s.blocks) ? s.blocks : []))
-    : [];
-  return subs.length ? [...own, ...subs] : own;
-}
+  blockCaption, blockExamples, blockLean, blockProofs, blockTex,
+  isSectionRef, sectionBlockNames, tryParseLeanRef,
+} from "../manifest-entries.js";
+import { leanStatusBucket } from "../../content/pipeline/render-latex.js";
 
 export class PaperResolver {
   private outlineCache = new TtlCache<ContentOutline>();
@@ -98,7 +65,7 @@ export class PaperResolver {
     let folioData: { title: string; papers: Array<{ dir: string; title?: string; description?: string; tags?: string[] }> };
 
     if (this.gitHelper.fileExistsBranch(br, folioRel)) {
-      folioData = (await this.gitHelper.importTsBranch(br, folioRel)) as any;
+      folioData = await this.gitHelper.importTsBranch<Folio>(br, folioRel);
     } else {
       const dirs = this.gitHelper.listDirBranch(br, "content").filter((d) => {
         if (d === "schema" || d === "pipeline" || d === "node_modules") return false;
@@ -110,25 +77,34 @@ export class PaperResolver {
     const items: FolioItem[] = [];
     for (const ref of folioData.papers) {
       try {
-        const paperMod = (await this.gitHelper.importTsBranch(br, `content/${ref.dir}/${ref.dir}.ts`)) as any;
+        const paperMod = await this.gitHelper.importTsBranch<Paper>(br, `content/${ref.dir}/${ref.dir}.ts`);
         let blockCount = 0, provedCount = 0, todoCount = 0, chapCount = 0;
 
         for (const chRef of paperMod.chapters || []) {
           const chRel = `content/${ref.dir}/${chRef.dir}/${chRef.dir}.ts`;
           if (!this.gitHelper.fileExistsBranch(br, chRel)) continue;
           chapCount++;
-          const ch = (await this.gitHelper.importTsBranch(br, chRel)) as any;
+          const ch = await this.gitHelper.importTsBranch<Chapter>(br, chRel);
           for (const sec of ch.sections || []) {
-            if (!("blocks" in sec)) continue;
+            // Was `!("blocks" in sec)`, which also skipped inline sections
+            // whose blocks all live in `subsections[]` — the very case
+            // `sectionBlockNames` exists to flatten. Same fix as the MCP
+            // resolver; both now use the one reference test.
+            if (isSectionRef(sec)) continue;
             for (const rootName of sectionBlockNames(sec)) {
               const blkRel = `content/${ref.dir}/${chRef.dir}/${rootName}.ts`;
               if (!this.gitHelper.fileExistsBranch(br, blkRel)) continue;
               blockCount++;
               try {
-                const blk = (await this.gitHelper.importTsBranch(br, blkRel)) as any;
-                if (blk.status === "proved" || blk.status === "mathlib_ok") provedCount++;
+                const blk = await this.gitHelper.importTsBranch<Block>(br, blkRel);
+                // Was `blk.status === "proved" || "mathlib_ok"`. There is no
+                // block-level `status`: the schema derives
+                // `FormalizationStatus` at build time and does not store it
+                // in manifests, so this counter was always 0. The block's
+                // own `lean` field is the signal.
+                if (leanStatusBucket(blockLean(blk)) === "compiled") provedCount++;
                 const fb = this.feedbackStore.read(ref.dir, rootName);
-                if (fb.length) todoCount += fb.filter((t: any) => t.status !== "resolved" && t.status !== "wontfix").length;
+                if (fb.length) todoCount += fb.filter((t) => t.status !== "resolved" && t.status !== "wontfix").length;
               } catch {}
             }
           }
@@ -169,7 +145,7 @@ export class PaperResolver {
     const paperRel = `content/${id}/${id}.ts`;
     if (!this.gitHelper.fileExistsBranch(br, paperRel)) return null;
 
-    const paperMod = (await this.gitHelper.importTsBranch(br, paperRel)) as any;
+    const paperMod = await this.gitHelper.importTsBranch<Paper>(br, paperRel);
     const chapters: OutlineChapter[] = [];
 
     // Auto-number chapters from manifest order: skip unnumbered ones (tabLabel set)
@@ -177,14 +153,13 @@ export class PaperResolver {
     for (const chRef of paperMod.chapters || []) {
       const chTsRel = `content/${id}/${chRef.dir}/${chRef.dir}.ts`;
       if (!this.gitHelper.fileExistsBranch(br, chTsRel)) continue;
-      const ch = (await this.gitHelper.importTsBranch(br, chTsRel)) as any;
+      const ch = await this.gitHelper.importTsBranch<Chapter>(br, chTsRel);
       const chapterNumber = ch.tabLabel != null ? undefined : autoNum++;
 
       const sections: OutlineChapter["sections"] = [];
       for (const sec of ch.sections || []) {
-        if ("name" in sec && !("blocks" in sec)) continue;
-        const section = sec as { title: string; label?: string; blocks: string[] };
-        sections.push({ title: section.title, label: section.label, blockCount: sectionBlockNames(section).length });
+        if (isSectionRef(sec)) continue;
+        sections.push({ title: sec.title, label: sec.label, blockCount: sectionBlockNames(sec).length });
       }
 
       chapters.push({ number: chapterNumber, tabLabel: ch.tabLabel, title: ch.title, label: ch.label, dir: chRef.dir, sections });
@@ -216,27 +191,30 @@ export class PaperResolver {
     const chTsRel = `${chRel}/${chapterDir}.ts`;
     if (!this.gitHelper.fileExistsBranch(br, chTsRel)) return null;
 
-    const ch = (await this.gitHelper.importTsBranch(br, chTsRel)) as any;
+    const ch = await this.gitHelper.importTsBranch<Chapter>(br, chTsRel);
     const sections: SectionStub[] = [];
 
     for (const sec of ch.sections || []) {
-      if ("name" in sec && !("blocks" in sec)) continue;
-      const section = sec as { title: string; label?: string; blocks: string[] };
+      if (isSectionRef(sec)) continue;
+      const section = sec;
 
       const blockStubs: SectionStub["blockStubs"] = [];
       for (const rootName of sectionBlockNames(section)) {
         const blkTsRel = `${chRel}/${rootName}.ts`;
         try {
-          const blk = (await this.gitHelper.importTsBranch(br, blkTsRel)) as any;
+          const blk = await this.gitHelper.importTsBranch<Block>(br, blkTsRel);
           const feedback = this.feedbackStore.read(paperId, rootName);
+          const blkLean = blockLean(blk);
           blockStubs.push({
             rootName,
             kind: blk.kind,
             label: blk.label,
             title: blk.title,
-            status: blk.status,
-            lean: blk.lean ? { ref: blk.lean.ref, validation: blk.lean.validation } : undefined,
-            todoCount: feedback.filter((t: any) => t.status === "open").length,
+            // `blk.status` again — derived, never stored. Bound once so TS
+            // narrows the const rather than each repeated call.
+            status: leanStatusBucket(blkLean),
+            lean: blkLean ? { ref: blkLean.ref, validation: blkLean.validation } : undefined,
+            todoCount: feedback.filter((t) => t.status === "open").length,
           });
         } catch {
           blockStubs.push({ rootName, kind: "error", todoCount: 0 });
@@ -281,11 +259,11 @@ export class PaperResolver {
     const chTsRel = `${chRel}/${chapterDir}.ts`;
     if (!this.gitHelper.fileExistsBranch(br, chTsRel)) return null;
 
-    const ch = (await this.gitHelper.importTsBranch(br, chTsRel)) as any;
-    const realSections = (ch.sections || []).filter((s: any) => !("name" in s && !("blocks" in s)));
+    const ch = await this.gitHelper.importTsBranch<Chapter>(br, chTsRel);
+    const realSections = (ch.sections || []).filter((s): s is Section => !isSectionRef(s));
     if (sectionIndex < 0 || sectionIndex >= realSections.length) return null;
 
-    const sec = realSections[sectionIndex] as any;
+    const sec = realSections[sectionIndex];
     const ownBlockNames = Array.isArray(sec.blocks) ? sec.blocks : [];
     const blocks = await this.resolveBlocks(paperId, chRel, ownBlockNames, br);
 
@@ -294,9 +272,11 @@ export class PaperResolver {
       subsections = [];
       for (const sub of sec.subsections) {
         if (!sub) continue;
-        const subBlockNames = Array.isArray(sub.blocks) ? sub.blocks : [];
-        const subBlocks = await this.resolveBlocks(paperId, chRel, subBlockNames, br);
-        subsections.push({ title: sub.title, label: sub.label, blocks: subBlocks });
+        // A bare `SectionRef` subsection is not resolvable at this level, so
+        // it contributes no blocks — as before, when `sub.blocks` was absent.
+        const inline = isSectionRef(sub) ? undefined : sub;
+        const subBlocks = await this.resolveBlocks(paperId, chRel, inline?.blocks ?? [], br);
+        subsections.push({ title: inline?.title ?? "", label: inline?.label, blocks: subBlocks });
       }
     }
 
@@ -316,7 +296,7 @@ export class PaperResolver {
     const paperRel = `content/${id}/${id}.ts`;
     if (!this.gitHelper.fileExistsBranch(br, paperRel)) return null;
 
-    const paperMod = (await this.gitHelper.importTsBranch(br, paperRel)) as any;
+    const paperMod = await this.gitHelper.importTsBranch<Paper>(br, paperRel);
     const chapters: ResolvedChapter[] = [];
 
     // Auto-number chapters from manifest order
@@ -325,13 +305,13 @@ export class PaperResolver {
       const chRel = `content/${id}/${chRef.dir}`;
       const chTsRel = `${chRel}/${chRef.dir}.ts`;
       if (!this.gitHelper.fileExistsBranch(br, chTsRel)) continue;
-      const ch = (await this.gitHelper.importTsBranch(br, chTsRel)) as any;
+      const ch = await this.gitHelper.importTsBranch<Chapter>(br, chTsRel);
       const chapterNumber = ch.tabLabel != null ? undefined : autoNum++;
 
       const sections: ResolvedSection[] = [];
       for (const sec of ch.sections || []) {
-        if ("name" in sec && !("blocks" in sec)) continue;
-        const section = sec as any;
+        if (isSectionRef(sec)) continue;
+        const section = sec;
         const ownBlockNames = Array.isArray(section.blocks) ? section.blocks : [];
         const blocks = await this.resolveBlocks(id, chRel, ownBlockNames, br);
 
@@ -340,9 +320,9 @@ export class PaperResolver {
           subsections = [];
           for (const sub of section.subsections) {
             if (!sub) continue;
-            const subBlockNames = Array.isArray(sub.blocks) ? sub.blocks : [];
-            const subBlocks = await this.resolveBlocks(id, chRel, subBlockNames, br);
-            subsections.push({ title: sub.title, label: sub.label, blocks: subBlocks });
+            const inline = isSectionRef(sub) ? undefined : sub;
+            const subBlocks = await this.resolveBlocks(id, chRel, inline?.blocks ?? [], br);
+            subsections.push({ title: inline?.title ?? "", label: inline?.label, blocks: subBlocks });
           }
         }
 
@@ -405,7 +385,7 @@ export class PaperResolver {
       const blkTsRel = `${chRel}/${rootName}.ts`;
       const blkMdRel = `${chRel}/${rootName}.md`;
       try {
-        const blk = (await this.gitHelper.importTsBranch(br, blkTsRel)) as any;
+        const blk = await this.gitHelper.importTsBranch<Block>(br, blkTsRel);
         const md = this.gitHelper.readFileBranch(br, blkMdRel) || "";
 
         const feedback = this.feedbackStore.read(paperId, rootName);
@@ -417,7 +397,8 @@ export class PaperResolver {
         //      (<lakeRoot>/<Decl/Path>.lean)
         //   3. grep the package's Lean source dir for the bare name
         let leanSource: string | undefined;
-        if (blk.lean) {
+        const blkLean = blockLean(blk);
+        if (blkLean) {
           const parsed = tryParseLeanRef(blk);
           leanSource = this.gitHelper.readFileBranch(br, `${chRel}/${rootName}.lean`) ?? undefined;
           if (!leanSource && parsed) {
@@ -462,12 +443,13 @@ export class PaperResolver {
           label: blk.label,
           title: blk.title,
           uses: blk.uses,
-          examples: blk.examples,
-          proofs: blk.proofs,
-          lean: blk.lean ? { ...blk.lean, source: leanSource } : undefined,
-          status: blk.status,
-          tex: blk.tex,
-          caption: blk.caption,
+          examples: blockExamples(blk),
+          proofs: blockProofs(blk),
+          lean: blkLean ? { ...blkLean, ref: blkLean.ref, source: leanSource } : undefined,
+          // Derived from `lean`, never stored on the manifest — see `blockLean`.
+          status: leanStatusBucket(blkLean),
+          tex: blockTex(blk),
+          caption: blockCaption(blk),
           tags: blk.tags,
           rendered,
           md,

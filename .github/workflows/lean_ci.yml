@@ -2,9 +2,14 @@
 #
 # Triggers
 # ────────
-#   push (main)            – commits that touch lean/, chapters/, or manifests
-#   pull_request (main)    – PRs targeting main with lean/chapter changes
-#   workflow_dispatch      – manual run
+#   workflow_dispatch      – manual run, and the ONLY trigger.
+#
+#   This block used to also list `push (main)` and `pull_request (main)`.
+#   Neither exists: the `on:` below is dispatch-only, per the owner directive
+#   of 2026-06-30 that disabled auto-triggers repo-wide over Actions billing
+#   (see `qou/.github/workflows/build.yml`, which states it). A header that
+#   claims triggers a workflow does not have reads as coverage that is not
+#   there.
 #
 # Phases
 # ──────
@@ -69,6 +74,23 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.ref || github.ref }}
+
+      # PREFLIGHT. This builds `content/<paper>/lean/`, which is FOLIO content —
+      # folio-assistant is the platform and has no papers, so a run here fails
+      # partway through `lake build` with an opaque error. Refuse up front and
+      # say which repo was expected. Mirrors `qa-sweep.yml`'s preflight, and the
+      # ⚠ already carried by `lake-cache-refresh.yml`.
+      - name: Preflight — a folio must be attached
+        run: |
+          roots=$(find content -mindepth 3 -maxdepth 3 -name lakefile.toml -path '*/lean/*' 2>/dev/null)
+          if [ -z "$roots" ]; then
+            echo "::error::no content/<paper>/lean/lakefile.toml found."
+            echo "::error::This is a FOLIO workflow: it builds a paper's Lean package."
+            echo "::error::folio-assistant is the PLATFORM and carries no papers."
+            echo "::error::Run it from the content repo, where content/<paper>/lean/ exists."
+            exit 1
+          fi
+          echo "lean packages: $(echo "$roots" | tr '\n' ' ')"
 
       - name: Install CI tools
         run: |

@@ -22,13 +22,15 @@ import tseslint from "typescript-eslint";
  *           rest of it being parsed as code. bun could not load that file.
  *
  *   WARN  — gradual-typing and module-style debt that is real but is a
- *           project-wide decision, not something to fail a build over:
- *           `no-explicit-any` (190 of the 356), `no-require-imports`,
- *           `no-unsafe-function-type`, `no-this-alias`.
+ *           project-wide decision, not something to fail a build over. This
+ *           tier is now EMPTY: `no-require-imports`, `no-unsafe-function-type`
+ *           and `no-this-alias` were drained first, and `no-explicit-any` —
+ *           190 of the original 356 — followed. Every rule is an error.
  *
  * Warnings are counted, not hidden. `bun run lint` reports them; the backlog
  * is visible without being a blocker. Tighten by promoting a rule here once
- * its count reaches zero.
+ * its count reaches zero — and promote it the moment it does, so the count
+ * cannot creep back up behind a warning nobody reads.
  */
 export default tseslint.config(
   {
@@ -80,13 +82,22 @@ export default tseslint.config(
       // `this`. An arrow captures it lexically and the alias disappears.
       "@typescript-eslint/no-this-alias": "error",
 
-      // ── The remaining debt ─────────────────────────────────────
-      // `no-explicit-any`: 201 over 194 files, and the ONLY rule still on
-      // warn. Unlike the four above it is not a sweep — each `any` is a
-      // separate typing decision, and a blanket replacement with `unknown`
-      // would either not compile or push casts to every call site. It wants
-      // a plan (bean lnt1) before anyone starts.
-      "@typescript-eslint/no-explicit-any": "warn",
+      // Driven to 0 from 201 over 194 files (bean lnt1) — the last rule to
+      // come off `warn`, and the only one that was never a sweep: each `any`
+      // was a separate typing decision, and a blanket replacement with
+      // `unknown` would either not compile or push a cast to every call site.
+      //
+      // A rule is an error only once its count is zero, and this one now is,
+      // so the escape hatch closes here rather than sitting on `warn` while
+      // the count creeps back. What the drain surfaced, in short: the skill
+      // registry never validated against its own schema; three schemas had
+      // drifted from the data (a second `FeedbackItem`, a second
+      // `LifecycleStage`, `SkillDefinition` missing two fields present on
+      // 18/18 files); `blk.status` was a phantom in both resolvers;
+      // `renderBlock` was being handed a `ResolvedBlock`; feedback
+      // status/priority were written to `main` unvalidated; PACKAGES.md had
+      // always shipped empty; and five mdast guards could never fire.
+      "@typescript-eslint/no-explicit-any": "error",
     },
   },
 );

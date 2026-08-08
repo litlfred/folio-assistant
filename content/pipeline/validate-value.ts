@@ -129,9 +129,10 @@ export function validateValueDirectives(
     // computation, warn so the author either attaches one or accepts
     // the implicit dependency.  This is per decision 2a (implicit
     // auto-link).
-    const blockAny = block as any;
+    // `computation` is declared on definition/theorem/algorithm/simulator/
+    // table but not on prose/diagram/equation, so the `in` test is real.
     const compWitnessRaw: string | string[] | undefined =
-      blockAny?.computation?.witness;
+      "computation" in block ? block.computation?.witness : undefined;
     const declared: string[] = compWitnessRaw === undefined
       ? []
       : Array.isArray(compWitnessRaw)

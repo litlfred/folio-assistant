@@ -43,7 +43,7 @@ import { join, resolve, extname } from "path";
 import { remark } from "remark";
 import remarkDirective from "remark-directive";
 import remarkMath from "remark-math";
-import { visit } from "unist-util-visit";
+import { visit, SKIP } from "unist-util-visit";
 import { gfmTable } from "micromark-extension-gfm-table";
 import { gfmTableFromMarkdown, gfmTableToMarkdown } from "mdast-util-gfm-table";
 import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough";
@@ -265,10 +265,10 @@ export function rewriteMarkdownFile(file: string, index: LiteralEntry[]): FileRe
   interface Patch { start: number; end: number; replacement: string; }
   const patches: Patch[] = [];
 
-  visit(tree as any, (node: any) => {
+  visit(tree, (node) => {
     // Skip subtree if we're inside a fenced ```tex block or a table.
-    if (node.type === "code" && node.lang === "tex") return "skip" as any;
-    if (node.type === "table") return "skip" as any;
+    if (node.type === "code" && node.lang === "tex") return SKIP;
+    if (node.type === "table") return SKIP;
     if (node.type !== "inlineMath" && node.type !== "math") return;
     if (!node.position?.start || !node.position?.end) return;
 

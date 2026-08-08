@@ -34,15 +34,22 @@
  */
 
 import { readFileSync, writeFileSync } from "fs";
-import { join, resolve } from "path";
+import { join} from "path";
 import type { Paper, Chapter, Section, Block } from "../../schemas/types";
+import { findContentRepoRoot } from "./repo-root";
+import { requirePaper } from "./repo-root";
 
-const REPO_ROOT = resolve(import.meta.dir, "../..");
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
 const CONTENT_ROOT = join(REPO_ROOT, "content");
 
 const args = process.argv.slice(2);
 const APPLY = args.includes("--apply");
-const PAPER_NAME = "quantum-observable-universe";
+// Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
+const PAPER_NAME = requirePaper();
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
 
 // ── Load all blocks ─────────────────────────────────────────────

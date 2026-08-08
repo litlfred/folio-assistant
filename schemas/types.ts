@@ -898,6 +898,15 @@ export interface EquationBlock {
   kind: "equation";
   /** Equation label (e.g. "eq:snake-identities"). */
   label?: string;
+  /** Optional display title. */
+  title?: string;
+  tags?: string[];
+  /** Editorial dependencies — see `BlockBase.uses`. Equation was the ONLY
+   *  member of the `Block` union carrying neither `uses` nor a base that
+   *  supplies it; its three standalone siblings (`prose`, `diagram`, `table`)
+   *  all declare it. `tags` was likewise present in the Zod schema and absent
+   *  here. */
+  uses?: string[];
   /** Inline TeX for the equation (short enough to live in .ts). */
   tex?: string;
   companions?: Companions;

@@ -13,6 +13,7 @@
 import { readdirSync, readFileSync, statSync, writeFileSync, mkdirSync } from "fs";
 import { join, basename, dirname, relative } from "path";
 import { BLOCK_KIND_ALT } from "../../schemas/types";
+import { requirePaper } from "./repo-root";
 
 /**
  * `export default <kind>({` — the builder call that identifies a block.
@@ -50,7 +51,7 @@ function walk(dir: string) {
   }
 }
 
-walk("content/quantum-observable-universe");
+walk(join("content", requirePaper()));
 
 const conjectureLabels = new Set<string>();
 for (const b of blocks.values()) if (b.kind === "conjecture") conjectureLabels.add(b.label);

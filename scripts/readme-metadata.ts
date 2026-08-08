@@ -9,7 +9,12 @@
 import { readdir, stat, readFile } from "fs/promises";
 import { join, basename } from "path";
 
-const root = join(import.meta.dir, "..");
+// The FOLIO's root. `join(import.meta.dir, "..")` is the PLATFORM's, which
+// holds no `content/folio.ts`, no papers and no `.github/workflows` for a
+// folio — every path below was resolving into the wrong repo. The
+// `folio-assistant/simulators` path below stays folio-relative on purpose:
+// the folio embeds the platform there as a symlink.
+const root = findContentRepoRoot();
 
 // ── Papers ──────────────────────────────────────────────────────────────────
 
@@ -53,14 +58,15 @@ async function getPapers(): Promise<PaperInfo[]> {
 interface ChapterInfo { dir: string; title: string; kind: "chapter" | "appendix" | "index" }
 
 async function getChapters(): Promise<ChapterInfo[]> {
-  const manifest = join(root, "content/quantum-observable-universe/quantum-observable-universe.ts");
+  const { paper } = statsTarget();
+  const manifest = join(root, "content", paper, `${paper}.ts`);
   const src = await readFile(manifest, "utf-8");
   // Extract dir values from chapterRef({ dir: "..." }) in order
   const dirs = [...src.matchAll(/chapterRef\(\{\s*dir:\s*["']([^"']+)["']/g)].map(m => m[1]);
 
   const chapters: ChapterInfo[] = [];
   for (const dir of dirs) {
-    const chapterTs = join(root, "content/quantum-observable-universe", dir, `${dir}.ts`);
+    const chapterTs = join(root, "content", paper, dir, `${dir}.ts`);
     let title = dir;
     try {
       const chSrc = await readFile(chapterTs, "utf-8");
@@ -81,7 +87,13 @@ async function getChapters(): Promise<ChapterInfo[]> {
 interface LeanModule { name: string; source: string; fileCount?: number }
 
 async function getLeanModules(): Promise<LeanModule[]> {
-  const qouDir = join(root, "content/quantum-observable-universe/lean/QOU");
+  const { paper } = statsTarget();
+  // The Lean library directory, from the registered Lake packages, rather than
+  // one folio's `QOU` namespace baked into a platform script.
+  const pkg = LEAN_PACKAGES.find((k) => k.lakeRoot.includes(`/${paper}/`) || k.lakeRoot.includes(paper));
+  const qouDir = pkg
+    ? join(root, pkg.lakeRoot, pkg.lib)
+    : join(root, "content", paper, "lean");
   const modules: LeanModule[] = [];
 
   try {
@@ -165,6 +177,40 @@ async function getWorkflows(): Promise<WorkflowInfo[]> {
 // ── Lean coverage stats ─────────────────────────────────────────────────────
 
 import { computeStats } from "./lean-coverage";
+import { findContentRepoRoot, findPapers, soleFolioPaper } from "../content/pipeline/repo-root";
+import { LEAN_PACKAGES } from "../schemas/lean-packages";
+
+/**
+ * The paper to report on, and the folio's `content/` root.
+ *
+ * Both were wrong: `computeStats(paperDir, contentRoot)` takes two arguments
+ * and was called with one — so `contentRoot` was `undefined` at runtime — and
+ * the paper was hardcoded to `quantum-observable-universe`, one folio's paper
+ * name living in the platform. `--paper` wins; otherwise take the folio's sole
+ * paper and refuse to guess when there are several.
+ */
+function statsTarget(): { paper: string; contentRoot: string } {
+  const repoRoot = findContentRepoRoot();
+  const contentRoot = join(repoRoot, "content");
+  const argIdx = process.argv.indexOf("--paper");
+  const paper = argIdx >= 0 && process.argv[argIdx + 1]
+    ? process.argv[argIdx + 1]
+    : soleFolioPaper(repoRoot);
+  if (!paper) {
+    // Exit cleanly rather than throwing: this is a CLI entry point, and a raw
+    // stack trace buries the one line that tells the operator what to do.
+    // Matches `export-json.ts` and `validate.ts`.
+    const found = findPapers(repoRoot);
+    console.error(
+      found.length === 0
+        ? `no paper found under ${contentRoot} — run from a folio checkout, or pass --paper`
+        : `this folio has ${found.length} papers (${found.join(", ")}) — pass --paper to choose one`,
+    );
+    process.exit(2);
+  }
+  return { paper, contentRoot };
+}
+
 
 interface LeanCoverage {
   provable_total: number;
@@ -181,7 +227,8 @@ interface LeanCoverage {
 
 async function getLeanCoverage(): Promise<LeanCoverage | null> {
   try {
-    const s = computeStats("quantum-observable-universe");
+    const target = statsTarget();
+    const s = computeStats(target.paper, target.contentRoot);
     return {
       provable_total: s.provable.total,
       provable_with_lean: s.provable.with_lean_file,

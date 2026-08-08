@@ -20,15 +20,20 @@
  * claims.
  */
 import { readdir, readFile } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 import { leanPackageByName } from "../../schemas/lean-packages.ts";
+import { findContentRepoRoot } from "./repo-root";
+import { requirePaper } from "./repo-root";
 
 // Resolve repo root from this script's location:
 // content/pipeline/conjectural-propagation-audit.ts → repo root.
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(SCRIPT_DIR, "..", "..");
-const ROOT = join(REPO_ROOT, "content/quantum-observable-universe");
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
+// Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
+const ROOT = join(REPO_ROOT, "content", requirePaper());
 const WITNESS_OUT = process.argv[2] ??
   join(REPO_ROOT, "docs/audits/2026-05-01-p3-1-conjectural-propagation.witness.json");
 

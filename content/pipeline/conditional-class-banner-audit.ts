@@ -27,13 +27,17 @@
  * with `--strict`).
  */
 import { readdir, readFile } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { join, resolve } from "node:path";
 import { leanPackageByName } from "../../schemas/lean-packages.ts";
-
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(SCRIPT_DIR, "..", "..");
-const ROOT = join(REPO_ROOT, "content/quantum-observable-universe");
+import { findContentRepoRoot } from "./repo-root";
+import { requirePaper } from "./repo-root";
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
+// Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
+const ROOT = join(REPO_ROOT, "content", requirePaper());
 const STRICT = process.argv.includes("--strict");
 
 // Optional baseline-allowlist file (declared before WITNESS_OUT so its
@@ -329,6 +333,18 @@ const fullyCompliant = findings.filter((f) =>
   f.has_lean_class_hypothesis && f.has_md_conditional_banner);
 
 console.log(`§3b-cond conditional-class banner audit`);
+// `witness-pipeline.yml` runs this with `--strict`, so its exit code gates.
+// Over an empty corpus it finds 0 labels beyond the baseline and exits 0 —
+// the same shape as `trivial-skeleton-audit` (bean `pzdv`): a gate that
+// passes for free because it read nothing. Auditing nothing is a failure.
+if (blocks.size === 0) {
+  console.error(
+    `No content blocks found under ${ROOT} — refusing to report success.\n` +
+    "This audits a FOLIO's blocks; folio-assistant is the platform.\n" +
+    "Run it from the content repo.",
+  );
+  process.exit(1);
+}
 console.log(`Total blocks scanned:                       ${blocks.size}`);
 console.log(`Conditional-on-class candidates:            ${findings.length}`);
 console.log(`  ✓ fully compliant (banner + class-hyp):   ${fullyCompliant.length}`);

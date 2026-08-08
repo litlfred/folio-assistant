@@ -23,9 +23,14 @@
  */
 
 import { readFileSync, writeFileSync, existsSync } from "fs";
-import { resolve, join } from "path";
+import { join } from "path";
+import { findContentRepoRoot } from "./repo-root";
 
-const REPO_ROOT = resolve(import.meta.dir, "../..");
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
 const TARGET = join(REPO_ROOT, "content/bib-qa-verifications.json");
 
 /** Parse legacy "Claude (model-name)" pattern → `{ kind: "agent", model }`. */
@@ -49,8 +54,15 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const raw = JSON.parse(readFileSync(TARGET, "utf-8"));
-  const entries: any[] = raw.entries ?? [];
+  // The file is hand-edited JSON, so `verified_by` is either the legacy
+  // string or the `Verifier` union this script migrates it to.
+  interface VerificationEntry { id?: string; verified_by?: unknown }
+  const raw = JSON.parse(readFileSync(TARGET, "utf-8")) as {
+    entries?: VerificationEntry[];
+    _verified_by_caveat?: unknown;
+    _schema?: string;
+  };
+  const entries: VerificationEntry[] = raw.entries ?? [];
 
   let migrated = 0;
   let alreadyStructured = 0;
@@ -59,7 +71,7 @@ if (import.meta.main) {
   for (const e of entries) {
     const v = e.verified_by;
     if (v == null) continue;
-    if (typeof v === "object" && v.kind) {
+    if (typeof v === "object" && v !== null && "kind" in v) {
       alreadyStructured++;
       continue;
     }

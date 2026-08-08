@@ -20,10 +20,11 @@
  * @module content/pipeline/qa-agent-drain-queue
  */
 import { writeFileSync, mkdirSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, join} from "node:path";
 import { walkBlocks, hashFile, loadQaReport } from "./qa-utils";
 import { QA_CRITERIA_REGISTRY } from "./qa-criteria-registry";
 import { findContentRepoRoot } from "./repo-root";
+import { requirePaper } from "./repo-root";
 
 // chdir to the content-repo root before any path work. The default
 // `root` and `--out` paths are repo-relative, and `walkBlocks` yields
@@ -37,7 +38,7 @@ import { findContentRepoRoot } from "./repo-root";
 // would land inside folio-assistant, not the content repo).
 process.chdir(findContentRepoRoot());
 
-const root = process.argv[2] ?? "content/quantum-observable-universe";
+const root = process.argv[2] ?? join("content", requirePaper());
 const bsIdx = process.argv.indexOf("--batch-size");
 const bsVal =
   bsIdx >= 0 && bsIdx + 1 < process.argv.length

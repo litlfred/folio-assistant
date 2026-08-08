@@ -6,6 +6,7 @@
 import { test, expect, describe } from "bun:test";
 import { registerBibTools } from "../../adapters/paper/tools/bib.ts";
 import { registerTransformTools } from "../../adapters/paper/tools/transform.ts";
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 /** An MCP tool handler, as the registration stubs below see it. */
 type ToolHandler = (
@@ -13,9 +14,22 @@ type ToolHandler = (
 ) => Promise<{ content: Array<{ type: string; text: string }> }>;
 
 
-function collect(register: (s: any) => void) {
-  const reg: Record<string, { desc: string; schema: any; handler: ToolHandler }> = {};
-  register({ tool(name: string, desc: string, schema: any, handler: ToolHandler) { reg[name] = { desc, schema, handler }; } });
+/**
+ * A stand-in for `McpServer` that records what a `register*Tools` call
+ * registers. Only `tool` is exercised, so the cast to `McpServer` at each use
+ * is narrowed through `unknown` rather than `any` — the recorder itself stays
+ * typed, and a change to the `tool` signature still breaks here.
+ */
+interface ToolRecorder {
+  tool(name: string, desc: string, schema: unknown, handler: ToolHandler): void;
+}
+
+function collect(register: (s: McpServer) => void) {
+  const reg: Record<string, { desc: string; schema: unknown; handler: ToolHandler }> = {};
+  const recorder: ToolRecorder = {
+    tool(name, desc, schema, handler) { reg[name] = { desc, schema, handler }; },
+  };
+  register(recorder as unknown as McpServer);
   return reg;
 }
 

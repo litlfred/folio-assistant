@@ -42,14 +42,14 @@ const HASHES = { ts: "aaaaaaaaaaaa", md: "bbbbbbbbbbbb", lean: "cccccccccccc" };
 
 let seq = 0;
 /** Write a block `.ts` + its sidecar; returns the block triple. */
-function block(entries: unknown[]): { ts: string; label: string } {
+function block(entries: unknown[]): { ts: string } {
   const ts = join(DIR, `b${seq++}.ts`);
   writeFileSync(ts, "export default conjecture({});\n");
   writeFileSync(
     ts.replace(/\.ts$/, ".qa.json"),
     JSON.stringify({ criteria: { [CRITERION]: entries } }, null, 2),
   );
-  return { ts, label: "conj:x" };
+  return { ts };
 }
 
 const human = (at: string, result = "pass") => ({
@@ -116,6 +116,6 @@ describe("human dispensation precedence", () => {
   test("a block with no sidecar has no dispensation", () => {
     const ts = join(DIR, `nosidecar.ts`);
     writeFileSync(ts, "export default conjecture({});\n");
-    expect(hasHumanDispensation({ ts, label: "conj:y" }, CRITERION, HASHES)).toBe(false);
+    expect(hasHumanDispensation({ ts }, CRITERION, HASHES)).toBe(false);
   });
 });

@@ -24,6 +24,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 import type { Paper } from "../../schemas/types";
 import { escapeLatex } from "./render-latex";
+import { findContentRepoRoot, requirePaper } from "./repo-root";
 
 /**
  * Escape text for use in LaTeX metadata fields (title, author, etc.).
@@ -317,11 +318,18 @@ export function generateStandaloneAppendixTex(
 
 if (import.meta.main) {
   const args = process.argv.slice(2);
-  const defaultPaper = join(
-    import.meta.dir,
-    "../quantum-observable-universe/quantum-observable-universe.ts",
+  // Was `join(import.meta.dir, "../quantum-observable-universe/…")` — a
+  // specific FOLIO paper named in PLATFORM code, under a path resolved from
+  // this file, so it pointed at `<platform>/content/quantum-observable-universe`
+  // which exists in no checkout. Same fix as `build.ts`.
+  const contentRoot = findContentRepoRoot();
+  const paperPath = resolve(
+    args[0] ||
+      (() => {
+        const p = requirePaper(undefined, contentRoot);
+        return join(contentRoot, "content", p, `${p}.ts`);
+      })(),
   );
-  const paperPath = resolve(args[0] || defaultPaper);
 
   const preambleIdx = args.indexOf("--preamble");
   const preamblePath = resolve(
