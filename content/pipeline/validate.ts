@@ -86,6 +86,46 @@ async function loadBlocksFromDir(
   const blocks = new Map<string, Block>();
   const names = blockNames ?? discoverManifests(dir);
 
+  // ── no-orphan-sidecar ────────────────────────────────────────
+  //
+  // A `<block>.qa.json` whose `.ts` manifest is gone is an audit report about
+  // a block that does not exist. It can never be refreshed — no sweep will
+  // ever visit it — and it silently inflates every corpus census taken over
+  // `**/*.qa.json`, which is how QA state is normally counted.
+  //
+  // Same principle as `no-orphan-lean`: a `.lean` file is never standalone,
+  // and neither is a QA report. These accumulate when a block MOVES between
+  // chapters — the block picks up a fresh sidecar at its new path while the
+  // old file stays behind, holding verdicts computed against content that has
+  // since changed. Found live in qou: 18 orphans, 5 of them from moves.
+  //
+  // Runs on every directory load, including chapter mode where `blockNames`
+  // restricts which manifests are validated. That restriction is irrelevant
+  // here: orphanhood asks whether `<base>.ts` exists ON DISK, not whether the
+  // caller asked for it — a sidecar whose manifest exists but was not
+  // requested still finds its `.ts` and is not flagged. Gating on
+  // `blockNames === null` made this a silent no-op for every real paper,
+  // since only legacy flat mode passes null.
+  //
+  // Non-recursive, matching `discoverManifests`: sidecars in nested dirs are
+  // caught when those dirs are themselves scanned.
+  if (existsSync(dir)) {
+    for (const f of readdirSync(dir)) {
+      if (!f.endsWith(".qa.json")) continue;
+      const base = f.slice(0, -".qa.json".length);
+      if (existsSync(join(dir, `${base}.ts`))) continue;
+      issues.push({
+        level: "error",
+        block: base,
+        message:
+          `orphan QA sidecar: ${f} has no sibling ${base}.ts. ` +
+          `The block was deleted or moved; delete the sidecar (git history ` +
+          `keeps it) or restore the manifest.`,
+        file: f,
+      });
+    }
+  }
+
   for (const name of names) {
     const tsPath = join(dir, `${name}.ts`);
     if (!existsSync(tsPath)) {
