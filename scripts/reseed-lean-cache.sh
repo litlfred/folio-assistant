@@ -235,6 +235,29 @@ github.com release assets usually are not — check that first."
   fi
 fi
 
+# ── Reading `lake-cache.sh status` ──────────────────────────────────
+#
+# Both phase 2 and phase 5 scrape the SAME human-readable `status`
+# output, so they must share one parser. They did not, and it cost a
+# release: phase 2 was updated when the line changed from
+# `traces: N (P% coverage)` to `traced: N/M oleans (P%)`, phase 5 was
+# not. Phase 5's gate is `[ cov -ge 90 ]` against an unmatched (hence
+# empty, hence 0) capture, so **verify could never pass** and
+# `--promote` / `--auto-promote` were unreachable — on a tree reporting
+# a clean 5267/5267, 100%.
+#
+# Failing to 0 is the safe direction, but only if someone notices. Keep
+# these three readers as the single place that knows the format.
+cache_status_cov()   { # <status output> -> integer percent, empty if unreadable
+  printf '%s\n' "$1" | sed -n 's/^ *traced: *[0-9]*\/[0-9]* oleans *(\([0-9]*\)%).*/\1/p' | head -1
+}
+cache_status_own()   { # <status output> -> own-package olean count
+  printf '%s\n' "$1" | sed -n 's/^ *own pkg: *\([0-9]*\).*/\1/p' | head -1
+}
+cache_status_total() { # <status output> -> total olean count
+  printf '%s\n' "$1" | sed -n 's/^ *oleans: *\([0-9]*\).*/\1/p' | head -1
+}
+
 # ── Phase 2: traced Mathlib ─────────────────────────────────────────
 
 if phase_wanted cache; then
@@ -243,21 +266,16 @@ if phase_wanted cache; then
   # from `git rev-parse` in the current directory, so invoking it from
   # the platform checkout would resolve folio-assistant as the content
   # repo and read the wrong roster.
-  # Scraped from `status`'s human-readable output, so the two are
-  # COUPLED: renaming that line silently degrades this to 0. It already
-  # did once — `traces: N (P% coverage)` became
-  # `traced: N/M oleans (P%)` and this quietly reported 0% on a fully
-  # traced tree. Failing to 0 is the safe direction (it fetches, and
-  # `cache get` is idempotent), but silence hides the breakage, so say so.
+  # Scraped from `status`'s human-readable output — see the shared
+  # readers above; do not inline a second copy of the pattern here.
   status_out=$(cd "$REPO" && bash "$CACHE_SVC" status --package "$PACKAGE" --lake-root "$ABS_LAKE" 2>/dev/null)
-  cov=$(printf '%s\n' "$status_out" \
-        | sed -n 's/^ *traced: *[0-9]*\/[0-9]* oleans *(\([0-9]*\)%).*/\1/p' | head -1)
+  cov=$(cache_status_cov "$status_out")
   if [ -z "$cov" ]; then
     warn "could not read trace coverage from \`$CACHE_SVC status\` — assuming 0%"
     info "(its output format may have changed; this parser needs updating)"
     cov=0
   fi
-  nol=$(printf '%s\n' "$status_out" | sed -n 's/^ *oleans: *\([0-9]*\).*/\1/p' | head -1)
+  nol=$(cache_status_total "$status_out")
   nol="${nol:-0}"
   # Coverage is a RATIO, so a nearly-empty tree scores 100% on a handful
   # of oleans and would skip fetching thousands. Observed: a partially
@@ -335,15 +353,15 @@ if phase_wanted verify || [ "$PROMOTE" -eq 1 ]; then
     printf '%s\n' "$out" | sed 's/^/   /'
     rm -rf "$VDIR"
 
-    own=$(printf '%s' "$out" | sed -n 's/.*own pkg: *\([0-9]*\).*/\1/p')
-    cov=$(printf '%s' "$out" | sed -n 's/.*traces:.*(\([0-9]*\)% coverage).*/\1/p')
+    own=$(cache_status_own "$out")
+    cov=$(cache_status_cov "$out")
     [ "${own:-0}" -gt 0 ] || die "verify FAILED: own-package oleans are 0.
 That is the defect this reseed exists to fix — do not promote."
     [ "${cov:-0}" -ge 90 ] || die "verify FAILED: trace coverage ${cov:-0}%.
 A build would rebuild and evict the shortfall — do not promote."
     info "verified: own=$own, traces=${cov}% ✓"
     # Carried into the regression check below.
-    VERIFIED_OLEANS=$(printf '%s' "$out" | sed -n 's/.*oleans: *\([0-9]*\).*/\1/p' | head -1)
+    VERIFIED_OLEANS=$(cache_status_total "$out")
     VERIFIED_OWN="$own"
   fi
 fi
