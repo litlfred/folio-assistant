@@ -116,17 +116,48 @@ per [`bib-qa.md §Batch intake pipeline`](bib-qa.md#batch-intake-pipeline).
 
 Convert raw format to `extracted-text.md`:
 
+**For PDFs, always start with
+[`scripts/pdf-extract.py`](../../scripts/pdf-extract.py)** — do not reach for a
+Python PDF library directly. It walks a fallback ladder (`pdftotext` → `pypdf` →
+`pdfminer.six` → a zero-dependency content-stream extractor → OCR) and, when it
+cannot read a file, **tells you which rung failed and why** instead of returning
+an empty string:
+
+```bash
+python3 scripts/pdf-extract.py FILE.pdf -o extracted-text.md
+python3 scripts/pdf-extract.py FILE.pdf --diagnose   # structure only
+```
+
+Exit `0` = text; **exit `2` = no text layer (a scan)**; exit `3` = a parser
+problem on a file that does have text.
+
+Two failure modes it exists to prevent, both observed in practice:
+
+* **A silent empty extraction reads exactly like a scan, a broken library, and
+  a malformed PDF.** The script separates them by inspecting the PDF structure
+  (`CCITTFaxDecode` / `JBIG2Decode` / `DCTDecode` counts against `/Font`), so
+  "swap libraries" vs "you need OCR" is decided by evidence rather than guessed.
+* **A broken native extension kills the whole pipeline.** `pypdf` and
+  `pdfminer.six` both fail via pyo3 `PanicException` when `cryptography`'s Rust
+  bindings are broken — and that is a `BaseException`, so an ordinary
+  `except Exception` does **not** catch it. Every rung is guarded accordingly.
+  The zero-dependency rung exists precisely for this case; in the container this
+  was written in it was the only rung that worked.
+
 | Format | Extraction method |
 |--------|-------------------|
-| PDF (text) | `pdftotext` or PDF.js |
-| PDF (scan) | Tesseract OCR / Claude vision |
+| PDF (text) | `scripts/pdf-extract.py` (ladder; `pdftotext` when available) |
+| PDF (scan) | `scripts/pdf-extract.py` → exit 2, then Tesseract OCR / Claude vision |
 | LaTeX | Direct parse (strip preamble) |
 | HTML | Readability + turndown |
 | DOCX | Pandoc → markdown |
 | Images | Claude vision API |
 
-For scanned documents, use Claude's vision capability to extract
-text with structural awareness (headings, lists, tables, boxes).
+For scanned documents the script's OCR rung fires automatically **if**
+`tesseract` and `pdftoppm` are installed (`apt-get install -y tesseract-ocr
+poppler-utils`); it names whichever is missing. Where OCR is unavailable, or
+where layout carries meaning (headings, lists, tables, boxes), fall back to
+Claude's vision capability, which reads structure that OCR flattens.
 
 **Output**: `extracted-text.md` — raw markdown with preserved structure.
 

@@ -167,6 +167,16 @@ jobs:
       - name: tsc --noEmit
         run: bunx tsc --noEmit -p tsconfig.json
 
+      # `docs/reference/**` is generated from skill sources and must not be
+      # hand-edited, but nothing verified it had been REGENERATED after a
+      # source change. document-intake.md sat 35 lines behind its source and
+      # the published docs site served the stale copy. --check writes nothing
+      # and names every file that would change.
+      - name: generated docs are current
+        run: |
+          bun run scripts/gen-schema-docs.ts --check
+          bun run scripts/gen-skill-docs.ts --check
+
   rust-wildcard:
     name: Rust wildcard imports (warn-only)
     runs-on: ubuntu-latest
