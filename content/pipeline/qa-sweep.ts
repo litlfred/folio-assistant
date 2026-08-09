@@ -110,6 +110,7 @@ import {
   entryIsFresh,
   freshnessKeys,
   preserveNonScriptEntries,
+  sameScriptVerdict,
   computeCriterionScriptHashes,
   saveQaScriptSidecar,
   type CriterionScriptHashes,
@@ -310,6 +311,16 @@ function run(): void {
     report.paths = newPaths;
     report.source_hashes = currentHashes;
 
+    // Did any criterion's VERDICT actually move this run? Re-running a checker
+    // is not by itself a change: a criterion that re-evaluates to exactly what
+    // the sidecar already records must keep its existing entry, timestamps and
+    // all. Without this, the `staleNa` re-check below (which deliberately
+    // re-evaluates every applicable `n/a` on every sweep) restamps
+    // `reviewed_at` forever, so every sidecar's `updated_at` moved on every
+    // sweep and feature branches carried the churn regardless of the
+    // per-criterion `script_hash` fix.
+    let verdictChanged = false;
+
     const sweepResult: BlockSweepResult = {
       label: block.label,
       kind: block.kind,
@@ -406,7 +417,13 @@ function run(): void {
           reviewed_sha: headSha,
           notes: "block has no .md sibling",
         };
-        report.criteria[criterionId] = [...nonScriptExisting, naEntry];
+        const priorNa = existing.find((e) => e?.reviewer?.kind === "script");
+        report.criteria[criterionId] = [
+          ...nonScriptExisting,
+          sameScriptVerdict(priorNa, naEntry)
+            ? priorNa!
+            : ((verdictChanged = true), naEntry),
+        ];
         sweepResult.details.push({
           criterion: criterionId,
           outcome: "n/a-no-md",
@@ -422,7 +439,13 @@ function run(): void {
           reviewed_sha: headSha,
           notes: "block has no .lean sibling",
         };
-        report.criteria[criterionId] = [...nonScriptExisting, naEntry];
+        const priorNa = existing.find((e) => e?.reviewer?.kind === "script");
+        report.criteria[criterionId] = [
+          ...nonScriptExisting,
+          sameScriptVerdict(priorNa, naEntry)
+            ? priorNa!
+            : ((verdictChanged = true), naEntry),
+        ];
         sweepResult.details.push({
           criterion: criterionId,
           outcome: "n/a-no-lean",
@@ -470,8 +493,15 @@ function run(): void {
       }
 
       // Write the fresh script entry, REPLACING the prior script entry
-      // (agent + human entries are preserved via `nonScriptExisting`).
-      report.criteria[criterionId] = [...nonScriptExisting, entry];
+      // (agent + human entries are preserved via `nonScriptExisting`). When
+      // the re-run reproduces what the sidecar already records, keep the
+      // existing entry verbatim so its timestamps survive — a re-run is not a
+      // change.
+      const priorScript = existing.find((e) => e?.reviewer?.kind === "script");
+      const settled = sameScriptVerdict(priorScript, entry)
+        ? priorScript!
+        : ((verdictChanged = true), entry);
+      report.criteria[criterionId] = [...nonScriptExisting, settled];
 
       sweepResult.details.push({
         criterion: criterionId,
@@ -486,18 +516,19 @@ function run(): void {
       });
     }
 
-    report.updated_at = nowIso;
     // Save when any of the following changed since the loaded sidecar:
-    //   - new automated criterion entry written (criteria_run > 0)
-    //   - new n/a marker written for an inapplicable criterion
+    //   - a criterion's verdict (or its inputs / checker identity) moved
     //   - sidecar metadata drifted (file moved, kind/label changed,
     //     source-file content hash changed)
-    const wroteSomething =
-      sweepResult.criteria_run > 0 ||
-      sweepResult.details.some(
-        (d) => d.outcome === "n/a-no-md" || d.outcome === "n/a-no-lean",
-      ) ||
-      metadataDrifted;
+    //
+    // Note this is NOT `criteria_run > 0`. Running a checker and reproducing
+    // the recorded verdict leaves the sidecar semantically identical, and
+    // saving it anyway rewrote `updated_at` on every block on every sweep —
+    // which is what made an otherwise no-op sweep dirty the whole corpus.
+    const wroteSomething = verdictChanged || metadataDrifted;
+    // Only advance the file's own timestamp when its content actually moved,
+    // for the same reason.
+    if (wroteSomething) report.updated_at = nowIso;
     if (!args.dryRun && wroteSomething) {
       saveQaReport(qaPath, report);
     }
