@@ -572,6 +572,24 @@ interface BlockBase {
    */
   uses?: string[];
   /**
+   * Subset of `uses[]` that points DELIBERATELY forward — a foreshadow, a
+   * preview, or an explicitly deferred result the exposition promises to
+   * return to (the surreal-number thread is the archetype).
+   *
+   * `detangler-no-forward-ref` exists to catch a reader being sent to material
+   * they have not reached yet (`detangler-no-xchapter-fwd` is still an unwired
+   * stub returning `n/a`). That is a
+   * defect when it is accidental and a rhetorical device when it is not: a
+   * block may legitimately say "we will need X, proved in chapter 9". Listing
+   * X here declares the reference intentional and exempts that one edge.
+   *
+   * NOT a way to silence the axis. Every entry must also appear in `uses[]`
+   * (enforced — a foreshadow of something the block does not reference is
+   * meaningless), and each one is a claim that the prose actually frames the
+   * reference as deferred. Everything not listed stays a finding.
+   */
+  foreshadows?: string[];
+  /**
    * Bibliography keys cited by this block (e.g. ["kock2004", "atiyah1988"]).
    *
    * These are reference ids from content/schema/references.ts.
@@ -882,6 +900,8 @@ export interface ProseBlock {
   title?: string;
   /** Labels of content blocks this prose depends on (for the dependency graph). */
   uses?: string[];
+  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
+  foreshadows?: string[];
   /** Bibliography keys cited by this block. */
   cites?: string[];
   tags?: string[];
@@ -908,6 +928,8 @@ export interface EquationBlock {
    *  all declare it. `tags` was likewise present in the Zod schema and absent
    *  here. */
   uses?: string[];
+  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
+  foreshadows?: string[];
   /** Inline TeX for the equation (short enough to live in .ts). */
   tex?: string;
   companions?: Companions;
@@ -933,6 +955,8 @@ export interface DiagramBlock {
   tags?: string[];
   /** Labels of content blocks this diagram depends on (for the dependency graph). */
   uses?: string[];
+  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
+  foreshadows?: string[];
   companions?: Companions;
   /** Pre-rendered diagram (e.g. SVG from tikzcd server-side render). */
   rendered?: RenderedAsset[];
@@ -959,6 +983,8 @@ export interface TableBlock {
   tags?: string[];
   /** Blocks that this table summarises data from. */
   uses?: string[];
+  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
+  foreshadows?: string[];
   /** Witness/script the table values are derived from (mirrors RemarkBlock).
    *  Lets tables that cite `:val[…]` literals declare the upstream witness
    *  dep, same as remark/proof/definition blocks. */
