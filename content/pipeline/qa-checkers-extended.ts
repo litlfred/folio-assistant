@@ -1456,6 +1456,19 @@ export function checkDetanglerSectionBand(
 // this commit, with explicit `n/a` returns so the sweep doesn't
 // flag them as missing. A follow-up commit will wire them.
 
+/**
+ * Parse a block manifest's `foreshadows: [...]` — the subset of `uses[]` the
+ * author has declared as a deliberate forward reference.
+ *
+ * Text-level like the sibling `label:` parse in this file, so the checker
+ * stays free of a module import of the manifest.
+ */
+export function parseForeshadows(tsSrc: string): string[] {
+  const m = tsSrc.match(/\bforeshadows:\s*\[([\s\S]*?)\]/);
+  if (!m) return [];
+  return [...m[1].matchAll(/["']([^"']+)["']/g)].map((x) => x[1]);
+}
+
 export function checkDetanglerNoForwardRef(
   tsPath: string | undefined,
 ): CheckerResult {
@@ -1472,11 +1485,19 @@ export function checkDetanglerNoForwardRef(
   if (myPos === undefined) return { result: "pass", hits: [] }; // not listed
   const myChapter = _labelToChapter.get(label);
 
+  // Deliberate forward references — a foreshadow, a preview, or an explicitly
+  // deferred result the exposition promises to return to. Declared on the
+  // block, so the intent lives in the authored manifest next to `uses[]`
+  // rather than in a QA sidecar. Only these edges are exempt; every other
+  // forward ref is still a finding.
+  const foreshadowed = new Set(parseForeshadows(content));
+
   const hits: CheckerHit[] = [];
   for (const u of _usesGraph.get(label) ?? []) {
     // Only SAME-chapter forward refs here; cross-chapter is the
     // separate `detangler-no-xchapter-fwd` criterion.
     if (_labelToChapter.get(u) !== myChapter) continue;
+    if (foreshadowed.has(u)) continue;
     const uPos = _blockPos.get(u);
     if (uPos !== undefined && uPos > myPos) {
       hits.push({

@@ -398,6 +398,7 @@ export const AuthorNoteSchema = z.object({
 const BlockBaseSchema = z.object({
   title: z.string().optional(),
   uses: z.array(z.string()).optional(),
+  foreshadows: z.array(z.string()).optional(),
   cites: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   companions: CompanionsSchema.optional(),
@@ -564,6 +565,7 @@ export const ProseSchema = z.object({
   cites: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   uses: z.array(z.string()).optional(),
+  foreshadows: z.array(z.string()).optional(),
   companions: CompanionsSchema.optional(),
   rendered: z.array(RenderedAssetSchema).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
@@ -577,6 +579,7 @@ export const EquationSchema = z.object({
   tex: z.string().optional(),
   tags: z.array(z.string()).optional(),
   uses: z.array(z.string()).optional(),
+  foreshadows: z.array(z.string()).optional(),
   companions: CompanionsSchema.optional(),
   rendered: z.array(RenderedAssetSchema).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
@@ -591,6 +594,7 @@ export const DiagramSchema = z.object({
   caption: z.string().optional(),
   tags: z.array(z.string()).optional(),
   uses: z.array(z.string()).optional(),
+  foreshadows: z.array(z.string()).optional(),
   companions: CompanionsSchema.optional(),
   rendered: z.array(RenderedAssetSchema).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
@@ -605,6 +609,7 @@ export const TableSchema = z.object({
   title: z.string().optional(),
   tags: z.array(z.string()).optional(),
   uses: z.array(z.string()).optional(),
+  foreshadows: z.array(z.string()).optional(),
   computation: ComputationSchema.optional(),
   companions: CompanionsSchema.optional(),
   rendered: z.array(RenderedAssetSchema).optional(),
@@ -755,6 +760,29 @@ export interface ConstraintContext {
  * Add custom rules by appending to this array.
  */
 export const CONSTRAINT_RULES: ConstraintRule[] = [
+  {
+    id: "foreshadows-subset-of-uses",
+    description:
+      "Every foreshadows[] entry must also appear in uses[] — a declared " +
+      "forward reference to something the block does not reference is " +
+      "meaningless, and would silently exempt nothing",
+    // Universal: any block that can carry `uses[]` can carry a foreshadow, so
+    // this must not narrow as new kinds appear.
+    appliesTo: [...BLOCK_KINDS],
+    check: (block) => {
+      const fs = (block as { foreshadows?: string[] }).foreshadows;
+      if (!fs?.length) return null;
+      const uses = new Set((block as { uses?: string[] }).uses ?? []);
+      // Keeps `foreshadows` an annotation ON an edge rather than a second,
+      // parallel way to name blocks. Without this it drifts: a `uses[]` entry
+      // gets removed or renamed, its foreshadow declaration lingers, and the
+      // exemption quietly applies to nothing while looking deliberate.
+      const orphans = fs.filter((f) => !uses.has(f));
+      return orphans.length
+        ? `foreshadows[] entries not present in uses[]: ${orphans.join(", ")}`
+        : null;
+    },
+  },
   {
     id: "md-exists",
     description: "Every block must have a companion .md file",
