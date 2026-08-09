@@ -118,6 +118,48 @@ RUN cd /build/hecke-engine && cargo build --release && \
     find target/release -maxdepth 1 -type f -executable -name 'hecke*' \
       -exec cp {} /hecke-bins/ \;
 
+# ── pyhecke-native wheel, built from THIS tree ──────────────────
+#
+# Built here, in the same stage and from the same source as the
+# hecke-engine binaries, so the wheel in the image cannot disagree
+# with the engine it was compiled from.
+#
+# Why this exists: on 2026-08-09 the pyhecke_native installed in a
+# session container returned trace convention C
+# (markov_z(q0) = 0.4993203341836945) while tools/hecke-engine/src/gram.rs
+# read convention D — the wheel predated the C -> D migration
+# (litlfred/qou b5f4cb5b9) by a day. Source review could not see it,
+# the content-layer QA axis passed, the registry was correct, and only
+# calling the binary exposed it. Because the standing rule in that folio
+# is "never hand-edit witness numbers, regenerate from the producer",
+# a stale wheel turns the remediation into a reintroduction vector:
+# fresh convention-C numbers, stamped into witnesses with a producer's
+# authority.
+#
+# The wheel was NOT previously built here at all, so whatever wheel a
+# container ended up with came from outside the image and could drift
+# arbitrarily. Building it in-stage removes that degree of freedom
+# rather than merely detecting it.
+#
+# --no-default-features drops the clarabel-lp backend (the litlfred
+# Clarabel.rs fork), which is unreachable from restricted-network
+# builders and is NOT needed by the Gram / seminormal / Markov-trace
+# primitives — only by `operator_selection_lp`. Callers that need the LP
+# should install the default-feature wheel separately; see
+# tools/pyhecke-native/README.md §"Clarabel (litlfred fork)".
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+        python3-dev python3-pip \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip3 install --break-system-packages --no-cache-dir maturin
+
+COPY tools/pyhecke-native/ /build/pyhecke-native/
+COPY docs/coordination/trace-convention-registry.json /build/registry.json
+
+RUN cd /build/pyhecke-native \
+    && maturin build --release --no-default-features \
+    && mkdir -p /hecke-wheels \
+    && find target/wheels -name 'pyhecke_native*.whl' -exec cp {} /hecke-wheels/ \;
+
 # ── Lean 4 (via elan) ───────────────────────────────────────────
 
 FROM base AS lean-setup
@@ -162,6 +204,45 @@ COPY .github/scripts/requirements.txt .github/scripts/requirements.txt
 
 # Copy pre-built hecke-engine binaries from the Rust build stage
 COPY --from=hecke-build /hecke-bins/ /usr/local/bin/
+
+# ── pyhecke-native: install from THIS image's build, then gate it ───
+#
+# The install is deliberately NOT tolerated on failure, unlike the Lean
+# steps above. A missing pyhecke_native degrades gracefully (producers
+# have Python fallbacks); a pyhecke_native carrying the WRONG TRACE
+# CONVENTION does not — it silently produces convention-C numbers that
+# look like ordinary producer output. Fail the build instead.
+COPY --from=hecke-build /hecke-wheels/ /tmp/hecke-wheels/
+RUN pip3 install --break-system-packages --no-cache-dir \
+        /tmp/hecke-wheels/pyhecke_native*.whl \
+    && rm -rf /tmp/hecke-wheels
+
+# Trace-convention gate. Compares the INSTALLED BINARY against the
+# registry, which is the only check that can see a stale artifact:
+# source review, the content-layer axis and the registry itself were all
+# green while the binary was wrong. Reads z from the registry rather
+# than a literal, so changing the production convention re-arms this
+# automatically instead of grandfathering the old value.
+COPY docs/coordination/trace-convention-registry.json /tmp/registry.json
+RUN python3 - <<'PYGATE' && rm -f /tmp/registry.json
+import json, sys
+reg = json.load(open("/tmp/registry.json"))
+q0 = float(reg["meta"]["q0"]["value"])
+want = float(next(c for c in reg["conventions"] if c["id"] == "D")["z_at_q0"])
+import pyhecke_native as pn
+got = pn.markov_z(q0)
+d = abs(got - want)
+print(f"[pyhecke-native] markov_z(q0) = {got!r}")
+print(f"[pyhecke-native] registry D   = {want!r}")
+print(f"[pyhecke-native] |difference| = {d:.3e}  (tol 1e-15, f64 path)")
+if d > 1e-15:
+    zc = 1.0 / (q0 ** 0.5 + q0 ** -0.5)
+    if abs(got - zc) <= 1e-15:
+        sys.exit("[pyhecke-native] FATAL: wheel is CONVENTION C. The image would "
+                 "ship a producer that silently reintroduces the excised convention.")
+    sys.exit("[pyhecke-native] FATAL: wheel matches neither convention D nor C.")
+print("[pyhecke-native] convention D confirmed — wheel agrees with the registry.")
+PYGATE
 
 # Resolve dependencies and warm the Mathlib olean cache for the
 # whole folio workspace (QOU + UGB + Fred2005).  Failures are
