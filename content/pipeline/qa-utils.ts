@@ -14,6 +14,7 @@ import {
 } from "fs";
 import { join, resolve } from "path";
 import { execFileSync } from "child_process";
+import { criterionSourceHash } from "./qa-criterion-hash";
 import {
   parseLeanRef,
   leanPackageByName,
@@ -176,7 +177,16 @@ export interface CriterionScriptHashes {
   criterion_id: string;
   /** Path to checker source file (may not exist on disk). */
   source_file: string;
-  /** 12-char SHA-256 of the source file. Empty if absent. */
+  /**
+   * 12-char SHA-256 of the checker's own code: its dispatch entry plus the
+   * transitive closure of module-local declarations it references. Falls back
+   * to hashing the whole source file when that closure cannot be resolved.
+   * Empty if the file is absent.
+   *
+   * Per-criterion rather than per-file so that editing one checker does not
+   * invalidate every other criterion sharing its module — see
+   * `qa-criterion-hash.ts` for why that matters.
+   */
   script_hash: string;
   /** Full git SHA of the file's most recent commit. */
   script_commit_sha: string;
@@ -215,7 +225,12 @@ export function computeCriterionScriptHashes(
   return {
     criterion_id: criterionId,
     source_file: sourceFile,
-    script_hash: hashFile(absSource) ?? "",
+    // Prefer the per-criterion closure hash; fall back to the whole file when
+    // the criterion cannot be located or its closure cannot be trusted. The
+    // fallback over-invalidates (churn) rather than under-invalidating (stale
+    // verdicts silently kept), which is the safe direction.
+    script_hash:
+      criterionSourceHash(absSource, criterionId) ?? hashFile(absSource) ?? "",
     // Pass the repo-relative `sourceFile` (not `absSource`) so git
     // interprets the pathspec correctly against `repoRoot`.
     script_commit_sha: gitFileCommitSha(sourceFile, repoRoot),
