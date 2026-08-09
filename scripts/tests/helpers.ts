@@ -8,20 +8,72 @@
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join, relative, resolve } from "path";
 import { execSync } from "child_process";
+import { findContentRepoRoot, findPapers } from "../../content/pipeline/repo-root";
+import { LEAN_PACKAGES } from "../../schemas/lean-packages";
 
 // ── Paths ───────────────────────────────────────────────────────
 
+/** Root of THIS repo — the folio-assistant platform checkout. */
 export const REPO_ROOT = resolve(import.meta.dir, "../..");
+
+/**
+ * Root of the CONTENT repo (the folio), when one is attached.
+ *
+ * folio-assistant is the platform; the Lean workspace, `proof-objects.json`,
+ * `lean-toolchain` and the papers themselves live in a SEPARATE repo which
+ * embeds this one (as a sibling clone plus a `folio-assistant/` symlink —
+ * see `scripts/setup-folio-assistant.sh` in the folio).
+ *
+ * A plain `bun test` here has no folio attached, so anything asserting a
+ * content artifact must SKIP rather than fail — see `hasFolio()`. Tests
+ * that hardcoded `REPO_ROOT + "content/quantum-observable-universe/..."`
+ * were asserting a path that cannot exist in this repo, which is most of
+ * why the suite carried 29 permanent failures.
+ */
+export const FOLIO_ROOT: string | undefined = (() => {
+  // Resolve from `process.cwd()`, NOT from this file's location. The folio
+  // embeds the platform as a SYMLINK (`<folio>/folio-assistant`), and
+  // `import.meta.dir` resolves through it to the real platform path — so
+  // walking up from here never reaches the folio, even when running from
+  // one. (Same trap that made `q-usage-audit.ts` sweep the wrong repo.)
+  //
+  // Reuses the pipeline's helpers rather than carrying a second copy of
+  // the walk: one implementation, already covered by tests.
+  const root = findContentRepoRoot();
+  return findPapers(root).length > 0 ? root : undefined;
+})();
+
+/** True when a content repo (folio) is attached and content assertions can run. */
+export function hasFolio(): boolean {
+  return FOLIO_ROOT !== undefined;
+}
+
 /**
  * Root Lake workspace directory.  `lake build` at this directory
  * builds every paper package registered in the root `lakefile.toml`.
  * Per-paper Lake roots are under `content/<paper>/lean/`; see
- * `folio-assistant/schemas/lean-packages.ts` for the authoritative map.
+ * `schemas/lean-packages.ts` for the authoritative map.
+ *
+ * Lives in the FOLIO, not the platform. Empty string when none is attached —
+ * guard with `hasFolio()` before using.
  */
-export const LEAN_DIR = REPO_ROOT;
+export const LEAN_DIR = FOLIO_ROOT ?? "";
 /** Legacy alias: default paper's Lake directory (QOU). */
-export const QOU_LEAN_DIR = join(REPO_ROOT, "content/quantum-observable-universe/lean");
-export const CHAPTERS_DIR = join(REPO_ROOT, "chapters");
+export const QOU_LEAN_DIR = join(
+  FOLIO_ROOT ?? REPO_ROOT,
+  "content/quantum-observable-universe/lean",
+);
+/**
+ * `chapters/*.tex` — `content_build` output, which lives in the FOLIO.
+ *
+ * Was `join(REPO_ROOT, "chapters")`, i.e. the PLATFORM, so
+ * `findChapterFiles()` returned `[]` even with a folio attached and
+ * `latex-lean-coverage.test.ts` has never run a single one of its real
+ * assertions in either repo. `QOU_LEAN_DIR` directly above already resolves
+ * against `FOLIO_ROOT`; this is the same rule, and the same split-repo trap
+ * the `FOLIO_ROOT` comment warns about.
+ */
+export const CHAPTERS_DIR = join(FOLIO_ROOT ?? REPO_ROOT, "chapters");
 export const SCHEMAS_DIR = join(REPO_ROOT, "schemas");
 
 // ── Lean project discovery ──────────────────────────────────────
@@ -37,11 +89,15 @@ const DEPENDENCY_NAMES = new Set([
  * library names like `["QOU", "UGB", "Fred2005"]`.
  */
 export function discoverLeanProjects(): string[] {
+  // Anchored at the FOLIO, and derived from LEAN_PACKAGES rather than a
+  // hand-listed set of paper paths: the old list was three hardcoded
+  // `REPO_ROOT + content/<paper>/lean` strings, so it pointed into the
+  // platform (where no paper exists) AND silently missed any paper added
+  // to the registry afterwards.
+  const root = FOLIO_ROOT ?? REPO_ROOT;
   const lakefiles = [
     join(LEAN_DIR, "lakefile.toml"),
-    join(REPO_ROOT, "content/quantum-observable-universe/lean/lakefile.toml"),
-    join(REPO_ROOT, "content/unital-groebner-bases/lean/lakefile.toml"),
-    join(REPO_ROOT, "content/fred2005-formal-groups/lean/lakefile.toml"),
+    ...LEAN_PACKAGES.map((p) => join(root, p.lakeRoot, "lakefile.toml")),
   ];
   const names = new Set<string>();
 
@@ -100,6 +156,24 @@ export function findChapterFiles(): string[] {
 
 import { parse } from "@unified-latex/unified-latex-util-parse";
 import { attachMacroArgs } from "@unified-latex/unified-latex-util-arguments";
+import type {
+  Ast as LatexAstUnion, Environment, Macro,
+} from "@unified-latex/unified-latex-types";
+
+/** One node of the unified-latex AST — `Ast` also admits an array; the
+ *  walkers below take the element type. Same alias as `render-latex.ts`. */
+type LatexNode = Exclude<LatexAstUnion, unknown[]>;
+
+/** Child nodes, when this node's `content` is an array.
+ *
+ *  On `macro`, `string`, `comment` and `verb`, `content` is a plain STRING
+ *  (for a macro, its name) rather than children — which is exactly the
+ *  distinction the recursive walkers here depend on, and exactly what `any`
+ *  stopped the compiler from enforcing. */
+function latexChildren(node: LatexNode): LatexNode[] {
+  const c = (node as { content?: unknown }).content;
+  return Array.isArray(c) ? (c as LatexNode[]) : [];
+}
 
 export interface LatexEnvironment {
   envType: string;
@@ -124,33 +198,36 @@ const MACRO_SIGNATURES = {
 };
 
 /** Extract text content from a unified-latex AST node's arguments. */
-function argText(node: any, argIndex = 0): string | undefined {
+function argText(node: Macro, argIndex = 0): string | undefined {
   const args = node.args;
   if (!args) return undefined;
   // Find the first arg with openMark "{" (mandatory arg)
-  const mandatoryArgs = args.filter((a: any) => a.openMark === "{");
+  const mandatoryArgs = args.filter((a) => a.openMark === "{");
   const arg = mandatoryArgs[argIndex];
   if (!arg?.content?.length) return undefined;
-  return arg.content.map((c: any) => c.content ?? "").join("");
+  // `content` on the leaves here is the string payload of a `string`/`macro`
+  // node; anything else contributes nothing, as before.
+  return arg.content
+    .map((c) => (typeof (c as { content?: unknown }).content === "string"
+      ? (c as { content: string }).content : ""))
+    .join("");
 }
 
 /** Recursively check if an AST node array contains a macro with given name. */
-function hasMacro(nodes: any[], name: string): boolean {
+function hasMacro(nodes: LatexNode[], name: string): boolean {
   for (const n of nodes) {
     if (n.type === "macro" && n.content === name) return true;
-    if (n.content && Array.isArray(n.content) && hasMacro(n.content, name)) return true;
+    if (hasMacro(latexChildren(n), name)) return true;
   }
   return false;
 }
 
 /** Find a macro node by name in an AST node array. */
-function findMacro(nodes: any[], name: string): any | undefined {
+function findMacro(nodes: LatexNode[], name: string): Macro | undefined {
   for (const n of nodes) {
     if (n.type === "macro" && n.content === name) return n;
-    if (n.content && Array.isArray(n.content)) {
-      const found = findMacro(n.content, name);
-      if (found) return found;
-    }
+    const found = findMacro(latexChildren(n), name);
+    if (found) return found;
   }
   return undefined;
 }
@@ -167,10 +244,10 @@ export function extractEnvironments(texFile: string): LatexEnvironment[] {
   const envs: LatexEnvironment[] = [];
 
   // Walk AST for environment nodes
-  function walkForEnvs(nodes: any[]) {
+  function walkForEnvs(nodes: LatexNode[]) {
     for (const node of nodes) {
-      if (node.type === "environment" && ENV_TYPES.has(node.env)) {
-        const body = node.content || [];
+      if (node.type === "environment" && ENV_TYPES.has((node as Environment).env)) {
+        const body = latexChildren(node);
 
         // Find \label
         const labelNode = findMacro(body, "label");
@@ -197,9 +274,7 @@ export function extractEnvironments(texFile: string): LatexEnvironment[] {
       }
 
       // Recurse into content
-      if (node.content && Array.isArray(node.content)) {
-        walkForEnvs(node.content);
-      }
+      walkForEnvs(latexChildren(node));
     }
   }
 

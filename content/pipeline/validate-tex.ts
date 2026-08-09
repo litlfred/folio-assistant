@@ -19,13 +19,32 @@
  */
 
 import { readFileSync, existsSync, writeFileSync } from "fs";
-import { join, relative, basename, extname } from "path";
+import { join } from "path";
 import { Glob } from "bun";
 import { remark } from "remark";
 import remarkMath from "remark-math";
 import { visit } from "unist-util-visit";
 import { parse as parseLatex } from "@unified-latex/unified-latex-util-parse";
 import { printRaw } from "@unified-latex/unified-latex-util-print-raw";
+import type { Ast as LatexAstUnion, Environment } from "@unified-latex/unified-latex-types";
+import { findContentRepoRoot } from "./repo-root";
+
+/** One node of the unified-latex AST — the second, unrelated node family
+ *  alongside mdast in this file. Same alias as `render-latex.ts`. */
+type LatexNode = Exclude<LatexAstUnion, unknown[]>;
+
+/** Child nodes, when this node's `content` is an array. On `macro`,
+ *  `string`, `comment` and `verb` it is a plain string instead. */
+function latexChildren(node: LatexNode): LatexNode[] {
+  const c = (node as { content?: unknown }).content;
+  return Array.isArray(c) ? (c as LatexNode[]) : [];
+}
+
+/** A node's arguments, for the kinds that take them. */
+function latexArgs(node: LatexNode): LatexNode[] {
+  const a = (node as { args?: unknown }).args;
+  return Array.isArray(a) ? (a as LatexNode[]) : [];
+}
 
 // ── Types ─────────────────────────────────────────────────────────
 
@@ -72,7 +91,7 @@ function extractSnippets(filepath: string, text: string): TexSnippet[] {
 
   const tree = remark().use(remarkMath).parse(text);
 
-  visit(tree, (node: any) => {
+  visit(tree, (node) => {
     const pos = node.position?.start ?? { line: 1, column: 1 };
 
     if (node.type === "inlineMath") {
@@ -108,11 +127,6 @@ function extractSnippets(filepath: string, text: string): TexSnippet[] {
 // ── unified-latex AST validation ──────────────────────────────────
 
 /** Known LaTeX environments that are valid in math mode. */
-const MATH_ENVS = new Set([
-  "aligned", "gathered", "split", "cases", "array",
-  "pmatrix", "bmatrix", "Bmatrix", "vmatrix", "Vmatrix",
-  "smallmatrix", "matrix", "tikzcd",
-]);
 
 /** Environments that must NOT appear in math mode. */
 const NON_MATH_ENVS = new Set([
@@ -146,7 +160,7 @@ function validateSnippetAst(snippet: TexSnippet): ValidationError[] {
     texToParse = snippet.content;
   }
 
-  let ast: any;
+  let ast: ReturnType<typeof parseLatex>;
   try {
     ast = parseLatex(texToParse);
   } catch (e) {
@@ -165,13 +179,12 @@ function validateSnippetAst(snippet: TexSnippet): ValidationError[] {
   // Walk AST for structural issues
   const envStack: string[] = [];
 
-  function walkNodes(nodes: any[]): void {
+  function walkNodes(nodes: LatexNode[]): void {
     for (const node of nodes) {
       // Check environment nodes
       if (node.type === "environment") {
-        const envName = typeof node.env === "string"
-          ? node.env
-          : printRaw(node.env ?? []);
+        const env = (node as Environment).env;
+        const envName = typeof env === "string" ? env : printRaw(env ?? []);
 
         // Check for non-math environments in math context
         if (isMathContext && NON_MATH_ENVS.has(envName)) {
@@ -189,43 +202,25 @@ function validateSnippetAst(snippet: TexSnippet): ValidationError[] {
         envStack.push(envName);
 
         // Recurse into environment content
-        if (node.content && Array.isArray(node.content)) {
-          walkNodes(node.content);
-        }
+        walkNodes(latexChildren(node));
 
         envStack.pop();
       }
 
-      // Check for unmatched braces (group nodes with issues)
-      if (node.type === "group" && node.content && Array.isArray(node.content)) {
-        walkNodes(node.content);
+      // Groups (brace scopes) and the three math node kinds carry children
+      // the same way; `latexChildren` returns [] for anything else, so the
+      // per-type `Array.isArray(node.content)` tests are what it replaces.
+      if (node.type === "group" || node.type === "inlinemath" ||
+          node.type === "displaymath" || node.type === "mathenv") {
+        walkNodes(latexChildren(node));
       }
 
       // Recurse into args
-      if (node.args && Array.isArray(node.args)) {
-        for (const arg of node.args) {
-          if (arg.content && Array.isArray(arg.content)) {
-            walkNodes(arg.content);
-          }
-        }
-      }
-
-      // Check inline/display math nodes for nested issues
-      if (node.type === "inlinemath" && node.content) {
-        walkNodes(node.content);
-      }
-      if (node.type === "displaymath" && node.content) {
-        walkNodes(node.content);
-      }
-      if (node.type === "mathenv" && node.content) {
-        walkNodes(node.content);
-      }
+      for (const arg of latexArgs(node)) walkNodes(latexChildren(arg));
     }
   }
 
-  if (ast.content && Array.isArray(ast.content)) {
-    walkNodes(ast.content);
-  }
+  walkNodes(latexChildren(ast));
 
   return errors;
 }
@@ -430,6 +425,11 @@ function formatText(report: ValidationReport): string {
       lines.push(`    snippet: ${preview}...`);
       lines.push("");
     }
+  } else if (report.snippetsFound === 0) {
+    // "No errors found" over zero snippets is the shape this whole sweep is
+    // about: it reads as a clean bill of health for a scan that never
+    // happened. Say which of the two facts it is.
+    lines.push("Nothing scanned — no TeX snippets found.");
   } else {
     lines.push("No errors found.");
   }
@@ -449,8 +449,9 @@ function formatWarningsLog(report: ValidationReport): string {
 
 // ── CLI ───────────────────────────────────────────────────────────
 
-const REPO_ROOT = join(import.meta.dir, "../..");
-const CONTENT_ROOT = join(import.meta.dir, "..");
+// Was `join(import.meta.dir, "..")` — `<platform>/content`, which holds only
+// `pipeline/`. The papers this validates live in the folio.
+const CONTENT_ROOT = join(findContentRepoRoot(), "content");
 
 if (import.meta.main) {
   const args = process.argv.slice(2);
@@ -508,6 +509,17 @@ if (import.meta.main) {
     }
   }
 
+  // An empty corpus is a broken run, not a clean one — the rule
+  // `validateObjects` settled. Before this the validator printed
+  // "No errors found." and exited 0 having read no files at all.
+  if (report.snippetsFound === 0) {
+    console.error(
+      `\nNo TeX snippets found under ${CONTENT_ROOT} — refusing to report success.\n` +
+      "This validates a FOLIO's .md content; folio-assistant is the platform.\n" +
+      "Run it from the content repo, or pass --paper.",
+    );
+    process.exit(1);
+  }
   process.exit(report.errors.length > 0 ? 1 : 0);
 }
 

@@ -18,7 +18,6 @@ from __future__ import annotations
 import argparse
 import html as html_mod
 import re
-import sys
 from pathlib import Path
 
 # ---------------------------------------------------------------------------

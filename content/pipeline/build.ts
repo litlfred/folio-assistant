@@ -19,6 +19,7 @@ import { renderChapter, validateLatexAst } from "./render-latex";
 import { generateMainTex } from "./generate-main-tex";
 import { runPreflight } from "./latex-preflight";
 import { resolveLeanFile, leanFileStatus } from "../../scripts/lean-coverage";
+import { findContentRepoRoot, findPapers } from "./repo-root";
 
 // ── Build ────────────────────────────────────────────────────────
 
@@ -280,15 +281,46 @@ export async function buildPaper(
 
 if (import.meta.main) {
   const args = process.argv.slice(2);
-  const defaultPaper = join(import.meta.dir, "../quantum-observable-universe/quantum-observable-universe.ts");
   // Resolve relative paths against cwd so `bun run pipeline/build.ts rel/path` works.
   // Only treat args[0] as a paper path if it's a positional argument (not a --flag);
   // otherwise fall back to the default paper. This allows invocations like
   // `bun run pipeline/build.ts --generate-main --main-out main.tex` without a path.
   const firstPositional = args[0] && !args[0].startsWith("--") ? args[0] : undefined;
-  const paperPath = resolve(firstPositional || defaultPaper);
+
+  // The default was
+  //   join(import.meta.dir, "../quantum-observable-universe/quantum-observable-universe.ts")
+  // — a specific FOLIO paper, named in PLATFORM code and resolved relative to
+  // this file, so it pointed at `<platform>/content/quantum-observable-universe`
+  // which exists in no checkout. Discover the folio's papers instead, the way
+  // `validate.ts` already does. One paper is unambiguous; several need an
+  // explicit argument; none is an error worth stating rather than a path that
+  // fails to import.
+  const contentRoot = findContentRepoRoot();
+  const paperPath = resolve(firstPositional ?? (() => {
+    const papers = findPapers(contentRoot);
+    if (papers.length === 1) return join(contentRoot, "content", papers[0], `${papers[0]}.ts`);
+    if (papers.length === 0) {
+      console.error(`No paper found under ${join(contentRoot, "content")}.`);
+      console.error("folio-assistant is the PLATFORM; papers live in a folio. Run this from the folio,");
+      console.error("or pass a paper manifest explicitly: bun run pipeline/build.ts <paper>/<paper>.ts");
+      process.exit(1);
+    }
+    console.error(`${papers.length} papers found (${papers.join(", ")}) — name one:`);
+    console.error("  bun run pipeline/build.ts content/<paper>/<paper>.ts");
+    process.exit(1);
+  })());
   const outDirIdx = args.indexOf("--out-dir");
-  const outDir = resolve(outDirIdx >= 0 ? args[outDirIdx + 1] : join(import.meta.dir, "../../chapters"));
+  // The default was `join(import.meta.dir, "../../chapters")` — this file's
+  // own location, so the PLATFORM checkout. `chapters/*.tex` is folio build
+  // output; every CI invocation passes `--out-dir ../chapters/` from inside
+  // the folio, which is why this never showed there. `server.ts` invokes
+  // this script twice WITHOUT the flag, and those runs wrote a paper's
+  // chapters into the platform repo. `findContentRepoRoot()` walks up from
+  // cwd — it must not use `import.meta.dir`, which resolves through the
+  // folio's `folio-assistant/` symlink back to the platform.
+  const outDir = resolve(
+    outDirIdx >= 0 ? args[outDirIdx + 1] : join(contentRoot, "chapters"),
+  );
 
   // Parse print mode options
   const printModeIdx = args.indexOf("--print-mode");

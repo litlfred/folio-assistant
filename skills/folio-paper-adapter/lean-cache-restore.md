@@ -3,109 +3,119 @@ name: lean-cache-restore
 roles: [reader, collaborator, owner]
 user_invocable: true
 description: >
-  Restore prebuilt Lean `.olean` artifacts before building. One command,
-  race-free, verified. Try this BEFORE any `lake build` — a restore is
-  ~2 minutes, a from-source Mathlib build is 30-60.
+  The Lean build loop — restore a warm cache before working, and
+  contribute your build back when done. One command each. A restore is
+  ~2 minutes; a cold Mathlib build is 30-60.
 allowed-tools: Bash Read
 ---
 
-# Lean / olean cache restore
+# Lean cache: the authoring loop
 
-## Do this first
+## The loop
 
-```sh
-scripts/lake-cache.sh status     # is a cache already on disk?
-scripts/lake-cache.sh restore    # ~2 min; derives package + branch itself
+The cache is not a maintenance chore. It is the **output of every
+authoring session**, and every session should leave it warmer than it
+found it:
+
+```
+restore  ──▶  draft / edit .lean  ──▶  lake build  ──▶  contribute
+   ▲                                                        │
+   └────────────── next agent starts here ──────────────────┘
 ```
 
-That is the whole procedure. No package name to look up, no branch slug
-to construct, no git incantation to retype.
+```sh
+scripts/lake-cache.sh status       # what do I have?
+scripts/lake-cache.sh restore      # warm up  (~2 min)
+# … draft, edit, `lake build` …
+scripts/lake-cache.sh contribute   # give the build back
+```
 
-**This is the single most common wasted hour in this repo.** An agent
-runs `lake build`, waits 40 minutes for Mathlib to compile from source,
-and never learns that a prebuilt cache existed. Restore first, always.
+**Restore before any Lean work.** The single most common wasted hour is
+an agent running `lake build` cold, waiting 40 minutes for Mathlib, and
+never learning a prebuilt cache existed.
 
-## Why a script and not a recipe
+**Contribute when you finish.** If you compiled anything, the next agent
+should not have to compile it again. `contribute` is safe to run
+unconditionally — every guard below applies, so a session that built
+nothing, or only a subtree, simply gets refused.
 
-The old procedure was eight lines of shell copied out of a 600-line
-skill. Every failure it had is now handled:
+## Why contributing is safe
 
-| Failure | What went wrong | Now |
-|---|---|---|
-| `gzip: not in gzip format` | `FETCH_HEAD` is global; a concurrent fetch repointed it mid-restore and the assembled tarball was truncated | Fetches into a private ref; no race to lose |
-| "restored" but the build still runs cold | nothing checked that oleans actually landed | Counts `.olean` files and fails if zero |
-| "carries neither parts nor a tree" on a good branch | `git ls-tree` is cwd-prefix-relative, and you run it from the Lake root | Uses `--full-tree` |
-| wrong package guessed | branch slug hand-constructed | Derived from the roster, else inferred from the branch family |
-| silently restored a `-test` branch | prefix matching | Exact `<pkg>-<slug>` only |
+`contribute` publishes only if all four hold:
 
-## Commands
-
-| Command | Use |
+| Guard | Refuses when |
 |---|---|
-| `status` | Is a cache present? Prints the resolved package, toolchain, branch, olean count |
-| `restore` | Restore oleans for this Lake package |
-| `restore-toolchain` | Restore the elan toolchain itself, when `lake` is missing and the elan host is slow or blocked |
-| `list` | Cache branches on origin |
-| `seed` | Package a built `.lake/` for pushing to a cache branch |
-| `doctor` | Everything at once, plus the next step |
+| Non-empty | no oleans at all |
+| Own-package | zero oleans belong to this package — only its dependencies |
+| Trace coverage | under 90% traced (see below) |
+| **No-shrink** | the result is materially smaller than what is already published |
 
-Run from anywhere inside the package — the Lake root is found by walking
-up to the nearest `lakefile.toml`.
+The last one is what makes an open contribution model work: a session
+that compiled one subtree cannot replace a fuller cache. Counts are read
+from the incumbent branch's commit message, so the check costs no
+bandwidth — `--filter=blob:none` fetches the commit and skips the ~1.6 GB
+payload.
 
-## Exit codes — branch on these, don't grep output
+`--force` overrides the no-shrink check. That is a deliberate downgrade;
+do not reach for it to make a red run go green.
 
-| Code | Meaning | Next step |
+## Traces are the thing that matters
+
+Lake decides staleness from `.trace`, **not** `.olean`. An olean with no
+trace is "out of date", so Lake rebuilds it — and rebuilding **evicts**
+the untraced neighbours.
+
+This was measured, not theorised: a cache with 7268 oleans and 0 traces
+survived a single-module build as 772 oleans, and every survivor had a
+trace. Such a cache works for direct `lean` + `LEAN_PATH` and is useless
+for a build.
+
+So `status` reports coverage, and anything under 90% is a warning you
+should act on rather than route around.
+
+## Exit codes — branch on these, don't grep
+
+| Code | Meaning | Next |
 |---|---|---|
-| `0` | Restored, or already present | Build |
-| `1` | Miss — no such branch | Build from source, then `seed` |
-| `2` | Environment/usage error | Read the message; usually no git or no `lean-toolchain` |
-| `3` | Cache found but **unusable** (corrupt, or extracted zero oleans) | Build, then reseed that branch |
+| `0` | present / restored / published | proceed |
+| `1` | miss — no such branch | build, then `contribute` |
+| `2` | usage or environment error | read the message |
+| `3` | found but **unusable** (corrupt, gutted, or won't link) | see below |
 
-`1` and `3` are different and matter. `1` means nobody has seeded this
-package+toolchain yet. `3` means someone did and it is broken — reseeding
-is owed, or the next agent hits the same wall.
+`1` and `3` differ and it matters. `1` means nobody has seeded this
+package+toolchain. `3` means someone did and it is broken — repair with
+`restore`, or reseed if the branch itself is bad.
 
-## After a from-source build, seed
+## Cold start
 
-If you had to build, leave the next agent a cache:
+If there is no usable branch at all, that is a bootstrap, not a session
+task:
 
 ```sh
-scripts/lake-cache.sh seed
+scripts/reseed-lean-cache.sh --repo <content-repo> --dry-run
 ```
 
-It writes the split parts and prints the exact push commands. The push is
-deliberately **not** automated: seeding force-pushes an orphan branch, which
-is destructive.
+Phased, resumable, and safe by default — seeds to a `-test` branch and
+verifies a restore from a clean clone before it will touch production.
+See [Reseeding the Lean cache](../../docs/guides/reseeding-the-lean-cache.md).
 
-Never seed an unbuilt tree — the script refuses. An empty cache is worse
-than none: the next agent gets a hit, skips the build, and fails with no
-oleans and no explanation.
+## Toolchain
 
-## When restore misses
+```sh
+scripts/lake-cache.sh restore-toolchain
+```
 
-A miss is not a dead end, in this order:
-
-1. `scripts/lake-cache.sh list` — is there a branch for a *different*
-   toolchain? If so the folio's `lean-toolchain` moved and the cache
-   family needs refreshing (`.github/workflows/lake-cache-refresh.yml`).
-2. `lake exe cache get` — Mathlib's upstream cache. Mathlib only, and it
-   403s on sandboxed networks.
-3. From-source build — the last resort. See `lean-environment-setup`
-   for the mathlib source-clone and codeload-tarball workarounds when
-   the network blocks both of the above.
-
-## Out-of-cone modules
-
-A cache branch carries only the oleans in that package's dependency
-closure at seed time. A new import that pulls in a module outside it
-(say a representation-theory file) will still compile from source — the
-restore is not broken. Fold it into the next reseed.
+Exits `3` if the restored toolchain has no static libraries — it will
+elaborate but nothing will **link**, so `lake exe …` (including
+`lake exe cache get`) cannot run. Install a real one with elan in that
+case.
 
 ## Interaction with other skills
 
 | Skill | Interaction |
 |---|---|
-| `lean-environment-setup` | Full environment story; network workarounds when every cache tier misses |
-| `lean-build-fix` | Run restore before diagnosing a build failure — a cold build is not a broken build |
-| `formalizer`, `lean-generation` | Need a warm cache for the LSP to answer inside the MCP timeout |
-| `prepare-merge` | `lean_build` gate assumes artifacts are restorable |
+| `lean-environment-setup` | Full environment story; network workarounds when every tier misses |
+| `lean-build-fix` | Restore first — a cold build is not a broken build |
+| `formalizer`, `lean-generation` | Draft step of the loop; need a warm cache for the LSP to answer in time |
+| `lean-formal-graph` | Consumes what a build produces |
+| `prepare-merge` | Its `lean_build` gate assumes artifacts are restorable |

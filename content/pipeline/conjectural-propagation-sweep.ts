@@ -12,6 +12,20 @@
  */
 import { readdirSync, readFileSync, statSync, writeFileSync, mkdirSync } from "fs";
 import { join, basename, dirname, relative } from "path";
+import { BLOCK_KIND_ALT } from "../../schemas/types";
+import { requirePaper } from "./repo-root";
+
+/**
+ * `export default <kind>({` — the builder call that identifies a block.
+ *
+ * Built from `BLOCK_KIND_ALT` rather than spelled out. Spelled out, this
+ * listed 13 of the schema's 15 kinds, silently skipping every `table` and
+ * `algorithm` block in the corpus.
+ */
+const BUILDER_RE = new RegExp(
+  `^(?:export default\\s+)?(${BLOCK_KIND_ALT})\\s*\\(\\s*\\{`,
+  "m",
+);
 
 type Block = { kind: string; label: string; uses: string[]; file: string };
 const blocks = new Map<string, Block>();
@@ -24,7 +38,7 @@ function walk(dir: string) {
     if (!p.endsWith(".ts")) continue;
     if (basename(p).startsWith("index")) continue;
     const src = readFileSync(p, "utf8");
-    const m = src.match(/^(?:export default\s+)?(definition|theorem|lemma|proposition|corollary|conjecture|remark|example|prose|equation|diagram|simulator|proof)\s*\(\s*\{/m);
+    const m = src.match(BUILDER_RE);
     if (!m) continue;
     const kind = m[1];
     const labelM = src.match(/label\s*:\s*["']([^"']+)["']/);
@@ -37,7 +51,7 @@ function walk(dir: string) {
   }
 }
 
-walk("content/quantum-observable-universe");
+walk(join("content", requirePaper()));
 
 const conjectureLabels = new Set<string>();
 for (const b of blocks.values()) if (b.kind === "conjecture") conjectureLabels.add(b.label);

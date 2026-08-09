@@ -39,11 +39,16 @@
  * @module scripts/audit-wiring-migrate
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
-import { resolve, basename, relative, dirname } from "path";
+import { readFileSync, writeFileSync } from "fs";
+import { basename, relative } from "path";
 import { globSync } from "glob";
+import { findContentRepoRoot } from "../content/pipeline/repo-root";
 
-const REPO_ROOT = resolve(import.meta.dir, "..");
+// Was `import.meta.dir`-relative, i.e. the PLATFORM — but every path below is
+// folio content (`content/**`, `computations/**`), and this is used as the cwd
+// for those globs. `findContentRepoRoot()` walks up from the real cwd;
+// `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
+const REPO_ROOT = findContentRepoRoot();
 
 interface Args {
   dry: boolean;
@@ -196,7 +201,7 @@ function main(): void {
     let witness: Record<string, unknown>;
     try {
       witness = JSON.parse(readFileSync(wf, "utf-8"));
-    } catch (e) {
+    } catch {
       console.error(`  malformed JSON: ${wf} — skipped`);
       continue;
     }

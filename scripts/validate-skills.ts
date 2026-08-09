@@ -7,6 +7,7 @@
  * Usage: npx ts-node scripts/validate-skills.ts
  */
 
+import type { z } from "zod";
 import { readFileSync, readdirSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -16,7 +17,6 @@ import {
   ActorDefinitionSchema,
   CapabilityDefinitionSchema,
   RequirementSchema,
-  SkillDefinitionSchema,
 } from "../schemas/constraints.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -25,7 +25,7 @@ const rootDir = join(__dirname, "..");
 let errors = 0;
 let validated = 0;
 
-function validateDir(dir: string, schema: any, label: string): void {
+function validateDir(dir: string, schema: z.ZodType<unknown>, label: string): void {
   if (!existsSync(dir)) return;
   for (const file of readdirSync(dir).filter(f => f.endsWith(".json"))) {
     const path = join(dir, file);
@@ -34,8 +34,8 @@ function validateDir(dir: string, schema: any, label: string): void {
       schema.parse(data);
       console.log(`  ✓ ${label}/${file}`);
       validated++;
-    } catch (e: any) {
-      console.error(`  ✗ ${label}/${file}: ${e.message}`);
+    } catch (e) {
+      console.error(`  ✗ ${label}/${file}: ${e instanceof Error ? e.message : String(e)}`);
       errors++;
     }
   }
@@ -75,8 +75,8 @@ if (existsSync(skillsDir)) {
         SkillPackageManifestSchema.parse(data);
         console.log(`  ✓ skills/${pkg.name}/package-manifest.json`);
         validated++;
-      } catch (e: any) {
-        console.error(`  ✗ skills/${pkg.name}/package-manifest.json: ${e.message}`);
+      } catch (e) {
+        console.error(`  ✗ skills/${pkg.name}/package-manifest.json: ${e instanceof Error ? e.message : String(e)}`);
         errors++;
       }
     }

@@ -96,6 +96,11 @@ const BLOCK_KINDS: Array<Pick<BlockModuleEntry, "kind" | "displayName" | "viewer
   { kind: "equation", displayName: "Equation", viewerDependencies: ["katex"] },
   { kind: "diagram", displayName: "Diagram" },
   { kind: "simulator", displayName: "Simulator", viewerDependencies: ["katex"] },
+  // `algorithm` and `table` are in the schema's `Block` union and were missing
+  // here, so neither had a registered renderer. They were missing from four
+  // other hand-maintained kind lists too; see `BLOCK_KINDS` in schemas/types.
+  { kind: "algorithm", displayName: "Algorithm" },
+  { kind: "table", displayName: "Table" },
 ];
 
 // Register all built-in kinds with stub loaders.

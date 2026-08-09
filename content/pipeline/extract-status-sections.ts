@@ -30,6 +30,7 @@
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { checkStatusSectionHeader } from "./qa-checkers-voice";
+import { requirePaper } from "./repo-root";
 
 const TODO_RE =
   /\b(?:TODO|FIXME|XXX|HACK|to-?do|pending|punt(?:ed|ing)?|kick\s+the\s+can|not\s+yet\s+(?:implemented|written|done|filled)|remaining\s+work|work\s+remaining|next\s+steps?|needs?\s+(?:work|fixing|attention|filling))\b/i;
@@ -86,7 +87,7 @@ interface TodoEntry { block: string; header: string; body: string; }
 function main() {
   const args = process.argv.slice(2);
   const get = (f: string) => (args.includes(f) ? args[args.indexOf(f) + 1] : undefined);
-  const paper = get("--paper") ?? "quantum-observable-universe";
+  const paper = requirePaper(get("--paper"));
   const chapter = get("--chapter");
   const write = args.includes("--write");
   const beansTodos = ".beans/paper-todos.json";
@@ -147,7 +148,7 @@ function main() {
     }
 
     // APPLY. Remove sections bottom-up (also strip one preceding blank line).
-    let out = [...lines];
+    const out = [...lines];
     for (const s of removable) {
       let start = s.a;
       while (start > 0 && out[start - 1].trim() === "") start--;

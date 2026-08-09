@@ -39,11 +39,11 @@
  */
 
 import { existsSync, readFileSync, writeFileSync, readdirSync, statSync } from "fs";
-import { basename, join, resolve, extname } from "path";
+import { join, resolve, extname } from "path";
 import { remark } from "remark";
 import remarkDirective from "remark-directive";
 import remarkMath from "remark-math";
-import { visit } from "unist-util-visit";
+import { visit, SKIP } from "unist-util-visit";
 import { gfmTable } from "micromark-extension-gfm-table";
 import { gfmTableFromMarkdown, gfmTableToMarkdown } from "mdast-util-gfm-table";
 import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough";
@@ -51,7 +51,6 @@ import { gfmStrikethroughFromMarkdown, gfmStrikethroughToMarkdown } from "mdast-
 import {
   WITNESSED_VALUES,
   verifiedNames,
-  type WitnessedValueEntry,
 } from "./value-registry-di";
 import { resolvePath } from "./render-value";
 import { findContentRepoRoot } from "./repo-root";
@@ -103,7 +102,7 @@ function sigDigitString(str: string): string | null {
   if (!m) return null;
   const intPart = m[1];
   const fracPart = m[2] || "";
-  let digits = intPart + fracPart;
+  const digits = intPart + fracPart;
   // Strip leading zeros (preserve at least one digit so "0" → "0").
   let i = 0;
   while (i < digits.length - 1 && digits[i] === "0") i++;
@@ -266,10 +265,10 @@ export function rewriteMarkdownFile(file: string, index: LiteralEntry[]): FileRe
   interface Patch { start: number; end: number; replacement: string; }
   const patches: Patch[] = [];
 
-  visit(tree as any, (node: any) => {
+  visit(tree, (node) => {
     // Skip subtree if we're inside a fenced ```tex block or a table.
-    if (node.type === "code" && node.lang === "tex") return "skip" as any;
-    if (node.type === "table") return "skip" as any;
+    if (node.type === "code" && node.lang === "tex") return SKIP;
+    if (node.type === "table") return SKIP;
     if (node.type !== "inlineMath" && node.type !== "math") return;
     if (!node.position?.start || !node.position?.end) return;
 

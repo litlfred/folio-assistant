@@ -34,6 +34,14 @@
 
 name: QA sweep (all integration watchers)
 
+#
+# TRIGGERS, ACTUAL: `workflow_dispatch` only.
+# The triggers described above are the FOLIO's. This file was copied into the
+# platform in the repo split (109a4ff) with every trigger neutered to
+# dispatch, and the prose left as it was. It is correct here: this workflow
+# sweeps `content/<paper>/` blocks, and the platform carries no folio. The folio's copy holds the real
+# triggers. See bean `folio-assistant-5rfy`.
+
 on:
   workflow_dispatch:
 
@@ -51,6 +59,29 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: "1.1.30"
+
+      # PREFLIGHT. Every step below sweeps a FOLIO — `content/package.json`,
+      # a `content/<paper>/` tree and its committed `.qa.json` sidecars all
+      # live in the content repo, not in this platform repo. Without that,
+      # the sweep steps fail into `continue-on-error` and the schema-sanity
+      # step below iterates an empty `find` and reports that every sidecar
+      # passes. Passing by finding nothing is the failure mode this whole
+      # workflow exists to catch, so refuse to start instead.
+      - name: Preflight — a folio must be attached
+        run: |
+          if [ ! -f content/package.json ]; then
+            echo "::error::no content/package.json — this workflow sweeps a FOLIO (content repo)."
+            echo "::error::folio-assistant is the platform; run this from a folio checkout,"
+            echo "::error::or from CI in the folio repo where content/<paper>/ exists."
+            exit 1
+          fi
+          papers=$(find content -mindepth 2 -maxdepth 2 -name '*.ts' -path '*/*' \
+            -exec sh -c 'd=$(dirname "$1"); [ "$(basename "$1" .ts)" = "$(basename "$d")" ] && echo "$d"' _ {} \; | sort -u)
+          if [ -z "$papers" ]; then
+            echo "::error::content/ has no <paper>/<paper>.ts manifest — nothing to sweep."
+            exit 1
+          fi
+          echo "papers: $(echo "$papers" | tr '\n' ' ')"
 
       - name: Install content deps
         run: |
@@ -80,18 +111,8 @@ jobs:
             echo "── axis: $axis ─────────────────────────────────"
             bun run pipeline/qa-sweep.ts quantum-observable-universe \
               --axis "$axis" --json 2>/dev/null \
-              | python3 -c "
-import json, sys, collections
-d = json.load(sys.stdin)
-c = collections.Counter()
-for b in d.get('blocks', []):
-    for det in b.get('details', []):
-        if 'fail' in det.get('outcome', ''):
-            c[det['criterion']] += 1
-print(f'criteria run: {len(d[\"want_criteria\"])}')
-for k, v in sorted(c.items(), key=lambda x: -x[1]):
-    print(f'  {v:4d} {k}')
-" 2>&1 | tee /tmp/qa-axis-$axis.log
+              | python3 "$GITHUB_WORKSPACE/scripts/ci/qa-axis-summary.py" \
+                2>&1 | tee "/tmp/qa-axis-$axis.log"
           done
 
       - name: QA staleness map
@@ -105,17 +126,25 @@ for k, v in sorted(c.items(), key=lambda x: -x[1]):
       - name: Schema sanity (.qa.json files)
         run: |
           bad=0
+          seen=0
           while IFS= read -r f; do
+            seen=$((seen+1))
             if ! grep -q '"\$schema": "block-qa/v1"' "$f"; then
               echo "::error file=$f::missing or wrong \$schema marker"
               bad=$((bad+1))
             fi
           done < <(find content -name '*.qa.json' -type f)
-          if [ "$bad" -gt 0 ]; then
-            echo "::error::$bad sidecar(s) failed schema sanity"
+          # A loop over zero files leaves bad=0 and used to print that every
+          # sidecar passes — a green check for a corpus that was never read.
+          if [ "$seen" -eq 0 ]; then
+            echo "::error::found NO .qa.json sidecars under content/ — refusing to report success"
             exit 1
           fi
-          echo "schema sanity: all .qa.json files pass"
+          if [ "$bad" -gt 0 ]; then
+            echo "::error::$bad of $seen sidecar(s) failed schema sanity"
+            exit 1
+          fi
+          echo "schema sanity: all $seen .qa.json file(s) pass"
 
       - name: Upload sweep + staleness logs
         if: always()

@@ -36,7 +36,18 @@
  */
 
 import { existsSync, readFileSync } from "fs";
-import { dirname, basename, sep } from "path";
+import { sep } from "path";
+
+// Chapter profiles are FOLIO content and now arrive through a registry, the
+// same way values and references do. Re-exported below so the checker's
+// import surface is unchanged for `q-usage-audit.ts` and the tests.
+import {
+  CHAPTER_EXPECTED_REGIMES, CATEGORICAL_CHAPTERS, ARCHIMEDEAN_CHAPTERS,
+} from "./chapter-profile-registry-di";
+// Side-effecting: registers qou's profiles as the default until the folio
+// supplies its own. `_folio-chapter-profiles.qou.ts` says how to finish that.
+import { registerDefaultChapterProfiles } from "./_folio-chapter-profiles.qou";
+registerDefaultChapterProfiles();
 
 export interface QUsageHit {
   file: string;
@@ -84,154 +95,11 @@ export type QRegime =
 // fixed-q0 numerical pin in `braids-and-knots`), not to flag every
 // borderline chapter.
 
-const CHAPTER_EXPECTED_REGIMES: Record<string, ReadonlySet<QRegime>> = {
-  // ── Front matter ───────────────────────────────────────────────
-  introduction: new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "mod-gt-1", "mod-lt-1", "root-of-unity", "fixed-q0",
-  ]),
-  notation: new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "real-lt-1", "mod-gt-1", "mod-lt-1", "unit-circle",
-    "root-of-unity", "fixed-q0",
-  ]),
 
-  // ── Part I — categorical foundations ──────────────────────────
-  // Symbolic / generic-R primary. fixed-q0 only in a specialisation
-  // block that explicitly carries an archimedean banner.
-  "quantum-universes": new Set<QRegime>([
-    "na", "symbolic", "generic-R",
-  ]),
-  "quantum-observable-universes": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive",
-  ]),
-  "models-of-qous": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "mod-gt-1", "mod-lt-1", "fixed-q0",
-  ]),
-  "lifting-and-descent": new Set<QRegime>([
-    "na", "symbolic", "generic-R",
-  ]),
 
-  // ── Part II — structural mechanics ───────────────────────────
-  "braids-and-knots": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "mod-gt-1",
-    "mod-lt-1",
-  ]),
-  "brings-surface": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "fixed-q0",
-  ]),
-  "fluid-dynamics": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "stochastic-mechanics": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "real-lt-1", "mod-lt-1", "fixed-q0",
-  ]),
-  "information-theory": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "fixed-q0",
-  ]),
-  "mass-theory": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "mass-endomorphism": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "fixed-q0",
-  ]),
-  "particle-interactions": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "gravity-spacetime": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
 
-  // ── Part III — Descartes universe + observations ─────────────
-  "climax-volume-mass": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  observations: new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "predicted-spectra": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "measurement-observation": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "molecular-construction": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "organic-chemistry": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
 
-  // ── Ch 11 — q-geometric Langlands (root-of-unity territory) ──
-  "q-geometric-langlands": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "root-of-unity", "unit-circle",
-    "mod-lt-1", "mod-gt-1",
-  ]),
 
-  // ── Appendices ────────────────────────────────────────────────
-  "appendix-qvalues": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "appendix-atomic-mass-calculations": new Set<QRegime>([
-    "na", "real-positive", "real-gt-1", "fixed-q0",
-  ]),
-  "appendix-knot-operations": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "mod-lt-1", "mod-gt-1",
-  ]),
-  "appendix-knot-periodic-table": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "fixed-q0",
-  ]),
-  "appendix-nf-witnesses": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "fixed-q0",
-  ]),
-  "appendix-surreals": new Set<QRegime>([
-    "na", "symbolic", "generic-R",
-  ]),
-  "appendix-transfer-matrices": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "fixed-q0",
-  ]),
-
-  // Glossary and notation entries are register tables — allow any.
-  glossary: new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "real-lt-1", "mod-gt-1", "mod-lt-1", "unit-circle",
-    "root-of-unity", "fixed-q0",
-  ]),
-  "index-of-definitions": new Set<QRegime>([
-    "na", "symbolic", "generic-R", "real-positive", "real-gt-1",
-    "real-lt-1", "mod-gt-1", "mod-lt-1", "unit-circle",
-    "root-of-unity", "fixed-q0",
-  ]),
-};
-
-/** Chapters whose narrative-expected profile is "categorical only". */
-const CATEGORICAL_CHAPTERS: ReadonlySet<string> = new Set([
-  "quantum-universes",
-  "lifting-and-descent",
-  "braids-and-knots",
-  "appendix-knot-operations",
-  "appendix-surreals",
-]);
-
-/** Chapters whose narrative-expected profile is "archimedean / fixed q_0". */
-const ARCHIMEDEAN_CHAPTERS: ReadonlySet<string> = new Set([
-  "mass-theory",
-  "particle-interactions",
-  "gravity-spacetime",
-  "climax-volume-mass",
-  "observations",
-  "predicted-spectra",
-  "measurement-observation",
-  "molecular-construction",
-  "organic-chemistry",
-  "fluid-dynamics",
-  "appendix-qvalues",
-  "appendix-atomic-mass-calculations",
-]);
 
 // ── Regime detectors ────────────────────────────────────────────
 
@@ -252,6 +120,27 @@ function readMaybe(path: string | undefined): string {
  * block's current claim — and they routinely contain phrases like
  * "q_0 ≈ 1.1097" inside narrative-history.
  */
+/**
+ * Blank Lean comments — `--` line comments and `/- … -/` blocks, including
+ * `/-! … -/` module docs and `/-- … -/` docstrings — while PRESERVING line
+ * numbers, so reported hit lines stay accurate.
+ *
+ * Without this, prose describing archimedean behaviour counts as archimedean
+ * code. Measured on the qou corpus: five `appendix-surreals` conjectures
+ * failed on `QOU/AppendixSurreals/Conjectures.lean:105/206/208`, all three of
+ * which are inside comments explaining that `surrealExp` is a
+ * standard-part-projection PLACEHOLDER (`ofReal ∘ Real.exp ∘ st`) and what it
+ * loses. Documenting a limitation is not committing it.
+ *
+ * The tactic scan below already skipped comment lines; the `Real.*` scan
+ * beside it did not.
+ */
+function stripLeanComments(lean: string): string {
+  return lean
+    .replace(/\/-[\s\S]*?-\//g, (m) => "\n".repeat((m.match(/\n/g) ?? []).length))
+    .replace(/--[^\n]*/g, "");
+}
+
 function stripFraming(md: string): string {
   let out = md;
   // Strip fenced code (text inside ``` ... ```)
@@ -403,6 +292,134 @@ function* matchLines(
   }
 }
 
+// ── Scoping a whole-file Lean scan to the block's own declaration ──
+
+/**
+ * Final component of a block's `lean.ref`, when that component names a
+ * declaration rather than a module.
+ *
+ * Refs are uniformly `qou:<Module.Path>[.<DeclName>]` across the corpus
+ * (1190 of them). We cannot tell a module from a declaration by shape alone —
+ * `qou:QOU.Aeon` is a module, `qou:QOU.So3Generators` could be either — so
+ * this returns the candidate and the caller falls back to a whole-file scan
+ * when no declaration of that name is present.
+ */
+export function leanDeclFromTs(ts: string): string | undefined {
+  const m = /\bref:\s*"(?:[a-z0-9_-]+:)?([A-Za-z0-9_.']+)"/.exec(ts);
+  if (!m) return undefined;
+  const last = m[1].split(".").pop();
+  return last && last.length > 0 ? last : undefined;
+}
+
+const LEAN_DECL_RE =
+  /^\s*(?:@\[[^\]]*\]\s*)?(?:private\s+|protected\s+|noncomputable\s+|partial\s+|unsafe\s+)*(?:theorem|lemma|def|abbrev|structure|inductive|class|instance|axiom|example|opaque)\s+([A-Za-z_][A-Za-z0-9_'!?]*)/;
+
+interface LeanSpan {
+  name: string;
+  /** 1-indexed, inclusive. */
+  start: number;
+  end: number;
+}
+
+/** Lexical per-declaration line spans of a comment-stripped Lean file. */
+export function leanDeclSpans(lean: string): LeanSpan[] {
+  const lines = lean.split(/\r?\n/);
+  const starts: Array<{ name: string; at: number }> = [];
+  for (let i = 0; i < lines.length; i++) {
+    const m = LEAN_DECL_RE.exec(lines[i]);
+    if (m) starts.push({ name: m[1], at: i + 1 });
+  }
+  return starts.map((s, i) => ({
+    name: s.name,
+    start: s.at,
+    end: i + 1 < starts.length ? starts[i + 1].at - 1 : lines.length,
+  }));
+}
+
+/**
+ * Blank every line of `lean` outside the named declaration's span and the
+ * spans of the same-file helpers it transitively references, preserving line
+ * numbers. Returns `undefined` when the declaration is not in this file, so
+ * the caller can fall back to scanning the whole thing.
+ *
+ * WHY. `lean.ref` resolves to a FILE, and the criteria scanned that whole
+ * file, attributing every hit in it to every block pointing into it. Most
+ * files carry one block (1211 of them) so this rarely mattered — but
+ * `AppendixSurreals/Conjectures.lean` holds 69 declarations shared by 7
+ * blocks, and all five of its failing conjectures were failing on the SAME
+ * three lines, in `surrealExp` (215-221), `surrealLog` (222-236) and
+ * `instProvable` (953-975) — none of which is any of their declarations.
+ * Four of the five reference no archimedean helper at all.
+ *
+ * The transitive helper closure is what keeps this honest rather than merely
+ * quieter: `KashaevSurreal` states
+ * `standardPart (2 * ofReal Real.pi * surrealLog (…) / ω) = Vol`, so it
+ * *does* route through `surrealLog`'s `Real.log` and is still reported. A
+ * block is accountable for the archimedean content it reaches, not for
+ * whatever else happens to share its file.
+ */
+/**
+ * Does this block OWN its whole Lean file, or is it one of several blocks
+ * pointing into a shared library module?
+ *
+ * Two ownership signals, both structural:
+ *   - the `.lean` is the block's SIBLING — same basename as its `.ts`, sitting
+ *     next to it in the chapter directory (`figure-eight-reeb-rotation.ts` ↔
+ *     `figure-eight-reeb-rotation.lean`);
+ *   - the file is NAMED AFTER the ref — `qou:QOU.Braiding.TrMHopfSigma1Sq…`
+ *     resolving to `TrMHopfSigma1SqClosedForm.lean`.
+ *
+ * Either way the block is responsible for everything in the file, including
+ * theorems its own declaration does not reference: `TrMHopfSigma1SqClosedForm`
+ * is a class, and the `Real.sqrt q` lives in the sibling theorem
+ * `trm_hopf_sigma1_sq_closed_form_simplified` — still the block's content.
+ *
+ * When NEITHER holds, the ref points at one declaration inside a module named
+ * something else, which is the shared-library case: `KashaevSurreal` inside
+ * `AppendixSurreals/Conjectures.lean`, 69 declarations, 7 blocks.
+ */
+function ownsWholeLeanFile(
+  tsPath: string | undefined,
+  leanPath: string | undefined,
+  decl: string | undefined,
+): boolean {
+  if (!leanPath) return true;
+  const stem = (p: string) => (p.split(sep).pop() ?? "").replace(/\.[^.]+$/, "");
+  const leanStem = stem(leanPath);
+  if (tsPath && stem(tsPath) === leanStem) return true;
+  return decl !== undefined && decl === leanStem;
+}
+
+export function scopeLeanToDecl(lean: string, decl: string): string | undefined {
+  const spans = leanDeclSpans(lean);
+  const root = spans.find((s) => s.name === decl);
+  if (!root) return undefined;
+
+  const byName = new Map(spans.map((s) => [s.name, s]));
+  const lines = lean.split(/\r?\n/);
+  const textOf = (s: LeanSpan) => lines.slice(s.start - 1, s.end).join("\n");
+
+  const included = new Set<string>([root.name]);
+  const queue = [root];
+  while (queue.length > 0) {
+    const body = textOf(queue.shift()!);
+    for (const m of body.matchAll(/[A-Za-z_][A-Za-z0-9_']*/g)) {
+      const other = byName.get(m[0]);
+      if (other && !included.has(other.name)) {
+        included.add(other.name);
+        queue.push(other);
+      }
+    }
+  }
+
+  const keep = new Set<number>();
+  for (const name of included) {
+    const s = byName.get(name)!;
+    for (let i = s.start; i <= s.end; i++) keep.add(i);
+  }
+  return lines.map((l, i) => (keep.has(i + 1) ? l : "")).join("\n");
+}
+
 // ── Criterion checkers ─────────────────────────────────────────
 
 /**
@@ -482,7 +499,18 @@ export function checkQUsageArchimedeanInCategoricalChapter(
   // No .ts tag-read — dispensations live in the sidecar as a human
   // reviewer entry. See q-usage-watcher.md §Dispensations.
 
-  const lean = readMaybe(leanPath);
+  const leanRaw = readMaybe(leanPath);
+  // Comments are prose, not code — see stripLeanComments.
+  const leanFile = stripLeanComments(leanRaw);
+  // Scan the block's OWN declaration (plus the same-file helpers it reaches),
+  // not everything that happens to share the file — see scopeLeanToDecl.
+  // Falls back to the whole file when the ref names a module, or names a
+  // declaration this file does not contain.
+  const decl = leanDeclFromTs(readMaybe(tsPath));
+  const lean =
+    (decl && !ownsWholeLeanFile(tsPath, leanPath, decl)
+      ? scopeLeanToDecl(leanFile, decl)
+      : undefined) ?? leanFile;
   const md = readMaybe(mdPath);
   const mdClean = stripFraming(md);
   const hits: QUsageHit[] = [];
@@ -490,24 +518,51 @@ export function checkQUsageArchimedeanInCategoricalChapter(
   // Real.* applied to q (or to a context that mentions q) is a strong signal.
   // Plain integer/Nat norm_num is not archimedean — only fire on tactics
   // when the file ALSO contains an archimedean-type marker.
-  const fileHasReal =
-    /\b(ℝ|Real\.|q\s*:\s*ℝ|q\s*:\s*Real\b|noncomputable def)/.test(lean);
-  for (const m of matchLines(lean, REAL_FN_RE)) {
-    hits.push({
-      file: leanPath!,
-      line: m.line,
-      text: `archimedean Real.* in categorical chapter — ${m.text}`,
-    });
-  }
-  if (fileHasReal) {
-    for (const m of matchLines(lean, /\b(linarith|positivity)\b/)) {
-      // Skip if line is just a comment.
-      if (/^\s*--/.test(m.text)) continue;
+  //
+  // `noncomputable def` used to be in this set and is not an archimedean
+  // marker at all: `noncomputable` means Lean cannot generate executable code,
+  // which is what classical choice, quotients, `Module`/`finrank` and inverses
+  // over an abstract field all produce. Live example — after comment
+  // stripping, `braids-and-knots/knot-eigenbasis-complete.lean` contains ZERO
+  // `ℝ` and zero `Real.`, and its two `noncomputable def`s were the whole
+  // reason its `positivity` / `linarith` calls were reported. Those calls
+  // prove partition-size facts over ℚ (`(a - b) / 2 ≤ n / 2` from
+  // `Nat.cast_nonneg`), which is ordered-field combinatorics on integer casts,
+  // not the substrate being evaluated.
+  const fileHasReal = /\b(ℝ|Real\.|q\s*:\s*ℝ|q\s*:\s*Real\b)/.test(lean);
+
+  // This criterion is about the SUBSTRATE PARAMETER q being evaluated
+  // archimedean-ly. A Lean file that never mentions `q` cannot be doing that,
+  // so its use of ℝ is ordinary mathematics rather than a wall crossing.
+  //
+  // Live example: `QOU/Machinery/CoxeterGeometricRepresentationFull.lean`
+  // failed on `Real.sin` / `Real.cos` and mentions `q` ZERO times — it is the
+  // classical geometric representation of a Coxeter group, which is *defined*
+  // over ℝ via cos(π/m). Flagging it as archimedean q-usage was outside the
+  // criterion's own stated intent (the comment directly above).
+  //
+  // This gates the LEAN scans only. The prose scan below is about the block's
+  // own narrative and does not depend on what its sibling Lean file contains.
+  const leanMentionsQ = MENTIONS_Q_RE.test(lean) || /\bq\b/.test(lean);
+
+  if (leanMentionsQ) {
+    for (const m of matchLines(lean, REAL_FN_RE)) {
       hits.push({
         file: leanPath!,
         line: m.line,
-        text: `archimedean tactic in categorical chapter — ${m.text}`,
+        text: `archimedean Real.* in categorical chapter — ${m.text}`,
       });
+    }
+    if (fileHasReal) {
+      for (const m of matchLines(lean, /\b(linarith|positivity)\b/)) {
+        // Skip if line is just a comment.
+        if (/^\s*--/.test(m.text)) continue;
+        hits.push({
+          file: leanPath!,
+          line: m.line,
+          text: `archimedean tactic in categorical chapter — ${m.text}`,
+        });
+      }
     }
   }
   // MeV / CODATA only fires when the block prose actively mentions a

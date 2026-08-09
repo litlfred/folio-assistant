@@ -14,6 +14,9 @@ specific content, and any content shown is illustrative only.
 - **[Agent onboarding](agent-onboarding.html)** — start here if you are an LLM
   agent: which repo you are in, first steps, finding skills, the content-object
   model, QA sidecars and axes, and where to look things up.
+- **[Reseeding the Lean cache](reseeding-the-lean-cache.html)** — exact
+  local procedure to rebuild the olean cache branches, which are
+  currently unusable for builds.
 - **[Writing a paper with folio-assistant](writing-a-paper.html)** — the flagship
   tutorial: a full LLM-driven walk-through with a mock chat session and workflow
   diagrams.

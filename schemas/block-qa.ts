@@ -93,6 +93,23 @@ export interface QaFieldHash {
   ts?: string;
   lean?: string;
   /**
+   * Hash of the chapter's `uses[]` edge set, for criteria whose verdict is a
+   * property of the GRAPH rather than of this block's own files.
+   *
+   * The detangler axis is the case: forward references, dependency cycles,
+   * cone depth and graph energy are all computed across the whole chapter, so
+   * editing block A's `uses[]` changes block B's verdict while B's own `.md` /
+   * `.ts` / `.lean` are untouched. Keyed only on its own files, B stays
+   * `fresh-skip` and keeps a verdict that is now wrong — observed live in qou,
+   * where breaking three dependency cycles left 15 blocks still recording
+   * `detangler-no-dependency-cycle: fail` for cycles that no longer existed.
+   *
+   * Present only on entries for graph-scoped criteria (those declaring
+   * `also_invalidated_by: ["graph"]`), so ordinary criteria neither carry nor
+   * compare it.
+   */
+  graph?: string;
+  /**
    * Hash of only the **declaration signatures** in the `.lean` file —
    * everything up to each declaration's `:=` / `where`.
    *
@@ -239,10 +256,38 @@ export interface QaCriterionDefinition {
   default_severity: "critical" | "major" | "minor";
   /**
    * Which source files this criterion depends on.
-   * Used to compute staleness: criterion is fresh iff every listed
-   * file's current hash equals the reviewer entry's `field_hash`.
+   *
+   * This field carries TWO meanings, and they are not the same thing:
+   *
+   * 1. **Applicability.** A block missing a listed file gets an `n/a`
+   *    verdict and the checker never runs (`qa-sweep`'s `n/a-no-md` /
+   *    `n/a-no-lean` paths).
+   * 2. **Freshness.** A cached verdict is stale once a listed file's
+   *    hash moves away from the entry's `field_hash`.
+   *
+   * When a criterion *reads* a file but must still apply to blocks that
+   * lack it, listing the file here is wrong — it would `n/a` exactly the
+   * blocks the criterion exists to check. Use `also_invalidated_by`
+   * instead, which buys freshness without the applicability gate.
    */
   depends_on: Array<"md" | "ts" | "lean">;
+  /**
+   * Extra files that invalidate a cached verdict WITHOUT gating
+   * applicability — the freshness half of `depends_on` on its own.
+   *
+   * Exists because the two meanings above genuinely come apart.
+   * `voice-scholarly-default` is the motivating case: it scans Lean
+   * docstrings as well as `.md`, but must keep running on prose-only
+   * blocks that have no `.lean` sibling at all. Listing `"lean"` in
+   * `depends_on` would `n/a` every such block; omitting it entirely
+   * meant a Lean-only edit could neither raise a finding nor CLEAR one,
+   * so a fixed docstring kept serving a stale `fail` until the sidecar
+   * entry was deleted by hand.
+   *
+   * Consulted by `entryIsFresh` via `freshnessKeys()`; ignored by the
+   * applicability gates.
+   */
+  also_invalidated_by?: Array<"md" | "ts" | "lean" | "graph">;
   /**
    * Whether a deterministic script can run this criterion (true) or
    * it requires agent / human adjudication (false).

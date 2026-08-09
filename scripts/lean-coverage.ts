@@ -44,8 +44,14 @@
 
 import { readdirSync, readFileSync, existsSync, writeFileSync } from "fs";
 import { join, resolve, relative, dirname, basename } from "path";
+import { findContentRepoRoot } from "../content/pipeline/repo-root";
+import { requirePaper } from "../content/pipeline/repo-root";
 
-const SCRIPT_REPO_ROOT = resolve(import.meta.dir, "..");
+// Was `import.meta.dir`-relative, i.e. the PLATFORM — but every path below is
+// folio content (`content/**`, `computations/**`), and this is used as the cwd
+// for those globs. `findContentRepoRoot()` walks up from the real cwd;
+// `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
+const SCRIPT_REPO_ROOT = findContentRepoRoot();
 
 const PROVABLE = new Set(["theorem", "lemma", "proposition", "corollary"]);
 
@@ -286,6 +292,13 @@ interface Stats {
     percent_primary_class_axiomatized: number;
     /** legacy: class-axiomatised among *all* conjecture blocks. */
     class_axiomatized: number;
+    /** legacy percentage matching `class_axiomatized`'s denominator. */
+    percent_class_axiomatized: number;
+    /** Conjecture blocks with a resolvable `.lean`, as for `provable` and
+     *  `definitions`. `readme-metadata.ts` and `refresh-authors-note.ts` both
+     *  read these two; neither existed, so the README and the authors' note
+     *  were interpolating `undefined`. */
+    with_lean_file: number;
   };
   definitions: {
     total: number;
@@ -350,6 +363,7 @@ function computeStats(paperDir: string, contentRoot: string): Stats {
   );
   const primaryAxiom = primary.filter(b => b.leanFile && b.leanHasClass);
   const allAxiom = conjectures.filter(b => b.leanFile && b.leanHasClass);
+  const conjWithFile = conjectures.filter(b => b.leanFile);
 
   const defs = blocks.filter(b => b.kind === "definition");
   const defsWithFile = defs.filter(b => b.leanFile);
@@ -377,6 +391,8 @@ function computeStats(paperDir: string, contentRoot: string): Stats {
       primary_class_axiomatized: primaryAxiom.length,
       percent_primary_class_axiomatized: pct(primaryAxiom.length, primary.length),
       class_axiomatized: allAxiom.length,
+      percent_class_axiomatized: pct(allAxiom.length, conjectures.length),
+      with_lean_file: conjWithFile.length,
     },
     definitions: {
       total: defs.length,
@@ -409,7 +425,7 @@ function resolveContentRoot(args: string[]): string {
 
 if (import.meta.main) {
   const args = process.argv.slice(2);
-  const paper = flagValue(args, "--paper") || "quantum-observable-universe";
+  const paper = requirePaper(flagValue(args, "--paper") ?? undefined);
   const jsonOnly = args.includes("--json");
   const outPath = flagValue(args, "--out");
   const contentRoot = resolveContentRoot(args);

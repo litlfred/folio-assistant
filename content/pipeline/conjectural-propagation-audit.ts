@@ -19,16 +19,26 @@
  * Definitions are exempt — they name constructions, not logical
  * claims.
  */
-import { readdir, readFile } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { leanPackageByName } from "../../schemas/lean-packages.ts";
+import { findContentRepoRoot } from "./repo-root";
+import { requirePaper } from "./repo-root";
+import { loadBlocksUnder, reportLoadFailures } from "./block-module";
+import type { BlockLoadFailure } from "./block-module";
+
+/** Blocks that would not import. Surfaced, never silently dropped. */
+const LOAD_FAILURES: BlockLoadFailure[] = [];
 
 // Resolve repo root from this script's location:
 // content/pipeline/conjectural-propagation-audit.ts → repo root.
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(SCRIPT_DIR, "..", "..");
-const ROOT = join(REPO_ROOT, "content/quantum-observable-universe");
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
+// Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
+const ROOT = join(REPO_ROOT, "content", requirePaper());
 const WITNESS_OUT = process.argv[2] ??
   join(REPO_ROOT, "docs/audits/2026-05-01-p3-1-conjectural-propagation.witness.json");
 
@@ -85,43 +95,23 @@ async function isClassAxiomatised(conjBlock: Block): Promise<boolean> {
   }
 }
 
+/**
+ * Import each block rather than scanning its source.
+ *
+ * The note here used to read "Crude but sufficient parse … Avoid running
+ * TS — too slow + needs deps." Measured on a 300-block corpus: the scan
+ * took 34 ms and skipped 149 of them; importing took 197 ms and skipped
+ * none. 0.66 ms per block is not too slow for an audit, and Bun needs no
+ * dependency to import TypeScript.
+ *
+ * The 149 were `algorithm`, `proof` and `table` blocks — the regex
+ * listed twelve of the fifteen kinds in `Block`. A `proof` block
+ * invisible to the *conjectural propagation* audit is the sharp end of
+ * that: this audit exists to trace what rests on a conjecture.
+ */
 async function loadAll(): Promise<Map<string, Block>> {
-  const blocks = new Map<string, Block>();
-  // Walk every directory under ROOT.
-  const dirs = await readdir(ROOT, { withFileTypes: true });
-  for (const d of dirs) {
-    if (!d.isDirectory()) continue;
-    const dirPath = join(ROOT, d.name);
-    const files = await readdir(dirPath);
-    for (const f of files) {
-      if (!f.endsWith(".ts")) continue;
-      const path = join(dirPath, f);
-      const text = await readFile(path, "utf8");
-      // Crude but sufficient parse: find the builder name and the
-      // label / uses fields. Avoid running TS — too slow + needs deps.
-      const builderMatch = text.match(
-        /export default (definition|theorem|proposition|lemma|corollary|conjecture|remark|prose|equation|diagram|example|simulator)\(/,
-      );
-      if (!builderMatch) continue;
-      const kind = builderMatch[1];
-      const labelMatch = text.match(/label:\s*"([^"]+)"/);
-      if (!labelMatch) continue;
-      const label = labelMatch[1];
-      // Extract uses[] — find first `uses: [` and read until matching `]`.
-      const usesIdx = text.indexOf("uses:");
-      let uses: string[] = [];
-      if (usesIdx >= 0) {
-        const afterUses = text.slice(usesIdx);
-        const arrStart = afterUses.indexOf("[");
-        const arrEnd = afterUses.indexOf("]", arrStart);
-        if (arrStart >= 0 && arrEnd > arrStart) {
-          const arr = afterUses.slice(arrStart + 1, arrEnd);
-          uses = [...arr.matchAll(/"([^"]+)"/g)].map((m) => m[1]);
-        }
-      }
-      blocks.set(label, { label, kind, uses, file: path });
-    }
-  }
+  const { blocks, failures } = await loadBlocksUnder(ROOT);
+  if (reportLoadFailures(failures)) LOAD_FAILURES.push(...failures);
   return blocks;
 }
 
@@ -220,6 +210,11 @@ await Bun.write(
       audit: "conjectural-propagation (CLAUDE.md §3b + §3b-cond)",
       generated: new Date().toISOString(),
       total_blocks: blocks.size,
+      // Coverage, in the artifact itself: a consumer must be able to see
+      // that this run did not read the whole corpus. `0` is a claim; the
+      // field's absence used to be one too, silently.
+      blocks_failed_to_load: LOAD_FAILURES.length,
+      failed_to_load: LOAD_FAILURES.map((f) => f.file),
       class_axiomatised_conjectures: [...classAxiomatised].sort(),
       provable_blocks_touching_conjecture:
         violators.length + conditional.length,

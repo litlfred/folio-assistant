@@ -27,6 +27,44 @@ import { join, resolve, basename } from "path";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
 const OUT_DIR = join(REPO_ROOT, "docs", "reference", "skill-instructions");
+
+/**
+ * `--check`: verify the generated tree is current without writing to it.
+ *
+ * These pages are generated from skill sources and the repo forbids editing
+ * them by hand, but nothing verified they had actually been regenerated after
+ * a source change — so `document-intake.md` sat 35 lines behind its source
+ * (the PDF-extraction ladder) and the published docs site served the stale
+ * copy. A generated file with no drift guard is a file that silently rots.
+ *
+ * Collects every path whose content would change, so one run reports all of
+ * them rather than the first.
+ */
+const CHECK_ONLY = process.argv.includes("--check");
+const drifted: string[] = [];
+
+function emit(path: string, content: string): void {
+  if (CHECK_ONLY) {
+    const current = existsSync(path) ? readFileSync(path, "utf-8") : null;
+    if (current !== content) drifted.push(path);
+    return;
+  }
+  writeFileSync(path, content);
+}
+
+function reportDrift(): void {
+  if (!CHECK_ONLY) return;
+  if (drifted.length === 0) {
+    console.log("generated docs are up to date");
+    process.exit(0);
+  }
+  console.error(
+    `generated docs are STALE (${drifted.length} file(s)); re-run without --check:`,
+  );
+  for (const p of drifted) console.error(`  ${p}`);
+  process.exit(1);
+}
+
 const SCHEMA_DIR = join(REPO_ROOT, "docs", "reference", "skills");
 
 interface Group {
@@ -115,7 +153,7 @@ function main(): void {
       page.push(body.trimEnd());
       page.push("{% endraw %}");
       page.push("");
-      writeFileSync(join(OUT_DIR, `${name}.md`), page.join("\n"));
+      emit(join(OUT_DIR, `${name}.md`), page.join("\n"));
       written.set(name, group.category);
 
       const desc = escapePipes((body.match(/^#\s+.+\n+([^\n#].*)$/m)?.[1] ?? "").slice(0, 100));
@@ -162,9 +200,10 @@ function main(): void {
   idx.push("> skill *definitions* + typed schemas today; their prose instruction bodies");
   idx.push("> will appear here as they are authored.");
   idx.push("");
-  writeFileSync(join(OUT_DIR, "index.md"), idx.join("\n"));
+  emit(join(OUT_DIR, "index.md"), idx.join("\n"));
   const total = Object.values(indexRows).reduce((n, r) => n + r.length, 0);
   console.log(`  ✓ index.md (${total} instruction bodies)`);
+  reportDrift();
   console.log(`\nWrote skill instruction docs to ${OUT_DIR}`);
 }
 

@@ -10,27 +10,22 @@
  * @module content/pipeline/validate-defterm
  */
 import { visit } from "unist-util-visit";
+import type { TextDirective } from "mdast-util-directive";
+// Ambient: registers the directive node types on the mdast unions.
+import type {} from "mdast-util-directive";
+import type {} from "mdast-util-math";
 import type { Block, ValidationIssue } from "../../schemas/types";
 import { parseMdCached } from "./render-latex";
 
 /** Resolve the slug for a defterm/refterm node. */
-function nodeSlug(node: any): { slug: string; label: string } {
-  const label = ((node.children ?? [])
-    .map((c: any) => (typeof c.value === "string" ? c.value : ""))
+function nodeSlug(node: TextDirective): { slug: string; label: string } {
+  const label = (node.children ?? [])
+    .map((c) => ("value" in c && typeof c.value === "string" ? c.value : ""))
     .join("")
-    .trim()) as string;
+    .trim();
   const explicit = node.attributes && (node.attributes.id || node.attributes["#"]);
   const slug = (explicit ? String(explicit) : label).trim();
   return { slug, label };
-}
-
-/** Sluggify a visible label into a candidate slug (lowercase, hyphenated). */
-function slugifyText(s: string): string {
-  return s
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
 }
 
 /**
@@ -54,7 +49,7 @@ function collectBlockUsage(md: string): BlockTermUsage {
   const refs = new Map<string, { label: string }>();
   const textParts: string[] = [];
 
-  visit(tree as any, (node: any, _index, parent: any) => {
+  visit(tree, (node, _index, parent) => {
     if (node.type === "textDirective") {
       if (node.name === "defterm") {
         const { slug, label } = nodeSlug(node);
@@ -64,9 +59,10 @@ function collectBlockUsage(md: string): BlockTermUsage {
         if (slug && !refs.has(slug)) refs.set(slug, { label });
       }
     } else if (node.type === "text" && parent && parent.type !== "textDirective") {
-      // Skip text nodes inside directives (already counted as label) and
-      // inside math/code (different node types).
-      textParts.push(node.value as string);
+      // Skip text nodes inside directives (already counted as label). Math
+      // and code need no test: they are mdast literal nodes with no `text`
+      // children to reach.
+      textParts.push(node.value);
     }
   });
 
@@ -81,7 +77,9 @@ export function buildGlossaryIndex(
 ): Map<string, string[]> {
   const index = new Map<string, string[]>();
   for (const { name, block } of blocks) {
-    const defines = (block as any).defines as string[] | undefined;
+    // `defines` is absent from `diagram`/`equation`/`table` in both the TS
+    // union and the Zod schema, so the `in` test is real — the cast was not.
+    const defines = "defines" in block ? block.defines : undefined;
     if (!defines) continue;
     for (const slug of defines) {
       const list = index.get(slug) ?? [];
@@ -149,7 +147,7 @@ export function validateDefterms(
   // ── Rule: defterm-declared, defterm-marked ──
   for (const [name, { block }] of blocks) {
     const usage = usageByBlock.get(name)!;
-    const defines = ((block as any).defines as string[] | undefined) ?? [];
+    const defines = ("defines" in block ? block.defines : undefined) ?? [];
     const declaredSet = new Set(defines);
 
     // defterm-declared (error): every :defterm[X] must appear in defines[]

@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeAll, afterAll } from "bun:test";
-import { execFileSync } from "child_process";
+import { execFileSync, spawnSync } from "child_process";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
@@ -22,29 +22,40 @@ const BRANCH = `lake-cache/${PKG}-${SLUG}`;
 let root = "";
 let lakeRoot = "";
 
-/** Run the script; never throws — returns status and output. */
+/**
+ * Run the script; never throws — returns status and output.
+ *
+ * `out` merges stdout AND stderr on every path. `execFileSync` hands back
+ * stdout alone when the command succeeds, which silently dropped every
+ * `warn` from a run that then exited 0 — so a test asserting on a warning
+ * could only pass if the script also failed.
+ */
 function run(
   args: string[],
   cwd: string,
+  env?: Record<string, string>,
 ): { code: number; out: string } {
-  try {
-    const out = execFileSync("bash", [SCRIPT, ...args], {
-      cwd,
-      encoding: "utf-8",
-      stdio: "pipe",
-      timeout: 60_000,
-    });
-    return { code: 0, out };
-  } catch (e: any) {
-    return {
-      code: e.status ?? -1,
-      out: `${e.stdout ?? ""}${e.stderr ?? ""}`,
-    };
-  }
+  const r = spawnSync("bash", [SCRIPT, ...args], {
+    cwd,
+    encoding: "utf-8",
+    timeout: 60_000,
+    env: env ? { ...process.env, ...env } : process.env,
+  });
+  return { code: r.status ?? -1, out: `${r.stdout ?? ""}${r.stderr ?? ""}` };
 }
 
 function git(args: string[], cwd: string) {
-  execFileSync("git", args, { cwd, stdio: "pipe" });
+  // `stdio: "pipe"` alone throws `Command failed: git push …` with git's own
+  // stderr discarded, so a fixture failure tells you nothing about why — which
+  // is exactly what happened when this suite went flaky under load. Capture it
+  // and put it in the message.
+  const r = spawnSync("git", args, { cwd, encoding: "utf-8" });
+  if (r.status !== 0) {
+    throw new Error(
+      `git ${args.join(" ")} (cwd ${cwd}) exited ${r.status}` +
+      `${r.signal ? ` on ${r.signal}` : ""}\n${r.stderr ?? ""}${r.stdout ?? ""}`,
+    );
+  }
 }
 
 /** A `.lake` tree with `count` dependency oleans and `own` package oleans. */
@@ -65,7 +76,9 @@ beforeAll(() => {
   // Bare remote.
   const bare = join(root, "origin.git");
   mkdirSync(bare);
-  git(["init", "--bare", "-q"], root);
+  // Was preceded by a stray `git init --bare -q` with cwd=root and NO path,
+  // which turned the temp root itself into a bare repo — an unwanted repo
+  // wrapping the working clone, created by a line that looks like setup.
   execFileSync("git", ["init", "--bare", "-q", bare], { stdio: "pipe" });
 
   // Working repo with a Lake package nested two levels down — the
@@ -226,6 +239,33 @@ describe("lake-cache.sh — seed guard", () => {
     rmSync(ml, { recursive: true, force: true });
   });
 
+  // `status` used to lack the exemption `seed` has, so pointing it at the
+  // workspace root printed `7268 oleans / own pkg 0` under "ZERO belong to
+  // this package". That is the mathlib family behaving correctly — deps are
+  // its payload — but it reads exactly like a gutted per-package cache, and
+  // was mistaken for one (bean folio-assistant-5d7z). Both callers now go
+  // through `own_oleans_expected`.
+  test("status applies the same mathlib exemption as seed", () => {
+    const ml = mkdtempSync(join(tmpdir(), "lakecache-mlstatus-"));
+    execFileSync("bash", ["-c", `cp -r '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${ml}/'`], { stdio: "pipe" });
+    makeLake(ml, 5, 0);
+    git(["init", "-q"], ml);
+    const r = run(["status", "--package", "mathlib", "--lake-root", ml], ml);
+    expect(r.out).toContain("cache PRESENT");
+    expect(r.out).not.toContain("ZERO belong to");
+    rmSync(ml, { recursive: true, force: true });
+  });
+
+  test("status still reports a genuinely gutted per-package cache", () => {
+    const bad = mkdtempSync(join(tmpdir(), "lakecache-badstatus-"));
+    execFileSync("bash", ["-c", `cp -r '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${bad}/'`], { stdio: "pipe" });
+    makeLake(bad, 5, 0);
+    git(["init", "-q"], bad);
+    const r = run(["status", "--package", PKG, "--lake-root", bad], bad);
+    expect(r.out).toContain("ZERO belong to");
+    rmSync(bad, { recursive: true, force: true });
+  });
+
   test("refuses to seed an empty tree", () => {
     const empty = mkdtempSync(join(tmpdir(), "lakecache-empty-"));
     execFileSync("bash", ["-c", `cp -r '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${empty}/'`], { stdio: "pipe" });
@@ -234,5 +274,264 @@ describe("lake-cache.sh — seed guard", () => {
     expect(r.code).toBe(2);
     expect(r.out).toContain("build before seeding");
     rmSync(empty, { recursive: true, force: true });
+  });
+});
+
+/**
+ * `install-toolchain` — fetch a toolchain straight from its GitHub
+ * release, for hosts where elan's own download hosts are unreachable.
+ *
+ * Offline: $LEAN_RELEASE_BASE points at a `file://` tree holding a fake
+ * toolchain archive of the real shape, so the whole
+ * download -> extract -> verify -> publish path runs without network.
+ */
+const HAS_ZSTD = (() => {
+  try { execFileSync("zstd", ["--version"], { stdio: "pipe" }); return true; }
+  catch { return false; }
+})();
+
+const PIN = "leanprover/lean4:v4.24.0";
+/** elan's encoding: `/` -> `--`, `:` -> `---`. */
+const ELAN_NAME = "leanprover--lean4---v4.24.0";
+/** What the old `tr '/:' '--'` produced — a path elan never uses. */
+const WRONG_NAME = "leanprover-lean4-v4.24.0";
+
+const PLAT =
+  process.platform === "darwin"
+    ? (process.arch === "arm64" ? "darwin_aarch64" : "darwin")
+    : (process.arch === "arm64" ? "linux_aarch64" : "linux");
+
+/**
+ * A mirror tree holding `<tag>/lean-<ver>-<plat>.tar.zst`.
+ * `withLibs: false` builds the DEFECTIVE shape the toolchain cache branch
+ * actually carries — a `lean` that runs, and no static libraries.
+ */
+function makeMirror(withLibs = true): string {
+  const mirror = mkdtempSync(join(tmpdir(), "lean-mirror-"));
+  const stage = join(mirror, "stage", "lean-4.24.0-linux");
+  mkdirSync(join(stage, "bin"), { recursive: true });
+  mkdirSync(join(stage, "lib", "lean"), { recursive: true });
+  writeFileSync(
+    join(stage, "bin", "lean"),
+    "#!/bin/sh\necho 'Lean (version 4.24.0, fake-for-tests)'\n",
+    { mode: 0o755 },
+  );
+  if (withLibs) {
+    for (const l of ["libleancpp.a", "libLean.a", "libLake.a"]) {
+      writeFileSync(join(stage, "lib", "lean", l), "!<arch>\n");
+    }
+  }
+  mkdirSync(join(mirror, "v4.24.0"), { recursive: true });
+  execFileSync(
+    "bash",
+    ["-c",
+     `tar --zstd -cf '${join(mirror, "v4.24.0", `lean-4.24.0-${PLAT}.tar.zst`)}' ` +
+     `-C '${join(mirror, "stage")}' lean-4.24.0-linux`],
+    { stdio: "pipe" },
+  );
+  return mirror;
+}
+
+describe("lake-cache.sh — install-toolchain (argument handling)", () => {
+  test("declines a nightly rather than guessing an asset name", () => {
+    const r = run(["install-toolchain", "--toolchain", "leanprover/lean4:nightly-2025-01-01"], lakeRoot);
+    expect(r.code).toBe(2);
+    expect(r.out).toContain("nightly");
+    expect(r.out).toContain("elan toolchain install");
+  });
+
+  test("fails clearly when no pin can be resolved", () => {
+    const bare = mkdtempSync(join(tmpdir(), "lakecache-nopin-"));
+    git(["init", "-q"], bare);
+    const r = run(["install-toolchain"], bare);
+    expect(r.code).toBe(2);
+    expect(r.out).toContain("--toolchain");
+    rmSync(bare, { recursive: true, force: true });
+  });
+});
+
+describe.skipIf(!HAS_ZSTD)("lake-cache.sh — install-toolchain (install path)", () => {
+  test("installs under elan's real directory name, not the tr '/:' one", () => {
+    // The regression: `tr '/:' '--'` yields `leanprover-lean4-v4.24.0`,
+    // which matches no elan install — so the guard meant to catch a
+    // non-linking toolchain tested a path that never exists.
+    const mirror = makeMirror();
+    const home = mkdtempSync(join(tmpdir(), "elan-home-"));
+    const r = run(["install-toolchain", "--toolchain", PIN], lakeRoot,
+                  { LEAN_RELEASE_BASE: `file://${mirror}`, ELAN_HOME: home });
+    expect(r.code).toBe(0);
+    expect(existsSync(join(home, "toolchains", ELAN_NAME, "bin", "lean"))).toBe(true);
+    expect(existsSync(join(home, "toolchains", WRONG_NAME))).toBe(false);
+    rmSync(mirror, { recursive: true, force: true });
+    rmSync(home, { recursive: true, force: true });
+  });
+
+  test("reports the static libs it landed", () => {
+    const mirror = makeMirror();
+    const home = mkdtempSync(join(tmpdir(), "elan-home-"));
+    const r = run(["install-toolchain", "--toolchain", PIN], lakeRoot,
+                  { LEAN_RELEASE_BASE: `file://${mirror}`, ELAN_HOME: home });
+    expect(r.out).toContain("static libs: 3");
+    rmSync(mirror, { recursive: true, force: true });
+    rmSync(home, { recursive: true, force: true });
+  });
+
+  test("is idempotent — a linkable toolchain is left alone", () => {
+    const mirror = makeMirror();
+    const home = mkdtempSync(join(tmpdir(), "elan-home-"));
+    const env = { LEAN_RELEASE_BASE: `file://${mirror}`, ELAN_HOME: home };
+    expect(run(["install-toolchain", "--toolchain", PIN], lakeRoot, env).code).toBe(0);
+    const second = run(["install-toolchain", "--toolchain", PIN], lakeRoot, env);
+    expect(second.code).toBe(0);
+    expect(second.out).toContain("already installed and linkable");
+    rmSync(mirror, { recursive: true, force: true });
+    rmSync(home, { recursive: true, force: true });
+  });
+
+  test("--force reinstalls over a linkable toolchain", () => {
+    const mirror = makeMirror();
+    const home = mkdtempSync(join(tmpdir(), "elan-home-"));
+    const env = { LEAN_RELEASE_BASE: `file://${mirror}`, ELAN_HOME: home };
+    run(["install-toolchain", "--toolchain", PIN], lakeRoot, env);
+    const forced = run(["install-toolchain", "--toolchain", PIN, "--force"], lakeRoot, env);
+    expect(forced.code).toBe(0);
+    expect(forced.out).toContain("reinstalling");
+    rmSync(mirror, { recursive: true, force: true });
+    rmSync(home, { recursive: true, force: true });
+  });
+
+  test("replaces a toolchain that has NO static libs — the ga7e trap", () => {
+    // A tree at exactly the path elan expects makes elan (and every
+    // staleness check) conclude a toolchain is installed and skip the
+    // download, leaving a `lean` that elaborates but cannot link.
+    const home = mkdtempSync(join(tmpdir(), "elan-home-"));
+    const broken = join(home, "toolchains", ELAN_NAME);
+    mkdirSync(join(broken, "lib", "lean"), { recursive: true });
+    mkdirSync(join(broken, "bin"), { recursive: true });
+    writeFileSync(join(broken, "lib", "lean", "libleancpp.a.trace"), "x"); // trace, no lib
+    writeFileSync(join(broken, "bin", "lean"), "#!/bin/sh\necho fake\n", { mode: 0o755 });
+
+    const mirror = makeMirror();
+    const r = run(["install-toolchain", "--toolchain", PIN], lakeRoot,
+                  { LEAN_RELEASE_BASE: `file://${mirror}`, ELAN_HOME: home });
+    expect(r.code).toBe(0);
+    expect(r.out).toContain("NO static libraries");
+    expect(existsSync(join(broken, "lib", "lean", "libleancpp.a"))).toBe(true);
+    rmSync(mirror, { recursive: true, force: true });
+    rmSync(home, { recursive: true, force: true });
+  });
+
+  test("refuses to publish an archive with no static libs, leaving nothing behind", () => {
+    // Verification happens in a staging dir: a toolchain that would not
+    // link must never reach the path everything treats as installed.
+    const mirror = makeMirror(false);
+    const home = mkdtempSync(join(tmpdir(), "elan-home-"));
+    const r = run(["install-toolchain", "--toolchain", PIN], lakeRoot,
+                  { LEAN_RELEASE_BASE: `file://${mirror}`, ELAN_HOME: home });
+    expect(r.code).toBe(3);
+    expect(r.out).toContain("no static libraries");
+    expect(existsSync(join(home, "toolchains", ELAN_NAME))).toBe(false);
+    rmSync(mirror, { recursive: true, force: true });
+    rmSync(home, { recursive: true, force: true });
+  });
+
+  test("a missing asset fails with exit 1 and installs nothing", () => {
+    const empty = mkdtempSync(join(tmpdir(), "lean-mirror-empty-"));
+    const home = mkdtempSync(join(tmpdir(), "elan-home-"));
+    const r = run(["install-toolchain", "--toolchain", PIN], lakeRoot,
+                  { LEAN_RELEASE_BASE: `file://${empty}`, ELAN_HOME: home });
+    expect(r.code).toBe(1);
+    expect(existsSync(join(home, "toolchains", ELAN_NAME))).toBe(false);
+    rmSync(empty, { recursive: true, force: true });
+    rmSync(home, { recursive: true, force: true });
+  });
+});
+
+describe("lake-cache.sh — trace coverage is a real pairing, not a ratio of counts", () => {
+  /** Lake tree with `n` module oleans, `traced` of them carrying a sibling. */
+  function makeTraced(dir: string, n: number, traced: number, decoys = 0) {
+    const lib = join(dir, ".lake", "build", "lib", "lean", "TestPkg");
+    mkdirSync(lib, { recursive: true });
+    for (let i = 0; i < n; i++) {
+      writeFileSync(join(lib, `M${i}.olean`), "x");
+      if (i < traced) writeFileSync(join(lib, `M${i}.trace`), "x");
+    }
+    // `.trace` files that belong to NON-olean artifacts. A real tree is
+    // full of these: .c.o.export.trace, a binary's .trace, .tar.gz.trace,
+    // package-lock.json.trace …
+    const ir = join(dir, ".lake", "build", "ir", "TestPkg");
+    mkdirSync(ir, { recursive: true });
+    for (let i = 0; i < decoys; i++) writeFileSync(join(ir, `M${i}.c.o.export.trace`), "x");
+  }
+
+  function statusOf(dir: string) {
+    writeFileSync(join(dir, "lakefile.toml"), `name = "${PKG}"\n`);
+    writeFileSync(join(dir, "lean-toolchain"), "leanprover/lean4:v4.24.0\n");
+    git(["init", "-q"], dir);
+    return run(["status", "--package", PKG, "--lake-root", dir], dir);
+  }
+
+  test("decoy traces cannot push coverage above 100%", () => {
+    // The regression: total .trace / oleans. A partially built qou tree
+    // had 13 oleans and 25 traces and reported 192% coverage — which then
+    // sailed past every >= 90% gate.
+    const d = mkdtempSync(join(tmpdir(), "lakecache-cov-"));
+    makeTraced(d, 5, 5, 20); // 5 oleans, all traced, 20 unrelated traces
+    const r = statusOf(d);
+    expect(r.out).toContain("traced:     5/5 oleans  (100%)");
+    const pct = Number(r.out.match(/oleans\s+\((\d+)%\)/)?.[1]);
+    expect(pct).toBeLessThanOrEqual(100); // 192% is what this pins
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("counts only oleans that carry their OWN trace", () => {
+    const d = mkdtempSync(join(tmpdir(), "lakecache-cov-"));
+    makeTraced(d, 10, 4, 30); // decoys must not make up the shortfall
+    const r = statusOf(d);
+    expect(r.out).toContain("traced:     4/10 oleans  (40%)");
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("an untraced tree reads 0%, not 'plenty of traces'", () => {
+    // lake-cache/qou-v4-24-0's actual shape: oleans present, no traces,
+    // so Lake rebuilds and evicts every one.
+    const d = mkdtempSync(join(tmpdir(), "lakecache-cov-"));
+    makeTraced(d, 8, 0, 12);
+    const r = statusOf(d);
+    expect(r.out).toContain("traced:     0/8 oleans  (0%)");
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("the lakefile.olean form (X.olean -> X.olean.trace) also counts", () => {
+    const d = mkdtempSync(join(tmpdir(), "lakecache-cov-"));
+    mkdirSync(join(d, ".lake"), { recursive: true });
+    writeFileSync(join(d, ".lake", "lakefile.olean"), "x");
+    writeFileSync(join(d, ".lake", "lakefile.olean.trace"), "x");
+    const r = statusOf(d);
+    expect(r.out).toContain("traced:     1/1 oleans  (100%)");
+    rmSync(d, { recursive: true, force: true });
+  });
+});
+
+describe("lake-cache.sh — contribute (agentic loop)", () => {
+  test("contribute is a recognised command", () => {
+    // The loop's last step: restore -> draft -> build -> contribute.
+    const r = run(["contribute", "--package", PKG], lakeRoot);
+    expect(r.out).not.toContain("unknown command");
+  });
+
+  test("contribute inherits the seed guards", () => {
+    // A session that compiled nothing must not be able to publish. Same
+    // guard as `seed`, reached through the loop's verb.
+    const bare = mkdtempSync(join(tmpdir(), "lakecache-contrib-"));
+    execFileSync("bash", [
+      "-c",
+      `cp '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${bare}/'`,
+    ], { stdio: "pipe" });
+    git(["init", "-q"], bare);
+    const r = run(["contribute", "--package", PKG, "--lake-root", bare], bare);
+    expect(r.code).toBe(2);
+    expect(r.out).toContain("build before seeding");
+    rmSync(bare, { recursive: true, force: true });
   });
 });

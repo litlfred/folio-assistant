@@ -8,26 +8,39 @@
  *
  * Coverage results feed into the publication pipeline — the ∀ symbol
  * in PDF/HTML links readers to pretty-printed Lean documentation.
+ *
+ * EVERY assertion here needs `chapters/*.tex`, which is `content_build`
+ * output and lives in the FOLIO. With no folio attached the file has nothing
+ * to check, and it must say `skip` — not `pass`.
+ *
+ * It used to say `pass`. Two tests did `console.log("ℹ Skipped: …"); return;`
+ * and two more asserted `expect(true).toBe(true)` after computing (and
+ * logging) the violations they were named for — so CI printed
+ * `✓ label prefixes match environment types` whether or not they did.
+ * The per-declaration loop below generated ZERO tests, silently, because
+ * `chapterFiles` was empty. And it was ALWAYS empty: `CHAPTERS_DIR` pointed
+ * at the platform checkout rather than the folio, so this file had never run
+ * one of its real assertions in either repo.
  */
 
 import { describe, test, expect } from "bun:test";
-import { readFileSync, existsSync } from "fs";
-import { join, relative } from "path";
+import { readFileSync } from "fs";
+import { relative } from "path";
 import {
   LEAN_DIR,
-  CHAPTERS_DIR,
-  REPO_ROOT,
   findLeanFiles,
   findChapterFiles,
   extractEnvironments,
   type LatexEnvironment,
 } from "./helpers";
-
 // ── Collect all environments and Lean files once ────────────────
 
 const chapterFiles = findChapterFiles();
 const allEnvs: LatexEnvironment[] = chapterFiles.flatMap(extractEnvironments);
 const allLeanFiles = findLeanFiles(LEAN_DIR);
+
+/** No `chapters/*.tex` → nothing to check. Skip, visibly. */
+const noChapters = chapterFiles.length === 0;
 
 /** Read all Lean source into a searchable map: filename → content */
 const leanContents = new Map<string, string>();
@@ -54,16 +67,19 @@ function declExistsInLean(declName: string): boolean {
 describe("\\lean{} tags → Lean declarations", () => {
   const envsWithLean = allEnvs.filter((e) => e.leanDecl);
 
-  test("at least one \\lean{} tag found (requires chapters/ from content_build)", () => {
-    if (chapterFiles.length === 0) {
-      console.log("    ℹ Skipped: no chapters/*.tex found (run content_build first)");
-      return; // skip — chapters not generated yet
-    }
+  test.skipIf(noChapters)("at least one \\lean{} tag found", () => {
     expect(envsWithLean.length).toBeGreaterThan(0);
   });
 
   // Group by declaration to avoid duplicate tests
   const uniqueDecls = [...new Set(envsWithLean.map((e) => e.leanDecl!))];
+
+  test.skipIf(noChapters)("the per-declaration checks below were generated", () => {
+    // A `for` loop over an empty array registers no tests at all, so the
+    // checks simply vanish from the run and the file still reports green.
+    // This is the one test that notices.
+    expect(uniqueDecls.length).toBeGreaterThan(0);
+  });
 
   for (const decl of uniqueDecls) {
     test(`${decl} exists in Lean source`, () => {
@@ -84,11 +100,7 @@ describe("Coverage completeness", () => {
 
   const formalizable = allEnvs.filter((e) => formalizableTypes.has(e.envType));
 
-  test("formalizable environments found (requires chapters/ from content_build)", () => {
-    if (chapterFiles.length === 0) {
-      console.log("    ℹ Skipped: no chapters/*.tex found (run content_build first)");
-      return; // skip — chapters not generated yet
-    }
+  test.skipIf(noChapters)("formalizable environments found", () => {
     expect(formalizable.length).toBeGreaterThan(0);
   });
 
@@ -113,9 +125,14 @@ describe("Coverage completeness", () => {
   const total = formalizable.length;
   const pct = total > 0 ? ((covered / (total - notready)) * 100).toFixed(1) : "0";
 
-  test("coverage statistics logged", () => {
+  // A report, not a check — so it says so, and it skips rather than printing
+  // "Coverage: 0/0 formalizable (0%)" over an empty corpus, which is not a
+  // coverage figure at all. It was `expect(true).toBe(true)`: a console.log
+  // wearing a test's clothes, counted among the passes.
+  test.skipIf(noChapters)("coverage statistics (report)", () => {
     console.log(`\n    Coverage: ${covered}/${total - notready} formalizable (${pct}%), ${notready} not-ready`);
-    expect(true).toBe(true);
+    // The report is only meaningful over a corpus it actually read.
+    expect(total).toBeGreaterThan(0);
   });
 });
 
@@ -124,7 +141,9 @@ describe("Coverage completeness", () => {
 describe("\\leanok consistency", () => {
   const orphans = allEnvs.filter((e) => e.hasLeanok && !e.leanDecl);
 
-  test("no \\leanok without \\lean{}", () => {
+  // A real gate — but `[]` has length 0, so with no corpus it passed by
+  // finding nothing. Skipped instead, like the rest of the file.
+  test.skipIf(noChapters)("no \\leanok without \\lean{}", () => {
     if (orphans.length > 0) {
       console.log(`\n    Orphan \\leanok tags:`);
       for (const e of orphans) {
@@ -154,14 +173,24 @@ describe("Label conventions", () => {
     return expected && !env.label.startsWith(expected);
   });
 
-  test("label prefixes match environment types", () => {
+  // Named "label prefixes match environment types" and asserting
+  // `expect(true).toBe(true)` — so CI printed a green tick for a property it
+  // never checked, next to a log of every violation. Renamed to what it does.
+  //
+  // It stays a REPORT rather than becoming a gate because the live count is
+  // unknown from this repo — the corpus is in the folio — and the ratchet
+  // rule is that a rule becomes an error only once its count is zero.
+  // Measure in a folio, then flip the last line to
+  // `expect(mismatches).toHaveLength(0)`.
+  test.skipIf(noChapters)("label prefix mismatches (report)", () => {
     if (mismatches.length > 0) {
       console.log(`\n    ℹ ${mismatches.length} label prefix mismatches (fix or reclassify):`);
       for (const e of mismatches) {
         console.log(`      - ${e.label} is ${e.envType} (expected ${prefixMap[e.envType]}*) in ${e.file}:${e.line}`);
       }
     }
-    // Informational — these are data quality issues to fix in LaTeX
-    expect(true).toBe(true);
+    // Asserts the report ran over a real corpus — the one thing that can
+    // actually go wrong here without anybody noticing.
+    expect(allEnvs.length).toBeGreaterThan(0);
   });
 });

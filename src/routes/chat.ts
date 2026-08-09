@@ -31,7 +31,7 @@ export async function handleChatPost(
   url: URL,
   req: Request,
   adapter: ContentAdapter,
-  feedbackStore: FeedbackStore,
+  _feedbackStore: FeedbackStore,
 ): Promise<Response | null> {
   if (url.pathname !== "/api/chat") return null;
 
@@ -90,10 +90,17 @@ export async function handleChatPost(
               messages: apiMessages,
             });
 
-            const toolUses = response.content.filter((b) => b.type === "tool_use");
+            // Predicate form: `Array.filter` narrows the element type only
+            // when the callback is a type guard, which is why the `.map`s
+            // below had to reopen each block to reach fields the SDK declares.
+            const toolUses = response.content.filter(
+              (b): b is Anthropic.ToolUseBlock => b.type === "tool_use",
+            );
             if (toolUses.length === 0) {
-              const textBlocks = response.content.filter((b) => b.type === "text");
-              const fullText = textBlocks.map((b) => (b as any).text).join("");
+              const textBlocks = response.content.filter(
+                (b): b is Anthropic.TextBlock => b.type === "text",
+              );
+              const fullText = textBlocks.map((b) => b.text).join("");
               const chunkSize = 20;
               for (let i = 0; i < fullText.length; i += chunkSize) {
                 send({ text: fullText.slice(i, i + chunkSize) });
@@ -105,7 +112,7 @@ export async function handleChatPost(
               return;
             }
 
-            const toolNames = toolUses.map((t) => (t as any).name);
+            const toolNames = toolUses.map((t) => t.name);
             logDebug("chat:tools", `round ${toolRounds + 1}: ${toolUses.length} calls`, toolNames.join(", "));
             send({ status: toolNames.join(", ") + "..." });
 

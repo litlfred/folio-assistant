@@ -8,8 +8,9 @@
 
 import { existsSync, readFileSync, writeFileSync, readdirSync, mkdirSync } from "fs";
 import { join, resolve, extname } from "path";
-import Anthropic from "@anthropic-ai/sdk";
+import { execSync, spawnSync } from "child_process";
 
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { registerRenderTools } from "./tools/render.js";
 import { registerValidateTools } from "./tools/validate.js";
 import { registerLeanTools } from "./tools/lean.js";
@@ -24,10 +25,6 @@ import { registerSkillFetchTools } from "../../src/tools/skill-fetch.js";
 
 import type {
   ContentAdapter,
-  FolioItem,
-  ContentOutline,
-  ChapterDetail,
-  ResolvedSection,
   ResolvedDocument,
   ResolvedBlock,
   DocumentDiff,
@@ -35,12 +32,11 @@ import type {
   BranchCharacterization,
   TriageResult,
   FeedbackItem,
-  UserRole,
-} from "../../src/types.js";
+  UserRole } from "../../src/types.js";
 import type { GitHelper } from "../../src/core/git.js";
 import type { FeedbackStore } from "../../src/core/feedback.js";
 import { log } from "../../src/core/logging.js";
-import { hasRole, forbidden, getUserName, getUserEmail } from "../../src/core/rbac.js";
+import { hasRole, forbidden } from "../../src/core/rbac.js";
 import { PaperResolver } from "./resolver.js";
 import { getAnthropic } from "../../src/routes/chat.js";
 
@@ -436,7 +432,7 @@ Respond in JSON: {"assessment": "...", "actionable": boolean, "proposedEdit": {"
                 stats.totalBlocks++;
                 if (blk.kind === "definition") stats.definitions++;
                 if (blk.kind === "theorem" || blk.kind === "lemma" || blk.kind === "proposition") stats.theorems++;
-                stats.openTodos += (blk.todos || []).filter((t: any) => t.status === "open").length;
+                stats.openTodos += (blk.todos || []).filter((t) => t.status === "open").length;
               }
           return JSON.stringify({ title: paper.title, ...stats });
         }
@@ -476,7 +472,7 @@ Respond in JSON: {"assessment": "...", "actionable": boolean, "proposedEdit": {"
           const chNum = input.chapterNumber as number;
           const paper = pid ? await this.getDocument(pid) : null;
           if (!paper) return JSON.stringify({ error: "Document not found" });
-          const ch = paper.chapters.find((c: any) => c.number === chNum);
+          const ch = paper.chapters.find((c) => c.number === chNum);
           if (!ch) return JSON.stringify({ error: `Chapter ${chNum} not found` });
           const blocks: unknown[] = [];
           for (const sec of ch.sections || [])
@@ -665,7 +661,9 @@ End every response with suggested follow-ups:
             return {
               id: d.name,
               title: intake?.title ?? d.name,
-              stage: (intake?.pipeline as any)?.stage ?? "unknown",
+              // `intake` is parsed JSON, so `pipeline` is `unknown`; read the
+              // one field this needs rather than reopening the whole object.
+              stage: (intake?.pipeline as { stage?: unknown } | undefined)?.stage ?? "unknown",
               classification: intake?.classification ?? null,
               blockCount: intake?.blockCount ?? 0,
               files: readdirSync(join(uploadsDir, d.name)).filter((f) => f !== "intake.json"),
@@ -698,7 +696,6 @@ End every response with suggested follow-ups:
     // Render PDF status
     if (path === "/api/render-pdf/status") {
       try {
-        const { execSync } = require("child_process") as typeof import("child_process");
         execSync("which latexmk", { stdio: "pipe" });
         return Response.json({ available: true }, { headers: CORS });
       } catch {
@@ -801,7 +798,6 @@ End every response with suggested follow-ups:
     // TeX export — build content pipeline and serve files as JSON manifest
     if (path === "/api/tex-export") {
       try {
-        const { spawnSync } = require("child_process") as typeof import("child_process");
 
         const buildResult = spawnSync("bun", ["run", join(this.repoRoot, "content/pipeline/build.ts")], {
           cwd: this.repoRoot, stdio: "pipe", timeout: 60_000,
@@ -989,7 +985,6 @@ End every response with suggested follow-ups:
     // Render PDF
     if (path === "/api/render-pdf") {
       try {
-        const { spawnSync, execSync } = require("child_process") as typeof import("child_process");
         try {
           execSync("which latexmk", { stdio: "pipe" });
         } catch {
@@ -1028,7 +1023,7 @@ End every response with suggested follow-ups:
 
   // ── MCP tool registration ──────────────────────────────────────
 
-  registerMcpTools(server: any): void {
+  registerMcpTools(server: McpServer): void {
     // Paper-specific MCP tools
     registerRenderTools(server);
     registerValidateTools(server);

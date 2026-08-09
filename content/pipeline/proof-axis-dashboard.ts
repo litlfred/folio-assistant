@@ -10,8 +10,9 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { resolve, dirname, relative, basename } from "path";
+import { resolve, dirname, relative } from "path";
 import { fileURLToPath } from "url";
+import { execSync } from "child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = resolve(dirname(__filename), "..", "..");
@@ -22,12 +23,21 @@ interface Args {
 }
 
 function parseArgs(argv: string[]): Args {
-  const out: Args = { root: "quantum-observable-universe", json: false };
+  // Read the positional argument FIRST, then fall back to auto-detection.
+  //
+  // This computed `requirePaper()` as the initial value of `out.root`, which
+  // is eager: the fallback ran before the loop could see an explicit
+  // argument, so in any repo with more than one paper `requirePaper` threw
+  // ("N papers found — name one explicitly") even when a paper *was* named.
+  // qou carries five, so the dashboard could not be run there at all.
+  // `requirePaper` already takes `explicit?` for exactly this — pass it.
+  let root: string | undefined;
+  let json = false;
   for (const a of argv) {
-    if (a === "--json") out.json = true;
-    else if (!a.startsWith("-")) out.root = a;
+    if (a === "--json") json = true;
+    else if (!a.startsWith("-")) root = a;
   }
-  return out;
+  return { root: requirePaper(root), json };
 }
 
 interface CriterionSummary {
@@ -64,10 +74,40 @@ interface SorryInfo {
 
 import { walkBlocks, loadQaReport } from "./qa-utils";
 import { WATCHER_CRITERIA_BY_AXIS } from "./qa-criteria-registry";
+import { requirePaper } from "./repo-root";
+
+/** `evidence` as searchable text, whichever of its two shapes it is. */
+function evidenceText(ev: string | Array<{ line?: number; text?: string }> | undefined): string {
+  if (typeof ev === "string") return ev;
+  if (!Array.isArray(ev)) return "";
+  return ev.map((h) => `${h.line ?? ""}:${h.text ?? ""}`).join(" | ");
+}
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
-  const rootPath = resolve(REPO_ROOT, "content", args.root);
+
+  // `args.root` may be either a PAPER NAME (resolved under this platform's
+  // own `content/`, which is how it works when the platform repo also holds
+  // the content) or a PATH to a content root. The second case is the normal
+  // one: folio-assistant is the platform, and the folio it serves lives in a
+  // separate repo, so `<platform>/content/<paper>` does not exist there.
+  //
+  // Resolving only the first way meant this dashboard could not be pointed at
+  // a real folio at all — `find` errored, zero blocks were walked, and every
+  // criterion scored 0/0. Accept a path when one is given, like `qa-sweep.ts`
+  // already does.
+  const asPath = resolve(process.cwd(), args.root);
+  const rootPath = existsSync(asPath) ? asPath : resolve(REPO_ROOT, "content", args.root);
+  if (!existsSync(rootPath)) {
+    console.error(
+      `proof-axis-dashboard: no such content root: ${args.root}\n` +
+        `  tried (as path):  ${asPath}\n` +
+        `  tried (as paper): ${resolve(REPO_ROOT, "content", args.root)}\n` +
+        `Pass the path to the folio's content root, e.g.\n` +
+        `  bun run <platform>/content/pipeline/proof-axis-dashboard.ts content/<paper>`,
+    );
+    process.exit(2);
+  }
 
   const proofCriteria = WATCHER_CRITERIA_BY_AXIS["proof"] ?? [];
 
@@ -103,7 +143,13 @@ function main() {
       if (r === "fail") s.failBlocks.push(report.label);
       if (r === "warn") {
         s.warnBlocks.push(report.label);
-        const ev = latest.evidence ?? "";
+        // `QaCriterionEntry.evidence` is `string | Array<{line?, text?}>`.
+        // This was used directly as a string: `ev.includes("no declarations")`
+        // on the ARRAY form is Array.prototype.includes — exact-element
+        // membership, not substring — so it was always false and the
+        // "no declarations" mismatch silently never fired for array-form
+        // evidence. Flatten to text first.
+        const ev = evidenceText(latest.evidence);
         const notes = latest.notes ?? "";
         if (ev.includes("no declarations")) {
           const relTs = relative(rootPath, block.ts);
@@ -131,7 +177,6 @@ function main() {
 
   // Scan for actual sorry in code
   const sorries: SorryInfo[] = [];
-  const { execSync } = require("child_process");
   try {
     const grepOut = execSync(
       `find ${rootPath} -name '*.lean' ! -path '*/lean/*' -exec grep -l '\\bsorry\\b' {} +`,
@@ -232,8 +277,24 @@ function main() {
 
   console.log(`\n── Summary ────────────────────────────────────────`);
   const anyFail = Object.values(summaries).some(s => s.fail > 0);
+  const totalFail = Object.values(summaries).reduce((a, s) => a + s.fail, 0);
   const totalWarn = Object.values(summaries).reduce((a,s) => a + s.warn, 0);
-  console.log(`Automated: ${anyFail ? "FAIL" : "PASS"} (0 failures)`);
+
+  // An empty scan is NOT a pass. Every criterion scoring 0/0/0 used to print
+  // "Automated: PASS (0 failures)", which reads as a clean bill of health and
+  // is indistinguishable from one — the single most misleading thing a gate
+  // can do. If nothing was examined, say so and exit non-zero so a caller
+  // (e.g. /prepare-merge) cannot quote it as green.
+  if (totalBlocks === 0) {
+    console.log(`Automated: NO DATA — 0 blocks walked under ${rootPath}`);
+    console.log(`This is not a pass. Check the content root argument.`);
+    console.log(``);
+    process.exit(1);
+  }
+
+  // The count was hardcoded to 0, so a genuine failure printed
+  // "FAIL (0 failures)".
+  console.log(`Automated: ${anyFail ? "FAIL" : "PASS"} (${totalFail} failures)`);
   console.log(`Warnings: ${totalWarn} (${stubs.length} stubs + ${mismatches.length} mismatches)`);
   console.log(`Sorry closure: ${deferred.length} deferred files actionable with Lean`);
   console.log(``);

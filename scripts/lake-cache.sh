@@ -18,13 +18,19 @@
 #   scripts/lake-cache.sh status   [--lake-root DIR]
 #   scripts/lake-cache.sh restore  [--lake-root DIR] [--package NAME] [--branch BR]
 #   scripts/lake-cache.sh restore-toolchain [--branch BR]
-#   scripts/lake-cache.sh seed     [--lake-root DIR] [--package NAME] [--branch BR] [--push]
+#   scripts/lake-cache.sh install-toolchain [--toolchain PIN] [--force]
+#   scripts/lake-cache.sh seed       [--lake-root DIR] [--package NAME] [--branch BR] [--push] [--force]
+#   scripts/lake-cache.sh contribute [--lake-root DIR] [--package NAME] [--force]
 #   scripts/lake-cache.sh list
 #   scripts/lake-cache.sh doctor   [--lake-root DIR]
 #
 # The package and branch are derived automatically from
 # `.github/lake-packages.json` + `lean-toolchain`; pass them only to
 # override.
+#
+# `install-toolchain` fetches the Lean toolchain straight from its GitHub
+# release, for hosts where elan's own download hosts are unreachable.
+# Honours $LEAN_RELEASE_BASE (mirror / file:// tree) and $ELAN_HOME.
 #
 # EXIT CODES
 #   0  success / cache present
@@ -66,12 +72,16 @@ LAKE_ROOT=""
 PACKAGE=""
 BRANCH=""
 PUSH=0
+TOOLCHAIN=""
+FORCE=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --lake-root) LAKE_ROOT="${2:-}"; shift 2 ;;
     --package)   PACKAGE="${2:-}";   shift 2 ;;
     --branch)    BRANCH="${2:-}";    shift 2 ;;
+    --toolchain) TOOLCHAIN="${2:-}"; shift 2 ;;
     --push)      PUSH=1; shift ;;
+    --force)     FORCE=1; shift ;;
     -h|--help)   CMD="help"; shift ;;
     *) die "unknown option: $1" ;;
   esac
@@ -105,6 +115,30 @@ toolchain_slug() {
   [ -z "$f" ] && [ -f "$REPO_ROOT/lean-toolchain" ] && f="$REPO_ROOT/lean-toolchain"
   [ -z "$f" ] && return 1
   cut -d: -f2 "$f" | tr -d '[:space:]' | tr . -
+}
+
+# The FULL pin, e.g. `leanprover/lean4:v4.24.0` — `--toolchain` wins, then
+# the Lake root's file, then the repo root's.
+toolchain_pin() {
+  local root="${1:-$REPO_ROOT}" f=""
+  [ -n "$TOOLCHAIN" ] && { printf '%s\n' "$TOOLCHAIN"; return; }
+  [ -f "$root/lean-toolchain" ] && f="$root/lean-toolchain"
+  [ -z "$f" ] && [ -f "$REPO_ROOT/lean-toolchain" ] && f="$REPO_ROOT/lean-toolchain"
+  [ -z "$f" ] && return 1
+  tr -d '[:space:]' < "$f"
+}
+
+# elan's on-disk directory name for a pin: `/` -> `--`, `:` -> `---`.
+# So `leanprover/lean4:v4.24.0` -> `leanprover--lean4---v4.24.0`.
+#
+# This is NOT `tr '/:' '--'`. That single-character form yields
+# `leanprover-lean4-v4.24.0`, which matches no real elan install — and a
+# guard that tests the wrong path silently never fires. `reseed-lean-cache.sh`
+# had exactly that bug in the check meant to catch a non-linking toolchain
+# before elan skips the download, i.e. the one trap the script exists to
+# enforce.
+elan_dir_name() {
+  printf '%s\n' "$1" | sed -e 's#/#--#g' -e 's#:#---#g'
 }
 
 # Package short name.
@@ -178,14 +212,87 @@ count_oleans() {
 # Oleans belonging to the package ITSELF, as opposed to its dependencies.
 #
 # A SECOND way a healthy-looking total lies, distinct from the gutting
-# check below. A cache branch can carry thousands of Mathlib oleans and
-# NONE of the paper's own modules — `lake-cache/qou-v4-24-0` does exactly
-# that: 7268 oleans, zero `QOU.*`. Nothing was evicted, so the stamp
-# check passes; the branch was simply seeded without the package. Every
-# build still recompiles the paper, and sibling `.lean` files cannot
+# check below. A cache branch can carry thousands of dependency oleans
+# and NONE of the package's own modules: nothing was evicted, so the
+# stamp check passes; the branch was simply seeded without the package.
+# Every build then recompiles it, and sibling `.lean` files cannot
 # elaborate standalone.
 count_own_oleans() {
   find "$1/.lake/build/lib" -name '*.olean' -type f 2>/dev/null | head -20000 | wc -l | tr -d ' '
+}
+
+# Exit 0 = this family SHOULD carry own-package oleans, so zero of them
+# is a defect worth reporting.
+#
+# `mathlib` is the exception: its roster entry has lake-root `.`, where
+# the "own package" is the workspace-root shim that exists only to pull
+# Mathlib in. Its `.lake/build/lib` is empty by construction and the
+# dependencies ARE the payload.
+#
+# `seed` has always exempted it. `status` did not, and so reported the
+# workspace-root cache as `7268 oleans / own pkg 0` under the alarm
+# "ZERO belong to this package" — a false positive that reads exactly
+# like a gutted per-package cache and was mistaken for one. Both callers
+# now ask here, so they cannot disagree again.
+own_oleans_expected() {  # pkg
+  [ "$1" != "mathlib" ]
+}
+
+# Trace files, which are what Lake actually consults for staleness.
+#
+# THE reason a cache can look full and still not help `lake build`. Lake
+# decides a module is up to date from its `.trace` sibling, not from the
+# `.olean`. An olean with no trace is "out-of-date and needs to be
+# rebuilt" — so Lake rebuilds it, and rebuilding EVICTS the untraced
+# neighbours.
+#
+# Measured on lake-cache/qou-v4-24-0: 7268 oleans, 775 traces. Building
+# ONE module ran 823 targets and left 772 oleans — every survivor had a
+# trace (494 mathlib oleans, 494 traces, zero of 200 sampled missing
+# one). The cache only ever worked for direct `lean` invocations with
+# LEAN_PATH, never for a build.
+count_traces() {
+  find "$1/.lake" -name '*.trace' -type f 2>/dev/null | head -20000 | wc -l | tr -d ' '
+}
+
+# Trace coverage as a percentage of oleans. Below ~90% a `lake build`
+# will rebuild — and evict — the shortfall.
+# Fraction of oleans that actually have their OWN trace sibling.
+#
+# This used to be `total .trace files * 100 / oleans`, which is not a
+# coverage at all: most `.trace` files in a Lake tree do not belong to an
+# olean. A real tree carries `.c.o.export.trace`, `cache.trace` (a
+# binary), `.tar.gz.trace`, `lake.trace`, `package-lock.json.trace` …
+# Measured on a partially built qou tree: 13 oleans, 25 traces, reported
+# as 192% coverage when the true figure was 100%.
+#
+# Both consumers fail OPEN on an inflated number — phase 2 of the reseed
+# skips fetching the upstream cache at >= 90%, and the seed guard lets a
+# cache through — so an over-count is the dangerous direction.
+#
+# Two sibling forms exist, and both count:
+#   build/lib/lean/Cache/IO.olean  ->  build/lib/lean/Cache/IO.trace
+#   .lake/lakefile.olean           ->  .lake/lakefile.olean.trace
+count_paired_traces() {  # root -> oleans that have their own trace
+  { find "$1/.lake" -name '*.trace' -type f 2>/dev/null | head -40000
+    printf '@@\n'
+    find "$1/.lake" -name '*.olean' -type f 2>/dev/null | head -20000
+  } | awk '
+    /^@@$/   { mode = 1; next }
+    mode == 0 { seen[$0] = 1; next }
+    {
+      base = $0; sub(/\.olean$/, "", base)
+      if ((base ".trace") in seen || ($0 ".trace") in seen) n++
+    }
+    END { print n + 0 }'
+}
+
+trace_coverage_pct() {  # root
+  local o paired
+  o=$(count_oleans "$1")
+  [ "$o" -eq 0 ] && { printf '0\n'; return; }
+  paired=$(count_paired_traces "$1")
+  printf '%s\n' $(( paired * 100 / o ))
 }
 
 # A restore stamps how many oleans it laid down. Counting alone cannot
@@ -233,8 +340,10 @@ cmd_status() {
   info "toolchain:  $slug"
   info "branch:     lake-cache/$pkg-$slug"
   local own; own=$(count_own_oleans "$root")
+  local tr cov; tr=$(count_paired_traces "$root"); cov=$(trace_coverage_pct "$root")
   info "oleans:     $n  (deps + own)"
   info "own pkg:    $own"
+  info "traced:     $tr/$n oleans  (${cov}%)"
   # Gutting is checked first: an evicted tree is the more urgent of the
   # two failures, and it is repairable by re-running restore.
   if is_gutted "$root" "$n"; then
@@ -246,11 +355,18 @@ cmd_status() {
   fi
   if [ "$n" -gt 0 ]; then
     printf '\n  cache PRESENT — %s oleans on disk.\n' "$n"
-    if [ "$own" -eq 0 ]; then
+    if [ "$own" -eq 0 ] && own_oleans_expected "$pkg"; then
       warn "but ZERO belong to this package — only its dependencies are cached."
       info "Anything importing the package's own modules still rebuilds, and"
       info "sibling .lean files will not elaborate standalone. Reseed with a"
       info "build that includes the package: $PROG seed (after a full build)."
+    fi
+    if [ "$cov" -lt 90 ]; then
+      warn "trace coverage is only ${cov}% — \`lake build\` WILL rebuild the rest."
+      info "Lake reads .trace, not .olean, to decide staleness, and rebuilding"
+      info "evicts the untraced neighbours. This cache is usable for direct"
+      info "\`lean\` + LEAN_PATH but NOT for a build. Reseed from a tree where"
+      info "traces accompany the oleans."
     fi
     return 0
   fi
@@ -376,6 +492,38 @@ Known packages: $(cmd_list_names | tr '\n' ' ')"
 
 # ── Seed ────────────────────────────────────────────────────────────
 
+
+# ── No-shrink guard ─────────────────────────────────────────────────
+#
+# The enabling mechanism for agentic contribution, not just a safety net.
+#
+# If every authoring session can push its build back, the cache improves
+# continuously — but only if a session that compiled a SUBSET can never
+# replace a fuller cache. `seed` records its counts in the branch's
+# commit message, so the incumbent's figures are readable without
+# downloading ~1.6 GB of tarball blobs (`--filter=blob:none` fetches the
+# commit and skips the payload).
+#
+# Returns 0 when publishing is safe, 1 when it would shrink the branch.
+branch_counts() {  # branch -> "<oleans> <own>", empty if unreadable
+  local ref="refs/lake-cache-prevcheck"
+  git update-ref -d "$ref" 2>/dev/null || true
+  timeout 60 git fetch --depth=1 --filter=blob:none -q origin "+$1:$ref" 2>/dev/null || return 1
+  local msg; msg=$(git log -1 --format=%s "$ref" 2>/dev/null)
+  git update-ref -d "$ref" 2>/dev/null || true
+  printf '%s' "$msg" | sed -n 's/.*(\([0-9]*\) oleans, \([0-9]*\) own).*/\1 \2/p'
+}
+
+would_shrink() {  # branch cand_oleans cand_own
+  local prev; prev=$(branch_counts "$1") || return 1
+  [ -z "$prev" ] && return 1   # no recorded counts (new or legacy branch)
+  local po pw; po=${prev%% *}; pw=${prev##* }
+  info "incumbent $1: $po oleans, $pw own"
+  # 90% tolerates churn between Mathlib revisions without tolerating a
+  # partial build replacing a complete one.
+  [ "$2" -lt $(( po * 90 / 100 )) ] || [ "$3" -lt $(( pw * 90 / 100 )) ]
+}
+
 cmd_seed() {
   local root; root=$(resolve_lake_root)
   local slug pkg
@@ -388,23 +536,48 @@ cmd_seed() {
 Seeding an empty cache is worse than none: the next agent gets a hit,
 skips the build, and fails with no oleans."
 
-  # Refuse to seed a package whose OWN modules are absent.
+  # Refuse to seed a package whose OWN modules are absent: thousands of
+  # dependency oleans and none of the package's own makes the total look
+  # healthy while every consumer still rebuilds from source.
   #
-  # This is the exact defect that shipped on lake-cache/qou-v4-24-0:
-  # 7268 oleans, every one a dependency, zero QOU.*. The total looked
-  # healthy, so nothing caught it, and every consumer since has
-  # rebuilt the paper from source while believing the cache was warm.
-  # `mathlib` is exempt — for that package the dependencies ARE the
-  # payload and `.lake/build` is legitimately thin.
+  # Exemptions live in `own_oleans_expected` — `status` asks the same
+  # question, and the two used to answer it differently.
   local own; own=$(count_own_oleans "$root")
-  if [ "$pkg" != "mathlib" ] && [ "$own" -eq 0 ]; then
+  if own_oleans_expected "$pkg" && [ "$own" -eq 0 ]; then
     die "refusing to seed '$br': $n oleans present but ZERO belong to '$pkg'.
 Only .lake/packages/ was populated — .lake/build/lib is empty, so the
 package itself never built. Run a full \`lake build\` in $root first.
 Seeding this would reproduce the bug it is meant to fix."
   fi
 
-  printf 'seeding %s from %s (%s oleans, %s own)\n' "$br" "$root/.lake" "$n" "$own"
+  # Refuse to publish a cache Lake will not trust.
+  #
+  # Oleans without their `.trace` siblings are invisible to Lake's
+  # staleness check: it rebuilds them and evicts them in the process. A
+  # branch seeded that way restores a big number and helps no build —
+  # which is exactly the state lake-cache/qou-v4-24-0 is in (7268 oleans,
+  # 775 traces). Catching it at seed time is the only place it is cheap.
+  local cov; cov=$(trace_coverage_pct "$root")
+  if [ "$cov" -lt 90 ]; then
+    die "refusing to seed '$br': trace coverage is only ${cov}% ($(count_paired_traces "$root") of $n oleans carry their trace).
+Lake reads .trace to decide staleness, so it would rebuild — and evict —
+everything untraced. Seed from a tree where a real \`lake build\`
+produced the traces alongside the oleans."
+  fi
+
+  # Never replace a fuller cache with a thinner one. This is what lets an
+  # agent contribute a partial build without risking everyone else's.
+  if [ "$PUSH" -eq 1 ] && would_shrink "$br" "$n" "$own"; then
+    if [ "$FORCE" -eq 0 ]; then
+      die "refusing to publish '$br': the candidate ($n oleans, $own own) is
+materially smaller than what is already there. Usually this means a
+partial build is about to overwrite a complete cache. Finish the build,
+or pass --force for a deliberate downgrade."
+    fi
+    warn "--force: publishing a smaller cache than the incumbent"
+  fi
+
+  printf 'seeding %s from %s (%s oleans, %s own, %s%% traced)\n' "$br" "$root/.lake" "$n" "$own" "$cov"
   local tmp; tmp=$(mktemp -d) || die "mktemp failed"
   # shellcheck disable=SC2064
   trap "rm -rf '$tmp'" RETURN
@@ -422,7 +595,10 @@ Seeding this would reproduce the bug it is meant to fix."
   # errors out rather than extending once it runs out of suffixes.
   tar czf - -C "$root" .lake | split -d -a 3 -b 90m - "$tmp/lake-oleans.tgz.part" \
     || die "failed to create the split tarball"
-  ( cd "$tmp" && for f in lake-oleans.tgz.part*; do mv "$f" "$(printf '%s' "$f")"; done )
+  # (was: a `mv "$f" "$f"` loop renaming every part to itself — a no-op
+  #  left over from when `split` produced alphabetic suffixes. It emitted
+  #  "are the same file" once per part and did nothing. The `split -d`
+  #  above already writes the numeric names we want.)
 
   if [ "$PUSH" -eq 1 ]; then
     # CI path. Uses a detached worktree so the caller's working tree is
@@ -480,7 +656,7 @@ cmd_restore_toolchain() {
   git update-ref -d "$PRIVATE_REF" 2>/dev/null || true
   if ! git fetch --depth=1 origin "+$br:$PRIVATE_REF" 2>/dev/null; then
     warn "toolchain cache branch '$br' not found."
-    info "Install normally: elan toolchain install \$(cat lean-toolchain)"
+    info "Install it directly instead: $PROG install-toolchain"
     return 1
   fi
   local tmp; tmp=$(mktemp -d) || die "mktemp failed"
@@ -514,7 +690,7 @@ cmd_restore_toolchain() {
   bin=$(find "$dest/toolchains" -maxdepth 3 -type f -name lean -perm -u+x 2>/dev/null | head -1)
   if [ -z "$bin" ]; then
     warn "extract produced no lean binary under $dest/toolchains — unusable."
-    info "Install normally: elan toolchain install \$(cat lean-toolchain)"
+    info "Install it directly instead: $PROG install-toolchain"
     return 3
   fi
   local ver; ver=$("$bin" --version 2>/dev/null | head -1)
@@ -523,9 +699,194 @@ cmd_restore_toolchain() {
     return 3
   fi
 
+  # Elaborating is not the same as being usable. The toolchain cache
+  # branch carries `.trace` and `.hash` files for the static libraries
+  # but NONE of the `.a` files themselves, so `lean` runs while any
+  # LINK step fails:
+  #     /usr/bin/ld: cannot find -lleancpp
+  # That kills `lake exe <anything>` — including `lake exe cache get`,
+  # the standard way to obtain a properly-traced Mathlib. Reporting a
+  # bare version string here would hide it.
+  local libdir; libdir="$(dirname "$(dirname "$bin")")/lib/lean"
+  local nlibs; nlibs=$(find "$libdir" -name '*.a' -type f 2>/dev/null | wc -l | tr -d ' ')
+
   printf '\nrestored %s\n' "$ver"
   printf '  binary: %s\n' "$bin"
   printf '  PATH:   export PATH="%s:$PATH"\n' "$(dirname "$bin")"
+  if [ "$nlibs" -eq 0 ]; then
+    warn "no static libraries (*.a) under $libdir"
+    info "\`lean\` will elaborate, but every LINK fails (-lleancpp not found),"
+    info "so \`lake exe …\` — including \`lake exe cache get\` — cannot run."
+    info "Install the real toolchain for build work:"
+    info "  $PROG install-toolchain"
+    return 3
+  fi
+  info "static libs: $nlibs"
+}
+
+# ── Toolchain install (direct from GitHub releases) ─────────────────
+
+# The elan route is not always available. Behind an egress proxy, elan's
+# own hosts are unreachable:
+#
+#   elan.lean-lang.org      -> no route
+#   release.lean-lang.org   -> no route
+#
+# which produced `CONNECT tunnel failed, response 403` and the standing
+# conclusion that a linkable toolchain simply could not be obtained
+# locally and the whole cache reseed had to move to CI (bean ga7e).
+#
+# But elan is only a fetcher, and the SAME toolchain is published as a
+# GitHub release asset, which IS reachable:
+#
+#   github.com/leanprover/lean4/releases/download/v4.24.0/lean-4.24.0-linux.tar.zst
+#
+# So this fetches it directly. Verified end to end: the resulting
+# toolchain carries the 16 `*.a` files the cache branch lacks
+# (libleancpp.a, libLean.a, libLake.a, libleanrt.a, …) and `lake exe`
+# links and runs.
+#
+# Idempotent: an already-linkable toolchain is left alone unless --force.
+cmd_install_toolchain() {
+  local root; root=$(resolve_lake_root)
+  local pin; pin=$(toolchain_pin "$root") \
+    || die "no lean-toolchain found — pass --toolchain leanprover/lean4:vX.Y.Z"
+
+  # Only the released channel is served this way. Nightlies live in a
+  # different repo under a different asset convention; guessing at it
+  # would fail obscurely, so decline where the user can still act.
+  case "$pin" in
+    *nightly*)
+      warn "nightly toolchains are not published as lean4 release assets: $pin"
+      info "Use elan for nightlies: elan toolchain install '$pin'"
+      return 2 ;;
+  esac
+
+  local ver="${pin##*:}"          # v4.24.0  (or 4.24.0)
+  local tag="$ver"
+  [ "${tag#v}" = "$tag" ] && tag="v$tag"
+  local bare="${tag#v}"           # 4.24.0
+
+  # Release assets are named by platform, `.tar.zst` only — there is no
+  # `.tar.gz` variant to fall back on (checked: 404).
+  local os arch plat
+  os=$(uname -s); arch=$(uname -m)
+  case "$os:$arch" in
+    Linux:x86_64)            plat="linux" ;;
+    Linux:aarch64|Linux:arm64) plat="linux_aarch64" ;;
+    Darwin:x86_64)           plat="darwin" ;;
+    Darwin:arm64|Darwin:aarch64) plat="darwin_aarch64" ;;
+    *) die "unsupported platform for a direct toolchain download: $os/$arch
+Use elan: elan toolchain install '$pin'" ;;
+  esac
+
+  local dest="${ELAN_HOME:-$HOME/.elan}/toolchains"
+  local name; name=$(elan_dir_name "$pin")
+  local target="$dest/$name"
+
+  # An existing tree is either fine or is THE trap: elan (and this
+  # script) see a toolchain at the expected path and skip the install,
+  # leaving a `lean` that elaborates but cannot link. Distinguish by the
+  # static libs, not by the directory existing.
+  if [ -d "$target" ]; then
+    if find "$target" -name 'libleancpp.a' -type f 2>/dev/null | grep -q .; then
+      if [ "$FORCE" -eq 0 ]; then
+        printf 'toolchain already installed and linkable: %s\n' "$target"
+        info "$("$target/bin/lean" --version 2>/dev/null | head -1)"
+        info "pass --force to reinstall"
+        return 0
+      fi
+      info "--force: reinstalling over a linkable toolchain"
+    else
+      warn "existing toolchain at $target has NO static libraries"
+      info "it must be removed, or elan and lake will keep using it"
+    fi
+    rm -rf "$target" || die "could not remove $target"
+  fi
+
+  command -v curl >/dev/null 2>&1 || die "curl not found on PATH"
+  # `tar --zstd` shells out to zstd; without it the extract fails with a
+  # confusing message about a bad header rather than a missing tool.
+  if ! command -v zstd >/dev/null 2>&1; then
+    warn "zstd not found — release assets are .tar.zst only"
+    info "install it first, e.g.  apt-get install -y zstd  |  brew install zstd"
+    return 2
+  fi
+
+  # Overridable for an internal mirror, an air-gapped file:// tree, or a
+  # test that must not reach the network.
+  local base="${LEAN_RELEASE_BASE:-https://github.com/leanprover/lean4/releases/download}"
+  local url="$base/$tag/lean-$bare-$plat.tar.zst"
+  printf 'installing %s\n' "$pin"
+  info "from: $url"
+  info "to:   $target"
+
+  local tmp; tmp=$(mktemp -d) || die "mktemp failed"
+  # shellcheck disable=SC2064
+  trap "rm -rf '$tmp'" RETURN
+
+  if ! curl -sSfL --retry 3 --retry-delay 2 -o "$tmp/tc.tar.zst" "$url"; then
+    warn "download failed: $url"
+    info "check that '$tag' is a real lean4 release tag, and that"
+    info "github.com release assets are reachable from here."
+    return 1
+  fi
+  info "downloaded $(du -h "$tmp/tc.tar.zst" | cut -f1)"
+
+  # Extract to a staging dir and move into place only once it verifies.
+  # Extracting straight to $target is how a half-written tree ends up at
+  # exactly the path everything treats as "installed" — the trap above.
+  mkdir -p "$tmp/x"
+  if ! tar --zstd -xf "$tmp/tc.tar.zst" -C "$tmp/x" 2>/dev/null; then
+    warn "extract failed — truncated download or unreadable archive"
+    return 3
+  fi
+
+  local staged; staged=$(find "$tmp/x" -maxdepth 1 -mindepth 1 -type d | head -1)
+  [ -z "$staged" ] && { warn "archive contained no toolchain directory"; return 3; }
+
+  # Verify BEFORE publishing to the elan path.
+  local lbin="$staged/bin/lean"
+  [ -x "$lbin" ] || { warn "no lean binary in the archive"; return 3; }
+  local ver_out; ver_out=$("$lbin" --version 2>/dev/null | head -1)
+  [ -z "$ver_out" ] && { warn "lean binary does not run (architecture mismatch?)"; return 3; }
+
+  local nlibs; nlibs=$(find "$staged/lib/lean" -name '*.a' -type f 2>/dev/null | wc -l | tr -d ' ')
+  if [ "$nlibs" -eq 0 ]; then
+    warn "downloaded toolchain has no static libraries — would not link"
+    return 3
+  fi
+
+  mkdir -p "$dest"
+  mv "$staged" "$target" || die "could not install to $target"
+
+  printf '\ninstalled %s\n' "$ver_out"
+  info "path:        $target"
+  info "static libs: $nlibs"
+  info "PATH:        export PATH=\"$target/bin:\$PATH\""
+}
+
+# ── Contribute ──────────────────────────────────────────────────────
+
+# The agentic loop's last step: give this session's build back.
+#
+# An authoring session restores the cache, drafts and compiles Lean, and
+# ends holding a `.lake` that is strictly better than the one it started
+# from. `contribute` publishes that, so the next agent starts warmer.
+# Every guard `seed` has applies — own-package oleans, trace coverage,
+# and the no-shrink check — so a session that only compiled a subtree
+# cannot degrade the shared cache.
+cmd_contribute() {
+  local root; root=$(resolve_lake_root)
+  local slug pkg
+  slug=$(toolchain_slug "$root") || die "no lean-toolchain"
+  pkg=$(resolve_package "$root"); [ -z "$pkg" ] && die "pass --package NAME"
+
+  printf 'contributing this build to lake-cache/%s-%s\n' "$pkg" "$slug"
+  info "oleans: $(count_oleans "$root")   own: $(count_own_oleans "$root")   traces: $(trace_coverage_pct "$root")%"
+  PUSH=1
+  BRANCH="${BRANCH:-lake-cache/$pkg-$slug}"
+  cmd_seed
 }
 
 # ── List / doctor ───────────────────────────────────────────────────
@@ -598,9 +959,11 @@ case "$CMD" in
   status)  cmd_status ;;
   restore) cmd_restore ;;
   restore-toolchain) cmd_restore_toolchain ;;
+  install-toolchain) cmd_install_toolchain ;;
   seed)    cmd_seed ;;
+  contribute) cmd_contribute ;;
   list)    cmd_list ;;
   doctor)  cmd_doctor ;;
   ""|help|-h|--help) usage ;;
-  *) die "unknown command: $CMD (try: status restore restore-toolchain seed list doctor)" ;;
+  *) die "unknown command: $CMD (try: status restore restore-toolchain install-toolchain contribute seed list doctor)" ;;
 esac

@@ -14,6 +14,7 @@ export { isCrossPaperRef, KNOWN_LABEL_PREFIXES } from "./constraints.js";
  */
 
 import { z } from "zod";
+import type { BlockKind } from "./block-kinds.js";
 
 import {
   ActorTypeSchema,
@@ -571,6 +572,24 @@ interface BlockBase {
    */
   uses?: string[];
   /**
+   * Subset of `uses[]` that points DELIBERATELY forward — a foreshadow, a
+   * preview, or an explicitly deferred result the exposition promises to
+   * return to (the surreal-number thread is the archetype).
+   *
+   * `detangler-no-forward-ref` exists to catch a reader being sent to material
+   * they have not reached yet (`detangler-no-xchapter-fwd` is still an unwired
+   * stub returning `n/a`). That is a
+   * defect when it is accidental and a rhetorical device when it is not: a
+   * block may legitimately say "we will need X, proved in chapter 9". Listing
+   * X here declares the reference intentional and exempts that one edge.
+   *
+   * NOT a way to silence the axis. Every entry must also appear in `uses[]`
+   * (enforced — a foreshadow of something the block does not reference is
+   * meaningless), and each one is a claim that the prose actually frames the
+   * reference as deferred. Everything not listed stays a finding.
+   */
+  foreshadows?: string[];
+  /**
    * Bibliography keys cited by this block (e.g. ["kock2004", "atiyah1988"]).
    *
    * These are reference ids from content/schema/references.ts.
@@ -881,6 +900,8 @@ export interface ProseBlock {
   title?: string;
   /** Labels of content blocks this prose depends on (for the dependency graph). */
   uses?: string[];
+  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
+  foreshadows?: string[];
   /** Bibliography keys cited by this block. */
   cites?: string[];
   tags?: string[];
@@ -898,6 +919,17 @@ export interface EquationBlock {
   kind: "equation";
   /** Equation label (e.g. "eq:snake-identities"). */
   label?: string;
+  /** Optional display title. */
+  title?: string;
+  tags?: string[];
+  /** Editorial dependencies — see `BlockBase.uses`. Equation was the ONLY
+   *  member of the `Block` union carrying neither `uses` nor a base that
+   *  supplies it; its three standalone siblings (`prose`, `diagram`, `table`)
+   *  all declare it. `tags` was likewise present in the Zod schema and absent
+   *  here. */
+  uses?: string[];
+  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
+  foreshadows?: string[];
   /** Inline TeX for the equation (short enough to live in .ts). */
   tex?: string;
   companions?: Companions;
@@ -923,6 +955,8 @@ export interface DiagramBlock {
   tags?: string[];
   /** Labels of content blocks this diagram depends on (for the dependency graph). */
   uses?: string[];
+  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
+  foreshadows?: string[];
   companions?: Companions;
   /** Pre-rendered diagram (e.g. SVG from tikzcd server-side render). */
   rendered?: RenderedAsset[];
@@ -949,6 +983,8 @@ export interface TableBlock {
   tags?: string[];
   /** Blocks that this table summarises data from. */
   uses?: string[];
+  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
+  foreshadows?: string[];
   /** Witness/script the table values are derived from (mirrors RemarkBlock).
    *  Lets tables that cite `:val[…]` literals declare the upstream witness
    *  dep, same as remark/proof/definition blocks. */
@@ -976,6 +1012,26 @@ export type Block =
   | EquationBlock
   | DiagramBlock
   | TableBlock;
+
+/**
+ * `BLOCK_KINDS`, `BlockKind` and `BLOCK_KIND_ALT` now live in the leaf
+ * module `./block-kinds`, so `constraints.ts` can import them without a
+ * runtime cycle through this file. Re-exported here because that is
+ * where every existing consumer looks for them.
+ */
+export { BLOCK_KINDS, BLOCK_KIND_ALT } from "./block-kinds.js";
+export type { BlockKind } from "./block-kinds.js";
+
+
+/**
+ * Compile-time proof that `BLOCK_KINDS` and `Block["kind"]` cover each other.
+ * Add a member to the union without adding it here (or vice versa) and this
+ * stops type-checking — which is the whole point, since the drift it replaces
+ * produced no error anywhere.
+ */
+type _MutuallyExhaustive<A, B> = [A] extends [B] ? ([B] extends [A] ? true : never) : never;
+const _blockKindsAreExhaustive: _MutuallyExhaustive<Block["kind"], BlockKind> = true;
+void _blockKindsAreExhaustive;
 
 /** Blocks that represent theorem-like environments. */
 export type EnvironmentBlock =

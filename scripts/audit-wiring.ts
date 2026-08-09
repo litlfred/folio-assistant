@@ -49,12 +49,35 @@
  * @module scripts/audit-wiring
  */
 
-import { readFileSync, existsSync, mkdirSync, writeFileSync } from "fs";
-import { resolve, basename, dirname, relative } from "path";
+import { readFileSync, mkdirSync, writeFileSync } from "fs";
+import { resolve, dirname, relative } from "path";
 import { globSync } from "glob";
 import { execSync } from "child_process";
+import type { ComputationWitness } from "../schemas/types.ts";
+import { findContentRepoRoot } from "../content/pipeline/repo-root";
 
-const REPO_ROOT = resolve(import.meta.dir, "..");
+/**
+ * A `.witness.json` as it appears on disk.
+ *
+ * Every field is optional and read defensively: these files are produced by
+ * the folio's Python `WitnessBuilder` and can be malformed (this script
+ * counts that case), so nothing here is guaranteed. `scriptFile`,
+ * `scriptHash`, `scriptCommitSha` and `git_sha` are written by the builder
+ * but are NOT on `ComputationWitness` in `schemas/types.ts` — the two have
+ * drifted, and the drift is only visible once this stops being `any`.
+ */
+interface WitnessFile extends Partial<ComputationWitness> {
+  scriptFile?: string;
+  scriptHash?: string;
+  scriptCommitSha?: string;
+  git_sha?: string;
+}
+
+// Was `import.meta.dir`-relative, i.e. the PLATFORM — but every path below is
+// folio content (`content/**`, `computations/**`), and this is used as the cwd
+// for those globs. `findContentRepoRoot()` walks up from the real cwd;
+// `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
+const REPO_ROOT = findContentRepoRoot();
 
 // ── CLI ──────────────────────────────────────────────────────────
 
@@ -88,18 +111,6 @@ function parseArgs(argv: string[]): Args {
 }
 
 // ── Helpers ──────────────────────────────────────────────────────
-
-function gitFileFirstSha(filePath: string): string {
-  try {
-    return execSync(`git log -n 1 --format=%H -- "${filePath}"`, {
-      cwd: REPO_ROOT,
-    })
-      .toString()
-      .trim() || "unknown";
-  } catch {
-    return "unknown";
-  }
-}
 
 function gitFileFirstShas(filePaths: string[]): Map<string, string> {
   const out = new Map<string, string>();
@@ -329,13 +340,13 @@ function audit(args: Args): BucketResult {
     report.totals.total++;
     dirBucket.total++;
 
-    let witness: any = null;
+    let witness: WitnessFile | null = null;
     let malformed = false;
     const rawText = (() => {
       try { return readFileSync(wf, "utf-8"); } catch { return ""; }
     })();
     try {
-      witness = JSON.parse(rawText);
+      witness = JSON.parse(rawText) as WitnessFile;
     } catch {
       malformed = true;
     }

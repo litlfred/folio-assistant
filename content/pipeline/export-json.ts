@@ -17,7 +17,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync } from "fs";
-import { join, resolve } from "path";
+import { join } from "path";
 import { createHash } from "crypto";
 import type {
   Paper,
@@ -28,12 +28,16 @@ import type {
   LeanRef,
 } from "../../schemas/types";
 import type { Data as CSLData } from "csl-json";
-import { references, referenceMap } from "../../schemas/references";
+import { references, referenceMap } from "./references-registry-di";
+import { findContentRepoRoot, findPapers, soleFolioPaper } from "./repo-root";
 import { mergeCitations } from "./citations";
-import { isWitnessed, leanFileHash } from "../../scripts/lean-witness";
+import { isWitnessed } from "../../scripts/lean-witness";
 import { leanPackageByName, parseLeanRef } from "../../schemas/lean-packages";
 
-const REPO_ROOT = resolve(import.meta.dir, "../..");
+// The FOLIO's root, not the platform's. `resolve(import.meta.dir, "../..")`
+// lands in folio-assistant, which holds no papers — and the symlinked
+// embedding resolves there even when run from the content repo.
+const REPO_ROOT = findContentRepoRoot();
 const CONTENT_ROOT = join(REPO_ROOT, "content");
 
 const args = process.argv.slice(2);
@@ -42,7 +46,20 @@ function argVal(name: string, fallback: string): string {
   return idx >= 0 && args[idx + 1] ? args[idx + 1] : fallback;
 }
 
-const PAPER_NAME = argVal("paper", "quantum-observable-universe");
+// No hardcoded paper. The platform must not privilege one folio's paper —
+// this defaulted to `quantum-observable-universe`, a qou name living in the
+// platform. `--paper` still wins; otherwise take the folio's sole paper, and
+// refuse rather than guess when there are several.
+const PAPER_NAME = argVal("paper", soleFolioPaper(REPO_ROOT) ?? "");
+if (!PAPER_NAME) {
+  const found = findPapers(REPO_ROOT);
+  console.error(
+    found.length === 0
+      ? `export-json: no paper found under ${CONTENT_ROOT} — run from a folio checkout, or pass --paper.`
+      : `export-json: this folio has ${found.length} papers (${found.join(", ")}) — pass --paper to choose one.`,
+  );
+  process.exit(2);
+}
 const OUT_DIR = argVal("out", join(REPO_ROOT, "build", "viewer"));
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
 
@@ -242,7 +259,10 @@ async function main() {
             : undefined;
 
           // Merge explicit cites[] with auto-extracted from .md
-          const explicitCites = "cites" in block ? (block as any).cites as string[] | undefined : undefined;
+          // The `in` test is real — `cites` is absent from `diagram`,
+          // `equation` and `table` in both the TS union and the Zod schema.
+          // Only the `as any` was surplus: `in` narrows on its own.
+          const explicitCites = "cites" in block ? block.cites : undefined;
           const cites = mergeCitations(explicitCites, md);
 
           blocks.push({
@@ -261,10 +281,10 @@ async function main() {
             md,
             mdModified: mdStat ? mdStat.mtime.toISOString() : "",
             meta: "meta" in block ? block.meta : undefined,
-            html: "html" in block ? (block as any).html : undefined,
-            defaultView: "defaultView" in block ? (block as any).defaultView : undefined,
-            views: "views" in block ? (block as any).views : undefined,
-            interprets: "interprets" in block ? (block as any).interprets : undefined,
+            html: "html" in block ? block.html : undefined,
+            defaultView: "defaultView" in block ? block.defaultView : undefined,
+            views: "views" in block ? block.views : undefined,
+            interprets: "interprets" in block ? block.interprets : undefined,
           });
         } catch (e) {
           blocks.push({
@@ -307,7 +327,7 @@ async function main() {
     date: paper.date,
     chapters,
     references,
-    macros: (paper as any).macros,
+    macros: paper.macros,
     meta: paper.meta,
     _built: new Date().toISOString(),
   };

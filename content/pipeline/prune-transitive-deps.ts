@@ -33,16 +33,25 @@
  * @module content/pipeline/prune-transitive-deps
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
-import { join, resolve } from "path";
+import { readFileSync, writeFileSync } from "fs";
+import { join } from "path";
 import type { Paper, Chapter, Section, Block } from "../../schemas/types";
+import { findContentRepoRoot } from "./repo-root";
+import { requirePaper } from "./repo-root";
+import { findUsesField, replaceUsesArray, removeUsesField } from "./uses-field";
+import { verifyEditedBlock } from "./block-module";
 
-const REPO_ROOT = resolve(import.meta.dir, "../..");
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
 const CONTENT_ROOT = join(REPO_ROOT, "content");
 
 const args = process.argv.slice(2);
 const APPLY = args.includes("--apply");
-const PAPER_NAME = "quantum-observable-universe";
+// Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
+const PAPER_NAME = requirePaper();
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
 
 // ── Load all blocks ─────────────────────────────────────────────
@@ -166,11 +175,12 @@ function computePruning(
 
 // ── Apply changes to .ts files ──────────────────────────────────
 
-function applyPruning(
+async function applyPruning(
   blocks: BlockInfo[],
   pruning: Map<string, { pruned: string[] }>,
-): number {
+): Promise<number> {
   let filesChanged = 0;
+  let refused = 0;
   const blockByLabel = new Map<string, BlockInfo>();
   for (const b of blocks) blockByLabel.set(b.label, b);
 
@@ -181,35 +191,50 @@ function applyPruning(
     const tsPath = block.tsPath;
     let content = readFileSync(tsPath, "utf-8");
 
-    // Match the uses array in the .ts file and replace it
-    // Pattern: uses: [ ... ] (possibly multiline)
-    const usesPattern = /uses:\s*\[[\s\S]*?\]/;
-    const match = content.match(usesPattern);
-    if (!match) {
+    // Locate the uses[] field. The previous pattern was
+    // `/uses:\s*\[[\s\S]*?\]/` — no word boundary, so on a block with a
+    // `causes:` field earlier in the object this WROTE OVER THAT FIELD,
+    // and non-greedy, so an entry containing `]` truncated the match
+    // mid-array. This is the write path; both mistakes edit content.
+    if (!findUsesField(content)) {
       console.warn(`  ⚠ Could not find uses[] in ${tsPath}`);
       continue;
     }
 
-    let newUses: string;
     if (pruned.length === 0) {
-      // Remove the uses field entirely
-      // Match uses: [...], with optional trailing comma
-      const removePattern = /\s*uses:\s*\[[\s\S]*?\],?\n?/;
-      content = content.replace(removePattern, "\n");
+      content = removeUsesField(content);
     } else if (pruned.length === 1) {
-      newUses = `uses: ["${pruned[0]}"]`;
-      content = content.replace(usesPattern, newUses);
+      content = replaceUsesArray(content, `["${pruned[0]}"]`);
     } else {
       const indent = "    ";
-      const entries = pruned.map(u => `${indent}"${u}",`).join("\n");
-      newUses = `uses: [\n${entries}\n  ]`;
-      content = content.replace(usesPattern, newUses);
+      const entries = pruned.map((u) => `${indent}"${u}",`).join("\n");
+      content = replaceUsesArray(content, `[\n${entries}\n  ]`);
+    }
+
+    // Verify the edit against the module system before it lands.
+    //
+    // Every version of this write path has been a text edit trusted on
+    // faith. The block is a module, so its post-edit `uses[]` can simply
+    // be read rather than assumed — and that catches any way the splice
+    // could be wrong, including ones nobody anticipated, instead of only
+    // the two that have been found so far.
+    const verdict = await verifyEditedBlock(tsPath, content, pruned);
+    if (!verdict.ok) {
+      console.error(`  ✗ REFUSED to write ${tsPath}\n      ${verdict.reason}`);
+      refused++;
+      continue;
     }
 
     writeFileSync(tsPath, content);
     filesChanged++;
   }
 
+  if (refused > 0) {
+    console.error(
+      `\n  ${refused} file(s) NOT written — the edit did not verify against the ` +
+        `loaded module. Nothing was changed for those blocks.`,
+    );
+  }
   return filesChanged;
 }
 
@@ -242,7 +267,7 @@ async function main() {
 
   if (APPLY) {
     console.log("\nApplying changes...");
-    const changed = applyPruning(blocks, pruning);
+    const changed = await applyPruning(blocks, pruning);
     console.log(`✓ ${changed} files updated.`);
   } else {
     console.log("\nDry run — pass --apply to rewrite files.");

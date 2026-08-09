@@ -14,6 +14,7 @@ import {
 } from "fs";
 import { join, resolve } from "path";
 import { execFileSync } from "child_process";
+import { criterionSourceHash } from "./qa-criterion-hash";
 import {
   parseLeanRef,
   leanPackageByName,
@@ -27,6 +28,7 @@ import type {
   QaCriterionEntry,
   QaScriptSidecar,
 } from "../../schemas/block-qa";
+import { BLOCK_KINDS } from "../../schemas/types";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 import { leanStatementHash } from "./lean-signature";
 import { findContentRepoRoot } from "./repo-root";
@@ -85,9 +87,17 @@ export const GIT_SHA_UNKNOWN = "unknown";
  * Current HEAD SHA (full). Returns the `unknown` sentinel outside
  * a git repo.
  */
-export function gitHeadSha(): string {
+export function gitHeadSha(repoRoot?: string): string {
   try {
-    return execFileSync("git", ["rev-parse", "HEAD"], {
+    // `repoRoot` matters once the pipeline is run from a DIFFERENT repo
+    // than the one being described. Without `-C`, this reads
+    // `process.cwd()` — the content repo — which is right for a block
+    // verdict's `reviewed_sha` and wrong for anything recording the
+    // platform's own state.
+    const args = repoRoot
+      ? ["-C", repoRoot, "rev-parse", "HEAD"]
+      : ["rev-parse", "HEAD"];
+    return execFileSync("git", args, {
       stdio: ["ignore", "pipe", "ignore"],
     })
       .toString()
@@ -167,7 +177,16 @@ export interface CriterionScriptHashes {
   criterion_id: string;
   /** Path to checker source file (may not exist on disk). */
   source_file: string;
-  /** 12-char SHA-256 of the source file. Empty if absent. */
+  /**
+   * 12-char SHA-256 of the checker's own code: its dispatch entry plus the
+   * transitive closure of module-local declarations it references. Falls back
+   * to hashing the whole source file when that closure cannot be resolved.
+   * Empty if the file is absent.
+   *
+   * Per-criterion rather than per-file so that editing one checker does not
+   * invalidate every other criterion sharing its module — see
+   * `qa-criterion-hash.ts` for why that matters.
+   */
   script_hash: string;
   /** Full git SHA of the file's most recent commit. */
   script_commit_sha: string;
@@ -206,7 +225,12 @@ export function computeCriterionScriptHashes(
   return {
     criterion_id: criterionId,
     source_file: sourceFile,
-    script_hash: hashFile(absSource) ?? "",
+    // Prefer the per-criterion closure hash; fall back to the whole file when
+    // the criterion cannot be located or its closure cannot be trusted. The
+    // fallback over-invalidates (churn) rather than under-invalidating (stale
+    // verdicts silently kept), which is the safe direction.
+    script_hash:
+      criterionSourceHash(absSource, criterionId) ?? hashFile(absSource) ?? "",
     // Pass the repo-relative `sourceFile` (not `absSource`) so git
     // interprets the pathspec correctly against `repoRoot`.
     script_commit_sha: gitFileCommitSha(sourceFile, repoRoot),
@@ -512,6 +536,25 @@ export interface BlockPaths {
 }
 
 /**
+ * `export default <kind>(` for every kind in the schema's `Block` union.
+ *
+ * Built from `BLOCK_KINDS` rather than written out, because writing it out is
+ * what went wrong: this regex listed 13 of the 15 kinds, omitting `algorithm`
+ * and `table`. `readBlockManifest` returns `undefined` for an unrecognised
+ * builder and `walkBlocks` skips whatever it returns `undefined` for, so on
+ * the qou corpus 461 blocks — 445 `table`, 16 `algorithm` — were never
+ * yielded to any QA tool. Never swept, never audited, no sidecar; ~13% of the
+ * corpus, excluded by a stale list rather than by a decision.
+ *
+ * Container kinds (`chapter`, `paper`, `folio`) are correctly absent: they are
+ * not in the `Block` union, and `readBlockManifest` is documented to reject
+ * them.
+ */
+const BLOCK_BUILDER_RE = new RegExp(
+  `export\\s+default\\s+(${BLOCK_KINDS.join("|")})\\s*\\(`,
+);
+
+/**
  * Read `export default <kind>({ ... label: "...", ... })` from a .ts
  * manifest. Returns the block's kind + label, or `undefined` if the
  * file is not a single-block manifest (chapter, paper, etc.).
@@ -524,9 +567,7 @@ export function readBlockManifest(
 ): { kind: string; label: string } | undefined {
   if (!existsSync(tsPath)) return undefined;
   const src = readFileSync(tsPath, "utf-8");
-  const kindMatch = src.match(
-    /export\s+default\s+(definition|theorem|lemma|proposition|corollary|conjecture|example|remark|proof|prose|equation|diagram|simulator)\s*\(/,
-  );
+  const kindMatch = src.match(BLOCK_BUILDER_RE);
   if (!kindMatch) return undefined;
   const labelMatch = src.match(/\blabel\s*:\s*"([^"]+)"/);
   if (!labelMatch) return undefined;
@@ -598,11 +639,50 @@ export function* walkBlocks(rootDir: string): Generator<BlockPaths> {
 
 // ── QA report IO ────────────────────────────────────────────────
 
+/** Paths already warned about, so a sweep reports each file once. */
+const warnedSidecars = new Set<string>();
+
 export function loadQaReport(path: string): BlockQaReport | undefined {
   if (!existsSync(path)) return undefined;
+  let raw: unknown;
   try {
-    const raw = JSON.parse(readFileSync(path, "utf-8"));
-    if (raw?.$schema !== "block-qa/v1") return undefined;
+    raw = JSON.parse(readFileSync(path, "utf-8"));
+  } catch (err) {
+    // A corrupt sidecar used to return `undefined` — the same answer as a file
+    // that does not exist. Callers treat that as "no QA has ever been done"
+    // and `qa-sweep` bootstraps a fresh report over the top of it, so a stray
+    // edit could destroy a block's recorded history without a word. Say so.
+    if (!warnedSidecars.has(path)) {
+      warnedSidecars.add(path);
+      console.error(
+        `qa: sidecar is not valid JSON, ignoring: ${path}\n` +
+          `    ${err instanceof Error ? err.message : String(err)}`,
+      );
+    }
+    return undefined;
+  }
+  try {
+    const rec = raw as Record<string, unknown>;
+    if (rec?.$schema !== "block-qa/v1") {
+      // The marker was introduced after some sidecars were written. Rejecting
+      // an unmarked file outright discarded real recorded state: 32 sidecars
+      // in the qou corpus carry 315 criterion entries between them and were
+      // invisible to every reader. Worse, once their blocks became reachable
+      // again, the next sweep would have bootstrapped empty reports over them.
+      //
+      // Accept on SHAPE instead — a `criteria` object is what block-qa/v1 is —
+      // and say the marker is missing so it gets added. Anything else (a
+      // paper-level `section-title-audit.qa.json` is `{criterion, paper,
+      // chapters}`) is genuinely not this schema and is still rejected.
+      if (!rec || typeof rec.criteria !== "object" || rec.criteria === null) {
+        return undefined;
+      }
+      if (!warnedSidecars.has(path)) {
+        warnedSidecars.add(path);
+        console.error(`qa: sidecar missing '$schema: "block-qa/v1"', reading anyway: ${path}`);
+      }
+      rec.$schema = "block-qa/v1";
+    }
     // Normalize malformed criterion values at the IO boundary: some
     // agent-written sidecars carry a bare entry OBJECT where block-qa/v1
     // requires a single-entry ARRAY (observed corpus-wide in qou on
@@ -611,14 +691,15 @@ export function loadQaReport(path: string): BlockQaReport | undefined {
     // and crashed with `existing.filter is not a function`. Wrapping here
     // preserves the entry verbatim; any other non-array shape (string,
     // number, null) is dropped as unrecoverable.
-    if (raw.criteria && typeof raw.criteria === "object") {
-      for (const [id, value] of Object.entries(raw.criteria)) {
+    const criteria = rec.criteria as Record<string, unknown> | undefined;
+    if (criteria && typeof criteria === "object") {
+      for (const [id, value] of Object.entries(criteria)) {
         if (Array.isArray(value)) continue;
-        if (value && typeof value === "object") raw.criteria[id] = [value];
-        else delete raw.criteria[id];
+        if (value && typeof value === "object") criteria[id] = [value];
+        else delete criteria[id];
       }
     }
-    return raw as BlockQaReport;
+    return rec as unknown as BlockQaReport;
   } catch {
     return undefined;
   }
@@ -629,6 +710,24 @@ export function saveQaReport(path: string, report: BlockQaReport): void {
 }
 
 // ── Staleness check ─────────────────────────────────────────────
+
+/**
+ * The files whose hashes invalidate a cached verdict for `def`:
+ * `depends_on` (which also gates applicability) UNION
+ * `also_invalidated_by` (which does not).
+ *
+ * Always use this — not `depends_on` alone — when computing freshness.
+ * A criterion that reads a file it cannot list in `depends_on` (because
+ * doing so would `n/a` the blocks it exists to check) is otherwise
+ * unable to clear its own stale verdict when that file is the only
+ * thing that changed.
+ */
+export function freshnessKeys(def: {
+  depends_on: Array<"md" | "ts" | "lean">;
+  also_invalidated_by?: Array<"md" | "ts" | "lean" | "graph">;
+}): Array<"md" | "ts" | "lean" | "graph"> {
+  return [...new Set([...def.depends_on, ...(def.also_invalidated_by ?? [])])];
+}
 
 /**
  * A criterion entry is "fresh" iff every file the criterion depends
@@ -642,7 +741,7 @@ export function saveQaReport(path: string, report: BlockQaReport): void {
 export function entryIsFresh(
   entry: QaCriterionEntry,
   current: QaFieldHash,
-  depends_on: Array<"md" | "ts" | "lean">,
+  depends_on: Array<"md" | "ts" | "lean" | "graph">,
   current_script_hashes?: CriterionScriptHashes,
   lean_granularity?: "file" | "statement",
 ): boolean {
@@ -734,6 +833,56 @@ export function preserveNonScriptEntries(
 }
 
 /**
+ * Does a freshly-computed script entry say the same thing as the one already
+ * recorded?
+ *
+ * Compares everything that carries meaning — verdict, the input hashes it was
+ * computed from, the reviewer identity and its script/deps hashes, and the
+ * checker's own output (notes, evidence, metrics, severity) — while ignoring
+ * `reviewed_at` and `reviewed_sha`, which say only WHEN the sweep last ran.
+ *
+ * Callers use this to keep the existing entry verbatim when a re-run reproduces
+ * it, so re-running a checker is not by itself a change to the sidecar. That
+ * matters because some criteria are deliberately re-evaluated on every sweep
+ * (an `n/a` whose `depends_on` is now satisfied must be re-checked in case it
+ * became applicable); without this, each such re-check restamped the entry and
+ * dirtied the file forever.
+ *
+ * `reviewed_sha` is deliberately NOT refreshed on an unchanged verdict: the
+ * matching `field_hash` already proves the inputs are identical, so the older
+ * sha remains a truthful record of when the verdict was established.
+ *
+ * `script_commit_sha` is excluded for the same reason. It is a FILE-level
+ * pointer — the last commit to touch the checker module — so it moves when a
+ * neighbouring criterion is edited, and comparing it would reintroduce exactly
+ * the file-level coupling that per-criterion `script_hash` exists to remove.
+ * `script_hash` is the field that actually answers "did this criterion's code
+ * change", and it IS compared.
+ */
+export function sameScriptVerdict(
+  a: QaCriterionEntry | undefined,
+  b: QaCriterionEntry,
+): boolean {
+  if (!a) return false;
+  const shape = (e: QaCriterionEntry) => ({
+    result: e.result,
+    field_hash: e.field_hash,
+    notes: e.notes,
+    evidence: e.evidence,
+    metrics: e.metrics,
+    severity: e.severity,
+    reviewer: {
+      kind: e.reviewer?.kind,
+      id: e.reviewer?.id,
+      version: e.reviewer?.version,
+      script_hash: e.reviewer?.script_hash,
+      deps_hash: e.reviewer?.deps_hash,
+    },
+  });
+  return JSON.stringify(shape(a)) === JSON.stringify(shape(b));
+}
+
+/**
  * Per-criterion freshness summary for one block.
  *
  * - `fresh-entries`: reviewer entries whose field_hash matches.
@@ -758,7 +907,7 @@ export function summariseFreshness(
   const out: CriterionFreshness[] = [];
   for (const [criterion, entries] of Object.entries(report.criteria)) {
     const def = QA_CRITERIA_BY_ID[criterion];
-    const dependsOn = def?.depends_on ?? ["md"];
+    const dependsOn = def ? freshnessKeys(def) : (["md"] as Array<"md" | "ts" | "lean">);
     const sh = scriptHashesByCriterion?.[criterion];
     const fresh: QaCriterionEntry[] = [];
     const stale: QaCriterionEntry[] = [];
@@ -819,6 +968,30 @@ export function saveQaScriptSidecar(
   sidecar: QaScriptSidecar,
   repoRoot: string = process.cwd(),
 ): void {
+  // Skip the write when nothing SUBSTANTIVE changed.
+  //
+  // `last_run_at` is a fresh timestamp on every sweep, so an unconditional
+  // write dirtied every script sidecar in this repo each time any consumer
+  // ran a sweep — 76 modified files after one qou run, none of them a real
+  // change. That churn is not free: it is indistinguishable, in `git
+  // status`, from an actual checker-hash movement.
+  //
+  // Everything except the two `last_run_*` fields is content-derived, so
+  // comparing on those alone is the right test: identical hashes mean the
+  // recorded state is already accurate and the timestamp adds nothing.
+  const prev = loadQaScriptSidecar(sidecar.criterion_id, repoRoot);
+  if (
+    prev &&
+    prev.source_file === sidecar.source_file &&
+    prev.script_hash === sidecar.script_hash &&
+    prev.script_commit_sha === sidecar.script_commit_sha &&
+    prev.deps_hash === sidecar.deps_hash &&
+    prev.engine_version === sidecar.engine_version &&
+    JSON.stringify(prev.extra_inputs ?? []) ===
+      JSON.stringify(sidecar.extra_inputs ?? [])
+  ) {
+    return;
+  }
   const p = scriptSidecarPath(sidecar.criterion_id, repoRoot);
   // Use `dirname(p)` (not `join(p, "..")`) — the latter happens to
   // normalise to the parent on POSIX but reads as "go up from this

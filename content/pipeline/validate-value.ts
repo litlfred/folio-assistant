@@ -25,18 +25,14 @@ import { existsSync, readFileSync } from "fs";
 import { resolve } from "path";
 import { findContentRepoRoot } from "./repo-root";
 import {
-  WITNESSED_VALUES,
   lookupValue,
-  type WitnessedValueEntry,
 } from "./value-registry-di";
 import {
   extractValOccurrences,
   resolvePath,
-  referencedWitnessFiles,
   type ValOccurrence,
 } from "./render-value";
 import type { Block, ValidationIssue } from "../../schemas/types";
-
 // Content repo root (the downstream repo embedding folio-assistant); witness
 // files are resolved relative to this.  See ./repo-root for why import-relative
 // resolution is wrong under the symlinked-subdir layout.
@@ -133,9 +129,10 @@ export function validateValueDirectives(
     // computation, warn so the author either attaches one or accepts
     // the implicit dependency.  This is per decision 2a (implicit
     // auto-link).
-    const blockAny = block as any;
+    // `computation` is declared on definition/theorem/algorithm/simulator/
+    // table but not on prose/diagram/equation, so the `in` test is real.
     const compWitnessRaw: string | string[] | undefined =
-      blockAny?.computation?.witness;
+      "computation" in block ? block.computation?.witness : undefined;
     const declared: string[] = compWitnessRaw === undefined
       ? []
       : Array.isArray(compWitnessRaw)

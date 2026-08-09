@@ -45,6 +45,31 @@ describe("leanSignatures", () => {
     expect(leanSignatures(THM)).not.toBe(leanSignatures(THM_NEW_STATEMENT));
   });
 
+  test("changes when a statement contains `:=` and its TAIL changes", () => {
+    // Regression. The signature/body cut fired on the first `:=`
+    // anywhere, so a `let` in the statement truncated the signature to
+    // `theorem t : (let x` — identical for both of these. The statement
+    // hash built on it therefore could not see the 5 -> 6 change, and a
+    // QA sidecar recorded against the old statement stayed "fresh".
+    const five = `theorem t : (let x := 5; x) = 5 := by rfl\n`;
+    const six = `theorem t : (let x := 5; x) = 6 := by rfl\n`;
+    expect(leanSignatures(five)).not.toBe(leanSignatures(six));
+  });
+
+  test("a structure instance in the statement does not truncate it", () => {
+    const a = `theorem t : ({ a := 1 } : Foo).a = 1 := by rfl\n`;
+    const b = `theorem t : ({ a := 1 } : Foo).a = 2 := by rfl\n`;
+    expect(leanSignatures(a)).not.toBe(leanSignatures(b));
+  });
+
+  test("still invariant under a proof rewrite when the statement holds `:=`", () => {
+    // The other direction: the fix must not make the hash sensitive to
+    // the body, or every proof edit would invalidate every sidecar.
+    const p1 = `theorem t : (let x := 5; x) = 5 := by rfl\n`;
+    const p2 = `theorem t : (let x := 5; x) = 5 := by simp\n`;
+    expect(leanSignatures(p1)).toBe(leanSignatures(p2));
+  });
+
   test("changes when a declaration is RENAMED", () => {
     // A rename is a statement change even with an identical type — the
     // narrative names the declaration.

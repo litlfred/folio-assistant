@@ -26,14 +26,20 @@
  * conditional-on-class block missing either component (when run
  * with `--strict`).
  */
-import { readdir, readFile } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { readFile } from "node:fs/promises";
+import { join, resolve } from "node:path";
 import { leanPackageByName } from "../../schemas/lean-packages.ts";
-
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(SCRIPT_DIR, "..", "..");
-const ROOT = join(REPO_ROOT, "content/quantum-observable-universe");
+import { findContentRepoRoot } from "./repo-root";
+import { requirePaper } from "./repo-root";
+import { loadBlocksUnder, reportLoadFailures } from "./block-module";
+import type { BlockLoadFailure } from "./block-module";
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
+// Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
+const ROOT = join(REPO_ROOT, "content", requirePaper());
 const STRICT = process.argv.includes("--strict");
 
 // Optional baseline-allowlist file (declared before WITNESS_OUT so its
@@ -79,40 +85,20 @@ interface Block {
 
 const PROVABLE = new Set(["theorem", "proposition", "lemma", "corollary"]);
 
+/** Blocks that would not import. Never silently dropped — see STRICT below. */
+const LOAD_FAILURES: BlockLoadFailure[] = [];
+
+/**
+ * Import each block rather than scanning its source.
+ *
+ * The regex this replaces listed twelve of the fifteen kinds in `Block`,
+ * so `algorithm`, `proof` and `table` blocks were invisible to this
+ * gate — the same drift `schemas/types.ts` documents costing ~13% of the
+ * qou corpus across five other lists. Importing has no list to drift.
+ */
 async function loadAll(): Promise<Map<string, Block>> {
-  const blocks = new Map<string, Block>();
-  const dirs = await readdir(ROOT, { withFileTypes: true });
-  for (const d of dirs) {
-    if (!d.isDirectory()) continue;
-    const dirPath = join(ROOT, d.name);
-    let files: string[];
-    try { files = await readdir(dirPath); } catch { continue; }
-    for (const f of files) {
-      if (!f.endsWith(".ts")) continue;
-      const path = join(dirPath, f);
-      const text = await readFile(path, "utf8");
-      const builderMatch = text.match(
-        /export default (definition|theorem|proposition|lemma|corollary|conjecture|remark|prose|equation|diagram|example|simulator)\(/,
-      );
-      if (!builderMatch) continue;
-      const kind = builderMatch[1];
-      const labelMatch = text.match(/label:\s*"([^"]+)"/);
-      if (!labelMatch) continue;
-      const label = labelMatch[1];
-      const usesIdx = text.indexOf("uses:");
-      let uses: string[] = [];
-      if (usesIdx >= 0) {
-        const afterUses = text.slice(usesIdx);
-        const arrStart = afterUses.indexOf("[");
-        const arrEnd = afterUses.indexOf("]", arrStart);
-        if (arrStart >= 0 && arrEnd > arrStart) {
-          const arr = afterUses.slice(arrStart + 1, arrEnd);
-          uses = [...arr.matchAll(/"([^"]+)"/g)].map((m) => m[1]);
-        }
-      }
-      blocks.set(label, { label, kind, uses, file: path });
-    }
-  }
+  const { blocks, failures } = await loadBlocksUnder(ROOT);
+  if (reportLoadFailures(failures)) LOAD_FAILURES.push(...failures);
   return blocks;
 }
 
@@ -329,6 +315,18 @@ const fullyCompliant = findings.filter((f) =>
   f.has_lean_class_hypothesis && f.has_md_conditional_banner);
 
 console.log(`§3b-cond conditional-class banner audit`);
+// `witness-pipeline.yml` runs this with `--strict`, so its exit code gates.
+// Over an empty corpus it finds 0 labels beyond the baseline and exits 0 —
+// the same shape as `trivial-skeleton-audit` (bean `pzdv`): a gate that
+// passes for free because it read nothing. Auditing nothing is a failure.
+if (blocks.size === 0) {
+  console.error(
+    `No content blocks found under ${ROOT} — refusing to report success.\n` +
+    "This audits a FOLIO's blocks; folio-assistant is the platform.\n" +
+    "Run it from the content repo.",
+  );
+  process.exit(1);
+}
 console.log(`Total blocks scanned:                       ${blocks.size}`);
 console.log(`Conditional-on-class candidates:            ${findings.length}`);
 console.log(`  ✓ fully compliant (banner + class-hyp):   ${fullyCompliant.length}`);
@@ -447,6 +445,15 @@ if (BASELINE_PATH) {
 }
 
 if (STRICT) {
+  // A block that would not load was not audited. Passing STRICT while
+  // part of the corpus went unread is the failure mode this whole gate
+  // exists to prevent, so it fails instead.
+  if (LOAD_FAILURES.length > 0) {
+    console.error(
+      `\nSTRICT mode: ${LOAD_FAILURES.length} block(s) could not be loaded and were not audited`,
+    );
+    process.exit(1);
+  }
   const counted = BASELINE_PATH
     ? (regressionsLean + regressionsBanner)
     : (missingLean.length + missingBanner.length);

@@ -28,6 +28,7 @@ import { fileURLToPath } from "url";
 import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
 import { hashFile } from "./qa-utils";
 import { findContentRepoRoot, findPapers } from "./repo-root";
+import { stripArrayField } from "./uses-field";
 
 const __filename = fileURLToPath(import.meta.url);
 // Resolve content-repo paths (witnesses under <repo>/computations, Lean
@@ -48,7 +49,6 @@ const REPO_ROOT = findContentRepoRoot();
 // silently, while looking healthy.
 const CONTENT_DIR = join(REPO_ROOT, "content");
 const COMPUTATIONS_DIR = join(REPO_ROOT, "computations");
-const BIB_QA_IMAGES_DIR = join(CONTENT_DIR, "bib-qa-images");
 const BIB_QA_REPORT = join(CONTENT_DIR, "bib-qa.json");
 
 export interface CheckerHit {
@@ -605,6 +605,38 @@ export function checkComputeWitnessExists(
   return { result: hits.length > 0 ? "fail" : "pass", hits };
 }
 
+/**
+ * Every block field whose contents are LABELS OR PATHS POINTING ELSEWHERE,
+ * as opposed to describing the block itself. Mirrors `BlockBase` and its
+ * kind-specific extensions in `schemas/types.ts`.
+ *
+ * A checker asking "does this block do X?" must not read these — they say
+ * what OTHER blocks do.
+ */
+const REFERENCE_ARRAY_FIELDS = [
+  "uses",
+  "cites",
+  "examples",
+  "proofs",
+  "defines",
+  "requires",
+  "mathlibLinks",
+  "blocks",
+] as const;
+
+/** The same, for fields holding a single reference rather than an array. */
+const REFERENCE_SCALAR_FIELDS = ["interprets", "see"] as const;
+
+/** Blank out every reference field, leaving what the block says about itself. */
+function stripReferenceFields(ts: string): string {
+  let out = ts;
+  for (const f of REFERENCE_ARRAY_FIELDS) out = stripArrayField(out, f);
+  for (const f of REFERENCE_SCALAR_FIELDS) {
+    out = out.replace(new RegExp(`\\b${f}\\s*:\\s*"[^"]*"`, "g"), "");
+  }
+  return out;
+}
+
 const LP_DUAL_HINT_RE =
   /lp-dual|operator-selection-lp|shadow-price|primal-dual|lp-duality/i;
 const LP_DUAL_REQUIRED_FIELDS = [
@@ -627,16 +659,26 @@ export function checkComputeLpDualPresent(
   if (!ts) return { result: "n/a", hits: [] };
   const { witness } = getComputationField(ts);
   if (!witness) return { result: "pass", hits: [] };
-  // Filter: only blocks whose ts mentions LP/SDP/operator-selection
-  // OUTSIDE the `uses: [...]` array. References inside `uses:` are
-  // downstream dependencies (the block consumes an LP result) — they
-  // do not imply the block's OWN witness must carry LP dual fields.
-  // Strip uses: array + cites: array + interprets: field — these are
-  // downstream references, not evidence the block computes LP duals.
-  const tsStripped = ts
-    .replace(/\buses\s*:\s*\[[\s\S]*?\]/g, "")
-    .replace(/\bcites\s*:\s*\[[\s\S]*?\]/g, "")
-    .replace(/\binterprets\s*:\s*"[^"]*"/g, "");
+  // Filter: only blocks whose ts mentions LP/SDP/operator-selection in a
+  // field that describes THIS block. Every reference field points at a
+  // DIFFERENT one — a block that `uses:` an LP bound consumes a result, it
+  // does not compute duals — so an LP token inside one says nothing about
+  // the witness this block must carry.
+  //
+  // Two bugs have come from getting the strip wrong, and both read a
+  // reference as evidence:
+  //
+  //  - a non-greedy `[\s\S]*?\]` stopped at the FIRST `]`, so an entry
+  //    containing one (`"def:family[0]"`) left the rest of the array in
+  //    place. `stripArrayField` scans to the matching bracket instead.
+  //  - the list itself was `uses` + `cites` + `interprets`, which is only
+  //    three of the schema's reference fields. `examples`, `proofs`,
+  //    `defines`, `requires` and `mathlibLinks` all point elsewhere too,
+  //    and all leaked.
+  //
+  // The list below is the complete set; adding a reference field to the
+  // schema means adding it here.
+  const tsStripped = stripReferenceFields(ts);
   if (!LP_DUAL_HINT_RE.test(tsStripped)) {
     return { result: "pass", hits: [] };
   }
@@ -658,12 +700,30 @@ export function checkComputeLpDualPresent(
   const absPath = witness.startsWith("/")
     ? witness
     : resolve(REPO_ROOT, witness);
-  if (!existsSync(absPath)) return { result: "pass", hits: [] };
+  // Past this point the block IS an LP computation, so the witness is the
+  // evidence the criterion turns on. Missing or unparseable, the answer is
+  // unknown — `pass` for a corrupt witness is the criterion asserting a
+  // result it could not read. (A missing witness is separately a `fail`
+  // under `compute-witness-exists`, so the finding is not lost here.)
+  if (!existsSync(absPath)) {
+    return {
+      result: "n/a",
+      hits: [],
+      notes: `witness ${witness} not found — LP dual fields not checked`,
+    };
+  }
   let body: Record<string, unknown> = {};
   try {
     body = JSON.parse(readFileSync(absPath, "utf-8"));
-  } catch {
-    return { result: "pass", hits: [] };
+  } catch (e) {
+    return {
+      result: "n/a",
+      hits: [],
+      notes:
+        `witness ${witness} does not parse as JSON (${
+          e instanceof Error ? e.message.slice(0, 80) : "unknown"
+        }) — LP dual fields not checked`,
+    };
   }
   // LP fields may live at the top level OR nested anywhere reachable
   // by a shallow walk (the conventional layout for WitnessBuilder
@@ -910,26 +970,88 @@ const NUMEROLOGY_PHRASES = [
   /\baccidental(?:ly)?\s+match/i,
 ];
 
+/**
+ * Prose that DISCLAIMS a coincidence rather than trading on it.
+ *
+ * The signal phrases above are exactly the vocabulary an honest caveat uses —
+ * naming a coincidence as a coincidence is the behaviour this criterion exists
+ * to reward, not to punish. Observed live in qou
+ * (`mass-theory/toroidal-harmonics-delta-lambda`), where
+ *
+ *   "It is a numerical coincidence at an unrelated anchor, not a parameter-free
+ *    evaluation on the substrate, and it does not determine Δ_λ, which stays
+ *    open"
+ *
+ * failed `critical` — the criterion firing on the paper being careful.
+ *
+ * These patterns are deliberately narrow: a bare `not` anywhere nearby is NOT
+ * enough (it would suppress "the agreement is not accidental — it is
+ * miraculous"). The negation has to deny that the coincidence ESTABLISHES
+ * something, which is what separates a caveat from a claim.
+ */
+const NUMEROLOGY_DISCLAIMERS = [
+  /\bnot\s+(?:a\s+|an\s+)?(?:derivation|proof|prediction|explanation|evidence|derived|parameter-free|first-principles)\b/i,
+  /\bdoes\s+not\s+(?:determine|derive|prove|establish|explain|predict|imply|follow)\b/i,
+  /\bis\s+not\s+claimed\b/i,
+  /\bno\s+(?:derivation|mechanism|explanation)\b/i,
+  /\bcoincidence,\s*not\b/i,
+  /\bnot\s+a\s+substitute\s+for\b/i,
+];
+
+/**
+ * Markdown paragraphs (runs of contiguous non-blank lines) with the 1-based
+ * line each starts on.
+ *
+ * Scope matters here: the signal phrase and its disclaimer routinely land on
+ * DIFFERENT physical lines because prose is hard-wrapped, so a per-line test
+ * structurally cannot see the caveat attached to the sentence it is judging.
+ */
+function markdownParagraphs(
+  md: string,
+): Array<{ text: string; startLine: number; lines: string[] }> {
+  const out: Array<{ text: string; startLine: number; lines: string[] }> = [];
+  let current: string[] = [];
+  let start = 1;
+  const flush = () => {
+    if (current.length) out.push({ text: current.join(" "), startLine: start, lines: current });
+    current = [];
+  };
+  md.split("\n").forEach((line, i) => {
+    if (line.trim() === "") {
+      flush();
+      start = i + 2;
+    } else {
+      if (!current.length) start = i + 1;
+      current.push(line);
+    }
+  });
+  flush();
+  return out;
+}
+
 export function checkCanonicalNoNumerology(
   mdPath: string | undefined,
 ): CheckerResult {
   const md = readMaybe(mdPath);
   if (!md) return { result: "pass", hits: [] };
   const hits: CheckerHit[] = [];
-  let lineNo = 0;
-  for (const line of md.split("\n")) {
-    lineNo++;
-    for (const re of NUMEROLOGY_PHRASES) {
-      const m = line.match(re);
-      if (m) {
-        hits.push({
-          file: mdPath ?? "(unknown)",
-          line: lineNo,
-          text: `numerology signal phrase: "${m[0]}"`,
-        });
-        break;
+  for (const para of markdownParagraphs(md)) {
+    // A paragraph that explicitly denies the coincidence establishes anything
+    // is the discipline working; do not flag it.
+    if (NUMEROLOGY_DISCLAIMERS.some((re) => re.test(para.text))) continue;
+    para.lines.forEach((line, offset) => {
+      for (const re of NUMEROLOGY_PHRASES) {
+        const m = line.match(re);
+        if (m) {
+          hits.push({
+            file: mdPath ?? "(unknown)",
+            line: para.startLine + offset,
+            text: `numerology signal phrase: "${m[0]}"`,
+          });
+          break;
+        }
       }
-    }
+    });
   }
   return { result: hits.length > 0 ? "fail" : "pass", hits };
 }
@@ -946,14 +1068,24 @@ export function checkCanonicalScriptNotDeprecated(
   tsPath: string | undefined,
 ): CheckerResult {
   const ts = readMaybe(tsPath);
-  if (!ts) return { result: "pass", hits: [] };
-  const { probe } = getComputationField(ts);
-  const witness = getComputationField(ts).witness;
+  // No manifest to read: nothing was examined, so nothing passed. Every
+  // other checker in this file spells this `n/a`.
+  if (!ts) return { result: "n/a", hits: [] };
   const scriptMatch = ts.match(/script:\s*["']([^"']+)["']/);
   if (!scriptMatch) return { result: "pass", hits: [] };
   const scriptRelPath = scriptMatch[1];
   const scriptAbsPath = resolve(REPO_ROOT, scriptRelPath);
-  if (!existsSync(scriptAbsPath)) return { result: "pass", hits: [] };
+  if (!existsSync(scriptAbsPath)) {
+    // The block NAMES a script and the file is not there. "Not
+    // deprecated" is then a claim about something unread — absence of
+    // the evidence, not evidence of absence. A block declaring no script
+    // at all is different, and still passes vacuously above.
+    return {
+      result: "n/a",
+      hits: [],
+      notes: `declared script ${scriptRelPath} not found — deprecation not checked`,
+    };
+  }
   const scriptSrc = readFileSync(scriptAbsPath, "utf-8");
   const hits: CheckerHit[] = [];
   // Check for script-level deprecation markers (first 10 lines or
@@ -1324,6 +1456,19 @@ export function checkDetanglerSectionBand(
 // this commit, with explicit `n/a` returns so the sweep doesn't
 // flag them as missing. A follow-up commit will wire them.
 
+/**
+ * Parse a block manifest's `foreshadows: [...]` — the subset of `uses[]` the
+ * author has declared as a deliberate forward reference.
+ *
+ * Text-level like the sibling `label:` parse in this file, so the checker
+ * stays free of a module import of the manifest.
+ */
+export function parseForeshadows(tsSrc: string): string[] {
+  const m = tsSrc.match(/\bforeshadows:\s*\[([\s\S]*?)\]/);
+  if (!m) return [];
+  return [...m[1].matchAll(/["']([^"']+)["']/g)].map((x) => x[1]);
+}
+
 export function checkDetanglerNoForwardRef(
   tsPath: string | undefined,
 ): CheckerResult {
@@ -1340,11 +1485,19 @@ export function checkDetanglerNoForwardRef(
   if (myPos === undefined) return { result: "pass", hits: [] }; // not listed
   const myChapter = _labelToChapter.get(label);
 
+  // Deliberate forward references — a foreshadow, a preview, or an explicitly
+  // deferred result the exposition promises to return to. Declared on the
+  // block, so the intent lives in the authored manifest next to `uses[]`
+  // rather than in a QA sidecar. Only these edges are exempt; every other
+  // forward ref is still a finding.
+  const foreshadowed = new Set(parseForeshadows(content));
+
   const hits: CheckerHit[] = [];
   for (const u of _usesGraph.get(label) ?? []) {
     // Only SAME-chapter forward refs here; cross-chapter is the
     // separate `detangler-no-xchapter-fwd` criterion.
     if (_labelToChapter.get(u) !== myChapter) continue;
+    if (foreshadowed.has(u)) continue;
     const uPos = _blockPos.get(u);
     if (uPos !== undefined && uPos > myPos) {
       hits.push({

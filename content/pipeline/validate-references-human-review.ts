@@ -23,10 +23,11 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { resolve } from "path";
+import { join } from "path";
 import { createHash } from "crypto";
-import { references } from "../../schemas/references";
+import { references } from "./references-registry-di";
 import type { Data as CSLData } from "csl-json";
+import { findContentRepoRoot } from "./repo-root";
 
 const STATUS_ENUM = [
   "unreviewed",
@@ -51,7 +52,12 @@ interface ReviewSidecar {
   reviews: Record<string, ReviewEntry>;
 }
 
-const SIDECAR_PATH = resolve(import.meta.dir, "../../schemas/references.review.json");
+// The review sidecar sits BESIDE the bibliography it annotates, which is
+// folio content (`content/schema/references.review.json`). Computing it from
+// `import.meta.dir` pointed at `<folio-assistant>/schemas/` — a path that does
+// not exist, and one the folio's symlinked embedding resolves to even when the
+// pipeline is run from the content repo.
+const SIDECAR_PATH = join(findContentRepoRoot(), "content", "schema", "references.review.json");
 
 /** Recursively key-sorted JSON, so the hash is independent of source key order.
  *  Mimics `JSON.stringify` semantics for the non-JSON values that can appear in a

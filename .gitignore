@@ -8,6 +8,9 @@ dist/
 *.log
 .DS_Store
 
+# Build outputs — regenerate locally, never commit
+build/
+
 # Generated files — regenerate with `npm run generate:all`
 schemas/generated/
 content/audit-tex-source.json
@@ -16,3 +19,8 @@ content/audit-tex-source.json
 # worktrees created per background agent and removed when it finishes —
 # transient tooling state, never repository content.
 .claude/worktrees/
+# Python bytecode. There are 44 .py files here and no ignore for their
+# artefacts, so any `python -m py_compile` / import leaves `__pycache__`
+# directories staged for the next `git add -A`.
+__pycache__/
+*.py[cod]

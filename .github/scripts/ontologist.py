@@ -27,7 +27,6 @@ from qou_lib.config import (
     BEGIN_RE,
     CHAPTER_FILES,
     CHAPTERS_DIR,
-    ENV_TYPES,
     LABEL_RE,
     LEAN_DIR,
     MAX_ENV_SCAN_LINES,

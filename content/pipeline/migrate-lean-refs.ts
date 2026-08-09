@@ -23,8 +23,13 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { join, relative } from "path";
 import { LEAN_PACKAGES } from "../../schemas/lean-packages";
+import { findContentRepoRoot } from "./repo-root";
 
-const REPO_ROOT = join(import.meta.dir, "..", "..");
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
 const CONTENT_ROOT = join(REPO_ROOT, "content");
 const WRITE = process.argv.includes("--write");
 
@@ -148,7 +153,7 @@ function transform(src: string, pkg: string): { src: string; matches: number } {
     if (!declMatch) continue;
     const decl = declMatch[1];
 
-    let newBody = body
+    const newBody = body
       .replace(/\bdecl:\s*"[^"]+"\s*,?/, `ref: "${pkg}:${decl}",`)
       .replace(/^\s*file:\s*"[^"]*"\s*,?\s*\n/gm, "");
 

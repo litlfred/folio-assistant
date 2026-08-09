@@ -18,6 +18,15 @@
 
 name: Build Paper Assistant Image
 
+#
+# TRIGGERS, ACTUAL: `workflow_dispatch` only — the push and twice-weekly
+# triggers described above are NOT wired. Unlike the folio-side workflows,
+# this one CAN run here (`adapters/mcp-server/Dockerfile` is platform code),
+# and the image it builds is the one publish/lean-build/blueprint all use.
+# So it is a real gap, not a split artefact — but wiring it starts pushing to
+# GHCR, which the folio server auto-deploys, so it needs an owner's decision.
+# See bean `folio-assistant-5rfy`.
+
 on:
   workflow_dispatch:
 env:

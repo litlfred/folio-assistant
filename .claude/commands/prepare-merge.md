@@ -47,7 +47,33 @@ Prefer the MCP tools (structured findings) when connected; otherwise the scripts
 - `qa_sweep` — no critical findings (dry-run).
 - `proof_status` — no regression in sorry/coverage for changed blocks.
 - `latex_preflight` — no new unknown macros / overfull boxes.
+- `block_pdf_render` — for each changed block, compile a standalone PDF and
+  resolve LaTeX errors; overfull boxes on changed content are advisory.
+  Run: `bun run scripts/render-changed-blocks.ts` (add `--upload-drive` to
+  also push to Drive when `googleDrive.folderPath` is configured). Needs
+  local `latexmk` — when it is absent the gate cannot run, and that is
+  reported as **not run**, never as a pass.
 - `lean_build` / `lean_check` — build green (or unchanged) for touched packages.
+  **Check what the target covers before quoting its result.** `lake build`
+  compiles the root module plus its transitive imports, not the source tree
+  (`lean_lib` globs default to `roots.map Glob.one`; `srcDir` only widens
+  where sources are found). In qou that is 853 of 1618 modules — so a module
+  you touched may be green-by-omission, and a corpus sorry count read off the
+  build is an undercount. `find .lake/build -name '*.olean' | wc -l` against
+  the source count takes a second and settles it.
+- **Dispatch the repo's Lean CI workflow on the pushed branch, and put its
+  result in the PR.** A local `lake build` is not CI green: it runs on a warm
+  `.lake`, your toolchain, your `moreLeanArgs`. Push first, then
+  `gh workflow run <lean-ci>.yml --ref <branch>` (or `actions_run_trigger`),
+  wait for it, and record run URL + conclusion in the PR body. If it fails,
+  fix and re-dispatch — do not open the PR on an unrun workflow.
+  If dispatch is refused (no `actions: write`), say so in the PR with the
+  command a maintainer should run, rather than leaving it unmentioned.
+
+  *Why this is a gate and not a nicety:* qou's `lean_ci.yml` last ran
+  2026-04-25 and failed. Nothing dispatched it for ~4 months, and 37 modules
+  silently stopped compiling — including files with plain parse errors that
+  had never compiled at all. A workflow nobody runs is not a safety net.
 
 **`contentType: who-smart-dak` (L2):**
 - BPMN/DMN well-formedness; data-dictionary + value-set validation

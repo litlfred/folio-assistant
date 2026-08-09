@@ -20,12 +20,19 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { resolve, basename, dirname, relative } from "path";
+import { resolve, basename, relative } from "path";
 import { globSync } from "glob";
 import { execSync } from "child_process";
-import { isWitnessed, leanFileHash, isStale } from "./lean-witness";
+import { isWitnessed, isStale } from "./lean-witness";
+import { findContentRepoRoot } from "../content/pipeline/repo-root";
+import { requirePaper } from "../content/pipeline/repo-root";
+import { leanModuleChapter } from "../content/pipeline/chapter-profile-registry-di";
 
-const REPO_ROOT = resolve(import.meta.dir, "..");
+// Was `import.meta.dir`-relative, i.e. the PLATFORM — but every path below is
+// folio content (`content/**`, `computations/**`), and this is used as the cwd
+// for those globs. `findContentRepoRoot()` walks up from the real cwd;
+// `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
+const REPO_ROOT = findContentRepoRoot();
 const CONTENT_ROOT = resolve(REPO_ROOT, "content");
 
 // ── Types ────────────────────────────────────────────────────────
@@ -99,18 +106,6 @@ interface AuditReport {
 function getCurrentCommitSha(): string {
   try {
     return execSync("git rev-parse HEAD", { cwd: REPO_ROOT })
-      .toString()
-      .trim();
-  } catch {
-    return "unknown";
-  }
-}
-
-function getFileCommitSha(filePath: string): string {
-  try {
-    return execSync(`git log -1 --format=%H -- "${filePath}"`, {
-      cwd: REPO_ROOT,
-    })
       .toString()
       .trim();
   } catch {
@@ -338,26 +333,15 @@ function getChapterName(dir: string): string {
 }
 
 // Map build-system lean files to chapters based on module path
+// Rules are FOLIO content: which Lean namespace belongs to which chapter is a
+// fact about one paper's module layout. Injected via the chapter-profile
+// registry; an unmatched path falls back exactly as before.
 function mapBuildFileToChapter(filePath: string): string {
   const rel = relative(CONTENT_ROOT, filePath);
-  if (rel.includes("QOU/QuantumObservableUniverse")) return "ch1-quantum-observable-universe";
-  if (rel.includes("QOU/Torsion")) return "ch3-lifting-of-quantum-torsion";
-  if (rel.includes("QOU/Descartes/")) return "ch6-descartes-universe";
-  if (rel.includes("QOU/PathIntegrals") || rel.includes("QOU/KnotTheory") || rel.includes("QOU/KnotRegistry"))
-    return "ch4-path-integrals-and-braiding";
-  if (rel.includes("QOU/BringsSurface")) return "ch5-brings-surface";
-  if (rel.includes("QOU/DescartesUniverse")) return "ch6-descartes-universe";
-  if (rel.includes("QOU/GaugeFieldFluidDynamics")) return "ch10-fluid-dynamics";
-  if (rel.includes("QOU/InformationTheory")) return "ch9-information-theory";
-  if (rel.includes("QOU/QGeometricLanglands")) return "ch11-q-geometric-langlands";
-  if (rel.includes("QOU/Glossary")) return "ch8-glossary";
-  if (rel.includes("QOU/HadronicMass") || rel.includes("QOU/AtomicMass") || rel.includes("QOU/MassDerivation"))
-    return "ch7-observations";
-  if (rel.includes("QOU/CODATAChain")) return "ch7-observations";
-  if (rel.includes("QOU/RepresentationTheory")) return "ch2-quantum-geometry";
-  if (rel.includes("QOU/Calculations") || rel.includes("QOU/MathConstants")) return "shared";
-  return "core";
+  // `"core"` is the original fallback for an unmatched path — preserved.
+  return leanModuleChapter(rel) ?? "core";
 }
+
 
 // ── Main audit ───────────────────────────────────────────────────
 
@@ -564,9 +548,7 @@ function printReport(report: AuditReport) {
 
     // Witness status
     const allFiles = [...ch.siblingFiles, ...ch.buildFiles];
-    const witnessedFiles = allFiles.filter((f) => f.witnessed && !f.stale);
     const staleFiles = allFiles.filter((f) => f.stale);
-    const pendingFiles = allFiles.filter((f) => !f.witnessed && !f.stale);
 
     if (staleFiles.length > 0) {
       console.log(`\n  Stale witnesses (need rebuild):`);
@@ -629,7 +611,7 @@ if (import.meta.main) {
   const chapterFilter =
     chapterIdx >= 0 ? args[chapterIdx + 1] : undefined;
 
-  const report = runAudit("quantum-observable-universe", chapterFilter);
+  const report = runAudit(requirePaper(), chapterFilter);
 
   if (jsonMode) {
     console.log(JSON.stringify(report, null, 2));

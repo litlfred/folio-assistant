@@ -20,11 +20,16 @@
  */
 
 import { readFileSync, existsSync, readdirSync } from "fs";
-import { resolve, join } from "path";
-import { references, referenceMap, CSLEntrySchema } from "../../schemas/references";
-import type { Data as CSLData } from "csl-json";
+import { join } from "path";
+import { references, referenceMap, CSLEntrySchema } from "./references-registry-di";
+import { findContentRepoRoot } from "./repo-root";
+import { requirePaper } from "./repo-root";
 
-const REPO_ROOT = resolve(import.meta.dir, "../..");
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
 const args = process.argv.slice(2);
 const strict = args.includes("--strict");
 
@@ -121,7 +126,8 @@ const leanCitations = new Set<string>();
 // Scan .lean files for -- Ref: [key] patterns
 const leanDir = join(REPO_ROOT, "lean");
 const contentDir = join(REPO_ROOT, "content");
-const leanArchiveDir = join(REPO_ROOT, "content/quantum-observable-universe/lean");
+// Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
+const leanArchiveDir = join(REPO_ROOT, "content", requirePaper(), "lean");
 
 function scanFilesRecursive(dir: string, ext: string): string[] {
   if (!existsSync(dir)) return [];

@@ -6,8 +6,48 @@
     "strict": true,
     "types": ["bun-types"],
     "outDir": "dist",
-    "rootDir": "."
+    "rootDir": ".",
+    // The codebase imports siblings as `./qa-utils.ts`, which bun resolves
+    // natively. Without this, every such import is a TS5097 error — 21 of
+    // them the moment anything outside `src/` enters the program.
+    "allowImportingTsExtensions": true
   },
-  "include": ["src/**/*.ts"],
+  // `include` used to be `["src/**/*.ts"]` alone, so `tsc --noEmit -p .`
+  // typechecked `src/` plus only what `src/` transitively imports: 6 of the
+  // 69 files in `content/pipeline`, and not `schemas/types.ts` at all. A
+  // green `tsc` therefore said nothing about most of the pipeline — including
+  // the block-kind exhaustiveness assertion in `schemas/types.ts`, which
+  // cannot fail if it is never compiled.
+  //
+  // `schemas/**` is in scope now — it is clean, and it is where the block-kind
+  // exhaustiveness assertion lives. Widening it here immediately caught a
+  // ReferenceError shipped in 958c29e: seven constraint checks had their `ctx`
+  // parameter renamed to `_ctx` during a lint drain while their bodies still
+  // read `ctx.dir` / `ctx.fileExists`. That commit claimed "`tsc --noEmit` …
+  // clean", which was true and meaningless, because the file was not in the
+  // program.
+  //
+  // `content/**` is in scope now too, drained to zero (bean
+  // `folio-assistant-tsca`). Adding it here is the point of the drain: the
+  // 63 pipeline files nothing in `src/` imports were never compiled, and that
+  // is how `validate.ts` shipped a `ReferenceError` and how six bibliography
+  // entry points sat dead — importing `../../schemas/references`, a path that
+  // does not exist here — without anything reporting it.
+  //
+  // `scripts/**` is in scope now too, drained to zero. Its 15 errors were not
+  // typing nits: `computeStats(paperDir, contentRoot)` was called with ONE
+  // argument from two scripts, and both read `conjectures.with_lean_file` and
+  // `conjectures.percent_class_axiomatized`, neither of which existed — so the
+  // README and the authors' note were interpolating `undefined`.
+  //
+  // `adapters/**` is in scope now too, drained from 81 to zero. Its errors
+  // were not typing nits: 38 catch blocks referenced an `e` binding a lint
+  // drain had stripped (a ReferenceError each, all mine, shipped in 958c29e),
+  // `resolveOutline` had never existed, and `--http` mode used the SDK's NODE
+  // transport for a Bun `Request`.
+  //
+  // Every tree is now compiled. A green `bun run typecheck` finally means what
+  // it says.
+  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts", "scripts/**/*.ts", "adapters/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }

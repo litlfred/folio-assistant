@@ -26,13 +26,26 @@
  *   bun run content/pipeline/trivial-skeleton-audit.ts
  */
 import { readFile, writeFile, mkdir } from "node:fs/promises";
-import { join, dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { join, dirname } from "node:path";
 import { glob } from "glob";
+import { findContentRepoRoot, findPapers } from "./repo-root";
 
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(SCRIPT_DIR, "..", "..");
-const ROOT = join(REPO_ROOT, "content/quantum-observable-universe");
+// Was `resolve(SCRIPT_DIR, "..", "..")` plus a hardcoded
+// `content/quantum-observable-universe` — a specific FOLIO paper named in
+// PLATFORM code, under a root computed from this file's own location. So the
+// scan target was `<platform>/content/quantum-observable-universe`, a path
+// that exists in NO checkout: not here (the platform has no papers) and not
+// in a folio either, since `import.meta.url` resolves back through the
+// `folio-assistant/` symlink to the platform. This audit has never read a
+// single Lean file, in either repo — and reported "✓ All strict-gate budgets
+// respected" every time.
+const REPO_ROOT = findContentRepoRoot();
+const PAPERS = findPapers(REPO_ROOT);
+// Scan every paper the folio has, not one named in advance.
+const PAPER_GLOBS = PAPERS.flatMap((p) => [
+  `content/${p}/*/*.lean`,
+  `content/${p}/lean/**/*.lean`,
+]);
 
 // CLI parsing: `--out <path>` overrides witness output;
 // `--max-per-pattern name=N,name2=M` enforces per-pattern strict
@@ -42,7 +55,7 @@ const ROOT = join(REPO_ROOT, "content/quantum-observable-universe");
 // also treated as `--out`.
 const argv = process.argv.slice(2);
 let WITNESS_OUT = join(REPO_ROOT, "docs/audits/2026-05-08-trivial-skeleton-audit.json");
-let strictGates: Record<string, number> = {};
+const strictGates: Record<string, number> = {};
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
   if (a === "--out") WITNESS_OUT = argv[++i];
@@ -79,10 +92,27 @@ const TRIV_INSTANCE = /^\s*instance\s+\w*[Tt]rivial\b/;
 const HOLDS_TRIVIAL = /_holds\s*:=\s*(?:trivial|rfl|by\s+(?:trivial|rfl|simp|norm_num))/;
 
 async function main() {
-  const files = await glob([
-    "*/*.lean",
-    "lean/QOU/**/*.lean",
-  ], { cwd: ROOT, absolute: true });
+  // Was `["*/*.lean", "lean/QOU/**/*.lean"]` relative to a single paper —
+  // `QOU` being that paper's Lean library name, also hardcoded here.
+  const files = await glob(PAPER_GLOBS, { cwd: REPO_ROOT, absolute: true });
+
+  // A scan of nothing is a broken run, not a clean one — the same rule
+  // `validateObjects` settled (bean `vald`). It matters most HERE, because
+  // the strict gate below tests `observed > budget`: with zero files every
+  // `observed` is 0, no budget is ever exceeded, and the audit prints
+  // "✓ All strict-gate budgets respected" having read no Lean at all.
+  // `witness-pipeline.yml` runs this as "baseline-strict" with the `|| true`
+  // mask deliberately dropped, so that pass is load-bearing.
+  if (files.length === 0) {
+    console.error(
+      `No .lean files found under ${REPO_ROOT} ` +
+      `(papers: ${PAPERS.length ? PAPERS.join(", ") : "none"}) — refusing to report success.\n` +
+      "This audit reads a FOLIO's Lean tree; folio-assistant is the platform.\n" +
+      "Run it from the content repo.",
+    );
+    process.exit(1);
+  }
+  console.log(`Scanning ${files.length} Lean file(s) across ${PAPERS.length} paper(s)\n`);
 
   const flagged: Record<string, PatternHit[]> = {};
   for (const f of files.sort()) {
@@ -118,7 +148,7 @@ async function main() {
       }
     }
     if (hits.length) {
-      const rel = f.replace(ROOT + "/", "");
+      const rel = f.replace(REPO_ROOT + "/", "");
       flagged[rel] = hits;
     }
   }
@@ -173,7 +203,7 @@ async function main() {
       for (const v of violations) console.error(v);
       process.exit(1);
     }
-    console.log("\n✓ All strict-gate budgets respected.");
+    console.log(`\n✓ All strict-gate budgets respected (${files.length} file(s) scanned).`);
   }
 }
 

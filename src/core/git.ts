@@ -8,7 +8,7 @@
  * @module folio-assistant/core/git
  */
 
-import { readFileSync, existsSync, writeFileSync, unlinkSync, mkdirSync } from "fs";
+import { readFileSync, existsSync, writeFileSync, unlinkSync, mkdirSync, symlinkSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 import { spawnSync } from "child_process";
 
@@ -155,7 +155,6 @@ export class GitHelper {
       if (!existsSync(schemaLink) && existsSync(realSchema)) {
         mkdirSync(join(branchTmpDir, "content"), { recursive: true });
         try {
-          const { symlinkSync } = require("fs") as typeof import("fs");
           symlinkSync(realSchema, schemaLink, "dir");
         } catch {}
       }
@@ -174,15 +173,24 @@ export class GitHelper {
     }
   }
 
-  /** Import a .ts module — from disk if current branch, via temp file otherwise. */
-  async importTsBranch(branch: string | undefined, relPath: string): Promise<unknown> {
+  /**
+   * Import a .ts module — from disk if current branch, via temp file otherwise.
+   *
+   * Generic, matching `adapters/mcp-server/git.ts`: every caller knows the
+   * manifest shape it asked for, and returning bare `unknown` meant each one
+   * re-asserted it with `as any` — nine of them in `adapters/paper/resolver.ts`
+   * alone, which is how `blk.status` (a field no block manifest carries) went
+   * unnoticed there. `T` defaults to `unknown`, so a caller that does not
+   * supply one is no worse off than before.
+   */
+  async importTsBranch<T = unknown>(branch: string | undefined, relPath: string): Promise<T> {
     if (this.isCurrentBranch(branch)) {
       const absPath = resolve(this.repoRoot, relPath);
       delete require.cache?.[absPath];
       const mod = await import(`${absPath}?t=${Date.now()}`);
-      return mod.default ?? mod;
+      return (mod.default ?? mod) as T;
     }
-    return this.gitImportTs(branch!, relPath);
+    return this.gitImportTs(branch!, relPath) as Promise<T>;
   }
 
   /** Get commits that touched any of the given files (relative paths). */
@@ -211,7 +219,6 @@ export class GitHelper {
   /** List directory — from disk if current branch, via git otherwise. */
   listDirBranch(branch: string | undefined, relDir: string): string[] {
     if (this.isCurrentBranch(branch)) {
-      const { readdirSync } = require("fs") as typeof import("fs");
       const absPath = resolve(this.repoRoot, relDir);
       if (!existsSync(absPath)) return [];
       return readdirSync(absPath);

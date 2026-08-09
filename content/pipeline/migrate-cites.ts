@@ -13,10 +13,19 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
-import { join, resolve } from "path";
+import { join} from "path";
 import { extractCitations } from "./citations";
+import { BLOCK_KIND_ALT } from "../../schemas/types";
+import { findContentRepoRoot } from "./repo-root";
 
-const REPO_ROOT = resolve(import.meta.dir, "../..");
+/** Builder call identifying a block's kind — see `BLOCK_KIND_ALT`. */
+const BUILDER_RE = new RegExp(`(${BLOCK_KIND_ALT})\\(`);
+
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
 const CONTENT_ROOT = join(REPO_ROOT, "content");
 const args = process.argv.slice(2);
 const dryRun = !args.includes("--write");
@@ -49,7 +58,7 @@ function processBlock(tsPath: string) {
   const mdContent = readFileSync(mdPath, "utf-8");
 
   // Only process files that use builder functions
-  if (!/(definition|theorem|lemma|proposition|corollary|conjecture|example|remark|proof|prose)\(/.test(tsContent)) return;
+  if (!BUILDER_RE.test(tsContent)) return;
 
   // Skip if cites already present
   if (/\bcites\s*:/.test(tsContent)) {

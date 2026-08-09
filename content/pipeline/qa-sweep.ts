@@ -108,7 +108,9 @@ import {
   loadQaReport,
   saveQaReport,
   entryIsFresh,
+  freshnessKeys,
   preserveNonScriptEntries,
+  sameScriptVerdict,
   computeCriterionScriptHashes,
   saveQaScriptSidecar,
   type CriterionScriptHashes,
@@ -121,11 +123,15 @@ import {
   getCriterionExtraInputs,
 } from "./qa-criteria-registry";
 import { AUTOMATED_CHECKERS } from "./qa-checkers-voice";
+import { usesGraphHash } from "./uses-graph-hash";
+
+import type { CheckerResult } from "./qa-checkers-extended";
 import type {
   BlockQaReport,
   QaCriterionEntry,
   QaScriptSidecar,
 } from "../../schemas/block-qa";
+
 
 // ── CLI parsing ─────────────────────────────────────────────────
 
@@ -179,13 +185,21 @@ interface BlockSweepResult {
   fail_minor: number;
   details: Array<{
     criterion: string;
+    // `CheckerResult["result"]` is assigned here verbatim, so this union must
+    // contain all of it. It omitted `"warn"` and plain `"n/a"` — meaning a
+    // soft finding was written into the details JSON as a value the type said
+    // could not occur, and a consumer switching exhaustively on `outcome`
+    // would not handle it. `CheckerResult` documents that `warn` is
+    // "preserved end-to-end … without being silently coerced to `pass`", and
+    // an earlier `warn` -> `pass` coercion in the extended dispatch did
+    // silently drop chapter-mismatch warnings (#1640). Referencing the type
+    // rather than restating it is what stops the two drifting again.
     outcome:
       | "fresh-skip"
-      | "pass"
-      | "fail"
       | "needs-agent"
       | "n/a-no-md"
-      | "n/a-no-lean";
+      | "n/a-no-lean"
+      | CheckerResult["result"];
     severity?: "critical" | "major" | "minor";
     hits?: number;
     first_hit?: string;
@@ -251,6 +265,20 @@ function run(): void {
   }
   const engineVersion = `bun-${Bun.version}`;
 
+  // Hash of the `uses[]` edge set under sweep, computed once per run.
+  //
+  // The detangler criteria answer questions about the GRAPH — forward
+  // references, dependency cycles, cone depth, graph energy — so editing block
+  // A's `uses[]` changes block B's verdict while B's own files are untouched.
+  // Keyed only on its own `field_hash`, B stays `fresh-skip` and keeps a
+  // verdict that is now wrong. Criteria opt in with
+  // `also_invalidated_by: ["graph"]`; only their entries carry and compare it.
+  //
+  // The edge SET is hashed rather than the `.ts` files, so an edit that does
+  // not touch `uses[]` does not invalidate the axis — hashing the manifests
+  // would reintroduce exactly the churn per-criterion `script_hash` removed.
+  const graphHash = usesGraphHash(walkRoot);
+
   const results: BlockSweepResult[] = [];
 
   let totalBlocks = 0;
@@ -273,7 +301,7 @@ function run(): void {
       md: block.md ? relative(contentRepoRoot, block.md) : undefined,
       lean: block.lean ? relative(contentRepoRoot, block.lean) : undefined,
     };
-    let report: BlockQaReport = existingReport ?? {
+    const report: BlockQaReport = existingReport ?? {
       $schema: "block-qa/v1",
       label: block.label,
       kind: block.kind,
@@ -299,6 +327,16 @@ function run(): void {
     report.kind = block.kind;
     report.paths = newPaths;
     report.source_hashes = currentHashes;
+
+    // Did any criterion's VERDICT actually move this run? Re-running a checker
+    // is not by itself a change: a criterion that re-evaluates to exactly what
+    // the sidecar already records must keep its existing entry, timestamps and
+    // all. Without this, the `staleNa` re-check below (which deliberately
+    // re-evaluates every applicable `n/a` on every sweep) restamps
+    // `reviewed_at` forever, so every sidecar's `updated_at` moved on every
+    // sweep and feature branches carried the churn regardless of the
+    // per-criterion `script_hash` fix.
+    let verdictChanged = false;
 
     const sweepResult: BlockSweepResult = {
       label: block.label,
@@ -330,6 +368,14 @@ function run(): void {
       // newly applicable — typically because `depends_on` was
       // relaxed in the registry) must NOT short-circuit the sweep;
       // it has to be re-evaluated against the actual checker.
+      // Graph-scoped criteria (the detangler axis) compare an extra `graph`
+      // key so that a `uses[]` edit ANYWHERE in the chapter invalidates them.
+      // Only their entries carry it — adding it unconditionally would grow
+      // every field_hash on every block for no signal.
+      const graphScoped = freshnessKeys(def).includes("graph");
+      const fieldHash = graphScoped
+        ? { ...currentHashes, graph: graphHash }
+        : currentHashes;
       const existing = report.criteria[criterionId] ?? [];
       // A script re-run is a REFRESH, not a new opinion: it must REPLACE the
       // prior script entry rather than append. Only agent-kind reviewers
@@ -342,7 +388,7 @@ function run(): void {
       const nonScriptExisting = preserveNonScriptEntries(existing);
       const scriptHashes = scriptHashesByCriterion[criterionId];
       const freshExisting = existing.find((e) =>
-        entryIsFresh(e, currentHashes, def.depends_on, scriptHashes, def.lean_granularity),
+        entryIsFresh(e, fieldHash, freshnessKeys(def), scriptHashes, def.lean_granularity),
       );
       const dependsOnSatisfied = def.depends_on.every(
         (k) => currentHashes[k] !== undefined,
@@ -389,14 +435,20 @@ function run(): void {
 
       if (def.depends_on.includes("md") && !block.md) {
         const naEntry: QaCriterionEntry = {
-          field_hash: currentHashes,
+          field_hash: fieldHash,
           result: "n/a",
           reviewer: { ...scriptReviewer },
           reviewed_at: nowIso,
           reviewed_sha: headSha,
           notes: "block has no .md sibling",
         };
-        report.criteria[criterionId] = [...nonScriptExisting, naEntry];
+        const priorNa = existing.find((e) => e?.reviewer?.kind === "script");
+        report.criteria[criterionId] = [
+          ...nonScriptExisting,
+          sameScriptVerdict(priorNa, naEntry)
+            ? priorNa!
+            : ((verdictChanged = true), naEntry),
+        ];
         sweepResult.details.push({
           criterion: criterionId,
           outcome: "n/a-no-md",
@@ -405,14 +457,20 @@ function run(): void {
       }
       if (def.depends_on.includes("lean") && !block.lean) {
         const naEntry: QaCriterionEntry = {
-          field_hash: currentHashes,
+          field_hash: fieldHash,
           result: "n/a",
           reviewer: { ...scriptReviewer },
           reviewed_at: nowIso,
           reviewed_sha: headSha,
           notes: "block has no .lean sibling",
         };
-        report.criteria[criterionId] = [...nonScriptExisting, naEntry];
+        const priorNa = existing.find((e) => e?.reviewer?.kind === "script");
+        report.criteria[criterionId] = [
+          ...nonScriptExisting,
+          sameScriptVerdict(priorNa, naEntry)
+            ? priorNa!
+            : ((verdictChanged = true), naEntry),
+        ];
         sweepResult.details.push({
           criterion: criterionId,
           outcome: "n/a-no-lean",
@@ -424,7 +482,7 @@ function run(): void {
       sweepResult.criteria_run++;
       const checkRes = checker(paths);
       const entry: QaCriterionEntry = {
-        field_hash: currentHashes,
+        field_hash: fieldHash,
         result: checkRes.result,
         reviewer: { ...scriptReviewer },
         reviewed_at: nowIso,
@@ -460,8 +518,15 @@ function run(): void {
       }
 
       // Write the fresh script entry, REPLACING the prior script entry
-      // (agent + human entries are preserved via `nonScriptExisting`).
-      report.criteria[criterionId] = [...nonScriptExisting, entry];
+      // (agent + human entries are preserved via `nonScriptExisting`). When
+      // the re-run reproduces what the sidecar already records, keep the
+      // existing entry verbatim so its timestamps survive — a re-run is not a
+      // change.
+      const priorScript = existing.find((e) => e?.reviewer?.kind === "script");
+      const settled = sameScriptVerdict(priorScript, entry)
+        ? priorScript!
+        : ((verdictChanged = true), entry);
+      report.criteria[criterionId] = [...nonScriptExisting, settled];
 
       sweepResult.details.push({
         criterion: criterionId,
@@ -476,18 +541,19 @@ function run(): void {
       });
     }
 
-    report.updated_at = nowIso;
     // Save when any of the following changed since the loaded sidecar:
-    //   - new automated criterion entry written (criteria_run > 0)
-    //   - new n/a marker written for an inapplicable criterion
+    //   - a criterion's verdict (or its inputs / checker identity) moved
     //   - sidecar metadata drifted (file moved, kind/label changed,
     //     source-file content hash changed)
-    const wroteSomething =
-      sweepResult.criteria_run > 0 ||
-      sweepResult.details.some(
-        (d) => d.outcome === "n/a-no-md" || d.outcome === "n/a-no-lean",
-      ) ||
-      metadataDrifted;
+    //
+    // Note this is NOT `criteria_run > 0`. Running a checker and reproducing
+    // the recorded verdict leaves the sidecar semantically identical, and
+    // saving it anyway rewrote `updated_at` on every block on every sweep —
+    // which is what made an otherwise no-op sweep dirty the whole corpus.
+    const wroteSomething = verdictChanged || metadataDrifted;
+    // Only advance the file's own timestamp when its content actually moved,
+    // for the same reason.
+    if (wroteSomething) report.updated_at = nowIso;
     if (!args.dryRun && wroteSomething) {
       saveQaReport(qaPath, report);
     }
@@ -510,7 +576,13 @@ function run(): void {
           hashes.extra_inputs.length > 0 ? hashes.extra_inputs : undefined,
         deps_hash: hashes.deps_hash,
         last_run_at: nowIso,
-        last_run_sha: headSha,
+        // The PLATFORM's HEAD, not `headSha`. This sidecar lives in and
+        // describes folio-assistant's own checker scripts; `headSha` is the
+        // CONTENT repo's HEAD (correct for a block's `reviewed_sha`, since
+        // that verdict is about content at that commit). Stamping the
+        // content SHA here recorded a foreign repo's commit as this repo's
+        // "HEAD at last run".
+        last_run_sha: gitHeadSha(REPO_ROOT),
         engine_version: engineVersion,
       };
       saveQaScriptSidecar(sidecar, REPO_ROOT);

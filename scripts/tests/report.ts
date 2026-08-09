@@ -14,7 +14,7 @@ import { execSync } from "child_process";
 import { readFileSync, writeFileSync, unlinkSync } from "fs";
 import { resolve, join } from "path";
 import { XMLParser } from "fast-xml-parser";
-import { REPO_ROOT, discoverLeanProjects, getCommitSha } from "./helpers";
+import { discoverLeanProjects, getCommitSha } from "./helpers";
 import type {
   TestReport,
   TestResult,
@@ -40,13 +40,32 @@ try {
 // Parse JUnit XML → TestResult[] using fast-xml-parser
 const xml = readFileSync(junitPath, "utf-8");
 const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "@_" });
-const parsed = parser.parse(xml);
+const parsed = parser.parse(xml) as { testsuites?: JUnitSuite | JUnitSuite[] };
 
 const results: TestResult[] = [];
 
+/**
+ * A JUnit `<testcase>` as `fast-xml-parser` yields it, and the `<testsuite>`
+ * tree it is nested in. Only the fields this file reads are named; the parser
+ * hands back arbitrary JSON, so everything else stays `unknown`.
+ */
+interface JUnitTestcase {
+  "@_name"?: string;
+  "@_classname"?: string;
+  "@_time"?: string;
+  "@_file"?: string;
+  failure?: { "@_message"?: string };
+  error?: unknown;
+  skipped?: unknown;
+}
+interface JUnitSuite {
+  testcase?: JUnitTestcase | JUnitTestcase[];
+  testsuite?: JUnitSuite | JUnitSuite[];
+}
+
 /** Recursively collect all testcase nodes from nested testsuites. */
-function collectTestcases(node: any): any[] {
-  const cases: any[] = [];
+function collectTestcases(node: JUnitSuite | JUnitSuite[] | undefined): JUnitTestcase[] {
+  const cases: JUnitTestcase[] = [];
   if (!node) return cases;
   const items = Array.isArray(node) ? node : [node];
   for (const item of items) {
@@ -104,13 +123,17 @@ function inferCategory(testId: string): TestCategory {
   return "custom";
 }
 
-const byCategory: TestSummary["by_category"] = {} as any;
+// `by_category` is a total `Record<TestCategory, …>`, but it is filled in as
+// categories are encountered — so it is genuinely partial while being built.
+// Saying that beats starting from `{} as any` and hoping.
+const byCategory: Partial<TestSummary["by_category"]> = {};
 for (const r of results) {
   const cat = inferCategory(r.test_id);
   if (!byCategory[cat]) byCategory[cat] = { total: 0, passed: 0, failed: 0 };
-  byCategory[cat].total++;
-  if (r.outcome === "pass") byCategory[cat].passed++;
-  if (r.outcome === "fail") byCategory[cat].failed++;
+  const bucket = byCategory[cat]!;
+  bucket.total++;
+  if (r.outcome === "pass") bucket.passed++;
+  if (r.outcome === "fail") bucket.failed++;
 }
 
 const report: TestReport = {
@@ -125,7 +148,9 @@ const report: TestReport = {
     skipped,
     errored,
     duration_ms,
-    by_category: byCategory,
+    // Every category present is fully populated; absent ones simply had no
+    // tests in this run, which is what a reader of the report needs to know.
+    by_category: byCategory as TestSummary["by_category"],
   },
   results,
 };

@@ -16,6 +16,12 @@ name: Maintain discussion archive
 # GITHUB_TOKEN pushes don't retrigger workflows, and the commit carries
 # [skip ci] as a second loop guard.
 
+#
+# TRIGGERS, ACTUAL: `workflow_dispatch` only.
+# The triggers described above are the other repo's. Copied in at the split
+# (109a4ff) with the trigger neutered and the prose left alone. Correct here:
+# this workflow maintains `human-agent-discussions/`, which the platform does not carry. See bean `folio-assistant-5rfy`.
+
 on:
   workflow_dispatch:
     inputs:

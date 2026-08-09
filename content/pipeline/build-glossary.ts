@@ -21,7 +21,7 @@
  *
  * @module content/pipeline/build-glossary
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { basename, dirname, join, resolve } from "path";
 import type { Block, Chapter, Paper, Section } from "../../schemas/types";
 import { ChapterSchema, PaperSchema } from "../../schemas/constraints";
@@ -117,11 +117,13 @@ export async function buildGlossary(paperDir: string): Promise<GlossaryIndex> {
       try {
         const mod = await import(tsPath);
         const block: Block = mod.default;
-        const defines = (block as any).defines as string[] | undefined;
+        // `defines` and `lean` are declared on some kinds and not others, so
+        // the `in` test is the real check; `label` is on all of them.
+        const defines = "defines" in block ? block.defines : undefined;
         if (!defines || defines.length === 0) continue;
 
         const { sectionTitle } = locateBlock(name, chapter);
-        const lean = (block as any).lean?.ref ?? null;
+        const lean = ("lean" in block ? block.lean?.ref : undefined) ?? null;
 
         for (const slug of defines) {
           entries.push({
@@ -129,7 +131,7 @@ export async function buildGlossary(paperDir: string): Promise<GlossaryIndex> {
             chapter: chRef.dir,
             chapterTitle: chapter.title ?? chRef.dir,
             section: sectionTitle,
-            block: (block as any).label ?? name,
+            block: block.label ?? name,
             kind: block.kind,
             lean,
           });

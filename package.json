@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "description": "Content-agnostic assistant platform — MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
+  "description": "Content-agnostic assistant platform \u2014 MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -45,7 +45,8 @@
     "check-deps": "bun run src/index.ts --check-deps",
     "test:e2e": "playwright test",
     "test": "bun test",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
@@ -61,12 +62,17 @@
     "remark": "^15.0.1",
     "remark-directive": "^4.0.0",
     "remark-math": "^6.0.0",
+    "typescript": "^6.0.3",
     "unist-util-visit": "^5.1.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "bun-types": "latest",
-    "@playwright/test": "^1.60.0"
+    "csl-json": "^0.1.0",
+    "eslint": "^10.8.0",
+    "fast-xml-parser": "^5.10.1",
+    "typescript-eslint": "^8.66.0"
   },
   "engines": {
     "bun": ">=1.0.0"

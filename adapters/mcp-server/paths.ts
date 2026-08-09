@@ -5,9 +5,24 @@
  */
 
 import { resolve } from "path";
+import { readFileSync } from "fs";
+import { findContentRepoRoot } from "../../content/pipeline/repo-root";
 
-/** Repository root directory. */
-export const REPO_ROOT = resolve(import.meta.dir, "../..");
+/**
+ * The FOLIO's root — the content repo this server serves.
+ *
+ * Every constant below is a folio concept: `content/`, `chapters/`,
+ * `main.tex`, the Lake workspace, `build/`, `todos/`. None of them exist in
+ * folio-assistant, which is the platform. This was
+ * `resolve(import.meta.dir, "../..")`, so the server rooted itself in the
+ * platform and reported `Paper not found` for every paper in the folio it was
+ * launched from — and its git operations ran against the platform repo rather
+ * than the content branches it is meant to switch between.
+ *
+ * Same defect class as `q-usage-audit`, `validate`, `validate-bib`,
+ * `export-json`, `readme-metadata` and `refresh-authors-note`.
+ */
+export const REPO_ROOT = findContentRepoRoot();
 
 /** Content objects directory. */
 export const CONTENT_DIR = resolve(REPO_ROOT, "content");
@@ -50,7 +65,7 @@ export const CONFIG_FILE = resolve(REPO_ROOT, "lean-mcp.config.json");
 /** Read viewer_port from lean-mcp.config.json (single source of truth). */
 function readViewerPort(): number {
   try {
-    const cfg = JSON.parse(require("fs").readFileSync(CONFIG_FILE, "utf-8"));
+    const cfg = JSON.parse(readFileSync(CONFIG_FILE, "utf-8"));
     return cfg.viewer_port ?? 8080;
   } catch {
     return 8080;
