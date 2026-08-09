@@ -833,6 +833,56 @@ export function preserveNonScriptEntries(
 }
 
 /**
+ * Does a freshly-computed script entry say the same thing as the one already
+ * recorded?
+ *
+ * Compares everything that carries meaning — verdict, the input hashes it was
+ * computed from, the reviewer identity and its script/deps hashes, and the
+ * checker's own output (notes, evidence, metrics, severity) — while ignoring
+ * `reviewed_at` and `reviewed_sha`, which say only WHEN the sweep last ran.
+ *
+ * Callers use this to keep the existing entry verbatim when a re-run reproduces
+ * it, so re-running a checker is not by itself a change to the sidecar. That
+ * matters because some criteria are deliberately re-evaluated on every sweep
+ * (an `n/a` whose `depends_on` is now satisfied must be re-checked in case it
+ * became applicable); without this, each such re-check restamped the entry and
+ * dirtied the file forever.
+ *
+ * `reviewed_sha` is deliberately NOT refreshed on an unchanged verdict: the
+ * matching `field_hash` already proves the inputs are identical, so the older
+ * sha remains a truthful record of when the verdict was established.
+ *
+ * `script_commit_sha` is excluded for the same reason. It is a FILE-level
+ * pointer — the last commit to touch the checker module — so it moves when a
+ * neighbouring criterion is edited, and comparing it would reintroduce exactly
+ * the file-level coupling that per-criterion `script_hash` exists to remove.
+ * `script_hash` is the field that actually answers "did this criterion's code
+ * change", and it IS compared.
+ */
+export function sameScriptVerdict(
+  a: QaCriterionEntry | undefined,
+  b: QaCriterionEntry,
+): boolean {
+  if (!a) return false;
+  const shape = (e: QaCriterionEntry) => ({
+    result: e.result,
+    field_hash: e.field_hash,
+    notes: e.notes,
+    evidence: e.evidence,
+    metrics: e.metrics,
+    severity: e.severity,
+    reviewer: {
+      kind: e.reviewer?.kind,
+      id: e.reviewer?.id,
+      version: e.reviewer?.version,
+      script_hash: e.reviewer?.script_hash,
+      deps_hash: e.reviewer?.deps_hash,
+    },
+  });
+  return JSON.stringify(shape(a)) === JSON.stringify(shape(b));
+}
+
+/**
  * Per-criterion freshness summary for one block.
  *
  * - `fresh-entries`: reviewer entries whose field_hash matches.
