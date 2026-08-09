@@ -1216,6 +1216,12 @@ const DETANGLER: QaCriterionDefinition[] = [
     default_severity: "major",
     depends_on: ["ts"],
     automated: true,
+    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
+    // ANOTHER block's uses[] changes it while this block's own files are
+    // untouched. Without this the entry stays fresh-skip and keeps a stale
+    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
+    // still recording a cycle that no longer existed.
+    also_invalidated_by: ["graph"],
   },
   {
     id: "detangler-section-band",
@@ -1230,6 +1236,12 @@ const DETANGLER: QaCriterionDefinition[] = [
     default_severity: "minor",
     depends_on: ["ts"],
     automated: true,
+    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
+    // ANOTHER block's uses[] changes it while this block's own files are
+    // untouched. Without this the entry stays fresh-skip and keeps a stale
+    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
+    // still recording a cycle that no longer existed.
+    also_invalidated_by: ["graph"],
   },
   {
     id: "detangler-no-xchapter-fwd",
@@ -1241,6 +1253,12 @@ const DETANGLER: QaCriterionDefinition[] = [
     default_severity: "major",
     depends_on: ["ts"],
     automated: true,
+    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
+    // ANOTHER block's uses[] changes it while this block's own files are
+    // untouched. Without this the entry stays fresh-skip and keeps a stale
+    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
+    // still recording a cycle that no longer existed.
+    also_invalidated_by: ["graph"],
   },
   {
     id: "detangler-archimedean-wall",
@@ -1255,6 +1273,12 @@ const DETANGLER: QaCriterionDefinition[] = [
     default_severity: "major",
     depends_on: ["ts", "lean"],
     automated: true,
+    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
+    // ANOTHER block's uses[] changes it while this block's own files are
+    // untouched. Without this the entry stays fresh-skip and keeps a stale
+    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
+    // still recording a cycle that no longer existed.
+    also_invalidated_by: ["graph"],
   },
   {
     id: "detangler-block-tanglement",
@@ -1270,6 +1294,12 @@ const DETANGLER: QaCriterionDefinition[] = [
     default_severity: "major",
     depends_on: ["ts"],
     automated: true,
+    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
+    // ANOTHER block's uses[] changes it while this block's own files are
+    // untouched. Without this the entry stays fresh-skip and keeps a stale
+    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
+    // still recording a cycle that no longer existed.
+    also_invalidated_by: ["graph"],
   },
   {
     id: "detangler-graph-energy",
@@ -1293,6 +1323,12 @@ const DETANGLER: QaCriterionDefinition[] = [
     default_severity: "major",
     depends_on: ["ts"],
     automated: true,
+    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
+    // ANOTHER block's uses[] changes it while this block's own files are
+    // untouched. Without this the entry stays fresh-skip and keeps a stale
+    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
+    // still recording a cycle that no longer existed.
+    also_invalidated_by: ["graph"],
   },
   {
     id: "detangler-topic-coherence",
@@ -1309,6 +1345,12 @@ const DETANGLER: QaCriterionDefinition[] = [
     default_severity: "minor",
     depends_on: ["md"],
     automated: true,
+    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
+    // ANOTHER block's uses[] changes it while this block's own files are
+    // untouched. Without this the entry stays fresh-skip and keeps a stale
+    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
+    // still recording a cycle that no longer existed.
+    also_invalidated_by: ["graph"],
   },
   {
     id: "detangler-no-dependency-cycle",
@@ -1326,6 +1368,12 @@ const DETANGLER: QaCriterionDefinition[] = [
     default_severity: "major",
     depends_on: ["ts"],
     automated: true,
+    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
+    // ANOTHER block's uses[] changes it while this block's own files are
+    // untouched. Without this the entry stays fresh-skip and keeps a stale
+    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
+    // still recording a cycle that no longer existed.
+    also_invalidated_by: ["graph"],
   },
 ];
 

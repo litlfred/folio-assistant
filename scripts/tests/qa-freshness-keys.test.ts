@@ -103,7 +103,12 @@ describe("registry invariant", () => {
     // Harmless (freshnessKeys de-dupes) but always a mistake: it means the
     // author was unsure which half they wanted.
     const offenders = Object.values(QA_CRITERIA_BY_ID)
-      .filter((d) => (d.also_invalidated_by ?? []).some((k) => d.depends_on.includes(k)))
+      .filter((d) =>
+        (d.also_invalidated_by ?? []).some(
+          // "graph" is not a file, so it can never appear in depends_on.
+          (k) => k !== "graph" && d.depends_on.includes(k),
+        ),
+      )
       .map((d) => d.id);
     expect(offenders).toEqual([]);
   });

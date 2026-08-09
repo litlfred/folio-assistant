@@ -93,6 +93,23 @@ export interface QaFieldHash {
   ts?: string;
   lean?: string;
   /**
+   * Hash of the chapter's `uses[]` edge set, for criteria whose verdict is a
+   * property of the GRAPH rather than of this block's own files.
+   *
+   * The detangler axis is the case: forward references, dependency cycles,
+   * cone depth and graph energy are all computed across the whole chapter, so
+   * editing block A's `uses[]` changes block B's verdict while B's own `.md` /
+   * `.ts` / `.lean` are untouched. Keyed only on its own files, B stays
+   * `fresh-skip` and keeps a verdict that is now wrong — observed live in qou,
+   * where breaking three dependency cycles left 15 blocks still recording
+   * `detangler-no-dependency-cycle: fail` for cycles that no longer existed.
+   *
+   * Present only on entries for graph-scoped criteria (those declaring
+   * `also_invalidated_by: ["graph"]`), so ordinary criteria neither carry nor
+   * compare it.
+   */
+  graph?: string;
+  /**
    * Hash of only the **declaration signatures** in the `.lean` file —
    * everything up to each declaration's `:=` / `where`.
    *
@@ -270,7 +287,7 @@ export interface QaCriterionDefinition {
    * Consulted by `entryIsFresh` via `freshnessKeys()`; ignored by the
    * applicability gates.
    */
-  also_invalidated_by?: Array<"md" | "ts" | "lean">;
+  also_invalidated_by?: Array<"md" | "ts" | "lean" | "graph">;
   /**
    * Whether a deterministic script can run this criterion (true) or
    * it requires agent / human adjudication (false).

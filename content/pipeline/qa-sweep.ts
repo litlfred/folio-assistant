@@ -123,12 +123,15 @@ import {
   getCriterionExtraInputs,
 } from "./qa-criteria-registry";
 import { AUTOMATED_CHECKERS } from "./qa-checkers-voice";
+import { usesGraphHash } from "./uses-graph-hash";
+
 import type { CheckerResult } from "./qa-checkers-extended";
 import type {
   BlockQaReport,
   QaCriterionEntry,
   QaScriptSidecar,
 } from "../../schemas/block-qa";
+
 
 // ── CLI parsing ─────────────────────────────────────────────────
 
@@ -262,6 +265,20 @@ function run(): void {
   }
   const engineVersion = `bun-${Bun.version}`;
 
+  // Hash of the `uses[]` edge set under sweep, computed once per run.
+  //
+  // The detangler criteria answer questions about the GRAPH — forward
+  // references, dependency cycles, cone depth, graph energy — so editing block
+  // A's `uses[]` changes block B's verdict while B's own files are untouched.
+  // Keyed only on its own `field_hash`, B stays `fresh-skip` and keeps a
+  // verdict that is now wrong. Criteria opt in with
+  // `also_invalidated_by: ["graph"]`; only their entries carry and compare it.
+  //
+  // The edge SET is hashed rather than the `.ts` files, so an edit that does
+  // not touch `uses[]` does not invalidate the axis — hashing the manifests
+  // would reintroduce exactly the churn per-criterion `script_hash` removed.
+  const graphHash = usesGraphHash(walkRoot);
+
   const results: BlockSweepResult[] = [];
 
   let totalBlocks = 0;
@@ -351,6 +368,14 @@ function run(): void {
       // newly applicable — typically because `depends_on` was
       // relaxed in the registry) must NOT short-circuit the sweep;
       // it has to be re-evaluated against the actual checker.
+      // Graph-scoped criteria (the detangler axis) compare an extra `graph`
+      // key so that a `uses[]` edit ANYWHERE in the chapter invalidates them.
+      // Only their entries carry it — adding it unconditionally would grow
+      // every field_hash on every block for no signal.
+      const graphScoped = freshnessKeys(def).includes("graph");
+      const fieldHash = graphScoped
+        ? { ...currentHashes, graph: graphHash }
+        : currentHashes;
       const existing = report.criteria[criterionId] ?? [];
       // A script re-run is a REFRESH, not a new opinion: it must REPLACE the
       // prior script entry rather than append. Only agent-kind reviewers
@@ -363,7 +388,7 @@ function run(): void {
       const nonScriptExisting = preserveNonScriptEntries(existing);
       const scriptHashes = scriptHashesByCriterion[criterionId];
       const freshExisting = existing.find((e) =>
-        entryIsFresh(e, currentHashes, freshnessKeys(def), scriptHashes, def.lean_granularity),
+        entryIsFresh(e, fieldHash, freshnessKeys(def), scriptHashes, def.lean_granularity),
       );
       const dependsOnSatisfied = def.depends_on.every(
         (k) => currentHashes[k] !== undefined,
@@ -410,7 +435,7 @@ function run(): void {
 
       if (def.depends_on.includes("md") && !block.md) {
         const naEntry: QaCriterionEntry = {
-          field_hash: currentHashes,
+          field_hash: fieldHash,
           result: "n/a",
           reviewer: { ...scriptReviewer },
           reviewed_at: nowIso,
@@ -432,7 +457,7 @@ function run(): void {
       }
       if (def.depends_on.includes("lean") && !block.lean) {
         const naEntry: QaCriterionEntry = {
-          field_hash: currentHashes,
+          field_hash: fieldHash,
           result: "n/a",
           reviewer: { ...scriptReviewer },
           reviewed_at: nowIso,
@@ -457,7 +482,7 @@ function run(): void {
       sweepResult.criteria_run++;
       const checkRes = checker(paths);
       const entry: QaCriterionEntry = {
-        field_hash: currentHashes,
+        field_hash: fieldHash,
         result: checkRes.result,
         reviewer: { ...scriptReviewer },
         reviewed_at: nowIso,
