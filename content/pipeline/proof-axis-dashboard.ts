@@ -68,7 +68,29 @@ import { WATCHER_CRITERIA_BY_AXIS } from "./qa-criteria-registry";
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
-  const rootPath = resolve(REPO_ROOT, "content", args.root);
+
+  // `args.root` may be either a PAPER NAME (resolved under this platform's
+  // own `content/`, which is how it works when the platform repo also holds
+  // the content) or a PATH to a content root. The second case is the normal
+  // one: folio-assistant is the platform, and the folio it serves lives in a
+  // separate repo, so `<platform>/content/<paper>` does not exist there.
+  //
+  // Resolving only the first way meant this dashboard could not be pointed at
+  // a real folio at all — `find` errored, zero blocks were walked, and every
+  // criterion scored 0/0. Accept a path when one is given, like `qa-sweep.ts`
+  // already does.
+  const asPath = resolve(process.cwd(), args.root);
+  const rootPath = existsSync(asPath) ? asPath : resolve(REPO_ROOT, "content", args.root);
+  if (!existsSync(rootPath)) {
+    console.error(
+      `proof-axis-dashboard: no such content root: ${args.root}\n` +
+        `  tried (as path):  ${asPath}\n` +
+        `  tried (as paper): ${resolve(REPO_ROOT, "content", args.root)}\n` +
+        `Pass the path to the folio's content root, e.g.\n` +
+        `  bun run <platform>/content/pipeline/proof-axis-dashboard.ts content/<paper>`,
+    );
+    process.exit(2);
+  }
 
   const proofCriteria = WATCHER_CRITERIA_BY_AXIS["proof"] ?? [];
 
@@ -232,8 +254,24 @@ function main() {
 
   console.log(`\n── Summary ────────────────────────────────────────`);
   const anyFail = Object.values(summaries).some(s => s.fail > 0);
+  const totalFail = Object.values(summaries).reduce((a, s) => a + s.fail, 0);
   const totalWarn = Object.values(summaries).reduce((a,s) => a + s.warn, 0);
-  console.log(`Automated: ${anyFail ? "FAIL" : "PASS"} (0 failures)`);
+
+  // An empty scan is NOT a pass. Every criterion scoring 0/0/0 used to print
+  // "Automated: PASS (0 failures)", which reads as a clean bill of health and
+  // is indistinguishable from one — the single most misleading thing a gate
+  // can do. If nothing was examined, say so and exit non-zero so a caller
+  // (e.g. /prepare-merge) cannot quote it as green.
+  if (totalBlocks === 0) {
+    console.log(`Automated: NO DATA — 0 blocks walked under ${rootPath}`);
+    console.log(`This is not a pass. Check the content root argument.`);
+    console.log(``);
+    process.exit(1);
+  }
+
+  // The count was hardcoded to 0, so a genuine failure printed
+  // "FAIL (0 failures)".
+  console.log(`Automated: ${anyFail ? "FAIL" : "PASS"} (${totalFail} failures)`);
   console.log(`Warnings: ${totalWarn} (${stubs.length} stubs + ${mismatches.length} mismatches)`);
   console.log(`Sorry closure: ${deferred.length} deferred files actionable with Lean`);
   console.log(``);
