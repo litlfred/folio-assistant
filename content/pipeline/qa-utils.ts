@@ -724,8 +724,8 @@ export function saveQaReport(path: string, report: BlockQaReport): void {
  */
 export function freshnessKeys(def: {
   depends_on: Array<"md" | "ts" | "lean">;
-  also_invalidated_by?: Array<"md" | "ts" | "lean">;
-}): Array<"md" | "ts" | "lean"> {
+  also_invalidated_by?: Array<"md" | "ts" | "lean" | "graph">;
+}): Array<"md" | "ts" | "lean" | "graph"> {
   return [...new Set([...def.depends_on, ...(def.also_invalidated_by ?? [])])];
 }
 
@@ -741,7 +741,7 @@ export function freshnessKeys(def: {
 export function entryIsFresh(
   entry: QaCriterionEntry,
   current: QaFieldHash,
-  depends_on: Array<"md" | "ts" | "lean">,
+  depends_on: Array<"md" | "ts" | "lean" | "graph">,
   current_script_hashes?: CriterionScriptHashes,
   lean_granularity?: "file" | "statement",
 ): boolean {
