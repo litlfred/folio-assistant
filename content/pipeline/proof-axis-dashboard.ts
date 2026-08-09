@@ -23,12 +23,21 @@ interface Args {
 }
 
 function parseArgs(argv: string[]): Args {
-  const out: Args = { root: requirePaper(), json: false };
+  // Read the positional argument FIRST, then fall back to auto-detection.
+  //
+  // This computed `requirePaper()` as the initial value of `out.root`, which
+  // is eager: the fallback ran before the loop could see an explicit
+  // argument, so in any repo with more than one paper `requirePaper` threw
+  // ("N papers found — name one explicitly") even when a paper *was* named.
+  // qou carries five, so the dashboard could not be run there at all.
+  // `requirePaper` already takes `explicit?` for exactly this — pass it.
+  let root: string | undefined;
+  let json = false;
   for (const a of argv) {
-    if (a === "--json") out.json = true;
-    else if (!a.startsWith("-")) out.root = a;
+    if (a === "--json") json = true;
+    else if (!a.startsWith("-")) root = a;
   }
-  return out;
+  return { root: requirePaper(root), json };
 }
 
 interface CriterionSummary {
