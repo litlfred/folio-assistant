@@ -264,9 +264,18 @@ function updateSidecar(b: BlockTriple, results: Map<string, QUsageResult>): void
           : null,
       });
     }
+    // Drop EVERY script-kind entry for this criterion, not just ones this
+    // tool wrote. `qa-sweep` also writes these criteria, under a different
+    // reviewer id (its `source_file`, `content/pipeline/qa-checkers-q-usage.ts`),
+    // and it drops all script entries on refresh. Filtering only on
+    // REVIEWER_ID meant the two producers never cleared each other, so every
+    // run left both entries behind and the sidecars grew without bound —
+    // measured in qou at 3420 `q-usage-audit` + 2762 `qa-checkers-q-usage.ts`
+    // entries for a single criterion, nearly all of them evidence-free
+    // leftovers. Agent and human adjudications are preserved, as ever.
     sidecar.criteria[criterionId] = [
       ...(sidecar.criteria[criterionId] ?? []).filter(
-        (e) => e.reviewer.id !== REVIEWER_ID,
+        (e) => e?.reviewer?.kind !== "script",
       ),
       entry,
     ];
