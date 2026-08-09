@@ -12,8 +12,13 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { join } from "path";
+import { findContentRepoRoot } from "../content/pipeline/repo-root";
 
-const REPO_ROOT = join(import.meta.dir, "..");
+// `VIEWER_DIR` below is `<root>/folio-assistant/ui` — a FOLIO-relative path,
+// since inside a folio the platform IS the `folio-assistant/` directory. So
+// this root must be the folio's, not `import.meta.dir`'s, which pointed at
+// `<platform>/folio-assistant/ui` and does not exist in any checkout.
+const REPO_ROOT = findContentRepoRoot();
 const VIEWER_DIR = join(REPO_ROOT, "folio-assistant", "ui");
 const BUILD_DIR = join(REPO_ROOT, "build", "viewer");
 const PAPER_JSON = join(BUILD_DIR, "paper.json");

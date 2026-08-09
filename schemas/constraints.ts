@@ -9,6 +9,10 @@
 import { z } from "zod";
 
 import { LEAN_REF_PATTERN, leanPackageByName, parseLeanRef } from "./lean-packages.js";
+import type { Block } from "./types.js";
+// Leaf module — importing the kind list from `types.js` would be a runtime
+// cycle, and `appliesTo` is built at module init, exactly when that bites.
+import { BLOCK_KINDS } from "./block-kinds.js";
 
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
@@ -91,6 +95,13 @@ export const SkillValidatorSchema = z.object({
   scope: ValidatorScopeSchema,
 });
 
+/** Mirrors `SkillSchemaRef` — a TS module + the type names a skill touches. */
+export const SkillSchemaRefSchema = z.object({
+  module: z.string().min(1),
+  types: z.array(z.string()),
+  access: z.enum(["read", "write", "read-write"]),
+});
+
 export const SkillDefinitionSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
@@ -105,6 +116,10 @@ export const SkillDefinitionSchema = z.object({
   routingPatterns: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   package: z.string().optional(),
+  // `SkillDefinition.schemas` is documented and appears in the interface's own
+  // example, but had no counterpart here — so `.parse()` stripped it off any
+  // skill that used one. Same defect as `lean` on the provable blocks.
+  schemas: z.array(SkillSchemaRefSchema).optional(),
   lifecycleStages: z.array(LifecycleStageSchema).optional(),
   schemaRef: z.string().optional(),
 });
@@ -165,17 +180,6 @@ export const RoleAssignmentSchema = z.object({
   priority: z.number(),
 });
 
-export const SkillRegistrySchema = z.object({
-  schemaVersion: z.literal("1.0"),
-  repository: z.string(),
-  actors: z.array(ActorDefinitionSchema),
-  capabilities: z.array(CapabilityDefinitionSchema),
-  skills: z.array(SkillDefinitionSchema),
-  requirements: z.array(RequirementSchema),
-  packages: z.array(SkillPackageRefSchema),
-  hooks: z.array(SessionHookSchema),
-});
-
 // ─── Docker Requirements ─────────────────────────────────────────────────────
 
 export const DockerRequirementsSchema = z.object({
@@ -199,6 +203,24 @@ export const SkillPackageManifestSchema = z.object({
   requiresCapabilities: z.array(z.string()).optional(),
   lifecycleStages: z.array(LifecycleStageSchema).optional(),
   schemas: z.array(z.string()).optional(),
+});
+
+export const SkillRegistrySchema = z.object({
+  schemaVersion: z.literal("1.0"),
+  repository: z.string(),
+  actors: z.array(ActorDefinitionSchema),
+  capabilities: z.array(CapabilityDefinitionSchema),
+  skills: z.array(SkillDefinitionSchema),
+  requirements: z.array(RequirementSchema),
+  // Local `skills/<name>/package-manifest.json` files, which is what the
+  // generator has always written here — not `SkillPackageRefSchema`, whose
+  // required `repo`/`path`/`ref` made every generated registry invalid.
+  packages: z.array(SkillPackageManifestSchema),
+  hooks: z.array(SessionHookSchema),
+  // `SkillRegistry.roleAssignments` is required by the TS interface but was
+  // absent here, so the field was stripped by `.parse()` — on top of the
+  // generator never populating it in the first place.
+  roleAssignments: z.array(RoleAssignmentSchema),
 });
 
 // ─── Remote Package Reference ────────────────────────────────────────────────
@@ -404,6 +426,13 @@ export const DefinitionSchema = BlockBaseSchema.extend({
 });
 
 const ProvableBaseSchema = BlockBaseSchema.extend({
+  // TS `ProvableBase` declares `lean?: LeanRef`; only `DefinitionSchema`
+  // declared it here, so a theorem / lemma / proposition / corollary /
+  // algorithm writing `lean: { ref: … }` had it SILENTLY STRIPPED at the
+  // validation boundary — the link into Lean, on exactly the kinds whose
+  // whole point is to carry one. Optional, matching TS: `DefinitionSchema`
+  // keeps its own required override.
+  lean: LeanRefSchema.optional(),
   proofs: z.array(z.string()).optional(),
   examples: z.array(z.string()).optional(),
 });
@@ -474,6 +503,10 @@ export const ConjectureSchema = BlockBaseSchema.extend({
 export const ExampleSchema = BlockBaseSchema.extend({
   kind: z.literal("example"),
   label: labelForKind("example"),
+  /** Label of the provable block this example interprets. Declared on TS
+   *  `ExampleBlock` and missing here, unlike its `algorithm` and `remark`
+   *  siblings — so it was silently stripped. `.min(1)` matches theirs. */
+  interprets: z.string().min(1).optional(),
   lean: LeanRefSchema.optional(),
 });
 
@@ -507,6 +540,11 @@ export const ComputationSchema = z.object({
 export const ProofSchema = BlockBaseSchema.extend({
   kind: z.literal("proof"),
   label: labelForKind("proof"),
+  // The canonical reverse link to the provable this proof establishes
+  // (`ProvableBase.proofs[]` is the forward one). Declared on TS
+  // `ProofBlock`, missing here — so it was silently stripped. Eight proof
+  // blocks in qou carry it.
+  of: z.string().optional(),
   lean: LeanRefSchema.optional(),
   computation: ComputationSchema.optional(),
 });
@@ -522,8 +560,10 @@ export const SimulatorSchema = BlockBaseSchema.extend({
 export const ProseSchema = z.object({
   kind: z.literal("prose"),
   label: z.string().optional(),
+  title: z.string().optional(),
   cites: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
+  uses: z.array(z.string()).optional(),
   companions: CompanionsSchema.optional(),
   rendered: z.array(RenderedAssetSchema).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
@@ -533,8 +573,10 @@ export const ProseSchema = z.object({
 export const EquationSchema = z.object({
   kind: z.literal("equation"),
   label: labelForKind("equation").optional(),
+  title: z.string().optional(),
   tex: z.string().optional(),
   tags: z.array(z.string()).optional(),
+  uses: z.array(z.string()).optional(),
   companions: CompanionsSchema.optional(),
   rendered: z.array(RenderedAssetSchema).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
@@ -544,9 +586,11 @@ export const EquationSchema = z.object({
 export const DiagramSchema = z.object({
   kind: z.literal("diagram"),
   label: labelForKind("diagram").optional(),
+  title: z.string().optional(),
   tex: z.string().optional(),
   caption: z.string().optional(),
   tags: z.array(z.string()).optional(),
+  uses: z.array(z.string()).optional(),
   companions: CompanionsSchema.optional(),
   rendered: z.array(RenderedAssetSchema).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
@@ -682,7 +726,7 @@ export interface ConstraintRule {
   /** Which block kinds this rule applies to. */
   appliesTo: string[];
   /** Check function — returns error message or null. */
-  check: (block: z.infer<typeof BlockSchema>, context: ConstraintContext) => string | null;
+  check: (block: Block, context: ConstraintContext) => string | null;
 }
 
 export interface ConstraintContext {
@@ -776,8 +820,11 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     id: "simulator-ref-resolve",
     description: "Blocks with simulator refs must reference an existing simulator label",
     appliesTo: [
-      "definition", "theorem", "lemma", "proposition", "corollary",
-      "conjecture", "example", "remark",
+      // `simulator` is a BlockBase field, so ANY kind can carry one. The
+      // check below returns null when the field is absent, so listing
+      // fewer kinds only creates blind spots — `validate.ts` skips an
+      // unlisted kind without a word.
+      ...BLOCK_KINDS,
     ],
     check: (block, ctx) => {
       if (!("simulator" in block) || !block.simulator) return null;
@@ -794,10 +841,16 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     appliesTo: [
       "definition", "theorem", "lemma", "proposition", "corollary",
       "conjecture", "example", "remark", "simulator",
+      "algorithm", "proof", "prose", "equation", "diagram", "table",
     ],
     check: (block, ctx) => {
       if (!("uses" in block) || !block.uses) return null;
       const missing = block.uses.filter((u: string) => {
+        // An empty entry is never resolvable and must be reported as one —
+        // not skipped. Ten `*-table-data` blocks in qou carry `uses: [""]`
+        // beside `title: "Data table N from "`, an extraction generator that
+        // failed to substitute its source label.
+        if (u.trim() === "") return true;
         // Cross-paper qualified ref: "paper-dir:label" (contains exactly
         // one colon-delimited paper prefix before the label-kind prefix).
         // Pattern: non-label chars, colon, then a standard label.
@@ -809,8 +862,11 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
         // Same-paper ref — must exist in allLabels
         return !ctx.allLabels.has(u);
       });
+      // Quote each label: an empty entry rendered bare produced
+      // "Unresolved uses: " with nothing after it, which reads as a checker
+      // bug rather than as the content defect it is.
       return missing.length === 0 ? null
-        : `Unresolved uses: ${missing.join(", ")}`;
+        : `Unresolved uses: ${missing.map((u: string) => JSON.stringify(u)).join(", ")}`;
     },
   },
   {
@@ -827,8 +883,10 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     id: "cites-resolve",
     description: "All citation keys in cites[] must exist in references.ts",
     appliesTo: [
-      "definition", "theorem", "lemma", "proposition", "corollary",
-      "conjecture", "example", "remark", "prose",
+      // `cites` is a BlockBase field — every kind can carry one. An
+      // `algorithm` or `table` block citing a key absent from
+      // references.ts used to pass by never being looked at.
+      ...BLOCK_KINDS,
     ],
     check: (block, ctx) => {
       if (!("cites" in block) || !block.cites || !ctx.allRefIds) return null;
@@ -872,8 +930,10 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
     id: "md-crossref-resolve",
     description: "All [text](#label) cross-references in .md content must resolve to existing labels",
     appliesTo: [
-      "definition", "theorem", "lemma", "proposition", "corollary",
-      "conjecture", "example", "remark", "simulator", "prose",
+      // Guarded on `ctx.mdContent` below, so kinds without an .md are
+      // already no-ops. A `proof` block's .md with a broken
+      // `[text](#label)` was simply never checked.
+      ...BLOCK_KINDS,
     ],
     check: (_block, ctx) => {
       if (!ctx.mdContent) return null;

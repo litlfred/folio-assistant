@@ -18,6 +18,10 @@
 
 import { readdirSync, existsSync, statSync } from "fs";
 import { resolve, join } from "path";
+import { requirePaper } from "./repo-root";
+// The term list is FOLIO content — which words a paper treats as needing a
+// formal backing is a judgement about its own subject. Injected, not inlined.
+import { termsNeedingDefinitions } from "./chapter-profile-registry-di";
 
 // ── Types ────────────────────────────────────────────────────────
 
@@ -32,22 +36,7 @@ interface RemarkInfo {
   ambiguousTerms: string[];
 }
 
-// ── Physics terms that need categorical backing ──────────────────
 
-const PHYSICS_TERMS_NEEDING_DEFS: Record<string, string> = {
-  "energy": "def:crossing-energy or similar",
-  "force": "categorical force definition",
-  "particle": "def:q-harmonic-form or def:fermion-boson-decomposition",
-  "observable": "def:quantum-observable-universe",
-  "measurement": "def:observation",
-  "degeneration": "formal Frobenius non-degeneracy failure",
-  "time reversal": "prop:fiber-adjoint-involution",
-  "virtual particle": "brane tower level definition",
-  "pair creation": "exceptional divisor passage",
-  "chirality flip": "formal chirality reversal definition",
-  "big bang": "initial object in QOU_deg",
-  "heat death": "terminal object / classical limit",
-};
 
 // ── Discovery ────────────────────────────────────────────────────
 
@@ -99,7 +88,7 @@ async function analyzeRemark(filePath: string): Promise<RemarkInfo | null> {
       const mdContent = readFileSync(mdPath, "utf-8").toLowerCase();
       const usedLabels = new Set<string>(block.uses ?? []);
 
-      for (const [term, expectedDef] of Object.entries(PHYSICS_TERMS_NEEDING_DEFS)) {
+      for (const [term, expectedDef] of Object.entries(termsNeedingDefinitions())) {
         if (mdContent.includes(term.toLowerCase())) {
           // Check if the expected definition is in uses[]
           const hasRef = Array.from(usedLabels).some((u) =>
@@ -130,7 +119,7 @@ async function analyzeRemark(filePath: string): Promise<RemarkInfo | null> {
 // ── Main ─────────────────────────────────────────────────────────
 
 async function main() {
-  const paperDir = process.argv[2] || "quantum-observable-universe";
+  const paperDir = requirePaper(process.argv[2]);
   const contentDir = resolve(import.meta.dir, "..", paperDir);
 
   if (!existsSync(contentDir)) {

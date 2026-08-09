@@ -56,6 +56,12 @@ name: release-please
 # rescue path: `gh pr create --head release-please--...`. See
 # docs/release-process.md (once added) for the exact recipe.
 
+#
+# TRIGGERS, ACTUAL: `workflow_dispatch` only.
+# The triggers described above are the other repo's. Copied in at the split
+# (109a4ff) with the trigger neutered and the prose left alone. Correct here:
+# this workflow releases the packages under `tools/`, which the platform does not carry. See bean `folio-assistant-5rfy`.
+
 on:
   workflow_dispatch:
 

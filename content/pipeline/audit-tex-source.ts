@@ -33,8 +33,13 @@
 import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from "fs";
 import { resolve, join, relative } from "path";
 import { findMathTextSeams } from "./render-latex";
+import { findContentRepoRoot } from "./repo-root";
 
-const REPO_ROOT = resolve(import.meta.dir, "../..");
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
 const args = process.argv.slice(2);
 const strict = args.includes("--strict");
 
@@ -234,6 +239,15 @@ console.log("Auditing TeX-source hazards...");
 auditReferencesTs();
 const contentRoot = join(REPO_ROOT, "content");
 const mdFiles = walk(contentRoot, ".md");
+// Same rule: a report over zero files is not a clean result.
+if (mdFiles.length === 0) {
+  console.error(
+    `No .md files found under ${contentRoot} — refusing to report success.\n` +
+    "This audits a FOLIO's content; folio-assistant is the platform.\n" +
+    "Run it from the content repo.",
+  );
+  process.exit(1);
+}
 for (const f of mdFiles) {
   // Skip .md files that are pure docs, not paper content
   if (f.includes("/node_modules/") || f.includes("/docs/")) continue;

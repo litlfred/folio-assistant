@@ -1,6 +1,5 @@
 """Utilities for loading skill definitions from .claude/skills/."""
 
-from pathlib import Path
 
 from .config import SKILLS_DIR
 

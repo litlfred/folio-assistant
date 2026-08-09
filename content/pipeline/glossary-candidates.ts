@@ -164,9 +164,9 @@ export async function proposeCandidates(paperDir: string): Promise<CandidatesRep
       try {
         const mod = await import(tsPath);
         const block: Block = mod.default;
-        const defines = ((block as any).defines as string[] | undefined) ?? [];
-        const label = (block as any).label ?? name;
-        const title = (block as any).title ?? null;
+        const defines = ("defines" in block ? block.defines : undefined) ?? [];
+        const label = block.label ?? name;
+        const title = block.title ?? null;
         const mdContent = existsSync(mdPath) ? readFileSync(mdPath, "utf-8") : "";
 
         const { sectionTitle } = locateBlock(name, chapter);

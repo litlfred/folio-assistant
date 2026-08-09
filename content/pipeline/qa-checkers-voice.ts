@@ -869,7 +869,7 @@ export function checkScholarlyDefault(
   mdPath: string | undefined,
   leanPath: string | undefined,
 ): CheckerResult {
-  const { lines } = mdPath ? readSource(mdPath) : { src: "", lines: [] };
+  const lines = mdPath ? readSource(mdPath).lines : [];
   if (lines.length === 0 && !leanPath) return { result: "pass", hits: [] };
 
   const hits: CheckerHit[] = [];

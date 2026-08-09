@@ -40,6 +40,7 @@ import { readFileSync, writeFileSync, readdirSync, statSync, mkdirSync } from "f
 import { join, dirname, basename } from "path";
 import { checkStatusSectionHeader } from "./qa-checkers-voice";
 import { BLOCK_KIND_ALT } from "../../schemas/types";
+import { requirePaper } from "./repo-root";
 
 /** Builder call identifying a block's kind — see `BLOCK_KIND_ALT`. */
 const BUILDER_RE = new RegExp(`\\b(${BLOCK_KIND_ALT})\\s*\\(`);
@@ -120,10 +121,10 @@ function classify(body: string): Classification {
 
 function main() {
   const args = process.argv.slice(2);
-  const paper =
-    args[args.indexOf("--paper") + 1] && args.includes("--paper")
-      ? args[args.indexOf("--paper") + 1]
-      : "quantum-observable-universe";
+  // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
+  const paper = requirePaper(
+    args.includes("--paper") ? args[args.indexOf("--paper") + 1] : undefined,
+  );
   const out =
     args.includes("--out") ? args[args.indexOf("--out") + 1] : ".beans/status-section-audit.json";
   const root = join("content", paper);

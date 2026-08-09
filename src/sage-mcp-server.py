@@ -44,7 +44,6 @@ import os
 import shutil
 import subprocess
 import sys
-from pathlib import Path
 
 PROTOCOL_VERSION = "2024-11-05"
 SERVER_INFO = {"name": "sage-mcp", "version": "0.2.0"}

@@ -11,7 +11,11 @@
  * @module folio-assistant/routes/feedback
  */
 
-import { FeedbackStore } from "../core/feedback.js";
+import {
+  FeedbackStore, INVALID_ENUM, parseTodoPriority, parseTodoStatus,
+  TODO_PRIORITIES, TODO_STATUSES,
+} from "../core/feedback.js";
+import type { FeedbackItem } from "../../schemas/types.js";
 import type { ContentAdapter } from "../types.js";
 import { getUserName, getUserEmail, hasRole, forbidden } from "../core/rbac.js";
 import { log } from "../core/logging.js";
@@ -60,12 +64,19 @@ export async function handleFeedbackPost(
       };
       const itemId = body.itemId || body.paperId || "";
 
-      const todo = {
+      const priority = parseTodoPriority(body.priority || undefined);
+      if (priority === INVALID_ENUM) {
+        return Response.json({
+          error: `Invalid priority: must be one of ${TODO_PRIORITIES.join("|")}`,
+        }, { status: 400 });
+      }
+
+      const todo: FeedbackItem = {
         id: FeedbackStore.makeId(),
         summary: body.summary,
         comment: body.comment,
         status: "open",
-        priority: body.priority || "medium",
+        priority: priority ?? "medium",
         origin: "human",
         author: getUserName(req),
         authorEmail: getUserEmail(req),
@@ -96,11 +107,21 @@ export async function handleFeedbackPost(
         status?: string;
       };
       const itemId = body.itemId || body.paperId || "";
-      const todos = feedbackStore.read(itemId, body.rootName) as any[];
-      const idx = todos.findIndex((t: any) => t.id === body.todoId);
+      // Both arrive off the wire as bare strings and were written through
+      // unchecked; see `parseTodoPriority` on what that cost.
+      const priority = parseTodoPriority(body.priority);
+      const status = parseTodoStatus(body.status);
+      if (priority === INVALID_ENUM || status === INVALID_ENUM) {
+        return Response.json({
+          error: `Invalid update: priority must be one of ${TODO_PRIORITIES.join("|")}, ` +
+            `status one of ${TODO_STATUSES.join("|")}`,
+        }, { status: 400 });
+      }
+      const todos = feedbackStore.read(itemId, body.rootName);
+      const idx = todos.findIndex((t) => t.id === body.todoId);
       if (idx < 0) return Response.json({ error: "Todo not found" }, { status: 404 });
-      if (body.priority !== undefined) todos[idx].priority = body.priority;
-      if (body.status !== undefined) todos[idx].status = body.status;
+      if (priority !== undefined) todos[idx].priority = priority;
+      if (status !== undefined) todos[idx].status = status;
       feedbackStore.write(itemId, body.rootName, todos);
       return Response.json({ ok: true, todo: todos[idx] });
     } catch (e) {
@@ -121,8 +142,8 @@ export async function handleFeedbackPost(
         todoId: string;
       };
       const itemId = body.itemId || body.paperId || "";
-      const todos = feedbackStore.read(itemId, body.rootName) as any[];
-      const idx = todos.findIndex((t: any) => t.id === body.todoId);
+      const todos = feedbackStore.read(itemId, body.rootName);
+      const idx = todos.findIndex((t) => t.id === body.todoId);
       if (idx < 0) return Response.json({ error: "Todo not found" }, { status: 404 });
       todos.splice(idx, 1);
       feedbackStore.write(itemId, body.rootName, todos);
@@ -143,7 +164,7 @@ export async function handleFeedbackPost(
       };
       const itemId = body.itemId || body.paperId || "";
       const todos = feedbackStore.read(itemId, body.rootName);
-      const todo = (todos as any[]).find((t) => t.id === body.todoId);
+      const todo = todos.find((t) => t.id === body.todoId);
       if (!todo) return Response.json({ error: "Todo not found" }, { status: 404 });
 
       const doc = await adapter.getDocument(itemId);

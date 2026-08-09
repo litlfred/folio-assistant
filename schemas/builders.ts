@@ -17,6 +17,7 @@ import type {
   SkillPackageManifest,
   RemotePackageRef,
   DefinitionBlock,
+  LeanRef,
   TheoremBlock,
   LemmaBlock,
   PropositionBlock,
@@ -123,15 +124,20 @@ function validated<T>(schema: { parse: (v: unknown) => unknown }, data: T): T {
 
 // ── Block builders ───────────────────────────────────────────────
 
-export function definition(data: Omit<DefinitionBlock, "kind">): DefinitionBlock {
+// `DefinitionBlock.lean` is required, so `Omit<…, "kind">` could not express
+// the very case this builder exists to handle — a partially-authored
+// definition with no ref yet. The `as any` below was standing in for that.
+export function definition(
+  data: Omit<DefinitionBlock, "kind" | "lean"> & { lean?: LeanRef },
+): DefinitionBlock {
   // Provide default lean ref so partially-authored definitions
   // load instead of crashing the viewer/MCP server with Zod errors.
   // Uses the qou package by default; callers working in other papers
   // must pass an explicit `lean.ref`.
   const label = data.label || "def:unknown";
   const defaultDecl = "QOU." + label.replace(/^def:/, "").replace(/-./g, m => m[1].toUpperCase()).replace(/^./, c => c.toUpperCase());
-  if (!data.lean) (data as any).lean = { ref: `qou:${defaultDecl}` };
-  return validated(DefinitionSchema, { kind: "definition" as const, ...data });
+  const lean = data.lean ?? { ref: `qou:${defaultDecl}` };
+  return validated(DefinitionSchema, { kind: "definition" as const, ...data, lean });
 }
 
 export function theorem(data: Omit<TheoremBlock, "kind">): TheoremBlock {

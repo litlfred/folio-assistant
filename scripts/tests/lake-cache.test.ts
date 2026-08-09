@@ -45,7 +45,17 @@ function run(
 }
 
 function git(args: string[], cwd: string) {
-  execFileSync("git", args, { cwd, stdio: "pipe" });
+  // `stdio: "pipe"` alone throws `Command failed: git push …` with git's own
+  // stderr discarded, so a fixture failure tells you nothing about why — which
+  // is exactly what happened when this suite went flaky under load. Capture it
+  // and put it in the message.
+  const r = spawnSync("git", args, { cwd, encoding: "utf-8" });
+  if (r.status !== 0) {
+    throw new Error(
+      `git ${args.join(" ")} (cwd ${cwd}) exited ${r.status}` +
+      `${r.signal ? ` on ${r.signal}` : ""}\n${r.stderr ?? ""}${r.stdout ?? ""}`,
+    );
+  }
 }
 
 /** A `.lake` tree with `count` dependency oleans and `own` package oleans. */
@@ -66,7 +76,9 @@ beforeAll(() => {
   // Bare remote.
   const bare = join(root, "origin.git");
   mkdirSync(bare);
-  git(["init", "--bare", "-q"], root);
+  // Was preceded by a stray `git init --bare -q` with cwd=root and NO path,
+  // which turned the temp root itself into a bare repo — an unwanted repo
+  // wrapping the working clone, created by a line that looks like setup.
   execFileSync("git", ["init", "--bare", "-q", bare], { stdio: "pipe" });
 
   // Working repo with a Lake package nested two levels down — the
@@ -225,6 +237,33 @@ describe("lake-cache.sh — seed guard", () => {
     const r = run(["seed", "--package", "mathlib", "--lake-root", ml], ml);
     expect(r.out).not.toContain("ZERO belong to");
     rmSync(ml, { recursive: true, force: true });
+  });
+
+  // `status` used to lack the exemption `seed` has, so pointing it at the
+  // workspace root printed `7268 oleans / own pkg 0` under "ZERO belong to
+  // this package". That is the mathlib family behaving correctly — deps are
+  // its payload — but it reads exactly like a gutted per-package cache, and
+  // was mistaken for one (bean folio-assistant-5d7z). Both callers now go
+  // through `own_oleans_expected`.
+  test("status applies the same mathlib exemption as seed", () => {
+    const ml = mkdtempSync(join(tmpdir(), "lakecache-mlstatus-"));
+    execFileSync("bash", ["-c", `cp -r '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${ml}/'`], { stdio: "pipe" });
+    makeLake(ml, 5, 0);
+    git(["init", "-q"], ml);
+    const r = run(["status", "--package", "mathlib", "--lake-root", ml], ml);
+    expect(r.out).toContain("cache PRESENT");
+    expect(r.out).not.toContain("ZERO belong to");
+    rmSync(ml, { recursive: true, force: true });
+  });
+
+  test("status still reports a genuinely gutted per-package cache", () => {
+    const bad = mkdtempSync(join(tmpdir(), "lakecache-badstatus-"));
+    execFileSync("bash", ["-c", `cp -r '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${bad}/'`], { stdio: "pipe" });
+    makeLake(bad, 5, 0);
+    git(["init", "-q"], bad);
+    const r = run(["status", "--package", PKG, "--lake-root", bad], bad);
+    expect(r.out).toContain("ZERO belong to");
+    rmSync(bad, { recursive: true, force: true });
   });
 
   test("refuses to seed an empty tree", () => {

@@ -61,8 +61,17 @@ import { readdirSync, existsSync, mkdirSync, writeFileSync, readFileSync, statSy
 import { resolve, dirname, join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createHash } from "node:crypto";
+import { findContentRepoRoot } from "./repo-root";
 
-process.chdir(resolve(import.meta.dir, "..", ".."));
+// Was `resolve(import.meta.dir, "..", "..")` — this file's own location, so
+// the PLATFORM repo. Every path below is cwd-relative (`resolve("content",
+// paper, …)`), so that one line pointed the entire audit at
+// `<platform>/content`, which holds only `pipeline/`. Run from a folio it
+// chdir'd BACK OUT to the platform through the `folio-assistant/` symlink.
+//
+// `findContentRepoRoot()` walks up from the real cwd, so it must be called
+// before the chdir, not after.
+process.chdir(findContentRepoRoot());
 
 const args = process.argv.slice(2);
 const reportOnly = args.includes("--report-only");
@@ -287,15 +296,15 @@ function subtreeStalenessHash(
   const title = typeof node.title === "string" ? node.title : "";
   const label = typeof node.label === "string" ? node.label : "";
   const blocks = Array.isArray(node.blocks) ? (node.blocks as unknown[]).map(String) : [];
-  let h = `${title} ${label} ${blocks.join(",")}`;
+  let h = `${title}\u0000${label}\u0000${blocks.join(",")}`;
   for (const b of blocks)
     for (const f of blockSourceFiles(paper, chapterDir, b)) {
-      try { h += ` ${b}=${hashContent(readFileSync(f, "utf8"))}`; } catch { /* unreadable block file */ }
+      try { h += `\u0000${b}=${hashContent(readFileSync(f, "utf8"))}`; } catch { /* unreadable block file */ }
     }
   const subs = Array.isArray(node.subsections)
     ? (node.subsections as Record<string, unknown>[]).filter((s) => s && typeof s.title === "string")
     : [];
-  for (const s of subs) h += ` sub(${subtreeStalenessHash(s, paper, chapterDir, acc)})`;
+  for (const s of subs) h += `\u0000sub(${subtreeStalenessHash(s, paper, chapterDir, acc)})`;
   const digest = hashContent(h);
   acc.set(label || title, digest);
   return digest;
@@ -567,6 +576,18 @@ async function main(): Promise<void> {
   const hard = flags.filter((f) => HARD.has(f.kind));
   const soft = flags.filter((f) => !HARD.has(f.kind));
   console.log(`section-title audit: ${allNodes.length} titles across ${byChapter.size} chapters (max-len ${MAX_LEN})`);
+  // An audit of nothing is a broken run, not a clean one — the rule
+  // `validateObjects` settled (bean `vald`). `section-title-audit.yml` calls
+  // this a HARD GATE, and over an empty corpus it printed the three ✓ lines
+  // below and exited 0, one line after saying "0 titles across 0 chapters".
+  if (allNodes.length === 0) {
+    console.error(
+      `\n  ✗ no titles found under ${process.cwd()}/content — refusing to report success.\n` +
+      `    This audit reads a FOLIO's chapter manifests; folio-assistant is the platform.\n` +
+      `    Run it from the content repo, or name a paper explicitly.`,
+    );
+    process.exit(1);
+  }
   if (importErrors.length) console.log(`  (${importErrors.length} manifest(s) un-importable — skipped)`);
 
   const show = (label: string, fs: Flag[]) => {

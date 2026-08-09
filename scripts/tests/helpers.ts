@@ -63,7 +63,17 @@ export const QOU_LEAN_DIR = join(
   FOLIO_ROOT ?? REPO_ROOT,
   "content/quantum-observable-universe/lean",
 );
-export const CHAPTERS_DIR = join(REPO_ROOT, "chapters");
+/**
+ * `chapters/*.tex` — `content_build` output, which lives in the FOLIO.
+ *
+ * Was `join(REPO_ROOT, "chapters")`, i.e. the PLATFORM, so
+ * `findChapterFiles()` returned `[]` even with a folio attached and
+ * `latex-lean-coverage.test.ts` has never run a single one of its real
+ * assertions in either repo. `QOU_LEAN_DIR` directly above already resolves
+ * against `FOLIO_ROOT`; this is the same rule, and the same split-repo trap
+ * the `FOLIO_ROOT` comment warns about.
+ */
+export const CHAPTERS_DIR = join(FOLIO_ROOT ?? REPO_ROOT, "chapters");
 export const SCHEMAS_DIR = join(REPO_ROOT, "schemas");
 
 // ── Lean project discovery ──────────────────────────────────────
@@ -146,6 +156,24 @@ export function findChapterFiles(): string[] {
 
 import { parse } from "@unified-latex/unified-latex-util-parse";
 import { attachMacroArgs } from "@unified-latex/unified-latex-util-arguments";
+import type {
+  Ast as LatexAstUnion, Environment, Macro,
+} from "@unified-latex/unified-latex-types";
+
+/** One node of the unified-latex AST — `Ast` also admits an array; the
+ *  walkers below take the element type. Same alias as `render-latex.ts`. */
+type LatexNode = Exclude<LatexAstUnion, unknown[]>;
+
+/** Child nodes, when this node's `content` is an array.
+ *
+ *  On `macro`, `string`, `comment` and `verb`, `content` is a plain STRING
+ *  (for a macro, its name) rather than children — which is exactly the
+ *  distinction the recursive walkers here depend on, and exactly what `any`
+ *  stopped the compiler from enforcing. */
+function latexChildren(node: LatexNode): LatexNode[] {
+  const c = (node as { content?: unknown }).content;
+  return Array.isArray(c) ? (c as LatexNode[]) : [];
+}
 
 export interface LatexEnvironment {
   envType: string;
@@ -170,33 +198,36 @@ const MACRO_SIGNATURES = {
 };
 
 /** Extract text content from a unified-latex AST node's arguments. */
-function argText(node: any, argIndex = 0): string | undefined {
+function argText(node: Macro, argIndex = 0): string | undefined {
   const args = node.args;
   if (!args) return undefined;
   // Find the first arg with openMark "{" (mandatory arg)
-  const mandatoryArgs = args.filter((a: any) => a.openMark === "{");
+  const mandatoryArgs = args.filter((a) => a.openMark === "{");
   const arg = mandatoryArgs[argIndex];
   if (!arg?.content?.length) return undefined;
-  return arg.content.map((c: any) => c.content ?? "").join("");
+  // `content` on the leaves here is the string payload of a `string`/`macro`
+  // node; anything else contributes nothing, as before.
+  return arg.content
+    .map((c) => (typeof (c as { content?: unknown }).content === "string"
+      ? (c as { content: string }).content : ""))
+    .join("");
 }
 
 /** Recursively check if an AST node array contains a macro with given name. */
-function hasMacro(nodes: any[], name: string): boolean {
+function hasMacro(nodes: LatexNode[], name: string): boolean {
   for (const n of nodes) {
     if (n.type === "macro" && n.content === name) return true;
-    if (n.content && Array.isArray(n.content) && hasMacro(n.content, name)) return true;
+    if (hasMacro(latexChildren(n), name)) return true;
   }
   return false;
 }
 
 /** Find a macro node by name in an AST node array. */
-function findMacro(nodes: any[], name: string): any | undefined {
+function findMacro(nodes: LatexNode[], name: string): Macro | undefined {
   for (const n of nodes) {
     if (n.type === "macro" && n.content === name) return n;
-    if (n.content && Array.isArray(n.content)) {
-      const found = findMacro(n.content, name);
-      if (found) return found;
-    }
+    const found = findMacro(latexChildren(n), name);
+    if (found) return found;
   }
   return undefined;
 }
@@ -213,10 +244,10 @@ export function extractEnvironments(texFile: string): LatexEnvironment[] {
   const envs: LatexEnvironment[] = [];
 
   // Walk AST for environment nodes
-  function walkForEnvs(nodes: any[]) {
+  function walkForEnvs(nodes: LatexNode[]) {
     for (const node of nodes) {
-      if (node.type === "environment" && ENV_TYPES.has(node.env)) {
-        const body = node.content || [];
+      if (node.type === "environment" && ENV_TYPES.has((node as Environment).env)) {
+        const body = latexChildren(node);
 
         // Find \label
         const labelNode = findMacro(body, "label");
@@ -243,9 +274,7 @@ export function extractEnvironments(texFile: string): LatexEnvironment[] {
       }
 
       // Recurse into content
-      if (node.content && Array.isArray(node.content)) {
-        walkForEnvs(node.content);
-      }
+      walkForEnvs(latexChildren(node));
     }
   }
 

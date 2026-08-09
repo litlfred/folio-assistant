@@ -167,7 +167,7 @@ function transliterateForVerbatim(text: string): string {
  * unknown/absent validation on a block that *does* carry a Lean ref defaults
  * to "drafted" (it is stated, just not yet checked).
  */
-function leanStatusBucket(
+export function leanStatusBucket(
   lean: { sorryFree?: boolean; validation?: string } | undefined,
 ): "stubbed" | "drafted" | "compiled" {
   if (!lean) return "stubbed";

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nimj
 title: Nazrin as triviality oracle (proof-not-machine-trivial)
-status: in-progress
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-08-07T09:13:35Z
-updated_at: 2026-08-07T12:11:25Z
+updated_at: 2026-08-08T16:05:00Z
 ---
 
 
@@ -96,3 +96,137 @@ corpus — the blocks that happen not to import their own package.
 - [ ] With hits in hand, measure the actual false-positive rate.
 - [ ] Tune the ladder / threshold on that evidence.
 - [ ] Only then consider raising severity above `minor`.
+
+
+---
+
+## Re-checked 2026-08-08 (session `3bada08b`) — blocked downstream of 5d7z
+
+Asked to work all open beans, so this was re-tested rather than inherited.
+
+The toolchain this bean once wanted is present and works (`lean` 4.24.0, `lake`
+5.0.0 under `~/.elan/toolchains/`), and the bean already established Nazrin
+itself is unnecessary — Lean's own automation is the oracle.
+
+What remains is the measurement, and it is gated on the cache reseed exactly as
+this bean says: 16 of 28 candidate blocks (57%) could not be probed because
+their sibling `.lean` files import the paper's own package and the cache branch
+carries zero of its oleans. Re-tested the reseed blocker under `5d7z` and
+`02kc`: every host it needs is unreachable from an authoring container (000 /
+403), and there is no folio checked out here at all.
+
+So the order is fixed and unchanged: **reseed in CI (5d7z) → re-probe → measure
+the false-positive rate → only then tune the threshold or raise severity.**
+Nothing here is actionable from an authoring container. The criterion remains
+inert by construction in the meantime — no cache means `n/a`, and the note says
+"not measured", never "nothing trivial".
+
+
+---
+
+## Measured 2026-08-08 (session `3bada08b`) — the oracle works; three defects fixed
+
+The bean was blocked on the false-positive rate, which needs the `5d7z`
+reseed. But a second question was sitting underneath it, unnoticed and not
+blocked: **the first qou run reported `probed 12, closed 0`, and that was read
+here as "none of 12 real qou theorems fall to cheap automation". A probe that
+can never close anything prints the identical line.** Nothing in the output
+separated the two readings.
+
+Settled it with a control: core-Lean declarations of known difficulty, run
+through the real code path (no Mathlib, no folio, no cache — just the toolchain
+`ga7e` restored).
+
+    trivTrue     CLOSED step 1 (trivial)
+    simpAppend   CLOSED step 3 (simp)      <- trivial and rfl both lost first
+    omegaLinear  CLOSED step 5 (omega)     <- the ladder really walks
+    substantive  open                      <- and does not close everything
+
+So the probe discriminates, and qou's `closed 0` is a real measurement. That
+control is now `scripts/tests/lean-triviality-probe.test.ts`.
+
+Getting there surfaced three ways the probe reported a **mechanical failure as
+a substantive result** — each one scoring a block `pass`, "not machine-trivial":
+
+1. **A rung that is not installed.** `aesop` is not core Lean; without Mathlib
+   it errors `unknown tactic` and exits non-zero, which an exit-code check
+   scores as "ran and lost". The ladder silently had five rungs. Now recorded
+   as `ladder.unavailable`, and the criterion reads a short-ladder "not closed"
+   as `n/a` rather than `pass`.
+2. **A rung that ran out of time.** `execFileSync` reports a timeout by killing
+   the child, landing in the same catch as a failed proof. A tactic that did
+   not answer is not a tactic that lost — and `simp` is the rung most likely to
+   be slow on the goals most worth flagging. Now `ladder.timedOut`. Same for
+   the baseline: `baseline-timeout` is a distinct skip from `baseline-fails`,
+   because "too slow" must not print "restore the oleans".
+3. **A splice that landed inside the statement.** `splitDeclarations` cut at
+   the first `:=` *anywhere*, though its doc comment has always said "the first
+   **top-level** `:=`". A statement containing one — `(let x := 5; x) = 5`, a
+   structure instance — had the tactic written over its own type; the file
+   stopped elaborating, all six rungs failed, `closed: false`. Fixed at the
+   source with `topLevelCut`.
+
+**Defect 3 reached further than this bean.** `lean-signature` builds the QA
+**statement hash** from the same cut, so a truncated signature hashes a partial
+statement:
+
+    theorem t : (let x := 5; x) = 5 := by rfl     hash d1b45ae0f3e3
+    theorem t : (let x := 5; x) = 6 := by rfl     hash d1b45ae0f3e3
+
+A changed statement that never invalidates its QA sidecar — a staleness check
+passing by finding nothing. Equivalence-checked before landing: over 17
+declaration shapes the new cut agrees with the old on all 12 that were already
+correct, and differs only on the 5 it was getting wrong.
+
+The skip bucket is also classified now (`decl-not-found` / `no-body` /
+`baseline-fails` / `baseline-timeout`), because this bean's own headline number
+— 16 of 28 blocks (57%) unprobeable — came from an undifferentiated counter
+whose log line asserted one cause for all four. When the reseed lands, that
+number will say which fix it needs.
+
+### Remaining — unchanged, still gated on 5d7z
+
+- [ ] Reseed the cache (5d7z), then re-run the probe over the full corpus.
+- [ ] With hits in hand, measure the actual false-positive rate.
+- [ ] Tune the ladder / threshold on that evidence.
+- [ ] Only then consider raising severity above `minor`.
+
+What changed is that the measurement will now be trustworthy when it runs.
+Before this it would have been taken with a five-rung ladder, a timeout counted
+as a loss, and any statement containing `:=` silently scored "not trivial".
+
+---
+
+## 2026-08-08 — SCRAPPED by owner decision, downstream of the reseed being declined
+
+Every remaining item here needs the `5d7z` reseed, and that was put to the
+owner with its costs and declined. So the false-positive rate stays
+**unmeasured by choice, not by blocker** — which is a different and more
+honest state than "blocked", and the reason this is being closed rather than
+left open to be re-tested a fourth time.
+
+The bean's own standard was right and is being held to: *"shipping the scaffold
+is not the same as adopting the idea."* The idea is not adopted.
+
+**Nothing is ripped out**, because nothing costs anything to keep:
+
+- `proof-not-machine-trivial` stays shipped at `minor`, warn-only, and inert by
+  construction — no cache means `n/a`, and the note says "not measured", never
+  "nothing trivial". It cannot produce a wrong answer; it can only decline to
+  produce one.
+- `lean-triviality-probe.ts` and its control test stay. The control is what
+  established the probe discriminates at all, and it runs on core Lean with no
+  cache, no Mathlib and no folio — so it keeps working regardless of this.
+- The three defects fixed along the way stay fixed, and one of them was never
+  about this bean: `topLevelCut` also repaired the QA **statement hash**, where
+  a statement containing `:=` hashed a truncated prefix and a changed statement
+  never invalidated its sidecar. That was a staleness check passing by finding
+  nothing, and it is fixed independently of anything decided here.
+
+So the ledger is: the criterion is real and safe, the probe is real and
+verified, one genuine bug in an unrelated system was caught, and the only thing
+not obtained is the tuning evidence — which needs the reseed nobody is buying.
+
+To reopen: land the reseed, re-run the probe over the full corpus, measure the
+FP rate at `TRIVIAL_STEP_THRESHOLD = 3`, then decide on severity. In that
+order, and not before.

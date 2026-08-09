@@ -10,6 +10,7 @@ import { existsSync, readFileSync, writeFileSync, readdirSync, mkdirSync } from 
 import { join, resolve, extname } from "path";
 import { execSync, spawnSync } from "child_process";
 
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { registerRenderTools } from "./tools/render.js";
 import { registerValidateTools } from "./tools/validate.js";
 import { registerLeanTools } from "./tools/lean.js";
@@ -431,7 +432,7 @@ Respond in JSON: {"assessment": "...", "actionable": boolean, "proposedEdit": {"
                 stats.totalBlocks++;
                 if (blk.kind === "definition") stats.definitions++;
                 if (blk.kind === "theorem" || blk.kind === "lemma" || blk.kind === "proposition") stats.theorems++;
-                stats.openTodos += (blk.todos || []).filter((t: any) => t.status === "open").length;
+                stats.openTodos += (blk.todos || []).filter((t) => t.status === "open").length;
               }
           return JSON.stringify({ title: paper.title, ...stats });
         }
@@ -471,7 +472,7 @@ Respond in JSON: {"assessment": "...", "actionable": boolean, "proposedEdit": {"
           const chNum = input.chapterNumber as number;
           const paper = pid ? await this.getDocument(pid) : null;
           if (!paper) return JSON.stringify({ error: "Document not found" });
-          const ch = paper.chapters.find((c: any) => c.number === chNum);
+          const ch = paper.chapters.find((c) => c.number === chNum);
           if (!ch) return JSON.stringify({ error: `Chapter ${chNum} not found` });
           const blocks: unknown[] = [];
           for (const sec of ch.sections || [])
@@ -660,7 +661,9 @@ End every response with suggested follow-ups:
             return {
               id: d.name,
               title: intake?.title ?? d.name,
-              stage: (intake?.pipeline as any)?.stage ?? "unknown",
+              // `intake` is parsed JSON, so `pipeline` is `unknown`; read the
+              // one field this needs rather than reopening the whole object.
+              stage: (intake?.pipeline as { stage?: unknown } | undefined)?.stage ?? "unknown",
               classification: intake?.classification ?? null,
               blockCount: intake?.blockCount ?? 0,
               files: readdirSync(join(uploadsDir, d.name)).filter((f) => f !== "intake.json"),
@@ -1020,7 +1023,7 @@ End every response with suggested follow-ups:
 
   // ── MCP tool registration ──────────────────────────────────────
 
-  registerMcpTools(server: any): void {
+  registerMcpTools(server: McpServer): void {
     // Paper-specific MCP tools
     registerRenderTools(server);
     registerValidateTools(server);

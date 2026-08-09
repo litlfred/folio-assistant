@@ -28,6 +28,7 @@ import { fileURLToPath } from "url";
 import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
 import { hashFile } from "./qa-utils";
 import { findContentRepoRoot, findPapers } from "./repo-root";
+import { stripArrayField } from "./uses-field";
 
 const __filename = fileURLToPath(import.meta.url);
 // Resolve content-repo paths (witnesses under <repo>/computations, Lean
@@ -604,6 +605,38 @@ export function checkComputeWitnessExists(
   return { result: hits.length > 0 ? "fail" : "pass", hits };
 }
 
+/**
+ * Every block field whose contents are LABELS OR PATHS POINTING ELSEWHERE,
+ * as opposed to describing the block itself. Mirrors `BlockBase` and its
+ * kind-specific extensions in `schemas/types.ts`.
+ *
+ * A checker asking "does this block do X?" must not read these — they say
+ * what OTHER blocks do.
+ */
+const REFERENCE_ARRAY_FIELDS = [
+  "uses",
+  "cites",
+  "examples",
+  "proofs",
+  "defines",
+  "requires",
+  "mathlibLinks",
+  "blocks",
+] as const;
+
+/** The same, for fields holding a single reference rather than an array. */
+const REFERENCE_SCALAR_FIELDS = ["interprets", "see"] as const;
+
+/** Blank out every reference field, leaving what the block says about itself. */
+function stripReferenceFields(ts: string): string {
+  let out = ts;
+  for (const f of REFERENCE_ARRAY_FIELDS) out = stripArrayField(out, f);
+  for (const f of REFERENCE_SCALAR_FIELDS) {
+    out = out.replace(new RegExp(`\\b${f}\\s*:\\s*"[^"]*"`, "g"), "");
+  }
+  return out;
+}
+
 const LP_DUAL_HINT_RE =
   /lp-dual|operator-selection-lp|shadow-price|primal-dual|lp-duality/i;
 const LP_DUAL_REQUIRED_FIELDS = [
@@ -626,16 +659,26 @@ export function checkComputeLpDualPresent(
   if (!ts) return { result: "n/a", hits: [] };
   const { witness } = getComputationField(ts);
   if (!witness) return { result: "pass", hits: [] };
-  // Filter: only blocks whose ts mentions LP/SDP/operator-selection
-  // OUTSIDE the `uses: [...]` array. References inside `uses:` are
-  // downstream dependencies (the block consumes an LP result) — they
-  // do not imply the block's OWN witness must carry LP dual fields.
-  // Strip uses: array + cites: array + interprets: field — these are
-  // downstream references, not evidence the block computes LP duals.
-  const tsStripped = ts
-    .replace(/\buses\s*:\s*\[[\s\S]*?\]/g, "")
-    .replace(/\bcites\s*:\s*\[[\s\S]*?\]/g, "")
-    .replace(/\binterprets\s*:\s*"[^"]*"/g, "");
+  // Filter: only blocks whose ts mentions LP/SDP/operator-selection in a
+  // field that describes THIS block. Every reference field points at a
+  // DIFFERENT one — a block that `uses:` an LP bound consumes a result, it
+  // does not compute duals — so an LP token inside one says nothing about
+  // the witness this block must carry.
+  //
+  // Two bugs have come from getting the strip wrong, and both read a
+  // reference as evidence:
+  //
+  //  - a non-greedy `[\s\S]*?\]` stopped at the FIRST `]`, so an entry
+  //    containing one (`"def:family[0]"`) left the rest of the array in
+  //    place. `stripArrayField` scans to the matching bracket instead.
+  //  - the list itself was `uses` + `cites` + `interprets`, which is only
+  //    three of the schema's reference fields. `examples`, `proofs`,
+  //    `defines`, `requires` and `mathlibLinks` all point elsewhere too,
+  //    and all leaked.
+  //
+  // The list below is the complete set; adding a reference field to the
+  // schema means adding it here.
+  const tsStripped = stripReferenceFields(ts);
   if (!LP_DUAL_HINT_RE.test(tsStripped)) {
     return { result: "pass", hits: [] };
   }
@@ -657,12 +700,30 @@ export function checkComputeLpDualPresent(
   const absPath = witness.startsWith("/")
     ? witness
     : resolve(REPO_ROOT, witness);
-  if (!existsSync(absPath)) return { result: "pass", hits: [] };
+  // Past this point the block IS an LP computation, so the witness is the
+  // evidence the criterion turns on. Missing or unparseable, the answer is
+  // unknown — `pass` for a corrupt witness is the criterion asserting a
+  // result it could not read. (A missing witness is separately a `fail`
+  // under `compute-witness-exists`, so the finding is not lost here.)
+  if (!existsSync(absPath)) {
+    return {
+      result: "n/a",
+      hits: [],
+      notes: `witness ${witness} not found — LP dual fields not checked`,
+    };
+  }
   let body: Record<string, unknown> = {};
   try {
     body = JSON.parse(readFileSync(absPath, "utf-8"));
-  } catch {
-    return { result: "pass", hits: [] };
+  } catch (e) {
+    return {
+      result: "n/a",
+      hits: [],
+      notes:
+        `witness ${witness} does not parse as JSON (${
+          e instanceof Error ? e.message.slice(0, 80) : "unknown"
+        }) — LP dual fields not checked`,
+    };
   }
   // LP fields may live at the top level OR nested anywhere reachable
   // by a shallow walk (the conventional layout for WitnessBuilder
@@ -945,12 +1006,24 @@ export function checkCanonicalScriptNotDeprecated(
   tsPath: string | undefined,
 ): CheckerResult {
   const ts = readMaybe(tsPath);
-  if (!ts) return { result: "pass", hits: [] };
+  // No manifest to read: nothing was examined, so nothing passed. Every
+  // other checker in this file spells this `n/a`.
+  if (!ts) return { result: "n/a", hits: [] };
   const scriptMatch = ts.match(/script:\s*["']([^"']+)["']/);
   if (!scriptMatch) return { result: "pass", hits: [] };
   const scriptRelPath = scriptMatch[1];
   const scriptAbsPath = resolve(REPO_ROOT, scriptRelPath);
-  if (!existsSync(scriptAbsPath)) return { result: "pass", hits: [] };
+  if (!existsSync(scriptAbsPath)) {
+    // The block NAMES a script and the file is not there. "Not
+    // deprecated" is then a claim about something unread — absence of
+    // the evidence, not evidence of absence. A block declaring no script
+    // at all is different, and still passes vacuously above.
+    return {
+      result: "n/a",
+      hits: [],
+      notes: `declared script ${scriptRelPath} not found — deprecation not checked`,
+    };
+  }
   const scriptSrc = readFileSync(scriptAbsPath, "utf-8");
   const hits: CheckerHit[] = [];
   // Check for script-level deprecation markers (first 10 lines or

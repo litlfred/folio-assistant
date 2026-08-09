@@ -1,11 +1,11 @@
 ---
 # folio-assistant-02kc
 title: Cache carries oleans WITHOUT .trace siblings — lake rebuilds and evicts them
-status: in-progress
+status: scrapped
 type: bug
 priority: critical
 created_at: 2026-08-07T13:56:17Z
-updated_at: 2026-08-07T14:49:26Z
+updated_at: 2026-08-08T16:05:00Z
 ---
 
 Root cause of the cache never helping lake build. Lake decides staleness from .trace files; an olean with no trace is out-of-date, so lake rebuilds it and evicts. Measured: restore laid 7268 oleans with only 775 traces; a single-module 'lake build' ran 823 targets and left 772 oleans — every survivor had a trace (494 mathlib oleans / 494 traces, 0 of 200 sampled lacking one). The cache only ever worked for direct lean+LEAN_PATH calls, which is why the triviality probe succeeded while builds did not.
@@ -142,3 +142,118 @@ Possible follow-up, not built: `seed` could compare the candidate's olean
 count against the branch it is about to replace and warn on a large drop.
 That is a real computable check, unlike an absolute breadth threshold.
 Deferred rather than added mid-reseed.
+
+
+---
+
+## Blocker re-tested 2026-08-08 (session `3bada08b`) — still blocked, now measured
+
+Asked to work all open beans, so the claim was re-tested rather than inherited.
+
+**The toolchain half is genuinely resolved** (`ga7e` was right):
+`~/.elan/toolchains/leanprover--lean4---v4.24.0` is present and both binaries
+run — `lean --version` → 4.24.0, `lake --version` → Lake 5.0.0-src+797c613. So
+"no linkable toolchain" is no longer the blocker.
+
+**The network half is not.** Every host a reseed needs is unreachable from an
+authoring container:
+
+    https://release.lean-lang.org                  HTTP 000
+    https://leanprover-community.github.io         HTTP 000
+    https://github.com/leanprover-community/mathlib4   HTTP 403
+    https://api.github.com/repos/leanprover/elan/releases/latest   HTTP 403
+
+`lake exe cache get` fetches from the second of those, so the fast route is
+out; the from-source route is the hours-long build this bean already measured
+(823 targets for ONE module, not finished in 10 minutes at 0% trace coverage).
+
+**And there is no folio here.** `scripts/lake-cache.sh restore-toolchain`
+exits `no lean-toolchain` — that file is folio content, and this container has
+the platform only. So even with network there is nothing to build.
+
+Conclusion unchanged and now pinned: **this needs CI, or a machine with
+unrestricted egress.** The runbook in
+`docs/guides/reseeding-the-lean-cache.md` is the artifact to run there. Nothing
+further is doable from an authoring container, and the next session should not
+spend turns re-confirming it.
+
+---
+
+## 2026-08-08 — blocker re-confirmed from a container that DOES carry the folio
+
+The re-test above closed with "there is no folio here… this container has the
+platform only". This one has both: `/home/user/folio-assistant` and a `qou`
+checkout at `/workspace/qou` with a populated `.lake`. So the untested half is
+now tested, and the conclusion is unchanged.
+
+### The denial is network POLICY, not routing
+
+The earlier probe recorded `no route` / `HTTP 000`. The proxy's own status
+endpoint names it exactly:
+
+    kind:   connect_rejected
+    detail: gateway answered 403 to CONNECT (policy denial or upstream failure)
+    hosts:  leanprover-community.github.io:443
+            mathlib4.lean-cache.cloud:443
+            lakecache.blob.core.windows.net:443
+            release.lean-lang.org:443
+
+That is the environment's network policy refusing CONNECT, not an unroutable
+host. It names the fix precisely: either allow those four hosts in the
+environment's network policy, or run the reseed in CI. Nothing in the container
+can be reconfigured around it, and nothing should try.
+
+### Trace coverage measured on real trees, with the corrected formula
+
+Both families, from the `qou` checkout:
+
+    qou family     950 oleans, 945 own,  traced   5/950   (0%)
+    mathlib family 7268 oleans,   0 own, traced   0/7268  (0%)
+
+Raw `.trace` files on disk: **6** under the paper's lake-root, **0** under the
+workspace root. So this bean's opening figure — "7268 oleans with only 775
+traces" — was itself the inflated pre-fix metric; the true pairing is nearer
+zero than 775. The diagnosis is unaffected and if anything understated.
+
+Corroborating from use: this session type-checked three modules, including a new
+one importing `QOU.QBeta.*`, via `scripts/lean-verify.sh` — `lean` + `LEAN_PATH`
+directly, no `lake`. Exactly the split this bean predicts: the cache works for
+direct `lean` calls and not for `lake build`.
+
+### Note on the mathlib family's `own pkg: 0`
+
+Not a defect — that roster entry's lake-root is `.`, where the own package is a
+shim. `status` used to raise the gutted-cache alarm on it anyway; fixed in
+`own_oleans_expected` (bean `folio-assistant-zq4t`, #77). See the correction on
+`folio-assistant-5d7z`, which had inherited that reading.
+
+Not resolving this bean — it is a sibling's, and the blocker stands.
+
+---
+
+## 2026-08-08 — SCRAPPED by owner decision: the defect is real and accepted
+
+Same ruling as `5d7z`, which this bean is the root cause of. Asked directly;
+the answer was **leave it**.
+
+Nothing above is retracted. Oleans without `.trace` siblings genuinely are
+invisible to Lake's staleness check, coverage genuinely is 0% on both families,
+and `lake build` genuinely does rebuild and evict. The diagnosis stands; what
+changed is that fixing it was weighed against what it buys and declined.
+
+It buys `lake build`. The paper is verified through `scripts/lean-verify.sh`,
+which calls `lean` with `LEAN_PATH` and never invokes `lake` — the split this
+bean itself predicted ("the cache only ever worked for direct lean+LEAN_PATH
+calls, which is why the triviality probe succeeded while builds did not"). That
+prediction is now the reason the fix is not needed: the working path is the one
+in use.
+
+Costs, for the record: widening the environment's network policy to four hosts,
+or hours of Actions time on a repo whose auto-triggers were disabled for
+billing.
+
+Marked `scrapped` rather than left `in-progress` specifically so it stops being
+re-tested. **Three sessions have now independently re-confirmed this blocker**
+— it is well established and needs no fourth. If `lake build` ever becomes
+load-bearing, reopen and follow
+`docs/guides/reseeding-the-lean-cache.md`.

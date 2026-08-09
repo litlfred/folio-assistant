@@ -97,3 +97,29 @@ export function soleFolioPaper(repoRoot?: string): string | undefined {
   const papers = findPapers(repoRoot);
   return papers.length === 1 ? papers[0] : undefined;
 }
+
+/**
+ * The paper to operate on: an explicit name if given, else the folio's sole
+ * paper.
+ *
+ * Throws — with the folio's actual contents in the message — when there is no
+ * unambiguous answer. That is the point: the hardcoded
+ * `"quantum-observable-universe"` defaults this replaces did not fail when the
+ * folio was absent or held a different paper, they silently pointed at a
+ * directory that was not there, and the caller reported a clean run over
+ * nothing.
+ */
+export function requirePaper(explicit?: string, repoRoot?: string): string {
+  if (explicit) return explicit;
+  const root = repoRoot ?? findContentRepoRoot();
+  const sole = soleFolioPaper(root);
+  if (sole) return sole;
+  const papers = findPapers(root);
+  throw new Error(
+    papers.length === 0
+      ? `No paper found under ${join(root, "content")}. folio-assistant is the ` +
+        `PLATFORM; papers live in a folio. Run this from the content repo, or ` +
+        `name a paper explicitly.`
+      : `${papers.length} papers found (${papers.join(", ")}) — name one explicitly.`,
+  );
+}

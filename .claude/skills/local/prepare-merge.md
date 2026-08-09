@@ -56,6 +56,19 @@ the one recipe.
    name), and scope any corpus-wide number you quote to what actually ran. In
    qou, `lake build` reaches 853 of 1618 Lean modules, so a touched file can be
    green purely by never having been compiled.
+
+   For `contentType: paper` branches that touch content blocks, also run the
+   **`block_pdf_render`** gate:
+   ```
+   bun run scripts/render-changed-blocks.ts [--upload-drive]
+   ```
+   This compiles a standalone PDF for every changed block and scrapes the
+   LaTeX log; `--upload-drive` additionally pushes clean PDFs to Google Drive
+   when it is configured. Exits 1 on LaTeX errors (fix required); exits 0 with warnings
+   only (advisory); exits 2 on setup problems — including **no local
+   `latexmk`**, which is the common case in a container. Exit 2 means the gate
+   did **not run**; report it that way rather than folding it into a green,
+   per the same honesty rule as the build above.
 6. **Push** the feature branch (retry/backoff as in step 2):
    `git push -u origin <branch>`.
 7. **Dispatch the repo's CI on the pushed branch, and fold the result into the

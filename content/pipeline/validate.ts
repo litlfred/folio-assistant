@@ -30,6 +30,7 @@ import { renderBlock, validateLatexAst } from "./render-latex";
 import { validateDefterms } from "./validate-defterm";
 import { validateValueDirectives } from "./validate-value";
 import { findContentRepoRoot, findPapers } from "./repo-root";
+import { referenceRegistryConfigured, getReferenceRegistry } from "./references-registry-di";
 
 // ── File discovery ───────────────────────────────────────────────
 
@@ -41,8 +42,6 @@ function discoverManifests(dir: string): string[] {
     .map(f => basename(f, ".ts"));
 }
 
-type ManifestKind = "paper" | "chapter" | null;
-
 /**
  * Detect what kind of manifest a directory's eponymous .ts file is.
  * Returns "paper", "chapter", or null if no manifest exists.
@@ -51,15 +50,24 @@ type ManifestKind = "paper" | "chapter" | null;
  * exported object against PaperSchema and ChapterSchema. The data itself
  * determines the type — no source-text heuristics.
  */
-async function detectManifestKind(dir: string): Promise<{ kind: ManifestKind; path: string | null; data?: any }> {
+// Discriminated on `kind`: `data` is the manifest each branch just validated,
+// so callers get `Paper` or `Chapter` rather than re-asserting it.
+type ManifestDetection =
+  | { kind: "paper"; path: string; data: Paper }
+  | { kind: "chapter"; path: string; data: Chapter }
+  | { kind: null; path: null; data?: undefined };
+
+async function detectManifestKind(dir: string): Promise<ManifestDetection> {
   const dirName = basename(dir);
   const manifestPath = join(dir, `${dirName}.ts`);
   if (!existsSync(manifestPath)) return { kind: null, path: null };
   try {
     const mod = await import(manifestPath);
     const obj = mod.default;
-    if (PaperSchema.safeParse(obj).success) return { kind: "paper", path: manifestPath, data: obj };
-    if (ChapterSchema.safeParse(obj).success) return { kind: "chapter", path: manifestPath, data: obj };
+    const asPaper = PaperSchema.safeParse(obj);
+    if (asPaper.success) return { kind: "paper", path: manifestPath, data: obj as Paper };
+    const asChapter = ChapterSchema.safeParse(obj);
+    if (asChapter.success) return { kind: "chapter", path: manifestPath, data: obj as Chapter };
   } catch { /* import error — not a valid manifest */ }
   return { kind: null, path: null };
 }
@@ -487,12 +495,35 @@ export async function validateObjects(
   // `ReferenceError: dir is not defined` on any run reaching a single block.
   // Restoring the binding is the fix; substituting `objectsDir` would silence
   // the crash and make `md-exists` fail for every block in the paper.
+  // `cites-resolve` opens with `if (… || !ctx.allRefIds) return null`, and
+  // this context never supplied `allRefIds` — so the only rule that
+  // validates a block's `cites[]` against the bibliography could not fire
+  // for any block, ever. `bib-qa` does not cover it either: it scans
+  // `.tex` and `.md` for `\cite{}`, never the `.ts` manifest field.
+  //
+  // A folio with no bibliography is legitimate, so an absent registry is
+  // not an error — but it must not read as "citations checked" either.
+  const refsConfigured = referenceRegistryConfigured();
+  const allRefIds = refsConfigured
+    ? new Set(getReferenceRegistry().referenceMap.keys())
+    : undefined;
+  if (!refsConfigured) {
+    issues.push({
+      level: "info",
+      block: "(bibliography)",
+      message:
+        "no reference registry configured — cites-resolve did not run, so " +
+        "cites[] entries were NOT validated against references",
+    });
+  }
+
   for (const [name, { block, dir }] of allBlocks) {
     const mdContent = mdCache.get(name);
     const ctx: ConstraintContext = {
       rootName: name,
       dir,
       allLabels,
+      allRefIds,
       fileExists: (p: string) => existsSync(p),
       lakeTreeContainsBasename,
       mdContent,
@@ -501,7 +532,7 @@ export async function validateObjects(
 
     for (const rule of CONSTRAINT_RULES) {
       if (!rule.appliesTo.includes(block.kind)) continue;
-      const msg = rule.check(block as any, ctx);
+      const msg = rule.check(block, ctx);
       if (msg) {
         const isWarning = msg.startsWith("[warning]");
         issues.push({

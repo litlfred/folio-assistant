@@ -58,4 +58,52 @@ describe("GitHub Actions workflows", () => {
       expect(triggers, `${file} has no on: triggers`).toBeDefined();
     });
   }
+
+  /**
+   * `code-quality-gates.yml` runs `bun test`, `bun run lint` and
+   * `tsc --noEmit`. Nothing else in this repo does — of 33 workflows, only
+   * `atomic-mass-gen-check` and `docs-site` auto-trigger, and neither touches
+   * TypeScript.
+   *
+   * It was written `workflow_dispatch`-only, in a commit whose own message
+   * said "no folio-assistant workflow triggers on `pull_request`" and "a
+   * ratchet only works if something runs it". So every gate landed since —
+   * the suite at 0 failures, eslint with every rule at `error`, `tsc` over all
+   * five trees — was enforced by nothing at all, behind a workflow whose
+   * header claimed it was the enforcement.
+   *
+   * A dispatch-only gate is indistinguishable from a working one until you
+   * look at the Actions tab and find no runs. This is the check that looks.
+   */
+  test("code-quality-gates.yml actually triggers on pull_request", () => {
+    const doc = Bun.YAML.parse(
+      readFileSync(join(WORKFLOW_DIR, "code-quality-gates.yml"), "utf-8"),
+    ) as Record<string, unknown>;
+    const triggers = (doc.on ?? doc["true"]) as Record<string, unknown>;
+    expect(Object.keys(triggers).sort()).toContain("pull_request");
+  });
+
+  test("code-quality-gates.yml has no paths: filter on pull_request", () => {
+    // A `paths:` filter is how a whole-repo gate quietly stops covering the
+    // file that broke it — and, because GitHub reports a filtered-out required
+    // check as never having run, how a branch protection rule blocks forever.
+    const doc = Bun.YAML.parse(
+      readFileSync(join(WORKFLOW_DIR, "code-quality-gates.yml"), "utf-8"),
+    ) as Record<string, unknown>;
+    const triggers = (doc.on ?? doc["true"]) as Record<string, unknown>;
+    const pr = triggers.pull_request as Record<string, unknown> | null;
+    expect(pr == null || !("paths" in pr)).toBe(true);
+  });
+
+  test("the TypeScript gate runs all three checks", () => {
+    // Each is a separate ratchet; a gate that runs two of the three reads as
+    // full coverage in the Actions UI.
+    const doc = Bun.YAML.parse(
+      readFileSync(join(WORKFLOW_DIR, "code-quality-gates.yml"), "utf-8"),
+    ) as { jobs: Record<string, { steps: Array<{ run?: string }> }> };
+    const runs = (doc.jobs.typescript?.steps ?? []).map((s) => s.run ?? "").join("\n");
+    expect(runs).toContain("bun test");
+    expect(runs).toContain("bun run lint");
+    expect(runs).toContain("tsc --noEmit");
+  });
 });

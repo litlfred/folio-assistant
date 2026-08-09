@@ -4,6 +4,7 @@
  */
 import { test, expect, describe } from "bun:test";
 import { registerAuditTools } from "../../adapters/paper/tools/audit.ts";
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 /** An MCP tool handler, as the registration stubs below see it. */
 type ToolHandler = (
@@ -11,9 +12,22 @@ type ToolHandler = (
 ) => Promise<{ content: Array<{ type: string; text: string }> }>;
 
 
+/**
+ * A stand-in for `McpServer` that records what a `register*Tools` call
+ * registers. Only `tool` is exercised, so the cast to `McpServer` at each use
+ * is narrowed through `unknown` rather than `any` — the recorder itself stays
+ * typed, and a change to the `tool` signature still breaks here.
+ */
+interface ToolRecorder {
+  tool(name: string, desc: string, schema: unknown, handler: ToolHandler): void;
+}
+
 describe("registerAuditTools", () => {
   const reg: Record<string, { desc: string; handler: ToolHandler }> = {};
-  registerAuditTools({ tool(name: string, desc: string, _s: any, handler: ToolHandler) { reg[name] = { desc, handler }; } } as any);
+  const recorder: ToolRecorder = {
+    tool(name, desc, _schema, handler) { reg[name] = { desc, handler }; },
+  };
+  registerAuditTools(recorder as unknown as McpServer);
 
   const expected = [
     "latex_overfull", "qa_staleness", "tex_source_audit", "dangling_remarks",

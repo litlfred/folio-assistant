@@ -1,46 +1,59 @@
 # Code-quality gates — cheap, fast static checks that protect compute infra.
 #
-# Three gates (per docs/handover/2026-06-09-affectionate-hopper-handover.md §2):
+# Four jobs (the first three per
+# docs/handover/2026-06-09-affectionate-hopper-handover.md §2).
+#
+# TWO of the four jobs gate THIS repo; two scan trees only a folio has. Which
+# is which is stated in each job, and a job with nothing to scan says so
+# rather than printing OK — see the note on `lean-bare-import`.
 #
 #   1. Lean bare-import gate — HARD FAIL on `import Mathlib` (the whole
 #      library). A bare `import Mathlib` pulls the entire Mathlib build cone
 #      into a single content-block / lib file, which is what drives the
 #      >9-min full-library `lake build` timeout. Targeted imports keep the
-#      per-file dependency cone (and CI build) small. Zero offenders today
-#      (the 2 historical ones — alpha-k-derivation-procedure.lean and
-#      AppendixSurreals/FigureEightCasimirWeight.lean — were narrowed), so
-#      this is a true regression gate.
+#      per-file dependency cone (and CI build) small. FOLIO tree: the Lean
+#      sources live in `content/<paper>/lean/`, so in the platform repo this
+#      job has nothing to scan and skips.
 #
-#   2. Python unused / wildcard imports — WARN-ONLY ratchet. ruff F401
-#      (unused import) + F403 (`from x import *`) over the compute tree.
-#      Warn-only on the current baseline; tighten to a hard gate once the
-#      live offenders (universal-ilp.py wildcard; substrate facade
-#      re-exports) are resolved or annotated (`# noqa: F403` / `__all__`).
+#   2. Python unused / wildcard imports — HARD GATE (promoted from
+#      warn-only). ruff F401 (unused import) + F403 (`from x import *`) over
+#      this repo's Python. It used to scan `folio-assistant/computations` and
+#      `tools`, neither of which exists here — ruff warned about the missing
+#      paths and exited 0, so the step reported a clean baseline it had never
+#      computed. Repointed at the trees that hold the 44 real files, which
+#      surfaced 24 live F401s; those were drained, so the rule is an error.
 #
 #   3. TypeScript gate — HARD FAIL on `bun test`, `bun run lint`, and
-#      `tsc --noEmit`. All three are green as of PR #68 and each is a real
-#      regression gate rather than a baseline report:
-#        - the suite went 201 pass / 29 fail -> 287 / 0 (the 29 were
-#          split-repo assertions that had been red long enough to read as
-#          background noise, which is exactly the cost — a genuine
-#          regression would not have stood out);
-#        - `bun run lint` had NEVER run (no config, no dependency) and now
-#          exits 0. Its config promotes a rule to `error` only once that
-#          rule's count is zero, so a red lint always means a regression
-#          rather than pre-existing debt. `no-explicit-any` is still on
-#          `warn` by design and does not fail this gate.
+#      `tsc --noEmit`. Each is a real regression gate rather than a baseline
+#      report: the suite is 428 pass / 0 fail; `tsc` covers all five trees
+#      (`src`, `schemas`, `content`, `scripts`, `adapters`), not just `src`;
+#      and `eslint` has every rule at `error` — the `warn` tier is empty, so
+#      a red lint always means a regression rather than pre-existing debt.
 #      Without this job none of that is enforced: the ratchet only works if
-#      something runs it.
+#      something runs it — which is exactly what went wrong, see `on:` below.
 #
 #   4. Rust wildcard imports — WARN-ONLY ratchet. Lightweight grep report
 #      of non-test `use ...::*;` in tools/ (full `clippy -D
 #      clippy::wildcard_imports` is the eventual upgrade, but a cargo build
 #      on every PR is too heavy for a static gate; the grep ratchet flags
-#      new wildcard imports cheaply).
+#      new wildcard imports cheaply). FOLIO tree: zero `.rs` files here, so
+#      this job skips.
 
 name: Code-quality gates
 
 on:
+  # This workflow was added by the commit "ci: give the ratchet something to
+  # run in", whose message correctly reported that "no folio-assistant workflow
+  # triggers on `pull_request`" — and was then written `workflow_dispatch`-only,
+  # so it never ran. The fix for "nothing runs the ratchet" was itself something
+  # that never runs. Of 33 workflows here, exactly two auto-trigger
+  # (atomic-mass-gen-check, docs-site) and neither runs any TypeScript check.
+  #
+  # No `paths:` filter. The TypeScript job is the gate for the whole repo, and
+  # a filter is how a gate stops covering the file that broke it.
+  pull_request:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -60,6 +73,19 @@ jobs:
       - name: No bare `import Mathlib`
         run: |
           set -euo pipefail
+          # Say which of the two facts this is. `content/` in the PLATFORM repo
+          # holds only `pipeline/` — zero .lean files — so this printed
+          # "OK — no bare 'import Mathlib'" having looked at nothing at all.
+          # "None found" and "nothing to look at" are different, and a gate that
+          # reports the first while meaning the second is worse than no gate:
+          # it reads as coverage. The Lean tree lives in the FOLIO; this job is
+          # here for folios that vendor this workflow.
+          count=$(find content -name '*.lean' 2>/dev/null | wc -l)
+          if [ "$count" -eq 0 ]; then
+            echo "SKIP — no content/**/*.lean in this repo (the Lean tree lives in the folio). Nothing scanned."
+            exit 0
+          fi
+          echo "Scanning $count Lean file(s)…"
           if matches=$(grep -rnE '^import Mathlib[[:space:]]*$' \
                 content --include='*.lean' 2>/dev/null); then
             echo "::error::Bare 'import Mathlib' found — use targeted imports (#min_imports). Offenders:"
@@ -69,10 +95,10 @@ jobs:
             done
             exit 1
           fi
-          echo "OK — no bare 'import Mathlib' in content/**/*.lean"
+          echo "OK — no bare 'import Mathlib' in $count Lean file(s)"
 
   python-imports:
-    name: Python unused/wildcard imports (warn-only)
+    name: Python unused/wildcard imports (hard)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -84,17 +110,36 @@ jobs:
       - name: Install ruff
         run: pip install "ruff>=0.5"
 
-      # WARN-ONLY: report F401 (unused) + F403 (wildcard) but never fail CI
-      # on the current baseline. Flip `continue-on-error` off (and drop the
-      # `|| true`) to make it a hard gate once the baseline is clean.
-      - name: ruff F401,F403 (report)
-        continue-on-error: true
-        # `continue-on-error` (above) keeps the job green; do NOT add `|| true`
-        # — that would mask the step's own failed status in the Actions UI.
+      # HARD GATE, promoted from warn-only. Same rule as eslint: a check is an
+      # error only once its count is zero, and this repo's count is zero — the
+      # 24 live F401s were drained in the same commit that repointed the scan.
+      # `continue-on-error` is gone with it; a new unused import fails here.
+      - name: ruff F401,F403
+        #
+        # Was pointed at `folio-assistant/computations tools`. Neither exists
+        # here: `tools/` is a folio tree, and `folio-assistant/computations` is
+        # a FOLIO-RELATIVE path (inside a folio, the platform is the
+        # `folio-assistant/` symlink) — so in this repo it would mean
+        # `folio-assistant/folio-assistant/computations`. ruff exits non-zero on
+        # a missing path, and `continue-on-error` swallowed that, so the step
+        # has been reporting a clean baseline it never computed.
+        #
+        # Scan the trees that hold this repo's 44 Python files. Missing paths
+        # are dropped rather than passed to ruff, and an empty set is stated.
         run: |
+          set -uo pipefail
+          targets=""
+          for d in scripts .github/scripts content/pipeline schemas src adapters; do
+            [ -d "$d" ] && targets="$targets $d"
+          done
+          if [ -z "$targets" ]; then
+            echo "SKIP — no Python trees present in this repo. Nothing scanned."
+            exit 0
+          fi
+          echo "Scanning:$targets"
           ruff check --select F401,F403 --output-format=github \
             --exclude '**/_deprecated/**' \
-            folio-assistant/computations tools
+            $targets
 
   typescript:
     name: TypeScript — tests, lint, types (hard)
@@ -135,6 +180,15 @@ jobs:
         continue-on-error: true
         run: |
           set -uo pipefail
+          # Same distinction as the Lean gate: there are ZERO .rs files in this
+          # repo, so "OK — no non-test wildcard imports" was reporting a clean
+          # result for a scan of nothing. `tools/` is a folio tree; this job is
+          # here for folios that vendor this workflow.
+          count=$(find tools -name '*.rs' 2>/dev/null | wc -l)
+          if [ "$count" -eq 0 ]; then
+            echo "SKIP — no tools/**/*.rs in this repo (the Rust tree lives in the folio). Nothing scanned."
+            exit 0
+          fi
           # Char class covers digits too (e.g. base64::prelude::*, sha2::*) and
           # underscores (wasm_bindgen::prelude::*, extendr_api::prelude::*).
           matches=$(grep -rnE '^[[:space:]]*use [A-Za-z0-9_:]+::\*;' \
@@ -146,5 +200,5 @@ jobs:
               echo "  $line"
             done
           else
-            echo "OK — no non-test wildcard imports in tools/**/*.rs"
+            echo "OK — no non-test wildcard imports in $count Rust file(s)"
           fi

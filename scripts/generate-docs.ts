@@ -39,7 +39,20 @@ import {
   DockerRequirementsSchema,
   SkillPackageManifestSchema,
   RemotePackageRefSchema,
+  LifecycleStageSchema,
 } from "../schemas/constraints.js";
+import type { z } from "zod";
+import type {
+  ActorDefinition, CapabilityDefinition, Requirement, SkillDefinition,
+} from "../schemas/assistant-types.ts";
+// `assistant-package.ts` also exports a `PackageManifest` — a Docker BUILD
+// manifest (`packageId`, `baseImage`, `apt`, `installers`). The files under
+// `skills/*/package-manifest.json` are the other thing of that name, matching
+// `SkillPackageManifestSchema` exactly on all nine keys.
+import type { SkillPackageManifest } from "../schemas/types.ts";
+
+/** No TS interface mirrors this one — the Zod schema is its definition. */
+type RemotePackageRef = z.infer<typeof RemotePackageRefSchema>;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "..");
@@ -49,40 +62,71 @@ mkdirSync(outDir, { recursive: true });
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function loadJsonDir(dir: string): { name: string; data: any }[] {
+/** One `<name>.json` per definition, parsed. Callers say what `T` is. */
+function loadJsonDir<T>(dir: string): { name: string; data: T }[] {
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
     .filter(f => f.endsWith(".json"))
     .map(f => {
       try {
-        return { name: f.replace(".json", ""), data: JSON.parse(readFileSync(join(dir, f), "utf-8")) };
+        return { name: f.replace(".json", ""), data: JSON.parse(readFileSync(join(dir, f), "utf-8")) as T };
       } catch { return null; }
     })
-    .filter(Boolean) as any[];
+    .filter((x): x is { name: string; data: T } => x !== null);
 }
 
-function formatType(def: any): string {
+/**
+ * The subset of a JSON Schema node this renderer reads.
+ *
+ * Hand-declared rather than borrowed from `zod-to-json-schema`, whose
+ * `JsonSchema7Type` is a 24-arm union: every access here would need a
+ * narrowing step for a renderer that is deliberately shape-tolerant and falls
+ * through to "`object`". Naming the fields it does read is what stops a typo
+ * in one of them from silently rendering every type as "`object`".
+ */
+interface JsonSchemaNode {
+  // Other keywords pass through untouched; the index signature says so, and
+  // keeps a `zod-to-json-schema` node — whose `anyOf` arms may be bare
+  // `{format}` objects — assignable without a cast.
+  [keyword: string]: unknown;
+}
+
+/** Treat an arbitrary JSON value as a schema node; non-objects have none. */
+const node = (v: unknown): JsonSchemaNode | undefined =>
+  v !== null && typeof v === "object" ? (v as JsonSchemaNode) : undefined;
+
+/** A keyword read as a string, or `undefined` if it is absent or not one. */
+const str = (v: unknown): string | undefined => (typeof v === "string" ? v : undefined);
+
+/** A keyword read as an array, or `undefined`. */
+const arr = (v: unknown): unknown[] | undefined => (Array.isArray(v) ? v : undefined);
+
+function formatType(def: JsonSchemaNode | undefined): string {
   if (!def) return "`any`";
-  if (def.type === "array") return `${formatType(def.items || {})}[]`;
-  if (def.type) return `\`${def.type}\``;
-  if (def.enum) return def.enum.map((e: string) => `\`"${e}"\``).join(" | ");
-  if (def.anyOf) return def.anyOf.map((a: any) => formatType(a)).join(" | ");
-  if (def.oneOf) return def.oneOf.map((a: any) => formatType(a)).join(" | ");
-  if (def.const) return `\`"${def.const}"\``;
-  if (def.$ref) return `\`${def.$ref.split("/").pop()}\``;
+  if (def.type === "array") return `${formatType(node(def.items) ?? {})}[]`;
+  if (def.type) return `\`${String(def.type)}\``;
+  const enums = arr(def.enum);
+  if (enums) return enums.map((e) => `\`"${String(e)}"\``).join(" | ");
+  const anyOf = arr(def.anyOf);
+  if (anyOf) return anyOf.map((a) => formatType(node(a))).join(" | ");
+  const oneOf = arr(def.oneOf);
+  if (oneOf) return oneOf.map((a) => formatType(node(a))).join(" | ");
+  if (def.const) return `\`"${String(def.const)}"\``;
+  const ref = str(def.$ref);
+  if (ref) return `\`${ref.split("/").pop()}\``;
   return "`object`";
 }
 
-function jsonSchemaPropsTable(schema: any): string[] {
+function jsonSchemaPropsTable(schema: JsonSchemaNode | undefined): string[] {
   const lines: string[] = [];
-  const props = schema?.properties || {};
+  const props = node(schema?.properties) ?? {};
   if (Object.keys(props).length === 0) return lines;
-  const req = schema?.required || [];
+  const req = arr(schema?.required) ?? [];
   lines.push("| Property | Type | Required | Description |");
   lines.push("|----------|------|----------|-------------|");
   for (const [k, v] of Object.entries(props)) {
-    const d = v as any;
-    lines.push(`| \`${k}\` | ${formatType(d)} | ${req.includes(k) ? "Yes" : "No"} | ${d.description || ""} |`);
+    const d = node(v);
+    lines.push(`| \`${k}\` | ${formatType(d)} | ${req.includes(k) ? "Yes" : "No"} | ${str(d?.description) || ""} |`);
   }
   return lines;
 }
@@ -120,23 +164,29 @@ function getTransitiveRoles(actorId: string): Set<string> {
 
 // ─── Load all data ───────────────────────────────────────────────────────────
 
-const actors = loadJsonDir(join(rootDir, ".claude", "skills", "actors"));
-const capabilities = loadJsonDir(join(rootDir, ".claude", "skills", "capabilities"));
-const requirements = loadJsonDir(join(rootDir, ".claude", "skills", "requirements"));
-const skills = loadJsonDir(join(rootDir, ".claude", "skills", "local"));
-const remotePackages = loadJsonDir(join(rootDir, "skills", "remote-packages"));
+const actors = loadJsonDir<ActorDefinition>(join(rootDir, ".claude", "skills", "actors"));
+const capabilities = loadJsonDir<CapabilityDefinition>(join(rootDir, ".claude", "skills", "capabilities"));
+const requirements = loadJsonDir<Requirement>(join(rootDir, ".claude", "skills", "requirements"));
+const skills = loadJsonDir<SkillDefinition>(join(rootDir, ".claude", "skills", "local"));
+const remotePackages = loadJsonDir<RemotePackageRef>(join(rootDir, "skills", "remote-packages"));
 const skillSchemaDirs = existsSync(join(rootDir, "schemas", "skills"))
   ? readdirSync(join(rootDir, "schemas", "skills"), { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name)
   : [];
-const packages = loadJsonDir(join(rootDir, "skills")).length > 0
+// Gated on `loadJsonDir(join(rootDir, "skills")).length > 0` until now — that
+// reads loose `*.json` files sitting DIRECTLY in `skills/`, and there have
+// never been any: every manifest lives one level down, in
+// `skills/<package>/package-manifest.json`. So the guard was always false,
+// `packages` was always `[]`, and PACKAGES.md shipped with an empty "Package
+// Summary" table and no per-package sections at all, for all five packages.
+const packages = existsSync(join(rootDir, "skills"))
   ? readdirSync(join(rootDir, "skills"), { withFileTypes: true })
       .filter(d => d.isDirectory())
       .map(d => {
         const mp = join(rootDir, "skills", d.name, "package-manifest.json");
-        try { return { name: d.name, data: JSON.parse(readFileSync(mp, "utf-8")) }; }
+        try { return { name: d.name, data: JSON.parse(readFileSync(mp, "utf-8")) as SkillPackageManifest }; }
         catch { return null; }
       })
-      .filter(Boolean) as any[]
+      .filter((x): x is { name: string; data: SkillPackageManifest } => x !== null)
   : [];
 
 // ─── 1. SCHEMAS.md — Core framework schemas ─────────────────────────────────
@@ -225,7 +275,7 @@ function generateSchemasMd(): string {
       L.push(`**Package:** ${skillDef.data.package || "local"}  `);
       L.push(`**Lifecycle:** ${(skillDef.data.lifecycleStages || []).join(", ")}  `);
       if (skillDef.data.mcpServices?.length) L.push(`**MCP Services:** ${skillDef.data.mcpServices.join(", ")}  `);
-      if (skillDef.data.scripts?.length) L.push(`**Scripts:** ${skillDef.data.scripts.map((s: any) => `\`${s.path}\` (${s.runtime})`).join(", ")}  `);
+      if (skillDef.data.scripts?.length) L.push(`**Scripts:** ${skillDef.data.scripts.map((s) => `\`${s.path}\` (${s.runtime})`).join(", ")}  `);
       L.push("");
     }
 
@@ -430,7 +480,9 @@ function generateCapabilitiesMd(): string {
   for (const c of capabilities) {
     const d = c.data;
     const det = d.detection;
-    let detStr = det.method;
+    // Annotated: inferred, this is the literal union of `det.method`, so
+    // every formatted branch below is a type error the `any` was hiding.
+    let detStr: string = det.method;
     if (det.method === "command") detStr = `command: \`${det.command}\``;
     else if (det.method === "env-var") detStr = `env: \`${det.variable}\``;
     else if (det.method === "file-exists") detStr = `file: \`${det.path}\``;
@@ -448,7 +500,7 @@ function generateCapabilitiesMd(): string {
     L.push(`**Detection:** \`${JSON.stringify(d.detection)}\`  `);
     if (d.requires?.length) L.push(`**Requires:** ${d.requires.map((r: string) => `\`${r}\``).join(", ")}  `);
     // Which skills need this?
-    const neededBy = skills.filter(s => s.data.requiredCapabilities?.some((rc: any) => rc.capabilityId === d.id));
+    const neededBy = skills.filter(s => s.data.requiredCapabilities?.some((rc) => rc.capabilityId === d.id));
     if (neededBy.length) L.push(`**Required by skills:** ${neededBy.map(s => `\`${s.data.id}\``).join(", ")}  `);
     // Which actors provide this?
     const providedBy = actors.filter(a => a.data.capabilities?.includes(d.id));
@@ -481,7 +533,7 @@ function generateRequirementsMd(): string {
     L.push("| Key | Label | Conformance | Requirement | Satisfied By |");
     L.push("|-----|-------|-------------|-------------|-------------|");
     for (const s of d.statements || []) {
-      const satBy = (s.satisfiedBy || []).map((sb: any) => `\`${sb.kind}:${sb.ref}\``).join(", ") || "—";
+      const satBy = (s.satisfiedBy || []).map((sb) => `\`${sb.kind}:${sb.ref}\``).join(", ") || "—";
       L.push(`| \`${s.key}\` | ${s.label} | **${s.conformance}** | ${s.requirement} | ${satBy} |`);
     }
     L.push("");
@@ -662,7 +714,9 @@ function generateLifecycleMd(): string {
   L.push(`> **Auto-generated** on ${timestamp()} — Do not edit manually.`);
   L.push("");
 
-  const stages = ["plan", "author", "validate", "review", "test", "publish", "feedback", "retire"];
+  // Was a hand-copied literal of the same eight values. Reading the enum is
+  // what keeps LIFECYCLE.md from documenting stages the schema rejects.
+  const stages = LifecycleStageSchema.options;
 
   L.push("## Lifecycle Flow");
   L.push("");
