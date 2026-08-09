@@ -27,6 +27,55 @@ The formal relation is a separate edge kind in
 querying it from this watcher. The `uses` QA axis owns whether `uses[]`
 is *well used* — that is `uses-editorial-review`, not this watcher.
 
+## An intra-section swap is not a mechanical fix
+
+Reordering blocks to clear forward references is the obvious discharge
+for a `detangler-no-forward-ref` finding, and it is **not** safe to
+apply unread. Run over a real paper, an unconstrained search cleared 66
+of 236 forward references — and a narrative review of its 53 moves found
+**18 of them made the paper worse**. Reducing the metric and improving
+the reading are different objectives, and they diverge often enough that
+the difference is not a rounding error.
+
+Constrain the search first. Each of these exists because a move broke
+something a reader would hit:
+
+| constraint | what it prevents |
+|---|---|
+| a block never leaves its section | section membership decides which heading a block appears under — that is a rewrite, not a reordering |
+| the section's first unit and any `meta.position: "opening"` block are pinned | a block landing above the framing prose it presupposes |
+| a block may not precede one it `interprets` | splitting a narrative pair; `interprets` pairs blocks whose slugs share no prefix, so no family rule catches it |
+| forward references over prose may not rise — both `[text](#label)` and backticked `kind:slug` | stranding a block from a dependency `uses[]` never declared. Count both forms: a block naming its prerequisite only in code spans is invisible to a link-only scan |
+| families are atomic: `X` with `X-proof`, `X-interpretation`, `X-tableN-data` | a proposition separated from its proof |
+| a unit headed by a descendant of a block in the same section is pinned | an *already-detached* child wandering further from its parent |
+| comments never move; the entry beneath a comment is pinned | a note re-attaching to a block it was not written about. Some of these describe the block below; others describe a block that was moved away and is no longer there. Text alone does not tell them apart |
+
+Prose references are a **guard, not an objective**. Minimising them
+would be authoring `uses[]` by inference, which is the failure mode the
+`uses` axis exists to prevent.
+
+Even fully constrained, the search cannot see authored order, and this
+is what escalation is for. Every one of these was found only by reading:
+
+- a section intro that narrates a sequence — "the analysis proceeds in
+  three stages. **First** … **Second** …", a hand-numbered 1–5 arc,
+  "**Finally**, the classical limit demonstrates…" — which the move
+  falsifies;
+- a block opening on a **bare anaphor** ("**These axioms** carry direct
+  physical meanings…", "they are **its** surrounding vocabulary");
+- a **definite article** pointing at something introduced above ("**the**
+  terminal Skein resolution", "the confinement category") with no
+  `uses[]` edge behind it;
+- the previous block **closing by announcing** the next ("Iterating this
+  categorical jet construction generates the recursive brane tower");
+- a block that self-labels "(forward reference)" — the edge is authored.
+
+So: propose, review, then apply — never apply and then review. Record
+each veto **with its reason, per block**, in a pin list the next run
+reads; the reasons live in the prose, not the manifests, and rediscovering
+them costs a full reading every time. Expect the reviewed yield to be
+roughly a third of what the raw metric promises, and prefer it.
+
 **Setup:** use `NAME=detangler-integration-watcher` everywhere the
 parent's §1 references `${NAME}`. Files at
 `.beans/detangler-integration-watcher-queue.json` and
