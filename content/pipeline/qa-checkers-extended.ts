@@ -970,26 +970,88 @@ const NUMEROLOGY_PHRASES = [
   /\baccidental(?:ly)?\s+match/i,
 ];
 
+/**
+ * Prose that DISCLAIMS a coincidence rather than trading on it.
+ *
+ * The signal phrases above are exactly the vocabulary an honest caveat uses —
+ * naming a coincidence as a coincidence is the behaviour this criterion exists
+ * to reward, not to punish. Observed live in qou
+ * (`mass-theory/toroidal-harmonics-delta-lambda`), where
+ *
+ *   "It is a numerical coincidence at an unrelated anchor, not a parameter-free
+ *    evaluation on the substrate, and it does not determine Δ_λ, which stays
+ *    open"
+ *
+ * failed `critical` — the criterion firing on the paper being careful.
+ *
+ * These patterns are deliberately narrow: a bare `not` anywhere nearby is NOT
+ * enough (it would suppress "the agreement is not accidental — it is
+ * miraculous"). The negation has to deny that the coincidence ESTABLISHES
+ * something, which is what separates a caveat from a claim.
+ */
+const NUMEROLOGY_DISCLAIMERS = [
+  /\bnot\s+(?:a\s+|an\s+)?(?:derivation|proof|prediction|explanation|evidence|derived|parameter-free|first-principles)\b/i,
+  /\bdoes\s+not\s+(?:determine|derive|prove|establish|explain|predict|imply|follow)\b/i,
+  /\bis\s+not\s+claimed\b/i,
+  /\bno\s+(?:derivation|mechanism|explanation)\b/i,
+  /\bcoincidence,\s*not\b/i,
+  /\bnot\s+a\s+substitute\s+for\b/i,
+];
+
+/**
+ * Markdown paragraphs (runs of contiguous non-blank lines) with the 1-based
+ * line each starts on.
+ *
+ * Scope matters here: the signal phrase and its disclaimer routinely land on
+ * DIFFERENT physical lines because prose is hard-wrapped, so a per-line test
+ * structurally cannot see the caveat attached to the sentence it is judging.
+ */
+function markdownParagraphs(
+  md: string,
+): Array<{ text: string; startLine: number; lines: string[] }> {
+  const out: Array<{ text: string; startLine: number; lines: string[] }> = [];
+  let current: string[] = [];
+  let start = 1;
+  const flush = () => {
+    if (current.length) out.push({ text: current.join(" "), startLine: start, lines: current });
+    current = [];
+  };
+  md.split("\n").forEach((line, i) => {
+    if (line.trim() === "") {
+      flush();
+      start = i + 2;
+    } else {
+      if (!current.length) start = i + 1;
+      current.push(line);
+    }
+  });
+  flush();
+  return out;
+}
+
 export function checkCanonicalNoNumerology(
   mdPath: string | undefined,
 ): CheckerResult {
   const md = readMaybe(mdPath);
   if (!md) return { result: "pass", hits: [] };
   const hits: CheckerHit[] = [];
-  let lineNo = 0;
-  for (const line of md.split("\n")) {
-    lineNo++;
-    for (const re of NUMEROLOGY_PHRASES) {
-      const m = line.match(re);
-      if (m) {
-        hits.push({
-          file: mdPath ?? "(unknown)",
-          line: lineNo,
-          text: `numerology signal phrase: "${m[0]}"`,
-        });
-        break;
+  for (const para of markdownParagraphs(md)) {
+    // A paragraph that explicitly denies the coincidence establishes anything
+    // is the discipline working; do not flag it.
+    if (NUMEROLOGY_DISCLAIMERS.some((re) => re.test(para.text))) continue;
+    para.lines.forEach((line, offset) => {
+      for (const re of NUMEROLOGY_PHRASES) {
+        const m = line.match(re);
+        if (m) {
+          hits.push({
+            file: mdPath ?? "(unknown)",
+            line: para.startLine + offset,
+            text: `numerology signal phrase: "${m[0]}"`,
+          });
+          break;
+        }
       }
-    }
+    });
   }
   return { result: hits.length > 0 ? "fail" : "pass", hits };
 }
