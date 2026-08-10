@@ -144,6 +144,33 @@ Searching for the target's *words* also misses a lean on the target's *object*
 — a source writing "the canonical $\tilde w_\lambda$" depends on whatever
 defines the undeformed $w_\lambda$, whether or not it ever says so.
 
+## Sibling parity is evidence only until a bulk edit touched the family
+
+"All five siblings declare nothing, so declaring it here would be the anomaly"
+is a good argument, and it is exactly the argument to distrust when a bulk
+operation has run over the corpus.
+
+Two independent readers used it to judge a five-member family of millennium-
+problem bounds *deliberately* empty — each names the same six blocks in prose
+and each declares nothing. The uniformity was real. It was also **uniform
+damage**: every member lost 8-10 edges to a single "transitive-prune" commit
+whose rule (*if A→B and B→C, drop A→C*) fired where B→C was being dropped in the
+same pass. A bulk edit produces parity **by construction**, so parity cannot
+distinguish a shared convention from a shared wound.
+
+Before resting on it, check the **family's history**, not just the block's:
+
+```sh
+git log --oneline -- <chapter>/<sibling>.ts   # for two or three siblings
+```
+
+A convention shows up as blocks that were *authored* empty. Damage shows up as
+one commit emptying all of them on the same day. If the emptiness has a single
+commit behind it, parity tells you nothing about intent.
+
+The same caution applies to any evidence drawn from what "the corpus does":
+a corpus that has been swept is a record of the sweep as much as of the authors.
+
 ## One reading is not the standard
 
 Adjudicating `uses[]` is not a task where a careful pass suffices, and the
