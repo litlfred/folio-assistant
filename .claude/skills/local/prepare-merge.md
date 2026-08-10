@@ -84,13 +84,34 @@ the one recipe.
    skip it: state in the PR that CI was not run, and give the exact command a
    maintainer should run.
 
-   *Why this is a step and not advice:* qou's `lean_ci.yml` last ran
-   2026-04-25 and failed on `main`. Nothing dispatched it for four months,
-   and 37 modules silently stopped compiling — several with plain parse
-   errors, i.e. files that had never compiled at all. The regression was
-   invisible precisely because a workflow existed and no one ran it. Check
-   when CI last ran (`actions_list` → `list_workflow_runs`) as part of this
-   step; "there is a workflow" is not evidence anything is being checked.
+   **Find the workflow by reading `.github/workflows/`, not by name.** The
+   example this step used to give — qou's `lean_ci.yml` — was deleted in that
+   repo's workflows migration, and an agent following the old text went
+   looking for it, found nothing, and guessed `build.yml`, which is a
+   *publish* workflow. Guessing a workflow name is how this gate gets skipped
+   while appearing to run.
+
+   In qou today the Lean-adjacent gates are `lean-orphan-gate.yml`,
+   `lean-content-siblings.yml` and `probe-float64-gate.yml`. **All of them,
+   and every other workflow in that repo, are `workflow_dispatch`-only** — an
+   owner directive of 2026-06-30 disabled auto-triggers over Actions billing.
+   So nothing runs on push or PR, and "CI is green" is never true by default;
+   it is only ever true because someone dispatched it.
+
+   Several of those files document a **local equivalent in their own header**
+   — e.g. `bun run content/pipeline/lean-orphan-audit.ts --diff <changed .lean>`
+   and `python3 scripts/probe-float64-guard.py --diff <changed .py>`. Run
+   those; they are the same check without the dispatch. Read the workflow
+   before assuming there is no local path.
+
+   *Why this is a step and not advice:* qou's Lean CI last ran 2026-04-25 and
+   failed on `main`. Nothing dispatched it for four months, and 37 modules
+   silently stopped compiling — several with plain parse errors, i.e. files
+   that had never compiled at all. The regression was invisible precisely
+   because a workflow existed and no one ran it. Check when CI last ran
+   (`actions_list` → `list_workflow_runs`) as part of this step; "there is a
+   workflow" is not evidence anything is being checked, and in a
+   dispatch-only repo it is evidence of the opposite.
 8. **Stop here** unless a PR / merge was explicitly requested. If a PR *was*
    requested, see below.
 

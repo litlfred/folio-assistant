@@ -70,10 +70,25 @@ Prefer the MCP tools (structured findings) when connected; otherwise the scripts
   If dispatch is refused (no `actions: write`), say so in the PR with the
   command a maintainer should run, rather than leaving it unmentioned.
 
-  *Why this is a gate and not a nicety:* qou's `lean_ci.yml` last ran
-  2026-04-25 and failed. Nothing dispatched it for ~4 months, and 37 modules
-  silently stopped compiling — including files with plain parse errors that
-  had never compiled at all. A workflow nobody runs is not a safety net.
+  **Find the workflow by reading `.github/workflows/`, not by name.** The
+  example this gate used to name — qou's `lean_ci.yml` — was deleted in that
+  repo's workflows migration. An agent following the old text went looking,
+  found nothing, and guessed `build.yml`, which is a *publish* workflow.
+  Guessing is how this gate gets skipped while appearing to run.
+
+  In qou today the Lean-adjacent gates are `lean-orphan-gate.yml`,
+  `lean-content-siblings.yml` and `probe-float64-gate.yml` — and **every
+  workflow in that repo is `workflow_dispatch`-only**, by an owner directive
+  of 2026-06-30 over Actions billing. Nothing runs on push or PR, so "CI is
+  green" is never true by default. Several of those files document a **local
+  equivalent in their own header** (`lean-orphan-audit.ts --diff`,
+  `probe-float64-guard.py --diff`); run those — same check, no dispatch.
+
+  *Why this is a gate and not a nicety:* qou's Lean CI last ran 2026-04-25 and
+  failed. Nothing dispatched it for ~4 months, and 37 modules silently stopped
+  compiling — including files with plain parse errors that had never compiled
+  at all. A workflow nobody runs is not a safety net, and in a dispatch-only
+  repo that is the default state rather than the exception.
 
 **`contentType: who-smart-dak` (L2):**
 - BPMN/DMN well-formedness; data-dictionary + value-set validation
