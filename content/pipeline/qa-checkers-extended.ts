@@ -1586,6 +1586,57 @@ let _graphLoaded = false;
 const CHAPTER_POS_STRIDE = 1_000_000;
 const withinChapter = (pos: number): number => pos % CHAPTER_POS_STRIDE;
 
+/**
+ * Drop `//` line comments from a manifest before its `blocks: [...]` arrays
+ * are matched.
+ *
+ * The arrays are read with a non-greedy `\[([\s\S]*?)\]`, which stops at the
+ * first `]` — including one inside a comment. In a real paper a comment
+ * reading "…and it has `uses: []` …" truncated its section's array, and every
+ * block listed after it vanished from `blockPos`: 45 of 3498 blocks corpus-wide,
+ * across 7 chapters. A block with no position is silently exempt from
+ * `detangler-no-forward-ref` (`myPos === undefined` returns `pass`), and edges
+ * *pointing at* it are skipped too, so the checker reported clean on material it
+ * had never looked at.
+ *
+ * The reverse also bit: a slug quoted inside a comment was counted as a real
+ * entry, which both invented a block and advanced `within`, shifting every
+ * later position in the chapter by one and corrupting every distance measured
+ * from it.
+ *
+ * Quote-aware rather than a blunt `//.*$`, so a `"https://…"` inside a title
+ * survives.
+ */
+export function stripLineComments(src: string): string {
+  let out = "";
+  let quote: string | null = null;
+  for (let i = 0; i < src.length; i++) {
+    const c = src[i];
+    if (quote) {
+      out += c;
+      if (c === "\\") {
+        out += src[++i] ?? "";
+        continue;
+      }
+      if (c === quote) quote = null;
+      continue;
+    }
+    if (c === '"' || c === "'" || c === "`") {
+      quote = c;
+      out += c;
+      continue;
+    }
+    if (c === "/" && src[i + 1] === "/") {
+      // Keep the newline so line-oriented structure is unchanged.
+      while (i < src.length && src[i] !== "\n") i++;
+      out += "\n";
+      continue;
+    }
+    out += c;
+  }
+  return out;
+}
+
 function loadChapterGraph(): void {
   if (_graphLoaded) return;
 
@@ -1666,7 +1717,7 @@ function loadChapterGraph(): void {
       const ci = firstIdx + i;
       const manifestPath = join(base, dir, `${dir}.ts`);
       if (!existsSync(manifestPath)) return;
-      const mc = readFileSync(manifestPath, "utf-8");
+      const mc = stripLineComments(readFileSync(manifestPath, "utf-8"));
       let within = 0;
       let sectionIdx = 0;
       for (const bm of mc.matchAll(/blocks\s*:\s*\[([\s\S]*?)\]/g)) {
