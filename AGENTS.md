@@ -51,6 +51,18 @@ beans create "<title>"                   # open a work-plan item
 beans <id> --status in-progress          # claim an item (durable, visible to siblings)
 ```
 
+> **Check before you create (STRICT).** `beans create` is **not** idempotent —
+> it mints a fresh ID on every call and dedupes on nothing, so re-entering a
+> work-plan step duplicates the plan instead of no-op'ing. Before **every**
+> `beans create`, including the session milestone, run the exact-title
+> existence check in [`skills/folio-core/todo-manager.md` §Check before you
+> create](skills/folio-core/todo-manager.md); on a match, claim the existing
+> bean with `beans update <id> --status in-progress` instead. History: in the
+> `qou` folio an unguarded re-run of that step ~980 times on 2026-08-04
+> produced **14,688** duplicate beans — 92 % of every open bean in the repo —
+> which starved the idle-backlog policy of signal, collided with the IDs of 15
+> real beans, and corrupted a later agent's own corpus-grep.
+
 - **Session todos:** track anything you want to persist as beans, not in your
   agent's ephemeral in-memory todo list — `.beans/` is committed, so the plan
   survives a resume in a fresh container.
