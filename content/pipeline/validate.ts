@@ -155,6 +155,29 @@ async function loadBlocksFromDir(
         continue;
       }
 
+      // A key the schema does not declare is SILENTLY STRIPPED — the Zod
+      // block schemas are non-strict, so a misspelt field name produces no
+      // error and the data it carried never reaches the graph. Comparing the
+      // raw object's keys against the parsed result's is exactly that signal,
+      // without changing what validates.
+      //
+      // Real cases: two proof blocks declare their parent as `proofOf`, where
+      // the canonical field is `of`, so those parent links are absent from the
+      // dependency graph entirely. Three more carry `is_mathematics`. The same
+      // class bit this schema once before — `of` itself was declared on the TS
+      // type and missing from the Zod object, and was stripped until noticed.
+      for (const key of Object.keys(block as Record<string, unknown>)) {
+        if (key in (result.data as Record<string, unknown>)) continue;
+        issues.push({
+          level: "warning",
+          block: name,
+          message:
+            `Unknown field "${key}" — no schema declares it, so it was silently ` +
+            `dropped and carries no meaning. Check for a misspelling of a real field.`,
+          file: `${name}.ts`,
+        });
+      }
+
       blocks.set(name, block);
 
       // Math-link detection: scan the sibling .md (if any) for
