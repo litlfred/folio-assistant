@@ -119,13 +119,55 @@ declaring:
   block than the edge under review. A deferral pointed elsewhere cannot
   exempt this one.
 
-Before calling a forward edge spurious, read the block's extracted
-`tbl:…-data` children. Pointer-style blocks ("See Table 3") keep their
-substance there, and a name-and-notation search of the `.md` alone will
-report absence that is not real. Searching for the target's *words* also
-misses a lean on the target's *object* — a source writing
-"the canonical $\tilde w_\lambda$" depends on whatever defines the
-undeformed $w_\lambda$, whether or not it ever says so.
+## A block's `uses[]` may be carrying the whole family
+
+**Never judge an entry from the block's own `.md` alone.** A block is the head
+of a family — `X-proof`, `X-interpretation`, `X-tableN-data` — and the
+dependency you are looking for is often in a child while the *declaration* sits
+on the parent.
+
+- **Table children.** Pointer-style blocks ("See Table 3") keep their substance
+  in `tbl:…-data`. A name-and-notation search of the parent's `.md` reports an
+  absence that is not real.
+- **Proof children.** A proof cites what the statement assumes. In one case the
+  parent's prose genuinely never named the target, its **proof child cited the
+  target by label** for the exact identity the parent's boxed formula is built
+  from — and that proof declared no `uses[]` of its own. The parent's entry was
+  the **sole record** of the dependency, so deleting it as "unsupported by the
+  prose" would have erased the edge entirely.
+
+So before removing an entry, check whether any child leans on the target, and
+whether that child declares anything itself. An entry that looks like dead
+weight on the parent may be the family's only declaration.
+
+Searching for the target's *words* also misses a lean on the target's *object*
+— a source writing "the canonical $\tilde w_\lambda$" depends on whatever
+defines the undeformed $w_\lambda$, whether or not it ever says so.
+
+## One reading is not the standard
+
+Adjudicating `uses[]` is not a task where a careful pass suffices, and the
+numbers say so rather than intuition:
+
+- A pass over 274 forward edges had its **destructive verdicts re-reviewed**:
+  3 of 35 deletions and **17 of 23** foreshadow declarations were overturned.
+- A later slice of 8 edges — 6 of them reported by a single earlier reader, 2
+  of those "verified directly against the text" — went to **two independent
+  readers**. Both returned *keep* on **all eight**, agreeing row for row. Every
+  refutation rested on positive evidence, not on a tie-break. Both "verified"
+  ones had been checked by keyword search over the `.md` alone.
+
+Use **two readers who cannot see each other's verdicts** for anything that
+edits the graph, and treat agreement as the signal. Where they disagree, or
+where either is unsure, leave the edge alone: a wrongly deleted editorial edge
+silently corrupts every ordering metric computed from the graph, and nothing
+downstream catches it.
+
+**A retarget carries both burdens.** It asserts this edge is wrong *and* that
+one is right, so it needs evidence for each half separately. In the slice above
+one retarget's second half was true — the proposed target really was leaned on
+and really was missing — while its first half was false. Split, it was not a
+swap but an **addition**, and both edges survived.
 
 ## Reading the mechanical findings first
 
