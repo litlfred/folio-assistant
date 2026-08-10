@@ -80,6 +80,53 @@ When reviewing, do not open the Lean file to decide what belongs in
 | `warn` | A marginal entry, or a missing dependency a reader could shrug off. |
 | `fail` | A missing dependency a reader would stumble over, **or** an entry that is plainly a copied-in formal dependency. |
 
+## Forward references and `foreshadows[]`
+
+A `uses[]` entry pointing at a block that appears *later* in the chapter
+is a `detangler-no-forward-ref` finding. Sometimes that is right — the
+exposition really does defer — and `foreshadows[]` (a subset of `uses[]`,
+enforced by `foreshadows-subset-of-uses`) declares it, permanently
+exempting the edge.
+
+Permanently is the operative word. A wrong declaration does not merely
+mislabel: it hides a genuine ordering defect behind an authored claim
+that the disorder was intended, and nothing downstream re-opens it. The
+contract in `BlockBase.foreshadows` is strict — the prose must **frame
+the reference as deferred** ("we will need X, proved in chapter 9").
+
+The bar is a first-person authorial hand-off that says the treatment
+happens *elsewhere*: "we establish this in X", "we work this out
+separately", "the derivation is recorded in X". In a review of 274
+forward edges, every declaration that survived adversarial re-review had
+that shape, and **17 of 23** first-pass declarations did not and were
+withdrawn.
+
+| Looks like a deferral | Actually |
+|---|---|
+| Bare cross-reference — "See [X] in Chapter 7" | `ordering`. Says nothing about direction. |
+| Organizational pointer — "these tables are projections of this master table" | `ordering`. About structure, not sequence. |
+| Block asserts the target's conclusion as background, then reasons onward from it | `ordering`. Consuming a result is the opposite of deferring it. |
+| Target listed under "## Rigorous results" / "## Consumers / downstream" | `ordering` — and check the direction; these often run target→source. |
+| A forward-looking word ("below", "later", "we must show") | `ordering` unless the sentence is about *this target's placement*. "Below $n^*$" is a numeric comparison; "we must show" is usually about research, not chapter order. |
+
+Two failure modes survive a verbatim quote, so check both before
+declaring:
+
+- **False locator.** "the functor of the *next subsection*" where the
+  target is 21 sections and ~300 blocks away. The prose defers; it does
+  not defer *this far*, and the edge is a real defect.
+- **Mis-aimed deferral.** The quoted sentence hands off to a *different*
+  block than the edge under review. A deferral pointed elsewhere cannot
+  exempt this one.
+
+Before calling a forward edge spurious, read the block's extracted
+`tbl:…-data` children. Pointer-style blocks ("See Table 3") keep their
+substance there, and a name-and-notation search of the `.md` alone will
+report absence that is not real. Searching for the target's *words* also
+misses a lean on the target's *object* — a source writing
+"the canonical $\tilde w_\lambda$" depends on whatever defines the
+undeformed $w_\lambda$, whether or not it ever says so.
+
 ## Reading the mechanical findings first
 
 Run the script half before adjudicating — it is cheap and it changes
