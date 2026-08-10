@@ -92,3 +92,43 @@ one criterion. It is not worth opening on its own account, and it is not
 blocking anything.
 
 Bullet 2 (`readBlockManifest`) unchanged and still fine as filed.
+
+## 2026-08-10 — a third scanner, and it had a live bug (bullet 3)
+
+The inventory above was incomplete. `loadChapterGraph` in the same file reads
+**chapter manifests** with `blocks: \[([\s\S]*?)\]` — a third hand-rolled scan,
+and the one that has now cost something. See `mcp1` / #99.
+
+The non-greedy match stops at the first `]`, **including one inside a comment**.
+A note in the qou paper reading "…and it has `uses: []` today" sat mid-array and
+every block listed below it vanished from `blockPos` — **45 of 3498 blocks,
+across 7 of 19 chapters**.
+
+That is not a miscount. `checkDetanglerNoForwardRef` returns `pass` when a block
+has no position (`myPos === undefined` reads as "not listed"), and edges pointing
+at an unpositioned block are skipped too. The criterion reported clean on
+material it had never looked at, and nothing downstream could distinguish
+"checked and fine" from "never checked".
+
+The reverse direction was worse: a slug quoted inside a comment counted as a real
+entry, which both invented a block and advanced `within`, shifting every later
+position in that chapter by one. Six such phantoms existed — most were fragments
+of section titles caught between quotes, but one was a **real label** mentioned
+in a comment, which is the case most likely to produce a plausible wrong answer
+rather than an obviously broken one.
+
+Fixed in #99 by stripping `//` comments before matching, quote-aware so a
+`"https://…"` in a title survives. 8 tests.
+
+**Why this belongs on this bean rather than closing with #99.** The fix repairs
+this scanner; it does not retire the class. A regex over `.ts` source is
+defeated by anything the source may legitimately contain, and the failure is
+silent by construction — the checker cannot tell an empty parse from a clean one.
+That is the argument for the sync loader, made concretely rather than in
+principle.
+
+It does not change the owner's ruling on bullet 1, which was about narrowing a
+gate, not about parsing. But it does move this bean from "filed so the remaining
+scanners are known rather than rediscovered" to "one of them has already
+mis-parsed real content and hidden findings behind a pass". Still not blocking;
+now with a demonstrated cost.
