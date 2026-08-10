@@ -1239,11 +1239,12 @@ const DETANGLER: QaCriterionDefinition[] = [
       "Load-bearing since `foreshadows[]` stopped being a subset of " +
       "`uses[]` (2026-08-10): an entry may now name a block the manifest " +
       "does not otherwise reference, and is zero-cost by construction, so " +
-      "direction is the one property left that a machine can check. It is a " +
-      "PARTIAL guard — it cannot catch a genuine prerequisite moved out of " +
-      "`uses[]` into `foreshadows[]` to clear a red " +
-      "`detangler-no-forward-ref`, because both point forward. That move is " +
-      "laundering and a review failure; no checker adjudicates it.",
+      "direction is the one property left that a machine can check here. It " +
+      "cannot distinguish a pure forward pointer from a prerequisite filed " +
+      "in the wrong field — both point forward — so that call stays with the " +
+      "author. The cost of getting it wrong is reading-order accuracy, not " +
+      "correctness: a block's formal content is carried by its `lean.ref` " +
+      "sibling and gated by the Lean build, independently of this graph.",
     default_severity: "major",
     depends_on: ["ts"],
     automated: true,

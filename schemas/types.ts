@@ -605,21 +605,22 @@ interface BlockBase {
    * a tangle — the prose has told them the material is coming and does not ask
    * them to go now.
    *
-   * ## ⚠ NOT a way to silence the axis
+   * ## Choosing between the two fields
    *
-   * The exemption is from the ordering **cost**, never from the **edge**. A
+   * The exemption is from the ordering **cost**, not from the **edge**. A
    * foreshadow that is also in `uses[]` still counts for cycle detection,
    * dependency cones, chain depth, and PageRank — a cycle is a logical
-   * impossibility rather than reader burden, and no declaration hides one.
+   * impossibility rather than reader burden, so no declaration hides one.
    *
-   * **Moving a genuine prerequisite OUT of `uses[]` and into this field to
-   * clear a red checker is laundering** — the same defect class as concluding
-   * `: True` to pass a vacuity audit, and now the more tempting move, because
-   * a non-`uses[]` foreshadow leaves the dependency graph entirely. The test
-   * is not "does this clear the gate?" but *"must the reader have this in hand
-   * to follow the block?"* If yes it is a `uses[]` edge, and a forward-pointing
-   * one means the **block order is wrong** — fix the order, do not re-file the
-   * edge.
+   * The authoring question is *"must the reader have this in hand to follow
+   * the block?"* If yes it belongs in `uses[]`, and a forward-pointing
+   * `uses[]` edge means the **block order is wrong** — the fix is the order,
+   * not the field. If no, it belongs here.
+   *
+   * Getting that choice wrong costs reading-order accuracy, which is what
+   * these fields are for; it does not affect whether anything is *true*. The
+   * formal content of a block is carried by its `lean.ref` sibling and gated
+   * by the Lean build, entirely independently of this graph.
    *
    * Each entry remains a claim that the prose actually frames the reference as
    * deferred. Everything not listed stays a finding.
