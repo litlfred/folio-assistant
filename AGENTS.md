@@ -63,6 +63,38 @@ beans <id> --status in-progress          # claim an item (durable, visible to si
 - **Move wiring and script together:** when relocating a hook-backed script or a
   queue, repoint every reference (docs, hooks, readers) in the same change.
 
+### Say which bean you are on — every turn
+
+Claiming a bean records the work; **reporting** it is what lets a human steer and
+a sibling session avoid you. Both are required.
+
+**When you begin work on a bean**, open that turn by naming it and what you are
+attempting — before the first tool call, not after the work lands:
+
+> **Starting `fwr7`** — retargeting the seven edges the forward-ref arc left
+> alone, because the edge is wrong rather than the block's position.
+
+**End every turn** with the beans you touched and what is next. One line each,
+**up to 50 words** — enough that a reader can act without opening the file:
+
+> **Beans**
+> - **worked** `fwr8` — Re-baselined both endpoints with the fixed parser: the
+>   arc is 274 → 195, not 274 → 192. Corrected my own claim that the start was
+>   understated; only post-mid-arc figures are short by 3.
+> - **next** `fwr7` — Retarget seven mis-aimed edges. Two are now confirmed
+>   detangler findings rather than reader reports, which raises their priority.
+
+Rules that make the report worth reading:
+
+- **A name and five words is not a synopsis.** Say what changed, or why the next
+  item is next. "Retarget seven edges" is a title; "two are now confirmed
+  findings, which raises their priority" is a reason.
+- **"Next" is your judgement, not a fact.** Beans carry no priority order beyond
+  what an agent asserts — so say why, and expect to be overruled.
+- **Prefix across repos** (`qou/fwr7`, `fa/fsl7`) when a turn spans both.
+- **Report unclaimed work as unclaimed.** If you did durable work without a bean,
+  say so and open one; that omission is the failure this exists to catch.
+
 Full discipline: `.claude/skills/local/todo-manager.md` and
 `.claude/skills/local/bean-coordination.md`.
 
