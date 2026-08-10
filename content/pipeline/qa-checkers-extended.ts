@@ -1512,6 +1512,77 @@ export function checkDetanglerNoForwardRef(
     : { result: "pass", hits: [] };
 }
 
+/**
+ * `foreshadows[]` must point FORWARD.
+ *
+ * A foreshadow is a promise that material is coming. Naming something the
+ * reader has already passed is not a preview — it is either a prerequisite
+ * filed in the wrong field, or a back-reference that costs nothing and says
+ * nothing.
+ *
+ * This became load-bearing when `foreshadows[]` stopped being a subset of
+ * `uses[]` (2026-08-10). While the subset rule held, every foreshadow was
+ * also a dependency and `uses-resolve` plus the ordering criteria constrained
+ * it from the other side. Now an entry may name a block the manifest does not
+ * otherwise reference, and such an entry is zero-cost by construction — so
+ * direction is the one property left that a machine can check.
+ *
+ * It is a partial guard, and worth being honest about the gap: it catches a
+ * BACKWARD-pointing entry, which is incoherent, but it cannot catch a genuine
+ * prerequisite moved out of `uses[]` into `foreshadows[]` to clear a red
+ * `detangler-no-forward-ref`. Both point forward. That move is laundering and
+ * is a review failure; no checker adjudicates it.
+ */
+export function checkForeshadowsPointForward(
+  tsPath: string | undefined,
+): CheckerResult {
+  if (!tsPath || !existsSync(tsPath)) return { result: "n/a", hits: [] };
+  loadChapterGraph();
+  if (!_graphLoaded || !_blockPos || !_labelToChapter || !_chapterOrder)
+    return { result: "n/a", hits: [] };
+
+  const content = readFileSync(tsPath, "utf-8");
+  const labelMatch = content.match(/label:\s*"([^"]+)"/);
+  if (!labelMatch) return { result: "pass", hits: [] };
+  const label = labelMatch[1];
+  const foreshadows = parseForeshadows(content);
+  if (!foreshadows.length) return { result: "n/a", hits: [] };
+
+  const myPos = _blockPos.get(label);
+  if (myPos === undefined) return { result: "pass", hits: [] }; // not listed
+  const myChapter = _labelToChapter.get(label);
+  const myChapterIdx = myChapter ? _chapterOrder.get(myChapter) : undefined;
+
+  const hits: CheckerHit[] = [];
+  for (const f of foreshadows) {
+    const fPos = _blockPos.get(f);
+    if (fPos === undefined) continue; // unresolved — `foreshadows-resolve` owns that
+    const fChapter = _labelToChapter.get(f);
+    if (fChapter === myChapter) {
+      if (fPos < myPos)
+        hits.push({
+          file: tsPath,
+          line: 0,
+          text: `foreshadows ${f} (pos ${withinChapter(fPos)}), which appears BEFORE this block (pos ${withinChapter(myPos)}) in the chapter — a foreshadow must point forward`,
+        });
+      continue;
+    }
+    // Cross-chapter: judge by chapter order rather than absolute position.
+    const fChapterIdx = fChapter ? _chapterOrder.get(fChapter) : undefined;
+    if (
+      myChapterIdx !== undefined &&
+      fChapterIdx !== undefined &&
+      fChapterIdx < myChapterIdx
+    )
+      hits.push({
+        file: tsPath,
+        line: 0,
+        text: `foreshadows ${f}, which lives in an EARLIER chapter (${fChapter}) than this block (${myChapter}) — a foreshadow must point forward`,
+      });
+  }
+  return hits.length ? { result: "fail", hits } : { result: "pass", hits: [] };
+}
+
 export function checkDetanglerNoXChapterFwd(
   _tsPath: string | undefined,
 ): CheckerResult {
@@ -1538,9 +1609,11 @@ export function checkDetanglerArchimedeanWall(
 let _chapterOrder: Map<string, number> | null = null;
 let _labelToChapter: Map<string, string> | null = null;
 let _usesGraph: Map<string, string[]> | null = null;
-// Block label -> its author-declared `foreshadows[]` (always a subset of
-// that block's `uses[]`, enforced by the `foreshadows-subset-of-uses`
-// constraint). Consulted by the ordering-COST metrics only.
+// Block label -> its author-declared `foreshadows[]`. Since 2026-08-10 these
+// are INDEPENDENT of that block's `uses[]`: an entry that also appears in
+// `uses[]` is a real dependency exempted from the ordering-COST metrics, and
+// an entry that does not is a pure forward pointer that never enters the
+// dependency graph at all. Consulted by the cost metrics only.
 let _foreshadowGraph: Map<string, string[]> | null = null;
 // Reverse adjacency: block label -> labels whose uses[] reference it.
 // Drives the per-block in-degree metric (how foundational a block is)
@@ -2889,6 +2962,7 @@ export const EXTENDED_AUTOMATED_CHECKERS: Record<
   // detangler
   "detangler-section-band": (p) => checkDetanglerSectionBand(p.ts),
   "detangler-no-forward-ref": (p) => checkDetanglerNoForwardRef(p.ts),
+  "foreshadows-point-forward": (p) => checkForeshadowsPointForward(p.ts),
   "detangler-no-xchapter-fwd": (p) => checkDetanglerNoXChapterFwd(p.ts),
   "detangler-archimedean-wall": (p) =>
     checkDetanglerArchimedeanWall(p.ts, p.lean),
