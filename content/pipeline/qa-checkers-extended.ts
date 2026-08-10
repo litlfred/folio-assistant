@@ -1538,6 +1538,10 @@ export function checkDetanglerArchimedeanWall(
 let _chapterOrder: Map<string, number> | null = null;
 let _labelToChapter: Map<string, string> | null = null;
 let _usesGraph: Map<string, string[]> | null = null;
+// Block label -> its author-declared `foreshadows[]` (always a subset of
+// that block's `uses[]`, enforced by the `foreshadows-subset-of-uses`
+// constraint). Consulted by the ordering-COST metrics only.
+let _foreshadowGraph: Map<string, string[]> | null = null;
 // Reverse adjacency: block label -> labels whose uses[] reference it.
 // Drives the per-block in-degree metric (how foundational a block is)
 // without a per-call full scan.
@@ -1645,6 +1649,11 @@ function loadChapterGraph(): void {
   const chapterOrder = new Map<string, number>();
   const labelToChapter = new Map<string, string>();
   const usesGraph = new Map<string, string[]>();
+  // Author-declared deliberate forward references, per block. A separate
+  // adjacency (rather than a per-file re-parse) so the RECEIVE side of the
+  // tanglement metric can ask "did the citing block declare this?" without
+  // reading that block's manifest again.
+  const foreshadowGraph = new Map<string, string[]>();
 
   // Resolve the paper from the folio rather than hardcoding one. A
   // folio may hold several papers and the platform must not privilege
@@ -1706,6 +1715,7 @@ function loadChapterGraph(): void {
               ? [...new Set([...usesM[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]))]
               : [];
             usesGraph.set(m[1], useLabels);
+            foreshadowGraph.set(m[1], parseForeshadows(content));
           }
         }
       } catch {}
@@ -1806,6 +1816,7 @@ function loadChapterGraph(): void {
   _chapterOrder = chapterOrder;
   _labelToChapter = labelToChapter;
   _usesGraph = usesGraph;
+  _foreshadowGraph = foreshadowGraph;
   _reverseUses = reverseUses;
   _coneSizeCache = new Map();
   _depthCache = new Map();
@@ -1897,9 +1908,14 @@ export function checkDetanglerBlockTanglement(
   // remarks is not a dependency tangle). Consistent with the
   // graph-energy and no-forward-ref checkers, which key off `uses[]`.
   const uses = _usesGraph?.get(label) ?? [];
+  // Declared foreshadows are zero-cost on BOTH sides of this metric, for
+  // the same reason they are zero-energy: tanglement scores reader burden,
+  // and a signposted forward reference imposes none.
+  const myForeshadows = new Set(_foreshadowGraph?.get(label) ?? []);
   let fwdEmitted = 0;
   const hits: CheckerHit[] = [];
   for (const u of uses) {
+    if (myForeshadows.has(u)) continue;
     const tgtCh = _labelToChapter.get(u);
     if (tgtCh && (_chapterOrder.get(tgtCh) ?? 0) > thisIdx) {
       fwdEmitted++;
@@ -1911,6 +1927,11 @@ export function checkDetanglerBlockTanglement(
   // (now an O(1) reverse-index lookup, not a deferred full scan).
   let fwdReceived = 0;
   for (const user of _reverseUses?.get(label) ?? []) {
+    // Symmetric to the emit side: if the EARLIER block declared this
+    // reference a foreshadow, the edge is signposted and costs its target
+    // nothing either. Without this the author would clear the citing
+    // block's score and still see the cost reappear on the cited one.
+    if ((_foreshadowGraph?.get(user) ?? []).includes(label)) continue;
     const userCh = _labelToChapter.get(user);
     if (userCh && (_chapterOrder.get(userCh) ?? 999) < thisIdx) fwdReceived++;
   }
@@ -1993,11 +2014,26 @@ export function checkDetanglerGraphEnergy(
   if (myPos === undefined) return { result: "pass", hits: [] };
   const mySection = _blockSection?.get(label);
 
+  // A declared foreshadow costs ZERO energy. Energy measures the burden a
+  // forward edge puts on a reader who must jump ahead to follow the block;
+  // a foreshadow imposes no such burden, because the prose has told the
+  // reader the material is coming and does not ask them to go now. Leaving
+  // these in would bill the author for the very device that removes the
+  // cost, and would push the "reorder me" signal toward orderings that
+  // delete a deliberate rhetorical thread.
+  //
+  // Same exemption, same source of truth, as `detangler-no-forward-ref`
+  // above — and it is an exemption from the *cost*, never from the *edge*:
+  // the dependency stays in `uses[]` and still counts for cycle detection,
+  // dependency cones, and chain depth.
+  const foreshadowed = new Set(parseForeshadows(content));
+
   let energy = 0;
   let fwdEdges = 0;
   let worstSpan = 0;
   const hits: CheckerHit[] = [];
   for (const u of _usesGraph.get(label) ?? []) {
+    if (foreshadowed.has(u)) continue;
     // Count only WITHIN-section forward edges. A forward edge that
     // crosses a section boundary reflects the chapter's intentional
     // face ordering (e.g. a Geometric-face block citing an Archimedean-
