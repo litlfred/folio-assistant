@@ -761,25 +761,62 @@ export interface ConstraintContext {
  */
 export const CONSTRAINT_RULES: ConstraintRule[] = [
   {
-    id: "foreshadows-subset-of-uses",
+    id: "foreshadows-resolve",
     description:
-      "Every foreshadows[] entry must also appear in uses[] — a declared " +
-      "forward reference to something the block does not reference is " +
-      "meaningless, and would silently exempt nothing",
+      "All labels in foreshadows[] must exist in the document (or be " +
+      "qualified cross-paper refs)",
     // Universal: any block that can carry `uses[]` can carry a foreshadow, so
     // this must not narrow as new kinds appear.
     appliesTo: [...BLOCK_KINDS],
+    // Replaces `foreshadows-subset-of-uses` (removed 2026-08-10, owner
+    // ruling). That rule required every foreshadow to also appear in `uses[]`,
+    // which made the field an ANNOTATION ON an edge and nothing more. It
+    // therefore could not express the case it was most wanted for: a chapter
+    // overview (§0) naming results it previews but does not depend on. Under
+    // the old rule, recording such a pointer meant first asserting a
+    // dependency that is not real — see the eight `overview-source` rows in
+    // qou's `docs/audits/uses-edge-rejections.json`.
+    //
+    // `foreshadows[]` is now INDEPENDENT of `uses[]`. An entry may be:
+    //   - also in `uses[]` → a real prerequisite the paper states later on
+    //     purpose ("we will need X, proved in chapter 9"). Exempt from the
+    //     ordering-COST metrics; still counted for cycles, cones and depth.
+    //   - not in `uses[]` → a pure forward pointer. Never enters the
+    //     dependency graph at all, so it is zero-cost by construction.
+    //
+    // The old rule was also carrying referential integrity: it caught a
+    // foreshadow whose target had been renamed or deleted, because `uses[]`
+    // validation rejected the same label. With the subset requirement gone
+    // that protection would vanish too, so this rule takes it over directly.
+    // Same reference forms as `uses-resolve`.
+    check: (block, ctx) => {
+      const fs = (block as { foreshadows?: string[] }).foreshadows;
+      if (!fs?.length) return null;
+      const missing = fs.filter((f: string) => {
+        // Cross-paper qualified ref ("paper-dir:label") — resolved at folio
+        // level, not here. Mirrors uses-resolve.
+        if (/^([a-z0-9-]+):([a-z]+:.+)$/.test(f)) return false;
+        if (f.startsWith("https://") || f.startsWith("http://")) return false;
+        return !ctx.allLabels.has(f);
+      });
+      return missing.length === 0 ? null
+        : `Unresolved foreshadows: ${missing.join(", ")}`;
+    },
+  },
+  {
+    id: "foreshadows-not-self",
+    description: "A block may not foreshadow itself",
+    appliesTo: [...BLOCK_KINDS],
+    // Cheap, but worth stating: with the subset rule gone nothing else
+    // rejects it. A self-reference would be silently zero-cost and would read
+    // as a deliberate pointer.
     check: (block) => {
       const fs = (block as { foreshadows?: string[] }).foreshadows;
       if (!fs?.length) return null;
-      const uses = new Set((block as { uses?: string[] }).uses ?? []);
-      // Keeps `foreshadows` an annotation ON an edge rather than a second,
-      // parallel way to name blocks. Without this it drifts: a `uses[]` entry
-      // gets removed or renamed, its foreshadow declaration lingers, and the
-      // exemption quietly applies to nothing while looking deliberate.
-      const orphans = fs.filter((f) => !uses.has(f));
-      return orphans.length
-        ? `foreshadows[] entries not present in uses[]: ${orphans.join(", ")}`
+      const self = (block as { label?: string }).label;
+      if (!self) return null;
+      return fs.includes(self)
+        ? `foreshadows[] contains the block's own label: ${self}`
         : null;
     },
   },
