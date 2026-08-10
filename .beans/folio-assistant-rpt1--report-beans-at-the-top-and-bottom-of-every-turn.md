@@ -1,10 +1,10 @@
 ---
 # folio-assistant-rpt1
 title: Report beans at the top and bottom of every turn
-status: in-progress
+status: completed
 type: task
 created_at: 2026-08-10T02:00:00Z
-updated_at: 2026-08-10T02:00:00Z
+updated_at: 2026-08-10T02:20:00Z
 ---
 
 Branch `claude/bean-reporting-directive-2026-08-10`.
@@ -29,3 +29,8 @@ and what would change if it were not.
 
 Goes in `AGENTS.md` (agent-generic, read natively by every tool) rather than a
 skill, since it applies to every turn regardless of what is being worked on.
+
+**Landed** as folio-assistant#100 and qou#4898. The qou copy sits in that repo's
+work-plan list as item 3 with the tail renumbered; folio-assistant's is a
+subsection under the beans section, which is the agent-generic source of truth
+both tools read.
