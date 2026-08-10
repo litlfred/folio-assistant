@@ -24,3 +24,15 @@ content/audit-tex-source.json
 # directories staged for the next `git add -A`.
 __pycache__/
 *.py[cod]
+
+# Agent scratch state — transient tooling state, never repository content.
+# Same class as .claude/worktrees/ above. A sandbox accumulates these as
+# untracked directories and a `git add -A` sweeps them into an unrelated
+# commit; in the qou folio that mechanism committed 46,155 files under a
+# one-file Lean subject line. Prophylactic here — folio-assistant has none
+# of these today, and should not acquire them.
+.agents/
+amalgamated_done/
+amalgamated_input/
+_deprecated/
+scratch/
