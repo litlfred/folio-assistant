@@ -1457,16 +1457,79 @@ export function checkDetanglerSectionBand(
 // flag them as missing. A follow-up commit will wire them.
 
 /**
- * Parse a block manifest's `foreshadows: [...]` — the subset of `uses[]` the
- * author has declared as a deliberate forward reference.
+ * Parse a block manifest's DECLARED `foreshadows: [...]`.
  *
  * Text-level like the sibling `label:` parse in this file, so the checker
  * stays free of a module import of the manifest.
+ *
+ * ⚠ The array match is non-greedy, so it stops at the first `]`. A comment
+ * inside the array containing a closing bracket — `// moved out of uses[]` —
+ * silently truncates the list, and a truncated array is indistinguishable
+ * from a shorter one, so nothing downstream can detect it. The same shape
+ * applies to the `uses:` parse in `loadChapterGraph`. Do not write a closing
+ * bracket in a comment inside one of these arrays.
  */
 export function parseForeshadows(tsSrc: string): string[] {
   const m = tsSrc.match(/\bforeshadows:\s*\[([\s\S]*?)\]/);
   if (!m) return [];
   return [...m[1].matchAll(/["']([^"']+)["']/g)].map((x) => x[1]);
+}
+
+/**
+ * Every block label a `.md` narrative references, in either form the corpus
+ * uses:
+ *
+ *   - `](#kind:label)` — a markdown link (4786 occurrences in qou)
+ *   - `` `kind:label` `` — a backtick mention (907, of which 44 appear in no
+ *     link anywhere in their block)
+ *
+ * Deliberately NOT included: `:refterm[…]{#slug}` / `:defterm[…]{#slug}`.
+ * Those carry GLOSSARY TERM slugs (`braided-monoidal-category`) — a separate
+ * namespace from block labels, owned by the `defines` machinery.
+ *
+ * Returns raw candidates. Resolution against the corpus and the
+ * forward/backward split are the caller's job; this function has no position
+ * information and stays deliberately ignorant of it.
+ */
+export function parseMdBlockRefs(mdSrc: string): string[] {
+  const out = new Set<string>();
+  for (const m of mdSrc.matchAll(/\]\(#([a-z]+:[a-z0-9-]+)\)/g)) out.add(m[1]);
+  for (const m of mdSrc.matchAll(/`([a-z]+:[a-z0-9-]+)`/g)) out.add(m[1]);
+  return [...out];
+}
+
+/**
+ * A block's DERIVED forward pointers: labels its narrative references that sit
+ * later in the reading order and are not already declared dependencies.
+ *
+ * This is the autopopulation rule. A forward pointer already lives in the
+ * prose — "see X", "the remarks below frame these regimes as ODEs" — so the
+ * manifest should not have to repeat it. Same relationship `cites` has to
+ * `\cite{}` in the `.md`.
+ *
+ * What it CANNOT derive, and why the manifest field remains: a foreshadow that
+ * is also a `uses[]` dependency — a real prerequisite the paper states later
+ * on purpose. No rule separates that from a forward `uses[]` edge that is
+ * simply a defect; only the author's declaration can. Callers therefore take
+ * the UNION of this and `parseForeshadows`.
+ */
+export function deriveForeshadows(
+  label: string,
+  mdSrc: string,
+  uses: readonly string[],
+  positionOf: (l: string) => number | undefined,
+  isKnownLabel: (l: string) => boolean,
+): string[] {
+  const myPos = positionOf(label);
+  if (myPos === undefined) return [];
+  const declared = new Set(uses);
+  return parseMdBlockRefs(mdSrc)
+    .filter((t) => t !== label && !declared.has(t) && isKnownLabel(t))
+    .filter((t) => {
+      const p = positionOf(t);
+      return p !== undefined && p > myPos;
+    })
+    .sort();
 }
 
 export function checkDetanglerNoForwardRef(
@@ -1722,11 +1785,14 @@ function loadChapterGraph(): void {
   const chapterOrder = new Map<string, number>();
   const labelToChapter = new Map<string, string>();
   const usesGraph = new Map<string, string[]>();
-  // Author-declared deliberate forward references, per block. A separate
-  // adjacency (rather than a per-file re-parse) so the RECEIVE side of the
-  // tanglement metric can ask "did the citing block declare this?" without
-  // reading that block's manifest again.
+  // Deliberate forward references, per block. A separate adjacency (rather
+  // than a per-file re-parse) so the RECEIVE side of the tanglement metric
+  // can ask "did the citing block declare this?" without reading that
+  // block's manifest again. Seeded with the DECLARED entries and unioned
+  // with the ones derived from each `.md` once positions exist.
   const foreshadowGraph = new Map<string, string[]>();
+  // Raw block labels each narrative references, pre-direction-filter.
+  const mdRefs = new Map<string, string[]>();
 
   // Resolve the paper from the folio rather than hardcoding one. A
   // folio may hold several papers and the platform must not privilege
@@ -1789,6 +1855,20 @@ function loadChapterGraph(): void {
               : [];
             usesGraph.set(m[1], useLabels);
             foreshadowGraph.set(m[1], parseForeshadows(content));
+            // Collect the narrative's raw block references now; the
+            // forward/backward split needs positions, which are built in the
+            // pass below. Missing .md is normal for some kinds and is not an
+            // error here.
+            try {
+              mdRefs.set(
+                m[1],
+                parseMdBlockRefs(
+                  readFileSync(join(chDir, `${f.slice(0, -3)}.md`), "utf-8"),
+                ),
+              );
+            } catch {
+              /* no .md sibling */
+            }
           }
         }
       } catch {}
@@ -1883,6 +1963,40 @@ function loadChapterGraph(): void {
         for (const n of nodes)
           next.set(n, next.get(n)! + damping * dangling);
       for (const [k, v] of next) pagerank.set(k, v);
+    }
+  }
+
+  // Union the DERIVED forward pointers into the declared ones. Runs here
+  // rather than in the block loop because the forward/backward split needs
+  // `blockPos`, which is only complete once every chapter manifest has been
+  // walked.
+  //
+  // Derivation is done from source on every load rather than read from the
+  // generated `foreshadows.json`, so a stale or absent artifact can never
+  // change a checker's verdict. The JSON is an emission for humans and other
+  // tools, not an input.
+  {
+    const posOf = (l: string) => blockPos.get(l);
+    // Every block the walk saw is a key here, so this doubles as the
+    // "is this a real label?" test — an unresolvable reference in prose is
+    // dropped rather than becoming a phantom pointer.
+    const known = (l: string) => labelToChapter.has(l);
+    for (const [label, refs] of mdRefs) {
+      const myPos = blockPos.get(label);
+      if (myPos === undefined) continue;
+      const uses = new Set(usesGraph.get(label) ?? []);
+      const derived = refs.filter(
+        (t) =>
+          t !== label &&
+          !uses.has(t) &&
+          known(t) &&
+          (posOf(t) ?? -1) > myPos,
+      );
+      if (!derived.length) continue;
+      foreshadowGraph.set(
+        label,
+        [...new Set([...(foreshadowGraph.get(label) ?? []), ...derived])],
+      );
     }
   }
 
