@@ -42,7 +42,11 @@
  */
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { parseForeshadows, parseMdBlockRefs } from "./qa-checkers-extended";
+import {
+  parseForeshadows,
+  parseMdBlockRefs,
+  parseManifestStringArray,
+} from "./qa-checkers-extended";
 import { findContentRepoRoot } from "./repo-root";
 
 // The CONTENT repo's content/, not folio-assistant's. An import-relative path
@@ -89,11 +93,7 @@ export function buildForeshadows(paper: string): {
       if (!m) continue;
       const label = m[1];
       slugToLabel.set(f.slice(0, -3), label);
-      const um = src.match(/uses\s*:\s*\[([\s\S]*?)\]/);
-      uses.set(
-        label,
-        new Set(um ? [...um[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]) : []),
-      );
+      uses.set(label, new Set(parseManifestStringArray(src, "uses")));
       declared.set(label, parseForeshadows(src));
       const md = join(chDir, `${f.slice(0, -3)}.md`);
       if (existsSync(md)) mdRefs.set(label, parseMdBlockRefs(readFileSync(md, "utf-8")));
