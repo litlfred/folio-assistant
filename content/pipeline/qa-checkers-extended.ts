@@ -1469,10 +1469,126 @@ export function checkDetanglerSectionBand(
  * applies to the `uses:` parse in `loadChapterGraph`. Do not write a closing
  * bracket in a comment inside one of these arrays.
  */
-export function parseForeshadows(tsSrc: string): string[] {
-  const m = tsSrc.match(/\bforeshadows:\s*\[([\s\S]*?)\]/);
+/**
+ * Blank out string-literal CONTENTS and comment bodies, preserving every
+ * index so offsets into the result are valid offsets into the original.
+ *
+ * Used to locate manifest array fields without being fooled by text that
+ * merely looks like one. Handles `"`, `'` and backtick literals (with
+ * escapes), plus `//` and block comments.
+ */
+export function maskStringsAndComments(src: string): string {
+  const out = src.split("");
+  let i = 0;
+  const n = src.length;
+  const blank = (from: number, to: number) => {
+    for (let k = from; k < to && k < n; k++) if (out[k] !== "\n") out[k] = " ";
+  };
+  while (i < n) {
+    const c = src[i];
+    const d = src[i + 1];
+    if (c === "/" && d === "/") {
+      const end = src.indexOf("\n", i);
+      blank(i, end === -1 ? n : end);
+      i = end === -1 ? n : end;
+      continue;
+    }
+    if (c === "/" && d === "*") {
+      const end = src.indexOf("*/", i + 2);
+      blank(i, end === -1 ? n : end + 2);
+      i = end === -1 ? n : end + 2;
+      continue;
+    }
+    if (c === '"' || c === "'" || c === "`") {
+      let j = i + 1;
+      while (j < n) {
+        if (src[j] === "\\") { j += 2; continue; }
+        if (src[j] === c) break;
+        j++;
+      }
+      blank(i + 1, j); // keep the quotes, blank the contents
+      i = j + 1;
+      continue;
+    }
+    i++;
+  }
+  return out.join("");
+}
+
+/**
+ * Extract a manifest array field's string entries.
+ *
+ * Replaces three regex-shaped bugs that made the checkers read different
+ * data from the content pipeline — which imports the manifest and sees the
+ * real array — while `validate` stayed green:
+ *
+ *  1. **Phantom entries.** A quoted string in a comment inside the array was
+ *     extracted as an entry. Live in the corpus: `p3-blowup-yekutieli.ts`
+ *     read 4 `uses[]` entries where the truth is 3, the extra being the
+ *     phrase `NS blowup ⟺ obstruction level n*` from an explanatory comment.
+ *  2. **Wrong array entirely.** The old match was unanchored and took the
+ *     first hit in the file, so a quoted `uses: [...]` in an `authorNotes`
+ *     body won over the block's real field. Live in
+ *     `hecke-log-decomposition-table-data.ts`, whose note documents an
+ *     earlier fabricated-edge incident and thereby fabricated another.
+ *  3. **Silent truncation.** `[\s\S]*?\]` stops at the first `]`, so a
+ *     comment containing one — `// moved out of uses[]` — dropped every
+ *     entry after it. The worst of the three: a truncated array is
+ *     indistinguishable from a shorter one, so nothing downstream can
+ *     detect it.
+ *
+ * Masking fixes all three at once: comments and string CONTENTS are blanked
+ * (indices preserved), so the field is located only at a real property
+ * position and the closing bracket is found by depth-scanning text that can
+ * no longer contain a decorative one. Entries are then read from the
+ * ORIGINAL source over that range.
+ *
+ * Note the masking must be index-preserving rather than a strip: naive
+ * comment removal corrupts `https://…` inside string literals.
+ */
+export function parseManifestStringArray(tsSrc: string, field: string): string[] {
+  const masked = maskStringsAndComments(tsSrc);
+  const re = new RegExp(`(^|[{,\\s])${field}\\s*:\\s*\\[`, "g");
+  const m = re.exec(masked);
   if (!m) return [];
-  return [...m[1].matchAll(/["']([^"']+)["']/g)].map((x) => x[1]);
+  const open = masked.indexOf("[", m.index);
+  let depth = 0;
+  let close = -1;
+  for (let k = open; k < masked.length; k++) {
+    if (masked[k] === "[") depth++;
+    else if (masked[k] === "]") {
+      depth--;
+      if (depth === 0) { close = k; break; }
+    }
+  }
+  if (close === -1) return [];
+  // Read entries from the ORIGINAL text, but only at positions the mask
+  // agrees are string literals — so a bracket or quote inside a comment
+  // cannot contribute an entry.
+  const region = tsSrc.slice(open + 1, close);
+  const maskRegion = masked.slice(open + 1, close);
+  const out: string[] = [];
+  const entry = /["']/g;
+  let mm: RegExpExecArray | null;
+  while ((mm = entry.exec(maskRegion))) {
+    const q = mm.index;
+    const quote = maskRegion[q];
+    const end = maskRegion.indexOf(quote, q + 1);
+    if (end === -1) break;
+    out.push(region.slice(q + 1, end));
+    entry.lastIndex = end + 1;
+  }
+  return out;
+}
+
+/**
+ * Parse a block manifest's DECLARED `foreshadows: [...]`.
+ *
+ * Comment- and string-safe via `parseManifestStringArray`; see that
+ * function for the three failure modes this replaced.
+ */
+export function parseForeshadows(tsSrc: string): string[] {
+  return parseManifestStringArray(tsSrc, "foreshadows");
 }
 
 /**
@@ -1846,13 +1962,12 @@ function loadChapterGraph(): void {
             // Record the block's `uses:[...]` dependency edges (only the
             // uses array — NOT cites/interprets/own-label) for cycle
             // detection.
-            const usesM = content.match(/uses\s*:\s*\[([\s\S]*?)\]/);
             // De-duplicate: a block listing the same `uses:` label twice
             // must not inflate out-degree / in-degree / cone size — count
             // unique dependency edges only.
-            const useLabels = usesM
-              ? [...new Set([...usesM[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]))]
-              : [];
+            const useLabels = [
+              ...new Set(parseManifestStringArray(content, "uses")),
+            ];
             usesGraph.set(m[1], useLabels);
             foreshadowGraph.set(m[1], parseForeshadows(content));
             // Collect the narrative's raw block references now; the
