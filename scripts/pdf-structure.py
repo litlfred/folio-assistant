@@ -223,7 +223,22 @@ def infer_headings(pages: list[str]) -> list[TocEntry]:
     seen: set[str] = set()
 
     for pageno, text in enumerate(pages, start=1):
-        for line in text.splitlines():
+        # A table-of-contents page is itself a dense list of heading-shaped
+        # lines, each ending in the page number it points at. Scraping it
+        # yields a whole document's headings all claiming to start on the
+        # TOC page — 3 corpus documents had over half their sections on one
+        # page for this reason. Detect and skip the page, not the document:
+        # its real headings are still found in the body.
+        lines_ = text.splitlines()
+        heading_ish = [l for l in lines_ if RE_NUMBERED.match(l) or RE_NAMED.match(l)]
+        if len(heading_ish) >= 8:
+            trailing_page_no = sum(
+                1 for l in heading_ish if re.search(r"(?:\.\s*){2,}\d{1,4}\s*$|\s\d{1,4}\s*$", l)
+            )
+            if trailing_page_no >= 0.6 * len(heading_ish):
+                continue
+
+        for line in lines_:
             line = line.rstrip()
             if not (3 <= len(line.strip()) <= 92) or RE_NOT_HEADING.search(line):
                 continue
