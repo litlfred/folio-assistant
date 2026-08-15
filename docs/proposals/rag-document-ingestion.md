@@ -44,13 +44,41 @@ PDF into context. There are no embeddings, no chunk store, no index. The
 
 ## 2. Three constraints that decide most of this
 
-**(a) Two thirds of the corpus has a LaTeX source, and we are OCR-ing
-it.** For 230 documents the authoritative representation — the actual
-`.tex` the author wrote, with every macro, every `\label`, every
-alignment — is a fetch away from arXiv. Any PDF pipeline, however good,
-is reconstructing by inference something we can simply download. No
-formula-recognition model beats the source. This is not a RAG problem; it
-is an acquisition problem, and it is close to free.
+**(a) Two thirds of the corpus has a LaTeX source — but the network
+often cannot reach it.** For 230 documents the authoritative
+representation — the actual `.tex` the author wrote, with every macro and
+every `\label` — exists on arXiv, and `qou/.mcp.json` already configures
+`paper-search-mcp` and `openalex-paper-search` to fetch it. **In a
+sandboxed session that path is dead:** measured 2026-08-15, the egress
+proxy returns 403 (organisation policy denial) for `arxiv.org`,
+`export.arxiv.org` and `api.openalex.org` alike. PyPI is reachable;
+arXiv is not.
+
+The correction this forces is important. Source-first is still right
+*when the network allows it*, so it stays the preferred route in §7. But
+it cannot be the **only** route, or ingestion stops dead in exactly the
+sandboxed sessions where most agent work happens. **The PDF path must be
+complete on its own, offline.**
+
+Fortunately the PDF carries more than expected — see §2a-bis.
+
+**(a-bis) The PDFs are in far better shape than "PDF" suggests.**
+Measured over all 339 with `pypdf`, **zero read errors across 12,437
+pages**:
+
+| Signal | Count | Consequence |
+|---|---|---|
+| Has a PDF outline (bookmarks) | **194 (57 %)** | the table of contents is *free* — no inference needed |
+| …with ≥ 5 entries | 181 (53 %) | deep enough to section the document |
+| Has a plausible DocInfo `/Title` | 126 (37 %) | too unreliable to trust — derive from text instead |
+| arXiv stamp in page-1 text | ~230 | **identity, version, primary class and date, offline** |
+
+That third row is why metadata must come from the text and not the
+DocInfo dictionary. The fourth is the one that rescues constraint (a):
+arXiv prints its own stamp down the left margin of page 1, in both eras
+(`arXiv:0706.2213v3 [math.GT] 9 Mar 2008` and `arXiv:hep-th/0001202v2`),
+so **a blocked network costs us the LaTeX source but not the paper's
+identity**. The ledger join still works offline.
 
 **(b) The deployment host cannot run RAGFlow.** `lean-mcp.config.json`
 pins `server_type: cx23` — a Hetzner shared-vCPU instance at **2 vCPU /
@@ -227,6 +255,113 @@ Generic RAG is what happens when that fails, not what happens first.
 
 ---
 
+## 7-bis. Where processed content goes
+
+The single most important design question, and the answer has to be the
+same shape for a knot-theory preprint and a WHO L1 guideline.
+
+### The layout
+
+A processed document stops being a flat PDF and becomes the per-document
+directory `document-intake.md` already specifies (followed today by 1 of
+339 documents — the convention is right, it was just never automated):
+
+```
+uploads/<doc-id>/
+  original.pdf            the upload, unchanged
+  structure.json          pdf-structure/v1 — metadata + TOC + section index
+  sections/               ← THE GREPPABLE ARTEFACT
+    sec-000-introduction.md
+    sec-001-preliminaries.md
+    ...
+  candidates.json         class-specific extraction (§8, §9) — proposals only
+  intake.json             pipeline state
+```
+
+`<doc-id>` is derived, not assigned: `arxiv-0706.2213v3` when the stamp is
+present, else the slugified filename. So the identifier is stable across
+re-uploads and is the join key to `content/bib-qa-verifications.json`.
+
+### Why plain Markdown, and not a vector store
+
+Because **this project's agents find things by grepping.** The qou
+`AGENTS.md` corpus-grep checklist is a STRICT gate before any agent may
+declare an item open, and it names four paths — `docs/audits/`,
+`content/`, `computations/`, `docs/coordination/`. `uploads/` is not one
+of them, and cannot be: it is 339 PDFs and 289 MB of binary.
+
+Extracting sections to `.md` **makes `uploads/` a fifth grep path**, which
+is a larger practical win than semantic search would be at this corpus
+size:
+
+```sh
+grep -rn "Reidemeister torsion" uploads/*/sections/
+# → uploads/arxiv-0706.2213v3/sections/sec-004-review-on-the-non-abelian.md:42
+```
+
+Each section file opens with YAML front-matter naming the document,
+section, page range and source SHA, so a grep hit is immediately citable
+— which is what the ledger and `-- Ref:` citations need anyway. A vector
+index (§4.3) can be layered on top later; it reads the same files. The
+files are the substrate, the index is an accelerator.
+
+### Two stages, and the boundary between them matters
+
+```
+original.pdf
+     │
+     ├── STAGE A — pdf-structure          domain-neutral, mechanical
+     │        structure.json + sections/*.md
+     │        no math logic, no WHO logic
+     │
+     └── STAGE B — class-specific extractor      routed by §7
+              ├─ math paper → candidates.json: claims, theorems,
+              │                 formalization candidates
+              └─ WHO L1     → candidates.json: recommendations,
+                                remarks, GRADE tables
+                          │
+                          └── ADJUDICATION (agent proposes, human accepts)
+                                  → content/<paper>/<block>.ts + .md
+```
+
+Stage A is shared and already built (`scripts/pdf-structure.py`). Stage B
+is where math and SMART Guidelines diverge, and it emits **candidates,
+never content**. That boundary is the anti-laundering rule applied to
+ingestion: a sentence extracted from someone else's paper is *a claim
+attributed to a source*, not a folio claim. It reaches `content/` only
+when an agent or the author promotes it, exactly as
+`document-intake.md §Stage 4` already requires.
+
+### Does it need Lean formalization?
+
+That is a Stage-B verdict on a math document, and it must be a
+**proposal**, not an action. `candidates.json` carries, per extracted
+claim: the section it came from, its page, the claim text, a kind guess
+(`definition`/`theorem`/`lemma`), and a `formalization_candidate` flag
+with a reason.
+
+What the flag means is narrow and worth stating, because the failure mode
+is obvious: **an extracted theorem is not a proved theorem.** It is
+someone else's result, and importing it creates a block that must cite
+them, not a Lean obligation the folio has discharged. So the routing is:
+
+1. **Relevant + already cited** → the ledger row gains the section
+   pointer; nothing else happens.
+2. **Relevant + not cited** → `paper-relevance-triage` verdict, then a
+   `references.ts` entry and a citation.
+3. **Relevant + the folio wants to *use* the result** → a bean, routed to
+   `formalizer`. The Lean either states it with `sorry` + `-- Ref:` to
+   the source (the honest "imported, not reproved" marker), or proves it.
+   Both are governed by the existing Strict Lean Discipline; ingestion
+   grants no exemption and creates no Lean by itself.
+
+The generalisation is that Stage B always answers "what does this
+document *offer*, and to which downstream skill?" For a math paper the
+answer routes to `formalizer`. For an L1 guideline it routes to
+`l2-dak-authoring`. Same shape, different registry.
+
+---
+
 ## 8. Math-specialised ingest
 
 The specialisation is mostly **not** a model — it is three disciplines:
@@ -290,8 +425,61 @@ table handling is the relevant strength there, because GRADE tables are
 the part a naive extractor mangles.
 
 So the SMART-Guidelines answer is: **structured extractors for L2/L3,
-Docling for L1 only, and no vector store in the loop at all** until
-someone wants to search across many guidelines.
+generic ingest for L1 only, and no vector store in the loop at all**
+until someone wants to search across many guidelines.
+
+### 9.1 The L1 path — narrative guideline → recommendations
+
+This is the one place in the SMART domain where the §7-bis machinery
+applies unchanged, and it is worth spelling out because it is the mirror
+image of the math path.
+
+**Stage A is identical.** A WHO L1 guideline is a long PDF with a real
+table of contents — usually a *better* one than a preprint has, since
+these are professionally typeset and almost always carry bookmarks. So
+`pdf-structure.py` sections it with no WHO-specific logic at all, and
+`uploads/who-<guideline>/sections/*.md` becomes greppable the same way.
+
+**Stage B is a different extractor.** Where the math extractor looks for
+theorem environments, the L1 extractor looks for WHO's normative
+furniture, which `document-intake.md` already maps:
+
+| Found in the L1 text | Candidate block | Label |
+|---|---|---|
+| boxed, numbered **Recommendation** | `definition` | `def:who-<g>-rec-<n>` |
+| **Remarks** bullets under it | `remark` | `rem:who-<g>-remark-<n>` |
+| **Good practice statement** | `proposition` | `prop:who-<g>-gps-<n>` |
+| **Research priority** | `conjecture` | `conj:who-<g>-research-<n>` |
+| Evidence summary narrative | `prose` | — |
+| **GRADE** certainty table | `diagram` + `meta.gradeLevel` | — |
+
+Two things make this harder than the math case, and both argue for
+Docling over a plain text extractor at Stage A for this document class:
+
+1. **Recommendations are boxes.** The normative statement is set in a
+   ruled box, and its boundary is what separates *the recommendation* from
+   the surrounding evidence discussion. Plain text extraction flattens the
+   box away and the boundary is lost. Docling's layout model keeps it.
+2. **GRADE tables carry the strength/certainty grading** (`strong` /
+   `conditional`, `⊕⊕⊕◯`), which the block's `meta` needs. That is table
+   structure recognition, which is precisely Docling's TableFormer
+   strength and precisely what naive extraction mangles.
+
+**Where it goes** is the same as §7-bis: `candidates.json` proposing
+blocks, then adjudication into `content/<guideline>/`. The verdict
+question differs — not "does this need Lean?" but "**is this L1
+recommendation already represented in the L2 DAK?**" — and it routes to
+`l2-dak-authoring` rather than `formalizer`. That is the whole
+generalisation: same two stages, same artefacts, a different registry of
+what to look for and a different downstream skill.
+
+A useful property falls out for free: once L1 recommendations are
+extracted as candidates with stable labels, the gap between an L1
+guideline and its L2 DAK becomes **diffable** — recommendations present
+in the narrative with no corresponding DAK decision-logic row are exactly
+the DAK's coverage gaps. That is a QA axis the existing watcher
+infrastructure could carry, and it is not reachable while the L1 document
+remains an opaque PDF.
 
 ---
 
@@ -300,20 +488,36 @@ someone wants to search across many guidelines.
 A staged adoption, cheapest and highest-value first. Each stage is
 independently useful and independently abandonable.
 
-**Stage 1 — Acquire (no new infrastructure).** Add an `acquire` step that
-resolves each `uploads/` document to its best available representation:
-arXiv source for the 230, publisher XML where available, PDF otherwise.
-Write the result into the per-document directory `document-intake.md`
-already specifies, and backfill the ledger's reference join from the
-fetched metadata. *This is the stage that pays for itself.*
+> **Ordering revised after the egress measurement (§2a).** An earlier
+> draft made network acquisition Stage 1. That was wrong for the sessions
+> that matter: with `arxiv.org` 403-blocked, an acquire-first pipeline
+> produces nothing in a sandbox. The offline PDF path is now Stage 1, and
+> network acquisition is an *enrichment* that runs when it can.
 
-**Stage 2 — Parse (Docling).** Capability probe
-`.claude/skills/capabilities/docling.json`, a cached SHA-stamped
-`parsed.json` per document, degrading to `n/a` when absent. Covers the
-109 PDF-only items and the WHO L1 path.
+**Stage 1 — Structure, offline (`scripts/pdf-structure.py`, built).**
+PDF → `structure.json` + `sections/*.md`, pure `pypdf`, no network, no
+GPU, no service. Delivers the metadata/TOC/section split and — the
+practical win — makes `uploads/` greppable (§7-bis). Works in every
+session regardless of egress policy.
 
-**Stage 3 — Route (§7).** The class router, plus math normalisation
-(§8.3) as a gate rather than a nicety.
+**Stage 2 — Acquire, when the network allows (enrichment).** Where
+`arxiv.org` is reachable, fetch the LaTeX source for the 230 arXiv
+documents and upgrade that document's structure from inferred to
+authoritative. The arXiv ID needed to do it is already in
+`structure.json`, extracted offline from the page-1 stamp — so Stage 1
+prepares Stage 2's work list even when it cannot do it. Also backfills
+the ledger's reference join.
+
+**Stage 3 — Parse harder, where it pays (Docling).** Capability probe
+`.claude/skills/capabilities/docling.json`, degrading to `n/a` when
+absent. Two populations need it and `pypdf` will not serve them: the
+scanned/no-text-layer documents Stage 1 flags as `likely_scanned`, and
+the **WHO L1 guidelines**, where boxed recommendations and GRADE tables
+are layout facts a text extractor destroys (§9.1).
+
+**Stage 3-bis — Route + Stage B extractors (§7, §7-bis).** The class
+router, the candidate extractors, and math normalisation (§8.3) as a
+gate rather than a nicety.
 
 **Stage 4 — Index (LanceDB, embedded).** Only once Stages 1–2 have
 produced clean text worth embedding. Indexing bad extractions is how RAG
