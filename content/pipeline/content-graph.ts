@@ -57,6 +57,7 @@ import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { walkBlocks } from "./qa-utils";
 import { findContentRepoRoot } from "./repo-root";
+import { findUsesField } from "./uses-field";
 
 /** Provenance of a dependency edge. */
 export type EdgeKind = "editorial" | "formal";
@@ -167,15 +168,20 @@ const ATLAS_CACHE_REL = "docs/audits/lean-atlas-deps.json";
 export function extractUses(
   tsSrc: string,
 ): { entries: string[]; index: number } | undefined {
-  const m = tsSrc.match(/(?:^|[{,])\s*uses\s*:\s*\[([\s\S]*?)\]/);
-  if (!m) return undefined;
-  const body = m[1]
-    .replace(/\/\*[\s\S]*?\*\//g, "") // block comments
-    .replace(/\/\/[^\n]*/g, ""); // line comments
-  return {
-    entries: [...body.matchAll(/["']([^"']+)["']/g)].map((x) => x[1]),
-    index: m.index ?? 0,
-  };
+  // Delegates to the shared field scanner rather than carrying a fourth
+  // hand-rolled parser. The regex this replaced anchored on
+  // /(?:^|[{,])\s*uses\s*:\s*\[/ — the anchor was right (it stops a `uses:`
+  // quoted in an authorNotes body winning), but `\s*` does not span comments,
+  // so a `//` line between the previous field's comma and the `uses:` key made
+  // the match fail outright. The block then contributed NO editorial edges,
+  // indistinguishable from one that genuinely declares nothing: 27 blocks and
+  // 53 declared edges were invisible to every graph metric.
+  //
+  // `findUsesField` anchors on an identifier boundary instead and matches the
+  // close by bracket depth, so neither comments nor nesting can defeat it.
+  const f = findUsesField(tsSrc);
+  if (!f) return undefined;
+  return { entries: f.entries, index: f.fieldStart };
 }
 
 /**

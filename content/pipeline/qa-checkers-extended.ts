@@ -28,7 +28,7 @@ import { fileURLToPath } from "url";
 import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
 import { hashFile } from "./qa-utils";
 import { findContentRepoRoot, findPapers } from "./repo-root";
-import { stripArrayField } from "./uses-field";
+import { maskStringsAndComments, stripArrayField } from "./uses-field";
 
 const __filename = fileURLToPath(import.meta.url);
 // Resolve content-repo paths (witnesses under <repo>/computations, Lean
@@ -1469,51 +1469,11 @@ export function checkDetanglerSectionBand(
  * applies to the `uses:` parse in `loadChapterGraph`. Do not write a closing
  * bracket in a comment inside one of these arrays.
  */
-/**
- * Blank out string-literal CONTENTS and comment bodies, preserving every
- * index so offsets into the result are valid offsets into the original.
- *
- * Used to locate manifest array fields without being fooled by text that
- * merely looks like one. Handles `"`, `'` and backtick literals (with
- * escapes), plus `//` and block comments.
- */
-export function maskStringsAndComments(src: string): string {
-  const out = src.split("");
-  let i = 0;
-  const n = src.length;
-  const blank = (from: number, to: number) => {
-    for (let k = from; k < to && k < n; k++) if (out[k] !== "\n") out[k] = " ";
-  };
-  while (i < n) {
-    const c = src[i];
-    const d = src[i + 1];
-    if (c === "/" && d === "/") {
-      const end = src.indexOf("\n", i);
-      blank(i, end === -1 ? n : end);
-      i = end === -1 ? n : end;
-      continue;
-    }
-    if (c === "/" && d === "*") {
-      const end = src.indexOf("*/", i + 2);
-      blank(i, end === -1 ? n : end + 2);
-      i = end === -1 ? n : end + 2;
-      continue;
-    }
-    if (c === '"' || c === "'" || c === "`") {
-      let j = i + 1;
-      while (j < n) {
-        if (src[j] === "\\") { j += 2; continue; }
-        if (src[j] === c) break;
-        j++;
-      }
-      blank(i + 1, j); // keep the quotes, blank the contents
-      i = j + 1;
-      continue;
-    }
-    i++;
-  }
-  return out.join("");
-}
+// `maskStringsAndComments` now lives in `./uses-field`, next to the field
+// scanner that needs it, and is re-exported here so existing importers and
+// tests keep working. Two copies of a masking primitive is how the manifest
+// parsers diverged in the first place (see `fsl7`).
+export { maskStringsAndComments };
 
 /**
  * Extract a manifest array field's string entries.
