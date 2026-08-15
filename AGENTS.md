@@ -135,8 +135,11 @@ a background subagent, not the foreground.
   `detangler-no-forward-ref` builds its own `uses`-only adjacency in
   `loadChapterGraph` and does **not** consume `content-graph`, so it is
   unaffected and ten forward-pointing `interprets` edges are outside what it
-  counts; and the graph is no longer acyclic — one genuine editorial cycle is
-  revealed rather than introduced (see `i8ad`).
+  counts; and the graph is no longer acyclic — genuine editorial cycles are
+  revealed rather than introduced (see `i8ad`). **Do not quote a count from
+  here**: it was 1 when `i8ad` was measured and 4 a few hours later on merged
+  content, none of it caused by the change. Run the check against the corpus
+  in front of you.
   It is **not** the formal dependency graph; that is machine-derived from
   `lean.ref`. The two diverge legitimately in both directions (a proof invokes
   `simp` lemmas nobody reads about; a theorem is motivated by an example it
