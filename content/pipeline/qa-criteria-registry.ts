@@ -2031,6 +2031,34 @@ const DAK: QaCriterionDefinition[] = [
     depends_on: ["ts"],
     automated: true,
   },
+// ── Domain: trap (language-trap / model-idiom audit) ────────────
+//
+// Ten trap categories marking unedited model idiom in scholarly
+// prose (owner specification 2026-08-15). The mechanical scanner
+// `content/pipeline/language-trap-audit.ts` emits high-recall
+// script candidates; the authoritative verdict is the per-block
+// agent adjudication defined in
+// `.claude/skills/local/language-trap-agent-audit.md` (full-context
+// judgement, false-positive classes: substantive mathematical
+// contrast, temporal status, cross-reference closers, load-bearing
+// disambiguation). Agent entries are appended with
+// `content/pipeline/qa-agent-entry.ts`. The diagnostic five
+// (negation-contrast, rhetorical-pivot, closing-aphorism,
+// meta-commentary, thesis-restatement) are rare in human scholarly
+// drafting and near-universal in unedited model output — severity
+// `major`; the density four plus the corroborating one are `minor`.
+
+const TRAP: QaCriterionDefinition[] = [
+  { id: "trap-negation-contrast", domain: "trap", description: "Asserting by denying the opposite (', not X.' appositive tails; 'not (just) X but Y'). State the positive claim; mathematical contrast that IS the claim passes with a note.", default_severity: "major", depends_on: ["md", "ts"], automated: false },
+  { id: "trap-rhetorical-pivot", domain: "trap", description: "Setup-then-reframe ('the question is whether…', 'what matters is…') — the second clause carries the content.", default_severity: "major", depends_on: ["md", "ts"], automated: false },
+  { id: "trap-em-dash", domain: "trap", description: "Stylistic spaced dash substituting for sentence structure; density signal, ranges and true parentheticals pass.", default_severity: "minor", depends_on: ["md", "ts"], automated: false },
+  { id: "trap-triples", domain: "trap", description: "The reflex three-item list regardless of content; density signal, substantive enumerations pass.", default_severity: "minor", depends_on: ["md", "ts"], automated: false },
+  { id: "trap-closing-aphorism", domain: "trap", description: "A quotable-sounding final line placed because documents 'end with quotable lines'. End on content.", default_severity: "major", depends_on: ["md", "ts"], automated: false },
+  { id: "trap-meta-commentary", domain: "trap", description: "Narrating one's own emphasis ('worth noting', 'we emphasize', 'the key takeaway'). Place the emphasis, do not announce it; plain 'note that' passes.", default_severity: "major", depends_on: ["md", "ts"], automated: false },
+  { id: "trap-thesis-restatement", domain: "trap", description: "Block-final sentence restating what the text already established ('This establishes …' as a closer). 'This completes the proof' and cross-reference closers pass.", default_severity: "major", depends_on: ["md", "ts"], automated: false },
+  { id: "trap-performed-warmth", domain: "trap", description: "Personal register in institutional prose ('thank you', 'we are excited', 'journey').", default_severity: "minor", depends_on: ["md", "ts"], automated: false },
+  { id: "trap-superlative", domain: "trap", description: "Maximum-strength claims without qualification ('most importantly', 'near-universal', 'single most'); includes intensifier-inflation registers ('rigorously evades', 'seamlessly').", default_severity: "minor", depends_on: ["md", "ts"], automated: false },
+  { id: "trap-nonspeakable", domain: "trap", description: "Noun-heavy chains that parse on the page but stall aloud — written for the eye, not the ear.", default_severity: "minor", depends_on: ["md", "ts"], automated: false },
 ];
 
 export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
@@ -2055,6 +2083,7 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...DEVILS_ADVOCATE,
   ...EXPO,
   ...DAK,
+  ...TRAP,
 ];
 
 export const SCRIPT_QUALITY_CRITERIA: string[] = SCRIPT_QUALITY.map(
