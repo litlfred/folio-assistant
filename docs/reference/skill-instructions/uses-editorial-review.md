@@ -84,13 +84,42 @@ When reviewing, do not open the Lean file to decide what belongs in
 
 A `uses[]` entry pointing at a block that appears *later* in the chapter
 is a `detangler-no-forward-ref` finding. Sometimes that is right — the
-exposition really does defer — and `foreshadows[]` (a subset of `uses[]`,
-enforced by `foreshadows-subset-of-uses`) declares it, permanently
-exempting the edge.
+exposition really does defer — and `foreshadows[]` records it.
 
-Permanently is the operative word. A wrong declaration does not merely
-mislabel: it hides a genuine ordering defect behind an authored claim
-that the disorder was intended, and nothing downstream re-opens it. The
+**`foreshadows[]` is independent of `uses[]`** (owner ruling, 2026-08-10;
+the old `foreshadows-subset-of-uses` rule is gone). That independence is
+the whole point, and it splits the field into two cases you must keep
+apart:
+
+| case | in `uses[]`? | who records it | cost |
+|---|---|---|---|
+| **Pure forward pointer** — the prose names something coming later and does not depend on it | no | **derived** from the `.md`, not authored | zero by construction: it never enters the dependency graph |
+| **Deferred prerequisite** — a real dependency the paper states later on purpose | yes | **declared** by the author, and only the author | exempt from ordering *cost*; still counted for cycles, cones and depth |
+
+The earlier subset rule required every foreshadow to sit in `uses[]`,
+which made the field an annotation on an edge and nothing more. It could
+not express the case it was most wanted for — a chapter overview naming
+results it previews but does not depend on — because recording such a
+pointer meant first asserting a dependency that is not real.
+
+**Do not hand-author the first case.** `deriveForeshadows` reads the
+block's own markdown links and backticked labels, keeps those that
+resolve to a real block sitting later in reading order and are not
+already in `uses[]`, and `loadChapterGraph` re-derives on every load.
+Writing them into the manifest duplicates authored content into metadata,
+where it goes stale the moment the prose changes.
+
+Note what the derivation does **not** do: it never reads deferral
+*language*. It matches links and labels. An attempt to detect phrasing
+instead classified "**Below** $n^*$" — a numeric comparison — as a
+deferral, which is why the mechanical half stays mechanical.
+
+## Declaring the second case
+
+Only a deferred prerequisite needs your judgement, and it is the
+expensive one to get wrong: it exempts a real `uses[]` edge from the
+ordering metrics, hiding a genuine defect behind an authored claim that
+the disorder was intended, and nothing downstream re-opens it. The
 contract in `BlockBase.foreshadows` is strict — the prose must **frame
 the reference as deferred** ("we will need X, proved in chapter 9").
 
@@ -99,7 +128,9 @@ happens *elsewhere*: "we establish this in X", "we work this out
 separately", "the derivation is recorded in X". In a review of 274
 forward edges, every declaration that survived adversarial re-review had
 that shape, and **17 of 23** first-pass declarations did not and were
-withdrawn.
+withdrawn. Read that number in context: it was measured under the subset
+rule, when *every* forward pointer had to be declared. Most of the
+withdrawn ones were pure pointers, which now derive themselves.
 
 | Looks like a deferral | Actually |
 |---|---|
@@ -118,6 +149,17 @@ declaring:
 - **Mis-aimed deferral.** The quoted sentence hands off to a *different*
   block than the edge under review. A deferral pointed elsewhere cannot
   exempt this one.
+
+Both are about the *declared* case only. A derived pointer is aimed by
+the link itself, so it cannot be mis-aimed, and it carries no exemption
+to abuse.
+
+Two rules police the field now that the subset requirement is gone:
+`foreshadows-resolve` (every target must exist — the referential
+integrity `uses[]` validation used to provide incidentally) and
+`foreshadows-not-self`. The `foreshadows-point-forward` criterion catches
+a target the reader has already passed, which is either a prerequisite
+filed in the wrong field or an inert back-reference.
 
 ## A block's `uses[]` may be carrying the whole family
 
