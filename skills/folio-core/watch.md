@@ -32,7 +32,11 @@ Before arming anything, record the current state so the §3 review
 compares cleanly:
 
 ```bash
-git fetch origin <BRANCH> 2>/dev/null
+# Explicit refspec, ALWAYS. `git fetch origin <BRANCH>` writes FETCH_HEAD and
+# refreshes refs/remotes/origin/<BRANCH> only when the clone's configured
+# refspec covers it — and exits 0 either way. A baseline read from a tracking
+# ref that was never updated is not a baseline.
+git fetch origin "+refs/heads/<BRANCH>:refs/remotes/origin/<BRANCH>" 2>/dev/null
 # Sanitize branch name for use in a file path: replace `/` with `_`
 # (e.g. `feature/foo` → `feature_foo`).  Without this, branches with
 # slashes silently land in non-existent directory trees.
@@ -280,8 +284,15 @@ timeout, main may have moved substantially. Mandatory steps on
 timeout-recovery:
 
 ```bash
-# Compare current baseline against actual main HEAD
-git fetch origin main 2>/dev/null
+# Compare the stashed baseline against the WATCHED BRANCH's actual head.
+#
+# This fetched `main` and then measured `origin/<BRANCH>` — a different ref
+# from the one it refreshed. The recovery step that exists to catch what was
+# missed while the watcher was down therefore compared the baseline against a
+# tracking ref nothing had updated, found them equal, and reported 0 missed
+# every time. Fetch the ref you are about to read, with an explicit refspec so
+# the tracking ref is actually written.
+git fetch origin "+refs/heads/<BRANCH>:refs/remotes/origin/<BRANCH>" 2>/dev/null
 SAFE=$(echo "<BRANCH>" | tr '/' '_')
 LAST=$(cat /tmp/_watch_baseline_${SAFE}.sha 2>/dev/null || echo "")
 CUR=$(git rev-parse origin/<BRANCH>)
