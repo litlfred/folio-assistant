@@ -494,11 +494,28 @@ independently useful and independently abandonable.
 > produces nothing in a sandbox. The offline PDF path is now Stage 1, and
 > network acquisition is an *enrichment* that runs when it can.
 
-**Stage 1 — Structure, offline (`scripts/pdf-structure.py`, built).**
-PDF → `structure.json` + `sections/*.md`, pure `pypdf`, no network, no
-GPU, no service. Delivers the metadata/TOC/section split and — the
-practical win — makes `uploads/` greppable (§7-bis). Works in every
-session regardless of egress policy.
+**Stage 1 — Structure, offline (`scripts/pdf-structure.py`, built and
+run).** PDF → `structure.json` + `sections/*.md`, pure `pypdf`, no
+network, no GPU, no service. Works in every session regardless of egress
+policy. Measured over the whole corpus:
+
+| | Result |
+|---|---|
+| Input | 339 PDFs, 12,166 pages |
+| Processed | **332 documents, 0 failures** (7 PDFs collided on derived `doc_id` — duplicate uploads, deduplicated for free) |
+| **Output** | **7,313 sections, 24.7 M characters greppable**, 52 MB |
+| Title | **321 (96.7 %)** — against DocInfo's 126 (37 %), a 2.6× improvement that justifies deriving from text |
+| Authors | 241 (72.6 %) |
+| Abstract | 227 (68.4 %) |
+| arXiv id | 213 (64.2 %) — matches the 68 % filename estimate, now confirmed from page-1 stamps rather than filenames |
+| TOC route | outline 188 · inferred 137 · **none 7** |
+
+The weak cells are the honest part and they define Stage 3's work list:
+**7 documents yield no TOC, 17 stay unsectioned, 7 look scanned.** Those
+~20 documents are where `pypdf` genuinely runs out and Docling or OCR
+earns its place — not the other 312. Author and abstract recall
+(73 %/68 %) are the next quality target; both are page-1 layout problems
+that Docling would also improve.
 
 **Stage 2 — Acquire, when the network allows (enrichment).** Where
 `arxiv.org` is reachable, fetch the LaTeX source for the 230 arXiv
