@@ -1892,6 +1892,62 @@ let _graphLoaded = false;
 const CHAPTER_POS_STRIDE = 1_000_000;
 const withinChapter = (pos: number): number => pos % CHAPTER_POS_STRIDE;
 
+/**
+ * Where a block sits, for callers outside this module.
+ *
+ * Three outcomes, kept distinct on purpose. The position map is the only
+ * source of block ordering in the platform, and it was private — so a consumer
+ * that needed to ask "where is this block?" had to hand-roll a second manifest
+ * parser. That duplication is what `fsl7` exists to prevent and what `#116`
+ * finished undoing for `loadChapterGraph` itself; re-creating it one caller out
+ * would be the same mistake with extra steps.
+ *
+ * - `ok` — the block is listed, and `pos` orders it within `chapter`.
+ * - `unlisted` — the graph loaded and this label is not in any manifest.
+ * - `unavailable` — the graph could not be built (no paper manifest, multi-paper
+ *   folio). **Nothing is known.**
+ *
+ * The last two are separated because conflating them is the recurring defect in
+ * this area: `checkDetanglerNoForwardRef` returns `pass` for an unpositioned
+ * block, so an unbuilt graph and a clean corpus produce the same report. A new
+ * consumer should not inherit that.
+ */
+export type BlockPlacement =
+  | { status: "ok"; chapter: string; pos: number; within: number }
+  | { status: "unlisted" }
+  | { status: "unavailable" };
+
+/** Placement of `label`, building the chapter graph on first call. */
+export function blockPlacement(label: string): BlockPlacement {
+  loadChapterGraph();
+  if (!_graphLoaded || !_blockPos || !_labelToChapter) return { status: "unavailable" };
+  const pos = _blockPos.get(label);
+  const chapter = _labelToChapter.get(label);
+  if (pos === undefined || chapter === undefined) return { status: "unlisted" };
+  return { status: "ok", chapter, pos, within: withinChapter(pos) };
+}
+
+/**
+ * Would an edge `from → to` be a **forward reference**?
+ *
+ * The rule `checkDetanglerNoForwardRef` applies, exported once rather than
+ * re-derived per caller: an edge counts as forward only when both blocks sit in
+ * the **same chapter** and the target comes later. A cross-chapter edge
+ * reflects the paper's intended chapter order and is not a local tangle.
+ *
+ * `undefined` means the question could not be answered — either block unlisted,
+ * or no graph. Callers must not read that as `false`; the whole point of
+ * costing a proposed `uses[]` edge is to avoid silently undoing ordering work,
+ * and "I could not check" is not "it is fine".
+ */
+export function pointsForward(from: string, to: string): boolean | undefined {
+  const a = blockPlacement(from);
+  const b = blockPlacement(to);
+  if (a.status !== "ok" || b.status !== "ok") return undefined;
+  if (a.chapter !== b.chapter) return false;
+  return b.pos > a.pos;
+}
+
 function loadChapterGraph(): void {
   if (_graphLoaded) return;
 
