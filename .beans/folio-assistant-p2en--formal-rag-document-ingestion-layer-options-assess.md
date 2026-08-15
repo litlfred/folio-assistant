@@ -64,3 +64,24 @@ pypdf-only Stage 1. Stage 3 is a workstation/CI stage: run where egress
 allows, commit artefacts, let sandboxed sessions consume them.
 
 Work list is ~20 documents (7 no-TOC, 17 unsectioned, 7 scanned).
+
+## L1 extractor: logic tested, real layout still unproven
+
+who.int / iris.who.int / cdn.who.int are 403 like arxiv and huggingface,
+and no guideline-like document exists in the library, so validation
+against a real WHO L1 PDF is impossible in a sandboxed session. Added
+`scripts/tests/who-l1-extractor.test.py` instead: a synthetic fixture
+built from document-intake's documented L1 structure, asserting all five
+normative elements map to the right block kinds, GRADE + strength are
+detected, routing goes to l2-dak-authoring, and no formalization
+candidates are emitted.
+
+The negative half of that test found a real bug: RE_GRADE alternated on
+bare `\bhigh|moderate|low`, so "high malaria burden" in a nearby
+paragraph flagged a recommendation as GRADE-adjacent. Certainty levels
+must now bind to a certainty/quality/evidence noun.
+
+`candidates.json` still reports `"validated": false` for who-l1 and must
+keep doing so until a real guideline runs through it. Only affects the
+who-l1 class; the 332 math-class candidates are unchanged (extract_math
+never touches RE_GRADE).
