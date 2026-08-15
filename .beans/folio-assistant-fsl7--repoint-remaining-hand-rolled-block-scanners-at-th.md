@@ -132,3 +132,34 @@ gate, not about parsing. But it does move this bean from "filed so the remaining
 scanners are known rather than rediscovered" to "one of them has already
 mis-parsed real content and hidden findings behind a pass". Still not blocking;
 now with a demonstrated cost.
+
+
+## 2026-08-15 — bullet 3 is half-discharged, and the half that mattered is not
+
+`1690d08` ("manifest parsing: read the array, not the text that looks like one")
+adds `parseManifestStringArray`, which is the right implementation and strictly
+better than the stopgap: it **masks** strings and comments index-preservingly
+rather than stripping them, then matches the array by **bracket depth**. So a
+`]` inside a comment cannot terminate it, a `https://` inside a literal survives,
+and — unlike the stopgap — a legitimately nested array is handled.
+
+It has a 113-line test file. This is the class being retired properly rather
+than patched, which is what this bean asks for.
+
+**But `loadChapterGraph` was not repointed at it.** The position map that every
+detangler criterion depends on — the exact code path `mcp1` was a bug in — still
+runs `stripLineComments` plus the non-greedy `blocks: \[([\s\S]*?)\]`. Two
+parsers now derive block positions from the same manifests by different means:
+`build-foreshadows.ts` on the new one, `loadChapterGraph` on the old.
+
+Measured on the qou corpus today: **they agree, 0 disagreements across 3515
+slugs**, so this is latent rather than live. The stopgap handles the two shapes
+that actually occur (a `]` in a comment, a slug quoted in a comment). It would
+diverge on a nested array inside a `blocks: [...]`, which no manifest currently
+has.
+
+So the remaining work here is small and worth doing while the context is fresh:
+point `loadChapterGraph` at `parseManifestStringArray`, drop `stripLineComments`
+and its test if nothing else uses them. Not urgent — nothing is wrong today —
+but two parsers for one job is how the next divergence starts, and this bean
+exists precisely to stop scanners being rediscovered.
