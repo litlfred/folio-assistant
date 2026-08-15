@@ -73,10 +73,27 @@ try {
   /* ignore */
 }
 
-let doc: any = {};
+interface QaEntry {
+  field_hash: { md: string; ts?: string };
+  result: string;
+  severity?: string;
+  evidence?: string;
+  notes?: string;
+  reviewer: { kind: string; id: string; version?: string };
+  reviewed_at: string;
+  reviewed_sha: string;
+}
+interface QaSidecarDoc {
+  $schema?: string;
+  criteria?: Record<string, QaEntry[]>;
+  updated_at?: string;
+  [k: string]: unknown;
+}
+
+let doc: QaSidecarDoc = {};
 if (existsSync(qaPath)) {
   try {
-    doc = JSON.parse(readFileSync(qaPath, "utf8"));
+    doc = JSON.parse(readFileSync(qaPath, "utf8")) as QaSidecarDoc;
   } catch {
     console.error(`unparseable sidecar (fix by hand first): ${qaPath}`);
     process.exit(1);
@@ -86,7 +103,7 @@ doc.$schema ??= "block-qa/v1";
 doc.criteria ??= {};
 doc.criteria[criterion] ??= [];
 
-const entry: any = {
+const entry: QaEntry = {
   field_hash: {
     md: sha12(readFileSync(blockMd, "utf8")),
     ...(existsSync(tsPath) ? { ts: sha12(readFileSync(tsPath, "utf8")) } : {}),
@@ -100,7 +117,7 @@ if (severity) entry.severity = severity;
 if (evidence) entry.evidence = evidence;
 if (notes) entry.notes = notes;
 
-doc.criteria[criterion].push(entry);
+doc.criteria![criterion].push(entry);
 doc.updated_at = entry.reviewed_at;
 writeFileSync(qaPath, JSON.stringify(doc, null, 2) + "\n");
 console.log(`${qaPath}: ${criterion} <- agent ${result}`);
