@@ -45,6 +45,47 @@ Note: the npm package named `beans` is an unrelated abandoned tool — do **not*
    `beans create "<Task Title>" --type task`
    `beans update <child-id> --parent <session-id>`
 3. **No manual `.md` checklists:** Never use `session-beans.md` or raw Markdown `- [ ]` checklists to track global tasks. Always use the `beans` CLI to prevent namespace pollution and maintain the official project tracking.
+4. **Check before you create:** `beans create` is **not** idempotent. Run the existence check below before every `beans create` — no exceptions, including the session milestone.
+
+## Check before you create — `beans create` is not idempotent (STRICT)
+
+`beans create` mints a **fresh random ID on every call** and dedupes on
+nothing. Re-running a work-plan step is therefore *not* a no-op — it creates a
+second bean. **Before every `beans create`, check whether the bean exists:**
+
+```bash
+T="Prove Foo.bar"
+beans list --json --search "title:\"$T\"" | python3 -c '
+import json, sys
+t = sys.argv[1]
+m = [b for b in json.load(sys.stdin) if b["title"] == t]
+print(f"{len(m)} exact match(es)")
+[print(" ", b["id"], b["status"]) for b in m]' "$T"
+```
+
+- **≥ 1 match** → do **not** create. Claim the existing bean instead:
+  `beans update <id> --status in-progress --body-append "Claimed by <branch>"`
+- **0 matches** → `beans create "$T" --type task`
+
+`--search` is a fuzzy Bleve query, so the exact-title comparison inside the
+pipe is load-bearing — do not drop it and trust `--search` alone.
+
+**Why this is STRICT.** In the `qou` folio on 2026-08-04, one agent context
+re-ran its 15-bean session work-plan ~980 times back-to-back (median 19 s per
+cycle, ~16 h wall). Because `create` is unconditional, that produced **14,688
+duplicate beans** — 92 % of every open bean in that repo. The damage was not
+just clutter:
+
+- the session-start sweep and the idle-backlog policy were reading mostly noise;
+- ~980 copies of an already-proved item sat at `todo`;
+- the duplicates **collided with the IDs of 15 real beans**, making
+  `beans update <id>` ambiguous for those;
+- they corrupted a later agent's own corpus-grep — 4,928 `.beans` files matched
+  one search term across just 36 titles, inflating 14 real source files into an
+  apparent 54 and nearly landing a false correction in a PR body.
+
+The runaway loop is not something a doc can prevent; an unguarded `create` is.
+This rule is platform-level so every folio inherits it.
 
 ## Working with Beans
 

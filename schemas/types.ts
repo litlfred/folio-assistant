@@ -572,21 +572,67 @@ interface BlockBase {
    */
   uses?: string[];
   /**
-   * Subset of `uses[]` that points DELIBERATELY forward — a foreshadow, a
+   * Labels this block points DELIBERATELY forward to — a foreshadow, a
    * preview, or an explicitly deferred result the exposition promises to
    * return to (the surreal-number thread is the archetype).
    *
-   * `detangler-no-forward-ref` exists to catch a reader being sent to material
-   * they have not reached yet (`detangler-no-xchapter-fwd` is still an unwired
-   * stub returning `n/a`). That is a
-   * defect when it is accidental and a rhetorical device when it is not: a
-   * block may legitimately say "we will need X, proved in chapter 9". Listing
-   * X here declares the reference intentional and exempts that one edge.
+   * Where `uses[]` answers *"what must a reader have read first?"* and is
+   * backward-looking by construction, this answers the complementary
+   * question — *"what will the reader meet later, if they want more?"*
    *
-   * NOT a way to silence the axis. Every entry must also appear in `uses[]`
-   * (enforced — a foreshadow of something the block does not reference is
-   * meaningless), and each one is a claim that the prose actually frames the
-   * reference as deferred. Everything not listed stays a finding.
+   * ## Independent of `uses[]` (changed 2026-08-10)
+   *
+   * This field was originally a strict **subset** of `uses[]`: an annotation
+   * marking one dependency edge as deliberately deferred. That could not
+   * express the case it was most wanted for — a chapter overview (§0) naming
+   * results it previews but does not depend on — because recording such a
+   * pointer first required asserting a dependency that is not real.
+   *
+   * An entry may now be either:
+   *
+   * - **also in `uses[]`** — a genuine prerequisite the paper states later on
+   *   purpose ("we will need X, proved in chapter 9"). The edge stays in the
+   *   dependency graph; listing it here exempts it from the ordering-COST
+   *   metrics only.
+   * - **not in `uses[]`** — a pure forward pointer, asserting no dependency.
+   *   It never enters the dependency graph at all.
+   *
+   * ## Zero cost, in both cases
+   *
+   * A foreshadow carries no ordering cost: it is skipped by
+   * `detangler-no-forward-ref`, `detangler-graph-energy`, and both sides of
+   * `detangler-block-tanglement`. Pointing a reader forward is a service, not
+   * a tangle — the prose has told them the material is coming and does not ask
+   * them to go now.
+   *
+   * ## Choosing between the two fields
+   *
+   * The exemption is from the ordering **cost**, not from the **edge**. A
+   * foreshadow that is also in `uses[]` still counts for cycle detection,
+   * dependency cones, chain depth, and PageRank — a cycle is a logical
+   * impossibility rather than reader burden, so no declaration hides one.
+   *
+   * The authoring question is *"must the reader have this in hand to follow
+   * the block?"* If yes it belongs in `uses[]`, and a forward-pointing
+   * `uses[]` edge means the **block order is wrong** — the fix is the order,
+   * not the field. If no, it belongs here.
+   *
+   * Getting that choice wrong costs reading-order accuracy, which is what
+   * these fields are for; it does not affect whether anything is *true*. The
+   * formal content of a block is carried by its `lean.ref` sibling and gated
+   * by the Lean build, entirely independently of this graph.
+   *
+   * Each entry remains a claim that the prose actually frames the reference as
+   * deferred. Everything not listed stays a finding.
+   *
+   * ## Form
+   *
+   * Same reference forms as `uses[]` — bare label within a paper,
+   * `paper-dir:label` cross-paper, full URL cross-folio. Targets must resolve
+   * (`foreshadows-resolve`), and a block may not foreshadow itself
+   * (`foreshadows-not-self`). Unlike `uses[]`, this list is **not**
+   * transitively pruned: pointers are individually chosen editorial gestures,
+   * not a reachability relation.
    */
   foreshadows?: string[];
   /**

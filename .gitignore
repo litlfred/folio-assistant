@@ -24,3 +24,28 @@ content/audit-tex-source.json
 # directories staged for the next `git add -A`.
 __pycache__/
 *.py[cod]
+
+# Agent scratch state — transient tooling state, never repository content.
+# Same class as .claude/worktrees/ above. A sandbox accumulates these as
+# untracked directories and a `git add -A` sweeps them into an unrelated
+# commit; in the qou folio that mechanism committed 46,155 files under a
+# one-file Lean subject line. Prophylactic here — folio-assistant has none
+# of these today, and should not acquire them.
+#
+# ANCHORED with a leading slash — root-level only. A gitignore pattern with no
+# internal slash matches at EVERY depth, so the unanchored form these entries
+# originally had reaches into nested directories that share a name. In the qou
+# folio that captured two documented archives — `computations/_deprecated/`
+# (1,449 tracked files, including `script-qa/*.script-qa.json` QA sidecars) and
+# `docs/audits/_deprecated/` (66) — where any NEW file would then be skipped by
+# `git add` with no error. Keep the leading slash on every entry.
+/.agents/
+/amalgamated_done/
+/amalgamated_input/
+/_deprecated/
+/scratch/
+
+# Symlink farm created by the CONTENT repo's scripts/setup-folio-assistant.sh
+# (e.g. content/schema/references.ts -> <content-repo>/content/schema/references.ts).
+# Machine-local absolute paths — useful in a working clone, meaningless in git.
+content/schema/

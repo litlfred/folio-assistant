@@ -72,6 +72,14 @@ Three places, all required:
 ```
 
 **b. Beans CLI** — Create a parent session bean and child tasks.
+
+> **Check before you create (STRICT).** `beans create` is not idempotent — it
+> mints a fresh ID every call and dedupes on nothing, so re-entering this step
+> duplicates the whole plan rather than no-op'ing. Run the existence check in
+> [`todo-manager.md` §Check before you create](todo-manager.md) before **every**
+> `beans create` below, the session milestone included. An unguarded re-run of
+> exactly this step produced 14,688 duplicate beans in one folio on 2026-08-04.
+
 - Create a session-level milestone/epic: `beans create "Session: <Branch/Goal>" --type milestone`
 - For each task you pick up, create a child task and link it to the session bean:
   `beans create "<Task>" --type task`

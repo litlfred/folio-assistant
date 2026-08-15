@@ -1224,6 +1224,36 @@ const DETANGLER: QaCriterionDefinition[] = [
     also_invalidated_by: ["graph"],
   },
   {
+    id: "foreshadows-point-forward",
+    domain: "detangler",
+    description:
+      "Every `foreshadows:` target appears LATER than the block — later in " +
+      "the same chapter's ordered `sections[].blocks[]`, or in a later " +
+      "chapter. A foreshadow is a promise that material is coming; naming " +
+      "something the reader has already passed is either a prerequisite " +
+      "filed in the wrong field or an inert back-reference. Deterministic: " +
+      "`checkForeshadowsPointForward` reuses the block-position map and " +
+      "fails (major) listing each backward target. `n/a` for blocks with no " +
+      "`foreshadows:`. Resolution of the labels themselves is the " +
+      "`foreshadows-resolve` constraint, not this criterion.\n\n" +
+      "Load-bearing since `foreshadows[]` stopped being a subset of " +
+      "`uses[]` (2026-08-10): an entry may now name a block the manifest " +
+      "does not otherwise reference, and is zero-cost by construction, so " +
+      "direction is the one property left that a machine can check here. It " +
+      "cannot distinguish a pure forward pointer from a prerequisite filed " +
+      "in the wrong field — both point forward — so that call stays with the " +
+      "author. The cost of getting it wrong is reading-order accuracy, not " +
+      "correctness: a block's formal content is carried by its `lean.ref` " +
+      "sibling and gated by the Lean build, independently of this graph.",
+    default_severity: "major",
+    depends_on: ["ts"],
+    automated: true,
+    // Same rationale as detangler-no-forward-ref above: the verdict depends
+    // on the chapter's block ORDER, so another block's manifest edit can
+    // change it while this block's own files are untouched.
+    also_invalidated_by: ["graph"],
+  },
+  {
     id: "detangler-section-band",
     domain: "detangler",
     description:
