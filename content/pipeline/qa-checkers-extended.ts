@@ -28,7 +28,7 @@ import { fileURLToPath } from "url";
 import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
 import { hashFile } from "./qa-utils";
 import { findContentRepoRoot, findPapers } from "./repo-root";
-import { maskStringsAndComments, stripArrayField } from "./uses-field";
+import { maskStringsAndComments, parseStringField, stripArrayField } from "./uses-field";
 
 const __filename = fileURLToPath(import.meta.url);
 // Resolve content-repo paths (witnesses under <repo>/computations, Lean
@@ -1916,6 +1916,9 @@ function loadChapterGraph(): void {
   const chapterOrder = new Map<string, number>();
   const labelToChapter = new Map<string, string>();
   const usesGraph = new Map<string, string[]>();
+  // `uses[]` PLUS `interprets` — the full editorial relation. Cycle detection
+  // runs on this; the ordering measures stay on `usesGraph`.
+  const editorialGraph = new Map<string, string[]>();
   // Deliberate forward references, per block. A separate adjacency (rather
   // than a per-file re-parse) so the RECEIVE side of the tanglement metric
   // can ask "did the citing block declare this?" without reading that
@@ -1975,8 +1978,7 @@ function loadChapterGraph(): void {
             labelToChapter.set(m[1], `${paper}/${dir}`);
             slugToLabel.set(f.slice(0, -3), m[1]);
             // Record the block's `uses:[...]` dependency edges (only the
-            // uses array — NOT cites/interprets/own-label) for cycle
-            // detection.
+            // uses array — NOT cites/own-label) for ordering measures.
             // De-duplicate: a block listing the same `uses:` label twice
             // must not inflate out-degree / in-degree / cone size — count
             // unique dependency edges only.
@@ -1984,6 +1986,19 @@ function loadChapterGraph(): void {
               ...new Set(parseManifestStringArray(content, "uses")),
             ];
             usesGraph.set(m[1], useLabels);
+            // The EDITORIAL adjacency additionally carries `interprets`, which
+            // is an editorial dependency too (bean `i8ad`). Kept separate from
+            // `usesGraph` on purpose: cycle detection must see the whole
+            // relation, while the forward-reference count stays on `uses[]`
+            // alone. Merging them would move a gate five merged PRs were
+            // measured against, and that is a separate decision.
+            const interpretsTarget = parseStringField(content, "interprets");
+            editorialGraph.set(
+              m[1],
+              interpretsTarget && !useLabels.includes(interpretsTarget)
+                ? [...useLabels, interpretsTarget]
+                : useLabels,
+            );
             foreshadowGraph.set(m[1], parseForeshadows(content));
             // Collect the narrative's raw block references now; the
             // forward/backward split needs positions, which are built in the
@@ -2045,15 +2060,21 @@ function loadChapterGraph(): void {
     }
   }
 
-  // Precompute uses[]-cycle membership ONCE: for each label on a
+  // Precompute EDITORIAL cycle membership ONCE: for each label on a
   // dependency cycle, store an example back-to-self path. Per-block
   // checks then become an O(1) lookup.
+  //
+  // Runs on `editorialGraph`, not `usesGraph`. A cycle through an `interprets`
+  // edge is just as circular for a reader — "read A before B and B before A" —
+  // and one such cycle sat undetected in the corpus because this scan could
+  // not see that leg (`rem:frobenius-packing-density` interprets
+  // `conj:mass-volume-factorization`, which `uses` it back).
   const inCyclePath = new Map<string, string[]>();
-  for (const start of usesGraph.keys()) {
+  for (const start of editorialGraph.keys()) {
     const visited = new Set<string>([start]);
     const path: string[] = [start];
     const dfs = (node: string): string[] | null => {
-      for (const next of usesGraph.get(node) ?? []) {
+      for (const next of editorialGraph.get(node) ?? []) {
         if (next === start) return [...path, start];
         if (!visited.has(next)) {
           visited.add(next);
@@ -2569,7 +2590,9 @@ export function checkDetanglerNoDependencyCycle(
         {
           file: tsPath,
           line: 0,
-          text: `uses[] dependency cycle: ${cyclePath.join(" -> ")}`,
+          text:
+            `editorial dependency cycle (uses[] + interprets): ` +
+            `${cyclePath.join(" -> ")}`,
         },
       ],
     };
