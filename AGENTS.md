@@ -124,8 +124,19 @@ a background subagent, not the foreground.
 
 ## More
 
-- **`uses[]` is the EDITORIAL relation** — what a *reader* must have read to
-  follow a block. Agent/human maintained, part of the authored content.
+- **`uses[]` and `interprets` are the EDITORIAL relation** — what a *reader*
+  must have read to follow a block. Agent/human maintained, part of the authored
+  content. `uses[]` is the curated list; `interprets` states the same
+  reader-facing fact for a remark or example about one specific block, and since
+  2026-08-15 (bean `i8ad`) `content-graph.ts` counts both. Each editorial edge
+  carries `editorialField` so a tool proposing an *edit* can still tell which
+  field an author wrote — they are interchangeable to a reader, not to a writer.
+  **Two caveats worth knowing before you quote a number:**
+  `detangler-no-forward-ref` builds its own `uses`-only adjacency in
+  `loadChapterGraph` and does **not** consume `content-graph`, so it is
+  unaffected and ten forward-pointing `interprets` edges are outside what it
+  counts; and the graph is no longer acyclic — one genuine editorial cycle is
+  revealed rather than introduced (see `i8ad`).
   It is **not** the formal dependency graph; that is machine-derived from
   `lean.ref`. The two diverge legitimately in both directions (a proof invokes
   `simp` lemmas nobody reads about; a theorem is motivated by an example it
@@ -133,8 +144,8 @@ a background subagent, not the foreground.
   every ordering metric is computed from. For impact questions ("what breaks if
   this changes?") use the union via `content/pipeline/content-graph.ts`, whose
   accessors default to it. Auditing: the `uses` QA axis (mechanical) plus the
-  `uses-editorial-review` skill (human/agent). Contract: `BlockBase.uses` in
-  `schemas/types.ts`.
+  `uses-editorial-review` skill (human/agent). Contract: `BlockBase.uses` and
+  `RemarkBlock.interprets` in `schemas/types.ts`.
 - Lean tooling roadmap (Lean Atlas / Compass, Nazrin, refactor cluster,
   LeanDojo) — where each earns a place and how it wires into existing skills:
   `docs/proposals/llm-authoring-tool-integration.md`.

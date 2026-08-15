@@ -91,7 +91,11 @@ trap restore_state EXIT
 
 # ── Fetch origin/main + branch FIRST (before slow audit) ────────
 echo "Fetching origin/main..."
-git fetch origin main --quiet
+# Explicit refspec: the branch below is cut from refs/remotes/origin/main, and a
+# bare `git fetch origin main` refreshes that ref only when the clone's
+# configured refspec covers it. Under a narrowed refspec the audit would run
+# against a stale tree and report on code that is not what main holds. See 9giz.
+git fetch origin '+refs/heads/main:refs/remotes/origin/main' --quiet
 
 # Stash any uncommitted work so the audit branch is scoped to its own diff
 if ! git diff --quiet HEAD 2>/dev/null || ! git diff --quiet --cached 2>/dev/null; then
