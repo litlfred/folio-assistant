@@ -1546,6 +1546,56 @@ export function maskStringsAndComments(src: string): string {
  * Note the masking must be index-preserving rather than a strip: naive
  * comment removal corrupts `https://…` inside string literals.
  */
+/**
+ * Every occurrence of a manifest array field, in source order.
+ *
+ * Same masking and depth-scanning as `parseManifestStringArray` — which is now
+ * the first element of this — but a chapter manifest holds one `blocks: [...]`
+ * per section and per subsection, and the position map has to walk all of them
+ * in order.
+ */
+export function parseManifestStringArrays(tsSrc: string, field: string): string[][] {
+  const masked = maskStringsAndComments(tsSrc);
+  const re = new RegExp(`(^|[{,\\s])${field}\\s*:\\s*\\[`, "g");
+  const arrays: string[][] = [];
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(masked)) !== null) {
+    const open = masked.indexOf("[", m.index);
+    let depth = 0;
+    let close = -1;
+    for (let k = open; k < masked.length; k++) {
+      if (masked[k] === "[") depth++;
+      else if (masked[k] === "]") {
+        depth--;
+        if (depth === 0) {
+          close = k;
+          break;
+        }
+      }
+    }
+    if (close === -1) break; // unbalanced source; take nothing further
+    // Read entries from the ORIGINAL text, but only at positions the mask
+    // agrees are string literals — so a bracket or quote inside a comment
+    // cannot contribute an entry.
+    const region = tsSrc.slice(open + 1, close);
+    const maskRegion = masked.slice(open + 1, close);
+    const entries: string[] = [];
+    const entry = /["']/g;
+    let mm: RegExpExecArray | null;
+    while ((mm = entry.exec(maskRegion))) {
+      const q = mm.index;
+      const quote = maskRegion[q];
+      const end = maskRegion.indexOf(quote, q + 1);
+      if (end === -1) break;
+      entries.push(region.slice(q + 1, end));
+      entry.lastIndex = end + 1;
+    }
+    arrays.push(entries);
+    re.lastIndex = close; // resume after this array, never inside it
+  }
+  return arrays;
+}
+
 export function parseManifestStringArray(tsSrc: string, field: string): string[] {
   const masked = maskStringsAndComments(tsSrc);
   const re = new RegExp(`(^|[{,\\s])${field}\\s*:\\s*\\[`, "g");
@@ -1842,57 +1892,6 @@ let _graphLoaded = false;
 const CHAPTER_POS_STRIDE = 1_000_000;
 const withinChapter = (pos: number): number => pos % CHAPTER_POS_STRIDE;
 
-/**
- * Drop `//` line comments from a manifest before its `blocks: [...]` arrays
- * are matched.
- *
- * The arrays are read with a non-greedy `\[([\s\S]*?)\]`, which stops at the
- * first `]` — including one inside a comment. In a real paper a comment
- * reading "…and it has `uses: []` …" truncated its section's array, and every
- * block listed after it vanished from `blockPos`: 45 of 3498 blocks corpus-wide,
- * across 7 chapters. A block with no position is silently exempt from
- * `detangler-no-forward-ref` (`myPos === undefined` returns `pass`), and edges
- * *pointing at* it are skipped too, so the checker reported clean on material it
- * had never looked at.
- *
- * The reverse also bit: a slug quoted inside a comment was counted as a real
- * entry, which both invented a block and advanced `within`, shifting every
- * later position in the chapter by one and corrupting every distance measured
- * from it.
- *
- * Quote-aware rather than a blunt `//.*$`, so a `"https://…"` inside a title
- * survives.
- */
-export function stripLineComments(src: string): string {
-  let out = "";
-  let quote: string | null = null;
-  for (let i = 0; i < src.length; i++) {
-    const c = src[i];
-    if (quote) {
-      out += c;
-      if (c === "\\") {
-        out += src[++i] ?? "";
-        continue;
-      }
-      if (c === quote) quote = null;
-      continue;
-    }
-    if (c === '"' || c === "'" || c === "`") {
-      quote = c;
-      out += c;
-      continue;
-    }
-    if (c === "/" && src[i + 1] === "/") {
-      // Keep the newline so line-oriented structure is unchanged.
-      while (i < src.length && src[i] !== "\n") i++;
-      out += "\n";
-      continue;
-    }
-    out += c;
-  }
-  return out;
-}
-
 function loadChapterGraph(): void {
   if (_graphLoaded) return;
 
@@ -1995,20 +1994,25 @@ function loadChapterGraph(): void {
       const ci = firstIdx + i;
       const manifestPath = join(base, dir, `${dir}.ts`);
       if (!existsSync(manifestPath)) return;
-      const mc = stripLineComments(readFileSync(manifestPath, "utf-8"));
+      // Read via the masking parser, not a regex over the raw text. The
+      // position map is what `detangler-no-forward-ref` and its siblings run
+      // on, and a block with no position reads as "not listed" and returns
+      // `pass` — so a mis-parse here does not produce a wrong answer, it
+      // produces a silent absence of checking.
+      const mc = readFileSync(manifestPath, "utf-8");
       let within = 0;
       let sectionIdx = 0;
-      for (const bm of mc.matchAll(/blocks\s*:\s*\[([\s\S]*?)\]/g)) {
-        for (const sm of bm[1].matchAll(/"([^"]+)"/g)) {
-          const lbl = slugToLabel.get(sm[1]);
+      for (const slugs of parseManifestStringArrays(mc, "blocks")) {
+        for (const slug of slugs) {
+          const lbl = slugToLabel.get(slug);
           if (lbl && !blockPos.has(lbl)) {
             blockPos.set(lbl, ci * CHAPTER_POS_STRIDE + within);
             blockSection.set(lbl, ci * CHAPTER_POS_STRIDE + sectionIdx);
+          }
+          within++;
         }
-        within++;
+        sectionIdx++;
       }
-      sectionIdx++;
-    }
     });
   }
 
