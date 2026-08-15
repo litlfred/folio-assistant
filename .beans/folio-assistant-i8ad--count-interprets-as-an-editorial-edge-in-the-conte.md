@@ -111,3 +111,27 @@ Prune damage on the union: **658 → 581**. More than the 37 directly-declared,
 because the new edges restore transitive reachability for others.
 
 tsc 0 · 702 tests / 0 fail · eslint clean.
+
+
+## 2026-08-15 — the cycle count was a snapshot, not a property
+
+Recorded here as "exactly one" cycle. A few hours later, after `main` moved
+3792 files, the same check reports **four**:
+
+```
+rem:frobenius-packing-density   -> conj:mass-volume-factorization -> …
+thm:ns-singularity-descartes    -> prop:ns-kummer-specialisation  -> …
+rem:skein-filtration-trichotomy -> conj:q-collatz -> …
+prop:ns-kummer-specialisation   -> rem:skein-filtration-trichotomy -> conj:q-collatz -> …
+```
+
+All four are pre-existing content cycles that counting `interprets` makes
+visible; three arrived with merged content after this bean was measured. Nothing
+here caused them, and the framing — *revealed, not introduced* — survives.
+
+What does not survive is the number. `AGENTS.md` now says so explicitly rather
+than carrying a figure that goes stale whenever content lands. Same class of
+error this bean's own arc kept finding: a measurement quoted as a property.
+
+The forward-reference gate moved the same way, 195 -> 196, from the same merged
+content and likewise not from this change.
