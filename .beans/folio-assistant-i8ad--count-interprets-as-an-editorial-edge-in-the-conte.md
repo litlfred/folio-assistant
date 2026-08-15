@@ -1,7 +1,7 @@
 ---
 # folio-assistant-i8ad
 title: Count interprets as an editorial edge in the content graph
-status: in-progress
+status: completed
 type: task
 created_at: 2026-08-15T21:20:00Z
 updated_at: 2026-08-15T21:20:00Z
@@ -59,12 +59,12 @@ Three consequences, all of which the decision accepts:
 
 ## Plan
 
-- [ ] Parse `interprets` through the shared masked field scanner, not a new regex
-- [ ] Add as an editorial edge, tagged with its provenance so a consumer can
+- [x] Parse `interprets` through the shared masked field scanner, not a new regex
+- [x] Add as an editorial edge, tagged with its provenance so a consumer can
       still tell `uses` from `interprets`
-- [ ] Update the module contract and `AGENTS.md`, which both currently say the
+- [x] Update the module contract and `AGENTS.md`, which both currently say the
       editorial relation *is* `uses[]`
-- [ ] Report the cycle and the ten forward refs rather than absorbing them
+- [x] Report the cycle and the ten forward refs rather than absorbing them
       silently
 
 ## Summary of Changes
