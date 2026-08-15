@@ -530,7 +530,22 @@ the ledger's reference join.
 absent. Two populations need it and `pypdf` will not serve them: the
 scanned/no-text-layer documents Stage 1 flags as `likely_scanned`, and
 the **WHO L1 guidelines**, where boxed recommendations and GRADE tables
-are layout facts a text extractor destroys (§9.1).
+are layout facts a text extractor destroys (§9.1). Measured work list
+from the Stage 1 run: **7 no-TOC, 17 unsectioned, 7 likely-scanned** —
+about twenty documents, not the other 312.
+
+> **Blocked in a sandboxed session, for the same reason as Stage 2.**
+> Docling's layout, TableFormer and formula models are fetched from
+> HuggingFace, and `huggingface.co` / `cdn-lfs.huggingface.co` return the
+> same 403 policy denial as `arxiv.org` (measured 2026-08-15). So *both*
+> network-dependent stages are unavailable where most agent work happens.
+>
+> This is the strongest form of the §2a argument. A pipeline whose first
+> step needs the network produces nothing in a sandbox; the `pypdf`-only
+> Stage 1 produced 7,313 sections there. Stage 3 is therefore a
+> **workstation / CI stage** — run it where egress allows, commit the
+> artefacts, and let sandboxed sessions consume them. The capability probe
+> is what makes that degrade honestly instead of silently.
 
 **Stage 3-bis — Route + Stage B extractors (§7, §7-bis).** The class
 router, the candidate extractors, and math normalisation (§8.3) as a
