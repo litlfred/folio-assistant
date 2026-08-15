@@ -116,7 +116,15 @@ RE_AUTHOR_HINT = re.compile(r"(,\s|\band\b|\&)", re.I)
 # Report numbers / preprint stamps that precede the title.
 RE_REPORT_NO = re.compile(
     r"^\s*(?:[A-Z]{2,}[-–—/]{1,2}[\w\-–/.]*\d|[a-z\-]+(?:\.[A-Z]{2})?/\d{7}"
-    r"|preprint\b|submitted\b|\d{1,2}\s+(?:" + MONTHS + r")\s+\d{4})",
+    r"|preprint\b|submitted\b|\d{1,2}\s+(?:" + MONTHS + r")\s+\d{4}"
+    # Journal front matter, in the order a published paper prints it:
+    # a publisher mark ("msp"), the masthead ("ALGEBRA AND NUMBER THEORY
+    # 14:7 (2020)"), then the DOI. Without these three a split journal
+    # paper takes the publisher mark as its title — all ten papers of a
+    # bound issue came out titled "msp".
+    r"|\S{1,4}\s*$"
+    r"|[A-Za-z][A-Za-z\s&.\-]{5,}\s+\d+\s*[:(]\s*\d"
+    r"|https?://|doi\s*:|\bdoi\.org\b)",
     re.I,
 )
 
