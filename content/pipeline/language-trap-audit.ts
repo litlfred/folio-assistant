@@ -102,6 +102,14 @@ interface QaCriterionEntry {
   reviewed_at: string;
   reviewed_sha: string;
 }
+interface QaSidecarDoc {
+  $schema?: string;
+  label?: string;
+  kind?: string;
+  criteria?: Record<string, QaCriterionEntry[]>;
+  updated_at?: string;
+  [k: string]: unknown;
+}
 
 // ---------------------------------------------------------------------------
 // Thresholds. Diagnostic criteria fire on presence; density criteria need
@@ -534,10 +542,10 @@ function writeSidecar(
   reviewedSha: string,
 ) {
   const qaPath = join(b.dir, `${b.root}.qa.json`);
-  let doc: any = {};
+  let doc: QaSidecarDoc = {};
   if (existsSync(qaPath)) {
     try {
-      doc = JSON.parse(readFileSync(qaPath, "utf8"));
+      doc = JSON.parse(readFileSync(qaPath, "utf8")) as QaSidecarDoc;
     } catch {
       doc = {};
     }
