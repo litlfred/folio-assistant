@@ -166,7 +166,7 @@ async function loadBlocksFromDir(
       // dependency graph entirely. Three more carry `is_mathematics`. The same
       // class bit this schema once before — `of` itself was declared on the TS
       // type and missing from the Zod object, and was stripped until noticed.
-      for (const key of Object.keys(block as Record<string, unknown>)) {
+      for (const key of Object.keys(block)) {
         if (key in (result.data as Record<string, unknown>)) continue;
         issues.push({
           level: "warning",
