@@ -163,3 +163,33 @@ point `loadChapterGraph` at `parseManifestStringArray`, drop `stripLineComments`
 and its test if nothing else uses them. Not urgent — nothing is wrong today —
 but two parsers for one job is how the next divergence starts, and this bean
 exists precisely to stop scanners being rediscovered.
+
+
+## 2026-08-15 — bullet 3 closed: loadChapterGraph is on the real parser
+
+`parseManifestStringArrays` added — same masking and depth-scan as the
+single-array version, returning every occurrence in source order, because a
+chapter manifest holds one `blocks: [...]` per section and per subsection and
+the position map walks them in order. That is why the existing function was not
+a drop-in.
+
+`loadChapterGraph` now reads through it. `stripLineComments` is deleted: it had
+no production caller left, only its own test.
+
+Its test survives, repointed. The two cases in it came out of the corpus — a `]`
+inside a comment, a slug quoted inside a comment — and they are worth keeping as
+regressions regardless of which parser answers them. Four cases added that the
+stopgap could not have passed: every section's array returned in order, a nested
+array not ending the scan, and a field name inside a string not winning over the
+real field. That last one is bug 2 from `parseManifestStringArray`'s own notes,
+which the stopgap never addressed — stripping comments does nothing about a
+`blocks: [...]` quoted inside an `authorNotes` body.
+
+Verified behaviour-preserving: forward references on qou read **194 before and
+194 after**, matching the 0-disagreement measurement taken before the change.
+677 tests, lint clean.
+
+**Bullet 3 is done.** Bullets 1 and 2 stand as previously ruled — bullet 1 closed
+by owner decision, bullet 2 fine as filed. The bean's remaining subject is the
+sync loader, unchanged: worth doing when someone is already in loader work, not
+worth opening on its own account.
