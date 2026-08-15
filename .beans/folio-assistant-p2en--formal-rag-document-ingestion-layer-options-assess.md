@@ -43,3 +43,24 @@ Those ~20 are where Docling earns its place; the other 312 do not need it.
 Next: Stage B extractors (candidates.json) — math claims -> formalization
 candidates, WHO L1 -> recommendation blocks. Both propose, never write to
 content/.
+
+## Follow-ups landed (qou PR #5134)
+
+- corpus-grep checklist gains path 5, `library/*/sections/` — the 24.7M
+  chars are now reachable by the discipline that most needs them.
+- 43 references.ts entries marked `stage: "missing"` (claimed upload,
+  file never committed). Recorded, not repaired.
+- 246 uncited library documents queued in
+  `docs/audits/2026-08-15-library-uncited-triage.md`, ranked by extracted
+  formalizable content (a proxy for offered material, NOT relevance).
+
+## Stage 3 (Docling) is network-blocked, like Stage 2
+
+huggingface.co and cdn-lfs.huggingface.co return the same 403 policy
+denial as arxiv.org, and that is where Docling's layout/TableFormer/
+formula models come from. So BOTH network-dependent stages are dead in a
+sandbox, which is the strongest version of the argument for the
+pypdf-only Stage 1. Stage 3 is a workstation/CI stage: run where egress
+allows, commit artefacts, let sandboxed sessions consume them.
+
+Work list is ~20 documents (7 no-TOC, 17 unsectioned, 7 scanned).
