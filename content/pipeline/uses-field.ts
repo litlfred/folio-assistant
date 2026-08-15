@@ -245,6 +245,39 @@ export function findUsesField(text: string): UsesField | undefined {
 }
 
 /**
+ * A scalar string field's value — `interprets: "def:x"` — or `undefined`.
+ *
+ * Same masked locate as `findArrayField`, for the same reasons: a `//` note
+ * between the previous field and this one must not hide it, and the field name
+ * quoted inside a string must not win. A plain
+ * `/interprets:\s*"([^"]+)"/` would fall to both, and the second is not
+ * hypothetical — prose in this corpus discusses `interprets:` by name.
+ */
+export function parseStringField(text: string, name: string): string | undefined {
+  const scan = maskStringsAndComments(text);
+  let from = 0;
+  for (;;) {
+    const fieldStart = findFieldStart(scan, name, from);
+    if (fieldStart < 0) return undefined;
+    let i = fieldStart + name.length;
+    while (i < scan.length && scan[i] !== ":") i++;
+    i++;
+    while (i < scan.length && /\s/.test(scan[i])) i++;
+    const quote = scan[i];
+    if (quote !== '"' && quote !== "'") {
+      // Not a string literal — a template, a variable, a nested object.
+      from = fieldStart + name.length;
+      continue;
+    }
+    // The masked copy keeps quote positions, so the end is findable there and
+    // the value is sliced from the original.
+    const end = scan.indexOf(quote, i + 1);
+    if (end < 0) return undefined;
+    return text.slice(i + 1, end);
+  }
+}
+
+/**
  * Remove an array field's `name: [...]` text entirely, leaving the rest
  * intact. Used to blank downstream-reference fields before scanning the
  * remaining source for evidence about the block itself.

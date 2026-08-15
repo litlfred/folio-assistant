@@ -7,10 +7,30 @@
  * A content block participates in **two different** dependency
  * relations, and conflating them is a category error:
  *
- * - **editorial** — from the block manifest's `uses[]` array. Answers
- *   "what must a reader have read to follow this block?" Authored:
- *   agent/human maintained, part of the content. See
- *   `schemas/types.ts` → `BlockBase.uses`.
+ * - **editorial** — from the block manifest's `uses[]` array **and its
+ *   `interprets` field**. Answers "what must a reader have read to follow
+ *   this block?" Authored: agent/human maintained, part of the content. See
+ *   `schemas/types.ts` → `BlockBase.uses` and `RemarkBlock.interprets`.
+ *
+ *   Both fields state the same reader-facing fact, so both are editorial: a
+ *   remark interpreting a proposition cannot be followed without it. This was
+ *   `uses[]` alone until 2026-08-15 (owner decision, bean `i8ad`), so the graph
+ *   answered "what must a reader have read?" while omitting 342 authored
+ *   statements of exactly that, and they were absent from every cone, energy
+ *   and reachability measure.
+ *
+ *   Note what this does **not** change: `loadChapterGraph` in
+ *   `qa-checkers-extended.ts` builds its own `uses`-only adjacency and does not
+ *   consume this module, so `detangler-no-forward-ref` is unaffected and its
+ *   count stands at 195. Ten `interprets` edges do point forward, and that gate
+ *   does not see them — a real gap, now visible, and deliberately left as a
+ *   separate decision rather than folded into this one.
+ *
+ *   Each editorial edge carries `editorialField` so a consumer can still tell
+ *   which field an author wrote. That matters for anything *proposing* an
+ *   edit: `uses[]` is a curated list, `interprets` is a single structural
+ *   claim, and they are not interchangeable to a writer even though they are
+ *   to a reader.
  * - **formal** — from the Lean dependency graph, resolved through each
  *   block's `lean.ref`. Answers "what does this proof actually invoke?"
  *   Machine-derived, never hand-written, never stored in a manifest.
@@ -57,7 +77,7 @@ import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { walkBlocks } from "./qa-utils";
 import { findContentRepoRoot } from "./repo-root";
-import { findUsesField } from "./uses-field";
+import { findUsesField, parseStringField } from "./uses-field";
 
 /** Provenance of a dependency edge. */
 export type EdgeKind = "editorial" | "formal";
@@ -85,6 +105,18 @@ export interface ContentEdge {
   /** Target block label (the dependency). */
   to: string;
   kind: EdgeKind;
+  /**
+   * Which authored field produced an editorial edge. Set only on
+   * `kind: "editorial"`.
+   *
+   * Both fields state a reader-facing prerequisite, so both are editorial — but
+   * they are not interchangeable to a *writer*. `uses[]` is a list a maintainer
+   * curates; `interprets` is a single structural claim ("this remark is about
+   * that proposition"). A tool proposing an edit must know which it is looking
+   * at, and evidence messages read better naming the field the author actually
+   * wrote.
+   */
+  editorialField?: "uses" | "interprets";
   /** Set only on `kind: "formal"`. */
   formalKind?: FormalEdgeKind;
   /**
@@ -390,7 +422,23 @@ export function buildContentGraph(rootDir: string, repoRoot?: string): ContentGr
         declToLabel.set(decl, b.label);
       }
     }
-    for (const u of uses) g.addEdge({ from: b.label, to: u, kind: "editorial" });
+    for (const u of uses) {
+      g.addEdge({ from: b.label, to: u, kind: "editorial", editorialField: "uses" });
+    }
+    // `interprets` is an editorial edge too: a remark interpreting a
+    // proposition cannot be followed without having read it, which is exactly
+    // what the editorial relation means. 342 authored dependencies were absent
+    // from every cone, energy and reachability measure until this landed.
+    // Owner decision 2026-08-15, bean i8ad.
+    const interprets = parseStringField(src, "interprets");
+    if (interprets) {
+      g.addEdge({
+        from: b.label,
+        to: interprets,
+        kind: "editorial",
+        editorialField: "interprets",
+      });
+    }
   }
 
   // ── Pass 2: formal edges from the Atlas cache ──────────────────
