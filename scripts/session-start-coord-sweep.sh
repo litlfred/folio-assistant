@@ -58,7 +58,14 @@ CURRENT_BRANCH="$(git symbolic-ref --short HEAD 2>/dev/null || echo DETACHED)"
 DEFAULT_BRANCH="$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's@^origin/@@')"
 [ -n "$DEFAULT_BRANCH" ] || DEFAULT_BRANCH=main
 
-if ! git fetch origin "$DEFAULT_BRANCH" >/dev/null 2>&1; then
+# Fetch with an EXPLICIT refspec. `git fetch origin <branch>` writes FETCH_HEAD
+# and updates refs/remotes/origin/<branch> only opportunistically — it does so
+# when the configured remote.origin.fetch covers that branch, and silently does
+# not when it doesn't. A clone whose refspec has been narrowed (this container
+# had a qou clone pinned to one sibling branch) then answers every question
+# below from a tracking ref that has not moved for days, while the fetch itself
+# exits 0. See bean 9giz.
+if ! git fetch origin "+refs/heads/$DEFAULT_BRANCH:refs/remotes/origin/$DEFAULT_BRANCH" >/dev/null 2>&1; then
   echo "## Coord sweep"
   echo
   echo "_origin/$DEFAULT_BRANCH fetch failed (offline?). Branch: \`$CURRENT_BRANCH\`._"
@@ -79,15 +86,34 @@ if [ "${NEW_ON_DEFAULT:-0}" -gt 0 ] 2>/dev/null; then
 fi
 
 # ── 3. Recent sibling agent branches ────────────────────────────────────────
-RECENT_SIBLINGS="$(git for-each-ref --sort=-committerdate \
-  --format='%(refname:short) %(committerdate:relative) %(subject)' \
-  refs/remotes/origin/claude 2>/dev/null \
-  | grep -v "$CURRENT_BRANCH" \
-  | head -8 || true)"
+# This reads the remote-tracking tree directly, so unlike §2 it cannot be
+# repaired by fetching one branch harder: if the clone's refspec does not cover
+# refs/heads/*, that tree is empty and "no siblings" means "never fetched any".
+# An empty section is the same shape as a quiet repo, so say which one it is.
+if git config --get-all remote.origin.fetch 2>/dev/null | grep -q 'refs/heads/\*'; then
+  RECENT_SIBLINGS="$(git for-each-ref --sort=-committerdate \
+    --format='%(refname:short) %(committerdate:relative) %(subject)' \
+    refs/remotes/origin/claude 2>/dev/null \
+    | grep -v "$CURRENT_BRANCH" \
+    | head -8 || true)"
 
-if [ -n "$RECENT_SIBLINGS" ]; then
-  echo "**Recent sibling \`claude/*\` branches:**"
-  echo "$RECENT_SIBLINGS" | sed 's/^/- /'
+  if [ -n "$RECENT_SIBLINGS" ]; then
+    echo "**Recent sibling \`claude/*\` branches:**"
+    echo "$RECENT_SIBLINGS" | sed 's/^/- /'
+    echo
+  fi
+else
+  echo "**Sibling branches: not visible from this clone.**"
+  echo
+  echo "\`remote.origin.fetch\` does not cover \`refs/heads/*\`, so"
+  echo "\`refs/remotes/origin/claude/*\` is whatever was fetched by name — not the"
+  echo "set of sibling branches. Treat this section as unread, not as empty."
+  echo
+  echo "Restore it with:"
+  echo '```sh'
+  echo "git config --replace-all remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
+  echo "git fetch origin --prune"
+  echo '```'
   echo
 fi
 
