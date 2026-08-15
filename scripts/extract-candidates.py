@@ -73,7 +73,20 @@ RE_WHO_REC = re.compile(
 RE_WHO_GPS = re.compile(r"^\s*Good\s+practice\s+statement\s*[.:—-]?\s*(?P<body>.*)$", re.M | re.I)
 RE_WHO_REMARK = re.compile(r"^\s*Remarks?\s*[.:—-]\s*(?P<body>.*)$", re.M | re.I)
 RE_WHO_RESEARCH = re.compile(r"^\s*Research\s+(?:priority|priorities|gap)\w*\s*[.:—-]?\s*(?P<body>.*)$", re.M | re.I)
-RE_GRADE = re.compile(r"(⊕|\bGRADE\b|\bcertainty of (?:the )?evidence\b|\bhigh|moderate|low|very low\b\s+certainty)", re.I)
+# A GRADE marker, not merely a word that appears in GRADE tables. The
+# certainty levels must be *bound* to a certainty/evidence/quality noun:
+# an earlier form alternated on bare `\bhigh|moderate|low`, so the phrase
+# "high malaria burden" three paragraphs away flagged a recommendation as
+# GRADE-adjacent. Caught by the extractor's own negative test.
+RE_GRADE = re.compile(
+    r"(?:⊕"
+    r"|\bGRADE\b"
+    r"|\b(?:certainty|quality)\s+of\s+(?:the\s+)?evidence\b"
+    r"|\b(?:very\s+low|low|moderate|high)\s+(?:certainty|quality)\b"
+    r"|\b(?:certainty|quality)\s*[:=]\s*(?:very\s+low|low|moderate|high)\b"
+    r")",
+    re.I,
+)
 RE_STRENGTH = re.compile(r"\b(strong|conditional|context[- ]specific)\b\s+recommendation", re.I)
 
 
