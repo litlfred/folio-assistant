@@ -166,8 +166,14 @@ async function loadBlocksFromDir(
       // dependency graph entirely. Three more carry `is_mathematics`. The same
       // class bit this schema once before — `of` itself was declared on the TS
       // type and missing from the Zod object, and was stripped until noticed.
-      for (const key of Object.keys(block as Record<string, unknown>)) {
-        if (key in (result.data as Record<string, unknown>)) continue;
+      //
+      // No casts here: `Object.keys` takes `object` and `in` takes any object
+      // type, so both operands work as they stand. The `as Record<string,
+      // unknown>` this first carried was not merely redundant — it does not
+      // typecheck, because `TableBlock` has no index signature and `Block` is a
+      // union containing it. That is what took `tsc` red on main.
+      for (const key of Object.keys(block)) {
+        if (key in result.data) continue;
         issues.push({
           level: "warning",
           block: name,
