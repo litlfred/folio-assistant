@@ -125,7 +125,12 @@ RE_REPORT_NO = re.compile(
     # paper takes the publisher mark as its title — all ten papers of a
     # bound issue came out titled "msp".
     r"|\S{1,4}\s*$"
-    r"|[A-Za-z][A-Za-z\s&.\-]{5,}\s+\d+\s*[:(]\s*\d"
+    # A journal name then "vol (year)" or "vol:issue". Commas and colons
+    # have to be allowed inside the name or the pattern cannot cross them
+    # — "Symmetry, Integrability and Geometry: Methods and Applications
+    # SIGMA 7 (2011), 115" went unrecognised and became a paper's title.
+    r"|[A-Za-z][A-Za-z\s&.,:\-]{5,}\s+\d{1,4}\s*[:(]\s*\d"
+    r"|Vol(?:ume)?\.?\s*\d+\s*[,.]"
     # Publisher furniture that prints ABOVE the title and was being taken
     # as the title: a submission banner, a download stamp, an
     # article-listing masthead, and the society banner that opens an AMS
@@ -439,10 +444,30 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
     # abstract. Walk down, skipping stamp lines, collecting title lines until
     # something that reads like an author list or the abstract marker.
     lines = [l.strip() for l in p1.splitlines()]
+    # Skip the CONTIGUOUS run of furniture at the top, and stop at the
+    # first line that is not furniture. Taking the last furniture line
+    # anywhere in the window instead — which this did — walks straight past
+    # the title whenever any furniture is printed *below* it, and plenty
+    # is: a DOI URL under the byline, a "Received ... Published online"
+    # line, or an arXiv margin stamp that pypdf emits last because it is
+    # rotated. Both cost the title outright.
+    #
+    #   0| arXiv:1105.1998v3 [math.CA] 16 Dec 2011
+    #   1| ... SIGMA 7 (2011), 115, 11 pages          <- furniture
+    #   2| A Connection Formula                       <- the title
+    #   ...
+    #   9| http://dx.doi.org/10.3842/SIGMA.2011.115   <- furniture, below it
+    #
+    # The old rule started at line 10.
     start = 0
     for i, l in enumerate(lines[:16]):
+        if not l:
+            start = i + 1
+            continue
         if re.search(r"ar\s*X\s*iv", l, re.I) or RE_REPORT_NO.match(l):
             start = i + 1
+            continue
+        break
 
     title_lines: list[str] = []
     author_lines: list[str] = []
