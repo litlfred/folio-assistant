@@ -60,6 +60,7 @@ institut fourier institut fourier institut fourier corps valué hauteur soit
 bases for bases for bases for bases for the bases for
 crystallographic crystallographic crystallographic crystallographic
 cryst allographic
+hyperbolic hyperbolic hyperbolic manifolds manifolds manifolds bloch group
 """
 # The repeated words above are deliberate, and so are the odd ones.
 # `basesfor`, `institutfourier` and the lone `cryst allographic` are damage
@@ -117,6 +118,11 @@ CASES = [
      "Soit K un corps val\u00e9 de hauteur",
      "a lone symbol before a word is not a kerning split: ungated, the "
      "split-capital rule turned \"K un\" into \"Kun\""),
+    ("HYPERBOLIC 3-MANIFOLDS, THE BLOCH GROUP",
+     "HYPERBOLIC 3-MANIFOLDS, THE BLOCH GROUP",
+     "a join must create a word: a fragment ending in a non-letter seams "
+     "on itself, so every frequency test compares a word with itself and "
+     "passes - which welded HYPERBOLIC to 3-MANIFOLDS"),
     ("NON-CRYST ALLOGRAPHIC COXETER GROUPS AND BASES",
      "NON-CRYSTALLOGRAPHIC COXETER GROUPS AND BASES",
      "a real word still wins when the document attests BOTH fragments too: "
