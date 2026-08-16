@@ -330,7 +330,14 @@ export function extractMappedUnicode(records: LineRecord[]): Set<string> {
   const mapped = new Set<string>();
   for (const rec of records) {
     if (!rec.text) continue;
-    const re = /\\newunicodechar\s*\{?\s*([^\s{}])\s*\}?/g;
+    // The `u` flag is load-bearing. Without it `[^\s{}]` matches a single
+    // UTF-16 code unit, so an astral-plane mapping such as
+    // `\newunicodechar{𝔙}{\mathfrak{V}}` (U+1D519) captured HALF a
+    // surrogate pair and never matched the character that `nonAsciiUses`
+    // — which iterates code points — actually reports. Every non-BMP
+    // mapping was therefore invisible, producing a permanent false
+    // "unmapped-unicode" hit against a character that IS declared.
+    const re = /\\newunicodechar\s*\{?\s*([^\s{}])\s*\}?/gu;
     let m: RegExpExecArray | null;
     while ((m = re.exec(rec.text)) !== null) mapped.add(m[1]);
   }
