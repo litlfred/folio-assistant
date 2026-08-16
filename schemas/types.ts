@@ -1414,6 +1414,21 @@ export interface RenderOptions {
    * Default: true.  Set to false for a minimal compact output.
    */
   compactInlineRefs?: boolean;
+  /**
+   * Document-wide set of `term:<slug>` labels that some block refers to
+   * via `:refterm[…]{#slug}` / `\refterm{slug}`.
+   *
+   * Chapters render independently, so a chapter-local scan cannot see
+   * that (say) `appendix-surreals` refterms a term defined in the
+   * glossary chapter. Without this, compact mode drops the glossary
+   * entry, its `term:` anchor — which lives in the block BODY, not in
+   * its label — is never emitted, and the link dangles in the built PDF.
+   *
+   * The builder computes this once over every loaded block and passes it
+   * down. Only terms actually referred to are pulled in, so compact mode
+   * stays compact.
+   */
+  referencedTerms?: Set<string>;
 }
 
 // ── Validation result ────────────────────────────────────────────
