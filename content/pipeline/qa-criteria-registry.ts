@@ -1809,12 +1809,47 @@ export function folioOptionalAxes(): string[] {
   return _optionalAxes;
 }
 
+// ── Domain: render ──────────────────────────────────────────────
+//
+// Source patterns that abort the pdflatex build. Folio-generic: every
+// folio renders through the same LaTeX pipeline, so these apply
+// everywhere (unlike `q-usage`, which encodes one folio's mathematics).
+//
+// Admission bar: a criterion belongs here only if it maps to a *fatal*
+// pdflatex error class that a corpus scan shows recurring. Cosmetic
+// issues (overfull/underfull boxes) never abort a build and would
+// drown the signal.
+
+const RENDER: QaCriterionDefinition[] = [
+  {
+    id: "render-math-mode-envelope",
+    domain: "render",
+    description:
+      "Block's `.md` opens an inner-only math environment (`aligned`, " +
+      "`gathered`, `split`, `cases`, `pmatrix`, `array`, …) without an " +
+      "enclosing outer math context (`$$…$$`, `\\[…\\]`, `equation`, " +
+      "`align`, `gather`, `multline`). A ```tex fence is raw passthrough, " +
+      "so such a fence lands in horizontal mode and pdflatex aborts with " +
+      '"! Package amsmath Error: \\begin{aligned} allowed only in math ' +
+      'mode" plus two "Missing $ inserted" — three errors per slip. ' +
+      "Fix by wrapping the environment in `\\[ … \\]`, or by switching " +
+      "to the outer `align`/`gather` form. Recurring class: fixed once " +
+      "in afdf60d667, then returned in two further blocks.",
+    default_severity: "critical",
+    // The defect is entirely in the narrative md; ts/lean are irrelevant.
+    depends_on: ["md"],
+    automated: true,
+    source_file: "content/pipeline/qa-checkers-render.ts",
+  },
+];
+
 // ── Exported registry ───────────────────────────────────────────
 
 export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...VOICE,
   ...FIT,
   ...FRAMEWORK,
+  ...RENDER,
   ...WALL,
   // Q_USAGE is FOLIO-OPTIONAL — see `folioOptionalAxes()` below. It
   // encodes one folio's mathematics (a substrate deformation parameter
