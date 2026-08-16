@@ -324,6 +324,32 @@ function lakeBasenameMap(
  * purpose: it only *gates* candidate (a), and a false positive there is no
  * worse than the pre-fix behaviour.
  */
+/** Regex fragment listing every Lean top-level declaration keyword. */
+const _DECL_KW =
+  "theorem|lemma|def|abbrev|instance|structure|class|inductive|opaque|axiom";
+
+/**
+ * Does `file` declare **anything at all**, or is it an import-only aggregator?
+ *
+ * Used to keep the safe fallback from handing back a file that declares
+ * nothing. A ref naming a decl that does not exist (e.g. `qou:QOU.Foo` when no
+ * `Foo` was ever written) parses with module `QOU`, whose module-path file is
+ * the library root — a list of `import` lines. Returning that made every
+ * checker audit the import list and **pass**, which is strictly worse than the
+ * honest `n/a` an unresolved ref produces. Measured on the qou corpus
+ * 2026-08-15: 65 of 1220 blocks resolved this way (bean `qou-cu0a`).
+ */
+function fileDeclaresAnything(file: string): boolean {
+  let body: string;
+  try {
+    body = readFileSync(file, "utf-8");
+  } catch {
+    return false;
+  }
+  return new RegExp(`^\\s*(?:noncomputable\\s+|private\\s+|protected\\s+)*(?:${_DECL_KW})\\s`, "mu")
+    .test(body);
+}
+
 function fileDeclaresName(file: string, name: string): boolean {
   let body: string;
   try {
@@ -488,7 +514,15 @@ export function resolveCanonicalLean(
   // (safe fallback) preserve legacy behaviour: a ref that resolved to the
   //   direct module-path before the (a)-gate still resolves to it, so no
   //   previously-resolving ref regresses to `undefined`.
-  if (directExists) return direct;
+  //
+  //   EXCEPT when that file declares nothing at all. An import-only aggregator
+  //   carries no statement to audit, so returning it makes every checker pass
+  //   vacuously on a list of `import` lines — strictly worse than the honest
+  //   `n/a` that `undefined` produces, because a false green is indistinguishable
+  //   from a real one. Refs naming a decl that exists nowhere land here (module
+  //   `QOU` → the library root); 65 of 1220 qou blocks did, bean `qou-cu0a`.
+  //   Real single-module files still fall back exactly as before.
+  if (directExists && fileDeclaresAnything(direct)) return direct;
   return undefined;
 }
 
