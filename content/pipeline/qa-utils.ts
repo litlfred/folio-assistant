@@ -15,6 +15,7 @@ import {
 import { join, resolve } from "path";
 import { execFileSync } from "child_process";
 import { criterionSourceHash } from "./qa-criterion-hash";
+import { maskStringsAndComments, parseStringField } from "./uses-field";
 import {
   parseLeanRef,
   leanPackageByName,
@@ -559,19 +560,33 @@ const BLOCK_BUILDER_RE = new RegExp(
  * manifest. Returns the block's kind + label, or `undefined` if the
  * file is not a single-block manifest (chapter, paper, etc.).
  *
- * Robust to surrounding fields; uses naive regex (no TypeScript
- * loader needed for this scan).
+ * **Matched against a string- and comment-masked copy**, so a builder call or
+ * a `label:` written inside a string literal or a comment cannot make an
+ * ordinary source file look like a block manifest. Offsets are preserved by
+ * masking, so the values still come from the original text.
+ *
+ * That is not a hypothetical: `content/pipeline/witness-substitution-audit.ts`
+ * contains a self-test reading
+ *
+ * ```ts
+ * parseWitnessList(`export default proposition({ label: "prop:x" });`)
+ * ```
+ *
+ * and the raw scan yielded that audit script as a content block labelled
+ * `prop:x`. Every per-block checker then ran on it and attributed the results
+ * to a block that does not exist.
  */
 export function readBlockManifest(
   tsPath: string,
 ): { kind: string; label: string } | undefined {
   if (!existsSync(tsPath)) return undefined;
   const src = readFileSync(tsPath, "utf-8");
-  const kindMatch = src.match(BLOCK_BUILDER_RE);
+  const masked = maskStringsAndComments(src);
+  const kindMatch = masked.match(BLOCK_BUILDER_RE);
   if (!kindMatch) return undefined;
-  const labelMatch = src.match(/\blabel\s*:\s*"([^"]+)"/);
-  if (!labelMatch) return undefined;
-  return { kind: kindMatch[1], label: labelMatch[1] };
+  const label = parseStringField(src, "label");
+  if (!label) return undefined;
+  return { kind: kindMatch[1], label };
 }
 
 /**

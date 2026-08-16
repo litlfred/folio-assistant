@@ -193,3 +193,40 @@ Verified behaviour-preserving: forward references on qou read **194 before and
 by owner decision, bullet 2 fine as filed. The bean's remaining subject is the
 sync loader, unchanged: worth doing when someone is already in loader work, not
 worth opening on its own account.
+
+## 2026-08-16 — bullet 2 closed: readBlockManifest was admitting a non-block
+
+Bullet 2 said `readBlockManifest` "is regex-based but builds its kind
+alternation from BLOCK_KINDS, so it cannot drift. Fine as is unless a sync
+loader appears."
+
+The alternation cannot drift. The **matching** could, and did — in the
+permissive direction, which is the worse one. Both regexes ran against raw
+source, so a builder call or a `label:` inside a string literal or comment made
+an ordinary file look like a manifest.
+
+`content/pipeline/witness-substitution-audit.ts` carries a self-test:
+
+```ts
+parseWitnessList(`export default proposition({ label: "prop:x" });`)
+```
+
+`walkBlocks` yielded that audit script as a content block labelled `prop:x`.
+Every per-block checker ran on it and filed results under a label no block
+holds. Blocks walked: **3521 → 3520**.
+
+Fixed by matching against a string- and comment-masked copy and reading the
+label through `parseStringField`. Both primitives already live in
+`uses-field.ts` after this session's consolidation, so this is a repoint rather
+than a fifth parser — which is what this bean has been asking for throughout.
+
+Seven tests, including the exact corpus shape (a manifest's source passed as a
+template literal to the function under test) and the guard that a real manifest
+still reads.
+
+**Bullet 2 is closed**, and not by the sync loader. The remaining subject is
+unchanged: bullet 1 was closed by owner decision, bullet 3 by `#116`, and a true
+sync loader is still absent — but the class this bean was filed to track,
+"scanners that read source text and can be fooled by what source text may
+legitimately contain", is now materially smaller. Every manifest read in the
+pipeline goes through the masked scanner.
