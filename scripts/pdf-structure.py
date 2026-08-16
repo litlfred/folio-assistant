@@ -45,6 +45,7 @@ import hashlib
 import json
 import os
 import re
+import unicodedata
 import sys
 import warnings
 from dataclasses import dataclass, field, asdict
@@ -124,9 +125,137 @@ RE_REPORT_NO = re.compile(
     # bound issue came out titled "msp".
     r"|\S{1,4}\s*$"
     r"|[A-Za-z][A-Za-z\s&.\-]{5,}\s+\d+\s*[:(]\s*\d"
+    # Publisher furniture that prints ABOVE the title and was being taken
+    # as the title: a submission banner, a download stamp, an
+    # article-listing masthead, and the society banner that opens an AMS
+    # or Springer offprint.
+    r"|prepared\s+for\s+submission\b|downloaded\s+from\b"
+    r"|contents\s+lists\s+available\b|journal\s+homepage\b"
+    r"|(?:transactions|proceedings|communications|annals|bulletin|journal)\s+"
+    r"(?:of|in)\b[^\n]{0,60}$"
     r"|https?://|doi\s*:|\bdoi\.org\b)",
     re.I,
 )
+
+# PDF text extraction damages words in two systematic ways. Both corrupt
+# every downstream consumer at once — the title, the index brief, and the
+# section text that corpus-grep runs over — so they are repaired here at
+# the producer rather than in each reader.
+LIGATURES = str.maketrans({
+    "ﬀ": "ff", "ﬁ": "fi", "ﬂ": "fl", "ﬃ": "ffi",
+    "ﬄ": "ffl", "ﬅ": "st", "ﬆ": "st",
+})
+# A floating accent emitted before its letter: "Gr¨ obner" -> "Gröbner",
+# "J ´ER ˆOME" -> "JÉRÔME".
+ACCENTS = {"¨": "̈", "´": "́", "`": "̀", "ˆ": "̂", "˜": "̃"}
+RE_FLOAT_ACCENT = re.compile("([" + "".join(ACCENTS) + r"])\s*([A-Za-z])")
+# A capital separated from the rest of its word by kerning: "V olume".
+RE_SPLIT_CAP = re.compile(r"\b([A-Z])\s+([a-z]{2,})\b")
+
+
+# Two adjacent all-caps runs, Unicode-aware. `[A-Z]` is ASCII-only in
+# Python's re, which left "GR ÖBNER" and "J ÉR ÔME" split precisely for
+# the accented names the accent repair had just fixed.
+RE_CAPS_PAIR = re.compile(r"(?<![^\W\d_])([^\W\d_]+)\s+([^\W\d_]+)(?![^\W\d_])")
+
+
+def repair_text(s: str) -> str:
+    """Deterministic half: ligatures and floating accents only.
+
+    Safe to apply anywhere — neither needs to know the document, and both
+    are unambiguous. Anything that has to guess belongs in `rejoin_caps`,
+    which can consult the document's own vocabulary.
+    """
+    if not s:
+        return s
+    s = s.translate(LIGATURES)
+    s = unicodedata.normalize(
+        "NFC", RE_FLOAT_ACCENT.sub(lambda m: m.group(2) + ACCENTS[m.group(1)], s))
+    return re.sub(r"\s{2,}", " ", s)
+
+
+def rejoin_caps(s: str, vocab: set[str]) -> str:
+    """Vocabulary-gated half: undo arbitrary splits in all-caps runs.
+
+    All-caps words get broken at arbitrary points by kerning — "STA VROS
+    GAROUF ALIDIS" — and nothing about the *shape* of two capitalised
+    fragments says whether they are one word or two. So a join is made
+    only when the joined form actually occurs elsewhere in this same
+    document, which separates "GAROUF ALIDIS" (attested) from "THREE
+    MANIFOLDS" (never attested as one token).
+
+    `vocab` must be built from text that has already been through
+    `repair_text`, or an accented name will fail to attest its own join.
+    """
+    if not vocab:
+        return s
+
+    # A capital kerned away from the rest of its word: "V olume". Gated on
+    # attestation, because the same shape is also a symbol followed by an
+    # ordinary word — ungated, this turned the French "Soit K un corps"
+    # into "Soit Kun corps".
+    s = RE_SPLIT_CAP.sub(
+        lambda m: m.group(1) + m.group(2)
+        if (m.group(1) + m.group(2)).lower() in vocab else m.group(0), s)
+
+    # Whole runs, longest first. A name can be broken more than once —
+    # "J ÉR ÔME" — and joining pairwise never fires there, because the
+    # intermediate "JÉR" is not a word and so is not attested. Only the
+    # full run is.
+    toks = re.split(r"(\s+)", s)
+    out: list[str] = []
+    i = 0
+    while i < len(toks):
+        run = []
+        j = i
+        while j < len(toks) and toks[j].strip() and toks[j].isupper():
+            run.append(toks[j])
+            j += 2                      # skip the separator between tokens
+        joined = None
+        for k in range(len(run), 1, -1):
+            cand = "".join(run[:k])
+            words = [(m.start(), m.end(), m.group(0))
+                     for m in re.finditer(r"[^\W\d_]+", cand)]
+            # Test the word formed at *every* seam, not the whole
+            # concatenation and not just the first seam. Joining "GR" to
+            # "ÖBNER-SHIRSHOV" makes the word "GRÖBNER", so asking whether
+            # "gröbnershirshov" is a word answers a question nobody posed;
+            # and checking only the first seam once swallowed an entire
+            # title into one token because its first seam happened to be
+            # a real join.
+            seams, ok = [], True
+            for f in run[:k - 1]:
+                seams.append((seams[-1] if seams else 0) + len(f))
+            for idx, seam in enumerate(seams):
+                w = next((t for a, b, t in words if a < seam <= b), "")
+                if len(w) < 4 or w.lower() not in vocab:
+                    ok = False
+                    break
+                # The two words actually being welded — the last word of
+                # the left fragment and the first of the right. If BOTH
+                # are real words on their own, they are two real words,
+                # whatever the document says about the welded form: a
+                # document containing its own damage attests the
+                # artefact, which is how "BASES FOR" became "BASESFOR"
+                # and "L'INSTITUT FOURIER" became "L'INSTITUTFOURIER".
+                # Comparing whole fragments missed the second, because
+                # "L'INSTITUT" is not a word while "INSTITUT" is.
+                left = re.findall(r"[^\W\d_]+", run[idx])
+                right = re.findall(r"[^\W\d_]+", run[idx + 1])
+                if (left and right
+                        and left[-1].lower() in vocab
+                        and right[0].lower() in vocab):
+                    ok = False
+                    break
+            if ok:
+                joined, i = cand, i + 2 * k - 1
+                break
+        if joined:
+            out.append(joined)
+        else:
+            out.append(toks[i])
+            i += 1
+    return "".join(out)
 
 
 # ---------------------------------------------------------------- structures
@@ -328,9 +457,21 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
         if len(" ".join(title_lines)) > 180:
             break
 
-    title = re.sub(r"\s{2,}", " ", " ".join(title_lines)).strip(" .,")
+    # The document's own token set, used to decide whether an all-caps
+    # split is real, and built from *repaired* text so an accented name
+    # can attest its own join.
+    #
+    # Drawn from the whole document, not from `head`. Front matter is
+    # exactly where the damage is — it is the part set in caps and
+    # letter-spaced — so a two-page sample often fails to attest the very
+    # names it needs. An author surname reappears unbroken in the running
+    # heads and the bibliography, which is what makes the join decidable.
+    vocab = {w.lower() for w in
+             re.findall(r"[^\W\d_]{3,}", repair_text("\n".join(pages)))}
+
+    title = rejoin_caps(repair_text(" ".join(title_lines)), vocab).strip(" .,")
     meta["title"] = title or None
-    authors = re.sub(r"\s{2,}", " ", " ".join(author_lines)).strip(" .,")
+    authors = rejoin_caps(repair_text(" ".join(author_lines)), vocab).strip(" .,")
     meta["authors_raw"] = authors or None
 
     # Abstract: everything after the marker, cut at the first section heading.
