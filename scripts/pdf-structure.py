@@ -130,7 +130,19 @@ RE_REPORT_NO = re.compile(
     # — "Symmetry, Integrability and Geometry: Methods and Applications
     # SIGMA 7 (2011), 115" went unrecognised and became a paper's title.
     r"|[A-Za-z][A-Za-z\s&.,:\-]{5,}\s+\d{1,4}\s*[:(]\s*\d"
-    r"|Vol(?:ume)?\.?\s*\d+\s*[,.]"
+    r"|Vol(?:ume)?\.?\s*\d+\s*[,.(]"
+    # An ISSN banner and a publication-date line, both printed above the
+    # title on society offprints. Neither was recognised, and once the
+    # start index stopped at the first non-furniture line rather than the
+    # last furniture line, an unrecognised banner became the title itself.
+    #
+    #   0| ISSN 1472-2739 (on-line) 1472-2747 (printed) 537
+    #   1| Algebraic & Geometric Topology
+    #   3| Volume 3 (2003) 537-556
+    #   4| Published: 16 June 2003
+    #   5| Skein-theoretical derivation          <- the title starts here
+    r"|ISSN\b|e-ISSN\b"
+    r"|(?:Published|Received|Accepted|Revised)\s*:?\s*\d{1,2}\s+\w+\s+\d{4}"
     # Publisher furniture that prints ABOVE the title and was being taken
     # as the title: a submission banner, a download stamp, an
     # article-listing masthead, and the society banner that opens an AMS
@@ -459,12 +471,32 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
     #   9| http://dx.doi.org/10.3842/SIGMA.2011.115   <- furniture, below it
     #
     # The old rule started at line 10.
+    def furniture(l: str) -> bool:
+        return bool(re.search(r"ar\s*X\s*iv", l, re.I) or RE_REPORT_NO.match(l))
+
     start = 0
+    skipped = False
     for i, l in enumerate(lines[:16]):
         if not l:
             start = i + 1
             continue
-        if re.search(r"ar\s*X\s*iv", l, re.I) or RE_REPORT_NO.match(l):
+        if furniture(l):
+            start, skipped = i + 1, True
+            continue
+        # A bare journal name carries no volume or year to match on, so it
+        # is unrecognisable on its own — but it sits INSIDE the furniture
+        # run, with more furniture under it:
+        #
+        #   ISSN 1472-2739 (on-line) ...      furniture
+        #   Algebraic & Geometric Topology    <- this line
+        #   ATG                               furniture
+        #   Volume 3 (2003) 537-556           furniture
+        #   Published: 16 June 2003           furniture
+        #   Skein-theoretical derivation      the title
+        #
+        # Only once something above it was already skipped, so a title
+        # sitting on line 0 above a date line is never mistaken for one.
+        if skipped and any(furniture(x) for x in lines[i + 1:i + 3] if x):
             start = i + 1
             continue
         break
