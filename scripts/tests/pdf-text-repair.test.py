@@ -31,6 +31,7 @@ import os
 import re
 import sys
 import unicodedata
+from collections import Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCRIPT = os.path.join(os.path.dirname(HERE), "pdf-structure.py")
@@ -41,7 +42,7 @@ def load():
     start = src.index("LIGATURES = str.maketrans")
     end = src.index("# ------------------------------------------------"
                     "---------------- structures")
-    ns: dict = {"re": re, "unicodedata": unicodedata}
+    ns: dict = {"re": re, "unicodedata": unicodedata, "Counter": Counter}
     exec(src[start:end], ns)
     return ns["repair_text"], ns["rejoin_caps"]
 
@@ -54,12 +55,19 @@ stavros garoufalidis rinat kashaev volume mathematical transactions coxeter
 non-crystallographic groups gröbner shirshov jérôme dubois vu huynh yoshikazu
 yamaguchi invariant refined categorified three manifolds physics topology
 algebras bases for non abelian reidemeister torsion twist knots
-basesfor institutfourier institut fourier corps valué hauteur soit
+basesfor institutfourier
+institut fourier institut fourier institut fourier corps valué hauteur soit
+bases for bases for bases for bases for the bases for
+crystallographic crystallographic crystallographic crystallographic
+cryst allographic
 """
-# `basesfor` above is deliberate. It is not a typo: the real document
-# carried that same kerning damage in its body, so attestation attested
-# the *artefact*, and an earlier version of the repair used it as licence
-# to weld "BASES FOR" into one token in the title.
+# The repeated words above are deliberate, and so are the odd ones.
+# `basesfor`, `institutfourier` and the lone `cryst allographic` are damage
+# artefacts the real documents carried in their own bodies — mere presence
+# therefore attests them, which is why the gate counts occurrences instead.
+# A real word outnumbers the fragments it was broken into
+# (`crystallographic` 4 vs `cryst` 1); an artefact is outnumbered by the
+# real words it welded (`basesfor` 1 vs `for` 5).
 
 CASES = [
     # (damaged, expected, what it exercises)
@@ -109,12 +117,17 @@ CASES = [
      "Soit K un corps val\u00e9 de hauteur",
      "a lone symbol before a word is not a kerning split: ungated, the "
      "split-capital rule turned \"K un\" into \"Kun\""),
+    ("NON-CRYST ALLOGRAPHIC COXETER GROUPS AND BASES",
+     "NON-CRYSTALLOGRAPHIC COXETER GROUPS AND BASES",
+     "a real word still wins when the document attests BOTH fragments too: "
+     "the same damaged header repeats on every page, so presence alone "
+     "cannot separate them and frequency has to"),
 ]
 
 
 def main() -> int:
     repair_text, rejoin_caps = load()
-    vocab = {w.lower() for w in re.findall(r"[^\W\d_]{3,}", repair_text(BODY))}
+    vocab = Counter(w.lower() for w in re.findall(r"[^\W\d_]{3,}", repair_text(BODY)))
     failed = 0
     for damaged, expected, what in CASES:
         got = rejoin_caps(repair_text(damaged), vocab)
