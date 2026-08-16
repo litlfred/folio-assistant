@@ -118,8 +118,11 @@ else
   echo "$ssh_probe" | head -2 >&2
 fi
 
-# Branch off main
-git fetch origin "$DEFAULT_BRANCH" --quiet 2>/dev/null || true
+# Branch off main. Explicit refspec: a bare `git fetch origin <branch>`
+# refreshes refs/remotes/origin/<branch> only when the clone's configured
+# refspec covers it, so the checkout below would silently cut from a stale
+# base. See bean 9giz.
+git fetch origin "+refs/heads/$DEFAULT_BRANCH:refs/remotes/origin/$DEFAULT_BRANCH" --quiet 2>/dev/null || true
 if git rev-parse --verify --quiet "$BRANCH" >/dev/null; then
   echo "[git] branch $BRANCH already exists locally; checking out"
   git checkout "$BRANCH"

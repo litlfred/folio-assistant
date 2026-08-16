@@ -14,8 +14,11 @@ DECLINED_FILE="$STATE_DIR/declined-upstream-shas"
 mkdir -p "$STATE_DIR"
 touch "$DECLINED_FILE"
 
-# Fetch latest main (quiet, tolerate network failure)
-if ! git fetch origin main --quiet 2>/dev/null; then
+# Fetch latest main (quiet, tolerate network failure).
+# Explicit refspec: `git fetch origin main` refreshes refs/remotes/origin/main
+# only if the clone's configured refspec covers it, and exits 0 either way — so
+# a narrowed refspec makes every comparison below read a stale ref. See 9giz.
+if ! git fetch origin '+refs/heads/main:refs/remotes/origin/main' --quiet 2>/dev/null; then
   exit 0  # network issue — silently skip
 fi
 

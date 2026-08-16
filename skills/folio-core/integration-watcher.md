@@ -255,8 +255,10 @@ NAME="<your-watcher-name>"
 |----------|-------|-------|----------|--------|
 EOF
 
-# Stash main baseline so §5f timeout-recovery can diff cleanly
-git fetch origin main 2>/dev/null
+# Stash main baseline so §5f timeout-recovery can diff cleanly.
+# Explicit refspec — see coordinate.md §8a: a bare fetch may not write
+# refs/remotes/origin/main, and a baseline read from an unwritten ref is not one.
+git fetch origin '+refs/heads/main:refs/remotes/origin/main' 2>/dev/null
 git rev-parse origin/main > "/tmp/_${NAME}_main.sha"
 ```
 
@@ -1094,7 +1096,8 @@ surface a structured suggestion to the user.
 2. **Compute the unreviewed-commits queue.** For each criterion `C`:
 
    ```bash
-   git fetch origin main 2>/dev/null
+   # Explicit refspec (coordinate.md §8a) — CUR below reads the tracking ref.
+   git fetch origin '+refs/heads/main:refs/remotes/origin/main' 2>/dev/null
    # jq --arg passes $C safely (no shell-quoting injection).
    LAST=$(jq -r --arg c "$C" '.reviewed_up_to[$c] // empty' "$QUEUE")
    CUR=$(git rev-parse origin/main)

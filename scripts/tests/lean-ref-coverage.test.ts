@@ -229,6 +229,29 @@ describe("lean.ref candidate-2 (library tree) resolution", () => {
     }
   });
 
+  test("ref naming a nonexistent decl does NOT fall back to an import-only root", () => {
+    const { tmp, lake } = makeWorkspace();
+    try {
+      // The library root is an import-only aggregator, exactly like qou's
+      // 954-line `QOU.lean`. A ref whose decl exists nowhere parses with
+      // module `QOU`, so its module-path IS this file.
+      writeLake(lake, "QOU.lean", "import QOU.Some.Module\nimport QOU.Other\n");
+      writeLake(lake, "QOU/Some/Module.lean", GENERIC_R_BODY);
+
+      // Must be undefined (-> honest n/a), never the aggregator: returning it
+      // makes every checker pass vacuously on a list of imports (qou-cu0a).
+      expect(resolveCanonicalLean("qou:QOU.NoSuchDeclAnywhere", REPO_ROOT)).toBeUndefined();
+
+      // But a module-path file that DOES declare something still resolves —
+      // the fallback is narrowed, not removed.
+      const real = resolveCanonicalLean("qou:QOU.Some.Module.genId", REPO_ROOT);
+      expect(real).toBeDefined();
+      expect(real!.replace(/\\/g, "/")).toContain("/QOU/Some/Module.lean");
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
   test("unknown package / malformed ref resolves to undefined", () => {
     makeWorkspace();
     expect(resolveCanonicalLean("nope:QOU.X", REPO_ROOT)).toBeUndefined();

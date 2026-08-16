@@ -1781,6 +1781,29 @@ const DEVILS_ADVOCATE: QaCriterionDefinition[] = [
   { id: "da-overclaim", domain: "devils-advocate", description: "Conclusion stronger than the argument supports: scope-limited negative as structural, fitted-as-derived, conditional-as-proved, approximate-as-absolute.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
   { id: "da-hidden-dof", domain: "devils-advocate", description: "Undisclosed free parameter: 4th calibration, off-menu coefficient, constant with no canonical-chain origin.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
   { id: "da-non-sequitur", domain: "devils-advocate", description: "Logical gap: step B does not follow from step A; 'therefore' with a missing lemma.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
+  // `automated: false` here is a MEASURED necessity, not a convenience. A
+  // prototype scanner flags all 4 known instances but fires IDENTICALLY on the
+  // CORRECTED text — it detects the topic, not the defect, because the
+  // discriminating fact (does the index bind across the equivalence? is the
+  // symbol level-indexed in its Lean type? are the two legs the same instance?)
+  // is semantic, not lexical.
+  //
+  // ADJUDICATED PRECISION IS 0% — 0 defects in 29 candidates over 6395 files,
+  // on the first real agent pass (2026-08-16). An earlier revision of this
+  // comment said "~10%"; that was a TRIAGE estimate (three hits that looked
+  // worth opening) reported as if it were an adjudication. All three were then
+  // adjudicated legit — one of them, "at Kummer level n, kappa_0 mod n vanishes
+  // iff n | chi(A)", is in fact a MODEL of the correct form, since the index
+  // binds on both sides. Per-candidate verdicts: qou PR #5191.
+  //
+  // That strengthens this `automated: false` rather than weakening it: a
+  // checker with 0% adjudicated precision must not write sidecars. The
+  // criterion itself stands — the four historical instances were real, and it
+  // is the DISCIPLINE (the four questions) that catches them, not the regex.
+  //
+  // Candidate lister is print-only; only an agent verdict writes a sidecar.
+  // Four questions + full measurement: qou `local/devils-advocate-watcher`.
+  { id: "da-arity-conflation", domain: "devils-advocate", description: "A predicate that VARIES (over states, levels, or instances) conflated with the single truth value of its universal closure: a level-indexed family read as one Prop; a pointwise claim (forall P, v <-> Pred P) refuted where the corpus asserts the universal closure (v <-> forall P, Pred P, which is trivially inhabited); a one-instance theorem read as a cross-instance identification; a set-level fact (undecidable / not cut out by an ideal / cofinite locus) used to deny a truth-value equivalence.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
   { id: "da-lean-narrative-divergence", domain: "devils-advocate", description: "Lean proves something weaker/different/vacuously-implied vs the .md claim (proof-statement-integrity).", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
   { id: "da-citation-misuse", domain: "devils-advocate", description: "Cited reference (cites[] or -- Ref:) does not contain / is mis-attributed for the invoked result.", default_severity: "minor", depends_on: ["md", "ts", "lean"], automated: false },
   { id: "da-definitional-ambiguity", domain: "devils-advocate", description: "Key term undefined / multiple incompatible readings / 'the unique X' without uniqueness / implicit regime or base ring.", default_severity: "minor", depends_on: ["md", "ts", "lean"], automated: false },

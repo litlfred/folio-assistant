@@ -384,11 +384,33 @@ leave `origin/main` unfetched. Before any push, force a fresh fetch
 and compute the upstream delta:
 
 ```bash
-git fetch origin main 2>/dev/null
+git fetch origin '+refs/heads/main:refs/remotes/origin/main' 2>/dev/null
 DELTA=$(git rev-list --count HEAD..origin/main)
 SIBS=$(git log --oneline ${MERGE_BASE:-$(git merge-base HEAD origin/main)}..origin/main 2>/dev/null | wc -l)
 echo "main is ${DELTA} commits ahead since branch base"
 ```
+
+> **Fetch the ref you are about to read, with an explicit refspec.**
+> `git fetch origin main` writes `FETCH_HEAD`; it refreshes
+> `refs/remotes/origin/main` only when the clone's configured
+> `remote.origin.fetch` covers that branch — and it **exits 0 either way**. A
+> clone whose refspec has been narrowed to one branch (this happens: a `qou`
+> clone was found pinned to a single sibling) answers every `origin/main`
+> question from a ref that has not moved for days, and nothing in the output
+> distinguishes that from being up to date. Use
+> `+refs/heads/<b>:refs/remotes/origin/<b>`, which is correct whatever the
+> clone is configured with.
+>
+> Two corollaries, both of which have bitten:
+>
+> - **Fetch the same ref you then read.** `watch.md §5b` fetched `main` and
+>   measured `origin/<BRANCH>`, so its mandatory missed-commit recovery
+>   reported 0 missed by construction.
+> - **A per-branch refspec does not repair `for-each-ref`.** Anything walking
+>   `refs/remotes/origin/claude/*` sees only what was fetched by name, so an
+>   empty result means "never fetched", not "no siblings". Check
+>   `git config --get-all remote.origin.fetch | grep 'refs/heads/\*'` before
+>   believing it.
 
 Decision matrix:
 

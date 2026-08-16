@@ -28,7 +28,11 @@ COMPOSE_FILE="docker-compose.folio.yml"
 
 # ── 1. Check git for new commits ─────────────────────────────────
 cd "$REPO_ROOT"
-git fetch origin main --quiet 2>/dev/null
+# Explicit refspec — a bare `git fetch origin main` updates FETCH_HEAD but only
+# opportunistically refreshes refs/remotes/origin/main, so a clone with a
+# narrowed refspec would compare against a stale ref and decide it is already
+# up to date forever. See bean 9giz.
+git fetch origin '+refs/heads/main:refs/remotes/origin/main' --quiet 2>/dev/null
 
 LOCAL_SHA=$(git rev-parse HEAD 2>/dev/null)
 REMOTE_SHA=$(git rev-parse origin/main 2>/dev/null)

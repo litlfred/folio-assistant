@@ -287,7 +287,12 @@ function run(): void {
   let totalMinor = 0;
   let totalNeedsAgent = 0;
 
-  for (const block of walkBlocks(walkRoot)) {
+  // `includeUnlabelled`: the sweep's question is "what prose ships?", not "what
+  // is in the dependency graph". Unlabelled `prose()` blocks — chapter intros
+  // and outros, the notation register — render into the paper and were outside
+  // every criterion, while already carrying sidecars nothing could refresh.
+  // See `qou/3fui`.
+  for (const block of walkBlocks(walkRoot, { includeUnlabelled: true })) {
     if (blockRootFilter && block.root !== blockRootFilter) continue;
     totalBlocks++;
     const paths = { md: block.md, ts: block.ts, lean: block.lean };

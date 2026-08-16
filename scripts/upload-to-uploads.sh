@@ -130,7 +130,11 @@ else
 fi
 
 # ─── Branch + commit + push ────────────────────────────────────
-git fetch origin "$DEFAULT_BRANCH" --quiet 2>/dev/null || true
+# Explicit refspec: the new branch is cut from origin/$DEFAULT_BRANCH below, and
+# a bare `git fetch origin <branch>` refreshes that tracking ref only when the
+# clone's configured refspec covers it — silently rooting the upload on a stale
+# base otherwise. See bean 9giz.
+git fetch origin "+refs/heads/$DEFAULT_BRANCH:refs/remotes/origin/$DEFAULT_BRANCH" --quiet 2>/dev/null || true
 
 UTC_YMD="$(date -u +%Y-%m-%d)"
 SAFE_NAME="$(echo "$TARGET" | sed 's/[^A-Za-z0-9._-]/-/g' | cut -c1-40)"

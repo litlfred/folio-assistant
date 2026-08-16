@@ -661,9 +661,31 @@ export function checkBaseRingMinimal(
     .replace(/\/-[\s\S]*?-\/|--.*$/gm, "")
     .replace(/^\s*import\s+[^\n]*$/gm, "");
   // Archimedean side: a field / ℝ / division is legitimate there.
-  if (ARCHIMEDEAN_LEAN_RE.test(stripped)) {
+  //
+  // The skip is the UNION of the two archimedean signals, because neither
+  // alone covers it. `ARCHIMEDEAN_LEAN_RE` carries the arithmetic tactics
+  // (`linarith`/`norm_num`/`positivity`) but its `\(ℝ\)` / `: ℝ\b` tokens
+  // cannot fire on spaced Lean forms, since `\b` next to the non-word `ℝ`
+  // never matches; `ARCHIMEDEAN_TYPE_RE` catches `ℝ` in any position but
+  // deliberately omits those tactics (they discharge goals over any ordered
+  // field, so they are not evidence of an ℝ specialisation -- correct for
+  // `checkWallSide`'s mixed-signal split, which is where it is used).
+  //
+  // Swapping the narrow regex for the broad one -- the fix as originally
+  // proposed -- therefore trades one blind spot for another and scores
+  // WORSE: measured over `content/quantum-observable-universe`, 321 hits
+  // -> 445, because every generic file closing a literal with `norm_num`
+  // starts being scored. The union gives 137. See qou#4886 / qou#4901.
+  if (
+    ARCHIMEDEAN_LEAN_RE.test(stripped) ||
+    ARCHIMEDEAN_TYPE_RE.test(stripped)
+  ) {
     return { result: "pass", hits: [] };
   }
+  // A bare `⁻¹` is only a RING inverse if the file has ring structure at
+  // all; in a file with none it is an `Inv` on a group / `Equiv.Perm`, and
+  // asking for a "division-free restatement" there is meaningless.
+  const isAlgebraic = ALGEBRAIC_LEAN_RE.test(stripped);
   const hits: CheckerHit[] = [];
   // Blank out block comments (preserving line numbers) so docstring math
   // such as `α_EM = q⁻¹/(...)` does not false-flag.
@@ -676,7 +698,8 @@ export function checkBaseRingMinimal(
     const fieldHit = FIELD_MARKER_RE.test(code);
     // ring-element inverse `q⁻¹` (needs Inv/Field), but NOT a Units
     // coercion `↑q⁻¹` over a CommRing — that is the target pattern.
-    const ringInvHit = RING_INV_RE.test(code) && !/↑|Rˣ|Units/.test(code);
+    const ringInvHit =
+      isAlgebraic && RING_INV_RE.test(code) && !/↑|Rˣ|Units/.test(code);
     if (fieldHit || ringInvHit) {
       hits.push({
         file: leanPath,

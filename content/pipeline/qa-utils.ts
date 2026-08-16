@@ -15,6 +15,7 @@ import {
 import { join, resolve } from "path";
 import { execFileSync } from "child_process";
 import { criterionSourceHash } from "./qa-criterion-hash";
+import { maskStringsAndComments, parseStringField } from "./uses-field";
 import {
   parseLeanRef,
   leanPackageByName,
@@ -323,6 +324,32 @@ function lakeBasenameMap(
  * purpose: it only *gates* candidate (a), and a false positive there is no
  * worse than the pre-fix behaviour.
  */
+/** Regex fragment listing every Lean top-level declaration keyword. */
+const _DECL_KW =
+  "theorem|lemma|def|abbrev|instance|structure|class|inductive|opaque|axiom";
+
+/**
+ * Does `file` declare **anything at all**, or is it an import-only aggregator?
+ *
+ * Used to keep the safe fallback from handing back a file that declares
+ * nothing. A ref naming a decl that does not exist (e.g. `qou:QOU.Foo` when no
+ * `Foo` was ever written) parses with module `QOU`, whose module-path file is
+ * the library root — a list of `import` lines. Returning that made every
+ * checker audit the import list and **pass**, which is strictly worse than the
+ * honest `n/a` an unresolved ref produces. Measured on the qou corpus
+ * 2026-08-15: 65 of 1220 blocks resolved this way (bean `qou-cu0a`).
+ */
+function fileDeclaresAnything(file: string): boolean {
+  let body: string;
+  try {
+    body = readFileSync(file, "utf-8");
+  } catch {
+    return false;
+  }
+  return new RegExp(`^\\s*(?:noncomputable\\s+|private\\s+|protected\\s+)*(?:${_DECL_KW})\\s`, "mu")
+    .test(body);
+}
+
 function fileDeclaresName(file: string, name: string): boolean {
   let body: string;
   try {
@@ -487,7 +514,15 @@ export function resolveCanonicalLean(
   // (safe fallback) preserve legacy behaviour: a ref that resolved to the
   //   direct module-path before the (a)-gate still resolves to it, so no
   //   previously-resolving ref regresses to `undefined`.
-  if (directExists) return direct;
+  //
+  //   EXCEPT when that file declares nothing at all. An import-only aggregator
+  //   carries no statement to audit, so returning it makes every checker pass
+  //   vacuously on a list of `import` lines — strictly worse than the honest
+  //   `n/a` that `undefined` produces, because a false green is indistinguishable
+  //   from a real one. Refs naming a decl that exists nowhere land here (module
+  //   `QOU` → the library root); 65 of 1220 qou blocks did, bean `qou-cu0a`.
+  //   Real single-module files still fall back exactly as before.
+  if (directExists && fileDeclaresAnything(direct)) return direct;
   return undefined;
 }
 
@@ -559,19 +594,33 @@ const BLOCK_BUILDER_RE = new RegExp(
  * manifest. Returns the block's kind + label, or `undefined` if the
  * file is not a single-block manifest (chapter, paper, etc.).
  *
- * Robust to surrounding fields; uses naive regex (no TypeScript
- * loader needed for this scan).
+ * **Matched against a string- and comment-masked copy**, so a builder call or
+ * a `label:` written inside a string literal or a comment cannot make an
+ * ordinary source file look like a block manifest. Offsets are preserved by
+ * masking, so the values still come from the original text.
+ *
+ * That is not a hypothetical: `content/pipeline/witness-substitution-audit.ts`
+ * contains a self-test reading
+ *
+ * ```ts
+ * parseWitnessList(`export default proposition({ label: "prop:x" });`)
+ * ```
+ *
+ * and the raw scan yielded that audit script as a content block labelled
+ * `prop:x`. Every per-block checker then ran on it and attributed the results
+ * to a block that does not exist.
  */
 export function readBlockManifest(
   tsPath: string,
 ): { kind: string; label: string } | undefined {
   if (!existsSync(tsPath)) return undefined;
   const src = readFileSync(tsPath, "utf-8");
-  const kindMatch = src.match(BLOCK_BUILDER_RE);
+  const masked = maskStringsAndComments(src);
+  const kindMatch = masked.match(BLOCK_BUILDER_RE);
   if (!kindMatch) return undefined;
-  const labelMatch = src.match(/\blabel\s*:\s*"([^"]+)"/);
-  if (!labelMatch) return undefined;
-  return { kind: kindMatch[1], label: labelMatch[1] };
+  const label = parseStringField(src, "label");
+  if (!label) return undefined;
+  return { kind: kindMatch[1], label };
 }
 
 /**
@@ -579,7 +628,57 @@ export function readBlockManifest(
  * triple. Skips chapter manifests, paper manifests, and any .ts
  * file that is not a single-block manifest.
  */
-export function* walkBlocks(rootDir: string): Generator<BlockPaths> {
+/**
+ * A block manifest that declares a builder but **no `label:`** — `prose()`
+ * connective tissue. Returns its kind plus the file's slug standing in for the
+ * label; `undefined` when the file is not a block manifest at all, or when it
+ * does have a label (use `readBlockManifest` for those).
+ *
+ * The slug is what the corpus's existing sidecars for these blocks already key
+ * on, so this adopts the convention rather than minting a second one.
+ *
+ * Masked like `readBlockManifest`, so a builder call inside a string or comment
+ * still does not qualify — the fix in `#125` must not be undone by the looser
+ * path being added beside it.
+ */
+export function readUnlabelledBlockManifest(
+  tsPath: string,
+): { kind: string; label: string } | undefined {
+  if (!existsSync(tsPath)) return undefined;
+  const src = readFileSync(tsPath, "utf-8");
+  if (parseStringField(src, "label")) return undefined; // labelled: not ours
+  const kindMatch = maskStringsAndComments(src).match(BLOCK_BUILDER_RE);
+  if (!kindMatch) return undefined;
+  const slug = tsPath.split("/").pop()!.replace(/\.ts$/, "");
+  return { kind: kindMatch[1], label: slug };
+}
+
+export interface WalkBlocksOptions {
+  /**
+   * Also yield blocks that declare **no `label:`** — `prose()` connective
+   * tissue (chapter intros and outros, author's notes, the notation register).
+   *
+   * Default `false`, which is right for the **dependency graph**: a block with
+   * no label cannot be a node, and nothing can reference it.
+   *
+   * It is wrong for **QA**. `walkBlocks` is not only the graph's enumeration,
+   * it is every checker's, and 63 such blocks in the `qou` corpus render into
+   * the paper carrying 27,390 words that no criterion could reach. They already
+   * hold `.qa.json` sidecars — written by a one-off bulk pass that enumerated
+   * differently — which `qa-sweep` could never refresh, so a stale sidecar and
+   * a current one were indistinguishable. See `qou/3fui`.
+   *
+   * Unlabelled blocks are yielded with their **slug** as `label`, which is the
+   * identity the existing sidecars already use; this adopts a convention rather
+   * than inventing one.
+   */
+  includeUnlabelled?: boolean;
+}
+
+export function* walkBlocks(
+  rootDir: string,
+  opts: WalkBlocksOptions = {},
+): Generator<BlockPaths> {
   // When a block's sibling `<root>.lean` is missing but its `lean.ref`
   // URI points at a file in the package's Lake tree (the cluster-
   // migration pattern, e.g. lean/QOU/BraidKnot/MarkovAxiomsPrimitive.lean),
@@ -607,7 +706,10 @@ export function* walkBlocks(rootDir: string): Generator<BlockPaths> {
         yield* recurse(full);
       } else if (entry.endsWith(".ts")) {
         // Skip chapter / paper manifests by checking the export shape.
-        const manifest = readBlockManifest(full);
+        let manifest = readBlockManifest(full);
+        if (!manifest && opts.includeUnlabelled) {
+          manifest = readUnlabelledBlockManifest(full);
+        }
         if (!manifest) continue;
         const root = full.slice(0, -3); // strip ".ts"
         const md = root + ".md";

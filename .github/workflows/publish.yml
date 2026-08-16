@@ -645,7 +645,13 @@ jobs:
         env:
           BASE_REF: ${{ github.event.pull_request.base.ref || 'main' }}
         run: |
-          git fetch origin "$BASE_REF"
+          # Explicit refspec: the checkout below reads refs/remotes/origin/$BASE_REF,
+          # and a bare `git fetch origin <ref>` only refreshes (or creates) that
+          # tracking ref when the clone's configured refspec covers it —
+          # actions/checkout narrows it to the single ref being built. Defensive:
+          # this step is continue-on-error, so a missing ref shows up as an absent
+          # diff PDF rather than a failure. See bean 9giz.
+          git fetch origin "+refs/heads/$BASE_REF:refs/remotes/origin/$BASE_REF"
           git checkout "origin/$BASE_REF" -- main.tex
           latexpand main.tex > main-base-flat.tex 2>/dev/null
           # main-flat.tex came from the paper-pdf job's artefact

@@ -193,3 +193,76 @@ Verified behaviour-preserving: forward references on qou read **194 before and
 by owner decision, bullet 2 fine as filed. The bean's remaining subject is the
 sync loader, unchanged: worth doing when someone is already in loader work, not
 worth opening on its own account.
+
+## 2026-08-16 — bullet 2 closed: readBlockManifest was admitting a non-block
+
+Bullet 2 said `readBlockManifest` "is regex-based but builds its kind
+alternation from BLOCK_KINDS, so it cannot drift. Fine as is unless a sync
+loader appears."
+
+The alternation cannot drift. The **matching** could, and did — in the
+permissive direction, which is the worse one. Both regexes ran against raw
+source, so a builder call or a `label:` inside a string literal or comment made
+an ordinary file look like a manifest.
+
+`content/pipeline/witness-substitution-audit.ts` carries a self-test:
+
+```ts
+parseWitnessList(`export default proposition({ label: "prop:x" });`)
+```
+
+`walkBlocks` yielded that audit script as a content block labelled `prop:x`.
+Every per-block checker ran on it and filed results under a label no block
+holds. Blocks walked: **3521 → 3520**.
+
+Fixed by matching against a string- and comment-masked copy and reading the
+label through `parseStringField`. Both primitives already live in
+`uses-field.ts` after this session's consolidation, so this is a repoint rather
+than a fifth parser — which is what this bean has been asking for throughout.
+
+Seven tests, including the exact corpus shape (a manifest's source passed as a
+template literal to the function under test) and the guard that a real manifest
+still reads.
+
+**Bullet 2 is closed**, and not by the sync loader. The remaining subject is
+unchanged: bullet 1 was closed by owner decision, bullet 3 by `#116`, and a true
+sync loader is still absent — but the class this bean was filed to track,
+"scanners that read source text and can be fooled by what source text may
+legitimately contain", is now materially smaller. Every manifest read in the
+pipeline goes through the masked scanner.
+
+## 2026-08-16 — the walk was wrong in BOTH directions
+
+`#125` fixed `walkBlocks` **admitting** a non-block. Asking the complement —
+does it **miss** real ones? — found 63 that it did.
+
+Chapter manifests list 3571 slugs; the walk yielded 63 fewer. All 63 are
+`prose()` connective tissue with no `label:` (chapter intros and outros, the
+notation register, the author's note), all render into the paper, and all carry
+27,390 words of narrative plus `.qa.json` sidecars that `qa-sweep` — which
+iterates `walkBlocks` — could never refresh.
+
+Fixed by separating the two questions the one enumeration was answering.
+`walkBlocks(root, { includeUnlabelled })` defaults to **false**, which is right
+for the dependency graph: a block with no label cannot be a node. `qa-sweep`
+opts in, because its question is "what prose ships?" not "what is in the
+graph?". Unlabelled blocks are yielded under their **slug**, which is the
+identity their existing sidecars already use.
+
+`readUnlabelledBlockManifest` is masked like `readBlockManifest`, and a test
+pins that neither mode readmits the `#125` shape — a looser path added beside a
+fix is how the fix gets undone.
+
+**Measured before landing, and the measurement changed the recommendation.** I
+had argued this option was "the smallest change and the loudest", on the
+assumption that 27,390 unchecked words would produce a large batch of findings.
+Across the 63 blocks: **1286 applicable criterion runs, 0 failures** (819 runs
+skipped by `applies_to`, correctly — a chapter outro is not a proposition).
+
+An earlier count of 126 failures was my own error: I invoked the checkers
+directly and bypassed the `applies_to` filter that `qa-sweep` applies at line
+367, so `compute-prop-has-probe` and `-has-consumer` fired on prose. Caught
+before it was reported as a risk.
+
+So the change is cheap AND quiet. The prose was clean; it simply could not be
+seen to be.
