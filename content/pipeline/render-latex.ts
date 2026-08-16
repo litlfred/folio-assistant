@@ -138,12 +138,74 @@ const VERBATIM_TRANSLIT: Record<string, string> = {
   "═": "=", "║": "|", "╔": "+", "╗": "+", "╚": "+", "╝": "+",
   "▲": "^", "►": ">", "▼": "v", "◄": "<", "△": "^", "▽": "v",
   "◁": "<", "▷": ">", "➤": ">",
+  // Chars with no T1 glyph AND no `\newunicodechar` mapping in
+  // latex/preamble.tex — empirically determined by compiling every
+  // distinct non-ASCII char in the corpus against the real preamble
+  // (see NO_LATEX_SETUP below for the probe). Each aborts pdflatex.
+  "ᵀ": "^T", "ⁱ": "^i", "ˣ": "^x", "₊": "_+", "₋": "_-", "ₗ": "_l",
+  "ℑ": "Im", "↠": "->>", "∤": "!|", "∮": "oint", "≟": "=?",
+  "⊇": "supseteq", "⊔": "union+", "⋯": "...", "☉": "(sun)",
+  "𝐂": "C", "𝓕": "F", "𝓜": "M", "𝔎": "K", "𝔐": "M", "𝔓": "P",
+  "𝔟": "b", "𝔤": "g", "𝔥": "h", "𝔯": "r", "𝕆": "O", "𝕜": "k",
+  // U+FFFD is a mojibake artefact of a bad decode upstream; render it
+  // visibly rather than aborting, so the corrupted source is findable.
+  "�": "?",
 };
+
+/**
+ * The subset of {@link VERBATIM_TRANSLIT} whose keys have **no LaTeX
+ * setup at all** — neither a T1 glyph, nor a `\newunicodechar` mapping
+ * in `latex/preamble.tex`, nor one of LaTeX's built-in `utf8.def`
+ * declarations. These abort pdflatex with
+ * `Unicode character … not set up for use with LaTeX` in *any* context,
+ * including `\texttt{}`.
+ *
+ * Derived empirically: emit every distinct non-ASCII char in the corpus,
+ * one per line, into a document using the real preamble, compile, and
+ * collect the chars pdflatex rejects. Re-run that probe when the
+ * preamble's `\newunicodechar` block changes.
+ *
+ * Kept separate from the full verbatim table on purpose. Inline code
+ * renders to `\texttt{}`, which is NOT a verbatim catcode regime, so
+ * `\newunicodechar` **does** apply there — transliterating everything
+ * would gratuitously turn a nicely-mapped `→` into `->`. Only the
+ * genuinely-unsupported chars need rewriting.
+ */
+const NO_LATEX_SETUP: readonly string[] = [
+  "ς", "ᵀ", "ⁱ", "ˣ", "⁺", "ⁿ", "₊", "₋", "ₗ", "ℑ", "℘", "↠", "∇",
+  "∉", "∤", "∪", "∫", "∮", "≟", "⊇", "⊔", "⋯", "⌊", "⌋", "═",
+  "■", "☉", "⟶", "�", "𝐂", "𝓕", "𝓜", "𝔎", "𝔐", "𝔓", "𝔟",
+  "𝔤", "𝔥", "𝔯", "𝕆", "𝕜", "𝟙",
+];
+
+const INLINE_CODE_TRANSLIT: Record<string, string> = Object.fromEntries(
+  NO_LATEX_SETUP.filter((ch) => ch in VERBATIM_TRANSLIT).map((ch) => [
+    ch,
+    VERBATIM_TRANSLIT[ch]!,
+  ]),
+);
 
 function transliterateForVerbatim(text: string): string {
   let out = "";
   for (const ch of text) {
     out += VERBATIM_TRANSLIT[ch] ?? ch;
+  }
+  return out;
+}
+
+/**
+ * Rewrite only the chars that have no LaTeX setup whatsoever, for use
+ * inside `\texttt{}`. Everything else — including every char the
+ * preamble maps with `\newunicodechar` — is passed through unchanged,
+ * so inline code keeps its current appearance.
+ *
+ * Without this, a Lean snippet such as `` `q : Rˣ` `` reached the PDF as
+ * `\texttt{q : Rˣ}` and aborted the whole build.
+ */
+function transliterateForInlineCode(text: string): string {
+  let out = "";
+  for (const ch of text) {
+    out += INLINE_CODE_TRANSLIT[ch] ?? ch;
   }
   return out;
 }
@@ -727,7 +789,10 @@ function renderMdastNode(node: MdNode): string {
     case "inlineCode":
       // Inline code: `text` → \texttt{...} with break opportunities so long
       // identifiers wrap in narrow table cells instead of overflowing.
-      return `\\texttt{${breakableCode(node.value)}}`;
+      // Chars with no LaTeX setup at all are rewritten first: \texttt is
+      // not verbatim, so \newunicodechar still applies and only the
+      // genuinely-unsupported chars need it (see transliterateForInlineCode).
+      return `\\texttt{${breakableCode(transliterateForInlineCode(node.value))}}`;
 
     case "code":
       if (node.lang === "tex") {
