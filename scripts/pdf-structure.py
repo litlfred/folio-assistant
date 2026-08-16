@@ -46,6 +46,7 @@ import json
 import os
 import re
 import unicodedata
+from collections import Counter
 import sys
 import warnings
 from dataclasses import dataclass, field, asdict
@@ -174,21 +175,31 @@ def repair_text(s: str) -> str:
     return re.sub(r"\s{2,}", " ", s)
 
 
-def rejoin_caps(s: str, vocab: set[str]) -> str:
+def rejoin_caps(s: str, vocab) -> str:
     """Vocabulary-gated half: undo arbitrary splits in all-caps runs.
 
     All-caps words get broken at arbitrary points by kerning — "STA VROS
     GAROUF ALIDIS" — and nothing about the *shape* of two capitalised
-    fragments says whether they are one word or two. So a join is made
-    only when the joined form actually occurs elsewhere in this same
-    document, which separates "GAROUF ALIDIS" (attested) from "THREE
-    MANIFOLDS" (never attested as one token).
+    fragments says whether they are one word or two. The document's own
+    text decides.
 
-    `vocab` must be built from text that has already been through
-    `repair_text`, or an accented name will fail to attest its own join.
+    `vocab` is a Counter of lower-cased tokens, and the counts are load
+    bearing: mere presence is not enough in either direction, because a
+    document that carries this damage attests its own artefacts. "BASES
+    FOR" was welded into one token because "basesfor" appeared elsewhere,
+    and "NON-CRYST ALLOGRAPHIC" was left broken because the same damaged
+    header repeats on every page, so "cryst" and "allographic" are both
+    "words" too.
+
+    Frequency separates them. A real word beats the fragments it was
+    broken into (`crystallographic` 30 vs `cryst` 5), while a damage
+    artefact loses to the real words it welded (`basesfor` 1 vs `for` 200).
     """
     if not vocab:
         return s
+
+    def freq(w):
+        return vocab.get(re.sub(r"[^\w]", "", w).lower(), 0)
 
     # A capital kerned away from the rest of its word: "V olume". Gated on
     # attestation, because the same shape is also a symbol followed by an
@@ -196,7 +207,7 @@ def rejoin_caps(s: str, vocab: set[str]) -> str:
     # into "Soit Kun corps".
     s = RE_SPLIT_CAP.sub(
         lambda m: m.group(1) + m.group(2)
-        if (m.group(1) + m.group(2)).lower() in vocab else m.group(0), s)
+        if freq(m.group(1) + m.group(2)) else m.group(0), s)
 
     # Whole runs, longest first. A name can be broken more than once —
     # "J ÉR ÔME" — and joining pairwise never fires there, because the
@@ -216,35 +227,23 @@ def rejoin_caps(s: str, vocab: set[str]) -> str:
             cand = "".join(run[:k])
             words = [(m.start(), m.end(), m.group(0))
                      for m in re.finditer(r"[^\W\d_]+", cand)]
-            # Test the word formed at *every* seam, not the whole
-            # concatenation and not just the first seam. Joining "GR" to
-            # "ÖBNER-SHIRSHOV" makes the word "GRÖBNER", so asking whether
-            # "gröbnershirshov" is a word answers a question nobody posed;
-            # and checking only the first seam once swallowed an entire
-            # title into one token because its first seam happened to be
-            # a real join.
             seams, ok = [], True
             for f in run[:k - 1]:
                 seams.append((seams[-1] if seams else 0) + len(f))
             for idx, seam in enumerate(seams):
+                # The word formed AT THE SEAM, not the whole concatenation:
+                # "GR" + "ÖBNER-SHIRSHOV" makes "GRÖBNER", and asking
+                # whether "gröbnershirshov" is a word answers a question
+                # nobody posed. Every seam is checked, because checking
+                # only the first once swallowed a whole title into one
+                # token on a run whose first seam was a real join.
                 w = next((t for a, b, t in words if a < seam <= b), "")
-                if len(w) < 4 or w.lower() not in vocab:
+                if len(w) < 4 or not freq(w):
                     ok = False
                     break
-                # The two words actually being welded — the last word of
-                # the left fragment and the first of the right. If BOTH
-                # are real words on their own, they are two real words,
-                # whatever the document says about the welded form: a
-                # document containing its own damage attests the
-                # artefact, which is how "BASES FOR" became "BASESFOR"
-                # and "L'INSTITUT FOURIER" became "L'INSTITUTFOURIER".
-                # Comparing whole fragments missed the second, because
-                # "L'INSTITUT" is not a word while "INSTITUT" is.
                 left = re.findall(r"[^\W\d_]+", run[idx])
                 right = re.findall(r"[^\W\d_]+", run[idx + 1])
-                if (left and right
-                        and left[-1].lower() in vocab
-                        and right[0].lower() in vocab):
+                if left and right and freq(w) < min(freq(left[-1]), freq(right[0])):
                     ok = False
                     break
             if ok:
@@ -466,8 +465,8 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
     # letter-spaced — so a two-page sample often fails to attest the very
     # names it needs. An author surname reappears unbroken in the running
     # heads and the bibliography, which is what makes the join decidable.
-    vocab = {w.lower() for w in
-             re.findall(r"[^\W\d_]{3,}", repair_text("\n".join(pages)))}
+    vocab = Counter(w.lower() for w in
+                    re.findall(r"[^\W\d_]{3,}", repair_text("\n".join(pages))))
 
     title = rejoin_caps(repair_text(" ".join(title_lines)), vocab).strip(" .,")
     meta["title"] = title or None
