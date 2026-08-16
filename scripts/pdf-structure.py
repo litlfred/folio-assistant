@@ -41,6 +41,7 @@ Dependencies: pypdf (BSD-3-Clause). Install: pip install pypdf
 from __future__ import annotations
 
 import argparse
+import glob
 import hashlib
 import json
 import os
@@ -631,9 +632,49 @@ def derive_doc_id(path: str, meta: dict[str, Any]) -> str:
     return slugify(os.path.splitext(os.path.basename(path))[0], 60)
 
 
-def process(path: str) -> tuple[dict[str, Any], list[Section]]:
+def ocr_pages(path: str, outdir: str | None) -> list[str]:
+    """Cached OCR text for this PDF, if `pdf-ocr.py` has been run on it.
+
+    Read rather than generated: OCR costs seconds per page and needs
+    binaries this script deliberately does not depend on, so producing it
+    is a separate, explicit step.
+    """
+    base = outdir or os.path.dirname(os.path.abspath(path))
+    for d in (os.path.join(base, "ocr"),
+              os.path.join(base, slugify(os.path.splitext(os.path.basename(path))[0], 60), "ocr")):
+        files = sorted(glob.glob(os.path.join(d, "page-*.txt")))
+        if files:
+            return [open(f, encoding="utf-8", errors="replace").read() for f in files]
+    return []
+
+
+def text_is_unusable(pages: list[str]) -> bool:
+    """No text layer, or one that decoded through the wrong codec.
+
+    The second case is why a length test is not enough: a JIS-encoded
+    Japanese scan yields ~1,100 characters per page of
+    `Fs=E2=7k$SL\\$Ncolored Jones`, which passes every "did we get text"
+    check and is worth less than nothing downstream.
+    """
+    if not pages:
+        return True
+    mean = sum(len(p or "") for p in pages) / len(pages)
+    if mean < 120:
+        return True
+    head = " ".join((p or "") for p in pages[:3])
+    letters = sum(c.isalpha() for c in head)
+    return bool(head) and letters < 0.55 * len(head)
+
+
+def process(path: str, outdir: str | None = None, use_ocr: bool = False,
+            ) -> tuple[dict[str, Any], list[Section]]:
     reader = PdfReader(path)
     pages = page_texts(reader)
+    ocr_used = False
+    if use_ocr and text_is_unusable(pages):
+        cached = ocr_pages(path, outdir)
+        if cached:
+            pages, ocr_used = cached, True
 
     outline = read_outline(reader)
     toc = outline or infer_headings(pages)
@@ -658,6 +699,10 @@ def process(path: str) -> tuple[dict[str, Any], list[Section]]:
             "sha256": sha256_of(path),
             "bytes": os.path.getsize(path),
             "pages": len(pages),
+            # Whether this artefact was built from OCR rather than from the
+            # PDF's own text. A consumer that ranks or cites this document
+            # should know the text is a transcription.
+            "text_source": "ocr" if ocr_used else "embedded",
         },
         "metadata": meta | {"docinfo": docinfo},
         "toc": [asdict(e) for e in toc],
@@ -711,6 +756,9 @@ def main() -> int:
                     help="root for <doc-id>/ output dirs (default: alongside the PDF)")
     ap.add_argument("--no-sections", action="store_true", help="structure.json only")
     ap.add_argument("--json", action="store_true", help="print artefact to stdout, write nothing")
+    ap.add_argument("--ocr", action="store_true",
+                    help="for a PDF whose text layer is absent or mojibake, use the "
+                         "cached OCR text written by pdf-ocr.py (which must be run first)")
     args = ap.parse_args()
 
     targets = list(args.pdfs)
@@ -725,7 +773,7 @@ def main() -> int:
     ok = failed = 0
     for path in targets:
         try:
-            artefact, sections = process(path)
+            artefact, sections = process(path, args.outdir, args.ocr)
         except Exception as exc:
             failed += 1
             print(f"FAIL  {os.path.basename(path)}: {type(exc).__name__}: {exc}",
