@@ -483,6 +483,76 @@ remains an opaque PDF.
 
 ---
 
+## 9-bis. OCR: which engine, and why the choice is not about accuracy
+
+Two document classes defeat text extraction completely, and no amount of
+parser work reaches them:
+
+| Class | Symptom | Count in the qou library |
+|---|---|---|
+| Scan, no text layer | `pypdf` returns 0 characters | 7 |
+| Scan, JIS-encoded font, no ToUnicode map | ~1,100 chars/page of `Fs=E2=7k$SL\$Ncolored Jones` | 5 |
+
+The second is the nastier one: it *looks* like text, so every "did we get
+characters" test passes and the mojibake flows into the index, the title
+and the grep path.
+
+### The choice is made by egress, not by benchmark scores
+
+Every model-based OCR fetches weights on first run, and `huggingface.co`
+returns **403** here under organisation policy (§2a). That single fact
+eliminates most of the field regardless of how well it reads:
+
+| Engine | Licence | Weights | Works here | Notes |
+|---|---|---|---|---|
+| **Tesseract 5** | Apache-2.0 | apt (`tesseract-ocr-*`) | **yes** | 100+ languages as distro packages; CPU; what this repo uses |
+| **RapidOCR** (`rapidocr-onnxruntime`) | Apache-2.0 | **in the wheel** | **yes** | ONNX, CPU, ~15 MB; the natural second string |
+| PaddleOCR | Apache-2.0 | HF / Baidu CDN | no | strongest on dense CJK layout, unreachable |
+| docTR | Apache-2.0 | HF | no | |
+| Surya | GPL-3.0 / commercial | HF | no | best-in-class reading order; licence also needs review |
+| EasyOCR | Apache-2.0 | JAIDED CDN | no | |
+| Cloud OCR (Google, AWS, Azure) | — | — | no | egress, and it sends the corpus to a third party |
+
+So the shortlist is **Tesseract** and **RapidOCR**, and Tesseract wins on
+language packaging alone: `tesseract-ocr-jpn` is one apt package, and the
+Japanese scans are precisely the hard cases here.
+
+### Two things that are easy to get wrong
+
+**`poppler-data` is not optional.** Without it `pdftoppm` fails on CJK
+with *"Missing language pack for 'Adobe-Japan1' mapping"*, produces no
+image, and **exits 0** — so an OCR pipeline reads nothing and reports
+success. `pdf-ocr.py` raises on an empty rasterisation for this reason.
+
+**Language must be detected, not assumed.** A Japanese page read as
+`-l eng` returns near-nothing. Tesseract's own script detection
+(`--psm 0`) is cheap and does not need the pack for the script it finds;
+a detected pack that is not installed is dropped rather than passed
+through, because Tesseract exits non-zero and returns nothing at all when
+asked for a language it lacks.
+
+### What it recovered
+
+Run over the blocked documents, with page-level caching and
+`source.text_source: "ocr"` recorded so a consumer knows the text is a
+transcription:
+
+- McMullen — *Braiding of the attractor and the failure of iterative
+  algorithms*, Invent. math. **91**, 259–272 (1988). The filename claims
+  2013; the paper is 1988.
+- Birman — *On Markov's Theorem*, J. Knot Theory Ramifications **11**(3).
+- RIMS Kôkyûroku 1172 — 岡本美雪 (Miyuki Okamoto), *二重化結び目の colored
+  Jones 多項式の計算方法について*.
+
+### What OCR does not fix
+
+It recovers *text*, not *judgement*. An OCR'd masthead is still a
+masthead, and the title/byline separation problems of §7-bis apply
+unchanged to the transcribed text — several OCR'd documents still needed
+a hand-verified entry in `library-title-overrides.json`. OCR moves a
+document from "unreadable" to "readable and subject to the usual
+extraction defects"; it does not move it to "registered".
+
 ## 10. Recommendation
 
 A staged adoption, cheapest and highest-value first. Each stage is
