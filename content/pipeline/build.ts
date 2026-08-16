@@ -15,7 +15,11 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
 import { join, dirname, resolve, relative } from "path";
 import type { Paper, Chapter, Section, Block, RenderOptions } from "../../schemas/types";
 import { extractBlockLabel, isCrossPaperRef } from "../../schemas/types";
-import { renderChapter, validateLatexAst } from "./render-latex";
+import {
+  renderChapter,
+  validateLatexAst,
+  collectReferencedTerms,
+} from "./render-latex";
 import { generateMainTex } from "./generate-main-tex";
 import { runPreflight } from "./latex-preflight";
 import { resolveLeanFile, leanFileStatus } from "../../scripts/lean-coverage";
@@ -214,8 +218,19 @@ export async function buildPaper(
   // Paper slug = the last path segment of paperDir, used to build the
   // `\sourcebase`-relative chapter URL inside \chapterannot{}.
   const paperSlug = paperDir.split("/").filter(Boolean).pop() ?? "";
+
+  // Document-wide glossary-term references. Chapters render
+  // independently, so this must be computed once over ALL blocks before
+  // the loop: body prose citing a glossary term is almost always in a
+  // different chapter from the entry that defines it, and a chapter-local
+  // scan cannot see across that boundary.
+  const renderOpts: RenderOptions = {
+    ...opts,
+    referencedTerms: collectReferencedTerms(blocks),
+  };
+
   for (const { chapter, manifestIdx, dir } of resolvedChapters) {
-    const latex = renderChapter(chapter, blocks, opts, dir, paperSlug);
+    const latex = renderChapter(chapter, blocks, renderOpts, dir, paperSlug);
     chapters.set(manifestIdx, latex);
 
     // AST validation

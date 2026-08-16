@@ -1117,6 +1117,13 @@ export function renderBlock(
   mdContent: string,
   sourceDir?: string,
   rootName?: string,
+  /**
+   * Label of the section this block is being rendered inside, if any.
+   * A prose block is frequently the section's own intro and carries the
+   * SAME label as its section; the section already emits that `\label`,
+   * so emitting it again would make it multiply-defined.
+   */
+  enclosingSectionLabel?: string,
 ): string {
   const lines: string[] = [];
 
@@ -1129,6 +1136,27 @@ export function renderBlock(
 
   switch (block.kind) {
     case "prose": {
+      // A labelled prose block must be referenceable. Without this,
+      // `case "prose"` emitted the body and nothing else, so every
+      // `[…](#sec:foo)` pointing at a prose block rendered as a dangling
+      // \hyperref — five of them in the qou paper (sec:frobenius-integration,
+      // sec:knot-notation-convention, sec:thurston-relaxation,
+      // sec:fine-structure-data, sec:approach-to-exceptional-divisor).
+      // \phantomsection is required for hyperref to anchor a \label that
+      // is not attached to a numbered heading.
+      //
+      // Skipped when the block reuses its section's label: a prose block
+      // is often the section intro and shares that label, and the section
+      // has already emitted it. Emitting both makes the label multiply
+      // defined (15 of them on the first pass at this fix) — and the
+      // section's own anchor is the better target anyway.
+      if (
+        "label" in block &&
+        block.label &&
+        block.label !== enclosingSectionLabel
+      ) {
+        lines.push(`\\phantomsection\\label{${block.label}}`);
+      }
       lines.push(markdownToLatex(mdContent));
       break;
     }
@@ -1386,8 +1414,34 @@ function collectReferencedLabels(
     if ("examples" in block && Array.isArray(block.examples)) {
       for (const label of block.examples) refs.add(label);
     }
+    // A glossary term used via `:refterm[…]{#slug}` (or the short form
+    // `:refterm[slug]`, or the LaTeX `\refterm{slug}`) IS a reference.
+    // Counting only `examples[]` meant a glossary entry cited solely by
+    // refterm was dropped in compact mode, so its `term:<slug>` anchor —
+    // which lives in the block BODY, not in its label — was never emitted
+    // and every such link dangled. Six of them in the qou paper, from
+    // live prose in appendix-surreals.
+    for (const m of entry.mdContent.matchAll(
+      /:refterm\[([^\]]*)\](?:\{#([^}]+)\})?/g,
+    )) {
+      refs.add(`term:${m[2] ?? m[1]}`);
+    }
+    for (const m of entry.mdContent.matchAll(/\\refterm\{([^}]+)\}/g)) {
+      refs.add(`term:${m[1]}`);
+    }
   }
   return refs;
+}
+
+/** The `term:` slugs a block DEFINES via `:defterm[…]{#slug}`. */
+function definedTermLabels(mdContent: string): string[] {
+  const out: string[] = [];
+  for (const m of mdContent.matchAll(
+    /:defterm\[([^\]]*)\](?:\{#([^}]+)\})?/g,
+  )) {
+    out.push(`term:${m[2] ?? m[1]}`);
+  }
+  return out;
 }
 
 /**
@@ -1402,6 +1456,7 @@ function shouldIncludeBlock(
   block: Block,
   referencedLabels: Set<string>,
   opts: RenderOptions,
+  mdContent = "",
 ): boolean {
   const mode = opts.printMode ?? "compact";
   if (mode === "formal") return true;
@@ -1422,7 +1477,44 @@ function shouldIncludeBlock(
 
   // Include if this block's label is referenced by another block
   const label = "label" in block ? block.label : undefined;
-  return label != null && referencedLabels.has(label);
+  if (label != null && referencedLabels.has(label)) return true;
+
+  // …or if it DEFINES a glossary term that another block refterm's. The
+  // `term:` anchor lives in the body, so excluding the block would leave
+  // the reference unresolvable — only the entries actually cited are
+  // pulled in, so compact mode stays compact.
+  //
+  // `opts.referencedTerms` is the DOCUMENT-wide set; `referencedLabels`
+  // is chapter-local. Both are consulted because the common case is
+  // cross-chapter (body prose citing the glossary chapter), which the
+  // chapter-local set cannot see.
+  const defined = definedTermLabels(mdContent);
+  if (defined.length === 0) return false;
+  return defined.some(
+    (t) => referencedLabels.has(t) || opts.referencedTerms?.has(t) === true,
+  );
+}
+
+/**
+ * Scan every loaded block for glossary-term references and return the
+ * document-wide `term:<slug>` set for {@link RenderOptions.referencedTerms}.
+ */
+export function collectReferencedTerms(
+  blocks: Map<string, { block: Block; mdContent: string; sourceDir?: string }>,
+): Set<string> {
+  const refs = new Set<string>();
+  for (const { mdContent } of blocks.values()) {
+    if (!mdContent) continue;
+    for (const m of mdContent.matchAll(
+      /:refterm\[([^\]]*)\](?:\{#([^}]+)\})?/g,
+    )) {
+      refs.add(`term:${m[2] ?? m[1]}`);
+    }
+    for (const m of mdContent.matchAll(/\\refterm\{([^}]+)\}/g)) {
+      refs.add(`term:${m[1]}`);
+    }
+  }
+  return refs;
 }
 
 // ── Chapter rendering ────────────────────────────────────────────
@@ -1504,7 +1596,9 @@ export function renderSection(
         lines.push(`% ERROR: block "${rootName}" not found`);
         continue;
       }
-      if (!shouldIncludeBlock(entry.block, referencedLabels, opts)) {
+      if (
+        !shouldIncludeBlock(entry.block, referencedLabels, opts, entry.mdContent)
+      ) {
         // Emit a phantom label so \hyperref[label]{...} references from
         // other blocks resolve without "Hyper reference undefined" warnings.
         const label = (entry.block && typeof entry.block === "object"
@@ -1516,7 +1610,15 @@ export function renderSection(
         }
         continue;
       }
-      lines.push(renderBlock(entry.block, entry.mdContent, entry.sourceDir, rootName));
+      lines.push(
+        renderBlock(
+          entry.block,
+          entry.mdContent,
+          entry.sourceDir,
+          rootName,
+          section.label,
+        ),
+      );
       lines.push(""); // blank line between blocks
     }
   };
