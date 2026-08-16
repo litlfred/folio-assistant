@@ -243,7 +243,15 @@ def rejoin_caps(s: str, vocab) -> str:
                     break
                 left = re.findall(r"[^\W\d_]+", run[idx])
                 right = re.findall(r"[^\W\d_]+", run[idx + 1])
-                if left and right and freq(w) < min(freq(left[-1]), freq(right[0])):
+                # The join has to actually make a word. When a fragment
+                # ends in a non-letter the seam word is just that fragment
+                # unchanged — "HYPERBOLIC" + "3-MANIFOLDS" seams on
+                # "HYPERBOLIC" — and every frequency test then compares the
+                # word with itself and passes, welding two real words.
+                if not left or not right or w in (left[-1], right[0]):
+                    ok = False
+                    break
+                if freq(w) < min(freq(left[-1]), freq(right[0])):
                     ok = False
                     break
             if ok:
