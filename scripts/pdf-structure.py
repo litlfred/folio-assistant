@@ -468,10 +468,22 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
     vocab = Counter(w.lower() for w in
                     re.findall(r"[^\W\d_]{3,}", repair_text("\n".join(pages))))
 
-    title = rejoin_caps(repair_text(" ".join(title_lines)), vocab).strip(" .,")
+    fix = lambda s: rejoin_caps(repair_text(s), vocab).strip(" .,")
+    title = fix(" ".join(title_lines))
     meta["title"] = title or None
-    authors = rejoin_caps(repair_text(" ".join(author_lines)), vocab).strip(" .,")
+    authors = fix(" ".join(author_lines))
     meta["authors_raw"] = authors or None
+    # The lines the title was assembled from, kept separately.
+    #
+    # Joining them destroys the one boundary that reliably separates a
+    # title from its byline: the line break. When the author-line test
+    # above misses — it needs a comma or an "and", so a single-author
+    # byline slips through — the byline is appended to the title and no
+    # downstream heuristic can recover it, because in an all-caps title
+    # "THEORY TOM BRIDGELAND" is indistinguishable from "TORUS KNOT" by
+    # shape alone. With the lines kept, a consumer can test the last one
+    # on its own.
+    meta["title_lines"] = [fix(l) for l in title_lines] or None
 
     # Abstract: everything after the marker, cut at the first section heading.
     meta["abstract"] = None
