@@ -77,7 +77,7 @@ import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { walkBlocks } from "./qa-utils";
 import { findContentRepoRoot } from "./repo-root";
-import { findUsesField, parseStringField } from "./uses-field";
+import { findUsesField, parseNestedStringField, parseStringField } from "./uses-field";
 
 /** Provenance of a dependency edge. */
 export type EdgeKind = "editorial" | "formal";
@@ -227,9 +227,19 @@ export function parseUses(tsSrc: string): string[] {
   return [...new Set(extractUses(tsSrc)?.entries ?? [])];
 }
 
-/** Parse a block manifest's `lean: { ref: "..." }` URI, if present. */
+/**
+ * Parse a block manifest's `lean: { ref: "..." }` URI, if present.
+ *
+ * **Scoped to the `lean` object.** A manifest may carry several `ref:` keys —
+ * `lean.ref`, `simulator.ref`, `computation.ref` — and the unscoped
+ * `/\bref\s*:\s*["']([^"']+)["']/` this replaced returned whichever came first
+ * in the file. Three blocks in the `qou` corpus have `simulator: { ref: … }`
+ * and **no `lean:` block at all**, and were reported as owning a Lean
+ * declaration named `sim:…`, which put them in `declOwners` and gave them
+ * formal edges they cannot have.
+ */
 export function parseLeanRef(tsSrc: string): string | undefined {
-  return tsSrc.match(/\bref\s*:\s*["']([^"']+)["']/)?.[1];
+  return parseNestedStringField(tsSrc, "lean", "ref");
 }
 
 /**

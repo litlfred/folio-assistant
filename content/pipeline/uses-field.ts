@@ -245,6 +245,65 @@ export function findUsesField(text: string): UsesField | undefined {
 }
 
 /**
+ * A string field nested inside an object field: `lean: { ref: "qou:X" }`.
+ *
+ * Scoped to `outer`'s braces, so a `ref:` belonging to a *different* field
+ * cannot answer. Manifests carry several: `lean.ref`, `simulator.ref`,
+ * `computation.ref`. An unscoped `/\bref\s*:\s*"([^"]+)"/` returns whichever
+ * appears first in the file, which for a block with `simulator: { ref: … }` and
+ * no `lean:` block at all is a simulator id reported as a Lean declaration.
+ *
+ * Returns `undefined` when `outer` is absent, is not an object, or holds no
+ * such key — never a value from elsewhere in the file.
+ */
+export function parseNestedStringField(
+  text: string,
+  outer: string,
+  inner: string,
+): string | undefined {
+  const scan = maskStringsAndComments(text);
+  let from = 0;
+  for (;;) {
+    const start = findFieldStart(scan, outer, from);
+    if (start < 0) return undefined;
+    let i = start + outer.length;
+    while (i < scan.length && scan[i] !== ":") i++;
+    i++;
+    while (i < scan.length && /\s/.test(scan[i])) i++;
+    if (scan[i] !== "{") {
+      from = start + outer.length;
+      continue;
+    }
+    // Depth-scan the object so a nested `{}` cannot end it early.
+    let depth = 0;
+    let end = -1;
+    for (let k = i; k < scan.length; k++) {
+      if (scan[k] === "{") depth++;
+      else if (scan[k] === "}") {
+        depth--;
+        if (depth === 0) { end = k; break; }
+      }
+    }
+    if (end < 0) return undefined;
+    // Search only within the object, and slice the value from the original.
+    const innerStart = findFieldStart(scan.slice(i, end), inner, 0);
+    if (innerStart < 0) {
+      from = start + outer.length;
+      continue;
+    }
+    let j = i + innerStart + inner.length;
+    while (j < scan.length && scan[j] !== ":") j++;
+    j++;
+    while (j < scan.length && /\s/.test(scan[j])) j++;
+    const q = scan[j];
+    if (q !== '"' && q !== "'") return undefined;
+    const close = scan.indexOf(q, j + 1);
+    if (close < 0) return undefined;
+    return text.slice(j + 1, close);
+  }
+}
+
+/**
  * A scalar string field's value — `interprets: "def:x"` — or `undefined`.
  *
  * Same masked locate as `findArrayField`, for the same reasons: a `//` note
