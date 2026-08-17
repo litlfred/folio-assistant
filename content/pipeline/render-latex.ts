@@ -430,9 +430,52 @@ export function clearMdAstCache(): void {
  *   | table         | \begin{tabular}...\end{tabular}      |
  *   | paragraph     | children + blank line                |
  */
+/**
+ * Environments that typeset as a single full-width unbreakable box.
+ * A run-in heading immediately followed by one of these cannot be
+ * line-broken between the two — see {@link terminateRunInHeadings}.
+ */
+const FULL_WIDTH_BOX_ENVS =
+  "adjustbox|tabular|tabularx|longtable|center|tikzcd|tikzpicture|verbatim";
+
+/**
+ * Terminate a `\paragraph` / `\subparagraph` run-in heading when the very
+ * next thing is a full-width box.
+ *
+ * `\paragraph{…}` is a RUN-IN heading: the following material joins the
+ * SAME paragraph. That is what we want in the common case ("**Statement**
+ * The claim is …"), but when the next item is a full-width box the line
+ * becomes heading-plus-box, which cannot be broken, and pdflatex reports a
+ * massive Overfull \hbox. Measured on the qou paper: 21 such sites,
+ * including the two worst boxes in the whole 1033-page document at 268pt
+ * and 252pt over — i.e. text running ~3.5 inches off the page.
+ *
+ * Note the diagnosis is NOT "the table is too wide": these tables are
+ * already wrapped in `\begin{adjustbox}{max width=\linewidth}` and fit
+ * fine. The overflowing material is the *heading text*, which is why
+ * making the table narrower never helped.
+ *
+ * `\mbox{}\par` closes the heading's own line. Verified against the real
+ * preamble: the isolated case reproduces at exactly 268.35pt and drops to
+ * zero with this terminator (`\leavevmode\par` and `\hfill\break` also
+ * work; `\mbox{}\par` is the canonical idiom).
+ *
+ * Applied only before a box, so ordinary run-in headings keep their
+ * current appearance.
+ */
+function terminateRunInHeadings(latex: string): string {
+  return latex.replace(
+    new RegExp(
+      String.raw`(\\(?:sub)?paragraph\{(?:[^{}]|\{[^{}]*\})*\})(\s*\n\s*\n\s*)(\\begin\{(?:${FULL_WIDTH_BOX_ENVS})\})`,
+      "g",
+    ),
+    "$1\\mbox{}\\par$2$3",
+  );
+}
+
 export function markdownToLatex(md: string): string {
   const tree = parseMdCached(md);
-  return renderMdastNode(tree).trim();
+  return terminateRunInHeadings(renderMdastNode(tree).trim());
 }
 
 /**
