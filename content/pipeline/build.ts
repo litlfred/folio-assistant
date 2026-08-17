@@ -266,6 +266,25 @@ export async function buildPaper(
     }
   }
 
+  // A `\label{…}` written inside the markdown — typically in a ```tex
+  // fence around `\begin{equation}\label{eq:foo}` — defines a perfectly
+  // good LaTeX anchor and IS resolvable by `[text](#eq:foo)`. Collecting
+  // only block/chapter/section labels above therefore under-counts what
+  // is defined, and every equation cross-reference in the corpus was
+  // reported "referenced but no content block defines this label".
+  //
+  // Measured on the qou paper: all 10 remaining pipeline warnings were
+  // this one blind spot — the `eq:` namespace has zero *block* labels by
+  // construction, because equations are labelled inline rather than
+  // promoted to `equation` blocks. Several of the reported labels were
+  // resolving fine in the built PDF at the time they were being warned
+  // about, which is the signature of a checker looking in the wrong place.
+  for (const [, entry] of blocks) {
+    for (const m of entry.mdContent.matchAll(/\\label\{([^}]+)\}/g)) {
+      definedLabels.add(m[1]);
+    }
+  }
+
   // Scan all markdown content for [text](#label) cross-references
   const referencedLabels = new Set<string>();
   for (const [, entry] of blocks) {
