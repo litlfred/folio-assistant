@@ -48,6 +48,27 @@
 % with the deeper residuals (wide display math, long \texttt identifiers) for a
 % follow-up pass — to cover them, wrap bare prose URLs in \url{} at render time.
 
+% ── Code blocks: wrap instead of running off the page ────────────────────────
+% Fenced code renders to `verbatim`, which neither wraps nor shrinks: a line
+% wider than \linewidth simply runs into the margin and off the page. In this
+% corpus that produced the worst NON-math overfull boxes (157pt, 112pt, 95pt —
+% algorithm-step lines in appendix-mass-binding-algorithms).
+%
+% fvextra's breaklines retrofits wrapping onto the existing environment via
+% \RecustomVerbatimEnvironment, so no renderer change is needed and every
+% already-authored code block is fixed at once. breakanywhere is required
+% rather than the default break-at-space: the long lines here break inside
+% identifiers and subscripted names (r_{res}, tr_M(sigma_w)) that contain no
+% space near the margin. Leading indentation is preserved (verified).
+%
+% NOTE: plain fancyvrb is NOT enough — `breaklines' is an fvextra option, and
+% fancyvrb alone fails with "xkeyval Error: `breaklines' undefined in families
+% `FV'".
+\usepackage{fvextra}
+\RecustomVerbatimEnvironment{verbatim}{Verbatim}%
+  {breaklines=true,breakanywhere=true,fontsize=\small,
+   xleftmargin=0pt,frame=none,samepage=false}
+
 % ── Unicode character mappings ───────────────────────────────────────────────
 % Allow Unicode symbols in .md content to pass through pdflatex.
 \newcommand{\unimathsafe}[1]{\ifmmode #1\else $#1$\fi}
@@ -582,6 +603,12 @@
   \bigskip\noindent\textbf{Lean formalisation key} — the bold ∀ beside each
   block links to its source on GitHub; its colour and tag give the status:%
   \par\smallskip\noindent
+  % max width: the four-column key is wider than \linewidth at 10.95pt and
+  % ran 183pt into the margin — the worst overfull box in the document once
+  % the display-math ones were fixed. Content tables already get this
+  % treatment from the renderer; this one is hand-written here, so it was
+  % missed.
+  \begin{adjustbox}{max width=\linewidth}
   \begin{tabular}{@{}cl@{\qquad}cl@{}}
     \textcolor{leanstubcolor}{$\boldsymbol{\forall}$\,\textbf{\footnotesize stub}}
       & Stub: \texttt{sorry}/placeholder, or vacuous/trivial per QA
@@ -590,7 +617,8 @@
     \textcolor{leanokcolor}{$\boldsymbol{\forall}$\,\textbf{\footnotesize ok}}
       & Compiled: built sorry-free
     & \textcolor{OliveGreen}{\checkmark\kern-0.3em\checkmark} & Merged into Mathlib\\
-  \end{tabular}\bigskip
+  \end{tabular}
+  \end{adjustbox}\bigskip
 }
 
 % ── Print mode: affiliations ──────────────────────────────────────────────────
