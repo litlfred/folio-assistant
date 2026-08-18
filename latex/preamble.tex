@@ -605,5 +605,198 @@
 % frozen at format-dump time.
 \newunicodechar{𝔙}{\mathfrak{V}}
 \newunicodechar{’}{'}
-\newunicodechar{É}{\'E}
 \newunicodechar{⥤}{\rightrightarrows}
+
+% ── Accented Latin letters: math-safe (U+00C0–U+017F) ────────────────────────
+% An accented letter reaching MATH mode aborts the line it is on. utf8.def maps
+% e.g. ï to the TEXT accent \"i, and \" is invalid in math, so
+% `$y^{\mathrm{naïve}}$` emits "Command \" invalid in math mode" and then drops
+% the glyph entirely ("Missing character") — a hole in the typeset page. The
+% author sees valid-looking markdown; nothing warns until pdflatex runs.
+%
+% \unitextsafe is the text-mode dual of \unimathsafe above: \unimathsafe wraps a
+% MATH symbol so it also survives text, this wraps a TEXT accent so it also
+% survives math. In text mode the expansion is byte-identical to utf8.def's, so
+% the 400+ existing accented names in the bibliography are unaffected.
+%
+% Three things here are load-bearing and were each established by compiling:
+%
+%   1. \DeclareUnicodeCharacter, not \newunicodechar. Both work, but
+%      \newunicodechar warns "Redefining Unicode character" on every char that
+%      utf8.def already declares — which is all of them — adding 161 warnings to
+%      a log whose remaining warnings are meant to be read. \DeclareUnicodeCharacter
+%      is inputenc's own API and is silent on redeclaration.
+%   2. Intercept at the CHARACTER, not at the accent command. Making \" and
+%      friends math-tolerant looks more general and covers 13 of the 15 accents,
+%      but utf8.def routes \' \` \= through \@tabacckludge (for `tabbing`), so
+%      é keeps failing while ö is fixed. Wrapping the kludge too means
+%      redefining kernel internals; this API does not.
+%   3. The full range, not the chars in use. The corpus uses 20 of these today;
+%      the 21st arrives with the next European surname in a bibliography entry,
+%      and the failure mode is a silently missing glyph.
+%
+% Generated from Unicode canonical decomposition (base letter + combining mark →
+% LaTeX accent). Verified: all 161 typeset in BOTH text and math, 0 errors,
+% 0 "invalid in math mode", 0 "Missing character", 0 new warnings.
+\newcommand{\unitextsafe}[1]{\ifmmode\text{#1}\else#1\fi}
+\DeclareUnicodeCharacter{00C0}{\unitextsafe{\`A}}  % À
+\DeclareUnicodeCharacter{00C1}{\unitextsafe{\'A}}  % Á
+\DeclareUnicodeCharacter{00C2}{\unitextsafe{\^A}}  % Â
+\DeclareUnicodeCharacter{00C3}{\unitextsafe{\~A}}  % Ã
+\DeclareUnicodeCharacter{00C4}{\unitextsafe{\"A}}  % Ä
+\DeclareUnicodeCharacter{00C5}{\unitextsafe{\r A}}  % Å
+\DeclareUnicodeCharacter{00C7}{\unitextsafe{\c C}}  % Ç
+\DeclareUnicodeCharacter{00C8}{\unitextsafe{\`E}}  % È
+\DeclareUnicodeCharacter{00C9}{\unitextsafe{\'E}}  % É
+\DeclareUnicodeCharacter{00CA}{\unitextsafe{\^E}}  % Ê
+\DeclareUnicodeCharacter{00CB}{\unitextsafe{\"E}}  % Ë
+\DeclareUnicodeCharacter{00CC}{\unitextsafe{\`I}}  % Ì
+\DeclareUnicodeCharacter{00CD}{\unitextsafe{\'I}}  % Í
+\DeclareUnicodeCharacter{00CE}{\unitextsafe{\^I}}  % Î
+\DeclareUnicodeCharacter{00CF}{\unitextsafe{\"I}}  % Ï
+\DeclareUnicodeCharacter{00D1}{\unitextsafe{\~N}}  % Ñ
+\DeclareUnicodeCharacter{00D2}{\unitextsafe{\`O}}  % Ò
+\DeclareUnicodeCharacter{00D3}{\unitextsafe{\'O}}  % Ó
+\DeclareUnicodeCharacter{00D4}{\unitextsafe{\^O}}  % Ô
+\DeclareUnicodeCharacter{00D5}{\unitextsafe{\~O}}  % Õ
+\DeclareUnicodeCharacter{00D6}{\unitextsafe{\"O}}  % Ö
+\DeclareUnicodeCharacter{00D9}{\unitextsafe{\`U}}  % Ù
+\DeclareUnicodeCharacter{00DA}{\unitextsafe{\'U}}  % Ú
+\DeclareUnicodeCharacter{00DB}{\unitextsafe{\^U}}  % Û
+\DeclareUnicodeCharacter{00DC}{\unitextsafe{\"U}}  % Ü
+\DeclareUnicodeCharacter{00DD}{\unitextsafe{\'Y}}  % Ý
+\DeclareUnicodeCharacter{00E0}{\unitextsafe{\`a}}  % à
+\DeclareUnicodeCharacter{00E1}{\unitextsafe{\'a}}  % á
+\DeclareUnicodeCharacter{00E2}{\unitextsafe{\^a}}  % â
+\DeclareUnicodeCharacter{00E3}{\unitextsafe{\~a}}  % ã
+\DeclareUnicodeCharacter{00E4}{\unitextsafe{\"a}}  % ä
+\DeclareUnicodeCharacter{00E5}{\unitextsafe{\r a}}  % å
+\DeclareUnicodeCharacter{00E7}{\unitextsafe{\c c}}  % ç
+\DeclareUnicodeCharacter{00E8}{\unitextsafe{\`e}}  % è
+\DeclareUnicodeCharacter{00E9}{\unitextsafe{\'e}}  % é
+\DeclareUnicodeCharacter{00EA}{\unitextsafe{\^e}}  % ê
+\DeclareUnicodeCharacter{00EB}{\unitextsafe{\"e}}  % ë
+\DeclareUnicodeCharacter{00EC}{\unitextsafe{\`i}}  % ì
+\DeclareUnicodeCharacter{00ED}{\unitextsafe{\'i}}  % í
+\DeclareUnicodeCharacter{00EE}{\unitextsafe{\^i}}  % î
+\DeclareUnicodeCharacter{00EF}{\unitextsafe{\"i}}  % ï
+\DeclareUnicodeCharacter{00F1}{\unitextsafe{\~n}}  % ñ
+\DeclareUnicodeCharacter{00F2}{\unitextsafe{\`o}}  % ò
+\DeclareUnicodeCharacter{00F3}{\unitextsafe{\'o}}  % ó
+\DeclareUnicodeCharacter{00F4}{\unitextsafe{\^o}}  % ô
+\DeclareUnicodeCharacter{00F5}{\unitextsafe{\~o}}  % õ
+\DeclareUnicodeCharacter{00F6}{\unitextsafe{\"o}}  % ö
+\DeclareUnicodeCharacter{00F9}{\unitextsafe{\`u}}  % ù
+\DeclareUnicodeCharacter{00FA}{\unitextsafe{\'u}}  % ú
+\DeclareUnicodeCharacter{00FB}{\unitextsafe{\^u}}  % û
+\DeclareUnicodeCharacter{00FC}{\unitextsafe{\"u}}  % ü
+\DeclareUnicodeCharacter{00FD}{\unitextsafe{\'y}}  % ý
+\DeclareUnicodeCharacter{00FF}{\unitextsafe{\"y}}  % ÿ
+\DeclareUnicodeCharacter{0100}{\unitextsafe{\=A}}  % Ā
+\DeclareUnicodeCharacter{0101}{\unitextsafe{\=a}}  % ā
+\DeclareUnicodeCharacter{0102}{\unitextsafe{\u A}}  % Ă
+\DeclareUnicodeCharacter{0103}{\unitextsafe{\u a}}  % ă
+\DeclareUnicodeCharacter{0104}{\unitextsafe{\k A}}  % Ą
+\DeclareUnicodeCharacter{0105}{\unitextsafe{\k a}}  % ą
+\DeclareUnicodeCharacter{0106}{\unitextsafe{\'C}}  % Ć
+\DeclareUnicodeCharacter{0107}{\unitextsafe{\'c}}  % ć
+\DeclareUnicodeCharacter{0108}{\unitextsafe{\^C}}  % Ĉ
+\DeclareUnicodeCharacter{0109}{\unitextsafe{\^c}}  % ĉ
+\DeclareUnicodeCharacter{010A}{\unitextsafe{\.C}}  % Ċ
+\DeclareUnicodeCharacter{010B}{\unitextsafe{\.c}}  % ċ
+\DeclareUnicodeCharacter{010C}{\unitextsafe{\v C}}  % Č
+\DeclareUnicodeCharacter{010D}{\unitextsafe{\v c}}  % č
+\DeclareUnicodeCharacter{010E}{\unitextsafe{\v D}}  % Ď
+\DeclareUnicodeCharacter{010F}{\unitextsafe{\v d}}  % ď
+\DeclareUnicodeCharacter{0112}{\unitextsafe{\=E}}  % Ē
+\DeclareUnicodeCharacter{0113}{\unitextsafe{\=e}}  % ē
+\DeclareUnicodeCharacter{0114}{\unitextsafe{\u E}}  % Ĕ
+\DeclareUnicodeCharacter{0115}{\unitextsafe{\u e}}  % ĕ
+\DeclareUnicodeCharacter{0116}{\unitextsafe{\.E}}  % Ė
+\DeclareUnicodeCharacter{0117}{\unitextsafe{\.e}}  % ė
+\DeclareUnicodeCharacter{0118}{\unitextsafe{\k E}}  % Ę
+\DeclareUnicodeCharacter{0119}{\unitextsafe{\k e}}  % ę
+\DeclareUnicodeCharacter{011A}{\unitextsafe{\v E}}  % Ě
+\DeclareUnicodeCharacter{011B}{\unitextsafe{\v e}}  % ě
+\DeclareUnicodeCharacter{011C}{\unitextsafe{\^G}}  % Ĝ
+\DeclareUnicodeCharacter{011D}{\unitextsafe{\^g}}  % ĝ
+\DeclareUnicodeCharacter{011E}{\unitextsafe{\u G}}  % Ğ
+\DeclareUnicodeCharacter{011F}{\unitextsafe{\u g}}  % ğ
+\DeclareUnicodeCharacter{0120}{\unitextsafe{\.G}}  % Ġ
+\DeclareUnicodeCharacter{0121}{\unitextsafe{\.g}}  % ġ
+\DeclareUnicodeCharacter{0122}{\unitextsafe{\c G}}  % Ģ
+\DeclareUnicodeCharacter{0123}{\unitextsafe{\c g}}  % ģ
+\DeclareUnicodeCharacter{0124}{\unitextsafe{\^H}}  % Ĥ
+\DeclareUnicodeCharacter{0125}{\unitextsafe{\^h}}  % ĥ
+\DeclareUnicodeCharacter{0128}{\unitextsafe{\~I}}  % Ĩ
+\DeclareUnicodeCharacter{0129}{\unitextsafe{\~i}}  % ĩ
+\DeclareUnicodeCharacter{012A}{\unitextsafe{\=I}}  % Ī
+\DeclareUnicodeCharacter{012B}{\unitextsafe{\=i}}  % ī
+\DeclareUnicodeCharacter{012C}{\unitextsafe{\u I}}  % Ĭ
+\DeclareUnicodeCharacter{012D}{\unitextsafe{\u i}}  % ĭ
+\DeclareUnicodeCharacter{012E}{\unitextsafe{\k I}}  % Į
+\DeclareUnicodeCharacter{012F}{\unitextsafe{\k i}}  % į
+\DeclareUnicodeCharacter{0130}{\unitextsafe{\.I}}  % İ
+\DeclareUnicodeCharacter{0134}{\unitextsafe{\^J}}  % Ĵ
+\DeclareUnicodeCharacter{0135}{\unitextsafe{\^j}}  % ĵ
+\DeclareUnicodeCharacter{0136}{\unitextsafe{\c K}}  % Ķ
+\DeclareUnicodeCharacter{0137}{\unitextsafe{\c k}}  % ķ
+\DeclareUnicodeCharacter{0139}{\unitextsafe{\'L}}  % Ĺ
+\DeclareUnicodeCharacter{013A}{\unitextsafe{\'l}}  % ĺ
+\DeclareUnicodeCharacter{013B}{\unitextsafe{\c L}}  % Ļ
+\DeclareUnicodeCharacter{013C}{\unitextsafe{\c l}}  % ļ
+\DeclareUnicodeCharacter{013D}{\unitextsafe{\v L}}  % Ľ
+\DeclareUnicodeCharacter{013E}{\unitextsafe{\v l}}  % ľ
+\DeclareUnicodeCharacter{0143}{\unitextsafe{\'N}}  % Ń
+\DeclareUnicodeCharacter{0144}{\unitextsafe{\'n}}  % ń
+\DeclareUnicodeCharacter{0145}{\unitextsafe{\c N}}  % Ņ
+\DeclareUnicodeCharacter{0146}{\unitextsafe{\c n}}  % ņ
+\DeclareUnicodeCharacter{0147}{\unitextsafe{\v N}}  % Ň
+\DeclareUnicodeCharacter{0148}{\unitextsafe{\v n}}  % ň
+\DeclareUnicodeCharacter{014C}{\unitextsafe{\=O}}  % Ō
+\DeclareUnicodeCharacter{014D}{\unitextsafe{\=o}}  % ō
+\DeclareUnicodeCharacter{014E}{\unitextsafe{\u O}}  % Ŏ
+\DeclareUnicodeCharacter{014F}{\unitextsafe{\u o}}  % ŏ
+\DeclareUnicodeCharacter{0150}{\unitextsafe{\H O}}  % Ő
+\DeclareUnicodeCharacter{0151}{\unitextsafe{\H o}}  % ő
+\DeclareUnicodeCharacter{0154}{\unitextsafe{\'R}}  % Ŕ
+\DeclareUnicodeCharacter{0155}{\unitextsafe{\'r}}  % ŕ
+\DeclareUnicodeCharacter{0156}{\unitextsafe{\c R}}  % Ŗ
+\DeclareUnicodeCharacter{0157}{\unitextsafe{\c r}}  % ŗ
+\DeclareUnicodeCharacter{0158}{\unitextsafe{\v R}}  % Ř
+\DeclareUnicodeCharacter{0159}{\unitextsafe{\v r}}  % ř
+\DeclareUnicodeCharacter{015A}{\unitextsafe{\'S}}  % Ś
+\DeclareUnicodeCharacter{015B}{\unitextsafe{\'s}}  % ś
+\DeclareUnicodeCharacter{015C}{\unitextsafe{\^S}}  % Ŝ
+\DeclareUnicodeCharacter{015D}{\unitextsafe{\^s}}  % ŝ
+\DeclareUnicodeCharacter{015E}{\unitextsafe{\c S}}  % Ş
+\DeclareUnicodeCharacter{015F}{\unitextsafe{\c s}}  % ş
+\DeclareUnicodeCharacter{0160}{\unitextsafe{\v S}}  % Š
+\DeclareUnicodeCharacter{0161}{\unitextsafe{\v s}}  % š
+\DeclareUnicodeCharacter{0162}{\unitextsafe{\c T}}  % Ţ
+\DeclareUnicodeCharacter{0163}{\unitextsafe{\c t}}  % ţ
+\DeclareUnicodeCharacter{0164}{\unitextsafe{\v T}}  % Ť
+\DeclareUnicodeCharacter{0165}{\unitextsafe{\v t}}  % ť
+\DeclareUnicodeCharacter{0168}{\unitextsafe{\~U}}  % Ũ
+\DeclareUnicodeCharacter{0169}{\unitextsafe{\~u}}  % ũ
+\DeclareUnicodeCharacter{016A}{\unitextsafe{\=U}}  % Ū
+\DeclareUnicodeCharacter{016B}{\unitextsafe{\=u}}  % ū
+\DeclareUnicodeCharacter{016C}{\unitextsafe{\u U}}  % Ŭ
+\DeclareUnicodeCharacter{016D}{\unitextsafe{\u u}}  % ŭ
+\DeclareUnicodeCharacter{016E}{\unitextsafe{\r U}}  % Ů
+\DeclareUnicodeCharacter{016F}{\unitextsafe{\r u}}  % ů
+\DeclareUnicodeCharacter{0170}{\unitextsafe{\H U}}  % Ű
+\DeclareUnicodeCharacter{0171}{\unitextsafe{\H u}}  % ű
+\DeclareUnicodeCharacter{0172}{\unitextsafe{\k U}}  % Ų
+\DeclareUnicodeCharacter{0173}{\unitextsafe{\k u}}  % ų
+\DeclareUnicodeCharacter{0174}{\unitextsafe{\^W}}  % Ŵ
+\DeclareUnicodeCharacter{0175}{\unitextsafe{\^w}}  % ŵ
+\DeclareUnicodeCharacter{0176}{\unitextsafe{\^Y}}  % Ŷ
+\DeclareUnicodeCharacter{0177}{\unitextsafe{\^y}}  % ŷ
+\DeclareUnicodeCharacter{0178}{\unitextsafe{\"Y}}  % Ÿ
+\DeclareUnicodeCharacter{0179}{\unitextsafe{\'Z}}  % Ź
+\DeclareUnicodeCharacter{017A}{\unitextsafe{\'z}}  % ź
+\DeclareUnicodeCharacter{017B}{\unitextsafe{\.Z}}  % Ż
+\DeclareUnicodeCharacter{017C}{\unitextsafe{\.z}}  % ż
+\DeclareUnicodeCharacter{017D}{\unitextsafe{\v Z}}  % Ž
+\DeclareUnicodeCharacter{017E}{\unitextsafe{\v z}}  % ž
