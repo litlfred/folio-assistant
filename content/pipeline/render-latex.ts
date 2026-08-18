@@ -337,7 +337,16 @@ export function splitLongMath(math: string, minLen = 36): string {
  * instead of overflowing. Inert at normal text width.
  */
 function breakableCode(text: string): string {
-  return escapeLatexSegment(text).replace(/(\\_|[:./-])/g, "$1\\allowbreak{}");
+  return escapeLatexSegment(text)
+    .replace(/(\\_|[:./-])/g, "$1\\allowbreak{}")
+    // Also break at camelCase humps. Lean declaration names are long, dotted
+    // AND internally camelCased (`QOU.QuantumObservableUniverses.DilogPentagon\
+    // Associator`); separator-only breaks leave segments so long that the line
+    // carrying one has almost no glue left to justify with, which is a loose
+    // line — 53 of this corpus's 131 Underfull \hbox warnings. \allowbreak is
+    // zero-width, so this adds break opportunities without altering the
+    // rendered identifier.
+    .replace(/([a-z0-9])([A-Z])/g, "$1\\allowbreak{}$2");
 }
 
 // ── Markdown → LaTeX conversion (AST-based) ─────────────────────
