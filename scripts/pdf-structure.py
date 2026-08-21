@@ -497,7 +497,24 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
         #
         # Only once something above it was already skipped, so a title
         # sitting on line 0 above a date line is never mistaken for one.
-        if skipped and any(furniture(x) for x in lines[i + 1:i + 3] if x):
+        #
+        # The furniture run has to genuinely CONTINUE — both of the next two
+        # non-empty lines — not merely have some furniture near it. Asking
+        # for *any* furniture within two lines, which this did, matches the
+        # commonest front matter there is and eats the title and the byline
+        # together:
+        #
+        #   0| arXiv:hep-th/9310164v2  22 Jul 1998   furniture
+        #   1| SPHERICAL CA TEGORIES                 <- the title
+        #   2| John W. Barrett & Bruce W. Westbury   <- the byline
+        #   3| 10 August 1993; revised 22 July 1998  furniture (a date)
+        #
+        # Line 3 is furniture, so line 1 was skipped for it, then line 2 for
+        # the same line, and `start` landed on the abstract: no title, no
+        # authors, nothing to fall back on. A byline is not furniture, so
+        # requiring the run to continue tells the two layouts apart.
+        nxt = [x for x in lines[i + 1:i + 6] if x][:2]
+        if skipped and len(nxt) == 2 and all(furniture(x) for x in nxt):
             start = i + 1
             continue
         break
