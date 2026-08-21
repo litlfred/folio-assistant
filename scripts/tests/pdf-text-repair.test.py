@@ -18,6 +18,28 @@ exists rather than a one-off check:
   * first-seam-only lookup swallowed an entire title into one token, on a
     run whose first seam happened to be a real join.
 
+Known limitation, with the measurement that closes it: when the damage sits
+in a *running head* it repeats once per page, so the fragments outnumber the
+word they came from and the frequency gate rejects a correct join. Four
+titles in the qou library are affected ("TURAEV-VIRO INV ARIANTS" x3,
+"A SUR VEY OF TWISTED ALEXANDER POLYNOMIALS").
+
+Discounting occurrences *inside* the pair — comparing against how often each
+fragment stands alone — repairs all four, and cannot be adopted, because the
+two shapes are numerically identical and want opposite answers:
+
+    arxiv-1004.1533v3   "inv ariants" 54   "invariants" 18   -> welded is right
+    aif-2009-59-1-347-0 "institut fourier" 63  "institutfourier" 18
+                                                          -> spaced is right
+
+Same majority-spaced / minority-welded shape, opposite correct answers, so no
+statistic over these counts separates them. What does separate them is that
+"fourier" is a word and "ariants" is not — which needs either a dictionary or
+a cross-document vocabulary, and this producer takes one PDF and consults
+only that PDF. The four titles are therefore corrected downstream in
+`docs/audits/library-title-overrides.json` (qou), where a human verdict is
+the recorded mechanism, rather than guessed at here.
+
 Run: python3 scripts/tests/pdf-text-repair.test.py
 
 Standalone by design — it loads the two functions out of the script's
