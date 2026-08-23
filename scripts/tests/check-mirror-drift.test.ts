@@ -1,13 +1,14 @@
 /**
  * Parser tests for the mirror-drift audit.
  *
- * The parser is the whole risk surface of this checker: a sloppier version of
- * it, written ad hoc, reported 167 same-FQN pairs and 50 drifted where the real
- * figures are 148 and 45 (bean `qou-u87j`). Every case below is one of the four
- * mistakes that scan made, kept as a test so the numbers stay trustworthy.
+ * The parser is the whole risk surface of this checker. A sloppier version of
+ * it, written ad hoc, reported 167 same-FQN pairs and 50 drifted where `main`'s
+ * real figures are 147 and 46 (bean `qou-u87j`) — and three further bugs
+ * surfaced only once these tests existed. Every case below is one of those
+ * mistakes, kept so the numbers stay trustworthy.
  */
 import { test, expect, describe } from "bun:test";
-import { parseLeanDecls } from "../check-mirror-drift.ts";
+import { parseLeanDecls, parentName } from "../check-mirror-drift.ts";
 
 const F = "/tmp/x.lean";
 
@@ -165,5 +166,33 @@ end QOU
   test("records the head line so a finding can be clicked to source", () => {
     const [d] = parseLeanDecls(F, `\n\n\nstructure S where\n  x : ℕ\n`);
     expect(d.line).toBe(4);
+  });
+});
+
+describe("extends comparison", () => {
+  // A mirror that spells its universes explicitly is not drift. The corpus's
+  // own `QOU.QuantumObservableUniverse` pair is exactly this: identical in
+  // every field, differing only in `.{u, v}` on the parent. Comparing raw text
+  // reported it as drift and made the gate's own baseline wrong by one.
+  test("explicit universe levels on a parent are not a difference", () => {
+    const [withU] = parseLeanDecls(
+      F,
+      `structure A (R : Type*)\n    extends B.{u, v} R where\n  x : ℕ\n`,
+    );
+    const [withoutU] = parseLeanDecls(
+      F,
+      `structure A (R : Type*)\n    extends B R where\n  x : ℕ\n`,
+    );
+    expect(withU.extends.map(parentName)).toEqual(
+      withoutU.extends.map(parentName),
+    );
+  });
+
+  test("a different parent, or a different arity, still shows", () => {
+    const [one] = parseLeanDecls(F, `structure A extends B where\n  x : ℕ\n`);
+    const [two] = parseLeanDecls(F, `structure A extends C where\n  x : ℕ\n`);
+    const [three] = parseLeanDecls(F, `structure A extends B, C where\n  x : ℕ\n`);
+    expect(one.extends.map(parentName)).not.toEqual(two.extends.map(parentName));
+    expect(one.extends.map(parentName)).not.toEqual(three.extends.map(parentName));
   });
 });

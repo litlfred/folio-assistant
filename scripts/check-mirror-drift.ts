@@ -18,8 +18,8 @@
  * `lake build` actually compiles. A file can be green, compile clean, satisfy
  * every gate — and be the wrong definition.
  *
- * Measured on `litlfred/qou` 2026-08-23 (bean `qou-u87j`): 148 same-FQN pairs,
- * 102 faithful, **46 drifted across 39 files, and all 46 mask a block's
+ * Measured on `litlfred/qou@main` 2026-08-23 (bean `qou-u87j`): 147 same-FQN
+ * pairs, 101 faithful, **46 drifted across 39 files, and all 46 mask a block's
  * `lean.ref`**. Worked example — `QOU.CRManifoldData`: the library copy carries
  * `n_pos : 0 < n` and the siblings do not; the siblings carry `contact_nondeg`
  * and `reeb_preserves_contact` and the library does not. Each side has an
@@ -85,11 +85,13 @@
  * `identical` alongside `drifted` so the ratio stays visible, and the summary
  * prints it. If that ratio collapses, suspect the parser before the corpus.
  *
- * `scripts/tests/check-mirror-drift.test.ts` pins the four mistakes an earlier
- * ad-hoc version of this parser made — named sections corrupting the namespace
- * stack, docstring prose read as fields, `extends` unparsed, and a
- * lowercase-only field pattern dropping `M : Type*`. Each was worth several
- * findings in either direction.
+ * `scripts/tests/check-mirror-drift.test.ts` pins the mistakes earlier versions
+ * of this parser made — named and anonymous sections corrupting the namespace
+ * stack, docstring prose read as fields, `extends` unparsed or dropped when
+ * wrapped, a lowercase-only field pattern dropping `M : Type*`, and splitting
+ * an `extends` clause on commas *before* stripping `.{u, v}` (which tears
+ * `B.{u, v} R` into two entries and reports every explicitly-universed mirror
+ * as drift). Every one of them moved a count.
  */
 
 import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
@@ -131,6 +133,43 @@ const END = /^\s*end(?:\s+([A-Za-z0-9_.'!?]+))?\s*$/;
  */
 const FIELD = /^\s{2,}\[?\s*([A-Za-z_][A-Za-z0-9_'!?]*)\s*:/;
 const EXTENDS = /\bextends\s+([^:]+?)(?:\s+where\b|$)/;
+
+/**
+ * Reduce one `extends` entry to the parent's name.
+ *
+ * Explicit universe annotations and applied arguments are dropped:
+ * `QuantumUniverse.{u, v} R` and `QuantumUniverse R` name the same parent, and
+ * Lean infers the levels either way. Comparing the raw text instead reports
+ * every mirror that spells its universes differently, which is noise a gate
+ * cannot afford — the corpus's own `QuantumObservableUniverse` pair is exactly
+ * that case, identical in every field and differing only in `.{u, v}`.
+ *
+ * A genuine change of parent (`extends B` → `extends C`) or of arity
+ * (`extends B, C` → `extends B`) still shows, because those change the names.
+ */
+export function parentName(entry: string): string {
+  return stripUniverses(entry).trim().split(/\s+/)[0] ?? "";
+}
+
+/** Remove `.{u, v}` universe annotations from a clause. */
+function stripUniverses(s: string): string {
+  return s.replace(/\.\{[^}]*\}/g, "");
+}
+
+/**
+ * Split an `extends` clause into its parent entries.
+ *
+ * Universe annotations are stripped **before** splitting, because `.{u, v}`
+ * contains a comma: splitting first turns `B.{u, v} R` into `B.{u` and `v} R`,
+ * which then compares unequal against a plain `B R` no matter how the entries
+ * are normalised afterwards.
+ */
+export function splitExtends(clause: string): string[] {
+  return stripUniverses(clause)
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
 
 /**
  * Parse every `structure`/`class` in one file.
@@ -195,9 +234,7 @@ export function parseLeanDecls(file: string, text: string): Decl[] {
         kind: head[2],
         file,
         line: i + 1,
-        extends: ext
-          ? ext[1].split(",").map((s) => s.trim()).filter(Boolean)
-          : [],
+        extends: ext ? splitExtends(ext[1]) : [],
         fields: [],
       };
       curIndent = head[1].length;
@@ -214,9 +251,7 @@ export function parseLeanDecls(file: string, text: string): Decl[] {
     if (cur.fields.length === 0) {
       const ext = EXTENDS.exec(raw);
       if (ext) {
-        cur.extends.push(
-          ...ext[1].split(",").map((s) => s.trim()).filter(Boolean),
-        );
+        cur.extends.push(...splitExtends(ext[1]));
         continue;
       }
       if (/^\s*(\{|\[[A-Z]|\(|where\b)/.test(raw)) continue;
@@ -360,9 +395,11 @@ function audit(repoRoot: string, packages: readonly LeanPackage[]): Report {
       const sameFields =
         sib.fields.length === lib.fields.length &&
         sib.fields.every((f, i) => f === lib.fields[i]);
+      const sibParents = sib.extends.map(parentName);
+      const libParents = lib.extends.map(parentName);
       const sameExtends =
-        sib.extends.length === lib.extends.length &&
-        sib.extends.every((e, i) => e === lib.extends[i]);
+        sibParents.length === libParents.length &&
+        sibParents.every((e, i) => e === libParents[i]);
       if (sameFields && sameExtends) {
         identical++;
         continue;
