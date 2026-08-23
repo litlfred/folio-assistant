@@ -196,3 +196,50 @@ describe("extends comparison", () => {
     expect(one.extends.map(parentName)).not.toEqual(three.extends.map(parentName));
   });
 });
+
+describe("§7c regime detection", () => {
+  // Two mirrors can agree on every field NAME and still sit on opposite sides
+  // of the substrate→archimedean wall. The field-name comparison scores that as
+  // a faithful mirror; on qou it hid 7 such pairs.
+  test("a real-typed field marks the declaration archimedean", () => {
+    const [d] = parseLeanDecls(
+      F,
+      `structure SubstrateParameter (M : Type*) where\n  field : M → ℝ\n`,
+    );
+    expect(d.archimedean).toBe(true);
+  });
+
+  test("the same field over a generic ring does not", () => {
+    const [d] = parseLeanDecls(
+      F,
+      `structure SubstrateParameter (M : Type*) where\n  field : M → R_q\n`,
+    );
+    expect(d.archimedean).toBe(false);
+  });
+
+  // Only the type is tested. A field merely *named* for a real is not evidence
+  // — otherwise `q_real : R` would read as archimedean when its whole point is
+  // that it is not (see bean qou-mt7r).
+  test("the field NAME is not evidence — only the type after the colon", () => {
+    const [d] = parseLeanDecls(
+      F,
+      `structure S where\n  real_part : R\n  q_real : R\n`,
+    );
+    expect(d.archimedean).toBe(false);
+  });
+
+  test("`Real` and `LinearOrderedField` count, matching the corpus regex", () => {
+    const [a] = parseLeanDecls(F, `structure S where\n  x : Real\n`);
+    const [b] = parseLeanDecls(F, `structure S where\n  x : LinearOrderedField k\n`);
+    expect(a.archimedean).toBe(true);
+    expect(b.archimedean).toBe(true);
+  });
+
+  test("an archimedean binder on the head line marks it too", () => {
+    const [d] = parseLeanDecls(
+      F,
+      `structure S (f : M → ℝ) where\n  n : ℕ\n`,
+    );
+    expect(d.archimedean).toBe(true);
+  });
+});

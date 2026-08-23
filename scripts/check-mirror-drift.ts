@@ -19,8 +19,10 @@
  * every gate — and be the wrong definition.
  *
  * Measured on `litlfred/qou@main` 2026-08-23 (bean `qou-u87j`): 147 same-FQN
- * pairs, 101 faithful, **46 drifted across 39 files, and all 46 mask a block's
- * `lean.ref`**. Worked example — `QOU.CRManifoldData`: the library copy carries
+ * pairs, 94 faithful, **46 drifted across 39 files, and all 46 mask a block's
+ * `lean.ref`** — plus **7 `regime` pairs** that the field comparison alone
+ * calls faithful, and **10** of the 46 that cross the wall as well.
+ * Worked example — `QOU.CRManifoldData`: the library copy carries
  * `n_pos : 0 < n` and the siblings do not; the siblings carry `contact_nondeg`
  * and `reeb_preserves_contact` and the library does not. Each side has an
  * anti-vacuity condition the other lacks.
@@ -29,18 +31,29 @@
  *
  * Same fully-qualified name (namespace + declaration name) declared both under
  * a package's Lake root and in a co-located sibling, where the two disagree on
- * either the `extends` list or the declared field names. Field *types* are not
- * compared — a rename or a re-ordering is drift, a whitespace change is not.
+ * either the `extends` list or the declared field names. Field types are not
+ * part of *that* comparison — a rename or a re-ordering is drift, a whitespace
+ * change is not.
  *
  * Two findings are reported separately rather than as drift, because they are
  * different problems:
  *
+ *   - `regime` — the pair agrees on every field name and parent and still sits
+ *     on **opposite sides of the §7c substrate→archimedean wall**, judged by
+ *     the corpus's own `ARCHIMEDEAN_TYPE_RE` applied to the field *types*. The
+ *     name comparison scores these as faithful mirrors; on qou that hid **7**
+ *     of them. Kept out of the drift count on purpose: the fix is a wall split,
+ *     not a field resync, and a §7c figure should not move when someone drains
+ *     the drift backlog. Drifted pairs that *also* cross the wall are counted
+ *     under `driftedRegime` and flagged in place.
  *   - `duplicate-in-library` — one fully-qualified name declared more than once
  *     inside the Lake tree. Nothing to mirror against; fix that first.
- *   - `extends-shape` — the pair differs only in that one side `extends` a
- *     parent and the other inlines it. Usually still drift, but a reader should
- *     see it flagged as a shape difference rather than a field list they can
- *     diff line by line.
+ *
+ * The `regime` check exists because the wall gates cannot see this. Bean
+ * `qou-6ome`: `check-wall-side` and `check-base-ring` fire on a file that
+ * *mixes* regimes, so a declaration **wholly** on the wrong side passes both.
+ * Passing the wall gate means "not mixed", not "on the right side of the wall".
+ * Comparing a declaration against its own mirror is the cheapest way to see it.
  *
  * ## Gating
  *
@@ -99,6 +112,7 @@ import { join, relative, resolve } from "path";
 
 import { LEAN_PACKAGES, type LeanPackage } from "../schemas/lean-packages.ts";
 import { findContentRepoRoot } from "../content/pipeline/repo-root";
+import { ARCHIMEDEAN_TYPE_RE } from "../content/pipeline/qa-checkers-voice.ts";
 
 // ── Lean surface parsing ─────────────────────────────────────────
 
@@ -116,6 +130,16 @@ interface Decl {
   extends: string[];
   /** Declared field names, in source order. Types are deliberately ignored. */
   fields: string[];
+  /**
+   * True when any field's *type* names a real-field type, by the corpus's own
+   * `ARCHIMEDEAN_TYPE_RE` (`content/pipeline/qa-checkers-voice.ts`).
+   *
+   * This is the §7c side of the declaration. Two mirrors can agree on every
+   * field *name* and still sit on opposite sides of the substrate→archimedean
+   * wall, which the field-name comparison scores as a faithful mirror — see
+   * `regimeDiffers` in the findings.
+   */
+  archimedean: boolean;
 }
 
 const HEAD = /^(\s*)(structure|class)\s+([A-Za-z_][A-Za-z0-9_'!?]*)/;
@@ -236,6 +260,7 @@ export function parseLeanDecls(file: string, text: string): Decl[] {
         line: i + 1,
         extends: ext ? splitExtends(ext[1]) : [],
         fields: [],
+        archimedean: ARCHIMEDEAN_TYPE_RE.test(raw),
       };
       curIndent = head[1].length;
       out.push(cur);
@@ -264,7 +289,15 @@ export function parseLeanDecls(file: string, text: string): Decl[] {
     }
 
     const f = FIELD.exec(raw);
-    if (f) cur.fields.push(f[1]);
+    if (f) {
+      cur.fields.push(f[1]);
+      // The field's TYPE decides the §7c side. Only the text after the `:` is
+      // tested, so a field merely *named* `real_part` does not count as
+      // archimedean while `field : M → ℝ` does.
+      if (ARCHIMEDEAN_TYPE_RE.test(raw.slice(raw.indexOf(":", f.index) + 1))) {
+        cur.archimedean = true;
+      }
+    }
   }
 
   return out;
@@ -316,6 +349,15 @@ type Finding =
       siblingOnly: string[];
       libraryOnly: string[];
       extendsDiffers: boolean;
+      /** The two sides sit on opposite sides of the §7c wall. */
+      regimeDiffers: boolean;
+    }
+  | {
+      type: "regime";
+      fqn: string;
+      masksLeanRef: boolean;
+      sibling: { file: string; line: number; archimedean: boolean };
+      library: { file: string; line: number; archimedean: boolean };
     }
   | { type: "duplicate-in-library"; fqn: string; files: string[] };
 
@@ -331,6 +373,14 @@ interface Report {
     /** Drifted pairs whose sibling masks a block's `lean.ref`. */
     driftedMaskingLeanRef: number;
     driftedFiles: number;
+    /** Drifted pairs that ALSO sit on opposite sides of the §7c wall. */
+    driftedRegime: number;
+    /**
+     * Pairs that agree on every field name and parent yet sit on opposite
+     * sides of the wall — invisible to the field comparison, counted here.
+     */
+    regimeOnly: number;
+    regimeFiles: number;
     duplicatesInLibrary: number;
   };
   findings: Finding[];
@@ -372,6 +422,9 @@ function audit(repoRoot: string, packages: readonly LeanPackage[]): Report {
   let identical = 0;
   let drifted = 0;
   let driftedMasking = 0;
+  let driftedRegime = 0;
+  let regimeOnly = 0;
+  const regimeFiles = new Set<string>();
   let duplicates = 0;
 
   for (const [fqn, libDecls] of [...libraryByFqn].sort()) {
@@ -400,11 +453,39 @@ function audit(repoRoot: string, packages: readonly LeanPackage[]): Report {
       const sameExtends =
         sibParents.length === libParents.length &&
         sibParents.every((e, i) => e === libParents[i]);
+      const regimeDiffers = sib.archimedean !== lib.archimedean;
+
       if (sameFields && sameExtends) {
+        // Same field names, same parents — and still possibly opposite sides of
+        // the §7c wall, because field *types* are not part of that comparison.
+        // Reported as its own kind rather than folded into `drifted`: the fix
+        // is a wall split, not a field resync, and the count is a §7c figure
+        // that should not move when someone drains the drift backlog.
+        if (regimeDiffers) {
+          regimeOnly++;
+          regimeFiles.add(sib.file);
+          findings.push({
+            type: "regime",
+            fqn,
+            masksLeanRef: exists(sib.file.replace(/\.lean$/, ".ts")),
+            sibling: {
+              file: relative(repoRoot, sib.file),
+              line: sib.line,
+              archimedean: sib.archimedean,
+            },
+            library: {
+              file: relative(repoRoot, lib.file),
+              line: lib.line,
+              archimedean: lib.archimedean,
+            },
+          });
+          continue;
+        }
         identical++;
         continue;
       }
       drifted++;
+      if (regimeDiffers) driftedRegime++;
       driftedFiles.add(sib.file);
       const masks = exists(sib.file.replace(/\.lean$/, ".ts"));
       if (masks) driftedMasking++;
@@ -427,6 +508,7 @@ function audit(repoRoot: string, packages: readonly LeanPackage[]): Report {
         siblingOnly: sib.fields.filter((f) => !lib.fields.includes(f)),
         libraryOnly: lib.fields.filter((f) => !sib.fields.includes(f)),
         extendsDiffers: !sameExtends,
+        regimeDiffers,
       });
     }
   }
@@ -441,6 +523,9 @@ function audit(repoRoot: string, packages: readonly LeanPackage[]): Report {
       drifted,
       driftedMaskingLeanRef: driftedMasking,
       driftedFiles: driftedFiles.size,
+      driftedRegime,
+      regimeOnly,
+      regimeFiles: regimeFiles.size,
       duplicatesInLibrary: duplicates,
     },
     findings,
@@ -462,6 +547,10 @@ function printSummary(r: Report): void {
     `      of which mask a block's lean.ref: ${t.driftedMaskingLeanRef}`,
   );
   console.log(`      across files:                     ${t.driftedFiles}`);
+  console.log(`      of which ALSO cross the §7c wall: ${t.driftedRegime}`);
+  console.log(
+    `    §7c REGIME-ONLY (same fields, opposite sides of the wall): ${t.regimeOnly} across ${t.regimeFiles} file(s)`,
+  );
   if (t.duplicatesInLibrary) {
     console.log(
       `  duplicate FQNs inside the Lake tree: ${t.duplicatesInLibrary} (reported, not counted as drift)`,
@@ -480,6 +569,18 @@ function printSummary(r: Report): void {
       for (const p of f.files) console.log(`    ${p}`);
       continue;
     }
+    if (f.type === "regime") {
+      console.log(
+        `REGIME ${f.fqn}${f.masksLeanRef ? "  [masks lean.ref]" : ""}  — same fields, opposite sides of the §7c wall`,
+      );
+      console.log(
+        `    sib ${f.sibling.file}:${f.sibling.line}  ${f.sibling.archimedean ? "archimedean" : "algebraic"}`,
+      );
+      console.log(
+        `    lib ${f.library.file}:${f.library.line}  ${f.library.archimedean ? "archimedean" : "algebraic"}`,
+      );
+      continue;
+    }
     console.log(`DRIFT  ${f.fqn}${f.masksLeanRef ? "  [masks lean.ref]" : ""}`);
     console.log(`    sib ${f.sibling.file}:${f.sibling.line}`);
     console.log(`    lib ${f.library.file}:${f.library.line}`);
@@ -488,6 +589,12 @@ function printSummary(r: Report): void {
     }
     if (f.libraryOnly.length) {
       console.log(`    library-only fields: ${f.libraryOnly.join(", ")}`);
+    }
+    if (f.regimeDiffers) {
+      console.log(
+        "    §7c: the two sides are on opposite sides of the wall — a field " +
+          "resync will not fix this, a wall split will",
+      );
     }
     if (f.extendsDiffers) {
       console.log(
