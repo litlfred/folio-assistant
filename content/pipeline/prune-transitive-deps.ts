@@ -29,6 +29,7 @@
  * Usage:
  *   bun run content/pipeline/prune-transitive-deps.ts              # dry-run (report only)
  *   bun run content/pipeline/prune-transitive-deps.ts --apply      # rewrite .ts files
+ *   bun run content/pipeline/prune-transitive-deps.ts --paper NAME # multi-paper folio
  *
  * @module content/pipeline/prune-transitive-deps
  */
@@ -50,8 +51,15 @@ const CONTENT_ROOT = join(REPO_ROOT, "content");
 
 const args = process.argv.slice(2);
 const APPLY = args.includes("--apply");
+const argValue = (flag: string) =>
+  args.includes(flag) ? args[args.indexOf(flag) + 1] : undefined;
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-const PAPER_NAME = requirePaper();
+// `--paper` matters in a MULTI-paper folio: `requirePaper()` with no argument
+// throws "5 papers found — name one explicitly", and until this flag existed
+// there was no way to name one, so the script could not run there at all.
+// (qou carries five: bach2013-double-slit, fred2005-formal-groups,
+// quantum-observable-universe, unital-groebner-bases, visualizer.)
+const PAPER_NAME = requirePaper(argValue("--paper"));
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
 
 // ── Load all blocks ─────────────────────────────────────────────

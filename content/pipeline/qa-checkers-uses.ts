@@ -171,14 +171,31 @@ export function checkUsesEditorialHygiene(tsPath?: string): CheckerResult {
   for (const u of direct) {
     for (const other of direct) {
       if (other === u) continue;
-      if (g.cone(other, "editorial").has(u)) {
-        hit(
-          `transitively redundant "${u}" — already reachable via "${other}"; ` +
-            `run prune-transitive-deps.ts`,
-        );
-        redundant++;
-        break;
-      }
+      if (!g.cone(other, "editorial").has(u)) continue;
+      // Which relation carries the path matters for what to DO about it.
+      // `prune-transitive-deps.ts` computes the transitive reduction of
+      // `uses[]` ONLY. When the path runs through an `interprets` edge —
+      // legal in the editorial cone, invisible to the pruner — naming the
+      // pruner as the remedy sends the reader to a tool that will report
+      // nothing and change nothing. Measured in qou 2026-08-24:
+      // `prop:centered-hecke-variance-positive` warns here, and the pruner
+      // lists no edge for it, because the path from
+      // `rem:non-commutative-probability-dictionary` to
+      // `thm:jones-markov-trace` leaves that remark by its `interprets`
+      // edge (its `uses` cone is empty; its editorial cone is 29 nodes).
+      const viaUses = g.cone(other, "uses").has(u);
+      hit(
+        viaUses
+          ? `transitively redundant "${u}" — already reachable via "${other}"; ` +
+              `run prune-transitive-deps.ts`
+          : `transitively redundant "${u}" — reachable via "${other}" only ` +
+              `through an \`interprets\` edge, which prune-transitive-deps.ts ` +
+              `does not walk. Whether an \`interprets\` hop should make a ` +
+              `\`uses\` edge redundant is an editorial question, not a ` +
+              `mechanical one; the pruner will NOT remove this.`,
+      );
+      redundant++;
+      break;
     }
   }
 
