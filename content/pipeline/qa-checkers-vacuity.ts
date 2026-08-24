@@ -241,7 +241,19 @@ const HONESTY_CLAIM =
  * quoting the false claim being corrected.
  */
 const NEGATED_HONESTY_CLAIM =
-  /\b(?:no\s+`?sorry`?|not\s+a\s+`?sorry`?|without\s+(?:a\s+)?`?sorry`?|there\s+is\s+no\s+`?sorry`?|contains?\s+(?:no|neither)\b)/i;
+  /\b(?:no\s+`?sorry`?|not\s+a\s+`?sorry`?|without\s+(?:a\s+)?`?sorry`?|there\s+is\s+no\s+`?sorry`?|contains?\s+(?:no|neither)\b|sorry-free|rather\s+than\s+(?:as\s+)?a\s+`?sorry`?|not\s+by\s+a\s+`?sorry`?)/i;
+
+/**
+ * A *past-tense* mention: the term used to carry a `sorry` and no longer does.
+ *
+ * Recording that history is good practice in this corpus — "carried here as a
+ * `sorry` until 2026-08-17 (bean `qou-gjg6`); it is not provable by this route,
+ * and it was deleted" is a docstring doing its job. Reading it as a present
+ * claim inverts the criterion, flagging the note precisely because it is
+ * thorough.
+ */
+const PAST_TENSE_SORRY =
+  /\b(?:was|were|had\s+been|used\s+to\s+be|until\s+\d{4}-\d{2}-\d{2}|formerly|previously|no\s+longer|since\s+deleted|has\s+been\s+(?:removed|deleted|discharged|replaced))\b/i;
 
 /**
  * `lean-docstring-honesty` — a docstring that claims the term carries a
@@ -269,6 +281,7 @@ export function checkDocstringHonesty(leanPath?: string): CheckerResult {
     // repaired `ConfinementGradingCorrespondence.canonical`, whose new
     // docstring quotes the old false claim in order to explain it.
     if (NEGATED_HONESTY_CLAIM.test(d.docstring)) continue;
+    if (PAST_TENSE_SORRY.test(d.docstring)) continue;
     const whole = d.header + "\n" + d.body;
     // Strip comments before looking for `sorry`, so a docstring or an inline
     // note *about* sorries does not count as one.

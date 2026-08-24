@@ -184,6 +184,46 @@ def canonical : S where
     expect(r.result).toBe("pass");
   });
 
+  test("does NOT fire on `sorry-free` — a false positive found in the corpus", () => {
+    // QOU/SchurWeyl/QJucysMurphy.lean `barSymJMSum_central` and
+    // QOU/AlgebraicSubstrate/qou_obstruction_reduction.lean
+    // `kappa_vanishes_iff_chi` both say "sorry-free" and were both flagged.
+    const src = `
+/-- Both are sorry-free; the fields carry the domain gap as explicit
+    hypotheses rather than as a \`sorry\`. -/
+theorem kappa_vanishes_iff_chi : P ↔ Q := by
+  exact h
+`;
+    const r = withLean(src, (p) => checkDocstringHonesty(p));
+    expect(r.result).toBe("pass");
+  });
+
+  test("does NOT fire on a PAST-TENSE sorry that has since been removed", () => {
+    // Recording the history is the docstring doing its job; reading it as a
+    // present claim flags the note precisely because it is thorough.
+    const src = `
+/-- A hypothesis-free version of this statement was carried here as a
+    \`sorry\` until 2026-08-17 (bean \`qou-gjg6\`); it is not provable by this
+    route, and it was deleted rather than left standing as proof debt. -/
+theorem barSymJMSum_central : P := by
+  exact h
+`;
+    const r = withLean(src, (p) => checkDocstringHonesty(p));
+    expect(r.result).toBe("pass");
+  });
+
+  test("STILL fires on a present-tense claim with no sorry — the guard is not a hole", () => {
+    const src = `
+/-- **Faithful instance.** Carries the explicit research-grade conjecture as a sorry. -/
+def canonical : S where
+  a := 0
+  b := 0
+  a_eq_b _ := rfl
+`;
+    const r = withLean(src, (p) => checkDocstringHonesty(p));
+    expect(r.result).toBe("fail");
+  });
+
   test("a `sorry` mentioned only in a comment does not count as carrying one", () => {
     const src = `
 /-- Carries the conjecture as a sorry. -/
