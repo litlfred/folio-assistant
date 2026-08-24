@@ -29,6 +29,7 @@ import { EXTENDED_AUTOMATED_CHECKERS } from "./qa-checkers-extended";
 import { USES_AUTOMATED_CHECKERS } from "./qa-checkers-uses";
 import { COST_AUTOMATED_CHECKERS } from "./qa-checkers-cost";
 import { TRIVIALITY_AUTOMATED_CHECKERS } from "./qa-checkers-triviality";
+import { RENDER_AUTOMATED_CHECKERS } from "./qa-checkers-render";
 
 export interface CheckerHit {
   file: string;
@@ -1184,4 +1185,7 @@ export const AUTOMATED_CHECKERS: Record<
   ...COST_AUTOMATED_CHECKERS,
   // Machine-triviality oracle (scaffold; inert without a cache).
   ...TRIVIALITY_AUTOMATED_CHECKERS,
+  // Render integrity — source patterns that abort pdflatex. Bodies in
+  // `qa-checkers-render.ts`.
+  ...RENDER_AUTOMATED_CHECKERS,
 };

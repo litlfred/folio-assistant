@@ -639,7 +639,57 @@ export function readBlockManifest(
  * triple. Skips chapter manifests, paper manifests, and any .ts
  * file that is not a single-block manifest.
  */
-export function* walkBlocks(rootDir: string): Generator<BlockPaths> {
+/**
+ * A block manifest that declares a builder but **no `label:`** — `prose()`
+ * connective tissue. Returns its kind plus the file's slug standing in for the
+ * label; `undefined` when the file is not a block manifest at all, or when it
+ * does have a label (use `readBlockManifest` for those).
+ *
+ * The slug is what the corpus's existing sidecars for these blocks already key
+ * on, so this adopts the convention rather than minting a second one.
+ *
+ * Masked like `readBlockManifest`, so a builder call inside a string or comment
+ * still does not qualify — the fix in `#125` must not be undone by the looser
+ * path being added beside it.
+ */
+export function readUnlabelledBlockManifest(
+  tsPath: string,
+): { kind: string; label: string } | undefined {
+  if (!existsSync(tsPath)) return undefined;
+  const src = readFileSync(tsPath, "utf-8");
+  if (parseStringField(src, "label")) return undefined; // labelled: not ours
+  const kindMatch = maskStringsAndComments(src).match(BLOCK_BUILDER_RE);
+  if (!kindMatch) return undefined;
+  const slug = tsPath.split("/").pop()!.replace(/\.ts$/, "");
+  return { kind: kindMatch[1], label: slug };
+}
+
+export interface WalkBlocksOptions {
+  /**
+   * Also yield blocks that declare **no `label:`** — `prose()` connective
+   * tissue (chapter intros and outros, author's notes, the notation register).
+   *
+   * Default `false`, which is right for the **dependency graph**: a block with
+   * no label cannot be a node, and nothing can reference it.
+   *
+   * It is wrong for **QA**. `walkBlocks` is not only the graph's enumeration,
+   * it is every checker's, and 63 such blocks in the `qou` corpus render into
+   * the paper carrying 27,390 words that no criterion could reach. They already
+   * hold `.qa.json` sidecars — written by a one-off bulk pass that enumerated
+   * differently — which `qa-sweep` could never refresh, so a stale sidecar and
+   * a current one were indistinguishable. See `qou/3fui`.
+   *
+   * Unlabelled blocks are yielded with their **slug** as `label`, which is the
+   * identity the existing sidecars already use; this adopts a convention rather
+   * than inventing one.
+   */
+  includeUnlabelled?: boolean;
+}
+
+export function* walkBlocks(
+  rootDir: string,
+  opts: WalkBlocksOptions = {},
+): Generator<BlockPaths> {
   // When a block's sibling `<root>.lean` is missing but its `lean.ref`
   // URI points at a file in the package's Lake tree (the cluster-
   // migration pattern, e.g. lean/QOU/BraidKnot/MarkovAxiomsPrimitive.lean),
@@ -667,7 +717,10 @@ export function* walkBlocks(rootDir: string): Generator<BlockPaths> {
         yield* recurse(full);
       } else if (entry.endsWith(".ts")) {
         // Skip chapter / paper manifests by checking the export shape.
-        const manifest = readBlockManifest(full);
+        let manifest = readBlockManifest(full);
+        if (!manifest && opts.includeUnlabelled) {
+          manifest = readUnlabelledBlockManifest(full);
+        }
         if (!manifest) continue;
         const root = full.slice(0, -3); // strip ".ts"
         const md = root + ".md";

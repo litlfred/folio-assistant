@@ -230,3 +230,39 @@ sync loader is still absent — but the class this bean was filed to track,
 "scanners that read source text and can be fooled by what source text may
 legitimately contain", is now materially smaller. Every manifest read in the
 pipeline goes through the masked scanner.
+
+## 2026-08-16 — the walk was wrong in BOTH directions
+
+`#125` fixed `walkBlocks` **admitting** a non-block. Asking the complement —
+does it **miss** real ones? — found 63 that it did.
+
+Chapter manifests list 3571 slugs; the walk yielded 63 fewer. All 63 are
+`prose()` connective tissue with no `label:` (chapter intros and outros, the
+notation register, the author's note), all render into the paper, and all carry
+27,390 words of narrative plus `.qa.json` sidecars that `qa-sweep` — which
+iterates `walkBlocks` — could never refresh.
+
+Fixed by separating the two questions the one enumeration was answering.
+`walkBlocks(root, { includeUnlabelled })` defaults to **false**, which is right
+for the dependency graph: a block with no label cannot be a node. `qa-sweep`
+opts in, because its question is "what prose ships?" not "what is in the
+graph?". Unlabelled blocks are yielded under their **slug**, which is the
+identity their existing sidecars already use.
+
+`readUnlabelledBlockManifest` is masked like `readBlockManifest`, and a test
+pins that neither mode readmits the `#125` shape — a looser path added beside a
+fix is how the fix gets undone.
+
+**Measured before landing, and the measurement changed the recommendation.** I
+had argued this option was "the smallest change and the loudest", on the
+assumption that 27,390 unchecked words would produce a large batch of findings.
+Across the 63 blocks: **1286 applicable criterion runs, 0 failures** (819 runs
+skipped by `applies_to`, correctly — a chapter outro is not a proposition).
+
+An earlier count of 126 failures was my own error: I invoked the checkers
+directly and bypassed the `applies_to` filter that `qa-sweep` applies at line
+367, so `compute-prop-has-probe` and `-has-consumer` fired on prose. Caught
+before it was reported as a risk.
+
+So the change is cheap AND quiet. The prose was clean; it simply could not be
+seen to be.

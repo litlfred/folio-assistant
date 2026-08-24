@@ -15,7 +15,11 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
 import { join, dirname, resolve, relative } from "path";
 import type { Paper, Chapter, Section, Block, RenderOptions } from "../../schemas/types";
 import { extractBlockLabel, isCrossPaperRef } from "../../schemas/types";
-import { renderChapter, validateLatexAst } from "./render-latex";
+import {
+  renderChapter,
+  validateLatexAst,
+  collectReferencedTerms,
+} from "./render-latex";
 import { generateMainTex } from "./generate-main-tex";
 import { runPreflight } from "./latex-preflight";
 import { resolveLeanFile, leanFileStatus } from "../../scripts/lean-coverage";
@@ -215,8 +219,19 @@ export async function buildPaper(
   // Paper slug = the last path segment of paperDir, used to build the
   // `\sourcebase`-relative chapter URL inside \chapterannot{}.
   const paperSlug = paperDir.split("/").filter(Boolean).pop() ?? "";
+
+  // Document-wide glossary-term references. Chapters render
+  // independently, so this must be computed once over ALL blocks before
+  // the loop: body prose citing a glossary term is almost always in a
+  // different chapter from the entry that defines it, and a chapter-local
+  // scan cannot see across that boundary.
+  const renderOpts: RenderOptions = {
+    ...opts,
+    referencedTerms: collectReferencedTerms(blocks),
+  };
+
   for (const { chapter, manifestIdx, dir } of resolvedChapters) {
-    const latex = renderChapter(chapter, blocks, opts, dir, paperSlug);
+    const latex = renderChapter(chapter, blocks, renderOpts, dir, paperSlug);
     chapters.set(manifestIdx, latex);
 
     // AST validation
@@ -248,6 +263,25 @@ export async function buildPaper(
     for (const sec of chapter.sections) {
       if (!("blocks" in sec)) continue;
       if ((sec as Section).label) definedLabels.add((sec as Section).label!);
+    }
+  }
+
+  // A `\label{…}` written inside the markdown — typically in a ```tex
+  // fence around `\begin{equation}\label{eq:foo}` — defines a perfectly
+  // good LaTeX anchor and IS resolvable by `[text](#eq:foo)`. Collecting
+  // only block/chapter/section labels above therefore under-counts what
+  // is defined, and every equation cross-reference in the corpus was
+  // reported "referenced but no content block defines this label".
+  //
+  // Measured on the qou paper: all 10 remaining pipeline warnings were
+  // this one blind spot — the `eq:` namespace has zero *block* labels by
+  // construction, because equations are labelled inline rather than
+  // promoted to `equation` blocks. Several of the reported labels were
+  // resolving fine in the built PDF at the time they were being warned
+  // about, which is the signature of a checker looking in the wrong place.
+  for (const [, entry] of blocks) {
+    for (const m of entry.mdContent.matchAll(/\\label\{([^}]+)\}/g)) {
+      definedLabels.add(m[1]);
     }
   }
 
