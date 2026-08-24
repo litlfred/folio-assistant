@@ -955,6 +955,30 @@ export interface ProseBlock {
   /** Pre-rendered assets for ```tex blocks. */
   rendered?: RenderedAsset[];
   meta?: Record<string, unknown>;
+  /**
+   * Author-tracking notes — see `BlockBase.authorNotes` for the full
+   * contract and the `kind` taxonomy.
+   *
+   * GRANTED 2026-08-24. `prose`, `equation`, `diagram` and `table` do not
+   * extend `BlockBase`; they are standalone interfaces with deliberately
+   * small field sets, and this one was simply missing from all four. The
+   * Zod schemas are non-strict, so a block declaring it had the key
+   * SILENTLY STRIPPED before anything downstream saw it -- the note was
+   * neither rendered, nor validated, nor reported, and the author had no
+   * way to tell. Five real notes were being discarded that way in qou
+   * (`fine-structure-data`, `tm-interaction-completeness`,
+   * `millennium-bounds-via-surreals-intro`,
+   * `hecke-log-decomposition-table-data`,
+   * `q-beta-form-a-n1-symbolic-table-data`); qou #5115 found them and
+   * deliberately left them, because deleting the key destroys authored
+   * prose and granting the field is a schema decision.
+   *
+   * There is no reason a standalone kind cannot carry one: an author note
+   * is editorial metadata ABOUT a block, not content within it, and the
+   * render default is SKIP either way. Same shape of fix as the earlier
+   * `uses`/`tags` pass recorded on `EquationBlock.uses`.
+   */
+  authorNotes?: AuthorNote[];
 
 }
 
@@ -982,6 +1006,30 @@ export interface EquationBlock {
   /** Pre-rendered equation (e.g. SVG from MathJax/KaTeX server). */
   rendered?: RenderedAsset[];
   meta?: Record<string, unknown>;
+  /**
+   * Author-tracking notes — see `BlockBase.authorNotes` for the full
+   * contract and the `kind` taxonomy.
+   *
+   * GRANTED 2026-08-24. `prose`, `equation`, `diagram` and `table` do not
+   * extend `BlockBase`; they are standalone interfaces with deliberately
+   * small field sets, and this one was simply missing from all four. The
+   * Zod schemas are non-strict, so a block declaring it had the key
+   * SILENTLY STRIPPED before anything downstream saw it -- the note was
+   * neither rendered, nor validated, nor reported, and the author had no
+   * way to tell. Five real notes were being discarded that way in qou
+   * (`fine-structure-data`, `tm-interaction-completeness`,
+   * `millennium-bounds-via-surreals-intro`,
+   * `hecke-log-decomposition-table-data`,
+   * `q-beta-form-a-n1-symbolic-table-data`); qou #5115 found them and
+   * deliberately left them, because deleting the key destroys authored
+   * prose and granting the field is a schema decision.
+   *
+   * There is no reason a standalone kind cannot carry one: an author note
+   * is editorial metadata ABOUT a block, not content within it, and the
+   * render default is SKIP either way. Same shape of fix as the earlier
+   * `uses`/`tags` pass recorded on `EquationBlock.uses`.
+   */
+  authorNotes?: AuthorNote[];
 
 }
 
@@ -1007,6 +1055,30 @@ export interface DiagramBlock {
   /** Pre-rendered diagram (e.g. SVG from tikzcd server-side render). */
   rendered?: RenderedAsset[];
   meta?: Record<string, unknown>;
+  /**
+   * Author-tracking notes — see `BlockBase.authorNotes` for the full
+   * contract and the `kind` taxonomy.
+   *
+   * GRANTED 2026-08-24. `prose`, `equation`, `diagram` and `table` do not
+   * extend `BlockBase`; they are standalone interfaces with deliberately
+   * small field sets, and this one was simply missing from all four. The
+   * Zod schemas are non-strict, so a block declaring it had the key
+   * SILENTLY STRIPPED before anything downstream saw it -- the note was
+   * neither rendered, nor validated, nor reported, and the author had no
+   * way to tell. Five real notes were being discarded that way in qou
+   * (`fine-structure-data`, `tm-interaction-completeness`,
+   * `millennium-bounds-via-surreals-intro`,
+   * `hecke-log-decomposition-table-data`,
+   * `q-beta-form-a-n1-symbolic-table-data`); qou #5115 found them and
+   * deliberately left them, because deleting the key destroys authored
+   * prose and granting the field is a schema decision.
+   *
+   * There is no reason a standalone kind cannot carry one: an author note
+   * is editorial metadata ABOUT a block, not content within it, and the
+   * render default is SKIP either way. Same shape of fix as the earlier
+   * `uses`/`tags` pass recorded on `EquationBlock.uses`.
+   */
+  authorNotes?: AuthorNote[];
 
 }
 
@@ -1038,6 +1110,30 @@ export interface TableBlock {
   companions?: Companions;
   rendered?: RenderedAsset[];
   meta?: Record<string, unknown>;
+  /**
+   * Author-tracking notes — see `BlockBase.authorNotes` for the full
+   * contract and the `kind` taxonomy.
+   *
+   * GRANTED 2026-08-24. `prose`, `equation`, `diagram` and `table` do not
+   * extend `BlockBase`; they are standalone interfaces with deliberately
+   * small field sets, and this one was simply missing from all four. The
+   * Zod schemas are non-strict, so a block declaring it had the key
+   * SILENTLY STRIPPED before anything downstream saw it -- the note was
+   * neither rendered, nor validated, nor reported, and the author had no
+   * way to tell. Five real notes were being discarded that way in qou
+   * (`fine-structure-data`, `tm-interaction-completeness`,
+   * `millennium-bounds-via-surreals-intro`,
+   * `hecke-log-decomposition-table-data`,
+   * `q-beta-form-a-n1-symbolic-table-data`); qou #5115 found them and
+   * deliberately left them, because deleting the key destroys authored
+   * prose and granting the field is a schema decision.
+   *
+   * There is no reason a standalone kind cannot carry one: an author note
+   * is editorial metadata ABOUT a block, not content within it, and the
+   * render default is SKIP either way. Same shape of fix as the earlier
+   * `uses`/`tags` pass recorded on `EquationBlock.uses`.
+   */
+  authorNotes?: AuthorNote[];
 }
 
 // ── The discriminated union ──────────────────────────────────────

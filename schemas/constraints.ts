@@ -569,6 +569,11 @@ export const ProseSchema = z.object({
   companions: CompanionsSchema.optional(),
   rendered: z.array(RenderedAssetSchema).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
+  // GRANTED 2026-08-24 (bean folio-assistant-5nle). These four schemas are
+  // non-strict, so a block declaring `authorNotes` had the key silently
+  // stripped and the note was neither rendered nor reported. See
+  // `BlockBase.authorNotes` in schemas/types.ts.
+  authorNotes: z.array(AuthorNoteSchema).optional(),
 
 });
 
@@ -583,6 +588,11 @@ export const EquationSchema = z.object({
   companions: CompanionsSchema.optional(),
   rendered: z.array(RenderedAssetSchema).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
+  // GRANTED 2026-08-24 (bean folio-assistant-5nle). These four schemas are
+  // non-strict, so a block declaring `authorNotes` had the key silently
+  // stripped and the note was neither rendered nor reported. See
+  // `BlockBase.authorNotes` in schemas/types.ts.
+  authorNotes: z.array(AuthorNoteSchema).optional(),
 
 });
 
@@ -598,6 +608,11 @@ export const DiagramSchema = z.object({
   companions: CompanionsSchema.optional(),
   rendered: z.array(RenderedAssetSchema).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
+  // GRANTED 2026-08-24 (bean folio-assistant-5nle). These four schemas are
+  // non-strict, so a block declaring `authorNotes` had the key silently
+  // stripped and the note was neither rendered nor reported. See
+  // `BlockBase.authorNotes` in schemas/types.ts.
+  authorNotes: z.array(AuthorNoteSchema).optional(),
 
 });
 
@@ -614,6 +629,11 @@ export const TableSchema = z.object({
   companions: CompanionsSchema.optional(),
   rendered: z.array(RenderedAssetSchema).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
+  // GRANTED 2026-08-24 (bean folio-assistant-5nle). These four schemas are
+  // non-strict, so a block declaring `authorNotes` had the key silently
+  // stripped and the note was neither rendered nor reported. See
+  // `BlockBase.authorNotes` in schemas/types.ts.
+  authorNotes: z.array(AuthorNoteSchema).optional(),
 });
 
 /** Discriminated union — validates any Block. */
