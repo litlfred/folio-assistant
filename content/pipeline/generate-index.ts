@@ -7,13 +7,14 @@
  * then writes a markdown table with links to each block's location.
  *
  * Usage:
- *   bun run content/pipeline/generate-index.ts
+ *   bun run content/pipeline/generate-index.ts [paper-name]
  */
 
 import { writeFileSync } from "fs";
 import { join} from "path";
 import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
+import type { Section, SectionRef } from "../../schemas/types";
 
 // Was rooted at this file's own location, which is the PLATFORM — but every
 // path below is folio content. `findContentRepoRoot()` walks up from cwd;
@@ -22,9 +23,32 @@ import { requirePaper } from "./repo-root";
 const REPO_ROOT = findContentRepoRoot();
 const CONTENT_ROOT = join(REPO_ROOT, "content");
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-const PAPER_NAME = requirePaper();
+// The bare `requirePaper()` this replaces took no argument, so in a folio with
+// more than one paper it THREW every time and there was no way to name the
+// paper -- qou has five, so its committed definition-index.md could not be
+// regenerated at all. Positional argv matches `find-dangling-remarks.ts`.
+const PAPER_NAME = requirePaper(process.argv[2]);
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
 const INDEX_MD = join(PAPER_DIR, "index-of-definitions", "definition-index.md");
+
+/** A `SectionRef` is `{ name }` only; an inline `Section` carries `blocks`. */
+function isInlineSection(s: Section | SectionRef): s is Section {
+  return Array.isArray((s as Section).blocks);
+}
+
+/**
+ * Plural section headings, keyed by block kind. Explicit because the kind set
+ * is fixed and small; the fallback below only covers a kind added later.
+ */
+const KIND_HEADINGS: Record<string, string> = {
+  definition: "Definitions",
+  theorem: "Theorems",
+  proposition: "Propositions",
+  lemma: "Lemmas",
+  corollary: "Corollaries",
+  conjecture: "Conjectures",
+  example: "Examples",
+};
 
 const INDEXED_KINDS = new Set([
   "definition", "theorem", "proposition", "lemma",
@@ -47,6 +71,7 @@ async function main() {
   const paper = paperMod.default;
 
   const entries: IndexEntry[] = [];
+  const skipped: string[] = [];
 
   // Auto-number chapters from manifest order: skip unnumbered ones (tabLabel set)
   let autoNum = 1;
@@ -57,8 +82,12 @@ async function main() {
     // Chapters with tabLabel are unnumbered (Introduction, Glossary, etc.)
     const chapterNumber = ch.tabLabel != null ? undefined : autoNum++;
 
-    for (const section of ch.sections) {
-      for (const rootName of section.blocks) {
+    // `Section.subsections` nests arbitrarily deep. Walking only
+    // `ch.sections[].blocks` silently omitted every block in a subsection --
+    // e.g. `def:archimedean-realization-functor`, live and manifest-listed,
+    // was absent from the index while three blocks still cited it.
+    const visitSection = async (section: Section) => {
+      for (const rootName of section.blocks ?? []) {
         try {
           const blockMod = await import(join(chDir, `${rootName}.ts`));
           const block = blockMod.default;
@@ -73,11 +102,24 @@ async function main() {
             section: section.title,
             lean: block.lean?.ref,
           });
-        } catch {
-          // Skip blocks that fail to load
+        } catch (err) {
+          // A silent skip here is how a live block leaves the index without
+          // anyone noticing: the run still reports a clean "Index written",
+          // just over fewer entries. Report, then continue.
+          skipped.push(
+            `${chRef.dir}/${rootName}: ` +
+              (err instanceof Error ? err.message.split("\n")[0] : String(err)),
+          );
         }
       }
-    }
+      // A SectionRef (`{ name }`) carries no blocks of its own; only inline
+      // subsections are walked here.
+      for (const sub of section.subsections ?? []) {
+        if (isInlineSection(sub)) await visitSection(sub);
+      }
+    };
+
+    for (const section of ch.sections) await visitSection(section);
   }
 
   // Sort by kind, then alphabetically by title
@@ -104,7 +146,13 @@ async function main() {
     const group = groups.get(kind);
     if (!group) continue;
 
-    const kindTitle = kind.charAt(0).toUpperCase() + kind.slice(1) + "s";
+    // Naive `+ "s"` produced "Corollarys"; a consonant + `y` pluralises to
+    // `ies`. This heading is the only place the kind is shown to a reader,
+    // and definition-index.md is REGENERATED on every run -- so a hand-fix
+    // to that file is erased, and this is the only durable fix site.
+    const kindTitle = KIND_HEADINGS[kind]
+      ?? kind.charAt(0).toUpperCase() + kind.slice(1)
+         + (/[^aeiou]y$/.test(kind) ? "" : "s");
     lines.push(`## ${kindTitle}\n`);
     lines.push("| Label | Title | Chapter | Lean |");
     lines.push("|-------|-------|---------|------|");
@@ -115,6 +163,12 @@ async function main() {
       lines.push(`| [${e.label}](#${e.label}) | ${e.title} | ${chLabel} | ${leanCol} |`);
     }
     lines.push("");
+  }
+
+  if (skipped.length) {
+    console.error(`\n${skipped.length} block(s) SKIPPED — not in the index:`);
+    for (const m of skipped) console.error(`  ✗ ${m}`);
+    console.error("");
   }
 
   writeFileSync(INDEX_MD, lines.join("\n") + "\n");
