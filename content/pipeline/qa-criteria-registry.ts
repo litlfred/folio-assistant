@@ -876,6 +876,44 @@ const PROOF: QaCriterionDefinition[] = [
     applies_to: ["theorem", "lemma", "proposition", "corollary"],
   },
   {
+    id: "lean-no-vacuous-instance-data",
+    domain: "proof",
+    description:
+      "No instance discharges a propositional field by reflexivity BECAUSE " +
+      "its data fields were chosen degenerate. The signature is the " +
+      "conjunction — constant data (`_ := 0`, `PUnit.unit`, `default`) AND a " +
+      "`rfl`/`trivial` discharge of a field relating that data. Either half " +
+      "alone is usually legitimate: a genuine zero object has constant data, " +
+      "and plenty of real laws are reflexivity. Together they mean the claim " +
+      "was arranged away rather than proved. An unconditional `instance` is " +
+      "the severe form, since typeclass resolution supplies it everywhere and " +
+      "every downstream theorem taking the class stops being conditional. " +
+      "AST-checked, no agent turn. Fix: demote `instance` to `def` so the " +
+      "model must be named, or give the class a non-degeneracy field so the " +
+      "trivial model cannot be written at all. " +
+      "Routes to `lean-proof-vacuity-audit`.",
+    default_severity: "critical",
+    depends_on: ["lean"],
+    automated: true,
+    applies_to: ["definition", "theorem", "lemma", "proposition", "corollary"],
+  },
+  {
+    id: "lean-docstring-honesty",
+    domain: "proof",
+    description:
+      "A docstring that says the term carries a `sorry`, is axiomatised, or " +
+      "holds a conjecture as a placeholder must be telling the truth: the " +
+      "body contains an actual `sorry` or `axiom`. A docstring is the only " +
+      "place an incompleteness is recorded when the term is in fact closed by " +
+      "construction, and a wrong one is worse than no note at all — a `sorry` " +
+      "is visible to `#print axioms`, a `rfl` on `0 = 0` is not. " +
+      "AST-checked, no agent turn. Routes to `lean-proof-vacuity-audit`.",
+    default_severity: "major",
+    depends_on: ["lean"],
+    automated: true,
+    applies_to: ["definition", "theorem", "lemma", "proposition", "corollary"],
+  },
+  {
     id: "proof-no-false-premise",
     domain: "proof",
     description:
