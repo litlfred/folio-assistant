@@ -118,6 +118,16 @@ RE_NOT_HEADING = re.compile(
 # excluded by looking for ". " followed by a lower-case word instead.
 RE_AUTHORS = re.compile(r"^[A-ZÀ-ʯ](?![^\n]*[.!?]\s+[a-z])[^!?]{2,120}$")
 
+# Marks that only a byline carries: an initial ("D. J."), an affiliation
+# superscript ("Kreimer 2)", "Lv*1"), or a dagger/asterisk footnote. A title
+# continuation has none of these, so their presence outranks the abstract test.
+RE_BYLINE_MARKER = re.compile(
+    r"(?:\b[A-ZÀ-ʯ]\.(?:\s|$)"          # an initial with its period
+    r"|\d\s*\)"                          # "1)" affiliation marker
+    r"|[∗*†‡§]"                           # footnote marks
+    r"|\b[A-ZÀ-ʯ][a-zà-ʯ]+\s*\*?\d)"     # "Lv*1", "Zhou 2"
+)
+
 # Punctuation that betrays a list of names: a comma between them, or a
 # conjunction. Necessary but far from sufficient — see `looks_like_byline`,
 # which uses it as one of two routes and vetoes both with the abstract test.
@@ -521,8 +531,24 @@ def looks_like_byline(line: str, abstract_words: set[str]) -> bool:
     # the abstract is title text, because an author is rarely named in their
     # own abstract while the nouns of a title are almost always restated.
     words = [t.lower() for t in content if len(t) >= 3 and t[:1].isupper()]
-    in_abstract = bool(abstract_words and words and
-                       sum(1 for w in words if w in abstract_words) * 2 >= len(words))
+    hits = sum(1 for w in words if w in abstract_words) if abstract_words else 0
+    # A STRICT majority, and never on the strength of one word.
+    #
+    # `>= half` collapses to "any single hit" on a two-name byline: filtering
+    # initials and digits leaves `['broadhurst', 'kreimer']`, and one match
+    # satisfies `1 * 2 >= 2`. The old docstring defended "majority rather than
+    # any single hit" — true of a long byline, false of exactly the short one
+    # this test is usually asked about.
+    in_abstract = bool(words and hits >= 2 and hits * 2 > len(words))
+
+    # …and the veto does not apply at all to a line carrying INITIALS or
+    # affiliation markers. Those are positive byline evidence that a title
+    # continuation does not have, and they outrank the abstract heuristic,
+    # whose premise — "an author is rarely named in their own abstract" — is
+    # simply false in physics: `hep-th/0001202`'s abstract names both
+    # Broadhurst and Kreimer, and that is ordinary self-reference.
+    if RE_BYLINE_MARKER.search(line):
+        in_abstract = False
 
     # Route 1, inherited: punctuation. A comma, "and" or "&" between names.
     # Kept because it is what catches the messy real-world byline — emails,
@@ -705,9 +731,24 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
     abstract_words: set[str] = set()
     _am = re.search(r"\babstract\b\s*[.:—–-]?\s*", p1, re.I)
     if _am:
-        abstract_words = {
-            w.lower() for w in re.findall(r"[^\W\d_]{3,}", p1[_am.end(): _am.end() + 2000])
-        }
+        _tail = p1[_am.end(): _am.end() + 2600]
+        # Cut at the first section heading — the SAME cut `meta["abstract"]`
+        # uses below, so the two cannot disagree about what the abstract is.
+        #
+        # A raw window overruns the abstract into the body, the author
+        # addresses and the bibliography, and then "named in the abstract"
+        # becomes "named anywhere on page 1" — which every author is.
+        # `arxiv-math-0304010v1` lost its byline to exactly this: all four of
+        # Vladimir/Ivanov/Grigori/Olshanski were found, so the veto fired at
+        # full strength on a line that is nothing but names.
+        _cut = re.search(
+            r"\n\s*(?:1\s*\.?\s+Introduction\b|Introduction\b|Contents\b"
+            r"|Keywords?\b|Key words\b|MSC\b|AMS\b|\d{4}\s+Mathematics)",
+            _tail, re.I,
+        )
+        if _cut:
+            _tail = _tail[: _cut.start()]
+        abstract_words = {w.lower() for w in re.findall(r"[^\W\d_]{3,}", _tail)}
 
     title_lines: list[str] = []
     author_lines: list[str] = []
