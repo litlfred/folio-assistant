@@ -193,6 +193,11 @@ export function parseDecls(src: string): Decl[] {
  * Both halves are required. Degenerate data alone is often fine (a genuinely
  * zero object); a `rfl` discharge alone is often fine (a real reflexivity).
  * Together they mean the claim was arranged away rather than proved.
+ *
+ * And a third condition, added 2026-08-24: the declaration must do no
+ * substantive proof work anywhere. Without it the conjunction fires on a
+ * declaration that supplies ONE degenerate-looking datum beside genuinely
+ * non-constant data — see `doesSubstantiveWork`.
  */
 /**
  * The sibling criterion's conjunction, as a predicate on one declaration.
@@ -217,11 +222,63 @@ function vacuousDataConjunction(
   const degenerateData = fields.filter(
     (f) => !isClaimField(f.name) && DEGENERATE_VALUE.test(f.value),
   );
-  const trivialClaims = fields.filter(
-    (f) => isClaimField(f.name) && TRIVIAL_DISCHARGE.test(f.value),
-  );
+  const claimFields = fields.filter((f) => isClaimField(f.name));
+  const trivialClaims = claimFields.filter((f) => TRIVIAL_DISCHARGE.test(f.value));
   if (degenerateData.length === 0 || trivialClaims.length === 0) return null;
+  if (fields.some((f) => !isClaimField(f.name) && isArgumentDependent(f))) return null;
   return { degenerateData, trivialClaims };
+}
+
+/**
+ * A data field whose value genuinely depends on an argument it binds.
+ *
+ * The veto this serves: **a declaration that computes from its arguments is not
+ * dodging an obligation.** Constant data is the entire mechanism of the defect
+ * this criterion looks for — `carrier := PUnit`, `frobWeight _ := 1`,
+ * `hecke_relation := True`. A field that reads its own binder cannot be part of
+ * that mechanism, and its presence means the degenerate-looking siblings are a
+ * corner of a working model.
+ *
+ * `sl3DemazureLevelOne` (`QOU/Machinery/KashiwaraCrystalBasic.lean`) is the
+ * corpus case that forced this. It is the three-vertex crystal written
+ * *specifically* to give `DemazureSubcrystal.demazure_closure` teeth — a proper
+ * sub-crystal `{0,1}` whose closure is checked by exhaustion — and the
+ * conjunction fired on it because `highest := 0` matched `DEGENERATE_VALUE`
+ * (there it is a vertex index, not a degenerate value) and `highest_mem := by
+ * decide` matched `TRIVIAL_DISCHARGE` (there it evaluates `0 ≠ 2`). Its sibling
+ * `member := fun v => v ≠ 2` reads `v`, and nothing about the declaration is
+ * arranged away. Firing on the declaration written to *fix* the defect is the
+ * worst failure mode this criterion has: it reads as evidence the fix did not
+ * take.
+ *
+ * **Why not the sibling criterion's `doesRealWork` veto** ("some field carries a
+ * tactic proof, or some claim is non-trivially discharged"). Measured on the qou
+ * corpus it takes this criterion from 26 hits to 6, and the 20 it removes are
+ * overwhelmingly true positives: `triv_hecke` survives it on
+ * `carrier_addCommGroup := by infer_instance`, and
+ * `witnessR5Full_deuterium_placeholder` on a `by simp` carrying an inline
+ * comment — neither of which is work. `isSubstantiveDischarge` is calibrated for
+ * a population whose fields are already known non-constant; here it is a
+ * `by`-detector. Argument-dependence removes exactly one hit, the false
+ * positive.
+ *
+ * Wildcard binders do not count: `mul _ _ := PUnit.unit` and `centralIdem _ :=
+ * 𝟙 _` discard their arguments, which is what constant data looks like when the
+ * field has a function type.
+ */
+function isArgumentDependent(f: FieldAssign): boolean {
+  const lam = splitLambda(f.value);
+  const binders = lam
+    ? lam.binders
+    : f.binders.startsWith(":")
+      ? []
+      : f.binders.split(/\s+/).filter(Boolean);
+  const body = lam ? lam.body : f.value;
+  return binders
+    .filter((b) => !b.startsWith("_"))
+    .some((b) =>
+      new RegExp(`(?<![A-Za-z0-9_'!?₀-₉])${escapeRe(b)}(?![A-Za-z0-9_'!?₀-₉])`).test(body),
+    );
 }
 
 export function checkNoVacuousInstanceData(leanPath?: string): CheckerResult {
@@ -839,11 +896,15 @@ export function checkNoDefinitionalLaundering(leanPath?: string): CheckerResult 
           file: leanPath,
           line: c.line,
           text:
-            `${d.kind} \`${d.name}\`: claim field \`${c.name} := ${c.value}\` is discharged by ` +
-            `reflexivity, and the data it constrains is a constant behind a lambda ` +
-            `(${lambdaConst.map((f) => `${f.name} := ${f.value}`).join(", ")}). Same defect as ` +
+            `REVIEW (not a verdict) — ${d.kind} \`${d.name}\`: claim field \`${c.name} := ${c.value}\` ` +
+            `is discharged by reflexivity, and the data it constrains is a constant behind a lambda ` +
+            `(${lambdaConst.map((f) => `${f.name} := ${f.value}`).join(", ")}). Same shape as ` +
             `\`lean-no-vacuous-instance-data\`, one \`fun _ =>\` deeper than its anchored ` +
-            `degenerate-value match can reach.`,
+            `degenerate-value match can reach. What this establishes is that the claim fields ` +
+            `carry no force — not that the constant is wrong. It may be the value the mathematics ` +
+            `forces: \`instSl2DemazureSubcrystal\` has \`member := fun _ => True\` because the ` +
+            `level-1 Demazure sub-crystal of \`B(Λ₁)\` really is the whole two-vertex crystal. ` +
+            `Decide which, and record the decision in the docstring.`,
         });
       }
     }
@@ -880,7 +941,21 @@ export function checkNoDefinitionalLaundering(leanPath?: string): CheckerResult 
     }
   }
 
-  const hard = metrics.constant_prop_defs + metrics.lambda_constant_fields;
+  // Only detection 1 is a verdict. `def F (args…) : Prop := True` is a
+  // tautology whatever the author meant by it — the proposition is wrong, not
+  // just unexercised, and no reading of the surrounding mathematics rescues it.
+  //
+  // Detections 2 and 3 both turn on the same non-syntactic question: was the
+  // constant the value the mathematics forces, or a way of arranging the claim
+  // away? Detection 3 has always said so in its evidence and graded `warn`;
+  // detection 2 shipped as `fail` and was immediately wrong about
+  // `instSl2DemazureSubcrystal` (2026-08-24), whose `member := fun _ => True`
+  // is correct — `sl₂` has one simple root, so the level-1 Demazure
+  // sub-crystal of `B(Λ₁)` is the whole crystal. Its docstring concedes the
+  // exact vacuity this reports and there is nothing left to fix, so a `fail`
+  // there is a red that no correct edit can clear. A critical criterion that
+  // cannot be satisfied by correct content gets switched off, not obeyed.
+  const hard = metrics.constant_prop_defs;
   return {
     result: hits.length === 0 ? "pass" : hard > 0 ? "fail" : "warn",
     hits,

@@ -78,6 +78,56 @@ describe("lean-no-vacuous-instance-data", () => {
     expect(r.hits[0].text).not.toContain("resolved everywhere");
   });
 
+  test("does NOT fire when a data field reads its own binder", () => {
+    // `sl3DemazureLevelOne`, quoted from `QOU/Machinery/KashiwaraCrystalBasic
+    // .lean`. This is the declaration written *specifically* to give
+    // `demazure_closure` teeth — a proper sub-crystal `{0,1}` of a three-vertex
+    // crystal, whose closure is checked by exhaustion — and it fired on
+    // `highest := 0` (a vertex index, matching `DEGENERATE_VALUE`) beside
+    // `highest_mem := by decide` (matching `TRIVIAL_DISCHARGE`). Firing on the
+    // fix is the worst failure mode this criterion has.
+    const src = `
+def sl3DemazureLevelOne : DemazureSubcrystal standardSl3Crystal 1 where
+  member := fun v => v ≠ 2
+  highest := 0
+  highest_mem := by decide
+  highest_isHighest := fun i => by
+    simp only [standardSl3Crystal]
+    split <;> simp_all
+  demazure_closure := by
+    intro i hi v w hv hf
+    decide
+`;
+    const r = withLean(src, (p) => checkNoVacuousInstanceData(p));
+    expect(r.result).toBe("pass");
+  });
+
+  test("a WILDCARD binder is not argument-dependence", () => {
+    // Mutation of the pin above: `fun v => v ≠ 2` is the only thing separating
+    // it from a laundering. Discard the argument and the veto must not apply,
+    // or `mul _ _ := PUnit.unit` would clear every trivial instance in the
+    // corpus.
+    const src = `
+def sl3Bogus : DemazureSubcrystal standardSl3Crystal 1 where
+  member := fun _ => True
+  highest := 0
+  highest_mem := by decide
+`;
+    const r = withLean(src, (p) => checkNoVacuousInstanceData(p));
+    expect(r.result).toBe("fail");
+  });
+
+  test("point-full binders count too — `f x := g x`, not just lambdas", () => {
+    const src = `
+def pointFull : MyStructure where
+  weight n := n + 1
+  base := 0
+  base_eq := rfl
+`;
+    const r = withLean(src, (p) => checkNoVacuousInstanceData(p));
+    expect(r.result).toBe("pass");
+  });
+
   test("an instance at a CONCRETE carrier is not the severe form", () => {
     // `instance foo : C SomeObject where …` binds nothing, so resolution
     // supplies it for that one object. Its degenerate fields are a claim about
@@ -494,11 +544,32 @@ def RealODE (n : ℝ) (F : ℝ → ℝ) (η : ℝ) : Prop :=
 });
 
 describe("lean-no-definitional-laundering — a constant behind a lambda", () => {
-  test("fires on `member := fun _ => True` beside a reflexivity discharge", () => {
+  test("reports `member := fun _ => True` beside a reflexivity discharge", () => {
     const r = withLean(DEMAZURE_SUBCRYSTAL, (p) => checkNoDefinitionalLaundering(p));
-    expect(r.result).toBe("fail");
     expect(r.hits[0].text).toContain("member := fun _ => True");
     expect(r.hits[0].text).toContain("highest_mem");
+  });
+
+  test("grades detection 2 `warn`, not `fail` — the constant may be correct", () => {
+    // This exact declaration is the reason. `sl₂` has one simple root, so
+    // `B(Λ₁)` has two Demazure sub-crystals and the level-1 one is the whole
+    // two-vertex crystal: `fun _ => True` is the value the mathematics forces.
+    // The finding is still real — the claim fields carry no force, and the
+    // corpus docstring now says so — but there is no edit that clears it, and
+    // a critical `fail` no correct content can satisfy gets switched off.
+    const r = withLean(DEMAZURE_SUBCRYSTAL, (p) => checkNoDefinitionalLaundering(p));
+    expect(r.result).toBe("warn");
+    expect(r.hits[0].text).toContain("REVIEW (not a verdict)");
+  });
+
+  test("detection 1 is still a verdict — a tautology is wrong either way", () => {
+    // The grade split: `def F args : Prop := True` admits no reading that
+    // rescues it, so it stays `fail` where detections 2 and 3 are `warn`.
+    const src = `
+def Bogus (n : ℕ) : Prop := True
+`;
+    const r = withLean(src, (p) => checkNoDefinitionalLaundering(p));
+    expect(r.result).toBe("fail");
   });
 
   test("the sibling criterion misses it — that is why this one exists", () => {
