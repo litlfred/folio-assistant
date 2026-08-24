@@ -561,7 +561,18 @@ export interface BlockPaths {
   label: string;
   /** Block kind (`definition`, `proposition`, `remark`, …). */
   kind: string;
-  /** Root name shared by all sibling files (e.g. `carbon-valence`). */
+  /**
+   * Absolute path **stem** shared by all sibling files — the sibling paths
+   * minus their extension, e.g. `/abs/path/to/carbon-valence`. Append an
+   * extension to get a sibling: `` `${root}.lean` ``.
+   *
+   * Not a bare basename, which is what this said before ("Root name … e.g.
+   * `carbon-valence`"). A caller who believed that and wrote
+   * `join(dirname(b.ts), \`${b.root}.lean\`)` doubles the path and matches
+   * nothing — and gets a clean `0` rather than an error, which is exactly how a
+   * sibling-coverage measurement reported "0 siblings across 3486 blocks" and
+   * looked plausible enough to nearly publish.
+   */
   root: string;
   /** Absolute paths to present sibling files. */
   ts: string;
