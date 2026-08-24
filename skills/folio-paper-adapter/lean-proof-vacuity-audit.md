@@ -202,6 +202,50 @@ proof:
 **Never** the batch anti-fix: wrapping the conclusion in a structure field and
 projecting it. That converts a *visible* gap (`sorry`) into an *invisible* one.
 
+### Demonstrating non-degeneracy — the theorem-pair pattern
+
+Step 2 requires the conditional class to be "non-degenerate", and that is where
+most of these go wrong: a class is written, a `canonical` instance sets its data
+to zero so the propositional field becomes `rfl`, and the class asserts nothing
+for anyone. Demoting `instance` → `def` stops typeclass resolution supplying it
+silently, but it does not *say* what the hypothesis is worth.
+
+**Parameterise the class over the data, then state the residual vacuity as a
+proved pair.** Worked example in
+[`QOU/Archimedean/JetOrderIndependence.lean`](../../..) — read it before
+inventing your own:
+
+```lean
+/-- The identically-zero transport error. -/
+def trivialError : TransportErrorData where
+  shadow := fun _ => 0
+  physical := fun _ => 0
+  ...
+
+/-- **The bound is vacuous at the zero error (PROVED).** So an instance for an
+    *unspecified* `E` asserts nothing: it is satisfiable. -/
+instance trivialError_bound : SurrealParallelTransportBound trivialError where ...
+
+/-- **…and non-vacuous at any error with a non-zero physical shadow (PROVED).**
+    For a specific `E` the bound is a real constraint that can fail. -/
+theorem not_bound_of_physical_ne_zero (h : E.physical N ≠ 0) :
+    ¬ Nonempty (SurrealParallelTransportBound E) := ...
+```
+
+Read together the two say exactly what an instance buys: **the hypothesis
+carries no information until the datum is pinned down, and real information as
+soon as it is.** The trap becomes a machine-checked fact instead of a latent
+one — which is strictly better than forbidding the trivial model, because a
+non-degeneracy field on the class would prevent the trivial model *and*
+prevent saying anything about it.
+
+Parameterising alone is not enough: it stops the class choosing its own shadow,
+but a consumer can still instantiate at the zero datum. The pair is what closes
+that.
+
+Detected mechanically by `lean-no-vacuous-instance-data` (see below), which
+looks for the conjunction of degenerate data and a reflexivity discharge.
+
 ## Detection heuristic (candidate grep → agent confirmation)
 
 0. **Runnable scanner (preferred).** `bun run

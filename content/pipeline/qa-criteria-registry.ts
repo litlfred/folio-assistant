@@ -888,9 +888,20 @@ const PROOF: QaCriterionDefinition[] = [
       "was arranged away rather than proved. An unconditional `instance` is " +
       "the severe form, since typeclass resolution supplies it everywhere and " +
       "every downstream theorem taking the class stops being conditional. " +
-      "AST-checked, no agent turn. Fix: demote `instance` to `def` so the " +
-      "model must be named, or give the class a non-degeneracy field so the " +
-      "trivial model cannot be written at all. " +
+      "AST-checked, no agent turn. THE REMEDY, best-first: (1) parameterise " +
+      "the class over the data so it cannot choose its own degenerate " +
+      "shadow, then state the residual vacuity as a PROVED THEOREM PAIR — " +
+      "one instance at the trivial datum showing the hypothesis is " +
+      "satisfiable, one theorem showing it fails at any non-trivial datum. " +
+      "That turns the trap into a machine-checked fact about what the " +
+      "hypothesis is worth, instead of forbidding it. See " +
+      "`QOU/Archimedean/JetOrderIndependence.lean` (`trivialError_bound` " +
+      "beside `not_bound_of_physical_ne_zero`) for the worked pattern. " +
+      "(2) Failing that, demote `instance` to `def` so the model must be " +
+      "named and a reader of a downstream theorem can see what discharged " +
+      "the hypothesis. (3) A non-degeneracy field on the class is the " +
+      "blunt option: it prevents the trivial model but also prevents saying " +
+      "anything about it. " +
       "Routes to `lean-proof-vacuity-audit`.",
     default_severity: "critical",
     depends_on: ["lean"],
