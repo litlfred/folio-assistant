@@ -102,10 +102,12 @@ function label(tsPath: string): string | undefined {
  *  3. duplicate entry — inflates every degree/cone metric downstream;
  *  4. transitive redundancy — A uses B, B uses C, A also lists C.
  *
- * (4) is sound on the editorial relation specifically: reading-order
- * IS transitive, so listing C adds nothing a reader gains. It is never
- * applied to formal edges, where a direct dependency is a fact about
- * the proof term rather than a claim about reading order.
+ * (4) is sound on the `uses` relation specifically: a prerequisite of a
+ * prerequisite is one too, so listing C adds nothing a reader gains. It
+ * is NOT sound on the wider editorial relation — an `interprets` edge
+ * carries no prerequisite forward (see the note at the check itself) —
+ * and it is never applied to formal edges, where a direct dependency is
+ * a fact about the proof term rather than a claim about reading order.
  */
 export function checkUsesEditorialHygiene(tsPath?: string): CheckerResult {
   if (!tsPath || !existsSync(tsPath)) return { result: "n/a", hits: [] };
@@ -164,8 +166,7 @@ export function checkUsesEditorialHygiene(tsPath?: string): CheckerResult {
     seen.add(u);
   }
 
-  // 4. transitive redundancy: an entry also reachable through another
-  //    entry. Walk the editorial relation only.
+  // 4. transitive redundancy: an entry also reachable through another entry.
   const direct = [...seen];
   let redundant = 0;
   //
