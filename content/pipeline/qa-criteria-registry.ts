@@ -909,6 +909,52 @@ const PROOF: QaCriterionDefinition[] = [
     applies_to: ["definition", "theorem", "lemma", "proposition", "corollary"],
   },
   {
+    id: "lean-no-definitional-laundering",
+    domain: "proof",
+    description:
+      "The sibling `lean-no-vacuous-instance-data` models vacuity as CONSTANT " +
+      "data. This criterion covers the shape that model cannot see: data that " +
+      "is NOT constant and is still chosen so the claim becomes `rfl`. A hand " +
+      "pass over the qou corpus found eight such sites and the constant " +
+      "detector found twenty-five, with a zero overlap. Three detections, all " +
+      "conjunctive: (1) ARGUMENT-IGNORING BODY — `def F (args…) : Prop := " +
+      "True` (or `False`), possibly after `let` bindings whose results are " +
+      "discarded, so every claim stated in terms of `F` is free without any " +
+      "instance being written; (2) LAMBDA-WRAPPED CONSTANT — `member := fun _ " +
+      "=> True` beside a reflexivity discharge, the sibling's exact " +
+      "conjunction with the constant one lambda deeper than its anchored " +
+      "regex reaches; (3) DEFINITIONAL IDENTITY — the class declares `claim : " +
+      "∀ …, data args = RHS` and the instance assigns `data := fun … => RHS` " +
+      "with that same RHS, then discharges `claim` by reflexivity. " +
+      "AST-checked, no agent turn. " +
+      "DETECTION 3 IS A READING, NOT A VERDICT: pinning a field to a formula " +
+      "and observing the law then holds by `rfl` is a legitimate way to " +
+      "exhibit a model, and whether the class field was a CONSTRAINT the " +
+      "instance had to meet or a DEFINITION it was entitled to make is not a " +
+      "syntactic question. Those hits grade `warn` and say so; when the " +
+      "author's docstring disputes the reading the hit records that too. " +
+      "Detections 1 and 2 grade `fail`. " +
+      "SCOPE, HONESTLY: detection 3 reads only classes declared in the SAME " +
+      "file — resolving an imported class means resolving imports, and a " +
+      "wrong resolution is a confident false report about a decl never read. " +
+      "Semantic constancy (`w A := 3 * A * 0`) needs `whnf`, i.e. the " +
+      "elaborator, and is out of reach here. An argument-free `def X : Prop " +
+      ":= True` is deliberately NOT reported: that is " +
+      "`proof-no-trivial-true`'s `def-disguised-true` pattern. " +
+      "THE REMEDY is the sibling criterion's, and it is the same remedy " +
+      "because it is the same defect one level up: parameterise the class " +
+      "over the data so the instance cannot choose its own shadow, then state " +
+      "the residual vacuity as a proved theorem pair — one instance at the " +
+      "trivial datum, one theorem that the class fails at a non-trivial one. " +
+      "`QOU/MassTheory/CableWidthBraneTowerLift.lean` (`colorRule` beside " +
+      "`not_widthRule_of_ne`) is the worked pattern. " +
+      "Routes to `lean-proof-vacuity-audit`.",
+    default_severity: "critical",
+    depends_on: ["lean"],
+    automated: true,
+    applies_to: ["definition", "theorem", "lemma", "proposition", "corollary"],
+  },
+  {
     id: "lean-docstring-honesty",
     domain: "proof",
     description:

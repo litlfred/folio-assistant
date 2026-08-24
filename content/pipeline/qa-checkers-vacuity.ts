@@ -60,6 +60,16 @@ interface FieldAssign {
   name: string;
   value: string;
   line: number;
+  /**
+   * Whatever stood between the field name and `:=`.
+   *
+   * For `poleIndicator rho := decide (rho ≤ -1)` this is `rho` — the binders
+   * the author wrote on the left. For `d : ∀ c, … := 0` it is a type
+   * ascription and starts with `:`. `checkNoDefinitionalLaundering` uses it to
+   * recover binder names when the field was written point-full rather than as
+   * a lambda; every other reader ignores it.
+   */
+  binders: string;
 }
 
 /**
@@ -124,7 +134,7 @@ export function parseFieldAssigns(body: string, startLine: number): FieldAssign[
       value += " " + nxt.trim();
       j++;
     }
-    out.push({ name, value: value.trim(), line: startLine + i });
+    out.push({ name, value: value.trim(), line: startLine + i, binders: m[2].trim() });
   }
   return out;
 }
@@ -184,6 +194,36 @@ export function parseDecls(src: string): Decl[] {
  * zero object); a `rfl` discharge alone is often fine (a real reflexivity).
  * Together they mean the claim was arranged away rather than proved.
  */
+/**
+ * The sibling criterion's conjunction, as a predicate on one declaration.
+ *
+ * Factored out because `lean-no-definitional-laundering` needs to know whether
+ * this check already fires on a decl: the two criteria are meant to partition
+ * the defect, not to double-report it. Behaviour is unchanged — this is the
+ * body of the loop below, lifted.
+ */
+function vacuousDataConjunction(
+  d: Decl,
+): { degenerateData: FieldAssign[]; trivialClaims: FieldAssign[] } | null {
+  if (d.kind !== "instance" && d.kind !== "def") return null;
+  // `where` is tested against the whole declaration, not just its first
+  // line: a real instance signature wraps, and the motivating case put
+  // `where` three lines down after the instance binders. Requiring it in the
+  // header alone missed every multi-line declaration — which is most of them.
+  if (!/\bwhere\b/.test(d.header + "\n" + d.body)) return null;
+  const fields = parseFieldAssigns(d.body, d.line);
+  if (fields.length < 2) return null;
+
+  const degenerateData = fields.filter(
+    (f) => !isClaimField(f.name) && DEGENERATE_VALUE.test(f.value),
+  );
+  const trivialClaims = fields.filter(
+    (f) => isClaimField(f.name) && TRIVIAL_DISCHARGE.test(f.value),
+  );
+  if (degenerateData.length === 0 || trivialClaims.length === 0) return null;
+  return { degenerateData, trivialClaims };
+}
+
 export function checkNoVacuousInstanceData(leanPath?: string): CheckerResult {
   if (!leanPath || !existsSync(leanPath)) return { result: "n/a", hits: [] };
   let src: string;
@@ -191,22 +231,9 @@ export function checkNoVacuousInstanceData(leanPath?: string): CheckerResult {
 
   const hits: CheckerHit[] = [];
   for (const d of parseDecls(src)) {
-    if (d.kind !== "instance" && d.kind !== "def") continue;
-    // `where` is tested against the whole declaration, not just its first
-    // line: a real instance signature wraps, and the motivating case put
-    // `where` three lines down after the instance binders. Requiring it in the
-    // header alone missed every multi-line declaration — which is most of them.
-    if (!/\bwhere\b/.test(d.header + "\n" + d.body)) continue;
-    const fields = parseFieldAssigns(d.body, d.line);
-    if (fields.length < 2) continue;
-
-    const degenerateData = fields.filter(
-      (f) => !isClaimField(f.name) && DEGENERATE_VALUE.test(f.value),
-    );
-    const trivialClaims = fields.filter(
-      (f) => isClaimField(f.name) && TRIVIAL_DISCHARGE.test(f.value),
-    );
-    if (degenerateData.length === 0 || trivialClaims.length === 0) continue;
+    const conj = vacuousDataConjunction(d);
+    if (!conj) continue;
+    const { degenerateData, trivialClaims } = conj;
 
     // An unconditional `instance` is the severe form: typeclass resolution
     // supplies it everywhere, so downstream hypotheses stop being hypotheses.
@@ -311,10 +338,610 @@ export function checkDocstringHonesty(leanPath?: string): CheckerResult {
   return { result: hits.length ? "fail" : "pass", hits };
 }
 
+/* ------------------------------------------------------------------ *
+ * `lean-no-definitional-laundering`
+ *
+ * The sibling criterion above models vacuity as CONSTANT data. That model is
+ * exact and it is narrow. A hand pass over the qou corpus on 2026-08-24 found
+ * eight laundering sites and the detector found twenty-five — with a zero
+ * overlap. Both lists are real; they are different defects.
+ *
+ * What the constant model cannot see is data that is not constant and is still
+ * *chosen so the claim becomes `rfl`*:
+ *
+ *     class SubstrateWidthRule where
+ *       w        : ℕ → ℕ
+ *       is_color : ∀ A, w A = cableWidthColor     -- the claim
+ *
+ *     instance colorRule : SubstrateWidthRule where
+ *       w        := fun _ => cableWidthColor      -- …defined to BE the claim's RHS
+ *       is_color := fun _ => rfl
+ *
+ * `cableWidthColor` is not a degenerate token, the field is not `_ := 0`, and
+ * `DEGENERATE_VALUE` — anchored `^…$` — cannot see through the lambda either.
+ * Three separate reasons the old check passes it.
+ *
+ * This criterion adds three detections, all syntactic, all conjunctive:
+ *
+ *   1. CONSTANT-`Prop` DEFINITION. `def F (args…) : Prop := True` (or `False`),
+ *      possibly after `let`-bindings whose results are discarded. Every claim
+ *      stated in terms of `F` is free, and no instance is needed to launder it.
+ *      Requires ≥ 1 parameter: an argument-free `def X : Prop := True` is a
+ *      named tautology, which is `proof-no-trivial-true`'s `def-disguised-true`
+ *      pattern, not this one. Reporting it here would duplicate that criterion
+ *      without adding signal.
+ *
+ *   2. LAMBDA-WRAPPED CONSTANT FIELD. `member := fun _ => True` beside a
+ *      reflexivity discharge — the sibling criterion's exact conjunction, with
+ *      the constant hidden behind one lambda so its anchored regex misses it.
+ *      Every binder must be a wildcard; `fun n => 0` is a constant function
+ *      someone may have meant.
+ *
+ *   3. DEFINITIONAL IDENTITY (the `poleIndicator` shape). The class declares
+ *      `claim : ∀ …, data args = RHS`; the instance assigns `data := fun … =>
+ *      RHS` with the SAME RHS, and discharges `claim` by reflexivity. This one
+ *      needs the `class … where` block, so it is bounded to classes declared in
+ *      the same file — no import following.
+ *
+ * ## Detection 3 is a reading, not a verdict
+ *
+ * A definitional identity is sometimes exactly the content: pinning a field to
+ * a formula and observing that the law then holds by `rfl` is a legitimate way
+ * to exhibit a model. Whether the class field was a CONSTRAINT the instance was
+ * supposed to meet or a DEFINITION the instance was entitled to make is not a
+ * syntactic question — it is about what the class was for. So detection 3 hits
+ * are reported as `warn` (the schema's "borderline; reviewer flags but does not
+ * block"), never as an assertion of defect, and when the author's docstring
+ * disputes the reading the hit says so. `BorromeanQuark.canonical` is the
+ * worked example: its docstring argues the mass-calibration identity IS the
+ * content. It is still worth surfacing — but as a question.
+ *
+ * ## What is deliberately NOT here
+ *
+ * - **One-hop constant resolution** (`q0 := q_zero` where `def q_zero := …`).
+ *   Both corpus sites that motivated it (`ArchimedeanRealizationFunctor`,
+ *   `SubstrateWidthRule`) turn out to be detection-3 shapes — the named
+ *   constant is the class field's RHS — so following the name buys nothing
+ *   they do not already report, and following it in general would fire on
+ *   every instance that uses a named constant correctly.
+ * - **Semantic constancy.** `w A := 3 * A * 0` is constant and unreachable
+ *   from here. That needs `whnf`, i.e. the elaborator. See the note on the
+ *   sibling criterion; this file does not pretend to cover it.
+ * - **Cross-file classes.** Detection 3 needs the `class` block. Resolving an
+ *   imported class means resolving imports, and a wrong resolution produces a
+ *   confident false positive about a decl the checker never read.
+ *
+ * ## Tightened against
+ *
+ * The first corpus sweep returned 26. Every one was read, and five vetoes came
+ * out of the ones that were wrong — recorded here because the next person to
+ * loosen this check should know what each veto is holding back:
+ *
+ * - A discharge lambda that NAMES its binders is a proof, not a reflexivity
+ *   (`ti_eq := fun w => by simp [Equiv.punitProd]`) — see `REFL_DISCHARGE`.
+ * - A decl in which some law needed real tactic work is a model doing work —
+ *   see `isSubstantiveDischarge`.
+ * - Not every field a NAME calls a claim need be trivially discharged; one real
+ *   proof among them means the constants are a corner, not the whole model.
+ * - A declared inhabitation witness is the prescribed remedy, not the defect —
+ *   see `INHABITATION_WITNESS`.
+ * - A `theorem` exhibiting a record proves an existential; that is not this
+ *   criterion's business.
+ * ------------------------------------------------------------------ */
+
+/** Strip Lean block comments (docstrings included) and line comments. */
+function stripLeanComments(src: string): string {
+  return src.replace(/\/-[\s\S]*?-\//g, "").replace(/--.*$/gm, "");
+}
+
+/** Collapse whitespace so two spellings of one expression compare equal. */
+function normExpr(s: string): string {
+  let t = s.replace(/\s+/g, " ").trim();
+  // Peel parentheses that wrap the whole expression: `(f x)` vs `f x`.
+  while (t.startsWith("(") && t.endsWith(")")) {
+    let depth = 0;
+    let wraps = true;
+    for (let i = 0; i < t.length; i++) {
+      if (t[i] === "(") depth++;
+      else if (t[i] === ")") {
+        depth--;
+        if (depth === 0 && i < t.length - 1) { wraps = false; break; }
+      }
+    }
+    if (!wraps) break;
+    t = t.slice(1, -1).trim();
+  }
+  return t;
+}
+
+const OPENERS = "([{⟨⦃";
+const CLOSERS = ")]}⟩⦄";
+
+/** Index of the first `,` at bracket depth 0, or -1. */
+function topLevelComma(s: string, from: number): number {
+  let depth = 0;
+  for (let i = from; i < s.length; i++) {
+    const c = s[i];
+    if (OPENERS.includes(c)) depth++;
+    else if (CLOSERS.includes(c)) depth--;
+    else if (c === "," && depth === 0) return i;
+  }
+  return -1;
+}
+
+/** Split on `→` / `->` at bracket depth 0. */
+function splitArrows(s: string): string[] {
+  const out: string[] = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (OPENERS.includes(c)) depth++;
+    else if (CLOSERS.includes(c)) depth--;
+    else if (depth === 0 && (c === "→" || (c === "-" && s[i + 1] === ">"))) {
+      out.push(s.slice(start, i));
+      i += c === "→" ? 0 : 1;
+      start = i + 1;
+    }
+  }
+  out.push(s.slice(start));
+  return out.map((x) => x.trim()).filter((x) => x.length > 0);
+}
+
+/** Drop leading `∀ …,` / `Π …,` binder groups to expose the conclusion. */
+function stripBinders(s: string): string {
+  let t = s.trim();
+  for (let guard = 0; guard < 16; guard++) {
+    if (!/^[∀Π]/.test(t)) return t;
+    const idx = topLevelComma(t, 1);
+    if (idx < 0) return t;
+    t = t.slice(idx + 1).trim();
+  }
+  return t;
+}
+
+/**
+ * The conclusion of a field's type: what it asserts once every binder and
+ * hypothesis is discharged.
+ *
+ * Alternating `stripBinders` / `splitArrows` to a fixed point, because binders
+ * and hypotheses interleave: `∀ i, i < level → ∀ v w, member v = f w` puts a
+ * second `∀` AFTER a hypothesis arrow, and stripping only the outer one leaves
+ * the conclusion unreached.
+ */
+function conclusionOf(type: string): string {
+  let t = type.trim();
+  for (let guard = 0; guard < 8; guard++) {
+    const pieces = splitArrows(stripBinders(t));
+    const last = pieces[pieces.length - 1] ?? "";
+    if (last === t) return t;
+    t = last;
+  }
+  return t;
+}
+
+/** A field declared inside a `class`/`structure` body. */
+export interface StructField {
+  name: string;
+  type: string;
+}
+
+/** A `class`/`structure` declaration and the fields it declares. */
+export interface StructDecl {
+  kind: "class" | "structure";
+  name: string;
+  line: number;
+  fields: StructField[];
+}
+
+const STRUCT_HEAD =
+  /^(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+)*(class|structure)\s+([A-Za-z_][A-Za-z0-9_'.!?]*)/;
+
+/**
+ * Split a Lean file into its `class` / `structure` declarations.
+ *
+ * Separate from `parseDecls`, which treats a `class` line as a body terminator
+ * and never looks inside one. Detection 3 needs what the class DECLARES — an
+ * instance body alone cannot say which of its fields is the claim.
+ */
+export function parseStructureDecls(src: string): StructDecl[] {
+  const lines = src.split("\n");
+  const out: StructDecl[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(STRUCT_HEAD);
+    if (!m) continue;
+    const declLines = [lines[i]];
+    let j = i + 1;
+    while (j < lines.length) {
+      if (
+        /^(?:@\[|\/-|noncomputable\s|private\s|protected\s|instance\s|def\s|theorem\s|abbrev\s|structure\s|class\s|opaque\s|axiom\s|inductive\s|example\s|end\s|namespace\s|section\s)/.test(
+          lines[j],
+        )
+      ) break;
+      declLines.push(lines[j]);
+      j++;
+    }
+    i = j - 1;
+    const text = stripLeanComments(declLines.join("\n"));
+    const w = text.match(/\bwhere\b/);
+    if (!w || w.index === undefined) continue;
+    const bodyText = text.slice(w.index + w[0].length);
+    out.push({
+      kind: m[1] as StructDecl["kind"],
+      name: m[2],
+      line: i + 1,
+      fields: parseStructFields(bodyText),
+    });
+  }
+  return out;
+}
+
+/** `name : type` entries in a class body, absorbing wrapped types. */
+function parseStructFields(body: string): StructField[] {
+  const fields: StructField[] = [];
+  const lines = body.split("\n");
+  for (let k = 0; k < lines.length; k++) {
+    const raw = lines[k];
+    if (!raw.trim()) continue;
+    const fm = raw.match(/^(\s+)([A-Za-z_][A-Za-z0-9_'!?]*)\s*:(?!=)\s*(.*)$/);
+    if (!fm) continue;
+    const indent = fm[1].length;
+    let type = fm[3].trim();
+    let k2 = k + 1;
+    while (k2 < lines.length) {
+      const nxt = lines[k2];
+      if (!nxt.trim()) { k2++; continue; }
+      if (nxt.length - nxt.trimStart().length <= indent) break;
+      type += " " + nxt.trim();
+      k2++;
+    }
+    fields.push({ name: fm[2], type: type.trim() });
+    k = k2 - 1;
+  }
+  return fields;
+}
+
+/**
+ * A class field whose type says "this other field equals THIS expression".
+ *
+ * `is_color : ∀ A, w A = cableWidthColor` yields
+ * `{ claim: "is_color", data: "w", args: ["A"], rhs: "cableWidthColor" }`.
+ */
+interface DefinitionalClaim {
+  claim: string;
+  data: string;
+  args: string[];
+  rhs: string;
+}
+
+/**
+ * The equation must be the field's CONCLUSION, not any `=` anywhere in its
+ * type. `demazure_closure : ∀ i, i < level → ∀ v w, member v → G.f i v = some
+ * w → member w` contains an `=`, and reading it as the field's claim would
+ * invent an RHS the author never wrote. Binders are stripped and the type is
+ * split on top-level `→` so only the final conclusion is matched.
+ */
+const EQ_CONCLUSION =
+  /^([A-Za-z_][A-Za-z0-9_'!?₀-₉]*)\s*([^=]*?)(?<![<>!:≤≥≠~])=(?![=>])\s*(.+)$/;
+
+/** Args must be plain binder names for the alpha-rename below to be sound. */
+const SIMPLE_ARGS = /^[A-Za-z0-9_'!?₀-₉\s]*$/;
+
+function definitionalClaims(cls: StructDecl): DefinitionalClaim[] {
+  const names = new Set(cls.fields.map((f) => f.name));
+  const out: DefinitionalClaim[] = [];
+  for (const f of cls.fields) {
+    const concl = conclusionOf(f.type);
+    if (!concl) continue;
+    const m = concl.match(EQ_CONCLUSION);
+    if (!m) continue;
+    const data = m[1];
+    if (data === f.name || !names.has(data)) continue;
+    if (!SIMPLE_ARGS.test(m[2])) continue;
+    out.push({
+      claim: f.name,
+      data,
+      args: m[2].trim().split(/\s+/).filter(Boolean),
+      rhs: normExpr(m[3]),
+    });
+  }
+  return out;
+}
+
+/** `fun a b => body` / `λ a b ↦ body` → binders + body. */
+function splitLambda(value: string): { binders: string[]; body: string } | null {
+  const m = value.match(/^(?:fun|λ)\s+([^=↦]*?)\s*(?:=>|↦)\s*([\s\S]*)$/);
+  if (!m) return null;
+  const binders = m[1].trim().split(/\s+/).filter(Boolean);
+  if (!binders.every((b) => /^[A-Za-z_][A-Za-z0-9_'!?₀-₉]*$/.test(b))) return null;
+  return { binders, body: m[2].trim() };
+}
+
+/**
+ * Rename the instance's binders to the class's argument names, positionally.
+ *
+ * `poleIndicator := fun x => decide (x ≤ -1)` must compare equal to the class's
+ * `poleIndicator rho = decide (rho ≤ -1)`. Two phases so a rename cannot
+ * capture a name a later rename is about to introduce.
+ */
+function alphaRename(body: string, from: string[], to: string[]): string {
+  if (from.length !== to.length || from.length === 0) return body;
+  // NUL-delimited, and written as an escape rather than typed as a raw byte:
+  // a PRINTABLE placeholder collides with the source. Routing `y → x` through
+  // `" 0 "` would rewrite `g 0 y` to `g x x`, manufacturing a match out of a
+  // numeral the author wrote.
+  const hole = (i: number) => `\u0000${i}\u0000`;
+  let t = body;
+  for (let i = 0; i < from.length; i++) {
+    if (from[i] === "_") continue;
+    t = t.replace(new RegExp(`(?<![A-Za-z0-9_'])${escapeRe(from[i])}(?![A-Za-z0-9_'])`, "g"), hole(i));
+  }
+  for (let i = 0; i < to.length; i++) t = t.split(hole(i)).join(to[i]);
+  return t;
+}
+
+function escapeRe(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Reflexivity discharges, including multi-binder lambdas.
+ *
+ * Wider than `TRIVIAL_DISCHARGE` above on purpose, and kept separate on
+ * purpose: `volume_calibrates_mass := fun _ _ => rfl` has TWO wildcard binders
+ * and the sibling criterion's `fun\s+_+\s*=>` matches only one. Widening the
+ * shared constant would loosen a check whose precision is the reason it has
+ * near-zero false positives.
+ *
+ * The binders must be WILDCARDS. `ti_eq := fun w => by simp [Equiv.punitProd]`
+ * names its argument and rewrites with a named lemma; reading that as a
+ * reflexivity discharge produced four of the first sweep's false positives
+ * (`HeckeCommutingCellReduction`, `HeckeDihedralBraidReduction`). A discharge
+ * that IGNORES its arguments is the signal; one that uses them is a proof.
+ */
+const REFL_DISCHARGE =
+  /^(?:(?:fun|λ)\s+(?:_[A-Za-z0-9_'!?]*\s+)*(?:=>|↦)\s*)?(?:rfl|Iff\.rfl|Eq\.refl\b.*|trivial|True\.intro|\.intro|⟨⟩|by\s+(?:rfl|trivial|simp\s*\[[^\]]*\]|simp|norm_num|decide|positivity|constructor|exact\s+rfl|exact\s+Iff\.rfl))\s*$/;
+
+/**
+ * A field discharged by real work rather than by reflexivity.
+ *
+ * Used as a whole-declaration veto for detection 2. A decl in which SOME law
+ * needed a genuine tactic proof is a small model doing work, not a laundering:
+ * the constant fields are the model's degenerate corner, and the class is being
+ * shown satisfiable. `verlindeData_two` (`D_sq := by rw […]; rw […]; norm_num`),
+ * `spectralData_zero` (`rank`, `decomp`) and `localization_two`
+ * (`globalDim_ne`) are all this shape and all were false positives.
+ *
+ * Purely structural — no docstring involved, so it cannot be talked around.
+ */
+function isSubstantiveDischarge(value: string): boolean {
+  const v = value.trim();
+  if (REFL_DISCHARGE.test(v)) return false;
+  return /(?:^|\s)by\b/.test(v);
+}
+
+/**
+ * A docstring declaring the decl to be an inhabitation / non-vacuity witness.
+ *
+ * This IS a gameable escape hatch, and it is here for the same reason
+ * `NEGATED_HONESTY_CLAIM` is: the registry's own remedy for
+ * `lean-no-vacuous-instance-data` tells authors to write exactly this
+ * declaration — "one instance at the trivial datum showing the hypothesis is
+ * satisfiable" — so firing on it punishes the prescribed fix. `rtData_two` is
+ * the corpus case the structural vetoes above do not reach: every one of its
+ * fields is a one-liner, so nothing marks it as doing work, and the only thing
+ * separating it from a laundering is the stated intent.
+ *
+ * Kept narrow on purpose. "genuine" is NOT a trigger — `instSl2DemazureSubcrystal`
+ * calls itself "a genuine `DemazureSubcrystal`" and is a real finding.
+ */
+const INHABITATION_WITNESS =
+  /\b(?:non-?vacuity|not\s+vacuous|is\s+inhabited|inhabitation|satisfiab|not\s+conditional-on-`?False)/i;
+
+/** `fun _ _ => <constant>` — every binder a wildcard. */
+const WILDCARD_LAMBDA =
+  /^(?:fun|λ)\s+((?:_[A-Za-z0-9_'!?]*\s+)+)(?:=>|↦)\s*([\s\S]+)$/;
+
+/** Heads `parseFieldAssigns` picks up from tactic blocks that are not fields. */
+const NOT_A_FIELD = new Set([
+  "let", "have", "set", "show", "suffices", "obtain", "calc", "fun", "match",
+  "by", "exact", "refine", "apply", "use", "intro", "intros", "simp", "rw",
+  "case", "next", "with", "do", "if", "then", "else", "try", "all_goals",
+]);
+
+/** Trim a decl body at the first line that opens an unrelated declaration. */
+const FOREIGN_DECL = /^(?:opaque|axiom|inductive|example)\s/;
+
+function declText(d: Decl): string {
+  const kept: string[] = [];
+  for (const l of d.body.split("\n")) {
+    if (FOREIGN_DECL.test(l)) break;
+    kept.push(l);
+  }
+  return d.header + "\n" + kept.join("\n");
+}
+
+/**
+ * `lean-no-definitional-laundering` — data chosen so the claim is `rfl`, in the
+ * three shapes the constant model cannot see. See the block comment above.
+ */
+export function checkNoDefinitionalLaundering(leanPath?: string): CheckerResult {
+  if (!leanPath || !existsSync(leanPath)) return { result: "n/a", hits: [] };
+  let src: string;
+  try { src = readFileSync(leanPath, "utf8"); } catch { return { result: "n/a", hits: [] }; }
+
+  const hits: CheckerHit[] = [];
+  const metrics = { constant_prop_defs: 0, lambda_constant_fields: 0, definitional_identities: 0 };
+  const classes = parseStructureDecls(src);
+  const claimIndex = classes.map((c) => ({ cls: c, claims: definitionalClaims(c) }));
+
+  for (const d of parseDecls(src)) {
+    // Report only what the sibling criterion cannot see. The two lists were
+    // measured disjoint on the qou corpus and that is the point of splitting
+    // them; a decl already flagged there does not need a second, weaker
+    // description of the same defect.
+    if (vacuousDataConjunction(d)) continue;
+    const whole = declText(d);
+
+    // ── 1. `def F (args…) : Prop := True` ────────────────────────────
+    if (d.kind === "def" || d.kind === "abbrev") {
+      const constProp = constantPropBody(whole, d.name);
+      if (constProp) {
+        metrics.constant_prop_defs++;
+        hits.push({
+          file: leanPath,
+          line: d.line,
+          text:
+            `\`${d.name}\` takes ${constProp.arity} argument group${constProp.arity === 1 ? "" : "s"} ` +
+            `and its body is the constant \`${constProp.value}\`. It is a name reserved for a claim, ` +
+            `not the claim: it is equal to every other tautology, so anything stated in terms of it — ` +
+            `an iff, a hypothesis, a downstream theorem — is discharged by \`${constProp.value === "True" ? "Iff.rfl` / `trivial" : "not_false"}\` ` +
+            `and constrains nothing. Seal the body (\`opaque\`) or state the real proposition with a ` +
+            `\`sorry\` so \`#print axioms\` can see the gap.`,
+        });
+      }
+    }
+
+    // Detections 2 and 3 read a structure-instance body. A `theorem` that
+    // builds a record inside its proof — `⟨{ traceValue := ∏ …, factorization
+    // := rfl }, rfl, rfl, rfl⟩` in `markov_trace_product` — is exhibiting a
+    // witness for an existential, which is how one proves `∃`. Theorem-shaped
+    // vacuity belongs to `proof-no-self-assuming-projection` /
+    // `proof-no-trivial-true`.
+    if (d.kind === "theorem") continue;
+
+    const fields = parseFieldAssigns(d.body, d.line).filter((f) => !NOT_A_FIELD.has(f.name));
+    if (fields.length < 2) continue;
+    const byName = new Map(fields.map((f) => [f.name, f]));
+
+    // ── 2. `data := fun _ => <degenerate>` + a reflexivity discharge ──
+    //
+    // Three vetoes, all learned from the first corpus sweep: the decl must do
+    // no substantive proof work anywhere, EVERY field its name marks as a
+    // claim must be trivially discharged (one real proof among them means the
+    // constants are a corner of a working model), and it must not declare
+    // itself an inhabitation witness.
+    const lambdaConst = fields.filter((f) => {
+      if (isClaimField(f.name)) return false;
+      const m = f.value.match(WILDCARD_LAMBDA);
+      return !!m && DEGENERATE_VALUE.test(m[2].trim());
+    });
+    const claimFields = fields.filter((f) => isClaimField(f.name));
+    const trivialClaims = claimFields.filter((f) => REFL_DISCHARGE.test(f.value));
+    const doesRealWork =
+      fields.some((f) => isSubstantiveDischarge(f.value)) ||
+      trivialClaims.length !== claimFields.length ||
+      INHABITATION_WITNESS.test(d.docstring);
+    if (lambdaConst.length && trivialClaims.length && !doesRealWork) {
+      metrics.lambda_constant_fields += lambdaConst.length;
+      for (const c of trivialClaims) {
+        hits.push({
+          file: leanPath,
+          line: c.line,
+          text:
+            `${d.kind} \`${d.name}\`: claim field \`${c.name} := ${c.value}\` is discharged by ` +
+            `reflexivity, and the data it constrains is a constant behind a lambda ` +
+            `(${lambdaConst.map((f) => `${f.name} := ${f.value}`).join(", ")}). Same defect as ` +
+            `\`lean-no-vacuous-instance-data\`, one \`fun _ =>\` deeper than its anchored ` +
+            `degenerate-value match can reach.`,
+        });
+      }
+    }
+
+    // ── 3. data defined to BE the claim's right-hand side ─────────────
+    for (const { cls, claims } of claimIndex) {
+      for (const dc of claims) {
+        const dataField = byName.get(dc.data);
+        const claimField = byName.get(dc.claim);
+        if (!dataField || !claimField) continue;
+        if (!REFL_DISCHARGE.test(claimField.value)) continue;
+        const lam = splitLambda(dataField.value);
+        const binders = lam ? lam.binders : dataField.binders.startsWith(":") ? [] : dataField.binders.split(/\s+/).filter(Boolean);
+        const rawBody = lam ? lam.body : dataField.value;
+        if (normExpr(alphaRename(rawBody, binders, dc.args)) !== dc.rhs) continue;
+        metrics.definitional_identities++;
+        const disputed = DISPUTED_DEFINITIONAL.test(d.docstring);
+        hits.push({
+          file: leanPath,
+          line: dataField.line,
+          text:
+            `REVIEW (not a verdict) — ${d.kind} \`${d.name}\` assigns \`${dc.data} := ${dataField.value}\`, ` +
+            `which is exactly the right-hand side of \`${cls.name}.${dc.claim}\` ` +
+            `(\`${dc.data}${dc.args.length ? " " + dc.args.join(" ") : ""} = ${dc.rhs}\`), and then discharges ` +
+            `that field by \`${claimField.value}\`. The claim holds by definition because the data was defined ` +
+            `to make it hold. Whether that is laundering or content depends on what the class field was FOR — ` +
+            `a constraint the instance had to meet, or a definition it was entitled to make — and that is not ` +
+            `a syntactic question. Decide, and record the decision.` +
+            (disputed
+              ? ` The docstring disputes this reading; treat it as answered unless the class field was meant as a constraint.`
+              : ""),
+        });
+      }
+    }
+  }
+
+  const hard = metrics.constant_prop_defs + metrics.lambda_constant_fields;
+  return {
+    result: hits.length === 0 ? "pass" : hard > 0 ? "fail" : "warn",
+    hits,
+    metrics,
+  };
+}
+
+/**
+ * Docstring phrasing that argues the definitional identity is the content.
+ *
+ * Mirrors `NEGATED_HONESTY_CLAIM`'s role for `lean-docstring-honesty`: the
+ * checker still reports, but it must not assert a defect over the author's
+ * stated reasoning.
+ */
+const DISPUTED_DEFINITIONAL =
+  /\b(?:genuine\s+(?:content|instance|input)|non-?vacuous|not\s+(?:a\s+)?vacuous|holds?\s+definitionally|definitional(?:ly)?\s+(?:identity|content)|not\s+chosen(?:\s+to)?|\*derived\*)\b/i;
+
+/**
+ * `def F (args…) : Prop := True | False`, allowing discarded `let`/`have`.
+ *
+ * The remainder after the `let`s must be EXACTLY `True` or `False`. Anything
+ * else is a real proposition and the check declines to guess — a body it
+ * cannot read in full is a body it must not report on.
+ */
+function constantPropBody(
+  whole: string,
+  declName: string,
+): { value: "True" | "False"; arity: number } | null {
+  const text = stripLeanComments(whole);
+  const at = text.search(/:\s*Prop\s*:=/);
+  if (at < 0) return null;
+  const sig = text.slice(0, at).replace(
+    new RegExp(`^[\\s\\S]*?\\b(?:def|abbrev)\\s+${escapeRe(declName)}`),
+    "",
+  );
+  // Top-level groups only. A binder whose TYPE has parentheses —
+  // `(f : (ℕ → ℕ))` — is one argument group, not two, and the count is quoted
+  // back to the reader.
+  let arity = 0;
+  let depth = 0;
+  for (const c of sig) {
+    if (OPENERS.includes(c)) { if (depth === 0) arity++; depth++; }
+    else if (CLOSERS.includes(c)) depth--;
+  }
+  if (arity === 0) return null;
+  const after = text.slice(at).replace(/^:\s*Prop\s*:=/, "");
+  const rest = after
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0 && !/^(?:let|have|set)\b/.test(l))
+    .join(" ")
+    .trim();
+  if (rest === "True" || rest === "False") return { value: rest, arity };
+  return null;
+}
+
 export const VACUITY_AUTOMATED_CHECKERS: Record<
   string,
   (paths: { md?: string; ts?: string; lean?: string }) => CheckerResult
 > = {
   "lean-no-vacuous-instance-data": (p) => checkNoVacuousInstanceData(p.lean),
+  "lean-no-definitional-laundering": (p) => checkNoDefinitionalLaundering(p.lean),
   "lean-docstring-honesty": (p) => checkDocstringHonesty(p.lean),
 };

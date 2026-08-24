@@ -243,8 +243,31 @@ Parameterising alone is not enough: it stops the class choosing its own shadow,
 but a consumer can still instantiate at the zero datum. The pair is what closes
 that.
 
-Detected mechanically by `lean-no-vacuous-instance-data` (see below), which
-looks for the conjunction of degenerate data and a reflexivity discharge.
+Detected mechanically by **two** criteria in `content/pipeline/qa-checkers-vacuity.ts`,
+which partition the defect rather than overlap — a decl the first flags is
+skipped by the second:
+
+- `lean-no-vacuous-instance-data` — degenerate data *written as a constant*
+  (`_ := 0`, `PUnit.unit`, `default`) plus a reflexivity discharge.
+- `lean-no-definitional-laundering` — data that is **not** constant and is still
+  chosen so the claim becomes `rfl`. Three shapes: an argument-ignoring body
+  (`def F (args…) : Prop := True`), a constant one lambda deep
+  (`member := fun _ => True`), and a field defined to BE the right-hand side its
+  class field compares against (`w := fun _ => cableWidthColor` under
+  `is_color : ∀ A, w A = cableWidthColor`).
+
+The two lists were measured **disjoint** on the qou corpus on 2026-08-24: a hand
+read found eight laundering sites, the constant detector found twenty-five, and
+no site appeared in both. If you are auditing for vacuity, running only one of
+them is running half the check.
+
+The third shape grades `warn`, not `fail`, and says "REVIEW (not a verdict)" in
+its own evidence. Pinning a field to a formula and observing the law then holds
+by `rfl` is a legitimate way to exhibit a model; whether the class field was a
+*constraint* the instance had to meet or a *definition* it was entitled to make
+is a question about what the class was for, and no regex answers it. Answer it
+and record the answer — do not treat the hit as a defect, and do not dismiss it
+because the docstring already argues it is fine.
 
 ## Detection heuristic (candidate grep → agent confirmation)
 
