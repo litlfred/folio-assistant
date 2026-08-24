@@ -78,3 +78,43 @@ state: `voice-editorializing` produced 124 hits that are real adverbs
 ("merely", "trivially", "effortlessly", "cleanly"), i.e. an over-eager
 advisory rather than a broken pattern. Left alone deliberately — judging those
 is an authoring call, not a regex bug.
+
+---
+
+## CORRECTION 2026-08-24 — the impact figure was 66 -> 2, not 69 of 71
+
+The "69 of the 71 blocks whose committed sidecar records a fail" line above
+counted wrong, and the error is worth recording because it is easy to repeat.
+
+A `.qa.json` criterion holds a **history** of entries, not one verdict. My
+selector was "any entry has `result: fail`", which counts July's superseded
+failures alongside current ones. `prop:joint-galois-braid-discharged`, for
+instance, carries a `fail` from 2026-07-13 **and** a `pass` from 2026-07-19 —
+its current verdict is pass, and it should never have been in the denominator.
+
+Measured properly, taking the latest entry by `reviewed_at`:
+
+    voice-scholarly-default, CURRENT verdict
+      before the fix:  66 blocks failing
+      after the fix:    2 blocks failing
+      cleared:         64
+
+The 2 survivors are the same genuine line —
+`HyperbolicVolumeTranscendence.lean:259`, "Now that `vol_B3 = 8 · catalan_G`
+symbolically, ..." — reached by `prop:volume-tower-decomposition` and
+`prop:cs-evaluation-faithfulness`. That part of the original claim was right.
+
+Everything else in this bean stands: the 261 -> 6 corpus hit count came from
+running the checker, not from reading sidecars, and is unaffected.
+
+## Sidecars refreshed, and what the refresh surfaced
+
+The 71 selected blocks were re-swept in qou (`5951b6c26f`+). Re-running every
+script criterion at its current version also flipped 11 other stale verdicts
+to pass — `detangler-no-forward-ref` (3), `detangler-no-dependency-cycle` (2),
+`uses-editorial-hygiene` (2), `bib-cite-resolves`, `compute-prop-has-probe`,
+`compute-prop-has-consumer`, `voice-editorializing` — and revealed **four real
+failures that had been hiding behind passing verdicts stamped July**. Those
+are qou bean `qou-h1p7`, not fixed here: one is a Lean declaration claimed by
+two statement-bearing blocks, which needs an owner decision.
+
