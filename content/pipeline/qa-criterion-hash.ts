@@ -25,8 +25,16 @@
  *
  * ## What is hashed
  *
- * The criterion's dispatch entry (its property in the exported
- * `*_AUTOMATED_CHECKERS` record) plus the transitive closure of module-local
+ * The criterion's dispatch entry — the FIRST property in this module whose key
+ * is the criterion id, in any object literal, at any depth. The record's name
+ * is irrelevant and so is whether it is exported: `findCriterionEntry` matches
+ * on the key alone, so a dispatch table called anything at all is found, and a
+ * property with that key somewhere else would be found first. (An earlier
+ * version of this paragraph claimed the analysis locates an exported
+ * `*_AUTOMATED_CHECKERS` record; it never has, and reading it that way sends
+ * you looking for a naming convention that is not load-bearing.)
+ *
+ * That entry, plus the transitive closure of module-local
  * declarations it references. Cross-module imports are NOT followed — that
  * matches the previous whole-file behaviour, which never hashed other files
  * either, so this is not a new gap. Declared `extra_inputs` remain covered
