@@ -210,7 +210,16 @@ export function checkNoVacuousInstanceData(leanPath?: string): CheckerResult {
 
     // An unconditional `instance` is the severe form: typeclass resolution
     // supplies it everywhere, so downstream hypotheses stop being hypotheses.
-    const severity = d.kind === "instance" ? "instance" : "def";
+    //
+    // But only if the carrier is a VARIABLE. An instance at a concrete object —
+    // `instance foo : R5FullWitness LightNucleus.helium3`, binding nothing — is
+    // resolved for that one object and nothing else, so its degenerate fields
+    // are a claim about helium-3 rather than about every carrier. Both survivors
+    // of the 2026-08-24 demotion sweep were this shape, and both had already
+    // been cleared by hand. Detected by the absence of binder groups before the
+    // `:` in the header, which is what universal quantification looks like here.
+    const bindsCarrier = /^[^:]*[({\[]/.test(d.header.replace(/^(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+)*(?:instance|def)\s+[A-Za-z_][A-Za-z0-9_'.!?]*/, ""));
+    const severity = d.kind === "instance" && bindsCarrier ? "instance" : "def";
     for (const c of trivialClaims) {
       hits.push({
         file: leanPath,
@@ -220,9 +229,11 @@ export function checkNoVacuousInstanceData(leanPath?: string): CheckerResult {
           `discharged by reflexivity, and the data it constrains is degenerate ` +
           `(${degenerateData.map((f) => `${f.name} := ${f.value}`).join(", ")}). ` +
           `The claim is arranged away, not proved.` +
-          (d.kind === "instance"
-            ? " As an `instance` it is resolved everywhere, so downstream theorems taking this class are unconditional."
-            : ""),
+          (d.kind === "instance" && bindsCarrier
+            ? " As an `instance` over a variable carrier it is resolved everywhere, so downstream theorems taking this class are unconditional."
+            : d.kind === "instance"
+              ? " Resolved only at this concrete carrier, so the claim is about that object rather than every carrier — lower severity."
+              : ""),
       });
     }
   }

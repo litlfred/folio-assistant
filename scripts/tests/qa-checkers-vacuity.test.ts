@@ -76,6 +76,36 @@ describe("lean-no-vacuous-instance-data", () => {
     expect(r.hits[0].text).not.toContain("resolved everywhere");
   });
 
+  test("an instance at a CONCRETE carrier is not the severe form", () => {
+    // `instance foo : C SomeObject where …` binds nothing, so resolution
+    // supplies it for that one object. Its degenerate fields are a claim about
+    // that object, not about every carrier. Both survivors of the 2026-08-24
+    // demotion sweep were this shape and both had been cleared by hand.
+    const src = `
+/-- Witness at a specific nucleus. -/
+instance instR5FullWitness_helium3 : R5FullWitness LightNucleus.helium3 where
+  primal_obj := 1
+  dual_obj := 1
+  duality_gap_le := by simp
+`;
+    const r = withLean(src, (p) => checkNoVacuousInstanceData(p));
+    if (r.result === "fail") {
+      expect(r.hits[0].text).not.toContain("resolved everywhere");
+    }
+  });
+
+  test("an instance over a VARIABLE carrier IS the severe form", () => {
+    const src = `
+instance canonical (R : Type u) [CommRing R] (q : R) : S R q where
+  lhs _ := 0
+  rhs _ := 0
+  lhs_eq_rhs _ := rfl
+`;
+    const r = withLean(src, (p) => checkNoVacuousInstanceData(p));
+    expect(r.result).toBe("fail");
+    expect(r.hits[0].text).toContain("resolved everywhere");
+  });
+
   test("does NOT fire on degenerate data alone — a genuine zero object", () => {
     const src = `
 /-- The zero module is a legitimate object. -/
