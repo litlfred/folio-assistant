@@ -874,9 +874,20 @@ const SECOND_PERSON_RE =
 /**
  * Lecturer cadence — informal sentence openers more at home in a
  * lecture than a paper.
+ *
+ * `Right` requires a following comma (`Right, so ...`) or `now`
+ * (`Right now we encode ...`). The bare `Right\b` this used to carry
+ * flagged ordinary mathematical English: measured against the qou
+ * corpus 2026-08-24, 22 Lean docstring lines opened with `Right`, and
+ * 21 of them were "Right multiplication by", "Right action of",
+ * "Right adjoint", "Right identity", "Right zero law" — a 21/22
+ * false-positive rate. The remaining one ("Right now we encode") is
+ * still caught. The neighbouring `OK,?` / `Okay,?` / `Alright,?`
+ * keep their optional comma: none of those three is ever a technical
+ * term, so there is nothing for them to collide with.
  */
 const LECTURER_OPENER_RE =
-  /^\s*(?:So (?:what (?:we|I)(?:'re)?(?: going to)?(?: do)?|let'?s|now|first|why|here|the)|Now (?:we (?:want|need|will|are|have|move|turn|introduce|consider)|let'?s|that|here|first|comes?)|OK,?\b|Okay,?\b|Alright,?\b|Well,|Right,?\b|Anyway,|Anyhow,|Basically,|Briefly,|Long story short|Recap:|In short,|To recap,|At this point,?\s+(?:we|let'?s)|First (?:off|things first)|Before (?:we|getting|moving|diving)|Without further ado)/i;
+  /^\s*(?:So (?:what (?:we|I)(?:'re)?(?: going to)?(?: do)?|let'?s|now|first|why|here|the)|Now (?:we (?:want|need|will|are|have|move|turn|introduce|consider)|let'?s|that|here|first|comes?)|OK,?\b|Okay,?\b|Alright,?\b|Well,|Right(?:,|\s+now\b)|Anyway,|Anyhow,|Basically,|Briefly,|Long story short|Recap:|In short,|To recap,|At this point,?\s+(?:we|let'?s)|First (?:off|things first)|Before (?:we|getting|moving|diving)|Without further ado)/i;
 
 /**
  * Past-tense narration of the paper's own derivation. Paper voice

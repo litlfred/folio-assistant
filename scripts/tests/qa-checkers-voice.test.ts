@@ -18,6 +18,7 @@ import { join } from "path";
 import { tmpdir } from "os";
 import {
   checkEditorializing,
+  checkScholarlyDefault,
   checkWallSide,
 } from "../../content/pipeline/qa-checkers-voice.ts";
 
@@ -201,5 +202,35 @@ describe("checkWallSide — ack branch keyed on hasRealType, not tactic-inclusiv
     );
     const ts = tmp("realexp.ts", `export const b = { title: "k" };`);
     expect(checkWallSide(plainMd(), lean, ts).result).toBe("fail");
+  });
+});
+
+describe("checkScholarlyDefault — 'Right' is a technical adjective, not an interjection", () => {
+  const md = (line: string) =>
+    checkScholarlyDefault(tmp("t.md", line), undefined).result;
+  const leanDoc = (line: string) =>
+    checkScholarlyDefault(undefined, tmp("t.lean", `/-- ${line} -/\ndef f := 0\n`))
+      .result;
+
+  // The bare `Right\b` this pattern used to carry hit 22 Lean docstring
+  // lines in the qou corpus (2026-08-24) and was wrong on 21 of them.
+  test("'Right multiplication by a generator' passes", () => {
+    expect(md("Right multiplication by a generator preserves the parabolic.")).toBe("pass");
+  });
+  test("'Right action of the Hecke generator' passes", () => {
+    expect(md("Right action of the Hecke generator on the module.")).toBe("pass");
+  });
+  test("'Right gauge action' passes inside a Lean docstring", () => {
+    expect(leanDoc("Right gauge action `SU(2)_R`.")).toBe("pass");
+  });
+  test("'Right, so ...' still fails (genuine interjection)", () => {
+    expect(md("Right, so the bracket closes.")).toBe("fail");
+  });
+  test("'Right now we encode ...' still fails (lecturer cadence)", () => {
+    expect(md("Right now we encode the real-part magnitude.")).toBe("fail");
+  });
+  test("neighbouring bare-comma openers are untouched", () => {
+    expect(md("Alright the construction proceeds.")).toBe("fail");
+    expect(md("Okay so the map is defined.")).toBe("fail");
   });
 });
