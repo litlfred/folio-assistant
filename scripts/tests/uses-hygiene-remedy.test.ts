@@ -1,80 +1,98 @@
 import { describe, expect, test } from "bun:test";
 import { checkUsesEditorialHygiene } from "../../content/pipeline/qa-checkers-uses";
-import { buildContentGraph } from "../../content/pipeline/content-graph";
+import { buildContentGraph, parseUses } from "../../content/pipeline/content-graph";
 import { walkBlocks } from "../../content/pipeline/qa-utils";
-import { parseUses } from "../../content/pipeline/content-graph";
 import { FOLIO_ROOT, hasFolio } from "./helpers";
 import { readFileSync } from "fs";
 import { join } from "path";
 
 /**
  * `uses-editorial-hygiene` reports a `uses[]` entry as transitively redundant
- * when another entry's **editorial** cone reaches it, and its hit message used
- * to name `prune-transitive-deps.ts` as the remedy in every case.
+ * when another entry already reaches it. Which relation it walks to decide
+ * that is the whole question.
  *
- * The pruner computes the transitive reduction of `uses[]` ONLY — its own
- * docstring says so, and reducing the formal relation would be unsound. So
- * when the path leaves an entry by its `interprets` edge, the criterion warns
- * and the named remedy reports nothing and changes nothing. Measured in qou
- * 2026-08-24: `prop:centered-hecke-variance-positive` warns, and the pruner
- * lists no edge for it, because `rem:non-commutative-probability-dictionary`
- * has an empty `uses` cone and a 29-node editorial one.
+ * **Owner ruling 2026-08-24.** Sending a reader to a remark ABOUT B lets them
+ * take B's assertions for granted, and follow the reference if they want more.
+ * It does NOT mean they have read B's prerequisites. So an `interprets` edge
+ * transmits nothing forward, and an entry reachable only through one is not
+ * redundant — the reader still needs it named directly.
  *
- * A remedy that silently no-ops is worse than no remedy named: it reads as
- * "someone should run the script" rather than "this is an editorial question".
- * Whether an `interprets` hop SHOULD make a `uses` edge redundant is a
- * decision about the editorial model, and this test does not take it — it
- * pins only that the message tells the truth about which case is which.
+ * That is also what the criterion was specified to do (bean
+ * `folio-assistant-r0ax`, 2026-08-07: "transitive redundancy — A uses B, B
+ * uses C, A uses C"). It walked the full editorial cone, which meant `uses`
+ * until `i8ad` (2026-08-15) made `interprets` an editorial edge and silently
+ * widened it.
  *
- * Running it is how the scale came out. Over qou 2026-08-24: **374 blocks
- * warn, carrying 594 redundancy reports, and ALL 594 are `interprets`-only —
- * not one runs through `uses`.** So the remedy the criterion used to name was
- * a no-op every single time it was named, on ~10 % of the corpus. That is the
- * `So the` shape again: advice that has never once applied.
+ * The widening was not marginal. Over qou 2026-08-24, before this fix: 374
+ * blocks warned, carrying 594 reports, and ALL 594 were `interprets`-only —
+ * not one ran through `uses`. Each also named `prune-transitive-deps.ts`,
+ * which reduces `uses[]` alone and would have reported nothing for any of
+ * them: a remedy that no-ops on 100 % of the findings it is offered for.
  *
  * Asserted generically over whatever folio is attached; no label is hardcoded.
  */
-describe.skipIf(!hasFolio())("uses-editorial-hygiene names a remedy that applies", () => {
+describe.skipIf(!hasFolio())("uses-editorial-hygiene redundancy walks `uses` only", () => {
   const contentDir = (): string => join(FOLIO_ROOT!, "content");
 
-  // Walks every block in the folio and builds the graph: seconds, not ms.
-  test("the pruner is named iff the path runs through `uses`", () => {
+  // Walks every block and builds the graph: seconds, not milliseconds.
+  test("a warn fires iff a uses-only redundancy exists", () => {
     const g = buildContentGraph(contentDir(), FOLIO_ROOT!);
     let warned = 0;
-    let viaUsesSeen = 0;
-    let viaInterpretsSeen = 0;
+    let interpretsOnlySuppressed = 0;
 
     for (const b of walkBlocks(contentDir())) {
       const r = checkUsesEditorialHygiene(b.ts);
-      if (r.result !== "warn") continue;
-      warned++;
       const direct = [...new Set(parseUses(readFileSync(b.ts, "utf-8")))];
-      for (const h of r.hits) {
-        const text = (h as { text?: string }).text ?? "";
-        // Recover the (u, other) pair the checker reported.
-        const m = text.match(/redundant "([^"]+)" — (?:already )?reachable via "([^"]+)"/);
-        if (!m) continue;
-        const [, u, other] = m;
-        expect(direct).toContain(u);
-        expect(direct).toContain(other);
-        const viaUses = g.cone(other, "uses").has(u);
-        if (viaUses) viaUsesSeen++;
-        else viaInterpretsSeen++;
-        // The invariant: promise the pruner only when it will act.
-        expect(text.includes("run prune-transitive-deps.ts")).toBe(viaUses);
-        if (!viaUses) expect(text).toContain("`interprets`");
+
+      const redundantVia = (rel: "uses" | "editorial"): boolean =>
+        direct.some((u) =>
+          direct.some((other) => other !== u && g.cone(other, rel).has(u)),
+        );
+      const viaUses = redundantVia("uses");
+      const viaEditorial = redundantVia("editorial");
+
+      // The ruling, as an invariant: `uses` decides, nothing else.
+      if (r.result === "warn") {
+        warned++;
+        expect(viaUses).toBe(true);
+      } else if (r.result === "pass") {
+        expect(viaUses).toBe(false);
+      }
+
+      // The regression this guards: an interprets-only path must NOT warn.
+      if (viaEditorial && !viaUses) {
+        interpretsOnlySuppressed++;
+        expect(r.result).not.toBe("warn");
       }
     }
 
-    // A folio with no redundancy at all would make the assertions vacuous;
-    // say so rather than reporting a silent pass over nothing.
-    if (warned === 0) {
-      console.log("  (no block warns in this folio — invariant not exercised)");
-    } else {
-      console.log(
-        `  ${warned} warning block(s): ${viaUsesSeen} via uses, ` +
-          `${viaInterpretsSeen} via interprets only`,
-      );
+    console.log(
+      `  ${warned} block(s) warn on a uses-only redundancy; ` +
+        `${interpretsOnlySuppressed} interprets-only path(s) correctly silent`,
+    );
+    // A folio where neither case occurs makes the assertions vacuous — say so
+    // rather than reporting a silent pass over nothing.
+    if (warned === 0 && interpretsOnlySuppressed === 0) {
+      console.log("  (neither case present in this folio — invariant not exercised)");
+    }
+  }, 120_000);
+
+  test("the remedy named is one that applies to every finding", () => {
+    // `prune-transitive-deps.ts` reduces `uses[]`. Now that redundancy is
+    // computed over `uses` alone, naming it is always actionable — which was
+    // false for all 594 pre-fix findings.
+    const g = buildContentGraph(contentDir(), FOLIO_ROOT!);
+    for (const b of walkBlocks(contentDir())) {
+      const r = checkUsesEditorialHygiene(b.ts);
+      if (r.result !== "warn") continue;
+      for (const h of r.hits) {
+        const text = (h as { text?: string }).text ?? "";
+        const m = text.match(/redundant "([^"]+)" — already reachable via "([^"]+)"/);
+        if (!m) continue;
+        const [, u, other] = m;
+        expect(g.cone(other, "uses").has(u)).toBe(true);
+        expect(text).toContain("run prune-transitive-deps.ts");
+      }
     }
   }, 120_000);
 });

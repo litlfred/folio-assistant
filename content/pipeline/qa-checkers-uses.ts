@@ -168,31 +168,34 @@ export function checkUsesEditorialHygiene(tsPath?: string): CheckerResult {
   //    entry. Walk the editorial relation only.
   const direct = [...seen];
   let redundant = 0;
+  //
+  // Walk `uses` ONLY — not the full editorial relation.
+  //
+  // Redundancy here means "the reader already had to read `u` to get through
+  // `other`", and only `uses` transmits that. An `interprets` edge does not:
+  // owner ruling 2026-08-24 — sending a reader to a remark ABOUT B lets them
+  // take B's assertions for granted, and follow the reference if they want
+  // more; it does not mean they have read B's prerequisites. So a path that
+  // leaves a block by its `interprets` edge carries nothing forward, and an
+  // entry reachable only that way is not redundant.
+  //
+  // This is what the criterion was SPECIFIED to do — bean `folio-assistant-r0ax`,
+  // 2026-08-07: "transitive redundancy (A uses B, B uses C, A uses C)". It
+  // walked `cone(other, "editorial")`, which meant `uses` until `i8ad`
+  // (2026-08-15) made `interprets` an editorial edge, silently widening it.
+  //
+  // The cost of the widening, measured over qou 2026-08-24: 374 blocks warned,
+  // carrying 594 redundancy reports, and ALL 594 were `interprets`-only — not
+  // one ran through `uses`. Every one of them also named
+  // `prune-transitive-deps.ts` as the remedy, which reduces `uses[]` alone and
+  // would have reported nothing for any of them.
   for (const u of direct) {
     for (const other of direct) {
       if (other === u) continue;
-      if (!g.cone(other, "editorial").has(u)) continue;
-      // Which relation carries the path matters for what to DO about it.
-      // `prune-transitive-deps.ts` computes the transitive reduction of
-      // `uses[]` ONLY. When the path runs through an `interprets` edge —
-      // legal in the editorial cone, invisible to the pruner — naming the
-      // pruner as the remedy sends the reader to a tool that will report
-      // nothing and change nothing. Measured in qou 2026-08-24:
-      // `prop:centered-hecke-variance-positive` warns here, and the pruner
-      // lists no edge for it, because the path from
-      // `rem:non-commutative-probability-dictionary` to
-      // `thm:jones-markov-trace` leaves that remark by its `interprets`
-      // edge (its `uses` cone is empty; its editorial cone is 29 nodes).
-      const viaUses = g.cone(other, "uses").has(u);
+      if (!g.cone(other, "uses").has(u)) continue;
       hit(
-        viaUses
-          ? `transitively redundant "${u}" — already reachable via "${other}"; ` +
-              `run prune-transitive-deps.ts`
-          : `transitively redundant "${u}" — reachable via "${other}" only ` +
-              `through an \`interprets\` edge, which prune-transitive-deps.ts ` +
-              `does not walk. Whether an \`interprets\` hop should make a ` +
-              `\`uses\` edge redundant is an editorial question, not a ` +
-              `mechanical one; the pruner will NOT remove this.`,
+        `transitively redundant "${u}" — already reachable via "${other}"; ` +
+          `run prune-transitive-deps.ts`,
       );
       redundant++;
       break;
