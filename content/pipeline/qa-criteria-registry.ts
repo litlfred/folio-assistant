@@ -1862,6 +1862,28 @@ const SCRIPT_QUALITY: QaCriterionDefinition[] = [
     automated: true,
     source_file: "content/pipeline/qa-checkers-python.ts",
   },
+  {
+    id: "assertions_are_falsifiable",
+    domain: "script-quality",
+    description:
+      "A witness assertion must be able to FAIL. Fires when an " +
+      "`add_assertion(...)` call passes the same expression as both " +
+      "`computed` and `expected`, so the assertion holds by construction " +
+      "and the resulting `allPassed: true` says nothing about what the " +
+      "script produced — which is what a block's `computation.status: " +
+      "\"verified\"` rests on. Keyword and positional forms both checked. " +
+      "Regex, not AST (no Python runtime in the sweep): measured 90% recall " +
+      "at 100% sampled precision against an AST census, and it " +
+      "under-reports by design, since a missed tautology stays a backlog " +
+      "item while a false one costs an author an argument with the checker. " +
+      "Remedy: supply the real expected value; if none exists yet, assert a " +
+      "different property that can fail rather than re-deriving the " +
+      "computation under test, which is the same defect spelled out.",
+    default_severity: "critical",
+    depends_on: ["ts"],
+    automated: true,
+    source_file: "content/pipeline/qa-checkers-python.ts",
+  },
 ];
 
 // ── Domain: devils-advocate ─────────────────────────────────────
