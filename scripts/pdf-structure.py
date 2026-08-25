@@ -55,10 +55,12 @@ from typing import Any
 
 warnings.filterwarnings("ignore")
 
-try:
-    from pypdf import PdfReader
-except ImportError:  # pragma: no cover
-    sys.exit("pdf-structure: needs pypdf — pip install pypdf")
+# pypdf's import chain reaches `cryptography`, which panics rather than raising
+# ImportError when its native extension is broken -- see scripts/_pypdf_compat.py.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _pypdf_compat import import_pypdf  # noqa: E402
+
+PdfReader = import_pypdf("PdfReader")
 
 SCHEMA = "pdf-structure/v1"
 

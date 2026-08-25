@@ -39,14 +39,16 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import pathlib
 import sys
 from pathlib import Path
 
-try:
-    from pypdf import PdfReader, PdfWriter
-except ImportError:
-    print("ERROR: pypdf not installed. Install with: pip install pypdf", file=sys.stderr)
-    sys.exit(2)
+# See scripts/_pypdf_compat.py: a broken `cryptography` native extension panics
+# instead of raising ImportError, and the panic is not an Exception subclass.
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from _pypdf_compat import import_pypdf  # noqa: E402
+
+PdfReader, PdfWriter = import_pypdf("PdfReader", "PdfWriter")
 
 
 # Chapter slugs bundled into front-matter.pdf rather than as standalone PDFs.
