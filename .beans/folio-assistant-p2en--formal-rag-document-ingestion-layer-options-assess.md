@@ -1,11 +1,11 @@
 ---
 # folio-assistant-p2en
 title: 'Formal RAG document-ingestion layer: options assessment + integration contract'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T23:45:00Z
+updated_at: 2026-08-26T19:16:00Z
 ---
 
 
@@ -1005,3 +1005,20 @@ now share one probe instead of two copies.
 main == branch head. Direct push to main succeeded (not protected). GitHub
 reports 1 low dependabot vulnerability on the default branch — pre-existing, not
 from this work.
+
+## Closed — follow-on split to `sopq`
+
+The question this bean was opened for is answered: the ingestion schema is a
+JSON-LD graph, one file per node, vocabulary taken from published standards
+(DoCO/DEO, CiTO, W3C Web Annotation, PROV-O, Dublin Core, SKOS), with FRBR-style
+URIs for jurisdiction and translation identity. Blocks are fine-grained and
+self-contained, sections are ordered manifests over them, QA sidecars run per
+block through adapter-scoped criteria, and the MCP RAG tools read the graph.
+Merged to main at 41e815a.
+
+Remaining work is a different question — deriving QA criteria from WHO's own
+published authoring standards rather than from what a corpus happens to contain
+— so it is `sopq`, not more of this. Two findings already in hand are recorded
+there: the unenforceable "exactly one of" constraint in every `*Source`, and the
+official `.xlsx` component templates that bound the deferred workbook reader.
+
