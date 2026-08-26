@@ -12,7 +12,7 @@ import { LEAN_REF_PATTERN, leanPackageByName, parseLeanRef } from "./lean-packag
 import type { Block } from "./types.js";
 // Leaf module — importing the kind list from `types.js` would be a runtime
 // cycle, and `appliesTo` is built at module init, exactly when that bites.
-import { BLOCK_KINDS } from "./block-kinds.js";
+import { BLOCK_KINDS, DAK_LABEL_PREFIXES } from "./block-kinds.js";
 
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
@@ -252,11 +252,20 @@ export const RemotePackageRefSchema = z.object({
 
 
 
-export const KNOWN_LABEL_PREFIXES = [
+/**
+ * Every recognised label prefix, with its colon.
+ *
+ * The paper and structural prefixes are written out; the `dak` adapter's are
+ * derived from `DAK_LABEL_PREFIXES` so that this list and `KIND_PREFIXES` in
+ * `jsonld.ts` cannot drift as kinds are added. Their agreement is asserted by
+ * `assertPrefixesInSync`.
+ */
+export const KNOWN_LABEL_PREFIXES: readonly string[] = [
   "def:", "thm:", "lem:", "prop:", "cor:", "rem:", "ex:", "conj:",
   "prf:", "sim:", "eq:", "fig:", "tbl:",
   "sec:", "chap:", "app:", "bib:",
-] as const;
+  ...Object.values(DAK_LABEL_PREFIXES).map((p) => `${p}:`),
+];
 
 export function isCrossPaperRef(label: string): boolean {
   return label.includes(":") && !KNOWN_LABEL_PREFIXES.some(p => label.startsWith(p));
@@ -395,7 +404,11 @@ export const AuthorNoteSchema = z.object({
   see: z.string().optional(),
 });
 
-const BlockBaseSchema = z.object({
+/**
+ * Shared block fields, exported so the `dak` adapter's schemas in
+ * `dak-blocks.ts` extend the same base rather than restating it.
+ */
+export const BlockBaseSchema = z.object({
   title: z.string().optional(),
   uses: z.array(z.string()).optional(),
   foreshadows: z.array(z.string()).optional(),

@@ -31,7 +31,7 @@ import type {
   CompanionRole,
 } from "../../schemas/block-qa";
 import { COMPANION_ROLES } from "../../schemas/block-qa";
-import { BLOCK_KINDS } from "../../schemas/types";
+import { ALL_BLOCK_BUILDER_ALT, kindForBuilder } from "../../schemas/block-kinds";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 import { leanStatementHash } from "./lean-signature";
 import { findContentRepoRoot } from "./repo-root";
@@ -672,8 +672,14 @@ export interface BlockPaths {
  * not in the `Block` union, and `readBlockManifest` is documented to reject
  * them.
  */
+// Alternates over BUILDER names, not kind strings. For the paper adapter the
+// two are the same token; for the `dak` adapter they are not, because a kind
+// like `decision-table` is data and a hyphen is not a valid identifier — so
+// the builder is `decisionTable` and `kindForBuilder` maps back. Longest-first
+// ordering matters in an alternation: without it `profile` would shadow
+// nothing here, but `measure` would shadow a future `measureGroup`.
 const BLOCK_BUILDER_RE = new RegExp(
-  `export\\s+default\\s+(${BLOCK_KINDS.join("|")})\\s*\\(`,
+  `export\\s+default\\s+(${ALL_BLOCK_BUILDER_ALT})\\s*\\(`,
 );
 
 /**
@@ -727,7 +733,11 @@ export function readBlockManifest(
   if (!kindMatch) return undefined;
   const label = parseStringField(src, "label");
   if (!label) return undefined;
-  return { kind: kindMatch[1], label };
+  // The regex captures a BUILDER name; the block's kind is what it builds.
+  // Identical for paper kinds, different for every multi-word DAK kind.
+  const kind = kindForBuilder(kindMatch[1]!);
+  if (!kind) return undefined;
+  return { kind, label };
 }
 
 /**
@@ -757,7 +767,9 @@ export function readUnlabelledBlockManifest(
   const kindMatch = maskStringsAndComments(src).match(BLOCK_BUILDER_RE);
   if (!kindMatch) return undefined;
   const slug = tsPath.split("/").pop()!.replace(/\.ts$/, "");
-  return { kind: kindMatch[1], label: slug };
+  const kind = kindForBuilder(kindMatch[1]!);
+  if (!kind) return undefined;
+  return { kind, label: slug };
 }
 
 export interface WalkBlocksOptions {

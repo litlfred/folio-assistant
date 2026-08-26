@@ -8,3 +8,6 @@
 export * from "./types.js";
 export * from "./constraints.js";
 export * from "./builders.js";
+// The `dak` adapter's blocks — WHO SMART Guidelines L2/L3. Separate module,
+// separate union, same `BlockBase` fields; see schemas/dak-blocks.ts.
+export * from "./dak-blocks.js";

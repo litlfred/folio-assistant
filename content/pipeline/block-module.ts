@@ -52,7 +52,7 @@ import { readdir } from "node:fs/promises";
 import { writeFileSync, rmSync } from "node:fs";
 import { createRequire } from "node:module";
 import { join, dirname, basename } from "node:path";
-import { BLOCK_KINDS } from "../../schemas/types";
+import { ALL_BLOCK_KINDS } from "../../schemas/block-kinds";
 
 /** A block as the pipeline sees it, plus where it came from. */
 export interface LoadedBlock {
@@ -70,7 +70,10 @@ export interface BlockLoadFailure {
   error: string;
 }
 
-const KINDS = new Set<string>(BLOCK_KINDS);
+// Both adapters: a DAK manifest is loaded by the same import path as a paper
+// one, and a kind outside either set is a legitimate skip (a chapter manifest,
+// a helper module) rather than a failure.
+const KINDS = new Set<string>(ALL_BLOCK_KINDS);
 
 /**
  * Import one `.ts` and return it as a block.

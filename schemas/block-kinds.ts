@@ -167,3 +167,94 @@ const KIND_TO_ADAPTER: ReadonlyMap<string, ContentAdapter> = new Map(
 export function adapterForKind(kind: string): ContentAdapter | undefined {
   return KIND_TO_ADAPTER.get(kind);
 }
+
+/**
+ * Builder function name for each DAK kind.
+ *
+ * Paper kinds are single lowercase words, so builder name and kind string are
+ * the same token and `BLOCK_BUILDER_RE` can alternate over the kinds directly.
+ * DAK kinds are multi-word (`decision-table`), and a hyphen is not a valid
+ * identifier — so the two namespaces separate here for the first time: the
+ * kind stays kebab-case because it is *data*, and the builder is camelCase
+ * because it is an *identifier*.
+ *
+ * Anything scanning a `.ts` for `export default <builder>(` must alternate
+ * over these values and map back through {@link kindForBuilder}. Deriving one
+ * from the other by string munging is what this map exists to prevent.
+ */
+export const DAK_KIND_BUILDERS: Record<DakBlockKind, string> = {
+  persona: "persona",
+  "user-scenario": "userScenario",
+  "business-process": "businessProcess",
+  "data-element": "dataElement",
+  "decision-table": "decisionTable",
+  "scheduling-logic": "schedulingLogic",
+  indicator: "indicator",
+  "functional-requirement": "functionalRequirement",
+  "non-functional-requirement": "nonFunctionalRequirement",
+  "logical-model": "logicalModel",
+  profile: "profile",
+  "value-set": "valueSet",
+  questionnaire: "questionnaire",
+  "cql-library": "cqlLibrary",
+  "structure-map": "structureMap",
+  "plan-definition": "planDefinition",
+  measure: "measure",
+  "test-case": "testCase",
+  "actor-definition": "actorDefinition",
+};
+
+const BUILDER_TO_KIND: ReadonlyMap<string, string> = new Map([
+  ...PAPER_BLOCK_KINDS.map((k) => [k, k] as [string, string]),
+  ...(Object.entries(DAK_KIND_BUILDERS) as Array<[string, string]>).map(
+    ([kind, builder]) => [builder, kind] as [string, string],
+  ),
+]);
+
+/** The block kind a builder name introduces, or `undefined` if it is not one. */
+export function kindForBuilder(builder: string): string | undefined {
+  return BUILDER_TO_KIND.get(builder);
+}
+
+/**
+ * Every builder name, for the regex alternation that recognises a block
+ * manifest by scanning its source. Longest first, so `actorDefinition` is not
+ * shadowed by a shorter prefix in an alternation.
+ */
+export const ALL_BLOCK_BUILDER_ALT = [...BUILDER_TO_KIND.keys()]
+  .sort((a, b) => b.length - a.length)
+  .join("|");
+
+/**
+ * Label prefix for each DAK kind, without the colon.
+ *
+ * Canonical here rather than in `constraints.ts` so that `KNOWN_LABEL_PREFIXES`
+ * (validation) and `KIND_PREFIXES` (JSON-LD `@id` minting) both derive from
+ * one list. Those two already have a sync assertion; a third hand-written copy
+ * is what it exists to prevent.
+ *
+ * None collide with the paper and structural prefixes (`def`, `thm`, `lem`,
+ * `prop`, `cor`, `rem`, `ex`, `conj`, `prf`, `sim`, `eq`, `fig`, `tbl`, `sec`,
+ * `chap`, `app`, `bib`) — asserted by test.
+ */
+export const DAK_LABEL_PREFIXES: Record<DakBlockKind, string> = {
+  persona: "pers",
+  "user-scenario": "scen",
+  "business-process": "bp",
+  "data-element": "de",
+  "decision-table": "dt",
+  "scheduling-logic": "sched",
+  indicator: "ind",
+  "functional-requirement": "freq",
+  "non-functional-requirement": "nfreq",
+  "logical-model": "lm",
+  profile: "prof",
+  "value-set": "vs",
+  questionnaire: "quest",
+  "cql-library": "cql",
+  "structure-map": "sm",
+  "plan-definition": "pd",
+  measure: "meas",
+  "test-case": "tc",
+  "actor-definition": "actor",
+};

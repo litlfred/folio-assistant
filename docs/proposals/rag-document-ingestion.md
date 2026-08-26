@@ -935,3 +935,70 @@ DAK kinds are **declared, not authorable**. They are not members of the
 so `walkBlocks` will not discover one. What exists is the vocabulary — enough
 for QA to be scoped and for the ingest writer to have names to emit. Authoring
 a DAK block is the next piece of work, and the ingest writer follows it.
+
+### 12.9 DAK blocks are now authorable
+
+§12.8 left the WHO kinds *declared but not authorable* — names with no builder,
+no schema and no discovery path. That gap is closed: `schemas/dak-blocks.ts`
+carries the interfaces, Zod schemas and builders, and `walkBlocks` finds them.
+
+```ts
+// content/anc-dak/decision-logic/dt-anc-danger-signs.ts
+import { decisionTable } from "folio-assistant/schemas";
+export default decisionTable({
+  label: "dt:anc-danger-signs",
+  title: "ANC danger signs",
+  uses: ["de:danger-sign-code"],
+  realises: "def:who-anc-rec-12",
+});
+```
+
+with `dt-anc-danger-signs.dmn` alongside it and `dt-anc-danger-signs.qa.json`
+as its sidecar — the same block shape a paper uses, different companion.
+
+#### Two namespaces separate, for the first time
+
+Paper kinds are single lowercase words, so a builder name and a kind string
+were the same token and `BLOCK_BUILDER_RE` could alternate over the kinds
+themselves. A DAK kind is multi-word and a hyphen is not a valid identifier,
+so **the kind stays kebab-case because it is data, and the builder is
+camelCase because it is an identifier** — `decision-table` / `decisionTable`.
+
+The regex now alternates over builder names and maps back through
+`kindForBuilder`. Getting that wrong is not a compile error: blocks would be
+discovered under the kind `decisionTable`, matching no criterion's `appliesTo`
+and no adapter — the 461-block disappearance again, in a new place. Pinned by
+a test that asserts a DAK manifest is discovered under its *kind*.
+
+#### What the manifests deliberately do not model
+
+Field-level semantics. A `value-set` block carries a label, a title, editorial
+edges and a pointer to its `.fsh`; it does not model `ValueSet.compose.include`
+or a DMN hit policy. Those belong to the artefact formats, which have
+specifications and validators already (`fhir-validation`, `dmn-authoring`), and
+a parallel set of fields here would be a second, weaker, drifting copy — the
+argument §2c makes against pointing a RAG engine at `content/`, applied to
+schemas.
+
+**The manifest's job is identity, editorial edges and QA attachment. The
+companion file is the content.** For the same reason a `value-set` block is
+typed `folio:ValueSet` rather than `fhir:ValueSet`: the block is the authored
+manifest, the FHIR resource is what its companion compiles to, and typing the
+manifest as a resource would invite a consumer to read FHIR fields off it.
+
+#### Traceability comes free
+
+`DakBlockBase.realises` is the L1 → L2 → L3 edge, parallel to
+`RemarkBlock.interprets`. Once populated it makes DAK coverage a graph query
+rather than a bespoke script: an L1 recommendation nothing realises, or an L2
+`decision-table` with no L3 `plan-definition` realising it, is a gap — the
+property §9.1 predicted would fall out, now reachable through `get_neighbors`.
+
+#### Still not built
+
+The **ingest writer**. Every piece it needs now exists: the vocabulary, the
+authorable kinds, the JSON-LD projection, the graph index and adapter-scoped
+QA. What remains is the code that turns `structure.json` + `candidates.json`
+into `library/<doc>/blocks/*.jsonld` and section manifests — and no DAK QA
+criterion has been written yet, so `dak`-scoped axes exist as a mechanism with
+nothing registered in it.

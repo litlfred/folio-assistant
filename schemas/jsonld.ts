@@ -53,7 +53,13 @@
  * @module schemas/jsonld
  */
 
-import { BLOCK_KINDS, type BlockKind } from "./block-kinds";
+import {
+  BLOCK_KINDS,
+  DAK_BLOCK_KINDS,
+  DAK_LABEL_PREFIXES,
+  type BlockKind,
+  type DakBlockKind,
+} from "./block-kinds";
 
 // ── Namespaces ───────────────────────────────────────────────────
 
@@ -137,15 +143,71 @@ export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = {
   proof: "doco:Section",
 };
 
-/** Every `@type` for a block, most specific first. */
+/**
+ * `folio:` type for each DAK kind.
+ *
+ * Folio's own classes rather than FHIR's, deliberately. A `value-set` *block*
+ * is the authored unit that carries the label, the editorial edges and the QA
+ * sidecar; the FHIR `ValueSet` is what its `.fsh` companion compiles to. Typing
+ * the block as `fhir:ValueSet` would assert that a manifest is a FHIR resource,
+ * which it is not — and would invite a consumer to read FHIR fields off it.
+ * The link to the resource is the companion, not the type.
+ */
+export const DAK_KIND_TO_FOLIO_TYPE: Record<DakBlockKind, string> = {
+  persona: "folio:Persona",
+  "user-scenario": "folio:UserScenario",
+  "business-process": "folio:BusinessProcess",
+  "data-element": "folio:DataElement",
+  "decision-table": "folio:DecisionTable",
+  "scheduling-logic": "folio:SchedulingLogic",
+  indicator: "folio:Indicator",
+  "functional-requirement": "folio:FunctionalRequirement",
+  "non-functional-requirement": "folio:NonFunctionalRequirement",
+  "logical-model": "folio:LogicalModel",
+  profile: "folio:Profile",
+  "value-set": "folio:ValueSet",
+  questionnaire: "folio:Questionnaire",
+  "cql-library": "folio:CqlLibrary",
+  "structure-map": "folio:StructureMap",
+  "plan-definition": "folio:PlanDefinition",
+  measure: "folio:Measure",
+  "test-case": "folio:TestCase",
+  "actor-definition": "folio:ActorDefinition",
+};
+
+/**
+ * DoCO co-type for DAK kinds — even more sparing than the paper side.
+ *
+ * Only the three that really are document components in DoCO's sense get one.
+ * A `decision-table` renders as a table, and a `business-process` and a
+ * `logical-model` as figures. The rest are guideline artefacts rather than
+ * parts of a document's layout, and co-typing them `doco:Section` would be a
+ * stretch that puts wrong triples in a published graph.
+ */
+export const DAK_KIND_TO_DOCO_TYPE: Partial<Record<DakBlockKind, string>> = {
+  "decision-table": "doco:Table",
+  "business-process": "doco:Figure",
+  "logical-model": "doco:Figure",
+};
+
+/** Every `@type` for a block, most specific first. Spans both adapters. */
 export function typesForKind(kind: string): string[] {
-  const folio = BLOCK_KIND_TO_FOLIO_TYPE[kind as BlockKind];
-  const doco = BLOCK_KIND_TO_DOCO_TYPE[kind as BlockKind];
+  const folio =
+    BLOCK_KIND_TO_FOLIO_TYPE[kind as BlockKind] ??
+    DAK_KIND_TO_FOLIO_TYPE[kind as DakBlockKind];
+  const doco =
+    BLOCK_KIND_TO_DOCO_TYPE[kind as BlockKind] ??
+    DAK_KIND_TO_DOCO_TYPE[kind as DakBlockKind];
   const out: string[] = [];
   if (folio) out.push(folio);
   if (doco) out.push(doco);
   return out;
 }
+
+/** DAK kinds with no DoCO counterpart — most of them, by design. */
+export const DAK_KINDS_WITHOUT_DOCO_TYPE = DAK_BLOCK_KINDS.filter(
+  (k) => !DAK_KIND_TO_DOCO_TYPE[k],
+);
 
 // ── Label ↔ IRI segment ──────────────────────────────────────────
 
@@ -157,11 +219,12 @@ export function typesForKind(kind: string): string[] {
  * below is a segment comparison. {@link assertPrefixesInSync} is the guard
  * against the two drifting, and the test suite calls it.
  */
-export const KIND_PREFIXES = [
+export const KIND_PREFIXES: readonly string[] = [
   "def", "thm", "lem", "prop", "cor", "rem", "ex", "conj",
   "prf", "sim", "eq", "fig", "tbl",
   "sec", "chap", "app", "bib",
-] as const;
+  ...Object.values(DAK_LABEL_PREFIXES),
+];
 
 const KIND_PREFIX_SET: ReadonlySet<string> = new Set(KIND_PREFIXES);
 

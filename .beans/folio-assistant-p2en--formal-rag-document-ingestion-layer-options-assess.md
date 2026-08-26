@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T16:35:00Z
+updated_at: 2026-08-26T17:00:00Z
 ---
 
 
@@ -252,3 +252,36 @@ the ingest writer follows it.
 807 pass / 0 fail, typecheck + lint clean. Verified no-op for the existing
 corpus: every kind `walkBlocks` can encounter resolves to paper, and every
 registered criterion admits every paper kind.
+
+## DAK blocks authorable (§12.9)
+
+`schemas/dak-blocks.ts` — 19 interfaces, `DakBlock` union with its own
+exhaustiveness proof against `DAK_BLOCK_KINDS`, Zod schemas with label-prefix
+enforcement, builders, `layerForKind` deriving L2/L3 from one table. Exported
+via `schemas/index.ts`; smoke-tested through the package root.
+
+**The subtle bit:** builder name and kind string separate for the first time.
+Paper kinds are single words so `BLOCK_BUILDER_RE` alternated over kinds
+directly; `decision-table` cannot be an identifier, so builders are camelCase
+and `kindForBuilder` maps back. Left unmapped, blocks would be discovered under
+kind `decisionTable` — matching no criterion and no adapter, i.e. the 461-block
+disappearance in a new place, with no compile error. Pinned by a test that a
+DAK manifest is discovered under its KIND.
+
+Prefixes: 19 new, none colliding with the 17 paper/structural ones, canonical
+in `block-kinds.ts` so `KNOWN_LABEL_PREFIXES` and `KIND_PREFIXES` both derive
+from one list — the existing sync assertion still passes.
+
+Deliberately not modelled: field-level semantics. A `value-set` block has a
+label, edges and a `.fsh` pointer, not `ValueSet.compose.include`. Those
+belong to the artefact formats, which have validators already; a parallel copy
+would drift. Same reason it is typed `folio:ValueSet` not `fhir:ValueSet`.
+
+`realises` added as the L1→L2→L3 traceability edge, which makes DAK coverage a
+graph query via `get_neighbors` rather than a bespoke script.
+
+832 pass / 0 fail, typecheck + lint clean.
+
+**Next: the ingest writer.** Every dependency now exists. Also worth noting: no
+`dak`-scoped QA criterion has been written, so that mechanism is live with
+nothing registered in it.

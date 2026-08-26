@@ -509,7 +509,12 @@ export interface AuthorNote {
 // ── Block types (discriminated union on `kind`) ──────────────────
 
 /** Base fields shared by all environment blocks. */
-interface BlockBase {
+/**
+ * Shared block fields. Exported so the `dak` adapter's blocks in
+ * `dak-blocks.ts` extend the same base — one set of editorial fields across
+ * both adapters is what lets one graph loader and one QA sweep serve both.
+ */
+export interface BlockBase {
   /** Label following project convention (e.g. "def:quantum-universe"). */
   label: string;
   /** Optional display title. */
