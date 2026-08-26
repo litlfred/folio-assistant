@@ -26,7 +26,12 @@
       "properties": {
         "ts": { "type": "string", "description": "Manifest path, relative to repo root." },
         "md": { "type": "string", "description": "Narrative path, if present." },
-        "lean": { "type": "string", "description": "Formalization path, if present." }
+        "lean": { "type": "string", "description": "Formalization path, if present." },
+        "bpmn": { "type": "string", "description": "WHO L2 DAK business process (BPMN 2.0), if present." },
+        "dmn": { "type": "string", "description": "WHO L2 DAK decision-support logic (DMN table), if present." },
+        "xlsx": { "type": "string", "description": "WHO L2 DAK data dictionary / indicator sheet, if present." },
+        "fsh": { "type": "string", "description": "WHO L3 FHIR Shorthand artefact (profile, ValueSet, PlanDefinition, ...), if present." },
+        "cql": { "type": "string", "description": "WHO L3 Clinical Quality Language logic, if present." }
       },
       "description": "Paths to the block's source files, relative to repo root."
     },
@@ -54,9 +59,14 @@
       "properties": {
         "md": { "type": "string" },
         "ts": { "type": "string" },
-        "lean": { "type": "string" }
+        "lean": { "type": "string" },
+        "bpmn": { "type": "string" },
+        "dmn": { "type": "string" },
+        "xlsx": { "type": "string" },
+        "fsh": { "type": "string" },
+        "cql": { "type": "string" }
       },
-      "description": "12-char SHA-256 prefixes of each source file's UTF-8 bytes. Absent fields mean the audit did not depend on that file (or it did not exist at audit time)."
+      "description": "12-char SHA-256 prefixes of each companion file's UTF-8 bytes, keyed by companion role. Absent fields mean the audit did not depend on that file (or it did not exist at audit time). `md`/`ts`/`lean` are the paper adapter's companions; `bpmn`/`dmn`/`xlsx`/`fsh`/`cql` are the WHO SMART Guidelines L2 DAK and L3 FHIR companions. A criterion opts in to a role by listing it in its own `depends_on`, which gates applicability as well as freshness. Compiled FHIR JSON is not a role: SUSHI generates it from the .fsh, so it is a build output rather than an authored companion."
     },
     "reviewer": {
       "type": "object",

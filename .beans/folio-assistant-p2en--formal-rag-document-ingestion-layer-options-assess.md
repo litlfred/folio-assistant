@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T15:40:00Z
+updated_at: 2026-08-26T16:10:00Z
 ---
 
 
@@ -168,3 +168,53 @@ correctly reports content present/0 nodes, library absent.
 **Not verified:** the three MCP tool handlers are typechecked but not
 exercised by a test — no test drives the server's request path. And no run
 against a real corpus has happened; the folio repo is where that has to occur.
+
+## Granularity decided; QA companion roles widened
+
+Author's decision: content blocks are **fine-grained and self-contained** — a
+decision table, a math proposition, a FHIR ValueSet each a block — and
+groupings (sections) are built from an *ordered list* of block refs, as in the
+QOU chapter/section model. That dissolves the objection that fine-grained
+nodes would have no file of their own: the blocks own the files, a section is
+a manifest.
+
+Operational definition that settles it: **a content block is what a QA sidecar
+runs against** (`qa-utils.ts:810`, `<stem>.qa.json`).
+
+L2/L3 block vocabulary — WHO's own sites (smart.who.int, build.fhir.org) are
+403 like who.int, but the repo already carries the canonical lists:
+- L2 (`schemas/skills/l2-dak-authoring`): personas, user-scenarios,
+  business-processes, data-dictionary, decision-logic, scheduling-logic,
+  indicators, functional-requirements, non-functional-requirements
+- L3 (`schemas/skills/l3-fhir-authoring`): logical-model, profile,
+  questionnaire, cql-library, structure-map, plan-definition, measure,
+  test-case, actor-definition, requirements
+
+**The bug this exposed and fixed.** `depends_on` was typed
+`Array<"md"|"ts"|"lean">` — the paper adapter's companion set — and it gates
+*applicability*, not just freshness. So no criterion could attach to a `.dmn`
+or `.fsh`, and worse: every WHO block would hit qa-sweep's hard-coded `.md`
+branch and record a clean `n/a` for every axis. QA would report a swept,
+healthy corpus it had never read. Same failure shape as the stale
+BLOCK_BUILDER_RE that hid 461 blocks.
+
+Now `COMPANION_ROLES` = md, ts, lean, bpmn, dmn, xlsx, fsh, cql. The two
+hard-coded `if`s are one `applicabilityGap()` over the criterion's declared
+roles. Verified no-op for the paper corpus: `sameScriptVerdict` compares
+`notes`, and `missingCompanionNote` reproduces the existing strings byte for
+byte, so no sidecar rewrites on the next sweep — pinned by a test.
+
+Two judgement calls recorded:
+- **No `json` role.** Compiled FHIR JSON is a SUSHI build output of `.fsh`, not
+  an authored companion; it also warns as a Pydantic field (shadows
+  `BaseModel.json`) — confirmed against pydantic 2.13.4, not assumed.
+- **`xlsx` is not textual.** A ZIP container: hashable, not greppable.
+
+All three cross-language mirrors updated together (TS, canonical JSON Schema,
+Python, JS) rather than left to drift.
+
+793 pass / 0 fail, typecheck + lint clean.
+
+**Still open:** adapter-scoped vs globally-tagged BLOCK_KINDS — adding ~19 WHO
+kinds to the single global list makes every math axis nominally applicable to
+a ValueSet. That is the next fork, and it gates the ingest writer.

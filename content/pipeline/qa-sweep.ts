@@ -111,6 +111,8 @@ import {
   freshnessKeys,
   preserveNonScriptEntries,
   sameScriptVerdict,
+  applicabilityGap,
+  missingCompanionNote,
   computeCriterionScriptHashes,
   saveQaScriptSidecar,
   type CriterionScriptHashes,
@@ -130,6 +132,7 @@ import type {
   BlockQaReport,
   QaCriterionEntry,
   QaScriptSidecar,
+  CompanionRole,
 } from "../../schemas/block-qa";
 
 
@@ -197,8 +200,7 @@ interface BlockSweepResult {
     outcome:
       | "fresh-skip"
       | "needs-agent"
-      | "n/a-no-md"
-      | "n/a-no-lean"
+      | `n/a-no-${CompanionRole}`
       | CheckerResult["result"];
     severity?: "critical" | "major" | "minor";
     hits?: number;
@@ -438,14 +440,22 @@ function run(): void {
         deps_hash: scriptHashes?.deps_hash,
       };
 
-      if (def.depends_on.includes("md") && !block.md) {
+      // Applicability gate, over whichever companion roles the criterion
+      // declares. This was two hard-coded `if`s for `.md` and `.lean` — the
+      // paper adapter's companion set — so a criterion depending on a `.dmn`
+      // or `.fsh` had no gate at all, and every WHO L2/L3 block fell through
+      // the `.md` branch to a clean `n/a` for an axis that never ran. A
+      // criterion that reports `n/a` on a corpus it did not check is
+      // indistinguishable downstream from one that found nothing wrong.
+      const missingRole = applicabilityGap(def.depends_on, block.companions);
+      if (missingRole) {
         const naEntry: QaCriterionEntry = {
           field_hash: fieldHash,
           result: "n/a",
           reviewer: { ...scriptReviewer },
           reviewed_at: nowIso,
           reviewed_sha: headSha,
-          notes: "block has no .md sibling",
+          notes: missingCompanionNote(missingRole),
         };
         const priorNa = existing.find((e) => e?.reviewer?.kind === "script");
         report.criteria[criterionId] = [
@@ -456,29 +466,7 @@ function run(): void {
         ];
         sweepResult.details.push({
           criterion: criterionId,
-          outcome: "n/a-no-md",
-        });
-        continue;
-      }
-      if (def.depends_on.includes("lean") && !block.lean) {
-        const naEntry: QaCriterionEntry = {
-          field_hash: fieldHash,
-          result: "n/a",
-          reviewer: { ...scriptReviewer },
-          reviewed_at: nowIso,
-          reviewed_sha: headSha,
-          notes: "block has no .lean sibling",
-        };
-        const priorNa = existing.find((e) => e?.reviewer?.kind === "script");
-        report.criteria[criterionId] = [
-          ...nonScriptExisting,
-          sameScriptVerdict(priorNa, naEntry)
-            ? priorNa!
-            : ((verdictChanged = true), naEntry),
-        ];
-        sweepResult.details.push({
-          criterion: criterionId,
-          outcome: "n/a-no-lean",
+          outcome: `n/a-no-${missingRole}`,
         });
         continue;
       }

@@ -50,9 +50,17 @@ export type QaReviewer = z.infer<typeof QaReviewer>;
 
 export const QaFieldHash = z
   .object({
+    // Paper adapter companions.
     md: z.string().optional(),
     ts: z.string().optional(),
     lean: z.string().optional(),
+    // WHO SMART Guidelines L2 DAK companions.
+    bpmn: z.string().optional(),
+    dmn: z.string().optional(),
+    xlsx: z.string().optional(),
+    // WHO SMART Guidelines L3 FHIR companions.
+    fsh: z.string().optional(),
+    cql: z.string().optional(),
   })
   .passthrough();
 export type QaFieldHash = z.infer<typeof QaFieldHash>;

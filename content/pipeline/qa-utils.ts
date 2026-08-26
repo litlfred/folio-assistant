@@ -28,7 +28,9 @@ import type {
   QaFieldHash,
   QaCriterionEntry,
   QaScriptSidecar,
+  CompanionRole,
 } from "../../schemas/block-qa";
+import { COMPANION_ROLES } from "../../schemas/block-qa";
 import { BLOCK_KINDS } from "../../schemas/types";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 import { leanStatementHash } from "./lean-signature";
@@ -47,20 +49,24 @@ export function hashFile(path: string): string | undefined {
   return createHash("sha256").update(buf).digest("hex").slice(0, 12);
 }
 
-/** Build a {md, ts, lean} hash bundle, omitting absent files. */
-export function hashBlockFiles(paths: {
-  md?: string;
-  ts?: string;
-  lean?: string;
-}): QaFieldHash {
+/**
+ * Build a companion hash bundle, omitting absent files.
+ *
+ * Accepts any {@link CompanionRole}, not just the paper adapter's
+ * `md`/`ts`/`lean` — a WHO L2 block hashes its `.dmn`, an L3 block its
+ * `.fsh`. Roles the caller does not pass are simply absent, so every
+ * existing `{md, ts, lean}` call site is unchanged.
+ */
+export function hashBlockFiles(
+  paths: Partial<Record<CompanionRole, string>>,
+): QaFieldHash {
   const out: QaFieldHash = {};
-  if (paths.md) {
-    const h = hashFile(paths.md);
-    if (h) out.md = h;
-  }
-  if (paths.ts) {
-    const h = hashFile(paths.ts);
-    if (h) out.ts = h;
+  for (const role of COMPANION_ROLES) {
+    if (role === "lean") continue; // handled below — it also derives a statement hash
+    const p = paths[role];
+    if (!p) continue;
+    const h = hashFile(p);
+    if (h) out[role] = h;
   }
   if (paths.lean) {
     const h = hashFile(paths.lean);
@@ -557,6 +563,63 @@ export function listPackageLeanFiles(repoRoot: string): string[] {
 
 // ── Block discovery ─────────────────────────────────────────────
 
+/**
+ * Resolve every companion file present for a block stem.
+ *
+ * Roles the caller has already resolved (`md`, `ts`, and especially `lean`,
+ * which may live in the Lake tree rather than beside the manifest) are passed
+ * in and taken as-is. The rest are plain `<stem>.<role>` siblings.
+ *
+ * Returning a map rather than named fields is what lets `qa-sweep` gate
+ * applicability by iterating a criterion's `depends_on` instead of carrying a
+ * hard-coded `if` per role — which is how `.dmn` and `.fsh` blocks would
+ * otherwise have fallen through to `n/a-no-md` and recorded a clean verdict
+ * for an axis that never ran.
+ */
+/**
+ * The first companion role a criterion needs and the block does not have, or
+ * `undefined` when the criterion applies.
+ *
+ * Pure and exported so the applicability rule can be tested directly. It used
+ * to be two hard-coded `if` statements inside `qa-sweep`'s block loop, keyed
+ * on `.md` and `.lean` — the paper adapter's companion set. A criterion over a
+ * `.dmn` decision table or a `.fsh` profile therefore had no gate, and every
+ * WHO L2/L3 block took the `.md` branch and recorded a clean `n/a` for an axis
+ * that never ran.
+ *
+ * Order matters and follows the criterion's own `depends_on` array, so the
+ * reported role (and the sidecar `notes` string built from it) is stable.
+ */
+export function applicabilityGap(
+  depends_on: readonly CompanionRole[],
+  companions: Partial<Record<CompanionRole, string>>,
+): CompanionRole | undefined {
+  return depends_on.find((role) => !companions[role]);
+}
+
+/** The sidecar `notes` string recorded when {@link applicabilityGap} fires. */
+export function missingCompanionNote(role: CompanionRole): string {
+  return `block has no .${role} sibling`;
+}
+
+export function resolveCompanions(
+  root: string,
+  known: Partial<Record<CompanionRole, string>> = {},
+): Partial<Record<CompanionRole, string>> {
+  const out: Partial<Record<CompanionRole, string>> = {};
+  for (const role of COMPANION_ROLES) {
+    const preset = known[role];
+    if (preset !== undefined) {
+      out[role] = preset;
+      continue;
+    }
+    if (role in known) continue; // explicitly resolved to absent
+    const p = `${root}.${role}`;
+    if (existsSync(p)) out[role] = p;
+  }
+  return out;
+}
+
 export interface BlockPaths {
   /** Block label (e.g. `def:carbon-valence`). Read from the .ts file. */
   label: string;
@@ -580,6 +643,18 @@ export interface BlockPaths {
   md?: string;
   lean?: string;
   qa?: string;
+  /**
+   * Every present companion, keyed by role — the paper adapter's
+   * `md`/`ts`/`lean` plus the WHO L2/L3 siblings (`bpmn`, `dmn`, `fsh`,
+   * `cql`, `json`, `xlsx`).
+   *
+   * `md`, `ts` and `lean` are mirrored here as well as in their own fields, so
+   * a caller iterating `depends_on` generically does not have to special-case
+   * the three that predate the map. `lean` carries the Lake-resolved path when
+   * there is no literal sibling, which is why it is copied rather than
+   * re-derived from `root`.
+   */
+  companions: Partial<Record<CompanionRole, string>>;
 }
 
 /**
@@ -817,14 +892,20 @@ export function* walkBlocks(
           const refMatch = tsSrc.match(/ref:\s*["']([^"']+)["']/);
           leanResolved = resolveCanonicalLean(refMatch?.[1], REPO_ROOT, lakeCache);
         }
+        const mdResolved = existsSync(md) ? md : undefined;
         yield {
           label: manifest.label,
           kind: manifest.kind,
           root,
           ts: full,
-          md: existsSync(md) ? md : undefined,
+          md: mdResolved,
           lean: leanResolved,
           qa: existsSync(qa) ? qa : undefined,
+          companions: resolveCompanions(root, {
+            ts: full,
+            md: mdResolved,
+            lean: leanResolved,
+          }),
         };
       }
     }
@@ -1022,9 +1103,9 @@ export function saveQaReport(path: string, report: BlockQaReport): void {
  * thing that changed.
  */
 export function freshnessKeys(def: {
-  depends_on: Array<"md" | "ts" | "lean">;
-  also_invalidated_by?: Array<"md" | "ts" | "lean" | "graph">;
-}): Array<"md" | "ts" | "lean" | "graph"> {
+  depends_on: CompanionRole[];
+  also_invalidated_by?: Array<CompanionRole | "graph">;
+}): Array<CompanionRole | "graph"> {
   return [...new Set([...def.depends_on, ...(def.also_invalidated_by ?? [])])];
 }
 
@@ -1040,7 +1121,7 @@ export function freshnessKeys(def: {
 export function entryIsFresh(
   entry: QaCriterionEntry,
   current: QaFieldHash,
-  depends_on: Array<"md" | "ts" | "lean" | "graph">,
+  depends_on: Array<CompanionRole | "graph">,
   current_script_hashes?: CriterionScriptHashes,
   lean_granularity?: "file" | "statement",
 ): boolean {
@@ -1206,7 +1287,7 @@ export function summariseFreshness(
   const out: CriterionFreshness[] = [];
   for (const [criterion, entries] of Object.entries(report.criteria)) {
     const def = QA_CRITERIA_BY_ID[criterion];
-    const dependsOn = def ? freshnessKeys(def) : (["md"] as Array<"md" | "ts" | "lean">);
+    const dependsOn = def ? freshnessKeys(def) : (["md"] as CompanionRole[]);
     const sh = scriptHashesByCriterion?.[criterion];
     const fresh: QaCriterionEntry[] = [];
     const stale: QaCriterionEntry[] = [];

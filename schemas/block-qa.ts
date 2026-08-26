@@ -79,6 +79,75 @@ export interface QaReviewer {
 }
 
 /**
+ * Companion file roles a QA criterion can depend on.
+ *
+ * A content block is a file stem plus its siblings, and the sidecar
+ * `<stem>.qa.json` is what makes it a *content block* rather than a file —
+ * QA is the unit boundary. Which siblings exist depends on what kind of
+ * content the folio holds:
+ *
+ * | Role | Content type | Carries |
+ * |---|---|---|
+ * | `md` | any | prose |
+ * | `ts` | any | the block manifest |
+ * | `lean` | paper | the formalisation |
+ * | `bpmn` | WHO L2 DAK | a business process (BPMN 2.0) |
+ * | `dmn` | WHO L2 DAK | decision-support logic (a DMN table) |
+ * | `xlsx` | WHO L2 DAK | a data dictionary / indicator sheet |
+ * | `fsh` | WHO L3 | a FHIR profile, ValueSet, PlanDefinition… |
+ * | `cql` | WHO L3 | Clinical Quality Language logic |
+ *
+ * Compiled FHIR JSON is deliberately **not** a role. SUSHI generates it from
+ * the `.fsh`, so it is a build output rather than an authored companion — a
+ * criterion that cares about the resource depends on the source that produced
+ * it. (A `json` role would also shadow `BaseModel.json` in the Python mirror
+ * of this schema, which warns at class-definition time.)
+ *
+ * ## Why this had to stop being `"md" | "ts" | "lean"`
+ *
+ * That triple is the *paper* adapter's companion set, and it was the type of
+ * `depends_on` — which gates **applicability**, not just freshness. So a
+ * criterion could not say "applies to blocks with a `.dmn`", and worse, every
+ * L2/L3 block would take the `n/a-no-md` path and record a clean `n/a` for
+ * every axis. QA would report a swept, healthy corpus it had never checked —
+ * exactly the false pass the integration contract in
+ * `docs/proposals/rag-document-ingestion.md` §5 exists to prevent, and
+ * indistinguishable downstream from "a block with nothing wrong".
+ *
+ * Adding a role here does not make any existing criterion apply to it: a
+ * criterion opts in by listing the role in its own `depends_on`.
+ */
+export const COMPANION_ROLES = [
+  "md",
+  "ts",
+  "lean",
+  "bpmn",
+  "dmn",
+  "xlsx",
+  "fsh",
+  "cql",
+] as const;
+
+export type CompanionRole = (typeof COMPANION_ROLES)[number];
+
+/**
+ * Roles whose *content* is a text file a checker can read directly.
+ *
+ * `xlsx` is deliberately absent: it is a ZIP container, so hashing its bytes
+ * is meaningful but grepping them is not. A criterion over a data dictionary
+ * has to go through an extractor rather than reading the sibling.
+ */
+export const TEXTUAL_COMPANION_ROLES: readonly CompanionRole[] = [
+  "md",
+  "ts",
+  "lean",
+  "bpmn",
+  "dmn",
+  "fsh",
+  "cql",
+];
+
+/**
  * Hash of the source files at the moment a criterion was audited.
  *
  * Each entry is a 12-char prefix of the SHA-256 of the file's
@@ -87,11 +156,11 @@ export interface QaReviewer {
  *
  * Absent fields mean the criterion's audit did not depend on that
  * file (or the file did not exist at audit time).
+ *
+ * Keyed by {@link CompanionRole}, plus two derived keys (`graph`,
+ * `lean_statement`) that are not companion files at all.
  */
-export interface QaFieldHash {
-  md?: string;
-  ts?: string;
-  lean?: string;
+export interface QaFieldHash extends Partial<Record<CompanionRole, string>> {
   /**
    * Hash of the chapter's `uses[]` edge set, for criteria whose verdict is a
    * property of the GRAPH rather than of this block's own files.
@@ -270,7 +339,7 @@ export interface QaCriterionDefinition {
    * blocks the criterion exists to check. Use `also_invalidated_by`
    * instead, which buys freshness without the applicability gate.
    */
-  depends_on: Array<"md" | "ts" | "lean">;
+  depends_on: CompanionRole[];
   /**
    * Extra files that invalidate a cached verdict WITHOUT gating
    * applicability — the freshness half of `depends_on` on its own.
@@ -287,7 +356,7 @@ export interface QaCriterionDefinition {
    * Consulted by `entryIsFresh` via `freshnessKeys()`; ignored by the
    * applicability gates.
    */
-  also_invalidated_by?: Array<"md" | "ts" | "lean" | "graph">;
+  also_invalidated_by?: Array<CompanionRole | "graph">;
   /**
    * Whether a deterministic script can run this criterion (true) or
    * it requires agent / human adjudication (false).

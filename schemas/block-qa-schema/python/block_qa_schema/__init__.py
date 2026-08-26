@@ -75,9 +75,17 @@ class QaFieldHash(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
+    # Paper adapter companions.
     md: Optional[str] = None
     ts: Optional[str] = None
     lean: Optional[str] = None
+    # WHO SMART Guidelines L2 DAK companions.
+    bpmn: Optional[str] = None
+    dmn: Optional[str] = None
+    xlsx: Optional[str] = None
+    # WHO SMART Guidelines L3 FHIR companions.
+    fsh: Optional[str] = None
+    cql: Optional[str] = None
 
 
 class QaScore(BaseModel):
