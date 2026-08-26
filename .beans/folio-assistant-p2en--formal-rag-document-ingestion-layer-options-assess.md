@@ -861,3 +861,72 @@ Remaining sgex: DAK_LOGICAL_MODEL_UPDATE_PLAN.md (1668) and
 docs/dak-publication-software-architecture.md (457) unread; bpmn-to-svg.js
 jsdom-vs-Chromium comparison still open.
 
+## WHO's own logical models found + starter-kit SOPs (§12.24)
+
+sgex's DAK_LOGICAL_MODEL_UPDATE_PLAN.md (1668 lines) is 95% dead sgex service
+plan — BUT its first 30 lines quote WHO's DAK.fsh, and that quote **verified
+accurate** against smart-base input/fsh/models/DAK.fsh. First sgex claim to
+survive checking. Primary source now in hand (smart-base checkout was already
+on disk at /home/user/litlfred/smart-base).
+
+**Component list SETTLED — 4 sources, 3 agree:**
+- smart-base DAK.fsh: 9, ends testScenarios; description literally says "all 9
+  DAK components" ✓
+- starter-kit l2_dak_authoring.md **TABLE**: same 9, same numbering ✓
+- starter-kit l2_dak_authoring.md **INTRO PROSE**: a DIFFERENT 9 — scheduling
+  logic promoted to #7, test scenarios ABSENT. Contradicts its own table three
+  paragraphs later. Stale. ✗
+- sgex copilot-instructions: 8 (predates) + a bogus artefact-type list ✗
+
+Both machine-readable sources agree with the table → that's what DAK_COMPONENTS
+encodes. **Settles scheduling-logic**, which §12.23 hedged on: the SOP table
+itself says scheduling logic is "a specific type of decision-support logic" and
+documents it INSIDE that row; DAK.fsh gives it no field. Only the stale prose
+promotes it. Stays a kind, not a 10th component.
+
+Added DAK_COMPONENT_FIELDS with WHO's own field names (healthInterventions,
+personas, userScenarios, ...). Tests now PARSE DAK.fsh and assert: exactly 9
+`0..* *Source` declarations, every field we name is one of them, WHO declares
+none we haven't listed, and no scheduling component. smart-base absent ⇒
+reported UNVERIFIED, never a pass (§5 contract). 3 tests ran for real, not
+skipped.
+
+**The Source pattern + a constraint nothing enforces.** Every component is
+`0..* <Name>Source`, each offering url | canonical | instance — WHO's own answer
+to "where does a content block live". But each says "**exactly one of** the
+following must be provided" in Description PROSE, and there is **not one
+Invariant:/obeys in ANY of WHO's logical models** (grepped all 17). A DAK
+supplying all three, or none, validates clean. That's a QA criterion we can
+carry and the FHIR toolchain structurally cannot — exactly what .qa.json is for.
+
+**Both gap kinds now have WHO shapes (don't invent them):**
+- HealthInterventions.fsh: id, description[x] (string or uri), `reference 1..*
+  **DublinCore**` — and DublinCore's namespace is ALREADY in our JSON-LD context
+  as dcterms:. Content source per SOP: UHC menu of essential interventions + WHO
+  classification of digital health interventions (an IRIS publication — that's
+  what sgex's table meant by "IRIS Publications").
+- TestScenario.fsh: `feature 1..1 uri` → a **Gherkin .feature file**. So the L2
+  test-scenario companion role is `.feature`, alongside .bpmn/.dmn/.fsh/.cql.
+
+Also: WHO ships 11 per-component logical models, incl. FunctionalRequirement.fsh
+and NonFunctionalRequirement.fsh as SEPARATE models — independently corroborates
+my 2-kind split that §12.23 flagged as a deliberate departure. It's WHO's own
+structure. FunctionalRequirement is user-story shaped: activity/actor/
+capability("I want")/benefit("so that"). And `description[x] string or uri` =
+"Markdown content OR a URI to a Markdown file" recurs everywhere — exactly our
+.md companion pattern.
+
+**Workbook question ANSWERED (was blocked on user decision since §12.18).**
+starter-kit input/images/ ships the OFFICIAL DAK component templates as .xlsx:
+core data dictionary, decision-support logic, scheduling logic, indicators and
+performance metrics, high-level functional+non-functional requirements — at v2
+AND v2.1. Canonical sheet structure for exactly the components §12.13 found are
+workbook-backed. A reader is now bounded against a published template instead of
+reverse-engineering one repo.
+
+1021 pass / 0 fail, tsc + eslint clean.
+
+Starter kit has ~4300 lines of SOP across 30 pagecontent files (l3_*.md per
+artefact type, checklist.md 297, authoring_conventions.md, qa_check.md) — only
+l2_dak_authoring.md read so far.
+

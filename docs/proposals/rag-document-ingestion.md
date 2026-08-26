@@ -2028,3 +2028,105 @@ Not yet acted on, and listed so it is not lost: `DAK_LOGICAL_MODEL_UPDATE_PLAN.m
 (1,668 lines) and `docs/dak-publication-software-architecture.md` (457 lines) are
 the two remaining substantial DAK documents. Given §12.21's and §12.22's
 results, both should be read before anything in them is believed.
+
+### 12.24 WHO's own logical models, and a component list that four sources tell differently
+
+`sgex`'s `DAK_LOGICAL_MODEL_UPDATE_PLAN.md` (1,668 lines) is mostly a plan for
+`sgex`'s own TypeScript services — phases, staging grounds, asset editors, all
+dead. But its first 30 lines quote **WHO's `DAK.fsh` logical model**, and that
+quote is the first `sgex` claim to survive verification: checked against
+`smart-base` `input/fsh/models/DAK.fsh` directly, it is accurate.
+
+That makes the primary source reachable, and it is far better than the quote.
+
+#### The component list, settled
+
+WHO's `DAK.fsh` describes itself as covering "all 9 DAK components" and declares
+each as `0..* <Name>Source`. The WHO IG starter kit's L2 authoring SOP
+(`l2_dak_authoring.md`) numbers a table identically. Four sources, three in
+agreement:
+
+| Source | Says |
+|---|---|
+| `smart-base` `DAK.fsh` | The nine, ending `testScenarios` |
+| starter kit `l2_dak_authoring.md`, **the table** | The nine, identically numbered |
+| starter kit `l2_dak_authoring.md`, **the intro prose** | A *different* nine — scheduling logic promoted to #7, test scenarios absent |
+| `sgex` `copilot-instructions.md` | Eight, plus a second list that is artefact types rather than components |
+
+The starter kit contradicts itself within one file: its prose lists a nine that
+the table directly beneath it does not. The prose is stale. Both
+machine-readable sources agree with the table, so that is what `DAK_COMPONENTS`
+encodes.
+
+This also settles `scheduling-logic`, which §12.23 mapped under decision-support
+logic with a hedge. The SOP's own table calls scheduling logic **"a specific
+type of decision-support logic"** and documents it inside that row; `DAK.fsh`
+gives it no field. Only the stale prose promotes it. It stays a kind.
+
+`DAK_COMPONENT_FIELDS` now carries WHO's own field names (`healthInterventions`,
+`personas`, `userScenarios`, …), which makes the table checkable rather than
+merely parallel. Tests parse `DAK.fsh` and assert that it declares exactly nine
+`0..* …Source` components, that every field this repo names is one of them, and
+that WHO declares none this repo has not listed. `smart-base` is an external
+checkout, so its absence is reported as *unverified* — never as a pass.
+
+#### The Source pattern, and a constraint nothing enforces
+
+Every component in `DAK.fsh` is `0..*` of a `*Source` type, and each `*Source`
+offers three ways to say where the content is:
+
+```fsh
+* url       0..1 url       "URL to retrieve … from input/ or external source"
+* canonical 0..1 canonical "Canonical URI pointing to the … definition"
+* instance  0..1 HealthInterventions "Inline … instance data"
+```
+
+That is WHO's own answer to the question §12.15 asks — where a content block
+lives — and it maps cleanly onto this platform's block-plus-companion shape.
+
+But each `*Source` says, in its `Description` prose, "**exactly one of** the
+following must be provided", and **there is not one `Invariant:` or `obeys` in
+any of WHO's logical models**. The choice is documentation. A DAK that supplies
+all three, or none, validates clean. That is a QA criterion this platform can
+carry and the FHIR toolchain structurally cannot — precisely the kind of check
+`.qa.json` sidecars exist for.
+
+#### The two gap kinds now have WHO shapes
+
+§12.23 left `health-interventions-and-recommendations` and `test-scenarios`
+without an L2 kind. WHO models both, so the shapes need not be invented:
+
+- **`HealthInterventions.fsh`** — `id`, `description[x] (string or uri)`, and
+  `reference 1..* DublinCore`. Its references are **Dublin Core**, whose
+  namespace this repo's JSON-LD context already carries as `dcterms:`. The SOP
+  adds where the content comes from: the UHC menu of essential interventions and
+  the WHO classification of digital health interventions, the latter an IRIS
+  publication — which is what `sgex`'s representation table meant by "IRIS
+  Publications".
+- **`TestScenario.fsh`** — `feature 1..1 uri`, a link to a **Gherkin feature
+  file**, plus the same `description[x]`. So the L2 test scenario's companion
+  role is `.feature`, alongside the `.bpmn`/`.dmn`/`.fsh`/`.cql` already declared.
+
+`description[x] string or uri` — "either Markdown content or a URI to a Markdown
+file" — recurs across every model, and is exactly the `.md` companion pattern
+already in use.
+
+WHO also ships **eleven per-component logical models**, and two of them are
+`FunctionalRequirement.fsh` and `NonFunctionalRequirement.fsh` as separate
+models. That independently corroborates the two-kind split §12.23 flagged as a
+deliberate departure: it is WHO's own structure. `FunctionalRequirement` is
+user-story shaped — `activity`, `actor`, `capability` ("I want"), `benefit`
+("so that").
+
+#### The workbook question, answered
+
+§12.18 deferred workbook rendering pending a decision about which sheets belong
+in a printed document. The starter kit answers it: `input/images/` ships the
+**official DAK component templates** as `.xlsx` — core data dictionary,
+decision-support logic, scheduling logic, indicators and performance metrics,
+high-level functional and non-functional requirements, at `v2` and `v2.1`.
+
+These define the canonical sheet structure for exactly the components §12.13
+found are workbook-backed in practice. A reader for them is now a bounded
+problem against a published template rather than reverse-engineering whatever
+one repository happens to contain.

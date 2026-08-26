@@ -264,13 +264,22 @@ export const DAK_LABEL_PREFIXES: Record<DakBlockKind, string> = {
 /**
  * The WHO SMART Guidelines DAK components, in WHO's own order.
  *
- * The canonical list is eight components as published (see the WHO guidance
- * cited below), plus **test scenarios**, added later — which is why older
- * material, `sgex`'s agent instructions among it, documents "the 8 core DAK
- * components" and omits it. Anything counting components against an older
- * source will be off by one.
+ * The canonical list is eight components as published, plus **test scenarios**,
+ * added later. Four WHO-side sources state it and they do not all agree, so the
+ * list is pinned here rather than recited:
  *
- * Sources:
+ * | Source | Says |
+ * |---|---|
+ * | `smart-base` `input/fsh/models/DAK.fsh` | These nine, ending `testScenarios` — its own description says "all 9 DAK components" |
+ * | `smart-ig-starter-kit` `l2_dak_authoring.md`, **the table** | These nine, identically numbered |
+ * | `smart-ig-starter-kit` `l2_dak_authoring.md`, **the intro prose** | A different nine: scheduling logic promoted to #7, test scenarios absent — stale, and contradicted by the table directly beneath it |
+ * | `sgex` `.github/copilot-instructions.md` | Eight (predates test scenarios), *plus* a second list of artefact types that is not the components at all |
+ *
+ * Three of the four agree, including both machine-readable ones, so that is
+ * what this encodes. Anything counting components against an older source is
+ * off by one, silently.
+ *
+ * Published guidance:
  * - <https://www.who.int/publications/i/item/9789240099456>
  * - <https://www.who.int/publications/i/item/9789240085138>
  * - <https://www.who.int/publications/i/item/9789240020306>
@@ -293,6 +302,26 @@ export const DAK_COMPONENTS = [
 ] as const;
 
 export type DakComponent = (typeof DAK_COMPONENTS)[number];
+
+/**
+ * The field each component occupies in WHO's own `DAK` logical model.
+ *
+ * From `smart-base` `input/fsh/models/DAK.fsh`, where every component is
+ * declared `0..* <Name>Source`. Carrying the field names makes this table
+ * checkable against WHO's model rather than merely parallel to it, and gives a
+ * DAK read from `dak.json` somewhere to land.
+ */
+export const DAK_COMPONENT_FIELDS: Record<DakComponent, string> = {
+  "health-interventions-and-recommendations": "healthInterventions",
+  "generic-personas": "personas",
+  "user-scenarios": "userScenarios",
+  "generic-business-processes-and-workflows": "businessProcesses",
+  "core-data-elements": "dataElements",
+  "decision-support-logic": "decisionLogic",
+  "programme-indicators": "indicators",
+  "functional-and-non-functional-requirements": "requirements",
+  "test-scenarios": "testScenarios",
+};
 
 /** One-line statement of what each component is for, in WHO's terms. */
 export const DAK_COMPONENT_DESCRIPTIONS: Record<DakComponent, string> = {
@@ -324,8 +353,11 @@ export const DAK_COMPONENT_DESCRIPTIONS: Record<DakComponent, string> = {
  * - `functional-and-non-functional-requirements` is one WHO component that
  *   this repo splits into two kinds, because the component's own name is a
  *   conjunction and the two halves have different reviewers.
- * - `decision-support-logic` gains `scheduling-logic`, which WHO treats as
- *   decision logic but which authors keep separate.
+ * - `decision-support-logic` gains `scheduling-logic`. WHO's authoring SOP
+ *   calls scheduling logic "a specific type of decision-support logic" and
+ *   documents it inside that component's row; `DAK.fsh` likewise gives it no
+ *   field of its own. Only the SOP's stale intro prose promotes it, so it stays
+ *   a kind rather than becoming a tenth component.
  * - `core-data-elements` collects everything describing a variable's shape,
  *   including the L3 `structure-map` that transforms between two of them.
  *

@@ -13,13 +13,14 @@
  * new place.
  */
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "fs";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
 import {
   DAK_BLOCK_KINDS,
   DAK_COMPONENTS,
   DAK_COMPONENT_DESCRIPTIONS,
+  DAK_COMPONENT_FIELDS,
   DAK_COMPONENT_KINDS,
   DAK_KIND_BUILDERS,
   DAK_LABEL_PREFIXES,
@@ -287,5 +288,50 @@ describe("WHO DAK component coverage", () => {
       "functional-requirement",
       "non-functional-requirement",
     ]);
+  });
+});
+
+describe("the component list against WHO's own logical model", () => {
+  // DAK_COMPONENTS is a claim about WHO's model, so where the model is on disk
+  // it is checked rather than trusted. smart-base is an external checkout, so
+  // absence must read as "not checked" — never as a pass. Same contract as the
+  // rest of the smart-base-backed tooling.
+  const DAK_FSH = join(
+    process.env.SMART_BASE_HOME ?? "/home/user/litlfred/smart-base",
+    "input/fsh/models/DAK.fsh",
+  );
+  const available = existsSync(DAK_FSH);
+
+  test("smart-base availability is reported, not assumed", () => {
+    if (!available) {
+      console.warn(`  n/a: no DAK.fsh at ${DAK_FSH} — component fields unverified`);
+    }
+    expect(typeof available).toBe("boolean");
+  });
+
+  test.skipIf(!available)("every component field exists in WHO's DAK.fsh", () => {
+    const fsh = readFileSync(DAK_FSH, "utf-8");
+    // Component lines look like: `* healthInterventions 0..* HealthInterventionsSource "…"`
+    const declared = new Set(
+      [...fsh.matchAll(/^\* (\w+) 0\.\.\* (\w+Source)\b/gm)].map((m) => m[1]!),
+    );
+    expect(declared.size).toBe(9);
+    for (const c of DAK_COMPONENTS) {
+      expect(declared.has(DAK_COMPONENT_FIELDS[c])).toBe(true);
+    }
+  });
+
+  test.skipIf(!available)("WHO declares no component this repo has not listed", () => {
+    const fsh = readFileSync(DAK_FSH, "utf-8");
+    const declared = [...fsh.matchAll(/^\* (\w+) 0\.\.\* \w+Source\b/gm)].map((m) => m[1]!);
+    const known = new Set(Object.values(DAK_COMPONENT_FIELDS));
+    expect(declared.filter((d) => !known.has(d))).toEqual([]);
+  });
+
+  test.skipIf(!available)("scheduling logic is not a component in WHO's model", () => {
+    // The starter kit's stale intro prose promotes it to #7. Its own table and
+    // this model both keep it inside decision-support logic.
+    expect(readFileSync(DAK_FSH, "utf-8")).not.toMatch(/^\* schedul/im);
+    expect(DAK_COMPONENT_KINDS["decision-support-logic"]).toContain("scheduling-logic");
   });
 });
