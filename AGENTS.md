@@ -141,6 +141,26 @@ only reads the default branch, so nothing will ever run them here again. Bean
 `qa-sweep` preflights on `content/package.json` and `witness-refresh` needs
 `folio-assistant/computations/`, and the platform carries no folio.
 
+**A report is only read by someone in the room.** The session-start sweep covers
+every day somebody is working; the failure being guarded against is a quiet
+stretch with nobody looking, which is exactly the stretch in which no session
+starts either. So `.github/workflows/ci-health.yml` runs the same check weekly
+and maintains **one** tracking issue labelled `ci-health` — opened when the
+default branch has a live failure, edited in place while it persists (an edit
+does not notify, so a long outage stays one unread item), and closed
+automatically when `main` is clean. It deliberately does not send another
+email: GitHub sent 30 and the premise of `xom7` is that nobody reads them. The
+three live badges at the top of `README.md` are the same state at the front
+door. Bean `ynu8`.
+
+Two things about that workflow are load-bearing rather than incidental. It
+checks out with `fetch-depth: 0`, because the `superseded` rule asks `git log`
+when a workflow file last changed and a shallow clone cannot answer — which
+would resurrect the false fires it exists to retire. And on "could not check"
+(exit 2) it leaves the tracking issue **untouched** and fails the job, rather
+than closing it: the watchdog going blind must not read as good news, and a red
+`ci-health.yml` is itself reported by next week's run.
+
 Complements `5rfy`, which fixed workflows that never *fire*. This is the
 opposite defect — one that fires constantly and fails every time.
 

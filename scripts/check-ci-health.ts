@@ -20,13 +20,35 @@
  * and nothing surfaced it. See bean `xom7`.
  */
 import { execFileSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { assess, render, type RunSummary } from "../src/workflow/ci-health.js";
 
 const argv = process.argv.slice(2);
 const markdown = argv.includes("--markdown");
 const warn = argv.includes("--warn");
+
+/**
+ * `--out <file>` writes the markdown report to a file **and keeps the exit
+ * code**. `--markdown` cannot do both: it always exits 0, deliberately, because
+ * `session-start-coord-sweep.sh` runs it as `if ! bun run … --markdown; then`
+ * and prints its "Not checked — treat as unknown" fallback on a non-zero exit.
+ * Make `--markdown` exit 1 on a red and the sweep would print the report AND
+ * declare it unchecked, every time CI is red.
+ *
+ * So the notifier gets its own flag rather than one API call being spent twice.
+ */
+const outIdx = argv.findIndex((a) => a === "--out" || a.startsWith("--out="));
+const outFile =
+  outIdx === -1
+    ? undefined
+    : argv[outIdx].startsWith("--out=")
+      ? argv[outIdx].slice("--out=".length)
+      : argv[outIdx + 1];
+if (outIdx !== -1 && !outFile) {
+  console.error("--out needs a file path");
+  process.exit(2);
+}
 
 function git(args: string[]): string {
   return execFileSync("git", args, { encoding: "utf8" }).trim();
@@ -145,6 +167,8 @@ const health = runs
       workflowChangedAt,
     })
   : [];
+
+if (outFile) writeFileSync(outFile, render(health, { unreachable, branch }));
 
 if (markdown) {
   console.log(render(health, { unreachable, branch }));
