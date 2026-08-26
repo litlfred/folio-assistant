@@ -1,10 +1,11 @@
 ---
 # folio-assistant-fsl7
 title: Repoint remaining hand-rolled block scanners at the module loader
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-08-08T13:25:41Z
-updated_at: 2026-08-08T16:05:00Z
+updated_at: 2026-08-26T14:11:38Z
 ---
 
 Follow-up to jwd9, which replaced the source-text scan with module imports in conjectural-propagation-audit and conditional-class-banner-audit and added write-verification to prune-transitive-deps.
@@ -266,3 +267,127 @@ before it was reported as a risk.
 
 So the change is cheap AND quiet. The prose was clean; it simply could not be
 seen to be.
+
+## 2026-08-26 — the loader exists; bullet 2 is repointed behind an opt-in
+
+Bullet 2 was filed as "fine as is **unless a sync loader appears**". One
+appeared. Bun's `require` loads a TypeScript ES module synchronously, so
+`walkBlocks` — a sync generator with fourteen production callers, which is the
+whole reason it reads identity out of source text — can now import a block
+without becoming async.
+
+`loadBlockModuleSync` in `content/pipeline/block-module.ts`. Cost, measured over
+300 generated manifests plus 10 non-block helpers, cold:
+
+    regex readBlockManifest   16.0 ms   0.052 ms / file
+    loadBlockModuleSync       67.1 ms   0.216 ms / file
+
+Four times the regex, 0.76 s across three and a half thousand blocks. Matches
+the 0.66 ms/block the async loader measured in `jwd9`.
+
+### The textual read is wrong in three ways, and one of them is a wrong answer
+
+Not asserted — demonstrated, and pinned in
+`scripts/tests/block-walk-verify.test.ts`:
+
+| source                             | regex reads           | the block *is*         |
+|------------------------------------|-----------------------|------------------------|
+| `label: LBL` (a constant)          | `undefined` → skipped | `prop:computed`        |
+| an earlier `label:` in a helper    | `not-the-block`       | `prop:real`            |
+| `proposition({label:"theorem:x"})` | `theorem:x`           | rejected by the schema |
+
+Row 2 is the sharp one. It is not a miss, it is a confident wrong answer — a
+sidecar and a graph node keyed to a label the block does not have. Same shape as
+the `root`-is-a-stem bug that reported "0 siblings across 3486 blocks" and
+looked plausible enough to nearly publish.
+
+### The candidate gate stays textual, and that is load-bearing
+
+Importing a module runs it, and a content tree holds scripts as well as
+manifests — `content/pipeline/qa-agent-drain-queue.ts` in this repo starts a
+sweep at import time. So `readBlockManifest`'s masked builder-call match now
+decides *what may be executed*, and the loader decides *what it is*. Two tests
+pin the gate: a helper with a top-level side effect is never imported, and
+neither is the `#125` shape (a builder call inside a template literal).
+
+Writing this turned up a mistake in my own first cut. I had gated verification
+on the file having a textual `label:`, which meant the computed-label case —
+one of the three the change exists to fix — never reached the loader at all. The
+test caught it. The label is a question about identity, not about candidacy; the
+gate is the builder call alone.
+
+### The measurement ran, and the default is flipped
+
+I first wrote that the corpus "lives in the folio repo, not here, and this
+session had no access to one". That was wrong, and wrong in the cheap way:
+`add_repo litlfred/qou` attached it in one call. I asserted a limitation I had
+never tested. The measurement it was blocking takes about a second.
+
+`bun run content/pipeline/verify-block-walk.ts /home/user/qou/content/quantum-observable-universe`
+
+    QA mode    (includeUnlabelled)  textual 3557 blocks / 450 ms
+                                    verified 3557 blocks / 1475 ms
+    graph mode (default)            textual 3494 · verified 3494, identical
+                                    (kind, label, ts) triples
+
+    blocks only the verified walk finds  0
+    blocks only the textual walk finds   0
+    blocks whose identity differs        0
+    blocks that would not import         0
+
+So on `qou` the flip is a **no-op plus one second**. Its value is not fixing
+something broken there; it is that the three failure classes become impossible
+rather than merely absent-so-far, and that the walk stops depending on a parser
+that can drift. `verify` defaults to `true`; `verify: false` is the escape
+hatch.
+
+Two things the run itself turned up:
+
+- **A folio needs its platform symlink.** Importing a block resolves its
+  imports, and `qou/content/schema/builders.ts` re-exports through
+  `<folio>/folio-assistant`, which `scripts/setup-folio-assistant.sh` creates.
+  Without it all 3557 blocks fail to load. The walk still yields every one of
+  them under its textual identity and says so — the fallback doing its job —
+  but the first run printed 3557 warning lines and buried the one line that
+  said what to fix. Now capped at five named files plus a summary that names
+  the likely cause.
+- **The warning budget was process-global**, so a second walk in the same
+  process (`qa-sweep` calls `usesGraphHash` before its own) would have had its
+  genuine failures silently swallowed by the first walk having spent it. Scoped
+  per walk.
+
+And the flip broke `verify-block-walk` itself — both of its arms had been
+relying on the default, so it started comparing the verified reading with
+itself. Both arms now state `verify` explicitly.
+
+### Why it was opt-in first
+
+`walkBlocks(root, { verify: true, onLoadFailure })`. Default `false`.
+
+Fourteen tools consume this generator, and this repo has twice learned that
+changing what the walk enumerates must be measured against real content before
+it lands: `#125` admitted a non-block, `qou/3fui` missed 63 real ones — and in
+that case the measurement *reversed* the recommendation the change had been
+argued on. The corpus that would settle it is in the folio repo, not here, and
+this session had no access to one.
+
+So the flip is staged, not deferred indefinitely.
+`bun run content/pipeline/verify-block-walk.ts <content-root>` walks both ways
+and prints every disagreement, every block only one mode finds, every block that
+will not import, and what the flip costs in wall-clock. Run it against `qou`;
+flip the default on what it prints.
+
+A block that fails to import is reported and **still yielded**, carrying its
+degraded textual identity. Dropping it would trade a loud problem for a silent
+coverage hole, which is `qou/3fui` in reverse.
+
+### Still open
+
+Nothing in this bean's subject. Both scanners are addressed: bullet 1 closed by
+owner decision, bullet 2 repointed at the loader and the default flipped on a
+measurement.
+
+What a future reader should know rather than rediscover: the default was
+measured against **one** corpus. Another folio should be run through
+`verify-block-walk.ts` before its walks are trusted to verify, and
+`verify: false` is there when it disagrees.
