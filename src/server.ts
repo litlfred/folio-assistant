@@ -22,6 +22,7 @@ import { handleChatPost } from "./routes/chat.js";
 import { handleGlossaryGet, handleGlossaryPost } from "./routes/glossary.js";
 import { handleRelevanceGet, handleRelevancePost } from "./routes/relevance.js";
 import { registerBeansTools } from "./tools/beans-prime.js";
+import { registerWorkflowTools } from "./tools/workflow.js";
 
 // ── MIME types for static serving ────────────────────────────────
 
@@ -114,6 +115,8 @@ export class FolioServer {
 
     // Core, adapter-independent MCP tools (agent-generic work-plan priming).
     registerBeansTools(this.mcpServer, config.repoRoot);
+    // Process state from docs/workflows/*.bpmn — what is enabled now, and why.
+    registerWorkflowTools(this.mcpServer, config.repoRoot);
 
     // Register adapter-specific MCP tools
     if (this.adapter.registerMcpTools) {

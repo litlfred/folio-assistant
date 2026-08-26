@@ -44,6 +44,74 @@ sit *inside* level 3's `Draft the block edit`, and live with their guides:
 | `l2-dak-authoring.bpmn` | WHO SMART Guidelines DAK (L2) | [Authoring a WHO SMART DAK](guides/who-smart-dak.html#the-l2-artifacts) |
 | `l3-fhir-pipeline.bpmn` | WHO SMART Implementation Guide (L3) | [Authoring a WHO SMART IG](guides/who-smart-ig.html#the-l3-pipeline) |
 
+### They also run
+
+Since bean `fq0b` these files are not only pictures. The MCP server interprets
+them: `workflow_start` opens an instance for a subject, `workflow_next` reports
+what is enabled *now* — with the lane that performs it and the skill that
+implements it — and `workflow_complete` refuses a step the process has not
+reached. `Commit into the corpus` cannot be reported done before the editor's
+decision is recorded, because there is no token on it until then.
+
+That is ordering, not enforcement: nothing yet stops an agent calling a
+capability tool directly. The case for making it binding — and the argument
+that the commit boundary is the right place — is in
+[Proposal: workflow orchestration](proposals/workflow-orchestration.html).
+
+### Some decisions are computed, not judged
+
+Ten exclusive gateways sit across the six diagrams, and they are not all the
+same kind of question. `Accept, revise or discard?` is the editor's call.
+`Build green, no sorries?` is arithmetic over `lean_build` and `proof_status`.
+
+A gateway carrying `<folio:decision ref="decisions/x.dmn#Decision_Id"/>` has its
+outcome computed from a **DMN decision table** under
+[`docs/workflows/decisions/`](https://github.com/litlfred/folio-assistant/tree/main/docs/workflows/decisions).
+The agent supplies facts — `{ failCritical: 0, failMajor: 2 }` — and the table
+returns the branch; `workflow_complete` refuses a hand-supplied outcome there,
+and records which rule fired.
+
+| Gateway | Table | Reads |
+|---|---|---|
+| `Build green, no sorries?` | `lean-build-gate.dmn` | `buildOk`, `deferredSorries` |
+| `Draft QA green?` | `draft-qa-gate.dmn` | `failCritical`, `failMajor` |
+
+`QC clean?` and `FHIR valid?` are equally mechanical and equally deserve
+tables — they wait on a WHO/FHIR adapter, because a table keyed to facts no
+tool emits looks authoritative and is not.
+
+### The base processes are strict
+
+The three content-agnostic diagrams — editing, draft-to-publication, lifecycle —
+carry `<folio:policy enforcement="strict"/>`. `workflow_gate` refuses a step
+they have not reached. The three per-content-type diagrams are `advisory`,
+because what counts as adequate review of a Lean proof and of a FHIR profile are
+different questions, and the package that knows the domain should answer them.
+
+A content package may relax a base step by declaring it in
+`skills/<package>/workflow-policy.json` **with a reason** — an unexplained
+relaxation does not load, so the file is the record of what was waived and why.
+Five steps refuse to be relaxed at all: `Task_ReviewFindings`,
+`Gateway_EditorDecision` and `Task_Commit` (the editor seeing the findings, the
+decision, the write), plus `Task_AuthorizeRelease` and `Task_PublishRelease`
+(the `publish-authorized` SHALL). If those were negotiable the base would not be
+strict, it would be a suggestion.
+
+`bun run check:workflow-policy` lists the policy and validates every relaxation;
+it runs in CI, so one that has stopped applying is a build failure rather than a
+discovery on the day it is needed.
+
+**The commit boundary is where this is enforced rather than merely answerable.**
+`scripts/check-corpus-gate.ts`, run in the folio repo from a pre-commit hook or
+CI, refuses a changed content block that no instance records the editor having
+authorised. `workflow_gate` answers an agent that asks; the hook does not depend
+on anyone asking.
+
+```sh
+bun run <platform>/scripts/check-corpus-gate.ts --staged --platform <platform>
+bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradually
+```
+
 ### How to read them
 
 - **A lane is a role.** Every lane maps to an actor in

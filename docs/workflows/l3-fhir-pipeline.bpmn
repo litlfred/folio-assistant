@@ -24,6 +24,18 @@
     <bpmn:participant id="Participant_L3Fhir" name="WHO SMART Guidelines — L2 DAK to published FHIR IG" processRef="Process_L3Fhir" />
   </bpmn:collaboration>
   <bpmn:process id="Process_L3Fhir" name="L3 FHIR IG pipeline" isExecutable="false">
+    <bpmn:documentation>
+      folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline.
+      Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+      BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+      by `bun run render:bpmn` — never hand-edit the SVG.
+      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      work plan in .beans/.
+    </bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="advisory" />
+    </bpmn:extensionElements>
     <bpmn:laneSet id="Process_L3Fhir_LaneSet">
       <bpmn:lane id="Lane_Modeller" name="FHIR modeller">
         <bpmn:flowNodeRef>StartEvent_L2Ready</bpmn:flowNodeRef>
@@ -104,7 +116,7 @@
       <bpmn:documentation>QC findings do not stay in a report nobody re-reads — each becomes a bean the modeller and the agents both see.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" />
+        <folio:bean store=".beans/" op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>C09</bpmn:incoming>
       <bpmn:outgoing>C10</bpmn:outgoing>

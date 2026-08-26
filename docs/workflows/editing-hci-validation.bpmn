@@ -23,6 +23,18 @@
     <bpmn:participant id="Participant_FolioEditing" name="Folio editing — one proposed change to a content block" processRef="Process_Editing" />
   </bpmn:collaboration>
   <bpmn:process id="Process_Editing" name="Editing and HCI validation" isExecutable="false">
+    <bpmn:documentation>
+      folio-assistant — editing a content block and its HCI validation gate.
+      Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+      BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+      by `bun run render:bpmn` — never hand-edit the SVG.
+      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      work plan in .beans/.
+    </bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="strict" />
+    </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Editing_LaneSet">
       <bpmn:lane id="Lane_Editor" name="Editor / author (person)">
         <bpmn:flowNodeRef>StartEvent_EditRequested</bpmn:flowNodeRef>
@@ -74,7 +86,7 @@
       <bpmn:documentation>Every edit is tracked as a bean in .beans/. Check for an existing bean by exact title first; claim it (status in-progress) rather than minting a duplicate.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" />
+        <folio:bean store=".beans/" op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_02</bpmn:incoming>
       <bpmn:outgoing>Flow_03</bpmn:outgoing>
@@ -165,17 +177,23 @@
       <bpmn:documentation>Findings are appended to the bean, so the next agent or human sees what is outstanding.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" />
+        <folio:bean store=".beans/" op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_19</bpmn:incoming>
       <bpmn:outgoing>Flow_20</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:userTask id="Task_ReviewFindings" name="Review the findings">
       <bpmn:documentation>THE GATE: the editor sees every finding BEFORE anything reaches the corpus.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:policy relaxable="false" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_20</bpmn:incoming>
       <bpmn:outgoing>Flow_21</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_EditorDecision" name="Accept, revise or discard?">
+      <bpmn:extensionElements>
+        <folio:policy relaxable="false" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_21</bpmn:incoming>
       <bpmn:outgoing>Flow_22</bpmn:outgoing>
       <bpmn:outgoing>Flow_24</bpmn:outgoing>
@@ -193,6 +211,9 @@
     </bpmn:endEvent>
     <bpmn:serviceTask id="Task_Commit" name="Commit into the corpus">
       <bpmn:documentation>Only now does the change become corpus content, together with its QA sidecars. Subject to the commit-hygiene requirement.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:policy relaxable="false" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_25</bpmn:incoming>
       <bpmn:outgoing>Flow_26</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -200,7 +221,7 @@
       <bpmn:documentation>Resolved when the change landed clean; left open with the residue when it did not.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" />
+        <folio:bean store=".beans/" op="resolve" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_26</bpmn:incoming>
       <bpmn:outgoing>Flow_27</bpmn:outgoing>

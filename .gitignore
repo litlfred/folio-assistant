@@ -1,8 +1,14 @@
 node_modules/
 dist/
+# Jekyll build output — the docs site is built from docs/, never committed.
+_site/
 *.js
 *.js.map
 *.d.ts
+# ...except hand-written ambient declarations. `types/` holds ones for packages
+# that ship none (bpmn-moddle); the blanket rule above is for generated output,
+# and without this exception a fresh clone fails `tsc` on a missing module.
+!types/*.d.ts
 .env
 .env.*
 *.log
