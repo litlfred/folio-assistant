@@ -16,6 +16,8 @@ import { execSync } from "child_process";
 import { existsSync, readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { listInstances } from "../workflow/store.js";
+import type { InstanceState } from "../workflow/instance.js";
 
 /** Run a command in the repo, returning trimmed stdout or "" on failure. */
 function run(cmd: string, cwd: string): string {
@@ -58,6 +60,47 @@ function primeFromDir(beansDir: string): string {
   return lines.join("\n");
 }
 
+/**
+ * Where the beans are in their processes.
+ *
+ * A bean says what is being worked on; a workflow instance says where it got
+ * to. Reported apart, a reader gets two answers to one question — so priming
+ * joins them here rather than leaving the reader to. Read-only: this reports
+ * position, it does not advance anything.
+ */
+function workflowPositions(repoRoot: string): string {
+  let instances: InstanceState[];
+  try {
+    instances = listInstances(repoRoot);
+  } catch {
+    return "";
+  }
+  if (instances.length === 0) return "";
+
+  const lines = ["", "## Workflow position", ""];
+  for (const i of instances) {
+    const where =
+      i.status === "completed"
+        ? "completed"
+        : i.tokens.length
+          ? `at ${i.tokens.join(", ")}`
+          : "running, nothing enabled (stuck)";
+    lines.push(
+      `- \`${i.id}\` — ${i.subject} · ${where}` + (i.bean ? `  ← bean \`${i.bean}\`` : "  (no bean)"),
+    );
+  }
+  const tracked = new Set(instances.map((i) => i.bean).filter(Boolean));
+  lines.push(
+    "",
+    tracked.size > 0
+      ? `_Beans above without an instance are not being tracked through a process; ` +
+          `\`workflow_next\` reports what is enabled for those that are._`
+      : `_No instance names a bean. \`workflow_start\` takes one — without it the ` +
+          `work plan and the process stay two separate records._`,
+  );
+  return lines.join("\n");
+}
+
 export function registerBeansTools(server: McpServer, repoRoot: string): void {
   server.tool(
     "work_plan_prime",
@@ -76,7 +119,12 @@ export function registerBeansTools(server: McpServer, repoRoot: string): void {
         text = primeFromDir(join(repoRoot, ".beans"));
       }
       return {
-        content: [{ type: "text" as const, text: `# Work-plan (beans)\n\n${text}` }],
+        content: [
+          {
+            type: "text" as const,
+            text: `# Work-plan (beans)\n\n${text}\n${workflowPositions(repoRoot)}`,
+          },
+        ],
       };
     },
   );

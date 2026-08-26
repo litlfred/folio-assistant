@@ -24,6 +24,15 @@
     <bpmn:participant id="Participant_FolioPublication" name="Folio publication — one release of the folio" processRef="Process_Publication" />
   </bpmn:collaboration>
   <bpmn:process id="Process_Publication" name="Draft, review and publish" isExecutable="false">
+    <bpmn:documentation>
+      folio-assistant — corpus to draft publication to officially published.
+      Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+      BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+      by `bun run render:bpmn` — never hand-edit the SVG.
+      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      work plan in .beans/.
+    </bpmn:documentation>
     <bpmn:laneSet id="Process_Publication_LaneSet">
       <bpmn:lane id="Lane_Editors" name="Editors + authoring agents">
         <bpmn:flowNodeRef>CallActivity_Editing</bpmn:flowNodeRef>
@@ -66,7 +75,7 @@
       <bpmn:documentation>The release itself is a bean: it carries what is in this draft, what is outstanding, and who is holding it.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" />
+        <folio:bean store=".beans/" op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>G01</bpmn:incoming>
       <bpmn:outgoing>G02</bpmn:outgoing>
@@ -155,7 +164,7 @@
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
         <folio:skill ref="content-feedback" />
-        <folio:bean store=".beans/" />
+        <folio:bean store=".beans/" op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>G15</bpmn:incoming>
       <bpmn:outgoing>G17</bpmn:outgoing>
@@ -181,7 +190,7 @@
       <bpmn:documentation>What shipped is resolved; what slipped stays open and carries into the next cycle.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" />
+        <folio:bean store=".beans/" op="resolve" />
       </bpmn:extensionElements>
       <bpmn:incoming>G19</bpmn:incoming>
       <bpmn:outgoing>G20</bpmn:outgoing>

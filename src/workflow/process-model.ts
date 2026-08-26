@@ -33,6 +33,7 @@ import { BpmnModdle } from "bpmn-moddle";
 import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { loadDecisionTable, possibleOutcomes, type DecisionTable } from "./decision-table.js";
+import { WORK_PLAN_OPS, type WorkPlanOp } from "./bean-link.js";
 
 /** Element types the interpreter can walk faithfully. */
 const ACTIVITY_TYPES = [
@@ -66,6 +67,12 @@ export interface ProcessNode {
   skills: string[];
   /** True when `<folio:bean/>` marks this step as touching the work plan. */
   touchesWorkPlan: boolean;
+  /**
+   * `op` on `<folio:bean/>`: what this step does to the bean — `claim`, `note`
+   * or `resolve`. Absent means the step touches the plan in some way the tools
+   * do not perform automatically.
+   */
+  workPlanOp?: WorkPlanOp;
   /**
    * `<folio:decision ref="decisions/x.dmn#Decision_Id"/>` on an exclusive
    * gateway: its outcome is **computed** from a DMN table rather than chosen.
@@ -120,6 +127,26 @@ function cleanName(raw: string | undefined): string {
   return (raw ?? "").replace(/\s*\[[a-z0-9-]+\]\s*$/i, "").replace(/\s*\n\s*/g, " ").trim();
 }
 
+/**
+ * An `op` this build does not implement is refused rather than ignored: a step
+ * that says it resolves a bean and quietly does nothing is the two-records
+ * divergence this extension exists to close.
+ */
+function readWorkPlanOp(
+  nodeId: string,
+  ext: { $type: string; op?: string }[],
+): WorkPlanOp | undefined {
+  const op = ext.find((v) => v.$type === "folio:bean")?.op;
+  if (op === undefined) return undefined;
+  if (!WORK_PLAN_OPS.has(op)) {
+    throw new UnsupportedBpmn(
+      `${nodeId}: folio:bean op="${op}" is not implemented. ` +
+        `Supported: ${[...WORK_PLAN_OPS].join(", ")}.`,
+    );
+  }
+  return op as WorkPlanOp;
+}
+
 function kindOf(type: string): NodeKind {
   if (type === "bpmn:StartEvent") return "start";
   if (type === "bpmn:EndEvent") return "end";
@@ -135,7 +162,7 @@ interface ModdleElement {
   id: string;
   name?: string;
   documentation?: { text?: string }[];
-  extensionElements?: { values?: { $type: string; ref?: string }[] };
+  extensionElements?: { values?: { $type: string; ref?: string; op?: string }[] };
   calledElement?: string;
   sourceRef?: { id: string };
   targetRef?: { id: string };
@@ -194,6 +221,7 @@ export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> 
       lane: laneOf.get(el.id),
       skills: ext.filter((v) => v.$type === "folio:skill" && v.ref).map((v) => v.ref!),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
+      workPlanOp: readWorkPlanOp(el.id, ext),
       decisionRef: ext.find((v) => v.$type === "folio:decision" && v.ref)?.ref,
       documentation: el.documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined,
       calledElement: el.calledElement,

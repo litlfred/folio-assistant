@@ -38,6 +38,7 @@ import { basename, join, resolve } from "node:path";
 import { loadProcessModel, type ProcessModel } from "../workflow/process-model.js";
 import { complete, describe, startInstance } from "../workflow/instance.js";
 import { instanceId, listInstances, loadInstance, saveInstance } from "../workflow/store.js";
+import { applyWorkPlanOp } from "../workflow/bean-link.js";
 
 const WORKFLOW_SRC = join("docs", "workflows");
 
@@ -171,7 +172,21 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       const model = await loadProcessModel(join(root, state.source.replace(`${root}/`, "")));
       const next = complete(model, state, node, { outcome, facts, actor, note });
       saveInstance(root, next);
-      return text(describe(model, next));
+
+      // A bean-marked step IS the work-plan operation, not a step about it.
+      // Done after the advance so `resolve` can see whether the process it
+      // tracks actually finished.
+      const op = model.nodes.get(node)?.workPlanOp;
+      const plan = op
+        ? applyWorkPlanOp(root, next.bean, op, {
+            note,
+            instanceCompleted: next.status === "completed",
+          })
+        : undefined;
+
+      return text(
+        describe(model, next) + (plan ? `\n\n  work plan: ${plan.summary}` : ""),
+      );
     },
   );
 }

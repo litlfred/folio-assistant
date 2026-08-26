@@ -187,6 +187,14 @@ a background subagent, not the foreground.
   there — asserting the answer would defeat the point. Adding one means adding
   the `.dmn`, the `folio:decision` ref, and nothing else: the loader checks
   every outcome the table can return names a real branch.
+  **Bean-marked steps are the bean operation, not a note about it.** An activity
+  with `<folio:bean op="claim|note|resolve"/>` performs it on the instance's bean
+  when you complete the step: `claim` sets `in-progress` (idempotent), `note`
+  appends what you pass as `note`, and `resolve` completes the bean **only once
+  the instance itself has completed** — a still-running process gets a note,
+  because whether work is done is a judgement and `AGENTS.md` says a bean is not
+  closed on someone else's say-so. `work_plan_prime` reports every instance's
+  position next to its bean, so the plan and the process are one answer.
 - Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this

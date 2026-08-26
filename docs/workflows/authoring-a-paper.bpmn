@@ -23,6 +23,15 @@
     <bpmn:participant id="Participant_PaperAuthoring" name="Authoring a paper — plan to published" processRef="Process_PaperAuthoring" />
   </bpmn:collaboration>
   <bpmn:process id="Process_PaperAuthoring" name="Authoring a paper" isExecutable="false">
+    <bpmn:documentation>
+      folio-assistant — authoring a scientific paper end to end (Lean + LaTeX).
+      Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+      BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+      by `bun run render:bpmn` — never hand-edit the SVG.
+      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      work plan in .beans/.
+    </bpmn:documentation>
     <bpmn:laneSet id="Process_PaperAuthoring_LaneSet">
       <bpmn:lane id="Lane_Author" name="Author (person)">
         <bpmn:flowNodeRef>StartEvent_NewPaper</bpmn:flowNodeRef>
@@ -65,7 +74,7 @@
       <bpmn:documentation>The plan becomes beans, so a resumed session or a sibling agent can pick it up.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" />
+        <folio:bean store=".beans/" op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>A02</bpmn:incoming>
       <bpmn:outgoing>A03</bpmn:outgoing>

@@ -1,7 +1,9 @@
 # Proposal — making agentic workflow execution deterministic
 
-**Status:** phase 1 landed · DMN gateways landed (§6) · phases 2–3 proposed
-**Beans:** `fq0b` (interpreter), `sx4z` (DMN), `dv3w` / `bcnl` (open)
+**Status:** phases 1–2 landed · DMN gateways landed (§6) · phase 3 is the open
+decision (§4)
+**Beans:** `fq0b` (interpreter), `sx4z` (DMN), `dv3w` (work-plan loop),
+`bcnl` (the §4 decision — open)
 
 Agent workflows in this project are ad hoc. Skills are documents an agent
 fetches with `skill_fetch` and is *trusted* to follow; beans record what
@@ -152,16 +154,39 @@ agent because it is not the agent that runs it.
 
 ---
 
-## 5. Phase 2 — beans and instances must not become two truths
+## 5. Phase 2 — beans and instances must not become two truths *(landed)*
 
 `.beans/` answers "what is being worked on"; an instance answers "where did it
 get to". Those must be one answer or they will diverge, and a work plan that
 disagrees with itself is worse than one that is merely coarse.
 
-The hooks already exist: `workflow_start` takes a `bean`, and 11 activities
-carry `<folio:bean/>` marking where the plan is touched. What phase 2 adds is
-the loop closing — completing a bean-marked activity updates the bean, and
-`work_plan_prime` reports instance position alongside bean status.
+The loop is now closed. A bean-marked activity is not a step *about* the work
+plan, it **is** the work-plan operation, so `<folio:bean/>` gained an `op`:
+
+| op | on completing the step | where |
+|---|---|---|
+| `claim` | status → `in-progress`, idempotent | 5 activities |
+| `note` | append the caller's note to the body | 4 activities |
+| `resolve` | status → `completed`, **only if the instance finished** | 2 activities |
+
+`resolve` is the careful one. `AGENTS.md` is explicit that a bean is not closed
+on someone else's judgement, and the activity is called "Resolve **or re-open**
+the bean". So it does not fire on the caller's say-so: the bean completes only
+when the instance it tracks has itself completed, which is a fact derived from
+the process rather than an assertion. A still-running instance gets a note.
+
+`work_plan_prime` now joins the two: every instance is reported with its
+position and its bean, and the absence of a bean is stated rather than left
+blank. An `op` this build does not implement fails at process load — a step
+that says it resolves a bean and quietly does nothing is the divergence the
+extension exists to close.
+
+Two implementation notes worth knowing. The `beans` CLI is preferred and a
+direct `.beans/*.md` rewrite is the fallback, because "beans CLI not on PATH"
+is this repo's own session-start message, and an integration that only worked
+with the CLI installed would be off exactly when someone picks up a fresh
+container. And `findBean` matches `<id>--`, not the bare id, so `fq0b` cannot
+also resolve a bean called `fq0bx`.
 
 Instance state lives in `.folio/workflow/<id>.json`, **committed**, for the
 reason `.beans/` is: the container is ephemeral, and a work plan only one agent
@@ -254,9 +279,7 @@ they found — that is the criterion's job, and the criterion's tests.
    orientation: `workflow_next` tells an agent what it may work on, which lane
    owns it, and which skill implements it, without anyone having read the
    diagram.
-2. **Do phase 2 next** (beans ↔ instances). It is small, it removes a
-   divergence risk that grows with use, and it does not require the §4
-   decision.
+2. ~~Do phase 2 next~~ — **done** (§5). Beans and instances are one record.
 3. ~~Do the DMN tables for the four mechanical gateways~~ — **done for the two
    whose tools exist** (§6). The remaining two wait on a WHO/FHIR adapter
    rather than on a decision.
