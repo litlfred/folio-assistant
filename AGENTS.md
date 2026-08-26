@@ -171,6 +171,15 @@ a background subagent, not the foreground.
   Mermaid stays for the things that are *not* processes (component maps, the
   role-inheritance lattice, the docs navigation graph); the audit of which is
   which is in `docs/publication-workflow.md`.
+- **The diagrams are executable** — `workflow_list` / `workflow_start` /
+  `workflow_next` / `workflow_complete` (MCP) run a process from
+  `docs/workflows/*.bpmn`. `workflow_next` tells you what is enabled **now**,
+  which lane owns it and which skill implements it; `workflow_complete` refuses
+  a step that is not enabled, so work cannot be claimed out of order. State is
+  committed under `.folio/workflow/`, like beans, so a sibling session sees it.
+  Today this is **advisory** — nothing stops you calling a capability tool
+  directly. Whether to make it binding is argued in
+  `docs/proposals/workflow-orchestration.md`.
 - Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this

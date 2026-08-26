@@ -44,6 +44,20 @@ sit *inside* level 3's `Draft the block edit`, and live with their guides:
 | `l2-dak-authoring.bpmn` | WHO SMART Guidelines DAK (L2) | [Authoring a WHO SMART DAK](guides/who-smart-dak.html#the-l2-artifacts) |
 | `l3-fhir-pipeline.bpmn` | WHO SMART Implementation Guide (L3) | [Authoring a WHO SMART IG](guides/who-smart-ig.html#the-l3-pipeline) |
 
+### They also run
+
+Since bean `fq0b` these files are not only pictures. The MCP server interprets
+them: `workflow_start` opens an instance for a subject, `workflow_next` reports
+what is enabled *now* — with the lane that performs it and the skill that
+implements it — and `workflow_complete` refuses a step the process has not
+reached. `Commit into the corpus` cannot be reported done before the editor's
+decision is recorded, because there is no token on it until then.
+
+That is ordering, not enforcement: nothing yet stops an agent calling a
+capability tool directly. The case for making it binding — and the argument
+that the commit boundary is the right place — is in
+[Proposal: workflow orchestration](proposals/workflow-orchestration.html).
+
 ### How to read them
 
 - **A lane is a role.** Every lane maps to an actor in
