@@ -43,6 +43,11 @@ export default tseslint.config(
       "viewer/**",
       "ui/**",
       "home_page/**",
+      // Jekyll + TypeDoc build output. Gitignored, but eslint does not read
+      // .gitignore — so without this, anyone who builds the docs site locally
+      // and then runs `bun run lint` gets a wall of errors from TypeDoc's
+      // bundled assets.
+      "_site/**",
     ],
   },
   ...tseslint.configs.recommended,

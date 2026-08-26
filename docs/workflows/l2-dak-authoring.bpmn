@@ -23,6 +23,18 @@
     <bpmn:participant id="Participant_L2Dak" name="WHO SMART Guidelines — authoring the L2 DAK" processRef="Process_L2Dak" />
   </bpmn:collaboration>
   <bpmn:process id="Process_L2Dak" name="L2 DAK authoring" isExecutable="false">
+    <bpmn:documentation>
+      folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.
+      Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+      BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+      by `bun run render:bpmn` — never hand-edit the SVG.
+      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      work plan in .beans/.
+    </bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="advisory" />
+    </bpmn:extensionElements>
     <bpmn:laneSet id="Process_L2Dak_LaneSet">
       <bpmn:lane id="Lane_Programme" name="Programme manager / technical officer">
         <bpmn:flowNodeRef>StartEvent_Guideline</bpmn:flowNodeRef>
@@ -65,7 +77,7 @@
     <bpmn:task id="Task_SeedBeans" name="Seed the work plan&#10;[todo-manager]">
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" />
+        <folio:bean store=".beans/" op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>B02</bpmn:incoming>
       <bpmn:outgoing>B03</bpmn:outgoing>

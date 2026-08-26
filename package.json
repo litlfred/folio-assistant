@@ -48,6 +48,8 @@
     "lint": "eslint .",
     "gen:jsonld": "bun run scripts/gen-jsonld-context.ts && bun run content/pipeline/gen-block-jsonld.ts && bun run content/pipeline/gen-library-jsonld.ts",
     "gen:jsonld:check": "bun run scripts/gen-jsonld-context.ts --check && bun run content/pipeline/gen-block-jsonld.ts --check && bun run content/pipeline/gen-library-jsonld.ts --check",
+    "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
+    "check:workflow-policy": "bun run scripts/check-workflow-policy.ts",
     "render:bpmn": "bun run scripts/render-bpmn.ts",
     "render:bpmn:check": "bun run scripts/render-bpmn.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json"
@@ -56,6 +58,8 @@
     "@anthropic-ai/sdk": "^0.104.2",
     "@modelcontextprotocol/sdk": "^1.12.0",
     "@unified-latex/unified-latex-util-parse": "^1.8.4",
+    "bpmn-moddle": "^10.2.0",
+    "dmn-moddle": "^12.1.0",
     "glob": "^13.0.6",
     "mdast-util-directive": "^3.1.0",
     "mdast-util-gfm-strikethrough": "^2.0.0",

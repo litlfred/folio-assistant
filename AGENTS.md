@@ -171,6 +171,45 @@ a background subagent, not the foreground.
   Mermaid stays for the things that are *not* processes (component maps, the
   role-inheritance lattice, the docs navigation graph); the audit of which is
   which is in `docs/publication-workflow.md`.
+- **The diagrams are executable** — `workflow_list` / `workflow_start` /
+  `workflow_next` / `workflow_complete` (MCP) run a process from
+  `docs/workflows/*.bpmn`. `workflow_next` tells you what is enabled **now**,
+  which lane owns it and which skill implements it; `workflow_complete` refuses
+  a step that is not enabled, so work cannot be claimed out of order. State is
+  committed under `.folio/workflow/`, like beans, so a sibling session sees it.
+  **The base processes are STRICT.** `editing-hci-validation`,
+  `draft-to-publication` and `content-lifecycle` carry
+  `<folio:policy enforcement="strict"/>`: `workflow_gate` refuses a step that is
+  not enabled. The per-content-type processes are `advisory` — their package
+  owns what adequate means in that domain. Absent policy means strict.
+  **To relax a base step**, declare it in `skills/<package>/workflow-policy.json`
+  with a **reason** — no reason, no load — and never a step marked
+  `relaxable="false"` (`Task_ReviewFindings`, `Gateway_EditorDecision`,
+  `Task_Commit`, `Task_AuthorizeRelease`, `Task_PublishRelease`: the editor
+  seeing the findings, the decision, the write, and release authorisation).
+  `bun run check:workflow-policy` validates every relaxation and runs in CI.
+  Rationale: `docs/proposals/workflow-orchestration.md` §4.
+  **The commit boundary enforces it.** `scripts/check-corpus-gate.ts`, run in a
+  folio repo from a pre-commit hook or CI, refuses a changed block that no
+  instance records the editor having authorised — no instance, not past the
+  decision, or discarded. It refuses when it cannot tell, too: a file that reads
+  as a manifest but will not import is refused rather than waved through.
+  `.qa.json` is excluded (the sweep writes it). Use `--warn` to adopt gradually.
+  **Some gateways are computed, not chosen.** One carrying `<folio:decision/>`
+  is backed by a DMN table in `docs/workflows/decisions/`: pass `facts` (e.g.
+  `{ failCritical: 0, failMajor: 2 }` from `qa_sweep` totals) and the table
+  returns the branch. `workflow_complete` refuses a hand-supplied `outcome`
+  there — asserting the answer would defeat the point. Adding one means adding
+  the `.dmn`, the `folio:decision` ref, and nothing else: the loader checks
+  every outcome the table can return names a real branch.
+  **Bean-marked steps are the bean operation, not a note about it.** An activity
+  with `<folio:bean op="claim|note|resolve"/>` performs it on the instance's bean
+  when you complete the step: `claim` sets `in-progress` (idempotent), `note`
+  appends what you pass as `note`, and `resolve` completes the bean **only once
+  the instance itself has completed** — a still-running process gets a note,
+  because whether work is done is a judgement and `AGENTS.md` says a bean is not
+  closed on someone else's say-so. `work_plan_prime` reports every instance's
+  position next to its bean, so the plan and the process are one answer.
 - Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this

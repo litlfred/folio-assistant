@@ -194,6 +194,14 @@ jobs:
       - name: tsc --noEmit
         run: bunx tsc --noEmit -p tsconfig.json
 
+      # The base workflow processes are strict; a content package may relax a
+      # step only by declaring it with a reason, and never a step the BPMN marks
+      # relaxable="false". This fails when a relaxation names something that no
+      # longer exists — otherwise it sits in the file looking like policy while
+      # permitting nothing, and nobody finds out until the day it matters.
+      - name: workflow policy
+        run: bun run check:workflow-policy
+
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
       # source change. document-intake.md sat 35 lines behind its source and
