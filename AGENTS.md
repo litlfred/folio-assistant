@@ -123,9 +123,23 @@ site sat stale and nothing in the repo said so. Bean `xom7`.
 `bun run check:ci-health` reports each workflow's state on the default branch —
 consecutive failures, days since the last green, and whether it has run at all
 recently. The session-start sweep prints it, so it lands where you already look.
-Two rules it follows, and you should too when reading it: **"could not check" is
-never rendered as green**, and a red that has not re-run in a week is flagged as
-possibly stale rather than as an active fire.
+Three rules it follows, and you should too when reading it: **"could not check"
+is never rendered as green**; a red that has not re-run in a week is flagged as
+possibly stale rather than as an active fire; and a red whose **workflow file
+changed after the failing run** is reported as `superseded` — the version that
+failed is gone, so the verdict is stale. `superseded` is never rendered as green
+and never counted as a live failure, because a later edit is evidence the
+failing version is gone, not evidence the new one works.
+
+That third rule exists because two of this repo's workflows would otherwise be
+red forever. `witness-refresh.yml` and `qa-sweep.yml` failed to *parse* on
+2026-08-07 — which is why GitHub ran them on `push` despite both being
+`workflow_dispatch`-only, and why their runs are named by path rather than by
+`name:`. They were fixed the next day. They only run on dispatch and the report
+only reads the default branch, so nothing will ever run them here again. Bean
+`lq7e`. **Do not "fix" them by dispatching**: both fail by design in this repo —
+`qa-sweep` preflights on `content/package.json` and `witness-refresh` needs
+`folio-assistant/computations/`, and the platform carries no folio.
 
 Complements `5rfy`, which fixed workflows that never *fire*. This is the
 opposite defect — one that fires constantly and fails every time.

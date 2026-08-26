@@ -103,8 +103,47 @@ const repoRoot = (() => {
   }
 })();
 
+/**
+ * When was this workflow file last changed on the default branch?
+ *
+ * A red verdict is about the file *as it ran*. If the file changed after that
+ * run, the failing version is gone — see `workflowChangedAt` in `ci-health.ts`.
+ * Asked against `origin/<branch>` rather than `HEAD`, because the runs being
+ * classified are the default branch's; a feature branch's edits have not
+ * reached them. Falls back to `HEAD` for a clone with no such remote ref.
+ *
+ * Returns `undefined` when git cannot answer — a shallow clone, a path git does
+ * not know. That leaves the failure reported, which is the safe direction: not
+ * knowing when a file changed must never explain a failure away.
+ */
+const changedAtCache = new Map<string, string | undefined>();
+function workflowChangedAt(path: string): string | undefined {
+  if (changedAtCache.has(path)) return changedAtCache.get(path);
+  let out: string | undefined;
+  for (const ref of [`origin/${branch}`, "HEAD"]) {
+    try {
+      const iso = execFileSync("git", ["log", "-1", "--format=%cI", ref, "--", path], {
+        encoding: "utf8",
+        cwd: repoRoot,
+        stdio: ["ignore", "pipe", "ignore"],
+      }).trim();
+      if (iso) {
+        out = iso;
+        break;
+      }
+    } catch {
+      // Try the next ref; an unknown ref is not an answer of "never changed".
+    }
+  }
+  changedAtCache.set(path, out);
+  return out;
+}
+
 const health = runs
-  ? assess(runs, { workflowExists: (p) => existsSync(resolve(repoRoot, p)) })
+  ? assess(runs, {
+      workflowExists: (p) => existsSync(resolve(repoRoot, p)),
+      workflowChangedAt,
+    })
   : [];
 
 if (markdown) {
@@ -115,15 +154,18 @@ if (markdown) {
 } else {
   console.log(`CI health on \`${branch}\` (${runs!.length} recent runs)\n`);
   for (const h of health) {
-    const mark = h.health === "red" ? "✗" : h.health === "running" ? "…" : "✓";
+    const mark =
+      h.health === "red" ? "✗" : h.health === "running" ? "…" : h.health === "superseded" ? "❔" : "✓";
     const detail =
       h.health === "red"
         ? `${h.consecutiveFailures} consecutive failure(s), ` +
           (h.daysSinceSuccess === undefined
             ? "no success in window"
             : `last green ${h.daysSinceSuccess}d ago`)
-        : h.health;
-    console.log(`  ${mark} ${h.workflow.padEnd(32)} ${detail}`);
+        : h.health === "superseded"
+          ? `last failed ${h.daysSinceLastRun}d ago; file changed since — stale, not green`
+          : h.health;
+    console.log(`  ${mark} ${h.workflow.padEnd(40)} ${detail}`);
   }
 }
 

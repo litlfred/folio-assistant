@@ -36,7 +36,7 @@ export interface RunSummary {
   path?: string;
 }
 
-export type Health = "green" | "red" | "running" | "no-runs";
+export type Health = "green" | "red" | "running" | "no-runs" | "superseded";
 
 export interface WorkflowHealth {
   workflow: string;
@@ -59,6 +59,19 @@ export interface WorkflowHealth {
    * report earns the inattention it exists to fix.
    */
   daysSinceLastRun?: number;
+  /** ISO date of the most recent run of any conclusion. */
+  lastRun?: string;
+  /**
+   * ISO date of the change that made this workflow's last verdict obsolete.
+   *
+   * Set only on a red whose newest run **predates** the last edit to its
+   * workflow file: the version that failed no longer exists, so the failure is
+   * history rather than a live problem — the same distinction `workflowExists`
+   * already draws for a workflow that was deleted outright.
+   */
+  supersededBy?: string;
+  /** `.github/workflows/x.yml`, carried through for the reader. */
+  path?: string;
 }
 
 /** Conclusions that are not a pass but are also not the workflow's fault. */
@@ -101,6 +114,7 @@ export function classifyRuns(runs: RunSummary[], now = new Date()): Omit<Workflo
     lastSuccess,
     daysSinceSuccess,
     daysSinceLastRun,
+    lastRun: runs[0]?.created_at,
     latestUrl: runs[0]?.html_url,
   };
 }
@@ -128,6 +142,27 @@ export interface AssessOptions {
    * silently drop failures.
    */
   workflowExists?: (path: string) => boolean;
+  /**
+   * When was this workflow file last changed? ISO date, or `undefined` if not
+   * known.
+   *
+   * A red verdict is a verdict about *the file as it was when it ran*. Edit the
+   * file and that verdict is about a version that no longer exists — most
+   * sharply when the failure was a startup failure, where the YAML never parsed
+   * and no job ran at all.
+   *
+   * Two of this repo's workflows sit exactly there. `witness-refresh.yml` and
+   * `qa-sweep.yml` failed to parse, fired on `push` despite being
+   * `workflow_dispatch`-only (GitHub could not read the `on:` block to filter
+   * on), and were fixed the next day. They only run on dispatch, and this
+   * report only reads the default branch — so nothing will ever run them here
+   * again, and without this rule they stay red forever. Two permanent false
+   * fires erode exactly the attention the report exists to protect.
+   *
+   * Omit it and nothing is superseded: not knowing when a file changed must
+   * leave a failure reported, never explain it away.
+   */
+  workflowChangedAt?: (path: string) => string | undefined;
 }
 
 export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHealth[] {
@@ -136,10 +171,25 @@ export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHe
     ? runs.filter((r) => !r.path || opts.workflowExists!(r.path))
     : runs;
   return [...byWorkflow(live).entries()]
-    .map(([workflow, rs]) => ({ workflow, ...classifyRuns(rs, now) }))
+    .map(([workflow, rs]) => {
+      const h: WorkflowHealth = { workflow, path: rs[0]?.path, ...classifyRuns(rs, now) };
+      // A failure against a version of the file that is gone is history. Note
+      // that this only ever DEMOTES a red — it can never turn a failure into a
+      // pass, because a later edit is evidence the failing version is gone, not
+      // evidence the new one works.
+      if (h.health === "red" && h.path && h.lastRun && opts.workflowChangedAt) {
+        const changed = opts.workflowChangedAt(h.path);
+        if (changed && changed > h.lastRun) {
+          h.health = "superseded";
+          h.supersededBy = changed;
+        }
+      }
+      return h;
+    })
     .sort((a, b) => {
       // Worst first: a reader who reads one line should read the worst one.
-      const rank = (h: WorkflowHealth) => (h.health === "red" ? 0 : h.health === "running" ? 1 : 2);
+      const order: Health[] = ["red", "running", "superseded", "green", "no-runs"];
+      const rank = (h: WorkflowHealth) => order.indexOf(h.health);
       return rank(a) - rank(b) || b.consecutiveFailures - a.consecutiveFailures;
     });
 }
@@ -192,9 +242,23 @@ export function render(
         (h.latestUrl ? `\n      ${h.latestUrl}` : ""),
     );
   }
-  const ok = health.filter((h) => h.health !== "red");
-  if (red.length === 0) {
+  // Reported, but below the fold and never as a pass: the failing version of
+  // the file is gone, which is not the same as knowing the current one works.
+  const superseded = health.filter((h) => h.health === "superseded");
+  for (const h of superseded) {
+    lines.push(
+      `- ❔ **${h.workflow}** — last failed ${h.daysSinceLastRun}d ago, but the ` +
+        `workflow file changed after that. Verdict is stale, not green; nothing ` +
+        `has re-run it since.`,
+    );
+  }
+
+  const ok = health.filter((h) => h.health !== "red" && h.health !== "superseded");
+  if (red.length === 0 && superseded.length === 0) {
     lines.push(`✓ every workflow with a recent run on \`${opts.branch}\` is green (${ok.length}).`);
+  } else if (red.length === 0) {
+    // Not "all green" — that would be the lie this module exists to prevent.
+    lines.push("", `_(no live failures; ${ok.length} workflow(s) green.)_`);
   } else {
     lines.push("", `_(${ok.length} other workflow(s) not failing.)_`);
   }

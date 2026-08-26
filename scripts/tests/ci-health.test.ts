@@ -187,3 +187,102 @@ describe("rendering, and the thing it must never do", () => {
     expect(out).not.toContain("green");
   });
 });
+
+describe("a verdict against a file that has since changed", () => {
+  /**
+   * `witness-refresh.yml` and `qa-sweep.yml` failed to parse, so GitHub could
+   * not read their `on:` block and ran them on `push` despite both being
+   * `workflow_dispatch`-only — the startup-failure signature, and why both runs
+   * are named by path rather than by `name:`. They were fixed the next day, and
+   * 75 pushes to `main` since produced no further run of either.
+   *
+   * Nothing will ever run them on the default branch again, so without this
+   * rule they stay red forever: two permanent false fires in a report whose
+   * whole value is that a red line means something. See bean `lq7e`.
+   */
+  const failedThenFixed = [
+    run({
+      name: ".github/workflows/qa-sweep.yml",
+      path: ".github/workflows/qa-sweep.yml",
+      conclusion: "failure",
+      created_at: "2026-08-07T15:04:09Z",
+    }),
+  ];
+  const fixedOn = (iso: string) => () => iso;
+
+  test("a red whose file changed after the failure is superseded, not red", () => {
+    const [h] = assess(failedThenFixed, {
+      now: NOW,
+      workflowChangedAt: fixedOn("2026-08-08T18:57:45Z"),
+    });
+    expect(h.health).toBe("superseded");
+    expect(h.supersededBy).toBe("2026-08-08T18:57:45Z");
+  });
+
+  test("a red whose file changed BEFORE the failure stays red", () => {
+    // The run tested the current version. Nothing about it is stale.
+    const [h] = assess(failedThenFixed, {
+      now: NOW,
+      workflowChangedAt: fixedOn("2026-08-01T00:00:00Z"),
+    });
+    expect(h.health).toBe("red");
+    expect(h.supersededBy).toBeUndefined();
+  });
+
+  test("without a workflowChangedAt predicate nothing is superseded", () => {
+    // Not knowing when a file changed must leave the failure reported. This is
+    // the same refusal as `workflowExists`: absence of evidence explains
+    // nothing away.
+    expect(assess(failedThenFixed, { now: NOW })[0].health).toBe("red");
+  });
+
+  test("git answering `undefined` — a shallow clone — leaves it red", () => {
+    const [h] = assess(failedThenFixed, { now: NOW, workflowChangedAt: () => undefined });
+    expect(h.health).toBe("red");
+  });
+
+  test("a GREEN workflow is never touched by the rule", () => {
+    // The rule may only ever demote a red. A later edit is evidence the failing
+    // version is gone — never evidence about a version that passed.
+    const [h] = assess(
+      [run({ name: "Code-quality gates", path: ".github/workflows/code-quality-gates.yml" })],
+      { now: NOW, workflowChangedAt: fixedOn("2026-08-26T11:59:00Z") },
+    );
+    expect(h.health).toBe("green");
+  });
+
+  test("a run with no path cannot be superseded", () => {
+    const [h] = assess([run({ name: "Nameless", conclusion: "failure" })], {
+      now: NOW,
+      workflowChangedAt: fixedOn("2026-08-26T11:59:00Z"),
+    });
+    expect(h.health).toBe("red");
+  });
+
+  test("superseded renders below the fold, and NEVER as green", () => {
+    const out = render(
+      assess(failedThenFixed, { now: NOW, workflowChangedAt: fixedOn("2026-08-08T18:57:45Z") }),
+      { branch: "main" },
+    );
+    expect(out).toContain("stale, not green");
+    expect(out).not.toContain("every workflow with a recent run");
+  });
+
+  test("a live red still sorts above a superseded one", () => {
+    const h = assess(
+      [
+        ...failedThenFixed,
+        run({
+          name: "Docs site",
+          path: ".github/workflows/docs-site.yml",
+          conclusion: "failure",
+          created_at: "2026-08-26T10:00:00Z",
+        }),
+      ],
+      { now: NOW, workflowChangedAt: fixedOn("2026-08-08T18:57:45Z") },
+    );
+    expect(h[0].workflow).toBe("Docs site");
+    expect(h[0].health).toBe("red");
+    expect(h.at(-1)!.health).toBe("superseded");
+  });
+});
