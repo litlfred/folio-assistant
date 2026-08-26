@@ -114,6 +114,22 @@ Full discipline: `.claude/skills/local/todo-manager.md` and
 > `todo-review` skill over `feedback/<paper>/*.ts`) — that is a separate domain
 > feature, not the agent work-plan.
 
+## CI health — a red workflow looks exactly like a green one from in here
+
+`docs-site.yml` fired on every push to `main` and **failed all 30 times** over
+two months. The trigger was fine; the *outcome* was invisible, so the published
+site sat stale and nothing in the repo said so. Bean `xom7`.
+
+`bun run check:ci-health` reports each workflow's state on the default branch —
+consecutive failures, days since the last green, and whether it has run at all
+recently. The session-start sweep prints it, so it lands where you already look.
+Two rules it follows, and you should too when reading it: **"could not check" is
+never rendered as green**, and a red that has not re-run in a week is flagged as
+possibly stale rather than as an active fire.
+
+Complements `5rfy`, which fixed workflows that never *fire*. This is the
+opposite defect — one that fires constantly and fails every time.
+
 ## At session start
 
 Surface the work-plan before starting: run `beans prime` (and `beans list`), or

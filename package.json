@@ -46,6 +46,7 @@
     "test:e2e": "playwright test",
     "test": "bun test",
     "lint": "eslint .",
+    "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
     "check:workflow-policy": "bun run scripts/check-workflow-policy.ts",
     "render:bpmn": "bun run scripts/render-bpmn.ts",
