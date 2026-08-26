@@ -976,3 +976,32 @@ guard did its job.
 
 1027 pass / 0 fail, tsc + eslint clean.
 
+
+## MERGED to main (36ca385)
+
+Prepare-merge discipline run, then merged. Main had moved 4 commits; merged in
+(conflict in package.json, additive both sides — kept `gen:jsonld*` and main's
+`check:ci-health`).
+
+Gates: 1060 pass / 0 fail, tsc clean, `eslint .` clean, gen-schema-docs +
+gen-skill-docs produce no diff, check:workflow-policy green (1 legal
+relaxation), gen:jsonld:check up to date.
+
+**render:bpmn:check was RED — investigated rather than waved through.** Not
+mine: scripts/render-bpmn.ts came from main and only honoured an explicit
+CHROMIUM_PATH, so it died on this container's Playwright build skew (expects
+chromium_headless_shell-1228, ships -1194) with an error telling the reader to
+re-download browsers — which is blocked here. Fixed by falling back to the same
+PLAYWRIGHT_BROWSERS_PATH probe bpmn-render.ts already had. All 6 workflow SVGs
+now verify with NO env var set.
+
+Deliberately did NOT merge the two BPMN scripts despite the near-identical
+names: render-bpmn.ts is the docs pipeline (fixed paths + --check staleness
+gate), bpmn-render.ts is the library (arbitrary inputs, sub-process planes).
+Applying keepPrimaryPlane to the docs sources could change committed SVGs and
+break the gate guarding them. Added a docstring note saying which is which; they
+now share one probe instead of two copies.
+
+main == branch head. Direct push to main succeeded (not protected). GitHub
+reports 1 low dependabot vulnerability on the default branch — pre-existing, not
+from this work.
