@@ -571,6 +571,22 @@ narrative guidelines.</p>
       <td>weak</td>
       <td>largely unmaintained; hallucinates</td>
     </tr>
+    <tr>
+      <td><strong>pdfplumber</strong></td>
+      <td>MIT</td>
+      <td><strong>yes</strong></td>
+      <td>none</td>
+      <td>ruled + alignment, exact column edges</td>
+      <td><strong>library</strong>; the default backend of <code class="language-plaintext highlighter-rouge">scripts/pdf-tables.py</code> (§12.26)</td>
+    </tr>
+    <tr>
+      <td><strong>camelot-py</strong></td>
+      <td>MIT</td>
+      <td><strong>yes</strong></td>
+      <td>none</td>
+      <td>ruled + alignment, <strong>reports per-table accuracy</strong></td>
+      <td>library + CLI; 2.0 dropped Ghostscript to an optional extra (§12.26)</td>
+    </tr>
   </tbody>
 </table></div>
 
@@ -581,6 +597,13 @@ integration contract (§5). MinerU is better at formulae, but constraint
 (a) means the documents where formula recognition matters most are the
 ones we should not be OCR-ing at all. Keep MinerU as an escalation for a
 math-heavy scan with no source.</p>
+
+<p>The last two rows are not competitors to Docling and do not do what it does —
+no layout model, no reading order, no formulae. They are there because
+Docling’s weights come from HuggingFace and Docling therefore parses nothing in
+a sandboxed session, while these need no egress at all after their PyPI
+install. They recover <strong>tables</strong>, which is the part of the gap that can be
+closed deterministically; the rest of it waits for Stage 3. See §12.26.</p>
 <h3 id="43-index">
   
   
@@ -4036,6 +4059,235 @@ rule §2 applied to <code class="language-plaintext highlighter-rouge">doco:cont
 merely parallel to them.</p>
 
 <p>1027 tests pass, 0 fail; typecheck and lint clean.</p>
+<h3 id="1226-tables-and-figures-the-rung-that-runs-where-docling-cannot">
+  
+  
+    <a href="#1226-tables-and-figures-the-rung-that-runs-where-docling-cannot" class="anchor-heading" aria-labelledby="1226-tables-and-figures-the-rung-that-runs-where-docling-cannot"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.26 Tables and figures: the rung that runs where Docling cannot
+  
+  
+</h3>
+    
+
+<p>§12 opens by naming the defect this closes — <code class="language-plaintext highlighter-rouge">pdf-structure/v1</code>’s <code class="language-plaintext highlighter-rouge">Section</code>
+carries <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">number</code>, <code class="language-plaintext highlighter-rouge">title</code>, <code class="language-plaintext highlighter-rouge">level</code>, <code class="language-plaintext highlighter-rouge">page_start</code>, <code class="language-plaintext highlighter-rouge">page_end</code>, <code class="language-plaintext highlighter-rouge">n_chars</code>,
+<code class="language-plaintext highlighter-rouge">n_words</code>, <code class="language-plaintext highlighter-rouge">text</code>, and <em>nothing else</em>. No tables, no figures, no bounding
+boxes. That is not cosmetic. A GRADE evidence table or a boxed WHO
+recommendation is a <strong>layout</strong> fact, and a text extractor flattens it into a
+run of prose that reads exactly like prose; once flattened, no consumer can
+recover that the numbers it is reading were a 4×7 grid.</p>
+<h4 id="the-egress-measurement-holds-so-the-parser-that-closes-it-cannot-be-docling">
+  
+  
+    <a href="#the-egress-measurement-holds-so-the-parser-that-closes-it-cannot-be-docling" class="anchor-heading" aria-labelledby="the-egress-measurement-holds-so-the-parser-that-closes-it-cannot-be-docling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The egress measurement holds, so the parser that closes it cannot be Docling
+  
+  
+</h4>
+    
+
+<p>Re-measured 2026-08-26, eleven days after §2a:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Host</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">huggingface.co</code></td>
+      <td><code class="language-plaintext highlighter-rouge">curl: (56) CONNECT tunnel failed, response 403</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cdn-lfs.huggingface.co</code></td>
+      <td>same</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">arxiv.org</code></td>
+      <td>blocked</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">pypi.org</code></td>
+      <td><strong>200</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>So the §10 Stage-3 caveat stands unchanged: <code class="language-plaintext highlighter-rouge">pip install docling</code> succeeds and
+the <strong>first parse</strong> is what fails, because that is when the layout, TableFormer
+and formula weights are fetched. Docling remains the better parser and remains
+a workstation/CI stage whose artefacts are committed.</p>
+
+<p>What was missing was any way for a consumer to <em>see</em> that Stage 3 had not run.
+<code class="language-plaintext highlighter-rouge">.claude/skills/capabilities/docling.json</code> now exists, and its probe is
+deliberately not <code class="language-plaintext highlighter-rouge">import docling</code> alone, because <strong>the package importing is not
+the capability</strong> — a probe that passed on the import would report Docling
+present in exactly the sessions where it can parse nothing, which is the false
+pass §5 exists to prevent. What it asks instead is whether the weights are
+<em>usable</em>: cached locally, or failing that reachable, on a 5-second bound.</p>
+
+<p>Cache-first and not reachability-first, for a reason <code class="language-plaintext highlighter-rouge">capabilities.ts</code> states
+about its own <code class="language-plaintext highlighter-rouge">mcp-probe</code> case — <em>a check that hangs is worse than one that
+abstains</em>. A workstation that has already downloaded the models passes
+instantly and offline, and never touches the network to answer a dependency
+check; only an installed-but-unprimed Docling pays the 5 seconds. In a
+sandboxed session the <code class="language-plaintext highlighter-rouge">import</code> fails first and the probe short-circuits, so
+<code class="language-plaintext highlighter-rouge">--check-deps</code> stays at half a second.</p>
+<h4 id="scriptspdf-tablespy-and-the-three-meanings-of-an-empty-list">
+  
+  
+    <a href="#scriptspdf-tablespy-and-the-three-meanings-of-an-empty-list" class="anchor-heading" aria-labelledby="scriptspdf-tablespy-and-the-three-meanings-of-an-empty-list"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">scripts/pdf-tables.py</code>, and the three meanings of an empty list
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">pdf-tables/v1</code>, written beside <code class="language-plaintext highlighter-rouge">structure.json</code>, carrying per table: page
+list, bbox, column edges, cell matrix, caption and where the caption was found,
+<code class="language-plaintext highlighter-rouge">section_id</code> joined from <code class="language-plaintext highlighter-rouge">structure.json</code>, and a GFM rendering — GFM
+specifically because <code class="language-plaintext highlighter-rouge">content/pipeline/render-latex.ts</code> already converts a GFM
+table node to <code class="language-plaintext highlighter-rouge">\begin{tabular}</code> with booktabs, so an extracted table is
+paste-able into a content block with no new converter in between.</p>
+
+<p>The design decision worth recording is the shape of “nothing”. An empty
+<code class="language-plaintext highlighter-rouge">tables[]</code> has three unrelated meanings — the document has no tables, no
+backend was installed, or the file is a scan whose tables are pixels — and §5’s
+contract is <em>absent tool ⇒ n/a, never a false pass</em>. They are three exit codes
+(0, 5, 2) and, in the artefact, <strong>two different types</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"tables": []      a backend looked and found none      status "ok"
+"tables": null    nothing looked                       status "n/a-…"
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">null</code> is not <code class="language-plaintext highlighter-rouge">[]</code>. A consumer that forgets to check <code class="language-plaintext highlighter-rouge">status</code> still cannot read
+an unparsed document as an empty one. That is the property; the exit code is
+merely the convenient form of it.</p>
+<h4 id="camelot-and-a-stale-objection">
+  
+  
+    <a href="#camelot-and-a-stale-objection" class="anchor-heading" aria-labelledby="camelot-and-a-stale-objection"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Camelot, and a stale objection
+  
+  
+</h4>
+    
+
+<p>§4.2’s table does not list Camelot, and the reason it would have been excluded
+— that <code class="language-plaintext highlighter-rouge">lattice</code> shells out to Ghostscript, dragging an AGPL binary into an
+MIT-licensed platform — <strong>is no longer true</strong>. Camelot <strong>2.0</strong> moved Ghostscript
+to an optional extra; the base install is numpy / pandas / opencv-headless /
+pypdfium2 / playa-pdf, MIT throughout, and it was verified here on 2026-08-26
+importing and extracting with no egress at all after the PyPI install. <code class="language-plaintext highlighter-rouge">torch</code>
+and <code class="language-plaintext highlighter-rouge">transformers</code> appear only under the <code class="language-plaintext highlighter-rouge">[ml]</code> extra, so the HuggingFace
+problem does not reach the base install either.</p>
+
+<p>It is therefore the <strong>second</strong> backend, preferred when present, and the reason
+is not accuracy: on the two-page fixture both backends return identical cells
+and identical column edges. It is that Camelot reports a per-table
+<code class="language-plaintext highlighter-rouge">parsing_report.accuracy</code>, which lands in <code class="language-plaintext highlighter-rouge">confidence</code> and lets a consumer
+weight a table the way <code class="language-plaintext highlighter-rouge">toc_source: outline|inferred</code> already lets one weight a
+section. pdfplumber offers no equivalent, so <code class="language-plaintext highlighter-rouge">confidence</code> is <code class="language-plaintext highlighter-rouge">null</code> there rather
+than invented. pdfplumber stays the default on footprint, and because
+<code class="language-plaintext highlighter-rouge">smart-base-tools.md</code> already depends on it — it is a second use of an existing
+dependency rather than a new one.</p>
+<h4 id="stitching-a-table-across-a-page-break-is-ours-not-the-backends">
+  
+  
+    <a href="#stitching-a-table-across-a-page-break-is-ours-not-the-backends" class="anchor-heading" aria-labelledby="stitching-a-table-across-a-page-break-is-ours-not-the-backends"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Stitching a table across a page break is ours, not the backend’s
+  
+  
+</h4>
+    
+
+<p>A table continuing onto the next page is extracted by every tool as two tables,
+because that is what is on the two pages. Rejoining them is a judgement about
+column geometry, so it is made over <code class="language-plaintext highlighter-rouge">col_edges</code> — which both backends report
+identically — and works the same whichever backend ran.</p>
+
+<p>A wrong stitch is expensive in a specific way: it welds two unrelated tables
+into one plausible-looking one, and nothing downstream can detect that the rows
+under a header did not come from under that header. Hence three guards, each
+with a test that fails without it: consecutive pages only; same column count
+with every edge within tolerance; and a continuation carrying its own
+<code class="language-plaintext highlighter-rouge">Table N</code> caption with a <em>different</em> N is a new table however well its columns
+line up. A repeated header on the continuation is dropped, and <code class="language-plaintext highlighter-rouge">stitched_from</code>
+records what was merged, so the decision is auditable rather than invisible.</p>
+
+<p>One bug is worth recording because it was made and caught here. Only the
+<strong>last</strong> table on a page can continue onto the next — anything below it would
+come after the continuation — so a fragment is matched against the last table
+emitted, and the whole thing rests on sorting into reading order. pdfplumber
+reports top-down coordinates and Camelot bottom-up, so sorting on the raw
+<code class="language-plaintext highlighter-rouge">bbox[1]</code> reads a Camelot page <em>upwards</em> and matches the continuation against
+the wrong fragment. The fix is a backend-supplied sort key. The first version
+of the regression test did not catch it, because the fixture derived its bbox
+from its sort key and the two could not disagree — the same defect bean <code class="language-plaintext highlighter-rouge">6fnb</code>
+found in five other tests, reproduced while writing a test <em>about</em> correctness.
+It now fails when the fix is reverted, which was verified rather than assumed.</p>
+<h4 id="measured-on-a-fixture-not-on-a-corpus--and-that-is-the-honest-limit">
+  
+  
+    <a href="#measured-on-a-fixture-not-on-a-corpus--and-that-is-the-honest-limit" class="anchor-heading" aria-labelledby="measured-on-a-fixture-not-on-a-corpus--and-that-is-the-honest-limit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Measured on a fixture, not on a corpus — and that is the honest limit
+  
+  
+</h4>
+    
+
+<p>Every number in §10’s Stage 1 came from 339 real PDFs in the <code class="language-plaintext highlighter-rouge">qou</code> folio.
+<strong>Nothing here has been run against a corpus</strong>, because this repository is the
+platform and carries no folio; the verification is a synthetic two-page ruled
+table with a caption and a repeated header, plus a text-layer-less page for the
+exit-2 path. What that establishes is that the judgement layer is correct on
+inputs whose right answer is known. What it does <strong>not</strong> establish is recall on
+real journal tables — borderless grids, rotated tables, multi-level headers, a
+caption sitting three lines away in a two-column layout.</p>
+
+<p>So the work list a corpus run would settle, stated now rather than discovered
+later: what fraction of tables the <code class="language-plaintext highlighter-rouge">lines</code> strategy finds versus <code class="language-plaintext highlighter-rouge">text</code>; how
+often <code class="language-plaintext highlighter-rouge">detect_caption</code> returns <code class="language-plaintext highlighter-rouge">none</code> on documents that visibly have captions;
+whether <code class="language-plaintext highlighter-rouge">COL_TOL_PT = 2.0</code> is too tight for scanned rules; and how many of the
+<code class="language-plaintext highlighter-rouge">vector-cluster</code> figure candidates are real figures rather than page furniture.
+Those are the numbers that decide whether this rung is sufficient for the WHO
+L1 path or merely a floor under it.</p>
+<h4 id="two-claims-that-were-circulating-corrected-by-running-them">
+  
+  
+    <a href="#two-claims-that-were-circulating-corrected-by-running-them" class="anchor-heading" aria-labelledby="two-claims-that-were-circulating-corrected-by-running-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two claims that were circulating, corrected by running them
+  
+  
+</h4>
+    
+
+<p>Both appear in tool round-ups and neither survives contact:</p>
+
+<ul>
+  <li><strong>“pdfplumber has a native CLI — <code class="language-plaintext highlighter-rouge">pdfplumber &lt; file.pdf &gt; output.json</code>.”</strong>
+It has a CLI (a <code class="language-plaintext highlighter-rouge">pdfplumber</code> console script; <code class="language-plaintext highlighter-rouge">python -m pdfplumber</code> fails,
+there is no <code class="language-plaintext highlighter-rouge">__main__</code>), but <code class="language-plaintext highlighter-rouge">infile</code> is a positional with no stdin default,
+so the bare redirect prints usage and exits. More consequentially the CLI
+<strong>cannot extract tables at all</strong> — <code class="language-plaintext highlighter-rouge">--format json</code> emits per-character
+geometry, and <code class="language-plaintext highlighter-rouge">extract_tables()</code> is Python-API only. Verified against
+pdfplumber 0.11.10.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">magic-pdf -p … -m json</code></strong> is MinerU 1.x. The 2.x CLI is <code class="language-plaintext highlighter-rouge">mineru</code>. MinerU
+is also AGPL-3.0 against Docling’s MIT, which matters for anything this
+platform distributes and which §4.2’s licence column already records.</li>
+</ul>
+<h4 id="still-not-built-2">
+  
+  
+    <a href="#still-not-built-2" class="anchor-heading" aria-labelledby="still-not-built-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Still not built
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">pdf-structure.py</code> does not consume <code class="language-plaintext highlighter-rouge">tables.json</code> — the two artefacts sit side
+by side and a consumer joins them on <code class="language-plaintext highlighter-rouge">section_id</code>. Folding tables into
+<code class="language-plaintext highlighter-rouge">structure.json</code> would mean either making pypdf-only Stage 1 depend on a table
+backend, which destroys the property that makes it work in a broken container,
+or a merge step that has to reason about staleness of two SHAs. Neither is
+obviously right, so neither was guessed at. Nor is any of this exposed as an
+MCP tool: the integration point today is the skill (<code class="language-plaintext highlighter-rouge">document-intake.md</code>
+Stage 3), matching how <code class="language-plaintext highlighter-rouge">pdf-extract.py</code> and <code class="language-plaintext highlighter-rouge">pdf-ocr.py</code> are already reached.</p>
 
           
 

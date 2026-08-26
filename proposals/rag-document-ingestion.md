@@ -150,6 +150,8 @@ narrative guidelines.
 | **Marker** (Datalab) | GPL + commercial threshold | GPU preferred | good (Surya/texify) | good | CLI |
 | **RAGFlow DeepDoc** | Apache-2.0, but bundled | no (part of the stack) | moderate | good | **inside a product** |
 | **Nougat** (Meta) | MIT | GPU | math-native | weak | largely unmaintained; hallucinates |
+| **pdfplumber** | MIT | **yes** | none | ruled + alignment, exact column edges | **library**; the default backend of `scripts/pdf-tables.py` (§12.26) |
+| **camelot-py** | MIT | **yes** | none | ruled + alignment, **reports per-table accuracy** | library + CLI; 2.0 dropped Ghostscript to an optional extra (§12.26) |
 
 Docling is the right default: it is MIT, it runs on the CPU we actually
 have, and — decisively for this repo — **it is a library that produces a
@@ -158,6 +160,13 @@ integration contract (§5). MinerU is better at formulae, but constraint
 (a) means the documents where formula recognition matters most are the
 ones we should not be OCR-ing at all. Keep MinerU as an escalation for a
 math-heavy scan with no source.
+
+The last two rows are not competitors to Docling and do not do what it does —
+no layout model, no reading order, no formulae. They are there because
+Docling's weights come from HuggingFace and Docling therefore parses nothing in
+a sandboxed session, while these need no egress at all after their PyPI
+install. They recover **tables**, which is the part of the gap that can be
+closed deterministically; the rest of it waits for Stage 3. See §12.26.
 
 ### 4.3 Index
 
@@ -2212,3 +2221,163 @@ That makes a folio DAK joinable with WHO's published vocabularies rather than
 merely parallel to them.
 
 1027 tests pass, 0 fail; typecheck and lint clean.
+
+### 12.26 Tables and figures: the rung that runs where Docling cannot
+
+§12 opens by naming the defect this closes — `pdf-structure/v1`'s `Section`
+carries `id`, `number`, `title`, `level`, `page_start`, `page_end`, `n_chars`,
+`n_words`, `text`, and *nothing else*. No tables, no figures, no bounding
+boxes. That is not cosmetic. A GRADE evidence table or a boxed WHO
+recommendation is a **layout** fact, and a text extractor flattens it into a
+run of prose that reads exactly like prose; once flattened, no consumer can
+recover that the numbers it is reading were a 4×7 grid.
+
+#### The egress measurement holds, so the parser that closes it cannot be Docling
+
+Re-measured 2026-08-26, eleven days after §2a:
+
+| Host | Result |
+|---|---|
+| `huggingface.co` | `curl: (56) CONNECT tunnel failed, response 403` |
+| `cdn-lfs.huggingface.co` | same |
+| `arxiv.org` | blocked |
+| `pypi.org` | **200** |
+
+So the §10 Stage-3 caveat stands unchanged: `pip install docling` succeeds and
+the **first parse** is what fails, because that is when the layout, TableFormer
+and formula weights are fetched. Docling remains the better parser and remains
+a workstation/CI stage whose artefacts are committed.
+
+What was missing was any way for a consumer to *see* that Stage 3 had not run.
+`.claude/skills/capabilities/docling.json` now exists, and its probe is
+deliberately not `import docling` alone, because **the package importing is not
+the capability** — a probe that passed on the import would report Docling
+present in exactly the sessions where it can parse nothing, which is the false
+pass §5 exists to prevent. What it asks instead is whether the weights are
+*usable*: cached locally, or failing that reachable, on a 5-second bound.
+
+Cache-first and not reachability-first, for a reason `capabilities.ts` states
+about its own `mcp-probe` case — *a check that hangs is worse than one that
+abstains*. A workstation that has already downloaded the models passes
+instantly and offline, and never touches the network to answer a dependency
+check; only an installed-but-unprimed Docling pays the 5 seconds. In a
+sandboxed session the `import` fails first and the probe short-circuits, so
+`--check-deps` stays at half a second.
+
+#### `scripts/pdf-tables.py`, and the three meanings of an empty list
+
+`pdf-tables/v1`, written beside `structure.json`, carrying per table: page
+list, bbox, column edges, cell matrix, caption and where the caption was found,
+`section_id` joined from `structure.json`, and a GFM rendering — GFM
+specifically because `content/pipeline/render-latex.ts` already converts a GFM
+table node to `\begin{tabular}` with booktabs, so an extracted table is
+paste-able into a content block with no new converter in between.
+
+The design decision worth recording is the shape of "nothing". An empty
+`tables[]` has three unrelated meanings — the document has no tables, no
+backend was installed, or the file is a scan whose tables are pixels — and §5's
+contract is *absent tool ⇒ n/a, never a false pass*. They are three exit codes
+(0, 5, 2) and, in the artefact, **two different types**:
+
+```
+"tables": []      a backend looked and found none      status "ok"
+"tables": null    nothing looked                       status "n/a-…"
+```
+
+`null` is not `[]`. A consumer that forgets to check `status` still cannot read
+an unparsed document as an empty one. That is the property; the exit code is
+merely the convenient form of it.
+
+#### Camelot, and a stale objection
+
+§4.2's table does not list Camelot, and the reason it would have been excluded
+— that `lattice` shells out to Ghostscript, dragging an AGPL binary into an
+MIT-licensed platform — **is no longer true**. Camelot **2.0** moved Ghostscript
+to an optional extra; the base install is numpy / pandas / opencv-headless /
+pypdfium2 / playa-pdf, MIT throughout, and it was verified here on 2026-08-26
+importing and extracting with no egress at all after the PyPI install. `torch`
+and `transformers` appear only under the `[ml]` extra, so the HuggingFace
+problem does not reach the base install either.
+
+It is therefore the **second** backend, preferred when present, and the reason
+is not accuracy: on the two-page fixture both backends return identical cells
+and identical column edges. It is that Camelot reports a per-table
+`parsing_report.accuracy`, which lands in `confidence` and lets a consumer
+weight a table the way `toc_source: outline|inferred` already lets one weight a
+section. pdfplumber offers no equivalent, so `confidence` is `null` there rather
+than invented. pdfplumber stays the default on footprint, and because
+`smart-base-tools.md` already depends on it — it is a second use of an existing
+dependency rather than a new one.
+
+#### Stitching a table across a page break is ours, not the backend's
+
+A table continuing onto the next page is extracted by every tool as two tables,
+because that is what is on the two pages. Rejoining them is a judgement about
+column geometry, so it is made over `col_edges` — which both backends report
+identically — and works the same whichever backend ran.
+
+A wrong stitch is expensive in a specific way: it welds two unrelated tables
+into one plausible-looking one, and nothing downstream can detect that the rows
+under a header did not come from under that header. Hence three guards, each
+with a test that fails without it: consecutive pages only; same column count
+with every edge within tolerance; and a continuation carrying its own
+`Table N` caption with a *different* N is a new table however well its columns
+line up. A repeated header on the continuation is dropped, and `stitched_from`
+records what was merged, so the decision is auditable rather than invisible.
+
+One bug is worth recording because it was made and caught here. Only the
+**last** table on a page can continue onto the next — anything below it would
+come after the continuation — so a fragment is matched against the last table
+emitted, and the whole thing rests on sorting into reading order. pdfplumber
+reports top-down coordinates and Camelot bottom-up, so sorting on the raw
+`bbox[1]` reads a Camelot page *upwards* and matches the continuation against
+the wrong fragment. The fix is a backend-supplied sort key. The first version
+of the regression test did not catch it, because the fixture derived its bbox
+from its sort key and the two could not disagree — the same defect bean `6fnb`
+found in five other tests, reproduced while writing a test *about* correctness.
+It now fails when the fix is reverted, which was verified rather than assumed.
+
+#### Measured on a fixture, not on a corpus — and that is the honest limit
+
+Every number in §10's Stage 1 came from 339 real PDFs in the `qou` folio.
+**Nothing here has been run against a corpus**, because this repository is the
+platform and carries no folio; the verification is a synthetic two-page ruled
+table with a caption and a repeated header, plus a text-layer-less page for the
+exit-2 path. What that establishes is that the judgement layer is correct on
+inputs whose right answer is known. What it does **not** establish is recall on
+real journal tables — borderless grids, rotated tables, multi-level headers, a
+caption sitting three lines away in a two-column layout.
+
+So the work list a corpus run would settle, stated now rather than discovered
+later: what fraction of tables the `lines` strategy finds versus `text`; how
+often `detect_caption` returns `none` on documents that visibly have captions;
+whether `COL_TOL_PT = 2.0` is too tight for scanned rules; and how many of the
+`vector-cluster` figure candidates are real figures rather than page furniture.
+Those are the numbers that decide whether this rung is sufficient for the WHO
+L1 path or merely a floor under it.
+
+#### Two claims that were circulating, corrected by running them
+
+Both appear in tool round-ups and neither survives contact:
+
+- **"pdfplumber has a native CLI — `pdfplumber < file.pdf > output.json`."**
+  It has a CLI (a `pdfplumber` console script; `python -m pdfplumber` fails,
+  there is no `__main__`), but `infile` is a positional with no stdin default,
+  so the bare redirect prints usage and exits. More consequentially the CLI
+  **cannot extract tables at all** — `--format json` emits per-character
+  geometry, and `extract_tables()` is Python-API only. Verified against
+  pdfplumber 0.11.10.
+- **`magic-pdf -p … -m json`** is MinerU 1.x. The 2.x CLI is `mineru`. MinerU
+  is also AGPL-3.0 against Docling's MIT, which matters for anything this
+  platform distributes and which §4.2's licence column already records.
+
+#### Still not built
+
+`pdf-structure.py` does not consume `tables.json` — the two artefacts sit side
+by side and a consumer joins them on `section_id`. Folding tables into
+`structure.json` would mean either making pypdf-only Stage 1 depend on a table
+backend, which destroys the property that makes it work in a broken container,
+or a merge step that has to reason about staleness of two SHAs. Neither is
+obviously right, so neither was guessed at. Nor is any of this exposed as an
+MCP tool: the integration point today is the skill (`document-intake.md`
+Stage 3), matching how `pdf-extract.py` and `pdf-ocr.py` are already reached.

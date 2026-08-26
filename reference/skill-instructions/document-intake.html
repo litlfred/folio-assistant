@@ -481,6 +481,10 @@ was written in it was the only rung that worked.</li>
       <td>Images</td>
       <td>Claude vision API</td>
     </tr>
+    <tr>
+      <td>PDF (tables/figures)</td>
+      <td><code class="language-plaintext highlighter-rouge">scripts/pdf-tables.py</code> → <code class="language-plaintext highlighter-rouge">tables.json</code> (see Stage 3)</td>
+    </tr>
   </tbody>
 </table></div>
 
@@ -582,9 +586,74 @@ recommendation grammar) belongs in a domain adapter bundle, not the
 generic paper adapter. This skill detects the <em>shape</em> and hands off the
 domain-specific mapping rules to the relevant adapter.</p>
 </blockquote>
+<h4 id="tables-and-figures--run-scriptspdf-tablespy">
+  
+  
+    <a href="#tables-and-figures--run-scriptspdf-tablespy" class="anchor-heading" aria-labelledby="tables-and-figures--run-scriptspdf-tablespy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tables and figures — run <code class="language-plaintext highlighter-rouge">scripts/pdf-tables.py</code>
+  
+  
+</h4>
+    
+
+<p>Text extraction destroys tables. A GRADE evidence table or a boxed
+recommendation comes out of Stage 2 as a run of prose that reads exactly like
+prose, and nothing downstream can recover that it was a grid — which matters
+most for precisely the guideline documents this skill exists to process.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 scripts/pdf-tables.py FILE.pdf <span class="nt">-o</span> uploads/&lt;document-id&gt;/
+python3 scripts/pdf-tables.py <span class="nt">--check</span>     <span class="c"># which backends are installed</span>
+</code></pre></div></div>
+
+<p>Writes <code class="language-plaintext highlighter-rouge">tables.json</code> (<code class="language-plaintext highlighter-rouge">pdf-tables/v1</code>) beside <code class="language-plaintext highlighter-rouge">structure.json</code>, with each
+table’s cell matrix, column edges, caption, containing <code class="language-plaintext highlighter-rouge">section_id</code>, and a
+<strong>GFM rendering that can be pasted straight into a content block</strong> — the
+LaTeX pipeline already converts a GFM table to <code class="language-plaintext highlighter-rouge">\begin{tabular}</code>.</p>
+
+<p>Tables split across a page break are rejoined when their column geometry
+matches; <code class="language-plaintext highlighter-rouge">stitched_from</code> records what was merged, so check it on any table
+whose rows look like two tables.</p>
+
+<p><strong>Read <code class="language-plaintext highlighter-rouge">status</code> before you read <code class="language-plaintext highlighter-rouge">tables</code>.</strong> The three ways to get no tables are
+distinguished on purpose, and <code class="language-plaintext highlighter-rouge">tables</code> is <code class="language-plaintext highlighter-rouge">null</code> — not <code class="language-plaintext highlighter-rouge">[]</code> — whenever nothing
+actually looked:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th><code class="language-plaintext highlighter-rouge">status</code></th>
+      <th>Exit</th>
+      <th>Means</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ok</code></td>
+      <td>0</td>
+      <td>a backend looked; <code class="language-plaintext highlighter-rouge">tables: []</code> means the document has none</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">n/a-no-backend</code></td>
+      <td>5</td>
+      <td><code class="language-plaintext highlighter-rouge">pip install pdfplumber</code> (or <code class="language-plaintext highlighter-rouge">camelot-py</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">n/a-no-text-layer</code></td>
+      <td>2</td>
+      <td>a scan — its tables are pixels; see Stage 2’s OCR route</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Needs <code class="language-plaintext highlighter-rouge">pdfplumber</code> or <code class="language-plaintext highlighter-rouge">camelot-py</code>, both pure PyPI installs with no model
+weights. <strong>Docling is the better parser and is not this</strong>: its weights come
+from HuggingFace, which is 403-blocked in sandboxed sessions, so it is a
+workstation/CI stage whose artefacts get committed — the
+<code class="language-plaintext highlighter-rouge">docling</code> capability probe reports it absent here rather than letting a session
+believe it ran. See <code class="language-plaintext highlighter-rouge">docs/proposals/rag-document-ingestion.md</code> §12.26.</p>
 
 <p><strong>Output</strong>: <code class="language-plaintext highlighter-rouge">extracted-blocks.json</code> — array of detected blocks with
-provisional kinds, titles, and content.</p>
+provisional kinds, titles, and content; <code class="language-plaintext highlighter-rouge">tables.json</code> for the layout-bearing
+parts that do not survive as text.</p>
 <h3 id="stage-4-mapping--mapped">
   
   
@@ -808,6 +877,8 @@ To resume:</p>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">intake.json</code> has complete metadata</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">extracted-text.md</code> reviewed for OCR errors</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">extracted-blocks.json</code> reviewed and confirmed by user</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">tables.json</code> written, <code class="language-plaintext highlighter-rouge">status</code> checked (not silently <code class="language-plaintext highlighter-rouge">n/a</code>), and any
+    <code class="language-plaintext highlighter-rouge">stitched_from</code> table spot-checked against the PDF</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All content objects generated with correct builders</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Blocks tagged with <code class="language-plaintext highlighter-rouge">["imported", "source:&lt;document-id&gt;"]</code></li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Chapter/section structure matches document</li>
