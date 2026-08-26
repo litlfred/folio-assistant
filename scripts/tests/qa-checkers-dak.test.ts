@@ -29,7 +29,11 @@ import {
   isGeneratedArtefact,
 } from "../../content/pipeline/qa-checkers-dak";
 import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry";
-import { criterionAdapters } from "../../schemas/block-qa";
+import {
+  criterionAdapters,
+  COMPANION_ROLES,
+  ADAPTER_COMPANION_ROLES,
+} from "../../schemas/block-qa";
 
 const DIR = mkdtempSync(join(tmpdir(), "dak-checkers-"));
 const p = (n: string) => join(DIR, n);
@@ -106,8 +110,13 @@ describe("dak-companion-present", () => {
   });
 
   test("every kind with a required companion is one this can check", () => {
+    // Checked against the declared vocabulary rather than a hand-kept list:
+    // the point is that the checker can resolve the role, and resolution
+    // iterates COMPANION_ROLES. A role outside it would never be found and the
+    // requirement would fail every block that satisfies it.
     for (const [, role] of Object.entries(REQUIRED_COMPANION)) {
-      expect(["bpmn", "fsh", "cql"]).toContain(role);
+      expect(COMPANION_ROLES).toContain(role);
+      expect(ADAPTER_COMPANION_ROLES.dak).toContain(role);
     }
   });
 

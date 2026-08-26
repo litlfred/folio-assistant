@@ -116,6 +116,7 @@ export const PAPER_BLOCK_KINDS = BLOCK_KINDS;
  */
 export const DAK_BLOCK_KINDS = [
   // L2 — Digital Adaptation Kit components.
+  "health-intervention",
   "persona",
   "user-scenario",
   "business-process",
@@ -125,6 +126,7 @@ export const DAK_BLOCK_KINDS = [
   "indicator",
   "functional-requirement",
   "non-functional-requirement",
+  "test-scenario",
   // L3 — FHIR implementation-guide artefacts.
   "logical-model",
   "profile",
@@ -183,6 +185,7 @@ export function adapterForKind(kind: string): ContentAdapter | undefined {
  * from the other by string munging is what this map exists to prevent.
  */
 export const DAK_KIND_BUILDERS: Record<DakBlockKind, string> = {
+  "health-intervention": "healthIntervention",
   persona: "persona",
   "user-scenario": "userScenario",
   "business-process": "businessProcess",
@@ -192,6 +195,7 @@ export const DAK_KIND_BUILDERS: Record<DakBlockKind, string> = {
   indicator: "indicator",
   "functional-requirement": "functionalRequirement",
   "non-functional-requirement": "nonFunctionalRequirement",
+  "test-scenario": "testScenario",
   "logical-model": "logicalModel",
   profile: "profile",
   "value-set": "valueSet",
@@ -238,6 +242,7 @@ export const ALL_BLOCK_BUILDER_ALT = [...BUILDER_TO_KIND.keys()]
  * `chap`, `app`, `bib`) — asserted by test.
  */
 export const DAK_LABEL_PREFIXES: Record<DakBlockKind, string> = {
+  "health-intervention": "hi",
   persona: "pers",
   "user-scenario": "scen",
   "business-process": "bp",
@@ -247,6 +252,7 @@ export const DAK_LABEL_PREFIXES: Record<DakBlockKind, string> = {
   indicator: "ind",
   "functional-requirement": "freq",
   "non-functional-requirement": "nfreq",
+  "test-scenario": "tscen",
   "logical-model": "lm",
   profile: "prof",
   "value-set": "vs",
@@ -367,7 +373,7 @@ export const DAK_COMPONENT_DESCRIPTIONS: Record<DakComponent, string> = {
  * with no *L2* kind, which is that one plus `test-scenarios`.
  */
 export const DAK_COMPONENT_KINDS: Record<DakComponent, readonly DakBlockKind[]> = {
-  "health-interventions-and-recommendations": [],
+  "health-interventions-and-recommendations": ["health-intervention"],
   "generic-personas": ["persona", "actor-definition"],
   "user-scenarios": ["user-scenario"],
   "generic-business-processes-and-workflows": ["business-process", "plan-definition"],
@@ -385,5 +391,5 @@ export const DAK_COMPONENT_KINDS: Record<DakComponent, readonly DakBlockKind[]> 
     "functional-requirement",
     "non-functional-requirement",
   ],
-  "test-scenarios": ["test-case"],
+  "test-scenarios": ["test-scenario", "test-case"],
 };

@@ -930,3 +930,49 @@ Starter kit has ~4300 lines of SOP across 30 pagecontent files (l3_*.md per
 artefact type, checklist.md 297, authoring_conventions.md, qa_check.md) — only
 l2_dak_authoring.md read so far.
 
+## Gap CLOSED — both kinds added from WHO's shapes (§12.25)
+
+dakComponentsWithoutL2() now returns []. Both pinning assertions INVERTED (not
+deleted) so the closing shows in the diff.
+
+**health-intervention** (component 1, L1 end of every `realises`). From
+HealthInterventions.fsh: id, description[x], `reference 1..* DublinCore`. The
+1..* is ENFORCED at construction — `references: []` throws. References carry
+Dublin Core objects (title required) per WHO's DublinCore.fsh, whose namespace
+we already had as dcterms:. Prefix `hi:`.
+
+**test-scenario** (component 9), deliberately DISTINCT from L3 test-case: L2 =
+narrative a reviewer signs off, L3 = FHIR conformance artefact. test-scenarios
+maps to both, one per layer, test asserts layers differ. TestScenario.fsh gives
+`feature 1..1 uri` → added `feature` companion role + REQUIRED_COMPANION row.
+Real requirement, unlike workbook-backed kinds: WHO's model is one .feature per
+scenario, not one workbook per many blocks. resolveCompanions iterates
+COMPANION_ROLES so declaring the role was the whole wiring. Prefix `tscen:`.
+
+**User's note on IG-publisher-generated JSON/JSON-LD — checked, and it changes
+the answer for the better.** smart-base has generate_jsonld_vocabularies.py,
+generate_logical_model_schemas.py, generate_valueset_schemas.py. Reading the
+logical-model one: generated `@type` is a plain string carrying only an EXAMPLE
+("LogicalModel-HealthInterventions"), while `resourceDefinition` is a **const**
+pinned to the StructureDefinition canonical URL — same IRI DAKComponentSources
+.fsh uses as `canonical ^type[0].targetProfile`. So the canonical URL is the
+stable identifier, NOT the @type string.
+
+→ folio: typing STANDS (a block is a manifest, not a FHIR resource), and added
+DAK_KIND_TO_WHO_MODEL as a separate assertion: the WHO logical model this block
+instantiates. 10 kinds mapped. PARTIAL BY CONSTRUCTION — scheduling-logic has
+none (WHO folds it into decision support), L3 kinds have none (FHIR artefacts,
+not component models). Test asserts those absences AND that every IRI present
+sits under WHO's canonical base. Same rule as §2's doco:contains: no unverified
+IRI in a published graph.
+
+Also fixed a test that hardcoded ["bpmn","fsh","cql"] — now checks
+REQUIRED_COMPANION roles against COMPANION_ROLES + ADAPTER_COMPANION_ROLES.dak,
+which is what "one this can check" actually means (resolution iterates the
+vocabulary).
+
+Type system caught the JSON-LD map when I added the kinds — the exhaustiveness
+guard did its job.
+
+1027 pass / 0 fail, tsc + eslint clean.
+

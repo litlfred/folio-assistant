@@ -91,6 +91,50 @@ const L3_KINDS: ReadonlySet<string> = new Set([
 
 // ── Per-kind interfaces ──────────────────────────────────────────
 
+/**
+ * L2 — a health intervention or recommendation the DAK digitises.
+ *
+ * WHO DAK component 1, and the L1 end of every `realises` edge: the
+ * recommendation everything else in the DAK exists to implement. Modelled on
+ * `smart-base` `input/fsh/models/HealthInterventions.fsh`, whose `reference` is
+ * `1..* DublinCore` — hence {@link HealthInterventionBlock.references}, which
+ * carries Dublin Core metadata rather than a bare string, and whose namespace
+ * this repo's JSON-LD context already holds as `dcterms:`.
+ *
+ * WHO's authoring SOP says where the content comes from: the UHC menu of
+ * essential interventions, and the WHO classification of digital health
+ * interventions (an IRIS publication).
+ */
+export interface HealthInterventionBlock extends DakBlockBase {
+  kind: "health-intervention";
+  /**
+   * Dublin Core references to the guideline this intervention comes from.
+   *
+   * `HealthInterventions.fsh` makes this `1..*` — an intervention with no
+   * source recommendation is not one. Enforced by the Zod schema.
+   */
+  references: DublinCoreRef[];
+}
+
+/**
+ * The Dublin Core elements WHO's `DublinCore.fsh` declares, as far as a DAK
+ * reference uses them.
+ *
+ * WHO models all fifteen DCMI elements; this carries the subset an
+ * intervention reference actually needs, because a type that admits every
+ * element and requires none documents nothing. `title` is required for the
+ * same reason `references` is: a reference nobody can name is not a reference.
+ */
+export interface DublinCoreRef {
+  title: string;
+  identifier?: string;
+  /** Canonical URI — an IRIS handle, for WHO publications. */
+  source?: string;
+  date?: string;
+  publisher?: string;
+  language?: string;
+}
+
 /** L2 — a generic persona the guideline is written for. */
 export interface PersonaBlock extends DakBlockBase { kind: "persona" }
 /** L2 — a user scenario / narrative walkthrough. */
@@ -122,6 +166,17 @@ export interface QuestionnaireBlock extends DakBlockBase { kind: "questionnaire"
 export interface CqlLibraryBlock extends DakBlockBase { kind: "cql-library" }
 /** L3 — a FHIR StructureMap. */
 export interface StructureMapBlock extends DakBlockBase { kind: "structure-map" }
+/**
+ * L2 — a narrative test scenario validating the DAK end to end.
+ *
+ * WHO DAK component 9, added after the original eight. Distinct from the L3
+ * {@link TestCaseBlock}, which is a FHIR conformance artefact: this is the case
+ * a reviewer signs off. `smart-base` `input/fsh/models/TestScenario.fsh` gives
+ * it `feature 1..1 uri` — a link to a **Gherkin feature file** — so the
+ * companion role is `.feature`, and it is required rather than optional.
+ */
+export interface TestScenarioBlock extends DakBlockBase { kind: "test-scenario" }
+
 /** L3 — a FHIR PlanDefinition: the machine-readable form of a recommendation. */
 export interface PlanDefinitionBlock extends DakBlockBase { kind: "plan-definition" }
 /** L3 — a FHIR Measure, realising an L2 indicator. */
@@ -133,6 +188,7 @@ export interface ActorDefinitionBlock extends DakBlockBase { kind: "actor-defini
 
 /** Every DAK block kind, as a discriminated union. */
 export type DakBlock =
+  | HealthInterventionBlock
   | PersonaBlock
   | UserScenarioBlock
   | BusinessProcessBlock
@@ -142,6 +198,7 @@ export type DakBlock =
   | IndicatorBlock
   | FunctionalRequirementBlock
   | NonFunctionalRequirementBlock
+  | TestScenarioBlock
   | LogicalModelBlock
   | ProfileBlock
   | ValueSetBlock
@@ -177,9 +234,43 @@ function dakSchema(kind: DakBlockKind) {
   });
 }
 
+/**
+ * A Dublin Core reference, per WHO's `DublinCore.fsh`.
+ *
+ * `title` is required because a reference nobody can name is not one; the rest
+ * are optional exactly as WHO declares them.
+ */
+const DublinCoreRefSchema = z.object({
+  title: z.string().min(1),
+  identifier: z.string().min(1).optional(),
+  source: z.string().min(1).optional(),
+  date: z.string().min(1).optional(),
+  publisher: z.string().min(1).optional(),
+  language: z.string().min(1).optional(),
+});
+
+/**
+ * Per-kind additions to the shared shape.
+ *
+ * Only `health-intervention` has one today: `HealthInterventions.fsh` makes
+ * `reference` `1..*`, so a block with an empty `references` array is invalid at
+ * construction rather than at review. Kept as a table so a second kind with
+ * required fields does not require reworking `dakSchema`.
+ */
+const DAK_SCHEMA_EXTENSIONS: Partial<Record<DakBlockKind, z.ZodRawShape>> = {
+  "health-intervention": {
+    references: z.array(DublinCoreRefSchema).min(1, {
+      message: "A health intervention needs at least one reference (WHO models it 1..*)",
+    }),
+  },
+};
+
 /** Schema per DAK kind, keyed by kind. */
 export const DAK_BLOCK_SCHEMAS = Object.fromEntries(
-  DAK_BLOCK_KINDS.map((k) => [k, dakSchema(k)]),
+  DAK_BLOCK_KINDS.map((k) => {
+    const extra = DAK_SCHEMA_EXTENSIONS[k];
+    return [k, extra ? dakSchema(k).extend(extra) : dakSchema(k)];
+  }),
 ) as Record<DakBlockKind, ReturnType<typeof dakSchema>>;
 
 // ── Builders ─────────────────────────────────────────────────────
@@ -201,6 +292,9 @@ function buildDak<K extends DakBlockKind, B extends DakBlock & { kind: K }>(
 
 type DakInput<B extends DakBlock> = Omit<B, "kind" | "layer"> & { layer?: "L2" | "L3" };
 
+export const healthIntervention = (
+  d: DakInput<HealthInterventionBlock>,
+): HealthInterventionBlock => buildDak("health-intervention", d);
 export const persona = (d: DakInput<PersonaBlock>): PersonaBlock =>
   buildDak("persona", d);
 export const userScenario = (d: DakInput<UserScenarioBlock>): UserScenarioBlock =>
@@ -221,6 +315,8 @@ export const functionalRequirement = (
 export const nonFunctionalRequirement = (
   d: DakInput<NonFunctionalRequirementBlock>,
 ): NonFunctionalRequirementBlock => buildDak("non-functional-requirement", d);
+export const testScenario = (d: DakInput<TestScenarioBlock>): TestScenarioBlock =>
+  buildDak("test-scenario", d);
 
 export const logicalModel = (d: DakInput<LogicalModelBlock>): LogicalModelBlock =>
   buildDak("logical-model", d);

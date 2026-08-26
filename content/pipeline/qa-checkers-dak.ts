@@ -86,8 +86,14 @@ import { DAK_LABEL_PREFIXES, type DakBlockKind } from "../../schemas/block-kinds
  * Stage B and is not built. Requiring one now would report a defect in every
  * such block, in a corpus that is correctly formed.
  */
-export const REQUIRED_COMPANION: Partial<Record<DakBlockKind, "bpmn" | "fsh" | "cql">> = {
+export const REQUIRED_COMPANION: Partial<
+  Record<DakBlockKind, "bpmn" | "fsh" | "cql" | "feature">
+> = {
   "business-process": "bpmn",
+  // TestScenario.fsh declares `feature 1..1 uri` — a link to a Gherkin feature
+  // file. Unlike the workbook-backed kinds below, this is one file per scenario
+  // in WHO's own model, so the requirement is real rather than premature.
+  "test-scenario": "feature",
   "cql-library": "cql",
   "logical-model": "fsh",
   profile: "fsh",

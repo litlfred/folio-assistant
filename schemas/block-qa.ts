@@ -98,6 +98,7 @@ export interface QaReviewer {
  * | `xlsx` | WHO L2 DAK | a data dictionary / indicator sheet |
  * | `fsh` | WHO L3 | a FHIR profile, ValueSet, PlanDefinition… |
  * | `cql` | WHO L3 | Clinical Quality Language logic |
+ * | `feature` | WHO L2 | Gherkin feature file — `TestScenario.fsh` makes it `feature 1..1 uri` |
  *
  * Compiled FHIR JSON is deliberately **not** a role. SUSHI generates it from
  * the `.fsh`, so it is a build output rather than an authored companion — a
@@ -128,6 +129,7 @@ export const COMPANION_ROLES = [
   "xlsx",
   "fsh",
   "cql",
+  "feature",
 ] as const;
 
 export type CompanionRole = (typeof COMPANION_ROLES)[number];
@@ -156,7 +158,7 @@ export type CheckerPaths = Partial<Record<CompanionRole, string>>;
  */
 export const ADAPTER_COMPANION_ROLES: Record<ContentAdapter, readonly CompanionRole[]> = {
   paper: ["md", "ts", "lean"],
-  dak: ["md", "ts", "bpmn", "dmn", "xlsx", "fsh", "cql"],
+  dak: ["md", "ts", "bpmn", "dmn", "xlsx", "fsh", "cql", "feature"],
 };
 
 /**
@@ -196,6 +198,7 @@ export const TEXTUAL_COMPANION_ROLES: readonly CompanionRole[] = [
   "dmn",
   "fsh",
   "cql",
+  "feature",
 ];
 
 /**

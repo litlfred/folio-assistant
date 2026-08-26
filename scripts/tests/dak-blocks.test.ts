@@ -36,9 +36,12 @@ import {
   planDefinition,
   layerForKind,
   dakComponentsWithoutL2,
+  healthIntervention,
+  testScenario,
   type DakBlock,
 } from "../../schemas/dak-blocks";
 import { KNOWN_LABEL_PREFIXES } from "../../schemas/constraints";
+import { DAK_KIND_TO_WHO_MODEL } from "../../schemas/jsonld";
 import {
   assertPrefixesInSync,
   typesForKind,
@@ -259,26 +262,22 @@ describe("WHO DAK component coverage", () => {
     expect(doubled).toEqual([]);
   });
 
-  test("exactly one component names no kind at all", () => {
-    // Health interventions is the L1 end of every `realises` edge and has no
-    // kind at either layer, so that edge points at something unrepresentable.
-    // Asserted as-is rather than as an aspiration: adding the kind fails here.
+  test("every component now names at least one kind", () => {
     const bare = DAK_COMPONENTS.filter((c) => DAK_COMPONENT_KINDS[c].length === 0);
-    expect(bare).toEqual(["health-interventions-and-recommendations"]);
+    expect(bare).toEqual([]);
   });
 
-  test("the L2 gap is exactly the two components known to have one", () => {
-    // Not a wish: this asserts the gap as it stands, so adding a
-    // `health-intervention` or L2 test-scenario kind fails here and forces the
-    // documentation to be updated with the code.
-    expect(dakComponentsWithoutL2()).toEqual([
-      "health-interventions-and-recommendations",
-      "test-scenarios",
-    ]);
+  test("no component is left without an L2 kind", () => {
+    // Was ["health-interventions-and-recommendations", "test-scenarios"] until
+    // both kinds landed. L2 is what a DAK *is*, so this closing is the point.
+    expect(dakComponentsWithoutL2()).toEqual([]);
   });
 
-  test("test-scenarios is represented, but only as an L3 FHIR artefact", () => {
-    expect(DAK_COMPONENT_KINDS["test-scenarios"]).toEqual(["test-case"]);
+  test("test-scenarios is represented at both layers, and they are distinct", () => {
+    // The L2 scenario is the narrative a reviewer signs off; the L3 test-case
+    // is a FHIR conformance artefact. Collapsing them would lose the review.
+    expect(DAK_COMPONENT_KINDS["test-scenarios"]).toEqual(["test-scenario", "test-case"]);
+    expect(layerForKind("test-scenario")).toBe("L2");
     expect(layerForKind("test-case")).toBe("L3");
   });
 
@@ -333,5 +332,69 @@ describe("the component list against WHO's own logical model", () => {
     // this model both keep it inside decision-support logic.
     expect(readFileSync(DAK_FSH, "utf-8")).not.toMatch(/^\* schedul/im);
     expect(DAK_COMPONENT_KINDS["decision-support-logic"]).toContain("scheduling-logic");
+  });
+});
+
+describe("the two kinds added from WHO's own logical models", () => {
+  test("a health intervention requires at least one reference", () => {
+    // HealthInterventions.fsh makes `reference` 1..*: an intervention with no
+    // source recommendation is not one. Caught at construction, not at review.
+    expect(() =>
+      healthIntervention({ label: "hi:dtp-booster", title: "DTP booster", references: [] }),
+    ).toThrow();
+  });
+
+  test("references carry Dublin Core, not bare strings", () => {
+    const b = healthIntervention({
+      label: "hi:dtp-booster",
+      title: "DTP booster",
+      references: [
+        {
+          title: "WHO classification of digital health interventions",
+          source: "https://iris.who.int/handle/10665/373581",
+          publisher: "World Health Organization",
+        },
+      ],
+    });
+    expect(b.layer).toBe("L2");
+    expect(b.references[0]!.source).toContain("iris.who.int");
+  });
+
+  test("a Dublin Core reference must at least be nameable", () => {
+    expect(() =>
+      healthIntervention({
+        label: "hi:x",
+        title: "X",
+        references: [{ title: "" }],
+      }),
+    ).toThrow();
+  });
+
+  test("both new kinds are L2 and carry their label prefix", () => {
+    expect(layerForKind("health-intervention")).toBe("L2");
+    expect(DAK_LABEL_PREFIXES["health-intervention"]).toBe("hi");
+    expect(DAK_LABEL_PREFIXES["test-scenario"]).toBe("tscen");
+    expect(() => testScenario({ label: "wrong:x", title: "X" })).toThrow();
+    expect(testScenario({ label: "tscen:immz-full-course", title: "Full course" }).layer).toBe("L2");
+  });
+
+  test("each new kind maps to the WHO logical model it came from", () => {
+    expect(DAK_KIND_TO_WHO_MODEL["health-intervention"]).toBe(
+      "http://smart.who.int/base/StructureDefinition/HealthInterventions",
+    );
+    expect(DAK_KIND_TO_WHO_MODEL["test-scenario"]).toBe(
+      "http://smart.who.int/base/StructureDefinition/TestScenario",
+    );
+  });
+
+  test("no WHO model IRI is invented for a kind WHO does not model", () => {
+    // scheduling-logic is folded into decision support in WHO's model, and the
+    // L3 kinds are FHIR artefacts rather than DAK component models. A
+    // fabricated IRI would be indistinguishable from a real one downstream.
+    expect(DAK_KIND_TO_WHO_MODEL["scheduling-logic"]).toBeUndefined();
+    expect(DAK_KIND_TO_WHO_MODEL["measure"]).toBeUndefined();
+    for (const iri of Object.values(DAK_KIND_TO_WHO_MODEL)) {
+      expect(iri).toStartWith("http://smart.who.int/base/StructureDefinition/");
+    }
   });
 });

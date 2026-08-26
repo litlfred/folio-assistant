@@ -2130,3 +2130,85 @@ These define the canonical sheet structure for exactly the components §12.13
 found are workbook-backed in practice. A reader for them is now a bounded
 problem against a published template rather than reverse-engineering whatever
 one repository happens to contain.
+
+### 12.25 The gap closed, from WHO's shapes rather than invented ones
+
+§12.24 left two WHO components with no L2 kind and, crucially, WHO's own
+logical models on disk describing both. Adding them meant transcription rather
+than design.
+
+`dakComponentsWithoutL2()` now returns `[]`, and every component names at least
+one kind. The two assertions that pinned the gap are inverted rather than
+deleted, so the closing is visible in the diff.
+
+#### `health-intervention`
+
+WHO DAK component 1, and the L1 end of every `realises` edge. From
+`HealthInterventions.fsh`: `id`, `description[x] (string or uri)`, and
+`reference 1..* DublinCore`.
+
+That `1..*` is load-bearing and is enforced at construction — an intervention
+with no source recommendation is not one:
+
+```ts
+healthIntervention({ label: "hi:dtp-booster", title: "DTP booster", references: [] })
+// throws: A health intervention needs at least one reference (WHO models it 1..*)
+```
+
+References carry Dublin Core rather than bare strings, matching WHO's
+`DublinCore.fsh`, whose namespace this repo's JSON-LD context already holds as
+`dcterms:`. The subset modelled is the one an intervention reference uses;
+`title` is required for the same reason the array is non-empty. WHO's SOP names
+the sources: the UHC menu of essential interventions and the WHO classification
+of digital health interventions, the latter an IRIS publication.
+
+#### `test-scenario`
+
+WHO DAK component 9, and deliberately **distinct from the L3 `test-case`**. The
+L2 scenario is the narrative a reviewer signs off; the L3 case is a FHIR
+conformance artefact. `test-scenarios` now maps to both, one per layer, and a
+test asserts the layers differ — collapsing them would lose the review step.
+
+`TestScenario.fsh` declares `feature 1..1 uri`, a link to a **Gherkin feature
+file**, so `feature` joins the companion roles and `REQUIRED_COMPANION` demands
+it. That requirement is real rather than premature, unlike the workbook-backed
+kinds §12.13 exempted: WHO's own model is one feature file per scenario, not one
+workbook covering many blocks. Companion resolution iterates `COMPANION_ROLES`,
+so declaring the role was the whole wiring — and the test that guards
+`REQUIRED_COMPANION` now checks its roles against that vocabulary instead of a
+hand-kept list, which is what it meant by "one this can check" all along.
+
+#### Aligning to WHO's generated JSON-LD
+
+WHO's IG publisher post-processes the logical models into JSON Schema and
+JSON-LD, which raises the question of whether typing DAK blocks as `folio:`
+classes is wrong.
+
+Reading `generate_logical_model_schemas.py` settles it. The generated `@type` is
+a plain string carrying only an **example** (`LogicalModel-HealthInterventions`),
+while `resourceDefinition` is a `const` pinned to the StructureDefinition's
+canonical URL — the same IRI `DAKComponentSources.fsh` uses as
+`canonical ^type[0].targetProfile`. The canonical URL is the stable identifier;
+the `@type` string is not.
+
+So the `folio:` typing stands — a block is a manifest, not a FHIR resource —
+and `DAK_KIND_TO_WHO_MODEL` adds the missing assertion beside it: *the WHO
+logical model this block is an authored instance of*. Ten kinds have one:
+
+```
+health-intervention  → http://smart.who.int/base/StructureDefinition/HealthInterventions
+test-scenario        → http://smart.who.int/base/StructureDefinition/TestScenario
+…
+```
+
+The map is **partial by construction**. `scheduling-logic` has no entry because
+WHO folds it into decision support, and the L3 kinds have none because they are
+FHIR artefacts rather than DAK component models. A test asserts those absences
+and that every IRI present sits under WHO's canonical base — a fabricated IRI
+would be indistinguishable from a real one once published, which is the same
+rule §2 applied to `doco:contains`.
+
+That makes a folio DAK joinable with WHO's published vocabularies rather than
+merely parallel to them.
+
+1027 tests pass, 0 fail; typecheck and lint clean.

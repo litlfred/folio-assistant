@@ -80,6 +80,14 @@ export const DCTERMS_NS = "http://purl.org/dc/terms/";
 /** HL7 FHIR — the health-policy semantics of the ingest side. */
 export const FHIR_NS = "http://hl7.org/fhir/";
 
+/**
+ * WHO's canonical base for the SMART Guidelines base IG.
+ *
+ * `smart-base` `sushi-config.yaml` declares `canonical: http://smart.who.int/base`,
+ * and its logical models publish under `<canonical>/StructureDefinition/<Name>`.
+ */
+export const SMART_BASE_NS = "http://smart.who.int/base/StructureDefinition/";
+
 /** Where the published `@context` lives. Emitted files reference this URL. */
 export const CONTENT_CONTEXT_URL =
   "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld";
@@ -154,6 +162,7 @@ export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = {
  * The link to the resource is the companion, not the type.
  */
 export const DAK_KIND_TO_FOLIO_TYPE: Record<DakBlockKind, string> = {
+  "health-intervention": "folio:HealthIntervention",
   persona: "folio:Persona",
   "user-scenario": "folio:UserScenario",
   "business-process": "folio:BusinessProcess",
@@ -163,6 +172,7 @@ export const DAK_KIND_TO_FOLIO_TYPE: Record<DakBlockKind, string> = {
   indicator: "folio:Indicator",
   "functional-requirement": "folio:FunctionalRequirement",
   "non-functional-requirement": "folio:NonFunctionalRequirement",
+  "test-scenario": "folio:TestScenario",
   "logical-model": "folio:LogicalModel",
   profile: "folio:Profile",
   "value-set": "folio:ValueSet",
@@ -173,6 +183,40 @@ export const DAK_KIND_TO_FOLIO_TYPE: Record<DakBlockKind, string> = {
   measure: "folio:Measure",
   "test-case": "folio:TestCase",
   "actor-definition": "folio:ActorDefinition",
+};
+
+/**
+ * The WHO logical model each DAK kind corresponds to, as a canonical IRI.
+ *
+ * WHO's IG publisher post-processes `smart-base`'s logical models into JSON
+ * Schema and JSON-LD. Inspecting `generate_logical_model_schemas.py`, the
+ * generated `@type` is a plain string carrying only an *example*
+ * (`LogicalModel-HealthInterventions`), while `resourceDefinition` is a `const`
+ * pinned to the StructureDefinition's canonical URL. **The canonical URL is the
+ * stable identifier**, and it is the same one `DAKComponentSources.fsh` uses as
+ * `canonical ^type[0].targetProfile`.
+ *
+ * So a block keeps its `folio:` `@type` — it is a manifest, not a FHIR resource
+ * — and gains this as a separate assertion: *the thing this block is an
+ * authored instance of*. That makes a folio DAK joinable with WHO's published
+ * vocabularies instead of merely parallel to them.
+ *
+ * Deliberately **partial**. Ten of WHO's logical models name a component; kinds
+ * without one — the L3 FHIR artefacts, and `scheduling-logic`, which WHO folds
+ * into decision support — get no entry rather than a fabricated IRI. An
+ * unverified IRI never goes in a published graph.
+ */
+export const DAK_KIND_TO_WHO_MODEL: Partial<Record<DakBlockKind, string>> = {
+  "health-intervention": `${SMART_BASE_NS}HealthInterventions`,
+  persona: `${SMART_BASE_NS}GenericPersona`,
+  "user-scenario": `${SMART_BASE_NS}UserScenario`,
+  "business-process": `${SMART_BASE_NS}BusinessProcessWorkflow`,
+  "data-element": `${SMART_BASE_NS}CoreDataElement`,
+  "decision-table": `${SMART_BASE_NS}DecisionSupportLogic`,
+  indicator: `${SMART_BASE_NS}ProgramIndicator`,
+  "functional-requirement": `${SMART_BASE_NS}FunctionalRequirement`,
+  "non-functional-requirement": `${SMART_BASE_NS}NonFunctionalRequirement`,
+  "test-scenario": `${SMART_BASE_NS}TestScenario`,
 };
 
 /**
