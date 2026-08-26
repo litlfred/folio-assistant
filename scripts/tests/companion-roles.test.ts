@@ -34,6 +34,7 @@ import {
   entryIsFresh,
 } from "../../content/pipeline/qa-utils";
 import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry";
+import { criterionAdapters } from "../../schemas/block-qa";
 import type { QaCriterionEntry } from "../../schemas/block-qa";
 
 const DIR = mkdtempSync(join(tmpdir(), "companion-roles-"));
@@ -138,11 +139,13 @@ describe("no churn on the existing paper corpus", () => {
     expect(missingCompanionNote("lean")).toBe("block has no .lean sibling");
   });
 
-  test("every registered criterion still declares only paper companions", () => {
-    // Nothing in the registry should have silently acquired a WHO role yet —
-    // the vocabulary widened, the criteria did not.
+  test("every paper-scoped criterion still declares only paper companions", () => {
+    // DAK criteria now exist and legitimately depend on .dmn/.fsh, so this
+    // narrows to the paper axes — which are the ones whose sidecars already
+    // exist in the folio and must not start invalidating differently.
     const paper = new Set(["md", "ts", "lean"]);
     for (const def of QA_CRITERIA_REGISTRY) {
+      if (!criterionAdapters(def).includes("paper")) continue;
       for (const r of def.depends_on) {
         expect(paper.has(r)).toBe(true);
       }

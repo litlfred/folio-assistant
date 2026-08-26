@@ -1946,6 +1946,93 @@ const RENDER: QaCriterionDefinition[] = [
 
 // ── Exported registry ───────────────────────────────────────────
 
+
+// ── Domain: dak ─────────────────────────────────────────────────
+
+/**
+ * WHO SMART Guidelines axes — the first criteria scoped to a non-paper
+ * adapter.
+ *
+ * These check **structural presence and well-formedness**, not semantic
+ * conformance. Whether a profile validates against its base, whether CQL
+ * compiles, whether a decision table is complete over its inputs — those need
+ * the real validators (`fhir-validation`, SUSHI, a DMN engine) and belong to
+ * the L3 pipeline. A grep-level reimplementation would produce a second,
+ * weaker verdict that disagrees with the authoritative one.
+ *
+ * Every entry declares `adapters: ["dak"]`. Omitting it would silently scope
+ * the criterion to `paper` — see `criterionAdapters` — and it would then
+ * never run on the blocks it was written for.
+ */
+const DAK: QaCriterionDefinition[] = [
+  {
+    id: "dak-companion-present",
+    domain: "dak",
+    adapters: ["dak"],
+    description:
+      "A DAK block declares the artefact its kind promises: business-process " +
+      "has a .bpmn, decision-table and scheduling-logic a .dmn, cql-library a " +
+      ".cql, and the FHIR kinds a .fsh. A manifest without one is a label and " +
+      "a title that looks like content in every listing and carries none.",
+    default_severity: "major",
+    // NOT the artefact itself. `depends_on` gates applicability, so listing
+    // `.dmn` here would `n/a` exactly the blocks this exists to flag — the
+    // trap documented on `QaCriterionDefinition.depends_on`.
+    depends_on: ["ts"],
+    also_invalidated_by: ["bpmn", "dmn", "fsh", "cql"],
+    automated: true,
+  },
+  {
+    id: "dak-bpmn-has-process",
+    domain: "dak",
+    adapters: ["dak"],
+    description:
+      "The .bpmn parses as XML and declares at least one <process>. Catches a " +
+      "placeholder or truncated export before it reaches the IG build.",
+    default_severity: "major",
+    depends_on: ["bpmn"],
+    automated: true,
+  },
+  {
+    id: "dak-dmn-has-decision-table",
+    domain: "dak",
+    adapters: ["dak"],
+    description:
+      "The .dmn declares a <decision> containing a <decisionTable>. A " +
+      "definitions shell with no table is decision logic that expresses no " +
+      "decision.",
+    default_severity: "major",
+    depends_on: ["dmn"],
+    automated: true,
+  },
+  {
+    id: "dak-fsh-declares-kind",
+    domain: "dak",
+    adapters: ["dak"],
+    description:
+      "The .fsh declares a resource of the kind the block claims — a " +
+      "value-set block's FSH says ValueSet, not Profile. Catches the " +
+      "copy-paste error a schema cannot see, because both files are " +
+      "individually valid.",
+    default_severity: "major",
+    depends_on: ["fsh"],
+    also_invalidated_by: ["ts"],
+    automated: true,
+  },
+  {
+    id: "dak-label-prefix-matches-kind",
+    domain: "dak",
+    adapters: ["dak"],
+    description:
+      "The label prefix matches the kind its builder introduces. Zod enforces " +
+      "this at construction, so this catches a manifest hand-edited " +
+      "afterwards.",
+    default_severity: "minor",
+    depends_on: ["ts"],
+    automated: true,
+  },
+];
+
 export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...VOICE,
   ...FIT,
@@ -1967,6 +2054,7 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...SCRIPT_QUALITY,
   ...DEVILS_ADVOCATE,
   ...EXPO,
+  ...DAK,
 ];
 
 export const SCRIPT_QUALITY_CRITERIA: string[] = SCRIPT_QUALITY.map(

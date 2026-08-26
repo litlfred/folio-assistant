@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T17:00:00Z
+updated_at: 2026-08-26T17:30:00Z
 ---
 
 
@@ -285,3 +285,37 @@ graph query via `get_neighbors` rather than a bespoke script.
 **Next: the ingest writer.** Every dependency now exists. Also worth noting: no
 `dak`-scoped QA criterion has been written, so that mechanism is live with
 nothing registered in it.
+
+## First DAK QA axes (§12.10) — and a wiring hole they found
+
+Five criteria in `qa-checkers-dak.ts`: companion-present, bpmn-has-process,
+dmn-has-decision-table, fsh-declares-kind, label-prefix-matches-kind. All
+`adapters: ["dak"]`. Structural presence and well-formedness only — semantic
+conformance needs the real validators (fhir-validation, SUSHI, a DMN engine)
+and a grep-level reimplementation would disagree with the authoritative verdict.
+
+`dak-companion-present` is the interesting one: it catches a missing `.dmn`, so
+it must NOT list `.dmn` in `depends_on` (which gates applicability and would
+n/a exactly the blocks it is for). Depends on `ts`, declares the artefacts under
+`also_invalidated_by`. First criterion to need that documented distinction.
+
+**Hole this exposed in my own §12.8 work.** `qa-sweep` built
+`const paths = { md, ts, lean }` and passed it to both `hashBlockFiles` and the
+checker. So the types and the applicability gate knew about `.dmn`/`.fsh`, but
+the sweep still hashed three files — a DAK verdict could never go stale when
+its decision table changed. My companion-role tests covered `hashBlockFiles`
+and `entryIsFresh` in isolation and passed; they did not cover the call site.
+Fixed: `paths = block.companions`, checker signature is `CheckerPaths`.
+
+Added `ADAPTER_COMPANION_ROLES` + `incompatibleCompanions()` so a
+paper-criterion-depends-on-.dmn mismatch is checkable rather than showing up as
+a permanently-n/a criterion that looks registered.
+
+Four guard tests from the previous commit correctly failed (they asserted the
+registry was all-paper) and were rewritten to the stronger invariant rather
+than relaxed. One stale test comment corrected — it still claimed DAK kinds had
+no builder or Zod schema, which §12.9 made false.
+
+852 pass / 0 fail, typecheck + lint clean.
+
+**Next: real-corpus run.** Everything on this branch is still fixtures.

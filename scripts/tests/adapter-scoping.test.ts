@@ -26,7 +26,7 @@ import {
   CONTENT_ADAPTERS,
   adapterForKind,
 } from "../../schemas/block-kinds";
-import { criterionAdapters } from "../../schemas/block-qa";
+import { criterionAdapters, incompatibleCompanions } from "../../schemas/block-qa";
 import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry";
 
 describe("adapter partition", () => {
@@ -95,10 +95,11 @@ describe("DAK vocabulary tracks the repo's own L2/L3 schemas", () => {
     }
   });
 
-  test("DAK kinds are declared but NOT yet in the authorable Block union", () => {
-    // They have no builder, no Zod schema and no viewer registration, so
-    // walkBlocks will not discover one. Pinned so this stays a stated
-    // limitation rather than a kind that looks supported and yields nothing.
+  test("DAK kinds stay out of the paper union", () => {
+    // They now have builders and Zod schemas (schemas/dak-blocks.ts) and their
+    // own exhaustiveness proof against DakBlock — but they must never enter
+    // BLOCK_KINDS, whose proof is against the paper `Block` union and whose
+    // membership is what every paper QA axis is scoped by.
     for (const k of DAK_BLOCK_KINDS) {
       expect(BLOCK_KINDS as readonly string[]).not.toContain(k);
     }
@@ -115,21 +116,47 @@ describe("criterion adapter scope", () => {
     expect(criterionAdapters({ adapters: ["paper", "dak"] })).toEqual(["paper", "dak"]);
   });
 
-  test("every registered criterion resolves to paper only", () => {
-    // The registry is entirely paper axes today. If a DAK criterion is added
-    // without declaring `adapters`, this fails — which is the point.
+  test("every criterion resolves to a non-empty scope", () => {
     for (const def of QA_CRITERIA_REGISTRY) {
-      expect(criterionAdapters(def)).toEqual(["paper"]);
+      expect(criterionAdapters(def).length).toBeGreaterThan(0);
     }
   });
 
-  test("no existing criterion is silently widened over DAK blocks", () => {
+  test("a criterion never depends on a companion its adapters cannot have", () => {
+    // `depends_on` gates applicability, so a mismatched pair does not error —
+    // it produces a criterion that is permanently `n/a` and looks registered.
     for (const def of QA_CRITERIA_REGISTRY) {
+      expect({ id: def.id, bad: incompatibleCompanions(def) }).toEqual({
+        id: def.id,
+        bad: [],
+      });
+    }
+  });
+
+  test("paper axes never admit a DAK block, and DAK axes never admit a paper one", () => {
+    for (const def of QA_CRITERIA_REGISTRY) {
+      const scope = criterionAdapters(def);
       for (const k of DAK_BLOCK_KINDS) {
-        const blockAdapter = adapterForKind(k)!;
-        expect(criterionAdapters(def).includes(blockAdapter)).toBe(false);
+        expect(scope.includes(adapterForKind(k)!)).toBe(scope.includes("dak"));
+      }
+      for (const k of BLOCK_KINDS) {
+        expect(scope.includes(adapterForKind(k)!)).toBe(scope.includes("paper"));
       }
     }
+  });
+
+  test("every DAK-scoped criterion says so explicitly", () => {
+    // Omitting `adapters` silently scopes to paper, so a DAK criterion that
+    // forgets it never runs on the blocks it was written for.
+    for (const def of QA_CRITERIA_REGISTRY) {
+      if (def.domain === "dak") expect(criterionAdapters(def)).toEqual(["dak"]);
+    }
+  });
+
+  test("the dak domain is actually populated", () => {
+    // The scoping mechanism landed before anything was registered in it, which
+    // meant DAK blocks would sweep clean for want of a question, not an answer.
+    expect(QA_CRITERIA_REGISTRY.filter((d) => d.domain === "dak").length).toBeGreaterThan(0);
   });
 });
 
@@ -142,8 +169,9 @@ describe("no-op for the existing paper corpus", () => {
     for (const k of BLOCK_KINDS) expect(adapterForKind(k)).toBe("paper");
   });
 
-  test("every registered criterion admits every paper kind", () => {
+  test("every paper-scoped criterion admits every paper kind", () => {
     for (const def of QA_CRITERIA_REGISTRY) {
+      if (!criterionAdapters(def).includes("paper")) continue;
       for (const k of BLOCK_KINDS) {
         expect(criterionAdapters(def).includes(adapterForKind(k)!)).toBe(true);
       }

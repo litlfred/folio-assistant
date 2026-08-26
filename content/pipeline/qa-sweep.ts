@@ -125,6 +125,7 @@ import {
   getCriterionExtraInputs,
 } from "./qa-criteria-registry";
 import { AUTOMATED_CHECKERS } from "./qa-checkers-voice";
+import { DAK_AUTOMATED_CHECKERS } from "./qa-checkers-dak";
 import { usesGraphHash } from "./uses-graph-hash";
 
 import type { CheckerResult } from "./qa-checkers-extended";
@@ -300,7 +301,13 @@ function run(): void {
   for (const block of walkBlocks(walkRoot, { includeUnlabelled: true })) {
     if (blockRootFilter && block.root !== blockRootFilter) continue;
     totalBlocks++;
-    const paths = { md: block.md, ts: block.ts, lean: block.lean };
+    // Every present companion, not the paper triple. Building `{md, ts,
+    // lean}` here was the wiring half of the `depends_on` defect: the type
+    // system and the applicability gate learned about `.dmn` and `.fsh`, but
+    // the sweep still hashed three files, so a DAK block's verdict could
+    // never go stale when its decision table changed — a cached `pass` would
+    // outlive the logic it judged.
+    const paths = block.companions;
     const currentHashes = hashBlockFiles(paths);
 
     // Load or initialise report.
@@ -415,7 +422,7 @@ function run(): void {
       }
 
       // If non-automated, mark as needing agent and continue.
-      const checker = AUTOMATED_CHECKERS[criterionId];
+      const checker = AUTOMATED_CHECKERS[criterionId] ?? DAK_AUTOMATED_CHECKERS[criterionId];
       if (!def.automated || !checker) {
         sweepResult.criteria_needs_agent++;
         totalNeedsAgent++;

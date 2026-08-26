@@ -1002,3 +1002,55 @@ QA. What remains is the code that turns `structure.json` + `candidates.json`
 into `library/<doc>/blocks/*.jsonld` and section manifests — and no DAK QA
 criterion has been written yet, so `dak`-scoped axes exist as a mechanism with
 nothing registered in it.
+
+### 12.10 The first DAK QA axes — and a wiring hole they exposed
+
+§12.8 made QA adapter-aware and §12.9 made DAK blocks authorable, but nothing
+was registered in the `dak` scope. That left a corpus that would sweep **clean
+by default**: every paper criterion correctly `n/a`, and no DAK criterion to
+take its place. A corpus reporting no findings because nothing was asked is the
+same false pass as one reporting `n/a` because the gate was wrong.
+
+Five axes now ask something, in `qa-checkers-dak.ts`:
+
+| Criterion | Catches |
+|---|---|
+| `dak-companion-present` | a manifest whose artefact is missing — a label and a title that look like content in every listing |
+| `dak-bpmn-has-process` | a `.bpmn` that parses but declares no `<process>` |
+| `dak-dmn-has-decision-table` | a `<decision>` with no `<decisionTable>` — logic expressing no decision |
+| `dak-fsh-declares-kind` | a `value-set` block whose `.fsh` declares a `Profile`; both files individually valid, only the pairing wrong |
+| `dak-label-prefix-matches-kind` | a manifest hand-edited past its builder's validation |
+
+They check **structural presence and well-formedness, not semantic
+conformance**. Whether a profile validates against its base, whether CQL
+compiles, whether a decision table is complete over its inputs — those need the
+real validators and belong to the L3 pipeline. A grep-level reimplementation
+would produce a second, weaker verdict that disagrees with the authoritative
+one: §2c's argument against a second copy of the corpus, applied to validation.
+
+#### The `depends_on` trap, walked around deliberately
+
+`dak-companion-present` exists to flag a missing `.dmn`, so it must **not**
+list `.dmn` in `depends_on` — which gates applicability and would `n/a`
+precisely the blocks it is for. It depends on `ts` and declares the artefacts
+under `also_invalidated_by`. That is the distinction `QaCriterionDefinition`
+documents, and this is the first criterion to need it.
+
+#### The hole this work exposed
+
+Writing the checkers surfaced a defect in §12.8's own wiring. `qa-sweep`
+constructed `const paths = { md, ts, lean }` — the paper triple — and passed it
+to both `hashBlockFiles` and the checker. So the type system and the
+applicability gate had learned about `.dmn` and `.fsh`, but **the sweep still
+hashed three files**: a DAK block's verdict could never go stale when its
+decision table changed, and a cached `pass` would outlive the logic it judged.
+
+The companion-role tests covered `hashBlockFiles` and `entryIsFresh` in
+isolation and passed; they did not cover the sweep's call site. `paths` is now
+`block.companions`, and the checker signature is `CheckerPaths` — every present
+companion, keyed by role.
+
+`ADAPTER_COMPANION_ROLES` and `incompatibleCompanions()` were added alongside,
+so "a paper criterion depends on `.dmn`" is now a *checkable* mistake rather
+than one that manifests as a criterion which is permanently `n/a` and looks
+registered.

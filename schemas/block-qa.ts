@@ -132,6 +132,48 @@ export const COMPANION_ROLES = [
 
 export type CompanionRole = (typeof COMPANION_ROLES)[number];
 
+/**
+ * The companion paths handed to an automated checker.
+ *
+ * Every present companion, keyed by role — not the paper triple. A DAK
+ * checker reads `paths.dmn` or `paths.fsh` the same way a voice checker reads
+ * `paths.md`, and `qa-sweep` populates all of them from the block's resolved
+ * siblings.
+ */
+export type CheckerPaths = Partial<Record<CompanionRole, string>>;
+
+/**
+ * Which companion roles each adapter's blocks can actually have.
+ *
+ * `md` and `ts` are shared: every block has a manifest, and either kind of
+ * block may carry prose. `lean` is paper-only; the BPMN/DMN/FSH/CQL/XLSX
+ * artefacts are DAK-only.
+ *
+ * Stated here so that "a paper criterion depends on `.dmn`" is a *checkable*
+ * mistake rather than one that shows up as a criterion which silently never
+ * applies — `depends_on` gates applicability, so a mismatched pair produces a
+ * permanent `n/a` and no error.
+ */
+export const ADAPTER_COMPANION_ROLES: Record<ContentAdapter, readonly CompanionRole[]> = {
+  paper: ["md", "ts", "lean"],
+  dak: ["md", "ts", "bpmn", "dmn", "xlsx", "fsh", "cql"],
+};
+
+/**
+ * Companion roles a criterion declares that no adapter in its scope can
+ * provide — always empty in a healthy registry.
+ */
+export function incompatibleCompanions(def: {
+  adapters?: ContentAdapter[];
+  depends_on: CompanionRole[];
+}): CompanionRole[] {
+  const allowed = new Set<CompanionRole>();
+  for (const a of criterionAdapters(def)) {
+    for (const r of ADAPTER_COMPANION_ROLES[a]) allowed.add(r);
+  }
+  return def.depends_on.filter((r) => !allowed.has(r));
+}
+
 /** The adapters a criterion applies to, with the documented default applied. */
 export function criterionAdapters(def: {
   adapters?: ContentAdapter[];
