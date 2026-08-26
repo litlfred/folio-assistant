@@ -19,6 +19,8 @@
  * @module schemas/block-qa
  */
 
+import type { ContentAdapter } from "./block-kinds";
+
 /**
  * The kind of reviewer that produced this finding.
  *
@@ -129,6 +131,13 @@ export const COMPANION_ROLES = [
 ] as const;
 
 export type CompanionRole = (typeof COMPANION_ROLES)[number];
+
+/** The adapters a criterion applies to, with the documented default applied. */
+export function criterionAdapters(def: {
+  adapters?: ContentAdapter[];
+}): readonly ContentAdapter[] {
+  return def.adapters ?? ["paper"];
+}
 
 /**
  * Roles whose *content* is a text file a checker can read directly.
@@ -339,6 +348,26 @@ export interface QaCriterionDefinition {
    * blocks the criterion exists to check. Use `also_invalidated_by`
    * instead, which buys freshness without the applicability gate.
    */
+  /**
+   * Which content adapters this criterion applies to.
+   *
+   * **Absent means `["paper"]`**, not "all". Every criterion in the registry
+   * today was written for the paper adapter — its axes are about scholarly
+   * voice, proof structure, Lean formalisation and reading order — so an
+   * absent field must not silently widen them over WHO L2/L3 blocks. A
+   * `voice-scholarly-default` verdict on a FHIR ValueSet is not a finding,
+   * it is a category error, and one that would arrive as a `fail` rather
+   * than as an obviously wrong `n/a`.
+   *
+   * Defaulting to `all` was the alternative, and it is the trap: it needs
+   * every one of the ~47 existing criteria edited to stay correct, and any
+   * that were missed would misfire silently. Defaulting to the adapter they
+   * were all written for needs none, and a new DAK criterion opts in by
+   * saying so.
+   *
+   * Resolve with `criterionAdapters()` rather than reading this directly.
+   */
+  adapters?: ContentAdapter[];
   depends_on: CompanionRole[];
   /**
    * Extra files that invalidate a cached verdict WITHOUT gating

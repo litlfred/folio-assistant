@@ -134,6 +134,8 @@ import type {
   QaScriptSidecar,
   CompanionRole,
 } from "../../schemas/block-qa";
+import { criterionAdapters } from "../../schemas/block-qa";
+import { adapterForKind } from "../../schemas/block-kinds";
 
 
 // ── CLI parsing ─────────────────────────────────────────────────
@@ -201,6 +203,7 @@ interface BlockSweepResult {
       | "fresh-skip"
       | "needs-agent"
       | `n/a-no-${CompanionRole}`
+      | "n/a-wrong-adapter"
       | CheckerResult["result"];
     severity?: "critical" | "major" | "minor";
     hits?: number;
@@ -439,6 +442,39 @@ function run(): void {
           scriptHashes?.script_commit_sha || undefined,
         deps_hash: scriptHashes?.deps_hash,
       };
+
+      // Adapter gate, ahead of the companion gate. A criterion written for
+      // the paper adapter must not run against a WHO L2/L3 block: a
+      // `voice-scholarly-default` verdict on a FHIR ValueSet is a category
+      // error, and it would land as a `fail` rather than as an obviously
+      // wrong `n/a`. Criteria default to `["paper"]` (see `criterionAdapters`)
+      // so the ~47 existing definitions stay correct unedited.
+      const blockAdapter = adapterForKind(block.kind);
+      const criterionScope = criterionAdapters(def);
+      if (!blockAdapter || !criterionScope.includes(blockAdapter)) {
+        const naEntry: QaCriterionEntry = {
+          field_hash: fieldHash,
+          result: "n/a",
+          reviewer: { ...scriptReviewer },
+          reviewed_at: nowIso,
+          reviewed_sha: headSha,
+          notes: blockAdapter
+            ? `criterion applies to ${criterionScope.join("/")}; block kind "${block.kind}" is ${blockAdapter}`
+            : `unknown block kind "${block.kind}" — no adapter`,
+        };
+        const priorNa = existing.find((e) => e?.reviewer?.kind === "script");
+        report.criteria[criterionId] = [
+          ...nonScriptExisting,
+          sameScriptVerdict(priorNa, naEntry)
+            ? priorNa!
+            : ((verdictChanged = true), naEntry),
+        ];
+        sweepResult.details.push({
+          criterion: criterionId,
+          outcome: "n/a-wrong-adapter",
+        });
+        continue;
+      }
 
       // Applicability gate, over whichever companion roles the criterion
       // declares. This was two hard-coded `if`s for `.md` and `.lean` — the

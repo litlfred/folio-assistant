@@ -855,3 +855,83 @@ bun run content/pipeline/graph-index.ts --stats
 bun run content/pipeline/graph-index.ts --search "torsion" --text
 bun run content/pipeline/graph-index.ts --neighbors thm:main --in --hops 2
 ```
+
+### 12.8 Granularity, and what QA turned out to decide
+
+The open question in §12.6 was node granularity. It is settled, and the
+criterion that settled it was not file count.
+
+**Content blocks are fine-grained and self-contained** — a decision table, a
+math proposition, a FHIR ValueSet each a block — and groupings are built from
+an *ordered list* of block refs, exactly as a chapter holds sections and a
+section holds `blocks[]`. That dissolves the objection §12.6 raised: fine
+granularity does not leave nodes without files, because the **blocks** own the
+files and a section is a manifest.
+
+The operational definition is what makes it decidable: **a content block is
+what a QA sidecar runs against.** `qa-utils.ts` computes the sidecar as
+`<stem>.qa.json`, so a block is exactly a file stem that carries one. That is
+already enforced by machinery rather than convention.
+
+#### The L2/L3 block vocabulary
+
+WHO's own sites are unreachable from a sandboxed session — `smart.who.int` and
+`build.fhir.org` return the same 403 policy denial as `who.int` — but the repo
+already carries both lists, and they match WHO's standard DAK set:
+
+| Layer | Source of truth in this repo | Kinds |
+|---|---|---|
+| **L2 DAK** | `schemas/skills/l2-dak-authoring/input.schema.json` | personas, user-scenarios, business-processes, data-dictionary, decision-logic, scheduling-logic, indicators, functional- and non-functional-requirements |
+| **L3 FHIR** | `schemas/skills/l3-fhir-authoring/input.schema.json` | logical-model, profile, questionnaire, cql-library, structure-map, plan-definition, measure, test-case, actor-definition, requirements |
+
+These mirror the repo's schemas, **not** the published IG, which could not be
+consulted.
+
+#### Two defects this exposed
+
+**(a) `depends_on` was the paper adapter's companion set, and it gates
+applicability.** Typed `Array<"md" | "ts" | "lean">`, no criterion could say
+"applies to blocks with a `.dmn`" — and worse, every L2/L3 block would take
+`qa-sweep`'s hard-coded `.md` branch and record a clean `n/a` for every axis.
+QA would report a swept, healthy corpus it had never read. Same failure shape
+as the stale `BLOCK_BUILDER_RE` that hid 461 blocks (§12.5's discipline
+applied to a different table).
+
+Companion roles are now `md`, `ts`, `lean` (paper) plus `bpmn`, `dmn`, `xlsx`
+(L2) and `fsh`, `cql` (L3). Compiled FHIR JSON is deliberately **not** a role:
+SUSHI generates it from the `.fsh`, so it is a build output, and a criterion
+that cares depends on the source. The two hard-coded gates became one
+`applicabilityGap()` over whatever roles a criterion declares.
+
+**(b) One global `BLOCK_KINDS` pool would cross the adapters.** Adding ~19 WHO
+kinds to the list that carries a compile-time exhaustiveness proof against the
+`Block` union makes every math axis nominally applicable to a ValueSet. The
+visible failure would not be a harmless `n/a` but a
+`voice-scholarly-default: fail` on a decision table, which reads like a real
+finding.
+
+Kinds are therefore **adapter-scoped** — `paper` and `dak`, partitioned, with
+`adapterForKind()` returning `undefined` rather than defaulting — and QA
+criteria carry an `adapters` scope that the sweep gates on *before* the
+companion gate.
+
+#### The default that makes it safe
+
+`adapters` absent means **`["paper"]`, not "all"**. Every criterion in the
+registry today is a paper axis, so defaulting to "all" would require editing
+all ~47 to stay correct and would misfire silently on any missed. Defaulting
+to the adapter they were written for requires none, and a DAK criterion opts
+in by saying so. A test asserts every registered criterion still resolves to
+`["paper"]`, so adding a DAK criterion without declaring its scope fails.
+
+Both changes are verified no-ops for the existing corpus: `sameScriptVerdict`
+compares `notes`, and `missingCompanionNote` reproduces the existing strings
+byte for byte, so no sidecar rewrites on the next sweep.
+
+#### Still not built
+
+DAK kinds are **declared, not authorable**. They are not members of the
+`Block` union and have no builder, no Zod schema and no viewer registration,
+so `walkBlocks` will not discover one. What exists is the vocabulary — enough
+for QA to be scoped and for the ingest writer to have names to emit. Authoring
+a DAK block is the next piece of work, and the ingest writer follows it.

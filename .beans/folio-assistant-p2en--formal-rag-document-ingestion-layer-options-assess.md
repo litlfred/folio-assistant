@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T16:10:00Z
+updated_at: 2026-08-26T16:35:00Z
 ---
 
 
@@ -218,3 +218,37 @@ Python, JS) rather than left to drift.
 **Still open:** adapter-scoped vs globally-tagged BLOCK_KINDS — adding ~19 WHO
 kinds to the single global list makes every math axis nominally applicable to
 a ValueSet. That is the next fork, and it gates the ingest writer.
+
+## Adapter-scoped block kinds (§12.8)
+
+Took the adapter-scoped call rather than globally-tagged; author said go
+without picking and this matches the existing `adapters/paper/` seam.
+
+`CONTENT_ADAPTERS` = paper | dak. `PAPER_BLOCK_KINDS` is an **alias** for
+`BLOCK_KINDS` (not a copy — a second hand-maintained list is the exact drift
+`block-kinds.ts` exists to prevent), so the compile-time exhaustiveness proof
+against the `Block` union is untouched. `DAK_BLOCK_KINDS` adds 19 L2/L3 kinds.
+`adapterForKind()` returns `undefined` for an unknown kind rather than
+defaulting to paper — defaulting is precisely how a math axis would come to
+run against a ValueSet.
+
+QA criteria gained `adapters?`, gated in the sweep **before** the companion
+gate. The load-bearing choice is the default: **absent means `["paper"]`, not
+"all"**. All ~47 registered criteria are paper axes, so "all" would need every
+one edited to stay correct and would misfire silently on any missed. A test
+asserts every registered criterion resolves to `["paper"]`, so adding a DAK
+criterion without declaring scope fails.
+
+Failure mode this prevents is not a harmless n/a: it is
+`voice-scholarly-default: fail` on a decision table, which reads like a real
+finding.
+
+**Declared, not authorable.** DAK kinds are not in the `Block` union and have
+no builder, Zod schema or viewer registration, so `walkBlocks` cannot discover
+one. Pinned by a test so it stays a stated limitation rather than a kind that
+looks supported and silently yields nothing. That authoring work is next, and
+the ingest writer follows it.
+
+807 pass / 0 fail, typecheck + lint clean. Verified no-op for the existing
+corpus: every kind `walkBlocks` can encounter resolves to paper, and every
+registered criterion admits every paper kind.
