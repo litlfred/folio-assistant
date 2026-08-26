@@ -389,6 +389,33 @@ async function run(): Promise<void> {
     }
   }
 
+  if (totalScripts === 0) {
+    // A sweep over nothing used to print "0 findings" and exit 0, which
+    // reads exactly like a clean sweep of everything. It is not a result,
+    // it is a misconfiguration, and it hid a broken root for months. Say so,
+    // name the roots actually walked, and fail.
+    console.error("");
+    console.error("script-sweep: NO SCRIPTS WERE AUDITED — this is a");
+    console.error("  misconfiguration, not a clean result. The roots below");
+    console.error("  are joined onto the CONTENT repo root; check that you");
+    console.error("  are running from the content repo and that they exist.");
+    console.error(`    content root : ${CONTENT_ROOT}`);
+    console.error(`    platform root: ${PLATFORM_ROOT}`);
+    for (const r of SCRIPT_ROOTS) {
+      const abs = resolve(CONTENT_ROOT, r.dir);
+      console.error(
+        `    root         : ${r.dir} -> ${abs}` +
+          `  [${existsSync(abs) ? "exists" : "MISSING"}]`,
+      );
+    }
+    if (args.filter) {
+      console.error(
+        `  NOTE: --filter ${args.filter} was set; a filter matching nothing`,
+      );
+      console.error("        also lands here, and is not a misconfiguration.");
+    }
+    process.exitCode = 1;
+  }
   if (args.json) {
     console.log(
       JSON.stringify(
@@ -409,33 +436,6 @@ async function run(): Promise<void> {
     );
   } else {
     console.log(`script-sweep: ${totalScripts} script(s) audited`);
-    if (totalScripts === 0) {
-      // A sweep over nothing used to print "0 findings" and exit 0, which
-      // reads exactly like a clean sweep of everything. It is not a result,
-      // it is a misconfiguration, and it hid a broken root for months. Say so,
-      // name the roots actually walked, and fail.
-      console.error("");
-      console.error("script-sweep: NO SCRIPTS WERE AUDITED — this is a");
-      console.error("  misconfiguration, not a clean result. The roots below");
-      console.error("  are joined onto the CONTENT repo root; check that you");
-      console.error("  are running from the content repo and that they exist.");
-      console.error(`    content root : ${CONTENT_ROOT}`);
-      console.error(`    platform root: ${PLATFORM_ROOT}`);
-      for (const r of SCRIPT_ROOTS) {
-        const abs = resolve(CONTENT_ROOT, r.dir);
-        console.error(
-          `    root         : ${r.dir} -> ${abs}` +
-            `  [${existsSync(abs) ? "exists" : "MISSING"}]`,
-        );
-      }
-      if (args.filter) {
-        console.error(
-          `  NOTE: --filter ${args.filter} was set; a filter matching nothing`,
-        );
-        console.error("        also lands here, and is not a misconfiguration.");
-      }
-      process.exitCode = 1;
-    }
     console.log(`           HEAD: ${headSha.slice(0, 12) || "(no git)"}`);
     console.log(`           criteria: ${runnableIds.join(", ")}`);
     console.log(
