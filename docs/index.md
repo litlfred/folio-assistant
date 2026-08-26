@@ -58,7 +58,9 @@ folio-assistant is **pluggable** — each content type is handled by a content
 
 The cross-cutting [`content-lifecycle`](content-types.html#the-content-lifecycle)
 package (plan → author → validate → review → test → publish → feedback → retire)
-applies to every content type.
+applies to every content type. The
+[publication workflow](publication-workflow.html) models it properly — as BPMN
+swimlanes, with the roles, the HCI validation gate, and the shared work plan.
 
 ## Where to go next
 
@@ -66,6 +68,7 @@ applies to every content type.
 - **[Getting started](getting-started.html)** — connect the MCP server to your LLM and run your first skill.
 - **[Tutorial: Writing a paper with folio-assistant](guides/writing-a-paper.html)** — a full, LLM-driven walk-through with a mock chat session.
 - **[Content types](content-types.html)** — the formalism of each authoring domain.
+- **[Publication workflow](publication-workflow.html)** — BPMN swimlane diagrams of the editing and publication processes: the HCI validation gate, who reviews what, and the shared work plan.
 - **[Agent onboarding](guides/agent-onboarding.html)** — orientation for an LLM agent dropped into a folio: first steps, finding skills, the content-object model, QA sidecars.
 - **[Skills & roles](skills.html)** — every skill and role, and how they work together with the LLM.
 - **[Skill schema reference](reference/skills/)** — generated input/output contracts for every skill.
@@ -82,6 +85,7 @@ flowchart TD
     GS --> Tut[Tutorial: writing a paper]
     GS --> CT[Content types]
     CT --> Skills[Skills & roles]
+    CT --> WF[Publication workflow<br/>BPMN swimlanes]
     CT --> Guides[Authoring guides]
     Guides --> Paper[Papers: Lean + LaTeX]
     Guides --> DAK[WHO SMART DAK / L2]
@@ -93,6 +97,7 @@ flowchart TD
     Home --> Arch[Architecture]
 
     click Skills "skills.html" "Skills & roles"
+    click WF "publication-workflow.html" "Publication workflow (BPMN)"
     click Install "installation.html" "Installation"
     click GS "getting-started.html" "Getting started"
     click Tut "guides/writing-a-paper.html" "Tutorial: writing a paper"

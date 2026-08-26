@@ -1,0 +1,12 @@
+{
+  "id": "review-agent",
+  "name": "Review Agent",
+  "type": "system",
+  "description": "LLM agent performing NON-MECHANICAL validation — accuracy, voice, exposition, whether a change says what the editor meant. Judgement calls escalate to a human reviewer or SME.",
+  "inherits": [],
+  "capabilities": ["review-comments"],
+  "meta": {
+    "lifecycle": ["validate", "review"],
+    "workflow": "docs/workflows/editing-hci-validation.bpmn#Lane_NonMechanical"
+  }
+}

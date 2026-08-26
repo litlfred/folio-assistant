@@ -26,11 +26,13 @@ a **skill package** (the authoring formalism — what an author and the LLM do).
 Every content type moves through the same lifecycle, provided by the
 cross-cutting **`content-lifecycle`** skill package:
 
-```mermaid
-flowchart LR
-    plan --> author --> validate --> review --> test --> publish --> feedback --> retire
-    feedback -.-> author
-```
+<div class="bpmn-figure">
+  <img src="assets/img/workflows/content-lifecycle.svg"
+       alt="BPMN swimlane diagram of one folio cycle: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs per proposed change, an integration test and QA sweep follows, then draft-review-publish; feedback is triaged and filed as beans, and the cycle either repeats or the folio is retired.">
+</div>
+
+[BPMN 2.0 source](workflows/content-lifecycle.bpmn) · [full-size SVG](assets/img/workflows/content-lifecycle.svg)
+{: .bpmn-source }
 
 | Stage | Skill | What happens |
 |-------|-------|--------------|
@@ -46,6 +48,13 @@ flowchart LR
 The lifecycle stages are the same regardless of content type — what differs is
 the *authoring* skills and the *artifacts* each type produces. For the full list
 of skills and the roles that drive them, see **[Skills & roles](skills.html)**.
+
+Two things the eight stage names hide, and the diagram does not: `author` and
+`validate` are not consecutive phases but a *loop* — every proposed change runs
+the HCI validation gate, and the editor sees the findings before anything is
+committed — and `review` happens twice, once per change and once over the
+assembled draft. Both expand into their own diagrams on the
+**[publication workflow](publication-workflow.html)** page.
 
 ---
 
@@ -103,6 +112,15 @@ Relevant skill schemas:
 [`dmn-authoring`](reference/skills/dmn-authoring.html),
 [`terminology-management`](reference/skills/terminology-management.html).
 
+<div class="bpmn-figure">
+  <img src="assets/img/workflows/l2-dak-authoring.svg"
+       alt="BPMN swimlane diagram of L2 DAK authoring: a parallel gateway fans out personas, BPMN processes, DMN decision logic, the data dictionary and indicators across the business-analyst lane alongside the terminologist's bindings, then clinical SME validation gates assembly of the DAK.">
+</div>
+
+[BPMN 2.0 source](workflows/l2-dak-authoring.bpmn) · [full-size SVG](assets/img/workflows/l2-dak-authoring.svg)
+{: .bpmn-source }
+
+
 ---
 
 ## WHO SMART Implementation Guides (L3)
@@ -124,12 +142,13 @@ Relevant skill schemas:
 [`ig-publication`](reference/skills/ig-publication.html),
 [`quality-control`](reference/skills/quality-control.html).
 
-```mermaid
-flowchart LR
-    G[WHO guideline] --> L2[L2 DAK<br/>BPMN · DMN · data dict]
-    L2 --> L3[L3 FHIR IG<br/>FSH · profiles · IG Publisher]
-    L3 --> Pub[Published IG site]
-```
+<div class="bpmn-figure">
+  <img src="assets/img/workflows/l3-fhir-pipeline.svg"
+       alt="BPMN swimlane diagram of the L3 pipeline: map L2 to L3, author FSH, SUSHI compile, validate against profiles with a loop back to FSH on failure, QC gates that file findings as beans, IG Publisher build, and publication of the IG site.">
+</div>
+
+[BPMN 2.0 source](workflows/l3-fhir-pipeline.bpmn) · [full-size SVG](assets/img/workflows/l3-fhir-pipeline.svg)
+{: .bpmn-source }
 
 ---
 

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.
+
+  Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+  BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+  by `bun run render:bpmn` — never hand-edit the SVG.
+
+  The <folio:skill> extension on an activity names the folio-assistant skill
+  that implements it; <folio:bean> marks a step that reads or writes the shared
+  work plan in .beans/.
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  id="Definitions_L2Dak"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+
+  <bpmn:collaboration id="Collaboration_L2Dak">
+    <bpmn:participant id="Participant_L2Dak" name="WHO SMART Guidelines — authoring the L2 DAK" processRef="Process_L2Dak" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_L2Dak" name="L2 DAK authoring" isExecutable="false">
+    <bpmn:laneSet id="Process_L2Dak_LaneSet">
+      <bpmn:lane id="Lane_Programme" name="Programme manager / technical officer">
+        <bpmn:flowNodeRef>StartEvent_Guideline</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ScopeDak</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
+        <bpmn:flowNodeRef>Task_SeedBeans</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Analyst" name="Business analyst">
+        <bpmn:flowNodeRef>Gateway_AuthorMerge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_AuthorFork</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Personas</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Bpmn</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Dmn</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_DataDict</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Indicators</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_AuthorJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AssembleDak</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_L2Ready</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Terminologist" name="Terminologist">
+        <bpmn:flowNodeRef>Task_Terminology</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Sme" name="Clinical SME">
+        <bpmn:flowNodeRef>Task_SmeValidate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Accurate</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_Guideline" name="WHO guideline / recommendations">
+      <bpmn:outgoing>B01</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Task_ScopeDak" name="Scope the DAK&#10;[content-plan]">
+      <bpmn:documentation>Enumerate the processes, decisions and data elements the guideline implies; identify the actors.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-plan" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>B01</bpmn:incoming>
+      <bpmn:outgoing>B02</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:task id="Task_SeedBeans" name="Seed the work plan&#10;[todo-manager]">
+      <bpmn:extensionElements>
+        <folio:skill ref="todo-manager" />
+        <folio:bean store=".beans/" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>B02</bpmn:incoming>
+      <bpmn:outgoing>B03</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_AuthorMerge" name="">
+      <bpmn:incoming>B03</bpmn:incoming>
+      <bpmn:incoming>B19</bpmn:incoming>
+      <bpmn:outgoing>B04</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:parallelGateway id="Gateway_AuthorFork" name="">
+      <bpmn:incoming>B04</bpmn:incoming>
+      <bpmn:outgoing>B05</bpmn:outgoing>
+      <bpmn:outgoing>B06</bpmn:outgoing>
+      <bpmn:outgoing>B08</bpmn:outgoing>
+      <bpmn:outgoing>B09</bpmn:outgoing>
+      <bpmn:outgoing>B10</bpmn:outgoing>
+      <bpmn:outgoing>B07</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:serviceTask id="Task_Personas" name="Personas and scenarios&#10;[l2-dak-authoring]">
+      <bpmn:extensionElements>
+        <folio:skill ref="l2-dak-authoring" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>B05</bpmn:incoming>
+      <bpmn:outgoing>B11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Bpmn" name="Business processes · BPMN 2.0&#10;[bpmn-authoring]">
+      <bpmn:extensionElements>
+        <folio:skill ref="bpmn-authoring" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>B06</bpmn:incoming>
+      <bpmn:outgoing>B12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Dmn" name="Decision logic · DMN tables&#10;[dmn-authoring]">
+      <bpmn:extensionElements>
+        <folio:skill ref="dmn-authoring" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>B07</bpmn:incoming>
+      <bpmn:outgoing>B13</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_DataDict" name="Data dictionary and core data elements&#10;[l2-dak-authoring]">
+      <bpmn:extensionElements>
+        <folio:skill ref="l2-dak-authoring" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>B08</bpmn:incoming>
+      <bpmn:outgoing>B14</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Indicators" name="Indicators and requirements&#10;[l2-dak-authoring]">
+      <bpmn:extensionElements>
+        <folio:skill ref="l2-dak-authoring" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>B09</bpmn:incoming>
+      <bpmn:outgoing>B15</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Terminology" name="Terminology bindings&#10;[terminology-management]">
+      <bpmn:documentation>ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="terminology-management" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>B10</bpmn:incoming>
+      <bpmn:outgoing>B16</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:parallelGateway id="Gateway_AuthorJoin" name="">
+      <bpmn:incoming>B11</bpmn:incoming>
+      <bpmn:incoming>B12</bpmn:incoming>
+      <bpmn:incoming>B14</bpmn:incoming>
+      <bpmn:incoming>B15</bpmn:incoming>
+      <bpmn:incoming>B16</bpmn:incoming>
+      <bpmn:incoming>B13</bpmn:incoming>
+      <bpmn:outgoing>B17</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:userTask id="Task_SmeValidate" name="Clinical validation&#10;[content-review]">
+      <bpmn:documentation>Ground truth: does the DAK say what the guideline says?</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-review" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>B17</bpmn:incoming>
+      <bpmn:outgoing>B18</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_Accurate" name="Clinically accurate?">
+      <bpmn:incoming>B18</bpmn:incoming>
+      <bpmn:outgoing>B19</bpmn:outgoing>
+      <bpmn:outgoing>B20</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_AssembleDak" name="Assemble and validate the DAK&#10;[content-validate]">
+      <bpmn:extensionElements>
+        <folio:skill ref="content-validate" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>B20</bpmn:incoming>
+      <bpmn:outgoing>B21</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_L2Ready" name="L2 DAK ready for L3">
+      <bpmn:incoming>B21</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="B01" sourceRef="StartEvent_Guideline" targetRef="Task_ScopeDak" />
+    <bpmn:sequenceFlow id="B02" sourceRef="Task_ScopeDak" targetRef="Task_SeedBeans" />
+    <bpmn:sequenceFlow id="B03" sourceRef="Task_SeedBeans" targetRef="Gateway_AuthorMerge" />
+    <bpmn:sequenceFlow id="B04" sourceRef="Gateway_AuthorMerge" targetRef="Gateway_AuthorFork" />
+    <bpmn:sequenceFlow id="B05" sourceRef="Gateway_AuthorFork" targetRef="Task_Personas" />
+    <bpmn:sequenceFlow id="B06" sourceRef="Gateway_AuthorFork" targetRef="Task_Bpmn" />
+    <bpmn:sequenceFlow id="B08" sourceRef="Gateway_AuthorFork" targetRef="Task_DataDict" />
+    <bpmn:sequenceFlow id="B09" sourceRef="Gateway_AuthorFork" targetRef="Task_Indicators" />
+    <bpmn:sequenceFlow id="B10" sourceRef="Gateway_AuthorFork" targetRef="Task_Terminology" />
+    <bpmn:sequenceFlow id="B07" sourceRef="Gateway_AuthorFork" targetRef="Task_Dmn" />
+    <bpmn:sequenceFlow id="B11" sourceRef="Task_Personas" targetRef="Gateway_AuthorJoin" />
+    <bpmn:sequenceFlow id="B12" sourceRef="Task_Bpmn" targetRef="Gateway_AuthorJoin" />
+    <bpmn:sequenceFlow id="B14" sourceRef="Task_DataDict" targetRef="Gateway_AuthorJoin" />
+    <bpmn:sequenceFlow id="B15" sourceRef="Task_Indicators" targetRef="Gateway_AuthorJoin" />
+    <bpmn:sequenceFlow id="B16" sourceRef="Task_Terminology" targetRef="Gateway_AuthorJoin" />
+    <bpmn:sequenceFlow id="B13" sourceRef="Task_Dmn" targetRef="Gateway_AuthorJoin" />
+    <bpmn:sequenceFlow id="B17" sourceRef="Gateway_AuthorJoin" targetRef="Task_SmeValidate" />
+    <bpmn:sequenceFlow id="B18" sourceRef="Task_SmeValidate" targetRef="Gateway_Accurate" />
+    <bpmn:sequenceFlow id="B19" name="changes needed" sourceRef="Gateway_Accurate" targetRef="Gateway_AuthorMerge" />
+    <bpmn:sequenceFlow id="B20" name="validated" sourceRef="Gateway_Accurate" targetRef="Task_AssembleDak" />
+    <bpmn:sequenceFlow id="B21" sourceRef="Task_AssembleDak" targetRef="EndEvent_L2Ready" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_L2Dak">
+      <bpmndi:BPMNShape id="Participant_L2Dak_di" bpmnElement="Participant_L2Dak" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1820" height="1150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Programme_di" bpmnElement="Lane_Programme" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1790" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_WorkPlan_di" bpmnElement="Lane_WorkPlan" isHorizontal="true">
+        <dc:Bounds x="190" y="230" width="1790" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Analyst_di" bpmnElement="Lane_Analyst" isHorizontal="true">
+        <dc:Bounds x="190" y="380" width="1790" height="550" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Terminologist_di" bpmnElement="Lane_Terminologist" isHorizontal="true">
+        <dc:Bounds x="190" y="930" width="1790" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Sme_di" bpmnElement="Lane_Sme" isHorizontal="true">
+        <dc:Bounds x="190" y="1080" width="1790" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_Guideline_di" bpmnElement="StartEvent_Guideline">
+        <dc:Bounds x="262" y="137" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="225" y="177" width="110" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ScopeDak_di" bpmnElement="Task_ScopeDak">
+        <dc:Bounds x="375" y="110" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SeedBeans_di" bpmnElement="Task_SeedBeans">
+        <dc:Bounds x="535" y="260" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_AuthorMerge_di" bpmnElement="Gateway_AuthorMerge" isMarkerVisible="true">
+        <dc:Bounds x="735" y="630" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_AuthorFork_di" bpmnElement="Gateway_AuthorFork">
+        <dc:Bounds x="895" y="630" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Personas_di" bpmnElement="Task_Personas">
+        <dc:Bounds x="1015" y="390" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Bpmn_di" bpmnElement="Task_Bpmn">
+        <dc:Bounds x="1015" y="500" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Dmn_di" bpmnElement="Task_Dmn">
+        <dc:Bounds x="1015" y="610" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_DataDict_di" bpmnElement="Task_DataDict">
+        <dc:Bounds x="1015" y="720" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Indicators_di" bpmnElement="Task_Indicators">
+        <dc:Bounds x="1015" y="830" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Terminology_di" bpmnElement="Task_Terminology">
+        <dc:Bounds x="1015" y="960" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_AuthorJoin_di" bpmnElement="Gateway_AuthorJoin">
+        <dc:Bounds x="1215" y="630" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SmeValidate_di" bpmnElement="Task_SmeValidate">
+        <dc:Bounds x="1335" y="1110" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Accurate_di" bpmnElement="Gateway_Accurate" isMarkerVisible="true">
+        <dc:Bounds x="1535" y="1130" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1495" y="1184" width="130" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AssembleDak_di" bpmnElement="Task_AssembleDak">
+        <dc:Bounds x="1655" y="610" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_L2Ready_di" bpmnElement="EndEvent_L2Ready">
+        <dc:Bounds x="1862" y="637" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1825" y="677" width="110" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="B01_di" bpmnElement="B01">
+        <di:waypoint x="298" y="155" />
+        <di:waypoint x="375" y="155" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B02_di" bpmnElement="B02">
+        <di:waypoint x="505" y="155" />
+        <di:waypoint x="600" y="155" />
+        <di:waypoint x="600" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B03_di" bpmnElement="B03">
+        <di:waypoint x="665" y="305" />
+        <di:waypoint x="775" y="305" />
+        <di:waypoint x="775" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B04_di" bpmnElement="B04">
+        <di:waypoint x="785" y="655" />
+        <di:waypoint x="895" y="655" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B05_di" bpmnElement="B05">
+        <di:waypoint x="920" y="630" />
+        <di:waypoint x="920" y="435" />
+        <di:waypoint x="1015" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B06_di" bpmnElement="B06">
+        <di:waypoint x="920" y="630" />
+        <di:waypoint x="920" y="545" />
+        <di:waypoint x="1015" y="545" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B08_di" bpmnElement="B08">
+        <di:waypoint x="920" y="680" />
+        <di:waypoint x="920" y="765" />
+        <di:waypoint x="1015" y="765" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B09_di" bpmnElement="B09">
+        <di:waypoint x="920" y="680" />
+        <di:waypoint x="920" y="875" />
+        <di:waypoint x="1015" y="875" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B10_di" bpmnElement="B10">
+        <di:waypoint x="920" y="680" />
+        <di:waypoint x="920" y="1005" />
+        <di:waypoint x="1015" y="1005" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B07_di" bpmnElement="B07">
+        <di:waypoint x="945" y="655" />
+        <di:waypoint x="1015" y="655" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B11_di" bpmnElement="B11">
+        <di:waypoint x="1145" y="435" />
+        <di:waypoint x="1240" y="435" />
+        <di:waypoint x="1240" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B12_di" bpmnElement="B12">
+        <di:waypoint x="1145" y="545" />
+        <di:waypoint x="1240" y="545" />
+        <di:waypoint x="1240" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B14_di" bpmnElement="B14">
+        <di:waypoint x="1145" y="765" />
+        <di:waypoint x="1240" y="765" />
+        <di:waypoint x="1240" y="680" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B15_di" bpmnElement="B15">
+        <di:waypoint x="1145" y="875" />
+        <di:waypoint x="1240" y="875" />
+        <di:waypoint x="1240" y="680" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B16_di" bpmnElement="B16">
+        <di:waypoint x="1145" y="1005" />
+        <di:waypoint x="1240" y="1005" />
+        <di:waypoint x="1240" y="680" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B13_di" bpmnElement="B13">
+        <di:waypoint x="1145" y="655" />
+        <di:waypoint x="1215" y="655" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B17_di" bpmnElement="B17">
+        <di:waypoint x="1265" y="655" />
+        <di:waypoint x="1400" y="655" />
+        <di:waypoint x="1400" y="1110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B18_di" bpmnElement="B18">
+        <di:waypoint x="1465" y="1155" />
+        <di:waypoint x="1535" y="1155" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B19_di" bpmnElement="B19">
+        <di:waypoint x="1560" y="1130" />
+        <di:waypoint x="1560" y="600" />
+        <di:waypoint x="745" y="600" />
+        <di:waypoint x="745" y="630" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1300" y="568" width="110" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B20_di" bpmnElement="B20">
+        <di:waypoint x="1585" y="1155" />
+        <di:waypoint x="1720" y="1155" />
+        <di:waypoint x="1720" y="700" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1600" y="1122" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B21_di" bpmnElement="B21">
+        <di:waypoint x="1785" y="655" />
+        <di:waypoint x="1862" y="655" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

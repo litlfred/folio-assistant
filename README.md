@@ -55,6 +55,55 @@ flowchart LR
 
 ---
 
+## How a change gets published
+
+The editing and publication processes are modelled as **BPMN 2.0 swimlane
+diagrams**. Sources live in [`docs/workflows/`](docs/workflows) — open them in
+[bpmn.io](https://demo.bpmn.io/) or Camunda Modeler; the SVGs below are
+generated from them by `bun run render:bpmn`.
+
+Full walk-through, with the roles and the skill each activity uses:
+**[Publication workflow](https://litlfred.github.io/folio-assistant/publication-workflow.html)**.
+
+### One proposed change to one content block — the HCI validation gate
+
+An authoring agent produces a **proposed** change, never a commit. It fans out
+through **mechanical** validation (schema, syntax, spelling, links, build and QA
+gates) and **non-mechanical** validation (a review agent, escalating to a human
+or SME on a judgement call). Both must report; the findings are shown to the
+editor; only an accepted change is written to the corpus.
+
+<img src="docs/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
+
+[BPMN source](docs/workflows/editing-hci-validation.bpmn)
+
+### Corpus → draft → review team → published
+
+<img src="docs/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
+
+[BPMN source](docs/workflows/draft-to-publication.bpmn)
+
+### One cycle of a folio, plan → retire
+
+Both diagrams above appear here as call activities, and the **work plan
+(beans)** lane runs through all three — claimed before work starts, updated with
+findings, resolved on commit — so a human and an agent read the same answer to
+*what is done, and what is next*.
+
+<img src="docs/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
+
+[BPMN source](docs/workflows/content-lifecycle.bpmn)
+
+### Per content type
+
+| Diagram | Content type |
+|---------|--------------|
+| [`authoring-a-paper.bpmn`](docs/workflows/authoring-a-paper.bpmn) · [SVG](docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
+| [`l2-dak-authoring.bpmn`](docs/workflows/l2-dak-authoring.bpmn) · [SVG](docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
+| [`l3-fhir-pipeline.bpmn`](docs/workflows/l3-fhir-pipeline.bpmn) · [SVG](docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
+
+---
+
 ## Quick start
 
 ```sh

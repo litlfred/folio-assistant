@@ -161,6 +161,10 @@ Roles answer *who the agent is acting as*. The current user is mapped to a role
 by `role-assignments.json`, and the role's capabilities bound what the agent may
 do (RBAC). Roles **inherit** (e.g. `author` inherits `reviewer`).
 
+> To see these roles *as lanes* — who edits, who reviews, who signs off, and
+> which steps an agent may take on its own — read
+> [Publication workflow → Who is who](publication-workflow.html#who-is-who).
+
 ```mermaid
 flowchart LR
     viewer --> reviewer --> author --> admin
@@ -187,10 +191,16 @@ flowchart LR
 
 ### System actors
 
-| Actor | Provides |
-|-------|----------|
-| `lean-mcp` | Lean 4 proof checking & diagnostics via MCP |
-| `ig-publisher-service` | FHIR IG Publisher build & QA reporting |
+| Actor | Provides | Cannot |
+|-------|----------|--------|
+| `authoring-agent` | Drafts and revises a **proposed** change to a content block | Commit — its output goes to the editor through the validation gate |
+| `review-agent` | Non-mechanical validation: accuracy, voice, exposition | Approve — it reports findings only |
+| `lean-mcp` | Lean 4 proof checking & diagnostics via MCP | — |
+| `ig-publisher-service` | FHIR IG Publisher build & QA reporting | — |
+
+Where each of these sits in the process — and what an agent may and may not
+decide — is modelled in the
+[publication workflow](publication-workflow.html) BPMN diagrams.
 
 ### Role assignment
 
@@ -223,6 +233,7 @@ by priority. The shipped defaults:
 
 ## See also
 
+- [Publication workflow](publication-workflow.html) — BPMN swimlanes: which skill runs at which step, and who decides
 - [Skill instructions](reference/skill-instructions/) — the prose how-to bodies the LLM loads
 - [Skill schema reference](reference/skills/) — typed input/output for each skill
 - [Content types](content-types.html) — which skills each content type uses

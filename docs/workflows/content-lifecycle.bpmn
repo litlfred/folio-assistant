@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  folio-assistant — the content lifecycle end to end, one cycle of a folio.
+
+  Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+  BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+  by `bun run render:bpmn` — never hand-edit the SVG.
+
+  The <folio:skill> extension on an activity names the folio-assistant skill
+  that implements it; <folio:bean> marks a step that reads or writes the shared
+  work plan in .beans/.
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  id="Definitions_FolioLifecycle"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+
+  <bpmn:import namespace="https://litlfred.github.io/folio-assistant/workflows" location="editing-hci-validation.bpmn" importType="http://www.omg.org/spec/BPMN/20100524/MODEL" />
+  <bpmn:import namespace="https://litlfred.github.io/folio-assistant/workflows" location="draft-to-publication.bpmn" importType="http://www.omg.org/spec/BPMN/20100524/MODEL" />
+  <bpmn:collaboration id="Collaboration_FolioLifecycle">
+    <bpmn:participant id="Participant_FolioLifecycle" name="Folio lifecycle — one cycle, plan to retire" processRef="Process_Lifecycle" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Lifecycle" name="Content lifecycle" isExecutable="false">
+    <bpmn:laneSet id="Process_Lifecycle_LaneSet">
+      <bpmn:lane id="Lane_ProgMgr" name="Programme manager">
+        <bpmn:flowNodeRef>StartEvent_Initiative</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Plan</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_NextCycle</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Retire</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_Retired</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
+        <bpmn:flowNodeRef>Task_SeedBeans</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_FeedbackBeans</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Editors" name="Editors + authoring agents">
+        <bpmn:flowNodeRef>CallActivity_Editing</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Qa" name="Validation and QA (mechanical + agents)">
+        <bpmn:flowNodeRef>Task_Test</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Review" name="Review team and SMEs">
+        <bpmn:flowNodeRef>Task_Feedback</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_PubMgr" name="Publication manager">
+        <bpmn:flowNodeRef>CallActivity_Publication</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_Initiative" name="Folio initiative">
+      <bpmn:outgoing>H01</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Task_Plan" name="Plan scope, team, artifacts&#10;[content-plan]">
+      <bpmn:documentation>Scope the work, identify artifacts and actors, form the team, set the timeline.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-plan" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>H01</bpmn:incoming>
+      <bpmn:outgoing>H02</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:task id="Task_SeedBeans" name="Seed the work plan&#10;[todo-manager]">
+      <bpmn:documentation>The plan becomes beans. From here on, .beans/ is the shared answer to &#x27;what is done, what is next&#x27; — for humans and agents alike.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="todo-manager" />
+        <folio:bean store=".beans/" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>H02</bpmn:incoming>
+      <bpmn:outgoing>H03</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:callActivity id="CallActivity_Editing" name="Editing and HCI validation&#10;[content-author]" calledElement="Process_Editing">
+      <bpmn:documentation>See editing-hci-validation.bpmn. Runs once per proposed change, not once per cycle.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-author" />
+        <folio:skill ref="content-validate" />
+        <folio:skill ref="content-review" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>H03</bpmn:incoming>
+      <bpmn:incoming>H09</bpmn:incoming>
+      <bpmn:outgoing>H04</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:serviceTask id="Task_Test" name="Integration test and QA sweep&#10;[content-test]">
+      <bpmn:documentation>Corpus-wide checks that a single-block gate cannot make: cross-references, build green, proof status, QA axes across the whole folio.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-test" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>H04</bpmn:incoming>
+      <bpmn:outgoing>H05</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:callActivity id="CallActivity_Publication" name="Draft, review and publish&#10;[content-publish]" calledElement="Process_Publication">
+      <bpmn:documentation>See draft-to-publication.bpmn.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-review" />
+        <folio:skill ref="content-publish" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>H05</bpmn:incoming>
+      <bpmn:outgoing>H06</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:userTask id="Task_Feedback" name="Triage published feedback&#10;[content-feedback]">
+      <bpmn:documentation>Implementer and reader feedback on the published folio, triaged by severity and scope.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-feedback" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>H06</bpmn:incoming>
+      <bpmn:outgoing>H07</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:task id="Task_FeedbackBeans" name="File feedback as beans&#10;[todo-manager]">
+      <bpmn:documentation>Triaged feedback re-enters the work plan as beans, which is how the next cycle knows what it is for.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="todo-manager" />
+        <folio:skill ref="content-feedback" />
+        <folio:bean store=".beans/" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>H07</bpmn:incoming>
+      <bpmn:outgoing>H08</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_NextCycle" name="More content?">
+      <bpmn:incoming>H08</bpmn:incoming>
+      <bpmn:outgoing>H09</bpmn:outgoing>
+      <bpmn:outgoing>H10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_Retire" name="Retire or archive&#10;[content-retire]">
+      <bpmn:extensionElements>
+        <folio:skill ref="content-retire" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>H10</bpmn:incoming>
+      <bpmn:outgoing>H11</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_Retired" name="Folio retired">
+      <bpmn:incoming>H11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="H01" sourceRef="StartEvent_Initiative" targetRef="Task_Plan" />
+    <bpmn:sequenceFlow id="H02" sourceRef="Task_Plan" targetRef="Task_SeedBeans" />
+    <bpmn:sequenceFlow id="H03" sourceRef="Task_SeedBeans" targetRef="CallActivity_Editing" />
+    <bpmn:sequenceFlow id="H04" sourceRef="CallActivity_Editing" targetRef="Task_Test" />
+    <bpmn:sequenceFlow id="H05" sourceRef="Task_Test" targetRef="CallActivity_Publication" />
+    <bpmn:sequenceFlow id="H06" sourceRef="CallActivity_Publication" targetRef="Task_Feedback" />
+    <bpmn:sequenceFlow id="H07" sourceRef="Task_Feedback" targetRef="Task_FeedbackBeans" />
+    <bpmn:sequenceFlow id="H08" sourceRef="Task_FeedbackBeans" targetRef="Gateway_NextCycle" />
+    <bpmn:sequenceFlow id="H09" name="yes" sourceRef="Gateway_NextCycle" targetRef="CallActivity_Editing" />
+    <bpmn:sequenceFlow id="H10" name="no" sourceRef="Gateway_NextCycle" targetRef="Task_Retire" />
+    <bpmn:sequenceFlow id="H11" sourceRef="Task_Retire" targetRef="EndEvent_Retired" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_FolioLifecycle">
+      <bpmndi:BPMNShape id="Participant_FolioLifecycle_di" bpmnElement="Participant_FolioLifecycle" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1840" height="900" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_ProgMgr_di" bpmnElement="Lane_ProgMgr" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1810" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_WorkPlan_di" bpmnElement="Lane_WorkPlan" isHorizontal="true">
+        <dc:Bounds x="190" y="230" width="1810" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Editors_di" bpmnElement="Lane_Editors" isHorizontal="true">
+        <dc:Bounds x="190" y="380" width="1810" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Qa_di" bpmnElement="Lane_Qa" isHorizontal="true">
+        <dc:Bounds x="190" y="530" width="1810" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Review_di" bpmnElement="Lane_Review" isHorizontal="true">
+        <dc:Bounds x="190" y="680" width="1810" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_PubMgr_di" bpmnElement="Lane_PubMgr" isHorizontal="true">
+        <dc:Bounds x="190" y="830" width="1810" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_Initiative_di" bpmnElement="StartEvent_Initiative">
+        <dc:Bounds x="262" y="137" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="225" y="177" width="110" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Plan_di" bpmnElement="Task_Plan">
+        <dc:Bounds x="375" y="110" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SeedBeans_di" bpmnElement="Task_SeedBeans">
+        <dc:Bounds x="535" y="260" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_Editing_di" bpmnElement="CallActivity_Editing">
+        <dc:Bounds x="695" y="410" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Test_di" bpmnElement="Task_Test">
+        <dc:Bounds x="855" y="560" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_Publication_di" bpmnElement="CallActivity_Publication">
+        <dc:Bounds x="1015" y="860" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Feedback_di" bpmnElement="Task_Feedback">
+        <dc:Bounds x="1175" y="710" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_FeedbackBeans_di" bpmnElement="Task_FeedbackBeans">
+        <dc:Bounds x="1335" y="260" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_NextCycle_di" bpmnElement="Gateway_NextCycle" isMarkerVisible="true">
+        <dc:Bounds x="1535" y="130" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1512" y="92" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Retire_di" bpmnElement="Task_Retire">
+        <dc:Bounds x="1655" y="110" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Retired_di" bpmnElement="EndEvent_Retired">
+        <dc:Bounds x="1862" y="137" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1825" y="177" width="110" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="H01_di" bpmnElement="H01">
+        <di:waypoint x="298" y="155" />
+        <di:waypoint x="375" y="155" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="H02_di" bpmnElement="H02">
+        <di:waypoint x="505" y="155" />
+        <di:waypoint x="600" y="155" />
+        <di:waypoint x="600" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="H03_di" bpmnElement="H03">
+        <di:waypoint x="665" y="305" />
+        <di:waypoint x="760" y="305" />
+        <di:waypoint x="760" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="H04_di" bpmnElement="H04">
+        <di:waypoint x="825" y="455" />
+        <di:waypoint x="920" y="455" />
+        <di:waypoint x="920" y="560" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="H05_di" bpmnElement="H05">
+        <di:waypoint x="985" y="605" />
+        <di:waypoint x="1080" y="605" />
+        <di:waypoint x="1080" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="H06_di" bpmnElement="H06">
+        <di:waypoint x="1145" y="905" />
+        <di:waypoint x="1240" y="905" />
+        <di:waypoint x="1240" y="800" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="H07_di" bpmnElement="H07">
+        <di:waypoint x="1305" y="755" />
+        <di:waypoint x="1400" y="755" />
+        <di:waypoint x="1400" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="H08_di" bpmnElement="H08">
+        <di:waypoint x="1465" y="305" />
+        <di:waypoint x="1560" y="305" />
+        <di:waypoint x="1560" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="H09_di" bpmnElement="H09">
+        <di:waypoint x="1535" y="155" />
+        <di:waypoint x="1500" y="155" />
+        <di:waypoint x="1500" y="100" />
+        <di:waypoint x="790" y="100" />
+        <di:waypoint x="790" y="410" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1506" y="158" width="25" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="H10_di" bpmnElement="H10">
+        <di:waypoint x="1585" y="155" />
+        <di:waypoint x="1655" y="155" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1592" y="122" width="25" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="H11_di" bpmnElement="H11">
+        <di:waypoint x="1785" y="155" />
+        <di:waypoint x="1862" y="155" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
