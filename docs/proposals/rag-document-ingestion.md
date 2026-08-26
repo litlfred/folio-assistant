@@ -803,3 +803,55 @@ out.
   Work/Expression/Manifestation pattern.
 - **Emit real RDF, or JSON-LD-shaped JSON?** The latter is cheaper, stays
   greppable, and fits a 2 vCPU host. Nothing here forecloses the former.
+
+### 12.7 The MCP read side
+
+§1 recorded that retrieval is `grep` plus an agent reading a whole PDF, and
+that the MCP server's `/api/relevance/*` routes present the ledger without
+searching it. There was a sharper version of that gap: **MCP was write-only
+toward ingestion.** It creates `uploads/<id>/` on import and `get_imports`
+lists what was imported, but nothing ever read a `structure.json`, a
+`sections/*.md`, or a candidate. The 24.7 M extracted characters were
+reachable by `grep` and by nothing else.
+
+`content/pipeline/graph-index.ts` closes it, and is the first thing that
+actually spends the `.jsonld` decision. One directory walk over both roots
+yields one node map plus **reverse adjacency**, and three tools sit on it:
+
+| Tool | Answers |
+|---|---|
+| `search_graph` | "does anything — authored *or* ingested — mention this?" Metadata by default; companion Markdown on request |
+| `get_neighbors` | `out`: what must a reader have read first. `in`: **what breaks if this changes** — not otherwise available without a full corpus scan |
+| `get_graph_stats` | node/edge counts by provenance and kind, and whether each root exists |
+
+Three properties are deliberate rather than incidental:
+
+- **Honest emptiness.** An absent root reports `present: false`, not zero
+  matches. While the ingest writer is unbuilt, a caller must be able to tell
+  "that population has not been written yet" from "nothing matched" — the §5
+  contract's `n/a`-never-a-false-pass rule applied to retrieval.
+- **No silent truncation.** `totalMatches`, `textScanTruncated` and
+  `truncated` are all reported. A capped result that looks complete is worse
+  than one that says it was capped.
+- **A colliding `@id` is a finding.** Two nodes claiming one IRI is recorded
+  in `malformed` rather than resolved by picking a winner.
+
+This is not a vector store and does not want to be one yet. §10 Stage 4 still
+holds: index once the extractions are known good. What lands here is the
+graph-expansion layer an embedding index would sit *under* — a hit returns a
+node plus its neighbourhood, which is what an agent needs, and it reads the
+same files an embedding pass would.
+
+`content-graph.ts` remains authoritative for the authored editorial + formal
+graph: it imports manifests, and that import is a validation step. This index
+reads the published projection instead — cheaper, and it spans ingested
+documents that `content-graph.ts` cannot see. The CI drift gate is what makes
+trusting both at once sound.
+
+Runnable without an MCP client:
+
+```sh
+bun run content/pipeline/graph-index.ts --stats
+bun run content/pipeline/graph-index.ts --search "torsion" --text
+bun run content/pipeline/graph-index.ts --neighbors thm:main --in --hops 2
+```

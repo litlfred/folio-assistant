@@ -380,3 +380,58 @@ export const CONTENT_CONTEXT = {
 export const KINDS_WITHOUT_DOCO_TYPE = BLOCK_KINDS.filter(
   (k) => !BLOCK_KIND_TO_DOCO_TYPE[k],
 );
+
+// ── Graph edges ──────────────────────────────────────────────────
+
+/**
+ * Context terms that are **graph edges** — a reference from one node to
+ * another that a traversal should follow.
+ *
+ * Not simply "every term typed `@id`": `text` and `leanSource` are also
+ * `@id`-typed, but they point at companion *files* rather than at nodes.
+ * Following them would put a Markdown file in the middle of a dependency
+ * path. So the list is explicit, and `assertEdgeTermsAreIdTyped` guards it
+ * against typos and against a term losing its `@id` typing in the context.
+ */
+export const GRAPH_EDGE_TERMS = [
+  "uses",
+  "interprets",
+  "foreshadows",
+  "proofs",
+  "examples",
+  "cites",
+  "contains",
+  "refs",
+  "derivedFrom",
+  "sourceDocument",
+] as const;
+
+export type GraphEdgeTerm = (typeof GRAPH_EDGE_TERMS)[number];
+
+/** Terms that point at companion files, deliberately excluded from traversal. */
+export const FILE_LINK_TERMS = ["text", "leanSource"] as const;
+
+/**
+ * Throws if a graph edge term is missing from the context or is not
+ * `@id`-typed there — which would mean the emitter writes a plain string
+ * where a traversal expects a node reference.
+ */
+export function assertEdgeTermsAreIdTyped(): void {
+  const ctx = CONTENT_CONTEXT as Record<string, unknown>;
+  const bad: string[] = [];
+  for (const term of GRAPH_EDGE_TERMS) {
+    const def = ctx[term];
+    if (!def || typeof def !== "object" || (def as Record<string, unknown>)["@type"] !== "@id") {
+      bad.push(term);
+    }
+  }
+  if (bad.length) {
+    throw new Error(
+      `GRAPH_EDGE_TERMS entries missing or not "@id"-typed in CONTENT_CONTEXT: ${bad.join(", ")}`,
+    );
+  }
+  const overlap = FILE_LINK_TERMS.filter((t) => (GRAPH_EDGE_TERMS as readonly string[]).includes(t));
+  if (overlap.length) {
+    throw new Error(`file-link terms must not be traversed as edges: ${overlap.join(", ")}`);
+  }
+}

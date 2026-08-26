@@ -27,6 +27,16 @@ export const REPO_ROOT = findContentRepoRoot();
 /** Content objects directory. */
 export const CONTENT_DIR = resolve(REPO_ROOT, "content");
 
+/**
+ * Ingested documents directory — the `.jsonld` nodes and `sections/*.md` that
+ * `docs/proposals/rag-document-ingestion.md` §7-bis specifies.
+ *
+ * May not exist. That is not an error: the ingest writer is a separate stage,
+ * and the graph index reports an absent root as absent rather than as an
+ * empty one, so a caller can tell "not built yet" from "nothing matched".
+ */
+export const LIBRARY_DIR = resolve(REPO_ROOT, "library");
+
 /** LaTeX chapters output directory. */
 export const CHAPTERS_DIR = resolve(REPO_ROOT, "chapters");
 

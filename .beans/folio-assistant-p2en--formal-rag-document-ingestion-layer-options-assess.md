@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T14:30:00Z
+updated_at: 2026-08-26T15:40:00Z
 ---
 
 
@@ -132,3 +132,39 @@ two test files (30 tests), `.github/workflows/jsonld-gen-check.yml`.
 Still open: ingest node granularity (section-level vs every theorem/figure/
 table as its own file) — affects only the ingest writer; `@id` rename policy
 once anything annotates a block; whether to emit real RDF.
+
+## MCP read side landed (§12.7)
+
+The sharper form of the §1 retrieval gap: MCP was **write-only toward
+ingestion**. It creates `uploads/<id>/` on import and `get_imports` lists what
+was imported, but nothing ever read a `structure.json`, a `sections/*.md` or a
+candidate. 24.7M extracted chars reachable by grep and nothing else.
+
+`content/pipeline/graph-index.ts` is the first thing that spends the `.jsonld`
+decision: one directory walk over `content/` + `library/` yields one node map
+plus **reverse adjacency**. Three MCP tools on it — `search_graph`,
+`get_neighbors`, `get_graph_stats`.
+
+`get_neighbors --in` is the one nothing else provides: "what breaks if this
+changes?" today needs a full corpus scan.
+
+Three properties held deliberately: absent root reports `present: false` (not
+zero matches) so "not built yet" is distinguishable from "nothing matched";
+every cap reports itself (`totalMatches`, `textScanTruncated`, `truncated`);
+a colliding `@id` is recorded in `malformed` rather than resolved by picking
+a winner.
+
+`content-graph.ts` stays authoritative for authored content — it imports
+manifests and that import is a validation step. The index reads the published
+projection instead, which is cheaper and spans ingested docs. The CI drift
+gate is what makes trusting both at once sound.
+
+Also runnable without an MCP client:
+`bun run content/pipeline/graph-index.ts --stats|--search|--neighbors`.
+
+773 pass / 0 fail, typecheck + lint clean. Real run in folio-assistant
+correctly reports content present/0 nodes, library absent.
+
+**Not verified:** the three MCP tool handlers are typechecked but not
+exercised by a test — no test drives the server's request path. And no run
+against a real corpus has happened; the folio repo is where that has to occur.

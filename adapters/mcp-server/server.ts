@@ -39,7 +39,15 @@ import { registerPreviewTools } from "./tools/preview.js";
 import { registerPreferenceTools } from "./tools/preferences.js";
 import { registerLeanTools } from "./tools/lean.js";
 import { registerDepsTools } from "./tools/check-deps.js";
-import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT } from "./paths.js";
+import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT, LIBRARY_DIR } from "./paths.js";
+import {
+  loadGraphIndex,
+  searchGraph,
+  neighbors,
+  graphStats,
+  type GraphIndex,
+} from "../../content/pipeline/graph-index.js";
+import { GRAPH_EDGE_TERMS, type GraphEdgeTerm } from "../../schemas/jsonld.js";
 import {
   currentBranch, listBranches, fetchOrigin, isCurrentBranch,
   readFileBranch, fileExistsBranch, importTsBranch, listDirBranch,
@@ -273,6 +281,34 @@ function listAllFeedback(status?: string): { paperId: string; rootName: string; 
 // ── Content resolution (dynamic, no static JSON) ────────────────
 
 const CONTENT_DIR = resolve(REPO_ROOT, "content");
+
+/**
+ * Cached JSON-LD graph index over `content/` and `library/`.
+ *
+ * Built lazily and reused, because a walk of every `.jsonld` on each tool call
+ * would dominate the response time on a real corpus. The cache is therefore
+ * *stale by design* between edits, which is fine for the read-only queries
+ * these three tools serve and wrong for anything that must reflect an
+ * in-flight edit — so `get_graph_stats` takes an explicit `refresh`, and any
+ * future write path must call `invalidateGraphIndex()` rather than assume
+ * freshness.
+ */
+let graphIndexCache: GraphIndex | undefined;
+
+function getGraphIndex(refresh = false): GraphIndex {
+  if (refresh || !graphIndexCache) {
+    graphIndexCache = loadGraphIndex([
+      { name: "content", dir: CONTENT_DIR },
+      { name: "library", dir: LIBRARY_DIR },
+    ]);
+  }
+  return graphIndexCache;
+}
+
+/** Drop the cached index. Call after anything writes a `.jsonld`. */
+export function invalidateGraphIndex(): void {
+  graphIndexCache = undefined;
+}
 import { leanPackageByName } from "../../schemas/lean-packages.js";
 import {
   blockCaption, blockExamples, blockLean, blockProofs, blockTex,
@@ -2374,6 +2410,68 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
             required: [],
           },
         },
+        {
+          name: "search_graph",
+          description:
+            "Search the JSON-LD content graph across BOTH authored blocks and ingested library documents. " +
+            "Unlike search_blocks (authored content only, one paper), this spans ingested sources too. " +
+            "Use when the question may be answered by an ingested paper or guideline rather than by the folio's own prose.",
+          input_schema: {
+            type: "object" as const,
+            properties: {
+              query: { type: "string", description: "Substring to look for" },
+              provenance: {
+                type: "string",
+                enum: ["authored", "ingested"],
+                description: "Restrict to one population. Omit to search both.",
+              },
+              searchText: {
+                type: "boolean",
+                description:
+                  "Also scan companion Markdown bodies, not just metadata. Slower; reads files.",
+              },
+              limit: { type: "number", description: "Max hits (default 20)" },
+            },
+            required: ["query"],
+          },
+        },
+        {
+          name: "get_neighbors",
+          description:
+            "Walk the content graph outward from one node. direction 'out' answers " +
+            "'what must a reader have read first?'; direction 'in' answers 'what breaks if this changes?' — " +
+            "the reverse direction is not otherwise available without a full corpus scan. " +
+            "Accepts an @id or an authored label such as 'thm:main'.",
+          input_schema: {
+            type: "object" as const,
+            properties: {
+              id: { type: "string", description: "Node @id or authored label" },
+              direction: { type: "string", enum: ["out", "in", "both"] },
+              hops: { type: "number", description: "Traversal depth, 1–6 (default 1)" },
+              edges: {
+                type: "array",
+                items: { type: "string" },
+                description:
+                  "Restrict to these edge terms (uses, interprets, cites, contains, …). Omit for all.",
+              },
+            },
+            required: ["id"],
+          },
+        },
+        {
+          name: "get_graph_stats",
+          description:
+            "Node and edge counts for the content graph, broken down by provenance and kind, " +
+            "plus whether each root directory exists. Use this to tell 'nothing matched' from " +
+            "'that population has not been built yet' before reporting an empty search.",
+          input_schema: {
+            type: "object" as const,
+            properties: {
+              refresh: { type: "boolean", description: "Rebuild the index from disk first" },
+            },
+            required: [],
+          },
+        },
       ];
 
       // ── Tool execution (calls server functions directly, no HTTP) ──
@@ -2505,6 +2603,35 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
               }
               return JSON.stringify(matches);
             }
+
+            case "search_graph": {
+              const idx = getGraphIndex();
+              const result = searchGraph(idx, (input.query as string) || "", {
+                provenance: input.provenance as string | undefined,
+                searchText: input.searchText === true,
+                limit: typeof input.limit === "number" ? input.limit : 20,
+              });
+              return JSON.stringify(result);
+            }
+
+            case "get_neighbors": {
+              const idx = getGraphIndex();
+              const rawEdges = input.edges;
+              return JSON.stringify(
+                neighbors(idx, (input.id as string) || "", {
+                  direction: input.direction as "out" | "in" | "both" | undefined,
+                  hops: typeof input.hops === "number" ? input.hops : undefined,
+                  edges: Array.isArray(rawEdges)
+                    ? (rawEdges.filter((e): e is GraphEdgeTerm =>
+                        (GRAPH_EDGE_TERMS as readonly string[]).includes(e as string),
+                      ) as GraphEdgeTerm[])
+                    : undefined,
+                }),
+              );
+            }
+
+            case "get_graph_stats":
+              return JSON.stringify(graphStats(getGraphIndex(input.refresh === true)));
 
             case "get_imports": {
               const uploadsDir = join(REPO_ROOT, "uploads");
