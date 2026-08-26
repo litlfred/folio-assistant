@@ -1700,3 +1700,58 @@ The 5 workbooks — the data dictionary, indicators and requirements — which i
 where most of a DAK's substance lives. That needs an `.xlsx` reader and a
 decision about which sheets belong in a printed document; the second half is
 the author's, not something to infer.
+
+### 12.20 `sgex`: three scripts worth taking, not thirty-six
+
+`litlfred/sgex` is dead code, so unlike `smart-base` — whose scripts stay
+because the DAK repositories' Actions invoke them in place — its scripts should
+move here. Surveyed at `d8288af`: `scripts/` holds 36 entries.
+
+**Three are authoring or publication work:**
+
+| Script | Lines | What it is |
+|---|---|---|
+| `generate-dak-publication-poc.js` | **2,150** | A DAK publication generator — HTML and ePub output, WHO branding, template variables, and **`@media print` / `@page` rules** |
+| `generate-dak-faq-docs.js` | 896 | DAK FAQ documentation generation |
+| `bpmn-to-svg.js` | 73 | BPMN → SVG via bpmn-js under **jsdom** |
+
+**The other 33 are CI plumbing for the dead app** — `manage-pr-comment`,
+`run-security-checks`, `verify-csp-fix`, `verify-ghpages-build`,
+`test-deployment`, `analyze-github-issues`, and so on. They belong to a GitHub
+Pages deployment that no longer exists and would become skills for nothing.
+
+So the honest count is 3 of 36, not "lots". That matters for scoping: this is a
+day of work on two files, not a migration programme.
+
+#### The print styling was real, and in the repository I had not looked at
+
+§12.16 concluded there was no PDF styling, having searched `smart-base`. The
+author remembered otherwise and was right — it is in
+`generate-dak-publication-poc.js`, which carries genuine print rules:
+`@media print` with `page-break-before`, `page-break-inside: avoid` on
+component/actor/metric cards, a 10pt print body size, and link handling. That
+is exactly what `dak-pdf.ts` should adopt in place of its own page-break CSS.
+
+Both statements can stand: there is no print styling in `smart-base`, and there
+is print styling in `sgex`. The error was concluding the first meant the second.
+
+#### A second BPMN approach worth weighing
+
+`bpmn-to-svg.js` does what `scripts/bpmn-render.ts` now does, but with **jsdom**
+rather than a real browser: lighter, no Chromium, no `executablePath` probe. The
+tradeoff is that jsdom has no layout engine, so anything bpmn-js resolves by
+measuring rendered text may degrade. Worth a comparison on the same 8 WHO
+processes before assuming the Chromium route is the right one — it is heavier,
+and heavier is only justified if the output is actually better.
+
+#### Recommended order
+
+1. **Port the print CSS** from the publication POC into `dak-pdf.ts` — smallest,
+   and directly improves an artefact that already exists.
+2. **Read `generate-dak-publication-poc.js` properly.** 2,150 lines of DAK
+   publication logic with ePub output is either a large head start or a
+   cautionary tale, and which one it is cannot be told from its docstring.
+3. **Compare `bpmn-to-svg.js` against `bpmn-render.ts`** on the same inputs.
+
+The remaining 33 want no skill, and saying so is the point: a migration that
+carries them over would make the platform responsible for a dead app's CI.

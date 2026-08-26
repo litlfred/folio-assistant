@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T22:50:00Z
+updated_at: 2026-08-26T23:10:00Z
 ---
 
 
@@ -679,3 +679,37 @@ stolen/moved into folio-assistant — the opposite of smart-base (which stays
 because DAK Actions invoke it). Not yet surveyed.
 
 1001 pass / 0 fail. Added deps: bpmn-js, remark-html.
+
+## sgex survey (§12.20) — 3 of 36, not "lots"
+
+sgex is dead code, so unlike smart-base its scripts SHOULD move here. Surveyed
+@ d8288af: scripts/ has 36 entries.
+
+**Authoring/publication — 3:**
+- generate-dak-publication-poc.js (2,150) — DAK publication generator, HTML +
+  ePub, WHO branding, template variables, **@media print / @page rules**
+- generate-dak-faq-docs.js (896)
+- bpmn-to-svg.js (73) — bpmn-js under jsdom
+
+**The other 33 are CI plumbing for the dead app**: manage-pr-comment,
+run-security-checks, verify-csp-fix, verify-ghpages-build, test-deployment,
+analyze-github-issues… They'd become skills for nothing. Honest count is 3 of
+36, not "lots" — matters for scoping: a day on two files, not a programme.
+
+**The print styling was real, and I'd searched the wrong repo.** §12.16 said no
+PDF styling, having looked at smart-base. Author remembered otherwise and was
+right: it's in generate-dak-publication-poc.js — @media print with
+page-break-before, page-break-inside:avoid on cards, 10pt print body, link
+handling. Both statements stand: none in smart-base, some in sgex. My error was
+concluding the first meant the second.
+
+**Second BPMN approach worth weighing:** sgex's bpmn-to-svg.js uses jsdom, not
+a browser — lighter, no Chromium/executablePath probe, but jsdom has no layout
+engine so text-measurement-dependent rendering may degrade. Should compare on
+the same 8 WHO processes before assuming the Chromium route wins; heavier is
+only justified if output is better.
+
+**Order:** (1) port the print CSS into dak-pdf.ts — smallest, improves an
+existing artefact; (2) actually READ the 2,150-line publication POC — large head
+start or cautionary tale, can't tell from its docstring; (3) compare the two
+BPMN renderers.
