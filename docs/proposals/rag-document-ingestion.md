@@ -1755,3 +1755,76 @@ and heavier is only justified if the output is actually better.
 
 The remaining 33 want no skill, and saying so is the point: a migration that
 carries them over would make the platform responsible for a dead app's CI.
+
+### 12.21 The print CSS ported, and what the publication POC actually is
+
+#### Ported, with one thing that could not survive
+
+`sgex`'s `generate-dak-publication-poc.js` carries 486 lines of WHO-compliant
+CSS. The print-relevant and branding parts are now in `dak-pdf.ts`: A4 `@page`,
+Arial 11pt body (10pt in print), WHO blue `#0078d4` headings,
+`page-break-inside: avoid` on figures, and `a[href^="http"]::after { content: "
+(" attr(href) ")" }` — a printed link is useless without its target.
+
+The rest was left: it styles that generator's own card-and-grid markup
+(`.actors-grid`, `.metrics-grid`, `.component-card`), which this document does
+not have, and copying selectors nothing matches is how a stylesheet becomes
+unmaintainable.
+
+**The margin boxes could not be ported.** The POC declares
+`@page { @top-center { … } @bottom-center { content: "Page " counter(page) } }`.
+Those are CSS Paged Media margin boxes — implemented by PrinceXML and
+WeasyPrint, **not by Chromium**, which is what prints here. Copied verbatim they
+would have silently produced no header and no page numbers, which is the worst
+kind of port: it looks done. The equivalent is Playwright's
+`headerTemplate`/`footerTemplate`, and the running header and page numbering
+moved there.
+
+Verified rather than assumed, by extracting text from the output:
+**42 of 42 pages carry the running header, and 42 of 42 carry "Page N of M".**
+
+(Reading the PDF needed `scripts/_pypdf_compat.py` — this container's
+`cryptography` panics on import via pyo3 rather than raising `ImportError`,
+which is exactly the failure that shim exists for.)
+
+#### The POC is a cautionary tale, not a head start
+
+Read properly rather than from its docstring, `generate-dak-publication-poc.js`
+is a **demo with mocked data**, and the parts that look like a DAK publication
+generator mostly are not one:
+
+- `generateMockContent()` is ~300 lines of **hardcoded prose** — one canned
+  narrative per DAK component type.
+- `analyzeDAKRepository()` opens with *"Mock DAK repository analysis — in real
+  implementation this would…"*. It does not read a repository.
+- `generateTableOfContents()` **invents its page numbers**: `page: 3`,
+  `page: index + 4`, `page: 99`. They are not computed from the rendered
+  document.
+- `processMarkdownContent()` is regex markdown, self-described as *"in real
+  implementation would use markdown-it"*. `remark`, already used here, is
+  strictly better.
+- The API architecture the docstring advertises points at
+  `http://localhost:3002`, a service belonging to the dead app.
+
+17 occurrences of "mock" across the file.
+
+So of 2,150 lines the genuinely valuable asset was the stylesheet, and it has
+been taken. **Nothing else should be ported.** `dak-pdf.ts` already reads real
+repositories, renders real markdown through remark, draws real BPMN, and
+derives its contents list from the sections it actually assembled — every one
+of which the POC only simulates.
+
+That is worth stating plainly because the file's own header oversells it
+("API-driven service architecture", "WYSIWYG-ready template system",
+"multi-format output"), and a reader trusting that description would spend
+days porting scaffolding around mocked data.
+
+#### Revised recommendation for `sgex`
+
+Of the three authoring scripts §12.20 identified, one is now settled:
+
+| Script | Verdict |
+|---|---|
+| `generate-dak-publication-poc.js` | **CSS taken; do not port the rest.** Mocked data, invented page numbers, regex markdown, dead API |
+| `bpmn-to-svg.js` | Still worth comparing — jsdom versus the Chromium route now in use |
+| `generate-dak-faq-docs.js` | Unread |

@@ -211,6 +211,47 @@ export function whoStylesheet(): { css: string; source: string } | undefined {
   }
 }
 
+/**
+ * Print rules ported from `sgex`'s DAK publication generator.
+ *
+ * `litlfred/sgex/scripts/generate-dak-publication-poc.js` (dead code, so its
+ * scripts move here rather than being loaded) carries 486 lines of
+ * WHO-compliant CSS. Only the print-relevant and branding parts are taken:
+ * most of the rest styles that generator's own card-and-grid markup
+ * (`.actors-grid`, `.metrics-grid`, `.component-card`), which this document
+ * does not have, and copying selectors nothing matches is how a stylesheet
+ * becomes unmaintainable.
+ *
+ * ## The margin boxes do not survive the port
+ *
+ * The POC declares `@page { @top-center { … } @bottom-center { content: "Page "
+ * counter(page) } }`. Those are CSS Paged Media margin boxes, implemented by
+ * PrinceXML and WeasyPrint and **not by Chromium**, which is what prints here —
+ * copied verbatim they would silently produce no header and no page numbers.
+ * The equivalent is Playwright's `headerTemplate`/`footerTemplate`, so the
+ * running header and page numbering move there and the `@page` rule keeps only
+ * what Chromium honours: size and margin.
+ */
+function printCss(): string {
+  return `
+/* Ported from sgex generate-dak-publication-poc.js — WHO DAK publication styles. */
+@page { size: A4; margin: 2.2cm 2cm; }
+
+body { font-family: Arial, Helvetica, sans-serif; line-height: 1.6; color: #333; font-size: 11pt; }
+h1, h2, h3 { color: #0078d4; }
+.page-break { page-break-before: always; }
+
+@media print {
+  body { font-size: 10pt; }
+  .page-break { page-break-before: always; }
+  .component-section, figure { page-break-inside: avoid; }
+  a { color: #0078d4 !important; text-decoration: none; }
+  /* A printed link is useless without its target. */
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 8pt; color: #666; }
+}
+`;
+}
+
 export function toHtml(a: Assembly): string {
   const toc = a.sections
     .map((s, i) => `<li><a href="#s${i}">${esc(s.title)}</a></li>`)
@@ -233,22 +274,27 @@ export function toHtml(a: Assembly): string {
     : "";
 
   const who = whoStylesheet();
+  const print = printCss();
   return `<!doctype html><html><head><meta charset="utf-8"><title>${esc(a.title)}</title>
 ${who ? `<!-- WHO styling from smart-base ${who.source} -->\n<style>\n${who.css}\n</style>` : "<!-- no smart-base checkout: WHO styling unavailable -->"}
+<style>${print}</style>
 <style>
-  body { font: 11pt/1.5 Georgia, serif; margin: 0; color: #111; }
-  section { padding: 0 2.2cm; page-break-before: always; }
+  body { margin: 0; }
+  section { padding: 0; page-break-before: always; }
   section:first-of-type { page-break-before: avoid; }
-  h1 { font-size: 18pt; border-bottom: 1px solid #ccc; padding-bottom: .2em; }
+  h1 { font-size: 18pt; border-bottom: 1px solid #cfe6f7; padding-bottom: .2em; }
   h2 { font-size: 14pt; } h3 { font-size: 12pt; }
   code { font: 10pt monospace; background: #f4f4f4; padding: .1em .3em; }
   pre { background: #f4f4f4; padding: .6em; overflow-x: auto; }
   table { border-collapse: collapse; } td, th { border: 1px solid #bbb; padding: .3em .5em; }
-  .cover { padding: 6cm 2.2cm 0; page-break-after: always; }
+  .cover { padding: 6cm 0 0; page-break-after: always; }
   .cover h1 { font-size: 26pt; border: 0; }
   .src { color: #777; font-size: 8pt; font-style: italic; }
   .gaps { background: #fff8e1; }
   .gaps li { margin: .3em 0; }
+  figure { margin: 1.2em 0; }
+  figure svg { max-width: 100%; height: auto; }
+  figcaption { font-size: 9pt; color: #555; margin-bottom: .4em; }
 </style></head><body>
 <div class="cover"><h1>${esc(a.title)}</h1><p>Digital Adaptation Kit — rendered by folio-assistant</p></div>
 <section id="toc"><h1>Contents</h1><ol>${toc}</ol></section>
@@ -278,7 +324,26 @@ function chromiumExecutable(): string | undefined {
   return undefined;
 }
 
-async function renderPdf(html: string, out: string): Promise<void> {
+/**
+ * Running header and page numbering.
+ *
+ * Chromium ignores the `@top-center` / `@bottom-center` margin boxes the sgex
+ * POC uses, so its running header and `counter(page)` are reproduced here,
+ * where Chromium does implement them. Playwright requires an explicit
+ * `font-size` in these templates — inherited styles do not apply, and without
+ * one the text renders too small to read.
+ */
+function headerFooter(title: string): { header: string; footer: string } {
+  const style = "font-size:8pt;color:#666;width:100%;padding:0 2cm;font-family:Arial,sans-serif;";
+  return {
+    header: `<div style="${style}text-align:center;">${title.replace(/[<>&]/g, "")}</div>`,
+    footer:
+      `<div style="${style}text-align:center;">Page <span class="pageNumber"></span>` +
+      ` of <span class="totalPages"></span></div>`,
+  };
+}
+
+async function renderPdf(html: string, out: string, title: string): Promise<void> {
   const { chromium } = await import("playwright");
   const executablePath = chromiumExecutable();
   const browser = await chromium.launch(
@@ -287,11 +352,17 @@ async function renderPdf(html: string, out: string): Promise<void> {
   try {
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: "load" });
+    const { header, footer } = headerFooter(title);
     await page.pdf({
       path: out,
       format: "A4",
-      margin: { top: "1.6cm", bottom: "1.6cm", left: "0", right: "0" },
+      // Margins here rather than in `@page`: Chromium's PDF path takes its box
+      // from these, and a header/footer needs room reserved for it.
+      margin: { top: "2.0cm", bottom: "1.8cm", left: "2cm", right: "2cm" },
       printBackground: true,
+      displayHeaderFooter: true,
+      headerTemplate: header,
+      footerTemplate: footer,
     });
   } finally {
     await browser.close();
@@ -347,7 +418,7 @@ async function main(): Promise<number> {
     writeFileSync(out, html);
   } else {
     try {
-      await renderPdf(html, out);
+      await renderPdf(html, out, a.title);
     } catch (e) {
       console.error(`PDF rendering failed (${String(e).slice(0, 140)})`);
       console.error("Chromium is required. Re-run with --html-only to get the assembled HTML.");

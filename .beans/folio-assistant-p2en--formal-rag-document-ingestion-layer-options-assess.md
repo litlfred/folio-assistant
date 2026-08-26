@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T23:10:00Z
+updated_at: 2026-08-26T23:45:00Z
 ---
 
 
@@ -713,3 +713,42 @@ only justified if output is better.
 existing artefact; (2) actually READ the 2,150-line publication POC — large head
 start or cautionary tale, can't tell from its docstring; (3) compare the two
 BPMN renderers.
+
+## Print CSS ported; POC read properly (§12.21)
+
+**Ported** the print-relevant + branding parts of sgex's 486-line CSS into
+dak-pdf.ts: A4 @page, Arial 11pt (10pt print), WHO blue #0078d4,
+page-break-inside:avoid on figures, and a[href^=http]::after printing the URL.
+Left the card/grid selectors — this document has no such markup.
+
+**The margin boxes could NOT be ported.** POC uses
+`@page { @top-center{} @bottom-center{ content:"Page " counter(page) } }` —
+CSS Paged Media margin boxes, implemented by Prince/WeasyPrint, **NOT by
+Chromium**. Copied verbatim they'd silently produce no header and no page
+numbers — the worst kind of port, it looks done. Moved to Playwright
+headerTemplate/footerTemplate. **Verified by extracting PDF text: 42/42 pages
+carry the running header, 42/42 carry "Page N of M".** (Reading the PDF needed
+scripts/_pypdf_compat.py — this container's cryptography panics via pyo3
+instead of raising ImportError, exactly what that shim is for.)
+
+**The POC is a cautionary tale, not a head start.** Read properly:
+- generateMockContent() = ~300 lines of HARDCODED prose per component type
+- analyzeDAKRepository() opens "Mock DAK repository analysis — in real
+  implementation this would…" — it does not read a repository
+- generateTableOfContents() INVENTS page numbers (page:3, index+4, page:99)
+- processMarkdownContent() is regex markdown, self-described as "would use
+  markdown-it in real implementation" — remark is strictly better
+- API architecture points at http://localhost:3002, part of the dead app
+- 17 occurrences of "mock"
+
+Of 2,150 lines the stylesheet was the asset; it's taken. NOTHING ELSE should be
+ported. dak-pdf.ts already reads real repos, renders real markdown, draws real
+BPMN, and derives its TOC from sections actually assembled — all of which the
+POC only simulates. Worth saying plainly because the file's header oversells it
+("API-driven service architecture", "WYSIWYG-ready", "multi-format output") and
+a reader trusting it would spend days porting scaffolding around mocks.
+
+Remaining sgex: bpmn-to-svg.js (jsdom vs Chromium comparison), 
+generate-dak-faq-docs.js (unread).
+
+1001 pass / 0 fail.
