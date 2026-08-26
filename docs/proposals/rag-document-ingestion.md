@@ -1641,3 +1641,62 @@ exists. §12.15's target is block → PDF, and `pagecontent/` is precisely the
 seam where authored DAK blocks replace hand-written narrative: the assembler
 takes a list of sections with titles, HTML and a source, which is what a block
 sequence already is.
+
+### 12.19 Diagrams drawn, and WHO's own styling
+
+Two corrections to §12.18, both prompted by the author.
+
+#### The styling already existed, in a directory I had not searched
+
+§12.16 surveyed `input/scripts/` and concluded there was no PDF styling. That
+was under-searched. `smart-base/local-template/package/` carries
+`content/assets/css/dmn.css` — the WHO palette (`--dmn-who-blue: #0093d0`),
+light/dark theming, and decision-table rules — injected by the IG template via
+`_append.fragment-css.html`, alongside Liquid fragments for actors and
+functional requirements and `templates/liquid/{Measure,Library,PlanDefinition,
+Group,ActivityDefinition}.liquid`.
+
+The first cut invented its own generic serif CSS, which is the second-weaker-copy
+mistake this work keeps finding in other people's code. `dak-pdf.ts` now loads
+`dmn.css` from the checkout when `SMART_BASE_HOME` resolves, and says so in the
+HTML when it cannot.
+
+(There is still no `@media print` or `@page` anywhere in `smart-base` — the
+styling is for the IG's HTML, not for a PDF. But it is WHO's, and reusing it
+beats inventing.)
+
+#### Business processes are now drawn
+
+`scripts/bpmn-render.ts` renders BPMN to SVG with bpmn-js inside the same
+Chromium. **8 of 8 real WHO processes, 0 failures.** The PDF grew from 231 KB
+to 308 KB and its BPMN omission is gone.
+
+This works only because the files carry Diagram Interchange — bpmn-js renders a
+layout, it does not compute one. All 8 do, with 20–264 `BPMNShape` elements
+each.
+
+#### A correction I made mid-flight, and the real cause
+
+`IMMZ.D.Administer Vaccine` failed with `element <IMMZ.D17> already exists`. My
+first reading — a duplicate id in WHO's file — was **wrong**: the file has no
+duplicate ids at all. The actual cause is that `IMMZ.D17` appears both as a
+shape in the top-level diagram *and* as the root of its own drilled-down
+sub-process plane. That is legal BPMN, and a plain bpmn-js Viewer refuses it at
+`importXML`, before anything renders. Drilldown is a Modeler feature.
+
+My second attempt — a fresh viewer per diagram — also failed, for the same
+reason: the rejection is at import, not at render.
+
+`keepPrimaryPlane()` strips every `BPMNDiagram` after the first before import
+and returns how many it removed, so the top-level process draws and the
+sub-process count is reported (`IMMZ.D` has 7). Catching the failure instead
+would have meant no diagram at all for that file. The strip is a text operation
+on the serialised XML on purpose: re-serialising risks rewriting the namespace
+prefixes the DI references depend on.
+
+#### Still not in the PDF
+
+The 5 workbooks — the data dictionary, indicators and requirements — which is
+where most of a DAK's substance lives. That needs an `.xlsx` reader and a
+decision about which sheets belong in a printed document; the second half is
+the author's, not something to infer.

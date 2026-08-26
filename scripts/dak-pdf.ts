@@ -49,6 +49,13 @@ interface Section {
   source: string;
 }
 
+/** An SVG a caller rendered separately and wants inlined. */
+export interface Diagram {
+  /** The BPMN file it came from. */
+  source: string;
+  svg: string;
+}
+
 interface Assembly {
   title: string;
   sections: Section[];
@@ -74,7 +81,7 @@ function dakTitle(root: string): string {
   return basename(root);
 }
 
-export function assemble(root: string): Assembly {
+export function assemble(root: string, diagrams: Diagram[] = []): Assembly {
   const sections: Section[] = [];
   const omissions: string[] = [];
 
@@ -99,17 +106,33 @@ export function assemble(root: string): Assembly {
   if (existsSync(bpDir)) {
     const files = readdirSync(bpDir).filter((f) => f.endsWith(".bpmn")).sort();
     if (files.length) {
-      const items = files
-        .map((f) => `<li><code>${esc(f)}</code></li>`)
-        .join("\n");
+      // Drawn where a diagram was rendered; listed where it was not. The two
+      // must not look alike in the output — a process that failed to render is
+      // not a process without a diagram.
+      const drawn = new Map(diagrams.map((d) => [basename(d.source), d]));
+      const parts: string[] = [];
+      const undrawn: string[] = [];
+      for (const f of files) {
+        const d = drawn.get(f);
+        if (d) {
+          parts.push(`<figure><figcaption>${esc(f)}</figcaption>\n${d.svg}\n</figure>`);
+        } else {
+          undrawn.push(f);
+        }
+      }
+      if (undrawn.length) {
+        parts.push(
+          `<p>Not drawn:</p><ul>${undrawn.map((f) => `<li><code>${esc(f)}</code></li>`).join("")}</ul>`,
+        );
+        omissions.push(
+          `${undrawn.length} of ${files.length} BPMN process(es) listed but not drawn`,
+        );
+      }
       sections.push({
         title: "Business processes",
-        html: `<ul>\n${items}\n</ul>`,
+        html: parts.join("\n"),
         source: "input/business-processes/",
       });
-      omissions.push(
-        `${files.length} BPMN process(es) listed but not drawn — no diagram renderer, and no pre-exported SVG in input/images/`,
-      );
     }
   }
 
@@ -163,6 +186,31 @@ function findByExt(root: string, ext: string, depth = 4): string[] {
   return out.sort();
 }
 
+/**
+ * WHO's own decision-table stylesheet, from a smart-base checkout.
+ *
+ * `local-template/package/content/assets/css/dmn.css` carries the WHO palette
+ * (`--dmn-who-blue: #0093d0`), light/dark theming and DMN table rules, and the
+ * IG template injects it via `_append.fragment-css.html`. An earlier version of
+ * this renderer invented its own generic serif CSS instead — a second, weaker
+ * copy of presentation WHO already maintains, which is the mistake this work
+ * keeps finding elsewhere.
+ *
+ * Absent a checkout it returns undefined and the caller falls back, reporting
+ * the fallback rather than quietly producing differently-styled output.
+ */
+export function whoStylesheet(): { css: string; source: string } | undefined {
+  const home = process.env.SMART_BASE_HOME ?? "/opt/smart-base";
+  const rel = "local-template/package/content/assets/css/dmn.css";
+  const p = join(home, rel);
+  if (!existsSync(p)) return undefined;
+  try {
+    return { css: readFileSync(p, "utf-8"), source: rel };
+  } catch {
+    return undefined;
+  }
+}
+
 export function toHtml(a: Assembly): string {
   const toc = a.sections
     .map((s, i) => `<li><a href="#s${i}">${esc(s.title)}</a></li>`)
@@ -184,7 +232,9 @@ export function toHtml(a: Assembly): string {
         .join("")}</ul></section>`
     : "";
 
+  const who = whoStylesheet();
   return `<!doctype html><html><head><meta charset="utf-8"><title>${esc(a.title)}</title>
+${who ? `<!-- WHO styling from smart-base ${who.source} -->\n<style>\n${who.css}\n</style>` : "<!-- no smart-base checkout: WHO styling unavailable -->"}
 <style>
   body { font: 11pt/1.5 Georgia, serif; margin: 0; color: #111; }
   section { padding: 0 2.2cm; page-break-before: always; }
@@ -256,7 +306,7 @@ async function main(): Promise<number> {
   const htmlOnly = argv.includes("--html-only");
 
   if (!root || !out) {
-    console.error("usage: dak-pdf.ts <dak-repo> -o <out.pdf> [--html-only]");
+    console.error("usage: dak-pdf.ts <dak-repo> -o <out.pdf> [--html-only] [--no-diagrams]");
     return 2;
   }
   if (!existsSync(root)) {
@@ -264,7 +314,29 @@ async function main(): Promise<number> {
     return 2;
   }
 
-  const a = assemble(root);
+  const diagrams: Diagram[] = [];
+  if (!argv.includes("--no-diagrams")) {
+    try {
+      const { renderBpmn } = await import("./bpmn-render");
+      const bpDir = join(root, "input", "business-processes");
+      const files = existsSync(bpDir)
+        ? readdirSync(bpDir).filter((f) => f.endsWith(".bpmn")).map((f) => join(bpDir, f)).sort()
+        : [];
+      if (files.length) {
+        const rendered = await renderBpmn(files, process.cwd());
+        for (const r of rendered) {
+          // A file that failed to render must not be silently absent: it falls
+          // through to the "Not drawn" list, and its error is printed.
+          if (r.error) console.error(`  diagram FAILED ${basename(r.source)}: ${r.error.slice(0, 120)}`);
+          for (const d of r.diagrams) diagrams.push({ source: r.source, svg: d.svg });
+        }
+      }
+    } catch (e) {
+      console.error(`  diagram rendering unavailable: ${String(e).slice(0, 120)}`);
+    }
+  }
+
+  const a = assemble(root, diagrams);
   if (a.sections.length === 0) {
     console.error(`nothing to render under ${root} — not a DAK repository?`);
     return 1;

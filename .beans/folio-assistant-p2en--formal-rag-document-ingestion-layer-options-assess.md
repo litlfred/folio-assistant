@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T22:10:00Z
+updated_at: 2026-08-26T22:50:00Z
 ---
 
 
@@ -643,3 +643,39 @@ blocks replace it — the assembler takes sections of {title, html, source},
 which is what a block sequence already is.
 
 992 pass / 0 fail, typecheck + lint clean. Added dep: remark-html.
+
+## BPMN diagrams + WHO styling (§12.19)
+
+**Two corrections, both author-prompted.**
+
+1. **Styling existed; I under-searched.** §12.16 looked only in
+   `input/scripts/`. `smart-base/local-template/package/content/assets/css/dmn.css`
+   has the WHO palette (--dmn-who-blue #0093d0), light/dark, DMN table rules,
+   injected via `_append.fragment-css.html`; plus liquid fragments and
+   `templates/liquid/*.liquid`. My first cut invented generic serif CSS — the
+   second-weaker-copy mistake I keep flagging in others' code. dak-pdf.ts now
+   loads dmn.css from SMART_BASE_HOME, and says so in the HTML when it can't.
+   (Still no @media print/@page anywhere in smart-base — it's IG HTML styling,
+   not PDF. But it's WHO's.)
+
+2. **Diagrams now drawn.** scripts/bpmn-render.ts, bpmn-js in the same Chromium:
+   **8 of 8 WHO processes, 0 failures.** PDF 231KB → 308KB, BPMN omission gone.
+   Works only because all 8 files carry DI (20–264 BPMNShape each) — bpmn-js
+   renders a layout, doesn't compute one.
+
+**I was wrong twice mid-flight and should record it:** IMMZ.D failed with
+"element <IMMZ.D17> already exists". I first said duplicate id in WHO's file —
+FALSE, no duplicate ids at all. Real cause: IMMZ.D17 is both a shape in the
+top-level diagram AND the root of its own drilled-down subprocess plane (legal
+BPMN; drilldown is a Modeler feature). My second fix (fresh viewer per diagram)
+also failed — the rejection is at importXML, before render.
+`keepPrimaryPlane()` strips planes after the first pre-import and returns the
+count (IMMZ.D: 7). Catching the failure would have meant no diagram for that
+file. Text-level strip on purpose — re-serialising risks rewriting the
+namespace prefixes DI references depend on.
+
+**Note for next:** author says sgex is DEAD CODE and its scripts should be
+stolen/moved into folio-assistant — the opposite of smart-base (which stays
+because DAK Actions invoke it). Not yet surveyed.
+
+1001 pass / 0 fail. Added deps: bpmn-js, remark-html.
