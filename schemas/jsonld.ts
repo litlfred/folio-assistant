@@ -222,6 +222,7 @@ export const DAK_KINDS_WITHOUT_DOCO_TYPE = DAK_BLOCK_KINDS.filter(
 export const KIND_PREFIXES: readonly string[] = [
   "def", "thm", "lem", "prop", "cor", "rem", "ex", "conj",
   "prf", "sim", "eq", "fig", "tbl",
+  "alg", "prose",
   "sec", "chap", "app", "bib",
   ...Object.values(DAK_LABEL_PREFIXES),
 ];
@@ -356,6 +357,30 @@ export function resolveLabel(ref: string, paper: string): string | undefined {
     case "unresolvable":
       return undefined;
   }
+}
+
+/**
+ * The IRI for a block's OWN label. Never fails.
+ *
+ * Deliberately more forgiving than {@link resolveLabel}, and the asymmetry is
+ * the point. A *reference* is a claim that must resolve, so an unparseable one
+ * is reported rather than guessed at. A block's own label is definitionally
+ * that block's identity — it cannot be "wrong", only unconventional — so a
+ * label with no kind prefix still has to yield a unique `@id`.
+ *
+ * Measured on the qou corpus: emitting a shared `…/blocks/UNRESOLVED`
+ * placeholder for these gave **12 blocks the same `@id`**, and the graph index
+ * correctly refused to let one overwrite another, so twelve real blocks
+ * disappeared from the graph while the generator reported success. Fixtures
+ * could not surface it; every fixture label had a prefix.
+ */
+export function mintNodeId(label: string, paper: string): string {
+  const resolved = resolveLabel(label, paper);
+  if (resolved) return resolved;
+  // No kind prefix. Use the label verbatim as the segment: unique within a
+  // paper because labels are, and readable, which an opaque hash would not be.
+  const segment = label.replace(/[^A-Za-z0-9._~-]+/g, "-").replace(/^-+|-+$/g, "");
+  return `papers/${paper}/blocks/${segment || "unlabelled"}`;
 }
 
 /** The IRI for a bibliography key (`cites[]` entries are not labels). */

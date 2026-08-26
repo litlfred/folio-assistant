@@ -263,6 +263,16 @@ export const RemotePackageRefSchema = z.object({
 export const KNOWN_LABEL_PREFIXES: readonly string[] = [
   "def:", "thm:", "lem:", "prop:", "cor:", "rem:", "ex:", "conj:",
   "prf:", "sim:", "eq:", "fig:", "tbl:",
+  // `alg:` and `prose:` were missing until 2026-08-26. `LABEL_PREFIXES` maps
+  // `algorithm -> "alg:"`, so 16 algorithm blocks and 18 prose blocks in qou
+  // carried labels this list did not recognise — which made
+  // `isCrossPaperRef("alg:markov-trace")` return true for a block's own
+  // same-paper label. The consequence was silent and user-visible:
+  // `render-latex.ts` emits cross-paper references as plain text rather than
+  // `\hyperref`, so 9 in-paper links lost their hyperlink in the PDF, and
+  // `build.ts` excluded them from its undefined-reference warning, so a
+  // dangling link to an algorithm would never have been reported.
+  "alg:", "prose:",
   "sec:", "chap:", "app:", "bib:",
   ...Object.values(DAK_LABEL_PREFIXES).map((p) => `${p}:`),
 ];

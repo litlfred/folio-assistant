@@ -1054,3 +1054,68 @@ companion, keyed by role.
 so "a paper criterion depends on `.dmn`" is now a *checkable* mistake rather
 than one that manifests as a criterion which is permanently `n/a` and looks
 registered.
+
+### 12.11 First run against the real corpus
+
+Everything through §12.10 was exercised by fixtures. Run against `litlfred/qou`
+at `a5e9957` — 5 papers, 3,692 `.ts` files — three things came back that
+fixtures could not have produced.
+
+| | Result |
+|---|---|
+| Blocks emitted | **3,550**, 0 load failures |
+| Graph | **3,550 nodes, 7,631 edges**, 0 malformed |
+| Determinism | second run: `--check` clean, 0 rewritten |
+| Dangling references | 41 → **33** after the fix below |
+
+#### (a) `alg:` and `prose:` were never registered label prefixes
+
+`LABEL_PREFIXES` maps `algorithm → "alg:"`, and 16 algorithm blocks and 18
+prose blocks carry such labels — but `KNOWN_LABEL_PREFIXES` listed neither. So
+`isCrossPaperRef("alg:markov-trace")` returned **true for a block's own
+same-paper label**.
+
+The consequence was silent and user-visible. `render-latex.ts:866` renders a
+cross-paper reference as plain text rather than `\hyperref`, so **9 in-paper
+markdown links lost their hyperlink in the PDF**; and `build.ts:295` excludes
+cross-paper labels from `referencedLabels`, so a dangling link to an algorithm
+would never have been reported as an undefined reference. Both prefixes are now
+registered.
+
+This is a pre-existing defect, not one this work introduced. It had simply
+never been asked the question that exposes it.
+
+#### (b) A collision in this work's own generator
+
+`blockToJsonLd` fell back to `papers/<paper>/blocks/UNRESOLVED` when a block's
+own label had no kind prefix. Every such block therefore got **the same
+`@id`** — and the graph index, correctly refusing to let one node overwrite
+another, dropped **12 real blocks** while the generator reported success.
+
+Fixed by `mintNodeId`, which never fails: a prefix-less label becomes its own
+IRI segment. The asymmetry against `resolveLabel` is deliberate and worth
+stating — **a block's own label is its identity and cannot be wrong; a
+reference is a claim that must resolve**. Making `resolveLabel` equally
+forgiving would mask every typo.
+
+Every fixture label had a prefix, which is exactly why fixtures missed it.
+
+#### (c) What the graph is actually for, on real data
+
+```
+$ graph-index.ts --neighbors "def:quantum-universe" --in --hops 1
+25 dependents, spanning `uses` and `interprets`
+```
+
+"What breaks if this changes?" answered in one call against 3,550 nodes —
+the query that previously required a full corpus scan.
+
+#### Still outstanding
+
+The 33 remaining dangling references are qou content defects: labels with no
+kind prefix at all (`tm-interactions`, `tm-knot-pairs`, `tm-notation`, …)
+referenced from `uses[]`. They are reported, not repaired — repairing another
+repo's content is that repo's call.
+
+The MCP tool handlers remain typechecked but undriven by any test, and no DAK
+corpus exists yet to exercise the `dak` axes against.

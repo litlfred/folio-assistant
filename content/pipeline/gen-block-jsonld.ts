@@ -42,6 +42,7 @@ import { join, dirname, basename } from "path";
 import {
   CONTENT_CONTEXT_URL,
   resolveLabel,
+  mintNodeId,
   resolveReferenceKey,
   typesForKind,
   parseReference,
@@ -82,11 +83,13 @@ export function blockToJsonLd(
   dangling: DanglingRef[],
 ): Record<string, unknown> {
   const b = loaded.block;
-  const iri = resolveLabel(loaded.label, paper);
 
   const doc: Record<string, unknown> = {
     "@context": CONTENT_CONTEXT_URL,
-    "@id": iri ?? `papers/${paper}/blocks/UNRESOLVED`,
+    // `mintNodeId`, not `resolveLabel`: a block's own label always yields an
+    // id. The placeholder this replaces gave every prefix-less label the same
+    // `@id`, which collided 12 blocks into one on the real corpus.
+    "@id": mintNodeId(loaded.label, paper),
     "@type": typesForKind(loaded.kind),
     label: loaded.label,
     kind: loaded.kind,

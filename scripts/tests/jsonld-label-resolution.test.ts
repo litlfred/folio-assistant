@@ -28,6 +28,7 @@ import {
   parseReference,
   resolveLabel,
   segmentToLabel,
+  mintNodeId,
   typesForKind,
   BLOCK_KIND_TO_FOLIO_TYPE,
 } from "../../schemas/jsonld";
@@ -161,5 +162,37 @@ describe("types", () => {
 
   test("simulator carries no DoCO co-type — it has no counterpart", () => {
     expect(typesForKind("simulator")).toEqual(["folio:Simulator"]);
+  });
+});
+
+describe("mintNodeId — a block's own label always yields an id", () => {
+  test("a prefixed label mints the same id resolveLabel gives", () => {
+    expect(mintNodeId("def:widget", "qou")).toBe(resolveLabel("def:widget", "qou")!);
+  });
+
+  test("a prefix-less label still gets a UNIQUE id", () => {
+    // Measured on the qou corpus: emitting one shared `.../blocks/UNRESOLVED`
+    // placeholder for these gave 12 blocks the same @id. The graph index
+    // correctly refused to let one overwrite another, so twelve real blocks
+    // vanished from the graph while the generator reported success. Every
+    // fixture label had a prefix, so only a real run could surface it.
+    const a = mintNodeId("tm-general-form", "qou");
+    const b = mintNodeId("tm-knot-pairs", "qou");
+    expect(a).not.toBe(b);
+    expect(a).toBe("papers/qou/blocks/tm-general-form");
+  });
+
+  test("it never returns undefined, however odd the label", () => {
+    for (const label of ["tm-x", "weird label!", "::", "", "a/b"]) {
+      expect(typeof mintNodeId(label, "qou")).toBe("string");
+      expect(mintNodeId(label, "qou").length).toBeGreaterThan(0);
+    }
+  });
+
+  test("but a prefix-less REFERENCE stays unresolvable", () => {
+    // The asymmetry is deliberate: a block's own label is its identity and
+    // cannot be wrong, whereas a reference is a claim that must resolve.
+    // Making resolveLabel this forgiving would mask every typo.
+    expect(resolveLabel("tm-general-form", "qou")).toBeUndefined();
   });
 });

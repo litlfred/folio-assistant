@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T17:30:00Z
+updated_at: 2026-08-26T18:00:00Z
 ---
 
 
@@ -319,3 +319,38 @@ no builder or Zod schema, which §12.9 made false.
 852 pass / 0 fail, typecheck + lint clean.
 
 **Next: real-corpus run.** Everything on this branch is still fixtures.
+
+## Real-corpus run (§12.11) — two defects fixtures could not find
+
+Cloned litlfred/qou @ a5e9957, symlinked the platform to reproduce the real
+embedding. 5 papers, 3692 .ts files.
+
+**3550 blocks emitted, 0 load failures. 3550 nodes / 7631 edges, 0 malformed.
+Second run --check clean (deterministic).**
+
+**(a) Pre-existing repo bug.** `alg:` and `prose:` were absent from
+KNOWN_LABEL_PREFIXES though LABEL_PREFIXES maps `algorithm -> "alg:"` and 16
+alg + 18 prose blocks use them. So isCrossPaperRef returned TRUE for a block's
+own same-paper label. Effect: render-latex emits cross-paper refs as plain text
+not \hyperref, so 9 in-paper links lost hyperlinks in the PDF; and build.ts
+excluded them from undefined-reference warnings. Registered both. Not caused by
+this work — just never asked the question that exposes it.
+
+**(b) My own generator's collision.** `blockToJsonLd` fell back to
+`.../blocks/UNRESOLVED` for a prefix-less own-label, so ALL such blocks shared
+one @id — the index correctly refused to overwrite and 12 real blocks vanished
+while the generator reported success. Fixed with `mintNodeId` (never fails;
+prefix-less label becomes its own segment). Asymmetry vs resolveLabel is
+deliberate: a block's own label is identity and cannot be wrong, a reference is
+a claim that must resolve. Every fixture label had a prefix — which is exactly
+why fixtures missed it.
+
+Reverse query works on real data: `--neighbors def:quantum-universe --in` → 25
+dependents across uses + interprets.
+
+33 dangling refs remain — qou content defects (labels with no prefix at all).
+Reported, not repaired; another repo's content is its own call.
+
+856 pass / 0 fail, typecheck + lint clean.
+
+**Still open:** MCP handlers untested; no DAK corpus to exercise the dak axes.
