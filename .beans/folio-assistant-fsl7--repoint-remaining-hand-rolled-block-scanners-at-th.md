@@ -3,8 +3,9 @@
 title: Repoint remaining hand-rolled block scanners at the module loader
 status: todo
 type: task
+priority: normal
 created_at: 2026-08-08T13:25:41Z
-updated_at: 2026-08-08T16:05:00Z
+updated_at: 2026-08-26T13:58:47Z
 ---
 
 Follow-up to jwd9, which replaced the source-text scan with module imports in conjectural-propagation-audit and conditional-class-banner-audit and added write-verification to prune-transitive-deps.
@@ -266,3 +267,77 @@ before it was reported as a risk.
 
 So the change is cheap AND quiet. The prose was clean; it simply could not be
 seen to be.
+
+## 2026-08-26 — the loader exists; bullet 2 is repointed behind an opt-in
+
+Bullet 2 was filed as "fine as is **unless a sync loader appears**". One
+appeared. Bun's `require` loads a TypeScript ES module synchronously, so
+`walkBlocks` — a sync generator with fourteen production callers, which is the
+whole reason it reads identity out of source text — can now import a block
+without becoming async.
+
+`loadBlockModuleSync` in `content/pipeline/block-module.ts`. Cost, measured over
+300 generated manifests plus 10 non-block helpers, cold:
+
+    regex readBlockManifest   16.0 ms   0.052 ms / file
+    loadBlockModuleSync       67.1 ms   0.216 ms / file
+
+Four times the regex, 0.76 s across three and a half thousand blocks. Matches
+the 0.66 ms/block the async loader measured in `jwd9`.
+
+### The textual read is wrong in three ways, and one of them is a wrong answer
+
+Not asserted — demonstrated, and pinned in
+`scripts/tests/block-walk-verify.test.ts`:
+
+| source                             | regex reads           | the block *is*         |
+|------------------------------------|-----------------------|------------------------|
+| `label: LBL` (a constant)          | `undefined` → skipped | `prop:computed`        |
+| an earlier `label:` in a helper    | `not-the-block`       | `prop:real`            |
+| `proposition({label:"theorem:x"})` | `theorem:x`           | rejected by the schema |
+
+Row 2 is the sharp one. It is not a miss, it is a confident wrong answer — a
+sidecar and a graph node keyed to a label the block does not have. Same shape as
+the `root`-is-a-stem bug that reported "0 siblings across 3486 blocks" and
+looked plausible enough to nearly publish.
+
+### The candidate gate stays textual, and that is load-bearing
+
+Importing a module runs it, and a content tree holds scripts as well as
+manifests — `content/pipeline/qa-agent-drain-queue.ts` in this repo starts a
+sweep at import time. So `readBlockManifest`'s masked builder-call match now
+decides *what may be executed*, and the loader decides *what it is*. Two tests
+pin the gate: a helper with a top-level side effect is never imported, and
+neither is the `#125` shape (a builder call inside a template literal).
+
+Writing this turned up a mistake in my own first cut. I had gated verification
+on the file having a textual `label:`, which meant the computed-label case —
+one of the three the change exists to fix — never reached the loader at all. The
+test caught it. The label is a question about identity, not about candidacy; the
+gate is the builder call alone.
+
+### Why `verify` is opt-in and not the default
+
+`walkBlocks(root, { verify: true, onLoadFailure })`. Default `false`.
+
+Fourteen tools consume this generator, and this repo has twice learned that
+changing what the walk enumerates must be measured against real content before
+it lands: `#125` admitted a non-block, `qou/3fui` missed 63 real ones — and in
+that case the measurement *reversed* the recommendation the change had been
+argued on. The corpus that would settle it is in the folio repo, not here, and
+this session had no access to one.
+
+So the flip is staged, not deferred indefinitely.
+`bun run content/pipeline/verify-block-walk.ts <content-root>` walks both ways
+and prints every disagreement, every block only one mode finds, every block that
+will not import, and what the flip costs in wall-clock. Run it against `qou`;
+flip the default on what it prints.
+
+A block that fails to import is reported and **still yielded**, carrying its
+degraded textual identity. Dropping it would trade a loud problem for a silent
+coverage hole, which is `qou/3fui` in reverse.
+
+### Still open
+
+Only the flip, and it is now one measurement away rather than one refactor away.
+Bullet 1 stays closed by owner decision.

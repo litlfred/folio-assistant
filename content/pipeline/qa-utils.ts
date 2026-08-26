@@ -33,6 +33,7 @@ import { BLOCK_KINDS } from "../../schemas/types";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 import { leanStatementHash } from "./lean-signature";
 import { findContentRepoRoot } from "./repo-root";
+import { loadBlockModuleSync, type BlockLoadFailure } from "./block-module";
 
 // ── Hashing ─────────────────────────────────────────────────────
 
@@ -605,6 +606,26 @@ const BLOCK_BUILDER_RE = new RegExp(
  * manifest. Returns the block's kind + label, or `undefined` if the
  * file is not a single-block manifest (chapter, paper, etc.).
  *
+ * **This detects a candidate; it does not establish identity.** Reading a
+ * label out of source text is wrong in three demonstrated ways, pinned in
+ * `scripts/tests/block-walk-verify.test.ts`:
+ *
+ * | source                          | this reads        | the block *is*   |
+ * |---------------------------------|-------------------|------------------|
+ * | `label: LBL` (a constant)       | `undefined` — skipped | `prop:computed` |
+ * | an earlier `label:` in a helper | `not-the-block`   | `prop:real`      |
+ * | `proposition({label:"theorem:x"})` | `theorem:x`    | rejected by the schema |
+ *
+ * The middle row is the dangerous one: not a miss but a *wrong answer*, which
+ * keys a sidecar and a graph node to a label the block does not have.
+ * `walkBlocks(root, { verify: true })` settles identity by loading the module
+ * instead — see `loadBlockModuleSync`.
+ *
+ * What this stays authoritative for is **whether a file may be executed at
+ * all**. A content tree holds more than manifests, and importing runs them, so
+ * the masked regex below is the gate that decides what the loader is allowed to
+ * touch. Keep it cheap and keep it textual.
+ *
  * **Matched against a string- and comment-masked copy**, so a builder call or
  * a `label:` written inside a string literal or a comment cannot make an
  * ordinary source file look like a block manifest. Offsets are preserved by
@@ -684,6 +705,42 @@ export interface WalkBlocksOptions {
    * than inventing one.
    */
   includeUnlabelled?: boolean;
+
+  /**
+   * Settle each block's `kind` and `label` by **importing** it, instead of
+   * reading them out of its source text.
+   *
+   * The textual read is wrong in three ways `readBlockManifest` now documents,
+   * and the middle one returns a confidently wrong label rather than nothing.
+   * Importing runs the builder, so what comes back is the block the rest of the
+   * pipeline sees, validated against the schema.
+   *
+   * `readBlockManifest` still decides *which* files are candidates — importing
+   * executes a module, and a content tree holds scripts as well as manifests
+   * (`qa-agent-drain-queue.ts` starts a sweep at import time). Verification
+   * upgrades identity; it does not widen what gets executed.
+   *
+   * **Default `false`, deliberately.** Fourteen production tools consume this
+   * generator, and this repo has twice learned that changing what the walk
+   * enumerates must be measured against real content before it lands (`#125`
+   * admitted a non-block; `qou/3fui` missed 63 real ones, and the measurement
+   * reversed the recommendation). The corpus that would settle it lives in the
+   * content repo, not here. `bun run content/pipeline/verify-block-walk.ts
+   * <content-root>` runs both modes and diffs them; flip this default on that
+   * evidence, not on this comment.
+   */
+  verify?: boolean;
+
+  /**
+   * Where a block that fails to import is reported.
+   *
+   * A block that throws is a *finding*, not a file to pass over — that is how a
+   * sweep reports clean by looking at nothing. Omit this and failures go to
+   * stderr, once per file. Either way the block is still yielded, carrying its
+   * degraded textual identity: dropping it would trade a loud problem for a
+   * silent coverage hole, which is the `qou/3fui` mistake in reverse.
+   */
+  onLoadFailure?: (failure: BlockLoadFailure) => void;
 }
 
 export function* walkBlocks(
@@ -716,12 +773,22 @@ export function* walkBlocks(
       if (st.isDirectory()) {
         yield* recurse(full);
       } else if (entry.endsWith(".ts")) {
-        // Skip chapter / paper manifests by checking the export shape.
-        let manifest = readBlockManifest(full);
-        if (!manifest && opts.includeUnlabelled) {
-          manifest = readUnlabelledBlockManifest(full);
-        }
+        // Skip chapter / paper manifests by checking the export shape. The
+        // masked builder-call match is the gate on what may be *executed*
+        // below; the label is a question about identity, answered after.
+        const textual = readBlockManifest(full);
+        // Reading the unlabelled shape costs a second read + mask, so only pay
+        // it when someone can act on the answer.
+        const unlabelled =
+          textual || !(opts.verify || opts.includeUnlabelled)
+            ? undefined
+            : readUnlabelledBlockManifest(full);
+        if (!textual && !unlabelled) continue; // not a block manifest at all
+        const manifest = opts.verify
+          ? verifiedManifest(full, textual, unlabelled, opts)
+          : textualIdentity(textual, unlabelled);
         if (!manifest) continue;
+        if (!manifest.labelled && !opts.includeUnlabelled) continue;
         const root = full.slice(0, -3); // strip ".ts"
         const md = root + ".md";
         const lean = root + ".lean";
@@ -748,6 +815,82 @@ export function* walkBlocks(
     }
   }
   yield* recurse(rootDir);
+}
+
+/** Files already reported as unloadable, so a walk warns once per file. */
+const warnedBlockLoads = new Set<string>();
+
+type TextualManifest = { kind: string; label: string };
+/**
+ * `labelled` records whether the block has a real `label:` — which only the
+ * module can settle — as opposed to standing in under its slug. `walkBlocks`
+ * needs the distinction *after* verification, because a computed label makes a
+ * block labelled even though its source text does not say so.
+ */
+type VerifiedManifest = TextualManifest & { labelled: boolean };
+
+/** The reading `walkBlocks` has always used: whatever the source text says. */
+function textualIdentity(
+  textual: TextualManifest | undefined,
+  unlabelled: TextualManifest | undefined,
+): VerifiedManifest | undefined {
+  if (textual) return { ...textual, labelled: true };
+  if (unlabelled) return { ...unlabelled, labelled: false };
+  return undefined;
+}
+
+/**
+ * Replace a textually-read `{ kind, label }` with the one the module actually
+ * exports.
+ *
+ * On a throw the textual reading is kept and the failure reported: the block
+ * stays in the walk (so no criterion silently stops covering it) while the
+ * reason it could not be verified is visible. A `undefined` return from the
+ * loader means the default export is not a block after all — the candidate gate
+ * was fooled — which is likewise reported rather than silently dropped.
+ */
+function verifiedManifest(
+  tsPath: string,
+  textual: TextualManifest | undefined,
+  unlabelled: TextualManifest | undefined,
+  opts: WalkBlocksOptions,
+): VerifiedManifest | undefined {
+  const degraded = () => textualIdentity(textual, unlabelled);
+  try {
+    const loaded = loadBlockModuleSync(tsPath);
+    // A label the module actually carries. This is the only reading that can
+    // be trusted, and it is how a computed `label:` — invisible to the regex —
+    // becomes a labelled block rather than being skipped or mistaken for prose.
+    if (loaded) return { kind: loaded.kind, label: loaded.label, labelled: true };
+  } catch (e) {
+    report(tsPath, String(e).replace(/\s+/g, " ").slice(0, 300), opts);
+    return degraded();
+  }
+  // The loader found no labelled block. When the source had no textual label
+  // either, that agrees with `prose()` connective tissue and its slug identity
+  // stands. When the source *did* carry a label, the candidate gate was fooled
+  // by a file whose default export is not a block — a finding.
+  if (unlabelled) return { ...unlabelled, labelled: false };
+  report(
+    tsPath,
+    `default export is not a labelled block, but the source looks like a ` +
+      `manifest (read textually as ${textual?.kind} ${textual?.label})`,
+    opts,
+  );
+  return degraded();
+}
+
+function report(file: string, error: string, opts: WalkBlocksOptions): void {
+  if (opts.onLoadFailure) {
+    opts.onLoadFailure({ file, error });
+    return;
+  }
+  if (warnedBlockLoads.has(file)) return;
+  warnedBlockLoads.add(file);
+  console.warn(
+    `  ⚠ ${file} could not be loaded; using its source text for kind/label.\n` +
+      `      ${error}`,
+  );
 }
 
 // ── QA report IO ────────────────────────────────────────────────
