@@ -8,6 +8,10 @@
  * - `workflow_next`     — what is enabled *now*, with lane and skill
  * - `workflow_complete` — record a step, or a decision, and advance
  *
+ * A gateway that carries `folio:decision` is **computed**: the caller passes
+ * the facts a DMN table reads (`{ failCritical: 0, failMajor: 2 }`) and the
+ * table returns the branch. The agent reports numbers, not a verdict.
+ *
  * ## What this buys, and what it does not
  *
  * `workflow_next` is **derived** from the diagram, not asserted by whoever is
@@ -149,15 +153,23 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       outcome: z
         .string()
         .optional()
-        .describe("Required for a decision — one of the outcomes workflow_next listed"),
+        .describe("For a decision a person makes — one of the outcomes workflow_next listed"),
+      facts: z
+        .record(z.unknown())
+        .optional()
+        .describe(
+          "For a decision workflow_next reported as `computed by <table>`: the values " +
+            "it reads, e.g. { failCritical: 0, failMajor: 2 } from qa_sweep totals. " +
+            "The table returns the branch — do not pass `outcome` for these.",
+        ),
       actor: z.string().optional().describe("Who did it: a role, or an agent name"),
       note: z.string().optional().describe("What happened, for the instance history"),
     },
-    async ({ instance, node, outcome, actor, note }) => {
+    async ({ instance, node, outcome, facts, actor, note }) => {
       const state = loadInstance(root, instance);
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
       const model = await loadProcessModel(join(root, state.source.replace(`${root}/`, "")));
-      const next = complete(model, state, node, { outcome, actor, note });
+      const next = complete(model, state, node, { outcome, facts, actor, note });
       saveInstance(root, next);
       return text(describe(model, next));
     },

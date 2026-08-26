@@ -96,6 +96,9 @@
       <bpmn:outgoing>A06</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_LeanGreen" name="Build green, no sorries?">
+      <bpmn:extensionElements>
+        <folio:decision ref="decisions/lean-build-gate.dmn#Decision_LeanBuildGate" />
+      </bpmn:extensionElements>
       <bpmn:incoming>A06</bpmn:incoming>
       <bpmn:outgoing>A07</bpmn:outgoing>
       <bpmn:outgoing>A08</bpmn:outgoing>
@@ -143,7 +146,7 @@
     <bpmn:sequenceFlow id="A04" sourceRef="Task_Scaffold" targetRef="Task_AuthorBlocks" />
     <bpmn:sequenceFlow id="A05" sourceRef="Task_AuthorBlocks" targetRef="Task_Formalize" />
     <bpmn:sequenceFlow id="A06" sourceRef="Task_Formalize" targetRef="Gateway_LeanGreen" />
-    <bpmn:sequenceFlow id="A07" name="sorries remain" sourceRef="Gateway_LeanGreen" targetRef="Task_Formalize" />
+    <bpmn:sequenceFlow id="A07" name="not yet" sourceRef="Gateway_LeanGreen" targetRef="Task_Formalize" />
     <bpmn:sequenceFlow id="A08" name="green" sourceRef="Gateway_LeanGreen" targetRef="Task_Validate" />
     <bpmn:sequenceFlow id="A09" sourceRef="Task_Validate" targetRef="Task_Render" />
     <bpmn:sequenceFlow id="A10" sourceRef="Task_Render" targetRef="Task_Review" />

@@ -180,6 +180,13 @@ a background subagent, not the foreground.
   Today this is **advisory** — nothing stops you calling a capability tool
   directly. Whether to make it binding is argued in
   `docs/proposals/workflow-orchestration.md`.
+  **Some gateways are computed, not chosen.** One carrying `<folio:decision/>`
+  is backed by a DMN table in `docs/workflows/decisions/`: pass `facts` (e.g.
+  `{ failCritical: 0, failMajor: 2 }` from `qa_sweep` totals) and the table
+  returns the branch. `workflow_complete` refuses a hand-supplied `outcome`
+  there — asserting the answer would defeat the point. Adding one means adding
+  the `.dmn`, the `folio:decision` ref, and nothing else: the loader checks
+  every outcome the table can return names a real branch.
 - Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this

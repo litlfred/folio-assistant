@@ -31,7 +31,8 @@
 
 import { BpmnModdle } from "bpmn-moddle";
 import { readFileSync } from "node:fs";
-import { basename } from "node:path";
+import { basename, dirname, join } from "node:path";
+import { loadDecisionTable, possibleOutcomes, type DecisionTable } from "./decision-table.js";
 
 /** Element types the interpreter can walk faithfully. */
 const ACTIVITY_TYPES = [
@@ -65,6 +66,12 @@ export interface ProcessNode {
   skills: string[];
   /** True when `<folio:bean/>` marks this step as touching the work plan. */
   touchesWorkPlan: boolean;
+  /**
+   * `<folio:decision ref="decisions/x.dmn#Decision_Id"/>` on an exclusive
+   * gateway: its outcome is **computed** from a DMN table rather than chosen.
+   * Relative to the directory holding the `.bpmn`.
+   */
+  decisionRef?: string;
   /** `<bpmn:documentation>`, if the diagram carries one. */
   documentation?: string;
   /** For a call activity: the process it expands into. */
@@ -87,10 +94,18 @@ export interface ProcessModel {
   name: string;
   /** File this was read from, for error messages and provenance. */
   source: string;
+  /** Directory holding `source`, so a `folio:decision` ref resolves. */
+  dir: string;
   nodes: Map<string, ProcessNode>;
   flows: Map<string, ProcessFlow>;
   /** Every start event, in document order. */
   startNodes: string[];
+  /**
+   * Decision tables backing gateways that carry `folio:decision`, keyed by
+   * gateway id. Loaded with the process, so a missing table or one that cannot
+   * route is a *load* error rather than a surprise at the moment of decision.
+   */
+  decisions: Map<string, DecisionTable>;
 }
 
 export class UnsupportedBpmn extends Error {}
@@ -179,6 +194,7 @@ export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> 
       lane: laneOf.get(el.id),
       skills: ext.filter((v) => v.$type === "folio:skill" && v.ref).map((v) => v.ref!),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
+      decisionRef: ext.find((v) => v.$type === "folio:decision" && v.ref)?.ref,
       documentation: el.documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined,
       calledElement: el.calledElement,
       incoming: [],
@@ -205,15 +221,68 @@ export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> 
     throw new UnsupportedBpmn(`${basename(bpmnPath)}: no start event, so nothing can begin`);
   }
 
+  const decisions = await loadDecisions(bpmnPath, nodes, flows);
+
   return {
     id: proc.id,
     name: cleanName(proc.name) || proc.id,
     source: bpmnPath,
+    dir: dirname(bpmnPath),
     nodes,
     flows,
     startNodes,
+    decisions,
   };
 }
+
+/**
+ * Load every `folio:decision` table, and check each one can actually route.
+ *
+ * The check is the point. A table whose output is `"passed"` against a gateway
+ * whose flows are `yes` and `no` parses fine, evaluates fine, and then hands
+ * back an outcome that matches no branch — at the moment a decision is needed,
+ * which is the worst time to discover it. Every output literal in every rule
+ * must name one of the gateway's outgoing flows, verified when the process
+ * loads.
+ */
+async function loadDecisions(
+  bpmnPath: string,
+  nodes: Map<string, ProcessNode>,
+  flows: Map<string, ProcessFlow>,
+): Promise<Map<string, DecisionTable>> {
+  const out = new Map<string, DecisionTable>();
+  for (const node of nodes.values()) {
+    if (!node.decisionRef) continue;
+    if (node.kind !== "exclusive") {
+      throw new UnsupportedBpmn(
+        `${basename(bpmnPath)}: ${node.id} carries folio:decision but is a ` +
+          `${node.type}. Only an exclusive gateway routes on a decision.`,
+      );
+    }
+    const [file, decisionId] = node.decisionRef.split("#");
+    if (!file || !decisionId) {
+      throw new UnsupportedBpmn(
+        `${basename(bpmnPath)}: ${node.id} has folio:decision ref="${node.decisionRef}", ` +
+          `which is not \`path.dmn#DecisionId\``,
+      );
+    }
+    const table = await loadDecisionTable(join(dirname(bpmnPath), file), decisionId);
+
+    const branches = node.outgoing.map((f) => flows.get(f)!.name).filter(Boolean) as string[];
+    const unroutable = possibleOutcomes(table).filter((o) => !branches.includes(o));
+    if (unroutable.length > 0) {
+      throw new UnsupportedBpmn(
+        `${basename(bpmnPath)}: ${node.id} ("${node.name}") routes to ` +
+          `[${branches.join(", ")}], but ${decisionId} can return ` +
+          `[${unroutable.join(", ")}] — an outcome with no branch is a decision ` +
+          `that cannot be acted on.`,
+      );
+    }
+    out.set(node.id, table);
+  }
+  return out;
+}
+
 
 /** Whether a node is work someone does, as opposed to routing. */
 export function isActivity(node: ProcessNode): boolean {

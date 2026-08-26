@@ -1,6 +1,7 @@
 # Proposal — making agentic workflow execution deterministic
 
-**Status:** phase 1 landed, phases 2–3 proposed · **Bean:** `fq0b`
+**Status:** phase 1 landed · DMN gateways landed (§6) · phases 2–3 proposed
+**Beans:** `fq0b` (interpreter), `sx4z` (DMN), `dv3w` / `bcnl` (open)
 
 Agent workflows in this project are ad hoc. Skills are documents an agent
 fetches with `skill_fetch` and is *trusted* to follow; beans record what
@@ -180,26 +181,56 @@ The interpreter surfaces a **decision** when it reaches an exclusive gateway
 with no outcome supplied, rather than guessing. Ten such points exist across
 the six diagrams, and they are not all the same kind of question:
 
-| Gateway | Inputs | Deterministic? |
+| Gateway | Inputs | Status |
 |---|---|---|
-| `Build green, no sorries?` | `lean_status` | **Yes** — mechanical |
-| `Draft QA green?` | publication QA gates | **Yes** — mechanical |
-| `QC clean?` | IG Publisher QC | **Yes** — mechanical |
-| `FHIR valid?` | validator output | **Yes** — mechanical |
+| `Build green, no sorries?` | `lean_build`, `proof_status` | **Table shipped** |
+| `Draft QA green?` | `qa_sweep` totals | **Table shipped** |
+| `QC clean?` | IG Publisher QC | Mechanical, but no tool exists yet |
+| `FHIR valid?` | validator output | Mechanical, but no tool exists yet |
 | `Judgement call?` | is this clinical/scientific? | No — routing judgement |
 | `Accept, revise or discard?` | the findings | No — the editor's call |
 | `Approved?` | the draft as a whole | No — the review team's call |
 | `Clinically accurate?` | ground truth | No — SME's call |
 
-The mechanical half belongs in **DMN decision tables**, and this repo already
-has a `dmn-authoring` skill and a `dmn-authoring` schema. That converts four of
-ten decisions from "the agent decided" into "the table computed from a tool's
-output" — which is determinism in the strict sense, not merely recorded
-judgement. The other six should stay human, and the value of the workflow there
-is that the judgement is *recorded at a defined point* rather than implied by
-a commit.
+**Two corrections to an earlier draft of this section, both found by building
+it.** It named `lean_status` as the source for the Lean gate; `lean_status`
+checks whether the *toolchain* is installed, and the sorry counts come from
+`proof_status` (`proof-axis-dashboard --json`). And it claimed four tables were
+available: only two are. `QC clean?` and `FHIR valid?` are just as mechanical,
+but this repo ships no WHO/FHIR adapter, so their input names would have been
+invented — a table keyed to facts no tool emits is worse than no table, because
+it looks authoritative. They land when the adapter does.
 
-This is probably the highest ratio of determinism to effort on offer, and it is
+What shipped: a gateway carrying `<folio:decision ref="file.dmn#Decision_Id"/>`
+has its outcome **computed**. The caller passes facts, the table returns the
+branch, and `workflow_complete` **refuses a hand-supplied outcome** on such a
+gateway — being able to assert the answer would defeat the mechanism. The rule
+that fired is recorded in the instance history, so the audit trail says which
+table decided and why.
+
+Three things worth knowing about how the tables came out:
+
+- **The Lean gate is not "no sorries".** `proof-axis-dashboard` separates a
+  sorry standing in for an open conjecture — intentional — from a proof nobody
+  closed. A gate counting both would block on the conjectures the paper is
+  about, so the table reads `deferredSorries` only.
+- **Authoring the table fixed the diagram.** The branch was labelled
+  `sorries remain`, but a red build also routes there and is not a sorry.
+  Renamed to `not yet`. The label was wrong before the table existed; making
+  the decision explicit is what exposed it.
+- **The draft QA gate deliberately ignores two totals.** `fail_minor` does not
+  hold a draft, and `needs_agent` — criteria awaiting judgement — is the
+  business of the non-mechanical review lane, not of a mechanical publication
+  gate. Those are policy choices, and they now live in a table an editor can
+  change without touching code, which is the argument for DMN in the first
+  place.
+
+A validator runs at process load: every outcome a table can return must name
+one of the gateway's outgoing flows. A table that returns `"passed"` against a
+gateway branching on `yes`/`no` parses fine and evaluates fine, and would fail
+at the moment a decision is needed — the worst possible time to find out.
+
+This remains the highest ratio of determinism to effort on offer, and it is
 independent of the gating decision in §4.
 
 ---
@@ -226,9 +257,9 @@ they found — that is the criterion's job, and the criterion's tests.
 2. **Do phase 2 next** (beans ↔ instances). It is small, it removes a
    divergence risk that grows with use, and it does not require the §4
    decision.
-3. **Do the DMN tables for the four mechanical gateways** (§6), independently.
-   Best determinism per unit of work, and it uses a skill the repo already
-   ships.
+3. ~~Do the DMN tables for the four mechanical gateways~~ — **done for the two
+   whose tools exist** (§6). The remaining two wait on a WHO/FHIR adapter
+   rather than on a decision.
 4. **Decide §4 deliberately, and prefer the commit-boundary gate** to
    tool-by-tool gating. It bites where it matters, it is one place rather than
    twenty-five, and it is enforced by something other than an agent's

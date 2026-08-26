@@ -94,6 +94,9 @@
       <bpmn:outgoing>G05</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_QaGreen" name="Draft QA green?">
+      <bpmn:extensionElements>
+        <folio:decision ref="decisions/draft-qa-gate.dmn#Decision_DraftQaGate" />
+      </bpmn:extensionElements>
       <bpmn:incoming>G05</bpmn:incoming>
       <bpmn:outgoing>G06</bpmn:outgoing>
       <bpmn:outgoing>G08</bpmn:outgoing>

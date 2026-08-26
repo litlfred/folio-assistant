@@ -30,6 +30,7 @@
  */
 
 import { isActivity, type ProcessModel, type ProcessNode } from "./process-model.js";
+import { evaluate } from "./decision-table.js";
 
 export interface HistoryEntry {
   at: string;
@@ -83,6 +84,12 @@ export interface EnabledDecision {
   lane?: string;
   /** The outcomes that will be accepted, taken from the flow labels. */
   outcomes: string[];
+  /**
+   * Present when the gateway carries `folio:decision`: the outcome is
+   * **computed** from a DMN table, so supply `facts` rather than choosing.
+   * `facts` names exactly what the table reads.
+   */
+  computed?: { decision: string; facts: string[] };
 }
 
 export type Enabled = EnabledActivity | EnabledDecision;
@@ -197,12 +204,16 @@ export function enabled(model: ProcessModel, state: InstanceState): Enabled[] {
   return state.tokens.map((id) => {
     const node = model.nodes.get(id)!;
     if (node.kind === "exclusive") {
+      const table = model.decisions.get(node.id);
       return {
         kind: "decision" as const,
         node: node.id,
         name: node.name,
         lane: node.lane,
         outcomes: outcomesOf(model, node),
+        computed: table
+          ? { decision: table.id, facts: table.inputs.map((i) => i.expression) }
+          : undefined,
       };
     }
     return {
@@ -229,7 +240,13 @@ export function complete(
   model: ProcessModel,
   state: InstanceState,
   nodeId: string,
-  opts: { outcome?: string; actor?: string; note?: string } = {},
+  opts: {
+    outcome?: string;
+    /** For a gateway backed by a DMN table: the values it reads. */
+    facts?: Record<string, unknown>;
+    actor?: string;
+    note?: string;
+  } = {},
 ): InstanceState {
   if (state.status !== "running") {
     throw new WorkflowError(`instance ${state.id} is ${state.status}`);
@@ -247,7 +264,42 @@ export function complete(
   }
 
   let chosen: string | undefined;
-  if (node.kind === "exclusive") {
+  let computedNote: string | undefined;
+  const table = model.decisions.get(nodeId);
+  if (node.kind === "exclusive" && table) {
+    // Computed, not chosen. Accepting a hand-supplied outcome here would let the
+    // caller assert the very thing the table exists to derive.
+    if (opts.outcome) {
+      throw new WorkflowError(
+        `${nodeId} ("${node.name}") is computed by ${table.id}, not chosen. ` +
+          `Pass facts (${table.inputs.map((i) => i.expression).join(", ")}) ` +
+          `instead of outcome.`,
+      );
+    }
+    if (!opts.facts) {
+      throw new WorkflowError(
+        `${nodeId} ("${node.name}") is computed by ${table.id}. Supply facts: ` +
+          table.inputs
+            .map((i) => `${i.expression}${i.label ? ` (${i.label})` : ""}`)
+            .join(", "),
+      );
+    }
+    const result = evaluate(table, opts.facts);
+    const outcomes = outcomesOf(model, node);
+    const idx = outcomes.findIndex((o) => o === String(result.outcome));
+    if (idx === -1) {
+      // Unreachable while loadProcessModel's check holds; kept so a future
+      // loosening of that check cannot turn into a silent mis-route.
+      throw new WorkflowError(
+        `${table.id} returned "${result.outcome}", which is not a branch of ${nodeId} ` +
+          `(${outcomes.join(", ")})`,
+      );
+    }
+    chosen = node.outgoing[idx];
+    computedNote =
+      `${table.id} → ${result.outcome} by ${result.rule}` +
+      (result.ruleDescription ? ` (${result.ruleDescription})` : "");
+  } else if (node.kind === "exclusive") {
     const outcomes = outcomesOf(model, node);
     if (!opts.outcome) {
       throw new WorkflowError(
@@ -270,7 +322,8 @@ export function complete(
     node: nodeId,
     outcome: chosen ? model.flows.get(chosen)!.name : undefined,
     actor: opts.actor,
-    note: opts.note,
+    // The rule that fired is the audit trail: "which table said so, and why".
+    note: [opts.note, computedNote].filter(Boolean).join(" · ") || undefined,
   });
 
   const flowIds = chosen ? [chosen] : node.outgoing;
@@ -301,10 +354,15 @@ export function describe(model: ProcessModel, state: InstanceState): string {
     lines.push("", "  enabled now:");
     for (const e of open) {
       if (e.kind === "decision") {
-        lines.push(
-          `    ? ${e.name}  [${e.node}]${e.lane ? `  — ${e.lane}` : ""}`,
-          `        choose one of: ${e.outcomes.join(" | ")}`,
-        );
+        lines.push(`    ? ${e.name}  [${e.node}]${e.lane ? `  — ${e.lane}` : ""}`);
+        if (e.computed) {
+          lines.push(
+            `        computed by ${e.computed.decision} — supply facts: ${e.computed.facts.join(", ")}`,
+            `        it will route to one of: ${e.outcomes.join(" | ")}`,
+          );
+        } else {
+          lines.push(`        choose one of: ${e.outcomes.join(" | ")}`);
+        }
       } else {
         lines.push(
           `    • ${e.name}  [${e.node}]${e.lane ? `  — ${e.lane}` : ""}`,
