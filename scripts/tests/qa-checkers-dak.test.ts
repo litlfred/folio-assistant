@@ -25,6 +25,7 @@ import {
   checkDakLabelPrefixMatchesKind,
   DAK_AUTOMATED_CHECKERS,
   REQUIRED_COMPANION,
+  WORKBOOK_BACKED_KINDS,
 } from "../../content/pipeline/qa-checkers-dak";
 import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry";
 import { criterionAdapters } from "../../schemas/block-qa";
@@ -43,6 +44,8 @@ beforeAll(() => {
   writeFileSync(p("dt-shell.dmn"), `<?xml version="1.0"?><definitions/>\n`);
 
   writeFileSync(p("dt-naked.ts"), `export default decisionTable({ label: "dt:naked" });\n`);
+  writeFileSync(p("bp-naked.ts"), `export default businessProcess({ label: "bp:naked" });\n`);
+  writeFileSync(p("cql-naked.ts"), `export default cqlLibrary({ label: "cql:naked" });\n`);
 
   writeFileSync(p("bp-good.ts"), `export default businessProcess({ label: "bp:good" });\n`);
   writeFileSync(
@@ -76,9 +79,9 @@ describe("dak-companion-present", () => {
   });
 
   test("fails a manifest with no artefact — the case depends_on could not express", () => {
-    const r = checkDakCompanionPresent({ ts: p("dt-naked.ts") });
+    const r = checkDakCompanionPresent({ ts: p("cql-naked.ts") });
     expect(r.result).toBe("fail");
-    expect(r.hits[0]!.text).toContain("no .dmn companion");
+    expect(r.hits[0]!.text).toContain("no .cql companion");
   });
 
   test("ignores a paper block entirely", () => {
@@ -94,8 +97,31 @@ describe("dak-companion-present", () => {
 
   test("every kind with a required companion is one this can check", () => {
     for (const [, role] of Object.entries(REQUIRED_COMPANION)) {
-      expect(["bpmn", "dmn", "fsh", "cql"]).toContain(role);
+      expect(["bpmn", "fsh", "cql"]).toContain(role);
     }
+  });
+
+  test("workbook-backed kinds require no companion — measured, not overlooked", () => {
+    // Zero .dmn files exist across smart-dak-immz, smart-dak-bds and
+    // smart-immunizations: WHO authors decision-support logic as a
+    // spreadsheet, and one workbook covers MANY blocks. Requiring a per-block
+    // artefact would report a defect in every one of them, in a corpus that is
+    // correctly formed.
+    for (const k of WORKBOOK_BACKED_KINDS) {
+      expect(REQUIRED_COMPANION[k]).toBeUndefined();
+    }
+    expect(WORKBOOK_BACKED_KINDS).toContain("decision-table");
+  });
+
+  test("a decision-table with no artefact is NOT flagged", () => {
+    const r = checkDakCompanionPresent({ ts: p("dt-naked.ts") });
+    expect(r.result).toBe("pass");
+  });
+
+  test("a business-process with no .bpmn IS flagged — one file per process", () => {
+    const r = checkDakCompanionPresent({ ts: p("bp-naked.ts") });
+    expect(r.result).toBe("fail");
+    expect(r.hits[0]!.text).toContain("no .bpmn companion");
   });
 });
 

@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T18:40:00Z
+updated_at: 2026-08-26T19:10:00Z
 ---
 
 
@@ -389,3 +389,40 @@ folio content") carried verbatim onto the manifest rather than paraphrased.
 **Still open:** the five dak axes have never run on real content (no DAK corpus
 exists); 33 dangling refs are qou content defects; promotion library→content
 remains manual by design.
+
+## DAK axes vs real WHO content (§12.13)
+
+Three real repos: smart-dak-immz 3fe6a17, smart-dak-bds 6953ede,
+smart-immunizations 12ec2fc (L3).
+
+**Best result:** the block/companion model is not imposed — WHO already uses
+it. 279 .cql ↔ 279 .fsh Library instances pairing 1:1 by stem; 8 business
+processes as 8 .bpmn.
+
+Checkers that could run: `dak-bpmn-has-process` 8/8 pass on real WHO BPMN;
+`dak-fsh-declares-kind` 739/739 verdicts agree with ground truth.
+
+**Design error found.** REQUIRED_COMPANION mapped decision-table and
+scheduling-logic to `.dmn`, following this repo's own dmn-authoring skill and
+the l2-dak-authoring BPMN. **Zero .dmn across all three repos** — WHO ships
+decision-support logic as .xlsx. Would have failed every decision-table block
+for an artefact WHO doesn't produce. Deeper cause is structural: ONE WORKBOOK
+HOLDS MANY BLOCKS (one spreadsheet covers every decision table, one dictionary
+every data element), so a per-block companion doesn't exist until an extraction
+stage splits them — the DAK counterpart of Stage B, not built. Six kinds now in
+WORKBOOK_BACKED_KINDS, exempt by measurement.
+
+**A strengthening the data vetoed.** Was about to key dak-fsh-declares-kind on
+`InstanceOf:` to discriminate the five Instance-mapped kinds. Real WHO FSH names
+PROFILE URLs, not resource types: 138 cpg-recommendationdefinition, 41
+proportion-measure-cqfm vs 279 bare Library. Would have caused 138 false
+failures on a correct corpus. Stays coarse; resolving profiles is SUSHI's job.
+
+**Honest limit:** 3 of 5 axes check manifest↔artefact relationships, and real
+WHO repos have artefacts but no folio manifests. Only the artefact-reading half
+is validated. Full exercise needs DAK blocks authored over this content.
+
+Also unmodelled: WHO ships CodeSystem (6) and ConceptMap (3) FSH resources with
+no corresponding DAK block kind.
+
+891 pass / 0 fail, typecheck + lint clean.

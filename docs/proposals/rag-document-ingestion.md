@@ -1187,3 +1187,71 @@ answers a narrower question than the caller asked; it is now reported.
 - The 33 dangling references in qou are content defects there, reported and
   unrepaired.
 - Promotion (`library/` node → `content/` block) is still manual, as designed.
+
+### 12.13 The DAK axes against real WHO content
+
+§12.12 closed with the `dak` axes exercised only by fixtures. Run against three
+real repositories — `smart-dak-immz` (`3fe6a17`), `smart-dak-bds` (`6953ede`),
+and `smart-immunizations` (`12ec2fc`, the L3 side).
+
+#### The model was not imposed; WHO already uses it
+
+The strongest result is one I did not expect to be able to state. In
+`smart-immunizations` there are **279 `.cql` files and 279 `.fsh` `Library`
+instances, pairing 1:1 by file stem**. That is exactly the block/companion
+model — one stem, several artefacts — already present in published WHO content.
+Likewise 8 business processes as 8 `.bpmn` files.
+
+#### The checkers that could run, did
+
+| Axis | Real input | Result |
+|---|---|---|
+| `dak-bpmn-has-process` | 8 real WHO `.bpmn` | **8 pass / 0 fail** |
+| `dak-fsh-declares-kind` | 739 real WHO `.fsh` | **739/739 verdicts agree with ground truth** |
+
+#### A design error the real content exposed
+
+`REQUIRED_COMPANION` mapped `decision-table` and `scheduling-logic` to `.dmn`,
+on the strength of this repo's own `dmn-authoring` skill and the "Decision
+logic · DMN tables" activity in `docs/workflows/l2-dak-authoring.bpmn`.
+
+**There are zero `.dmn` files across all three repositories.** WHO authors
+decision-support logic as a spreadsheet —
+`input/decision-logic/IMMZ DAK_decision-support logic.xlsx`. The requirement
+would have failed every `decision-table` block for a missing artefact WHO does
+not produce.
+
+The deeper reason is structural, not a matter of swapping one extension for
+another: **one workbook holds many blocks.** A single decision-support
+spreadsheet covers every decision table, one dictionary every data element, one
+indicators file every indicator. A per-block companion does not exist until an
+extraction stage splits them — the DAK counterpart of Stage B, and not built.
+Those six kinds are now recorded in `WORKBOOK_BACKED_KINDS` and require no
+companion, so the exemption reads as a measurement rather than an oversight.
+
+#### A check the real content told me *not* to strengthen
+
+`dak-fsh-declares-kind` maps five kinds to `Instance:` and so cannot tell a
+PlanDefinition from a Measure. Strengthening it to read `InstanceOf:` was the
+obvious next move. Real content says no: `InstanceOf` names a **profile URL**
+far more often than a resource type — 138 `cpg-recommendationdefinition`, 41
+`proportion-measure-cqfm`, against 279 bare `Library`. A check keyed on
+resource-type names would have produced **138 false failures on a
+correctly-formed corpus**. Discriminating properly means resolving profiles to
+their bases, which is SUSHI's job. The check stays coarse on purpose.
+
+#### What still cannot be exercised
+
+Three of the five axes — `dak-companion-present`, `dak-fsh-declares-kind`
+end-to-end, and `dak-label-prefix-matches-kind` — check the relationship
+between a **folio manifest** and its artefact. Real WHO repositories have the
+artefacts and no folio manifests, so only the artefact-reading half could be
+validated (which is what the 739/739 figure measures). Exercising them fully
+means authoring DAK blocks over this content, which is the next piece of work.
+
+`dak-dmn-has-decision-table` is correct where a `.dmn` exists and, on this
+evidence, may never fire against WHO content. It is kept for folios that author
+DMN directly, per `dmn-authoring`.
+
+Also observed and not yet modelled: WHO ships `CodeSystem` (6) and `ConceptMap`
+(3) FSH resources, which have no corresponding DAK block kind.

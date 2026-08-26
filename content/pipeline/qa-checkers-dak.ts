@@ -39,11 +39,42 @@ import type { CheckerPaths } from "../../schemas/block-qa";
 import type { CheckerResult } from "./qa-checkers-extended";
 import { DAK_LABEL_PREFIXES, type DakBlockKind } from "../../schemas/block-kinds";
 
-/** The companion each DAK kind must carry to be more than a stub. */
-export const REQUIRED_COMPANION: Partial<Record<DakBlockKind, "bpmn" | "dmn" | "fsh" | "cql">> = {
+/**
+ * The companion each DAK kind must carry to be more than a stub.
+ *
+ * **Only kinds whose artefact is genuinely one-file-per-block appear here**,
+ * and the list is what real WHO content actually contains rather than what the
+ * authoring skills describe. Measured across `smart-dak-immz`, `smart-dak-bds`
+ * and `smart-immunizations`:
+ *
+ * | Kind | Artefact | Evidence |
+ * |---|---|---|
+ * | `business-process` | `.bpmn` | 8 processes, 8 files |
+ * | `cql-library` | `.cql` | 279 files, pairing 1:1 by stem with 279 `.fsh` Library instances |
+ * | FHIR kinds | `.fsh` | 739 files |
+ *
+ * ## Why `decision-table` is NOT here
+ *
+ * An earlier version required a `.dmn` for `decision-table` and
+ * `scheduling-logic`, on the strength of this repo's own `dmn-authoring` skill
+ * and the "Decision logic · DMN tables" activity in
+ * `docs/workflows/l2-dak-authoring.bpmn`. Measured against real content there
+ * are **zero `.dmn` files across all three repositories** — WHO authors
+ * decision-support logic as a spreadsheet
+ * (`input/decision-logic/IMMZ DAK_decision-support logic.xlsx`). The
+ * requirement would have failed every decision-table block for a missing
+ * artefact WHO does not produce.
+ *
+ * The deeper reason those kinds cannot have a required companion is that one
+ * workbook holds **many** blocks: a single decision-support spreadsheet covers
+ * every decision table, one dictionary covers every data element, one
+ * indicators file covers every indicator. A per-block companion does not
+ * exist until an extraction stage splits them, which is the DAK counterpart of
+ * Stage B and is not built. Requiring one now would report a defect in every
+ * such block, in a corpus that is correctly formed.
+ */
+export const REQUIRED_COMPANION: Partial<Record<DakBlockKind, "bpmn" | "fsh" | "cql">> = {
   "business-process": "bpmn",
-  "decision-table": "dmn",
-  "scheduling-logic": "dmn",
   "cql-library": "cql",
   "logical-model": "fsh",
   profile: "fsh",
@@ -54,6 +85,20 @@ export const REQUIRED_COMPANION: Partial<Record<DakBlockKind, "bpmn" | "dmn" | "
   measure: "fsh",
   "actor-definition": "fsh",
 };
+
+/**
+ * Kinds whose artefact lives inside a shared workbook rather than a file of
+ * their own. Recorded so the omission above reads as a measurement rather than
+ * an oversight.
+ */
+export const WORKBOOK_BACKED_KINDS: readonly DakBlockKind[] = [
+  "decision-table",
+  "scheduling-logic",
+  "data-element",
+  "indicator",
+  "functional-requirement",
+  "non-functional-requirement",
+];
 
 const pass = (): CheckerResult => ({ result: "pass", hits: [] });
 
@@ -84,8 +129,10 @@ function kindOf(tsPath: string | undefined): string | undefined {
 /**
  * The manifest declares a kind whose artefact is missing.
  *
- * A `decision-table` with no `.dmn` is a title and a label — it looks like
- * content in every listing and carries none.
+ * A `business-process` with no `.bpmn` is a title and a label — it looks like
+ * content in every listing and carries none. Applies only to the kinds in
+ * {@link REQUIRED_COMPANION}; workbook-backed kinds are exempt by measurement,
+ * not by omission.
  */
 export function checkDakCompanionPresent(paths: CheckerPaths): CheckerResult {
   const builder = kindOf(paths.ts);
@@ -137,6 +184,20 @@ export function checkDakDmnHasDecisionTable(paths: CheckerPaths): CheckerResult 
  *
  * Catches the copy-paste error that a schema cannot: a block labelled
  * `vs:danger-signs` whose `.fsh` actually declares a `Profile`.
+ *
+ * ## Why this stays coarse
+ *
+ * Five kinds map to `Instance:`, so this cannot tell a PlanDefinition from a
+ * Measure. Strengthening it to check `InstanceOf:` was the obvious next step
+ * and real content says no: across `smart-immunizations`, `InstanceOf` names a
+ * **profile URL** far more often than a resource type — 138
+ * `cpg-recommendationdefinition`, 41 `proportion-measure-cqfm`, alongside 279
+ * bare `Library`. A check keyed on resource-type names would have produced 138
+ * false failures on a correctly-formed corpus.
+ *
+ * Discriminating properly means resolving profiles to their base resources,
+ * which is SUSHI's job and the L3 pipeline's. This checker stays a presence
+ * check on purpose.
  */
 const FSH_DECLARATION: Partial<Record<DakBlockKind, RegExp>> = {
   profile: /^\s*Profile\s*:/m,
