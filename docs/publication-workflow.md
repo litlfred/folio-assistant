@@ -101,6 +101,17 @@ strict, it would be a suggestion.
 it runs in CI, so one that has stopped applying is a build failure rather than a
 discovery on the day it is needed.
 
+**The commit boundary is where this is enforced rather than merely answerable.**
+`scripts/check-corpus-gate.ts`, run in the folio repo from a pre-commit hook or
+CI, refuses a changed content block that no instance records the editor having
+authorised. `workflow_gate` answers an agent that asks; the hook does not depend
+on anyone asking.
+
+```sh
+bun run <platform>/scripts/check-corpus-gate.ts --staged --platform <platform>
+bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradually
+```
+
 ### How to read them
 
 - **A lane is a role.** Every lane maps to an actor in

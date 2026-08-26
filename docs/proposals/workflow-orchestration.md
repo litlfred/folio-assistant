@@ -1,9 +1,9 @@
 # Proposal — making agentic workflow execution deterministic
 
-**Status:** phases 1–2 landed · DMN gateways landed (§6) · §4 decided and the
-policy layer landed; the commit-boundary hook is what remains
+**Status:** phases 1–3 landed · DMN gateways landed (§6) · §4 decided, the
+policy layer and the commit-boundary gate in place
 **Beans:** `fq0b` (interpreter), `sx4z` (DMN), `dv3w` (work-plan loop),
-`bcnl` (the §4 decision — open)
+`bcnl` (the §4 decision), `4100` (the commit-boundary gate)
 
 Agent workflows in this project are ad hoc. Skills are documents an agent
 fetches with `skill_fetch` and is *trusted* to follow; beans record what
@@ -154,10 +154,40 @@ decide and augment with relaxation guidance, if any.** That is now implemented.
   applying — the activity was renamed, or became non-relaxable — is a build
   failure rather than a discovery on the day it is needed.
 
-What ships today: `workflow_gate` answers "may this step be performed now?"
-Wiring it into each capability tool, and into a pre-commit or CI check at the
-corpus boundary, is the remaining work — the policy layer it would consult is
-in place and tested.
+**The commit boundary is now enforced** (`4100`).
+`scripts/check-corpus-gate.ts` runs in the *folio* repo, from a pre-commit hook
+or from CI, and refuses a changed block that no instance records the editor
+having authorised:
+
+```sh
+bun run <platform>/scripts/check-corpus-gate.ts --staged  --platform <platform>
+bun run <platform>/scripts/check-corpus-gate.ts --since origin/main --platform <platform>
+bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradually
+```
+
+This is the piece that does not depend on asking. `workflow_gate` tells an
+agent whether a step is enabled *if it asks*; the hook does not care whether
+anyone asked. Four properties make it a gate rather than a formality:
+
+- **It refuses by default.** No instance, or an instance that has not reached
+  the editor's decision, or a change the editor *discarded* — all refused.
+- **It refuses when it cannot tell.** A file that reads as a block manifest but
+  will not import is refused, not waved through: a gate that fails open reports
+  clean by not looking. A malformed `workflow-policy.json` stops the gate
+  rather than quietly becoming "no relaxations", which would refuse work a
+  package had legitimately declared.
+- **It ignores what is not a corpus write.** `.qa.json` is machine-written by
+  the sweep; gating it would make every sweep look like an unauthorised edit.
+  Helper modules and chapter manifests are not blocks.
+- **Cost is O(the diff).** Only changed files are imported, gated by the cheap
+  textual check first — the same split `walkBlocks` uses, so a script with a
+  builder call in a template literal is not executed here either.
+
+Installing the hook is a one-liner the folio owner writes, not something a
+script does behind their back.
+
+Still open: per-capability-tool gating. It remains the more invasive option and
+the commit boundary covers the case that matters.
 
 **The costs, which stand as stated:**
 
@@ -314,8 +344,8 @@ they found — that is the criterion's job, and the criterion's tests.
    whose tools exist** (§6). The remaining two wait on a WHO/FHIR adapter
    rather than on a decision.
 4. ~~Decide §4~~ — **decided and implemented**: strict base, declared
-   relaxations, five un-relaxable steps (§4). What remains is wiring
-   `workflow_gate` into the commit boundary.
+   relaxations, five un-relaxable steps, and the commit boundary enforced by
+   `check-corpus-gate.ts` (§4).
 
 ---
 

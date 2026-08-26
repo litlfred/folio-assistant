@@ -189,6 +189,12 @@ a background subagent, not the foreground.
   seeing the findings, the decision, the write, and release authorisation).
   `bun run check:workflow-policy` validates every relaxation and runs in CI.
   Rationale: `docs/proposals/workflow-orchestration.md` §4.
+  **The commit boundary enforces it.** `scripts/check-corpus-gate.ts`, run in a
+  folio repo from a pre-commit hook or CI, refuses a changed block that no
+  instance records the editor having authorised — no instance, not past the
+  decision, or discarded. It refuses when it cannot tell, too: a file that reads
+  as a manifest but will not import is refused rather than waved through.
+  `.qa.json` is excluded (the sweep writes it). Use `--warn` to adopt gradually.
   **Some gateways are computed, not chosen.** One carrying `<folio:decision/>`
   is backed by a DMN table in `docs/workflows/decisions/`: pass `facts` (e.g.
   `{ failCritical: 0, failMajor: 2 }` from `qa_sweep` totals) and the table
