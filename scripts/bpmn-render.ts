@@ -24,6 +24,20 @@
  * Viewer cannot register an element as both a shape and a plane root — see
  * `RenderResult.extraPlanes`. The count is reported, never dropped.
  *
+ * ## Not to be confused with `render-bpmn.ts`
+ *
+ * The names are unhelpfully close, so: `render-bpmn.ts` is the **docs
+ * pipeline** — fixed input (`docs/workflows/`), fixed output
+ * (`docs/assets/img/workflows/`), and a `--check` staleness gate CI runs. This
+ * file is the **library** — arbitrary inputs, exported functions, sub-process
+ * plane handling — and is what WHO DAK content goes through. `render-bpmn.ts`
+ * imports {@link chromiumExecutable} from here rather than keeping a second
+ * copy of the probe.
+ *
+ * They are not merged because their contracts differ: applying
+ * {@link keepPrimaryPlane} to the docs sources could change committed SVGs and
+ * so break the very gate that guards them.
+ *
  * Usage:
  *   bun run scripts/bpmn-render.ts <file.bpmn|dir> -o OUTDIR
  *

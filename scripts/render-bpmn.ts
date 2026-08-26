@@ -17,6 +17,7 @@ import { chromium } from "@playwright/test";
 import { readdir, readFile, writeFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
+import { chromiumExecutable } from "./bpmn-render";
 
 const ROOT = resolve(import.meta.dir, "..");
 const SRC_DIR = join(ROOT, "docs/workflows");
@@ -41,7 +42,12 @@ if (sources.length === 0) {
 
 // Honour an explicitly provided Chromium when the sandbox ships a build that
 // does not match the version @playwright/test pins (CHROMIUM_PATH=/path/to/chrome).
-const executablePath = process.env.CHROMIUM_PATH || undefined;
+//
+// Falling back to a probe of PLAYWRIGHT_BROWSERS_PATH, because an explicit
+// variable only helps someone who already knows the build numbers disagree.
+// Without it this gate fails on a sandbox that *has* a usable Chromium, with an
+// error telling the reader to re-download browsers — which is blocked here.
+const executablePath = process.env.CHROMIUM_PATH || chromiumExecutable();
 const browser = await chromium.launch(executablePath ? { executablePath } : {});
 const page = await browser.newPage();
 await page.setContent(`<!doctype html><html><body><div id="canvas"></div></body></html>`);
