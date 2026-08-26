@@ -649,3 +649,157 @@ at `content/**` (§2c).
    (consuming `smart-base` extractors) or authoring support for **new**
    DAKs (producing artefacts those extractors read)? The skills package
    suggests the latter; §9 assumed both.
+
+---
+
+## 12. The schema decision: a JSON-LD graph, one file per node
+
+§§1–11 chose the *tools*. They left the **schema** unaddressed, and the flat
+`pdf-structure/v1` artefact is the direct consequence: `sections[]` is a list
+with a `level` integer, carrying no figures, no tables, no cross-references
+and no parent pointers. This section settles the schema, and the constraints
+that decided it were the author's:
+
+1. an **independent standard** wherever one exists,
+2. a **graph**, not a flat list,
+3. **no XML** in the stored form,
+4. each content block **standing alone** as its own file.
+
+### 12.1 What is not a standard
+
+`DoclingDocument` was the obvious anchor for the physical layer and it does
+not survive constraint (1). It is a set of **Pydantic models** in
+`docling-core` — MIT, contributed by IBM to LF AI & Data in April 2025 — with
+no specification document, no standards body, and no meaningful non-Python
+implementation. LF AI & Data confers neutral *maintenance*, not an independent
+*spec*; adopting it would put the artefact format on a library's release
+cadence. **Docling stays an input adapter and never the stored schema.**
+
+### 12.2 Tree standards, graph vocabularies
+
+Constraints (2) and (3) turn out to be the same constraint. Every mainstream
+*document* standard is XML and therefore a tree — JATS (ANSI/NISO Z39.96),
+TEI P5, DocBook (OASIS), Akoma Ntoso (OASIS), FHIR's XML form. Cross-references
+in all of them are ID-pointer attributes: edges smuggled through a hierarchy.
+
+TEI deserves its own note because it comes closest and still fails. It has
+`@xml:id` with `@target`/`@corresp`/`@ana`, and `<standOff>` puts annotation
+graphs outside the transcribed text — so a graph is *expressible*. But a TEI
+document is one well-formed XML document, so constraint (4) can only be met by
+wrapping every block in its own `<TEI>` with its own `<teiHeader>`, turning
+every pointer into a cross-document URI. That is a worse JSON-LD.
+
+The vocabularies, by contrast, are RDF and carry no XML commitment at all:
+**DoCO** and **DEO** (SPAR, OWL, permanent `purl.org/spar/*` IRIs),
+**Web Annotation**, **PROV-O** and **SKOS** (W3C Recommendations), and FHIR's
+JSON and RDF serialisations. So the rule is: **vocabulary from the standards,
+model from RDF, serialisation in JSON-LD.** XML formats remain export targets
+— JATS for scholarly exchange, FHIR for WHO, AKN for jurisdictional policy —
+never stored forms.
+
+Akoma Ntoso survives in one specific and load-bearing respect: its **naming
+convention** is a URI scheme, not XML, and its FRBR
+Work/Expression/Manifestation split is the only candidate that models a
+translation as *the same recommendation* and a national adaptation as a
+*derived* one. WHO publishes in six languages and this platform expects other
+countries and regions, so that is a requirement rather than a nicety.
+
+### 12.3 Authored blocks: TypeScript stays
+
+Content blocks are **not** migrating to JSON-LD. The `.ts` manifest remains
+the authoring surface and the source of truth, because:
+
+- the builders exist for author-time type checking, which no JSON Schema
+  matches in an editor;
+- `block-module.ts` loads blocks by `import`, and a manifest that throws is
+  treated as a *finding* — the import is itself a validation step;
+- the doc comments in `BlockBase` are this project's actual specification.
+
+Instead, each block gains a generated **`<block>.jsonld` sibling**, joining
+`.md` and `.lean` as one more `Companions` role. Generated, never hand-edited,
+gated on drift (`.github/workflows/jsonld-gen-check.yml`), exactly as
+`docs/reference/skills/*` already is.
+
+The sibling is committed rather than built into a directory for the same
+reason §10 commits parse artefacts: a session with no egress and no toolchain
+must still be able to *consume* them, and an external consumer needs a stable
+URL. The payoff is that `library/**` nodes and `content/**` blocks become one
+population — same `@context`, same `@type` vocabulary, same edge terms — so a
+graph loader is one glob rather than two code paths.
+
+### 12.4 The hazard: labels are not compact IRIs
+
+The one genuine trap, recorded because it fails silently.
+
+A folio label has the shape of a JSON-LD compact IRI — `def:foo` reads as
+`prefix:reference` — and is not one. `def:` names a **block kind**, not a
+namespace, and JSON-LD splits on the **first** colon:
+
+| Reference | Naive JSON-LD reading | Result |
+|---|---|---|
+| `https://…#def:bar` | absolute IRI | correct |
+| `def:quantum-universe` | prefix `def` → per-*kind* namespace | wrong axis |
+| `unital-groebner-bases:cor:pbw` | undefined prefix → **valid absolute IRI** with scheme `unital-groebner-bases` | well-formed, meaningless |
+
+The second row is the dangerous one: the same block referenced from inside its
+paper and from another would land on **two different IRIs**, so every graph
+join under-counts with no error raised anywhere.
+
+The fix is that labels are never emitted as IRIs. `resolveLabel()` mints `@id`
+from all three authored forms — including the nested-namespace form
+`ns:paper:prop:foo` that `citesProvable` documents — and the authored string is
+preserved verbatim in `folio:label` for grep and round-tripping. A reference it
+cannot parse returns `undefined` and is **reported**, never emitted as a
+plausible-looking IRI. **No content changes.**
+
+Emitted `@id`s are relative (`papers/<paper>/blocks/def-foo`) with `@base` in
+the published context, so changing where a folio is deployed does not rewrite
+thousands of committed files.
+
+### 12.5 What landed
+
+| Artefact | Purpose |
+|---|---|
+| `schemas/jsonld.ts` | Namespaces, kind→type maps, `parseReference`/`resolveLabel`, the `@context` value |
+| `ns/content/v1.jsonld` | The published context, generated |
+| `scripts/gen-jsonld-context.ts` | Emits it; `--check` gates it |
+| `content/pipeline/gen-block-jsonld.ts` | Emits `<block>.jsonld`; `--check` gates drift |
+| `scripts/tests/jsonld-label-resolution.test.ts` | All three reference tiers + both silent-failure modes |
+| `scripts/tests/gen-block-jsonld.test.ts` | Emitter end-to-end over a synthetic paper |
+| `.github/workflows/jsonld-gen-check.yml` | The CI drift gate |
+
+The DoCO co-typing is deliberately **partial**: `simulator` has no DoCO
+counterpart and gets none. Guessing would put wrong triples in a published
+graph, which is worse than leaving a kind untyped.
+
+The same discipline caught a real error while this was being written. The
+containment term was first mapped to `doco:contains`, which **does not
+exist** — DoCO imports `po:contains` from the Pattern Ontology instead. With
+`sparontologies.github.io` egress-blocked from a sandboxed session, the
+Pattern Ontology namespace could not be confirmed either, so `contains` maps
+to `dcterms:hasPart` — `po:contains`'s documented super-property, and
+therefore a sound generalisation rather than a guess. `certainty` is omitted
+for the same reason: it must bind to FHIR's GRADE value set, and that
+predicate wants checking against a real IG rather than inventing. Both narrow
+when the ingest writer lands and the IRIs can be verified.
+
+The general rule this establishes: **a published `@context` never carries an
+unverified IRI.** Under-claim with a verified broader term, or leave the term
+out.
+
+### 12.6 Still open
+
+- **Ingest node granularity** — section-level nodes, or every theorem, figure,
+  table and recommendation as its own file? The latter is ~7,313 sections
+  expanding to perhaps 40–60k small files. Section-level nodes with sub-blocks
+  as annotations until promoted is the cheaper staging. Unresolved; it affects
+  only the ingest writer, not anything in §12.5.
+- **`@id` as a public contract** — once anything annotates a block, renaming
+  its label breaks that reference. Recommended: readable IDs plus a
+  `folio:supersededBy` tombstone on rename. Not yet implemented.
+- **`@id` scheme for papers** — AKN's FRBR syntax is native to legal
+  instruments; applying it to a preprint is off-label. Proposed: AKN IRIs for
+  jurisdictional policy, a parallel `folio:` scheme for papers, same
+  Work/Expression/Manifestation pattern.
+- **Emit real RDF, or JSON-LD-shaped JSON?** The latter is cheaper, stays
+  greppable, and fits a 2 vCPU host. Nothing here forecloses the former.

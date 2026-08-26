@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-15T15:31:11Z
+updated_at: 2026-08-26T14:30:00Z
 ---
 
 
@@ -85,3 +85,50 @@ must now bind to a certainty/quality/evidence noun.
 keep doing so until a real guideline runs through it. Only affects the
 who-l1 class; the 332 math-class candidates are unchanged (extract_math
 never touches RE_GRADE).
+
+## Schema layer decided and built (§12)
+
+The landed assessment chose *tools* and left the *schema* open, which is why
+`pdf-structure/v1` is a flat `sections[]` with a `level` int. Author's
+constraints settled it: an independent standard where one exists, a graph not
+a flat list, no XML stored, each block standing alone as a file.
+
+`DoclingDocument` fails the first — it is Pydantic models in `docling-core`,
+no spec, no standards body, LF AI & Data hosting is maintenance not
+specification. Demoted to input adapter. TEI fails the fourth: XML is a tree,
+and a standalone block needs its own `<TEI>` + header, turning every pointer
+into a cross-document URI.
+
+Resolution: vocabulary from the standards (DoCO/DEO, Web Annotation, PROV-O,
+SKOS, FHIR), model from RDF, serialisation JSON-LD. XML formats stay export
+targets only. Akoma Ntoso survives as its *naming convention* — FRBR
+Work/Expression/Manifestation is the only candidate modelling a translation as
+the same recommendation and a national adaptation as a derived one, which WHO
++ other jurisdictions requires.
+
+Authored blocks keep TypeScript. Each gains a generated `.jsonld` sibling
+(one more `Companions` role), committed and drift-gated.
+
+**The hazard worth remembering:** a folio label looks like a JSON-LD compact
+IRI and is not one. `def:` names a kind, not a namespace, and JSON-LD splits
+on the first colon — so `def:foo` and `paper:def:foo` would resolve to two
+different IRIs for one block, and `unital-groebner-bases:cor:pbw` becomes a
+*valid* absolute IRI with scheme `unital-groebner-bases`. Both fail silently
+and under-count every join. Fixed by minting `@id` in `resolveLabel()` and
+never emitting labels as IRIs; unresolvable refs are reported, not emitted.
+No content changes.
+
+Also caught while writing: `doco:contains` does not exist (DoCO imports
+`po:contains` from the Pattern Ontology). Mapped to the verified
+super-property `dcterms:hasPart` instead, and `certainty` omitted pending a
+checkable FHIR predicate. Rule recorded in §12.5: a published `@context`
+never carries an unverified IRI.
+
+Landed: `schemas/jsonld.ts`, `ns/content/v1.jsonld`,
+`scripts/gen-jsonld-context.ts`, `content/pipeline/gen-block-jsonld.ts`,
+two test files (30 tests), `.github/workflows/jsonld-gen-check.yml`.
+740 pass / 0 fail, typecheck + lint clean.
+
+Still open: ingest node granularity (section-level vs every theorem/figure/
+table as its own file) — affects only the ingest writer; `@id` rename policy
+once anything annotates a block; whether to emit real RDF.

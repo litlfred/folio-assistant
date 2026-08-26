@@ -1,0 +1,91 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "https://litlfred.github.io/folio/",
+    "folio": "https://litlfred.github.io/folio-assistant/ns#",
+    "doco": "http://purl.org/spar/doco/",
+    "deo": "http://purl.org/spar/deo/",
+    "cito": "http://purl.org/spar/cito/",
+    "oa": "http://www.w3.org/ns/oa#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "fhir": "http://hl7.org/fhir/",
+    "label": "folio:label",
+    "title": "dcterms:title",
+    "kind": "folio:kind",
+    "uses": {
+      "@id": "folio:uses",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "interprets": {
+      "@id": "folio:interprets",
+      "@type": "@id"
+    },
+    "foreshadows": {
+      "@id": "folio:foreshadows",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "proofs": {
+      "@id": "folio:proofs",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "examples": {
+      "@id": "folio:examples",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "cites": {
+      "@id": "cito:cites",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "tags": {
+      "@id": "folio:tag",
+      "@container": "@set"
+    },
+    "defines": {
+      "@id": "folio:defines",
+      "@container": "@set"
+    },
+    "leanRef": "folio:leanRef",
+    "sorryFree": "folio:sorryFree",
+    "text": {
+      "@id": "folio:text",
+      "@type": "@id"
+    },
+    "leanSource": {
+      "@id": "folio:leanSource",
+      "@type": "@id"
+    },
+    "meta": {
+      "@id": "folio:meta",
+      "@type": "@json"
+    },
+    "contains": {
+      "@id": "dcterms:hasPart",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "refs": {
+      "@id": "folio:refs",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "derivedFrom": {
+      "@id": "prov:wasDerivedFrom",
+      "@type": "@id"
+    },
+    "sourceDocument": {
+      "@id": "folio:sourceDocument",
+      "@type": "@id"
+    },
+    "provenance": "folio:provenance",
+    "pageStart": "folio:pageStart",
+    "pageEnd": "folio:pageEnd",
+    "strength": "folio:strength"
+  }
+}

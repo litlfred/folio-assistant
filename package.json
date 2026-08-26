@@ -46,6 +46,8 @@
     "test:e2e": "playwright test",
     "test": "bun test",
     "lint": "eslint .",
+    "gen:jsonld": "bun run scripts/gen-jsonld-context.ts && bun run content/pipeline/gen-block-jsonld.ts",
+    "gen:jsonld:check": "bun run scripts/gen-jsonld-context.ts --check && bun run content/pipeline/gen-block-jsonld.ts --check",
     "render:bpmn": "bun run scripts/render-bpmn.ts",
     "render:bpmn:check": "bun run scripts/render-bpmn.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json"
