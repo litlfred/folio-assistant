@@ -69,6 +69,15 @@ jobs:
           source: ./docs
           destination: ./_site
 
+      # actions/jekyll-build-pages runs Jekyll in a container as root, so _site/
+      # comes back owned by root and every later step — which runs as `runner` —
+      # is locked out of it. That is why TypeDoc could not create _site/api and
+      # `touch _site/.nojekyll` failed with Permission denied, and why this
+      # workflow had failed 30 consecutive runs (back to at least 2026-08-07)
+      # while the published site sat unchanged.
+      - name: Take ownership of the Jekyll output
+        run: sudo chown -R "$(id -u):$(id -g)" ./_site
+
       - name: Generate TypeScript API reference (TypeDoc)
         run: |
           npx --yes typedoc \
