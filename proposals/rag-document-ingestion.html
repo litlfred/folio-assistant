@@ -1422,7 +1422,2620 @@ changes Stage 5 entirely.</li>
 (consuming <code class="language-plaintext highlighter-rouge">smart-base</code> extractors) or authoring support for <strong>new</strong>
 DAKs (producing artefacts those extractors read)? The skills package
 suggests the latter; §9 assumed both.</li>
+</ol><hr />
+<h2 id="12-the-schema-decision-a-json-ld-graph-one-file-per-node">
+  
+  
+    <a href="#12-the-schema-decision-a-json-ld-graph-one-file-per-node" class="anchor-heading" aria-labelledby="12-the-schema-decision-a-json-ld-graph-one-file-per-node"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12. The schema decision: a JSON-LD graph, one file per node
+  
+  
+</h2>
+    
+
+<p>§§1–11 chose the <em>tools</em>. They left the <strong>schema</strong> unaddressed, and the flat
+<code class="language-plaintext highlighter-rouge">pdf-structure/v1</code> artefact is the direct consequence: <code class="language-plaintext highlighter-rouge">sections[]</code> is a list
+with a <code class="language-plaintext highlighter-rouge">level</code> integer, carrying no figures, no tables, no cross-references
+and no parent pointers. This section settles the schema, and the constraints
+that decided it were the author’s:</p>
+
+<ol>
+  <li>an <strong>independent standard</strong> wherever one exists,</li>
+  <li>a <strong>graph</strong>, not a flat list,</li>
+  <li><strong>no XML</strong> in the stored form,</li>
+  <li>each content block <strong>standing alone</strong> as its own file.</li>
 </ol>
+<h3 id="121-what-is-not-a-standard">
+  
+  
+    <a href="#121-what-is-not-a-standard" class="anchor-heading" aria-labelledby="121-what-is-not-a-standard"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.1 What is not a standard
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">DoclingDocument</code> was the obvious anchor for the physical layer and it does
+not survive constraint (1). It is a set of <strong>Pydantic models</strong> in
+<code class="language-plaintext highlighter-rouge">docling-core</code> — MIT, contributed by IBM to LF AI &amp; Data in April 2025 — with
+no specification document, no standards body, and no meaningful non-Python
+implementation. LF AI &amp; Data confers neutral <em>maintenance</em>, not an independent
+<em>spec</em>; adopting it would put the artefact format on a library’s release
+cadence. <strong>Docling stays an input adapter and never the stored schema.</strong></p>
+<h3 id="122-tree-standards-graph-vocabularies">
+  
+  
+    <a href="#122-tree-standards-graph-vocabularies" class="anchor-heading" aria-labelledby="122-tree-standards-graph-vocabularies"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.2 Tree standards, graph vocabularies
+  
+  
+</h3>
+    
+
+<p>Constraints (2) and (3) turn out to be the same constraint. Every mainstream
+<em>document</em> standard is XML and therefore a tree — JATS (ANSI/NISO Z39.96),
+TEI P5, DocBook (OASIS), Akoma Ntoso (OASIS), FHIR’s XML form. Cross-references
+in all of them are ID-pointer attributes: edges smuggled through a hierarchy.</p>
+
+<p>TEI deserves its own note because it comes closest and still fails. It has
+<code class="language-plaintext highlighter-rouge">@xml:id</code> with <code class="language-plaintext highlighter-rouge">@target</code>/<code class="language-plaintext highlighter-rouge">@corresp</code>/<code class="language-plaintext highlighter-rouge">@ana</code>, and <code class="language-plaintext highlighter-rouge">&lt;standOff&gt;</code> puts annotation
+graphs outside the transcribed text — so a graph is <em>expressible</em>. But a TEI
+document is one well-formed XML document, so constraint (4) can only be met by
+wrapping every block in its own <code class="language-plaintext highlighter-rouge">&lt;TEI&gt;</code> with its own <code class="language-plaintext highlighter-rouge">&lt;teiHeader&gt;</code>, turning
+every pointer into a cross-document URI. That is a worse JSON-LD.</p>
+
+<p>The vocabularies, by contrast, are RDF and carry no XML commitment at all:
+<strong>DoCO</strong> and <strong>DEO</strong> (SPAR, OWL, permanent <code class="language-plaintext highlighter-rouge">purl.org/spar/*</code> IRIs),
+<strong>Web Annotation</strong>, <strong>PROV-O</strong> and <strong>SKOS</strong> (W3C Recommendations), and FHIR’s
+JSON and RDF serialisations. So the rule is: <strong>vocabulary from the standards,
+model from RDF, serialisation in JSON-LD.</strong> XML formats remain export targets
+— JATS for scholarly exchange, FHIR for WHO, AKN for jurisdictional policy —
+never stored forms.</p>
+
+<p>Akoma Ntoso survives in one specific and load-bearing respect: its <strong>naming
+convention</strong> is a URI scheme, not XML, and its FRBR
+Work/Expression/Manifestation split is the only candidate that models a
+translation as <em>the same recommendation</em> and a national adaptation as a
+<em>derived</em> one. WHO publishes in six languages and this platform expects other
+countries and regions, so that is a requirement rather than a nicety.</p>
+<h3 id="123-authored-blocks-typescript-stays">
+  
+  
+    <a href="#123-authored-blocks-typescript-stays" class="anchor-heading" aria-labelledby="123-authored-blocks-typescript-stays"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.3 Authored blocks: TypeScript stays
+  
+  
+</h3>
+    
+
+<p>Content blocks are <strong>not</strong> migrating to JSON-LD. The <code class="language-plaintext highlighter-rouge">.ts</code> manifest remains
+the authoring surface and the source of truth, because:</p>
+
+<ul>
+  <li>the builders exist for author-time type checking, which no JSON Schema
+matches in an editor;</li>
+  <li><code class="language-plaintext highlighter-rouge">block-module.ts</code> loads blocks by <code class="language-plaintext highlighter-rouge">import</code>, and a manifest that throws is
+treated as a <em>finding</em> — the import is itself a validation step;</li>
+  <li>the doc comments in <code class="language-plaintext highlighter-rouge">BlockBase</code> are this project’s actual specification.</li>
+</ul>
+
+<p>Instead, each block gains a generated <strong><code class="language-plaintext highlighter-rouge">&lt;block&gt;.jsonld</code> sibling</strong>, joining
+<code class="language-plaintext highlighter-rouge">.md</code> and <code class="language-plaintext highlighter-rouge">.lean</code> as one more <code class="language-plaintext highlighter-rouge">Companions</code> role. Generated, never hand-edited,
+gated on drift (<code class="language-plaintext highlighter-rouge">.github/workflows/jsonld-gen-check.yml</code>), exactly as
+<code class="language-plaintext highlighter-rouge">docs/reference/skills/*</code> already is.</p>
+
+<p>The sibling is committed rather than built into a directory for the same
+reason §10 commits parse artefacts: a session with no egress and no toolchain
+must still be able to <em>consume</em> them, and an external consumer needs a stable
+URL. The payoff is that <code class="language-plaintext highlighter-rouge">library/**</code> nodes and <code class="language-plaintext highlighter-rouge">content/**</code> blocks become one
+population — same <code class="language-plaintext highlighter-rouge">@context</code>, same <code class="language-plaintext highlighter-rouge">@type</code> vocabulary, same edge terms — so a
+graph loader is one glob rather than two code paths.</p>
+<h3 id="124-the-hazard-labels-are-not-compact-iris">
+  
+  
+    <a href="#124-the-hazard-labels-are-not-compact-iris" class="anchor-heading" aria-labelledby="124-the-hazard-labels-are-not-compact-iris"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.4 The hazard: labels are not compact IRIs
+  
+  
+</h3>
+    
+
+<p>The one genuine trap, recorded because it fails silently.</p>
+
+<p>A folio label has the shape of a JSON-LD compact IRI — <code class="language-plaintext highlighter-rouge">def:foo</code> reads as
+<code class="language-plaintext highlighter-rouge">prefix:reference</code> — and is not one. <code class="language-plaintext highlighter-rouge">def:</code> names a <strong>block kind</strong>, not a
+namespace, and JSON-LD splits on the <strong>first</strong> colon:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Reference</th>
+      <th>Naive JSON-LD reading</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">https://…#def:bar</code></td>
+      <td>absolute IRI</td>
+      <td>correct</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">def:quantum-universe</code></td>
+      <td>prefix <code class="language-plaintext highlighter-rouge">def</code> → per-<em>kind</em> namespace</td>
+      <td>wrong axis</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">unital-groebner-bases:cor:pbw</code></td>
+      <td>undefined prefix → <strong>valid absolute IRI</strong> with scheme <code class="language-plaintext highlighter-rouge">unital-groebner-bases</code></td>
+      <td>well-formed, meaningless</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The second row is the dangerous one: the same block referenced from inside its
+paper and from another would land on <strong>two different IRIs</strong>, so every graph
+join under-counts with no error raised anywhere.</p>
+
+<p>The fix is that labels are never emitted as IRIs. <code class="language-plaintext highlighter-rouge">resolveLabel()</code> mints <code class="language-plaintext highlighter-rouge">@id</code>
+from all three authored forms — including the nested-namespace form
+<code class="language-plaintext highlighter-rouge">ns:paper:prop:foo</code> that <code class="language-plaintext highlighter-rouge">citesProvable</code> documents — and the authored string is
+preserved verbatim in <code class="language-plaintext highlighter-rouge">folio:label</code> for grep and round-tripping. A reference it
+cannot parse returns <code class="language-plaintext highlighter-rouge">undefined</code> and is <strong>reported</strong>, never emitted as a
+plausible-looking IRI. <strong>No content changes.</strong></p>
+
+<p>Emitted <code class="language-plaintext highlighter-rouge">@id</code>s are relative (<code class="language-plaintext highlighter-rouge">papers/&lt;paper&gt;/blocks/def-foo</code>) with <code class="language-plaintext highlighter-rouge">@base</code> in
+the published context, so changing where a folio is deployed does not rewrite
+thousands of committed files.</p>
+<h3 id="125-what-landed">
+  
+  
+    <a href="#125-what-landed" class="anchor-heading" aria-labelledby="125-what-landed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.5 What landed
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Artefact</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">schemas/jsonld.ts</code></td>
+      <td>Namespaces, kind→type maps, <code class="language-plaintext highlighter-rouge">parseReference</code>/<code class="language-plaintext highlighter-rouge">resolveLabel</code>, the <code class="language-plaintext highlighter-rouge">@context</code> value</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ns/content/v1.jsonld</code></td>
+      <td>The published context, generated</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scripts/gen-jsonld-context.ts</code></td>
+      <td>Emits it; <code class="language-plaintext highlighter-rouge">--check</code> gates it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">content/pipeline/gen-block-jsonld.ts</code></td>
+      <td>Emits <code class="language-plaintext highlighter-rouge">&lt;block&gt;.jsonld</code>; <code class="language-plaintext highlighter-rouge">--check</code> gates drift</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scripts/tests/jsonld-label-resolution.test.ts</code></td>
+      <td>All three reference tiers + both silent-failure modes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scripts/tests/gen-block-jsonld.test.ts</code></td>
+      <td>Emitter end-to-end over a synthetic paper</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.github/workflows/jsonld-gen-check.yml</code></td>
+      <td>The CI drift gate</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The DoCO co-typing is deliberately <strong>partial</strong>: <code class="language-plaintext highlighter-rouge">simulator</code> has no DoCO
+counterpart and gets none. Guessing would put wrong triples in a published
+graph, which is worse than leaving a kind untyped.</p>
+
+<p>The same discipline caught a real error while this was being written. The
+containment term was first mapped to <code class="language-plaintext highlighter-rouge">doco:contains</code>, which <strong>does not
+exist</strong> — DoCO imports <code class="language-plaintext highlighter-rouge">po:contains</code> from the Pattern Ontology instead. With
+<code class="language-plaintext highlighter-rouge">sparontologies.github.io</code> egress-blocked from a sandboxed session, the
+Pattern Ontology namespace could not be confirmed either, so <code class="language-plaintext highlighter-rouge">contains</code> maps
+to <code class="language-plaintext highlighter-rouge">dcterms:hasPart</code> — <code class="language-plaintext highlighter-rouge">po:contains</code>’s documented super-property, and
+therefore a sound generalisation rather than a guess. <code class="language-plaintext highlighter-rouge">certainty</code> is omitted
+for the same reason: it must bind to FHIR’s GRADE value set, and that
+predicate wants checking against a real IG rather than inventing. Both narrow
+when the ingest writer lands and the IRIs can be verified.</p>
+
+<p>The general rule this establishes: <strong>a published <code class="language-plaintext highlighter-rouge">@context</code> never carries an
+unverified IRI.</strong> Under-claim with a verified broader term, or leave the term
+out.</p>
+<h3 id="126-still-open">
+  
+  
+    <a href="#126-still-open" class="anchor-heading" aria-labelledby="126-still-open"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.6 Still open
+  
+  
+</h3>
+    
+
+<ul>
+  <li><strong>Ingest node granularity</strong> — section-level nodes, or every theorem, figure,
+table and recommendation as its own file? The latter is ~7,313 sections
+expanding to perhaps 40–60k small files. Section-level nodes with sub-blocks
+as annotations until promoted is the cheaper staging. Unresolved; it affects
+only the ingest writer, not anything in §12.5.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">@id</code> as a public contract</strong> — once anything annotates a block, renaming
+its label breaks that reference. Recommended: readable IDs plus a
+<code class="language-plaintext highlighter-rouge">folio:supersededBy</code> tombstone on rename. Not yet implemented.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">@id</code> scheme for papers</strong> — AKN’s FRBR syntax is native to legal
+instruments; applying it to a preprint is off-label. Proposed: AKN IRIs for
+jurisdictional policy, a parallel <code class="language-plaintext highlighter-rouge">folio:</code> scheme for papers, same
+Work/Expression/Manifestation pattern.</li>
+  <li><strong>Emit real RDF, or JSON-LD-shaped JSON?</strong> The latter is cheaper, stays
+greppable, and fits a 2 vCPU host. Nothing here forecloses the former.</li>
+</ul>
+<h3 id="127-the-mcp-read-side">
+  
+  
+    <a href="#127-the-mcp-read-side" class="anchor-heading" aria-labelledby="127-the-mcp-read-side"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.7 The MCP read side
+  
+  
+</h3>
+    
+
+<p>§1 recorded that retrieval is <code class="language-plaintext highlighter-rouge">grep</code> plus an agent reading a whole PDF, and
+that the MCP server’s <code class="language-plaintext highlighter-rouge">/api/relevance/*</code> routes present the ledger without
+searching it. There was a sharper version of that gap: <strong>MCP was write-only
+toward ingestion.</strong> It creates <code class="language-plaintext highlighter-rouge">uploads/&lt;id&gt;/</code> on import and <code class="language-plaintext highlighter-rouge">get_imports</code>
+lists what was imported, but nothing ever read a <code class="language-plaintext highlighter-rouge">structure.json</code>, a
+<code class="language-plaintext highlighter-rouge">sections/*.md</code>, or a candidate. The 24.7 M extracted characters were
+reachable by <code class="language-plaintext highlighter-rouge">grep</code> and by nothing else.</p>
+
+<p><code class="language-plaintext highlighter-rouge">content/pipeline/graph-index.ts</code> closes it, and is the first thing that
+actually spends the <code class="language-plaintext highlighter-rouge">.jsonld</code> decision. One directory walk over both roots
+yields one node map plus <strong>reverse adjacency</strong>, and three tools sit on it:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Answers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">search_graph</code></td>
+      <td>“does anything — authored <em>or</em> ingested — mention this?” Metadata by default; companion Markdown on request</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">get_neighbors</code></td>
+      <td><code class="language-plaintext highlighter-rouge">out</code>: what must a reader have read first. <code class="language-plaintext highlighter-rouge">in</code>: <strong>what breaks if this changes</strong> — not otherwise available without a full corpus scan</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">get_graph_stats</code></td>
+      <td>node/edge counts by provenance and kind, and whether each root exists</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Three properties are deliberate rather than incidental:</p>
+
+<ul>
+  <li><strong>Honest emptiness.</strong> An absent root reports <code class="language-plaintext highlighter-rouge">present: false</code>, not zero
+matches. While the ingest writer is unbuilt, a caller must be able to tell
+“that population has not been written yet” from “nothing matched” — the §5
+contract’s <code class="language-plaintext highlighter-rouge">n/a</code>-never-a-false-pass rule applied to retrieval.</li>
+  <li><strong>No silent truncation.</strong> <code class="language-plaintext highlighter-rouge">totalMatches</code>, <code class="language-plaintext highlighter-rouge">textScanTruncated</code> and
+<code class="language-plaintext highlighter-rouge">truncated</code> are all reported. A capped result that looks complete is worse
+than one that says it was capped.</li>
+  <li><strong>A colliding <code class="language-plaintext highlighter-rouge">@id</code> is a finding.</strong> Two nodes claiming one IRI is recorded
+in <code class="language-plaintext highlighter-rouge">malformed</code> rather than resolved by picking a winner.</li>
+</ul>
+
+<p>This is not a vector store and does not want to be one yet. §10 Stage 4 still
+holds: index once the extractions are known good. What lands here is the
+graph-expansion layer an embedding index would sit <em>under</em> — a hit returns a
+node plus its neighbourhood, which is what an agent needs, and it reads the
+same files an embedding pass would.</p>
+
+<p><code class="language-plaintext highlighter-rouge">content-graph.ts</code> remains authoritative for the authored editorial + formal
+graph: it imports manifests, and that import is a validation step. This index
+reads the published projection instead — cheaper, and it spans ingested
+documents that <code class="language-plaintext highlighter-rouge">content-graph.ts</code> cannot see. The CI drift gate is what makes
+trusting both at once sound.</p>
+
+<p>Runnable without an MCP client:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/graph-index.ts <span class="nt">--stats</span>
+bun run content/pipeline/graph-index.ts <span class="nt">--search</span> <span class="s2">"torsion"</span> <span class="nt">--text</span>
+bun run content/pipeline/graph-index.ts <span class="nt">--neighbors</span> thm:main <span class="nt">--in</span> <span class="nt">--hops</span> 2
+</code></pre></div></div>
+<h3 id="128-granularity-and-what-qa-turned-out-to-decide">
+  
+  
+    <a href="#128-granularity-and-what-qa-turned-out-to-decide" class="anchor-heading" aria-labelledby="128-granularity-and-what-qa-turned-out-to-decide"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.8 Granularity, and what QA turned out to decide
+  
+  
+</h3>
+    
+
+<p>The open question in §12.6 was node granularity. It is settled, and the
+criterion that settled it was not file count.</p>
+
+<p><strong>Content blocks are fine-grained and self-contained</strong> — a decision table, a
+math proposition, a FHIR ValueSet each a block — and groupings are built from
+an <em>ordered list</em> of block refs, exactly as a chapter holds sections and a
+section holds <code class="language-plaintext highlighter-rouge">blocks[]</code>. That dissolves the objection §12.6 raised: fine
+granularity does not leave nodes without files, because the <strong>blocks</strong> own the
+files and a section is a manifest.</p>
+
+<p>The operational definition is what makes it decidable: <strong>a content block is
+what a QA sidecar runs against.</strong> <code class="language-plaintext highlighter-rouge">qa-utils.ts</code> computes the sidecar as
+<code class="language-plaintext highlighter-rouge">&lt;stem&gt;.qa.json</code>, so a block is exactly a file stem that carries one. That is
+already enforced by machinery rather than convention.</p>
+<h4 id="the-l2l3-block-vocabulary">
+  
+  
+    <a href="#the-l2l3-block-vocabulary" class="anchor-heading" aria-labelledby="the-l2l3-block-vocabulary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The L2/L3 block vocabulary
+  
+  
+</h4>
+    
+
+<p>WHO’s own sites are unreachable from a sandboxed session — <code class="language-plaintext highlighter-rouge">smart.who.int</code> and
+<code class="language-plaintext highlighter-rouge">build.fhir.org</code> return the same 403 policy denial as <code class="language-plaintext highlighter-rouge">who.int</code> — but the repo
+already carries both lists, and they match WHO’s standard DAK set:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Layer</th>
+      <th>Source of truth in this repo</th>
+      <th>Kinds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>L2 DAK</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">schemas/skills/l2-dak-authoring/input.schema.json</code></td>
+      <td>personas, user-scenarios, business-processes, data-dictionary, decision-logic, scheduling-logic, indicators, functional- and non-functional-requirements</td>
+    </tr>
+    <tr>
+      <td><strong>L3 FHIR</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">schemas/skills/l3-fhir-authoring/input.schema.json</code></td>
+      <td>logical-model, profile, questionnaire, cql-library, structure-map, plan-definition, measure, test-case, actor-definition, requirements</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>These mirror the repo’s schemas, <strong>not</strong> the published IG, which could not be
+consulted.</p>
+<h4 id="two-defects-this-exposed">
+  
+  
+    <a href="#two-defects-this-exposed" class="anchor-heading" aria-labelledby="two-defects-this-exposed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two defects this exposed
+  
+  
+</h4>
+    
+
+<p><strong>(a) <code class="language-plaintext highlighter-rouge">depends_on</code> was the paper adapter’s companion set, and it gates
+applicability.</strong> Typed <code class="language-plaintext highlighter-rouge">Array&lt;"md" | "ts" | "lean"&gt;</code>, no criterion could say
+“applies to blocks with a <code class="language-plaintext highlighter-rouge">.dmn</code>” — and worse, every L2/L3 block would take
+<code class="language-plaintext highlighter-rouge">qa-sweep</code>’s hard-coded <code class="language-plaintext highlighter-rouge">.md</code> branch and record a clean <code class="language-plaintext highlighter-rouge">n/a</code> for every axis.
+QA would report a swept, healthy corpus it had never read. Same failure shape
+as the stale <code class="language-plaintext highlighter-rouge">BLOCK_BUILDER_RE</code> that hid 461 blocks (§12.5’s discipline
+applied to a different table).</p>
+
+<p>Companion roles are now <code class="language-plaintext highlighter-rouge">md</code>, <code class="language-plaintext highlighter-rouge">ts</code>, <code class="language-plaintext highlighter-rouge">lean</code> (paper) plus <code class="language-plaintext highlighter-rouge">bpmn</code>, <code class="language-plaintext highlighter-rouge">dmn</code>, <code class="language-plaintext highlighter-rouge">xlsx</code>
+(L2) and <code class="language-plaintext highlighter-rouge">fsh</code>, <code class="language-plaintext highlighter-rouge">cql</code> (L3). Compiled FHIR JSON is deliberately <strong>not</strong> a role:
+SUSHI generates it from the <code class="language-plaintext highlighter-rouge">.fsh</code>, so it is a build output, and a criterion
+that cares depends on the source. The two hard-coded gates became one
+<code class="language-plaintext highlighter-rouge">applicabilityGap()</code> over whatever roles a criterion declares.</p>
+
+<p><strong>(b) One global <code class="language-plaintext highlighter-rouge">BLOCK_KINDS</code> pool would cross the adapters.</strong> Adding ~19 WHO
+kinds to the list that carries a compile-time exhaustiveness proof against the
+<code class="language-plaintext highlighter-rouge">Block</code> union makes every math axis nominally applicable to a ValueSet. The
+visible failure would not be a harmless <code class="language-plaintext highlighter-rouge">n/a</code> but a
+<code class="language-plaintext highlighter-rouge">voice-scholarly-default: fail</code> on a decision table, which reads like a real
+finding.</p>
+
+<p>Kinds are therefore <strong>adapter-scoped</strong> — <code class="language-plaintext highlighter-rouge">paper</code> and <code class="language-plaintext highlighter-rouge">dak</code>, partitioned, with
+<code class="language-plaintext highlighter-rouge">adapterForKind()</code> returning <code class="language-plaintext highlighter-rouge">undefined</code> rather than defaulting — and QA
+criteria carry an <code class="language-plaintext highlighter-rouge">adapters</code> scope that the sweep gates on <em>before</em> the
+companion gate.</p>
+<h4 id="the-default-that-makes-it-safe">
+  
+  
+    <a href="#the-default-that-makes-it-safe" class="anchor-heading" aria-labelledby="the-default-that-makes-it-safe"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The default that makes it safe
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">adapters</code> absent means <strong><code class="language-plaintext highlighter-rouge">["paper"]</code>, not “all”</strong>. Every criterion in the
+registry today is a paper axis, so defaulting to “all” would require editing
+all ~47 to stay correct and would misfire silently on any missed. Defaulting
+to the adapter they were written for requires none, and a DAK criterion opts
+in by saying so. A test asserts every registered criterion still resolves to
+<code class="language-plaintext highlighter-rouge">["paper"]</code>, so adding a DAK criterion without declaring its scope fails.</p>
+
+<p>Both changes are verified no-ops for the existing corpus: <code class="language-plaintext highlighter-rouge">sameScriptVerdict</code>
+compares <code class="language-plaintext highlighter-rouge">notes</code>, and <code class="language-plaintext highlighter-rouge">missingCompanionNote</code> reproduces the existing strings
+byte for byte, so no sidecar rewrites on the next sweep.</p>
+<h4 id="still-not-built">
+  
+  
+    <a href="#still-not-built" class="anchor-heading" aria-labelledby="still-not-built"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Still not built
+  
+  
+</h4>
+    
+
+<p>DAK kinds are <strong>declared, not authorable</strong>. They are not members of the
+<code class="language-plaintext highlighter-rouge">Block</code> union and have no builder, no Zod schema and no viewer registration,
+so <code class="language-plaintext highlighter-rouge">walkBlocks</code> will not discover one. What exists is the vocabulary — enough
+for QA to be scoped and for the ingest writer to have names to emit. Authoring
+a DAK block is the next piece of work, and the ingest writer follows it.</p>
+<h3 id="129-dak-blocks-are-now-authorable">
+  
+  
+    <a href="#129-dak-blocks-are-now-authorable" class="anchor-heading" aria-labelledby="129-dak-blocks-are-now-authorable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.9 DAK blocks are now authorable
+  
+  
+</h3>
+    
+
+<p>§12.8 left the WHO kinds <em>declared but not authorable</em> — names with no builder,
+no schema and no discovery path. That gap is closed: <code class="language-plaintext highlighter-rouge">schemas/dak-blocks.ts</code>
+carries the interfaces, Zod schemas and builders, and <code class="language-plaintext highlighter-rouge">walkBlocks</code> finds them.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// content/anc-dak/decision-logic/dt-anc-danger-signs.ts</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">decisionTable</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">folio-assistant/schemas</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">decisionTable</span><span class="p">({</span>
+  <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">dt:anc-danger-signs</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ANC danger signs</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">uses</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">de:danger-sign-code</span><span class="dl">"</span><span class="p">],</span>
+  <span class="na">realises</span><span class="p">:</span> <span class="dl">"</span><span class="s2">def:who-anc-rec-12</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>with <code class="language-plaintext highlighter-rouge">dt-anc-danger-signs.dmn</code> alongside it and <code class="language-plaintext highlighter-rouge">dt-anc-danger-signs.qa.json</code>
+as its sidecar — the same block shape a paper uses, different companion.</p>
+<h4 id="two-namespaces-separate-for-the-first-time">
+  
+  
+    <a href="#two-namespaces-separate-for-the-first-time" class="anchor-heading" aria-labelledby="two-namespaces-separate-for-the-first-time"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two namespaces separate, for the first time
+  
+  
+</h4>
+    
+
+<p>Paper kinds are single lowercase words, so a builder name and a kind string
+were the same token and <code class="language-plaintext highlighter-rouge">BLOCK_BUILDER_RE</code> could alternate over the kinds
+themselves. A DAK kind is multi-word and a hyphen is not a valid identifier,
+so <strong>the kind stays kebab-case because it is data, and the builder is
+camelCase because it is an identifier</strong> — <code class="language-plaintext highlighter-rouge">decision-table</code> / <code class="language-plaintext highlighter-rouge">decisionTable</code>.</p>
+
+<p>The regex now alternates over builder names and maps back through
+<code class="language-plaintext highlighter-rouge">kindForBuilder</code>. Getting that wrong is not a compile error: blocks would be
+discovered under the kind <code class="language-plaintext highlighter-rouge">decisionTable</code>, matching no criterion’s <code class="language-plaintext highlighter-rouge">appliesTo</code>
+and no adapter — the 461-block disappearance again, in a new place. Pinned by
+a test that asserts a DAK manifest is discovered under its <em>kind</em>.</p>
+<h4 id="what-the-manifests-deliberately-do-not-model">
+  
+  
+    <a href="#what-the-manifests-deliberately-do-not-model" class="anchor-heading" aria-labelledby="what-the-manifests-deliberately-do-not-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the manifests deliberately do not model
+  
+  
+</h4>
+    
+
+<p>Field-level semantics. A <code class="language-plaintext highlighter-rouge">value-set</code> block carries a label, a title, editorial
+edges and a pointer to its <code class="language-plaintext highlighter-rouge">.fsh</code>; it does not model <code class="language-plaintext highlighter-rouge">ValueSet.compose.include</code>
+or a DMN hit policy. Those belong to the artefact formats, which have
+specifications and validators already (<code class="language-plaintext highlighter-rouge">fhir-validation</code>, <code class="language-plaintext highlighter-rouge">dmn-authoring</code>), and
+a parallel set of fields here would be a second, weaker, drifting copy — the
+argument §2c makes against pointing a RAG engine at <code class="language-plaintext highlighter-rouge">content/</code>, applied to
+schemas.</p>
+
+<p><strong>The manifest’s job is identity, editorial edges and QA attachment. The
+companion file is the content.</strong> For the same reason a <code class="language-plaintext highlighter-rouge">value-set</code> block is
+typed <code class="language-plaintext highlighter-rouge">folio:ValueSet</code> rather than <code class="language-plaintext highlighter-rouge">fhir:ValueSet</code>: the block is the authored
+manifest, the FHIR resource is what its companion compiles to, and typing the
+manifest as a resource would invite a consumer to read FHIR fields off it.</p>
+<h4 id="traceability-comes-free">
+  
+  
+    <a href="#traceability-comes-free" class="anchor-heading" aria-labelledby="traceability-comes-free"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Traceability comes free
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">DakBlockBase.realises</code> is the L1 → L2 → L3 edge, parallel to
+<code class="language-plaintext highlighter-rouge">RemarkBlock.interprets</code>. Once populated it makes DAK coverage a graph query
+rather than a bespoke script: an L1 recommendation nothing realises, or an L2
+<code class="language-plaintext highlighter-rouge">decision-table</code> with no L3 <code class="language-plaintext highlighter-rouge">plan-definition</code> realising it, is a gap — the
+property §9.1 predicted would fall out, now reachable through <code class="language-plaintext highlighter-rouge">get_neighbors</code>.</p>
+<h4 id="still-not-built-1">
+  
+  
+    <a href="#still-not-built-1" class="anchor-heading" aria-labelledby="still-not-built-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Still not built
+  
+  
+</h4>
+    
+
+<p>The <strong>ingest writer</strong>. Every piece it needs now exists: the vocabulary, the
+authorable kinds, the JSON-LD projection, the graph index and adapter-scoped
+QA. What remains is the code that turns <code class="language-plaintext highlighter-rouge">structure.json</code> + <code class="language-plaintext highlighter-rouge">candidates.json</code>
+into <code class="language-plaintext highlighter-rouge">library/&lt;doc&gt;/blocks/*.jsonld</code> and section manifests — and no DAK QA
+criterion has been written yet, so <code class="language-plaintext highlighter-rouge">dak</code>-scoped axes exist as a mechanism with
+nothing registered in it.</p>
+<h3 id="1210-the-first-dak-qa-axes--and-a-wiring-hole-they-exposed">
+  
+  
+    <a href="#1210-the-first-dak-qa-axes--and-a-wiring-hole-they-exposed" class="anchor-heading" aria-labelledby="1210-the-first-dak-qa-axes--and-a-wiring-hole-they-exposed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.10 The first DAK QA axes — and a wiring hole they exposed
+  
+  
+</h3>
+    
+
+<p>§12.8 made QA adapter-aware and §12.9 made DAK blocks authorable, but nothing
+was registered in the <code class="language-plaintext highlighter-rouge">dak</code> scope. That left a corpus that would sweep <strong>clean
+by default</strong>: every paper criterion correctly <code class="language-plaintext highlighter-rouge">n/a</code>, and no DAK criterion to
+take its place. A corpus reporting no findings because nothing was asked is the
+same false pass as one reporting <code class="language-plaintext highlighter-rouge">n/a</code> because the gate was wrong.</p>
+
+<p>Five axes now ask something, in <code class="language-plaintext highlighter-rouge">qa-checkers-dak.ts</code>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Criterion</th>
+      <th>Catches</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dak-companion-present</code></td>
+      <td>a manifest whose artefact is missing — a label and a title that look like content in every listing</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dak-bpmn-has-process</code></td>
+      <td>a <code class="language-plaintext highlighter-rouge">.bpmn</code> that parses but declares no <code class="language-plaintext highlighter-rouge">&lt;process&gt;</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dak-dmn-has-decision-table</code></td>
+      <td>a <code class="language-plaintext highlighter-rouge">&lt;decision&gt;</code> with no <code class="language-plaintext highlighter-rouge">&lt;decisionTable&gt;</code> — logic expressing no decision</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dak-fsh-declares-kind</code></td>
+      <td>a <code class="language-plaintext highlighter-rouge">value-set</code> block whose <code class="language-plaintext highlighter-rouge">.fsh</code> declares a <code class="language-plaintext highlighter-rouge">Profile</code>; both files individually valid, only the pairing wrong</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dak-label-prefix-matches-kind</code></td>
+      <td>a manifest hand-edited past its builder’s validation</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>They check <strong>structural presence and well-formedness, not semantic
+conformance</strong>. Whether a profile validates against its base, whether CQL
+compiles, whether a decision table is complete over its inputs — those need the
+real validators and belong to the L3 pipeline. A grep-level reimplementation
+would produce a second, weaker verdict that disagrees with the authoritative
+one: §2c’s argument against a second copy of the corpus, applied to validation.</p>
+<h4 id="the-depends_on-trap-walked-around-deliberately">
+  
+  
+    <a href="#the-depends_on-trap-walked-around-deliberately" class="anchor-heading" aria-labelledby="the-depends_on-trap-walked-around-deliberately"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The <code class="language-plaintext highlighter-rouge">depends_on</code> trap, walked around deliberately
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">dak-companion-present</code> exists to flag a missing <code class="language-plaintext highlighter-rouge">.dmn</code>, so it must <strong>not</strong>
+list <code class="language-plaintext highlighter-rouge">.dmn</code> in <code class="language-plaintext highlighter-rouge">depends_on</code> — which gates applicability and would <code class="language-plaintext highlighter-rouge">n/a</code>
+precisely the blocks it is for. It depends on <code class="language-plaintext highlighter-rouge">ts</code> and declares the artefacts
+under <code class="language-plaintext highlighter-rouge">also_invalidated_by</code>. That is the distinction <code class="language-plaintext highlighter-rouge">QaCriterionDefinition</code>
+documents, and this is the first criterion to need it.</p>
+<h4 id="the-hole-this-work-exposed">
+  
+  
+    <a href="#the-hole-this-work-exposed" class="anchor-heading" aria-labelledby="the-hole-this-work-exposed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The hole this work exposed
+  
+  
+</h4>
+    
+
+<p>Writing the checkers surfaced a defect in §12.8’s own wiring. <code class="language-plaintext highlighter-rouge">qa-sweep</code>
+constructed <code class="language-plaintext highlighter-rouge">const paths = { md, ts, lean }</code> — the paper triple — and passed it
+to both <code class="language-plaintext highlighter-rouge">hashBlockFiles</code> and the checker. So the type system and the
+applicability gate had learned about <code class="language-plaintext highlighter-rouge">.dmn</code> and <code class="language-plaintext highlighter-rouge">.fsh</code>, but <strong>the sweep still
+hashed three files</strong>: a DAK block’s verdict could never go stale when its
+decision table changed, and a cached <code class="language-plaintext highlighter-rouge">pass</code> would outlive the logic it judged.</p>
+
+<p>The companion-role tests covered <code class="language-plaintext highlighter-rouge">hashBlockFiles</code> and <code class="language-plaintext highlighter-rouge">entryIsFresh</code> in
+isolation and passed; they did not cover the sweep’s call site. <code class="language-plaintext highlighter-rouge">paths</code> is now
+<code class="language-plaintext highlighter-rouge">block.companions</code>, and the checker signature is <code class="language-plaintext highlighter-rouge">CheckerPaths</code> — every present
+companion, keyed by role.</p>
+
+<p><code class="language-plaintext highlighter-rouge">ADAPTER_COMPANION_ROLES</code> and <code class="language-plaintext highlighter-rouge">incompatibleCompanions()</code> were added alongside,
+so “a paper criterion depends on <code class="language-plaintext highlighter-rouge">.dmn</code>” is now a <em>checkable</em> mistake rather
+than one that manifests as a criterion which is permanently <code class="language-plaintext highlighter-rouge">n/a</code> and looks
+registered.</p>
+<h3 id="1211-first-run-against-the-real-corpus">
+  
+  
+    <a href="#1211-first-run-against-the-real-corpus" class="anchor-heading" aria-labelledby="1211-first-run-against-the-real-corpus"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.11 First run against the real corpus
+  
+  
+</h3>
+    
+
+<p>Everything through §12.10 was exercised by fixtures. Run against <code class="language-plaintext highlighter-rouge">litlfred/qou</code>
+at <code class="language-plaintext highlighter-rouge">a5e9957</code> — 5 papers, 3,692 <code class="language-plaintext highlighter-rouge">.ts</code> files — three things came back that
+fixtures could not have produced.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Blocks emitted</td>
+      <td><strong>3,550</strong>, 0 load failures</td>
+    </tr>
+    <tr>
+      <td>Graph</td>
+      <td><strong>3,550 nodes, 7,631 edges</strong>, 0 malformed</td>
+    </tr>
+    <tr>
+      <td>Determinism</td>
+      <td>second run: <code class="language-plaintext highlighter-rouge">--check</code> clean, 0 rewritten</td>
+    </tr>
+    <tr>
+      <td>Dangling references</td>
+      <td>41 → <strong>33</strong> after the fix below</td>
+    </tr>
+  </tbody>
+</table></div>
+<h4 id="a-alg-and-prose-were-never-registered-label-prefixes">
+  
+  
+    <a href="#a-alg-and-prose-were-never-registered-label-prefixes" class="anchor-heading" aria-labelledby="a-alg-and-prose-were-never-registered-label-prefixes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> (a) <code class="language-plaintext highlighter-rouge">alg:</code> and <code class="language-plaintext highlighter-rouge">prose:</code> were never registered label prefixes
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">LABEL_PREFIXES</code> maps <code class="language-plaintext highlighter-rouge">algorithm → "alg:"</code>, and 16 algorithm blocks and 18
+prose blocks carry such labels — but <code class="language-plaintext highlighter-rouge">KNOWN_LABEL_PREFIXES</code> listed neither. So
+<code class="language-plaintext highlighter-rouge">isCrossPaperRef("alg:markov-trace")</code> returned <strong>true for a block’s own
+same-paper label</strong>.</p>
+
+<p>The consequence was silent and user-visible. <code class="language-plaintext highlighter-rouge">render-latex.ts:866</code> renders a
+cross-paper reference as plain text rather than <code class="language-plaintext highlighter-rouge">\hyperref</code>, so <strong>9 in-paper
+markdown links lost their hyperlink in the PDF</strong>; and <code class="language-plaintext highlighter-rouge">build.ts:295</code> excludes
+cross-paper labels from <code class="language-plaintext highlighter-rouge">referencedLabels</code>, so a dangling link to an algorithm
+would never have been reported as an undefined reference. Both prefixes are now
+registered.</p>
+
+<p>This is a pre-existing defect, not one this work introduced. It had simply
+never been asked the question that exposes it.</p>
+<h4 id="b-a-collision-in-this-works-own-generator">
+  
+  
+    <a href="#b-a-collision-in-this-works-own-generator" class="anchor-heading" aria-labelledby="b-a-collision-in-this-works-own-generator"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> (b) A collision in this work’s own generator
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">blockToJsonLd</code> fell back to <code class="language-plaintext highlighter-rouge">papers/&lt;paper&gt;/blocks/UNRESOLVED</code> when a block’s
+own label had no kind prefix. Every such block therefore got <strong>the same
+<code class="language-plaintext highlighter-rouge">@id</code></strong> — and the graph index, correctly refusing to let one node overwrite
+another, dropped <strong>12 real blocks</strong> while the generator reported success.</p>
+
+<p>Fixed by <code class="language-plaintext highlighter-rouge">mintNodeId</code>, which never fails: a prefix-less label becomes its own
+IRI segment. The asymmetry against <code class="language-plaintext highlighter-rouge">resolveLabel</code> is deliberate and worth
+stating — <strong>a block’s own label is its identity and cannot be wrong; a
+reference is a claim that must resolve</strong>. Making <code class="language-plaintext highlighter-rouge">resolveLabel</code> equally
+forgiving would mask every typo.</p>
+
+<p>Every fixture label had a prefix, which is exactly why fixtures missed it.</p>
+<h4 id="c-what-the-graph-is-actually-for-on-real-data">
+  
+  
+    <a href="#c-what-the-graph-is-actually-for-on-real-data" class="anchor-heading" aria-labelledby="c-what-the-graph-is-actually-for-on-real-data"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> (c) What the graph is actually for, on real data
+  
+  
+</h4>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ graph-index.ts --neighbors "def:quantum-universe" --in --hops 1
+25 dependents, spanning `uses` and `interprets`
+</code></pre></div></div>
+
+<p>“What breaks if this changes?” answered in one call against 3,550 nodes —
+the query that previously required a full corpus scan.</p>
+<h4 id="still-outstanding">
+  
+  
+    <a href="#still-outstanding" class="anchor-heading" aria-labelledby="still-outstanding"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Still outstanding
+  
+  
+</h4>
+    
+
+<p>The 33 remaining dangling references are qou content defects: labels with no
+kind prefix at all (<code class="language-plaintext highlighter-rouge">tm-interactions</code>, <code class="language-plaintext highlighter-rouge">tm-knot-pairs</code>, <code class="language-plaintext highlighter-rouge">tm-notation</code>, …)
+referenced from <code class="language-plaintext highlighter-rouge">uses[]</code>. They are reported, not repaired — repairing another
+repo’s content is that repo’s call.</p>
+
+<p>The MCP tool handlers remain typechecked but undriven by any test, and no DAK
+corpus exists yet to exercise the <code class="language-plaintext highlighter-rouge">dak</code> axes against.</p>
+<h3 id="1212-the-ingest-writer-and-the-graph-closed">
+  
+  
+    <a href="#1212-the-ingest-writer-and-the-graph-closed" class="anchor-heading" aria-labelledby="1212-the-ingest-writer-and-the-graph-closed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.12 The ingest writer, and the graph closed
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">gen-library-jsonld.ts</code> turns Stage A/B artefacts into graph nodes. Run against
+the real corpus — 443 documents, 435 with Stage A output:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Documents ingested</td>
+      <td><strong>435</strong> (8 skipped, no <code class="language-plaintext highlighter-rouge">structure.json</code> — reported, not counted as empty)</td>
+    </tr>
+    <tr>
+      <td>Blocks emitted</td>
+      <td><strong>16,669</strong></td>
+    </tr>
+    <tr>
+      <td><strong>One graph</strong></td>
+      <td><strong>29,780 nodes · 85,016 edges · 0 malformed</strong></td>
+    </tr>
+    <tr>
+      <td>Split</td>
+      <td>3,550 authored · 26,230 ingested</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>That is §1’s gap closed. Retrieval was <code class="language-plaintext highlighter-rouge">grep</code> plus an agent reading a whole PDF
+into context; the extracted corpus was reachable by <code class="language-plaintext highlighter-rouge">grep</code> alone and MCP was
+write-only toward it. It is now one graph, queryable by either population:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>search_graph  "Seifert surface", provenance: ingested   → 61 matches, with snippets
+get_neighbors "def:quantum-universe", direction: in     → 25 dependents
+get_graph_stats                                          → 29,780 / 85,016
+</code></pre></div></div>
+<h4 id="blocks-own-the-files-a-section-is-a-manifest">
+  
+  
+    <a href="#blocks-own-the-files-a-section-is-a-manifest" class="anchor-heading" aria-labelledby="blocks-own-the-files-a-section-is-a-manifest"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Blocks own the files; a section is a manifest
+  
+  
+</h4>
+    
+
+<p>A section node carries no text — its <code class="language-plaintext highlighter-rouge">contains</code> is an <strong>ordered</strong> list of block
+ids. The section’s prose becomes one <code class="language-plaintext highlighter-rouge">prose</code> block whose <code class="language-plaintext highlighter-rouge">text</code> points at the
+<em>existing</em> <code class="language-plaintext highlighter-rouge">sections/&lt;sid&gt;.md</code>, so nothing is copied and the 24.7 M characters
+stay exactly where the corpus-grep checklist already looks.</p>
+
+<p>Extraction is therefore incremental: whatever Stage B recognises becomes a
+typed block, the rest stays prose, and as extractors improve prose shrinks
+without any section’s <code class="language-plaintext highlighter-rouge">@id</code> changing.</p>
+<h4 id="attribution-kept-sharp">
+  
+  
+    <a href="#attribution-kept-sharp" class="anchor-heading" aria-labelledby="attribution-kept-sharp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Attribution, kept sharp
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">candidates.json</code> says of itself <em>“proposals only … nothing here is folio
+content and nothing here creates Lean”</em>. Every emitted node carries
+<code class="language-plaintext highlighter-rouge">provenance: "ingested"</code> and an attribution to its source document, and the
+extractor’s disposition string is carried <strong>verbatim</strong> onto the manifest rather
+than paraphrased. A query can always separate <em>what this paper claims</em> from
+<em>what the folio claims</em>; promotion into <code class="language-plaintext highlighter-rouge">content/</code> stays the deliberate act
+<code class="language-plaintext highlighter-rouge">document-intake</code> Stage 4 describes.</p>
+<h4 id="two-more-things-the-real-run-found">
+  
+  
+    <a href="#two-more-things-the-real-run-found" class="anchor-heading" aria-labelledby="two-more-things-the-real-run-found"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two more things the real run found
+  
+  
+</h4>
+    
+
+<p><strong>The text-scan cap was 6× too tight, and biased.</strong> <code class="language-plaintext highlighter-rouge">searchGraph</code> defaulted to
+400 companion files. Measured: scanning all 20,191 takes <strong>1.6 s</strong> and finds
+322 matches for “Reidemeister” where the cap found 55. Worse, iteration reaches
+authored nodes first, so the ingested population — the entire reason full-text
+search exists here — was never scanned. Default is now 50,000, a backstop
+rather than a budget.</p>
+
+<p><strong>The MCP handlers were untestable, and that was the pattern.</strong> They lived in a
+nested function inside a request handler, covered by <code class="language-plaintext highlighter-rouge">tsc</code> and nothing else —
+which is precisely where §12.11’s two defects were hiding, both of which
+typechecked. They now live in <code class="language-plaintext highlighter-rouge">adapters/mcp-server/tools/graph.ts</code> and are
+driven directly by tests, including against the real corpus. One behaviour
+changed while extracting: an unknown edge term was silently filtered out, which
+answers a narrower question than the caller asked; it is now reported.</p>
+<h4 id="what-remains">
+  
+  
+    <a href="#what-remains" class="anchor-heading" aria-labelledby="what-remains"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What remains
+  
+  
+</h4>
+    
+
+<ul>
+  <li>The five <code class="language-plaintext highlighter-rouge">dak</code> axes have <strong>never run against real content</strong> — no DAK corpus
+exists to point them at.</li>
+  <li>The 33 dangling references in qou are content defects there, reported and
+unrepaired.</li>
+  <li>Promotion (<code class="language-plaintext highlighter-rouge">library/</code> node → <code class="language-plaintext highlighter-rouge">content/</code> block) is still manual, as designed.</li>
+</ul>
+<h3 id="1213-the-dak-axes-against-real-who-content">
+  
+  
+    <a href="#1213-the-dak-axes-against-real-who-content" class="anchor-heading" aria-labelledby="1213-the-dak-axes-against-real-who-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.13 The DAK axes against real WHO content
+  
+  
+</h3>
+    
+
+<p>§12.12 closed with the <code class="language-plaintext highlighter-rouge">dak</code> axes exercised only by fixtures. Run against three
+real repositories — <code class="language-plaintext highlighter-rouge">smart-dak-immz</code> (<code class="language-plaintext highlighter-rouge">3fe6a17</code>), <code class="language-plaintext highlighter-rouge">smart-dak-bds</code> (<code class="language-plaintext highlighter-rouge">6953ede</code>),
+and <code class="language-plaintext highlighter-rouge">smart-immunizations</code> (<code class="language-plaintext highlighter-rouge">12ec2fc</code>, the L3 side).</p>
+<h4 id="the-model-was-not-imposed-who-already-uses-it">
+  
+  
+    <a href="#the-model-was-not-imposed-who-already-uses-it" class="anchor-heading" aria-labelledby="the-model-was-not-imposed-who-already-uses-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The model was not imposed; WHO already uses it
+  
+  
+</h4>
+    
+
+<p>The strongest result is one I did not expect to be able to state. In
+<code class="language-plaintext highlighter-rouge">smart-immunizations</code> there are <strong>279 <code class="language-plaintext highlighter-rouge">.cql</code> files and 279 <code class="language-plaintext highlighter-rouge">.fsh</code> <code class="language-plaintext highlighter-rouge">Library</code>
+instances, pairing 1:1 by file stem</strong>. That is exactly the block/companion
+model — one stem, several artefacts — already present in published WHO content.
+Likewise 8 business processes as 8 <code class="language-plaintext highlighter-rouge">.bpmn</code> files.</p>
+<h4 id="the-checkers-that-could-run-did">
+  
+  
+    <a href="#the-checkers-that-could-run-did" class="anchor-heading" aria-labelledby="the-checkers-that-could-run-did"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The checkers that could run, did
+  
+  
+</h4>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Axis</th>
+      <th>Real input</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dak-bpmn-has-process</code></td>
+      <td>8 real WHO <code class="language-plaintext highlighter-rouge">.bpmn</code></td>
+      <td><strong>8 pass / 0 fail</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dak-fsh-declares-kind</code></td>
+      <td>739 real WHO <code class="language-plaintext highlighter-rouge">.fsh</code></td>
+      <td><strong>739/739 verdicts agree with ground truth</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+<h4 id="a-design-error-the-real-content-exposed">
+  
+  
+    <a href="#a-design-error-the-real-content-exposed" class="anchor-heading" aria-labelledby="a-design-error-the-real-content-exposed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A design error the real content exposed
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">REQUIRED_COMPANION</code> mapped <code class="language-plaintext highlighter-rouge">decision-table</code> and <code class="language-plaintext highlighter-rouge">scheduling-logic</code> to <code class="language-plaintext highlighter-rouge">.dmn</code>,
+on the strength of this repo’s own <code class="language-plaintext highlighter-rouge">dmn-authoring</code> skill and the “Decision
+logic · DMN tables” activity in <code class="language-plaintext highlighter-rouge">docs/workflows/l2-dak-authoring.bpmn</code>.</p>
+
+<p><strong>There are zero <code class="language-plaintext highlighter-rouge">.dmn</code> files across all three repositories.</strong> WHO authors
+decision-support logic as a spreadsheet —
+<code class="language-plaintext highlighter-rouge">input/decision-logic/IMMZ DAK_decision-support logic.xlsx</code>. The requirement
+would have failed every <code class="language-plaintext highlighter-rouge">decision-table</code> block for a missing artefact WHO does
+not produce.</p>
+
+<p>The deeper reason is structural, not a matter of swapping one extension for
+another: <strong>one workbook holds many blocks.</strong> A single decision-support
+spreadsheet covers every decision table, one dictionary every data element, one
+indicators file every indicator. A per-block companion does not exist until an
+extraction stage splits them — the DAK counterpart of Stage B, and not built.
+Those six kinds are now recorded in <code class="language-plaintext highlighter-rouge">WORKBOOK_BACKED_KINDS</code> and require no
+companion, so the exemption reads as a measurement rather than an oversight.</p>
+<h4 id="a-check-the-real-content-told-me-not-to-strengthen">
+  
+  
+    <a href="#a-check-the-real-content-told-me-not-to-strengthen" class="anchor-heading" aria-labelledby="a-check-the-real-content-told-me-not-to-strengthen"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A check the real content told me <em>not</em> to strengthen
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">dak-fsh-declares-kind</code> maps five kinds to <code class="language-plaintext highlighter-rouge">Instance:</code> and so cannot tell a
+PlanDefinition from a Measure. Strengthening it to read <code class="language-plaintext highlighter-rouge">InstanceOf:</code> was the
+obvious next move. Real content says no: <code class="language-plaintext highlighter-rouge">InstanceOf</code> names a <strong>profile URL</strong>
+far more often than a resource type — 138 <code class="language-plaintext highlighter-rouge">cpg-recommendationdefinition</code>, 41
+<code class="language-plaintext highlighter-rouge">proportion-measure-cqfm</code>, against 279 bare <code class="language-plaintext highlighter-rouge">Library</code>. A check keyed on
+resource-type names would have produced <strong>138 false failures on a
+correctly-formed corpus</strong>. Discriminating properly means resolving profiles to
+their bases, which is SUSHI’s job. The check stays coarse on purpose.</p>
+<h4 id="what-still-cannot-be-exercised">
+  
+  
+    <a href="#what-still-cannot-be-exercised" class="anchor-heading" aria-labelledby="what-still-cannot-be-exercised"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What still cannot be exercised
+  
+  
+</h4>
+    
+
+<p>Three of the five axes — <code class="language-plaintext highlighter-rouge">dak-companion-present</code>, <code class="language-plaintext highlighter-rouge">dak-fsh-declares-kind</code>
+end-to-end, and <code class="language-plaintext highlighter-rouge">dak-label-prefix-matches-kind</code> — check the relationship
+between a <strong>folio manifest</strong> and its artefact. Real WHO repositories have the
+artefacts and no folio manifests, so only the artefact-reading half could be
+validated (which is what the 739/739 figure measures). Exercising them fully
+means authoring DAK blocks over this content, which is the next piece of work.</p>
+
+<p><code class="language-plaintext highlighter-rouge">dak-dmn-has-decision-table</code> is correct where a <code class="language-plaintext highlighter-rouge">.dmn</code> exists and, on this
+evidence, may never fire against WHO content. It is kept for folios that author
+DMN directly, per <code class="language-plaintext highlighter-rouge">dmn-authoring</code>.</p>
+
+<p>Also observed and not yet modelled: WHO ships <code class="language-plaintext highlighter-rouge">CodeSystem</code> (6) and <code class="language-plaintext highlighter-rouge">ConceptMap</code>
+(3) FSH resources, which have no corresponding DAK block kind.</p>
+<h3 id="1214-a-dak-has-several-representations-and-some-are-generated">
+  
+  
+    <a href="#1214-a-dak-has-several-representations-and-some-are-generated" class="anchor-heading" aria-labelledby="1214-a-dak-has-several-representations-and-some-are-generated"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.14 A DAK has several representations, and some are generated
+  
+  
+</h3>
+    
+
+<p>Three facts from the author, each confirmed against the real repositories, and
+together they change the model rather than refine it.</p>
+<h4 id="a-dak-content-has-a-fhir-ig-representation">
+  
+  
+    <a href="#a-dak-content-has-a-fhir-ig-representation" class="anchor-heading" aria-labelledby="a-dak-content-has-a-fhir-ig-representation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> (a) DAK content has a FHIR IG representation
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">smart-dak-immz</code> is described as L2 and carries 536 <code class="language-plaintext highlighter-rouge">.fsh</code> files. That is not a
+contradiction: the L2 DAK <em>is itself published as a FHIR IG</em>, and its
+<code class="language-plaintext highlighter-rouge">input/fsh/</code> subdirectories map almost one-to-one onto the DAK components —
+<code class="language-plaintext highlighter-rouge">models</code>, <code class="language-plaintext highlighter-rouge">plandefinitions</code>, <code class="language-plaintext highlighter-rouge">activitydefinitions</code>, <code class="language-plaintext highlighter-rouge">requirements</code>,
+<code class="language-plaintext highlighter-rouge">scenarios</code>, <code class="language-plaintext highlighter-rouge">actors</code>, <code class="language-plaintext highlighter-rouge">measures</code>, <code class="language-plaintext highlighter-rouge">questionnaires</code>, <code class="language-plaintext highlighter-rouge">valuesets</code>,
+<code class="language-plaintext highlighter-rouge">codesystems</code>, <code class="language-plaintext highlighter-rouge">conceptmaps</code>, <code class="language-plaintext highlighter-rouge">libraries</code>.</p>
+<h4 id="b-some-of-that-fhir-is-generated-from-the-l2-sources">
+  
+  
+    <a href="#b-some-of-that-fhir-is-generated-from-the-l2-sources" class="anchor-heading" aria-labelledby="b-some-of-that-fhir-is-generated-from-the-l2-sources"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> (b) Some of that FHIR is generated from the L2 sources
+  
+  
+</h4>
+    
+
+<p>Measured, from the files themselves:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Repository</th>
+      <th><code class="language-plaintext highlighter-rouge">.fsh</code></th>
+      <th>Explicitly marked generated</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-dak-immz</code> (L2 + IG rep)</td>
+      <td>536</td>
+      <td><strong>266</strong> — 262 requirements, 4 terminology</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-immunizations</code> (L3 IG)</td>
+      <td>739</td>
+      <td><strong>0</strong> — authored</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The marker names its source row:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//functional requirment instance generated from row 73
+Instance: IMMZ.FXNREQ.075.D
+InstanceOf: SGRequirements
+</code></pre></div></div>
+
+<p>So <code class="language-plaintext highlighter-rouge">IMMZ DAK_functional and non-functional requirements.xlsx</code> row 73 becomes
+<code class="language-plaintext highlighter-rouge">input/fsh/requirements/IMMZ.FXNREQ.075.D.fsh</code>.</p>
+<h4 id="c-a-pdf-representation-is-intended-and-does-not-exist-yet">
+  
+  
+    <a href="#c-a-pdf-representation-is-intended-and-does-not-exist-yet" class="anchor-heading" aria-labelledby="c-a-pdf-representation-is-intended-and-does-not-exist-yet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> (c) A PDF representation is intended, and does not exist yet
+  
+  
+</h4>
+    
+<h4 id="what-this-means">
+  
+  
+    <a href="#what-this-means" class="anchor-heading" aria-labelledby="what-this-means"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this means
+  
+  
+</h4>
+    
+
+<p><strong>A DAK block is one Work with several Expressions.</strong> The L2 spreadsheet row,
+the FHIR IG resource, and the future PDF section are three representations of
+<em>the same content block</em>, not three different blocks and not three companions
+of one authored file. That is the FRBR pattern §12.2 already argued for on
+multilingual and jurisdictional grounds; it now has a second, independent
+motivation arriving from the WHO side, which is a good sign for the choice.</p>
+
+<p><strong>Generated artefacts must not be QA’d as authored content.</strong> A finding on
+<code class="language-plaintext highlighter-rouge">IMMZ.FXNREQ.075.D.fsh</code> is unactionable: the fix lives in the spreadsheet row
+or in the generator, and a <code class="language-plaintext highlighter-rouge">fail</code> recorded against the artefact points at
+neither. <code class="language-plaintext highlighter-rouge">isGeneratedArtefact()</code> detects the marker and the checkers return
+<code class="language-plaintext highlighter-rouge">n/a</code> <strong>with a reason</strong> rather than a verdict — the same rule this repo already
+applies to its own generated files. Validated against real content: 266/536 and
+0/739, matching the ground-truth grep exactly.</p>
+
+<p>Detection is deliberately conservative — only an explicit marker counts.
+Inferring “generated” from a path or naming convention would silently exempt
+authored content from review, which is the costlier mistake. (The marker regex
+matches WHO’s spelling <code class="language-plaintext highlighter-rouge">requirment</code> verbatim, because a normalised pattern
+would stop matching if they fix the typo.)</p>
+<h4 id="a-correction-to-1213-one-section-old">
+  
+  
+    <a href="#a-correction-to-1213-one-section-old" class="anchor-heading" aria-labelledby="a-correction-to-1213-one-section-old"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A correction to §12.13, one section old
+  
+  
+</h4>
+    
+
+<p>§12.13 concluded that workbook-backed kinds have no per-block artefact until an
+extraction stage is built. That is true of the <strong>source</strong> and false of the DAK
+as published: WHO’s tooling already splits the workbook, one FHIR instance per
+row. A <code class="language-plaintext highlighter-rouge">functional-requirement</code> block does get a per-block artefact — a
+<em>generated</em> one. It still must not be <em>required</em>, because it is a derived
+representation rather than the authored source, but the reason has changed and
+the note now says so.</p>
+<h4 id="open-and-now-better-posed">
+  
+  
+    <a href="#open-and-now-better-posed" class="anchor-heading" aria-labelledby="open-and-now-better-posed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Open, and now better posed
+  
+  
+</h4>
+    
+
+<p>The block model needs a <strong>representation</strong> axis distinct from its companion
+axis: <code class="language-plaintext highlighter-rouge">source</code> (the authored artefact), <code class="language-plaintext highlighter-rouge">generated</code> (derived, drift-gated), and
+<code class="language-plaintext highlighter-rouge">rendered</code> (the PDF, when it exists). Companions answer <em>what files does this
+block have</em>; representations answer <em>which of them is authoritative</em>. Building
+that before the PDF representation exists would be guessing at a third case, so
+it is deferred — but the two cases that do exist are now distinguishable, which
+is what stops QA reporting unactionable findings today.</p>
+<h3 id="1215-the-target-block-as-source-everything-else-as-render">
+  
+  
+    <a href="#1215-the-target-block-as-source-everything-else-as-render" class="anchor-heading" aria-labelledby="1215-the-target-block-as-source-everything-else-as-render"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.15 The target: block as source, everything else as render
+  
+  
+</h3>
+    
+
+<p>The author’s statement of where this is going, which inverts the current
+direction and reframes much of §§12.8–12.14:</p>
+
+<blockquote>
+  <p>The DAK content block should be used to render both a PDF document (and some
+Excels) and the “DAK” IG. The source, PDF and Excel documents should be in
+the DAK repos. Currently those are produced by hand and we extract them into
+computable artifacts. We want to get to the other way around — use the folio
+assistant to build up the components and edit them, and then the rendering
+packages them together.</p>
+</blockquote>
+<h4 id="two-eras-opposite-arrows">
+  
+  
+    <a href="#two-eras-opposite-arrows" class="anchor-heading" aria-labelledby="two-eras-opposite-arrows"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two eras, opposite arrows
+  
+  
+</h4>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TODAY          hand-authored .xlsx / .bpmn ──extract──▶ FHIR IG      (+ PDF, absent)
+TARGET         content blocks ──render──▶ PDF · Excel · FHIR IG
+</code></pre></div></div>
+
+<p>That is exactly the paper adapter’s shape, which is the reassuring part: blocks
+are the source, <code class="language-plaintext highlighter-rouge">render-latex</code> / <code class="language-plaintext highlighter-rouge">generate-block-tex</code> / <code class="language-plaintext highlighter-rouge">generate-main-tex</code>
+produce <code class="language-plaintext highlighter-rouge">.tex</code>, latexmk produces the PDF, <code class="language-plaintext highlighter-rouge">export-json</code> produces the viewer.
+Nobody hand-writes the <code class="language-plaintext highlighter-rouge">.tex</code> and then extracts blocks from it. The DAK adapter
+wants the same chain with three outputs instead of two.</p>
+<h4 id="what-this-work-already-serves-and-what-it-does-not">
+  
+  
+    <a href="#what-this-work-already-serves-and-what-it-does-not" class="anchor-heading" aria-labelledby="what-this-work-already-serves-and-what-it-does-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this work already serves, and what it does not
+  
+  
+</h4>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Built</th>
+      <th>Standing in the target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Block model, adapter scoping, DAK kinds + builders</td>
+      <td><strong>Load-bearing</strong> — this is the authored source</td>
+    </tr>
+    <tr>
+      <td>Companion roles, adapter-scoped QA</td>
+      <td><strong>Load-bearing</strong></td>
+    </tr>
+    <tr>
+      <td>JSON-LD projection, graph index, MCP read side</td>
+      <td><strong>Load-bearing</strong> — one graph over whatever exists</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gen-library-jsonld.ts</code> (the ingest writer)</td>
+      <td><strong>Transitional.</strong> It is the extract arrow. It stays necessary while DAKs are hand-made, and the target reverses it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">REQUIRED_COMPANION</code>’s FHIR rows</td>
+      <td><strong>Era-dependent — see below</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The ingest writer is not wasted by the inversion: 435 documents and 26,230
+nodes of existing hand-made material still have to become computable, and that
+is a migration, not a dead end. But it should be read as the on-ramp rather
+than the architecture.</p>
+<h4 id="the-check-that-will-invert-with-the-arrow">
+  
+  
+    <a href="#the-check-that-will-invert-with-the-arrow" class="anchor-heading" aria-labelledby="the-check-that-will-invert-with-the-arrow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The check that will invert with the arrow
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">dak-companion-present</code> currently requires a <code class="language-plaintext highlighter-rouge">.fsh</code> of every FHIR-kind block.
+Today that is right — the <code class="language-plaintext highlighter-rouge">.fsh</code> <em>is</em> the authored source of the L3 IG. In the
+target state it is a <strong>render output</strong>, and requiring an authored block to
+carry its own rendering is the analogue of requiring a paper block to ship its
+own <code class="language-plaintext highlighter-rouge">.tex</code>.</p>
+
+<p>The split the target implies:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Companions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Authored source</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">.md</code>, <code class="language-plaintext highlighter-rouge">.ts</code>, <code class="language-plaintext highlighter-rouge">.bpmn</code>, <code class="language-plaintext highlighter-rouge">.dmn</code>, <code class="language-plaintext highlighter-rouge">.cql</code></td>
+    </tr>
+    <tr>
+      <td><strong>Rendered output</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">.fsh</code>, <code class="language-plaintext highlighter-rouge">.xlsx</code>, PDF</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><code class="language-plaintext highlighter-rouge">.bpmn</code> and <code class="language-plaintext highlighter-rouge">.dmn</code> stay authored — a business process is genuinely written as
+BPMN, and this repo authors its own workflows that way. <code class="language-plaintext highlighter-rouge">.fsh</code> and <code class="language-plaintext highlighter-rouge">.xlsx</code>
+cross the line.</p>
+
+<p>This is recorded rather than acted on. Changing the check now would enforce a
+state that does not exist, against corpora that are correctly formed for the
+state that does. The flag is what matters: <strong>when the renderer lands, this
+check inverts</strong>, and <code class="language-plaintext highlighter-rouge">isGeneratedArtefact</code> (§12.14) is the mechanism that
+already knows the difference.</p>
+<h4 id="what-is-missing-to-reach-it">
+  
+  
+    <a href="#what-is-missing-to-reach-it" class="anchor-heading" aria-labelledby="what-is-missing-to-reach-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is missing to reach it
+  
+  
+</h4>
+    
+
+<p>A <strong>DAK renderer</strong> — the analogue of <code class="language-plaintext highlighter-rouge">render-latex.ts</code>, fanning out to three
+targets:</p>
+
+<ul>
+  <li>block → FSH → SUSHI → FHIR IG</li>
+  <li>block → <code class="language-plaintext highlighter-rouge">.xlsx</code> (the DAK workbooks, as WHO publishes them)</li>
+  <li>block → PDF</li>
+</ul>
+
+<p>And the <strong>representation axis</strong> deferred in §12.14 stops being speculative: its
+three cases are now named by the target itself — <code class="language-plaintext highlighter-rouge">source</code> (authored),
+<code class="language-plaintext highlighter-rouge">generated</code> (rendered by us), <code class="language-plaintext highlighter-rouge">extracted</code> (pulled from hand-made material,
+pending promotion). The PDF is no longer a third guess; it is one render target
+among three.</p>
+<h3 id="1216-smart-base-what-exists-and-what-should-migrate">
+  
+  
+    <a href="#1216-smart-base-what-exists-and-what-should-migrate" class="anchor-heading" aria-labelledby="1216-smart-base-what-exists-and-what-should-migrate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.16 <code class="language-plaintext highlighter-rouge">smart-base</code>: what exists, and what should migrate
+  
+  
+</h3>
+    
+
+<p>Surveyed <code class="language-plaintext highlighter-rouge">litlfred/smart-base</code> at <code class="language-plaintext highlighter-rouge">5891a22</code> — <strong>54 Python scripts, 24,775
+lines</strong>, plus XSLT and XSD under <code class="language-plaintext highlighter-rouge">input/scripts/includes/</code>.</p>
+<h4 id="the-pdf-renderer-does-not-exist">
+  
+  
+    <a href="#the-pdf-renderer-does-not-exist" class="anchor-heading" aria-labelledby="the-pdf-renderer-does-not-exist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The PDF renderer does not exist
+  
+  
+</h4>
+    
+
+<p>Confirmed. The only PDF dependency in the toolchain is <code class="language-plaintext highlighter-rouge">pdfplumber</code>, used by
+<code class="language-plaintext highlighter-rouge">extractpr.py</code> to <strong>read</strong> PDFs when extracting personas. There is no
+block → PDF path, no LaTeX, no HTML-to-PDF converter. The PDF representation
+§12.15 calls for has to be built.</p>
+<h4 id="two-of-the-target-direction-pieces-already-exist">
+  
+  
+    <a href="#two-of-the-target-direction-pieces-already-exist" class="anchor-heading" aria-labelledby="two-of-the-target-direction-pieces-already-exist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two of the target-direction pieces already exist
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">input/scripts/includes/bpmn2fhirfsh.xsl</code> (720 lines) transforms <strong>BPMN → FHIR
+FSH</strong>, and <code class="language-plaintext highlighter-rouge">dmn2html.xslt</code> (161) renders DMN to HTML. Those are already the
+<em>render</em> arrow: an authored source artefact producing a published
+representation. They are the closest thing to a working precedent for the
+renderer §12.15 wants, and the least speculative starting point.</p>
+<h4 id="the-inventory-by-arrow">
+  
+  
+    <a href="#the-inventory-by-arrow" class="anchor-heading" aria-labelledby="the-inventory-by-arrow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The inventory, by arrow
+  
+  
+</h4>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Group</th>
+      <th>Scripts</th>
+      <th>≈ lines</th>
+      <th>Standing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Extract</strong> — spreadsheet/BPMN/PDF → computable</td>
+      <td><code class="language-plaintext highlighter-rouge">dd_</code>, <code class="language-plaintext highlighter-rouge">dt_</code> (1,305), <code class="language-plaintext highlighter-rouge">req_</code>, <code class="language-plaintext highlighter-rouge">bpmn_</code>, <code class="language-plaintext highlighter-rouge">svg_</code>, <code class="language-plaintext highlighter-rouge">extractpr</code>, <code class="language-plaintext highlighter-rouge">isco08_</code>, <code class="language-plaintext highlighter-rouge">DHI</code>, <code class="language-plaintext highlighter-rouge">extractor</code>, <code class="language-plaintext highlighter-rouge">extract_dak</code></td>
+      <td>~3,500</td>
+      <td>Transitional, same as this branch’s ingest writer</td>
+    </tr>
+    <tr>
+      <td><strong>Render / generate</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">bpmn2fhirfsh.xsl</code>, <code class="language-plaintext highlighter-rouge">dmn2html.xslt</code>, <code class="language-plaintext highlighter-rouge">dmn_questionnaire_generator</code>, <code class="language-plaintext highlighter-rouge">transform_dmn</code>, <code class="language-plaintext highlighter-rouge">generate_jsonld_vocabularies</code> (738), <code class="language-plaintext highlighter-rouge">generate_*_schemas</code> (2,315), <code class="language-plaintext highlighter-rouge">generate_smart_liquid</code>, <code class="language-plaintext highlighter-rouge">generate_dak_from_sushi</code>, <code class="language-plaintext highlighter-rouge">generate_dak_api_hub</code> (3,823)</td>
+      <td>~9,000</td>
+      <td><strong>The valuable half</strong> — target-direction</td>
+    </tr>
+    <tr>
+      <td><strong>Translation</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">extract_translations</code> (1,158), <code class="language-plaintext highlighter-rouge">inject_translations</code> (933), <code class="language-plaintext highlighter-rouge">pull_*</code> ×4, <code class="language-plaintext highlighter-rouge">translation_config</code>, <code class="language-plaintext highlighter-rouge">register_translation_project</code>, <code class="language-plaintext highlighter-rouge">translation_report</code>, <code class="language-plaintext highlighter-rouge">translation_security</code>, …</td>
+      <td>~5,500</td>
+      <td>See below</td>
+    </tr>
+    <tr>
+      <td><strong>IG build / CI</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">run_ig_publisher</code> (1,360), <code class="language-plaintext highlighter-rouge">create_package_release</code>, <code class="language-plaintext highlighter-rouge">inject_build_banner</code>, <code class="language-plaintext highlighter-rouge">stamp_deploy*</code>, <code class="language-plaintext highlighter-rouge">prune_branches</code>, <code class="language-plaintext highlighter-rouge">resolve_branch</code>, <code class="language-plaintext highlighter-rouge">pr_comment_*</code></td>
+      <td>~4,000</td>
+      <td>Belongs with the IG, not the platform</td>
+    </tr>
+  </tbody>
+</table></div>
+<h4 id="the-translation-subsystem-is-bigger-news-than-expected">
+  
+  
+    <a href="#the-translation-subsystem-is-bigger-news-than-expected" class="anchor-heading" aria-labelledby="the-translation-subsystem-is-bigger-news-than-expected"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The translation subsystem is bigger news than expected
+  
+  
+</h4>
+    
+
+<p>~5,500 lines wiring Weblate, Crowdin and Launchpad, with string extraction,
+injection, per-project registration and a completeness report. That is the
+<strong>multilingual axis</strong> §12.2 argued for on FRBR grounds — WHO publishing in six
+official languages, a translation being <em>the same recommendation in another
+Expression</em> — and it turns out to be an established subsystem rather than a
+future requirement.</p>
+
+<p>It substantially raises the stakes on the representation model: a DAK block has
+representations along <strong>two</strong> axes at once, format (source / IG / Excel / PDF)
+and language. That is exactly Work → Expression → Manifestation, and it is the
+strongest argument yet for adopting the FRBR pattern rather than approximating
+it.</p>
+<h4 id="an-independent-convergence-worth-recording">
+  
+  
+    <a href="#an-independent-convergence-worth-recording" class="anchor-heading" aria-labelledby="an-independent-convergence-worth-recording"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An independent convergence worth recording
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">smart-base</code> already generates JSON-LD (<code class="language-plaintext highlighter-rouge">generate_jsonld_vocabularies.py</code>, 738
+lines) with a declared <code class="language-plaintext highlighter-rouge">@context</code>. Its namespace IRIs and folio’s, chosen
+separately:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Prefix</th>
+      <th>smart-base</th>
+      <th>folio (§12.5)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">prov</code></td>
+      <td><code class="language-plaintext highlighter-rouge">http://www.w3.org/ns/prov#</code></td>
+      <td><strong>identical</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fhir</code></td>
+      <td><code class="language-plaintext highlighter-rouge">http://hl7.org/fhir/</code></td>
+      <td><strong>identical</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Both pin <code class="language-plaintext highlighter-rouge">@version: 1.1</code>. The vocabularies do not overlap otherwise — theirs
+covers ValueSet enumeration semantics (<code class="language-plaintext highlighter-rouge">schema:</code>, <code class="language-plaintext highlighter-rouge">rdfs:</code>), mine document
+structure (<code class="language-plaintext highlighter-rouge">doco:</code>, <code class="language-plaintext highlighter-rouge">deo:</code>) — so they compose rather than compete. WHO also
+stamps <code class="language-plaintext highlighter-rouge">prov:generatedAtTime</code>, which is a stronger generated-artefact signal
+than the source-comment marker <code class="language-plaintext highlighter-rouge">isGeneratedArtefact</code> currently keys on, and
+worth preferring where present.</p>
+<h4 id="correction-do-not-migrate--load">
+  
+  
+    <a href="#correction-do-not-migrate--load" class="anchor-heading" aria-labelledby="correction-do-not-migrate--load"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Correction: do not migrate — load
+  
+  
+</h4>
+    
+
+<p>The migration order this section originally proposed was wrong, and the author
+corrected it: <strong>the scripts are needed where they are.</strong> The DAK repositories’
+own GitHub Actions invoke them, so <code class="language-plaintext highlighter-rouge">smart-base</code> stays their authoritative home.
+Vendoring copies into this platform would produce exactly the second, drifting
+copy §2c argues against — this time of a toolchain rather than a corpus.</p>
+
+<p>The real need is the opposite: folio-assistant should <strong>load</strong> from smart-base,
+and package what it finds as <strong>agentic skills</strong>.</p>
+
+<p>That is the mechanism this repo already has, and §5’s integration contract is
+its statement:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>capability probe   .claude/skills/capabilities/smart-base.json
+       ↓           (detection + `requires`, resolved from SMART_BASE_HOME)
+skill              .claude/skills/local/smart-base-tools.json
+       ↓           (requiredCapabilities + degradation)
+absent ⇒ n/a, never a false pass
+</code></pre></div></div>
+
+<p>Both are added. The capability resolves <code class="language-plaintext highlighter-rouge">SMART_BASE_HOME</code>, defaulting to
+<code class="language-plaintext highlighter-rouge">/opt/smart-base</code>, and requires <code class="language-plaintext highlighter-rouge">python3</code>; the skill declares it with
+<code class="language-plaintext highlighter-rouge">degradation: "skip"</code>, so a session without a checkout degrades honestly rather
+than reporting a clean run over a toolchain it never had.</p>
+<h4 id="a-gap-this-exposed-nothing-ran-the-probes">
+  
+  
+    <a href="#a-gap-this-exposed-nothing-ran-the-probes" class="anchor-heading" aria-labelledby="a-gap-this-exposed-nothing-ran-the-probes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A gap this exposed: nothing ran the probes
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">.claude/skills/capabilities/*.json</code> has always declared <em>how</em> to detect each
+tool, and <strong>nothing executed them.</strong> <code class="language-plaintext highlighter-rouge">--check-deps</code> carried its own hardcoded
+list, and <code class="language-plaintext highlighter-rouge">src/tools/check-deps.ts</code> carried a second. So the probes were
+documentation, and a skill’s <code class="language-plaintext highlighter-rouge">requiredCapabilities</code> had nothing to check
+against.</p>
+
+<p>That is not a tidiness problem. §5’s contract rests on <em>absent tool ⇒ <code class="language-plaintext highlighter-rouge">n/a</code>,
+never a false pass</em> — a document nobody parsed must not read as a document with
+nothing in it. An unexecuted probe cannot deliver that.</p>
+
+<p><code class="language-plaintext highlighter-rouge">src/tools/capabilities.ts</code> now executes them, resolving <code class="language-plaintext highlighter-rouge">requires</code> first, and
+<code class="language-plaintext highlighter-rouge">--check-deps</code> reports both mechanisms. The <code class="language-plaintext highlighter-rouge">requires</code> resolution earns its
+place immediately: against this container it distinguishes</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>○ lean-atlas    — requires lean-toolchain
+○ plantuml      — requires graphviz
+○ smart-base    — probe failed
+</code></pre></div></div>
+
+<p>from a bare failure, and those call for different fixes. A dependent’s own
+probe is deliberately <strong>not</strong> run when a prerequisite is unmet — it would
+either fail confusingly or succeed and hide the break.</p>
+
+<p>The two hardcoded lists remain. Unifying them is a separate change with its own
+blast radius, and <code class="language-plaintext highlighter-rouge">--check-deps</code> now says which mechanism each line comes from.</p>
+<h4 id="what-to-package-next">
+  
+  
+    <a href="#what-to-package-next" class="anchor-heading" aria-labelledby="what-to-package-next"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What to package next
+  
+  
+</h4>
+    
+
+<p>Skills wrapping the target-direction scripts, in the order the evidence
+suggests — <code class="language-plaintext highlighter-rouge">bpmn2fhirfsh.xsl</code> and <code class="language-plaintext highlighter-rouge">dmn2html.xslt</code> first, since they are the
+smallest and already render rather than extract, then the <code class="language-plaintext highlighter-rouge">generate_*</code> family
+whose JSON-LD <code class="language-plaintext highlighter-rouge">@context</code> already shares this branch’s <code class="language-plaintext highlighter-rouge">prov</code> and <code class="language-plaintext highlighter-rouge">fhir</code> IRIs.
+The IG build and CI scripts want no skill at all: they orchestrate the
+publisher, and GitHub Actions is their caller.</p>
+<h3 id="1217-the-first-smart-base-backed-skill-and-the-render-arrow-proven">
+  
+  
+    <a href="#1217-the-first-smart-base-backed-skill-and-the-render-arrow-proven" class="anchor-heading" aria-labelledby="1217-the-first-smart-base-backed-skill-and-the-render-arrow-proven"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.17 The first smart-base-backed skill, and the render arrow proven
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">smart-base-tools</code> wraps the two XSLT transforms, loading them from a checkout
+rather than vendoring them. Run against real WHO content:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Inputs</td>
+      <td>8 real WHO <code class="language-plaintext highlighter-rouge">.bpmn</code> (<code class="language-plaintext highlighter-rouge">smart-dak-immz</code>)</td>
+    </tr>
+    <tr>
+      <td>Emitted</td>
+      <td><strong>313 FSH files, 0 failures</strong></td>
+    </tr>
+    <tr>
+      <td>Distinct paths</td>
+      <td><strong>201</strong></td>
+    </tr>
+    <tr>
+      <td>Collisions</td>
+      <td><strong>112</strong>, all named on stderr</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>That is the render arrow working end to end for the first time: an authored
+source artefact (BPMN) producing a published representation (FSH). It is the
+smallest existence proof that §12.15’s direction is buildable, and it is WHO’s
+own stylesheet doing the work.</p>
+<h4 id="three-things-the-real-run-taught-the-wrapper">
+  
+  
+    <a href="#three-things-the-real-run-taught-the-wrapper" class="anchor-heading" aria-labelledby="three-things-the-real-run-taught-the-wrapper"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three things the real run taught the wrapper
+  
+  
+</h4>
+    
+
+<p><strong>The output is an envelope, not a document.</strong> <code class="language-plaintext highlighter-rouge">bpmn2fhirfsh.xsl</code> emits
+<code class="language-plaintext highlighter-rouge">&lt;files&gt;&lt;file name="…"&gt;…&lt;/file&gt;…&lt;/files&gt;</code>, one entry per artefact — 157 of them
+for <code class="language-plaintext highlighter-rouge">IMMZ.D.Administer Vaccine</code> alone. A wrapper that treated the result as a
+single document would have written one file and lost 156.</p>
+
+<p><strong>Do not serialise and re-parse.</strong> One real process emits FSH text containing an
+<code class="language-plaintext highlighter-rouge">xsl:</code>-prefixed attribute that is well-formed inside the result tree and not
+well-formed once round-tripped through a string — <code class="language-plaintext highlighter-rouge">XMLSyntaxError: Namespace
+prefix xsl on attribute is not defined</code>. lxml hands back an already-parsed
+tree; the wrapper reads that and never re-parses.</p>
+
+<p><strong>Outputs collide.</strong> 313 emitted at 201 distinct paths, because shared actors
+and two near-duplicate copies of one process name the same files. Silently
+overwriting would report 313 successes and leave 201 files — quiet arithmetic
+of exactly the kind this work keeps finding. Every collision is now counted and
+named, so a reader decides whether it is a duplicate input to remove or two
+processes legitimately contributing the same actor.</p>
+<h4 id="degradation-checked-both-ways">
+  
+  
+    <a href="#degradation-checked-both-ways" class="anchor-heading" aria-labelledby="degradation-checked-both-ways"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Degradation, checked both ways
+  
+  
+</h4>
+    
+
+<p>Without a checkout, <code class="language-plaintext highlighter-rouge">--check</code> exits non-zero and names <code class="language-plaintext highlighter-rouge">SMART_BASE_HOME</code>; a
+transform attempt exits 3 and says why. Neither reports a clean run. That is
+the §5 contract — absent tool ⇒ <code class="language-plaintext highlighter-rouge">n/a</code>, never a false pass — reaching the
+toolchain layer, and it is what the capability probe added in the previous
+commit now actually enforces.</p>
+<h4 id="not-wrapped">
+  
+  
+    <a href="#not-wrapped" class="anchor-heading" aria-labelledby="not-wrapped"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Not wrapped
+  
+  
+</h4>
+    
+
+<p>The extractors, the <code class="language-plaintext highlighter-rouge">generate_*</code> family and the translation subsystem. The IG
+build and CI scripts want no skill at all: GitHub Actions is their caller.</p>
+<h3 id="1218-a-dak-pdf-exists">
+  
+  
+    <a href="#1218-a-dak-pdf-exists" class="anchor-heading" aria-labelledby="1218-a-dak-pdf-exists"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.18 A DAK PDF exists
+  
+  
+</h3>
+    
+
+<p>§12.16 established that no DAK PDF renderer exists anywhere — <code class="language-plaintext highlighter-rouge">smart-base</code>’s
+only PDF dependency is <code class="language-plaintext highlighter-rouge">pdfplumber</code>, which <em>reads</em> PDFs. <code class="language-plaintext highlighter-rouge">scripts/dak-pdf.ts</code>
+is the first thing that writes one, completing the third of §12.15’s three
+render targets.</p>
+
+<p>Run against all three real repositories:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Repository</th>
+      <th>Sections</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-dak-immz</code></td>
+      <td>35</td>
+      <td><strong>43-page PDF, 231 KB, valid trailer</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-dak-bds</code></td>
+      <td>33</td>
+      <td>PDF</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-immunizations</code></td>
+      <td>34</td>
+      <td>PDF</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Titles come from each repo’s <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> (“SMART DAK IMMZ”, “WHO
+Immunization Implementation Guide”), narrative from <code class="language-plaintext highlighter-rouge">input/pagecontent/*.md</code>
+through remark, and the whole document is printed by the Chromium already
+installed for Playwright.</p>
+<h4 id="what-it-does-not-render-and-why-that-is-in-the-document">
+  
+  
+    <a href="#what-it-does-not-render-and-why-that-is-in-the-document" class="anchor-heading" aria-labelledby="what-it-does-not-render-and-why-that-is-in-the-document"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What it does not render, and why that is in the document
+  
+  
+</h4>
+    
+
+<p>It renders narrative, a business-process index, and a decision-logic index. It
+does <strong>not</strong> render BPMN diagrams (8 processes are listed, not drawn — there is
+no diagram renderer and <code class="language-plaintext highlighter-rouge">input/images/</code> is empty), or the workbooks (5 in
+<code class="language-plaintext highlighter-rouge">smart-dak-immz</code>), which is where most of a DAK’s substance actually lives.</p>
+
+<p>Those omissions are printed <strong>inside the PDF</strong>, in a “Not included in this
+rendering” section, not only in the run log. A PDF that silently dropped the
+decision tables would look complete to exactly the reader least able to notice,
+and that reader never sees stdout. It is the same discipline as the graph
+index’s truncation reporting and the transform’s collision counting: the number
+that is missing has to travel with the artefact.</p>
+<h4 id="a-container-detail-worth-recording">
+  
+  
+    <a href="#a-container-detail-worth-recording" class="anchor-heading" aria-labelledby="a-container-detail-worth-recording"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A container detail worth recording
+  
+  
+</h4>
+    
+
+<p>The installed <code class="language-plaintext highlighter-rouge">playwright</code> expects <code class="language-plaintext highlighter-rouge">chromium_headless_shell-1228</code>; this
+container ships <code class="language-plaintext highlighter-rouge">-1194</code> under <code class="language-plaintext highlighter-rouge">PLAYWRIGHT_BROWSERS_PATH</code>. Re-downloading is
+deliberately blocked, so the renderer probes for the real binary and passes it
+as <code class="language-plaintext highlighter-rouge">executablePath</code>. Without that it fails with “Executable doesn’t exist”,
+which reads like a missing browser rather than a version skew.</p>
+<h4 id="where-the-blocks-come-in">
+  
+  
+    <a href="#where-the-blocks-come-in" class="anchor-heading" aria-labelledby="where-the-blocks-come-in"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the blocks come in
+  
+  
+</h4>
+    
+
+<p>This renders the <em>current</em> hand-authored <code class="language-plaintext highlighter-rouge">pagecontent/</code>, because that is what
+exists. §12.15’s target is block → PDF, and <code class="language-plaintext highlighter-rouge">pagecontent/</code> is precisely the
+seam where authored DAK blocks replace hand-written narrative: the assembler
+takes a list of sections with titles, HTML and a source, which is what a block
+sequence already is.</p>
+<h3 id="1219-diagrams-drawn-and-whos-own-styling">
+  
+  
+    <a href="#1219-diagrams-drawn-and-whos-own-styling" class="anchor-heading" aria-labelledby="1219-diagrams-drawn-and-whos-own-styling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.19 Diagrams drawn, and WHO’s own styling
+  
+  
+</h3>
+    
+
+<p>Two corrections to §12.18, both prompted by the author.</p>
+<h4 id="the-styling-already-existed-in-a-directory-i-had-not-searched">
+  
+  
+    <a href="#the-styling-already-existed-in-a-directory-i-had-not-searched" class="anchor-heading" aria-labelledby="the-styling-already-existed-in-a-directory-i-had-not-searched"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The styling already existed, in a directory I had not searched
+  
+  
+</h4>
+    
+
+<p>§12.16 surveyed <code class="language-plaintext highlighter-rouge">input/scripts/</code> and concluded there was no PDF styling. That
+was under-searched. <code class="language-plaintext highlighter-rouge">smart-base/local-template/package/</code> carries
+<code class="language-plaintext highlighter-rouge">content/assets/css/dmn.css</code> — the WHO palette (<code class="language-plaintext highlighter-rouge">--dmn-who-blue: #0093d0</code>),
+light/dark theming, and decision-table rules — injected by the IG template via
+<code class="language-plaintext highlighter-rouge">_append.fragment-css.html</code>, alongside Liquid fragments for actors and
+functional requirements and <code class="language-plaintext highlighter-rouge">templates/liquid/{Measure,Library,PlanDefinition,
+Group,ActivityDefinition}.liquid</code>.</p>
+
+<p>The first cut invented its own generic serif CSS, which is the second-weaker-copy
+mistake this work keeps finding in other people’s code. <code class="language-plaintext highlighter-rouge">dak-pdf.ts</code> now loads
+<code class="language-plaintext highlighter-rouge">dmn.css</code> from the checkout when <code class="language-plaintext highlighter-rouge">SMART_BASE_HOME</code> resolves, and says so in the
+HTML when it cannot.</p>
+
+<p>(There is still no <code class="language-plaintext highlighter-rouge">@media print</code> or <code class="language-plaintext highlighter-rouge">@page</code> anywhere in <code class="language-plaintext highlighter-rouge">smart-base</code> — the
+styling is for the IG’s HTML, not for a PDF. But it is WHO’s, and reusing it
+beats inventing.)</p>
+<h4 id="business-processes-are-now-drawn">
+  
+  
+    <a href="#business-processes-are-now-drawn" class="anchor-heading" aria-labelledby="business-processes-are-now-drawn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Business processes are now drawn
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">scripts/bpmn-render.ts</code> renders BPMN to SVG with bpmn-js inside the same
+Chromium. <strong>8 of 8 real WHO processes, 0 failures.</strong> The PDF grew from 231 KB
+to 308 KB and its BPMN omission is gone.</p>
+
+<p>This works only because the files carry Diagram Interchange — bpmn-js renders a
+layout, it does not compute one. All 8 do, with 20–264 <code class="language-plaintext highlighter-rouge">BPMNShape</code> elements
+each.</p>
+<h4 id="a-correction-i-made-mid-flight-and-the-real-cause">
+  
+  
+    <a href="#a-correction-i-made-mid-flight-and-the-real-cause" class="anchor-heading" aria-labelledby="a-correction-i-made-mid-flight-and-the-real-cause"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A correction I made mid-flight, and the real cause
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">IMMZ.D.Administer Vaccine</code> failed with <code class="language-plaintext highlighter-rouge">element &lt;IMMZ.D17&gt; already exists</code>. My
+first reading — a duplicate id in WHO’s file — was <strong>wrong</strong>: the file has no
+duplicate ids at all. The actual cause is that <code class="language-plaintext highlighter-rouge">IMMZ.D17</code> appears both as a
+shape in the top-level diagram <em>and</em> as the root of its own drilled-down
+sub-process plane. That is legal BPMN, and a plain bpmn-js Viewer refuses it at
+<code class="language-plaintext highlighter-rouge">importXML</code>, before anything renders. Drilldown is a Modeler feature.</p>
+
+<p>My second attempt — a fresh viewer per diagram — also failed, for the same
+reason: the rejection is at import, not at render.</p>
+
+<p><code class="language-plaintext highlighter-rouge">keepPrimaryPlane()</code> strips every <code class="language-plaintext highlighter-rouge">BPMNDiagram</code> after the first before import
+and returns how many it removed, so the top-level process draws and the
+sub-process count is reported (<code class="language-plaintext highlighter-rouge">IMMZ.D</code> has 7). Catching the failure instead
+would have meant no diagram at all for that file. The strip is a text operation
+on the serialised XML on purpose: re-serialising risks rewriting the namespace
+prefixes the DI references depend on.</p>
+<h4 id="still-not-in-the-pdf">
+  
+  
+    <a href="#still-not-in-the-pdf" class="anchor-heading" aria-labelledby="still-not-in-the-pdf"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Still not in the PDF
+  
+  
+</h4>
+    
+
+<p>The 5 workbooks — the data dictionary, indicators and requirements — which is
+where most of a DAK’s substance lives. That needs an <code class="language-plaintext highlighter-rouge">.xlsx</code> reader and a
+decision about which sheets belong in a printed document; the second half is
+the author’s, not something to infer.</p>
+<h3 id="1220-sgex-three-scripts-worth-taking-not-thirty-six">
+  
+  
+    <a href="#1220-sgex-three-scripts-worth-taking-not-thirty-six" class="anchor-heading" aria-labelledby="1220-sgex-three-scripts-worth-taking-not-thirty-six"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.20 <code class="language-plaintext highlighter-rouge">sgex</code>: three scripts worth taking, not thirty-six
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">litlfred/sgex</code> is dead code, so unlike <code class="language-plaintext highlighter-rouge">smart-base</code> — whose scripts stay
+because the DAK repositories’ Actions invoke them in place — its scripts should
+move here. Surveyed at <code class="language-plaintext highlighter-rouge">d8288af</code>: <code class="language-plaintext highlighter-rouge">scripts/</code> holds 36 entries.</p>
+
+<p><strong>Three are authoring or publication work:</strong></p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Script</th>
+      <th>Lines</th>
+      <th>What it is</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">generate-dak-publication-poc.js</code></td>
+      <td><strong>2,150</strong></td>
+      <td>A DAK publication generator — HTML and ePub output, WHO branding, template variables, and <strong><code class="language-plaintext highlighter-rouge">@media print</code> / <code class="language-plaintext highlighter-rouge">@page</code> rules</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">generate-dak-faq-docs.js</code></td>
+      <td>896</td>
+      <td>DAK FAQ documentation generation</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bpmn-to-svg.js</code></td>
+      <td>73</td>
+      <td>BPMN → SVG via bpmn-js under <strong>jsdom</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>The other 33 are CI plumbing for the dead app</strong> — <code class="language-plaintext highlighter-rouge">manage-pr-comment</code>,
+<code class="language-plaintext highlighter-rouge">run-security-checks</code>, <code class="language-plaintext highlighter-rouge">verify-csp-fix</code>, <code class="language-plaintext highlighter-rouge">verify-ghpages-build</code>,
+<code class="language-plaintext highlighter-rouge">test-deployment</code>, <code class="language-plaintext highlighter-rouge">analyze-github-issues</code>, and so on. They belong to a GitHub
+Pages deployment that no longer exists and would become skills for nothing.</p>
+
+<p>So the honest count is 3 of 36, not “lots”. That matters for scoping: this is a
+day of work on two files, not a migration programme.</p>
+<h4 id="the-print-styling-was-real-and-in-the-repository-i-had-not-looked-at">
+  
+  
+    <a href="#the-print-styling-was-real-and-in-the-repository-i-had-not-looked-at" class="anchor-heading" aria-labelledby="the-print-styling-was-real-and-in-the-repository-i-had-not-looked-at"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The print styling was real, and in the repository I had not looked at
+  
+  
+</h4>
+    
+
+<p>§12.16 concluded there was no PDF styling, having searched <code class="language-plaintext highlighter-rouge">smart-base</code>. The
+author remembered otherwise and was right — it is in
+<code class="language-plaintext highlighter-rouge">generate-dak-publication-poc.js</code>, which carries genuine print rules:
+<code class="language-plaintext highlighter-rouge">@media print</code> with <code class="language-plaintext highlighter-rouge">page-break-before</code>, <code class="language-plaintext highlighter-rouge">page-break-inside: avoid</code> on
+component/actor/metric cards, a 10pt print body size, and link handling. That
+is exactly what <code class="language-plaintext highlighter-rouge">dak-pdf.ts</code> should adopt in place of its own page-break CSS.</p>
+
+<p>Both statements can stand: there is no print styling in <code class="language-plaintext highlighter-rouge">smart-base</code>, and there
+is print styling in <code class="language-plaintext highlighter-rouge">sgex</code>. The error was concluding the first meant the second.</p>
+<h4 id="a-second-bpmn-approach-worth-weighing">
+  
+  
+    <a href="#a-second-bpmn-approach-worth-weighing" class="anchor-heading" aria-labelledby="a-second-bpmn-approach-worth-weighing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A second BPMN approach worth weighing
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">bpmn-to-svg.js</code> does what <code class="language-plaintext highlighter-rouge">scripts/bpmn-render.ts</code> now does, but with <strong>jsdom</strong>
+rather than a real browser: lighter, no Chromium, no <code class="language-plaintext highlighter-rouge">executablePath</code> probe. The
+tradeoff is that jsdom has no layout engine, so anything bpmn-js resolves by
+measuring rendered text may degrade. Worth a comparison on the same 8 WHO
+processes before assuming the Chromium route is the right one — it is heavier,
+and heavier is only justified if the output is actually better.</p>
+<h4 id="recommended-order">
+  
+  
+    <a href="#recommended-order" class="anchor-heading" aria-labelledby="recommended-order"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Recommended order
+  
+  
+</h4>
+    
+
+<ol>
+  <li><strong>Port the print CSS</strong> from the publication POC into <code class="language-plaintext highlighter-rouge">dak-pdf.ts</code> — smallest,
+and directly improves an artefact that already exists.</li>
+  <li><strong>Read <code class="language-plaintext highlighter-rouge">generate-dak-publication-poc.js</code> properly.</strong> 2,150 lines of DAK
+publication logic with ePub output is either a large head start or a
+cautionary tale, and which one it is cannot be told from its docstring.</li>
+  <li><strong>Compare <code class="language-plaintext highlighter-rouge">bpmn-to-svg.js</code> against <code class="language-plaintext highlighter-rouge">bpmn-render.ts</code></strong> on the same inputs.</li>
+</ol>
+
+<p>The remaining 33 want no skill, and saying so is the point: a migration that
+carries them over would make the platform responsible for a dead app’s CI.</p>
+<h3 id="1221-the-print-css-ported-and-what-the-publication-poc-actually-is">
+  
+  
+    <a href="#1221-the-print-css-ported-and-what-the-publication-poc-actually-is" class="anchor-heading" aria-labelledby="1221-the-print-css-ported-and-what-the-publication-poc-actually-is"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.21 The print CSS ported, and what the publication POC actually is
+  
+  
+</h3>
+    
+<h4 id="ported-with-one-thing-that-could-not-survive">
+  
+  
+    <a href="#ported-with-one-thing-that-could-not-survive" class="anchor-heading" aria-labelledby="ported-with-one-thing-that-could-not-survive"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Ported, with one thing that could not survive
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">sgex</code>’s <code class="language-plaintext highlighter-rouge">generate-dak-publication-poc.js</code> carries 486 lines of WHO-compliant
+CSS. The print-relevant and branding parts are now in <code class="language-plaintext highlighter-rouge">dak-pdf.ts</code>: A4 <code class="language-plaintext highlighter-rouge">@page</code>,
+Arial 11pt body (10pt in print), WHO blue <code class="language-plaintext highlighter-rouge">#0078d4</code> headings,
+<code class="language-plaintext highlighter-rouge">page-break-inside: avoid</code> on figures, and <code class="language-plaintext highlighter-rouge">a[href^="http"]::after { content: "
+(" attr(href) ")" }</code> — a printed link is useless without its target.</p>
+
+<p>The rest was left: it styles that generator’s own card-and-grid markup
+(<code class="language-plaintext highlighter-rouge">.actors-grid</code>, <code class="language-plaintext highlighter-rouge">.metrics-grid</code>, <code class="language-plaintext highlighter-rouge">.component-card</code>), which this document does
+not have, and copying selectors nothing matches is how a stylesheet becomes
+unmaintainable.</p>
+
+<p><strong>The margin boxes could not be ported.</strong> The POC declares
+<code class="language-plaintext highlighter-rouge">@page { @top-center { … } @bottom-center { content: "Page " counter(page) } }</code>.
+Those are CSS Paged Media margin boxes — implemented by PrinceXML and
+WeasyPrint, <strong>not by Chromium</strong>, which is what prints here. Copied verbatim they
+would have silently produced no header and no page numbers, which is the worst
+kind of port: it looks done. The equivalent is Playwright’s
+<code class="language-plaintext highlighter-rouge">headerTemplate</code>/<code class="language-plaintext highlighter-rouge">footerTemplate</code>, and the running header and page numbering
+moved there.</p>
+
+<p>Verified rather than assumed, by extracting text from the output:
+<strong>42 of 42 pages carry the running header, and 42 of 42 carry “Page N of M”.</strong></p>
+
+<p>(Reading the PDF needed <code class="language-plaintext highlighter-rouge">scripts/_pypdf_compat.py</code> — this container’s
+<code class="language-plaintext highlighter-rouge">cryptography</code> panics on import via pyo3 rather than raising <code class="language-plaintext highlighter-rouge">ImportError</code>,
+which is exactly the failure that shim exists for.)</p>
+<h4 id="the-poc-is-a-cautionary-tale-not-a-head-start">
+  
+  
+    <a href="#the-poc-is-a-cautionary-tale-not-a-head-start" class="anchor-heading" aria-labelledby="the-poc-is-a-cautionary-tale-not-a-head-start"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The POC is a cautionary tale, not a head start
+  
+  
+</h4>
+    
+
+<p>Read properly rather than from its docstring, <code class="language-plaintext highlighter-rouge">generate-dak-publication-poc.js</code>
+is a <strong>demo with mocked data</strong>, and the parts that look like a DAK publication
+generator mostly are not one:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">generateMockContent()</code> is ~300 lines of <strong>hardcoded prose</strong> — one canned
+narrative per DAK component type.</li>
+  <li><code class="language-plaintext highlighter-rouge">analyzeDAKRepository()</code> opens with <em>“Mock DAK repository analysis — in real
+implementation this would…”</em>. It does not read a repository.</li>
+  <li><code class="language-plaintext highlighter-rouge">generateTableOfContents()</code> <strong>invents its page numbers</strong>: <code class="language-plaintext highlighter-rouge">page: 3</code>,
+<code class="language-plaintext highlighter-rouge">page: index + 4</code>, <code class="language-plaintext highlighter-rouge">page: 99</code>. They are not computed from the rendered
+document.</li>
+  <li><code class="language-plaintext highlighter-rouge">processMarkdownContent()</code> is regex markdown, self-described as <em>“in real
+implementation would use markdown-it”</em>. <code class="language-plaintext highlighter-rouge">remark</code>, already used here, is
+strictly better.</li>
+  <li>The API architecture the docstring advertises points at
+<code class="language-plaintext highlighter-rouge">http://localhost:3002</code>, a service belonging to the dead app.</li>
+</ul>
+
+<p>17 occurrences of “mock” across the file.</p>
+
+<p>So of 2,150 lines the genuinely valuable asset was the stylesheet, and it has
+been taken. <strong>Nothing else should be ported.</strong> <code class="language-plaintext highlighter-rouge">dak-pdf.ts</code> already reads real
+repositories, renders real markdown through remark, draws real BPMN, and
+derives its contents list from the sections it actually assembled — every one
+of which the POC only simulates.</p>
+
+<p>That is worth stating plainly because the file’s own header oversells it
+(“API-driven service architecture”, “WYSIWYG-ready template system”,
+“multi-format output”), and a reader trusting that description would spend
+days porting scaffolding around mocked data.</p>
+<h4 id="revised-recommendation-for-sgex">
+  
+  
+    <a href="#revised-recommendation-for-sgex" class="anchor-heading" aria-labelledby="revised-recommendation-for-sgex"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Revised recommendation for <code class="language-plaintext highlighter-rouge">sgex</code>
+  
+  
+</h4>
+    
+
+<p>Of the three authoring scripts §12.20 identified, one is now settled:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Script</th>
+      <th>Verdict</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">generate-dak-publication-poc.js</code></td>
+      <td><strong>CSS taken; do not port the rest.</strong> Mocked data, invented page numbers, regex markdown, dead API</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bpmn-to-svg.js</code></td>
+      <td>Still worth comparing — jsdom versus the Chromium route now in use</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">generate-dak-faq-docs.js</code></td>
+      <td>Settled in §12.22 — generator rejected, question catalog taken</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="1222-generate-dak-faq-docsjs-the-script-is-worthless-its-input-is-not">
+  
+  
+    <a href="#1222-generate-dak-faq-docsjs-the-script-is-worthless-its-input-is-not" class="anchor-heading" aria-labelledby="1222-generate-dak-faq-docsjs-the-script-is-worthless-its-input-is-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.22 <code class="language-plaintext highlighter-rouge">generate-dak-faq-docs.js</code>: the script is worthless, its input is not
+  
+  
+</h3>
+    
+
+<p>The last unread <code class="language-plaintext highlighter-rouge">sgex</code> script is the one whose <em>inputs</em> matter more than its
+code. Read with the scepticism §12.21 earned, it splits cleanly in two.</p>
+<h4 id="the-generator-do-not-port">
+  
+  
+    <a href="#the-generator-do-not-port" class="anchor-heading" aria-labelledby="the-generator-do-not-port"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The generator: do not port
+  
+  
+</h4>
+    
+
+<p>Unlike the publication POC, it is <strong>not mocked</strong> — zero occurrences of <code class="language-plaintext highlighter-rouge">mock</code>,
+and all five of its declared sources exist in the repository. It genuinely
+reads what it claims to read. It is still not worth taking:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Finding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Coupling</td>
+      <td>Every source path is <code class="language-plaintext highlighter-rouge">sgex</code>’s own (<code class="language-plaintext highlighter-rouge">docs/dak-faq-system.md</code>, <code class="language-plaintext highlighter-rouge">src/dak/faq/questions/</code>, <code class="language-plaintext highlighter-rouge">services/dak-faq-mcp</code>). It documents a dead app to itself</td>
+    </tr>
+    <tr>
+      <td>Startup</td>
+      <td><code class="language-plaintext highlighter-rouge">startMCPServer()</code> runs <code class="language-plaintext highlighter-rouge">npm run build</code> in the dead service, spawns <code class="language-plaintext highlighter-rouge">dist/index.js</code>, and polls <code class="language-plaintext highlighter-rouge">127.0.0.1:3001/health</code> for 30 s. Porting it means porting that service</td>
+    </tr>
+    <tr>
+      <td>Extraction</td>
+      <td>Literal-heading regex — <code class="language-plaintext highlighter-rouge">## Overview</code>, <code class="language-plaintext highlighter-rouge">## Architecture</code>, <code class="language-plaintext highlighter-rouge">## Usage Examples</code>, <code class="language-plaintext highlighter-rouge">## \d+\. </code>. Renaming a heading silently empties a section</td>
+    </tr>
+    <tr>
+      <td>Markdown</td>
+      <td>Its own <code class="language-plaintext highlighter-rouge">markdownToHtml()</code>: heading/bold/italic regexes, <code class="language-plaintext highlighter-rouge">\n\n</code> paragraph splitting. The same weakness as the POC; this repo has <code class="language-plaintext highlighter-rouge">remark</code></td>
+    </tr>
+    <tr>
+      <td>CSS (~240 lines)</td>
+      <td><strong>Screen-only.</strong> One <code class="language-plaintext highlighter-rouge">@media (max-width: 768px)</code>, no <code class="language-plaintext highlighter-rouge">@page</code>, no print rules at all. The WHO blues (<code class="language-plaintext highlighter-rouge">#0078d4</code>, <code class="language-plaintext highlighter-rouge">#005a9e</code>) are already ported</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>There is nothing here <code class="language-plaintext highlighter-rouge">gen-schema-docs.ts</code> and <code class="language-plaintext highlighter-rouge">gen-skill-docs.ts</code> do not
+already do better, against sources that are not dead.</p>
+<h4 id="the-question-catalog-take-this">
+  
+  
+    <a href="#the-question-catalog-take-this" class="anchor-heading" aria-labelledby="the-question-catalog-take-this"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The question catalog: take this
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">docs/dak/faq/component-questions-draft.md</code> carries <strong>27 questions organised by
+the nine WHO DAK components</strong> — and those are not <code class="language-plaintext highlighter-rouge">sgex</code> artefacts, they are
+DAK-domain. They are precisely the queries an MCP RAG service over the content
+graph should answer, written by someone who knew the domain:</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">actor-workflows</code> — “Which workflows does this actor participate in?”
+<code class="language-plaintext highlighter-rouge">decision-dependencies</code> — “What other decisions does this decision depend on?”
+<code class="language-plaintext highlighter-rouge">requirement-traceability</code> — “How do requirements trace to implementation?”</p>
+</blockquote>
+
+<p>Seven are implemented (219–820 lines each), and their <strong>contract</strong> is the
+second thing worth taking:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">QuestionDefinition</code> — <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">level</code>, <code class="language-plaintext highlighter-rouge">title</code>, <code class="language-plaintext highlighter-rouge">description</code>, <code class="language-plaintext highlighter-rouge">parameters</code>,
+<code class="language-plaintext highlighter-rouge">tags</code>, <code class="language-plaintext highlighter-rouge">componentTypes</code>, <code class="language-plaintext highlighter-rouge">assetTypes</code>, <code class="language-plaintext highlighter-rouge">version</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">QuestionLevel</code> — <code class="language-plaintext highlighter-rouge">dak</code> / <code class="language-plaintext highlighter-rouge">component</code> / <code class="language-plaintext highlighter-rouge">asset</code>. That is the same three-tier
+shape as document / section / block, arrived at independently.</li>
+  <li><code class="language-plaintext highlighter-rouge">QuestionResult</code> — <code class="language-plaintext highlighter-rouge">structured</code> <strong>and</strong> <code class="language-plaintext highlighter-rouge">narrative</code>, plus <code class="language-plaintext highlighter-rouge">warnings</code>,
+<code class="language-plaintext highlighter-rouge">errors</code>. Exactly what a RAG tool needs: machine-consumable output <em>and</em>
+something to hand a model.</li>
+  <li><code class="language-plaintext highlighter-rouge">CacheHint</code> — <code class="language-plaintext highlighter-rouge">scope</code>, <code class="language-plaintext highlighter-rouge">key</code>, <code class="language-plaintext highlighter-rouge">ttl</code>, and a <code class="language-plaintext highlighter-rouge">dependencies</code> file list, so a
+cached answer can be invalidated by the files it was derived from.</li>
+</ul>
+
+<p>The implementations themselves should not be ported. All seven are data modules
+carrying dead <code class="language-plaintext highlighter-rouge">react</code> and <code class="language-plaintext highlighter-rouge">react-i18next</code> imports, they parse XML with the
+browser’s <code class="language-plaintext highlighter-rouge">DOMParser</code>, and — the familiar trap — <code class="language-plaintext highlighter-rouge">DecisionTableInputsQuestion</code>
+declares <code class="language-plaintext highlighter-rouge">assetTypes: ['dmn']</code> when <strong>there is not one <code class="language-plaintext highlighter-rouge">.dmn</code> file in any of the
+three WHO repositories</strong>. §12.13 already established that WHO ships decision
+logic as <code class="language-plaintext highlighter-rouge">.xlsx</code>. Ported as written, the two decision-table questions would
+answer nothing, forever, against real content.</p>
+<h4 id="the-inversion">
+  
+  
+    <a href="#the-inversion" class="anchor-heading" aria-labelledby="the-inversion"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The inversion
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">sgex</code> asks each question by parsing a file on demand. This platform has already
+built the graph, so most of these become graph queries rather than parsers.
+Mapping all 27 against what the graph carries today:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Answerable</th>
+      <th>Count</th>
+      <th>Basis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>From the graph now</td>
+      <td>~8</td>
+      <td><code class="language-plaintext highlighter-rouge">uses</code> / <code class="language-plaintext highlighter-rouge">realises</code> edges plus kind and label — <code class="language-plaintext highlighter-rouge">requirement-traceability</code> is what <code class="language-plaintext highlighter-rouge">realises</code> was added for; <code class="language-plaintext highlighter-rouge">actor-workflows</code>, <code class="language-plaintext highlighter-rouge">scenario-actors</code>, <code class="language-plaintext highlighter-rouge">process-participants</code>, <code class="language-plaintext highlighter-rouge">decision-dependencies</code>, <code class="language-plaintext highlighter-rouge">element-relationships</code>, <code class="language-plaintext highlighter-rouge">test-coverage</code>, <code class="language-plaintext highlighter-rouge">guideline-sections</code></td>
+    </tr>
+    <tr>
+      <td>Needs companion parsing</td>
+      <td>~16</td>
+      <td><code class="language-plaintext highlighter-rouge">.bpmn</code> for steps and decision points, <code class="language-plaintext highlighter-rouge">.xlsx</code> for data-dictionary constraints, terminology, indicator calculations</td>
+    </tr>
+    <tr>
+      <td>Nowhere to attach</td>
+      <td>3</td>
+      <td>See below</td>
+    </tr>
+  </tbody>
+</table></div>
+<h4 id="a-real-gap-this-exposed">
+  
+  
+    <a href="#a-real-gap-this-exposed" class="anchor-heading" aria-labelledby="a-real-gap-this-exposed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A real gap this exposed
+  
+  
+</h4>
+    
+
+<p>The catalog’s component 1 is <strong>Health Interventions and Recommendations</strong>.
+<code class="language-plaintext highlighter-rouge">DAK_BLOCK_KINDS</code> has no <code class="language-plaintext highlighter-rouge">health-intervention</code> kind — so <code class="language-plaintext highlighter-rouge">publication-references</code>
+and <code class="language-plaintext highlighter-rouge">intervention-scope</code> have no block to hang on, and the L1 end of the
+<code class="language-plaintext highlighter-rouge">realises</code> edge is a label pointing at nothing this repo can represent.</p>
+
+<p>§12.23 pins the component list properly and finds a second gap alongside it.</p>
+
+<p>That is the most valuable thing the script produced, and it produced it by being
+read rather than by being run.</p>
+<h4 id="sgex-settled">
+  
+  
+    <a href="#sgex-settled" class="anchor-heading" aria-labelledby="sgex-settled"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">sgex</code> settled
+  
+  
+</h4>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Script</th>
+      <th>Verdict</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">generate-dak-publication-poc.js</code></td>
+      <td>CSS taken; rest rejected (mocked data, invented page numbers)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">generate-dak-faq-docs.js</code></td>
+      <td><strong>Generator rejected; question catalog and the Question/Result/CacheHint contract taken</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bpmn-to-svg.js</code></td>
+      <td>Still worth comparing — jsdom versus the Chromium route now in use</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="1223-the-component-list-pinned-and-dak-ness-made-a-declaration">
+  
+  
+    <a href="#1223-the-component-list-pinned-and-dak-ness-made-a-declaration" class="anchor-heading" aria-labelledby="1223-the-component-list-pinned-and-dak-ness-made-a-declaration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.23 The component list pinned, and DAK-ness made a declaration
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">sgex</code> has no skills directory — verified against <code class="language-plaintext highlighter-rouge">origin/HEAD</code> at <code class="language-plaintext highlighter-rouge">d8288af</code>,
+still the tip, frozen since 2025-10-25. What it has instead is
+<code class="language-plaintext highlighter-rouge">.github/copilot-instructions.md</code>, 608 lines of agent guidance, and two things
+in it belong here.</p>
+<h4 id="the-nine-components-and-why-sources-disagree">
+  
+  
+    <a href="#the-nine-components-and-why-sources-disagree" class="anchor-heading" aria-labelledby="the-nine-components-and-why-sources-disagree"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The nine components, and why sources disagree
+  
+  
+</h4>
+    
+
+<p>The file contains <strong>two different component lists that do not agree with each
+other</strong>. A heading claims “The 8 Core DAK Components” and lists artefact types
+(Business Processes, Decision Support Logic, Indicators, Data Entry Forms,
+Terminology, FHIR Profiles, FHIR Extensions, Test Data) — a mix of L2 and L3
+that is not WHO’s list at all. Directly beneath it, a <em>Component
+Representations</em> table gives the eight real components with their L2 and L3
+forms.</p>
+
+<p>The discrepancy with the FAQ catalog’s nine has a plain cause: <strong>test scenarios
+is a later addition.</strong> WHO publishes eight components; the ninth came after
+<code class="language-plaintext highlighter-rouge">sgex</code> was written. Anything counting components against an older source is off
+by one, silently.</p>
+
+<p>So the list is now pinned in code rather than recited, with WHO’s own wording
+and the publications it comes from:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">DAK_COMPONENTS</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="dl">"</span><span class="s2">health-interventions-and-recommendations</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">generic-personas</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">user-scenarios</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">generic-business-processes-and-workflows</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">core-data-elements</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">decision-support-logic</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">programme-indicators</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">functional-and-non-functional-requirements</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">test-scenarios</span><span class="dl">"</span><span class="p">,</span>   <span class="c1">// added after the original eight</span>
+<span class="p">]</span> <span class="k">as</span> <span class="kd">const</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">DAK_COMPONENT_KINDS</code> maps each to the block kinds representing it. The mapping
+is deliberately not one-to-one: requirements is one WHO component whose own name
+is a conjunction and which splits into two kinds; decision-support logic gains
+<code class="language-plaintext highlighter-rouge">scheduling-logic</code>; core data elements collects <code class="language-plaintext highlighter-rouge">structure-map</code> alongside the
+profiles. Tests assert every kind lands in exactly one component, so a new kind
+cannot be added without deciding what it represents.</p>
+
+<p><code class="language-plaintext highlighter-rouge">sgex</code>’s representation table independently corroborates the L2→L3 pairing on
+every row it covers, and adds two details worth keeping: the L2 form of health
+interventions is <strong>IRIS publications</strong> (WHO’s institutional repository), and the
+L2 form of core data elements is <strong>OCL concepts</strong> (Open Concept Lab).</p>
+<h4 id="two-gaps-one-sharper-than-reported">
+  
+  
+    <a href="#two-gaps-one-sharper-than-reported" class="anchor-heading" aria-labelledby="two-gaps-one-sharper-than-reported"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two gaps, one sharper than reported
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">dakComponentsWithoutL2()</code> returns:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ "health-interventions-and-recommendations", "test-scenarios" ]
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Health interventions</strong> has no kind at <em>either</em> layer — the only component of
+which that is true. It is the L1 end of every <code class="language-plaintext highlighter-rouge">realises</code> edge, so that edge
+currently points at a label the repo cannot represent, and nothing detects the
+dangle.</li>
+  <li><strong>Test scenarios</strong> does have <code class="language-plaintext highlighter-rouge">test-case</code>, but that sits in the L3 set as a
+FHIR artefact. The L2 scenario — the narrative case a reviewer signs off — has
+no kind. §12.22 reported this component as unrepresented; that was too strong,
+and the distinction matters because L2 is what a DAK <em>is</em>.</li>
+</ul>
+
+<p>Both are asserted as they stand, not as aspirations: adding either kind fails
+the test and forces the documentation to move with the code.</p>
+<h4 id="dak-ness-is-now-a-declaration-not-an-inference">
+  
+  
+    <a href="#dak-ness-is-now-a-declaration-not-an-inference" class="anchor-heading" aria-labelledby="dak-ness-is-now-a-declaration-not-an-inference"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> DAK-ness is now a declaration, not an inference
+  
+  
+</h4>
+    
+
+<p><code class="language-plaintext highlighter-rouge">copilot-instructions.md</code> opens with a <strong>NO HEURISTICS POLICY</strong> — no inferring
+type from naming conventions, no fallback detection, no “if X looks like Y treat
+it as Y”, fail loudly instead. That is the same discipline as this repo’s
+integration contract (§5: <em>absent tool ⇒ n/a, never a false pass</em>), and applying
+it exposed a hole.</p>
+
+<p>The same file states the DAK test mechanically: a repository is a DAK <strong>iff</strong> its
+root <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> declares a dependency on <code class="language-plaintext highlighter-rouge">smart.who.int.base</code>.
+<code class="language-plaintext highlighter-rouge">dak-pdf.ts</code> implemented no such check — it read a title and rendered any
+directory handed to it as a Digital Adaptation Kit.</p>
+
+<p><code class="language-plaintext highlighter-rouge">dakIdentity()</code> now decides it explicitly, and carries the pinned version:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Repository</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-dak-immz</code></td>
+      <td>DAK, <code class="language-plaintext highlighter-rouge">smart.who.int.base: current</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-dak-bds</code></td>
+      <td>DAK, <code class="language-plaintext highlighter-rouge">smart.who.int.base: current</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-immunizations</code></td>
+      <td>DAK, <code class="language-plaintext highlighter-rouge">smart.who.int.base: 0.2.0</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant</code></td>
+      <td>not a DAK — <em>no sushi-config.yaml in the repository root</em></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>3/3 real WHO repositories identified; the platform repo correctly rejected. A
+directory that never declared itself is still rendered — refusing would be less
+useful — but its cover says so in place of the “Digital Adaptation Kit” line,
+because whoever reads the PDF is the one who would otherwise be misled. A test
+builds the structural lookalike (<code class="language-plaintext highlighter-rouge">input/business-processes/</code>,
+<code class="language-plaintext highlighter-rouge">input/dictionary/</code>, no config) and asserts it is <em>not</em> a DAK: that is precisely
+what a naming heuristic would have accepted.</p>
+
+<p>Reading <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> as YAML also retires the <code class="language-plaintext highlighter-rouge">/^title:/m</code> regex beside
+it. That regex was not producing wrong titles on any repository in hand — the
+honest claim is narrower: the same parse was already required for the dependency
+check, so the regex was a second, weaker reader of a file already being read
+properly.</p>
+<h4 id="still-worth-pulling-from-sgexs-guidance">
+  
+  
+    <a href="#still-worth-pulling-from-sgexs-guidance" class="anchor-heading" aria-labelledby="still-worth-pulling-from-sgexs-guidance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Still worth pulling from <code class="language-plaintext highlighter-rouge">sgex</code>’s guidance
+  
+  
+</h4>
+    
+
+<p>Not yet acted on, and listed so it is not lost: <code class="language-plaintext highlighter-rouge">DAK_LOGICAL_MODEL_UPDATE_PLAN.md</code>
+(1,668 lines) and <code class="language-plaintext highlighter-rouge">docs/dak-publication-software-architecture.md</code> (457 lines) are
+the two remaining substantial DAK documents. Given §12.21’s and §12.22’s
+results, both should be read before anything in them is believed.</p>
+<h3 id="1224-whos-own-logical-models-and-a-component-list-that-four-sources-tell-differently">
+  
+  
+    <a href="#1224-whos-own-logical-models-and-a-component-list-that-four-sources-tell-differently" class="anchor-heading" aria-labelledby="1224-whos-own-logical-models-and-a-component-list-that-four-sources-tell-differently"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.24 WHO’s own logical models, and a component list that four sources tell differently
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">sgex</code>’s <code class="language-plaintext highlighter-rouge">DAK_LOGICAL_MODEL_UPDATE_PLAN.md</code> (1,668 lines) is mostly a plan for
+<code class="language-plaintext highlighter-rouge">sgex</code>’s own TypeScript services — phases, staging grounds, asset editors, all
+dead. But its first 30 lines quote <strong>WHO’s <code class="language-plaintext highlighter-rouge">DAK.fsh</code> logical model</strong>, and that
+quote is the first <code class="language-plaintext highlighter-rouge">sgex</code> claim to survive verification: checked against
+<code class="language-plaintext highlighter-rouge">smart-base</code> <code class="language-plaintext highlighter-rouge">input/fsh/models/DAK.fsh</code> directly, it is accurate.</p>
+
+<p>That makes the primary source reachable, and it is far better than the quote.</p>
+<h4 id="the-component-list-settled">
+  
+  
+    <a href="#the-component-list-settled" class="anchor-heading" aria-labelledby="the-component-list-settled"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The component list, settled
+  
+  
+</h4>
+    
+
+<p>WHO’s <code class="language-plaintext highlighter-rouge">DAK.fsh</code> describes itself as covering “all 9 DAK components” and declares
+each as <code class="language-plaintext highlighter-rouge">0..* &lt;Name&gt;Source</code>. The WHO IG starter kit’s L2 authoring SOP
+(<code class="language-plaintext highlighter-rouge">l2_dak_authoring.md</code>) numbers a table identically. Four sources, three in
+agreement:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>Says</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-base</code> <code class="language-plaintext highlighter-rouge">DAK.fsh</code></td>
+      <td>The nine, ending <code class="language-plaintext highlighter-rouge">testScenarios</code></td>
+    </tr>
+    <tr>
+      <td>starter kit <code class="language-plaintext highlighter-rouge">l2_dak_authoring.md</code>, <strong>the table</strong></td>
+      <td>The nine, identically numbered</td>
+    </tr>
+    <tr>
+      <td>starter kit <code class="language-plaintext highlighter-rouge">l2_dak_authoring.md</code>, <strong>the intro prose</strong></td>
+      <td>A <em>different</em> nine — scheduling logic promoted to #7, test scenarios absent</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sgex</code> <code class="language-plaintext highlighter-rouge">copilot-instructions.md</code></td>
+      <td>Eight, plus a second list that is artefact types rather than components</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The starter kit contradicts itself within one file: its prose lists a nine that
+the table directly beneath it does not. The prose is stale. Both
+machine-readable sources agree with the table, so that is what <code class="language-plaintext highlighter-rouge">DAK_COMPONENTS</code>
+encodes.</p>
+
+<p>This also settles <code class="language-plaintext highlighter-rouge">scheduling-logic</code>, which §12.23 mapped under decision-support
+logic with a hedge. The SOP’s own table calls scheduling logic <strong>“a specific
+type of decision-support logic”</strong> and documents it inside that row; <code class="language-plaintext highlighter-rouge">DAK.fsh</code>
+gives it no field. Only the stale prose promotes it. It stays a kind.</p>
+
+<p><code class="language-plaintext highlighter-rouge">DAK_COMPONENT_FIELDS</code> now carries WHO’s own field names (<code class="language-plaintext highlighter-rouge">healthInterventions</code>,
+<code class="language-plaintext highlighter-rouge">personas</code>, <code class="language-plaintext highlighter-rouge">userScenarios</code>, …), which makes the table checkable rather than
+merely parallel. Tests parse <code class="language-plaintext highlighter-rouge">DAK.fsh</code> and assert that it declares exactly nine
+<code class="language-plaintext highlighter-rouge">0..* …Source</code> components, that every field this repo names is one of them, and
+that WHO declares none this repo has not listed. <code class="language-plaintext highlighter-rouge">smart-base</code> is an external
+checkout, so its absence is reported as <em>unverified</em> — never as a pass.</p>
+<h4 id="the-source-pattern-and-a-constraint-nothing-enforces">
+  
+  
+    <a href="#the-source-pattern-and-a-constraint-nothing-enforces" class="anchor-heading" aria-labelledby="the-source-pattern-and-a-constraint-nothing-enforces"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The Source pattern, and a constraint nothing enforces
+  
+  
+</h4>
+    
+
+<p>Every component in <code class="language-plaintext highlighter-rouge">DAK.fsh</code> is <code class="language-plaintext highlighter-rouge">0..*</code> of a <code class="language-plaintext highlighter-rouge">*Source</code> type, and each <code class="language-plaintext highlighter-rouge">*Source</code>
+offers three ways to say where the content is:</p>
+
+<pre><code class="language-fsh">* url       0..1 url       "URL to retrieve … from input/ or external source"
+* canonical 0..1 canonical "Canonical URI pointing to the … definition"
+* instance  0..1 HealthInterventions "Inline … instance data"
+</code></pre>
+
+<p>That is WHO’s own answer to the question §12.15 asks — where a content block
+lives — and it maps cleanly onto this platform’s block-plus-companion shape.</p>
+
+<p>But each <code class="language-plaintext highlighter-rouge">*Source</code> says, in its <code class="language-plaintext highlighter-rouge">Description</code> prose, “<strong>exactly one of</strong> the
+following must be provided”, and <strong>there is not one <code class="language-plaintext highlighter-rouge">Invariant:</code> or <code class="language-plaintext highlighter-rouge">obeys</code> in
+any of WHO’s logical models</strong>. The choice is documentation. A DAK that supplies
+all three, or none, validates clean. That is a QA criterion this platform can
+carry and the FHIR toolchain structurally cannot — precisely the kind of check
+<code class="language-plaintext highlighter-rouge">.qa.json</code> sidecars exist for.</p>
+<h4 id="the-two-gap-kinds-now-have-who-shapes">
+  
+  
+    <a href="#the-two-gap-kinds-now-have-who-shapes" class="anchor-heading" aria-labelledby="the-two-gap-kinds-now-have-who-shapes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two gap kinds now have WHO shapes
+  
+  
+</h4>
+    
+
+<p>§12.23 left <code class="language-plaintext highlighter-rouge">health-interventions-and-recommendations</code> and <code class="language-plaintext highlighter-rouge">test-scenarios</code>
+without an L2 kind. WHO models both, so the shapes need not be invented:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">HealthInterventions.fsh</code></strong> — <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">description[x] (string or uri)</code>, and
+<code class="language-plaintext highlighter-rouge">reference 1..* DublinCore</code>. Its references are <strong>Dublin Core</strong>, whose
+namespace this repo’s JSON-LD context already carries as <code class="language-plaintext highlighter-rouge">dcterms:</code>. The SOP
+adds where the content comes from: the UHC menu of essential interventions and
+the WHO classification of digital health interventions, the latter an IRIS
+publication — which is what <code class="language-plaintext highlighter-rouge">sgex</code>’s representation table meant by “IRIS
+Publications”.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">TestScenario.fsh</code></strong> — <code class="language-plaintext highlighter-rouge">feature 1..1 uri</code>, a link to a <strong>Gherkin feature
+file</strong>, plus the same <code class="language-plaintext highlighter-rouge">description[x]</code>. So the L2 test scenario’s companion
+role is <code class="language-plaintext highlighter-rouge">.feature</code>, alongside the <code class="language-plaintext highlighter-rouge">.bpmn</code>/<code class="language-plaintext highlighter-rouge">.dmn</code>/<code class="language-plaintext highlighter-rouge">.fsh</code>/<code class="language-plaintext highlighter-rouge">.cql</code> already declared.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">description[x] string or uri</code> — “either Markdown content or a URI to a Markdown
+file” — recurs across every model, and is exactly the <code class="language-plaintext highlighter-rouge">.md</code> companion pattern
+already in use.</p>
+
+<p>WHO also ships <strong>eleven per-component logical models</strong>, and two of them are
+<code class="language-plaintext highlighter-rouge">FunctionalRequirement.fsh</code> and <code class="language-plaintext highlighter-rouge">NonFunctionalRequirement.fsh</code> as separate
+models. That independently corroborates the two-kind split §12.23 flagged as a
+deliberate departure: it is WHO’s own structure. <code class="language-plaintext highlighter-rouge">FunctionalRequirement</code> is
+user-story shaped — <code class="language-plaintext highlighter-rouge">activity</code>, <code class="language-plaintext highlighter-rouge">actor</code>, <code class="language-plaintext highlighter-rouge">capability</code> (“I want”), <code class="language-plaintext highlighter-rouge">benefit</code>
+(“so that”).</p>
+<h4 id="the-workbook-question-answered">
+  
+  
+    <a href="#the-workbook-question-answered" class="anchor-heading" aria-labelledby="the-workbook-question-answered"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The workbook question, answered
+  
+  
+</h4>
+    
+
+<p>§12.18 deferred workbook rendering pending a decision about which sheets belong
+in a printed document. The starter kit answers it: <code class="language-plaintext highlighter-rouge">input/images/</code> ships the
+<strong>official DAK component templates</strong> as <code class="language-plaintext highlighter-rouge">.xlsx</code> — core data dictionary,
+decision-support logic, scheduling logic, indicators and performance metrics,
+high-level functional and non-functional requirements, at <code class="language-plaintext highlighter-rouge">v2</code> and <code class="language-plaintext highlighter-rouge">v2.1</code>.</p>
+
+<p>These define the canonical sheet structure for exactly the components §12.13
+found are workbook-backed in practice. A reader for them is now a bounded
+problem against a published template rather than reverse-engineering whatever
+one repository happens to contain.</p>
+<h3 id="1225-the-gap-closed-from-whos-shapes-rather-than-invented-ones">
+  
+  
+    <a href="#1225-the-gap-closed-from-whos-shapes-rather-than-invented-ones" class="anchor-heading" aria-labelledby="1225-the-gap-closed-from-whos-shapes-rather-than-invented-ones"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 12.25 The gap closed, from WHO’s shapes rather than invented ones
+  
+  
+</h3>
+    
+
+<p>§12.24 left two WHO components with no L2 kind and, crucially, WHO’s own
+logical models on disk describing both. Adding them meant transcription rather
+than design.</p>
+
+<p><code class="language-plaintext highlighter-rouge">dakComponentsWithoutL2()</code> now returns <code class="language-plaintext highlighter-rouge">[]</code>, and every component names at least
+one kind. The two assertions that pinned the gap are inverted rather than
+deleted, so the closing is visible in the diff.</p>
+<h4 id="health-intervention">
+  
+  
+    <a href="#health-intervention" class="anchor-heading" aria-labelledby="health-intervention"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">health-intervention</code>
+  
+  
+</h4>
+    
+
+<p>WHO DAK component 1, and the L1 end of every <code class="language-plaintext highlighter-rouge">realises</code> edge. From
+<code class="language-plaintext highlighter-rouge">HealthInterventions.fsh</code>: <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">description[x] (string or uri)</code>, and
+<code class="language-plaintext highlighter-rouge">reference 1..* DublinCore</code>.</p>
+
+<p>That <code class="language-plaintext highlighter-rouge">1..*</code> is load-bearing and is enforced at construction — an intervention
+with no source recommendation is not one:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">healthIntervention</span><span class="p">({</span> <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hi:dtp-booster</span><span class="dl">"</span><span class="p">,</span> <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DTP booster</span><span class="dl">"</span><span class="p">,</span> <span class="na">references</span><span class="p">:</span> <span class="p">[]</span> <span class="p">})</span>
+<span class="c1">// throws: A health intervention needs at least one reference (WHO models it 1..*)</span>
+</code></pre></div></div>
+
+<p>References carry Dublin Core rather than bare strings, matching WHO’s
+<code class="language-plaintext highlighter-rouge">DublinCore.fsh</code>, whose namespace this repo’s JSON-LD context already holds as
+<code class="language-plaintext highlighter-rouge">dcterms:</code>. The subset modelled is the one an intervention reference uses;
+<code class="language-plaintext highlighter-rouge">title</code> is required for the same reason the array is non-empty. WHO’s SOP names
+the sources: the UHC menu of essential interventions and the WHO classification
+of digital health interventions, the latter an IRIS publication.</p>
+<h4 id="test-scenario">
+  
+  
+    <a href="#test-scenario" class="anchor-heading" aria-labelledby="test-scenario"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">test-scenario</code>
+  
+  
+</h4>
+    
+
+<p>WHO DAK component 9, and deliberately <strong>distinct from the L3 <code class="language-plaintext highlighter-rouge">test-case</code></strong>. The
+L2 scenario is the narrative a reviewer signs off; the L3 case is a FHIR
+conformance artefact. <code class="language-plaintext highlighter-rouge">test-scenarios</code> now maps to both, one per layer, and a
+test asserts the layers differ — collapsing them would lose the review step.</p>
+
+<p><code class="language-plaintext highlighter-rouge">TestScenario.fsh</code> declares <code class="language-plaintext highlighter-rouge">feature 1..1 uri</code>, a link to a <strong>Gherkin feature
+file</strong>, so <code class="language-plaintext highlighter-rouge">feature</code> joins the companion roles and <code class="language-plaintext highlighter-rouge">REQUIRED_COMPANION</code> demands
+it. That requirement is real rather than premature, unlike the workbook-backed
+kinds §12.13 exempted: WHO’s own model is one feature file per scenario, not one
+workbook covering many blocks. Companion resolution iterates <code class="language-plaintext highlighter-rouge">COMPANION_ROLES</code>,
+so declaring the role was the whole wiring — and the test that guards
+<code class="language-plaintext highlighter-rouge">REQUIRED_COMPANION</code> now checks its roles against that vocabulary instead of a
+hand-kept list, which is what it meant by “one this can check” all along.</p>
+<h4 id="aligning-to-whos-generated-json-ld">
+  
+  
+    <a href="#aligning-to-whos-generated-json-ld" class="anchor-heading" aria-labelledby="aligning-to-whos-generated-json-ld"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Aligning to WHO’s generated JSON-LD
+  
+  
+</h4>
+    
+
+<p>WHO’s IG publisher post-processes the logical models into JSON Schema and
+JSON-LD, which raises the question of whether typing DAK blocks as <code class="language-plaintext highlighter-rouge">folio:</code>
+classes is wrong.</p>
+
+<p>Reading <code class="language-plaintext highlighter-rouge">generate_logical_model_schemas.py</code> settles it. The generated <code class="language-plaintext highlighter-rouge">@type</code> is
+a plain string carrying only an <strong>example</strong> (<code class="language-plaintext highlighter-rouge">LogicalModel-HealthInterventions</code>),
+while <code class="language-plaintext highlighter-rouge">resourceDefinition</code> is a <code class="language-plaintext highlighter-rouge">const</code> pinned to the StructureDefinition’s
+canonical URL — the same IRI <code class="language-plaintext highlighter-rouge">DAKComponentSources.fsh</code> uses as
+<code class="language-plaintext highlighter-rouge">canonical ^type[0].targetProfile</code>. The canonical URL is the stable identifier;
+the <code class="language-plaintext highlighter-rouge">@type</code> string is not.</p>
+
+<p>So the <code class="language-plaintext highlighter-rouge">folio:</code> typing stands — a block is a manifest, not a FHIR resource —
+and <code class="language-plaintext highlighter-rouge">DAK_KIND_TO_WHO_MODEL</code> adds the missing assertion beside it: <em>the WHO
+logical model this block is an authored instance of</em>. Ten kinds have one:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>health-intervention  → http://smart.who.int/base/StructureDefinition/HealthInterventions
+test-scenario        → http://smart.who.int/base/StructureDefinition/TestScenario
+…
+</code></pre></div></div>
+
+<p>The map is <strong>partial by construction</strong>. <code class="language-plaintext highlighter-rouge">scheduling-logic</code> has no entry because
+WHO folds it into decision support, and the L3 kinds have none because they are
+FHIR artefacts rather than DAK component models. A test asserts those absences
+and that every IRI present sits under WHO’s canonical base — a fabricated IRI
+would be indistinguishable from a real one once published, which is the same
+rule §2 applied to <code class="language-plaintext highlighter-rouge">doco:contains</code>.</p>
+
+<p>That makes a folio DAK joinable with WHO’s published vocabularies rather than
+merely parallel to them.</p>
+
+<p>1027 tests pass, 0 fail; typecheck and lint clean.</p>
 
           
 
