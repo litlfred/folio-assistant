@@ -152,6 +152,7 @@ Two failure modes it exists to prevent, both observed in practice:
 | HTML | Readability + turndown |
 | DOCX | Pandoc → markdown |
 | Images | Claude vision API |
+| PDF (tables/figures) | `scripts/pdf-tables.py` → `tables.json` (see Stage 3) |
 
 For scanned documents the script's OCR rung fires automatically **if**
 `tesseract` and `pdftoppm` are installed (`apt-get install -y tesseract-ocr
@@ -195,8 +196,47 @@ domain-specific; record it in `intake.json.classification.normativeLevel`.
 > generic paper adapter. This skill detects the *shape* and hands off the
 > domain-specific mapping rules to the relevant adapter.
 
+#### Tables and figures — run `scripts/pdf-tables.py`
+
+Text extraction destroys tables. A GRADE evidence table or a boxed
+recommendation comes out of Stage 2 as a run of prose that reads exactly like
+prose, and nothing downstream can recover that it was a grid — which matters
+most for precisely the guideline documents this skill exists to process.
+
+```bash
+python3 scripts/pdf-tables.py FILE.pdf -o uploads/<document-id>/
+python3 scripts/pdf-tables.py --check     # which backends are installed
+```
+
+Writes `tables.json` (`pdf-tables/v1`) beside `structure.json`, with each
+table's cell matrix, column edges, caption, containing `section_id`, and a
+**GFM rendering that can be pasted straight into a content block** — the
+LaTeX pipeline already converts a GFM table to `\begin{tabular}`.
+
+Tables split across a page break are rejoined when their column geometry
+matches; `stitched_from` records what was merged, so check it on any table
+whose rows look like two tables.
+
+**Read `status` before you read `tables`.** The three ways to get no tables are
+distinguished on purpose, and `tables` is `null` — not `[]` — whenever nothing
+actually looked:
+
+| `status` | Exit | Means |
+|---|---|---|
+| `ok` | 0 | a backend looked; `tables: []` means the document has none |
+| `n/a-no-backend` | 5 | `pip install pdfplumber` (or `camelot-py`) |
+| `n/a-no-text-layer` | 2 | a scan — its tables are pixels; see Stage 2's OCR route |
+
+Needs `pdfplumber` or `camelot-py`, both pure PyPI installs with no model
+weights. **Docling is the better parser and is not this**: its weights come
+from HuggingFace, which is 403-blocked in sandboxed sessions, so it is a
+workstation/CI stage whose artefacts get committed — the
+`docling` capability probe reports it absent here rather than letting a session
+believe it ran. See `docs/proposals/rag-document-ingestion.md` §12.26.
+
 **Output**: `extracted-blocks.json` — array of detected blocks with
-provisional kinds, titles, and content.
+provisional kinds, titles, and content; `tables.json` for the layout-bearing
+parts that do not survive as text.
 
 ### Stage 4: Mapping (→ `mapped`)
 
@@ -311,6 +351,8 @@ Before marking intake complete:
 - [ ] `intake.json` has complete metadata
 - [ ] `extracted-text.md` reviewed for OCR errors
 - [ ] `extracted-blocks.json` reviewed and confirmed by user
+- [ ] `tables.json` written, `status` checked (not silently `n/a`), and any
+      `stitched_from` table spot-checked against the PDF
 - [ ] All content objects generated with correct builders
 - [ ] Blocks tagged with `["imported", "source:<document-id>"]`
 - [ ] Chapter/section structure matches document
