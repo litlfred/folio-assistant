@@ -117,6 +117,30 @@ else
   echo
 fi
 
+# ── 3-bis. CI health ────────────────────────────────────────────────────────
+#
+# docs-site.yml fired on every push to main and failed all 30 times over two
+# months; the published site sat stale and nothing in the repo said so (bean
+# xom7). A red workflow and a green one look identical from in here, so the
+# outcome has to be printed where attention already goes — which is this file.
+#
+# Best-effort and bounded: one API call, short timeout, and a failure to reach
+# the API prints as UNKNOWN rather than being omitted. An absent section reads
+# as "fine", which is the defect this is here to fix.
+if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/check-ci-health.ts" ]; then
+  if ! timeout 25 bun run "$REPO_ROOT/scripts/check-ci-health.ts" --markdown 2>/dev/null; then
+    echo "## CI health"
+    echo
+    echo "**Not checked — treat as unknown, not as green.** The health check did not"
+    echo "complete (no network, no bun, or the API refused). Run it by hand:"
+    echo
+    echo '```sh'
+    echo "bun run check:ci-health"
+    echo '```'
+    echo
+  fi
+fi
+
 # ── 4. Recommended action (generic) ─────────────────────────────────────────
 cat <<'EOF'
 **Recommended action:**

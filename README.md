@@ -5,8 +5,20 @@ LLM — scientific papers & books, WHO SMART Guidelines, and FHIR Implementation
 Guides — backed by an MCP server, role-based access control, a typed
 content-object model, and a per-content-type skill system.
 
+[![Code-quality gates](https://github.com/litlfred/folio-assistant/actions/workflows/code-quality-gates.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/code-quality-gates.yml?query=branch%3Amain)
+[![Docs site](https://github.com/litlfred/folio-assistant/actions/workflows/docs-site.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/docs-site.yml?query=branch%3Amain)
+[![CI health](https://github.com/litlfred/folio-assistant/actions/workflows/ci-health.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/ci-health.yml?query=branch%3Amain)
 [![Docs](https://img.shields.io/badge/docs-github.io-blue)](https://litlfred.github.io/folio-assistant/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
+
+<!--
+The three live badges are the workflows that actually run on `main` — the only
+ones a badge can tell the truth about. A badge for a `workflow_dispatch`-only
+workflow reports its last dispatch forever, which is how `witness-refresh.yml`
+and `qa-sweep.yml` would read as red for all time (bean `lq7e`). If you add a
+workflow that auto-triggers on `main`, badge it here; if you add one that does
+not, do not.
+-->
 
 > **Platform, not content.** folio-assistant contains no content. It provides
 > the skills, schemas, and MCP server an LLM uses to plan, author, validate,
