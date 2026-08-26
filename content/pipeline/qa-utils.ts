@@ -720,14 +720,27 @@ export interface WalkBlocksOptions {
    * (`qa-agent-drain-queue.ts` starts a sweep at import time). Verification
    * upgrades identity; it does not widen what gets executed.
    *
-   * **Default `false`, deliberately.** Fourteen production tools consume this
-   * generator, and this repo has twice learned that changing what the walk
-   * enumerates must be measured against real content before it lands (`#125`
-   * admitted a non-block; `qou/3fui` missed 63 real ones, and the measurement
-   * reversed the recommendation). The corpus that would settle it lives in the
-   * content repo, not here. `bun run content/pipeline/verify-block-walk.ts
-   * <content-root>` runs both modes and diffs them; flip this default on that
-   * evidence, not on this comment.
+   * **Default `true`, on measured evidence.** This repo has twice learned that
+   * changing what the walk enumerates must be measured against real content
+   * before it lands — `#125` admitted a non-block, `qou/3fui` missed 63 real
+   * ones and the measurement reversed the recommendation the change had been
+   * argued on. So `verify-block-walk.ts` was written first and run against the
+   * `qou` corpus, all 3557 blocks:
+   *
+   *     textual walk : 3557 blocks in  493 ms
+   *     verified walk: 3557 blocks in 1473 ms
+   *     identity differences 0 · found by only one mode 0 · failed to import 0
+   *
+   * A second of wall-clock, and nothing else about that corpus moves. What it
+   * buys is the three failure classes above becoming impossible rather than
+   * merely absent-so-far. Measured on **one** corpus; `verify: false` is the
+   * escape hatch, and re-run that command on any other folio before relying on
+   * the default there.
+   *
+   * The one new coupling: importing a block resolves its imports, and a folio's
+   * blocks import the platform through a symlink its setup script creates
+   * (`<folio>/folio-assistant`). Without it every block fails to load — the
+   * walk still yields all of them under their textual identity, and says so.
    */
   verify?: boolean;
 
@@ -762,6 +775,8 @@ export function* walkBlocks(
   // the .lean (wall-side, compute-prop-has-probe/-consumer, voice, q-usage).
   const REPO_ROOT = findContentRepoRoot();
   const lakeCache: LakeTreeCache = new Map();
+  const verify = opts.verify ?? true;
+  const report = makeFailureReporter(opts);
 
   function* recurse(d: string): Generator<BlockPaths> {
     if (!existsSync(d)) return;
@@ -780,12 +795,12 @@ export function* walkBlocks(
         // Reading the unlabelled shape costs a second read + mask, so only pay
         // it when someone can act on the answer.
         const unlabelled =
-          textual || !(opts.verify || opts.includeUnlabelled)
+          textual || !(verify || opts.includeUnlabelled)
             ? undefined
             : readUnlabelledBlockManifest(full);
         if (!textual && !unlabelled) continue; // not a block manifest at all
-        const manifest = opts.verify
-          ? verifiedManifest(full, textual, unlabelled, opts)
+        const manifest = verify
+          ? verifiedManifest(full, textual, unlabelled, report)
           : textualIdentity(textual, unlabelled);
         if (!manifest) continue;
         if (!manifest.labelled && !opts.includeUnlabelled) continue;
@@ -816,9 +831,6 @@ export function* walkBlocks(
   }
   yield* recurse(rootDir);
 }
-
-/** Files already reported as unloadable, so a walk warns once per file. */
-const warnedBlockLoads = new Set<string>();
 
 type TextualManifest = { kind: string; label: string };
 /**
@@ -853,7 +865,7 @@ function verifiedManifest(
   tsPath: string,
   textual: TextualManifest | undefined,
   unlabelled: TextualManifest | undefined,
-  opts: WalkBlocksOptions,
+  report: FailureReporter,
 ): VerifiedManifest | undefined {
   const degraded = () => textualIdentity(textual, unlabelled);
   try {
@@ -863,7 +875,7 @@ function verifiedManifest(
     // becomes a labelled block rather than being skipped or mistaken for prose.
     if (loaded) return { kind: loaded.kind, label: loaded.label, labelled: true };
   } catch (e) {
-    report(tsPath, String(e).replace(/\s+/g, " ").slice(0, 300), opts);
+    report(tsPath, String(e).replace(/\s+/g, " ").slice(0, 300));
     return degraded();
   }
   // The loader found no labelled block. When the source had no textual label
@@ -875,22 +887,53 @@ function verifiedManifest(
     tsPath,
     `default export is not a labelled block, but the source looks like a ` +
       `manifest (read textually as ${textual?.kind} ${textual?.label})`,
-    opts,
   );
   return degraded();
 }
 
-function report(file: string, error: string, opts: WalkBlocksOptions): void {
-  if (opts.onLoadFailure) {
-    opts.onLoadFailure({ file, error });
-    return;
-  }
-  if (warnedBlockLoads.has(file)) return;
-  warnedBlockLoads.add(file);
-  console.warn(
-    `  ⚠ ${file} could not be loaded; using its source text for kind/label.\n` +
-      `      ${error}`,
-  );
+/**
+ * How many unloadable files are named before the rest are only counted.
+ *
+ * When a folio is checked out without its `folio-assistant` symlink, *every*
+ * block fails for the same reason — measured: 3557 of 3557 on `qou`. Naming
+ * them one by one buries the single line that says what to fix under three and
+ * a half thousand that do not, so the enumeration stops and the tail is
+ * summarised.
+ */
+const MAX_NAMED_LOAD_FAILURES = 5;
+
+type FailureReporter = (file: string, error: string) => void;
+
+/**
+ * One reporter per walk, **not** one per process.
+ *
+ * A process runs several walks — `qa-sweep` calls `usesGraphHash` before its
+ * own — and a budget shared across them means the second walk's genuine
+ * failures are swallowed by the first walk's having spent it. Scoping the
+ * counter to the walk keeps each one's report complete on its own terms.
+ */
+function makeFailureReporter(opts: WalkBlocksOptions): FailureReporter {
+  const sink = opts.onLoadFailure;
+  if (sink) return (file, error) => sink({ file, error });
+  const seen = new Set<string>();
+  return (file, error) => {
+    if (seen.has(file)) return;
+    seen.add(file);
+    if (seen.size <= MAX_NAMED_LOAD_FAILURES) {
+      console.warn(
+        `  ⚠ ${file} could not be loaded; using its source text for kind/label.\n` +
+          `      ${error}`,
+      );
+    } else if (seen.size === MAX_NAMED_LOAD_FAILURES + 1) {
+      console.warn(
+        `  ⚠ …and more blocks that would not load. Every one is walked under its\n` +
+          `      source-text identity, so nothing is skipped — but none of them was\n` +
+          `      verified. If this is the whole corpus, the cause is usually a folio\n` +
+          `      checked out without its platform symlink (<folio>/folio-assistant).\n` +
+          `      Run: bun run content/pipeline/verify-block-walk.ts <content-root>`,
+      );
+    }
+  };
 }
 
 // ── QA report IO ────────────────────────────────────────────────

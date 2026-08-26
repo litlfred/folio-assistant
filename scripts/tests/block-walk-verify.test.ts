@@ -153,12 +153,20 @@ describe("verification does not widen what gets executed", () => {
   });
 });
 
-describe("the default is unchanged", () => {
-  test("without `verify` the walk still reads identity from source text", () => {
-    // Same corpus, no verification: the wrong label is back and the computed
-    // one is missing again. This is what fourteen callers see today, and it
-    // must not move until the flip is measured against real content.
-    const seen = [...walkBlocks(root)].map((b) => b.label);
+describe("verification is the default, and `verify: false` is the escape hatch", () => {
+  test("the default verifies", () => {
+    const seen = [...walkBlocks(root, { onLoadFailure: () => {} })].map((b) => b.label);
+    expect(seen).toContain("prop:real");
+    expect(seen).toContain("prop:computed");
+    expect(seen).not.toContain("not-the-block");
+  });
+
+  test("`verify: false` restores the source-text reading", () => {
+    // The wrong label is back and the computed one is missing again. Pinned so
+    // the escape hatch is known to actually bypass the loader — a folio without
+    // its platform symlink, or a corpus that has not been diffed with
+    // `verify-block-walk.ts`, needs a way back.
+    const seen = [...walkBlocks(root, { verify: false })].map((b) => b.label);
     expect(seen).toContain("not-the-block");
     expect(seen).not.toContain("prop:computed");
   });

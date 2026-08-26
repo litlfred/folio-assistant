@@ -2,24 +2,29 @@
  * Diff the two ways `walkBlocks` can establish a block's identity, over a real
  * corpus.
  *
- * `walkBlocks` reads each block's `kind` and `label` out of its source text.
- * With `{ verify: true }` it imports the module instead and uses what the
- * builder validated. The textual read is wrong in three demonstrated ways —
+ * `walkBlocks` establishes each block's `kind` and `label` by importing it.
+ * With `{ verify: false }` it reads them out of the source text instead, the
+ * way it did before. The textual read is wrong in three demonstrated ways —
  * see `scripts/tests/block-walk-verify.test.ts` — but *how often* it is wrong
- * on real content is a question about the content, not about the code, and the
- * corpora live in folio repositories rather than here.
+ * on a given corpus is a question about the content, not about the code, and
+ * the corpora live in folio repositories rather than here.
  *
- * So this exists to answer it in one command, before the default is flipped:
+ * So this answers it in one command:
  *
  * ```sh
- * bun run content/pipeline/verify-block-walk.ts ../qou/content/qou
+ * bun run content/pipeline/verify-block-walk.ts ../qou/content/quantum-observable-universe
  * ```
  *
- * It prints every disagreement, every block that could not be imported, and
- * what the flip would cost in wall-clock. That is the evidence the decision
- * wants. This repo has twice learned the lesson the hard way: `#125` let a
- * non-block into the walk, `qou/3fui` kept 63 real ones out, and in the second
- * case the measurement *reversed* the recommendation the change was argued on.
+ * It prints every disagreement, every block only one mode finds, every block
+ * that will not import, and what verification costs in wall-clock. This repo
+ * has twice learned that lesson the hard way: `#125` let a non-block into the
+ * walk, `qou/3fui` kept 63 real ones out, and in the second case the
+ * measurement *reversed* the recommendation the change was argued on.
+ *
+ * The default was flipped on this tool's output against `qou` — 3557 blocks,
+ * zero disagreements, zero load failures, 1475 ms against 450 ms. That is one
+ * corpus. **Run this against any other folio before trusting the default
+ * there**, and use `verify: false` if it disagrees.
  *
  * Exit code is 0 whatever it finds — this reports, it does not gate.
  *
@@ -45,19 +50,26 @@ if (!existsSync(rootAbs)) {
   process.exit(2);
 }
 
-/** Both modes include unlabelled prose, so the comparison covers what qa-sweep sees. */
-const OPTS = { includeUnlabelled: true } as const;
+/**
+ * Both modes include unlabelled prose, so the comparison covers what qa-sweep
+ * sees. `verify` is stated explicitly on **both** arms rather than left to the
+ * default: this tool exists to compare the two readings, so it must not start
+ * comparing a reading with itself the day the default moves — which is exactly
+ * what happened the first time the default flipped under it.
+ */
+const TEXTUAL = { includeUnlabelled: true, verify: false } as const;
+const VERIFIED = { includeUnlabelled: true, verify: true } as const;
 
 const byPath = (blocks: BlockPaths[]): Map<string, BlockPaths> =>
   new Map(blocks.map((b) => [b.ts, b]));
 
 const t0 = Bun.nanoseconds();
-const textual = byPath([...walkBlocks(rootAbs, OPTS)]);
+const textual = byPath([...walkBlocks(rootAbs, { ...TEXTUAL, onLoadFailure: () => {} })]);
 const t1 = Bun.nanoseconds();
 
 const failures: BlockLoadFailure[] = [];
 const verified = byPath([
-  ...walkBlocks(rootAbs, { ...OPTS, verify: true, onLoadFailure: (f) => failures.push(f) }),
+  ...walkBlocks(rootAbs, { ...VERIFIED, onLoadFailure: (f) => failures.push(f) }),
 ]);
 const t2 = Bun.nanoseconds();
 
@@ -107,9 +119,9 @@ const clean =
 
 console.log(
   clean
-    ? `\nThe two walks agree on every block. Flipping \`verify\` on by default ` +
-        `costs ${ms(t1, t2)} ms instead of ${ms(t0, t1)} ms and changes nothing else ` +
-        `about this corpus.\n`
+    ? `\nThe two walks agree on every block. Verifying costs ${ms(t1, t2)} ms ` +
+        `against the source-text reading's ${ms(t0, t1)} ms, and changes nothing ` +
+        `else about this corpus.\n`
     : `\nThe walks disagree. Each line above is a block some QA tool is currently ` +
         `keyed to the wrong identity for, missing entirely, or unable to load — ` +
         `read them before flipping the default.\n`,
