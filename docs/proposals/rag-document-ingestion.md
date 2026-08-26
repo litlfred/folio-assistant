@@ -2250,10 +2250,19 @@ a workstation/CI stage whose artefacts are committed.
 
 What was missing was any way for a consumer to *see* that Stage 3 had not run.
 `.claude/skills/capabilities/docling.json` now exists, and its probe is
-deliberately not `import docling` alone — it also requires `huggingface.co` to
-answer, because **the package importing is not the capability**. A probe that
-passed on the import would report Docling present in exactly the sessions where
-it cannot parse anything, which is the false pass §5 exists to prevent.
+deliberately not `import docling` alone, because **the package importing is not
+the capability** — a probe that passed on the import would report Docling
+present in exactly the sessions where it can parse nothing, which is the false
+pass §5 exists to prevent. What it asks instead is whether the weights are
+*usable*: cached locally, or failing that reachable, on a 5-second bound.
+
+Cache-first and not reachability-first, for a reason `capabilities.ts` states
+about its own `mcp-probe` case — *a check that hangs is worse than one that
+abstains*. A workstation that has already downloaded the models passes
+instantly and offline, and never touches the network to answer a dependency
+check; only an installed-but-unprimed Docling pays the 5 seconds. In a
+sandboxed session the `import` fails first and the probe short-circuits, so
+`--check-deps` stays at half a second.
 
 #### `scripts/pdf-tables.py`, and the three meanings of an empty list
 
