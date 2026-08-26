@@ -33,6 +33,9 @@
       that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
       work plan in .beans/.
     </bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="strict" />
+    </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Publication_LaneSet">
       <bpmn:lane id="Lane_Editors" name="Editors + authoring agents">
         <bpmn:flowNodeRef>CallActivity_Editing</bpmn:flowNodeRef>
@@ -172,7 +175,8 @@
     <bpmn:userTask id="Task_AuthorizeRelease" name="Authorise the release&#10;[content-publish]">
       <bpmn:documentation>Publication requires authorisation by the programme manager or designated authority.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-publish" />
+        <folio:policy relaxable="false" />
+              <folio:skill ref="content-publish" />
       </bpmn:extensionElements>
       <bpmn:incoming>G16</bpmn:incoming>
       <bpmn:outgoing>G18</bpmn:outgoing>
@@ -180,7 +184,8 @@
     <bpmn:serviceTask id="Task_PublishRelease" name="Version, tag and publish&#10;[content-publish]">
       <bpmn:documentation>Version bump, release notes, tag, build the final artifacts, deploy to the publication platform.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-publish" />
+        <folio:policy relaxable="false" />
+              <folio:skill ref="content-publish" />
         <folio:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>G18</bpmn:incoming>

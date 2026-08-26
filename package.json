@@ -46,6 +46,7 @@
     "test:e2e": "playwright test",
     "test": "bun test",
     "lint": "eslint .",
+    "check:workflow-policy": "bun run scripts/check-workflow-policy.ts",
     "render:bpmn": "bun run scripts/render-bpmn.ts",
     "render:bpmn:check": "bun run scripts/render-bpmn.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json"

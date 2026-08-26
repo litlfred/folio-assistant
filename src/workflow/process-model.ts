@@ -74,6 +74,12 @@ export interface ProcessNode {
    */
   workPlanOp?: WorkPlanOp;
   /**
+   * `<folio:policy relaxable="false"/>` — a content package may not declare a
+   * relaxation for this step. These are the gate itself; if they were
+   * negotiable, "strict base" would mean nothing.
+   */
+  relaxable: boolean;
+  /**
    * `<folio:decision ref="decisions/x.dmn#Decision_Id"/>` on an exclusive
    * gateway: its outcome is **computed** from a DMN table rather than chosen.
    * Relative to the directory holding the `.bpmn`.
@@ -105,6 +111,15 @@ export interface ProcessModel {
   dir: string;
   nodes: Map<string, ProcessNode>;
   flows: Map<string, ProcessFlow>;
+  /**
+   * `<folio:policy enforcement="…"/>` on the process.
+   *
+   * `strict` — the content-agnostic base. A capability tool guarded by this
+   * process refuses when the step is not enabled.
+   * `advisory` — the per-content-type processes, where a package's own
+   * judgement about its domain applies.
+   */
+  enforcement: "strict" | "advisory";
   /** Every start event, in document order. */
   startNodes: string[];
   /**
@@ -162,7 +177,9 @@ interface ModdleElement {
   id: string;
   name?: string;
   documentation?: { text?: string }[];
-  extensionElements?: { values?: { $type: string; ref?: string; op?: string }[] };
+  extensionElements?: {
+    values?: { $type: string; ref?: string; op?: string; enforcement?: string; relaxable?: string }[];
+  };
   calledElement?: string;
   sourceRef?: { id: string };
   targetRef?: { id: string };
@@ -222,6 +239,7 @@ export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> 
       skills: ext.filter((v) => v.$type === "folio:skill" && v.ref).map((v) => v.ref!),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
       workPlanOp: readWorkPlanOp(el.id, ext),
+      relaxable: ext.find((v) => v.$type === "folio:policy")?.relaxable !== "false",
       decisionRef: ext.find((v) => v.$type === "folio:decision" && v.ref)?.ref,
       documentation: el.documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined,
       calledElement: el.calledElement,
@@ -244,6 +262,19 @@ export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> 
     nodes.get(to)!.incoming.push(el.id);
   }
 
+  const procExt = proc.extensionElements?.values ?? [];
+  const declared = procExt.find((v) => v.$type === "folio:policy")?.enforcement;
+  if (declared !== undefined && declared !== "strict" && declared !== "advisory") {
+    throw new UnsupportedBpmn(
+      `${basename(bpmnPath)}: folio:policy enforcement="${declared}" is not a policy. ` +
+        `Use "strict" or "advisory".`,
+    );
+  }
+  // Absent means strict. A process that forgot to say is governed, not exempt —
+  // the failure mode of defaulting the other way is that forgetting silently
+  // turns the gate off.
+  const enforcement: "strict" | "advisory" = declared === "advisory" ? "advisory" : "strict";
+
   const startNodes = [...nodes.values()].filter((n) => n.kind === "start").map((n) => n.id);
   if (startNodes.length === 0) {
     throw new UnsupportedBpmn(`${basename(bpmnPath)}: no start event, so nothing can begin`);
@@ -256,6 +287,7 @@ export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> 
     name: cleanName(proc.name) || proc.id,
     source: bpmnPath,
     dir: dirname(bpmnPath),
+    enforcement,
     nodes,
     flows,
     startNodes,

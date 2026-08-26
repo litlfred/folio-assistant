@@ -34,6 +34,9 @@
       that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
       work plan in .beans/.
     </bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="strict" />
+    </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Lifecycle_LaneSet">
       <bpmn:lane id="Lane_ProgMgr" name="Programme manager">
         <bpmn:flowNodeRef>StartEvent_Initiative</bpmn:flowNodeRef>

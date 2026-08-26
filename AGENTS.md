@@ -177,9 +177,18 @@ a background subagent, not the foreground.
   which lane owns it and which skill implements it; `workflow_complete` refuses
   a step that is not enabled, so work cannot be claimed out of order. State is
   committed under `.folio/workflow/`, like beans, so a sibling session sees it.
-  Today this is **advisory** — nothing stops you calling a capability tool
-  directly. Whether to make it binding is argued in
-  `docs/proposals/workflow-orchestration.md`.
+  **The base processes are STRICT.** `editing-hci-validation`,
+  `draft-to-publication` and `content-lifecycle` carry
+  `<folio:policy enforcement="strict"/>`: `workflow_gate` refuses a step that is
+  not enabled. The per-content-type processes are `advisory` — their package
+  owns what adequate means in that domain. Absent policy means strict.
+  **To relax a base step**, declare it in `skills/<package>/workflow-policy.json`
+  with a **reason** — no reason, no load — and never a step marked
+  `relaxable="false"` (`Task_ReviewFindings`, `Gateway_EditorDecision`,
+  `Task_Commit`, `Task_AuthorizeRelease`, `Task_PublishRelease`: the editor
+  seeing the findings, the decision, the write, and release authorisation).
+  `bun run check:workflow-policy` validates every relaxation and runs in CI.
+  Rationale: `docs/proposals/workflow-orchestration.md` §4.
   **Some gateways are computed, not chosen.** One carrying `<folio:decision/>`
   is backed by a DMN table in `docs/workflows/decisions/`: pass `facts` (e.g.
   `{ failCritical: 0, failMajor: 2 }` from `qa_sweep` totals) and the table

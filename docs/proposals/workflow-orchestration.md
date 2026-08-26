@@ -1,7 +1,7 @@
 # Proposal — making agentic workflow execution deterministic
 
-**Status:** phases 1–2 landed · DMN gateways landed (§6) · phase 3 is the open
-decision (§4)
+**Status:** phases 1–2 landed · DMN gateways landed (§6) · §4 decided and the
+policy layer landed; the commit-boundary hook is what remains
 **Beans:** `fq0b` (interpreter), `sx4z` (DMN), `dv3w` (work-plan loop),
 `bcnl` (the §4 decision — open)
 
@@ -109,7 +109,7 @@ and a walk that quietly dropped 27,390 words of prose.
 
 ---
 
-## 4. The decision this proposal actually asks for
+## 4. The decision — made: strict at the base, relaxable by declaration
 
 Phase 1 is **advisory**. An agent can ignore `workflow_next` entirely and call
 `content_validate` directly, and nothing stops it.
@@ -130,8 +130,36 @@ enabled. Concretely, in phase 3:
 - completing the tool call advances the process, so the agent cannot both do
   the work and forget to record it.
 
-**This is the part worth arguing before code exists**, because it has real
-costs:
+**The ruling (bean `bcnl`): be strict on the base; content-specific skills may
+decide and augment with relaxation guidance, if any.** That is now implemented.
+
+- The three **content-agnostic** processes — `Process_Editing`,
+  `Process_Publication`, `Process_Lifecycle` — carry
+  `<folio:policy enforcement="strict"/>`. A step that is not enabled is refused.
+- The three **per-content-type** processes are `advisory`: what counts as
+  adequate review of a Lean proof and of a FHIR profile are different questions,
+  and the package that knows the domain answers them.
+- A package relaxes a base step by naming it in
+  `skills/<package>/workflow-policy.json` **with a reason**. No reason, no load.
+- **Five steps cannot be relaxed at all**, marked `relaxable="false"`:
+  `Task_ReviewFindings`, `Gateway_EditorDecision`, `Task_Commit` — the editor
+  seeing the findings, the decision, and the write — plus
+  `Task_AuthorizeRelease` and `Task_PublishRelease`, which carry the
+  `publish-authorized` SHALL. If those were negotiable the base would not be
+  strict, it would be a suggestion.
+- Absent policy means **strict**. A process that forgot to declare is governed,
+  not exempt; defaulting the other way would mean forgetting silently turns the
+  gate off.
+- `bun run check:workflow-policy` runs in CI, so a relaxation that has stopped
+  applying — the activity was renamed, or became non-relaxable — is a build
+  failure rather than a discovery on the day it is needed.
+
+What ships today: `workflow_gate` answers "may this step be performed now?"
+Wiring it into each capability tool, and into a pre-commit or CI check at the
+corpus boundary, is the remaining work — the policy layer it would consult is
+in place and tested.
+
+**The costs, which stand as stated:**
 
 - **It can block legitimate work.** A one-line typo fix does not want a
   seven-step process. Either trivial edits get an escape hatch — and then the
@@ -146,11 +174,13 @@ costs:
   `render:bpmn:check`-style validator that every ref resolves. Cheap, and it is
   the failure mode this repo keeps rediscovering.
 
-A middle option worth considering instead of tool-level gating: **gate at the
-commit boundary**. A pre-commit hook or CI check that refuses a corpus write
+The **commit boundary** remains the recommended enforcement point over
+tool-by-tool gating: a pre-commit hook or CI check that refuses a corpus write
 whose block has no instance recording that the findings were surfaced. Fewer
 places to change, it bites where it matters, and it cannot be forgotten by an
-agent because it is not the agent that runs it.
+agent because it is not the agent that runs it. The first two objections above
+are answered by the relaxation mechanism — a content package that finds the gate
+too heavy for a class of edit declares that, in writing, once.
 
 ---
 
@@ -283,10 +313,9 @@ they found — that is the criterion's job, and the criterion's tests.
 3. ~~Do the DMN tables for the four mechanical gateways~~ — **done for the two
    whose tools exist** (§6). The remaining two wait on a WHO/FHIR adapter
    rather than on a decision.
-4. **Decide §4 deliberately, and prefer the commit-boundary gate** to
-   tool-by-tool gating. It bites where it matters, it is one place rather than
-   twenty-five, and it is enforced by something other than an agent's
-   intention to call it.
+4. ~~Decide §4~~ — **decided and implemented**: strict base, declared
+   relaxations, five un-relaxable steps (§4). What remains is wiring
+   `workflow_gate` into the commit boundary.
 
 ---
 

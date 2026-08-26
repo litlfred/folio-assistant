@@ -32,6 +32,9 @@
       that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
       work plan in .beans/.
     </bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="strict" />
+    </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Editing_LaneSet">
       <bpmn:lane id="Lane_Editor" name="Editor / author (person)">
         <bpmn:flowNodeRef>StartEvent_EditRequested</bpmn:flowNodeRef>
@@ -181,10 +184,16 @@
     </bpmn:serviceTask>
     <bpmn:userTask id="Task_ReviewFindings" name="Review the findings">
       <bpmn:documentation>THE GATE: the editor sees every finding BEFORE anything reaches the corpus.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:policy relaxable="false" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_20</bpmn:incoming>
       <bpmn:outgoing>Flow_21</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_EditorDecision" name="Accept, revise or discard?">
+      <bpmn:extensionElements>
+        <folio:policy relaxable="false" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_21</bpmn:incoming>
       <bpmn:outgoing>Flow_22</bpmn:outgoing>
       <bpmn:outgoing>Flow_24</bpmn:outgoing>
@@ -202,6 +211,9 @@
     </bpmn:endEvent>
     <bpmn:serviceTask id="Task_Commit" name="Commit into the corpus">
       <bpmn:documentation>Only now does the change become corpus content, together with its QA sidecars. Subject to the commit-hygiene requirement.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:policy relaxable="false" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_25</bpmn:incoming>
       <bpmn:outgoing>Flow_26</bpmn:outgoing>
     </bpmn:serviceTask>

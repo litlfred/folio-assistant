@@ -32,6 +32,9 @@
       that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
       work plan in .beans/.
     </bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="advisory" />
+    </bpmn:extensionElements>
     <bpmn:laneSet id="Process_PaperAuthoring_LaneSet">
       <bpmn:lane id="Lane_Author" name="Author (person)">
         <bpmn:flowNodeRef>StartEvent_NewPaper</bpmn:flowNodeRef>

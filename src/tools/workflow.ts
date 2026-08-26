@@ -6,6 +6,7 @@
  * - `workflow_list`     — which processes exist, and which instances are open
  * - `workflow_start`    — begin one for a subject (a block, a release, a bean)
  * - `workflow_next`     — what is enabled *now*, with lane and skill
+ * - `workflow_gate`     — may this step be performed right now?
  * - `workflow_complete` — record a step, or a decision, and advance
  *
  * A gateway that carries `folio:decision` is **computed**: the caller passes
@@ -39,6 +40,7 @@ import { loadProcessModel, type ProcessModel } from "../workflow/process-model.j
 import { complete, describe, startInstance } from "../workflow/instance.js";
 import { instanceId, listInstances, loadInstance, saveInstance } from "../workflow/store.js";
 import { applyWorkPlanOp } from "../workflow/bean-link.js";
+import { checkGate, loadRelaxations, validateRelaxations } from "../workflow/gate.js";
 
 const WORKFLOW_SRC = join("docs", "workflows");
 
@@ -140,6 +142,33 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
       const model = await loadProcessModel(join(root, state.source.replace(`${root}/`, "")));
       return text(describe(model, state));
+    },
+  );
+
+  server.tool(
+    "workflow_gate",
+    "May a step be performed right now? Ask before doing work a strict process " +
+      "governs. The content-agnostic processes (editing, publication, lifecycle) " +
+      "enforce: a step that is not enabled is refused unless a content package " +
+      "declares a relaxation for it in skills/<package>/workflow-policy.json. The " +
+      "per-content-type processes are advisory and always allow.",
+    {
+      instance: z.string(),
+      activity: z.string().describe("Node id, e.g. `Task_Commit`"),
+    },
+    async ({ instance, activity }) => {
+      const state = loadInstance(root, instance);
+      if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
+      const model = await loadProcessModel(join(root, state.source.replace(`${root}/`, "")));
+      const relaxations = loadRelaxations(root);
+      validateRelaxations(relaxations, [model]);
+      const verdict = checkGate(model, state, activity, relaxations);
+      return text(
+        `${verdict.allowed ? "ALLOWED" : "REFUSED"} — ${verdict.reason}` +
+          (verdict.relaxedBy
+            ? `\n\nDeclared in skills/${verdict.relaxedBy.package}/workflow-policy.json.`
+            : ""),
+      );
     },
   );
 

@@ -33,6 +33,9 @@
       that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
       work plan in .beans/.
     </bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="advisory" />
+    </bpmn:extensionElements>
     <bpmn:laneSet id="Process_L3Fhir_LaneSet">
       <bpmn:lane id="Lane_Modeller" name="FHIR modeller">
         <bpmn:flowNodeRef>StartEvent_L2Ready</bpmn:flowNodeRef>
