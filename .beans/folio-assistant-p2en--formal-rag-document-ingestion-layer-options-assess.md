@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T21:30:00Z
+updated_at: 2026-08-26T22:10:00Z
 ---
 
 
@@ -607,3 +607,39 @@ from the previous commit.
 
 913 pass / 0 fail (TS) + 16 python checks. Not wrapped: extractors, generate_*
 family, translation subsystem. IG build/CI want no skill — Actions is caller.
+
+## DAK PDF renderer — first cut (§12.18)
+
+Merged main (11 commits; resolved an additive package.json conflict, installed
+new dep dmn-moddle). 992 pass / 0 fail after.
+
+Main's DMN work let me finally exercise `dak-dmn-has-decision-table` against
+REAL DMN — the repo now authors `docs/workflows/decisions/*.dmn`. Both pass.
+That checker had never fired.
+
+`scripts/dak-pdf.ts`: the third render target, which existed nowhere.
+- smart-dak-immz: 35 sections → **43-page PDF, 231KB, valid trailer**
+- smart-dak-bds: 33 sections → PDF
+- smart-immunizations: 34 sections → PDF
+
+Titles from sushi-config.yaml, narrative from input/pagecontent/*.md via
+remark, printed by the Playwright Chromium.
+
+**Omissions printed INSIDE the PDF**, not just the run log: 8 BPMN processes
+listed-not-drawn (no diagram renderer, input/images/ empty), 5 workbooks
+unrendered (where most DAK substance lives). A PDF that silently dropped the
+decision tables would look complete to the reader least able to notice, and
+that reader never sees stdout. Same discipline as the graph index's truncation
+reporting and the transform's collision counting.
+
+**Container detail:** installed playwright expects chromium_headless_shell-1228,
+container ships -1194; re-download is blocked. Renderer probes
+PLAYWRIGHT_BROWSERS_PATH for the real binary and passes executablePath. Without
+it the error reads like a missing browser rather than version skew.
+
+**Where blocks come in:** this renders the CURRENT hand-authored pagecontent/,
+because that's what exists. pagecontent/ is exactly the seam where authored DAK
+blocks replace it — the assembler takes sections of {title, html, source},
+which is what a block sequence already is.
+
+992 pass / 0 fail, typecheck + lint clean. Added dep: remark-html.

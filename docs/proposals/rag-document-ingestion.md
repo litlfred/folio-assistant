@@ -1591,3 +1591,53 @@ commit now actually enforces.
 
 The extractors, the `generate_*` family and the translation subsystem. The IG
 build and CI scripts want no skill at all: GitHub Actions is their caller.
+
+### 12.18 A DAK PDF exists
+
+§12.16 established that no DAK PDF renderer exists anywhere — `smart-base`'s
+only PDF dependency is `pdfplumber`, which *reads* PDFs. `scripts/dak-pdf.ts`
+is the first thing that writes one, completing the third of §12.15's three
+render targets.
+
+Run against all three real repositories:
+
+| Repository | Sections | Result |
+|---|---|---|
+| `smart-dak-immz` | 35 | **43-page PDF, 231 KB, valid trailer** |
+| `smart-dak-bds` | 33 | PDF |
+| `smart-immunizations` | 34 | PDF |
+
+Titles come from each repo's `sushi-config.yaml` ("SMART DAK IMMZ", "WHO
+Immunization Implementation Guide"), narrative from `input/pagecontent/*.md`
+through remark, and the whole document is printed by the Chromium already
+installed for Playwright.
+
+#### What it does not render, and why that is in the document
+
+It renders narrative, a business-process index, and a decision-logic index. It
+does **not** render BPMN diagrams (8 processes are listed, not drawn — there is
+no diagram renderer and `input/images/` is empty), or the workbooks (5 in
+`smart-dak-immz`), which is where most of a DAK's substance actually lives.
+
+Those omissions are printed **inside the PDF**, in a "Not included in this
+rendering" section, not only in the run log. A PDF that silently dropped the
+decision tables would look complete to exactly the reader least able to notice,
+and that reader never sees stdout. It is the same discipline as the graph
+index's truncation reporting and the transform's collision counting: the number
+that is missing has to travel with the artefact.
+
+#### A container detail worth recording
+
+The installed `playwright` expects `chromium_headless_shell-1228`; this
+container ships `-1194` under `PLAYWRIGHT_BROWSERS_PATH`. Re-downloading is
+deliberately blocked, so the renderer probes for the real binary and passes it
+as `executablePath`. Without that it fails with "Executable doesn't exist",
+which reads like a missing browser rather than a version skew.
+
+#### Where the blocks come in
+
+This renders the *current* hand-authored `pagecontent/`, because that is what
+exists. §12.15's target is block → PDF, and `pagecontent/` is precisely the
+seam where authored DAK blocks replace hand-written narrative: the assembler
+takes a list of sections with titles, HTML and a source, which is what a block
+sequence already is.
