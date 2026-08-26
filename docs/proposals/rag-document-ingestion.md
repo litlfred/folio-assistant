@@ -1827,4 +1827,89 @@ Of the three authoring scripts §12.20 identified, one is now settled:
 |---|---|
 | `generate-dak-publication-poc.js` | **CSS taken; do not port the rest.** Mocked data, invented page numbers, regex markdown, dead API |
 | `bpmn-to-svg.js` | Still worth comparing — jsdom versus the Chromium route now in use |
-| `generate-dak-faq-docs.js` | Unread |
+| `generate-dak-faq-docs.js` | Settled in §12.22 — generator rejected, question catalog taken |
+
+### 12.22 `generate-dak-faq-docs.js`: the script is worthless, its input is not
+
+The last unread `sgex` script is the one whose *inputs* matter more than its
+code. Read with the scepticism §12.21 earned, it splits cleanly in two.
+
+#### The generator: do not port
+
+Unlike the publication POC, it is **not mocked** — zero occurrences of `mock`,
+and all five of its declared sources exist in the repository. It genuinely
+reads what it claims to read. It is still not worth taking:
+
+| Property | Finding |
+|---|---|
+| Coupling | Every source path is `sgex`'s own (`docs/dak-faq-system.md`, `src/dak/faq/questions/`, `services/dak-faq-mcp`). It documents a dead app to itself |
+| Startup | `startMCPServer()` runs `npm run build` in the dead service, spawns `dist/index.js`, and polls `127.0.0.1:3001/health` for 30 s. Porting it means porting that service |
+| Extraction | Literal-heading regex — `## Overview`, `## Architecture`, `## Usage Examples`, `## \d+\. `. Renaming a heading silently empties a section |
+| Markdown | Its own `markdownToHtml()`: heading/bold/italic regexes, `\n\n` paragraph splitting. The same weakness as the POC; this repo has `remark` |
+| CSS (~240 lines) | **Screen-only.** One `@media (max-width: 768px)`, no `@page`, no print rules at all. The WHO blues (`#0078d4`, `#005a9e`) are already ported |
+
+There is nothing here `gen-schema-docs.ts` and `gen-skill-docs.ts` do not
+already do better, against sources that are not dead.
+
+#### The question catalog: take this
+
+`docs/dak/faq/component-questions-draft.md` carries **27 questions organised by
+the nine WHO DAK components** — and those are not `sgex` artefacts, they are
+DAK-domain. They are precisely the queries an MCP RAG service over the content
+graph should answer, written by someone who knew the domain:
+
+> `actor-workflows` — "Which workflows does this actor participate in?"
+> `decision-dependencies` — "What other decisions does this decision depend on?"
+> `requirement-traceability` — "How do requirements trace to implementation?"
+
+Seven are implemented (219–820 lines each), and their **contract** is the
+second thing worth taking:
+
+- `QuestionDefinition` — `id`, `level`, `title`, `description`, `parameters`,
+  `tags`, `componentTypes`, `assetTypes`, `version`.
+- `QuestionLevel` — `dak` / `component` / `asset`. That is the same three-tier
+  shape as document / section / block, arrived at independently.
+- `QuestionResult` — `structured` **and** `narrative`, plus `warnings`,
+  `errors`. Exactly what a RAG tool needs: machine-consumable output *and*
+  something to hand a model.
+- `CacheHint` — `scope`, `key`, `ttl`, and a `dependencies` file list, so a
+  cached answer can be invalidated by the files it was derived from.
+
+The implementations themselves should not be ported. All seven are data modules
+carrying dead `react` and `react-i18next` imports, they parse XML with the
+browser's `DOMParser`, and — the familiar trap — `DecisionTableInputsQuestion`
+declares `assetTypes: ['dmn']` when **there is not one `.dmn` file in any of the
+three WHO repositories**. §12.13 already established that WHO ships decision
+logic as `.xlsx`. Ported as written, the two decision-table questions would
+answer nothing, forever, against real content.
+
+#### The inversion
+
+`sgex` asks each question by parsing a file on demand. This platform has already
+built the graph, so most of these become graph queries rather than parsers.
+Mapping all 27 against what the graph carries today:
+
+| Answerable | Count | Basis |
+|---|---|---|
+| From the graph now | ~8 | `uses` / `realises` edges plus kind and label — `requirement-traceability` is what `realises` was added for; `actor-workflows`, `scenario-actors`, `process-participants`, `decision-dependencies`, `element-relationships`, `test-coverage`, `guideline-sections` |
+| Needs companion parsing | ~16 | `.bpmn` for steps and decision points, `.xlsx` for data-dictionary constraints, terminology, indicator calculations |
+| Nowhere to attach | 3 | See below |
+
+#### A real gap this exposed
+
+The catalog's component 1 is **Health Interventions and Recommendations**.
+`DAK_BLOCK_KINDS` has no `health-intervention` kind — so `publication-references`,
+`guideline-sections` and `intervention-scope` have no block to hang on, and the
+L1 end of the `realises` edge is a label pointing at nothing this repo can
+represent. Nine WHO components, nine L2 kinds, but they are not the same nine.
+
+That is the most valuable thing the script produced, and it produced it by being
+read rather than by being run.
+
+#### `sgex` settled
+
+| Script | Verdict |
+|---|---|
+| `generate-dak-publication-poc.js` | CSS taken; rest rejected (mocked data, invented page numbers) |
+| `generate-dak-faq-docs.js` | **Generator rejected; question catalog and the Question/Result/CacheHint contract taken** |
+| `bpmn-to-svg.js` | Still worth comparing — jsdom versus the Chromium route now in use |

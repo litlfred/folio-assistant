@@ -748,7 +748,52 @@ POC only simulates. Worth saying plainly because the file's header oversells it
 ("API-driven service architecture", "WYSIWYG-ready", "multi-format output") and
 a reader trusting it would spend days porting scaffolding around mocks.
 
-Remaining sgex: bpmn-to-svg.js (jsdom vs Chromium comparison), 
-generate-dak-faq-docs.js (unread).
-
 1001 pass / 0 fail.
+
+## generate-dak-faq-docs.js read (§12.22) — the input beat the script
+
+Applied the same scepticism. It is NOT mocked (zero "mock", all five declared
+sources exist) — but still not portable:
+- every source path is sgex's own; it documents a dead app to itself
+- startMCPServer() runs `npm run build` in the dead service, spawns
+  dist/index.js, polls 127.0.0.1:3001/health for 30s — porting it means
+  porting that service
+- extraction is literal-heading regex (`## Overview`, `## \d+\. `); rename a
+  heading and a section silently empties
+- its own markdownToHtml() — same weakness as the POC; we have remark
+- getCSS() ~240 lines is SCREEN-ONLY: one @media (max-width:768px), no @page,
+  no print rules. Nothing for dak-pdf.ts; the WHO blues are already ported.
+
+**What IS worth taking is what it reads.** docs/dak/faq/component-questions-
+draft.md = 27 questions across the nine WHO DAK components. DAK-domain, not
+sgex-specific — exactly the queries an MCP RAG service over the graph should
+answer. Plus the contract of the 7 implemented ones:
+- QuestionDefinition: id, level, parameters, tags, componentTypes, assetTypes
+- QuestionLevel dak/component/asset — same three tiers as document/section/
+  block, arrived at independently
+- QuestionResult: `structured` AND `narrative` + warnings/errors — precisely
+  what a RAG tool needs
+- CacheHint: scope, key, ttl, **dependencies** file list for invalidation
+
+Implementations themselves: no. All 7 carry dead react/react-i18next imports,
+parse XML with browser DOMParser, and DecisionTableInputsQuestion declares
+assetTypes:['dmn'] when there is not ONE .dmn in any of the three WHO repos
+(§12.13: WHO ships decision logic as .xlsx). Ported as written, both
+decision-table questions answer nothing forever against real content — the same
+trap already caught in REQUIRED_COMPANION.
+
+**Inversion:** sgex parses a file per question; we already have the graph. Of
+the 27: ~8 answerable from `uses`/`realises` today (requirement-traceability is
+literally what `realises` was added for), ~16 need companion parsing (.bpmn
+steps/decision points, .xlsx constraints/terminology/calculations), 3 have
+nowhere to attach.
+
+**Real gap found:** catalog component 1 is "Health Interventions and
+Recommendations". DAK_BLOCK_KINDS has NO health-intervention kind — verified
+absent across schemas/ and content/pipeline/. So publication-references,
+guideline-sections and intervention-scope have no block to hang on, and the L1
+end of `realises` points at something this repo cannot represent. Nine WHO
+components, nine L2 kinds, but not the same nine.
+
+sgex is now settled: POC (CSS only), faq-docs (catalog + contract only),
+bpmn-to-svg.js still worth a jsdom-vs-Chromium comparison.
