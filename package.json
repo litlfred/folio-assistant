@@ -48,6 +48,7 @@
     "lint": "eslint .",
     "gen:jsonld": "bun run scripts/gen-jsonld-context.ts && bun run content/pipeline/gen-block-jsonld.ts && bun run content/pipeline/gen-library-jsonld.ts",
     "gen:jsonld:check": "bun run scripts/gen-jsonld-context.ts --check && bun run content/pipeline/gen-block-jsonld.ts --check && bun run content/pipeline/gen-library-jsonld.ts --check",
+    "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
     "check:workflow-policy": "bun run scripts/check-workflow-policy.ts",
     "render:bpmn": "bun run scripts/render-bpmn.ts",

@@ -114,6 +114,56 @@ Full discipline: `.claude/skills/local/todo-manager.md` and
 > `todo-review` skill over `feedback/<paper>/*.ts`) — that is a separate domain
 > feature, not the agent work-plan.
 
+## CI health — a red workflow looks exactly like a green one from in here
+
+`docs-site.yml` fired on every push to `main` and **failed all 30 times** over
+two months. The trigger was fine; the *outcome* was invisible, so the published
+site sat stale and nothing in the repo said so. Bean `xom7`.
+
+`bun run check:ci-health` reports each workflow's state on the default branch —
+consecutive failures, days since the last green, and whether it has run at all
+recently. The session-start sweep prints it, so it lands where you already look.
+Three rules it follows, and you should too when reading it: **"could not check"
+is never rendered as green**; a red that has not re-run in a week is flagged as
+possibly stale rather than as an active fire; and a red whose **workflow file
+changed after the failing run** is reported as `superseded` — the version that
+failed is gone, so the verdict is stale. `superseded` is never rendered as green
+and never counted as a live failure, because a later edit is evidence the
+failing version is gone, not evidence the new one works.
+
+That third rule exists because two of this repo's workflows would otherwise be
+red forever. `witness-refresh.yml` and `qa-sweep.yml` failed to *parse* on
+2026-08-07 — which is why GitHub ran them on `push` despite both being
+`workflow_dispatch`-only, and why their runs are named by path rather than by
+`name:`. They were fixed the next day. They only run on dispatch and the report
+only reads the default branch, so nothing will ever run them here again. Bean
+`lq7e`. **Do not "fix" them by dispatching**: both fail by design in this repo —
+`qa-sweep` preflights on `content/package.json` and `witness-refresh` needs
+`folio-assistant/computations/`, and the platform carries no folio.
+
+**A report is only read by someone in the room.** The session-start sweep covers
+every day somebody is working; the failure being guarded against is a quiet
+stretch with nobody looking, which is exactly the stretch in which no session
+starts either. So `.github/workflows/ci-health.yml` runs the same check weekly
+and maintains **one** tracking issue labelled `ci-health` — opened when the
+default branch has a live failure, edited in place while it persists (an edit
+does not notify, so a long outage stays one unread item), and closed
+automatically when `main` is clean. It deliberately does not send another
+email: GitHub sent 30 and the premise of `xom7` is that nobody reads them. The
+three live badges at the top of `README.md` are the same state at the front
+door. Bean `ynu8`.
+
+Two things about that workflow are load-bearing rather than incidental. It
+checks out with `fetch-depth: 0`, because the `superseded` rule asks `git log`
+when a workflow file last changed and a shallow clone cannot answer — which
+would resurrect the false fires it exists to retire. And on "could not check"
+(exit 2) it leaves the tracking issue **untouched** and fails the job, rather
+than closing it: the watchdog going blind must not read as good news, and a red
+`ci-health.yml` is itself reported by next week's run.
+
+Complements `5rfy`, which fixed workflows that never *fire*. This is the
+opposite defect — one that fires constantly and fails every time.
+
 ## At session start
 
 Surface the work-plan before starting: run `beans prime` (and `beans list`), or
