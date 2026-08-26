@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T19:40:00Z
+updated_at: 2026-08-26T20:05:00Z
 ---
 
 
@@ -467,3 +467,44 @@ does this block have"; representations answer "which is authoritative".
 Deferred until the PDF representation exists rather than guessing a third case.
 
 895 pass / 0 fail, typecheck + lint clean.
+
+## Target architecture stated (§12.15) — the arrow inverts
+
+Author: the DAK content block should render BOTH a PDF (+ some Excels) AND the
+DAK IG; source/PDF/Excel live in the DAK repos. Today those are hand-made and
+we extract computable artifacts from them; the goal is the reverse — build and
+edit components in folio-assistant, then rendering packages them together.
+("deck"/"lock" were voice-recognition for DAK/block; confirmed.)
+
+```
+TODAY   hand .xlsx/.bpmn --extract--> FHIR IG   (PDF absent)
+TARGET  content blocks --render--> PDF · Excel · FHIR IG
+```
+
+This is exactly the paper adapter's shape — blocks are source, render-latex /
+generate-block-tex / generate-main-tex produce .tex, latexmk the PDF. Nobody
+hand-writes .tex and extracts blocks from it. DAK wants the same chain, three
+outputs.
+
+**Re-assessment of what I built:**
+- Load-bearing at the target: block model, adapter scoping, DAK kinds+builders,
+  companion roles, adapter-scoped QA, JSON-LD projection, graph index, MCP read
+  side. All of it is "authored source" infrastructure.
+- **Transitional:** `gen-library-jsonld.ts` IS the extract arrow. Not wasted —
+  435 docs / 26,230 nodes of hand-made material still must become computable —
+  but it is the on-ramp, not the architecture. Labelled as such.
+- **Inverts:** `REQUIRED_COMPANION`'s FHIR rows. Today .fsh is the authored
+  source of the L3 IG so requiring it is right; at the target it is a RENDER
+  OUTPUT, and requiring an authored block to carry its own .fsh is the analogue
+  of requiring a paper block to ship its own .tex. Split: .md/.ts/.bpmn/.dmn/.cql
+  stay authored; .fsh/.xlsx/PDF cross the line. FLAGGED, not changed —
+  enforcing a state that doesn't exist would report defects in correct corpora.
+
+**Missing to reach the target:** a DAK renderer (block → FSH → SUSHI → IG;
+block → .xlsx; block → PDF), the analogue of render-latex.ts.
+
+The §12.14 representation axis is no longer speculative — the target names its
+three cases: source / generated / extracted. PDF is one render target, not a
+third guess.
+
+895 pass / 0 fail.

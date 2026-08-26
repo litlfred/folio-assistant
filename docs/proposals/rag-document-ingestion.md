@@ -1334,3 +1334,83 @@ block have*; representations answer *which of them is authoritative*. Building
 that before the PDF representation exists would be guessing at a third case, so
 it is deferred — but the two cases that do exist are now distinguishable, which
 is what stops QA reporting unactionable findings today.
+
+### 12.15 The target: block as source, everything else as render
+
+The author's statement of where this is going, which inverts the current
+direction and reframes much of §§12.8–12.14:
+
+> The DAK content block should be used to render both a PDF document (and some
+> Excels) and the "DAK" IG. The source, PDF and Excel documents should be in
+> the DAK repos. Currently those are produced by hand and we extract them into
+> computable artifacts. We want to get to the other way around — use the folio
+> assistant to build up the components and edit them, and then the rendering
+> packages them together.
+
+#### Two eras, opposite arrows
+
+```
+TODAY          hand-authored .xlsx / .bpmn ──extract──▶ FHIR IG      (+ PDF, absent)
+TARGET         content blocks ──render──▶ PDF · Excel · FHIR IG
+```
+
+That is exactly the paper adapter's shape, which is the reassuring part: blocks
+are the source, `render-latex` / `generate-block-tex` / `generate-main-tex`
+produce `.tex`, latexmk produces the PDF, `export-json` produces the viewer.
+Nobody hand-writes the `.tex` and then extracts blocks from it. The DAK adapter
+wants the same chain with three outputs instead of two.
+
+#### What this work already serves, and what it does not
+
+| Built | Standing in the target |
+|---|---|
+| Block model, adapter scoping, DAK kinds + builders | **Load-bearing** — this is the authored source |
+| Companion roles, adapter-scoped QA | **Load-bearing** |
+| JSON-LD projection, graph index, MCP read side | **Load-bearing** — one graph over whatever exists |
+| `gen-library-jsonld.ts` (the ingest writer) | **Transitional.** It is the extract arrow. It stays necessary while DAKs are hand-made, and the target reverses it |
+| `REQUIRED_COMPANION`'s FHIR rows | **Era-dependent — see below** |
+
+The ingest writer is not wasted by the inversion: 435 documents and 26,230
+nodes of existing hand-made material still have to become computable, and that
+is a migration, not a dead end. But it should be read as the on-ramp rather
+than the architecture.
+
+#### The check that will invert with the arrow
+
+`dak-companion-present` currently requires a `.fsh` of every FHIR-kind block.
+Today that is right — the `.fsh` *is* the authored source of the L3 IG. In the
+target state it is a **render output**, and requiring an authored block to
+carry its own rendering is the analogue of requiring a paper block to ship its
+own `.tex`.
+
+The split the target implies:
+
+| | Companions |
+|---|---|
+| **Authored source** | `.md`, `.ts`, `.bpmn`, `.dmn`, `.cql` |
+| **Rendered output** | `.fsh`, `.xlsx`, PDF |
+
+`.bpmn` and `.dmn` stay authored — a business process is genuinely written as
+BPMN, and this repo authors its own workflows that way. `.fsh` and `.xlsx`
+cross the line.
+
+This is recorded rather than acted on. Changing the check now would enforce a
+state that does not exist, against corpora that are correctly formed for the
+state that does. The flag is what matters: **when the renderer lands, this
+check inverts**, and `isGeneratedArtefact` (§12.14) is the mechanism that
+already knows the difference.
+
+#### What is missing to reach it
+
+A **DAK renderer** — the analogue of `render-latex.ts`, fanning out to three
+targets:
+
+- block → FSH → SUSHI → FHIR IG
+- block → `.xlsx` (the DAK workbooks, as WHO publishes them)
+- block → PDF
+
+And the **representation axis** deferred in §12.14 stops being speculative: its
+three cases are now named by the target itself — `source` (authored),
+`generated` (rendered by us), `extracted` (pulled from hand-made material,
+pending promotion). The PDF is no longer a third guess; it is one render target
+among three.

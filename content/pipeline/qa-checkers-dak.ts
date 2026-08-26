@@ -53,6 +53,19 @@ import { DAK_LABEL_PREFIXES, type DakBlockKind } from "../../schemas/block-kinds
  * | `cql-library` | `.cql` | 279 files, pairing 1:1 by stem with 279 `.fsh` Library instances |
  * | FHIR kinds | `.fsh` | 739 files |
  *
+ * ## The FHIR rows invert when the renderer lands
+ *
+ * Today a `.fsh` is the authored source of the L3 IG, so requiring one is
+ * right. The target (§12.15 of the ingestion proposal) makes the content block
+ * the source and the IG a **render output** — at which point requiring an
+ * authored block to carry its own `.fsh` is the analogue of requiring a paper
+ * block to ship its own `.tex`.
+ *
+ * `.bpmn`, `.dmn` and `.cql` stay authored either way; `.fsh` and `.xlsx`
+ * cross the line. This is flagged rather than changed, because enforcing the
+ * target state against corpora that are correctly formed for the current one
+ * would report defects in both.
+ *
  * ## Why `decision-table` is NOT here
  *
  * An earlier version required a `.dmn` for `decision-table` and
