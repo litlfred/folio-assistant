@@ -29,10 +29,18 @@ permanent, and worked around with a duplicate ingester on the qou side rather
 than fixed here. The duplicate was the wrong shape — `pdf-structure.py` is the
 owner of `pdf-structure/v1` and there should be exactly one producer of it.
 
+`pdfplumber` reaches the same `cryptography` import through `pdfminer.six`, and
+for the same reason: encrypted-PDF support it does not need to read an
+unencrypted file. So `import_pdfplumber` shares this machinery rather than
+duplicating it, and the module keeps its pypdf-flavoured name — renaming it
+would touch four importers and a test to say nothing new. What it actually owns
+is the cryptography workaround, not pypdf.
+
 Usage:
 
-    from _pypdf_compat import import_pypdf
+    from _pypdf_compat import import_pypdf, import_pdfplumber
     PdfReader, PdfWriter = import_pypdf("PdfReader", "PdfWriter")
+    pdfplumber = import_pdfplumber()          # None when absent
 """
 
 from __future__ import annotations
@@ -80,6 +88,35 @@ def import_pypdf(*names: str):
         except ImportError:
             sys.exit(f"{_prog()}: {_MISSING}")
     return tuple(getattr(pypdf, n) for n in names) if len(names) > 1 else getattr(pypdf, names[0])
+
+
+def import_pdfplumber():
+    """Return the `pdfplumber` module, or `None` when it is not usable.
+
+    Deliberately **not** `sys.exit` on absence, unlike `import_pypdf`. pypdf is
+    the floor for `pdf-structure.py` — without it there is no artefact at all.
+    pdfplumber is an *optional rung*: `pdf-tables.py` still has to write an
+    artefact saying it looked and could not, because `tables: []` from a missing
+    library must not read the same as `tables: []` from a document with no
+    tables (`rag-document-ingestion.md` §5: absent tool => n/a, never a false
+    pass). Returning `None` lets the caller say which of the two happened.
+
+    The `BaseException` retry is the same cryptography workaround documented at
+    the top of this module; pdfplumber reaches it through `pdfminer.six`.
+    """
+    try:
+        import pdfplumber
+        return pdfplumber
+    except ImportError:
+        return None
+    except BaseException:
+        _purge(("pdfplumber", "pdfminer", "cryptography"))
+        sys.meta_path.insert(0, _BlockCryptography())
+        try:
+            import pdfplumber  # noqa: F811
+            return pdfplumber
+        except BaseException:
+            return None
 
 
 def _prog() -> str:
