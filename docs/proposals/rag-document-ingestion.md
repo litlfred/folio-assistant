@@ -1255,3 +1255,82 @@ DMN directly, per `dmn-authoring`.
 
 Also observed and not yet modelled: WHO ships `CodeSystem` (6) and `ConceptMap`
 (3) FSH resources, which have no corresponding DAK block kind.
+
+### 12.14 A DAK has several representations, and some are generated
+
+Three facts from the author, each confirmed against the real repositories, and
+together they change the model rather than refine it.
+
+#### (a) DAK content has a FHIR IG representation
+
+`smart-dak-immz` is described as L2 and carries 536 `.fsh` files. That is not a
+contradiction: the L2 DAK *is itself published as a FHIR IG*, and its
+`input/fsh/` subdirectories map almost one-to-one onto the DAK components —
+`models`, `plandefinitions`, `activitydefinitions`, `requirements`,
+`scenarios`, `actors`, `measures`, `questionnaires`, `valuesets`,
+`codesystems`, `conceptmaps`, `libraries`.
+
+#### (b) Some of that FHIR is generated from the L2 sources
+
+Measured, from the files themselves:
+
+| Repository | `.fsh` | Explicitly marked generated |
+|---|---|---|
+| `smart-dak-immz` (L2 + IG rep) | 536 | **266** — 262 requirements, 4 terminology |
+| `smart-immunizations` (L3 IG) | 739 | **0** — authored |
+
+The marker names its source row:
+
+```
+//functional requirment instance generated from row 73
+Instance: IMMZ.FXNREQ.075.D
+InstanceOf: SGRequirements
+```
+
+So `IMMZ DAK_functional and non-functional requirements.xlsx` row 73 becomes
+`input/fsh/requirements/IMMZ.FXNREQ.075.D.fsh`.
+
+#### (c) A PDF representation is intended, and does not exist yet
+
+#### What this means
+
+**A DAK block is one Work with several Expressions.** The L2 spreadsheet row,
+the FHIR IG resource, and the future PDF section are three representations of
+*the same content block*, not three different blocks and not three companions
+of one authored file. That is the FRBR pattern §12.2 already argued for on
+multilingual and jurisdictional grounds; it now has a second, independent
+motivation arriving from the WHO side, which is a good sign for the choice.
+
+**Generated artefacts must not be QA'd as authored content.** A finding on
+`IMMZ.FXNREQ.075.D.fsh` is unactionable: the fix lives in the spreadsheet row
+or in the generator, and a `fail` recorded against the artefact points at
+neither. `isGeneratedArtefact()` detects the marker and the checkers return
+`n/a` **with a reason** rather than a verdict — the same rule this repo already
+applies to its own generated files. Validated against real content: 266/536 and
+0/739, matching the ground-truth grep exactly.
+
+Detection is deliberately conservative — only an explicit marker counts.
+Inferring "generated" from a path or naming convention would silently exempt
+authored content from review, which is the costlier mistake. (The marker regex
+matches WHO's spelling `requirment` verbatim, because a normalised pattern
+would stop matching if they fix the typo.)
+
+#### A correction to §12.13, one section old
+
+§12.13 concluded that workbook-backed kinds have no per-block artefact until an
+extraction stage is built. That is true of the **source** and false of the DAK
+as published: WHO's tooling already splits the workbook, one FHIR instance per
+row. A `functional-requirement` block does get a per-block artefact — a
+*generated* one. It still must not be *required*, because it is a derived
+representation rather than the authored source, but the reason has changed and
+the note now says so.
+
+#### Open, and now better posed
+
+The block model needs a **representation** axis distinct from its companion
+axis: `source` (the authored artefact), `generated` (derived, drift-gated), and
+`rendered` (the PDF, when it exists). Companions answer *what files does this
+block have*; representations answer *which of them is authoritative*. Building
+that before the PDF representation exists would be guessing at a third case, so
+it is deferred — but the two cases that do exist are now distinguishable, which
+is what stops QA reporting unactionable findings today.
