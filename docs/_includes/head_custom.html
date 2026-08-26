@@ -1,0 +1,29 @@
+<!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>

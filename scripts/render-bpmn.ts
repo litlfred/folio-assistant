@@ -82,12 +82,23 @@ for (const file of sources) {
 
   // The docs site scales diagrams to the column width; a fixed pixel width
   // would overflow on narrow screens.
-  const responsive = stable.replace(
+  // Everything outside the pool is transparent in bpmn-js output, and the strokes
+  // are near-black — so on a dark GitHub or docs theme the diagram loses its
+  // margins and any label that sits outside a lane. Paint the viewport white.
+  // The viewBox does not start at the origin, so the backdrop has to be placed
+  // in viewBox coordinates — a 100%-sized rect at 0,0 would miss the right edge.
+  const opaque = stable.replace(
+    /(<svg[^>]*\sviewBox="([-\d.]+) ([-\d.]+) ([\d.]+) ([\d.]+)"[^>]*>)/,
+    (_m: string, tag: string, x: string, y: string, w: string, h: string) =>
+      `${tag}<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#ffffff" />`,
+  );
+
+  const responsive = opaque.replace(
     /<svg([^>]*?)\swidth="[\d.]+"\sheight="[\d.]+"/,
     (_m: string, attrs: string) =>
       `<svg${attrs} width="100%" height="auto" style="max-width:100%;height:auto"`,
   );
-  if (responsive === stable) {
+  if (responsive === opaque || opaque === stable) {
     console.error(`✗ ${file}: could not make the SVG responsive — bpmn-js output changed shape`);
     process.exitCode = 1;
     continue;

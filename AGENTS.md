@@ -152,14 +152,25 @@ a background subagent, not the foreground.
 - Lean tooling roadmap (Lean Atlas / Compass, Nazrin, refactor cluster,
   LeanDojo) — where each earns a place and how it wires into existing skills:
   `docs/proposals/llm-authoring-tool-integration.md`.
-- **The editing and publication processes, as BPMN swimlanes** —
-  `docs/publication-workflow.md`, sources in `docs/workflows/*.bpmn`. Read it
+- **Every process in this repo is BPMN** — six `.bpmn` files under
+  `docs/workflows/`, indexed by `docs/publication-workflow.md`. Read that page
   before changing how a proposed edit is validated, who approves what, or where
   beans are claimed: it is the normative picture of the HCI validation gate
   (mechanical + non-mechanical), the draft-review-publish path, and the work-plan
-  lane. Each activity carries a `<folio:skill ref="…"/>` extension naming the
-  skill that implements it. Regenerate the SVGs with `bun run render:bpmn` after
-  editing a `.bpmn`; `bun run render:bpmn:check` fails if they are stale.
+  lane. Three are content-agnostic (`editing-hci-validation`,
+  `draft-to-publication`, `content-lifecycle`); three are per content type
+  (`authoring-a-paper`, `l2-dak-authoring`, `l3-fhir-pipeline`).
+  **The `.bpmn` is the source of truth**; `docs/assets/img/workflows/*.svg` is
+  generated — run `bun run render:bpmn` after editing one, and
+  `bun run render:bpmn:check` fails if an SVG is stale. Each activity carries a
+  `<folio:skill ref="…"/>` extension naming the skill that implements it, and
+  `<folio:bean store=".beans/"/>` where it touches the work plan — add both when
+  you add an activity.
+  **Adding a diagram:** if it has actors, activities and a control flow, it is a
+  process — author it as BPMN under `docs/workflows/`, not as a Mermaid fence.
+  Mermaid stays for the things that are *not* processes (component maps, the
+  role-inheritance lattice, the docs navigation graph); the audit of which is
+  which is in `docs/publication-workflow.md`.
 - Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this

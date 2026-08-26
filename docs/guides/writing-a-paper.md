@@ -23,17 +23,13 @@ LLM workflow** are.
 
 ## The end-to-end workflow
 
-```mermaid
-flowchart LR
-    plan[1 · Plan] --> scaffold[2 · Scaffold repo]
-    scaffold --> author[3 · Author blocks]
-    author --> lean[4 · Formalize in Lean]
-    lean --> validate[5 · Validate]
-    validate --> render[6 · Render PDF/HTML]
-    render --> review[7 · Review + feedback]
-    review -.->|iterate| author
-    review --> publish[8 · Publish]
-```
+<div class="bpmn-figure">
+  <img src="../assets/img/workflows/authoring-a-paper.svg"
+       alt="BPMN swimlane diagram: the author plans, the plan is seeded as beans, the authoring agent scaffolds the repo and drafts blocks, Lean formalisation loops until the build is green with no sorries, the build pipeline validates and renders, a reviewer either sends it back to authoring or approves it for publication.">
+</div>
+
+[BPMN 2.0 source](../workflows/authoring-a-paper.bpmn) · [full-size SVG](../assets/img/workflows/authoring-a-paper.svg)
+{: .bpmn-source }
 
 Every step is something the LLM does *for you* by calling folio-assistant's MCP
 tools — you converse in natural language and approve the work. *Approve* is

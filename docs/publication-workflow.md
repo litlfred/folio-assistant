@@ -16,22 +16,33 @@ validation gate, the skills, and the shared work plan all named.
 
 ---
 
-## The three diagrams
+## Every workflow in the repo
 
-The workflow is modelled at three levels. Each is a real BPMN 2.0 file; the
-outer levels reference the inner ones as **call activities**, so the same
-process is described once and reused.
+Six BPMN 2.0 files, all under
+[`docs/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/docs/workflows).
+Each is a real BPMN 2.0 document with diagram interchange — open it in
+[bpmn.io](https://demo.bpmn.io/), Camunda Modeler, or any BPMN tool. The SVGs
+throughout the docs are generated from these files by `bun run render:bpmn`;
+never hand-edit an SVG.
+
+**Content-agnostic** — these three apply to every folio, and the outer ones
+reference the inner ones as **call activities**, so each process is described
+once and reused:
 
 | Level | Diagram | Answers |
 |-------|---------|---------|
-| 1 | [Content lifecycle](#content-lifecycle-overview) | One cycle of a folio, plan → retire |
-| 2 | [Draft → publication](#from-corpus-to-published-folio) | How the corpus becomes an officially published folio |
-| 3 | [Editing & HCI validation](#editing-and-the-hci-validation-gate) | What happens to **one** proposed change to **one** content block |
+| 1 | [Content lifecycle](#content-lifecycle-overview) — `content-lifecycle.bpmn` | One cycle of a folio, plan → retire |
+| 2 | [Draft → publication](#from-corpus-to-published-folio) — `draft-to-publication.bpmn` | How the corpus becomes an officially published folio |
+| 3 | [Editing & HCI validation](#editing-and-the-hci-validation-gate) — `editing-hci-validation.bpmn` | What happens to **one** proposed change to **one** content block |
 
-Sources are under [`docs/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/docs/workflows)
-— open them in [bpmn.io](https://demo.bpmn.io/), Camunda Modeler, or any BPMN 2.0
-tool. The SVGs on this page are generated from those files by
-`bun run render:bpmn`; never hand-edit them.
+**Content-type specific** — how a particular kind of folio is authored. These
+sit *inside* level 3's `Draft the block edit`, and live with their guides:
+
+| Diagram | Content type | Where it is shown |
+|---------|--------------|-------------------|
+| `authoring-a-paper.bpmn` | Scientific papers & books | [Writing a paper](guides/writing-a-paper.html#the-end-to-end-workflow) |
+| `l2-dak-authoring.bpmn` | WHO SMART Guidelines DAK (L2) | [Authoring a WHO SMART DAK](guides/who-smart-dak.html#the-l2-artifacts) |
+| `l3-fhir-pipeline.bpmn` | WHO SMART Implementation Guide (L3) | [Authoring a WHO SMART IG](guides/who-smart-ig.html#the-l3-pipeline) |
 
 ### How to read them
 
@@ -53,11 +64,6 @@ tool. The SVGs on this page are generated from those files by
 
 This is the diagram that matters most day to day: **one proposed change to one
 content block**.
-
-<style>
-.bpmn-figure { overflow-x: auto; background: #fff; border: 1px solid rgba(128,128,128,.35); border-radius: 6px; margin: 1em 0; }
-.bpmn-figure img { display: block; width: 100%; min-width: 1200px; max-width: none; }
-</style>
 
 <div class="bpmn-figure">
   <img src="assets/img/workflows/editing-hci-validation.svg"
@@ -288,6 +294,25 @@ When you add an activity, add its `<folio:skill ref="…"/>` extension (and
 `<folio:bean store=".beans/"/>` if it touches the work plan) and the matching
 row in the tables above — the diagram and the skill list drifting apart is the
 failure this page exists to prevent.
+
+### Which diagrams are BPMN, and which are not
+
+Every **process** in the docs is BPMN. The diagrams that remain Mermaid are not
+processes, and BPMN would be the wrong notation for them — a pool with lanes
+implies actors performing activities over time, which none of these have:
+
+| Diagram | Notation | Why |
+|---------|----------|-----|
+| `README.md`, [home](index.html) — "What it does" | Mermaid | Component / data-flow map of the platform, not a sequence of activities |
+| [Architecture](architecture.html) — server and adapters | Mermaid | Deployment and module structure |
+| [Skills & roles](skills.html) — how the five concepts compose | Mermaid | Conceptual composition, no time axis |
+| [Skills & roles](skills.html) — `viewer → reviewer → author → admin` | Mermaid | An inheritance lattice, not a flow |
+| [Home](index.html) — documentation map | Mermaid | Navigation graph |
+| [Adding a content type](guides/new-content-type.html) — "What you provide" | Mermaid | What you hand over, not what you do |
+| [Writing a paper](guides/writing-a-paper.html) — the Lean session | Mermaid `sequenceDiagram` | An interaction transcript between you, the assistant and the MCP server. BPMN's equivalent — a collaboration with message flows — would add ceremony without adding meaning |
+
+If you add a diagram that *does* have actors, activities and a control flow,
+it belongs in `docs/workflows/` as BPMN, not in a Mermaid fence.
 
 ---
 

@@ -36,15 +36,13 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 
 ## The L3 pipeline
 
-```mermaid
-flowchart LR
-    L2[(L2 DAK)] --> FSH[Author FSH<br/>profiles · extensions · value sets]
-    FSH --> SUSHI[SUSHI compile<br/>→ FHIR JSON]
-    SUSHI --> VAL[fhir-validation]
-    VAL --> QC[quality-control]
-    QC --> IGP[IG Publisher]
-    IGP --> Site[Published IG site]
-```
+<div class="bpmn-figure">
+  <img src="../assets/img/workflows/l3-fhir-pipeline.svg"
+       alt="BPMN swimlane diagram: the FHIR modeller maps L2 to L3 and authors FSH, the build pipeline compiles with SUSHI and validates against profiles, a failed validation returns to FSH authoring, the QC reviewer's gates file findings as beans when they fail, and a clean run goes through the IG Publisher to a published IG site.">
+</div>
+
+[BPMN 2.0 source](../workflows/l3-fhir-pipeline.bpmn) · [full-size SVG](../assets/img/workflows/l3-fhir-pipeline.svg)
+{: .bpmn-source }
 
 | Step | Skill |
 |------|-------|

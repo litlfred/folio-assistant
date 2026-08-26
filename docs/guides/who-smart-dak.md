@@ -21,16 +21,13 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 
 ## The L2 artifacts
 
-```mermaid
-flowchart TD
-    G[WHO guideline / recommendations] --> P[Personas & scenarios]
-    G --> BP[Business processes · BPMN 2.0]
-    G --> DL[Decision logic · DMN]
-    G --> DD[Data dictionary · core data elements]
-    G --> T[Terminology · code systems / value sets]
-    G --> I[Indicators & requirements]
-    P & BP & DL & DD & T & I --> L2[(L2 DAK)]
-```
+<div class="bpmn-figure">
+  <img src="../assets/img/workflows/l2-dak-authoring.svg"
+       alt="BPMN swimlane diagram: the programme manager scopes the DAK, the plan is seeded as beans, then a parallel gateway fans out the five business-analyst artifacts (personas, BPMN processes, DMN decision logic, data dictionary, indicators) alongside the terminologist's bindings; a clinical SME validates, and the DAK is assembled once accurate.">
+</div>
+
+[BPMN 2.0 source](../workflows/l2-dak-authoring.bpmn) · [full-size SVG](../assets/img/workflows/l2-dak-authoring.svg)
+{: .bpmn-source }
 
 | Artifact | Skill | Format |
 |----------|-------|--------|
