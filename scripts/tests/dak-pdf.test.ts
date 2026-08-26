@@ -18,7 +18,7 @@ import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
-import { assemble, toHtml } from "../../scripts/dak-pdf";
+import { assemble, toHtml, dakIdentity } from "../../scripts/dak-pdf";
 
 const ROOT = mkdtempSync(join(tmpdir(), "dak-pdf-"));
 
@@ -113,5 +113,97 @@ describe("html", () => {
     expect(html).toContain("&lt;script&gt;");
     expect(html).not.toContain("<script>x</script>");
     rmSync(evil, { recursive: true, force: true });
+  });
+});
+
+describe("DAK identity is declared, never inferred", () => {
+  // sgex's agent guidance documents the rule WHO's own tooling relies on: a
+  // repository is a DAK iff its root sushi-config.yaml declares a dependency
+  // on smart.who.int.base. Verified against all three WHO repositories in
+  // hand — smart-dak-immz and smart-dak-bds pin `current`, smart-immunizations
+  // pins `0.2.0`. Nothing below looks at directory names or at which input/
+  // subdirectories happen to exist.
+  function withConfig(yaml: string): string {
+    const d = mkdtempSync(join(tmpdir(), "ident-"));
+    writeFileSync(join(d, "sushi-config.yaml"), yaml);
+    return d;
+  }
+
+  test("a declared smart.who.int.base dependency makes it a DAK", () => {
+    const d = withConfig("dependencies:\n  smart.who.int.base: current\n");
+    expect(dakIdentity(d)).toEqual({ isDak: true, baseVersion: "current" });
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("a pinned version is carried, not just the fact of the dependency", () => {
+    const d = withConfig("dependencies:\n  smart.who.int.base: 0.2.0\n");
+    expect(dakIdentity(d).baseVersion).toBe("0.2.0");
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("SUSHI's object dependency form is read too", () => {
+    const d = withConfig("dependencies:\n  smart.who.int.base:\n    version: 1.2.3\n");
+    expect(dakIdentity(d)).toEqual({ isDak: true, baseVersion: "1.2.3" });
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("other WHO-adjacent dependencies do not qualify a repository", () => {
+    const d = withConfig("dependencies:\n  hl7.fhir.uv.cpg: 2.0.0\n");
+    const id = dakIdentity(d);
+    expect(id.isDak).toBe(false);
+    expect(id.reason).toContain("smart.who.int.base");
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("looking like a DAK is not being one", () => {
+    // input/business-processes/ and input/dictionary/ are exactly what a
+    // structural heuristic would key on. The rule ignores them.
+    const d = mkdtempSync(join(tmpdir(), "lookalike-"));
+    mkdirSync(join(d, "input", "business-processes"), { recursive: true });
+    mkdirSync(join(d, "input", "dictionary"), { recursive: true });
+    expect(dakIdentity(d).isDak).toBe(false);
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("each way of not being a DAK gives its own reason", () => {
+    const missing = mkdtempSync(join(tmpdir(), "nocfg-"));
+    expect(dakIdentity(missing).reason).toContain("no sushi-config.yaml");
+    rmSync(missing, { recursive: true, force: true });
+
+    const noDeps = withConfig('title: "Something else"\n');
+    expect(dakIdentity(noDeps).reason).toContain("no dependencies");
+    rmSync(noDeps, { recursive: true, force: true });
+
+    const broken = withConfig("dependencies:\n\tbad: [unclosed\n");
+    expect(dakIdentity(broken).isDak).toBe(false);
+    rmSync(broken, { recursive: true, force: true });
+  });
+
+  test("a non-DAK is rendered but says so on its cover", () => {
+    // Rendering it anyway is useful; letting the cover call it a Digital
+    // Adaptation Kit on this tool's say-so is not.
+    const html = toHtml(assemble(ROOT));
+    expect(html).toContain("Not a recognised DAK");
+    expect(html).not.toContain(">Digital Adaptation Kit");
+  });
+
+  test("a real DAK's cover names the base version it pins", () => {
+    const d = withConfig('title: "Real"\ndependencies:\n  smart.who.int.base: current\n');
+    mkdirSync(join(d, "input", "pagecontent"), { recursive: true });
+    writeFileSync(join(d, "input", "pagecontent", "a.md"), "hi\n");
+    const html = toHtml(assemble(d));
+    expect(html).toContain("Digital Adaptation Kit");
+    expect(html).toContain("smart.who.int.base");
+    expect(html).not.toContain("Not a recognised DAK");
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("the title comes from the IG's own title, not a nested one", () => {
+    // Indentation alone kept the old /^title:/m from matching a nested title,
+    // so this pins behaviour the parse now guarantees structurally rather than
+    // a defect it repaired.
+    const d = withConfig('pages:\n  index.md:\n    title: "A page"\ntitle: "The IG"\n');
+    expect(assemble(d).title).toBe("The IG");
+    rmSync(d, { recursive: true, force: true });
   });
 });

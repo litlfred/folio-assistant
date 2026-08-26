@@ -258,3 +258,100 @@ export const DAK_LABEL_PREFIXES: Record<DakBlockKind, string> = {
   "test-case": "tc",
   "actor-definition": "actor",
 };
+
+// ── WHO DAK components, and this repo's coverage of them ─────────
+
+/**
+ * The WHO SMART Guidelines DAK components, in WHO's own order.
+ *
+ * The canonical list is eight components as published (see the WHO guidance
+ * cited below), plus **test scenarios**, added later — which is why older
+ * material, `sgex`'s agent instructions among it, documents "the 8 core DAK
+ * components" and omits it. Anything counting components against an older
+ * source will be off by one.
+ *
+ * Sources:
+ * - <https://www.who.int/publications/i/item/9789240099456>
+ * - <https://www.who.int/publications/i/item/9789240085138>
+ * - <https://www.who.int/publications/i/item/9789240020306>
+ *
+ * This exists to make coverage answerable rather than assumed:
+ * {@link DAK_COMPONENT_KINDS} maps each component to the block kinds that
+ * represent it, and a component mapping to none is a documented gap, not an
+ * oversight nobody noticed.
+ */
+export const DAK_COMPONENTS = [
+  "health-interventions-and-recommendations",
+  "generic-personas",
+  "user-scenarios",
+  "generic-business-processes-and-workflows",
+  "core-data-elements",
+  "decision-support-logic",
+  "programme-indicators",
+  "functional-and-non-functional-requirements",
+  "test-scenarios",
+] as const;
+
+export type DakComponent = (typeof DAK_COMPONENTS)[number];
+
+/** One-line statement of what each component is for, in WHO's terms. */
+export const DAK_COMPONENT_DESCRIPTIONS: Record<DakComponent, string> = {
+  "health-interventions-and-recommendations":
+    "Links clinical and public health guidance to specific digital actions.",
+  "generic-personas":
+    "Defines the target users, such as primary healthcare workers, clients, or managers.",
+  "user-scenarios":
+    "Illustrates how different personas interact with digital tools in real-world settings.",
+  "generic-business-processes-and-workflows":
+    "Maps out step-by-step clinical and administrative routines.",
+  "core-data-elements":
+    "Lists required variables mapped to international terminology standards like ICD.",
+  "decision-support-logic":
+    "Outlines logical rules, alerts, and algorithms for clinical guidance.",
+  "programme-indicators":
+    "Specifies metrics used to evaluate health program performance and reporting.",
+  "functional-and-non-functional-requirements":
+    "Details system specifications, performance bounds, and security needs.",
+  "test-scenarios":
+    "Exercises the guidance end to end; added after the original eight components.",
+};
+
+/**
+ * Which block kinds represent each WHO component.
+ *
+ * Deliberately **not** one-to-one in either direction:
+ *
+ * - `functional-and-non-functional-requirements` is one WHO component that
+ *   this repo splits into two kinds, because the component's own name is a
+ *   conjunction and the two halves have different reviewers.
+ * - `decision-support-logic` gains `scheduling-logic`, which WHO treats as
+ *   decision logic but which authors keep separate.
+ * - `core-data-elements` collects everything describing a variable's shape,
+ *   including the L3 `structure-map` that transforms between two of them.
+ *
+ * Coverage is asserted by test: every kind lands in exactly one component, and
+ * exactly one component — `health-interventions-and-recommendations` — names
+ * no kind at all. `dakComponentsWithoutL2` reports the sharper gap: components
+ * with no *L2* kind, which is that one plus `test-scenarios`.
+ */
+export const DAK_COMPONENT_KINDS: Record<DakComponent, readonly DakBlockKind[]> = {
+  "health-interventions-and-recommendations": [],
+  "generic-personas": ["persona", "actor-definition"],
+  "user-scenarios": ["user-scenario"],
+  "generic-business-processes-and-workflows": ["business-process", "plan-definition"],
+  "core-data-elements": [
+    "data-element",
+    "logical-model",
+    "profile",
+    "value-set",
+    "questionnaire",
+    "structure-map",
+  ],
+  "decision-support-logic": ["decision-table", "scheduling-logic", "cql-library"],
+  "programme-indicators": ["indicator", "measure"],
+  "functional-and-non-functional-requirements": [
+    "functional-requirement",
+    "non-functional-requirement",
+  ],
+  "test-scenarios": ["test-case"],
+};

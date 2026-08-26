@@ -61,7 +61,80 @@ interface Assembly {
   sections: Section[];
   /** Things a complete DAK PDF would contain and this one does not. */
   omissions: string[];
+  /** Whether the root is a DAK at all, and how that was decided. */
+  identity: DakIdentity;
 }
+
+/**
+ * The result of asking whether a directory is a WHO SMART Guidelines DAK.
+ *
+ * The test is the one `sgex` documents and the one WHO's own tooling relies
+ * on: a repository is a DAK iff its root `sushi-config.yaml` declares a
+ * dependency on `smart.who.int.base`. Verified against all three WHO
+ * repositories in hand — `smart-dak-immz` and `smart-dak-bds` pin `current`,
+ * `smart-immunizations` pins `0.2.0`.
+ *
+ * This is a *declaration*, not an inference. Nothing here looks at directory
+ * names, file counts, or whether `input/business-processes/` happens to exist:
+ * a repository that has not said it is a DAK is not treated as one, and the
+ * reason is reported rather than guessed around.
+ */
+export interface DakIdentity {
+  isDak: boolean;
+  /** Version pinned for `smart.who.int.base`, when it is declared. */
+  baseVersion?: string;
+  /** Why this root is not a recognised DAK. Present iff `!isDak`. */
+  reason?: string;
+}
+
+/** SUSHI's dependency values are either a version string or `{version}`. */
+function dependencyVersion(v: unknown): string | undefined {
+  if (typeof v === "string") return v;
+  if (typeof v === "number") return String(v);
+  if (v && typeof v === "object" && "version" in v) {
+    const inner = (v as { version: unknown }).version;
+    return typeof inner === "string" || typeof inner === "number" ? String(inner) : undefined;
+  }
+  return undefined;
+}
+
+/** Parse `sushi-config.yaml`, or explain why it could not be parsed. */
+function sushiConfig(root: string): { cfg?: Record<string, unknown>; reason?: string } {
+  const path = join(root, "sushi-config.yaml");
+  if (!existsSync(path)) return { reason: "no sushi-config.yaml in the repository root" };
+  let parsed: unknown;
+  try {
+    parsed = Bun.YAML.parse(readFileSync(path, "utf-8"));
+  } catch (e) {
+    return { reason: `sushi-config.yaml is not valid YAML: ${String(e).slice(0, 120)}` };
+  }
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    return { reason: "sushi-config.yaml does not parse to a mapping" };
+  }
+  return { cfg: parsed as Record<string, unknown> };
+}
+
+/** Decide whether `root` is a DAK, per the declared-dependency rule. */
+export function dakIdentity(root: string): DakIdentity {
+  const { cfg, reason } = sushiConfig(root);
+  if (!cfg) return { isDak: false, reason };
+
+  const deps = cfg.dependencies;
+  if (!deps || typeof deps !== "object" || Array.isArray(deps)) {
+    return { isDak: false, reason: "sushi-config.yaml declares no dependencies" };
+  }
+  const raw = (deps as Record<string, unknown>)[DAK_BASE_DEPENDENCY];
+  if (raw === undefined) {
+    return {
+      isDak: false,
+      reason: `sushi-config.yaml dependencies do not include ${DAK_BASE_DEPENDENCY}`,
+    };
+  }
+  return { isDak: true, baseVersion: dependencyVersion(raw) };
+}
+
+/** The IG dependency whose presence *is* the definition of a DAK. */
+export const DAK_BASE_DEPENDENCY = "smart.who.int.base";
 
 function mdToHtml(md: string): string {
   return String(remark().use(remarkHtml, { sanitize: false }).processSync(md));
@@ -71,13 +144,18 @@ function esc(s: string): string {
   return s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]!);
 }
 
-/** Title from sushi-config.yaml, falling back to the directory name. */
+/**
+ * Title from sushi-config.yaml, falling back to the directory name.
+ *
+ * Parsed as YAML rather than matched with `/^title:/m`. On all three WHO
+ * repositories in hand the two agree, so this is not a bug fix — it is that
+ * the same parse is already needed for {@link dakIdentity}, making the regex
+ * a second, weaker reader of a file already being read properly.
+ */
 function dakTitle(root: string): string {
-  const cfg = join(root, "sushi-config.yaml");
-  if (existsSync(cfg)) {
-    const m = readFileSync(cfg, "utf-8").match(/^title:\s*(.+)$/m);
-    if (m) return m[1]!.trim().replace(/^["']|["']$/g, "");
-  }
+  const { cfg } = sushiConfig(root);
+  const t = cfg?.title;
+  if (typeof t === "string" && t.trim()) return t.trim();
   return basename(root);
 }
 
@@ -157,7 +235,7 @@ export function assemble(root: string, diagrams: Diagram[] = []): Assembly {
     );
   }
 
-  return { title: dakTitle(root), sections, omissions };
+  return { title: dakTitle(root), sections, omissions, identity: dakIdentity(root) };
 }
 
 function findByExt(root: string, ext: string, depth = 4): string[] {
@@ -273,6 +351,14 @@ export function toHtml(a: Assembly): string {
         .join("")}</ul></section>`
     : "";
 
+  // A directory that never declared itself a DAK can still be rendered — but
+  // the reader is told, on the cover, rather than handed a document whose
+  // title page calls it a Digital Adaptation Kit on this tool's say-so.
+  const notDak = a.identity.isDak
+    ? ""
+    : `<p class="notdak">Not a recognised DAK: ${esc(a.identity.reason ?? "unknown")}. ` +
+      `Rendered anyway; treat the structure below as this tool's reading, not a WHO declaration.</p>`;
+
   const who = whoStylesheet();
   const print = printCss();
   return `<!doctype html><html><head><meta charset="utf-8"><title>${esc(a.title)}</title>
@@ -291,12 +377,18 @@ ${who ? `<!-- WHO styling from smart-base ${who.source} -->\n<style>\n${who.css}
   .cover h1 { font-size: 26pt; border: 0; }
   .src { color: #777; font-size: 8pt; font-style: italic; }
   .gaps { background: #fff8e1; }
+  .notdak { background: #fdecea; border-left: 4px solid #c0392b; padding: .6em .8em;
+            font-size: 10pt; margin-top: 1.5em; }
   .gaps li { margin: .3em 0; }
   figure { margin: 1.2em 0; }
   figure svg { max-width: 100%; height: auto; }
   figcaption { font-size: 9pt; color: #555; margin-bottom: .4em; }
 </style></head><body>
-<div class="cover"><h1>${esc(a.title)}</h1><p>Digital Adaptation Kit — rendered by folio-assistant</p></div>
+<div class="cover"><h1>${esc(a.title)}</h1><p>${
+    a.identity.isDak
+      ? `Digital Adaptation Kit${a.identity.baseVersion ? ` — <code>${esc(DAK_BASE_DEPENDENCY)}</code> ${esc(a.identity.baseVersion)}` : ""}`
+      : "Rendered by folio-assistant"
+  } — rendered by folio-assistant</p>${notDak}</div>
 <section id="toc"><h1>Contents</h1><ol>${toc}</ol></section>
 ${body}
 ${gaps}
@@ -427,6 +519,11 @@ async function main(): Promise<number> {
   }
 
   console.log(`${a.title}\n  ${a.sections.length} section(s) → ${out}`);
+  console.log(
+    a.identity.isDak
+      ? `  DAK: ${DAK_BASE_DEPENDENCY} ${a.identity.baseVersion ?? "(unversioned)"}`
+      : `  NOT a recognised DAK: ${a.identity.reason}`,
+  );
   if (a.omissions.length) {
     console.log(`\n  not included (${a.omissions.length}):`);
     for (const o of a.omissions) console.log(`    - ${o}`);

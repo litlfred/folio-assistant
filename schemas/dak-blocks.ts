@@ -34,8 +34,11 @@ import type { BlockBase } from "./types";
 import { BlockBaseSchema } from "./constraints";
 import {
   DAK_BLOCK_KINDS,
+  DAK_COMPONENTS,
+  DAK_COMPONENT_KINDS,
   DAK_LABEL_PREFIXES,
   type DakBlockKind,
+  type DakComponent,
 } from "./block-kinds";
 
 // ── Base ─────────────────────────────────────────────────────────
@@ -239,3 +242,28 @@ export const testCase = (d: DakInput<TestCaseBlock>): TestCaseBlock =>
   buildDak("test-case", d);
 export const actorDefinition = (d: DakInput<ActorDefinitionBlock>): ActorDefinitionBlock =>
   buildDak("actor-definition", d);
+
+/**
+ * Components represented only at L3, with no L2 kind to author them as.
+ *
+ * This is the coverage gap that matters, because L2 is what a DAK *is* — the
+ * data-model-agnostic statement that the L3 FHIR artefacts then realise.
+ *
+ * Two components are in it today:
+ *
+ * - `health-interventions-and-recommendations` has no kind at either layer. It
+ *   is the L1 end of every `realises` edge — the recommendation a DAK exists to
+ *   digitise — so that edge currently points at a label this repo cannot
+ *   represent, and nothing detects the dangle.
+ * - `test-scenarios` has `test-case`, but that sits in the L3 set as a FHIR
+ *   artefact. The L2 scenario — the narrative case a reviewer signs off — has
+ *   no kind.
+ *
+ * Reported rather than quietly tolerated: a DAK renderer that lists eight
+ * components and omits the ninth looks complete.
+ */
+export function dakComponentsWithoutL2(): DakComponent[] {
+  return DAK_COMPONENTS.filter(
+    (c) => !DAK_COMPONENT_KINDS[c].some((k) => layerForKind(k) === "L2"),
+  );
+}

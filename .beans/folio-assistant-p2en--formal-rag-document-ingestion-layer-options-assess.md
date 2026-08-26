@@ -797,3 +797,67 @@ components, nine L2 kinds, but not the same nine.
 
 sgex is now settled: POC (CSS only), faq-docs (catalog + contract only),
 bpmn-to-svg.js still worth a jsdom-vs-Chromium comparison.
+
+## sgex "skills" checked — none exist; its agent guidance does (§12.23)
+
+sgex has NO skills dir. Verified: git ls-remote origin HEAD == local HEAD ==
+d8288af, frozen 2025-10-25. What it has is .github/copilot-instructions.md (608
+lines of agent guidance). Two things in it belong here.
+
+**1. The component list — sources genuinely disagree.** That one file contains
+TWO non-agreeing lists: a heading "The 8 Core DAK Components" listing artefact
+types (Data Entry Forms, Terminology, FHIR Profiles/Extensions, Test Data — a
+mix of L2 and L3, not WHO's list at all), and directly beneath it a Component
+Representations table giving the 8 real components with L2/L3 forms. User
+confirmed the cause: **test scenarios is a LATER addition**; WHO publishes 8,
+the 9th came after sgex was written. Anything counting against an old source is
+off by one silently.
+
+Pinned in code now: DAK_COMPONENTS (9, WHO's wording + the 3 WHO publication
+URLs), DAK_COMPONENT_DESCRIPTIONS, DAK_COMPONENT_KINDS. Mapping deliberately
+not 1:1 — requirements is one component whose NAME is a conjunction (2 kinds);
+decision-support-logic gains scheduling-logic; core-data-elements collects
+structure-map. Test asserts every kind lands in exactly one component.
+
+sgex's representation table independently corroborates my L2→L3 pairing on every
+row, and adds: L2 of health interventions = **IRIS publications**, L2 of core
+data elements = **OCL concepts**.
+
+**2. Gap sharpened — I over-reported in §12.22.** dakComponentsWithoutL2() =
+[health-interventions-and-recommendations, test-scenarios].
+- health-interventions: no kind at EITHER layer, the only such component. L1 end
+  of every `realises` edge → that edge points at something unrepresentable and
+  nothing detects the dangle.
+- test-scenarios: DOES have test-case, but that's L3 FHIR. The L2 narrative
+  scenario has no kind. §12.22 called it unrepresented — too strong.
+Both asserted as-is, so adding either kind FAILS the test and forces docs to
+move with code. (My first pass wrote "every component names at least one kind";
+the test immediately failed on health-interventions — fixed to assert reality.)
+
+**3. NO HEURISTICS POLICY → a real hole found.** sgex's policy (no inferring
+type from names, no fallback detection, fail loudly) is the same discipline as
+§5's "absent tool ⇒ n/a, never a false pass". Applying it: sgex states the DAK
+test mechanically — a repo is a DAK IFF root sushi-config.yaml declares
+`smart.who.int.base`. **dak-pdf.ts had NO such check** — it read a title and
+rendered any directory as a DAK.
+
+dakIdentity() now decides explicitly + carries the pinned version. Verified:
+smart-dak-immz `current`, smart-dak-bds `current`, smart-immunizations `0.2.0`,
+folio-assistant correctly rejected. 3/3 real WHO repos. Non-DAK still rendered
+(refusing is less useful) but the cover SAYS so instead of the "Digital
+Adaptation Kit" line. Test builds the structural lookalike
+(input/business-processes/ + input/dictionary/, no config) and asserts NOT a DAK
+— exactly what a naming heuristic would have accepted.
+
+Also retired the /^title:/m regex for a real YAML parse. Honest scope: it was
+NOT producing wrong titles on any repo in hand (indentation kept nested titles
+from matching); the claim is only that the same parse was already needed for the
+dependency check, so the regex was a second weaker reader. Corrected my own
+overstated docstring + test comment on that.
+
+1017 pass / 0 fail, tsc + eslint clean.
+
+Remaining sgex: DAK_LOGICAL_MODEL_UPDATE_PLAN.md (1668) and
+docs/dak-publication-software-architecture.md (457) unread; bpmn-to-svg.js
+jsdom-vs-Chromium comparison still open.
+

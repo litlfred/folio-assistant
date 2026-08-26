@@ -1898,10 +1898,11 @@ Mapping all 27 against what the graph carries today:
 #### A real gap this exposed
 
 The catalog's component 1 is **Health Interventions and Recommendations**.
-`DAK_BLOCK_KINDS` has no `health-intervention` kind — so `publication-references`,
-`guideline-sections` and `intervention-scope` have no block to hang on, and the
-L1 end of the `realises` edge is a label pointing at nothing this repo can
-represent. Nine WHO components, nine L2 kinds, but they are not the same nine.
+`DAK_BLOCK_KINDS` has no `health-intervention` kind — so `publication-references`
+and `intervention-scope` have no block to hang on, and the L1 end of the
+`realises` edge is a label pointing at nothing this repo can represent.
+
+§12.23 pins the component list properly and finds a second gap alongside it.
 
 That is the most valuable thing the script produced, and it produced it by being
 read rather than by being run.
@@ -1913,3 +1914,117 @@ read rather than by being run.
 | `generate-dak-publication-poc.js` | CSS taken; rest rejected (mocked data, invented page numbers) |
 | `generate-dak-faq-docs.js` | **Generator rejected; question catalog and the Question/Result/CacheHint contract taken** |
 | `bpmn-to-svg.js` | Still worth comparing — jsdom versus the Chromium route now in use |
+
+### 12.23 The component list pinned, and DAK-ness made a declaration
+
+`sgex` has no skills directory — verified against `origin/HEAD` at `d8288af`,
+still the tip, frozen since 2025-10-25. What it has instead is
+`.github/copilot-instructions.md`, 608 lines of agent guidance, and two things
+in it belong here.
+
+#### The nine components, and why sources disagree
+
+The file contains **two different component lists that do not agree with each
+other**. A heading claims "The 8 Core DAK Components" and lists artefact types
+(Business Processes, Decision Support Logic, Indicators, Data Entry Forms,
+Terminology, FHIR Profiles, FHIR Extensions, Test Data) — a mix of L2 and L3
+that is not WHO's list at all. Directly beneath it, a *Component
+Representations* table gives the eight real components with their L2 and L3
+forms.
+
+The discrepancy with the FAQ catalog's nine has a plain cause: **test scenarios
+is a later addition.** WHO publishes eight components; the ninth came after
+`sgex` was written. Anything counting components against an older source is off
+by one, silently.
+
+So the list is now pinned in code rather than recited, with WHO's own wording
+and the publications it comes from:
+
+```ts
+export const DAK_COMPONENTS = [
+  "health-interventions-and-recommendations",
+  "generic-personas",
+  "user-scenarios",
+  "generic-business-processes-and-workflows",
+  "core-data-elements",
+  "decision-support-logic",
+  "programme-indicators",
+  "functional-and-non-functional-requirements",
+  "test-scenarios",   // added after the original eight
+] as const;
+```
+
+`DAK_COMPONENT_KINDS` maps each to the block kinds representing it. The mapping
+is deliberately not one-to-one: requirements is one WHO component whose own name
+is a conjunction and which splits into two kinds; decision-support logic gains
+`scheduling-logic`; core data elements collects `structure-map` alongside the
+profiles. Tests assert every kind lands in exactly one component, so a new kind
+cannot be added without deciding what it represents.
+
+`sgex`'s representation table independently corroborates the L2→L3 pairing on
+every row it covers, and adds two details worth keeping: the L2 form of health
+interventions is **IRIS publications** (WHO's institutional repository), and the
+L2 form of core data elements is **OCL concepts** (Open Concept Lab).
+
+#### Two gaps, one sharper than reported
+
+`dakComponentsWithoutL2()` returns:
+
+```
+[ "health-interventions-and-recommendations", "test-scenarios" ]
+```
+
+- **Health interventions** has no kind at *either* layer — the only component of
+  which that is true. It is the L1 end of every `realises` edge, so that edge
+  currently points at a label the repo cannot represent, and nothing detects the
+  dangle.
+- **Test scenarios** does have `test-case`, but that sits in the L3 set as a
+  FHIR artefact. The L2 scenario — the narrative case a reviewer signs off — has
+  no kind. §12.22 reported this component as unrepresented; that was too strong,
+  and the distinction matters because L2 is what a DAK *is*.
+
+Both are asserted as they stand, not as aspirations: adding either kind fails
+the test and forces the documentation to move with the code.
+
+#### DAK-ness is now a declaration, not an inference
+
+`copilot-instructions.md` opens with a **NO HEURISTICS POLICY** — no inferring
+type from naming conventions, no fallback detection, no "if X looks like Y treat
+it as Y", fail loudly instead. That is the same discipline as this repo's
+integration contract (§5: *absent tool ⇒ n/a, never a false pass*), and applying
+it exposed a hole.
+
+The same file states the DAK test mechanically: a repository is a DAK **iff** its
+root `sushi-config.yaml` declares a dependency on `smart.who.int.base`.
+`dak-pdf.ts` implemented no such check — it read a title and rendered any
+directory handed to it as a Digital Adaptation Kit.
+
+`dakIdentity()` now decides it explicitly, and carries the pinned version:
+
+| Repository | Result |
+|---|---|
+| `smart-dak-immz` | DAK, `smart.who.int.base: current` |
+| `smart-dak-bds` | DAK, `smart.who.int.base: current` |
+| `smart-immunizations` | DAK, `smart.who.int.base: 0.2.0` |
+| `folio-assistant` | not a DAK — *no sushi-config.yaml in the repository root* |
+
+3/3 real WHO repositories identified; the platform repo correctly rejected. A
+directory that never declared itself is still rendered — refusing would be less
+useful — but its cover says so in place of the "Digital Adaptation Kit" line,
+because whoever reads the PDF is the one who would otherwise be misled. A test
+builds the structural lookalike (`input/business-processes/`,
+`input/dictionary/`, no config) and asserts it is *not* a DAK: that is precisely
+what a naming heuristic would have accepted.
+
+Reading `sushi-config.yaml` as YAML also retires the `/^title:/m` regex beside
+it. That regex was not producing wrong titles on any repository in hand — the
+honest claim is narrower: the same parse was already required for the dependency
+check, so the regex was a second, weaker reader of a file already being read
+properly.
+
+#### Still worth pulling from `sgex`'s guidance
+
+Not yet acted on, and listed so it is not lost: `DAK_LOGICAL_MODEL_UPDATE_PLAN.md`
+(1,668 lines) and `docs/dak-publication-software-architecture.md` (457 lines) are
+the two remaining substantial DAK documents. Given §12.21's and §12.22's
+results, both should be read before anything in them is believed.
