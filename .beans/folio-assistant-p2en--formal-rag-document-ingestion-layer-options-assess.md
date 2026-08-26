@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T18:00:00Z
+updated_at: 2026-08-26T18:40:00Z
 ---
 
 
@@ -354,3 +354,38 @@ Reported, not repaired; another repo's content is its own call.
 856 pass / 0 fail, typecheck + lint clean.
 
 **Still open:** MCP handlers untested; no DAK corpus to exercise the dak axes.
+
+## Ingest writer landed; graph closed (§12.12)
+
+`gen-library-jsonld.ts`. Real run: 443 docs → **435 ingested, 16,669 blocks**.
+Combined graph **29,780 nodes / 85,016 edges, 0 malformed** (3,550 authored +
+26,230 ingested). §1's retrieval gap is closed — the extracted corpus is now
+queryable, not just greppable.
+
+Model as decided: blocks own files, a section is an ordered manifest of block
+refs and carries no text. Section prose becomes one `prose` block pointing at
+the EXISTING `sections/<sid>.md` — no copy, so 24.7M chars stay where the
+corpus-grep checklist looks. Extraction is incremental: better extractors turn
+prose into typed blocks without changing any section's @id.
+
+Attribution kept sharp: every node `provenance: "ingested"` + `sourceDocument`,
+and the extractor's own disposition string ("proposals only … nothing here is
+folio content") carried verbatim onto the manifest rather than paraphrased.
+
+**Two more real-run findings:**
+- `searchGraph`'s 400-file text cap was 6x too tight AND biased: a full scan of
+  20,191 files takes 1.6s and finds 322 matches vs 55, and iteration hits
+  authored nodes first so the ingested population — the whole reason full-text
+  search exists — was never scanned. Default now 50,000.
+- MCP handlers were in a nested function inside a request handler, covered by
+  tsc and nothing else — exactly where §12.11's two defects hid, both of which
+  typechecked. Extracted to `adapters/mcp-server/tools/graph.ts`, now driven by
+  14 tests and verified against the real corpus. One behaviour change: an
+  unknown edge term was silently filtered (answering a narrower question than
+  asked); now reported.
+
+888 pass / 0 fail, typecheck + lint clean. CI gate + npm scripts extended.
+
+**Still open:** the five dak axes have never run on real content (no DAK corpus
+exists); 33 dangling refs are qou content defects; promotion library→content
+remains manual by design.

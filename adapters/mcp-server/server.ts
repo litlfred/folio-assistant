@@ -40,14 +40,7 @@ import { registerPreferenceTools } from "./tools/preferences.js";
 import { registerLeanTools } from "./tools/lean.js";
 import { registerDepsTools } from "./tools/check-deps.js";
 import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT, LIBRARY_DIR } from "./paths.js";
-import {
-  loadGraphIndex,
-  searchGraph,
-  neighbors,
-  graphStats,
-  type GraphIndex,
-} from "../../content/pipeline/graph-index.js";
-import { GRAPH_EDGE_TERMS, type GraphEdgeTerm } from "../../schemas/jsonld.js";
+import { executeGraphTool } from "./tools/graph.js";
 import {
   currentBranch, listBranches, fetchOrigin, isCurrentBranch,
   readFileBranch, fileExistsBranch, importTsBranch, listDirBranch,
@@ -282,33 +275,11 @@ function listAllFeedback(status?: string): { paperId: string; rootName: string; 
 
 const CONTENT_DIR = resolve(REPO_ROOT, "content");
 
-/**
- * Cached JSON-LD graph index over `content/` and `library/`.
- *
- * Built lazily and reused, because a walk of every `.jsonld` on each tool call
- * would dominate the response time on a real corpus. The cache is therefore
- * *stale by design* between edits, which is fine for the read-only queries
- * these three tools serve and wrong for anything that must reflect an
- * in-flight edit — so `get_graph_stats` takes an explicit `refresh`, and any
- * future write path must call `invalidateGraphIndex()` rather than assume
- * freshness.
- */
-let graphIndexCache: GraphIndex | undefined;
-
-function getGraphIndex(refresh = false): GraphIndex {
-  if (refresh || !graphIndexCache) {
-    graphIndexCache = loadGraphIndex([
-      { name: "content", dir: CONTENT_DIR },
-      { name: "library", dir: LIBRARY_DIR },
-    ]);
-  }
-  return graphIndexCache;
-}
-
-/** Drop the cached index. Call after anything writes a `.jsonld`. */
-export function invalidateGraphIndex(): void {
-  graphIndexCache = undefined;
-}
+/** The two node populations the graph tools read. */
+const GRAPH_ROOTS = [
+  { name: "content", dir: CONTENT_DIR },
+  { name: "library", dir: LIBRARY_DIR },
+];
 import { leanPackageByName } from "../../schemas/lean-packages.js";
 import {
   blockCaption, blockExamples, blockLean, blockProofs, blockTex,
@@ -2604,34 +2575,13 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
               return JSON.stringify(matches);
             }
 
-            case "search_graph": {
-              const idx = getGraphIndex();
-              const result = searchGraph(idx, (input.query as string) || "", {
-                provenance: input.provenance as string | undefined,
-                searchText: input.searchText === true,
-                limit: typeof input.limit === "number" ? input.limit : 20,
-              });
-              return JSON.stringify(result);
-            }
-
-            case "get_neighbors": {
-              const idx = getGraphIndex();
-              const rawEdges = input.edges;
-              return JSON.stringify(
-                neighbors(idx, (input.id as string) || "", {
-                  direction: input.direction as "out" | "in" | "both" | undefined,
-                  hops: typeof input.hops === "number" ? input.hops : undefined,
-                  edges: Array.isArray(rawEdges)
-                    ? (rawEdges.filter((e): e is GraphEdgeTerm =>
-                        (GRAPH_EDGE_TERMS as readonly string[]).includes(e as string),
-                      ) as GraphEdgeTerm[])
-                    : undefined,
-                }),
-              );
-            }
-
+            case "search_graph":
+            case "get_neighbors":
             case "get_graph_stats":
-              return JSON.stringify(graphStats(getGraphIndex(input.refresh === true)));
+              // Implemented in ./tools/graph.ts so the handlers are reachable
+              // from a test — this switch is inside a request handler and was
+              // covered by nothing but `tsc`.
+              return executeGraphTool(name, input, GRAPH_ROOTS)!;
 
             case "get_imports": {
               const uploadsDir = join(REPO_ROOT, "uploads");

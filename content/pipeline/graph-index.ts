@@ -217,7 +217,7 @@ export interface SearchOptions {
   limit?: number;
   /** Also scan companion Markdown. Off by default — it reads files. */
   searchText?: boolean;
-  /** Cap on companion files read in one search. */
+  /** Cap on companion files read in one search. Default 50,000 — see note in searchGraph. */
   maxTextFiles?: number;
 }
 
@@ -235,7 +235,14 @@ export function searchGraph(
 ): SearchResult {
   const q = query.trim().toLowerCase();
   const limit = opts.limit ?? 20;
-  const maxTextFiles = opts.maxTextFiles ?? 400;
+  // Measured on qou: scanning all 20,191 companion files takes 1.6 s and
+  // finds 322 matches for "Reidemeister"; the 400-file cap this replaces
+  // found 55. It cost 6x the recall to save nothing, and worse, it was
+  // *biased* — iteration reaches authored nodes first, so the ingested
+  // population, which is the whole reason full-text search exists here, was
+  // never scanned at all. The cap remains as a backstop against a
+  // pathological tree, set well above any real corpus.
+  const maxTextFiles = opts.maxTextFiles ?? 50_000;
 
   const hits: SearchHit[] = [];
   let totalMatches = 0;

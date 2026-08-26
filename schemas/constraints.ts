@@ -283,8 +283,15 @@ export function isCrossPaperRef(label: string): boolean {
 
 // ── Label patterns ───────────────────────────────────────────────
 
-/** Label prefix must match object kind. */
-const LABEL_PREFIXES: Record<string, string> = {
+/**
+ * Label prefix must match object kind.
+ *
+ * Exported because the ingest writer mints block ids for extracted content and
+ * must use the same prefixes an author would — a fourth hand-written copy is
+ * how `alg:` came to be missing from `KNOWN_LABEL_PREFIXES` for as long as it
+ * was.
+ */
+export const LABEL_PREFIXES: Record<string, string> = {
   definition: "def:",
   theorem: "thm:",
   lemma: "lem:",

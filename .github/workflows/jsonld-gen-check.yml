@@ -25,6 +25,9 @@ on:
       - 'schemas/constraints.ts'
       - 'schemas/block-kinds.ts'
       - 'content/pipeline/gen-block-jsonld.ts'
+      - 'content/pipeline/gen-library-jsonld.ts'
+      - 'library/**/structure.json'
+      - 'library/**/candidates.json'
       - 'scripts/gen-jsonld-context.ts'
       - 'ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
@@ -36,6 +39,9 @@ on:
       - 'schemas/constraints.ts'
       - 'schemas/block-kinds.ts'
       - 'content/pipeline/gen-block-jsonld.ts'
+      - 'content/pipeline/gen-library-jsonld.ts'
+      - 'library/**/structure.json'
+      - 'library/**/candidates.json'
       - 'scripts/gen-jsonld-context.ts'
       - 'ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
@@ -70,7 +76,16 @@ jobs:
       - name: Block siblings in sync
         run: bun run content/pipeline/gen-block-jsonld.ts --check
 
+      # Ingested documents. Same gate, other population: `library/**` nodes are
+      # generated from structure.json + candidates.json, so a hand-edit or a
+      # re-run of Stage A/B without regenerating leaves the graph describing a
+      # document that no longer exists in that shape.
+      - name: Library nodes in sync
+        run: bun run content/pipeline/gen-library-jsonld.ts --check
+
       - name: Label resolution + emitter tests
         run: |
           bun test scripts/tests/jsonld-label-resolution.test.ts \
-                   scripts/tests/gen-block-jsonld.test.ts
+                   scripts/tests/gen-block-jsonld.test.ts \
+                   scripts/tests/gen-library-jsonld.test.ts \
+                   scripts/tests/mcp-graph-tools.test.ts

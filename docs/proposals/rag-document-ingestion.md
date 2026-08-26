@@ -1119,3 +1119,71 @@ repo's content is that repo's call.
 
 The MCP tool handlers remain typechecked but undriven by any test, and no DAK
 corpus exists yet to exercise the `dak` axes against.
+
+### 12.12 The ingest writer, and the graph closed
+
+`gen-library-jsonld.ts` turns Stage A/B artefacts into graph nodes. Run against
+the real corpus — 443 documents, 435 with Stage A output:
+
+| | Result |
+|---|---|
+| Documents ingested | **435** (8 skipped, no `structure.json` — reported, not counted as empty) |
+| Blocks emitted | **16,669** |
+| **One graph** | **29,780 nodes · 85,016 edges · 0 malformed** |
+| Split | 3,550 authored · 26,230 ingested |
+
+That is §1's gap closed. Retrieval was `grep` plus an agent reading a whole PDF
+into context; the extracted corpus was reachable by `grep` alone and MCP was
+write-only toward it. It is now one graph, queryable by either population:
+
+```
+search_graph  "Seifert surface", provenance: ingested   → 61 matches, with snippets
+get_neighbors "def:quantum-universe", direction: in     → 25 dependents
+get_graph_stats                                          → 29,780 / 85,016
+```
+
+#### Blocks own the files; a section is a manifest
+
+A section node carries no text — its `contains` is an **ordered** list of block
+ids. The section's prose becomes one `prose` block whose `text` points at the
+*existing* `sections/<sid>.md`, so nothing is copied and the 24.7 M characters
+stay exactly where the corpus-grep checklist already looks.
+
+Extraction is therefore incremental: whatever Stage B recognises becomes a
+typed block, the rest stays prose, and as extractors improve prose shrinks
+without any section's `@id` changing.
+
+#### Attribution, kept sharp
+
+`candidates.json` says of itself *"proposals only … nothing here is folio
+content and nothing here creates Lean"*. Every emitted node carries
+`provenance: "ingested"` and an attribution to its source document, and the
+extractor's disposition string is carried **verbatim** onto the manifest rather
+than paraphrased. A query can always separate *what this paper claims* from
+*what the folio claims*; promotion into `content/` stays the deliberate act
+`document-intake` Stage 4 describes.
+
+#### Two more things the real run found
+
+**The text-scan cap was 6× too tight, and biased.** `searchGraph` defaulted to
+400 companion files. Measured: scanning all 20,191 takes **1.6 s** and finds
+322 matches for "Reidemeister" where the cap found 55. Worse, iteration reaches
+authored nodes first, so the ingested population — the entire reason full-text
+search exists here — was never scanned. Default is now 50,000, a backstop
+rather than a budget.
+
+**The MCP handlers were untestable, and that was the pattern.** They lived in a
+nested function inside a request handler, covered by `tsc` and nothing else —
+which is precisely where §12.11's two defects were hiding, both of which
+typechecked. They now live in `adapters/mcp-server/tools/graph.ts` and are
+driven directly by tests, including against the real corpus. One behaviour
+changed while extracting: an unknown edge term was silently filtered out, which
+answers a narrower question than the caller asked; it is now reported.
+
+#### What remains
+
+- The five `dak` axes have **never run against real content** — no DAK corpus
+  exists to point them at.
+- The 33 dangling references in qou are content defects there, reported and
+  unrepaired.
+- Promotion (`library/` node → `content/` block) is still manual, as designed.
