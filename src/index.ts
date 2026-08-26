@@ -61,6 +61,19 @@ if (args.includes("--check-deps")) {
       if (d.required) missingReq++;
     }
   }
+  // Declared capability probes. These are a separate mechanism from the list
+  // above — `.claude/skills/capabilities/*.json` is what skills declare
+  // `requiredCapabilities` against — and until now nothing executed them, so a
+  // skill's prerequisite could be missing with no way to find out. The two
+  // hardcoded lists remain (here and in src/tools/check-deps.ts); unifying
+  // them is a separate change.
+  const { loadCapabilities, probeAll, formatCapabilityReport } = await import("./tools/capabilities.js");
+  const caps = loadCapabilities(resolve(import.meta.dir, ".."));
+  if (caps.length) {
+    console.log("\nDeclared capabilities (.claude/skills/capabilities/):\n");
+    console.log(formatCapabilityReport(probeAll(caps)));
+  }
+
   console.log(missingReq > 0
     ? `\n⚠  ${missingReq} required dep(s) missing!\n`
     : `\n✓  All required deps present.\n`);

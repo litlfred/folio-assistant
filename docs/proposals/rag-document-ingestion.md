@@ -1477,19 +1477,67 @@ stamps `prov:generatedAtTime`, which is a stronger generated-artefact signal
 than the source-comment marker `isGeneratedArtefact` currently keys on, and
 worth preferring where present.
 
-#### Recommended migration order
+#### Correction: do not migrate — load
 
-Not attempted here — 24,775 lines is a programme, and the entry point is the
-author's call. But the order the evidence suggests:
+The migration order this section originally proposed was wrong, and the author
+corrected it: **the scripts are needed where they are.** The DAK repositories'
+own GitHub Actions invoke them, so `smart-base` stays their authoritative home.
+Vendoring copies into this platform would produce exactly the second, drifting
+copy §2c argues against — this time of a toolchain rather than a corpus.
 
-1. **`bpmn2fhirfsh.xsl` and `dmn2html.xslt`** — smallest, already
-   target-direction, and they prove the render chain end to end.
-2. **`generate_*_schemas` and `generate_jsonld_vocabularies`** — align with the
-   `@context` this branch already publishes, given the IRIs match.
-3. **The extractors** — they pair with `gen-library-jsonld.ts`, which does the
-   same job for papers.
-4. **The translation subsystem** — largest, and needs the representation axis
-   decided first.
+The real need is the opposite: folio-assistant should **load** from smart-base,
+and package what it finds as **agentic skills**.
 
-IG build/CI scripts should probably stay in the IG repos: they orchestrate the
-publisher, not the content.
+That is the mechanism this repo already has, and §5's integration contract is
+its statement:
+
+```
+capability probe   .claude/skills/capabilities/smart-base.json
+       ↓           (detection + `requires`, resolved from SMART_BASE_HOME)
+skill              .claude/skills/local/smart-base-tools.json
+       ↓           (requiredCapabilities + degradation)
+absent ⇒ n/a, never a false pass
+```
+
+Both are added. The capability resolves `SMART_BASE_HOME`, defaulting to
+`/opt/smart-base`, and requires `python3`; the skill declares it with
+`degradation: "skip"`, so a session without a checkout degrades honestly rather
+than reporting a clean run over a toolchain it never had.
+
+#### A gap this exposed: nothing ran the probes
+
+`.claude/skills/capabilities/*.json` has always declared *how* to detect each
+tool, and **nothing executed them.** `--check-deps` carried its own hardcoded
+list, and `src/tools/check-deps.ts` carried a second. So the probes were
+documentation, and a skill's `requiredCapabilities` had nothing to check
+against.
+
+That is not a tidiness problem. §5's contract rests on *absent tool ⇒ `n/a`,
+never a false pass* — a document nobody parsed must not read as a document with
+nothing in it. An unexecuted probe cannot deliver that.
+
+`src/tools/capabilities.ts` now executes them, resolving `requires` first, and
+`--check-deps` reports both mechanisms. The `requires` resolution earns its
+place immediately: against this container it distinguishes
+
+```
+○ lean-atlas    — requires lean-toolchain
+○ plantuml      — requires graphviz
+○ smart-base    — probe failed
+```
+
+from a bare failure, and those call for different fixes. A dependent's own
+probe is deliberately **not** run when a prerequisite is unmet — it would
+either fail confusingly or succeed and hide the break.
+
+The two hardcoded lists remain. Unifying them is a separate change with its own
+blast radius, and `--check-deps` now says which mechanism each line comes from.
+
+#### What to package next
+
+Skills wrapping the target-direction scripts, in the order the evidence
+suggests — `bpmn2fhirfsh.xsl` and `dmn2html.xslt` first, since they are the
+smallest and already render rather than extract, then the `generate_*` family
+whose JSON-LD `@context` already shares this branch's `prov` and `fhir` IRIs.
+The IG build and CI scripts want no skill at all: they orchestrate the
+publisher, and GitHub Actions is their caller.

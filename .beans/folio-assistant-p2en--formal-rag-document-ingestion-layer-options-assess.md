@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T20:30:00Z
+updated_at: 2026-08-26T21:00:00Z
 ---
 
 
@@ -544,3 +544,39 @@ isGeneratedArtefact keys on; worth preferring where present.
 XSLT pair first (smallest, proves the chain) → generate_* schemas/jsonld (IRIs
 already align) → extractors (pair with gen-library-jsonld) → translation
 (largest, needs the representation axis decided first).
+
+## Correction: load smart-base, don't migrate it
+
+Author corrected my §12.16 migration recommendation: the scripts are **needed
+where they are** — the DAK repos' GitHub Actions invoke them. Vendoring copies
+would be the second drifting copy §2c argues against, this time of a toolchain.
+Real need: folio-assistant LOADS from smart-base, and packages what it finds as
+agentic skills.
+
+Added, using the mechanism the repo already has:
+- `.claude/skills/capabilities/smart-base.json` — resolves SMART_BASE_HOME
+  (default /opt/smart-base), requires python3
+- `.claude/skills/local/smart-base-tools.json` — degradation "skip"
+- registered in the authoring-who-smart-guidelines package manifest
+Both validate against CapabilityDefinitionSchema / SkillDefinitionSchema.
+
+**Gap this exposed:** `.claude/skills/capabilities/*.json` declared HOW to
+detect every tool and **nothing ever executed them**. `--check-deps` had its own
+hardcoded list; `src/tools/check-deps.ts` a second. So probes were documentation
+and skills' `requiredCapabilities` had nothing to check against — which breaks
+§5's "absent tool ⇒ n/a, never a false pass", since an unexecuted probe can't
+deliver it.
+
+Built `src/tools/capabilities.ts` (loader + probe + requires resolution) and
+wired it into `--check-deps`. The requires resolution pays immediately: reports
+`lean-atlas — requires lean-toolchain` and `plantuml — requires graphviz`
+distinctly from a bare probe failure; those need different fixes. A dependent's
+own probe is NOT run when a prerequisite is unmet (would fail confusingly or
+succeed and hide the break). Verified smart-base flips ○→✓ with
+SMART_BASE_HOME set to the real checkout.
+
+**Not done:** the two hardcoded dep lists remain; unifying them is a separate
+change with its own blast radius. --check-deps now labels which mechanism each
+line comes from.
+
+913 pass / 0 fail, typecheck + lint clean.
