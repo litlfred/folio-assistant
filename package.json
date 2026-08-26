@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "description": "Content-agnostic assistant platform \u2014 MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
+  "description": "Content-agnostic assistant platform — MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -46,6 +46,8 @@
     "test:e2e": "playwright test",
     "test": "bun test",
     "lint": "eslint .",
+    "render:bpmn": "bun run scripts/render-bpmn.ts",
+    "render:bpmn:check": "bun run scripts/render-bpmn.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
@@ -68,6 +70,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
+    "bpmn-js": "^18.25.1",
     "bun-types": "latest",
     "csl-json": "^0.1.0",
     "eslint": "^10.8.0",

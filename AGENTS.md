@@ -152,6 +152,14 @@ a background subagent, not the foreground.
 - Lean tooling roadmap (Lean Atlas / Compass, Nazrin, refactor cluster,
   LeanDojo) — where each earns a place and how it wires into existing skills:
   `docs/proposals/llm-authoring-tool-integration.md`.
+- **The editing and publication processes, as BPMN swimlanes** —
+  `docs/publication-workflow.md`, sources in `docs/workflows/*.bpmn`. Read it
+  before changing how a proposed edit is validated, who approves what, or where
+  beans are claimed: it is the normative picture of the HCI validation gate
+  (mechanical + non-mechanical), the draft-review-publish path, and the work-plan
+  lane. Each activity carries a `<folio:skill ref="…"/>` extension naming the
+  skill that implements it. Regenerate the SVGs with `bun run render:bpmn` after
+  editing a `.bpmn`; `bun run render:bpmn:check` fails if they are stale.
 - Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this

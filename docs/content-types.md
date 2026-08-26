@@ -47,6 +47,15 @@ The lifecycle stages are the same regardless of content type — what differs is
 the *authoring* skills and the *artifacts* each type produces. For the full list
 of skills and the roles that drive them, see **[Skills & roles](skills.html)**.
 
+> **This strip is the summary, not the process.** It flattens two things worth
+> seeing: `author` and `validate` are not consecutive phases but a *loop* — every
+> proposed change runs the HCI validation gate, and the editor sees the findings
+> before anything is committed — and `review` happens twice, once per change and
+> once over the assembled draft. The
+> **[publication workflow](publication-workflow.html)** models all of it as BPMN
+> swimlane diagrams, with the roles, the mechanical / non-mechanical split, and
+> the shared work plan (beans) that tracks what is done and what is next.
+
 ---
 
 ## Scientific papers & books

@@ -46,6 +46,12 @@ flowchart LR
 > [docs site](https://litlfred.github.io/folio-assistant/) and in Mermaid-aware
 > viewers). On GitHub itself, use the clickable map below.
 
+> **How a change actually gets published** — the editing and publication
+> processes as BPMN swimlane diagrams (the HCI validation gate, mechanical vs
+> non-mechanical review, who signs off, and the shared work plan):
+> **[Publication workflow](https://litlfred.github.io/folio-assistant/publication-workflow.html)**
+> (sources: [`docs/workflows/*.bpmn`](docs/workflows)).
+
 | Content type | Artifacts | Skill package |
 |--------------|-----------|---------------|
 | **Scientific papers & books** | Lean 4 + LaTeX/Markdown | `authoring-math` |

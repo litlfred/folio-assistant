@@ -23,6 +23,7 @@ on:
       - 'docs/**'
       - 'schemas/**'
       - 'scripts/gen-schema-docs.ts'
+      - 'scripts/render-bpmn.ts'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -51,6 +52,14 @@ jobs:
 
       - name: Regenerate skill instruction pages
         run: bun run scripts/gen-skill-docs.ts
+
+      # The BPMN sources under docs/workflows/ are the source of truth; the SVGs
+      # the workflow pages embed are rendered from them with bpmn-js in headless
+      # Chromium, so the published site can never show a stale diagram.
+      - name: Render BPMN workflow diagrams
+        run: |
+          npx --yes playwright install --with-deps chromium
+          bun run render:bpmn
 
       # Build the Jekyll site from docs/ using the github-pages gem
       # (whitelists jekyll-remote-theme, so just-the-docs works).
