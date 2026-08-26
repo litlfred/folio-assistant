@@ -1541,3 +1541,53 @@ smallest and already render rather than extract, then the `generate_*` family
 whose JSON-LD `@context` already shares this branch's `prov` and `fhir` IRIs.
 The IG build and CI scripts want no skill at all: they orchestrate the
 publisher, and GitHub Actions is their caller.
+
+### 12.17 The first smart-base-backed skill, and the render arrow proven
+
+`smart-base-tools` wraps the two XSLT transforms, loading them from a checkout
+rather than vendoring them. Run against real WHO content:
+
+| | Result |
+|---|---|
+| Inputs | 8 real WHO `.bpmn` (`smart-dak-immz`) |
+| Emitted | **313 FSH files, 0 failures** |
+| Distinct paths | **201** |
+| Collisions | **112**, all named on stderr |
+
+That is the render arrow working end to end for the first time: an authored
+source artefact (BPMN) producing a published representation (FSH). It is the
+smallest existence proof that §12.15's direction is buildable, and it is WHO's
+own stylesheet doing the work.
+
+#### Three things the real run taught the wrapper
+
+**The output is an envelope, not a document.** `bpmn2fhirfsh.xsl` emits
+`<files><file name="…">…</file>…</files>`, one entry per artefact — 157 of them
+for `IMMZ.D.Administer Vaccine` alone. A wrapper that treated the result as a
+single document would have written one file and lost 156.
+
+**Do not serialise and re-parse.** One real process emits FSH text containing an
+`xsl:`-prefixed attribute that is well-formed inside the result tree and not
+well-formed once round-tripped through a string — `XMLSyntaxError: Namespace
+prefix xsl on attribute is not defined`. lxml hands back an already-parsed
+tree; the wrapper reads that and never re-parses.
+
+**Outputs collide.** 313 emitted at 201 distinct paths, because shared actors
+and two near-duplicate copies of one process name the same files. Silently
+overwriting would report 313 successes and leave 201 files — quiet arithmetic
+of exactly the kind this work keeps finding. Every collision is now counted and
+named, so a reader decides whether it is a duplicate input to remove or two
+processes legitimately contributing the same actor.
+
+#### Degradation, checked both ways
+
+Without a checkout, `--check` exits non-zero and names `SMART_BASE_HOME`; a
+transform attempt exits 3 and says why. Neither reports a clean run. That is
+the §5 contract — absent tool ⇒ `n/a`, never a false pass — reaching the
+toolchain layer, and it is what the capability probe added in the previous
+commit now actually enforces.
+
+#### Not wrapped
+
+The extractors, the `generate_*` family and the translation subsystem. The IG
+build and CI scripts want no skill at all: GitHub Actions is their caller.

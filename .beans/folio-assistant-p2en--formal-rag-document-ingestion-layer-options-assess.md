@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T21:00:00Z
+updated_at: 2026-08-26T21:30:00Z
 ---
 
 
@@ -580,3 +580,30 @@ change with its own blast radius. --check-deps now labels which mechanism each
 line comes from.
 
 913 pass / 0 fail, typecheck + lint clean.
+
+## First smart-base-backed skill — render arrow proven (§12.17)
+
+`smart-base-tools` skill + `scripts/smart-base-transform.py` wrapping the two
+XSLT transforms, loaded from SMART_BASE_HOME, never vendored.
+
+**Real run: 8 WHO .bpmn → 313 FSH files, 0 failures, 201 distinct paths, 112
+collisions.** First time the render arrow (authored source → published
+representation) works end to end, using WHO's own stylesheet.
+
+Three things the real run taught the wrapper:
+1. Output is an ENVELOPE not a document — `<files><file name=…>` — 157 entries
+   for IMMZ.D alone. Treating it as one document would have lost 156.
+2. Don't serialise+re-parse: one real process emits FSH containing an
+   `xsl:`-prefixed attribute that is well-formed in the result tree and NOT
+   well-formed round-tripped through a string. Use lxml's parsed tree directly.
+3. Outputs collide: 313 → 201 distinct paths (shared actors, two near-duplicate
+   copies of one process). Silent overwrite would report 313 successes and leave
+   201 files. Now counted and named on stderr.
+
+Degradation verified both ways: no checkout → --check exits non-zero naming
+SMART_BASE_HOME; transform exits 3 with reasons; neither claims success. That's
+§5's contract reaching the toolchain layer, enforced by the capability probe
+from the previous commit.
+
+913 pass / 0 fail (TS) + 16 python checks. Not wrapped: extractors, generate_*
+family, translation subsystem. IG build/CI want no skill — Actions is caller.
