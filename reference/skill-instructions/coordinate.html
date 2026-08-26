@@ -1,0 +1,1353 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(5)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(5) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(5) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(5) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>/coordinate | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="/coordinate" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/coordinate.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/coordinate.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="/coordinate" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"/coordinate","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/coordinate.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>/coordinate</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/coordinate.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/coordinate.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="coordinate--multi-agent--multi-pr-coordination">
+  
+  
+    <a href="#coordinate--multi-agent--multi-pr-coordination" class="anchor-heading" aria-labelledby="coordinate--multi-agent--multi-pr-coordination"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> /coordinate — multi-agent / multi-PR coordination
+  
+  
+</h1>
+    
+
+<p>When several Claude branches are converging on the same long-term goal
+(e.g. “reach the precision target”, “close all violators of a rule”,
+“infrastructure overhaul”), each agent has only its own
+context.  Without coordination they will:</p>
+
+<ul>
+  <li>duplicate work (two agents both implementing the same helper),</li>
+  <li>silently diverge (one renames a symbol, another keeps the old name,
+the merge conflicts),</li>
+  <li>miss cherry-picks (one agent already wrote the template
+the others need),</li>
+  <li>accept inconsistent findings without flagging them to the author,</li>
+  <li>accept review-tool feedback without checking it against the actual
+artifact / sibling PR’s framing (e.g. accepting an off-by-one “fix”
+that contradicts a definition another PR is also using),</li>
+  <li>miss new sibling PRs that opened mid-session (new branches landing
+on <code class="language-plaintext highlighter-rouge">main</code> with overlapping scope).</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">/coordinate</code> is the protocol that prevents this.  None of the agents
+has all the answers; they look to the author for clarification on
+inconsistencies, and they cherry-pick from each other.</p>
+<h2 id="workflow-rule-reminder-from-agentsmd-branch--pr-workflow">
+  
+  
+    <a href="#workflow-rule-reminder-from-agentsmd-branch--pr-workflow" class="anchor-heading" aria-labelledby="workflow-rule-reminder-from-agentsmd-branch--pr-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow rule reminder (from AGENTS.md §Branch + PR workflow)
+  
+  
+</h2>
+    
+
+<p>This skill assumes you’ve already created a branch + opened a PR for
+the work tranche being coordinated. Per AGENTS.md (STRICT, supersedes
+default “no auto-PR” guidance for this repo): <strong>always create a
+branch and open a PR at the start of every work tranche</strong> — ASAP, and
+<strong>never ask the user “want me to open the PR?”</strong> Branch + PR creation
+is pre-authorized; the only git action needing explicit permission is
+the <em>merge</em>. Commit early, commit often. Small structured commits
+cherry-pick cleanly; big mixed commits do not. Exception:
+integration-watcher batch audit-job sweeps may use a single bulk
+commit.</p>
+<h2 id="when-to-invoke">
+  
+  
+    <a href="#when-to-invoke" class="anchor-heading" aria-labelledby="when-to-invoke"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to invoke
+  
+  
+</h2>
+    
+
+<ul>
+  <li>Start of a session where the user mentioned <strong>other branches/PRs</strong>
+by name (e.g. “coordinate with <code class="language-plaintext highlighter-rouge">claude/foo</code> and <code class="language-plaintext highlighter-rouge">claude/bar</code>”).</li>
+  <li>Whenever you start a new substantive task in a multi-PR effort —
+before making code changes, post intent on the relevant PRs.</li>
+  <li>When you finish a substantive task — post progress + concrete
+cherry-pickable artefacts (file paths, function names, templates,
+fixtures).</li>
+  <li><strong>Periodic triage between substantive commits</strong> (§7) — even with no
+external trigger, sibling PRs may have landed commits or comments
+that change your scope.  Run a quick triage every ~3–5 commits or
+when you finish a task and pick up the next one.</li>
+  <li><strong>When <code class="language-plaintext highlighter-rouge">main</code> lands new commits</strong> during your session — if any
+touch the same files, blocks, or scripts you
+are editing, treat as a sibling PR for §3 classification purposes.</li>
+  <li><strong>When a code-review comment lands on your own PR</strong> (gemini-code-
+assist, copilot-pull-request-reviewer, codex, or human reviewers)
+— see §5 <em>Responding to review comments</em>.</li>
+  <li>When you encounter a <strong>finding that contradicts another PR’s
+framing</strong> — write the disagreement up explicitly, post it to both
+PRs, and tag the author for resolution.</li>
+</ul>
+<h2 id="inputs">
+  
+  
+    <a href="#inputs" class="anchor-heading" aria-labelledby="inputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs
+  
+  
+</h2>
+    
+
+<ul>
+  <li>The current PR number (your branch).</li>
+  <li>A list of sibling branch names or PR numbers (the user gives this,
+or read <code class="language-plaintext highlighter-rouge">gh pr list --label "in-flight"</code>).</li>
+  <li>The shared goal in 1–2 sentences.</li>
+</ul>
+<h2 id="protocol">
+  
+  
+    <a href="#protocol" class="anchor-heading" aria-labelledby="protocol"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Protocol
+  
+  
+</h2>
+    
+<h3 id="1--read-sibling-prs-first">
+  
+  
+    <a href="#1--read-sibling-prs-first" class="anchor-heading" aria-labelledby="1--read-sibling-prs-first"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1.  Read sibling PRs first
+  
+  
+</h3>
+    
+
+<p>For each sibling PR:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gh <span class="nb">pr </span>view &lt;N&gt; <span class="nt">--json</span> number,title,body,state,headRefName,updatedAt
+gh <span class="nb">pr </span>view &lt;N&gt; <span class="nt">--json</span> files <span class="nt">--jq</span> <span class="s1">'.files[].path'</span>
+</code></pre></div></div>
+
+<p>Use <code class="language-plaintext highlighter-rouge">gh</code>’s embedded <code class="language-plaintext highlighter-rouge">--jq</code> (don’t pipe to an external <code class="language-plaintext highlighter-rouge">jq</code>; it
+isn’t a guaranteed dependency in every Claude Code environment).
+Read the <strong>full</strong> file list, not a truncated head — partial scope
+maps cause silent overlaps later. File paths are cheap.</p>
+
+<p>Or via MCP: <code class="language-plaintext highlighter-rouge">mcp__github__list_pull_requests</code> /
+<code class="language-plaintext highlighter-rouge">mcp__github__pull_request_read</code> (with paginated <code class="language-plaintext highlighter-rouge">get_files</code>).</p>
+
+<p>Build a <strong>scope map</strong>: which PR owns which workplan phase,
+which files, which blocks, which scripts.</p>
+<h3 id="2--identify-three-relationships-per-sibling">
+  
+  
+    <a href="#2--identify-three-relationships-per-sibling" class="anchor-heading" aria-labelledby="2--identify-three-relationships-per-sibling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.  Identify three relationships per sibling
+  
+  
+</h3>
+    
+
+<p>For every sibling PR, classify yourself on three axes:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Axis</th>
+      <th>Values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Overlap</strong></td>
+      <td>none / additive (different files, same goal) / conflicting (same file or same block)</td>
+    </tr>
+    <tr>
+      <td><strong>Dependency</strong></td>
+      <td>independent / I depend on theirs / they depend on mine</td>
+    </tr>
+    <tr>
+      <td><strong>Cherry-pick opportunity</strong></td>
+      <td>none / I want X / they probably want Y</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>A sibling that is <code class="language-plaintext highlighter-rouge">(none, independent, none)</code> doesn’t need a
+coordination comment.  Anything else does.</p>
+<h4 id="2-bis--domain-contract-sync">
+  
+  
+    <a href="#2-bis--domain-contract-sync" class="anchor-heading" aria-labelledby="2-bis--domain-contract-sync"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2-bis.  Domain-contract sync
+  
+  
+</h4>
+    
+
+<p><strong>If your PR touches an algorithm, pipeline step, or data contract
+that the project documents as a <em>maintenance contract</em> (a doc whose
+<code class="language-plaintext highlighter-rouge">uses[]</code>, <code class="language-plaintext highlighter-rouge">computation.script</code>, <code class="language-plaintext highlighter-rouge">computation.witness</code>, and prose
+sections must stay in sync with the actual code), you MUST update the
+matching contract block in the same PR.</strong></p>
+
+<p>Such a contract is not a static document: reviewers diff it against
+the code change. When posting your intent comment on a sibling PR
+whose scope overlaps such a contract, name the contract block(s) you
+will touch alongside the script paths.</p>
+<h3 id="3--post-intent-before-working">
+  
+  
+    <a href="#3--post-intent-before-working" class="anchor-heading" aria-labelledby="3--post-intent-before-working"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.  Post intent before working
+  
+  
+</h3>
+    
+
+<p>Use <code class="language-plaintext highlighter-rouge">mcp__github__add_issue_comment</code> (or <code class="language-plaintext highlighter-rouge">gh pr comment</code>) on each
+sibling PR with non-trivial relationship.  Format:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## Coordination from #&lt;your PR&gt;</span>
+
+<span class="gs">**Picking up:**</span> <span class="nt">&lt;one</span> <span class="na">sentence</span> <span class="err">—</span> <span class="na">which</span> <span class="na">workplan</span> <span class="na">phase</span> <span class="err">/</span> <span class="na">task</span><span class="nt">&gt;</span>
+
+<span class="gs">**Scope confirmation:**</span>
+<span class="p">-</span> I will touch: <span class="sb">`path/to/file:line-range`</span>, <span class="sb">`path/to/other`</span>, …
+<span class="p">-</span> I will not touch: <span class="sb">`&lt;the sibling's territory&gt;`</span>
+
+<span class="gs">**Cherry-pick from you:**</span>
+<span class="p">-</span> <span class="nt">&lt;what</span> <span class="na">you</span> <span class="na">need</span> <span class="na">from</span> <span class="na">them</span><span class="err">;</span> <span class="na">e.g.</span> <span class="err">"</span><span class="na">the</span> <span class="na">template</span> <span class="na">you</span> <span class="na">used</span> <span class="na">for</span> <span class="err">`&lt;</span><span class="na">block</span><span class="nt">&gt;</span><span class="sb">`"&gt;
+
+**Cherry-pick for you:**
+- &lt;what you'll produce that they may want; e.g. "the reader for
+  `</span><span class="nt">&lt;artifact&gt;</span><span class="sb">` is the same shape they need for `</span><span class="nt">&lt;other</span> <span class="na">path</span><span class="nt">&gt;</span><span class="err">`</span>"&gt;
+
+<span class="gs">**Asks (small):**</span> <span class="nt">&lt;questions</span> <span class="na">they</span> <span class="na">can</span> <span class="na">answer</span> <span class="na">in</span> <span class="na">one</span> <span class="na">line</span><span class="nt">&gt;</span>
+
+<span class="gs">**Escalation to author:**</span> <span class="nt">&lt;if</span> <span class="na">any</span><span class="err">;</span> <span class="na">see</span> <span class="err">§6</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>Keep it short.  One ask per ask.  No prose.</p>
+<h3 id="4--post-progress-at-task-boundaries">
+  
+  
+    <a href="#4--post-progress-at-task-boundaries" class="anchor-heading" aria-labelledby="4--post-progress-at-task-boundaries"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.  Post progress at task boundaries
+  
+  
+</h3>
+    
+
+<p>When you commit something cherry-pickable, post a follow-up:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## Progress from #&lt;your PR&gt; · `&lt;short-task-name&gt;`</span>
+<span class="p">
+-</span> Landed in <span class="sb">`&lt;commit-sha&gt;`</span>: <span class="nt">&lt;one</span> <span class="na">sentence</span><span class="nt">&gt;</span>
+<span class="p">-</span> Cherry-pick file pointers: <span class="sb">`path/file.py:fn`</span>, <span class="sb">`path/file.lean:Decl`</span>
+<span class="p">-</span> Updated <span class="p">[</span><span class="nv">`&lt;your-audit-or-plan-doc&gt;.md`</span><span class="p">](</span><span class="sx">…</span><span class="p">)</span> §<span class="nt">&lt;section&gt;</span>: &lt;what
+  changed&gt; — and/or appended a row to
+  <span class="p">[</span><span class="nv">`docs/coordination/&lt;goal-slug&gt;.md`</span><span class="p">](</span><span class="sx">…</span><span class="p">)</span>
+<span class="p">-</span> Next: <span class="nt">&lt;next</span> <span class="na">task</span> <span class="na">on</span> <span class="na">your</span> <span class="na">queue</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>Cherry-pick file pointers are the load-bearing part — the sibling
+agent should be able to copy/cite without reading your whole diff.</p>
+<h3 id="5--responding-to-review-comments-on-your-own-pr">
+  
+  
+    <a href="#5--responding-to-review-comments-on-your-own-pr" class="anchor-heading" aria-labelledby="5--responding-to-review-comments-on-your-own-pr"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5.  Responding to review comments on your own PR
+  
+  
+</h3>
+    
+
+<p>Code-review tools (<code class="language-plaintext highlighter-rouge">gemini-code-assist[bot]</code>,
+<code class="language-plaintext highlighter-rouge">copilot-pull-request-reviewer[bot]</code>, <code class="language-plaintext highlighter-rouge">codex[bot]</code>) and human
+reviewers leave comments on your PR.  <strong>Do not silently accept or
+silently dismiss.</strong>  The same rules that govern cross-PR
+inconsistencies (§6) govern review feedback.</p>
+<h4 id="5a--triage-every-comment">
+  
+  
+    <a href="#5a--triage-every-comment" class="anchor-heading" aria-labelledby="5a--triage-every-comment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5a.  Triage every comment
+  
+  
+</h4>
+    
+
+<p>For each comment, assign one of four verdicts:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Verdict</th>
+      <th>When</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">accept</code></td>
+      <td>Suggestion is correct and small</td>
+      <td>Apply the fix in a single commit citing the comment URL; mark the thread resolved if the tooling permits.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">accept-with-modification</code></td>
+      <td>Intent is right but the suggested patch has its own issue (e.g. introduces a different off-by-one, or breaks a sibling-PR’s convention)</td>
+      <td>Apply a corrected version; reply on the thread with one paragraph explaining what you did and why the original suggestion needed adjusting (cite <code class="language-plaintext highlighter-rouge">file:line</code> where the divergence matters).</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">reject-with-reason</code></td>
+      <td>Finding is incorrect (mathematically, empirically, or by project convention)</td>
+      <td>Reply with the reasoning: cite the specific line, definition, or sibling-PR convention that contradicts the suggestion.  Never silent-dismiss.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">escalate</code></td>
+      <td>Finding is correct but would cross a sibling-PR’s territory, or two reviewers disagree, or the comment exposes an inconsistency in a sibling PR’s audit</td>
+      <td>See §6.  Reply with an <code class="language-plaintext highlighter-rouge">⚠️</code> flag and tag the author.</td>
+    </tr>
+  </tbody>
+</table></div>
+<h4 id="5b--verify-against-the-actual-artifact--code-before-replying">
+  
+  
+    <a href="#5b--verify-against-the-actual-artifact--code-before-replying" class="anchor-heading" aria-labelledby="5b--verify-against-the-actual-artifact--code-before-replying"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5b.  Verify against the actual artifact / code before replying
+  
+  
+</h4>
+    
+
+<p>Review-tool suggestions can be <strong>subtly wrong</strong>.  Common failure
+modes:</p>
+
+<ul>
+  <li><strong>Off-by-one fixes that flip-flop a convention</strong>: a reviewer
+proposes a boundary change without noticing context that makes
+the original correct.  Read the artifact, not just the suggested patch.</li>
+  <li><strong>Cross-PR convention conflicts</strong>: e.g. PR A names a field
+<code class="language-plaintext highlighter-rouge">active_set</code>, PR B names it <code class="language-plaintext highlighter-rouge">active_constraints</code>; a
+reviewer suggesting one without checking the other introduces
+a merge conflict downstream.  Check sibling PRs before applying.</li>
+  <li><strong>Hallucinated context</strong>: review tools sometimes reference PR
+numbers or comment IDs that don’t exist.  If the reviewer
+references a comment you didn’t write, treat it as a
+hallucination and ignore the cross-reference (but still
+evaluate the substantive content of the comment on its merits).</li>
+</ul>
+
+<p>If you can’t verify in &lt; 2 minutes, escalate (§6) rather than
+guess.</p>
+<h4 id="5c--post-one-consolidated-status-comment">
+  
+  
+    <a href="#5c--post-one-consolidated-status-comment" class="anchor-heading" aria-labelledby="5c--post-one-consolidated-status-comment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5c.  Post one consolidated status comment
+  
+  
+</h4>
+    
+
+<p>After triaging all threads from one review pass, post a <strong>single</strong>
+PR-level summary using <code class="language-plaintext highlighter-rouge">mcp__github__add_issue_comment</code>:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Thanks @<span class="nt">&lt;reviewer&gt;</span> — addressed all <span class="nt">&lt;N&gt;</span> threads in <span class="p">[</span><span class="nv">`&lt;sha&gt;`</span><span class="p">](</span><span class="nt">&lt;</span><span class="sx">commit-url</span><span class="nt">&gt;</span><span class="p">)</span>.
+
+| # | Issue | Verdict | Resolution |
+|---|---|---|---|
+| 1 | Off-by-one in index | accept | Fixed |
+| 2 | … | accept-with-modification | Fixed differently — see note below |
+| 3 | … | reject-with-reason | See reply on thread |
+| 4 | … | escalate | ⚠️ tagged @<span class="nt">&lt;author&gt;</span> |
+
+<span class="gs">**Re #2 (note):**</span> <span class="nt">&lt;short</span> <span class="na">paragraph</span> <span class="na">explaining</span> <span class="na">the</span> <span class="na">modification</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>This avoids per-thread reply storms while still giving a paper
+trail for every verdict.  Threads marked <code class="language-plaintext highlighter-rouge">accept</code> /
+<code class="language-plaintext highlighter-rouge">accept-with-modification</code> should be resolved (<code class="language-plaintext highlighter-rouge">mcp__github__resolve_review_thread</code>)
+once the reviewer acknowledges or after a one-day cooling period.</p>
+<h4 id="5d--when-the-reviewer-pushes-back">
+  
+  
+    <a href="#5d--when-the-reviewer-pushes-back" class="anchor-heading" aria-labelledby="5d--when-the-reviewer-pushes-back"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5d.  When the reviewer pushes back
+  
+  
+</h4>
+    
+
+<p>Code-review bots often respond to your reply.  Keep the dialogue
+<strong>short</strong> — re-state the reasoning or the sibling-PR convention once,
+ask for a yes/no on whether the reviewer agrees.  After the
+second exchange, escalate (§6).  Loops with bots burn cycles
+without converging.</p>
+<h3 id="6--inconsistent-findings--escalate-do-not-paper-over">
+  
+  
+    <a href="#6--inconsistent-findings--escalate-do-not-paper-over" class="anchor-heading" aria-labelledby="6--inconsistent-findings--escalate-do-not-paper-over"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6.  Inconsistent findings → escalate, do not paper over
+  
+  
+</h3>
+    
+
+<p>If a sibling PR’s finding contradicts yours — <strong>or</strong> if a code-review
+comment claims a fact that contradicts a sibling PR’s audit (§5a
+<code class="language-plaintext highlighter-rouge">escalate</code>) — do NOT silently change your framing.  Post on every
+affected PR:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## ⚠️ Inconsistent finding — author input requested</span>
+<span class="p">
+-</span> This PR's claim: <span class="nt">&lt;yours</span><span class="err">,</span> <span class="na">file_path:line</span> <span class="na">cited</span><span class="nt">&gt;</span>
+<span class="p">-</span> Sibling #<span class="nt">&lt;N&gt;</span>'s claim: <span class="nt">&lt;theirs</span><span class="err">,</span> <span class="na">file_path:line</span> <span class="na">cited</span><span class="nt">&gt;</span>  (or:
+  Reviewer's claim in <span class="nt">&lt;comment-url&gt;</span>)
+<span class="p">-</span> Likely cause: <span class="nt">&lt;best</span> <span class="na">guess</span><span class="err">,</span> <span class="err">≤</span> <span class="err">2</span> <span class="na">sentences</span><span class="nt">&gt;</span>
+<span class="p">-</span> Resolution requested: <span class="nt">&lt;which</span> <span class="na">framing</span> <span class="na">to</span> <span class="na">adopt</span> <span class="na">going</span> <span class="na">forward</span><span class="nt">&gt;</span>
+
+Tagging @<span class="nt">&lt;author&gt;</span>.  Will hold downstream work blocked on this.
+</code></pre></div></div>
+
+<p>The author owns the resolution.  Do not “split the difference” or
+guess.  Inconsistent findings — whether between sibling PRs, or
+between a reviewer and a sibling PR — are an audit flag.</p>
+
+<p><strong>Escalation rate-limit.</strong>  An author who wakes up to fifteen
+<code class="language-plaintext highlighter-rouge">@&lt;author&gt;</code> pings is a useless arbiter.  Batch-escalate when
+possible: one comment listing every disagreement found in a
+review pass, with a short table.</p>
+<h3 id="7--periodic-sibling-pr-triage">
+  
+  
+    <a href="#7--periodic-sibling-pr-triage" class="anchor-heading" aria-labelledby="7--periodic-sibling-pr-triage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7.  Periodic sibling-PR triage
+  
+  
+</h3>
+    
+
+<p>Sibling PRs land commits and comments while you work.  Without
+periodic triage you will:</p>
+
+<ul>
+  <li>duplicate a fix the sibling already landed,</li>
+  <li>miss a question they posted directing back at you,</li>
+  <li>accept a review-comment that contradicts a finding the sibling
+just published.</li>
+</ul>
+
+<p>Run a triage <strong>every 3–5 of your own commits</strong>, or whenever you
+finish one substantive task and pick up the next.  Format:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Sibling-PR triage report (&lt;your PR&gt;, &lt;timestamp&gt;)
+
+| PR | New comments | New commits | CI | Asks for me | Action |
+|----|:---:|:---:|:---:|---|---|
+| #564 | 6 | 8 | ✅ | (none) | none |
+| #565 | 5 | 3 | 🟡 | P6 scope check (3 Q) | answer in next round |
+| #568 | 1 | 1 | ⚪ | (cherry-pick acked) | post drop-duplicate notice |
+</code></pre></div></div>
+
+<p>For each “Asks for me” with verdict <code class="language-plaintext highlighter-rouge">answer</code> or <code class="language-plaintext highlighter-rouge">escalate</code>, queue a
+coordination response in the next coordination round.  For verdict
+<code class="language-plaintext highlighter-rouge">none</code> or <code class="language-plaintext highlighter-rouge">acked</code>, no further action.</p>
+
+<p><strong>Use a background subagent for triage when possible</strong> —
+<code class="language-plaintext highlighter-rouge">Agent(subagent_type=Explore, run_in_background=true, prompt=...)</code> reads sibling
+PRs without blocking your foreground work.  Triage prompt template:</p>
+
+<blockquote>
+  <p>Background triage of sibling PRs <list>. For each:</list></p>
+  <ol>
+    <li>New comments since <my last="" coordination="" round="" timestamp="">.</my></li>
+    <li>New commits + sha + 1-line message.</li>
+    <li>CI status.</li>
+    <li>Specifically flag asks/replies directed at <my PR=""> + any
+inconsistent findings vs &lt;my key audit/artifact claims&gt;.
+Report under 400 words; per-PR table.</my></li>
+  </ol>
+</blockquote>
+<h3 id="8--watching-main-and-newly-created-branches">
+  
+  
+    <a href="#8--watching-main-and-newly-created-branches" class="anchor-heading" aria-labelledby="8--watching-main-and-newly-created-branches"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8.  Watching <code class="language-plaintext highlighter-rouge">main</code> and newly-created branches
+  
+  
+</h3>
+    
+
+<p>Sibling PRs are not the only thing that moves.  <code class="language-plaintext highlighter-rouge">main</code> lands merges,
+and <strong>new branches/PRs</strong> sometimes open mid-session by the author or
+other agents — these need to enter the scope map immediately.</p>
+<h4 id="8a--watch-main-for-new-commits">
+  
+  
+    <a href="#8a--watch-main-for-new-commits" class="anchor-heading" aria-labelledby="8a--watch-main-for-new-commits"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8a.  Watch <code class="language-plaintext highlighter-rouge">main</code> for new commits
+  
+  
+</h4>
+    
+
+<p>Run <code class="language-plaintext highlighter-rouge">git fetch origin main</code> at each triage cycle.  If new commits
+landed since your last fetch, run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log <span class="nt">--oneline</span> &lt;last-fetched-main-sha&gt;..origin/main <span class="se">\</span>
+  <span class="nt">--</span> &lt;files-or-paths-you-are-touching&gt;
+</code></pre></div></div>
+
+<p>For each main-landed commit that touches <strong>a file or block
+you are editing</strong>, classify it like a sibling PR using §2: overlap /
+dependency / cherry-pick.  Then choose:</p>
+
+<ul>
+  <li><strong>Merge <code class="language-plaintext highlighter-rouge">origin/main</code> into your branch</strong> if the changes are
+additive and you don’t have local edits to the same files.</li>
+  <li><strong>Cherry-pick the relevant commit</strong> if main’s branch tip has too
+much unrelated noise.</li>
+  <li><strong>Escalate to the author (§6)</strong> if main’s change contradicts a
+finding you just published.</li>
+</ul>
+
+<p>Do not silently rebase or force-push to incorporate <code class="language-plaintext highlighter-rouge">main</code> — those
+are author-authorised actions, see the repo’s Git Operations policy.</p>
+<h5 id="8a-bis--watch-for-new-skills-landing-on-main">
+  
+  
+    <a href="#8a-bis--watch-for-new-skills-landing-on-main" class="anchor-heading" aria-labelledby="8a-bis--watch-for-new-skills-landing-on-main"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8a-bis.  Watch for new skills landing on main
+  
+  
+</h5>
+    
+
+<p>In the same <code class="language-plaintext highlighter-rouge">git fetch origin main</code> pass, additionally run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="nt">--name-only</span> <span class="nt">--diff-filter</span><span class="o">=</span>A <span class="se">\</span>
+  &lt;last-fetched-main-sha&gt;..origin/main <span class="se">\</span>
+  <span class="nt">--</span> <span class="s1">'.claude/skills/local/*.md'</span> <span class="s1">'.claude/skills/*/*.md'</span>
+</code></pre></div></div>
+
+<p>For each new skill file:</p>
+
+<ol>
+  <li><strong>Read its frontmatter</strong> (<code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">roles</code>, <code class="language-plaintext highlighter-rouge">description</code>,
+<code class="language-plaintext highlighter-rouge">inherits</code>).</li>
+  <li><strong>Decide relevance</strong>: does the skill’s description overlap your
+branch’s scope?
+    <ul>
+      <li>Mention a file kind / domain / pattern you’re editing (touched
+in <code class="language-plaintext highlighter-rouge">git diff origin/main..HEAD --name-only</code>), OR</li>
+      <li>Provide a new integration-watcher child (<code class="language-plaintext highlighter-rouge">inherits:
+local/integration-watcher</code>) and your branch is itself an
+integration-watcher PR, OR</li>
+      <li>Provide a new QA / sweep / audit skill (one-voice-<em>, proof-</em>,
+compute-*, etc.) and your branch touches the corresponding
+content blocks.</li>
+    </ul>
+  </li>
+  <li><strong>Surface to the user via <code class="language-plaintext highlighter-rouge">AskUserQuestion</code></strong> with the standard
+3-chip pattern from <code class="language-plaintext highlighter-rouge">watch.md §3.Q3a</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Adopt now</code> — invoke the skill on the relevant subset</li>
+      <li><code class="language-plaintext highlighter-rouge">Defer to follow-up branch</code> — record decision, don’t change
+this branch</li>
+      <li><code class="language-plaintext highlighter-rouge">Not relevant</code> — record so the watcher doesn’t re-prompt</li>
+    </ul>
+  </li>
+  <li><strong>Record the decision in the coordination ledger</strong> under a
+new <code class="language-plaintext highlighter-rouge">## New skills detected on main</code> subsection so future
+sessions don’t re-prompt.</li>
+</ol>
+
+<p>This mirrors <code class="language-plaintext highlighter-rouge">watch.md §3.Q3a</code> and lets every coordinator
+session pick up new infrastructure (audit watchers, scoring
+heuristics, formalisation helpers) as it lands, without the user
+having to manually announce skill additions to every in-flight PR.</p>
+<h4 id="8c--pre-push-stale-state-check-mandatory">
+  
+  
+    <a href="#8c--pre-push-stale-state-check-mandatory" class="anchor-heading" aria-labelledby="8c--pre-push-stale-state-check-mandatory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8c.  Pre-push stale-state check (MANDATORY)
+  
+  
+</h4>
+    
+
+<p><strong>Trigger:</strong> before every <code class="language-plaintext highlighter-rouge">git push</code> (whether new commits or force-
+push). The watcher can lapse during long focused work — Monitor
+timeouts, hooks-busy windows, or background-agent waits all silently
+leave <code class="language-plaintext highlighter-rouge">origin/main</code> unfetched. Before any push, force a fresh fetch
+and compute the upstream delta:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch origin <span class="s1">'+refs/heads/main:refs/remotes/origin/main'</span> 2&gt;/dev/null
+<span class="nv">DELTA</span><span class="o">=</span><span class="si">$(</span>git rev-list <span class="nt">--count</span> HEAD..origin/main<span class="si">)</span>
+<span class="nv">SIBS</span><span class="o">=</span><span class="si">$(</span>git log <span class="nt">--oneline</span> <span class="k">${</span><span class="nv">MERGE_BASE</span><span class="k">:-</span><span class="si">$(</span>git merge-base HEAD origin/main<span class="si">)</span><span class="k">}</span>..origin/main 2&gt;/dev/null | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span>
+<span class="nb">echo</span> <span class="s2">"main is </span><span class="k">${</span><span class="nv">DELTA</span><span class="k">}</span><span class="s2"> commits ahead since branch base"</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Fetch the ref you are about to read, with an explicit refspec.</strong>
+<code class="language-plaintext highlighter-rouge">git fetch origin main</code> writes <code class="language-plaintext highlighter-rouge">FETCH_HEAD</code>; it refreshes
+<code class="language-plaintext highlighter-rouge">refs/remotes/origin/main</code> only when the clone’s configured
+<code class="language-plaintext highlighter-rouge">remote.origin.fetch</code> covers that branch — and it <strong>exits 0 either way</strong>. A
+clone whose refspec has been narrowed to one branch (this happens: a <code class="language-plaintext highlighter-rouge">qou</code>
+clone was found pinned to a single sibling) answers every <code class="language-plaintext highlighter-rouge">origin/main</code>
+question from a ref that has not moved for days, and nothing in the output
+distinguishes that from being up to date. Use
+<code class="language-plaintext highlighter-rouge">+refs/heads/&lt;b&gt;:refs/remotes/origin/&lt;b&gt;</code>, which is correct whatever the
+clone is configured with.</p>
+
+  <p>Two corollaries, both of which have bitten:</p>
+
+  <ul>
+    <li><strong>Fetch the same ref you then read.</strong> <code class="language-plaintext highlighter-rouge">watch.md §5b</code> fetched <code class="language-plaintext highlighter-rouge">main</code> and
+measured <code class="language-plaintext highlighter-rouge">origin/&lt;BRANCH&gt;</code>, so its mandatory missed-commit recovery
+reported 0 missed by construction.</li>
+    <li><strong>A per-branch refspec does not repair <code class="language-plaintext highlighter-rouge">for-each-ref</code>.</strong> Anything walking
+<code class="language-plaintext highlighter-rouge">refs/remotes/origin/claude/*</code> sees only what was fetched by name, so an
+empty result means “never fetched”, not “no siblings”. Check
+<code class="language-plaintext highlighter-rouge">git config --get-all remote.origin.fetch | grep 'refs/heads/\*'</code> before
+believing it.</li>
+  </ul>
+</blockquote>
+
+<p>Decision matrix:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Delta</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0..2</code></td>
+      <td>push freely</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">3..10</code></td>
+      <td><strong>fetch and triage</strong>: list each new main commit; for any touching files in your branch’s diff, classify per §2 (rebase-now, defer, escalate) BEFORE pushing</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&gt; 10</code></td>
+      <td><strong>stop</strong>: announce to the user. Long-discharge sessions risk substantial divergence; offer prepare-merge rebase OR continue + flag</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Additionally, run <code class="language-plaintext highlighter-rouge">mcp__github__list_pull_requests</code> filtered to
+<code class="language-plaintext highlighter-rouge">state:open updated since &lt;session_start&gt;</code> and check for sibling PRs
+that opened mid-session. Each new sibling enters scope per §3.</p>
+
+<p>This check is the difference between a clean fast-forward push and a
+multi-conflict rebase storm. If you’re discharging many small commits
+in a row, invoke this between every ~5 commits OR after every 30 min
+of foreground work.</p>
+<h4 id="8d--long-task-drift-recovery">
+  
+  
+    <a href="#8d--long-task-drift-recovery" class="anchor-heading" aria-labelledby="8d--long-task-drift-recovery"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8d.  Long-task drift recovery
+  
+  
+</h4>
+    
+
+<p>If you discover ≥ 5 new main commits AFTER a Monitor timeout or
+hooks-busy window, do NOT just “re-arm and continue”:</p>
+
+<ol>
+  <li><strong>Compare</strong>: <code class="language-plaintext highlighter-rouge">git diff --name-only HEAD..origin/main</code> to find
+overlapping files.</li>
+  <li><strong>If overlap is empty</strong>: re-arm watch (silent OK).</li>
+  <li><strong>If overlap exists</strong>: invoke <code class="language-plaintext highlighter-rouge">coordinate</code> §2 classification
+on each overlap. Most common: another agent edited the same content
+block (<code class="language-plaintext highlighter-rouge">.lean</code>, <code class="language-plaintext highlighter-rouge">.md</code>, <code class="language-plaintext highlighter-rouge">.ts</code> trio). Resolve BEFORE committing
+more work that will conflict.</li>
+  <li><strong>Notify the user</strong> if ≥ 2 substantive overlaps: this is the
+signal that multiple agents are working in the same scope and the
+user should coordinate goals.</li>
+</ol>
+<h4 id="8b--watch-for-newly-opened-prs--branches">
+  
+  
+    <a href="#8b--watch-for-newly-opened-prs--branches" class="anchor-heading" aria-labelledby="8b--watch-for-newly-opened-prs--branches"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8b.  Watch for newly-opened PRs / branches
+  
+  
+</h4>
+    
+
+<p>Each triage cycle, list open PRs and branches:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gh <span class="nb">pr </span>list <span class="nt">--state</span> open <span class="nt">--json</span> number,title,headRefName,createdAt
+gh api repos/&lt;owner&gt;/&lt;repo&gt;/branches <span class="nt">--jq</span> <span class="s1">'.[].name'</span>
+</code></pre></div></div>
+
+<p>If a <strong>new</strong> PR or branch appears since the last triage and its
+title / branch-name overlaps any of your scope keywords (your
+audit subjects, your changed files, your blocks), <strong>prompt
+the author</strong>:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**Q from #&lt;your PR&gt;:**</span> I see #<span class="nt">&lt;N&gt;</span> (<span class="sb">`&lt;branch&gt;`</span>) opened at
+<span class="nt">&lt;timestamp&gt;</span>; should I add it to my coordination scope (§3) and
+post intent?  Or is it independent of the <span class="nt">&lt;goal&gt;</span> goal-thread?
+</code></pre></div></div>
+
+<p>Do not silently add the new PR to scope — the author may have
+opened it as an isolated probe.  Wait for confirmation before
+posting coordination comments on the new PR.</p>
+<h3 id="9--coordination-ledger">
+  
+  
+    <a href="#9--coordination-ledger" class="anchor-heading" aria-labelledby="9--coordination-ledger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9.  Coordination ledger
+  
+  
+</h3>
+    
+
+<p>Maintain a single shared ledger at:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docs/coordination/&lt;goal-slug&gt;.md
+</code></pre></div></div>
+
+<p>Each PR appends a row (no rewrites of others’ rows):</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| Date | PR | Phase | Status | Cherry-pick |
+|------|----|-------|--------|-------------|
+| 2026-01-01 | #564 | phase A wire-up | landed <span class="sb">`&lt;sha&gt;`</span> | <span class="sb">`&lt;reader&gt;`</span> |
+| 2026-01-01 | #565 | migration | in-progress | — |
+| 2026-01-01 | #567 | sub-lemma | landed <span class="sb">`&lt;sha&gt;`</span> | <span class="sb">`&lt;block&gt;`</span> template |
+</code></pre></div></div>
+
+<p>The ledger lives on the branch where the coordinator is currently
+posting; final state can be merged to main when the goal completes.</p>
+<h3 id="10--cherry-picking">
+  
+  
+    <a href="#10--cherry-picking" class="anchor-heading" aria-labelledby="10--cherry-picking"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10.  Cherry-picking
+  
+  
+</h3>
+    
+
+<p><strong>Cherry-picking is fine — treat it as a low-friction default.</strong>
+When an in-flight sibling has infrastructure (a script, a witness,
+a template, a content block) that you’d otherwise
+duplicate, just cherry-pick it. The cross-PR ceremony in earlier
+revisions of this skill (mandatory “inform the sibling before”,
+“byte-for-byte identical or post the adaptation back”) was
+over-engineered for a working norm where small structured commits
+exist precisely so they can be picked up by anyone.</p>
+
+<p>The remaining rules are minimal:</p>
+
+<ol>
+  <li>
+    <p><strong>Cite the source in your commit message.</strong> Either
+<code class="language-plaintext highlighter-rouge">Cherry-pick of #&lt;N&gt;:&lt;sha&gt;</code> on the trailer line or a
+<code class="language-plaintext highlighter-rouge">Co-authored-by:</code> line. Attribution is cheap and lets
+<code class="language-plaintext highlighter-rouge">git log --grep</code> surface who originated the change. Optional
+but recommended — missing attribution is not a blocker.</p>
+  </li>
+  <li>
+    <p><strong>One-voice still applies.</strong> Whatever you keep from the source
+should read as your own work; rewrite voice / framing if the
+sibling’s tone clashes (AGENTS.md voice rules don’t relax just
+because the source was a different agent).</p>
+  </li>
+  <li>
+    <p><strong>You may diverge.</strong> If you adapt the cherry-picked file —
+rename imports, change a helper, tighten a tolerance — that’s
+normal. No requirement to post the adaptation back on the
+source PR; the sibling will see your divergence in their own
+§7 triage if it matters to them.</p>
+  </li>
+  <li>
+    <p><strong>You may pre-empt main.</strong> Cherry-picks from open sibling PRs
+are explicitly allowed; you do not need to wait for the source
+to land on <code class="language-plaintext highlighter-rouge">main</code>. When the source eventually merges, you’ll
+either pick up the canonical version on your next rebase
+(drift handled by the standard §1·a auto-resolve) or
+keep a slight divergence (also fine).</p>
+  </li>
+  <li>
+    <p><strong>Pre-flagging is optional.</strong> If you’re picking something
+substantive (a whole module, a large script) and want to
+reduce the chance of duplicated work, posting a one-liner
+coord comment on the source PR before picking is courteous —
+but it is <strong>not required</strong>. For small picks (single helper, a
+witness JSON, a class declaration), just commit.</p>
+  </li>
+</ol>
+
+<p>When the source PR lands on <code class="language-plaintext highlighter-rouge">main</code>, attribution stops being
+necessary — the file is just upstream code. A fresh PR sourced
+from a main-merged commit needs no <code class="language-plaintext highlighter-rouge">Cherry-pick of</code> line.</p>
+<h3 id="11--asks-and-responses">
+  
+  
+    <a href="#11--asks-and-responses" class="anchor-heading" aria-labelledby="11--asks-and-responses"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 11.  Asks and responses
+  
+  
+</h3>
+    
+
+<p>Asks are a first-class artefact.  Format every cross-PR ask as:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**Q from #&lt;your PR&gt;:**</span> <span class="nt">&lt;question&gt;</span>
+
+(answers as inline replies on the destination PR)
+</code></pre></div></div>
+
+<p>If a sibling has not answered an ask after 1 calendar day in an
+async setting, restate the ask in a fresh comment and tag the
+author.  Do not block indefinitely.</p>
+<h2 id="output">
+  
+  
+    <a href="#output" class="anchor-heading" aria-labelledby="output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Output
+  
+  
+</h2>
+    
+
+<p>After invocation, you should have:</p>
+
+<ul>
+  <li>Read every sibling PR’s body and changed-files list.</li>
+  <li>Posted at most one coordination comment per sibling PR (intent +
+asks), unless you’ve made progress that warrants a separate
+progress comment.</li>
+  <li>Triaged every open review-tool thread on your own PR (§5) and
+posted a single consolidated status comment.</li>
+  <li>Run a §7 periodic triage every 3–5 of your own commits, capturing
+new sibling-PR comments + commits + CI status in one table.</li>
+  <li>Run §8a (<code class="language-plaintext highlighter-rouge">git fetch origin main</code>) at each triage cycle and react
+to any main-landed changes that touch your scope.</li>
+  <li>Run §8b (newly-opened PRs / branches) at each triage cycle and
+prompt the author when a new sibling overlaps your scope keywords.</li>
+  <li>Identified the next concrete, non-overlapping task on your own
+workplan and started on it.</li>
+  <li>(Optional) Created or updated <code class="language-plaintext highlighter-rouge">docs/coordination/&lt;goal-slug&gt;.md</code>
+with the current state.</li>
+  <li>Escalated any inconsistencies via §6 with <code class="language-plaintext highlighter-rouge">@&lt;author&gt;</code> tagging.</li>
+</ul>
+<h2 id="anti-patterns">
+  
+  
+    <a href="#anti-patterns" class="anchor-heading" aria-labelledby="anti-patterns"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Anti-patterns
+  
+  
+</h2>
+    
+
+<ul>
+  <li>❌ Post a coordination comment that just summarises your own PR.
+Sibling agents already read your PR body.</li>
+  <li>❌ Pick the same task as a sibling without posting first.  Even
+if their PR has been quiet, the human author may have given them
+a verbal lead.</li>
+  <li>❌ “Resolve” an inconsistency by rewriting your finding.  Escalate
+to the author.</li>
+  <li>❌ Accept a review-tool fix without verifying it against the
+artifact and sibling-PR conventions.  Bot suggestions can flip
+conventions silently.</li>
+  <li>❌ Reply per-thread on a 6-comment review pass.  Use one
+consolidated status comment + per-thread <code class="language-plaintext highlighter-rouge">accept</code> /
+<code class="language-plaintext highlighter-rouge">reject-with-reason</code> flags.</li>
+  <li>❌ Skip §7 triage between commits because “I would have heard if
+something landed” — you wouldn’t.  Sibling agents work in parallel
+and rarely interrupt each other.  Run the triage anyway.</li>
+  <li>❌ Silently merge / cherry-pick from <code class="language-plaintext highlighter-rouge">main</code> without §8a
+classification.  Main commits can also be inconsistent findings.</li>
+  <li>❌ Add a newly-opened PR to your scope without prompting the
+author (§8b).  The author may want it independent.</li>
+  <li>❌ Long prose.  Coordination comments are tables, file pointers,
+and one-line asks.</li>
+</ul>
+<h2 id="11-statusmd--master-ledger-pattern">
+  
+  
+    <a href="#11-statusmd--master-ledger-pattern" class="anchor-heading" aria-labelledby="11-statusmd--master-ledger-pattern"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §11 STATUS.md + master ledger pattern
+  
+  
+</h2>
+    
+
+<p>A repeated flip-flop episode (a claim asserted and retracted across
+several sessions) motivates a more structured coordination layer that
+overlays this skill:</p>
+
+<ul>
+  <li><strong>Root <a href="../../../STATUS.md"><code class="language-plaintext highlighter-rouge">STATUS.md</code></a></strong> — single dashboard
+listing every goal + pointer to its master ledger + active PRs.</li>
+  <li><strong>Master ledger per goal</strong> — <code class="language-plaintext highlighter-rouge">docs/coordination/&lt;goal&gt;.md</code> holds
+the durable narrative: current canonical status, open tasks,
+flip-flop history, sessions log.</li>
+  <li><strong>Per-goal queue</strong> — the <code class="language-plaintext highlighter-rouge">beans</code> queue (<code class="language-plaintext highlighter-rouge">.beans/</code>); each
+open task is one entry.</li>
+</ul>
+
+<p>When <code class="language-plaintext highlighter-rouge">/coordinate</code> runs, it now ALSO:</p>
+
+<ol>
+  <li><strong>Reads STATUS.md</strong> to find which goal(s) the current PR
+touches.</li>
+  <li><strong>Reads the goal’s master ledger</strong> to identify the current
+canonical status — overrides recent commit claims if the
+ledger records a retraction.</li>
+  <li><strong>Reads the queue</strong> to find sibling tasks in flight.</li>
+  <li><strong>References the ledger session log</strong> when posting intent
+comments on sibling PRs, so the comment is grounded in the
+durable record, not just session memory.</li>
+</ol>
+
+<p>See <code class="language-plaintext highlighter-rouge">session-intent</code> for the session-start / session-end
+ledger + queue update protocol — <code class="language-plaintext highlighter-rouge">/coordinate</code> is the sibling-PR
+arm; <code class="language-plaintext highlighter-rouge">/session-intent</code> is the durable-state arm. They are run
+together at session start.</p>
+<h2 id="12-multi-agent-same-goal-coordination">
+  
+  
+    <a href="#12-multi-agent-same-goal-coordination" class="anchor-heading" aria-labelledby="12-multi-agent-same-goal-coordination"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §12 Multi-agent same-goal coordination
+  
+  
+</h2>
+    
+
+<p><strong>Multiple agents MAY work the same goal in parallel.</strong> Per author
+directive: agents coordinate with the user on goals, not with each
+other on task-level locks.</p>
+
+<p>Model:</p>
+
+<ul>
+  <li><strong>Goal</strong> = product (author’s directive). User-level concern.</li>
+  <li><strong>Queue</strong> = per-goal item list (the <code class="language-plaintext highlighter-rouge">beans</code> queue).</li>
+  <li><strong>Tasks</strong> are NOT exclusively claimed. Two agents may attack the
+same task with different methods — both threads have value.</li>
+  <li><strong>Coordination is with the USER</strong> on goal-level decisions, not
+agent-to-agent on task-level locks.</li>
+</ul>
+<h3 id="when-you-detect-a-sibling-agent-on-your-task">
+  
+  
+    <a href="#when-you-detect-a-sibling-agent-on-your-task" class="anchor-heading" aria-labelledby="when-you-detect-a-sibling-agent-on-your-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When you detect a sibling agent on your task
+  
+  
+</h3>
+    
+
+<p>Signals:</p>
+
+<ul>
+  <li>The queue entry has <code class="language-plaintext highlighter-rouge">co_assignees</code> populated, OR</li>
+  <li>A sibling PR (from <code class="language-plaintext highlighter-rouge">mcp__github__list_pull_requests</code>) has commits
+touching your task’s scope files within the last 24h, OR</li>
+  <li>The ledger session log shows another agent declared intent on
+the same task ID.</li>
+</ul>
+
+<p>Workflow:</p>
+
+<ol>
+  <li><strong>Do not silently abandon.</strong> Your independent attack is valuable.</li>
+  <li><strong>Post intent</strong> on the sibling PR (this skill §3) so the sibling
+sees you’re also working it.</li>
+  <li><strong>Ask the user</strong> with <code class="language-plaintext highlighter-rouge">AskUserQuestion</code> whether to keep both
+threads or have one stand down. Include rich context per AGENTS.md
+§User accessibility — quote what each agent is doing, what method,
+what’s been found, cost of running both.</li>
+  <li><strong>If user says one stands down</strong>, the standing-down agent appends
+partial results to the ledger and updates queue
+<code class="language-plaintext highlighter-rouge">status: "open"</code> (releasing the task). The continuing agent
+may pick up the partial results.</li>
+</ol>
+<h3 id="watching-for-sibling-pr-contradictions">
+  
+  
+    <a href="#watching-for-sibling-pr-contradictions" class="anchor-heading" aria-labelledby="watching-for-sibling-pr-contradictions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Watching for sibling-PR contradictions
+  
+  
+</h3>
+    
+
+<p>Per §8 of this skill: at each triage cycle, look for sibling-PR
+commits or comments that <strong>contradict</strong> your branch’s framing. Per
+§6: escalate inconsistent findings to the user. Do not silently
+adopt the sibling’s framing without an §6 conversation.</p>
+<h2 id="related-skills">
+  
+  
+    <a href="#related-skills" class="anchor-heading" aria-labelledby="related-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related skills
+  
+  
+</h2>
+    
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">delivery-summary</code> — what to post <strong>after</strong> a feature lands
+(one PR scope).</li>
+  <li><code class="language-plaintext highlighter-rouge">watch</code> — passive monitoring of upstream branches.</li>
+  <li><code class="language-plaintext highlighter-rouge">diff</code> — per-block change report (one PR scope).</li>
+  <li><code class="language-plaintext highlighter-rouge">session-intent</code> — session-start / session-end ledger +
+queue update protocol (the durable-state arm of coordination).</li>
+  <li><code class="language-plaintext highlighter-rouge">pending-show</code> — read-only display of current session’s
+pending work (todos, intent, queue assignments).</li>
+  <li><code class="language-plaintext highlighter-rouge">prepare-merge-auto</code> — autonomous merge pipeline (uses
+this skill’s sibling-coord pattern).</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">/coordinate</code> complements them: it is the <strong>active</strong> cross-PR
+protocol — including handling of code-review comments on your own
+PR — not a passive watcher and not a single-PR summary.</p>
+<h2 id="flag-bearer-reflections">
+  
+  
+    <a href="#flag-bearer-reflections" class="anchor-heading" aria-labelledby="flag-bearer-reflections"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Flag-bearer reflections
+  
+  
+</h2>
+    
+
+<p>Lessons from acting as flag-bearer across many sibling PRs on a shared
+goal. Apply when you hold the flag.</p>
+
+<ol>
+  <li>
+    <p><strong>Build the ledger hub FIRST, then post.</strong> Create
+<code class="language-plaintext highlighter-rouge">docs/coordination/&lt;goal&gt;.md</code> with: the direction (one boxed
+statement of the target), the <em>common infra everyone rows toward</em>
+(cheat-sheet step table, watcher queues, dashboards, a falsification
+anchor), and a per-PR “which way to row” roster with <strong>report-back
+slots</strong>. Post intent only after the hub exists, so every comment can
+link one canonical place. This is what makes “make sure all use common
+infra” actionable rather than a slogan.</p>
+  </li>
+  <li>
+    <p><strong>Tailor per-PR; then LISTEN.</strong> A flag-bearer that only broadcasts is
+half-doing the job. Pull each sibling’s current state (a background
+<code class="language-plaintext highlighter-rouge">Explore</code> agent reading PR bodies + last comments is ideal), and
+<strong>fold their findings back as sharpenings</strong> to your own plan. Record
+sharpenings in the ledger and amend the workplan — do not silently
+keep the stale plan.</p>
+  </li>
+  <li>
+    <p><strong>Anchor the cluster to one falsifiable target.</strong> Give every sibling a
+shared regression target. It turns “which way to row”
+into a checkable claim and prevents divergent re-derivations.</p>
+  </li>
+  <li>
+    <p><strong>Push-race coordination with background agents.</strong> When a background
+sub-agent and you both push to the same branch, wrap every push in a
+<code class="language-plaintext highlighter-rouge">fetch → rebase → retry</code> loop:
+<code class="language-plaintext highlighter-rouge">for i in 1 2 3 4; do git push &amp;&amp; break || { git fetch origin &lt;br&gt; -q;
+git rebase origin/&lt;br&gt;; sleep $((2**i)); }; done</code>. The agent’s commits
+may already be in your local history (shared working dir) — check
+<code class="language-plaintext highlighter-rouge">git log</code> before assuming a divergence.</p>
+  </li>
+  <li>
+    <p><strong>Billing-CI is noise — do not let it derail coordination.</strong> If CI
+fails setup-phase (≤5 s, simultaneous, no logs) on every push while
+local validation stays green, recognise the billing signature
+(AGENTS.md “CI billing failures”), note <code class="language-plaintext highlighter-rouge">[skip-ci: billing]</code>, and keep
+working; never re-diagnose it as a code problem or pause the cluster
+for it.</p>
+  </li>
+</ol>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

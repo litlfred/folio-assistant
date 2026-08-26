@@ -1,0 +1,783 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(98)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(98) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(98) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(98) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>lean-proof-vacuity-audit | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="lean-proof-vacuity-audit" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="lean-proof-vacuity-audit" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"lean-proof-vacuity-audit","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>lean-proof-vacuity-audit</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/lean-proof-vacuity-audit.md"><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/lean-proof-vacuity-audit.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="lean-proof-vacuity-audit">
+  
+  
+    <a href="#lean-proof-vacuity-audit" class="anchor-heading" aria-labelledby="lean-proof-vacuity-audit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> lean-proof-vacuity-audit
+  
+  
+</h1>
+    
+
+<p>A proof can be <strong>sorry-free, axiom-clean, and statement-faithful</strong> and still
+prove <strong>nothing</strong>. <code class="language-plaintext highlighter-rouge">proof-statement-integrity</code> guards the <em>statement</em> (signature
+unchanged vs prior commit, no <code class="language-plaintext highlighter-rouge">sorryAx</code>) but not the <em>content</em>. This skill
+catches the family of <strong>vacuous proofs</strong> — proofs whose validity is purely
+syntactic — and drains them to honest representations.</p>
+
+<p>The canonical trigger: a batch “fix proof-statement-integrity” pass that
+discharges a <code class="language-plaintext highlighter-rouge">sorry</code>/false-<code class="language-plaintext highlighter-rouge">axiom</code> by wrapping the conclusion in a <code class="language-plaintext highlighter-rouge">structure</code>
+field and projecting it. That removes the <code class="language-plaintext highlighter-rouge">sorry</code> and the axiom, the statement
+is unchanged, the checker goes green — but the theorem now <strong>assumes its own
+conclusion</strong>.</p>
+<h2 id="the-anti-pattern-family">
+  
+  
+    <a href="#the-anti-pattern-family" class="anchor-heading" aria-labelledby="the-anti-pattern-family"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The anti-pattern family
+  
+  
+</h2>
+    
+<h3 id="1-self-assuming-projection-circular--proof-no-self-assuming-projection">
+  
+  
+    <a href="#1-self-assuming-projection-circular--proof-no-self-assuming-projection" class="anchor-heading" aria-labelledby="1-self-assuming-projection-circular--proof-no-self-assuming-projection"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Self-assuming projection (circular) — <code class="language-plaintext highlighter-rouge">proof-no-self-assuming-projection</code>
+  
+  
+</h3>
+    
+
+<p>The conclusion is carried as a <code class="language-plaintext highlighter-rouge">structure</code>/<code class="language-plaintext highlighter-rouge">class</code> field and the proof returns
+that field verbatim. The other fields (the would-be hypotheses) are unused.</p>
+
+<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">structure</span> <span class="n">D</span> (<span class="n">S</span>) <span class="n">where</span>
+  <span class="n">hyp1</span> : <span class="o">...</span><span class="cd">                                   -- decoration, NEVER used</span>
+  <span class="n">exists_lambda</span> : <span class="o">∃</span> <span class="k">λ</span>, <span class="o">∀</span> <span class="n">r</span>, <span class="n">phi</span> <span class="n">r</span> <span class="o">=</span> <span class="k">λ</span> <span class="o">*</span> <span class="n">psi</span> <span class="n">r</span><span class="cd">  -- ← the CONCLUSION, as a field</span>
+<span class="k">theorem</span> <span class="n">foo</span> (<span class="n">S</span>) (<span class="n">d</span> : <span class="n">D</span> <span class="n">S</span>) :
+    <span class="o">∃</span> <span class="k">λ</span>, <span class="o">∀</span> <span class="n">r</span>, <span class="n">d</span><span class="o">.</span><span class="n">phi</span> <span class="n">r</span> <span class="o">=</span> <span class="k">λ</span> <span class="o">*</span> <span class="n">d</span><span class="o">.</span><span class="n">psi</span> <span class="n">r</span> := <span class="n">d</span><span class="o">.</span><span class="n">exists_lambda</span><span class="cd">   -- ← P ⊢ P, vacuous</span>
+</code></pre></div></div>
+
+<p>The goal is <em>literally the type of</em> <code class="language-plaintext highlighter-rouge">d.exists_lambda</code>. Equivalent shapes:
+<code class="language-plaintext highlighter-rouge">:= ⟨d.claim_a, d.claim_b⟩</code> (conjunction of conclusion-fields), <code class="language-plaintext highlighter-rouge">:= by exact
+d.claim</code>, <code class="language-plaintext highlighter-rouge">:= ctx.claim_foo</code>, class form <code class="language-plaintext highlighter-rouge">[C M] … := C.field</code>.</p>
+<h3 id="2-trivial-true-conclusion--proof-no-trivial-true">
+  
+  
+    <a href="#2-trivial-true-conclusion--proof-no-trivial-true" class="anchor-heading" aria-labelledby="2-trivial-true-conclusion--proof-no-trivial-true"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Trivial-true conclusion — <code class="language-plaintext highlighter-rouge">proof-no-trivial-true</code>
+  
+  
+</h3>
+    
+
+<p>The stated goal is a tautology, so any proof is content-free.</p>
+
+<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">theorem</span> <span class="n">foo</span> (<span class="n">heavy</span> <span class="n">hypotheses</span>) : <span class="n">True</span> := <span class="n">trivial</span><span class="cd">          -- conclusion is True</span>
+<span class="k">theorem</span> <span class="n">bar</span> : (<span class="mi">0</span> : <span class="n">R</span>) <span class="o">=</span> <span class="mi">0</span> := <span class="n">rfl</span><span class="cd">                          -- tautology</span>
+<span class="k">theorem</span> <span class="n">baz</span> : <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> := <span class="n">rfl</span><span class="cd">                                 -- reflexivity dressed as a result</span>
+<span class="n">structure</span> <span class="n">D</span> <span class="n">where</span> <span class="n">holds</span> : <span class="kt">Prop</span> := <span class="n">True</span><span class="cd">                     -- a "Prop" field pinned to True</span>
+</code></pre></div></div>
+
+<p>Watch for a <code class="language-plaintext highlighter-rouge">holds : Prop</code> / <code class="language-plaintext highlighter-rouge">claim : Prop</code> field that is later <strong>instantiated
+as <code class="language-plaintext highlighter-rouge">True</code></strong>, or a conclusion that <code class="language-plaintext highlighter-rouge">simp</code>/<code class="language-plaintext highlighter-rouge">tauto</code>/<code class="language-plaintext highlighter-rouge">trivial</code> closes with no use of
+the hypotheses.</p>
+
+<p><strong>The <code class="language-plaintext highlighter-rouge">theorem</code>→<code class="language-plaintext highlighter-rouge">def</code> dodge (STRICT — forbidden).</strong> Re-declaring a
+vacuous <code class="language-plaintext highlighter-rouge">theorem X : True := trivial</code> as <code class="language-plaintext highlighter-rouge">def X : True := trivial</code> (or
+<code class="language-plaintext highlighter-rouge">abbrev</code>/<code class="language-plaintext highlighter-rouge">instance</code>) can hide it from detectors that key on the provable kinds.
+A trivial-bodied <code class="language-plaintext highlighter-rouge">: True</code> <code class="language-plaintext highlighter-rouge">def</code> is flagged as pattern <strong><code class="language-plaintext highlighter-rouge">def-disguised-true</code></strong>.
+Carve-outs: a shadow-stub (real decl resolves elsewhere) or a
+<code class="language-plaintext highlighter-rouge">conjecture</code>-block Lean placeholder (sibling <code class="language-plaintext highlighter-rouge">.ts</code> is <code class="language-plaintext highlighter-rouge">conjecture(...)</code>) →
+exempt. Per <strong>the project authoring conventions</strong>, dodging an audit this way is a review failure;
+the honest dispositions are <em>prove it</em> / <em>state the real proposition with
+<code class="language-plaintext highlighter-rouge">sorry</code> + <code class="language-plaintext highlighter-rouge">-- Ref:</code></em> / <em>demote to <code class="language-plaintext highlighter-rouge">conjecture</code></em> — never a vacuous <code class="language-plaintext highlighter-rouge">def : True</code>.</p>
+<h3 id="3-false--unsatisfiable-premise-vacuously-true--proof-no-false-premise">
+  
+  
+    <a href="#3-false--unsatisfiable-premise-vacuously-true--proof-no-false-premise" class="anchor-heading" aria-labelledby="3-false--unsatisfiable-premise-vacuously-true--proof-no-false-premise"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. False / unsatisfiable premise (vacuously true) — <code class="language-plaintext highlighter-rouge">proof-no-false-premise</code>
+  
+  
+</h3>
+    
+
+<p>A hypothesis can never hold, so the theorem is vacuously true and asserts
+nothing about the intended domain.</p>
+
+<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">theorem</span> <span class="n">foo</span> (<span class="n">h</span> : (<span class="mi">0</span> : <span class="n">R</span>) <span class="o">=</span> <span class="mi">1</span>) : <span class="n">Anything</span> := <span class="n">absurd</span> <span class="n">h</span> (<span class="k">by</span> <span class="n">norm_num</span>)   <span class="cd">-- premise impossible</span>
+<span class="k">theorem</span> <span class="n">bar</span> (<span class="n">h</span> : <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span>) (<span class="n">hn</span> : <span class="n">n</span> : <span class="o">ℕ</span>) : <span class="n">P</span> <span class="n">n</span> := (<span class="n">Nat</span><span class="o">.</span><span class="n">not_lt_zero</span> <span class="n">n</span> <span class="n">h</span>)<span class="o">.</span><span class="n">elim</span>
+</code></pre></div></div>
+<h3 id="4-unused-hypotheses-statement-weaker-than-intended--proof-no-unused-hypotheses">
+  
+  
+    <a href="#4-unused-hypotheses-statement-weaker-than-intended--proof-no-unused-hypotheses" class="anchor-heading" aria-labelledby="4-unused-hypotheses-statement-weaker-than-intended--proof-no-unused-hypotheses"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Unused hypotheses (statement weaker than intended) — <code class="language-plaintext highlighter-rouge">proof-no-unused-hypotheses</code>
+  
+  
+</h3>
+    
+
+<p><em>All</em> declared hypotheses are unused. Sometimes legitimate (uniformity across a
+family), but frequently a signal that the statement was weakened until it became
+trivial, or that the “hypotheses” are scaffolding for a circular field-projection.
+Agent judges intent.</p>
+<h3 id="5-decide--native_decide-masking--proof-no-decide-masking">
+  
+  
+    <a href="#5-decide--native_decide-masking--proof-no-decide-masking" class="anchor-heading" aria-labelledby="5-decide--native_decide-masking--proof-no-decide-masking"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. <code class="language-plaintext highlighter-rouge">decide</code> / <code class="language-plaintext highlighter-rouge">native_decide</code> masking — <code class="language-plaintext highlighter-rouge">proof-no-decide-masking</code>
+  
+  
+</h3>
+    
+
+<p>A non-trivial statement is closed by <code class="language-plaintext highlighter-rouge">decide</code>/<code class="language-plaintext highlighter-rouge">native_decide</code>, trusting the
+kernel/compiler evaluator instead of proving structure. <code class="language-plaintext highlighter-rouge">native_decide</code> adds
+<code class="language-plaintext highlighter-rouge">Lean.ofReduceBool</code> to the axiom set — an integrity concern in its own right.
+The runnable scanner (below) flags <strong>only <code class="language-plaintext highlighter-rouge">native_decide</code></strong>; a plain <code class="language-plaintext highlighter-rouge">decide</code>
+on a small decidable goal (<code class="language-plaintext highlighter-rouge">(-1:ℤ)^6 = 1</code>, <code class="language-plaintext highlighter-rouge">genus 11 = 5</code>) is
+idiomatic and not a defect.</p>
+<h3 id="6-axiom-that-is-a-candidate-to-prove--proof-no-provable-axiom">
+  
+  
+    <a href="#6-axiom-that-is-a-candidate-to-prove--proof-no-provable-axiom" class="anchor-heading" aria-labelledby="6-axiom-that-is-a-candidate-to-prove--proof-no-provable-axiom"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Axiom that is a candidate to prove — <code class="language-plaintext highlighter-rouge">proof-no-provable-axiom</code>
+  
+  
+</h3>
+    
+
+<p>An <code class="language-plaintext highlighter-rouge">axiom</code> carrying <strong>no bibliographic <code class="language-plaintext highlighter-rouge">-- Ref:</code> justification</strong> (and no
+<code class="language-plaintext highlighter-rouge">[cite]</code> / DOI / URL in its docstring) asserts content with nothing backing
+it — it should either be <strong>proved</strong> (converted to a <code class="language-plaintext highlighter-rouge">theorem</code>) or <strong>cited</strong>
+(marked a genuine external input). This is the dual of <code class="language-plaintext highlighter-rouge">proof-no-axiom-growth</code>
+(which guards against <em>adding</em> axioms): this guards against <em>leaving provable
+or unjustified content as a global axiom</em>.</p>
+
+<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">axiom</span> <span class="n">my_identity</span> (<span class="n">x</span> : <span class="n">R</span>) : <span class="n">f</span> <span class="n">x</span> <span class="o">=</span> <span class="n">g</span> <span class="n">x</span><span class="cd">          -- no -- Ref:, looks provable → flag</span>
+</code></pre></div></div>
+
+<p>Tiers (agent-confirmed):</p>
+
+<ul>
+  <li><strong>provable</strong> — Mathlib or a short argument discharges it ⇒ prove it (recipe-1).</li>
+  <li><strong>legitimate-but-uncited</strong> — a genuine external input (deep theorem,
+opaque postulated construction) ⇒ add a <code class="language-plaintext highlighter-rouge">-- Ref:</code> (recipe-3), do NOT pretend
+to prove it.</li>
+  <li><strong>conditional input</strong> — belongs as a <code class="language-plaintext highlighter-rouge">[Class]</code> hypothesis on downstream
+consumers (recipe-2 / §3b-cond) rather than a global axiom.</li>
+</ul>
+
+<p>Do <strong>not</strong> flag an axiom that already carries a <code class="language-plaintext highlighter-rouge">-- Ref:</code> / citation — resting
+on a cited upstream result is sound.</p>
+<h2 id="why-proof-statement-integrity-misses-all-of-these">
+  
+  
+    <a href="#why-proof-statement-integrity-misses-all-of-these" class="anchor-heading" aria-labelledby="why-proof-statement-integrity-misses-all-of-these"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why <code class="language-plaintext highlighter-rouge">proof-statement-integrity</code> misses all of these
+  
+  
+</h2>
+    
+
+<p>Per the QA registry, <code class="language-plaintext highlighter-rouge">proof-statement-integrity</code> is <code class="language-plaintext highlighter-rouge">automated: false</code>
+(agent-checked) and verifies exactly two things: (i) the provable-kind signature
+is <strong>unchanged</strong> vs the prior commit (or an author-approved restatement appears
+in the same <code class="language-plaintext highlighter-rouge">.md</code> + <code class="language-plaintext highlighter-rouge">.ts</code> diff); (ii) <code class="language-plaintext highlighter-rouge">lean_verify</code> shows no <code class="language-plaintext highlighter-rouge">sorryAx</code> /
+unexpected axioms. A self-assuming projection satisfies <strong>both</strong> — the signature
+is the intended one, and there is no <code class="language-plaintext highlighter-rouge">sorry</code>/axiom. Vacuity is a <em>semantic</em>
+property of the proof term, invisible to a signature-diff + axiom sweep. Hence a
+separate, agent-checked criterion family.</p>
+<h2 id="legit-vs-anti--the-discriminators">
+  
+  
+    <a href="#legit-vs-anti--the-discriminators" class="anchor-heading" aria-labelledby="legit-vs-anti--the-discriminators"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Legit vs. anti — the discriminators
+  
+  
+</h2>
+    
+
+<p>Do <strong>not</strong> flag these legitimate patterns:</p>
+
+<ul>
+  <li><strong>§3b-cond conditional-class</strong> where the proof <strong>composes</strong> multiple class
+fields or <strong>applies lemmas</strong> to <em>derive</em> the conclusion — <code class="language-plaintext highlighter-rouge">Iff.intro h.fwd
+h.bwd</code>, <code class="language-plaintext highlighter-rouge">h.step1.trans h.step2</code>, <code class="language-plaintext highlighter-rouge">by rw [h.a]; exact h.b</code>, <code class="language-plaintext highlighter-rouge">by linarith
+[h.x, h.y]</code>. The class fields encode <em>hypotheses</em>; the theorem <em>derives</em>. This
+is exactly the project authoring conventions-cond item 5’s required shape.</li>
+  <li><strong>Honest named axiom with <code class="language-plaintext highlighter-rouge">-- Ref:</code></strong> for a genuine external input, where
+downstream theorems <strong><code class="language-plaintext highlighter-rouge">obtain</code>/consume</strong> it rather than re-assuming the
+conclusion. Resting on a cited upstream axiom is sound; smuggling the
+conclusion into a local field is not.</li>
+  <li><strong>A field that is a genuine hypothesis</strong> the theorem then <em>uses</em>.</li>
+  <li><strong>Unused hypothesis kept for family uniformity</strong> (the agent should confirm the
+statement is non-trivial despite the unused binder).</li>
+</ul>
+
+<p>The single discriminator for #1: does the proof <strong>return a conclusion-typed
+field verbatim</strong> (anti) or <strong>derive the conclusion from hypothesis-typed fields</strong>
+(legit)? <code class="language-plaintext highlighter-rouge">obtain ⟨…⟩ := upstream; &lt;derivation&gt;</code> is legit; <code class="language-plaintext highlighter-rouge">:= d.&lt;conclusion&gt;</code> is
+not.</p>
+<h2 id="sibling-resolution-stubs--delete-shadows-flag-placeholders-do-not-bless">
+  
+  
+    <a href="#sibling-resolution-stubs--delete-shadows-flag-placeholders-do-not-bless" class="anchor-heading" aria-labelledby="sibling-resolution-stubs--delete-shadows-flag-placeholders-do-not-bless"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Sibling-resolution stubs — delete shadows, flag placeholders (do NOT bless)
+  
+  
+</h2>
+    
+
+<p>A <strong>sibling-resolution stub</strong> is a content-block <code class="language-plaintext highlighter-rouge">.lean</code> sibling whose body is
+<code class="language-plaintext highlighter-rouge">theorem foo : True := trivial</code> with a docstring <code class="language-plaintext highlighter-rouge">**Sibling-resolution stub** …</code>.
+The criterion evaluates the decl the block’s <code class="language-plaintext highlighter-rouge">lean.ref</code> <strong>resolves to</strong>
+(<code class="language-plaintext highlighter-rouge">export-json.ts</code>: sibling <strong>first</strong>, then <code class="language-plaintext highlighter-rouge">&lt;lakeRoot&gt;/&lt;Decl/Path&gt;.lean</code>), so a
+trivial sibling <em>shadows</em> the real library decl. Handle each by class — never
+silently bless a bare <code class="language-plaintext highlighter-rouge">: True</code>:</p>
+
+<ul>
+  <li><strong>Shadow</strong> — the ref’s decl-path resolves to a real library decl. The stub is
+pure shadowing: <strong>delete it</strong> (the block then resolves to the real proof). Do
+NOT exempt. See the <strong>no-shadowing-stubs</strong> directive in the project authoring conventions.</li>
+  <li><strong>Genuine placeholder</strong> — no library formalisation exists. The block is an
+<em>unformalised</em> proposition asserting <code class="language-plaintext highlighter-rouge">: True</code> — <strong>flag it</strong> (honest fix: state
+the real proposition with <code class="language-plaintext highlighter-rouge">sorry</code> + <code class="language-plaintext highlighter-rouge">-- Ref:</code>, or demote to <code class="language-plaintext highlighter-rouge">conjecture</code>).</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">definition</code></strong> blocks require a sibling — it must carry the <strong>real</strong>
+formalisation, never <code class="language-plaintext highlighter-rouge">: True</code>.</li>
+</ul>
+
+<p>Detect a stub by: docstring <code class="language-plaintext highlighter-rouge">Sibling-resolution stub</code>, OR body <code class="language-plaintext highlighter-rouge">: True := by
+trivial</code> / <code class="language-plaintext highlighter-rouge">:= trivial</code>. A stub <em>corrupted</em> into a <code class="language-plaintext highlighter-rouge">: True ∧ True := ⟨d.f1,…⟩</code>
+projection is the self-assuming-projection anti-pattern — restore the honest
+stub, then apply the shadow/placeholder rule above.</p>
+<h2 id="fix-recipe-priority-order">
+  
+  
+    <a href="#fix-recipe-priority-order" class="anchor-heading" aria-labelledby="fix-recipe-priority-order"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fix recipe (priority order)
+  
+  
+</h2>
+    
+
+<p>When a vacuous proof is confirmed, make it <strong>honest</strong> — do not hand-wave a fake
+proof:</p>
+
+<ol>
+  <li><strong>Genuine proof (best).</strong> Restructure so the carrier’s fields are genuine
+<em>hypotheses</em> (or come from a cited upstream result via <code class="language-plaintext highlighter-rouge">obtain</code>), and the
+theorem <strong>derives</strong> the conclusion (the cited import is load-bearing).</li>
+  <li><strong>§3b-cond conditional-class.</strong> If the result depends on a genuine conjecture,
+axiomatise the conjecture’s <strong>inputs</strong> as a <code class="language-plaintext highlighter-rouge">class</code>, carry it as an explicit
+<code class="language-plaintext highlighter-rouge">[Instance]</code> hypothesis, and <strong>derive</strong> the conclusion (non-degenerate per
+§3b-cond item 5). Add the conditional banner to the <code class="language-plaintext highlighter-rouge">.md</code>.</li>
+  <li><strong>Honest named axiom with <code class="language-plaintext highlighter-rouge">-- Ref:</code>.</strong> If the content is a legitimate external
+input, make it a clearly-named <code class="language-plaintext highlighter-rouge">axiom</code> with a bibliographic <code class="language-plaintext highlighter-rouge">-- Ref:</code> and have
+downstream theorems <strong>consume</strong> it.</li>
+  <li><strong>Demote the block kind <code class="language-plaintext highlighter-rouge">theorem</code> → <code class="language-plaintext highlighter-rouge">conjecture</code>.</strong> If the statement is
+genuinely unproved and not yet a rigorous conditional, change the <code class="language-plaintext highlighter-rouge">.ts</code> kind
+to <code class="language-plaintext highlighter-rouge">conjecture</code> (and update <code class="language-plaintext highlighter-rouge">.md</code>). This is a claim change — surface it to the
+owner before committing.</li>
+</ol>
+
+<p><strong>Never</strong> the batch anti-fix: wrapping the conclusion in a structure field and
+projecting it. That converts a <em>visible</em> gap (<code class="language-plaintext highlighter-rouge">sorry</code>) into an <em>invisible</em> one.</p>
+<h2 id="detection-heuristic-candidate-grep--agent-confirmation">
+  
+  
+    <a href="#detection-heuristic-candidate-grep--agent-confirmation" class="anchor-heading" aria-labelledby="detection-heuristic-candidate-grep--agent-confirmation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Detection heuristic (candidate grep → agent confirmation)
+  
+  
+</h2>
+    
+
+<ol>
+  <li>
+    <p><strong>Runnable scanner (preferred).</strong> <code class="language-plaintext highlighter-rouge">bun run
+content/pipeline/lean-vacuity-axiom-audit.ts</code> walks every <code class="language-plaintext highlighter-rouge">.lean</code> (library
+trees + content-block siblings), strips comments/docstrings, and emits a
+witness JSON (<code class="language-plaintext highlighter-rouge">docs/audits/&lt;date&gt;-lean-vacuity-axiom-audit.json</code>) keyed by
+path, with one entry per category (#1–#6 above). It exempts sibling-stub
+<em>shadows</em> (real formalisation resolvable via <code class="language-plaintext highlighter-rouge">lean.ref</code> / docstring) and
+field <em>compositions</em> that derive. <code class="language-plaintext highlighter-rouge">--write-sidecars</code> upserts
+<code class="language-plaintext highlighter-rouge">reviewer.kind="script"</code> candidate entries on the owning blocks’ <code class="language-plaintext highlighter-rouge">.qa.json</code>.</p>
+  </li>
+  <li><strong>Cheap candidate filter</strong> (regex):
+    <ul>
+      <li>proof body <code class="language-plaintext highlighter-rouge">:=\s*\w+\.\w+\s*$</code>, <code class="language-plaintext highlighter-rouge">:=\s*⟨[^⟩]*\.\w+[^⟩]*⟩</code>, <code class="language-plaintext highlighter-rouge">:= by\s+exact\s+\w+\.\w+</code>, <code class="language-plaintext highlighter-rouge">:= ctx\.</code>, <code class="language-plaintext highlighter-rouge">:= d\.</code>, <code class="language-plaintext highlighter-rouge">:= h\.</code></li>
+      <li>conclusion <code class="language-plaintext highlighter-rouge">: True</code>, <code class="language-plaintext highlighter-rouge">: .* = .*</code> where both sides identical, <code class="language-plaintext highlighter-rouge">holds : Prop</code></li>
+      <li><code class="language-plaintext highlighter-rouge">decide</code>, <code class="language-plaintext highlighter-rouge">native_decide</code></li>
+      <li>structures whose field names are <code class="language-plaintext highlighter-rouge">claim_*</code>, <code class="language-plaintext highlighter-rouge">exists_*</code>, <code class="language-plaintext highlighter-rouge">*_holds</code>, <code class="language-plaintext highlighter-rouge">result</code>, <code class="language-plaintext highlighter-rouge">property</code>, <code class="language-plaintext highlighter-rouge">spec</code>, <code class="language-plaintext highlighter-rouge">main</code></li>
+    </ul>
+  </li>
+  <li><strong>Agent confirmation</strong> (this skill / <code class="language-plaintext highlighter-rouge">lean-proof-review</code>): open the file, read
+the carrier’s definition, check whether the projected field’s type unifies
+with the goal (up to bound variables), and whether sibling fields are used.
+Apply the legit-vs-anti discriminator above. Record verdict + evidence.</li>
+</ol>
+<h3 id="7--true-carrier-field--proof-claims-unencoded--pattern-true-class-field">
+  
+  
+    <a href="#7--true-carrier-field--proof-claims-unencoded--pattern-true-class-field" class="anchor-heading" aria-labelledby="7--true-carrier-field--proof-claims-unencoded--pattern-true-class-field"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. <code class="language-plaintext highlighter-rouge">: True</code> carrier field — <code class="language-plaintext highlighter-rouge">proof-claims-unencoded</code> / pattern <code class="language-plaintext highlighter-rouge">true-class-field</code>
+  
+  
+</h3>
+    
+
+<p>A <code class="language-plaintext highlighter-rouge">class</code>/<code class="language-plaintext highlighter-rouge">structure</code> field typed literally <code class="language-plaintext highlighter-rouge">: True</code> (or <code class="language-plaintext highlighter-rouge">True ∧ … ∧ True</code>, or a
+<code class="language-plaintext highlighter-rouge">Prop := True</code> default) carries <strong>zero</strong> content — every instance satisfies it,
+so a downstream consumer that takes the field as a hypothesis assumes nothing.
+This is the <em>field-level</em> analogue of a <code class="language-plaintext highlighter-rouge">: True</code> conclusion, and it is the gap
+that the empty-prop-carrier (zero-field) and claims-unencoded (≥2 enumerated
+bullets) detectors both structurally miss: a <strong>single</strong> <code class="language-plaintext highlighter-rouge">: True</code> field on an
+otherwise-populated carrier. Worst case: a conjecture carrier with <code class="language-plaintext highlighter-rouge">holds : True</code>
+that a trivial <code class="language-plaintext highlighter-rouge">instance … := ⟨⟩</code> then “closes” (fabricating a content-free
+instance of an open conjecture). <strong>Honest fix:</strong> encode the real property as the
+field type, or — for genuinely-open infrastructure Mathlib lacks — annotate the
+field <code class="language-plaintext highlighter-rouge">opaque marker</code> / <code class="language-plaintext highlighter-rouge">@marker</code> (then it is <strong>exempt-but-tracked</strong>), never
+leave a bare un-annotated <code class="language-plaintext highlighter-rouge">: True</code>.</p>
+
+<blockquote>
+  <p><strong>Escalation signal on trivial-true.</strong> A <code class="language-plaintext highlighter-rouge">placeholder-true</code> /
+<code class="language-plaintext highlighter-rouge">def-disguised-true</code> whose docstring carries theorem-assertion language
+(<code class="language-plaintext highlighter-rouge">**Theorem**</code> / <code class="language-plaintext highlighter-rouge">**Lemma**</code> / <code class="language-plaintext highlighter-rouge">**Proposition**</code>) and is <strong>not</strong> a conjecture
+carrier should be annotated <em>“docstring asserts a provable claim while the Lean
+concludes <code class="language-plaintext highlighter-rouge">True</code>”</em> — a real claim hidden behind a tautology, distinct from an
+honest open conjecture.</p>
+</blockquote>
+<h2 id="agent-inspection-ledger--making-agent-confirmation-mandatory">
+  
+  
+    <a href="#agent-inspection-ledger--making-agent-confirmation-mandatory" class="anchor-heading" aria-labelledby="agent-inspection-ledger--making-agent-confirmation-mandatory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agent-inspection ledger — making agent confirmation mandatory
+  
+  
+</h2>
+    
+
+<p>The detector is <strong>high-recall by design</strong>; the legit-vs-genuine call requires
+agent inspection (a <code class="language-plaintext highlighter-rouge">decide</code> on a true concrete fact is legit; a <code class="language-plaintext highlighter-rouge">: True</code> hiding
+a real theorem is not). For <strong>content blocks</strong> that verdict lands on the
+<code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> sidecar (above). But a <strong>standalone library <code class="language-plaintext highlighter-rouge">.lean</code></strong>
+(<code class="language-plaintext highlighter-rouge">content/**/lean/&lt;Paper&gt;/**/*.lean</code> with no <code class="language-plaintext highlighter-rouge">.ts</code>/<code class="language-plaintext highlighter-rouge">.md</code> sibling) has <strong>no
+sidecar</strong>, so an agent verdict has nowhere durable to live — detection stays
+purely machine, and a one-off triage doc can silently mis-call a candidate
+“legit”. The <strong>review ledger</strong> closes that gap:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Seed/refresh: new + file-changed candidates become `needs-agent`.</span>
+bun run content/pipeline/lean-vacuity-axiom-audit.ts content/&lt;paper&gt; <span class="se">\</span>
+  <span class="nt">--review-ledger</span> docs/audits/lean-vacuity-review-ledger.json
+<span class="c"># Enforce: exit 1 if ANY non-exempt candidate lacks a FRESH agent verdict.</span>
+bun run content/pipeline/lean-vacuity-axiom-audit.ts content/&lt;paper&gt; <span class="se">\</span>
+  <span class="nt">--check-ledger</span> docs/audits/lean-vacuity-review-ledger.json
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Ledger</strong> (<code class="language-plaintext highlighter-rouge">lean-vacuity-review/v1</code>, committed): keyed by
+<code class="language-plaintext highlighter-rouge">&lt;relpath&gt;::&lt;decl&gt;::&lt;category&gt;</code>; each entry records the agent <code class="language-plaintext highlighter-rouge">verdict</code>
+(<code class="language-plaintext highlighter-rouge">genuine</code> | <code class="language-plaintext highlighter-rouge">legit</code> | <code class="language-plaintext highlighter-rouge">advisory</code> | <code class="language-plaintext highlighter-rouge">needs-agent</code>), optional <code class="language-plaintext highlighter-rouge">disposition</code> /
+<code class="language-plaintext highlighter-rouge">evidence</code> / <code class="language-plaintext highlighter-rouge">reviewer</code>, and the <strong><code class="language-plaintext highlighter-rouge">.lean</code> sha at review time</strong>.</li>
+  <li><strong>Staleness = re-review.</strong> If the <code class="language-plaintext highlighter-rouge">.lean</code> changes after a verdict, <code class="language-plaintext highlighter-rouge">file_sha</code>
+drifts and <code class="language-plaintext highlighter-rouge">--review-ledger</code> resets the entry to <code class="language-plaintext highlighter-rouge">needs-agent</code>
+(preserving <code class="language-plaintext highlighter-rouge">stale_prev_verdict</code>). A verdict only counts while it matches the
+file it was made against — the machine cannot bless a candidate, only an agent
+verdict can, and only while fresh.</li>
+  <li><strong>Resolved candidates are pruned</strong> automatically (a fixed file no longer
+flags, so its key drops out).</li>
+  <li><strong>The agent workflow:</strong> run <code class="language-plaintext highlighter-rouge">--review-ledger</code> to materialise the queue, inspect
+each <code class="language-plaintext highlighter-rouge">needs-agent</code> entry per the legit-vs-anti discriminators above, write the
+verdict (+ disposition/evidence) into the ledger, fix every <code class="language-plaintext highlighter-rouge">genuine</code> /
+<code class="language-plaintext highlighter-rouge">advisory</code> candidate, then <code class="language-plaintext highlighter-rouge">--check-ledger</code> must pass. This is the
+“agent inspection, not just machine” gate.</li>
+</ul>
+<h2 id="qa-criteria-sidecar-params--wiring">
+  
+  
+    <a href="#qa-criteria-sidecar-params--wiring" class="anchor-heading" aria-labelledby="qa-criteria-sidecar-params--wiring"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> QA criteria (sidecar params) — wiring
+  
+  
+</h2>
+    
+
+<p>Mirrors the existing <code class="language-plaintext highlighter-rouge">proof-statement-integrity</code> model (Agent-checked,
+<code class="language-plaintext highlighter-rouge">automated: false</code>). Per-block sidecar <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> gains a
+<code class="language-plaintext highlighter-rouge">criteria["proof-no-&lt;x&gt;"]</code> array of <code class="language-plaintext highlighter-rouge">QaCriterionEntry</code> with <code class="language-plaintext highlighter-rouge">reviewer.kind =
+"agent"</code>.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>criterion id</th>
+      <th>status</th>
+      <th>anti-pattern</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proof-no-self-assuming-projection</code></td>
+      <td>active</td>
+      <td>#1 circular projection</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proof-no-trivial-true</code></td>
+      <td>active</td>
+      <td>#2 tautological conclusion</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proof-no-false-premise</code></td>
+      <td>active</td>
+      <td>#3 vacuously true</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proof-no-unused-hypotheses</code></td>
+      <td>active</td>
+      <td>#4 weakened statement</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proof-no-decide-masking</code></td>
+      <td>active</td>
+      <td>#5 evaluator masking (<code class="language-plaintext highlighter-rouge">native_decide</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proof-no-provable-axiom</code></td>
+      <td>active</td>
+      <td>#6 uncited / provable axiom</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Minimal wiring:</strong></p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code> — add a <code class="language-plaintext highlighter-rouge">QaCriterionDefinition</code>
+to the <code class="language-plaintext highlighter-rouge">PROOF</code> array (it auto-flows into <code class="language-plaintext highlighter-rouge">QA_CRITERIA_REGISTRY</code>,
+<code class="language-plaintext highlighter-rouge">PROOF_WATCHER_CRITERIA</code>, and the <code class="language-plaintext highlighter-rouge">proof</code> watcher axis). Use:
+<code class="language-plaintext highlighter-rouge">domain: "proof"</code>, <code class="language-plaintext highlighter-rouge">default_severity: "critical"</code>, <code class="language-plaintext highlighter-rouge">depends_on: ["lean"]</code>,
+<code class="language-plaintext highlighter-rouge">automated: false</code>, <code class="language-plaintext highlighter-rouge">applies_to: ["theorem","lemma","proposition","corollary"]</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">.claude/skills/local/proof-integration-watcher.md</code> — add a dispatch row per
+criterion → <code class="language-plaintext highlighter-rouge">lean-proof-review</code> (logic-validity review type).</li>
+  <li>No new checker file: <code class="language-plaintext highlighter-rouge">qa-sweep</code> marks <code class="language-plaintext highlighter-rouge">automated: false</code> criteria
+<code class="language-plaintext highlighter-rouge">needs-agent</code>; <code class="language-plaintext highlighter-rouge">proof-integration-watcher</code> dispatches an agent that runs this
+skill and writes the <code class="language-plaintext highlighter-rouge">reviewer.kind="agent"</code> sidecar entry.</li>
+</ol>
+
+<p><code class="language-plaintext highlighter-rouge">bun run content/pipeline/qa-sweep.ts &lt;block-path&gt; --only proof-no-self-assuming-projection</code>
+marks the entry <code class="language-plaintext highlighter-rouge">needs-agent</code>; the agent then fills the verdict.</p>
+<h2 id="audit--drain-workflow">
+  
+  
+    <a href="#audit--drain-workflow" class="anchor-heading" aria-labelledby="audit--drain-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Audit + drain workflow
+  
+  
+</h2>
+    
+
+<ol>
+  <li><strong>Audit:</strong> grep candidates across all <code class="language-plaintext highlighter-rouge">.lean</code> (library trees + content-block
+siblings), agent-confirm, record findings in
+<code class="language-plaintext highlighter-rouge">docs/audits/&lt;date&gt;-lean-vacuous-proof-audit.md</code>.</li>
+  <li><strong>Classify:</strong> assign each confirmed instance a fix from the recipe (1–4).
+Recipe-4 (demote to conjecture) items are claim changes — list them for owner
+sign-off, don’t auto-demote.</li>
+  <li><strong>Drain:</strong> fix file-by-file (or small directory batches), microcommit per
+AGENTS.md branch+PR policy, verify each with <code class="language-plaintext highlighter-rouge">lean</code>-direct against the
+restored cache oleans (per <code class="language-plaintext highlighter-rouge">lean-environment-setup.md</code>).</li>
+  <li><strong>Backfill sidecars:</strong> run <code class="language-plaintext highlighter-rouge">qa-sweep --only &lt;criterion&gt;</code> on the drained blocks
+so the green verdict is recorded.</li>
+</ol>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

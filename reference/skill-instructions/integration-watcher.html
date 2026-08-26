@@ -1,0 +1,2103 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(97)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(97) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(97) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(97) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>integration-watcher (abstract parent) | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="integration-watcher (abstract parent)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/integration-watcher.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/integration-watcher.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="integration-watcher (abstract parent)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"integration-watcher (abstract parent)","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/integration-watcher.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>integration-watcher (abstract parent)</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/integration-watcher.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/integration-watcher.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="integration-watcher-abstract-parent">
+  
+  
+    <a href="#integration-watcher-abstract-parent" class="anchor-heading" aria-labelledby="integration-watcher-abstract-parent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> integration-watcher (abstract parent)
+  
+  
+</h1>
+    
+
+<p>A concrete watcher (this skill’s child) <strong>watches incoming activity</strong>
+on a focused content axis — proofs, derivation discipline,
+compute-chain wiring, voice, structure, or any future domain — runs a
+domain QA pipeline on every detected change, queues findings, attempts
+auto-discharge where possible, and asks the author for the rest.</p>
+
+<p>Concrete children fill the slots below for one QA axis each. Typical
+axes (a project picks the ones it needs):</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Child</th>
+      <th>Domain</th>
+      <th>Goal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proof-integration-watcher</code></td>
+      <td>Proof QA (narrative + formal layer)</td>
+      <td>No bare gaps, no axiom growth, formal-layer compile check, no naked conjectures with provable scaffolding</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">canonical-watcher</code></td>
+      <td>Derivation discipline</td>
+      <td>No undisclosed free parameters, no numerology, no coefficient fits (per the project’s derivation-discipline statement)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">compute-integration-watcher</code></td>
+      <td>Cross-layer compute wiring</td>
+      <td>Every provable/derived block has a probe + production consumer</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">detangler-integration-watcher</code></td>
+      <td>Structural QA (graph + density)</td>
+      <td>No new forward refs, sections within the block-count band, no new cross-chapter forward edges</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">one-voice-integration-watcher</code></td>
+      <td>Content-block voice + fit + framework</td>
+      <td>Scholarly voice (narrative + proof bodies), zero AI-slop, block fit to section/chapter, canonical-vs-deprecated notation; persists per-block <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> audit reports (multi-reviewer, hash-keyed staleness)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">devils-advocate-watcher</code></td>
+      <td>Adversarial “why is this wrong” review</td>
+      <td>For every block + formal sibling, construct the strongest referee objection; multiple adversarial lenses + adjudicator; emits <code class="language-plaintext highlighter-rouge">da-*</code> sidecars; gated by the refutation-scope rule + corpus-grep checklist</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="domain-slots-every-child-must-fill">
+  
+  
+    <a href="#domain-slots-every-child-must-fill" class="anchor-heading" aria-labelledby="domain-slots-every-child-must-fill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Domain slots (every child must fill)
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Slot</th>
+      <th>Where in this parent</th>
+      <th>What the child provides</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>A. Goal statement</strong></td>
+      <td>top of child</td>
+      <td>One-paragraph driving function</td>
+    </tr>
+    <tr>
+      <td><strong>B. §3 trigger filter</strong></td>
+      <td>§3</td>
+      <td>Domain-specific patterns: which file paths / commit subjects / PR comment keywords trigger the §4 pipeline</td>
+    </tr>
+    <tr>
+      <td><strong>C. §4b dispatch table</strong></td>
+      <td>§4b</td>
+      <td>Which specialist skills/scripts to invoke per event, in parallel</td>
+    </tr>
+    <tr>
+      <td><strong>D. §4c finding taxonomy</strong></td>
+      <td>§4c</td>
+      <td>The set of violation/finding kinds the domain recognizes</td>
+    </tr>
+    <tr>
+      <td><strong>E. §4d discharge bands</strong></td>
+      <td>§4d</td>
+      <td>Domain-specific examples of Auto-discharge / Author-assist / Defer findings</td>
+    </tr>
+    <tr>
+      <td><strong>F. §4e author-ask templates</strong></td>
+      <td>§4e</td>
+      <td>Domain-specific question forms (numbered choices, file/line citations)</td>
+    </tr>
+    <tr>
+      <td><strong>G. §5a backlog discovery</strong></td>
+      <td>§5a</td>
+      <td>What to enumerate from the codebase at backlog-sweep time</td>
+    </tr>
+    <tr>
+      <td><strong>H. §5b prioritisation</strong></td>
+      <td>§5b</td>
+      <td>Domain-specific ranking rule for the backlog</td>
+    </tr>
+    <tr>
+      <td><strong>I. §6 invariants</strong></td>
+      <td>§6</td>
+      <td>Per-commit checks the watcher enforces on its own branch</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Everything else — §1, §2, §4a, §4f, §5c-§5m, §7-§9, anti-patterns,
+checklist — is defined here and inherited verbatim.</p>
+<h2 id="0-invocation-as-integration-watch-args">
+  
+  
+    <a href="#0-invocation-as-integration-watch-args" class="anchor-heading" aria-labelledby="0-invocation-as-integration-watch-args"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. Invocation as <code class="language-plaintext highlighter-rouge">/integration-watch [args]</code>
+  
+  
+</h2>
+    
+
+<p>This parent skill is <strong>abstract — <code class="language-plaintext highlighter-rouge">user_invocable: false</code></strong>.
+The <code class="language-plaintext highlighter-rouge">/integration-watch</code> slash command is implemented by
+<a href="/folio-assistant/reference/skill-instructions/integration-watch.html"><code class="language-plaintext highlighter-rouge">integration-watch</code></a>, which acts as the single
+entry point and dispatches to one or more concrete children. Keeping
+the dispatcher and the abstract parent separate avoids duplicating
+the slash-command routing.</p>
+
+<p>This section documents the <strong>invocation grammar</strong> that the dispatcher
+must implement; the parent only describes shared mechanics that every
+concrete watcher inherits.</p>
+
+<p>When the user invokes <code class="language-plaintext highlighter-rouge">/integration-watch</code> directly the dispatcher:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>User input</th>
+      <th>Behaviour</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/integration-watch</code> (no arg)</td>
+      <td><strong>Ask which.</strong> Use <code class="language-plaintext highlighter-rouge">AskUserQuestion</code> capped at 4 chips, role-gated. Do NOT auto-pick.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/integration-watch &lt;axis&gt;</code></td>
+      <td>Dispatch the named child watcher</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/integration-watch all</code> or comma/space list</td>
+      <td>Dispatch <strong>all</strong> named watchers in parallel — each gets its own Monitor, its own queue/ledger, its own PR subscription set (deduped).</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/integration-watch &lt;unknown&gt;</code></td>
+      <td>List the available children, reject the unknown name, re-prompt via <code class="language-plaintext highlighter-rouge">AskUserQuestion</code>.</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>No-arg full-context preamble (per §4e rule):</strong> before the
+<code class="language-plaintext highlighter-rouge">AskUserQuestion</code>, write a short chat message naming each available
+watcher and its one-line QA axis, then surface the structured chip set.</p>
+<h2 id="0a-repo-owner-preferences-binding-for-all-watchers">
+  
+  
+    <a href="#0a-repo-owner-preferences-binding-for-all-watchers" class="anchor-heading" aria-labelledby="0a-repo-owner-preferences-binding-for-all-watchers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0a. Repo-owner preferences (binding for all watchers)
+  
+  
+</h2>
+    
+
+<p>Per AGENTS.md §”User accessibility” the repo owner types with
+difficulty and prefers a small set of binding behavioural defaults.
+These override the historical watcher defaults — every child inherits
+them.</p>
+
+<ol>
+  <li><strong>One branch / one PR for related things.</strong> Group many related
+fixes (especially backlog items) into a single branch + single PR.
+Don’t open small per-item PRs. See §5j step 1 (“Cluster
+aggressively”) and §5g step 5 for the merge-prompt sequencing.</li>
+  <li><strong>Don’t spawn more than one agent at a time without explicit
+consent.</strong> Sequential foreground work is the default; parallel
+agent dispatch requires affirmative user approval per batch. See
+§5m for the full rule and the narrow exceptions (read-only tool
+calls in one response are still fine; agent spawns are the
+constraint).</li>
+  <li><strong>Group a lot — backlog batches are large by default.</strong> When the
+backlog has 4-20 related items in the same finding bucket, do them
+all in one branch, stacked as multiple commits if they need
+different commit messages. Don’t split into N small branches.</li>
+</ol>
+
+<p>These rules supersede any “default to parallel” / “one PR per item”
+framing earlier in this document. When in doubt: cluster more,
+dispatch fewer agents, ask before parallelising.</p>
+<h2 id="0c-sibling-coordination">
+  
+  
+    <a href="#0c-sibling-coordination" class="anchor-heading" aria-labelledby="0c-sibling-coordination"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0c. Sibling coordination
+  
+  
+</h2>
+    
+
+<p>Per AGENTS.md §”User accessibility” item “Coordinate intent with
+sibling branches”:</p>
+
+<ul>
+  <li><strong>At workplan start</strong> (new branch / new tranche), list active
+sibling PRs via <code class="language-plaintext highlighter-rouge">mcp__github__list_pull_requests</code> (open) and
+recently-updated <code class="language-plaintext highlighter-rouge">claude/*</code> branches via <code class="language-plaintext highlighter-rouge">mcp__github__list_branches</code>.
+Identify siblings whose scope overlaps (same chapter, same source
+file, same domain).</li>
+  <li><strong>Post a 1-3 sentence intent comment</strong> on each genuinely-overlapping
+sibling PR. Format: “Starting <theme> on <branch>; will touch
+</branch></theme>    <file or="" scope="">; flag conflicts to me." Don't comment on every
+sibling; don't make noise on the PR. Skip if no overlap.
+</file>
+  </li>
+  <li><strong>Inform siblings of critical findings</strong> as they land. If you
+discover something a sibling is waiting on, post on the sibling PR
+proactively — don’t wait for them to step on the rake.</li>
+  <li><strong>During idle (per §0b 5-minute trigger)</strong> ALSO check sibling PRs
+for coordination updates that affect your branch’s scope.
+<code class="language-plaintext highlighter-rouge">mcp__github__pull_request_read get_comments</code> on each watched
+sibling; new comments addressed to “all watchers” or referencing
+your branch’s keywords are actionable backlog items.</li>
+</ul>
+
+<p>This rule supersedes the historical “post on the PR only when asked”
+framing — proactive coordination on workplan start + during idle is
+now the default.</p>
+<h2 id="0d-askuserquestion-accessibility">
+  
+  
+    <a href="#0d-askuserquestion-accessibility" class="anchor-heading" aria-labelledby="0d-askuserquestion-accessibility"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0d. AskUserQuestion accessibility
+  
+  
+</h2>
+    
+
+<p>Per AGENTS.md §”User accessibility” item “Default <code class="language-plaintext highlighter-rouge">AskUserQuestion</code> to
+<code class="language-plaintext highlighter-rouge">multiSelect: true</code> + 🟡 marker”: the repo owner types with difficulty.</p>
+
+<ul>
+  <li><strong>Default <code class="language-plaintext highlighter-rouge">multiSelect: true</code>.</strong> Single-select forces the user to
+type “1, 2” as free text when multiple options apply. Most watcher
+decision points are not mutually exclusive, so multi-select is the
+safer default.</li>
+  <li><strong>Prefix questions with 🟡</strong> to mark the agent as waiting / blocked
+on input. Consistent use lets the user scan chat history and find
+every pending decision.</li>
+  <li><strong>Phrase questions to allow optional notes</strong>: “Pick all that apply;
+add ‘Other’ with a free-text note if needed.”</li>
+  <li>Single-select is OK only for genuinely mutually-exclusive actions.</li>
+</ul>
+<h2 id="0b-idle-time-backlog-policy-5-minute-trigger">
+  
+  
+    <a href="#0b-idle-time-backlog-policy-5-minute-trigger" class="anchor-heading" aria-labelledby="0b-idle-time-backlog-policy-5-minute-trigger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0b. Idle-time backlog policy (5-minute trigger)
+  
+  
+</h2>
+    
+
+<p>Per AGENTS.md §”Agent work-plan policy” item 4 (5-minute idle
+trigger): when this watcher has been idle for &gt; 5 minutes (no
+substantive output beyond TICK heartbeats or empty acks),
+automatically start processing backlog without waiting for the user
+to prompt. Walk the priority order:</p>
+
+<ol>
+  <li><strong>Session todos</strong> (beans work-plan).</li>
+  <li><strong>Current-PR todos</strong> — open-PR body checklist + unresolved
+review-comment threads on the branch’s PR (via
+<code class="language-plaintext highlighter-rouge">mcp__github__pull_request_read get_review_comments</code> and <code class="language-plaintext highlighter-rouge">get</code> for
+the body).</li>
+  <li><strong>Integration-watcher queue items</strong> — this watcher’s own
+<code class="language-plaintext highlighter-rouge">.beans/&lt;name&gt;-queue.json</code> first, then sibling watchers’. Prefer
+items whose <code class="language-plaintext highlighter-rouge">block_or_script</code> overlaps the current PR’s scope.</li>
+  <li>
+    <p><strong>Refresh stale sidecars + witnesses.</strong> The QA pipeline depends on
+<code class="language-plaintext highlighter-rouge">*.qa.json</code> sidecars and <code class="language-plaintext highlighter-rouge">*.witness.json</code> files staying in sync
+with the source they audit. Treat the following as actionable
+backlog whenever idle:</p>
+
+    <ul>
+      <li><strong>Sidecar staleness</strong> — any block where either:
+(a) the SHA-256 prefix of the current source file content differs
+from the value stored under <code class="language-plaintext highlighter-rouge">source_hashes.{...}</code> in the
+<code class="language-plaintext highlighter-rouge">.qa.json</code>, OR
+(b) the SHA-256 prefix of the current checker script differs from
+the <code class="language-plaintext highlighter-rouge">criteria.&lt;crit&gt;[-1].reviewer.script_hash</code> value stored for
+the criterion’s most recent entry. (Both stored hashes are
+12-character SHA-256 prefixes computed by the qa-sweep code;
+recompute with the same algorithm — see
+<code class="language-plaintext highlighter-rouge">content/pipeline/qa-sweep.ts</code> for the canonical helper.)
+Refresh by deleting the stale <code class="language-plaintext highlighter-rouge">criteria.&lt;crit&gt;</code> entry from the
+<code class="language-plaintext highlighter-rouge">.qa.json</code> and running
+<code class="language-plaintext highlighter-rouge">bun run content/pipeline/qa-sweep.ts &lt;path&gt; --only &lt;crit&gt;</code>
+(or invoke <code class="language-plaintext highlighter-rouge">/integration-audit &lt;axis&gt;</code> for a whole axis at once).</li>
+      <li><strong>Section-title sidecar staleness</strong> — the chapter-scoped
+<code class="language-plaintext highlighter-rouge">content/&lt;paper&gt;/section-title-audit.qa.json</code> sidecars are a
+<em>separate</em> kind (title/structure machine findings + agent
+title-coherence verdicts), refreshed by
+<code class="language-plaintext highlighter-rouge">qa-section-title-audit.ts</code>, <strong>not</strong> qa-sweep. Regenerate with
+<code class="language-plaintext highlighter-rouge">bun run content/pipeline/qa-section-title-audit.ts --report-only
+--write-sidecar --thorough</code>. The <code class="language-plaintext highlighter-rouge">--thorough</code> flag folds every
+contained block’s source content + descendant subsections into a
+per-section subtree hash, so a recorded title verdict re-opens
+(<code class="language-plaintext highlighter-rouge">pending</code>) when any descendant drifts. Keep the committed
+sidecars in thorough mode.</li>
+      <li><strong>Witness staleness</strong> — any <code class="language-plaintext highlighter-rouge">*.witness.json</code> where either:
+(a) <code class="language-plaintext highlighter-rouge">witness.scriptCommitSha</code> differs from the current <code class="language-plaintext highlighter-rouge">HEAD</code> git
+commit SHA on the producer script’s containing file
+(<code class="language-plaintext highlighter-rouge">git log -1 --format=%H -- &lt;producer&gt;</code>), OR
+(b) <code class="language-plaintext highlighter-rouge">witness.scriptHash</code> (SHA-256 prefix of the producer script’s
+file content) differs from a freshly-computed hash of the current
+producer script. Refresh by re-running the producer with
+<code class="language-plaintext highlighter-rouge">2&gt;&amp;1 | tee /tmp/&lt;script&gt;.log</code> per the long-compute logging
+discipline.</li>
+      <li><strong>Detection budget</strong> — capped at ≤ 10 sidecars / ≤ 3 witnesses
+per idle pass to avoid burying the visible queue items; remaining
+stale entries get logged for the next idle window.</li>
+      <li><strong>No silent regen</strong> — every refresh that changes a sidecar or
+witness gets a commit on the current branch with a
+<code class="language-plaintext highlighter-rouge">chore(qa-sweep|witness)</code> message naming the producer + criterion
+        <ul>
+          <li>count of entries updated.</li>
+        </ul>
+      </li>
+      <li><strong>Witness producer ≠ available</strong> — if a witness’s producer script
+crashes (e.g. blocked on a host fetch, a long compute killed), do
+NOT delete the sidecar. File a queue item naming the producer +
+the specific blocker and move on.</li>
+    </ul>
+  </li>
+  <li><strong>Cross-cutting cleanups</strong> (bare-URL reference upgrades, deferred
+bibliography items, glossary backfills).</li>
+</ol>
+
+<p>For this skill’s children specifically:</p>
+
+<ul>
+  <li>The watcher’s queue file is the primary backlog source (item 3).
+When triggered, read the queue, pull the highest-priority
+<code class="language-plaintext highlighter-rouge">needs-author</code> or unresolved <code class="language-plaintext highlighter-rouge">triage</code> item, and apply the §4 → §5 →
+§6 child-specific procedure on it.</li>
+  <li>If the queue is empty/all-terminal, fall through to item 4
+(cross-cutting cleanups). Don’t sit idle if there’s reachable
+cleanup work.</li>
+  <li>The “pause” command from the user IS a terminal state — do not
+pursue backlog after the user says “pause” or “stop until I’m back”.
+Only the explicit “resume” / “continue” restart command lifts the
+pause.</li>
+</ul>
+
+<p>This rule exists because integration-watcher sessions often spend long
+stretches in idle monitor-TICK mode after the in-flight tranche lands.
+Productive idle is “work the next queue item”, not “TICK heartbeats
+forever”.</p>
+<h2 id="1-baseline--setup-run-once-per-session">
+  
+  
+    <a href="#1-baseline--setup-run-once-per-session" class="anchor-heading" aria-labelledby="1-baseline--setup-run-once-per-session"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Baseline + setup (run once per session)
+  
+  
+</h2>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Repo identity — declared once, referenced everywhere below.</span>
+<span class="c"># Read from the project config / git remote, not hard-coded.</span>
+<span class="nv">OWNER</span><span class="o">=</span>&lt;repo-owner&gt;
+<span class="nv">REPO</span><span class="o">=</span>&lt;repo-name&gt;
+
+<span class="c"># Bootstrap the queue + ledger under .beans/ (queue tracked as a bulk-JSON</span>
+<span class="c"># coordination queue; ledger gitignored — both survive branch switches)</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> .beans
+<span class="nv">NAME</span><span class="o">=</span><span class="s2">"&lt;your-watcher-name&gt;"</span>
+<span class="o">[</span> <span class="nt">-f</span> <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-queue.json"</span> <span class="o">]</span> <span class="o">||</span> <span class="se">\</span>
+  <span class="nb">echo</span> <span class="s1">'{"items":[],"audited":{},"reviewed_up_to":{}}'</span> <span class="o">&gt;</span> <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-queue.json"</span>
+<span class="o">[</span> <span class="nt">-f</span> <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span> <span class="o">]</span> <span class="o">||</span> <span class="nb">cat</span> <span class="o">&gt;</span> <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh">
+# </span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="sh"> — session ledger
+
+| ts (UTC) | event | scope | findings | action |
+|----------|-------|-------|----------|--------|
+</span><span class="no">EOF
+
+</span><span class="c"># Stash main baseline so §5f timeout-recovery can diff cleanly.</span>
+<span class="c"># Explicit refspec — see coordinate.md §8a: a bare fetch may not write</span>
+<span class="c"># refs/remotes/origin/main, and a baseline read from an unwritten ref is not one.</span>
+git fetch origin <span class="s1">'+refs/heads/main:refs/remotes/origin/main'</span> 2&gt;/dev/null
+git rev-parse origin/main <span class="o">&gt;</span> <span class="s2">"/tmp/_</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">_main.sha"</span>
+</code></pre></div></div>
+
+<p>Queue file shape (children may extend with extra fields but must keep
+this core):</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;sha1-12 of block-or-script + finding-class&gt;"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"block_or_script"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;label or path&gt;"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"paths"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nl">"md"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nl">"formal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nl">"py"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w"> </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"finding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;domain-specific from Slot D&gt;"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"critical | major | minor"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"watch:main:&lt;sha&gt; | watch:pr:&lt;N&gt;:&lt;event-ts&gt; | backlog"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"source_sha"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;full SHA of the commit that triggered or backlogged this item&gt;"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"evidence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;one paragraph: file:line + offending text&gt;"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"attempts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nl">"tactic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nl">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fail|partial|ok"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"queued | in-progress | resolved | needs-author | wontfix | queued-for-removal"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"asked_author_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"audited"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"&lt;block-or-script&gt;"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;ISO-8601 ts of last audit pass&gt;"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sha"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;full SHA of main HEAD at audit time&gt;"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"criteria"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"&lt;domain-specific finding-class&gt;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"..."</span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"reviewed_up_to"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"&lt;criterion&gt;"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;full SHA of main HEAD at which all commits up-to-and-including have been audited under this criterion&gt;"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Schema notes:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">source_sha</code></strong> on every queue item records the commit that
+triggered the finding. For backlog items, set to the main HEAD at
+backlog-pass time.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">audited[&lt;block&gt;]</code></strong> is an object (not a bare timestamp). The <code class="language-plaintext highlighter-rouge">sha</code>
+records WHICH main HEAD the audit was against; the <code class="language-plaintext highlighter-rouge">criteria</code> array
+records WHICH finding-classes (Slot D) were checked.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">reviewed_up_to[&lt;criterion&gt;]</code></strong> is the per-criterion pointer to the
+most recent main commit at which the watcher has completed a full
+sweep under that criterion. Used by §5l resume to compute the
+unreviewed-commits queue.</li>
+</ul>
+
+<p>The idle backlog sweep (§5) skips blocks whose <code class="language-plaintext highlighter-rouge">audited</code> entry covers
+the current set of criteria AND was taken at a SHA ≥ the most recent
+change to the block’s source files. Anything else gets re-audited.</p>
+<h2 id="2-active-watching">
+  
+  
+    <a href="#2-active-watching" class="anchor-heading" aria-labelledby="2-active-watching"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Active watching
+  
+  
+</h2>
+    
+<h3 id="2a-watch-originmain-monitor-poll">
+  
+  
+    <a href="#2a-watch-originmain-monitor-poll" class="anchor-heading" aria-labelledby="2a-watch-originmain-monitor-poll"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2a. Watch <code class="language-plaintext highlighter-rouge">origin/main</code> (Monitor poll)
+  
+  
+</h3>
+    
+
+<p>Arm exactly <strong>one</strong> persistent Monitor per session. Each new commit
+line triggers the §4 per-event pipeline. <strong>Emit every commit</strong> — do
+not cap with <code class="language-plaintext highlighter-rouge">head -N</code>, or fast bursts silently drop tail commits.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Monitor:
+  description: "origin/main new commits — &lt;NAME&gt;"
+  persistent: true
+  command: |
+    last=$(git ls-remote origin main 2&gt;/dev/null | cut -f1)
+    while true; do
+      cur=$(git ls-remote origin main 2&gt;/dev/null | cut -f1)
+      if [ -n "$cur" ] &amp;&amp; [ "$cur" != "$last" ]; then
+        git fetch origin main 2&gt;/dev/null
+        # Use %H (full SHA) so downstream `git diff-tree` / `git show`
+        # calls don't risk abbreviation ambiguity in long sessions.
+        git log --reverse --format='MAIN %H %s' "$last..$cur"
+        last=$cur
+      fi
+      gh_now=$(date -u +%s)
+      if [ -z "$last_pr_check" ] || [ $((gh_now - last_pr_check)) -gt 300 ]; then
+        printf 'TICK %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        last_pr_check=$gh_now
+      fi
+      sleep 300
+    done
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">TICK</code> heartbeat (every 5 min) lets the foreground agent (a)
+re-list open PRs and subscribe to any new ones, (b) pull a backlog
+item if the queue was idle in the interval.</p>
+
+<p>If the Monitor reports <code class="language-plaintext highlighter-rouge">[Monitor timed out — re-arm if needed]</code>, apply
+<strong>watch.md §5b</strong> timeout-recovery (compare baseline SHA against current
+<code class="language-plaintext highlighter-rouge">origin/main</code>, walk the missed range) before re-arming.</p>
+<h3 id="2b-subscribe-to-prs">
+  
+  
+    <a href="#2b-subscribe-to-prs" class="anchor-heading" aria-labelledby="2b-subscribe-to-prs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2b. Subscribe to PRs
+  
+  
+</h3>
+    
+
+<p><strong>At setup</strong> subscribe to: (a) own PR (if pushed) and (b) every open PR
+updated in the last 7 days.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">own</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">PR</span> <span class="n">number</span> <span class="n">of</span> <span class="n">HEAD</span> <span class="n">branch</span><span class="o">&gt;</span>
+<span class="n">mcp__github__subscribe_pr_activity</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="n">OWNER</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">REPO</span><span class="p">,</span> <span class="n">pullNumber</span><span class="o">=</span><span class="n">own</span><span class="p">)</span>
+
+<span class="n">prs</span> <span class="o">=</span> <span class="n">mcp__github__list_pull_requests</span><span class="p">(</span>
+  <span class="n">owner</span><span class="o">=</span><span class="n">OWNER</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">REPO</span><span class="p">,</span>
+  <span class="n">state</span><span class="o">=</span><span class="s">"open"</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s">"updated"</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s">"desc"</span><span class="p">,</span> <span class="n">perPage</span><span class="o">=</span><span class="mi">40</span>
+<span class="p">)</span>
+<span class="n">cutoff</span> <span class="o">=</span> <span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="mi">7</span><span class="n">d</span>
+<span class="k">for</span> <span class="n">pr</span> <span class="ow">in</span> <span class="n">prs</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">parse</span><span class="p">(</span><span class="n">pr</span><span class="p">[</span><span class="s">"updated_at"</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">cutoff</span> <span class="ow">and</span> <span class="n">pr</span><span class="p">[</span><span class="s">"number"</span><span class="p">]</span> <span class="o">!=</span> <span class="n">own</span><span class="p">:</span>
+    <span class="n">mcp__github__subscribe_pr_activity</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="n">OWNER</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">REPO</span><span class="p">,</span> <span class="n">pullNumber</span><span class="o">=</span><span class="n">pr</span><span class="p">[</span><span class="s">"number"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><strong>Continuously:</strong> at every <code class="language-plaintext highlighter-rouge">TICK</code> heartbeat, re-list open PRs and
+subscribe to any new ones. Subscription is idempotent.</p>
+<h3 id="2c-continuous-main-following-for-own-prs-mandatory">
+  
+  
+    <a href="#2c-continuous-main-following-for-own-prs-mandatory" class="anchor-heading" aria-labelledby="2c-continuous-main-following-for-own-prs-mandatory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2c. Continuous main-following for own PRs (MANDATORY)
+  
+  
+</h3>
+    
+
+<p>Every new commit landing on <code class="language-plaintext highlighter-rouge">origin/main</code> (detected via the §2a Monitor
+poll) <strong>must</strong> trigger an own-PR rebase walk via §5g step 7
+<strong>unconditionally</strong> — independent of whether the §3 trigger filter
+matches the commit’s scope or §4 dispatch runs any specialists.</p>
+
+<p>The rationale: a watcher session that lets its own PRs accumulate
+“behind by N commits” against <code class="language-plaintext highlighter-rouge">origin/main</code> ships dirty work to
+reviewers and risks GitHub’s “needs rebase” state silently when the
+user comes back to merge.</p>
+
+<p><strong>Fire rule</strong> (every Monitor commit line):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>on new main commit SHA detected by Monitor:
+  1. Refresh local main tracking: git fetch origin main
+  2. Walk every own PR (this watcher created in this session)
+     per §5g step 7 — worktree rebase + force-with-lease push.
+     Witness-drift conflicts auto-resolve via §5f.
+  3. THEN (independently) check §3 trigger filter and dispatch
+     §4 specialists if in-scope.
+</code></pre></div></div>
+
+<p>The walk in step 2 is <strong>idempotent</strong> (a no-op when no own PRs are
+behind), so applying it on every commit is cheap.</p>
+
+<p><strong>Cross-PR rebase caveat (per-session limitation):</strong> the commit-signing
+wrapper some repos use emits “missing source” errors when invoked from
+a worktree opened by a session that didn’t author the commits being
+rebased. A watcher session can only auto-rebase PRs it OPENED IN THAT
+SAME SESSION — not sibling PRs from other sessions. For sibling PRs,
+surface the “behind by N” finding to the user via the §5e idle
+author-ask dispatcher instead.</p>
+<h3 id="2d-stop-conditions">
+  
+  
+    <a href="#2d-stop-conditions" class="anchor-heading" aria-labelledby="2d-stop-conditions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2d. Stop conditions
+  
+  
+</h3>
+    
+
+<ul>
+  <li>User says <em>“stop watching”</em>, <em>“unsubscribe”</em>, or <code class="language-plaintext highlighter-rouge">/unwatch</code>.</li>
+  <li>Branch merged or closed → unsubscribe own PR; keep sibling
+subscriptions if user still wants coordination.</li>
+  <li>Session ends.</li>
+</ul>
+
+<p>To stop: call <code class="language-plaintext highlighter-rouge">TaskStop</code> on the Monitor and
+<code class="language-plaintext highlighter-rouge">mcp__github__unsubscribe_pr_activity</code> on every subscribed PR. Record
+the stop event in the ledger.</p>
+<h2 id="3-trigger-filter--does-this-event-match-the-domain">
+  
+  
+    <a href="#3-trigger-filter--does-this-event-match-the-domain" class="anchor-heading" aria-labelledby="3-trigger-filter--does-this-event-match-the-domain"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Trigger filter — does this event match the domain?
+  
+  
+</h2>
+    
+
+<p>Children fill <strong>Slot B</strong> with the domain-specific filter. The parent
+only requires the filter return a boolean <code class="language-plaintext highlighter-rouge">is_in_scope=true|false</code> and,
+if false, that the event be recorded as a one-liner in the ledger and
+otherwise skipped.</p>
+
+<p>Common shapes children typically check:</p>
+
+<ul>
+  <li><strong>File path patterns</strong> in the changed-files list</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">.ts</code> block kind</strong> of any touched <code class="language-plaintext highlighter-rouge">content/.../**/*.ts</code></li>
+  <li><strong>PR comment body keywords</strong> (for review-comment events)</li>
+</ul>
+
+<p>If <code class="language-plaintext highlighter-rouge">is_in_scope=false</code>, emit a one-liner to the ledger and return.</p>
+<h3 id="3a-on-new-commit-derivation-completion-detection-mandatory">
+  
+  
+    <a href="#3a-on-new-commit-derivation-completion-detection-mandatory" class="anchor-heading" aria-labelledby="3a-on-new-commit-derivation-completion-detection-mandatory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3a. On-new-commit derivation-completion detection (MANDATORY)
+  
+  
+</h3>
+    
+
+<p>In addition to the domain trigger filter, every watcher must check
+whether the incoming commit <strong>closes</strong> a previously-flagged “open” item
+in the queue. The check runs <strong>before</strong> the §4 pipeline so the same
+event drives both new-violation detection AND queued-item resolution.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SHA</span><span class="o">=</span>&lt;incoming commit&gt;
+<span class="nv">changed</span><span class="o">=</span><span class="si">$(</span>git diff-tree <span class="nt">--no-commit-id</span> <span class="nt">--name-only</span> <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$SHA</span><span class="s2">"</span><span class="si">)</span>
+
+<span class="c"># Step 1 — look for canonical-form arrivals. Heuristic patterns</span>
+<span class="c"># (children override in Slot B-derivation). Content blocks use builder</span>
+<span class="c"># calls (`export default theorem({ ... })`), not literal `kind:` fields.</span>
+<span class="c"># The formal-layer check fires when an unproved-gap count drops to zero.</span>
+<span class="nv">new_propositions</span><span class="o">=</span><span class="si">$(</span>
+  <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$changed</span><span class="s2">"</span> | <span class="k">while </span><span class="nb">read </span>f<span class="p">;</span> <span class="k">do
+    if</span> <span class="o">[[</span> <span class="s2">"</span><span class="nv">$f</span><span class="s2">"</span> <span class="o">=</span>~ ^content/.<span class="k">*</span><span class="se">\.</span>ts<span class="nv">$ </span><span class="o">]]</span><span class="p">;</span> <span class="k">then
+      </span>git show <span class="s2">"</span><span class="nv">$SHA</span><span class="s2">:</span><span class="nv">$f</span><span class="s2">"</span> 2&gt;/dev/null <span class="se">\</span>
+        | <span class="nb">grep</span> <span class="nt">-qE</span> <span class="s2">"export default (theorem|proposition|lemma|corollary)</span><span class="se">\(</span><span class="s2">"</span> <span class="se">\</span>
+        <span class="o">&amp;&amp;</span> <span class="o">!</span> git show <span class="s2">"</span><span class="nv">$SHA</span><span class="s2">^:</span><span class="nv">$f</span><span class="s2">"</span> 2&gt;/dev/null <span class="se">\</span>
+        | <span class="nb">grep</span> <span class="nt">-qE</span> <span class="s2">"export default (theorem|proposition|lemma|corollary)</span><span class="se">\(</span><span class="s2">"</span> <span class="se">\</span>
+        <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$f</span><span class="s2">"</span>
+    <span class="k">fi
+  done</span>
+<span class="si">)</span>
+</code></pre></div></div>
+
+<p>A more reliable alternative: load the affected <code class="language-plaintext highlighter-rouge">.ts</code> modules via the
+content pipeline’s TypeScript loader and inspect the parsed <code class="language-plaintext highlighter-rouge">kind</code> field
+directly — heuristic grep is a session-local fast-path.</p>
+
+<p>For each newly-arrived derivation, search the queue for items whose
+<code class="language-plaintext highlighter-rouge">status</code> is in <code class="language-plaintext highlighter-rouge">{queued, needs-author}</code> and which reference the
+now-derived label (directly or transitively via <code class="language-plaintext highlighter-rouge">uses[]</code>). For each
+hit:</p>
+
+<ol>
+  <li><strong>Audit downstream impact.</strong> If the queued item was flagged “open”
+because it depended on this derivation, the dependency is now
+closed. Re-classify per §4d.</li>
+  <li><strong>Trigger removal candidacy.</strong> If the queued item was a placeholder
+or probing block waiting for the canonical form, mark <code class="language-plaintext highlighter-rouge">status:
+queued-for-removal</code> (see §3b below).</li>
+  <li><strong>Update the ledger</strong> with a <code class="language-plaintext highlighter-rouge">derivation-completion</code> row citing both
+the new commit SHA and the queue item id.</li>
+</ol>
+
+<p>This prevents the watcher from carrying stale “open problem” framings
+after the actual closure lands.</p>
+<h3 id="3b-removal-over-banner-policy-mandatory-for-legacy--superseded">
+  
+  
+    <a href="#3b-removal-over-banner-policy-mandatory-for-legacy--superseded" class="anchor-heading" aria-labelledby="3b-removal-over-banner-policy-mandatory-for-legacy--superseded"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3b. Removal-over-banner policy (MANDATORY for legacy / superseded)
+  
+  
+</h3>
+    
+
+<p>When a canonical derivation lands and supersedes a legacy / deprecated /
+probing block, the watcher’s correct response is <strong>remove the legacy
+block</strong>, not banner-tag it in place. Banner-tagging is reserved for
+blocks that <strong>remain on the canonical chain</strong> with an open piece
+(acknowledged-stub); legacy blocks that have been superseded should
+leave the paper.</p>
+
+<p>Removal decision matrix:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Legacy-block shape</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Block whose <code class="language-plaintext highlighter-rouge">kind: remark</code> explicitly says “<em>superseded</em>” / “<em>retained for historical context</em>” / “<em>legacy</em>”</td>
+      <td><strong>Remove file</strong> + rewire <code class="language-plaintext highlighter-rouge">uses[]</code> to the superseding block</td>
+    </tr>
+    <tr>
+      <td>Falsification report consumed by a summary block</td>
+      <td><strong>Remove file</strong>; the summary block carries the negative result</td>
+    </tr>
+    <tr>
+      <td>Probing block / negative-result attempt whose conclusion is “doesn’t close” / “incomplete”</td>
+      <td><strong>Remove file</strong> unless the methodology is reused elsewhere</td>
+    </tr>
+    <tr>
+      <td>Acknowledged-stub that is <strong>still on the canonical chain</strong></td>
+      <td><strong>Banner-tag</strong> (do NOT remove); the block is canonical with one open piece</td>
+    </tr>
+    <tr>
+      <td>Block that consumes an undisclosed input self-acknowledgedly</td>
+      <td><strong>Remove the affected section</strong> (not the whole file); keep the canonical form</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>When a child watcher detects a queued-for-removal item, it should:</p>
+
+<ol>
+  <li>Open a follow-up PR with the file deletion (+ <code class="language-plaintext highlighter-rouge">uses[]</code> rewires in
+chapter manifests and downstream consumers).</li>
+  <li><strong>Not</strong> silently delete content in the on-going PR — the removal is
+a separate, reviewable change.</li>
+  <li>Cite the superseding block in the removal PR description.</li>
+</ol>
+<h3 id="3c-on-new-commit-skill-availability-detection-mandatory">
+  
+  
+    <a href="#3c-on-new-commit-skill-availability-detection-mandatory" class="anchor-heading" aria-labelledby="3c-on-new-commit-skill-availability-detection-mandatory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3c. On-new-commit skill-availability detection (MANDATORY)
+  
+  
+</h3>
+    
+
+<p>In addition to the domain trigger filter (Slot B) and the §3a
+derivation-completion check, every watcher must check whether the
+incoming commit (or batch in the unreviewed range) <strong>added a new skill
+file</strong> under <code class="language-plaintext highlighter-rouge">.claude/skills/</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SHA_RANGE</span><span class="o">=</span><span class="s2">"&lt;LAST_REVIEWED&gt;..&lt;NEW_SHA&gt;"</span>
+git diff <span class="nt">--name-only</span> <span class="nt">--diff-filter</span><span class="o">=</span>A <span class="s2">"</span><span class="nv">$SHA_RANGE</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">--</span> <span class="s1">'.claude/skills/local/*.md'</span> <span class="s1">'.claude/skills/*/*.md'</span>
+</code></pre></div></div>
+
+<p>For each new skill file:</p>
+
+<ol>
+  <li><strong>Read the frontmatter</strong> — extract <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">roles</code>, <code class="language-plaintext highlighter-rouge">description</code>,
+<code class="language-plaintext highlighter-rouge">inherits</code>.</li>
+  <li><strong>Decide relevance</strong> to this watcher’s domain (Slot A goal). A new
+skill is relevant when its <code class="language-plaintext highlighter-rouge">description</code> mentions a file kind /
+pattern this watcher audits, OR it is a sibling integration-watcher
+child (<code class="language-plaintext highlighter-rouge">inherits: local/integration-watcher</code>), OR it provides a new
+specialist this watcher could dispatch via Slot C.</li>
+  <li><strong>Surface to the user via <code class="language-plaintext highlighter-rouge">AskUserQuestion</code></strong> with 3 chips: <code class="language-plaintext highlighter-rouge">Adopt
+now</code> / <code class="language-plaintext highlighter-rouge">Defer to follow-up branch</code> / <code class="language-plaintext highlighter-rouge">Not relevant</code>.</li>
+  <li><strong>Record the decision in the watcher’s ledger</strong> under a <code class="language-plaintext highlighter-rouge">### New
+skills</code> subsection so future sessions don’t re-prompt.</li>
+</ol>
+
+<p>This rule applies to skill files only. Skills landing on sibling PRs
+that haven’t merged yet do NOT trigger this check — only <code class="language-plaintext highlighter-rouge">main</code> commits
+count.</p>
+<h2 id="4-per-event-qa-pipeline">
+  
+  
+    <a href="#4-per-event-qa-pipeline" class="anchor-heading" aria-labelledby="4-per-event-qa-pipeline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Per-event QA pipeline
+  
+  
+</h2>
+    
+
+<p>When the trigger filter passes, fan out to the domain specialists <strong>in
+parallel</strong>. The parent owns the orchestration; the child provides the
+specialist list.</p>
+<h3 id="4a-scope-reduction">
+  
+  
+    <a href="#4a-scope-reduction" class="anchor-heading" aria-labelledby="4a-scope-reduction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4a. Scope reduction
+  
+  
+</h3>
+    
+
+<p>Compute the changed-block set / changed-script set / changed-witness set
+from the event SHA:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SHA</span><span class="o">=</span>&lt;event sha&gt;
+
+<span class="c"># changed content blocks (label = kebab basename minus -proof suffix)</span>
+<span class="nv">changed_blocks</span><span class="o">=</span><span class="si">$(</span>git diff-tree <span class="nt">--no-commit-id</span> <span class="nt">--name-only</span> <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$SHA</span><span class="s2">"</span> <span class="se">\</span>
+  | <span class="nb">grep</span> <span class="nt">-E</span> <span class="s1">'content/.*\.(md|ts)$'</span> <span class="se">\</span>
+  | <span class="nb">sed</span> <span class="nt">-E</span> <span class="s1">'s|.*/||; s|\.[^.]+$||; s|-proof$||'</span> <span class="se">\</span>
+  | <span class="nb">sort</span> <span class="nt">-u</span><span class="si">)</span>
+
+<span class="c"># changed scripts</span>
+<span class="nv">changed_py</span><span class="o">=</span><span class="si">$(</span>git diff-tree <span class="nt">--no-commit-id</span> <span class="nt">--name-only</span> <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$SHA</span><span class="s2">"</span> <span class="se">\</span>
+  | <span class="nb">grep</span> <span class="nt">-E</span> <span class="s1">'^computations/.*\.py$'</span> | <span class="nb">sort</span> <span class="nt">-u</span><span class="si">)</span>
+
+<span class="c"># changed witness JSONs</span>
+<span class="nv">changed_witnesses</span><span class="o">=</span><span class="si">$(</span>git diff-tree <span class="nt">--no-commit-id</span> <span class="nt">--name-only</span> <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$SHA</span><span class="s2">"</span> <span class="se">\</span>
+  | <span class="nb">grep</span> <span class="nt">-E</span> <span class="s1">'\.witness\.json$|\.derivation\.json$'</span> | <span class="nb">sort</span> <span class="nt">-u</span><span class="si">)</span>
+</code></pre></div></div>
+<h3 id="4b-dispatch-parallel-agent-calls">
+  
+  
+    <a href="#4b-dispatch-parallel-agent-calls" class="anchor-heading" aria-labelledby="4b-dispatch-parallel-agent-calls"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4b. Dispatch (parallel <code class="language-plaintext highlighter-rouge">Agent</code> calls)
+  
+  
+</h3>
+    
+
+<p>Children fill <strong>Slot C</strong> with a table of <code class="language-plaintext highlighter-rouge">Specialist | When to run |
+What it checks</code>. Launch all applicable specialists in a single response
+with multiple <code class="language-plaintext highlighter-rouge">Agent</code> tool calls (NOT sequentially).</p>
+
+<p><strong>Sidecar-aware dispatch.</strong> Before dispatching a specialist on a block,
+check the block’s <code class="language-plaintext highlighter-rouge">.qa.json</code> sidecar for the relevant criterion:</p>
+
+<ol>
+  <li>Read <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> → <code class="language-plaintext highlighter-rouge">criteria[&lt;criterion&gt;]</code> entries.</li>
+  <li>If an entry exists with <code class="language-plaintext highlighter-rouge">result: "pass"</code> and its <code class="language-plaintext highlighter-rouge">field_hash</code>
+matches the current file hash → <strong>skip</strong> (block already audited and
+passes).</li>
+  <li>If the entry is stale (hash mismatch) or <code class="language-plaintext highlighter-rouge">result: "fail"</code> →
+<strong>re-audit</strong>.</li>
+  <li>If no entry exists → <strong>audit</strong> (first time this criterion has been
+evaluated on this block).</li>
+</ol>
+
+<p>This avoids re-auditing the blocks that already pass on each incoming
+commit. Only changed blocks and previously-failing blocks get
+dispatched.</p>
+
+<p><strong>Recording results.</strong> After each specialist completes, update the
+sidecar with:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">result</code>: pass/warn/fail</li>
+  <li><code class="language-plaintext highlighter-rouge">field_hash</code>: current file hashes</li>
+  <li><code class="language-plaintext highlighter-rouge">reviewer</code>: <code class="language-plaintext highlighter-rouge">{ kind: "agent", agent_model: "&lt;model&gt;", agent_date:
+"&lt;ISO&gt;", agent_skill: "&lt;skill&gt;" }</code></li>
+  <li><code class="language-plaintext highlighter-rouge">evidence</code>: hits array (on fail/warn)</li>
+  <li><code class="language-plaintext highlighter-rouge">reviewed_at</code>: ISO date</li>
+</ul>
+
+<p>Multiple reviewer entries per criterion are allowed. The most recent
+entry whose <code class="language-plaintext highlighter-rouge">field_hash</code> matches current sources is authoritative.</p>
+
+<p>Cap each agent’s report at ~400 words.</p>
+<h3 id="4c-synthesize-findings">
+  
+  
+    <a href="#4c-synthesize-findings" class="anchor-heading" aria-labelledby="4c-synthesize-findings"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4c. Synthesize findings
+  
+  
+</h3>
+    
+
+<p>Apply the <code class="language-plaintext highlighter-rouge">proof-editor</code> §3 “Synthesize” rules (same in every domain):</p>
+
+<ol>
+  <li><strong>Deduplicate</strong> across specialists.</li>
+  <li><strong>Cluster</strong> by affected block/script.</li>
+  <li><strong>Severity rank</strong>: critical / major / minor.</li>
+  <li><strong>Map to queue items</strong> (one queue item per finding) — finding kind
+comes from the child’s <strong>Slot D</strong>.</li>
+</ol>
+<h3 id="4d-attempt-fixes-collaborator-only">
+  
+  
+    <a href="#4d-attempt-fixes-collaborator-only" class="anchor-heading" aria-labelledby="4d-attempt-fixes-collaborator-only"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4d. Attempt fixes (collaborator+ only)
+  
+  
+</h3>
+    
+
+<p>Every finding falls into one of three discharge bands. Children fill
+<strong>Slot E</strong> with domain-specific examples; the band structure is shared:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Band</th>
+      <th>Shape</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Auto-discharge</strong></td>
+      <td>Finding has a known mechanical fix (registry migration, tactic application, banner addition, cite move, …)</td>
+      <td>Apply the mechanical fix; re-run the relevant scanner / validator to confirm; commit</td>
+    </tr>
+    <tr>
+      <td><strong>Author-assist</strong></td>
+      <td>Finding requires human judgement (semantic, architectural, scope)</td>
+      <td>Open one author ask per stuck block (see §4e)</td>
+    </tr>
+    <tr>
+      <td><strong>Defer</strong></td>
+      <td>Finding is acknowledged / opt-out / minor stylistic</td>
+      <td>Mark <code class="language-plaintext highlighter-rouge">wontfix</code> in queue with reason</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="4e-author-asks--one-ask-per-stuck-block">
+  
+  
+    <a href="#4e-author-asks--one-ask-per-stuck-block" class="anchor-heading" aria-labelledby="4e-author-asks--one-ask-per-stuck-block"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4e. Author asks — one ask per stuck block
+  
+  
+</h3>
+    
+
+<p>When a finding lands in the <strong>Author-assist</strong> band, post one ask either
+on the source PR (if the trigger was a PR event) or via
+<code class="language-plaintext highlighter-rouge">AskUserQuestion</code> (if the trigger was a main commit and a foreground
+user is present).</p>
+
+<p><strong>Always lead with full context in chat, then ask a structured
+question.</strong> Two-part pattern:</p>
+
+<ol>
+  <li><strong>Context preamble (chat text).</strong> Before the <code class="language-plaintext highlighter-rouge">AskUserQuestion</code> call,
+write a short chat message: the finding (one sentence, with
+severity); the affected file (GitHub blob URL, <code class="language-plaintext highlighter-rouge">.md</code> preferred per
+AGENTS.md “Always provide GitHub links”); evidence (verbatim quote
+with line numbers); what was attempted and what failed.</li>
+  <li><strong>Structured question.</strong> Then call <code class="language-plaintext highlighter-rouge">AskUserQuestion</code> with a tight
+numbered-choice set (2-4 options), each option mapping directly to a
+queue-action. The question stem must be one sentence; the options
+carry the detail.</li>
+</ol>
+
+<p>Format (children fill Slot F with domain-specific question forms):</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**&lt;watcher-name&gt; ask — `&lt;block-or-script&gt;`**</span> (from <span class="nt">&lt;source-pr-or-commit&gt;</span>)
+<span class="p">
+-</span> Finding: <span class="nt">&lt;one</span> <span class="na">sentence</span><span class="err">,</span> <span class="na">with</span> <span class="na">severity</span><span class="nt">&gt;</span>
+<span class="p">-</span> File: <span class="nt">&lt;github-blob-url</span> <span class="na">to</span> <span class="err">`.</span><span class="na">md</span><span class="err">`</span> <span class="err">(</span><span class="na">or</span> <span class="na">formal</span><span class="err">/</span><span class="na">py</span> <span class="na">file</span> <span class="na">if</span> <span class="na">domain-specific</span><span class="err">)</span><span class="nt">&gt;</span>
+<span class="p">-</span> Evidence: <span class="sb">`&lt;file:line&gt;`</span> — <span class="sb">`&lt;verbatim quote of offending text&gt;`</span>
+<span class="p">-</span> Attempted: <span class="nt">&lt;which</span> <span class="na">scanners</span><span class="err">/</span><span class="na">specialists</span><span class="err">/</span><span class="na">tactics</span> <span class="na">were</span> <span class="na">tried</span><span class="nt">&gt;</span>
+<span class="p">-</span> Question: <span class="nt">&lt;one</span> <span class="na">yes</span><span class="err">/</span><span class="na">no</span> <span class="na">or</span> <span class="na">numbered</span> <span class="na">choice</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p><strong>One ask per stuck block, batched per round.</strong> If the author hasn’t
+answered in 24 h (async setting), restate once and move on. Do not
+block the queue on a single unanswered ask.</p>
+<h3 id="4f-update-the-queue--ledger">
+  
+  
+    <a href="#4f-update-the-queue--ledger" class="anchor-heading" aria-labelledby="4f-update-the-queue--ledger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4f. Update the queue + ledger
+  
+  
+</h3>
+    
+
+<p>After each event:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ts</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> <span class="nt">-u</span> +%Y-%m-%dT%H:%M:%SZ<span class="si">)</span>
+<span class="nb">echo</span> <span class="s2">"| </span><span class="nv">$ts</span><span class="s2"> | &lt;event&gt; | &lt;scope&gt; | &lt;N critical / N major / N minor&gt; | &lt;N auto / N asked / N deferred&gt; |"</span> <span class="se">\</span>
+  <span class="o">&gt;&gt;</span> <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span>
+</code></pre></div></div>
+
+<p>Update <code class="language-plaintext highlighter-rouge">.beans/${NAME}-queue.json</code> with new items + status changes via
+<code class="language-plaintext highlighter-rouge">Edit</code>.</p>
+<h3 id="4g-refresh-spawned-prs-against-main-superseded-by-2c">
+  
+  
+    <a href="#4g-refresh-spawned-prs-against-main-superseded-by-2c" class="anchor-heading" aria-labelledby="4g-refresh-spawned-prs-against-main-superseded-by-2c"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4g. Refresh spawned PRs against main <em>(superseded by §2c)</em>
+  
+  
+</h3>
+    
+
+<p>The continuous main-following rule is now §2c (mandatory, unconditional
+on every main commit, <strong>before</strong> §3 / §4 dispatch). §4g remains as a
+redundant safety net: if §2c somehow didn’t fire (e.g. the Monitor
+crashed between detection and rebase walk), the §4 pipeline completion
+can also trigger §5g step 7 as a fallback. The rebase runs in a
+worktree; witness-drift conflicts auto-resolve via §5f; substantive
+conflicts halt the rebase and surface as an author ask per §4e.</p>
+<h2 id="5-idle-backlog-sweep">
+  
+  
+    <a href="#5-idle-backlog-sweep" class="anchor-heading" aria-labelledby="5-idle-backlog-sweep"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Idle backlog sweep
+  
+  
+</h2>
+    
+
+<p>When the queue has been quiescent for ≥ 10 minutes (no main commits, no
+PR events, no in-flight discharge attempts), pull the next backlog item.</p>
+<h3 id="5a-discovery-run-once-at-session-start-refresh-every-50-items">
+  
+  
+    <a href="#5a-discovery-run-once-at-session-start-refresh-every-50-items" class="anchor-heading" aria-labelledby="5a-discovery-run-once-at-session-start-refresh-every-50-items"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5a. Discovery (run once at session start, refresh every 50 items)
+  
+  
+</h3>
+    
+
+<p>Children fill <strong>Slot G</strong> with the domain’s enumeration recipe (typically
+a <code class="language-plaintext highlighter-rouge">find</code> + <code class="language-plaintext highlighter-rouge">grep</code> pipeline OR an existing aggregator script).</p>
+<h3 id="5b-prioritisation">
+  
+  
+    <a href="#5b-prioritisation" class="anchor-heading" aria-labelledby="5b-prioritisation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5b. Prioritisation
+  
+  
+</h3>
+    
+
+<p>Children fill <strong>Slot H</strong> with the domain’s ranking rule. Common factors:</p>
+
+<ol>
+  <li>Severity (critical &gt; major &gt; minor).</li>
+  <li>Downstream dependents (more dependents → earlier) via <code class="language-plaintext highlighter-rouge">uses[]</code>.</li>
+  <li>Last-audit recency (older → earlier) from <code class="language-plaintext highlighter-rouge">queue.audited[]</code>.</li>
+  <li>Alphabetical as tie-breaker.</li>
+</ol>
+<h3 id="5c-per-item-processing">
+  
+  
+    <a href="#5c-per-item-processing" class="anchor-heading" aria-labelledby="5c-per-item-processing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5c. Per-item processing
+  
+  
+</h3>
+    
+
+<p>Apply §4 — exactly the same pipeline as for incoming events. The
+<code class="language-plaintext highlighter-rouge">source</code> field on each queue item becomes <code class="language-plaintext highlighter-rouge">backlog</code>.</p>
+<h3 id="5d-quiescence--heartbeat--auto-pull-from-queue-when-idle">
+  
+  
+    <a href="#5d-quiescence--heartbeat--auto-pull-from-queue-when-idle" class="anchor-heading" aria-labelledby="5d-quiescence--heartbeat--auto-pull-from-queue-when-idle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5d. Quiescence + heartbeat — AUTO-PULL FROM QUEUE WHEN IDLE
+  
+  
+</h3>
+    
+
+<p>A backlog item is preempted by any incoming event. Resume the backlog
+when the queue is quiescent again. The number of in-flight backlog items
+is capped by §5m’s parallelism cap (currently 4) when items are
+independent; items sharing state serialise.</p>
+
+<p><strong>Auto-pull policy (MANDATORY).</strong> On every Monitor TICK heartbeat where:</p>
+
+<ol>
+  <li>No incoming event has arrived during this TICK window</li>
+  <li>The count of items currently in <code class="language-plaintext highlighter-rouge">status: in-progress</code> is below the
+parallelism cap (per §5m, default 4)</li>
+  <li><code class="language-plaintext highlighter-rouge">.beans/${NAME}-queue.json</code> contains at least one item with <code class="language-plaintext highlighter-rouge">status:
+queued</code> (or <code class="language-plaintext highlighter-rouge">status: needs-author</code> whose author ask has been
+outstanding ≥ 7 days — the §5e re-ask cadence)</li>
+</ol>
+
+<p>→ <strong>Pull the highest-priority queued item per §5b and start §5c
+processing on it immediately.</strong> Do not wait for a user prompt. The
+heartbeat one-liner is for periods when the queue is <em>empty</em>, NOT for
+periods when the queue is non-empty and the agent is choosing not to
+work.</p>
+
+<p>Sub-agent dispatch. For long-running items the watcher should launch the
+work via <code class="language-plaintext highlighter-rouge">Agent(run_in_background=true)</code> so the foreground stays
+responsive. Update the item’s status to <code class="language-plaintext highlighter-rouge">in-progress</code> immediately on
+dispatch and back to <code class="language-plaintext highlighter-rouge">resolved</code> / <code class="language-plaintext highlighter-rouge">needs-author</code> on completion.</p>
+
+<p>Foreground vs background. Use foreground for items whose findings the
+watcher itself must consume to decide what to queue next. Use background
+for items whose deliverable is a standalone PR / commit / handover doc.</p>
+
+<p><strong>Empty-queue heartbeat.</strong> Only when the queue truly has no queued or
+eligible needs-author items, and the session has been entirely quiescent
+for ≥ 60 minutes, emit a one-liner:</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">&lt;watcher-name&gt;</code> idle — backlog at N items, queue at M items (0
+eligible for auto-pull), in-progress at K items, next refresh in</p>
+  <next discovery="" time="">.
+</next>
+</blockquote>
+
+<p>…and keep the Monitor armed. (If the queue has eligible items but the
+agent didn’t auto-pull, that is a policy violation — fix the watcher’s
+TICK handler, do not work around with the one-liner.)</p>
+<h3 id="5d-bis-own-pr-ci-wait-counts-as-idle-mandatory">
+  
+  
+    <a href="#5d-bis-own-pr-ci-wait-counts-as-idle-mandatory" class="anchor-heading" aria-labelledby="5d-bis-own-pr-ci-wait-counts-as-idle-mandatory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5d-bis. Own-PR-CI-wait counts as idle (MANDATORY)
+  
+  
+</h3>
+    
+
+<p>After you push a PR you authored this session, <strong>do not stop</strong>. The
+webhook subscription will deliver CI/review events when they arrive;
+meanwhile the agent is idle in §5d’s sense and MUST pull the next
+backlog item:</p>
+
+<ol>
+  <li><strong>Push + subscribe + immediately re-enter §5d auto-pull.</strong></li>
+  <li><strong>Pick a non-overlapping item.</strong> The new item’s scope must not touch
+files modified in the in-flight PR. Use <code class="language-plaintext highlighter-rouge">git diff origin/main..HEAD
+--name-only</code> on the in-flight branch to compute the exclusion set.</li>
+  <li><strong>Open the next item on a NEW branch off <code class="language-plaintext highlighter-rouge">origin/main</code></strong> — not off
+the in-flight PR’s branch.</li>
+  <li><strong>Webhook events still preempt.</strong></li>
+  <li><strong>Exhaust the queue, not your patience.</strong> Continue batching until (a)
+the queue is empty, (b) every remaining item touches files in an
+in-flight PR, or (c) the user says “stop” / “park” / “switch to X”.</li>
+</ol>
+<h3 id="5e-idle-author-ask-dispatcher">
+  
+  
+    <a href="#5e-idle-author-ask-dispatcher" class="anchor-heading" aria-labelledby="5e-idle-author-ask-dispatcher"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5e. Idle author-ask dispatcher
+  
+  
+</h3>
+    
+
+<p>When the watcher enters an idle window AND the queue contains items
+needing author input, batch the open asks and surface them via
+<code class="language-plaintext highlighter-rouge">AskUserQuestion</code> (foreground) OR as a single consolidated own-PR
+comment (PR-driven session) OR as a “Pending author asks” section in the
+ledger (headless).</p>
+
+<p>Triggers (in priority order):</p>
+
+<ol>
+  <li>Items with <code class="language-plaintext highlighter-rouge">status: needs-author</code> that have never been asked
+(<code class="language-plaintext highlighter-rouge">asked_author_at: null</code>).</li>
+  <li>Items with <code class="language-plaintext highlighter-rouge">status: queued</code> that have aged &gt; 24 h without any
+discharge attempt and are in the <strong>Author-assist</strong> band.</li>
+  <li>Items with <code class="language-plaintext highlighter-rouge">status: needs-author</code> that were asked &gt; 7 days ago and
+never resolved — <strong>re-ask once</strong>, then mark <code class="language-plaintext highlighter-rouge">wontfix</code> with <code class="language-plaintext highlighter-rouge">reason:
+author-unresponsive</code>.</li>
+</ol>
+
+<p>Per round, pull <strong>up to 3</strong> asks, group by block, surface as one
+consolidated message. After each ask, set <code class="language-plaintext highlighter-rouge">asked_author_at: "&lt;ISO ts&gt;"</code>.
+Cap consecutive asks per block at 3; beyond that mark <code class="language-plaintext highlighter-rouge">wontfix</code> with
+<code class="language-plaintext highlighter-rouge">reason: ask-fatigue</code>.</p>
+
+<p><strong>Anti-pattern:</strong> never auto-mark a <code class="language-plaintext highlighter-rouge">needs-author</code> item as <code class="language-plaintext highlighter-rouge">resolved</code>
+based on inferred user assent. Only an explicit author reply or commit
+closes it.</p>
+<h3 id="5f-witness-drift-ci-failure-pattern-recovery-recipe">
+  
+  
+    <a href="#5f-witness-drift-ci-failure-pattern-recovery-recipe" class="anchor-heading" aria-labelledby="5f-witness-drift-ci-failure-pattern-recovery-recipe"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5f. Witness-drift CI failure pattern (RECOVERY RECIPE)
+  
+  
+</h3>
+    
+
+<p>A compute/witness validation CI job re-runs the project’s computations,
+regenerates witnesses, and fires a drift check. It triggers on formal /
+compute source edits AND on any <code class="language-plaintext highlighter-rouge">*.witness.json</code> / <code class="language-plaintext highlighter-rouge">*.derivation.json</code>
+change.</p>
+
+<p><strong>Failure mode:</strong> even a comment-only edit can trigger validate.
+Validate runs many scripts; one regenerates a witness that has drifted
+on main since the last refresh (e.g. a <code class="language-plaintext highlighter-rouge">files_scanned</code> count moved when
+a new probe landed without a witness refresh). The drift check fires.</p>
+
+<p><strong>The pattern is endemic.</strong> Main’s own commit log shows repeated
+<code class="language-plaintext highlighter-rouge">post-rebase drift refresh</code> / <code class="language-plaintext highlighter-rouge">post-push drift refresh</code> entries — author</p>
+<ul>
+  <li>sibling agents do this routinely.</li>
+</ul>
+
+<p><strong>Sub-case: quick-fail = billing.</strong> If a CI job fails in <strong>under ~60
+seconds</strong>, the runner almost never reached the validators. This is a
+billing / queue / quota condition on the CI account, <strong>not</strong> a content
+failure. Treat as a flake: do NOT rebase, do NOT regenerate witnesses,
+do NOT diagnose validators. Document in ledger as <code class="language-plaintext highlighter-rouge">quick-fail /
+billing</code> and proceed per §5g step 5(b).</p>
+
+<p><strong>Recovery recipe</strong> (apply IN ORDER) for genuine multi-minute validate
+failures:</p>
+
+<ol>
+  <li><strong>Pull fresh main.</strong> <code class="language-plaintext highlighter-rouge">git fetch origin main</code>. If ≥ 5 commits landed,
+jump straight to step 2.</li>
+  <li><strong>Rebase.</strong> <code class="language-plaintext highlighter-rouge">git rebase origin/main</code>. Witness conflicts are expected
+on the auto-regenerated audit witnesses.</li>
+  <li><strong>Take main’s witnesses.</strong> <code class="language-plaintext highlighter-rouge">git checkout --ours &lt;witness&gt;</code> for each
+conflicted file (in rebase context <code class="language-plaintext highlighter-rouge">--ours</code> = main). `git add
+    <witness>`.
+</witness>
+  </li>
+  <li><strong>Continue.</strong> <code class="language-plaintext highlighter-rouge">git rebase --continue</code>. If the same conflict reappears
+on a later commit, repeat step 3.</li>
+  <li><strong>Force-push.</strong> <code class="language-plaintext highlighter-rouge">git push --force-with-lease</code>.</li>
+</ol>
+
+<p><strong>Do not</strong> hand-edit witness JSON, do not regenerate witnesses on your
+branch as a “fix” (by the time CI runs, main moves again), and do not
+rebase reactively after every single CI failure — only after exhausted
+local diagnosis.</p>
+<h3 id="5g-watch-prs-you-prepare">
+  
+  
+    <a href="#5g-watch-prs-you-prepare" class="anchor-heading" aria-labelledby="5g-watch-prs-you-prepare"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5g. Watch PRs you prepare
+  
+  
+</h3>
+    
+
+<p>When a watcher (or any skill it dispatches) <strong>prepares a PR</strong>, the
+watcher <strong>must</strong> add the new PR to its subscription set immediately and
+follow up on review activity. Author oversight expectation: <em>“watch PRs
+you prepare for review comments and respond if you can. if not ask
+author. once done, ask author if they want to merge and provide link”</em>.</p>
+
+<p>Per prepared PR:</p>
+
+<ol>
+  <li><strong>Subscribe.</strong> Right after <code class="language-plaintext highlighter-rouge">create_pull_request</code>, call
+<code class="language-plaintext highlighter-rouge">mcp__github__subscribe_pr_activity</code> with the new PR number. Add to
+the ledger under “watching”.</li>
+  <li><strong>Request automated reviews from the available bots.</strong> Call
+<code class="language-plaintext highlighter-rouge">mcp__github__request_copilot_review</code>. Any other automatic reviewer
+(e.g. <code class="language-plaintext highlighter-rouge">gemini-code-assist</code>) runs on PR open if configured; if it
+doesn’t post within a few minutes, check for a quota-limit comment
+and document in the ledger. Don’t wait for human review.</li>
+  <li><strong>Triage every review event</strong> per coordinate §5a:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">accept</code> → fix the small thing, push</li>
+      <li><code class="language-plaintext highlighter-rouge">accept-with-modification</code> → fix differently, reply</li>
+      <li><code class="language-plaintext highlighter-rouge">reject-with-reason</code> → reply on the thread</li>
+      <li><code class="language-plaintext highlighter-rouge">escalate</code> → ask the author via §4e</li>
+    </ul>
+  </li>
+  <li><strong>Pre-push stale-base check.</strong> Every fix-push triggers a fresh CI
+run. Before each fix-push, run <code class="language-plaintext highlighter-rouge">git fetch origin main</code> and check the
+delta. If main moved ≥ 3 commits and any touch your PR’s diff scope,
+rebase first (per §5f).</li>
+  <li><strong>Done check + merge via <code class="language-plaintext highlighter-rouge">/prepare-merge-auto</code>.</strong> When (a) every open
+review thread is resolved or replied to AND voice has been applied or
+noted n/a (§5h), (b) every CI check is green OR documented as a flake
+(§5f), (c) the diff still reflects the original intent — invoke
+<code class="language-plaintext highlighter-rouge">/prepare-merge-auto</code>. The skill handles sibling coordination, final
+rebase, review-comment resolution, structured user questions (if
+blocked), and merge.</li>
+  <li>
+    <p><strong>Stop on merge.</strong> Once merged (or closed), call
+<code class="language-plaintext highlighter-rouge">mcp__github__unsubscribe_pr_activity</code>. Record outcome in ledger.</p>
+  </li>
+  <li>
+    <p><strong>Rebase spawned PRs on main movement.</strong> Every time a new commit
+lands on <code class="language-plaintext highlighter-rouge">origin/main</code> and the §3 / §4 per-event triage completes,
+walk <strong>every PR this watcher has opened that is still open</strong> and
+ensure each one is current with <code class="language-plaintext highlighter-rouge">origin/main</code>:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># One `git fetch origin` outside the loop refreshes every</span>
+<span class="c"># remote-tracking ref the loop will use.</span>
+git fetch origin
+
+<span class="c"># Extract branches under the "### Watching" subsection. The closing</span>
+<span class="c"># pattern is `^## ` (next top-level header), NOT `^### `.</span>
+<span class="nv">pr_branches</span><span class="o">=</span><span class="si">$(</span><span class="nb">awk</span> <span class="s1">'/^### Watching/,/^## /'</span> <span class="se">\</span>
+    <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span> <span class="se">\</span>
+    | <span class="nb">grep</span> <span class="nt">-oE</span> <span class="s1">'claude/iw-[a-z0-9-]+'</span> | <span class="nb">sort</span> <span class="nt">-u</span><span class="si">)</span>
+
+<span class="k">for </span>pr_branch <span class="k">in</span> <span class="nv">$pr_branches</span><span class="p">;</span> <span class="k">do
+  </span><span class="nv">pr_num</span><span class="o">=</span><span class="si">$(</span>gh <span class="nb">pr </span>list <span class="nt">--head</span> <span class="s2">"</span><span class="nv">$pr_branch</span><span class="s2">"</span> <span class="nt">--state</span> open <span class="se">\</span>
+           <span class="nt">--json</span> number <span class="nt">--jq</span> <span class="s1">'.[0].number'</span><span class="si">)</span>
+  <span class="o">[</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$pr_num</span><span class="s2">"</span> <span class="o">]</span> <span class="o">||</span> <span class="k">continue</span>   <span class="c"># closed / no open PR; skip</span>
+
+  <span class="nv">behind</span><span class="o">=</span><span class="si">$(</span>git rev-list <span class="nt">--count</span> <span class="s2">"origin/</span><span class="nv">$pr_branch</span><span class="s2">..origin/main"</span><span class="si">)</span>
+
+  <span class="c"># Diff-scope overlap: which files did MAIN change since the branch</span>
+  <span class="c"># diverged, intersected with files the BRANCH changed since</span>
+  <span class="c"># divergence? Use merge-base, not a two-tip diff.</span>
+  <span class="nv">base</span><span class="o">=</span><span class="si">$(</span>git merge-base <span class="s2">"origin/main"</span> <span class="s2">"origin/</span><span class="nv">$pr_branch</span><span class="s2">"</span><span class="si">)</span>
+  <span class="c"># `xargs -r` skips the inner command when the file list is empty.</span>
+  <span class="nv">touches_diff</span><span class="o">=</span><span class="si">$(</span>
+    git diff <span class="nt">--name-only</span> <span class="s2">"</span><span class="nv">$base</span><span class="s2">"</span> <span class="s2">"origin/</span><span class="nv">$pr_branch</span><span class="s2">"</span> <span class="se">\</span>
+    | xargs <span class="nt">-r</span> <span class="nt">-I</span> <span class="o">{}</span> git log <span class="nt">--oneline</span> <span class="s2">"</span><span class="nv">$base</span><span class="s2">..origin/main"</span> <span class="nt">--</span> <span class="o">{}</span> <span class="se">\</span>
+    | <span class="nb">wc</span> <span class="nt">-l</span>
+  <span class="si">)</span>
+
+  <span class="c"># Rebase trigger: ≥ 3 commits behind OR ≥ 1 file in the</span>
+  <span class="c"># intersection of (main-changed-since-base) ∩ (branch-changed).</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$behind</span><span class="s2">"</span> <span class="nt">-lt</span> 3 <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$touches_diff</span><span class="s2">"</span> <span class="nt">-eq</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
+    continue
+  fi</span>
+
+  <span class="c"># Rebase in a worktree. Use a SUBSHELL so the per-iteration</span>
+  <span class="c"># `trap … EXIT` is scoped to this iteration.</span>
+  <span class="o">(</span>
+    <span class="nv">worktree</span><span class="o">=</span><span class="si">$(</span><span class="nb">mktemp</span> <span class="nt">-d</span> /tmp/iw-rebase.XXXXXX<span class="si">)</span>
+    <span class="nb">trap</span> <span class="s1">'git worktree remove --force "$worktree" 2&gt;/dev/null; \
+          rm -rf "$worktree"'</span> EXIT
+
+    git worktree add <span class="s2">"</span><span class="nv">$worktree</span><span class="s2">"</span> <span class="s2">"origin/</span><span class="nv">$pr_branch</span><span class="s2">"</span> <span class="o">&gt;</span>/dev/null
+
+    <span class="c"># Explicit if/then/else so rebase-conflict and push-fail are</span>
+    <span class="c"># distinguishable.</span>
+    <span class="k">if</span> <span class="o">(</span> <span class="nb">cd</span> <span class="s2">"</span><span class="nv">$worktree</span><span class="s2">"</span> <span class="o">&amp;&amp;</span> git rebase origin/main <span class="o">)</span><span class="p">;</span> <span class="k">then
+      if</span> <span class="o">(</span> <span class="nb">cd</span> <span class="s2">"</span><span class="nv">$worktree</span><span class="s2">"</span> <span class="o">&amp;&amp;</span> git push <span class="nt">--force-with-lease</span> <span class="se">\</span>
+             origin <span class="s2">"HEAD:</span><span class="nv">$pr_branch</span><span class="s2">"</span> <span class="o">)</span><span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"REBASED + PUSHED </span><span class="nv">$pr_branch</span><span class="s2">"</span>
+      <span class="k">else
+        </span><span class="nb">echo</span> <span class="s2">"PUSH FAILED on </span><span class="nv">$pr_branch</span><span class="s2"> (lease rejected / remote moved) — retry next cycle"</span>
+      <span class="k">fi
+    else</span>
+      <span class="o">(</span> <span class="nb">cd</span> <span class="s2">"</span><span class="nv">$worktree</span><span class="s2">"</span> <span class="o">&amp;&amp;</span> git rebase <span class="nt">--abort</span> 2&gt;/dev/null <span class="o">)</span> <span class="o">||</span> <span class="nb">true
+      echo</span> <span class="s2">"REBASE CONFLICT on </span><span class="nv">$pr_branch</span><span class="s2"> — flag to author (§4e)"</span>
+    <span class="k">fi</span>
+    <span class="c"># trap fires on subshell exit, cleaning THIS iteration's worktree.</span>
+  <span class="o">)</span>
+
+  <span class="c"># Update ledger row with last-rebase-against-main SHA on success.</span>
+<span class="k">done</span>
+</code></pre></div>    </div>
+
+    <p>Witness-drift conflicts on the auto-regenerated audit witnesses
+auto-resolve via the §5f recipe. Substantive conflicts halt the
+rebase and surface as an author ask per §4e. This step keeps spawned
+PRs current <strong>automatically</strong> between main-event triages.</p>
+  </li>
+</ol>
+<h3 id="5j-backlog-found-issue--spin-up-your-own-pr">
+  
+  
+    <a href="#5j-backlog-found-issue--spin-up-your-own-pr" class="anchor-heading" aria-labelledby="5j-backlog-found-issue--spin-up-your-own-pr"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5j. Backlog-found issue — spin up your own PR
+  
+  
+</h3>
+    
+
+<p>When the <strong>idle backlog sweep</strong> (§5) finds an issue that is NOT already
+addressed by an open PR, the watcher’s default action is to <strong>create a
+PR on its own branch</strong> to resolve it, then follow §5g.</p>
+
+<p>Workflow:</p>
+
+<ol>
+  <li><strong>Cluster aggressively — one branch / one PR per related tranche.</strong>
+Group nearby backlog items (same chapter, same file, same finding
+kind) so one PR addresses a coherent tranche, not a single one-line
+fix. <strong>Default to “big batch”.</strong> Sequencing within the PR: stack
+commits per sub-group, each on the same branch so reviewers read one
+diff.</li>
+  <li>
+    <p><strong>Branch.</strong> Create a new branch via <code class="language-plaintext highlighter-rouge">mcp__github__create_branch</code>,
+named using the <strong>integration-watcher convention</strong>:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>claude/iw-&lt;TYPE&gt;-&lt;DESCRIPTIVE-STUB&gt;
+</code></pre></div>    </div>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">&lt;TYPE&gt;</code> — short tag for which watcher is spinning up the PR
+(matching the child’s domain prefix), or <code class="language-plaintext highlighter-rouge">meta</code> for changes to the
+integration-watcher skill family itself.</li>
+      <li><code class="language-plaintext highlighter-rouge">&lt;DESCRIPTIVE-STUB&gt;</code> — kebab-case slug naming the issue, 3-6 words
+that read clearly in a <code class="language-plaintext highlighter-rouge">gh pr list</code> output.</li>
+    </ul>
+
+    <p>The <code class="language-plaintext highlighter-rouge">iw-</code> infix is the <strong>mandatory marker</strong> that ties the branch back
+to the integration-watcher family — the discovery handle any
+watcher-spawned-PR sweep can grep. Random suffixes are not part of
+the convention; on collision append <code class="language-plaintext highlighter-rouge">-v2</code> / <code class="language-plaintext highlighter-rouge">-v3</code>, don’t randomise.</p>
+  </li>
+  <li><strong>Apply fixes.</strong> Use <code class="language-plaintext highlighter-rouge">mcp__github__push_files</code> or <code class="language-plaintext highlighter-rouge">git push</code> from a
+temp local branch.</li>
+  <li><strong>Open PR</strong> via <code class="language-plaintext highlighter-rouge">mcp__github__create_pull_request</code> with a descriptive
+title + body citing the backlog source.</li>
+  <li><strong>Subscribe + request copilot review</strong> per §5g step 1-2.</li>
+  <li><strong>Triage</strong> review threads per §5g step 3.</li>
+  <li><strong>Voice + done check + merge prompt</strong> per §5h and §5g step 5.</li>
+</ol>
+
+<p><strong>When to escalate to the user instead of opening a PR:</strong></p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Condition</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Backlog item is one quick fix (&lt; 5 min, &lt; 50 lines) and clearly mechanical</td>
+      <td>Open PR directly, don’t ask first</td>
+    </tr>
+    <tr>
+      <td>Backlog item touches &gt; 5 files OR introduces new content blocks OR makes a semantic claim</td>
+      <td>Surface to user via §4e first; only open PR after user confirms</td>
+    </tr>
+    <tr>
+      <td><strong>Backlog item is VERY large</strong> (&gt; 200 lines, &gt; 20 files, semantic refactor, unfamiliar domain)</td>
+      <td><strong>Do NOT open a PR.</strong> Write a <strong>handover document</strong> at <code class="language-plaintext highlighter-rouge">docs/audits/&lt;YYYY-MM-DD&gt;-&lt;short-task&gt;-handover.md</code>. See §5k.</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="5k-handover-doc-for-very-large-backlog-issues">
+  
+  
+    <a href="#5k-handover-doc-for-very-large-backlog-issues" class="anchor-heading" aria-labelledby="5k-handover-doc-for-very-large-backlog-issues"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5k. Handover doc for very-large backlog issues
+  
+  
+</h3>
+    
+
+<p>When a backlog issue exceeds the watcher’s discharge capacity, produce a
+handover doc rather than attempt the fix:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh"># Handover: &lt;issue title&gt;</span>
+
+<span class="gs">**Scope:**</span> <span class="nt">&lt;one</span> <span class="na">paragraph</span><span class="nt">&gt;</span>
+<span class="gs">**Discovered by:**</span> <span class="sb">`&lt;watcher-name&gt;`</span> backlog sweep on <span class="nt">&lt;date&gt;</span>
+<span class="gs">**Severity:**</span> <span class="nt">&lt;critical</span> <span class="err">|</span> <span class="na">major</span> <span class="err">|</span> <span class="na">minor</span><span class="nt">&gt;</span>
+<span class="gs">**Estimated effort:**</span> <span class="nt">&lt;hours</span> <span class="err">/</span> <span class="na">days</span><span class="nt">&gt;</span>
+
+<span class="gu">## Background</span>
+<span class="nt">&lt;context</span> <span class="err">—</span> <span class="na">why</span> <span class="na">this</span> <span class="na">matters</span><span class="err">,</span> <span class="na">where</span> <span class="na">the</span> <span class="na">issue</span> <span class="na">lives</span><span class="nt">&gt;</span>
+
+<span class="gu">## What the watcher found</span>
+<span class="nt">&lt;verbatim</span> <span class="na">queue</span> <span class="na">items</span> <span class="err">+</span> <span class="na">evidence</span><span class="nt">&gt;</span>
+
+<span class="gu">## Suggested approach</span>
+<span class="p">1.</span> <span class="nt">&lt;step</span> <span class="err">1</span><span class="nt">&gt;</span>
+<span class="p">2.</span> <span class="nt">&lt;step</span> <span class="err">2</span><span class="nt">&gt;</span>
+
+<span class="gu">## Specialist skill recommended</span>
+<span class="sb">`&lt;skill-name&gt;`</span> (collaborator role)
+
+<span class="gu">## Acceptance criteria</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;criterion</span> <span class="err">1</span><span class="nt">&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;criterion</span> <span class="err">2</span><span class="nt">&gt;</span>
+<span class="p">-</span> [ ] CI green (or §5f flake documented)
+<span class="p">-</span> [ ] Voice sweep applied
+</code></pre></div></div>
+
+<p>Then surface to user via §5e: “I found a very-large issue (<title>).
+Handover doc at `<url>`. Should I dispatch `<specialist-skill>` to take
+it, hold for a future session, or expand the watcher to attempt it?"</specialist-skill></url></title></p>
+<h3 id="5i-sibling-pr-findings--post-comment-dont-fix">
+  
+  
+    <a href="#5i-sibling-pr-findings--post-comment-dont-fix" class="anchor-heading" aria-labelledby="5i-sibling-pr-findings--post-comment-dont-fix"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5i. Sibling-PR findings — post comment, don’t fix
+  
+  
+</h3>
+    
+
+<p>When a watcher detects an in-scope finding on <strong>a PR it did not create</strong>
+(a sibling PR owned by another agent or a human author), the watcher
+<strong>must not</strong> push a fix to the sibling branch. Instead, post a single
+coordination comment on the sibling PR:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**&lt;watcher-name&gt; sibling-PR ask — `&lt;block-or-script&gt;`**</span>
+<span class="p">
+-</span> Finding: <span class="nt">&lt;one</span> <span class="na">sentence</span><span class="err">,</span> <span class="na">with</span> <span class="na">severity</span><span class="nt">&gt;</span>
+<span class="p">-</span> File: <span class="nt">&lt;github-blob-url</span> <span class="na">to</span> <span class="err">`.</span><span class="na">md</span><span class="err">`</span> <span class="na">on</span> <span class="na">the</span> <span class="na">sibling</span> <span class="na">PR</span> <span class="na">head</span><span class="nt">&gt;</span>
+<span class="p">-</span> Evidence: <span class="sb">`&lt;file:line&gt;`</span> — <span class="sb">`&lt;offending text&gt;`</span>
+<span class="p">-</span> Attempted: (none — not auto-fixing on sibling branches per §5i)
+<span class="p">-</span> Suggested fix: <span class="nt">&lt;one-paragraph</span> <span class="na">proposal</span><span class="nt">&gt;</span>
+<span class="p">-</span> Owner-agent action: address on your branch and reply with the commit
+  SHA, or reply with rationale for skipping.
+</code></pre></div></div>
+
+<p>Rationale: cross-branch fixes silently diverge. The right move is to
+surface the finding, suggest the fix, and let the owner integrate.</p>
+
+<p><strong>Rate-limit.</strong> One sibling-PR comment per finding per round. If a
+sibling PR accumulates ≥ 3 unaddressed findings, batch them into a
+single follow-up comment (one round only); after that, mark the PR’s
+items <code class="language-plaintext highlighter-rouge">wontfix-sibling-unresponsive</code> and surface to the author per §5e.</p>
+
+<p><strong>Exceptions</strong> (when direct cross-branch action IS appropriate):</p>
+<ul>
+  <li>Cherry-picking a sibling’s commit into your branch — that’s pull, not
+push.</li>
+  <li>The author explicitly authorises the cross-branch action.</li>
+</ul>
+<h3 id="5h-post-completion-voice-review-on-prepared-prs">
+  
+  
+    <a href="#5h-post-completion-voice-review-on-prepared-prs" class="anchor-heading" aria-labelledby="5h-post-completion-voice-review-on-prepared-prs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5h. Post-completion voice review on prepared PRs
+  
+  
+</h3>
+    
+
+<p>When a prepared PR (per §5g) lands its <strong>last substantive fix</strong>, run
+<code class="language-plaintext highlighter-rouge">local/one-voice-audit</code> on the <strong>diff scope</strong> before the merge prompt:</p>
+
+<ul>
+  <li><strong>PR touches <code class="language-plaintext highlighter-rouge">.md</code> content</strong> → run the §1 greps (status leaks, emoji,
+work-tracker words, first-person tone, unicode crashes) on the diff.
+Apply mechanical fixes. Push as <code class="language-plaintext highlighter-rouge">style: voice sweep on PR diff</code>. Then
+the §5g step 5 merge prompt.</li>
+  <li><strong>PR is content-free</strong> (only formal-layer, <code class="language-plaintext highlighter-rouge">.ts</code>, <code class="language-plaintext highlighter-rouge">.py</code>, witness JSON,
+or skill <code class="language-plaintext highlighter-rouge">.md</code>) → voice is a <strong>no-op</strong>; record that in the ledger and
+the merge-prompt reply (“voice: n/a, PR scope is X only”).</li>
+</ul>
+<h3 id="5l-resume-protocol--suggest-next-action-on-session-start">
+  
+  
+    <a href="#5l-resume-protocol--suggest-next-action-on-session-start" class="anchor-heading" aria-labelledby="5l-resume-protocol--suggest-next-action-on-session-start"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5l. Resume protocol — suggest next action on session start
+  
+  
+</h3>
+    
+
+<p>When a watcher starts (fresh session OR <code class="language-plaintext highlighter-rouge">/integration-watch</code>
+invocation), <strong>before</strong> arming the Monitor, compute the resume state and
+surface a structured suggestion to the user.</p>
+
+<p><strong>Procedure:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Load persisted state.</strong> If <code class="language-plaintext highlighter-rouge">.beans/${NAME}-queue.json</code> exists,
+parse it. Read <code class="language-plaintext highlighter-rouge">reviewed_up_to[&lt;criterion&gt;]</code>, <code class="language-plaintext highlighter-rouge">items[]</code> with <code class="language-plaintext highlighter-rouge">status
+∈ {queued, in-progress, needs-author}</code>, and <code class="language-plaintext highlighter-rouge">audited[]</code>.</p>
+  </li>
+  <li>
+    <p><strong>Compute the unreviewed-commits queue.</strong> For each criterion <code class="language-plaintext highlighter-rouge">C</code>:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Explicit refspec (coordinate.md §8a) — CUR below reads the tracking ref.</span>
+git fetch origin <span class="s1">'+refs/heads/main:refs/remotes/origin/main'</span> 2&gt;/dev/null
+<span class="c"># jq --arg passes $C safely (no shell-quoting injection).</span>
+<span class="nv">LAST</span><span class="o">=</span><span class="si">$(</span>jq <span class="nt">-r</span> <span class="nt">--arg</span> c <span class="s2">"</span><span class="nv">$C</span><span class="s2">"</span> <span class="s1">'.reviewed_up_to[$c] // empty'</span> <span class="s2">"</span><span class="nv">$QUEUE</span><span class="s2">"</span><span class="si">)</span>
+<span class="nv">CUR</span><span class="o">=</span><span class="si">$(</span>git rev-parse origin/main<span class="si">)</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$LAST</span><span class="s2">"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$LAST</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">"</span><span class="nv">$CUR</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="c"># If main was force-pushed (history rewrite) `git log $LAST..$CUR`</span>
+  <span class="c"># would error. Fall back to "history diverged" handling.</span>
+  <span class="k">if </span>git merge-base <span class="nt">--is-ancestor</span> <span class="s2">"</span><span class="nv">$LAST</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$CUR</span><span class="s2">"</span> 2&gt;/dev/null<span class="p">;</span> <span class="k">then
+    </span>git log <span class="nt">--reverse</span> <span class="nt">--format</span><span class="o">=</span><span class="s1">'%H %s'</span> <span class="s2">"</span><span class="nv">$LAST</span><span class="s2">..</span><span class="nv">$CUR</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"/tmp/_</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">_</span><span class="k">${</span><span class="nv">C</span><span class="k">}</span><span class="s2">_missed"</span>
+  <span class="k">else
+    </span><span class="nb">printf</span> <span class="s1">'HISTORY_DIVERGED %s last=%s cur=%s\n'</span> <span class="s2">"</span><span class="nv">$C</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$LAST</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$CUR</span><span class="s2">"</span> <span class="se">\</span>
+      <span class="o">&gt;</span> <span class="s2">"/tmp/_</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">_</span><span class="k">${</span><span class="nv">C</span><span class="k">}</span><span class="s2">_missed"</span>
+  <span class="k">fi
+elif</span> <span class="o">[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$LAST</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="c"># No prior pointer (first run). Fall back to "backlog only" mode.</span>
+  <span class="nb">printf</span> <span class="s1">'NO_PRIOR_POINTER %s\n'</span> <span class="s2">"</span><span class="nv">$C</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"/tmp/_</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">_</span><span class="k">${</span><span class="nv">C</span><span class="k">}</span><span class="s2">_missed"</span>
+<span class="k">else</span>
+  : <span class="o">&gt;</span> <span class="s2">"/tmp/_</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">_</span><span class="k">${</span><span class="nv">C</span><span class="k">}</span><span class="s2">_missed"</span>   <span class="c"># LAST == CUR: nothing new</span>
+<span class="k">fi</span>
+</code></pre></div>    </div>
+
+    <p>The result per criterion: a list of commit SHAs not yet audited.
+Trigger §3 filter on each; only the in-scope ones become §4
+dispatches.</p>
+  </li>
+  <li>
+    <p><strong>Compose the resume-suggestion summary</strong> (full-context preamble per
+§4e), then ask the user via <code class="language-plaintext highlighter-rouge">AskUserQuestion</code> what to do next.
+Standard 4-option chip set:</p>
+
+    <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sb">`&lt;watcher-name&gt;`</span> resume — session state:
+
+| Indicator | Value |
+|-----------|------:|
+| Open queue items (queued + in-progress + needs-author) | N |
+| Unreviewed main commits per criterion (sum across Slot D) | M |
+| Last fully-audited main HEAD (across all criteria) | <span class="nt">&lt;SHA</span><span class="err">[</span><span class="na">:12</span><span class="err">]</span><span class="nt">&gt;</span> |
+| Current main HEAD | <span class="nt">&lt;SHA</span><span class="err">[</span><span class="na">:12</span><span class="err">]</span><span class="nt">&gt;</span> |
+| Delta | <span class="nt">&lt;N</span> <span class="na">commits</span><span class="nt">&gt;</span> |
+
+Top-3 oldest unaddressed asks: …
+Top-3 highest-severity queue items: …
+Newest in-scope main commit not yet audited: <span class="nt">&lt;SHA</span><span class="err">[</span><span class="na">:12</span><span class="err">]</span><span class="nt">&gt;</span> "<span class="nt">&lt;msg&gt;</span>"
+</code></pre></div>    </div>
+
+    <p>Then the AskUserQuestion:</p>
+    <ul>
+      <li>Option A: <strong>Triage unreviewed commits first</strong> (recommended when
+delta &gt; 0 and any are in-scope)</li>
+      <li>Option B: <strong>Continue backlog sweep</strong> (recommended when delta == 0
+or the backlog has needs-author items)</li>
+      <li>Option C: <strong>Dispatch a specific chapter / target</strong> (free-form
+fallback)</li>
+      <li>Option D: <strong>Just watch passively</strong> — arm Monitor, no proactive work</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Record on every full sweep.</strong> After §4 scans the <strong>entire</strong> missed
+range <code class="language-plaintext highlighter-rouge">LAST..CUR</code> under criterion <code class="language-plaintext highlighter-rouge">C</code>, update <code class="language-plaintext highlighter-rouge">reviewed_up_to[C] =
+CUR</code> — the scanned-up-to-and-including HEAD, <strong>not</strong> just the newest
+in-scope commit. The pointer advances when the scan is <em>complete</em>,
+regardless of how many commits passed §3. After §5 backlog sweep
+completes a block <code class="language-plaintext highlighter-rouge">B</code>, update <code class="language-plaintext highlighter-rouge">audited[B] = { ts, sha: &lt;main HEAD at
+sweep time&gt;, criteria: [&lt;Slot D criteria checked&gt;] }</code>.</p>
+  </li>
+  <li>
+    <p><strong>Resume-suggestion frequency.</strong> Run at session start and whenever
+the user types <code class="language-plaintext highlighter-rouge">/integration-watch resume</code> or <code class="language-plaintext highlighter-rouge">&lt;watcher&gt;:status</code>.</p>
+  </li>
+</ol>
+
+<p>The combination of <code class="language-plaintext highlighter-rouge">reviewed_up_to[criterion] +
+audited[block].{sha,criteria}</code> makes the audit ledger fully replayable.</p>
+<h3 id="5m-sequential-by-default-parallel-agents-require-explicit-consent">
+  
+  
+    <a href="#5m-sequential-by-default-parallel-agents-require-explicit-consent" class="anchor-heading" aria-labelledby="5m-sequential-by-default-parallel-agents-require-explicit-consent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5m. Sequential-by-default; parallel agents require explicit consent
+  
+  
+</h3>
+    
+
+<p>Repo-owner preference: <strong>don’t spawn more than one agent at a time
+unless explicit consent.</strong> This overrides the historical
+“parallel-by-default” model.</p>
+
+<p><strong>Default rule:</strong> while idle, the watcher does its own work
+<strong>sequentially in the foreground</strong> — one backlog item / one PR triage /
+one criterion sweep at a time. Foreground reads (<code class="language-plaintext highlighter-rouge">Read</code>, <code class="language-plaintext highlighter-rouge">Grep</code>, <code class="language-plaintext highlighter-rouge">Bash</code>
+for inspection) can still run in parallel within a single response; the
+constraint is on <strong>agent dispatch</strong> (<code class="language-plaintext highlighter-rouge">Agent(...)</code> calls).</p>
+
+<p><strong>Explicit-consent escalation:</strong> if the watcher believes a parallel
+batch is genuinely justified, it must (1) surface an <code class="language-plaintext highlighter-rouge">AskUserQuestion</code>
+describing the proposed batch (count, per-agent scope, expected total
+wall time); (2) wait for affirmative consent (“continue” / “proceed” /
+“go ahead” / explicit <code class="language-plaintext highlighter-rouge">yes</code>; silence does not); (3) cap the granted
+batch at the explicitly-named size (default 4 if the user says “parallel
+ok”); subsequent rounds need fresh consent.</p>
+
+<p><strong>Anti-parallel cases</strong> (always sequential even with consent):</p>
+
+<ul>
+  <li>Anything touching the same <code class="language-plaintext highlighter-rouge">.beans/${NAME}-queue.json</code> write (race).</li>
+  <li>Anything touching the same exclusive build lock.</li>
+  <li>Anything that depends on a prior step’s output (rebase → validate,
+format → lint).</li>
+  <li>Tasks where the user is mid-asking.</li>
+</ul>
+
+<p><strong>Acceptable parallel-without-consent exceptions</strong> (narrow):</p>
+
+<ul>
+  <li>Multiple <code class="language-plaintext highlighter-rouge">Read</code> / <code class="language-plaintext highlighter-rouge">Grep</code> / <code class="language-plaintext highlighter-rouge">Bash</code>-inspection tool calls in a single
+response — these are not agent spawns.</li>
+  <li>The §4b QA-specialist dispatch when reacting to an incoming event and
+the specialists are read-only — but if the dispatch would exceed 3
+agents, ask first.</li>
+</ul>
+
+<p><strong>Default invariant:</strong> in an idle window with K ≥ 2 independent tasks,
+the watcher <strong>picks the highest-priority one, works it
+foreground-sequential, and ships before reaching for the next.</strong> Batch
+consent is the escape hatch, not the default.</p>
+<h2 id="6-goal-driven-invariants">
+  
+  
+    <a href="#6-goal-driven-invariants" class="anchor-heading" aria-labelledby="6-goal-driven-invariants"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Goal-driven invariants
+  
+  
+</h2>
+    
+
+<p>Children fill <strong>Slot I</strong> with the domain’s invariant checks. The parent
+enforces this pattern: every invariant is checked before every
+own-branch commit; failure blocks the commit, queues the violation as
+<code class="language-plaintext highlighter-rouge">critical</code>, and asks the author.</p>
+<h2 id="7-output-style">
+  
+  
+    <a href="#7-output-style" class="anchor-heading" aria-labelledby="7-output-style"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Output style
+  
+  
+</h2>
+    
+
+<ul>
+  <li>One line per event when nothing changed (<code class="language-plaintext highlighter-rouge">&lt;sha&gt;  no &lt;domain&gt; scope</code>).</li>
+  <li>
+    <p>A short structured block when findings exist:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;source&gt; &lt;sha&gt; — &lt;msg&gt;
+  findings: N critical, N major
+  discharged: N  asked: N  deferred: N
+  queue: M (K in-progress)
+</code></pre></div>    </div>
+  </li>
+  <li>An author ask when escalating (see §4e).</li>
+  <li>End-of-session: tail of the ledger + queue stats.</li>
+</ul>
+<h2 id="8-integration">
+  
+  
+    <a href="#8-integration" class="anchor-heading" aria-labelledby="8-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Integration
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong>Built on</strong>: <code class="language-plaintext highlighter-rouge">local/watch</code> (Monitor scaffolding), <code class="language-plaintext highlighter-rouge">local/coordinate</code>
+(PR triage helpers).</li>
+  <li><strong>Dispatches</strong>: see each child’s Slot C.</li>
+  <li><strong>Produces</strong>: <code class="language-plaintext highlighter-rouge">.beans/${NAME}-queue.json</code> (live state) +
+<code class="language-plaintext highlighter-rouge">.beans/${NAME}-ledger.md</code> (event log).</li>
+  <li><strong>Complements</strong> other watchers — each owns one axis. Coordinate via
+<code class="language-plaintext highlighter-rouge">/coordinate</code> if the user is running more than one.</li>
+</ul>
+<h2 id="9-role-gating">
+  
+  
+    <a href="#9-role-gating" class="anchor-heading" aria-labelledby="9-role-gating"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Role gating
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong>reader</strong>: may run in audit-only mode (queue + ask; no edits, no
+commits, no PR comments).</li>
+  <li><strong>collaborator</strong>: may auto-discharge Auto-discharge band findings, may
+commit on this branch, may post asks on PRs.</li>
+  <li><strong>owner</strong>: same as collaborator plus may commit to main when
+explicitly requested (still requires per-commit user approval per
+AGENTS.md “Executing actions with care”).</li>
+</ul>
+<h2 id="anti-patterns-shared-across-all-children">
+  
+  
+    <a href="#anti-patterns-shared-across-all-children" class="anchor-heading" aria-labelledby="anti-patterns-shared-across-all-children"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Anti-patterns (shared across all children)
+  
+  
+</h2>
+    
+
+<ul>
+  <li>❌ Re-implement scanner/analyser logic here. Always delegate to
+existing specialists / scripts.</li>
+  <li>❌ Subscribe to <strong>every</strong> open PR. Only last-7-day-active set + own PR
+    <ul>
+      <li>newly-opened (per TICK).</li>
+    </ul>
+  </li>
+  <li>❌ Open &gt; 1 ask per round on the same block. Batch findings.</li>
+  <li>❌ Edit <code class="language-plaintext highlighter-rouge">.ts</code> manifests to add a <code class="language-plaintext highlighter-rouge">status:</code> field (status is derived).</li>
+  <li>❌ Touch protected files (the deployment whitelist files, etc.).</li>
+  <li>❌ Hand-edit witness JSON to “fix” drift.</li>
+  <li>❌ Auto-merge a PR without explicit author approval.</li>
+</ul>
+
+<p>Children add their own domain-specific anti-patterns.</p>
+<h2 id="checklist-shared-across-all-children">
+  
+  
+    <a href="#checklist-shared-across-all-children" class="anchor-heading" aria-labelledby="checklist-shared-across-all-children"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist (shared across all children)
+  
+  
+</h2>
+    
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Queue + ledger initialised under <code class="language-plaintext highlighter-rouge">.beans/</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Main baseline SHA stashed</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Monitor armed on <code class="language-plaintext highlighter-rouge">origin/main</code> with TICK heartbeat</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Subscribed to own PR + every sibling PR active in 7 days</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Auto-subscribe on every TICK for newly-opened PRs</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Per-event pipeline delegates to specialists in parallel</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Auto-discharge band uses scanner-verified mechanical fixes</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Author asks are one-per-block, batched per round</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Backlog sweep prioritised per Slot H</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Invariants checked before every own-branch commit</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />GitHub blob URLs (<code class="language-plaintext highlighter-rouge">.md</code> first) included in every author ask</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Prepared PRs followed up per §5g (subscribe + copilot review +
+    merge prompt)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Voice sweep applied or noted n/a on every prepared PR before merge
+    prompt (§5h)</li>
+</ul>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

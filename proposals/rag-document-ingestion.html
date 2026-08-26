@@ -1,0 +1,1483 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(14)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Proposal — a document-ingestion layer, and where RAG actually belongs | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Proposal — a document-ingestion layer, and where RAG actually belongs" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/proposals/rag-document-ingestion.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/proposals/rag-document-ingestion.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Proposal — a document-ingestion layer, and where RAG actually belongs" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Proposal — a document-ingestion layer, and where RAG actually belongs","url":"https://litlfred.github.io/folio-assistant/proposals/rag-document-ingestion.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="proposal--a-document-ingestion-layer-and-where-rag-actually-belongs">
+  
+  
+    <a href="#proposal--a-document-ingestion-layer-and-where-rag-actually-belongs" class="anchor-heading" aria-labelledby="proposal--a-document-ingestion-layer-and-where-rag-actually-belongs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proposal — a document-ingestion layer, and where RAG actually belongs
+  
+  
+</h1>
+    
+
+<p><strong>Status:</strong> proposal · <strong>Bean:</strong> <code class="language-plaintext highlighter-rouge">p2en</code></p>
+
+<p>The folio has an informal ingestion path: documents land in a flat
+<code class="language-plaintext highlighter-rouge">uploads/</code> directory, an agent opens them one at a time, and what it
+learned survives only as a row in a source ledger and whatever prose it
+wrote. This proposal assesses the tools that would formalise that path —
+RAGFlow, Docling, MinerU, Marker, visual retrievers — and argues for a
+particular shape: <strong>route by document class first, and fall through to
+generic RAG only when the structured path is unavailable.</strong></p>
+
+<p>That ordering is the substantive claim here. The obvious design is a
+generic RAG front-end with math and SMART-Guidelines specialisations
+bolted on downstream. Measured against this corpus, that design does the
+most expensive thing first and throws away structure it could have had
+for free.</p><hr />
+<h2 id="1-what-exists-today">
+  
+  
+    <a href="#1-what-exists-today" class="anchor-heading" aria-labelledby="1-what-exists-today"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. What exists today
+  
+  
+</h2>
+    
+
+<p>Measured on <code class="language-plaintext highlighter-rouge">litlfred/qou</code> at <code class="language-plaintext highlighter-rouge">73784ff0</code>, not asserted:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Fact</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Documents in <code class="language-plaintext highlighter-rouge">uploads/</code></td>
+      <td>339 PDFs, 289 MB, flat — no per-document directory</td>
+    </tr>
+    <tr>
+      <td>Documents whose filename is an arXiv ID</td>
+      <td><strong>230 (68 %)</strong> — 147 new-style (<code class="language-plaintext highlighter-rouge">YYMM.NNNNN</code>), 83 old-style (<code class="language-plaintext highlighter-rouge">YYMMNNN</code>)</td>
+    </tr>
+    <tr>
+      <td>Remaining</td>
+      <td>109 journal PDFs (Elsevier <code class="language-plaintext highlighter-rouge">1-s2.0-*</code>, Numdam <code class="language-plaintext highlighter-rouge">AIF_*</code>/<code class="language-plaintext highlighter-rouge">BSMF_*</code>, misc scans)</td>
+    </tr>
+    <tr>
+      <td>Documents with the <code class="language-plaintext highlighter-rouge">document-intake</code> per-document directory</td>
+      <td><strong>1</strong> — the skill’s own §”Per-upload state” note concedes this</td>
+    </tr>
+    <tr>
+      <td>Rows in the source ledger <code class="language-plaintext highlighter-rouge">content/bib-qa-verifications.json</code></td>
+      <td>432</td>
+    </tr>
+    <tr>
+      <td>Open beans that are <em>manually read this one paper</em></td>
+      <td><strong>15</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>So the ledger works and the intake convention does not. The 15 beans are
+the tell: each is a human-scheduled unit of work to open a PDF and
+extract what it says. That is the labour an ingestion layer amortises,
+and it is the right thing to measure any candidate against.</p>
+
+<p>Retrieval today is <code class="language-plaintext highlighter-rouge">grep</code> over <code class="language-plaintext highlighter-rouge">content/</code> plus an agent reading a whole
+PDF into context. There are no embeddings, no chunk store, no index. The
+<code class="language-plaintext highlighter-rouge">/api/relevance/*</code> routes present the ledger; they do not search it.</p><hr />
+<h2 id="2-three-constraints-that-decide-most-of-this">
+  
+  
+    <a href="#2-three-constraints-that-decide-most-of-this" class="anchor-heading" aria-labelledby="2-three-constraints-that-decide-most-of-this"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Three constraints that decide most of this
+  
+  
+</h2>
+    
+
+<p><strong>(a) Two thirds of the corpus has a LaTeX source — but the network
+often cannot reach it.</strong> For 230 documents the authoritative
+representation — the actual <code class="language-plaintext highlighter-rouge">.tex</code> the author wrote, with every macro and
+every <code class="language-plaintext highlighter-rouge">\label</code> — exists on arXiv, and <code class="language-plaintext highlighter-rouge">qou/.mcp.json</code> already configures
+<code class="language-plaintext highlighter-rouge">paper-search-mcp</code> and <code class="language-plaintext highlighter-rouge">openalex-paper-search</code> to fetch it. <strong>In a
+sandboxed session that path is dead:</strong> measured 2026-08-15, the egress
+proxy returns 403 (organisation policy denial) for <code class="language-plaintext highlighter-rouge">arxiv.org</code>,
+<code class="language-plaintext highlighter-rouge">export.arxiv.org</code> and <code class="language-plaintext highlighter-rouge">api.openalex.org</code> alike. PyPI is reachable;
+arXiv is not.</p>
+
+<p>The correction this forces is important. Source-first is still right
+<em>when the network allows it</em>, so it stays the preferred route in §7. But
+it cannot be the <strong>only</strong> route, or ingestion stops dead in exactly the
+sandboxed sessions where most agent work happens. <strong>The PDF path must be
+complete on its own, offline.</strong></p>
+
+<p>Fortunately the PDF carries more than expected — see §2a-bis.</p>
+
+<p><strong>(a-bis) The PDFs are in far better shape than “PDF” suggests.</strong>
+Measured over all 339 with <code class="language-plaintext highlighter-rouge">pypdf</code>, <strong>zero read errors across 12,437
+pages</strong>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Signal</th>
+      <th>Count</th>
+      <th>Consequence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Has a PDF outline (bookmarks)</td>
+      <td><strong>194 (57 %)</strong></td>
+      <td>the table of contents is <em>free</em> — no inference needed</td>
+    </tr>
+    <tr>
+      <td>…with ≥ 5 entries</td>
+      <td>181 (53 %)</td>
+      <td>deep enough to section the document</td>
+    </tr>
+    <tr>
+      <td>Has a plausible DocInfo <code class="language-plaintext highlighter-rouge">/Title</code></td>
+      <td>126 (37 %)</td>
+      <td>too unreliable to trust — derive from text instead</td>
+    </tr>
+    <tr>
+      <td>arXiv stamp in page-1 text</td>
+      <td>~230</td>
+      <td><strong>identity, version, primary class and date, offline</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>That third row is why metadata must come from the text and not the
+DocInfo dictionary. The fourth is the one that rescues constraint (a):
+arXiv prints its own stamp down the left margin of page 1, in both eras
+(<code class="language-plaintext highlighter-rouge">arXiv:0706.2213v3 [math.GT] 9 Mar 2008</code> and <code class="language-plaintext highlighter-rouge">arXiv:hep-th/0001202v2</code>),
+so <strong>a blocked network costs us the LaTeX source but not the paper’s
+identity</strong>. The ledger join still works offline.</p>
+
+<p><strong>(b) The deployment host cannot run RAGFlow.</strong> <code class="language-plaintext highlighter-rouge">lean-mcp.config.json</code>
+pins <code class="language-plaintext highlighter-rouge">server_type: cx23</code> — a Hetzner shared-vCPU instance at <strong>2 vCPU /
+4 GB RAM / 40 GB disk</strong>, €3.49/mo. RAGFlow documents a minimum of <strong>4
+cores / 16 GB RAM / 50 GB disk</strong>, and its Docker Compose stack brings
+Elasticsearch (or Infinity), MySQL, Redis and MinIO. The RAM figure is
+not advisory — the vector engine freezes below it. Co-hosting is out.
+RAGFlow means a second box at roughly 4× the current hosting cost, or
+batch runs on a workstation.</p>
+
+<p><strong>(c) The folio’s retrieval unit is the content block, not a chunk.</strong>
+This is the one most likely to be missed. <code class="language-plaintext highlighter-rouge">content/**</code> is <em>already</em>
+chunked — by hand, semantically, one claim per file — and each chunk
+carries a typed manifest, an editorial <code class="language-plaintext highlighter-rouge">uses[]</code> edge set, a Lean ref, and
+QA sidecars. A generic RAG engine wants to own a corpus: ingest it, chunk
+it its own way, embed it, and serve it. Pointed at <code class="language-plaintext highlighter-rouge">content/</code>, it would
+discard a richer structure than it can build, and hold a second copy that
+drifts. <strong>The folio does not need a chunker for its own content.</strong> It
+needs one for <em>incoming</em> documents, which is a much smaller job.</p><hr />
+<h2 id="3-separate-the-four-jobs-rag-conflates">
+  
+  
+    <a href="#3-separate-the-four-jobs-rag-conflates" class="anchor-heading" aria-labelledby="3-separate-the-four-jobs-rag-conflates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Separate the four jobs “RAG” conflates
+  
+  
+</h2>
+    
+
+<p>Most of the confusion in tool comparisons comes from products that span
+different subsets of these. Assessed separately, the choices are clearer.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ACQUIRE  ──▶  PARSE  ──▶  INDEX  ──▶  INGEST
+  best available   →structured  →searchable   →content objects
+  representation   document                   (folio-specific)
+</code></pre></div></div>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Job</th>
+      <th>What it means here</th>
+      <th>Folio status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Acquire</strong></td>
+      <td>Get the best representation that exists — LaTeX source, publisher XML, DAK spreadsheet — before settling for a PDF</td>
+      <td><strong>absent</strong>; PDFs are dropped in by hand</td>
+    </tr>
+    <tr>
+      <td><strong>Parse</strong></td>
+      <td>Whatever is left as PDF → structured document with layout, tables, formulae</td>
+      <td><strong>absent</strong>; agent reads the PDF</td>
+    </tr>
+    <tr>
+      <td><strong>Index</strong></td>
+      <td>Make 339 documents searchable without loading them into context</td>
+      <td><strong>absent</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Ingest</strong></td>
+      <td>Structured document → typed content blocks with <code class="language-plaintext highlighter-rouge">uses[]</code>, labels, citations</td>
+      <td><strong>exists</strong> as <code class="language-plaintext highlighter-rouge">document-intake</code> / <code class="language-plaintext highlighter-rouge">paper-importer</code> skills; unautomated</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The fourth is the folio-specific one and is not for sale. The first three
+are.</p><hr />
+<h2 id="4-options-by-job">
+  
+  
+    <a href="#4-options-by-job" class="anchor-heading" aria-labelledby="4-options-by-job"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Options, by job
+  
+  
+</h2>
+    
+<h3 id="41-acquire">
+  
+  
+    <a href="#41-acquire" class="anchor-heading" aria-labelledby="41-acquire"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.1 Acquire
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Fit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">arxiv-to-prompt</code> / arxiv-latex MCP</strong></td>
+      <td>Fetches arXiv LaTeX source and flattens it for a model. Directly addresses constraint (a). MIT-ish, tiny, no infrastructure.</td>
+    </tr>
+    <tr>
+      <td><strong>LaTeXML</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">.tex</code> → structured XML/HTML5 with MathML; the engine behind ar5iv. The rigorous route once source is in hand. Heavier, Perl, but battle-tested on all of arXiv.</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">paper-search-mcp</code> / OpenAlex (<code class="language-plaintext highlighter-rouge">alex-mcp</code>)</strong></td>
+      <td>Already named in <code class="language-plaintext highlighter-rouge">document-intake.md §Stage 1</code> as the preferred fetch path. Gives canonical metadata + PDF in one call, which is also how the ledger’s reference join gets populated without hand-typing.</td>
+    </tr>
+    <tr>
+      <td>Publisher XML (JATS)</td>
+      <td>Available for some of the 109 non-arXiv items; Numdam and Elsevier both expose it. Worth a probe before OCR.</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>This layer is the highest value per unit of effort in the whole
+proposal and needs no RAG engine at all.</strong></p>
+<h3 id="42-parse">
+  
+  
+    <a href="#42-parse" class="anchor-heading" aria-labelledby="42-parse"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.2 Parse
+  
+  
+</h3>
+    
+
+<p>For what remains as PDF-only — the ~109 journal items, scans, and WHO L1
+narrative guidelines.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>License</th>
+      <th>Runs on CPU</th>
+      <th>Math</th>
+      <th>Tables</th>
+      <th>Shape</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Docling</strong> (IBM)</td>
+      <td><strong>MIT</strong></td>
+      <td><strong>yes</strong></td>
+      <td>formula enrichment → LaTeX</td>
+      <td>TableFormer, strong</td>
+      <td><strong>library</strong>, emits <code class="language-plaintext highlighter-rouge">DoclingDocument</code>; also <code class="language-plaintext highlighter-rouge">docling-serve</code>, <code class="language-plaintext highlighter-rouge">docling-mcp</code></td>
+    </tr>
+    <tr>
+      <td><strong>MinerU</strong></td>
+      <td>AGPL-3.0</td>
+      <td>GPU strongly preferred</td>
+      <td><strong>best in class</strong> (UniMERNet)</td>
+      <td>good</td>
+      <td>service/CLI</td>
+    </tr>
+    <tr>
+      <td><strong>Marker</strong> (Datalab)</td>
+      <td>GPL + commercial threshold</td>
+      <td>GPU preferred</td>
+      <td>good (Surya/texify)</td>
+      <td>good</td>
+      <td>CLI</td>
+    </tr>
+    <tr>
+      <td><strong>RAGFlow DeepDoc</strong></td>
+      <td>Apache-2.0, but bundled</td>
+      <td>no (part of the stack)</td>
+      <td>moderate</td>
+      <td>good</td>
+      <td><strong>inside a product</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Nougat</strong> (Meta)</td>
+      <td>MIT</td>
+      <td>GPU</td>
+      <td>math-native</td>
+      <td>weak</td>
+      <td>largely unmaintained; hallucinates</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Docling is the right default: it is MIT, it runs on the CPU we actually
+have, and — decisively for this repo — <strong>it is a library that produces a
+cached artefact</strong>, which is precisely the shape of the existing
+integration contract (§5). MinerU is better at formulae, but constraint
+(a) means the documents where formula recognition matters most are the
+ones we should not be OCR-ing at all. Keep MinerU as an escalation for a
+math-heavy scan with no source.</p>
+<h3 id="43-index">
+  
+  
+    <a href="#43-index" class="anchor-heading" aria-labelledby="43-index"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.3 Index
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Fit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>LanceDB</strong></td>
+      <td>Embedded, file-backed, no server, no daemon — fits a 4 GB host and commits alongside <code class="language-plaintext highlighter-rouge">.beans/</code>. Best default for a 339-document corpus.</td>
+    </tr>
+    <tr>
+      <td><strong>Qdrant</strong></td>
+      <td>Excellent, but a service. Justified only once the corpus outgrows embedded.</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">sqlite-vec</code> / pgvector</strong></td>
+      <td>Viable if a SQL store already exists. It doesn’t here.</td>
+    </tr>
+    <tr>
+      <td><strong>ColPali / ColQwen</strong> (visual late-interaction)</td>
+      <td>Retrieves over <em>page images</em>, no text extraction — so figures, tables and formulae stay intact. Genuinely strong for exactly this corpus. But it is GPU-bound and stores ~1024 patch vectors per page. <strong>Park it</strong>; revisit if text retrieval demonstrably fails on diagram-bearing pages.</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>At 339 documents, retrieval quality is not the bottleneck — <em>having any
+index at all</em> is. Start embedded.</p>
+<h3 id="44-ingest">
+  
+  
+    <a href="#44-ingest" class="anchor-heading" aria-labelledby="44-ingest"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.4 Ingest
+  
+  
+</h3>
+    
+
+<p>Already specified by <code class="language-plaintext highlighter-rouge">document-intake.md</code> and <code class="language-plaintext highlighter-rouge">paper-importer.md</code>, and
+the block schema is the target. Nothing to buy. What changes is that
+Stages 2–3 stop being an agent reading a PDF and become a parse artefact
+the agent adjudicates.</p><hr />
+<h2 id="5-how-anything-enters-the-existing-contract">
+  
+  
+    <a href="#5-how-anything-enters-the-existing-contract" class="anchor-heading" aria-labelledby="5-how-anything-enters-the-existing-contract"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. How anything enters: the existing contract
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">docs/proposals/llm-authoring-tool-integration.md §1</code> already defines how
+an external tool is absorbed, and it applies unchanged:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>capability probe          .claude/skills/capabilities/&lt;tool&gt;.json
+        ↓                 (detection + `requires`, gates --check-deps)
+cached ingest artefact    uploads/&lt;id&gt;/parsed.json  (SHA-stamped)
+        ↓
+registered criterion      content/pipeline/qa-criteria-registry.ts
+        ↓
+checker or skill          qa-checkers-*.ts | skills/**/&lt;skill&gt;.md
+        ↓
+watcher axis              WATCHER_CRITERIA_BY_AXIS → integration-backlog
+</code></pre></div></div>
+
+<p>Its four properties are what keep an ingestion layer honest, and two
+matter especially here:</p>
+
+<ul>
+  <li><strong>Absent tool ⇒ <code class="language-plaintext highlighter-rouge">n/a</code>, never a false pass.</strong> A document nobody parsed
+must not read as a document with nothing in it.</li>
+  <li><strong>Stale cache ⇒ <code class="language-plaintext highlighter-rouge">n/a</code>.</strong> A parse artefact carries the source PDF’s SHA,
+so a re-uploaded or corrected document invalidates its own extraction
+rather than silently serving the old one.</li>
+</ul>
+
+<p>This is also the argument against adopting a product that owns its own
+store: RAGFlow’s index has no place to record <em>which</em> SHA it parsed in
+terms the folio’s staleness machinery can read.</p><hr />
+<h2 id="6-where-ragflow-does-fit">
+  
+  
+    <a href="#6-where-ragflow-does-fit" class="anchor-heading" aria-labelledby="6-where-ragflow-does-fit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Where RAGFlow does fit
+  
+  
+</h2>
+    
+
+<p>Not as the primary, but it is not nothing:</p>
+
+<ul>
+  <li>Its <strong>orchestrable ingestion pipeline</strong> (0.22+) treats parsing as
+pluggable, and can call Docling Serve (<code class="language-plaintext highlighter-rouge">DOCLING_SERVER_URL</code>) or MinerU
+(<code class="language-plaintext highlighter-rouge">MINERU_APISERVER</code>) as backends. So “RAGFlow <em>or</em> Docling” is a false
+choice — RAGFlow is an orchestrator + store + UI over parsers you would
+pick anyway.</li>
+  <li>Its <strong>template-based chunking</strong> (one template per document class:
+paper, manual, table, laws) is the right <em>idea</em>, and is worth stealing
+even if the engine isn’t adopted. It is §7’s routing table by another
+name.</li>
+  <li>If a <strong>human-facing corpus-browsing UI</strong> over <code class="language-plaintext highlighter-rouge">uploads/</code> becomes a real
+requirement, RAGFlow supplies one, and that is a genuine argument for
+standing it up on its own box.</li>
+</ul>
+
+<p>What it should not do is become the folio’s retrieval layer for
+<code class="language-plaintext highlighter-rouge">content/</code>. That would put a second, weaker copy of the corpus behind an
+API and orphan the <code class="language-plaintext highlighter-rouge">uses[]</code> graph.</p><hr />
+<h2 id="7-route-by-document-class">
+  
+  
+    <a href="#7-route-by-document-class" class="anchor-heading" aria-labelledby="7-route-by-document-class"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Route by document class
+  
+  
+</h2>
+    
+
+<p>The corrective this proposal argues for. Rather than <em>generic RAG →
+specialised</em>, the router runs <strong>first</strong>, and generic RAG is the fallback:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Detected by</th>
+      <th>Route</th>
+      <th>Falls back to</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>arXiv paper</td>
+      <td>arXiv ID in filename or ledger</td>
+      <td><strong>fetch <code class="language-plaintext highlighter-rouge">.tex</code> source</strong> → LaTeXML → blocks</td>
+      <td>Docling on the PDF</td>
+    </tr>
+    <tr>
+      <td>Journal paper w/ XML</td>
+      <td>DOI → publisher JATS</td>
+      <td><strong>JATS</strong> → blocks</td>
+      <td>Docling</td>
+    </tr>
+    <tr>
+      <td>Journal PDF, no source</td>
+      <td>—</td>
+      <td>Docling → blocks</td>
+      <td>MinerU if formula-dense</td>
+    </tr>
+    <tr>
+      <td>Scan / photograph</td>
+      <td>no text layer</td>
+      <td>Docling OCR, or vision</td>
+      <td>agent transcription</td>
+    </tr>
+    <tr>
+      <td><strong>WHO L2 DAK</strong></td>
+      <td>DAK repo structure</td>
+      <td><strong>structured extractors</strong> (§9)</td>
+      <td>— never generic</td>
+    </tr>
+    <tr>
+      <td><strong>WHO L1 guideline</strong></td>
+      <td>narrative PDF</td>
+      <td>Docling → recommendation-boxed blocks</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Lean / formal source</td>
+      <td><code class="language-plaintext highlighter-rouge">.lean</code></td>
+      <td>Lean Atlas, not a text pipeline</td>
+      <td>—</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Each row’s <em>first</em> choice preserves structure the document already has.
+Generic RAG is what happens when that fails, not what happens first.</p><hr />
+<h2 id="7-bis-where-processed-content-goes">
+  
+  
+    <a href="#7-bis-where-processed-content-goes" class="anchor-heading" aria-labelledby="7-bis-where-processed-content-goes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7-bis. Where processed content goes
+  
+  
+</h2>
+    
+
+<p>The single most important design question, and the answer has to be the
+same shape for a knot-theory preprint and a WHO L1 guideline.</p>
+<h3 id="the-layout">
+  
+  
+    <a href="#the-layout" class="anchor-heading" aria-labelledby="the-layout"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The layout
+  
+  
+</h3>
+    
+
+<p>A processed document stops being a flat PDF and becomes the per-document
+directory <code class="language-plaintext highlighter-rouge">document-intake.md</code> already specifies (followed today by 1 of
+339 documents — the convention is right, it was just never automated):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uploads/&lt;doc-id&gt;/
+  original.pdf            the upload, unchanged
+  structure.json          pdf-structure/v1 — metadata + TOC + section index
+  sections/               ← THE GREPPABLE ARTEFACT
+    sec-000-introduction.md
+    sec-001-preliminaries.md
+    ...
+  candidates.json         class-specific extraction (§8, §9) — proposals only
+  intake.json             pipeline state
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;doc-id&gt;</code> is derived, not assigned: <code class="language-plaintext highlighter-rouge">arxiv-0706.2213v3</code> when the stamp is
+present, else the slugified filename. So the identifier is stable across
+re-uploads and is the join key to <code class="language-plaintext highlighter-rouge">content/bib-qa-verifications.json</code>.</p>
+<h3 id="why-plain-markdown-and-not-a-vector-store">
+  
+  
+    <a href="#why-plain-markdown-and-not-a-vector-store" class="anchor-heading" aria-labelledby="why-plain-markdown-and-not-a-vector-store"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why plain Markdown, and not a vector store
+  
+  
+</h3>
+    
+
+<p>Because <strong>this project’s agents find things by grepping.</strong> The qou
+<code class="language-plaintext highlighter-rouge">AGENTS.md</code> corpus-grep checklist is a STRICT gate before any agent may
+declare an item open, and it names four paths — <code class="language-plaintext highlighter-rouge">docs/audits/</code>,
+<code class="language-plaintext highlighter-rouge">content/</code>, <code class="language-plaintext highlighter-rouge">computations/</code>, <code class="language-plaintext highlighter-rouge">docs/coordination/</code>. <code class="language-plaintext highlighter-rouge">uploads/</code> is not one
+of them, and cannot be: it is 339 PDFs and 289 MB of binary.</p>
+
+<p>Extracting sections to <code class="language-plaintext highlighter-rouge">.md</code> <strong>makes <code class="language-plaintext highlighter-rouge">uploads/</code> a fifth grep path</strong>, which
+is a larger practical win than semantic search would be at this corpus
+size:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">grep</span> <span class="nt">-rn</span> <span class="s2">"Reidemeister torsion"</span> uploads/<span class="k">*</span>/sections/
+<span class="c"># → uploads/arxiv-0706.2213v3/sections/sec-004-review-on-the-non-abelian.md:42</span>
+</code></pre></div></div>
+
+<p>Each section file opens with YAML front-matter naming the document,
+section, page range and source SHA, so a grep hit is immediately citable
+— which is what the ledger and <code class="language-plaintext highlighter-rouge">-- Ref:</code> citations need anyway. A vector
+index (§4.3) can be layered on top later; it reads the same files. The
+files are the substrate, the index is an accelerator.</p>
+<h3 id="two-stages-and-the-boundary-between-them-matters">
+  
+  
+    <a href="#two-stages-and-the-boundary-between-them-matters" class="anchor-heading" aria-labelledby="two-stages-and-the-boundary-between-them-matters"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two stages, and the boundary between them matters
+  
+  
+</h3>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>original.pdf
+     │
+     ├── STAGE A — pdf-structure          domain-neutral, mechanical
+     │        structure.json + sections/*.md
+     │        no math logic, no WHO logic
+     │
+     └── STAGE B — class-specific extractor      routed by §7
+              ├─ math paper → candidates.json: claims, theorems,
+              │                 formalization candidates
+              └─ WHO L1     → candidates.json: recommendations,
+                                remarks, GRADE tables
+                          │
+                          └── ADJUDICATION (agent proposes, human accepts)
+                                  → content/&lt;paper&gt;/&lt;block&gt;.ts + .md
+</code></pre></div></div>
+
+<p>Stage A is shared and already built (<code class="language-plaintext highlighter-rouge">scripts/pdf-structure.py</code>). Stage B
+is where math and SMART Guidelines diverge, and it emits <strong>candidates,
+never content</strong>. That boundary is the anti-laundering rule applied to
+ingestion: a sentence extracted from someone else’s paper is <em>a claim
+attributed to a source</em>, not a folio claim. It reaches <code class="language-plaintext highlighter-rouge">content/</code> only
+when an agent or the author promotes it, exactly as
+<code class="language-plaintext highlighter-rouge">document-intake.md §Stage 4</code> already requires.</p>
+<h3 id="does-it-need-lean-formalization">
+  
+  
+    <a href="#does-it-need-lean-formalization" class="anchor-heading" aria-labelledby="does-it-need-lean-formalization"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Does it need Lean formalization?
+  
+  
+</h3>
+    
+
+<p>That is a Stage-B verdict on a math document, and it must be a
+<strong>proposal</strong>, not an action. <code class="language-plaintext highlighter-rouge">candidates.json</code> carries, per extracted
+claim: the section it came from, its page, the claim text, a kind guess
+(<code class="language-plaintext highlighter-rouge">definition</code>/<code class="language-plaintext highlighter-rouge">theorem</code>/<code class="language-plaintext highlighter-rouge">lemma</code>), and a <code class="language-plaintext highlighter-rouge">formalization_candidate</code> flag
+with a reason.</p>
+
+<p>What the flag means is narrow and worth stating, because the failure mode
+is obvious: <strong>an extracted theorem is not a proved theorem.</strong> It is
+someone else’s result, and importing it creates a block that must cite
+them, not a Lean obligation the folio has discharged. So the routing is:</p>
+
+<ol>
+  <li><strong>Relevant + already cited</strong> → the ledger row gains the section
+pointer; nothing else happens.</li>
+  <li><strong>Relevant + not cited</strong> → <code class="language-plaintext highlighter-rouge">paper-relevance-triage</code> verdict, then a
+<code class="language-plaintext highlighter-rouge">references.ts</code> entry and a citation.</li>
+  <li><strong>Relevant + the folio wants to <em>use</em> the result</strong> → a bean, routed to
+<code class="language-plaintext highlighter-rouge">formalizer</code>. The Lean either states it with <code class="language-plaintext highlighter-rouge">sorry</code> + <code class="language-plaintext highlighter-rouge">-- Ref:</code> to
+the source (the honest “imported, not reproved” marker), or proves it.
+Both are governed by the existing Strict Lean Discipline; ingestion
+grants no exemption and creates no Lean by itself.</li>
+</ol>
+
+<p>The generalisation is that Stage B always answers “what does this
+document <em>offer</em>, and to which downstream skill?” For a math paper the
+answer routes to <code class="language-plaintext highlighter-rouge">formalizer</code>. For an L1 guideline it routes to
+<code class="language-plaintext highlighter-rouge">l2-dak-authoring</code>. Same shape, different registry.</p><hr />
+<h2 id="8-math-specialised-ingest">
+  
+  
+    <a href="#8-math-specialised-ingest" class="anchor-heading" aria-labelledby="8-math-specialised-ingest"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Math-specialised ingest
+  
+  
+</h2>
+    
+
+<p>The specialisation is mostly <strong>not</strong> a model — it is three disciplines:</p>
+
+<ol>
+  <li><strong>Prefer source over pixels.</strong> Covered above; 230 documents.</li>
+  <li><strong>Preserve the label graph.</strong> A <code class="language-plaintext highlighter-rouge">.tex</code> carries <code class="language-plaintext highlighter-rouge">\label</code>/<code class="language-plaintext highlighter-rouge">\ref</code>, which
+is a dependency relation over the <em>source</em> document — and folio’s
+whole model is a dependency relation over blocks. An ingest that
+flattens a paper to prose throws away the edges that make the imported
+blocks navigable. LaTeXML keeps them; a PDF parser cannot recover them.</li>
+  <li><strong>Normalise math to one dialect at the boundary.</strong> Blocks are
+KaTeX-rendered, and <code class="language-plaintext highlighter-rouge">AGENTS.md</code>’s render-QA gate already bans
+<code class="language-plaintext highlighter-rouge">\operatorname{}</code> and unfenced align-family environments. Imported math
+must pass the same battery, which means the ingest pipeline needs a
+normalisation step — not an afterthought, a gate.</li>
+</ol>
+
+<p>Downstream, the existing Lean-side proposal (<code class="language-plaintext highlighter-rouge">llm-authoring-tool-integration.md</code>)
+already covers premise retrieval via LeanDojo and the formal dependency
+graph via Lean Atlas. Those are the math-specific <em>retrieval</em> story and
+need no duplication here.</p>
+
+<p><strong>Deliberately not proposed:</strong> a math-aware embedding model. At 339
+documents, lexical + structural retrieval over well-parsed LaTeX will
+outperform any embedding of mangled PDF text, and costs nothing to run.</p><hr />
+<h2 id="9-smart-guidelines-specialised-ingest">
+  
+  
+    <a href="#9-smart-guidelines-specialised-ingest" class="anchor-heading" aria-labelledby="9-smart-guidelines-specialised-ingest"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. SMART-Guidelines-specialised ingest
+  
+  
+</h2>
+    
+
+<p>Here the “generic RAG first” ordering is not merely suboptimal — it is
+<strong>destructive</strong>, and this is the strongest instance of §7.</p>
+
+<p>A WHO Digital Adaptation Kit is <em>already machine-readable</em>. Its L2
+artefacts are structured by construction:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>L2 artefact</th>
+      <th>Native form</th>
+      <th>Correct extractor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Data dictionary</td>
+      <td>Excel</td>
+      <td><code class="language-plaintext highlighter-rouge">smart-base</code> DAK extraction scripts</td>
+    </tr>
+    <tr>
+      <td>Decision-support logic</td>
+      <td>DMN / tables</td>
+      <td>DMN parser → <code class="language-plaintext highlighter-rouge">dmn-authoring</code> skill</td>
+    </tr>
+    <tr>
+      <td>Business processes</td>
+      <td><strong>BPMN XML</strong></td>
+      <td>BPMN parser → <code class="language-plaintext highlighter-rouge">bpmn-authoring</code> skill</td>
+    </tr>
+    <tr>
+      <td>Indicators</td>
+      <td>structured</td>
+      <td>DAK extractors</td>
+    </tr>
+    <tr>
+      <td>Terminology</td>
+      <td>CodeSystem / ValueSet</td>
+      <td>FHIR terminology tooling</td>
+    </tr>
+    <tr>
+      <td>Personas, scenarios, requirements</td>
+      <td>DAK components</td>
+      <td>DAK API logical models</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>WHO’s <code class="language-plaintext highlighter-rouge">WorldHealthOrganization/smart-base</code> ships these extraction scripts
+under <code class="language-plaintext highlighter-rouge">input/scripts/</code> (slated to move to a dedicated repo), and the
+<strong>DAK API</strong> publishes logical models for the components. Running a BPMN
+file or a data-dictionary spreadsheet through a PDF-oriented RAG parser
+converts a graph and a table into prose — it is lossy in exactly the
+dimension that matters, and folio already has <code class="language-plaintext highlighter-rouge">l2-dak-authoring</code>,
+<code class="language-plaintext highlighter-rouge">bpmn-authoring</code>, <code class="language-plaintext highlighter-rouge">dmn-authoring</code> and <code class="language-plaintext highlighter-rouge">fhir-validation</code> skills expecting
+the structured form.</p>
+
+<p><strong>Generic ingest has exactly one job in this domain:</strong> the <strong>L1 narrative
+guideline PDF</strong> — the published recommendations document that a DAK is
+derived <em>from</em>. That is unstructured prose with boxed recommendations and
+GRADE tables, and <code class="language-plaintext highlighter-rouge">document-intake.md</code> already specifies the mapping
+(recommendation → <code class="language-plaintext highlighter-rouge">definition</code>, remark → <code class="language-plaintext highlighter-rouge">remark</code>, good-practice
+statement → <code class="language-plaintext highlighter-rouge">proposition</code>, research priority → <code class="language-plaintext highlighter-rouge">conjecture</code>). Docling’s
+table handling is the relevant strength there, because GRADE tables are
+the part a naive extractor mangles.</p>
+
+<p>So the SMART-Guidelines answer is: <strong>structured extractors for L2/L3,
+generic ingest for L1 only, and no vector store in the loop at all</strong>
+until someone wants to search across many guidelines.</p>
+<h3 id="91-the-l1-path--narrative-guideline--recommendations">
+  
+  
+    <a href="#91-the-l1-path--narrative-guideline--recommendations" class="anchor-heading" aria-labelledby="91-the-l1-path--narrative-guideline--recommendations"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9.1 The L1 path — narrative guideline → recommendations
+  
+  
+</h3>
+    
+
+<p>This is the one place in the SMART domain where the §7-bis machinery
+applies unchanged, and it is worth spelling out because it is the mirror
+image of the math path.</p>
+
+<p><strong>Stage A is identical.</strong> A WHO L1 guideline is a long PDF with a real
+table of contents — usually a <em>better</em> one than a preprint has, since
+these are professionally typeset and almost always carry bookmarks. So
+<code class="language-plaintext highlighter-rouge">pdf-structure.py</code> sections it with no WHO-specific logic at all, and
+<code class="language-plaintext highlighter-rouge">uploads/who-&lt;guideline&gt;/sections/*.md</code> becomes greppable the same way.</p>
+
+<p><strong>Stage B is a different extractor.</strong> Where the math extractor looks for
+theorem environments, the L1 extractor looks for WHO’s normative
+furniture, which <code class="language-plaintext highlighter-rouge">document-intake.md</code> already maps:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Found in the L1 text</th>
+      <th>Candidate block</th>
+      <th>Label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>boxed, numbered <strong>Recommendation</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">definition</code></td>
+      <td><code class="language-plaintext highlighter-rouge">def:who-&lt;g&gt;-rec-&lt;n&gt;</code></td>
+    </tr>
+    <tr>
+      <td><strong>Remarks</strong> bullets under it</td>
+      <td><code class="language-plaintext highlighter-rouge">remark</code></td>
+      <td><code class="language-plaintext highlighter-rouge">rem:who-&lt;g&gt;-remark-&lt;n&gt;</code></td>
+    </tr>
+    <tr>
+      <td><strong>Good practice statement</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">proposition</code></td>
+      <td><code class="language-plaintext highlighter-rouge">prop:who-&lt;g&gt;-gps-&lt;n&gt;</code></td>
+    </tr>
+    <tr>
+      <td><strong>Research priority</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">conjecture</code></td>
+      <td><code class="language-plaintext highlighter-rouge">conj:who-&lt;g&gt;-research-&lt;n&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Evidence summary narrative</td>
+      <td><code class="language-plaintext highlighter-rouge">prose</code></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>GRADE</strong> certainty table</td>
+      <td><code class="language-plaintext highlighter-rouge">diagram</code> + <code class="language-plaintext highlighter-rouge">meta.gradeLevel</code></td>
+      <td>—</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Two things make this harder than the math case, and both argue for
+Docling over a plain text extractor at Stage A for this document class:</p>
+
+<ol>
+  <li><strong>Recommendations are boxes.</strong> The normative statement is set in a
+ruled box, and its boundary is what separates <em>the recommendation</em> from
+the surrounding evidence discussion. Plain text extraction flattens the
+box away and the boundary is lost. Docling’s layout model keeps it.</li>
+  <li><strong>GRADE tables carry the strength/certainty grading</strong> (<code class="language-plaintext highlighter-rouge">strong</code> /
+<code class="language-plaintext highlighter-rouge">conditional</code>, <code class="language-plaintext highlighter-rouge">⊕⊕⊕◯</code>), which the block’s <code class="language-plaintext highlighter-rouge">meta</code> needs. That is table
+structure recognition, which is precisely Docling’s TableFormer
+strength and precisely what naive extraction mangles.</li>
+</ol>
+
+<p><strong>Where it goes</strong> is the same as §7-bis: <code class="language-plaintext highlighter-rouge">candidates.json</code> proposing
+blocks, then adjudication into <code class="language-plaintext highlighter-rouge">content/&lt;guideline&gt;/</code>. The verdict
+question differs — not “does this need Lean?” but “<strong>is this L1
+recommendation already represented in the L2 DAK?</strong>” — and it routes to
+<code class="language-plaintext highlighter-rouge">l2-dak-authoring</code> rather than <code class="language-plaintext highlighter-rouge">formalizer</code>. That is the whole
+generalisation: same two stages, same artefacts, a different registry of
+what to look for and a different downstream skill.</p>
+
+<p>A useful property falls out for free: once L1 recommendations are
+extracted as candidates with stable labels, the gap between an L1
+guideline and its L2 DAK becomes <strong>diffable</strong> — recommendations present
+in the narrative with no corresponding DAK decision-logic row are exactly
+the DAK’s coverage gaps. That is a QA axis the existing watcher
+infrastructure could carry, and it is not reachable while the L1 document
+remains an opaque PDF.</p><hr />
+<h2 id="9-bis-ocr-which-engine-and-why-the-choice-is-not-about-accuracy">
+  
+  
+    <a href="#9-bis-ocr-which-engine-and-why-the-choice-is-not-about-accuracy" class="anchor-heading" aria-labelledby="9-bis-ocr-which-engine-and-why-the-choice-is-not-about-accuracy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9-bis. OCR: which engine, and why the choice is not about accuracy
+  
+  
+</h2>
+    
+
+<p>Two document classes defeat text extraction completely, and no amount of
+parser work reaches them:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Symptom</th>
+      <th>Count in the qou library</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Scan, no text layer</td>
+      <td><code class="language-plaintext highlighter-rouge">pypdf</code> returns 0 characters</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>Scan, JIS-encoded font, no ToUnicode map</td>
+      <td>~1,100 chars/page of <code class="language-plaintext highlighter-rouge">Fs=E2=7k$SL\$Ncolored Jones</code></td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The second is the nastier one: it <em>looks</em> like text, so every “did we get
+characters” test passes and the mojibake flows into the index, the title
+and the grep path.</p>
+<h3 id="the-choice-is-made-by-egress-not-by-benchmark-scores">
+  
+  
+    <a href="#the-choice-is-made-by-egress-not-by-benchmark-scores" class="anchor-heading" aria-labelledby="the-choice-is-made-by-egress-not-by-benchmark-scores"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The choice is made by egress, not by benchmark scores
+  
+  
+</h3>
+    
+
+<p>Every model-based OCR fetches weights on first run, and <code class="language-plaintext highlighter-rouge">huggingface.co</code>
+returns <strong>403</strong> here under organisation policy (§2a). That single fact
+eliminates most of the field regardless of how well it reads:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Engine</th>
+      <th>Licence</th>
+      <th>Weights</th>
+      <th>Works here</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Tesseract 5</strong></td>
+      <td>Apache-2.0</td>
+      <td>apt (<code class="language-plaintext highlighter-rouge">tesseract-ocr-*</code>)</td>
+      <td><strong>yes</strong></td>
+      <td>100+ languages as distro packages; CPU; what this repo uses</td>
+    </tr>
+    <tr>
+      <td><strong>RapidOCR</strong> (<code class="language-plaintext highlighter-rouge">rapidocr-onnxruntime</code>)</td>
+      <td>Apache-2.0</td>
+      <td><strong>in the wheel</strong></td>
+      <td><strong>yes</strong></td>
+      <td>ONNX, CPU, ~15 MB; the natural second string</td>
+    </tr>
+    <tr>
+      <td>PaddleOCR</td>
+      <td>Apache-2.0</td>
+      <td>HF / Baidu CDN</td>
+      <td>no</td>
+      <td>strongest on dense CJK layout, unreachable</td>
+    </tr>
+    <tr>
+      <td>docTR</td>
+      <td>Apache-2.0</td>
+      <td>HF</td>
+      <td>no</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Surya</td>
+      <td>GPL-3.0 / commercial</td>
+      <td>HF</td>
+      <td>no</td>
+      <td>best-in-class reading order; licence also needs review</td>
+    </tr>
+    <tr>
+      <td>EasyOCR</td>
+      <td>Apache-2.0</td>
+      <td>JAIDED CDN</td>
+      <td>no</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Cloud OCR (Google, AWS, Azure)</td>
+      <td>—</td>
+      <td>—</td>
+      <td>no</td>
+      <td>egress, and it sends the corpus to a third party</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>So the shortlist is <strong>Tesseract</strong> and <strong>RapidOCR</strong>, and Tesseract wins on
+language packaging alone: <code class="language-plaintext highlighter-rouge">tesseract-ocr-jpn</code> is one apt package, and the
+Japanese scans are precisely the hard cases here.</p>
+<h3 id="two-things-that-are-easy-to-get-wrong">
+  
+  
+    <a href="#two-things-that-are-easy-to-get-wrong" class="anchor-heading" aria-labelledby="two-things-that-are-easy-to-get-wrong"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two things that are easy to get wrong
+  
+  
+</h3>
+    
+
+<p><strong><code class="language-plaintext highlighter-rouge">poppler-data</code> is not optional.</strong> Without it <code class="language-plaintext highlighter-rouge">pdftoppm</code> fails on CJK
+with <em>“Missing language pack for ‘Adobe-Japan1’ mapping”</em>, produces no
+image, and <strong>exits 0</strong> — so an OCR pipeline reads nothing and reports
+success. <code class="language-plaintext highlighter-rouge">pdf-ocr.py</code> raises on an empty rasterisation for this reason.</p>
+
+<p><strong>Language must be detected, not assumed.</strong> A Japanese page read as
+<code class="language-plaintext highlighter-rouge">-l eng</code> returns near-nothing. Tesseract’s own script detection
+(<code class="language-plaintext highlighter-rouge">--psm 0</code>) is cheap and does not need the pack for the script it finds;
+a detected pack that is not installed is dropped rather than passed
+through, because Tesseract exits non-zero and returns nothing at all when
+asked for a language it lacks.</p>
+<h3 id="what-it-recovered">
+  
+  
+    <a href="#what-it-recovered" class="anchor-heading" aria-labelledby="what-it-recovered"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What it recovered
+  
+  
+</h3>
+    
+
+<p>Run over the blocked documents, with page-level caching and
+<code class="language-plaintext highlighter-rouge">source.text_source: "ocr"</code> recorded so a consumer knows the text is a
+transcription:</p>
+
+<ul>
+  <li>McMullen — <em>Braiding of the attractor and the failure of iterative
+algorithms</em>, Invent. math. <strong>91</strong>, 259–272 (1988). The filename claims
+2013; the paper is 1988.</li>
+  <li>Birman — <em>On Markov’s Theorem</em>, J. Knot Theory Ramifications <strong>11</strong>(3).</li>
+  <li>RIMS Kôkyûroku 1172 — 岡本美雪 (Miyuki Okamoto), <em>二重化結び目の colored
+Jones 多項式の計算方法について</em>.</li>
+</ul>
+<h3 id="what-ocr-does-not-fix">
+  
+  
+    <a href="#what-ocr-does-not-fix" class="anchor-heading" aria-labelledby="what-ocr-does-not-fix"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What OCR does not fix
+  
+  
+</h3>
+    
+
+<p>It recovers <em>text</em>, not <em>judgement</em>. An OCR’d masthead is still a
+masthead, and the title/byline separation problems of §7-bis apply
+unchanged to the transcribed text — several OCR’d documents still needed
+a hand-verified entry in <code class="language-plaintext highlighter-rouge">library-title-overrides.json</code>. OCR moves a
+document from “unreadable” to “readable and subject to the usual
+extraction defects”; it does not move it to “registered”.</p>
+<h2 id="10-recommendation">
+  
+  
+    <a href="#10-recommendation" class="anchor-heading" aria-labelledby="10-recommendation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10. Recommendation
+  
+  
+</h2>
+    
+
+<p>A staged adoption, cheapest and highest-value first. Each stage is
+independently useful and independently abandonable.</p>
+
+<blockquote>
+  <p><strong>Ordering revised after the egress measurement (§2a).</strong> An earlier
+draft made network acquisition Stage 1. That was wrong for the sessions
+that matter: with <code class="language-plaintext highlighter-rouge">arxiv.org</code> 403-blocked, an acquire-first pipeline
+produces nothing in a sandbox. The offline PDF path is now Stage 1, and
+network acquisition is an <em>enrichment</em> that runs when it can.</p>
+</blockquote>
+
+<p><strong>Stage 1 — Structure, offline (<code class="language-plaintext highlighter-rouge">scripts/pdf-structure.py</code>, built and
+run).</strong> PDF → <code class="language-plaintext highlighter-rouge">structure.json</code> + <code class="language-plaintext highlighter-rouge">sections/*.md</code>, pure <code class="language-plaintext highlighter-rouge">pypdf</code>, no
+network, no GPU, no service. Works in every session regardless of egress
+policy. Measured over the whole corpus:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Input</td>
+      <td>339 PDFs, 12,166 pages</td>
+    </tr>
+    <tr>
+      <td>Processed</td>
+      <td><strong>332 documents, 0 failures</strong> (7 PDFs collided on derived <code class="language-plaintext highlighter-rouge">doc_id</code> — duplicate uploads, deduplicated for free)</td>
+    </tr>
+    <tr>
+      <td><strong>Output</strong></td>
+      <td><strong>7,313 sections, 24.7 M characters greppable</strong>, 52 MB</td>
+    </tr>
+    <tr>
+      <td>Title</td>
+      <td><strong>321 (96.7 %)</strong> — against DocInfo’s 126 (37 %), a 2.6× improvement that justifies deriving from text</td>
+    </tr>
+    <tr>
+      <td>Authors</td>
+      <td>241 (72.6 %)</td>
+    </tr>
+    <tr>
+      <td>Abstract</td>
+      <td>227 (68.4 %)</td>
+    </tr>
+    <tr>
+      <td>arXiv id</td>
+      <td>213 (64.2 %) — matches the 68 % filename estimate, now confirmed from page-1 stamps rather than filenames</td>
+    </tr>
+    <tr>
+      <td>TOC route</td>
+      <td>outline 188 · inferred 137 · <strong>none 7</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The weak cells are the honest part and they define Stage 3’s work list:
+<strong>7 documents yield no TOC, 17 stay unsectioned, 7 look scanned.</strong> Those
+~20 documents are where <code class="language-plaintext highlighter-rouge">pypdf</code> genuinely runs out and Docling or OCR
+earns its place — not the other 312. Author and abstract recall
+(73 %/68 %) are the next quality target; both are page-1 layout problems
+that Docling would also improve.</p>
+
+<p><strong>Stage 2 — Acquire, when the network allows (enrichment).</strong> Where
+<code class="language-plaintext highlighter-rouge">arxiv.org</code> is reachable, fetch the LaTeX source for the 230 arXiv
+documents and upgrade that document’s structure from inferred to
+authoritative. The arXiv ID needed to do it is already in
+<code class="language-plaintext highlighter-rouge">structure.json</code>, extracted offline from the page-1 stamp — so Stage 1
+prepares Stage 2’s work list even when it cannot do it. Also backfills
+the ledger’s reference join.</p>
+
+<p><strong>Stage 3 — Parse harder, where it pays (Docling).</strong> Capability probe
+<code class="language-plaintext highlighter-rouge">.claude/skills/capabilities/docling.json</code>, degrading to <code class="language-plaintext highlighter-rouge">n/a</code> when
+absent. Two populations need it and <code class="language-plaintext highlighter-rouge">pypdf</code> will not serve them: the
+scanned/no-text-layer documents Stage 1 flags as <code class="language-plaintext highlighter-rouge">likely_scanned</code>, and
+the <strong>WHO L1 guidelines</strong>, where boxed recommendations and GRADE tables
+are layout facts a text extractor destroys (§9.1). Measured work list
+from the Stage 1 run: <strong>7 no-TOC, 17 unsectioned, 7 likely-scanned</strong> —
+about twenty documents, not the other 312.</p>
+
+<blockquote>
+  <p><strong>Blocked in a sandboxed session, for the same reason as Stage 2.</strong>
+Docling’s layout, TableFormer and formula models are fetched from
+HuggingFace, and <code class="language-plaintext highlighter-rouge">huggingface.co</code> / <code class="language-plaintext highlighter-rouge">cdn-lfs.huggingface.co</code> return the
+same 403 policy denial as <code class="language-plaintext highlighter-rouge">arxiv.org</code> (measured 2026-08-15). So <em>both</em>
+network-dependent stages are unavailable where most agent work happens.</p>
+
+  <p>This is the strongest form of the §2a argument. A pipeline whose first
+step needs the network produces nothing in a sandbox; the <code class="language-plaintext highlighter-rouge">pypdf</code>-only
+Stage 1 produced 7,313 sections there. Stage 3 is therefore a
+<strong>workstation / CI stage</strong> — run it where egress allows, commit the
+artefacts, and let sandboxed sessions consume them. The capability probe
+is what makes that degrade honestly instead of silently.</p>
+</blockquote>
+
+<p><strong>Stage 3-bis — Route + Stage B extractors (§7, §7-bis).</strong> The class
+router, the candidate extractors, and math normalisation (§8.3) as a
+gate rather than a nicety.</p>
+
+<p><strong>Stage 4 — Index (LanceDB, embedded).</strong> Only once Stages 1–2 have
+produced clean text worth embedding. Indexing bad extractions is how RAG
+systems get a reputation for confident wrongness.</p>
+
+<p><strong>Stage 5 — reassess RAGFlow.</strong> With Stages 1–4 done, the open question
+is narrow and answerable: <em>is a browsing UI over the corpus worth a
+second VPS?</em> Ask it then, with the parse quality already known, rather
+than now.</p>
+
+<p><strong>Not recommended now:</strong> ColPali/ColQwen (GPU, premature at this corpus
+size), a math-specific embedding model (§8), and pointing any RAG engine
+at <code class="language-plaintext highlighter-rouge">content/**</code> (§2c).</p><hr />
+<h2 id="11-open-questions-for-the-author">
+  
+  
+    <a href="#11-open-questions-for-the-author" class="anchor-heading" aria-labelledby="11-open-questions-for-the-author"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 11. Open questions for the author
+  
+  
+</h2>
+    
+
+<ol>
+  <li>Should the parse artefacts be <strong>committed</strong> (reproducible, greppable,
+but adds tens of MB) or <strong>gitignored and rebuilt</strong> (clean tree, but a
+fresh container re-parses)? The Lean cache precedent suggests
+committing to an orphan branch.</li>
+  <li>Is a <strong>human browsing UI</strong> over <code class="language-plaintext highlighter-rouge">uploads/</code> actually wanted? It is the
+only thing that would justify RAGFlow’s footprint, and the answer
+changes Stage 5 entirely.</li>
+  <li>Does the SMART-Guidelines side want ingest of <strong>WHO’s published DAKs</strong>
+(consuming <code class="language-plaintext highlighter-rouge">smart-base</code> extractors) or authoring support for <strong>new</strong>
+DAKs (producing artefacts those extractors read)? The skills package
+suggests the latter; §9 assumed both.</li>
+</ol>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

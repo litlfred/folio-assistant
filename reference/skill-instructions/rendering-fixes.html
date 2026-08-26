@@ -1,0 +1,917 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(82)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(82) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(82) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(82) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Rendering Fixes | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Rendering Fixes" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/rendering-fixes.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/rendering-fixes.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Rendering Fixes" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Rendering Fixes","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/rendering-fixes.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Rendering Fixes</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/rendering-fixes.md"><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/rendering-fixes.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="rendering-fixes">
+  
+  
+    <a href="#rendering-fixes" class="anchor-heading" aria-labelledby="rendering-fixes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rendering Fixes
+  
+  
+</h1>
+    
+<h2 id="role">
+  
+  
+    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
+  
+  
+</h2>
+    
+
+<p>Quick-fix cookbook for common rendering errors in <code class="language-plaintext highlighter-rouge">.md</code> and <code class="language-plaintext highlighter-rouge">.ts</code> content
+files. Each entry shows the error pattern, why it breaks, and the exact fix.
+Agents editing content blocks should check this list before committing.</p>
+<h2 id="fix-index">
+  
+  
+    <a href="#fix-index" class="anchor-heading" aria-labelledby="fix-index"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fix Index
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Error</th>
+      <th>Severity</th>
+      <th>Auto-fixable?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>F1</td>
+      <td>Backtick/dollar mismatch</td>
+      <td>Error</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>F2</td>
+      <td>Bare <code class="language-plaintext highlighter-rouge">\eqref{}</code> outside math</td>
+      <td>Error</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>F3</td>
+      <td>Bare TeX in <code class="language-plaintext highlighter-rouge">.ts</code> title</td>
+      <td>Error</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>F4</td>
+      <td>Single-line <code class="language-plaintext highlighter-rouge">$$...$$</code> inside list</td>
+      <td>Error</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>F5</td>
+      <td>Extra trailing pipe in table</td>
+      <td>Warning</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>F6</td>
+      <td><code class="language-plaintext highlighter-rouge">\operatorname</code> vs <code class="language-plaintext highlighter-rouge">\mathrm</code></td>
+      <td>Error</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>F7</td>
+      <td><code class="language-plaintext highlighter-rouge">\mathscr</code> KaTeX compat</td>
+      <td>Warning</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>F8</td>
+      <td><code class="language-plaintext highlighter-rouge">$$</code> without preceding blank line</td>
+      <td>Error</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>F9</td>
+      <td><code class="language-plaintext highlighter-rouge">&amp;</code> in prose outside math</td>
+      <td>Error</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>F10</td>
+      <td>Raw TeX outside math delimiters</td>
+      <td>Error</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>F11</td>
+      <td>Wrong notation register</td>
+      <td>Error</td>
+      <td>Yes (pattern)</td>
+    </tr>
+    <tr>
+      <td>F12</td>
+      <td>Missing SVG pre-render for fenced tex</td>
+      <td>Warning</td>
+      <td>Script</td>
+    </tr>
+    <tr>
+      <td>F13</td>
+      <td>Orphan cross-reference</td>
+      <td>Error</td>
+      <td>Manual</td>
+    </tr>
+    <tr>
+      <td>F14</td>
+      <td>Missing bibliography entry</td>
+      <td>Error</td>
+      <td>Manual</td>
+    </tr>
+    <tr>
+      <td>F15</td>
+      <td><code class="language-plaintext highlighter-rouge">$=$</code> for observed/derived values</td>
+      <td>Error</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table></div><hr />
+<h2 id="f1-backtickdollar-mismatch">
+  
+  
+    <a href="#f1-backtickdollar-mismatch" class="anchor-heading" aria-labelledby="f1-backtickdollar-mismatch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F1: Backtick/dollar mismatch
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: A backtick <code class="language-plaintext highlighter-rouge">`</code> opens what should be math, but <code class="language-plaintext highlighter-rouge">$</code> closes it
+(or vice versa). Creates an unclosed math environment that swallows
+subsequent lines.</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- BROKEN: backtick opens, dollar closes --&gt;</span>
+$q = 1.10998$ from <span class="err">`</span>Vol(4_1) = 2.02988321281931$ and
+
+<span class="c">&lt;!-- FIXED: consistent delimiters --&gt;</span>
+$q = 1.10998$ from $<span class="se">\m</span>athrm{Vol}(4_1) = 2.02988321281931$ and
+</code></pre></div></div>
+
+<p><strong>Detection</strong>: Grep for lines with mismatched <code class="language-plaintext highlighter-rouge">`</code> and <code class="language-plaintext highlighter-rouge">$</code> counts.
+<strong>Fix</strong>: Replace <code class="language-plaintext highlighter-rouge">`</code> with <code class="language-plaintext highlighter-rouge">$</code> (for math) or <code class="language-plaintext highlighter-rouge">$</code> with <code class="language-plaintext highlighter-rouge">`</code> (for code).
+If the content is mathematical, use <code class="language-plaintext highlighter-rouge">$...$</code> and wrap function names in
+<code class="language-plaintext highlighter-rouge">\mathrm{}</code>.</p><hr />
+<h2 id="f2-bare-eqref-outside-math-mode">
+  
+  
+    <a href="#f2-bare-eqref-outside-math-mode" class="anchor-heading" aria-labelledby="f2-bare-eqref-outside-math-mode"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F2: Bare <code class="language-plaintext highlighter-rouge">\eqref{}</code> outside math mode
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">\eqref{eq:label}</code> used in prose text without <code class="language-plaintext highlighter-rouge">$...$</code> wrapping.
+Works in LaTeX but renders as literal text in the HTML viewer (KaTeX only
+processes content inside math delimiters).</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- BROKEN: bare \eqref in prose --&gt;</span>
+diagram <span class="se">\e</span>qref{eq:some-diagram} from the top-left
+
+<span class="c">&lt;!-- FIX OPTION 1: markdown cross-ref (preferred) --&gt;</span>
+diagram <span class="p">[</span><span class="nv">above</span><span class="p">](</span><span class="sx">#eq:some-diagram</span><span class="p">)</span> from the top-left
+
+<span class="c">&lt;!-- FIX OPTION 2: wrap in math (if equation number needed) --&gt;</span>
+diagram $<span class="se">\e</span>qref{eq:some-diagram}$ from the top-left
+</code></pre></div></div>
+
+<p><strong>Detection</strong>: <code class="language-plaintext highlighter-rouge">grep -n '\\eqref' *.md | grep -v '\$'</code>
+<strong>Fix</strong>: Convert to <code class="language-plaintext highlighter-rouge">[text](#label)</code> cross-ref (works in both pipelines).</p><hr />
+<h2 id="f3-bare-tex-in-ts-title-field">
+  
+  
+    <a href="#f3-bare-tex-in-ts-title-field" class="anchor-heading" aria-labelledby="f3-bare-tex-in-ts-title-field"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F3: Bare TeX in <code class="language-plaintext highlighter-rouge">.ts</code> title field
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: Title contains TeX like <code class="language-plaintext highlighter-rouge">d_q^2</code> without <code class="language-plaintext highlighter-rouge">$...$</code> wrapping.
+The <code class="language-plaintext highlighter-rouge">escapeLatex()</code> function escapes <code class="language-plaintext highlighter-rouge">_</code> and <code class="language-plaintext highlighter-rouge">^</code> as <code class="language-plaintext highlighter-rouge">\_</code> and
+<code class="language-plaintext highlighter-rouge">\textasciicircum{}</code>, producing garbled output.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// BROKEN: bare TeX — renders as "d\_q\textasciicircum{}2"</span>
+<span class="nx">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">d_q^2 does not vanish</span><span class="dl">"</span><span class="p">,</span>
+
+<span class="c1">// FIXED: wrapped in $...$</span>
+<span class="nx">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">$d_q^2$ does not vanish</span><span class="dl">"</span><span class="p">,</span>
+</code></pre></div></div>
+
+<p><strong>Detection</strong>: Grep <code class="language-plaintext highlighter-rouge">.ts</code> title fields for <code class="language-plaintext highlighter-rouge">_</code> or <code class="language-plaintext highlighter-rouge">^</code> outside <code class="language-plaintext highlighter-rouge">$...$</code>.
+<strong>Rule</strong>: Any TeX in a title MUST be inside <code class="language-plaintext highlighter-rouge">$...$</code> delimiters.</p><hr />
+<h2 id="f4-single-line--inside-list-items">
+  
+  
+    <a href="#f4-single-line--inside-list-items" class="anchor-heading" aria-labelledby="f4-single-line--inside-list-items"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F4: Single-line <code class="language-plaintext highlighter-rouge">$$...$$</code> inside list items
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: Display math <code class="language-plaintext highlighter-rouge">$$...$$</code> written on a single line (or spanning
+2 lines with both <code class="language-plaintext highlighter-rouge">$$</code> at line boundaries) inside a markdown list item.
+The pipeline may convert the opening <code class="language-plaintext highlighter-rouge">$$</code> to <code class="language-plaintext highlighter-rouge">\[</code> but leave the closing
+<code class="language-plaintext highlighter-rouge">$$</code> as-is, producing a mixed-delimiter error.</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- BROKEN: single-line display math in list --&gt;</span>
+<span class="p">3.</span> Define the Chern classes:
+   $$c_i(X) := c_i(<span class="se">\t</span>au(X)) <span class="se">\i</span>n H^{2i}_{<span class="se">\m</span>athrm{dR}}(<span class="se">\m</span>athrm{Spec}<span class="se">\,</span>R),$$
+
+<span class="c">&lt;!-- FIXED: display math on separate lines --&gt;</span>
+<span class="p">3.</span> Define the Chern classes:
+
+   $$
+   c_i(X) := c_i(<span class="se">\t</span>au(X)) <span class="se">\i</span>n H^{2i}_{<span class="se">\m</span>athrm{dR}}(<span class="se">\m</span>athrm{Spec}<span class="se">\,</span>R),
+   $$
+</code></pre></div></div>
+
+<p><strong>Detection</strong>: Grep for <code class="language-plaintext highlighter-rouge">$$</code> that starts and ends on the same line.
+<strong>Fix</strong>: Put <code class="language-plaintext highlighter-rouge">$$</code> on its own line, with a blank line before the opening <code class="language-plaintext highlighter-rouge">$$</code>.</p><hr />
+<h2 id="f5-extra-trailing-pipe-in-markdown-table">
+  
+  
+    <a href="#f5-extra-trailing-pipe-in-markdown-table" class="anchor-heading" aria-labelledby="f5-extra-trailing-pipe-in-markdown-table"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F5: Extra trailing pipe in markdown table
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: Table rows have more <code class="language-plaintext highlighter-rouge">|</code> separators than the header row,
+creating an extra empty column.</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- BROKEN: trailing | | creates extra column --&gt;</span>
+| Red | $S_3^{(r)}$ | $c_r = w_2 - z$ | |
+| Green | $S_3^{(g)}$ | $c_g = w_3 - z$ | |
+
+<span class="c">&lt;!-- FIXED: consistent column count --&gt;</span>
+| Red | $S_3^{(r)}$ | $c_r = w_2 - z$ |
+| Green | $S_3^{(g)}$ | $c_g = w_3 - z$ |
+</code></pre></div></div>
+
+<p><strong>Detection</strong>: Count <code class="language-plaintext highlighter-rouge">|</code> per row; flag rows with more than header.
+<strong>Caveat</strong>: <code class="language-plaintext highlighter-rouge">|</code> inside <code class="language-plaintext highlighter-rouge">$...$</code> (absolute values) creates false positives.</p><hr />
+<h2 id="f6-operatorname-vs-mathrm">
+  
+  
+    <a href="#f6-operatorname-vs-mathrm" class="anchor-heading" aria-labelledby="f6-operatorname-vs-mathrm"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F6: <code class="language-plaintext highlighter-rouge">\operatorname</code> vs <code class="language-plaintext highlighter-rouge">\mathrm</code>
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">\operatorname{Vol}</code> may break in some markdown/KaTeX
+renderers. Project convention is <code class="language-plaintext highlighter-rouge">\mathrm{Vol}</code>.</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- INCONSISTENT (works but non-standard for project) --&gt;</span>
+$<span class="se">\o</span>peratorname{Vol}(K)$
+
+<span class="c">&lt;!-- PREFERRED --&gt;</span>
+$<span class="se">\m</span>athrm{Vol}(K)$
+</code></pre></div></div>
+
+<p><strong>When to use <code class="language-plaintext highlighter-rouge">\operatorname</code></strong>: Only for operators that need special
+spacing (like <code class="language-plaintext highlighter-rouge">\lim</code>, <code class="language-plaintext highlighter-rouge">\sup</code>). For named functions, use <code class="language-plaintext highlighter-rouge">\mathrm{}</code>.</p><hr />
+<h2 id="f7-mathscr-katex-compatibility">
+  
+  
+    <a href="#f7-mathscr-katex-compatibility" class="anchor-heading" aria-labelledby="f7-mathscr-katex-compatibility"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F7: <code class="language-plaintext highlighter-rouge">\mathscr</code> KaTeX compatibility
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">\mathscr{L}</code> may not render in older KaTeX versions.</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- RISKY: needs KaTeX &gt;</span>=0.16 --&gt;
+$<span class="se">\m</span>athscr{L}_q$
+
+<span class="c">&lt;!-- SAFE: always renders --&gt;</span>
+$<span class="se">\m</span>athcal{L}_q$
+</code></pre></div></div>
+
+<p><strong>Fix</strong>: Use <code class="language-plaintext highlighter-rouge">\mathcal{}</code> unless the script font distinction is
+semantically necessary.</p><hr />
+<h2 id="f8--without-preceding-blank-line">
+  
+  
+    <a href="#f8--without-preceding-blank-line" class="anchor-heading" aria-labelledby="f8--without-preceding-blank-line"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F8: <code class="language-plaintext highlighter-rouge">$$</code> without preceding blank line
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: Display math <code class="language-plaintext highlighter-rouge">$$</code> immediately follows text without a blank
+line. The pipeline may produce mixed <code class="language-plaintext highlighter-rouge">\[</code>/<code class="language-plaintext highlighter-rouge">$$</code> delimiters, breaking
+LaTeX compilation.</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- RISKY: may parse as inline --&gt;</span>
+The formula is:
+$$
+  x = y
+$$
+
+<span class="c">&lt;!-- SAFE: blank line forces display --&gt;</span>
+The formula is:
+
+$$
+  x = y
+$$
+</code></pre></div></div>
+
+<p><strong>Fix</strong>: Add a blank line before <code class="language-plaintext highlighter-rouge">$$</code>.</p><hr />
+<h2 id="f9-ampersand-in-prose">
+  
+  
+    <a href="#f9-ampersand-in-prose" class="anchor-heading" aria-labelledby="f9-ampersand-in-prose"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F9: Ampersand in prose
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">&amp;</code> in prose text (outside <code class="language-plaintext highlighter-rouge">$...$</code> or <code class="language-plaintext highlighter-rouge"></code><code class="language-plaintext highlighter-rouge">tex </code>` blocks)
+becomes a column separator in LaTeX, causing compilation errors.</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- BROKEN in LaTeX --&gt;</span>
+groups &amp; rings form categories
+
+<span class="c">&lt;!-- FIXED --&gt;</span>
+groups and rings form categories
+</code></pre></div></div>
+
+<p><strong>Exception</strong>: <code class="language-plaintext highlighter-rouge">&amp;</code> inside math mode is fine (matrix/alignment separators).</p><hr />
+<h2 id="f10-raw-tex-outside-math-delimiters">
+  
+  
+    <a href="#f10-raw-tex-outside-math-delimiters" class="anchor-heading" aria-labelledby="f10-raw-tex-outside-math-delimiters"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F10: Raw TeX outside math delimiters
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: LaTeX commands like <code class="language-plaintext highlighter-rouge">\mathrm{}</code>, <code class="language-plaintext highlighter-rouge">\textbf{}</code>, <code class="language-plaintext highlighter-rouge">\emph{}</code>,
+<code class="language-plaintext highlighter-rouge">\frac{}{}</code> used in prose without <code class="language-plaintext highlighter-rouge">$...$</code> wrapping. Renders as literal
+text in both pipelines.</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- BROKEN: raw TeX in prose --&gt;</span>
+the group <span class="se">\m</span>athrm{SU}(2) acts on
+
+<span class="c">&lt;!-- FIXED: wrapped in math --&gt;</span>
+the group $<span class="se">\m</span>athrm{SU}(2)$ acts on
+</code></pre></div></div>
+
+<p><strong>Detection</strong>: Grep for <code class="language-plaintext highlighter-rouge">\commandname{</code> on lines without <code class="language-plaintext highlighter-rouge">$</code>.</p><hr />
+<h2 id="f11-notation-register-violations">
+  
+  
+    <a href="#f11-notation-register-violations" class="anchor-heading" aria-labelledby="f11-notation-register-violations"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F11: Notation register violations
+  
+  
+</h2>
+    
+
+<p>The project defines a <strong>notation register</strong> (in AGENTS.md) that assigns a
+canonical font/symbol to each concept. The most common fix is rewrapping a
+symbol in the correct font for its concept per that register.</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- WRONG: if the project's register reserves calligraphic for sheaves/bundles --&gt;</span>
+the category $<span class="se">\m</span>athcal{C}$
+
+<span class="c">&lt;!-- RIGHT: bold for categories --&gt;</span>
+the category $<span class="se">\m</span>athbf{C}$
+</code></pre></div></div>
+
+<p><strong>Fix</strong>: Check the symbol’s concept against the register in AGENTS.md and
+rewrap it in the font/symbol that register specifies.</p><hr />
+<h2 id="f12-missing-svg-pre-render-for-fenced-tex-blocks">
+  
+  
+    <a href="#f12-missing-svg-pre-render-for-fenced-tex-blocks" class="anchor-heading" aria-labelledby="f12-missing-svg-pre-render-for-fenced-tex-blocks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F12: Missing SVG pre-render for fenced tex blocks
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: A <code class="language-plaintext highlighter-rouge">.md</code> file contains a <code class="language-plaintext highlighter-rouge"></code><code class="language-plaintext highlighter-rouge">tex </code><code class="language-plaintext highlighter-rouge"> fenced block (typically
+tikzcd) but the corresponding </code>.ts<code class="language-plaintext highlighter-rouge"> manifest has no </code>rendered:` array.
+The block shows as raw LaTeX in the HTML viewer.</p>
+
+<p><strong>Fix</strong>: Run the pre-render pipeline:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run render-tex
+</code></pre></div></div>
+
+<p>Then add the generated SVG paths to the <code class="language-plaintext highlighter-rouge">.ts</code> manifest:</p>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">rendered</span><span class="p">:</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">mime</span><span class="p">:</span> <span class="dl">"</span><span class="s2">image/svg+xml</span><span class="dl">"</span><span class="p">,</span> <span class="na">url</span><span class="p">:</span> <span class="dl">"</span><span class="s2">rendered/block-name-0.svg</span><span class="dl">"</span><span class="p">,</span> <span class="na">blockIndex</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">hash</span><span class="p">:</span> <span class="dl">"</span><span class="s2">...</span><span class="dl">"</span> <span class="p">},</span>
+<span class="p">],</span>
+</code></pre></div></div><hr />
+<h2 id="f13-orphan-cross-reference">
+  
+  
+    <a href="#f13-orphan-cross-reference" class="anchor-heading" aria-labelledby="f13-orphan-cross-reference"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F13: Orphan cross-reference
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">[text](#label)</code> in <code class="language-plaintext highlighter-rouge">.md</code> or <code class="language-plaintext highlighter-rouge">\hyperref[label]{}</code> in rendered
+<code class="language-plaintext highlighter-rouge">.tex</code> points to a label that doesn’t exist. Renders as <code class="language-plaintext highlighter-rouge">??</code> in PDF.</p>
+
+<p><strong>Causes</strong>:</p>
+<ul>
+  <li>Block was deleted but references remain</li>
+  <li>Label was renamed without updating <code class="language-plaintext highlighter-rouge">uses[]</code></li>
+  <li>Cross-paper ref in single-paper build (expected)</li>
+</ul>
+
+<p><strong>Fix</strong>: Search for the label; if it was renamed, update the reference.
+If the block doesn’t exist yet, create it or remove the reference.</p><hr />
+<h2 id="f14-missing-bibliography-entry">
+  
+  
+    <a href="#f14-missing-bibliography-entry" class="anchor-heading" aria-labelledby="f14-missing-bibliography-entry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F14: Missing bibliography entry
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">\cite{key}</code> in <code class="language-plaintext highlighter-rouge">.md</code> or <code class="language-plaintext highlighter-rouge">-- Ref: [key]</code> in <code class="language-plaintext highlighter-rouge">.lean</code> refers
+to a key not in <code class="language-plaintext highlighter-rouge">content/schema/references.ts</code>.</p>
+
+<p><strong>Fix</strong>: Add a <code class="language-plaintext highlighter-rouge">ref()</code> entry in <code class="language-plaintext highlighter-rouge">references.ts</code>:</p>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ref</span><span class="p">({</span>
+  <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">author2024</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">article-journal</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Paper title</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">author</span><span class="p">:</span> <span class="p">[{</span> <span class="na">family</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Author</span><span class="dl">"</span><span class="p">,</span> <span class="na">given</span><span class="p">:</span> <span class="dl">"</span><span class="s2">A.</span><span class="dl">"</span> <span class="p">}],</span>
+  <span class="na">issued</span><span class="p">:</span> <span class="p">{</span> <span class="dl">"</span><span class="s2">date-parts</span><span class="dl">"</span><span class="p">:</span> <span class="p">[[</span><span class="mi">2024</span><span class="p">]]</span> <span class="p">},</span>
+  <span class="na">DOI</span><span class="p">:</span> <span class="dl">"</span><span class="s2">10.xxxx/xxxxx</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">}),</span>
+</code></pre></div></div>
+
+<p>Then run <code class="language-plaintext highlighter-rouge">bun run export-bibtex</code> and <code class="language-plaintext highlighter-rouge">bun run validate-refs</code>.</p><hr />
+<h2 id="f15--for-observedderived-values">
+  
+  
+    <a href="#f15--for-observedderived-values" class="anchor-heading" aria-labelledby="f15--for-observedderived-values"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F15: <code class="language-plaintext highlighter-rouge">$=$</code> for observed/derived values
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: Numerical or derived values written with <code class="language-plaintext highlighter-rouge">$=$</code> instead of
+<code class="language-plaintext highlighter-rouge">$\approx$</code>. Implies exact equality, which is false for derived quantities.</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- WRONG — implies exact --&gt;</span>
+$x(q_0) = 1.234$
+
+<span class="c">&lt;!-- RIGHT — approximation --&gt;</span>
+$x(q_0) <span class="se">\a</span>pprox 1.234$
+</code></pre></div></div>
+
+<p><strong>Exception</strong>: <code class="language-plaintext highlighter-rouge">$=$</code> is allowed when an explicit error term is present:</p>
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- OK — error term present --&gt;</span>
+$x(q_0) = 1.234 + O(10^{-3})$
+</code></pre></div></div>
+
+<p><strong>Not affected</strong>: Exact algebraic identities like <code class="language-plaintext highlighter-rouge">$f(q) = 1/(q-1)$</code> —
+these hold for all <code class="language-plaintext highlighter-rouge">$q$</code> and use <code class="language-plaintext highlighter-rouge">$=$</code>.</p>
+
+<p><strong>Detection</strong>: Flag <code class="language-plaintext highlighter-rouge">= &lt;number&gt;</code> patterns in numerical-result contexts
+that lack a neighbouring <code class="language-plaintext highlighter-rouge">\approx</code> or <code class="language-plaintext highlighter-rouge">O(</code> error term.</p><hr />
+<h2 id="f16-multi-line-inline-math-in-viewer">
+  
+  
+    <a href="#f16-multi-line-inline-math-in-viewer" class="anchor-heading" aria-labelledby="f16-multi-line-inline-math-in-viewer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F16: Multi-line inline math in viewer
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: Inline math <code class="language-plaintext highlighter-rouge">$...$</code> spans multiple lines in the <code class="language-plaintext highlighter-rouge">.md</code> source.
+The viewer’s <code class="language-plaintext highlighter-rouge">parseMd()</code> joins paragraph lines with spaces, so multi-line
+inline math works — but the <code class="language-plaintext highlighter-rouge">inl()</code> function’s <code class="language-plaintext highlighter-rouge">$</code>-parser must correctly
+track brace depth to find the closing <code class="language-plaintext highlighter-rouge">$</code>. Escaped braces <code class="language-plaintext highlighter-rouge">\{</code> and <code class="language-plaintext highlighter-rouge">\}</code>
+must be skipped (they don’t change nesting depth).</p>
+
+<p><strong>Authoring rule</strong>: Multi-line inline math is valid per AGENTS.md.
+No source change needed. If rendering fails, the bug is in the viewer’s
+parser (see <code class="language-plaintext highlighter-rouge">inl()</code> function in <code class="language-plaintext highlighter-rouge">viewer/index.html</code>).</p>
+
+<p><strong>Common pitfalls</strong>:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">\{</code> and <code class="language-plaintext highlighter-rouge">\}</code> (literal braces) treated as depth changes → <strong>fixed in viewer</strong></li>
+  <li>Continuation lines in list items not joined properly → check indentation is 2+ spaces</li>
+  <li><code class="language-plaintext highlighter-rouge">$...$</code> inside bold <code class="language-plaintext highlighter-rouge">**...**</code> — the bold regex in <code class="language-plaintext highlighter-rouge">inl()</code> runs first and may split the math token</li>
+</ul><hr />
+<h2 id="f17-simulator-block-schema-mismatch">
+  
+  
+    <a href="#f17-simulator-block-schema-mismatch" class="anchor-heading" aria-labelledby="f17-simulator-block-schema-mismatch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F17: Simulator block schema mismatch
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: A <code class="language-plaintext highlighter-rouge">simulator()</code> block uses a deprecated field format instead of
+the current <code class="language-plaintext highlighter-rouge">SimulatorBlock</code> schema. The build fails with Zod validation
+errors about missing <code class="language-plaintext highlighter-rouge">html</code>, <code class="language-plaintext highlighter-rouge">defaultView</code>, or <code class="language-plaintext highlighter-rouge">ref</code> fields.</p>
+
+<p><strong>Old format</strong> (deprecated):</p>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">simulator</span><span class="p">:</span> <span class="p">{</span> <span class="nl">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">html</span><span class="dl">"</span><span class="p">,</span> <span class="nx">source</span><span class="p">:</span> <span class="dl">"</span><span class="s2">file.html</span><span class="dl">"</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Current format</strong> (required):</p>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">html</span><span class="p">:</span> <span class="dl">"</span><span class="s2">folio-assistant/simulators/file.html</span><span class="dl">"</span><span class="p">,</span>
+<span class="nx">defaultView</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">default</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Default view</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">params</span><span class="p">:</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span>
+<span class="p">},</span>
+</code></pre></div></div>
+
+<p><strong>Fix</strong>: Replace the <code class="language-plaintext highlighter-rouge">simulator:</code> field with <code class="language-plaintext highlighter-rouge">html:</code> + <code class="language-plaintext highlighter-rouge">defaultView:</code>.
+Use an existing simulator block (e.g. <code class="language-plaintext highlighter-rouge">&lt;simulator-name&gt;.ts</code>) as a template.</p><hr />
+<h2 id="f18-orphaned-content-block-wrong-chapter-directory">
+  
+  
+    <a href="#f18-orphaned-content-block-wrong-chapter-directory" class="anchor-heading" aria-labelledby="f18-orphaned-content-block-wrong-chapter-directory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F18: Orphaned content block (wrong chapter directory)
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: A content block’s <code class="language-plaintext highlighter-rouge">.ts</code> and <code class="language-plaintext highlighter-rouge">.md</code> files are in one chapter
+directory but referenced from a different chapter’s manifest. The build
+fails with “Cannot find module” because it looks for the file relative
+to the manifest.</p>
+
+<p><strong>Fix</strong>: Move the block files to the chapter directory that references them,
+or update the manifest to point to the correct location.</p><hr />
+<h2 id="f19-tikzcdgathered-blocks-showing-as-raw-latex-in-html-viewer">
+  
+  
+    <a href="#f19-tikzcdgathered-blocks-showing-as-raw-latex-in-html-viewer" class="anchor-heading" aria-labelledby="f19-tikzcdgathered-blocks-showing-as-raw-latex-in-html-viewer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> F19: tikzcd/gathered blocks showing as raw LaTeX in HTML viewer
+  
+  
+</h2>
+    
+
+<p><strong>Pattern</strong>: A ````tex<code class="language-plaintext highlighter-rouge"> fenced block containing </code>\begin{tikzcd}<code class="language-plaintext highlighter-rouge"> or
+</code>\begin{gathered}` shows as raw LaTeX text in the HTML viewer. This
+happens because:</p>
+<ol>
+  <li>The <code class="language-plaintext highlighter-rouge">rendered[]</code> field in the <code class="language-plaintext highlighter-rouge">.ts</code> manifest is empty (no pre-rendered SVG)</li>
+  <li>KaTeX cannot render tikzcd environments</li>
+  <li>The viewer falls back to displaying raw source text</li>
+</ol>
+
+<p><strong>Fix</strong> (preferred): Run the pre-rendering pipeline:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run render-tex
+</code></pre></div></div>
+<p>This generates SVGs and updates <code class="language-plaintext highlighter-rouge">.ts</code> manifests with <code class="language-plaintext highlighter-rouge">rendered[]</code> entries.</p>
+
+<p><strong>Fix</strong> (when pdflatex unavailable): The viewer now shows a styled
+placeholder with a “[Commutative diagram]” label and collapsible source
+instead of raw text. This is automatic — no content change needed.</p><hr />
+<h2 id="pre-commit-checklist-for-agents-editing-content">
+  
+  
+    <a href="#pre-commit-checklist-for-agents-editing-content" class="anchor-heading" aria-labelledby="pre-commit-checklist-for-agents-editing-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pre-commit checklist (for agents editing content)
+  
+  
+</h2>
+    
+
+<p>Before committing changes to a content block, verify:</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All <code class="language-plaintext highlighter-rouge">$...$</code> delimiters are balanced (no mixed backtick/dollar)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Display math <code class="language-plaintext highlighter-rouge">$$</code> is on its own line with blank line before</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No raw TeX commands outside math delimiters</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">.ts</code> title fields wrap TeX in <code class="language-plaintext highlighter-rouge">$...$</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Markdown tables have consistent column counts</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No <code class="language-plaintext highlighter-rouge">\eqref{}</code> outside math — use <code class="language-plaintext highlighter-rouge">[text](#label)</code> instead</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Notation register compliance (per AGENTS.md)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">\cite{key}</code> keys exist in <code class="language-plaintext highlighter-rouge">references.ts</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">uses[]</code> labels resolve to existing blocks</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Fenced <code class="language-plaintext highlighter-rouge"></code><code class="language-plaintext highlighter-rouge">tex </code><code class="language-plaintext highlighter-rouge"> blocks have </code>rendered:` SVGs in manifest</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Observed/derived values use <code class="language-plaintext highlighter-rouge">$\approx$</code> not <code class="language-plaintext highlighter-rouge">$=$</code> (unless <code class="language-plaintext highlighter-rouge">$O(\cdot)$</code> error term present)</li>
+</ul>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

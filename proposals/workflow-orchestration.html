@@ -1,0 +1,801 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(15)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(15) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(15) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Proposal — making agentic workflow execution deterministic | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Proposal — making agentic workflow execution deterministic" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/proposals/workflow-orchestration.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/proposals/workflow-orchestration.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Proposal — making agentic workflow execution deterministic" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Proposal — making agentic workflow execution deterministic","url":"https://litlfred.github.io/folio-assistant/proposals/workflow-orchestration.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="proposal--making-agentic-workflow-execution-deterministic">
+  
+  
+    <a href="#proposal--making-agentic-workflow-execution-deterministic" class="anchor-heading" aria-labelledby="proposal--making-agentic-workflow-execution-deterministic"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proposal — making agentic workflow execution deterministic
+  
+  
+</h1>
+    
+
+<p><strong>Status:</strong> phases 1–3 landed · DMN gateways landed (§6) · §4 decided, the
+policy layer and the commit-boundary gate in place
+<strong>Beans:</strong> <code class="language-plaintext highlighter-rouge">fq0b</code> (interpreter), <code class="language-plaintext highlighter-rouge">sx4z</code> (DMN), <code class="language-plaintext highlighter-rouge">dv3w</code> (work-plan loop),
+<code class="language-plaintext highlighter-rouge">bcnl</code> (the §4 decision), <code class="language-plaintext highlighter-rouge">4100</code> (the commit-boundary gate)</p>
+
+<p>Agent workflows in this project are ad hoc. Skills are documents an agent
+fetches with <code class="language-plaintext highlighter-rouge">skill_fetch</code> and is <em>trusted</em> to follow; beans record what
+happened; the six BPMN diagrams under <code class="language-plaintext highlighter-rouge">docs/workflows/</code> describe what should
+happen. Nothing connects them. An agent that skips the HCI validation gate is
+not doing anything the system can detect, let alone refuse.</p>
+
+<p>This proposal argues for a small BPMN interpreter behind MCP tools, and then
+for the part that actually buys determinism: <strong>gating the existing capability
+tools on process state.</strong> Phase 1 is built, so the numbers below are measured
+rather than estimated.</p><hr />
+<h2 id="1-what-exists-today">
+  
+  
+    <a href="#1-what-exists-today" class="anchor-heading" aria-labelledby="1-what-exists-today"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. What exists today
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Layer</th>
+      <th>Mechanism</th>
+      <th>Binding?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Capability</td>
+      <td>~25 MCP tools — <code class="language-plaintext highlighter-rouge">lean_build</code>, <code class="language-plaintext highlighter-rouge">qa_sweep</code>, <code class="language-plaintext highlighter-rouge">content_validate</code>, <code class="language-plaintext highlighter-rouge">paper_render_pdf</code>, …</td>
+      <td>Callable in any order, at any time</td>
+    </tr>
+    <tr>
+      <td>Instruction</td>
+      <td><code class="language-plaintext highlighter-rouge">skill_fetch</code> serves a skill’s prose</td>
+      <td>Advisory</td>
+    </tr>
+    <tr>
+      <td>Work plan</td>
+      <td><code class="language-plaintext highlighter-rouge">.beans/</code>, <code class="language-plaintext highlighter-rouge">work_plan_prime</code></td>
+      <td>Advisory; records, does not gate</td>
+    </tr>
+    <tr>
+      <td>Process</td>
+      <td><code class="language-plaintext highlighter-rouge">docs/workflows/*.bpmn</code></td>
+      <td>Inert — nothing read them at runtime</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The tool surface is a <strong>flat menu</strong>. The process model is a <strong>picture</strong>. The
+gap between them is where “we hope the agent follows the skill” lives.</p>
+
+<p>One asset worth naming: the diagrams are in better shape than they look. All
+20 <code class="language-plaintext highlighter-rouge">folio:skill ref</code> values resolve to real skills, and 93% of activities carry
+one. The diagrams are already a valid index into the skill registry — they were
+simply never read.</p><hr />
+<h2 id="2-what-phase-1-measured">
+  
+  
+    <a href="#2-what-phase-1-measured" class="anchor-heading" aria-labelledby="2-what-phase-1-measured"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. What phase 1 measured
+  
+  
+</h2>
+    
+
+<p>Built and landed: <code class="language-plaintext highlighter-rouge">src/workflow/process-model.ts</code>, <code class="language-plaintext highlighter-rouge">instance.ts</code>, <code class="language-plaintext highlighter-rouge">store.ts</code>,
+<code class="language-plaintext highlighter-rouge">src/tools/workflow.ts</code>, plus <code class="language-plaintext highlighter-rouge">scripts/tests/workflow-interpreter.test.ts</code>.</p>
+
+<p><strong>Cost.</strong> 547 non-comment lines. <code class="language-plaintext highlighter-rouge">bpmn-moddle</code> — the parser bpmn.io itself uses
+— was already vendored as a transitive dependency of the <code class="language-plaintext highlighter-rouge">bpmn-js</code> we render
+SVGs with; it is now a direct one. No new service, no broker, no second
+datastore.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                            activities  gateways  lanes  w/ skill  bean  parse
+authoring-a-paper                    9         2      6         9     1    32ms
+content-lifecycle                    8         1      6         8     2    15ms
+draft-to-publication                11         5      7        11     3    17ms
+editing-hci-validation              14         6      7        10     3    12ms
+l2-dak-authoring                    10         4      5        10     1    12ms
+l3-fhir-pipeline                     8         2      5         8     1    11ms
+
+60 activities · 56 carry a skill ref (93%) · 11 touch the work plan
+10 real decision points · 3 call activities · 20 distinct skills
+</code></pre></div></div>
+
+<p><strong>Every diagram is sound.</strong> Checked in both directions: no node is unreachable
+from a start event, and no node is unable to reach an end event. The four
+activities without a skill ref are exactly the ones that should not have one —
+<code class="language-plaintext highlighter-rouge">Describe the intended change</code>, <code class="language-plaintext highlighter-rouge">Review the findings</code> (both human),
+<code class="language-plaintext highlighter-rouge">Collate findings into a report</code> (pipeline plumbing) and
+<code class="language-plaintext highlighter-rouge">Commit into the corpus</code> (governed by the <code class="language-plaintext highlighter-rouge">commit-hygiene</code> requirement).</p>
+
+<p><strong>The gate holds.</strong> Seventeen tests, run against the real <code class="language-plaintext highlighter-rouge">.bpmn</code> files rather
+than fixtures. The one that matters:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>workflow_complete { node: "Task_Commit" }
+  → Task_Commit is not enabled in instance editing--def-carbon-valence.
+    Enabled now: Task_DescribeChange.
+</code></pre></div></div>
+
+<p>There is no token on <code class="language-plaintext highlighter-rouge">Commit into the corpus</code> until the editor’s decision has
+been recorded, so it cannot be <em>reported</em> done before the HCI gate. Also
+pinned: both validation branches must report before the join fires; <code class="language-plaintext highlighter-rouge">discard</code>
+terminates without ever enabling the commit; <code class="language-plaintext highlighter-rouge">revise</code> re-enables the mechanical
+checks rather than letting a second round skip them.</p><hr />
+<h2 id="3-why-not-a-workflow-engine">
+  
+  
+    <a href="#3-why-not-a-workflow-engine" class="anchor-heading" aria-labelledby="3-why-not-a-workflow-engine"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Why not a workflow engine
+  
+  
+</h2>
+    
+
+<p><strong>Camunda 8 / Zeebe, Flowable, Activiti.</strong> A JVM, a broker, and a second
+datastore, for a repo whose entire runtime is <code class="language-plaintext highlighter-rouge">bun run src/index.ts</code>. The
+<a href="rag-document-ingestion.html">RAG ingestion proposal</a> already rejected RAGFlow
+on this exact argument — a 16 GB minimum against a 2 vCPU / 4 GB host — and the
+reasoning transfers without modification.</p>
+
+<p><strong>The npm <code class="language-plaintext highlighter-rouge">bpmn-engine</code>.</strong> Proportionate, pure JS, reads BPMN 2.0 directly. The
+real objection is a fit one: it is built to <em>execute</em> service tasks. Here the
+executor is an LLM that may take an hour over one activity and be interrupted
+halfway, so you drive it through external tasks and signals — which is most of
+the 547 lines you would otherwise have written, plus a dependency whose
+semantics you now have to match rather than choose.</p>
+
+<p><strong>What was actually needed</strong> is small because BPMN is large and this repo uses
+nine element types of it. The interpreter implements those nine and <strong>throws on
+anything else</strong>, naming what it found. That refusal is deliberate: skipping an
+unrecognised element yields a process that runs, reports progress, and is
+silently not the process on the diagram. This repo has that failure on file
+twice — a hand-written kind list that hid ~13% of a corpus from every QA tool,
+and a walk that quietly dropped 27,390 words of prose.</p><hr />
+<h2 id="4-the-decision--made-strict-at-the-base-relaxable-by-declaration">
+  
+  
+    <a href="#4-the-decision--made-strict-at-the-base-relaxable-by-declaration" class="anchor-heading" aria-labelledby="4-the-decision--made-strict-at-the-base-relaxable-by-declaration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. The decision — made: strict at the base, relaxable by declaration
+  
+  
+</h2>
+    
+
+<p>Phase 1 is <strong>advisory</strong>. An agent can ignore <code class="language-plaintext highlighter-rouge">workflow_next</code> entirely and call
+<code class="language-plaintext highlighter-rouge">content_validate</code> directly, and nothing stops it.</p>
+
+<p>That should worry us, because this repo has the failure recorded: bean <code class="language-plaintext highlighter-rouge">5rfy</code>,
+<em>“29 of 32 workflows never fire on their own”</em>. An MCP tool an agent is
+<em>supposed</em> to call is the same shape as a CI workflow nobody dispatches. Being
+well-designed does not make it fire.</p>
+
+<p><strong>Determinism comes from gating the capability tools, not from adding an
+advisory one.</strong> The difference between a map and a rail is whether the tool
+that writes to the corpus refuses when the process says that step is not
+enabled. Concretely, in phase 3:</p>
+
+<ul>
+  <li>a capability tool declares which activity it satisfies;</li>
+  <li>when an instance is open for the subject, the tool checks the token before
+acting, and refuses with the same message <code class="language-plaintext highlighter-rouge">workflow_complete</code> gives;</li>
+  <li>completing the tool call advances the process, so the agent cannot both do
+the work and forget to record it.</li>
+</ul>
+
+<p><strong>The ruling (bean <code class="language-plaintext highlighter-rouge">bcnl</code>): be strict on the base; content-specific skills may
+decide and augment with relaxation guidance, if any.</strong> That is now implemented.</p>
+
+<ul>
+  <li>The three <strong>content-agnostic</strong> processes — <code class="language-plaintext highlighter-rouge">Process_Editing</code>,
+<code class="language-plaintext highlighter-rouge">Process_Publication</code>, <code class="language-plaintext highlighter-rouge">Process_Lifecycle</code> — carry
+<code class="language-plaintext highlighter-rouge">&lt;folio:policy enforcement="strict"/&gt;</code>. A step that is not enabled is refused.</li>
+  <li>The three <strong>per-content-type</strong> processes are <code class="language-plaintext highlighter-rouge">advisory</code>: what counts as
+adequate review of a Lean proof and of a FHIR profile are different questions,
+and the package that knows the domain answers them.</li>
+  <li>A package relaxes a base step by naming it in
+<code class="language-plaintext highlighter-rouge">skills/&lt;package&gt;/workflow-policy.json</code> <strong>with a reason</strong>. No reason, no load.</li>
+  <li><strong>Five steps cannot be relaxed at all</strong>, marked <code class="language-plaintext highlighter-rouge">relaxable="false"</code>:
+<code class="language-plaintext highlighter-rouge">Task_ReviewFindings</code>, <code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code>, <code class="language-plaintext highlighter-rouge">Task_Commit</code> — the editor
+seeing the findings, the decision, and the write — plus
+<code class="language-plaintext highlighter-rouge">Task_AuthorizeRelease</code> and <code class="language-plaintext highlighter-rouge">Task_PublishRelease</code>, which carry the
+<code class="language-plaintext highlighter-rouge">publish-authorized</code> SHALL. If those were negotiable the base would not be
+strict, it would be a suggestion.</li>
+  <li>Absent policy means <strong>strict</strong>. A process that forgot to declare is governed,
+not exempt; defaulting the other way would mean forgetting silently turns the
+gate off.</li>
+  <li><code class="language-plaintext highlighter-rouge">bun run check:workflow-policy</code> runs in CI, so a relaxation that has stopped
+applying — the activity was renamed, or became non-relaxable — is a build
+failure rather than a discovery on the day it is needed.</li>
+</ul>
+
+<p><strong>The commit boundary is now enforced</strong> (<code class="language-plaintext highlighter-rouge">4100</code>).
+<code class="language-plaintext highlighter-rouge">scripts/check-corpus-gate.ts</code> runs in the <em>folio</em> repo, from a pre-commit hook
+or from CI, and refuses a changed block that no instance records the editor
+having authorised:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged</span>  <span class="nt">--platform</span> &lt;platform&gt;
+bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--since</span> origin/main <span class="nt">--platform</span> &lt;platform&gt;
+bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged</span> <span class="nt">--warn</span>   <span class="c"># adopt gradually</span>
+</code></pre></div></div>
+
+<p>This is the piece that does not depend on asking. <code class="language-plaintext highlighter-rouge">workflow_gate</code> tells an
+agent whether a step is enabled <em>if it asks</em>; the hook does not care whether
+anyone asked. Four properties make it a gate rather than a formality:</p>
+
+<ul>
+  <li><strong>It refuses by default.</strong> No instance, or an instance that has not reached
+the editor’s decision, or a change the editor <em>discarded</em> — all refused.</li>
+  <li><strong>It refuses when it cannot tell.</strong> A file that reads as a block manifest but
+will not import is refused, not waved through: a gate that fails open reports
+clean by not looking. A malformed <code class="language-plaintext highlighter-rouge">workflow-policy.json</code> stops the gate
+rather than quietly becoming “no relaxations”, which would refuse work a
+package had legitimately declared.</li>
+  <li><strong>It ignores what is not a corpus write.</strong> <code class="language-plaintext highlighter-rouge">.qa.json</code> is machine-written by
+the sweep; gating it would make every sweep look like an unauthorised edit.
+Helper modules and chapter manifests are not blocks.</li>
+  <li><strong>Cost is O(the diff).</strong> Only changed files are imported, gated by the cheap
+textual check first — the same split <code class="language-plaintext highlighter-rouge">walkBlocks</code> uses, so a script with a
+builder call in a template literal is not executed here either.</li>
+</ul>
+
+<p>Installing the hook is a one-liner the folio owner writes, not something a
+script does behind their back.</p>
+
+<p>Still open: per-capability-tool gating. It remains the more invasive option and
+the commit boundary covers the case that matters.</p>
+
+<p><strong>The costs, which stand as stated:</strong></p>
+
+<ul>
+  <li><strong>It can block legitimate work.</strong> A one-line typo fix does not want a
+seven-step process. Either trivial edits get an escape hatch — and then the
+hatch is the new default — or they do not, and the gate becomes something
+people route around by not starting an instance at all.</li>
+  <li><strong>Coverage is the whole game.</strong> Gating one tool while fifteen others stay
+open buys the <em>appearance</em> of a gate. Gating all of them is a large change to
+a surface other repos depend on.</li>
+  <li><strong>It needs an activity → tool mapping that does not drift.</strong> <code class="language-plaintext highlighter-rouge">folio:skill</code>
+points at skill <em>documents</em>, not at MCP tools. That mapping is the real work,
+and the obvious place for it is the same extension element, with a
+<code class="language-plaintext highlighter-rouge">render:bpmn:check</code>-style validator that every ref resolves. Cheap, and it is
+the failure mode this repo keeps rediscovering.</li>
+</ul>
+
+<p>The <strong>commit boundary</strong> remains the recommended enforcement point over
+tool-by-tool gating: a pre-commit hook or CI check that refuses a corpus write
+whose block has no instance recording that the findings were surfaced. Fewer
+places to change, it bites where it matters, and it cannot be forgotten by an
+agent because it is not the agent that runs it. The first two objections above
+are answered by the relaxation mechanism — a content package that finds the gate
+too heavy for a class of edit declares that, in writing, once.</p><hr />
+<h2 id="5-phase-2--beans-and-instances-must-not-become-two-truths-landed">
+  
+  
+    <a href="#5-phase-2--beans-and-instances-must-not-become-two-truths-landed" class="anchor-heading" aria-labelledby="5-phase-2--beans-and-instances-must-not-become-two-truths-landed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Phase 2 — beans and instances must not become two truths <em>(landed)</em>
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">.beans/</code> answers “what is being worked on”; an instance answers “where did it
+get to”. Those must be one answer or they will diverge, and a work plan that
+disagrees with itself is worse than one that is merely coarse.</p>
+
+<p>The loop is now closed. A bean-marked activity is not a step <em>about</em> the work
+plan, it <strong>is</strong> the work-plan operation, so <code class="language-plaintext highlighter-rouge">&lt;folio:bean/&gt;</code> gained an <code class="language-plaintext highlighter-rouge">op</code>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>op</th>
+      <th>on completing the step</th>
+      <th>where</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">claim</code></td>
+      <td>status → <code class="language-plaintext highlighter-rouge">in-progress</code>, idempotent</td>
+      <td>5 activities</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">note</code></td>
+      <td>append the caller’s note to the body</td>
+      <td>4 activities</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">resolve</code></td>
+      <td>status → <code class="language-plaintext highlighter-rouge">completed</code>, <strong>only if the instance finished</strong></td>
+      <td>2 activities</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><code class="language-plaintext highlighter-rouge">resolve</code> is the careful one. <code class="language-plaintext highlighter-rouge">AGENTS.md</code> is explicit that a bean is not closed
+on someone else’s judgement, and the activity is called “Resolve <strong>or re-open</strong>
+the bean”. So it does not fire on the caller’s say-so: the bean completes only
+when the instance it tracks has itself completed, which is a fact derived from
+the process rather than an assertion. A still-running instance gets a note.</p>
+
+<p><code class="language-plaintext highlighter-rouge">work_plan_prime</code> now joins the two: every instance is reported with its
+position and its bean, and the absence of a bean is stated rather than left
+blank. An <code class="language-plaintext highlighter-rouge">op</code> this build does not implement fails at process load — a step
+that says it resolves a bean and quietly does nothing is the divergence the
+extension exists to close.</p>
+
+<p>Two implementation notes worth knowing. The <code class="language-plaintext highlighter-rouge">beans</code> CLI is preferred and a
+direct <code class="language-plaintext highlighter-rouge">.beans/*.md</code> rewrite is the fallback, because “beans CLI not on PATH”
+is this repo’s own session-start message, and an integration that only worked
+with the CLI installed would be off exactly when someone picks up a fresh
+container. And <code class="language-plaintext highlighter-rouge">findBean</code> matches <code class="language-plaintext highlighter-rouge">&lt;id&gt;--</code>, not the bare id, so <code class="language-plaintext highlighter-rouge">fq0b</code> cannot
+also resolve a bean called <code class="language-plaintext highlighter-rouge">fq0bx</code>.</p>
+
+<p>Instance state lives in <code class="language-plaintext highlighter-rouge">.folio/workflow/&lt;id&gt;.json</code>, <strong>committed</strong>, for the
+reason <code class="language-plaintext highlighter-rouge">.beans/</code> is: the container is ephemeral, and a work plan only one agent
+can see is not a work plan. Instance ids are derived from the subject rather
+than random, so re-entering a step finds the instance that exists — the
+<code class="language-plaintext highlighter-rouge">beans create</code> non-idempotency that produced 14,688 duplicates in one afternoon
+is not a mistake worth repeating.</p>
+
+<p>The trade-off to accept openly: this is churn in the diff, on every step. Beans
+already carry that cost and the repo tolerates it.</p><hr />
+<h2 id="6-dmn--the-genuinely-deterministic-part">
+  
+  
+    <a href="#6-dmn--the-genuinely-deterministic-part" class="anchor-heading" aria-labelledby="6-dmn--the-genuinely-deterministic-part"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. DMN — the genuinely deterministic part
+  
+  
+</h2>
+    
+
+<p>The interpreter surfaces a <strong>decision</strong> when it reaches an exclusive gateway
+with no outcome supplied, rather than guessing. Ten such points exist across
+the six diagrams, and they are not all the same kind of question:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Gateway</th>
+      <th>Inputs</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Build green, no sorries?</code></td>
+      <td><code class="language-plaintext highlighter-rouge">lean_build</code>, <code class="language-plaintext highlighter-rouge">proof_status</code></td>
+      <td><strong>Table shipped</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Draft QA green?</code></td>
+      <td><code class="language-plaintext highlighter-rouge">qa_sweep</code> totals</td>
+      <td><strong>Table shipped</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">QC clean?</code></td>
+      <td>IG Publisher QC</td>
+      <td>Mechanical, but no tool exists yet</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FHIR valid?</code></td>
+      <td>validator output</td>
+      <td>Mechanical, but no tool exists yet</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Judgement call?</code></td>
+      <td>is this clinical/scientific?</td>
+      <td>No — routing judgement</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Accept, revise or discard?</code></td>
+      <td>the findings</td>
+      <td>No — the editor’s call</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Approved?</code></td>
+      <td>the draft as a whole</td>
+      <td>No — the review team’s call</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Clinically accurate?</code></td>
+      <td>ground truth</td>
+      <td>No — SME’s call</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Two corrections to an earlier draft of this section, both found by building
+it.</strong> It named <code class="language-plaintext highlighter-rouge">lean_status</code> as the source for the Lean gate; <code class="language-plaintext highlighter-rouge">lean_status</code>
+checks whether the <em>toolchain</em> is installed, and the sorry counts come from
+<code class="language-plaintext highlighter-rouge">proof_status</code> (<code class="language-plaintext highlighter-rouge">proof-axis-dashboard --json</code>). And it claimed four tables were
+available: only two are. <code class="language-plaintext highlighter-rouge">QC clean?</code> and <code class="language-plaintext highlighter-rouge">FHIR valid?</code> are just as mechanical,
+but this repo ships no WHO/FHIR adapter, so their input names would have been
+invented — a table keyed to facts no tool emits is worse than no table, because
+it looks authoritative. They land when the adapter does.</p>
+
+<p>What shipped: a gateway carrying <code class="language-plaintext highlighter-rouge">&lt;folio:decision ref="file.dmn#Decision_Id"/&gt;</code>
+has its outcome <strong>computed</strong>. The caller passes facts, the table returns the
+branch, and <code class="language-plaintext highlighter-rouge">workflow_complete</code> <strong>refuses a hand-supplied outcome</strong> on such a
+gateway — being able to assert the answer would defeat the mechanism. The rule
+that fired is recorded in the instance history, so the audit trail says which
+table decided and why.</p>
+
+<p>Three things worth knowing about how the tables came out:</p>
+
+<ul>
+  <li><strong>The Lean gate is not “no sorries”.</strong> <code class="language-plaintext highlighter-rouge">proof-axis-dashboard</code> separates a
+sorry standing in for an open conjecture — intentional — from a proof nobody
+closed. A gate counting both would block on the conjectures the paper is
+about, so the table reads <code class="language-plaintext highlighter-rouge">deferredSorries</code> only.</li>
+  <li><strong>Authoring the table fixed the diagram.</strong> The branch was labelled
+<code class="language-plaintext highlighter-rouge">sorries remain</code>, but a red build also routes there and is not a sorry.
+Renamed to <code class="language-plaintext highlighter-rouge">not yet</code>. The label was wrong before the table existed; making
+the decision explicit is what exposed it.</li>
+  <li><strong>The draft QA gate deliberately ignores two totals.</strong> <code class="language-plaintext highlighter-rouge">fail_minor</code> does not
+hold a draft, and <code class="language-plaintext highlighter-rouge">needs_agent</code> — criteria awaiting judgement — is the
+business of the non-mechanical review lane, not of a mechanical publication
+gate. Those are policy choices, and they now live in a table an editor can
+change without touching code, which is the argument for DMN in the first
+place.</li>
+</ul>
+
+<p>A validator runs at process load: every outcome a table can return must name
+one of the gateway’s outgoing flows. A table that returns <code class="language-plaintext highlighter-rouge">"passed"</code> against a
+gateway branching on <code class="language-plaintext highlighter-rouge">yes</code>/<code class="language-plaintext highlighter-rouge">no</code> parses fine and evaluates fine, and would fail
+at the moment a decision is needed — the worst possible time to find out.</p>
+
+<p>This remains the highest ratio of determinism to effort on offer, and it is
+independent of the gating decision in §4.</p><hr />
+<h2 id="7-what-this-does-not-buy">
+  
+  
+    <a href="#7-what-this-does-not-buy" class="anchor-heading" aria-labelledby="7-what-this-does-not-buy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. What this does not buy
+  
+  
+</h2>
+    
+
+<p><strong>Ordering is not quality.</strong> A completed instance means the gates ran in order
+and a person saw the findings. Whether the content is correct is what the QA
+axes, the Lean build and the FHIR validator are for. A green process must never
+be read as a reviewed paper, and any dashboard built on this should say so.</p>
+
+<p><strong>Nor is it a substitute for the mechanical checks.</strong> The process enforces that
+<code class="language-plaintext highlighter-rouge">Build and QA gates</code> ran before the editor decided. It has no opinion on what
+they found — that is the criterion’s job, and the criterion’s tests.</p><hr />
+<h2 id="8-recommendation">
+  
+  
+    <a href="#8-recommendation" class="anchor-heading" aria-labelledby="8-recommendation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Recommendation
+  
+  
+</h2>
+    
+
+<ol>
+  <li><strong>Keep phase 1 as landed</strong> — advisory, cheap, and immediately useful for
+orientation: <code class="language-plaintext highlighter-rouge">workflow_next</code> tells an agent what it may work on, which lane
+owns it, and which skill implements it, without anyone having read the
+diagram.</li>
+  <li><del>Do phase 2 next</del> — <strong>done</strong> (§5). Beans and instances are one record.</li>
+  <li><del>Do the DMN tables for the four mechanical gateways</del> — <strong>done for the two
+whose tools exist</strong> (§6). The remaining two wait on a WHO/FHIR adapter
+rather than on a decision.</li>
+  <li><del>Decide §4</del> — <strong>decided and implemented</strong>: strict base, declared
+relaxations, five un-relaxable steps, and the commit boundary enforced by
+<code class="language-plaintext highlighter-rouge">check-corpus-gate.ts</code> (§4).</li>
+</ol><hr />
+<h2 id="see-also">
+  
+  
+    <a href="#see-also" class="anchor-heading" aria-labelledby="see-also"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> See also
+  
+  
+</h2>
+    
+
+<ul>
+  <li><a href="../publication-workflow.html">Publication workflow</a> — the six diagrams, their roles, and the skills each activity uses</li>
+  <li><a href="../skills.html">Skills &amp; roles</a> — the actor and capability model the lanes map onto</li>
+  <li><a href="rag-document-ingestion.html"><code class="language-plaintext highlighter-rouge">rag-document-ingestion</code></a> — the host-size argument reused in §3</li>
+</ul>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

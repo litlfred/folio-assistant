@@ -1,0 +1,949 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(7)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(7) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(7) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(7) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>/devils-advocate-watcher | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="/devils-advocate-watcher" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="/devils-advocate-watcher" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"/devils-advocate-watcher","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>/devils-advocate-watcher</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/devils-advocate-watcher.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/devils-advocate-watcher.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="devils-advocate-watcher">
+  
+  
+    <a href="#devils-advocate-watcher" class="anchor-heading" aria-labelledby="devils-advocate-watcher"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> /devils-advocate-watcher
+  
+  
+</h1>
+    
+
+<p>A concrete instance of <a href="/folio-assistant/reference/skill-instructions/integration-watcher.html"><code class="language-plaintext highlighter-rouge">integration-watcher</code></a>.
+The parent encodes the shared mechanics; this file fills the nine
+domain-specific slots A–I. This watcher’s job is <strong>adversarial</strong>: it
+does not check style or wiring, it tries to <em>break</em> each block — to
+surface the objection a referee will make before the referee does.</p>
+
+<p><strong>Setup:</strong> use <code class="language-plaintext highlighter-rouge">NAME=devils-advocate-watcher</code> everywhere the parent’s §1
+references <code class="language-plaintext highlighter-rouge">${NAME}</code>. Files at <code class="language-plaintext highlighter-rouge">.beans/devils-advocate-watcher-queue.json</code>
+and <code class="language-plaintext highlighter-rouge">.beans/devils-advocate-watcher-ledger.md</code>.</p>
+
+<p><strong>Standing authority.</strong> This watcher is the operational arm of the
+<strong>Critical-distance license</strong> (AGENTS.md §”Critical-distance license”):
+agents have standing permission — and an affirmative duty when asked for
+assessment — to challenge the project’s claims on the merits, flag
+suspected numerology / overfitting / hidden degrees of freedom /
+post-hoc rationalization, and give outside-view reception forecasts
+without softening. Read the project’s <em>claims</em> adversarially; read the
+author’s <em>messages</em> charitably.</p>
+
+<p><strong>Discipline guardrails (read before recording any durable finding).</strong> A
+devil’s-advocate finding is an <em>adversarial hypothesis</em>, not a
+corpus-status fact. Two AGENTS.md rules gate what may be written into a
+durable artifact (sidecar <code class="language-plaintext highlighter-rouge">verdict</code>, audit doc, ledger, PR):</p>
+
+<ol>
+  <li><strong>(a)/(b) refutation-scope rule</strong> (§”Before declaring ‘refuted’”).
+Every finding that asserts something is wrong/excluded carries a
+<code class="language-plaintext highlighter-rouge">scope</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">scope: limited</code> — “this construction, <em>alone</em>, does not work as
+stated.” The default. Constrains magnitudes/combinations, not
+ingredients.</li>
+      <li><code class="language-plaintext highlighter-rouge">scope: structural</code> — “this cannot hold in any closure.” Permitted
+<strong>only</strong> when a <em>proved invariant</em> forbids it (a parity/sign,
+dimension/degree/count bound, a formally-proved impossibility, an
+entropy/precision bound). <strong>Must cite the invariant</strong> in
+<code class="language-plaintext highlighter-rouge">evidence</code>. Without one, downgrade to <code class="language-plaintext highlighter-rouge">limited</code>.</li>
+    </ul>
+  </li>
+  <li><strong>corpus-grep checklist</strong> (§”Before declaring ‘open’”). Before a
+finding asserts an item is <em>unresolved/open in the corpus</em>, run the
+four greps (<code class="language-plaintext highlighter-rouge">docs/audits/</code>, <code class="language-plaintext highlighter-rouge">content/</code>, <code class="language-plaintext highlighter-rouge">computations/</code>,
+<code class="language-plaintext highlighter-rouge">docs/coordination/</code>). A “this is an unproved gap” objection that the
+corpus already closes is a false finding — record it as <code class="language-plaintext highlighter-rouge">verdict:
+rebutted</code> with the closing artifact cited.</li>
+</ol>
+
+<p>These guardrails are what separate a <em>useful</em> devil’s advocate (finds
+the real objection early) from a <em>noisy</em> one (cries wolf on settled
+items). The adjudicator (Slot C) enforces both before a finding is
+written <code class="language-plaintext highlighter-rouge">surviving</code>.</p>
+<h2 id="slot-a--goal-statement">
+  
+  
+    <a href="#slot-a--goal-statement" class="anchor-heading" aria-labelledby="slot-a--goal-statement"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot A — Goal statement
+  
+  
+</h2>
+    
+
+<p>For every block <code class="language-plaintext highlighter-rouge">B</code> with statement <code class="language-plaintext highlighter-rouge">S(B)</code> and (optional) formal layer
+<code class="language-plaintext highlighter-rouge">F(B)</code>, produce the <strong>strongest surviving objection</strong></p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">obj*(B) = argmax_{obj ∈ Objections(B)} survival(obj | rebuttal)</code></p>
+</blockquote>
+
+<p>where <code class="language-plaintext highlighter-rouge">Objections(B)</code> ranges over the finding taxonomy (Slot D) and
+<code class="language-plaintext highlighter-rouge">survival</code> is the adjudicator’s verdict after the block’s own text,
+formal layer, cited references, and the corpus-grep checklist are given
+the chance to rebut. A block <strong>passes</strong> the devil’s-advocate axis iff
+its strongest objection is <code class="language-plaintext highlighter-rouge">rebutted</code> (the block’s own materials defeat
+it) — i.e. there is no surviving referee argument that <code class="language-plaintext highlighter-rouge">S(B)</code> is false,
+vacuous, circular, overclaimed, or unsupported.</p>
+
+<p>The deliverable per block is not “is it wrong” (we rarely <em>prove</em> wrong)
+but <strong>“here is exactly what a referee will argue, and here is whether
+the block already answers it.”</strong> Surviving objections become queue items</p>
+<ul>
+  <li>author asks; rebutted objections are recorded so the next reviewer
+(human or agent) does not re-litigate them.</li>
+</ul>
+
+<p>This is the <strong>review-tier-0 adversary</strong>: it front-runs the Tier-1
+<code class="language-plaintext highlighter-rouge">peer-review</code> and Tier-2 <code class="language-plaintext highlighter-rouge">academic-paper-reviewer</code> skills by predicting
+their objections at the block granularity, with a durable sidecar so the
+prediction is cached and hash-invalidated like every other QA axis.</p>
+<h2 id="slot-b--3-trigger-filter">
+  
+  
+    <a href="#slot-b--3-trigger-filter" class="anchor-heading" aria-labelledby="slot-b--3-trigger-filter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot B — §3 trigger filter
+  
+  
+</h2>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SHA</span><span class="o">=</span>&lt;event sha&gt;
+<span class="nv">changed</span><span class="o">=</span><span class="si">$(</span>git diff-tree <span class="nt">--no-commit-id</span> <span class="nt">--name-only</span> <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$SHA</span><span class="s2">"</span><span class="si">)</span>
+
+<span class="nv">is_da_event</span><span class="o">=</span><span class="nb">false</span>
+
+<span class="c"># (i) Any provable / definitional / conjecture content block touched.</span>
+<span class="k">for </span>f <span class="k">in</span> <span class="si">$(</span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$changed</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="nt">-E</span> <span class="s1">'content/.*\.(md|ts)$'</span><span class="si">)</span><span class="p">;</span> <span class="k">do
+  </span><span class="nv">ts</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">f</span><span class="p">%.*</span><span class="k">}</span><span class="s2">.ts"</span>
+  <span class="o">[</span> <span class="nt">-f</span> <span class="s2">"</span><span class="nv">$ts</span><span class="s2">"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">grep</span> <span class="nt">-qE</span> <span class="s1">'^export default (theorem|lemma|proposition|corollary|conjecture|definition|remark|example)\('</span> <span class="s2">"</span><span class="nv">$ts</span><span class="s2">"</span> <span class="se">\</span>
+    <span class="o">&amp;&amp;</span> <span class="nv">is_da_event</span><span class="o">=</span><span class="nb">true
+</span><span class="k">done</span>
+
+<span class="c"># (ii) Any formal-layer sibling under a paper's formal tree.</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$changed</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="nt">-qE</span> <span class="s1">'content/.*/(lean|formal)/.*\.(lean|v|thy)$'</span> <span class="o">&amp;&amp;</span> <span class="nv">is_da_event</span><span class="o">=</span><span class="nb">true</span>
+
+<span class="c"># (iii) Any witness / derivation JSON that a block's number is pinned to</span>
+<span class="c">#       (the empirical-fragility + reproducibility lenses consume these).</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$changed</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="nt">-qE</span> <span class="s1">'\.witness\.json$|\.derivation\.json$'</span> <span class="o">&amp;&amp;</span> <span class="nv">is_da_event</span><span class="o">=</span><span class="nb">true</span>
+</code></pre></div></div>
+
+<p>For PR review-comment events, pass through if the comment body mentions
+any referee-objection keyword: <code class="language-plaintext highlighter-rouge">wrong</code>, <code class="language-plaintext highlighter-rouge">false</code>, <code class="language-plaintext highlighter-rouge">counterexample</code>,
+<code class="language-plaintext highlighter-rouge">circular</code>, <code class="language-plaintext highlighter-rouge">assumes</code>, <code class="language-plaintext highlighter-rouge">vacuous</code>, <code class="language-plaintext highlighter-rouge">trivial</code>, <code class="language-plaintext highlighter-rouge">overclaim</code>, <code class="language-plaintext highlighter-rouge">doesn't
+follow</code>, <code class="language-plaintext highlighter-rouge">non sequitur</code>, <code class="language-plaintext highlighter-rouge">gap</code>, <code class="language-plaintext highlighter-rouge">fitted</code>, <code class="language-plaintext highlighter-rouge">overfit</code>, <code class="language-plaintext highlighter-rouge">numerology</code>,
+<code class="language-plaintext highlighter-rouge">cherry</code>, <code class="language-plaintext highlighter-rouge">reproduce</code>, <code class="language-plaintext highlighter-rouge">unsupported</code>, <code class="language-plaintext highlighter-rouge">where does this come from</code>, <code class="language-plaintext highlighter-rouge">how
+do you know</code>.</p>
+<h2 id="slot-c--4b-dispatch-table">
+  
+  
+    <a href="#slot-c--4b-dispatch-table" class="anchor-heading" aria-labelledby="slot-c--4b-dispatch-table"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot C — §4b dispatch table
+  
+  
+</h2>
+    
+
+<p>Per changed block, launch the adversarial lenses <strong>in parallel</strong> (one
+<code class="language-plaintext highlighter-rouge">Agent</code> each), then a single adjudicator after they return. Each lens is
+prompted to <em>try to break the block</em> from its angle — it returns
+findings, NOT a clean bill of health. The adjudicator is prompted to
+<em>defend</em> the block and rule each objection <code class="language-plaintext highlighter-rouge">surviving | rebutted |
+partial</code>.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Lens (agent)</th>
+      <th>When to run</th>
+      <th>What it attacks</th>
+      <th>Primary taxonomy (Slot D)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>L1 Formalist</strong></td>
+      <td>always</td>
+      <td>Logical structure: is <code class="language-plaintext highlighter-rouge">S(B)</code> actually entailed by its <code class="language-plaintext highlighter-rouge">uses[]</code>? missing lemma? quantifier slip? Does <code class="language-plaintext highlighter-rouge">F(B)</code> prove <code class="language-plaintext highlighter-rouge">S(B)</code> or something weaker/vacuous (<code class="language-plaintext highlighter-rouge">: True</code>, self-assuming projection, decision-procedure mask)?</td>
+      <td><code class="language-plaintext highlighter-rouge">da-false-claim</code>, <code class="language-plaintext highlighter-rouge">da-non-sequitur</code>, <code class="language-plaintext highlighter-rouge">da-vacuous</code>, <code class="language-plaintext highlighter-rouge">da-formal-narrative-divergence</code></td>
+    </tr>
+    <tr>
+      <td><strong>L2 Skeptical domain expert</strong></td>
+      <td>block states a numerical/empirical/domain claim, or <code class="language-plaintext highlighter-rouge">uses[]</code> touches a calibration / measured-quantity block</td>
+      <td>Numerology, overfitting, hidden degrees of freedom, an undisclosed swing the prose hides, unit/conservation errors, contradiction with a known measurement</td>
+      <td><code class="language-plaintext highlighter-rouge">da-hidden-dof</code>, <code class="language-plaintext highlighter-rouge">da-overclaim</code>, <code class="language-plaintext highlighter-rouge">da-empirical-fragility</code>, <code class="language-plaintext highlighter-rouge">da-domain-implausibility</code>, <code class="language-plaintext highlighter-rouge">da-circular</code></td>
+    </tr>
+    <tr>
+      <td><strong>L3 Structural / theory critic</strong></td>
+      <td>provable or definitional kind</td>
+      <td>Counterexample hunt; is the construction well-defined (the “unique X” without uniqueness)? domain/regime error? is a claim secretly about a different regime than it says?</td>
+      <td><code class="language-plaintext highlighter-rouge">da-false-claim</code>, <code class="language-plaintext highlighter-rouge">da-definitional-ambiguity</code>, <code class="language-plaintext highlighter-rouge">da-overclaim</code></td>
+    </tr>
+    <tr>
+      <td><strong>L4 Reproducibility / citation auditor</strong></td>
+      <td>block has <code class="language-plaintext highlighter-rouge">cites[]</code>, a <code class="language-plaintext highlighter-rouge">-- Ref:</code> in <code class="language-plaintext highlighter-rouge">F(B)</code>, or a pinned witness number</td>
+      <td>Does the cited reference actually contain the result? Is the witness reproducible, fresh (not stale), and does its number match the prose <code class="language-plaintext highlighter-rouge">≈</code>?</td>
+      <td><code class="language-plaintext highlighter-rouge">da-citation-misuse</code>, <code class="language-plaintext highlighter-rouge">da-reproducibility</code>, <code class="language-plaintext highlighter-rouge">da-empirical-fragility</code></td>
+    </tr>
+    <tr>
+      <td><strong>ADJ Adjudicator</strong></td>
+      <td>after L1–L4</td>
+      <td>Defends the block: applies the block’s own text + formal layer + the corpus-grep checklist + the (a)/(b) scope rule; rules each objection <code class="language-plaintext highlighter-rouge">surviving | rebutted | partial</code>; assigns the block <code class="language-plaintext highlighter-rouge">da-referee-verdict</code></td>
+      <td>(verdict only)</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Dispatch rules (inherit parent §4b sidecar-aware dispatch):</p>
+
+<ul>
+  <li><strong>Sidecar skip.</strong> Before dispatching, read <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code>. If a
+<code class="language-plaintext highlighter-rouge">da-referee-verdict</code> entry exists with a <code class="language-plaintext highlighter-rouge">field_hash</code> matching the
+current <code class="language-plaintext highlighter-rouge">.md</code>/<code class="language-plaintext highlighter-rouge">.ts</code>/formal hashes → skip (already adjudicated at this
+content). Re-audit on hash drift or a prior <code class="language-plaintext highlighter-rouge">surviving</code> verdict.</li>
+  <li><strong>Lens selection.</strong> Always run L1. Run L2/L3/L4 only when their “When
+to run” column matches — most remark/prose blocks get L1+L3 only;
+empirical/measured blocks get all four.</li>
+  <li><strong>One adversarial agent per lens per block</strong> (parent §5m parallelism
+cap applies; default 4 in flight). The four lenses on one block are
+independent → batch them in a single response.</li>
+  <li>Cap each lens report at ~350 words; the adjudicator at ~250.</li>
+</ul>
+
+<p><strong>Adversarial-lens prompt skeleton</strong> (every lens agent):</p>
+
+<blockquote>
+  <p>You are a hostile but competent referee for a formal + domain
+manuscript. Your job is to find the strongest reason block <code class="language-plaintext highlighter-rouge">&lt;label&gt;</code>
+is WRONG from the <code class="language-plaintext highlighter-rouge">&lt;lens&gt;</code> angle — do not be charitable, do not
+summarize, do not approve. Read <code class="language-plaintext highlighter-rouge">&lt;md&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;ts&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;formal&gt;</code>. Return up
+to 3 objections, each: <code class="language-plaintext highlighter-rouge">{kind (da-*), scope (limited|structural),
+evidence (file:line + verbatim quote; for structural scope, the
+invariant that forbids it), referee_argument (1–3 sentences in the
+referee's voice)}</code>. If you cannot find a real objection from your
+angle after genuine effort, return <code class="language-plaintext highlighter-rouge">[]</code> — an empty list is an honest
+result, a fabricated objection is not.</p>
+</blockquote>
+
+<p><strong>Adjudicator prompt skeleton:</strong></p>
+
+<blockquote>
+  <p>You are defending block <code class="language-plaintext highlighter-rouge">&lt;label&gt;</code> against the attached referee
+objections. For each: (1) does the block’s own text / formal layer /
+cited refs already answer it? (2) run the corpus-grep checklist if it
+claims an item is “open”; (3) enforce the (a)/(b) scope rule — a
+<code class="language-plaintext highlighter-rouge">structural</code> objection without a cited proved invariant is downgraded
+to <code class="language-plaintext highlighter-rouge">limited</code>. Rule each <code class="language-plaintext highlighter-rouge">surviving | rebutted | partial</code> with one
+sentence of reasoning + the rebutting artifact (if any). Then assign
+the block a <code class="language-plaintext highlighter-rouge">da-referee-verdict</code>: <code class="language-plaintext highlighter-rouge">clean</code> (all rebutted),
+<code class="language-plaintext highlighter-rouge">survivable-objection</code> (≥1 partial, none surviving), or
+<code class="language-plaintext highlighter-rouge">open-objection</code> (≥1 surviving). Be fair: a surviving objection must
+be one you genuinely could not rebut, not one you declined to.</p>
+</blockquote>
+<h2 id="slot-d--4c-finding-taxonomy-the-da--criteria-family">
+  
+  
+    <a href="#slot-d--4c-finding-taxonomy-the-da--criteria-family" class="anchor-heading" aria-labelledby="slot-d--4c-finding-taxonomy-the-da--criteria-family"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot D — §4c finding taxonomy (the <code class="language-plaintext highlighter-rouge">da-*</code> criteria family)
+  
+  
+</h2>
+    
+
+<p>These are the sidecar criteria. Each block accrues one entry per
+criterion that fired; the <code class="language-plaintext highlighter-rouge">da-referee-verdict</code> is the rollup.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Criterion id</th>
+      <th>“Why a referee says it’s wrong”</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-false-claim</code></td>
+      <td>The stated proposition is false — a counterexample exists, a quantifier is wrong, or a special case fails.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-vacuous</code></td>
+      <td>True but content-free: <code class="language-plaintext highlighter-rouge">: True := trivial</code>, a self-assuming projection (<code class="language-plaintext highlighter-rouge">:= ctx.claim</code>), a tautology (<code class="language-plaintext highlighter-rouge">x = x</code>), or a hypothesis so strong the conclusion is immediate. Proves nothing of interest.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-circular</code></td>
+      <td>The derivation assumes its conclusion: the target value is back-fitted, a calibration is smuggled in, or <code class="language-plaintext highlighter-rouge">S(B)</code> is used (directly/transitively) in its own justification.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-overclaim</code></td>
+      <td>Conclusion stronger than the argument supports: a scope-limited negative written as a structural exclusion, “derived” where it is “fitted”, “proved” where it is “conditional”, absolute where it is approximate.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-hidden-dof</code></td>
+      <td>An undisclosed free parameter — an off-menu coefficient, a constant with no derivation-chain origin, a tuned exponent whose source is unstated (numerology).</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-non-sequitur</code></td>
+      <td>A logical gap: step B does not follow from step A; a “therefore” with a missing lemma; an induction whose step is unproved.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-formal-narrative-divergence</code></td>
+      <td><code class="language-plaintext highlighter-rouge">F(B)</code> proves something weaker than, different from, or vacuously implied by the <code class="language-plaintext highlighter-rouge">.md</code> claim <code class="language-plaintext highlighter-rouge">S(B)</code> (statement-integrity failure).</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-citation-misuse</code></td>
+      <td>A cited reference (<code class="language-plaintext highlighter-rouge">cites[]</code> or <code class="language-plaintext highlighter-rouge">-- Ref:</code>) does not contain the invoked result, is mis-attributed, or is used for a claim it does not make.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-definitional-ambiguity</code></td>
+      <td>A key term is undefined, admits multiple incompatible readings, or names a construction not shown well-defined (“the unique X” without uniqueness; a regime left implicit).</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-empirical-fragility</code></td>
+      <td>A numerical match lives inside fit noise, relies on cherry-picked precision, hides a swing, or is stale against the current pinned input.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-domain-implausibility</code></td>
+      <td>A domain claim an expert rejects: wrong units, a broken conservation/consistency law, or contradiction with an established measurement.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-reproducibility</code></td>
+      <td>The compute/witness backing a number is irreproducible, stale (<code class="language-plaintext highlighter-rouge">scriptHash</code>/<code class="language-plaintext highlighter-rouge">scriptCommitSha</code> drift), or its value contradicts the prose <code class="language-plaintext highlighter-rouge">≈</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">da-referee-verdict</code></td>
+      <td>Rollup: <code class="language-plaintext highlighter-rouge">clean</code> / <code class="language-plaintext highlighter-rouge">survivable-objection</code> / <code class="language-plaintext highlighter-rouge">open-objection</code> + the strongest objection’s one-line referee argument.</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="sidecar-schema-pre-adopted">
+  
+  
+    <a href="#sidecar-schema-pre-adopted" class="anchor-heading" aria-labelledby="sidecar-schema-pre-adopted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Sidecar schema (pre-adopted)
+  
+  
+</h3>
+    
+
+<p>Each <code class="language-plaintext highlighter-rouge">da-*</code> entry is a standard <code class="language-plaintext highlighter-rouge">block-qa/v1</code> <code class="language-plaintext highlighter-rouge">QaCriterionEntry</code>
+(<code class="language-plaintext highlighter-rouge">field_hash</code>, <code class="language-plaintext highlighter-rouge">result</code>, <code class="language-plaintext highlighter-rouge">severity</code>, <code class="language-plaintext highlighter-rouge">evidence</code>, <code class="language-plaintext highlighter-rouge">reviewer.kind =
+"agent"</code>, <code class="language-plaintext highlighter-rouge">reviewed_at</code>, <code class="language-plaintext highlighter-rouge">reviewed_sha</code>) <strong>plus</strong> the da-axis extension
+fields: <code class="language-plaintext highlighter-rouge">scope</code> (<code class="language-plaintext highlighter-rouge">limited</code>|<code class="language-plaintext highlighter-rouge">structural</code>), <code class="language-plaintext highlighter-rouge">ruling</code>
+(<code class="language-plaintext highlighter-rouge">surviving</code>|<code class="language-plaintext highlighter-rouge">rebutted</code>|<code class="language-plaintext highlighter-rouge">partial</code>), <code class="language-plaintext highlighter-rouge">referee_argument</code>, <code class="language-plaintext highlighter-rouge">rebuttal</code>, and
+— on the <code class="language-plaintext highlighter-rouge">da-referee-verdict</code> rollup only — <code class="language-plaintext highlighter-rouge">verdict</code>
+(<code class="language-plaintext highlighter-rouge">clean</code>|<code class="language-plaintext highlighter-rouge">survivable-objection</code>|<code class="language-plaintext highlighter-rouge">open-objection</code>). <code class="language-plaintext highlighter-rouge">result</code> is derived
+from <code class="language-plaintext highlighter-rouge">ruling</code>/<code class="language-plaintext highlighter-rouge">verdict</code> (surviving/open→<code class="language-plaintext highlighter-rouge">fail</code>, partial/survivable→<code class="language-plaintext highlighter-rouge">warn</code>,
+rebutted/clean→<code class="language-plaintext highlighter-rouge">pass</code>); a <code class="language-plaintext highlighter-rouge">structural</code> scope requires a non-empty
+<code class="language-plaintext highlighter-rouge">rebuttal</code> + <code class="language-plaintext highlighter-rouge">referee_argument</code> naming the proved invariant.</p>
+
+<p>The producing types are owned by the folio-assistant platform’s
+<code class="language-plaintext highlighter-rouge">schemas/block-qa.ts</code>; the watcher emits the structured fields now so
+the sidecars conform once the platform validator adopts them.</p>
+<h2 id="slot-e--4d-discharge-bands">
+  
+  
+    <a href="#slot-e--4d-discharge-bands" class="anchor-heading" aria-labelledby="slot-e--4d-discharge-bands"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot E — §4d discharge bands
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Band</th>
+      <th>Devil’s-advocate shape</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Auto-discharge</strong></td>
+      <td>The objection has a mechanical fix the watcher may apply without author judgement: a <code class="language-plaintext highlighter-rouge">da-vacuous</code> <code class="language-plaintext highlighter-rouge">: True</code> stub that should resolve to a real library decl; a <code class="language-plaintext highlighter-rouge">da-overclaim</code> durable “REFUTED” missing the (a)/(b) scope (re-scope to <code class="language-plaintext highlighter-rouge">limited</code>, cite the supporting note); a <code class="language-plaintext highlighter-rouge">da-citation-misuse</code> where the correct ref exists in <code class="language-plaintext highlighter-rouge">references.ts</code>; a <code class="language-plaintext highlighter-rouge">da-reproducibility</code> stale-witness refresh; a stale-<code class="language-plaintext highlighter-rouge">≈</code>-vs-<code class="language-plaintext highlighter-rouge">=</code> notation fix. Apply, re-run the relevant checker, commit.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><strong>Author-assist</strong></td>
+      <td>The objection is <em>substantive</em> and needs the author’s judgement: a <code class="language-plaintext highlighter-rouge">da-false-claim</code> / <code class="language-plaintext highlighter-rouge">da-non-sequitur</code> / <code class="language-plaintext highlighter-rouge">da-circular</code> that, if real, changes the math; a <code class="language-plaintext highlighter-rouge">da-hidden-dof</code> candidate undisclosed parameter; a <code class="language-plaintext highlighter-rouge">da-empirical-fragility</code> that questions a headline number; a <code class="language-plaintext highlighter-rouge">da-formal-narrative-divergence</code> requiring a re-statement. Open one author ask per stuck block (§4e) with the referee argument verbatim.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><strong>Defer</strong></td>
+      <td>The objection is <code class="language-plaintext highlighter-rouge">rebutted</code> by the block’s own materials or the corpus-grep checklist, OR is a known/acknowledged open item already tracked (a <code class="language-plaintext highlighter-rouge">conj:</code> kind, an acknowledged-stub, a documented gate blocker). Record <code class="language-plaintext highlighter-rouge">verdict: rebutted</code> (or <code class="language-plaintext highlighter-rouge">wontfix</code> with the tracking artifact) so it is not re-raised.</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Critical do-not.</strong> This watcher <strong>never edits the math to make an
+objection go away.</strong> Auto-discharge is limited to scope/notation/
+citation/witness <em>hygiene</em>; any change to a statement, a proof, or a
+number is Author-assist. A devil’s advocate that “fixes” the claim it
+attacked has destroyed its own evidence.</p>
+<h2 id="slot-f--4e-author-ask-templates">
+  
+  
+    <a href="#slot-f--4e-author-ask-templates" class="anchor-heading" aria-labelledby="slot-f--4e-author-ask-templates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot F — §4e author-ask templates
+  
+  
+</h2>
+    
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**devils-advocate ask — `&lt;label&gt;`**</span> (from <span class="nt">&lt;source-pr-or-commit&gt;</span>)
+<span class="p">
+-</span> Objection (<span class="sb">`&lt;da-kind&gt;`</span>, severity <span class="nt">&lt;critical</span><span class="err">|</span><span class="na">major</span><span class="err">|</span><span class="na">minor</span><span class="nt">&gt;</span>, scope <span class="nt">&lt;limited</span><span class="err">|</span><span class="na">structural</span><span class="nt">&gt;</span>):
+  <span class="nt">&lt;one</span> <span class="na">sentence</span><span class="nt">&gt;</span>
+<span class="p">-</span> Referee argument (verbatim, the voice the real referee will use):
+  "<span class="nt">&lt;</span><span class="err">1–3</span> <span class="na">sentences</span><span class="nt">&gt;</span>"
+<span class="p">-</span> File: <span class="nt">&lt;github</span> <span class="na">blob</span> <span class="na">URL</span> <span class="na">to</span> <span class="err">`.</span><span class="na">md</span><span class="err">`</span><span class="nt">&gt;</span>  (formal: <span class="nt">&lt;blob</span> <span class="na">URL</span><span class="nt">&gt;</span> if relevant)
+<span class="p">-</span> Evidence: <span class="sb">`&lt;file:line&gt;`</span> — <span class="sb">`&lt;verbatim quote of the offending text&gt;`</span>
+<span class="p">-</span> Already attempted to rebut: <span class="nt">&lt;corpus-grep</span> <span class="na">paths</span> <span class="na">walked</span> <span class="err">/</span> <span class="na">formal</span> <span class="na">layer</span> <span class="na">checked</span> <span class="err">/</span> <span class="na">refs</span> <span class="na">read</span><span class="nt">&gt;</span> → <span class="nt">&lt;why</span> <span class="na">it</span> <span class="na">survived</span><span class="nt">&gt;</span>
+<span class="p">-</span> Question: <span class="nt">&lt;numbered</span> <span class="na">choice</span><span class="err">,</span> <span class="na">e.g.:</span><span class="nt">&gt;</span>
+<span class="p">  1.</span> The objection is real — restate/weaken the claim (I'll draft the edit).
+<span class="p">  2.</span> The objection is rebutted by <span class="nt">&lt;X&gt;</span> — point me at it and I'll record <span class="sb">`rebutted`</span>.
+<span class="p">  3.</span> Known open item — track as <span class="sb">`conj:`</span>/acknowledged-stub and move on.
+</code></pre></div></div>
+
+<p>Lead with the full context in chat (per parent §4e), then mirror a tight
+<code class="language-plaintext highlighter-rouge">AskUserQuestion</code> (🟡 prefix, <code class="language-plaintext highlighter-rouge">multiSelect: true</code> per §0d). The referee
+argument goes in the chat prose, not the structured option <code class="language-plaintext highlighter-rouge">description</code>
+(math legibility, AGENTS.md §User accessibility).</p>
+<h2 id="slot-g--5a-backlog-discovery">
+  
+  
+    <a href="#slot-g--5a-backlog-discovery" class="anchor-heading" aria-labelledby="slot-g--5a-backlog-discovery"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot G — §5a backlog discovery
+  
+  
+</h2>
+    
+
+<p>The backlog is <strong>every provable, definitional, and conjecture block in
+the corpus that has no current <code class="language-plaintext highlighter-rouge">da-referee-verdict</code> entry</strong>, plus every
+block whose verdict is stale (hash drift) or <code class="language-plaintext highlighter-rouge">open-objection</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># All blocks of an adversarially-auditable kind.</span>
+<span class="k">for </span>ts <span class="k">in</span> <span class="si">$(</span>git ls-files <span class="s1">'content/**/*.ts'</span><span class="si">)</span><span class="p">;</span> <span class="k">do
+  </span><span class="nb">grep</span> <span class="nt">-qE</span> <span class="s1">'^export default (theorem|lemma|proposition|corollary|conjecture|definition)\('</span> <span class="s2">"</span><span class="nv">$ts</span><span class="s2">"</span> <span class="o">||</span> <span class="k">continue
+  </span><span class="nv">qa</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">ts</span><span class="p">%.ts</span><span class="k">}</span><span class="s2">.qa.json"</span>
+  <span class="c"># Needs audit if no sidecar, no da-referee-verdict, stale hash, or open verdict.</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-f</span> <span class="s2">"</span><span class="nv">$qa</span><span class="s2">"</span> <span class="o">]</span> <span class="o">||</span> <span class="o">!</span> <span class="nb">grep</span> <span class="nt">-q</span> <span class="s1">'"da-referee-verdict"'</span> <span class="s2">"</span><span class="nv">$qa</span><span class="s2">"</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"AUDIT </span><span class="nv">$ts</span><span class="s2">"</span>
+  <span class="k">fi
+done</span>
+</code></pre></div></div>
+
+<p>Refresh discovery every 50 items (parent §5a cadence). Prefer the
+content-pipeline TypeScript loader over grep when parsing <code class="language-plaintext highlighter-rouge">kind</code>.</p>
+
+<p><strong>Mechanical pre-filters (cheap, corpus-wide).</strong> Two stdlib checkers
+sweep the recurring failure classes before the per-block lens fan-out,
+so the expensive agent audits target what they surface. Both are
+report-only (<code class="language-plaintext highlighter-rouge">--strict</code> to gate), agent-free, and do <strong>not</strong> write
+<code class="language-plaintext highlighter-rouge">da-*</code> sidecars (they feed this backlog):</p>
+
+<ul>
+  <li><strong>Witness hollowness:</strong> a witness-hollowness audit — <code class="language-plaintext highlighter-rouge">null-dual</code>
+(a structured dual emitted with null values) + the high-recall
+<code class="language-plaintext highlighter-rouge">hollow-verification</code> (empty-<code class="language-plaintext highlighter-rouge">assertions</code> success claims).</li>
+  <li><strong>Status-label overclaim:</strong> a status-label-overclaim audit — a closure
+label (<code class="language-plaintext highlighter-rouge">proved</code>/<code class="language-plaintext highlighter-rouge">closed-form</code>/<code class="language-plaintext highlighter-rouge">no-fit</code>/<code class="language-plaintext highlighter-rouge">RESOLVED</code>/<code class="language-plaintext highlighter-rouge">gap-free</code>) over a
+non-closure signal (a formal-layer gap/<code class="language-plaintext highlighter-rouge">:True</code>/<code class="language-plaintext highlighter-rouge">:=trivial</code>,
+<code class="language-plaintext highlighter-rouge">validation:not_checked|stub</code>, <code class="language-plaintext highlighter-rouge">kind:conjecture</code>). The <em>sharp</em> subset
+(label over a vacuous formal layer) is the actionable backlog.</li>
+</ul>
+
+<p>A block flagged by either checker jumps the §5b priority queue (a
+mechanical signal of a likely surviving objection); the lens fan-out
+then confirms or rebuts it per block.</p>
+<h2 id="slot-h--5b-prioritisation">
+  
+  
+    <a href="#slot-h--5b-prioritisation" class="anchor-heading" aria-labelledby="slot-h--5b-prioritisation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot H — §5b prioritisation
+  
+  
+</h2>
+    
+
+<p>Rank the backlog by <em>blast radius × headline-proximity × novelty</em>:</p>
+
+<ol>
+  <li><strong>On the project’s main derivation/argument chain.</strong> Blocks on the
+central chain and the headline results first — these are what a
+referee attacks first and where a surviving objection is most
+damaging.</li>
+  <li><strong>Most downstream dependents</strong> (via <code class="language-plaintext highlighter-rouge">uses[]</code>) — a false upstream
+claim poisons everything that uses it.</li>
+  <li><strong>Provable kinds before definitions before conjectures</strong> — a
+<code class="language-plaintext highlighter-rouge">theorem</code> carries a truth claim a referee can falsify; a <code class="language-plaintext highlighter-rouge">conjecture</code>
+already admits it is unproved (lower adversarial yield).</li>
+  <li><strong>Never-audited before stale before previously-clean.</strong></li>
+  <li>Alphabetical tie-break.</li>
+</ol>
+
+<p>High-yield seed targets are the project’s load-bearing, most-attackable
+claims — audit these first in any “full audit”: the central result(s),
+the calibration/parameter-fixing steps, any near-miss numerical match,
+and the project’s own discipline statement(s). A project can record its
+concrete seed list in a side doc; this slot only fixes the ranking
+heuristic.</p>
+<h2 id="slot-i--6-invariants-per-commit-on-this-watchers-own-branch">
+  
+  
+    <a href="#slot-i--6-invariants-per-commit-on-this-watchers-own-branch" class="anchor-heading" aria-labelledby="slot-i--6-invariants-per-commit-on-this-watchers-own-branch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot I — §6 invariants (per-commit, on this watcher’s own branch)
+  
+  
+</h2>
+    
+
+<ol>
+  <li><strong>No math edits in a finding commit.</strong> A commit that records findings
+(sidecar entries, audit doc, ledger) must not also change a
+statement/proof/number. Hygiene auto-discharges (scope re-label,
+citation fix, witness refresh, <code class="language-plaintext highlighter-rouge">≈</code> fix) ride separate <code class="language-plaintext highlighter-rouge">chore</code>/<code class="language-plaintext highlighter-rouge">fix</code>
+commits, each naming the block + criterion.</li>
+  <li><strong>Every <code class="language-plaintext highlighter-rouge">surviving</code> finding carries its rebuttal attempt.</strong> A sidecar
+entry with <code class="language-plaintext highlighter-rouge">verdict: surviving</code> must record, in <code class="language-plaintext highlighter-rouge">notes</code> or
+<code class="language-plaintext highlighter-rouge">evidence</code>, which rebuttal paths were tried (corpus-grep, formal
+layer, refs) and why they failed. A bare “surviving” with no
+attempted rebuttal is an audit flag (it may be a noisy false
+positive).</li>
+  <li><strong>(a)/(b) scope on every durable refutation</strong> (§Discipline
+guardrails). No <code class="language-plaintext highlighter-rouge">structural</code>-scope finding without a cited proved
+invariant.</li>
+  <li><strong>corpus-grep before any “open/gap” finding</strong> is written <code class="language-plaintext highlighter-rouge">surviving</code>.</li>
+  <li><strong>Verdict ≠ truth.</strong> A <code class="language-plaintext highlighter-rouge">da-referee-verdict: open-objection</code> means “a
+referee argument survived rebuttal in this audit”, <strong>not</strong> “the block
+is proven false.” Phrase ledger/PR text accordingly (the objection is
+open, not the disproof closed).</li>
+</ol>
+<h2 id="running-a-full-audit-multi-agent-fan-out">
+  
+  
+    <a href="#running-a-full-audit-multi-agent-fan-out" class="anchor-heading" aria-labelledby="running-a-full-audit-multi-agent-fan-out"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running a “full audit” (multi-agent fan-out)
+  
+  
+</h2>
+    
+
+<p>When the user asks for a <em>full</em> / <em>exhaustive</em> devil’s-advocate audit
+(e.g. “start full audit”), run the backlog sweep as a fan-out, not a
+serial walk:</p>
+
+<ol>
+  <li><strong>Enumerate + prioritise</strong> (Slots G, H). Produce the ranked block
+list; record the count and the seed targets in the ledger.</li>
+  <li><strong>Wave the fan-out.</strong> Process in waves of N blocks (N = parent §5m
+parallelism cap, default 4). For each block in a wave, dispatch its
+L1–L4 lenses + adjudicator (Slot C). Within a wave the blocks are
+independent → one response, many <code class="language-plaintext highlighter-rouge">Agent</code> calls. Honor §0a item 2: if
+the owner has not consented to parallel agent dispatch, fall back to
+sequential foreground lenses (slower, same coverage).</li>
+  <li><strong>Persist per block.</strong> Write the <code class="language-plaintext highlighter-rouge">da-*</code> + <code class="language-plaintext highlighter-rouge">da-referee-verdict</code>
+entries to each <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> (reviewer.kind = “agent”,
+agent_model, agent_date, agent_skill = <code class="language-plaintext highlighter-rouge">devils-advocate-watcher</code>).</li>
+  <li><strong>Commit per wave</strong>, not per block — one <code class="language-plaintext highlighter-rouge">audit(devils-advocate):
+wave K — &lt;chapter/scope&gt;, M blocks, P open-objection</code> commit carrying
+that wave’s sidecar writes + the audit-doc append.</li>
+  <li><strong>Audit doc.</strong> Maintain
+<code class="language-plaintext highlighter-rouge">docs/audits/&lt;date&gt;-devils-advocate-&lt;scope&gt;.md</code>: one table row per
+block with <code class="language-plaintext highlighter-rouge">verdict</code>, the strongest objection, and its disposition.
+This is the human-readable face of the sweep; the sidecars are the
+machine-readable cache.</li>
+  <li><strong>Surviving objections → queue + asks.</strong> Every <code class="language-plaintext highlighter-rouge">open-objection</code> block
+becomes a queue item (Slot D kind) and, in a foreground session, an
+Author-assist ask (Slot F). Rebutted objections stay in the sidecar
+only (no queue noise).</li>
+  <li><strong>Stop conditions.</strong> The sweep is “done” for a scope when every block
+in it has a fresh <code class="language-plaintext highlighter-rouge">da-referee-verdict</code>. A full-corpus sweep is large;
+report progress per wave and let the user steer scope (one chapter,
+one chain, the headline results).</li>
+</ol>
+<h2 id="relationship-to-the-existing-watchers">
+  
+  
+    <a href="#relationship-to-the-existing-watchers" class="anchor-heading" aria-labelledby="relationship-to-the-existing-watchers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Relationship to the existing watchers
+  
+  
+</h2>
+    
+
+<p>This watcher is <strong>orthogonal</strong> to its siblings and deliberately
+overlapping at the edges — the overlap is the point (a referee does not
+respect axis boundaries):</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Sibling</th>
+      <th>They check</th>
+      <th>The adversary additionally asks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proof-integration-watcher</code></td>
+      <td>no bare gaps, no axiom growth, formal layer compiles</td>
+      <td><em>is the thing it proves the thing it claims, and is the claim even true?</em></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">canonical-watcher</code></td>
+      <td>no undisclosed parameters, no numerology (pattern-based)</td>
+      <td><em>where exactly does this constant come from, and would a skeptic buy the derivation?</em></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">compute-integration-watcher</code></td>
+      <td>every statement has a probe + consumer</td>
+      <td><em>does the probe actually support the claim, or just co-vary with it?</em></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">one-voice-integration-watcher</code></td>
+      <td>scholarly voice, AI-slop, fit</td>
+      <td><em>strip the confident voice — does the argument still stand?</em></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code></td>
+      <td>formal ≟ narrative (equivalence)</td>
+      <td><em>if they diverge, which one is the overclaim?</em></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Where a sibling already has a <code class="language-plaintext highlighter-rouge">pass</code> sidecar entry, the adversary may
+<em>cite</em> it as a rebuttal — but a <code class="language-plaintext highlighter-rouge">pass</code> on <code class="language-plaintext highlighter-rouge">framework-canonical</code> does not
+pre-rebut a <code class="language-plaintext highlighter-rouge">da-circular</code> objection; the axes ask different questions.
+The adjudicator decides what counts as a rebuttal.</p>
+<h2 id="anti-patterns-devils-advocate-specific">
+  
+  
+    <a href="#anti-patterns-devils-advocate-specific" class="anchor-heading" aria-labelledby="anti-patterns-devils-advocate-specific"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Anti-patterns (devil’s-advocate-specific)
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong>Manufacturing objections.</strong> An empty objection list from a lens is
+an honest result. Inventing a weak objection to look thorough pollutes
+the sidecar and trains the next reader to ignore it.</li>
+  <li><strong>Crying wolf on settled items.</strong> Recording <code class="language-plaintext highlighter-rouge">surviving</code> on an item the
+corpus already records as a documented gap, or on a <code class="language-plaintext highlighter-rouge">conj:</code> that
+openly admits it is unproved, without checking the coordination
+ledger. Run the corpus-grep first.</li>
+  <li><strong>Structural overclaim by the adversary itself.</strong> Writing a
+<code class="language-plaintext highlighter-rouge">structural</code>-scope refutation without a proved invariant — the same
+over-narrowing the (a)/(b) rule forbids in the corpus, now committed
+by the auditor. The adversary is held to the discipline it enforces.</li>
+  <li><strong>Editing the math to win the argument.</strong> See Slot I item 1 / Slot E
+“Critical do-not”. Auto-discharge is hygiene only.</li>
+  <li><strong>Treating a verdict as a disproof.</strong> <code class="language-plaintext highlighter-rouge">open-objection</code> = “a referee
+argument is open”, not “the block is false.” Keep the modality.</li>
+</ul>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

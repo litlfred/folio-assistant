@@ -1,0 +1,633 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(9)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(9) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(9) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(9) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>/exposition-swarm-drain | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="/exposition-swarm-drain" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="/exposition-swarm-drain" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"/exposition-swarm-drain","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>/exposition-swarm-drain</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/exposition-swarm-drain.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/exposition-swarm-drain.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="exposition-swarm-drain--milnor-exposition-auditresolve-drain">
+  
+  
+    <a href="#exposition-swarm-drain--milnor-exposition-auditresolve-drain" class="anchor-heading" aria-labelledby="exposition-swarm-drain--milnor-exposition-auditresolve-drain"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> /exposition-swarm-drain — Milnor-exposition audit→resolve drain
+  
+  
+</h1>
+    
+
+<p>Bring every narrative block up to the <strong>Milnor exposition standard</strong>
+(one-voice style guide → “The Milnor exposition standard”), at scale,
+autonomously, without hand-editing block by block.</p>
+<h2 id="0-when-to-use">
+  
+  
+    <a href="#0-when-to-use" class="anchor-heading" aria-labelledby="0-when-to-use"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. When to use
+  
+  
+</h2>
+    
+
+<ul>
+  <li>“swarm the exposition”, “Milnor-audit the paper”, “drain narrative
+quality”, “run the audit+resolve swarm”, “clean up the prose across
+chapter X / the whole paper”.</li>
+  <li>The paper has ~2,000 narrative blocks; this is the mechanism for
+processing them in bulk while keeping each edit conservative and
+each batch a reviewable PR.</li>
+</ul>
+<h2 id="1-the-pattern-three-roles">
+  
+  
+    <a href="#1-the-pattern-three-roles" class="anchor-heading" aria-labelledby="1-the-pattern-three-roles"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The pattern (three roles)
+  
+  
+</h2>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                    ┌─────────────── foreground session (you) ───────────────┐
+   enumerate  →     │  batch the blocks → launch swarm → auto prepare-merge   │  → repeat until drained
+                    └────────────────────────────────────────────────────────┘
+                              │ each batch
+                              ▼
+        ┌──────────── swarm agent (one per grouped batch) ────────────┐
+        │  own branch → AUDIT each block (Milnor H1–H8 + defects)     │
+        │            → RESOLVE flagged blocks (math-preserving edits) │
+        │            → commit → push → open PR → return PR#           │
+        └─────────────────────────────────────────────────────────────┘
+</code></pre></div></div>
+
+<ol>
+  <li><strong>Foreground (this session)</strong> — enumerate + batch the blocks, launch
+the swarm, then <strong>auto prepare-merge</strong> each swarm PR (via
+<code class="language-plaintext highlighter-rouge">/prepare-merge-auto</code>). Runs the drain loop until every batch is
+merged or explicitly parked. Does <strong>not</strong> stop for check-ins — go
+until completely drained (owner directive 2026-07-04).</li>
+  <li><strong>Swarm agent (grouped batch)</strong> — each agent owns <strong>one branch</strong> and
+<strong>one grouped batch</strong> of blocks (not one block per agent — that
+over-creates PRs; see §3). It audits and resolves its whole batch,
+commits, pushes, opens a PR, and returns the PR number + a summary.</li>
+  <li><strong>Auto-merge</strong> — the foreground runs <code class="language-plaintext highlighter-rouge">/prepare-merge-auto</code> on each
+returned PR: rebase, one-voice + lean checks, request reviews,
+resolve mechanical comments, merge (rebase-merge default). Merge is
+pre-authorized for this drain (owner directive); architectural review
+comments still escalate via <code class="language-plaintext highlighter-rouge">AskUserQuestion</code>.</li>
+</ol>
+<h2 id="2-the-audit-rubric-what-each-agent-scores">
+  
+  
+    <a href="#2-the-audit-rubric-what-each-agent-scores" class="anchor-heading" aria-labelledby="2-the-audit-rubric-what-each-agent-scores"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. The audit rubric (what each agent scores)
+  
+  
+</h2>
+    
+
+<p>Score each block on the eight Milnor hallmarks, 0–2 each
+(authoritative: <code class="language-plaintext highlighter-rouge">expo-milnor-clarity</code> spec,
+<a href="../../../docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md"><code class="language-plaintext highlighter-rouge">docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md</code> §5A</a>;
+author-facing: <code class="language-plaintext highlighter-rouge">one-voice-style-guide.md</code> → “The Milnor exposition standard”):</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Hallmark</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>H1</td>
+      <td>Economy — every sentence load-bearing</td>
+    </tr>
+    <tr>
+      <td>H2</td>
+      <td>Concrete before abstract</td>
+    </tr>
+    <tr>
+      <td>H3</td>
+      <td>The “Why” precedes the “What”</td>
+    </tr>
+    <tr>
+      <td>H4</td>
+      <td>Uncluttered notation</td>
+    </tr>
+    <tr>
+      <td>H5</td>
+      <td>Linear argument</td>
+    </tr>
+    <tr>
+      <td>H6</td>
+      <td>Prose carries the argument</td>
+    </tr>
+    <tr>
+      <td>H7</td>
+      <td>Surgical cleanliness / right-tool framing</td>
+    </tr>
+    <tr>
+      <td>H8</td>
+      <td>Respect for the reader’s time and intelligence</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Gate (owner ruling 2026-07-04, STRICT):</strong> <code class="language-plaintext highlighter-rouge">T = ΣHi</code>. <code class="language-plaintext highlighter-rouge">T = 16</code> → <strong>pass</strong>;
+<code class="language-plaintext highlighter-rouge">12 ≤ T ≤ 15</code> → <strong>warn</strong>; <code class="language-plaintext highlighter-rouge">T ≤ 11</code> → <strong>fail</strong>. Perfection is the bar.</p>
+
+<p>Also flag the deterministic narrative defects (independent of the score):</p>
+<ul>
+  <li><strong>proof-sketch-vs-kind</strong> — a provable-kind block presenting “Proof
+(sketch)”/an incompleteness admission.</li>
+  <li><strong>proof-no-lean-mention-in-prose</strong> — prose naming the Lean/sorry/Mathlib
+apparatus.</li>
+  <li><strong>proof-cross-block-duplication</strong> — a proof authored twice across
+sibling blocks.</li>
+</ul>
+<h2 id="3-batching-grouped-review-sized">
+  
+  
+    <a href="#3-batching-grouped-review-sized" class="anchor-heading" aria-labelledby="3-batching-grouped-review-sized"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Batching (grouped, review-sized)
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong>One agent per grouped batch</strong>, batch = a <strong>chapter</strong> (or a
+sub-cluster of a large chapter). Never one-block-per-agent — that
+fragments into hundreds of PRs and violates the “minimize PR creation”
+rule (AGENTS.md).</li>
+  <li>
+    <p><strong>Size cap:</strong> ≤ ~40 blocks per batch AND ≤ 49 files per resulting PR
+(the Gemini review limit). Split big chapters into coherent
+sub-clusters by section or topic stem. Get the actual per-chapter
+counts from the folio rather than a remembered table — they drift:</p>
+
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>d <span class="k">in </span>content/<span class="k">*</span>/<span class="k">*</span>/<span class="p">;</span> <span class="k">do
+  </span><span class="nb">printf</span> <span class="s1">'%s %s\n'</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">ls</span> <span class="s2">"</span><span class="nv">$d</span><span class="s2">"</span><span class="k">*</span>.md 2&gt;/dev/null | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$d</span><span class="s2">"</span>
+<span class="k">done</span> | <span class="nb">sort</span> <span class="nt">-rn</span> | <span class="nb">head</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Concurrency:</strong> a “small swarm” is ≤ ~8 batch-agents live at once
+(the Workflow cap is <code class="language-plaintext highlighter-rouge">min(16, cores−2)</code>); launch chapters in waves.</li>
+  <li><strong>Branch name:</strong> each agent uses <code class="language-plaintext highlighter-rouge">claude/expo-milnor-&lt;chapter&gt;-&lt;utc-ymd&gt;</code>.</li>
+</ul>
+<h2 id="4-conservative-edit-discipline-strict--the-resolve-half">
+  
+  
+    <a href="#4-conservative-edit-discipline-strict--the-resolve-half" class="anchor-heading" aria-labelledby="4-conservative-edit-discipline-strict--the-resolve-half"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Conservative-edit discipline (STRICT — the resolve half)
+  
+  
+</h2>
+    
+
+<p>Resolve agents edit <code class="language-plaintext highlighter-rouge">.md</code> prose only. They <strong>must not</strong>:</p>
+<ul>
+  <li>change any mathematical statement, definition, equation, hypothesis, or
+proof step;</li>
+  <li>invent mathematics or fake a proof;</li>
+  <li>convert a “Proof (sketch)” to “Proof” unless the complete argument is
+<strong>already present</strong> (else leave it and set <code class="language-plaintext highlighter-rouge">needs_owner</code>).</li>
+</ul>
+
+<p><strong>DO-NOT-TOUCH-DERIVATIONS rule (STRICT, added 2026-07-04 after a live
+incident).</strong> A resolve agent must <strong>not edit the prose of a derivation,
+computation, or proof body at all</strong> — not even to “tighten” or “clarify”
+it. Polishing a derivation can make a <em>wrong</em> one read more cleanly and
+authoritative, which is worse than leaving it rough. (Incident: the swarm
+reworded a <code class="language-plaintext highlighter-rouge">frobenius-relation-su2</code> derivation that was mathematically
+false — it conflated the Hopf comultiplication with the Frobenius
+comultiplication — and the cleaner prose lent the error false authority;
+Gemini caught it, PR #3301.) Therefore:</p>
+<ul>
+  <li><strong>Only edit the <em>surrounding exposition</em></strong> — the intro/motivation
+sentence, the notation-introduction, a redundant restatement <em>outside</em>
+the derivation, the closing interpretation. Leave every derivation /
+computation / proof step <strong>verbatim</strong>.</li>
+  <li>If a derivation itself reads poorly, <strong>do not fix it</strong> — set
+<code class="language-plaintext highlighter-rouge">needs_owner</code> with a note. A resolve agent is not authorized to verify
+or repair mathematics.</li>
+  <li>The audit stage <strong>may</strong> score H5/H6/H7 low on a muddy derivation and
+<strong>flag</strong> it, but the flag routes to <code class="language-plaintext highlighter-rouge">needs_owner</code>, not to an autonomous
+prose rewrite of the derivation.</li>
+</ul>
+
+<p>They <strong>may</strong>: strip Lean/sorry/apparatus sentences; tighten wordy prose
+<em>outside derivations</em>; reorder so motivation precedes machinery; introduce
+a symbol at first use; de-duplicate a glyph. Anything requiring real math —
+or any edit that would touch a derivation body — is returned as
+<code class="language-plaintext highlighter-rouge">needs_owner</code> with a reason, <strong>never</strong> auto-faked or auto-polished.</p>
+
+<p><strong>The review layer is the backstop, not the gate.</strong> Every swarm PR still
+goes through <code class="language-plaintext highlighter-rouge">/prepare-merge-auto</code> (Gemini + Copilot) before merge; that
+layer caught the incident above. Do not merge a content batch on the
+swarm’s self-check alone.</p>
+
+<p>Every resolve agent runs the render sanity battery before committing
+(balanced <code class="language-plaintext highlighter-rouge">$</code>/<code class="language-plaintext highlighter-rouge">$$</code>/<code class="language-plaintext highlighter-rouge">{}</code>, no <code class="language-plaintext highlighter-rouge">\operatorname</code> → <code class="language-plaintext highlighter-rouge">\mathrm</code>, no list-hijack
+line starting <code class="language-plaintext highlighter-rouge">+</code>/<code class="language-plaintext highlighter-rouge">-</code>/<code class="language-plaintext highlighter-rouge">*</code> inside <code class="language-plaintext highlighter-rouge">$$</code>, align-family fenced as <code class="language-plaintext highlighter-rouge">```tex</code>)
+per <code class="language-plaintext highlighter-rouge">markdown-render-check</code>, and the block validates
+(<code class="language-plaintext highlighter-rouge">bun run scripts/run-validate.ts content/&lt;paper&gt;</code>) before the PR opens.</p>
+<h2 id="5-foreground-drain-loop">
+  
+  
+    <a href="#5-foreground-drain-loop" class="anchor-heading" aria-labelledby="5-foreground-drain-loop"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Foreground drain loop
+  
+  
+</h2>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocks = enumerate_narrative_blocks(paper)          # kind ∈ narrative, ≥40 words
+batches = group_into_batches(blocks)                # §3 — per chapter / sub-cluster
+for wave in chunks(batches, 8):                     # ≤8 agents live
+    prs = swarm(wave)                               # §6 workflow → [PR#, …]
+    for pr in prs:
+        prepare_merge_auto(pr)                      # rebase, checks, reviews, merge
+# repeat until batches exhausted — do NOT stop for check-ins
+</code></pre></div></div>
+
+<p>Stop conditions: the batch list is exhausted (drained), OR the owner says
+stop, OR a batch’s <code class="language-plaintext highlighter-rouge">needs_owner</code> items require a decision that blocks its
+PR — park that one PR (comment why) and keep draining the rest.</p>
+<h2 id="6-workflow-skeleton-audit--resolve-pipelined-per-block-within-a-batch">
+  
+  
+    <a href="#6-workflow-skeleton-audit--resolve-pipelined-per-block-within-a-batch" class="anchor-heading" aria-labelledby="6-workflow-skeleton-audit--resolve-pipelined-per-block-within-a-batch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Workflow skeleton (audit → resolve, pipelined per block within a batch)
+  
+  
+</h2>
+    
+
+<p>A batch-agent may itself run this inner pipeline over its blocks. The
+canonical script (iterate via <code class="language-plaintext highlighter-rouge">scriptPath</code>, not by resending):</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">meta</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">milnor-audit-resolve</span><span class="dl">'</span><span class="p">,</span> <span class="na">description</span><span class="p">:</span> <span class="dl">'</span><span class="s1">…</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">phases</span><span class="p">:</span> <span class="p">[{</span><span class="na">title</span><span class="p">:</span><span class="dl">'</span><span class="s1">Audit</span><span class="dl">'</span><span class="p">},{</span><span class="na">title</span><span class="p">:</span><span class="dl">'</span><span class="s1">Resolve</span><span class="dl">'</span><span class="p">}]</span> <span class="p">}</span>
+<span class="kd">const</span> <span class="nx">blocks</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="p">?</span> <span class="nx">args</span> <span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span>   <span class="c1">// args may arrive as a string</span>
+<span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">pipeline</span><span class="p">(</span><span class="nx">blocks</span><span class="p">,</span>
+  <span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">agent</span><span class="p">(</span><span class="nx">AUDIT_PROMPT</span><span class="p">(</span><span class="nx">path</span><span class="p">),</span>   <span class="p">{</span><span class="na">phase</span><span class="p">:</span><span class="dl">'</span><span class="s1">Audit</span><span class="dl">'</span><span class="p">,</span>   <span class="na">agentType</span><span class="p">:</span><span class="dl">'</span><span class="s1">general-purpose</span><span class="dl">'</span><span class="p">,</span> <span class="na">schema</span><span class="p">:</span> <span class="nx">AUDIT_SCHEMA</span><span class="p">}),</span>
+  <span class="p">(</span><span class="nx">audit</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">audit</span> <span class="o">||</span> <span class="p">(</span><span class="nx">audit</span><span class="p">.</span><span class="nx">verdict</span><span class="o">===</span><span class="dl">'</span><span class="s1">pass</span><span class="dl">'</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">audit</span><span class="p">.</span><span class="nx">defects</span><span class="p">.</span><span class="nx">length</span><span class="p">))</span> <span class="k">return</span> <span class="p">{</span><span class="na">block</span><span class="p">:</span><span class="nx">path</span><span class="p">,</span> <span class="na">edited</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span> <span class="na">skipped_reason</span><span class="p">:</span><span class="dl">'</span><span class="s1">clean</span><span class="dl">'</span><span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">audit</span><span class="p">.</span><span class="nx">needs_owner</span><span class="p">)</span> <span class="k">return</span> <span class="p">{</span><span class="na">block</span><span class="p">:</span><span class="nx">path</span><span class="p">,</span> <span class="na">edited</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span> <span class="na">skipped_reason</span><span class="p">:</span><span class="dl">'</span><span class="s1">needs owner: </span><span class="dl">'</span><span class="o">+</span><span class="nx">audit</span><span class="p">.</span><span class="nx">needs_owner_reason</span><span class="p">}</span>
+    <span class="k">return</span> <span class="nx">agent</span><span class="p">(</span><span class="nx">RESOLVE_PROMPT</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="nx">audit</span><span class="p">),</span> <span class="p">{</span><span class="na">phase</span><span class="p">:</span><span class="dl">'</span><span class="s1">Resolve</span><span class="dl">'</span><span class="p">,</span> <span class="na">agentType</span><span class="p">:</span><span class="dl">'</span><span class="s1">general-purpose</span><span class="dl">'</span><span class="p">,</span> <span class="na">schema</span><span class="p">:</span> <span class="nx">RESOLVE_SCHEMA</span><span class="p">})</span>
+  <span class="p">})</span>
+<span class="k">return</span> <span class="nx">results</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nb">Boolean</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">agentType: 'general-purpose'</code></strong> so resolve agents have Edit/Write.</li>
+  <li><strong>Schemas</strong> force structured audit (scores/verdict/defects/fix_plan/
+needs_owner) and resolve (edited/changes/preserved_math/skipped_reason).</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">pipeline</code> not <code class="language-plaintext highlighter-rouge">parallel</code></strong> — each block flows audit→resolve with no
+barrier; a warn block resolves while another is still being audited.</li>
+  <li><strong>Guard <code class="language-plaintext highlighter-rouge">args</code></strong> — it can arrive as a JSON string; parse defensively.</li>
+</ul>
+<h2 id="7-interaction-with-the-flag-preservation-guard">
+  
+  
+    <a href="#7-interaction-with-the-flag-preservation-guard" class="anchor-heading" aria-labelledby="7-interaction-with-the-flag-preservation-guard"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Interaction with the flag-preservation guard
+  
+  
+</h2>
+    
+
+<p>The Milnor gate can <code class="language-plaintext highlighter-rouge">fail</code>, so its verdicts are real blocking flags. Per
+<code class="language-plaintext highlighter-rouge">qa-flag-preservation-audit.ts</code> (PR #3289), a distrusted <code class="language-plaintext highlighter-rouge">expo-milnor-clarity</code>
+verdict must be <strong>re-audited</strong>, never <code class="language-plaintext highlighter-rouge">n/a</code>-cleared. Keep the per-block score
+vector in the sidecar so a re-review re-scores rather than re-guesses.</p>
+<h2 id="8-reporting">
+  
+  
+    <a href="#8-reporting" class="anchor-heading" aria-labelledby="8-reporting"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Reporting
+  
+  
+</h2>
+    
+
+<p>At the end of each wave, report a compact table: block · kind · Milnor
+total · verdict · defects · edited?/needs_owner. At full drain, report the
+score distribution (how many pass/warn/fail before vs after) and the list
+of <code class="language-plaintext highlighter-rouge">needs_owner</code> blocks for the author.</p>
+<h2 id="cross-references">
+  
+  
+    <a href="#cross-references" class="anchor-heading" aria-labelledby="cross-references"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cross-references
+  
+  
+</h2>
+    
+
+<ul>
+  <li>Rubric spec: <code class="language-plaintext highlighter-rouge">docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md</code> §5A</li>
+  <li>Author voice: <code class="language-plaintext highlighter-rouge">.claude/skills/local/one-voice-style-guide.md</code> → “The Milnor exposition standard”</li>
+  <li>Merge pipeline: <code class="language-plaintext highlighter-rouge">.claude/skills/local/prepare-merge-auto.md</code></li>
+  <li>Sister drain: <code class="language-plaintext highlighter-rouge">.claude/skills/local/integration-backlog.md</code></li>
+  <li>Flag guard: <code class="language-plaintext highlighter-rouge">content/pipeline/qa-flag-preservation-audit.ts</code></li>
+</ul>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

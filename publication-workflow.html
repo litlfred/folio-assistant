@@ -1,0 +1,1129 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(7)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(7) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(7) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(7) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Publication workflow | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Publication workflow" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/publication-workflow.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/publication-workflow.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Publication workflow" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Publication workflow","url":"https://litlfred.github.io/folio-assistant/publication-workflow.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 class="no_toc" id="publication-workflow">
+  
+  
+    <a href="#publication-workflow" class="anchor-heading" aria-labelledby="publication-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Publication workflow
+  
+  
+</h1>
+    
+
+<p>How a change gets from <em>an editor had an idea</em> to <em>the folio is officially
+published</em> — expressed as <strong>BPMN 2.0 swimlane diagrams</strong>, with the roles, the
+validation gate, the skills, and the shared work plan all named.</p>
+
+<ol id="markdown-toc">
+  <li><a href="#every-workflow-in-the-repo" id="markdown-toc-every-workflow-in-the-repo">Every workflow in the repo</a>    <ol>
+      <li><a href="#they-also-run" id="markdown-toc-they-also-run">They also run</a></li>
+      <li><a href="#some-decisions-are-computed-not-judged" id="markdown-toc-some-decisions-are-computed-not-judged">Some decisions are computed, not judged</a></li>
+      <li><a href="#the-base-processes-are-strict" id="markdown-toc-the-base-processes-are-strict">The base processes are strict</a></li>
+      <li><a href="#how-to-read-them" id="markdown-toc-how-to-read-them">How to read them</a></li>
+    </ol>
+  </li>
+  <li><a href="#editing-and-the-hci-validation-gate" id="markdown-toc-editing-and-the-hci-validation-gate">Editing and the HCI validation gate</a>    <ol>
+      <li><a href="#the-one-rule-this-diagram-exists-to-state" id="markdown-toc-the-one-rule-this-diagram-exists-to-state">The one rule this diagram exists to state</a></li>
+      <li><a href="#mechanical-vs-non-mechanical-validation" id="markdown-toc-mechanical-vs-non-mechanical-validation">Mechanical vs non-mechanical validation</a></li>
+      <li><a href="#activities-and-the-skills-that-implement-them" id="markdown-toc-activities-and-the-skills-that-implement-them">Activities and the skills that implement them</a></li>
+    </ol>
+  </li>
+  <li><a href="#from-corpus-to-published-folio" id="markdown-toc-from-corpus-to-published-folio">From corpus to published folio</a></li>
+  <li><a href="#content-lifecycle-overview" id="markdown-toc-content-lifecycle-overview">Content lifecycle overview</a></li>
+  <li><a href="#the-work-plan--tasks-as-beans" id="markdown-toc-the-work-plan--tasks-as-beans">The work plan — tasks as beans</a></li>
+  <li><a href="#who-is-who" id="markdown-toc-who-is-who">Who is who</a>    <ol>
+      <li><a href="#people" id="markdown-toc-people">People</a></li>
+      <li><a href="#agents-and-system-actors" id="markdown-toc-agents-and-system-actors">Agents and system actors</a></li>
+    </ol>
+  </li>
+  <li><a href="#changing-these-diagrams" id="markdown-toc-changing-these-diagrams">Changing these diagrams</a>    <ol>
+      <li><a href="#which-diagrams-are-bpmn-and-which-are-not" id="markdown-toc-which-diagrams-are-bpmn-and-which-are-not">Which diagrams are BPMN, and which are not</a></li>
+    </ol>
+  </li>
+  <li><a href="#see-also" id="markdown-toc-see-also">See also</a></li>
+</ol><hr />
+<h2 id="every-workflow-in-the-repo">
+  
+  
+    <a href="#every-workflow-in-the-repo" class="anchor-heading" aria-labelledby="every-workflow-in-the-repo"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Every workflow in the repo
+  
+  
+</h2>
+    
+
+<p>Six BPMN 2.0 files, all under
+<a href="https://github.com/litlfred/folio-assistant/tree/main/docs/workflows"><code class="language-plaintext highlighter-rouge">docs/workflows/</code></a>.
+Each is a real BPMN 2.0 document with diagram interchange — open it in
+<a href="https://demo.bpmn.io/">bpmn.io</a>, Camunda Modeler, or any BPMN tool. The SVGs
+throughout the docs are generated from these files by <code class="language-plaintext highlighter-rouge">bun run render:bpmn</code>;
+never hand-edit an SVG.</p>
+
+<p><strong>Content-agnostic</strong> — these three apply to every folio, and the outer ones
+reference the inner ones as <strong>call activities</strong>, so each process is described
+once and reused:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Level</th>
+      <th>Diagram</th>
+      <th>Answers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><a href="#content-lifecycle-overview">Content lifecycle</a> — <code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></td>
+      <td>One cycle of a folio, plan → retire</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><a href="#from-corpus-to-published-folio">Draft → publication</a> — <code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></td>
+      <td>How the corpus becomes an officially published folio</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><a href="#editing-and-the-hci-validation-gate">Editing &amp; HCI validation</a> — <code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code></td>
+      <td>What happens to <strong>one</strong> proposed change to <strong>one</strong> content block</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Content-type specific</strong> — how a particular kind of folio is authored. These
+sit <em>inside</em> level 3’s <code class="language-plaintext highlighter-rouge">Draft the block edit</code>, and live with their guides:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Diagram</th>
+      <th>Content type</th>
+      <th>Where it is shown</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></td>
+      <td>Scientific papers &amp; books</td>
+      <td><a href="guides/writing-a-paper.html#the-end-to-end-workflow">Writing a paper</a></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></td>
+      <td>WHO SMART Guidelines DAK (L2)</td>
+      <td><a href="guides/who-smart-dak.html#the-l2-artifacts">Authoring a WHO SMART DAK</a></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></td>
+      <td>WHO SMART Implementation Guide (L3)</td>
+      <td><a href="guides/who-smart-ig.html#the-l3-pipeline">Authoring a WHO SMART IG</a></td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="they-also-run">
+  
+  
+    <a href="#they-also-run" class="anchor-heading" aria-labelledby="they-also-run"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> They also run
+  
+  
+</h3>
+    
+
+<p>Since bean <code class="language-plaintext highlighter-rouge">fq0b</code> these files are not only pictures. The MCP server interprets
+them: <code class="language-plaintext highlighter-rouge">workflow_start</code> opens an instance for a subject, <code class="language-plaintext highlighter-rouge">workflow_next</code> reports
+what is enabled <em>now</em> — with the lane that performs it and the skill that
+implements it — and <code class="language-plaintext highlighter-rouge">workflow_complete</code> refuses a step the process has not
+reached. <code class="language-plaintext highlighter-rouge">Commit into the corpus</code> cannot be reported done before the editor’s
+decision is recorded, because there is no token on it until then.</p>
+
+<p>That is ordering, not enforcement: nothing yet stops an agent calling a
+capability tool directly. The case for making it binding — and the argument
+that the commit boundary is the right place — is in
+<a href="proposals/workflow-orchestration.html">Proposal: workflow orchestration</a>.</p>
+<h3 id="some-decisions-are-computed-not-judged">
+  
+  
+    <a href="#some-decisions-are-computed-not-judged" class="anchor-heading" aria-labelledby="some-decisions-are-computed-not-judged"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Some decisions are computed, not judged
+  
+  
+</h3>
+    
+
+<p>Ten exclusive gateways sit across the six diagrams, and they are not all the
+same kind of question. <code class="language-plaintext highlighter-rouge">Accept, revise or discard?</code> is the editor’s call.
+<code class="language-plaintext highlighter-rouge">Build green, no sorries?</code> is arithmetic over <code class="language-plaintext highlighter-rouge">lean_build</code> and <code class="language-plaintext highlighter-rouge">proof_status</code>.</p>
+
+<p>A gateway carrying <code class="language-plaintext highlighter-rouge">&lt;folio:decision ref="decisions/x.dmn#Decision_Id"/&gt;</code> has its
+outcome computed from a <strong>DMN decision table</strong> under
+<a href="https://github.com/litlfred/folio-assistant/tree/main/docs/workflows/decisions"><code class="language-plaintext highlighter-rouge">docs/workflows/decisions/</code></a>.
+The agent supplies facts — <code class="language-plaintext highlighter-rouge">{ failCritical: 0, failMajor: 2 }</code> — and the table
+returns the branch; <code class="language-plaintext highlighter-rouge">workflow_complete</code> refuses a hand-supplied outcome there,
+and records which rule fired.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Gateway</th>
+      <th>Table</th>
+      <th>Reads</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Build green, no sorries?</code></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-build-gate.dmn</code></td>
+      <td><code class="language-plaintext highlighter-rouge">buildOk</code>, <code class="language-plaintext highlighter-rouge">deferredSorries</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Draft QA green?</code></td>
+      <td><code class="language-plaintext highlighter-rouge">draft-qa-gate.dmn</code></td>
+      <td><code class="language-plaintext highlighter-rouge">failCritical</code>, <code class="language-plaintext highlighter-rouge">failMajor</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><code class="language-plaintext highlighter-rouge">QC clean?</code> and <code class="language-plaintext highlighter-rouge">FHIR valid?</code> are equally mechanical and equally deserve
+tables — they wait on a WHO/FHIR adapter, because a table keyed to facts no
+tool emits looks authoritative and is not.</p>
+<h3 id="the-base-processes-are-strict">
+  
+  
+    <a href="#the-base-processes-are-strict" class="anchor-heading" aria-labelledby="the-base-processes-are-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The base processes are strict
+  
+  
+</h3>
+    
+
+<p>The three content-agnostic diagrams — editing, draft-to-publication, lifecycle —
+carry <code class="language-plaintext highlighter-rouge">&lt;folio:policy enforcement="strict"/&gt;</code>. <code class="language-plaintext highlighter-rouge">workflow_gate</code> refuses a step
+they have not reached. The three per-content-type diagrams are <code class="language-plaintext highlighter-rouge">advisory</code>,
+because what counts as adequate review of a Lean proof and of a FHIR profile are
+different questions, and the package that knows the domain should answer them.</p>
+
+<p>A content package may relax a base step by declaring it in
+<code class="language-plaintext highlighter-rouge">skills/&lt;package&gt;/workflow-policy.json</code> <strong>with a reason</strong> — an unexplained
+relaxation does not load, so the file is the record of what was waived and why.
+Five steps refuse to be relaxed at all: <code class="language-plaintext highlighter-rouge">Task_ReviewFindings</code>,
+<code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code> and <code class="language-plaintext highlighter-rouge">Task_Commit</code> (the editor seeing the findings, the
+decision, the write), plus <code class="language-plaintext highlighter-rouge">Task_AuthorizeRelease</code> and <code class="language-plaintext highlighter-rouge">Task_PublishRelease</code>
+(the <code class="language-plaintext highlighter-rouge">publish-authorized</code> SHALL). If those were negotiable the base would not be
+strict, it would be a suggestion.</p>
+
+<p><code class="language-plaintext highlighter-rouge">bun run check:workflow-policy</code> lists the policy and validates every relaxation;
+it runs in CI, so one that has stopped applying is a build failure rather than a
+discovery on the day it is needed.</p>
+
+<p><strong>The commit boundary is where this is enforced rather than merely answerable.</strong>
+<code class="language-plaintext highlighter-rouge">scripts/check-corpus-gate.ts</code>, run in the folio repo from a pre-commit hook or
+CI, refuses a changed content block that no instance records the editor having
+authorised. <code class="language-plaintext highlighter-rouge">workflow_gate</code> answers an agent that asks; the hook does not depend
+on anyone asking.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged</span> <span class="nt">--platform</span> &lt;platform&gt;
+bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged</span> <span class="nt">--warn</span>   <span class="c"># adopt gradually</span>
+</code></pre></div></div>
+<h3 id="how-to-read-them">
+  
+  
+    <a href="#how-to-read-them" class="anchor-heading" aria-labelledby="how-to-read-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to read them
+  
+  
+</h3>
+    
+
+<ul>
+  <li><strong>A lane is a role.</strong> Every lane maps to an actor in
+<a href="https://github.com/litlfred/folio-assistant/tree/main/.claude/skills/actors"><code class="language-plaintext highlighter-rouge">.claude/skills/actors/</code></a> —
+see <a href="#who-is-who">Who is who</a>.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">[skill-name]</code> under an activity</strong> is the folio-assistant skill that
+implements it. The same reference is carried machine-readably as a
+<code class="language-plaintext highlighter-rouge">&lt;folio:skill ref="…"/&gt;</code> extension element on the BPMN activity.</li>
+  <li><strong>The “Work plan — beans” lane</strong> is the shared to-do store. Steps in that
+lane read and write <code class="language-plaintext highlighter-rouge">.beans/</code>, and are marked <code class="language-plaintext highlighter-rouge">&lt;folio:bean store=".beans/"/&gt;</code>
+in the source.</li>
+  <li><strong>A thick-bordered box is a call activity</strong> — it expands into another diagram
+on this page.</li>
+</ul><hr />
+<h2 id="editing-and-the-hci-validation-gate">
+  
+  
+    <a href="#editing-and-the-hci-validation-gate" class="anchor-heading" aria-labelledby="editing-and-the-hci-validation-gate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Editing and the HCI validation gate
+  
+  
+</h2>
+    
+
+<p>This is the diagram that matters most day to day: <strong>one proposed change to one
+content block</strong>.</p>
+
+<div class="bpmn-figure">
+  <img src="assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram: an editor describes a change, an authoring agent drafts it, the proposed change fans out through mechanical and non-mechanical validation, the findings are shown to the editor, and only an accepted change is committed to the corpus." />
+</div>
+
+<p><a href="/folio-assistant/workflows/editing-hci-validation.bpmn" class="btn btn-outline">Open the BPMN source</a></p>
+<h3 id="the-one-rule-this-diagram-exists-to-state">
+  
+  
+    <a href="#the-one-rule-this-diagram-exists-to-state" class="anchor-heading" aria-labelledby="the-one-rule-this-diagram-exists-to-state"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The one rule this diagram exists to state
+  
+  
+</h3>
+    
+
+<p><strong>Nothing reaches the corpus before the editor has seen the findings.</strong> The
+authoring agent produces a <em>proposed</em> change, not a commit. That proposal fans
+out through the HCI validation pipeline, the results are collated into one
+report, and the editor decides — accept, revise, or discard. The <code class="language-plaintext highlighter-rouge">Commit into
+the corpus</code> activity sits <em>after</em> that decision, in its own lane, and is the
+only step that writes content.</p>
+<h3 id="mechanical-vs-non-mechanical-validation">
+  
+  
+    <a href="#mechanical-vs-non-mechanical-validation" class="anchor-heading" aria-labelledby="mechanical-vs-non-mechanical-validation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mechanical vs non-mechanical validation
+  
+  
+</h3>
+    
+
+<p>The parallel gateway splits the pipeline in two, and the split is the point:</p>
+
+<ul>
+  <li><strong>Mechanical validation</strong> — anything a machine can settle on its own, with a
+reproducible verdict: block schema and constraint rules, label prefixes,
+syntax, spelling, cross-references and citation resolution, Lean build and
+proof status, LaTeX compilation, FHIR/SUSHI validation, QA axes. No
+judgement, no negotiation; it passes or it does not.</li>
+  <li><strong>Non-mechanical validation</strong> — everything that needs judgement: is the claim
+accurate, does the prose keep the folio’s voice, does the change actually say
+what the editor meant. A <strong>review agent</strong> handles the routine cases; anything
+turning on clinical or scientific judgement escalates to a <strong>human reviewer or
+SME</strong>. Both branches are the <em>same</em> stage of the pipeline — the reviewer being
+a person or an agent changes who answers, not where the answer goes.</li>
+</ul>
+
+<p>Both branches must report before the join. A green mechanical run does not
+excuse a missing review, and a clean review does not excuse a red build.</p>
+<h3 id="activities-and-the-skills-that-implement-them">
+  
+  
+    <a href="#activities-and-the-skills-that-implement-them" class="anchor-heading" aria-labelledby="activities-and-the-skills-that-implement-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Activities and the skills that implement them
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Activity</th>
+      <th>Lane</th>
+      <th>Skill</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Describe the intended change</td>
+      <td>Editor / author</td>
+      <td>— (human)</td>
+    </tr>
+    <tr>
+      <td>Claim or open the bean</td>
+      <td>Work plan</td>
+      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+    </tr>
+    <tr>
+      <td>Draft the block edit</td>
+      <td>Authoring agent</td>
+      <td><a href="reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
+    </tr>
+    <tr>
+      <td>Schema and constraint checks</td>
+      <td>Mechanical validation</td>
+      <td><a href="reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
+    </tr>
+    <tr>
+      <td>Syntax, spelling and links</td>
+      <td>Mechanical validation</td>
+      <td><a href="reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
+    </tr>
+    <tr>
+      <td>Build and QA gates</td>
+      <td>Mechanical validation</td>
+      <td><a href="reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a></td>
+    </tr>
+    <tr>
+      <td>Agent review of the change</td>
+      <td>Non-mechanical validation</td>
+      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+    </tr>
+    <tr>
+      <td>Human / SME review</td>
+      <td>Non-mechanical validation</td>
+      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+    </tr>
+    <tr>
+      <td>Collate findings into a report</td>
+      <td>HCI validation pipeline</td>
+      <td>— (pipeline)</td>
+    </tr>
+    <tr>
+      <td>Log findings on the bean</td>
+      <td>Work plan</td>
+      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+    </tr>
+    <tr>
+      <td>Review the findings</td>
+      <td>Editor / author</td>
+      <td>— (human — this is the gate)</td>
+    </tr>
+    <tr>
+      <td>Revise the proposed change</td>
+      <td>Authoring agent</td>
+      <td><a href="reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
+    </tr>
+    <tr>
+      <td>Commit into the corpus</td>
+      <td>Corpus</td>
+      <td>— (subject to the <code class="language-plaintext highlighter-rouge">commit-hygiene</code> requirement)</td>
+    </tr>
+    <tr>
+      <td>Resolve or re-open the bean</td>
+      <td>Work plan</td>
+      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The domain-specific checks hang off <code class="language-plaintext highlighter-rouge">content-validate</code> / <code class="language-plaintext highlighter-rouge">content-test</code> by
+content type:
+<a href="reference/skills/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a> and
+<a href="reference/skills/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a> for papers,
+<a href="reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a> and
+<a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a> for IGs,
+<a href="reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a> for rendering.</p><hr />
+<h2 id="from-corpus-to-published-folio">
+  
+  
+    <a href="#from-corpus-to-published-folio" class="anchor-heading" aria-labelledby="from-corpus-to-published-folio"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> From corpus to published folio
+  
+  
+</h2>
+    
+
+<p>The corpus is not the publication. A <strong>draft</strong> is built from it, reviewed as a
+whole by the review team, and only then released.</p>
+
+<div class="bpmn-figure">
+  <img src="assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: the corpus is built into a draft publication, QA gates run, the publication manager circulates it, the review team and SMEs review in parallel, change requests become beans that re-enter editing, and an approved draft is authorised by the programme manager and published." />
+</div>
+
+<p><a href="/folio-assistant/workflows/draft-to-publication.bpmn" class="btn btn-outline">Open the BPMN source</a></p>
+
+<p>Three things to note:</p>
+
+<ol>
+  <li><strong>A red draft is fixed in the editing process, not in the artifact.</strong> The
+<code class="language-plaintext highlighter-rouge">no</code> branch off <code class="language-plaintext highlighter-rouge">Draft QA green?</code> goes back through the editing call
+activity — which means back through the HCI validation gate. Nobody patches
+a built PDF or a generated IG.</li>
+  <li><strong>Review is parallel, and both halves must land.</strong> The review team (content
+reviewer, QC reviewer, technical officer) reviews the draft as a publication;
+the clinical or scientific SMEs sign off on the domain content. The join
+waits for both.</li>
+  <li><strong>Change requests become beans.</strong> A <code class="language-plaintext highlighter-rouge">changes requested</code> outcome does not
+evaporate into a review thread — each request is opened as a bean, so
+whoever picks the work up next (human or agent) sees exactly what review
+asked for.</li>
+</ol>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Activity</th>
+      <th>Lane</th>
+      <th>Skill</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Open or claim the release bean</td>
+      <td>Work plan</td>
+      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+    </tr>
+    <tr>
+      <td>Build the draft publication</td>
+      <td>Corpus + build pipeline</td>
+      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
+    </tr>
+    <tr>
+      <td>Run publication QA gates</td>
+      <td>Corpus + build pipeline</td>
+      <td><a href="reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a> · <a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a></td>
+    </tr>
+    <tr>
+      <td>Editing and HCI validation</td>
+      <td>Editors + authoring agents</td>
+      <td>call activity → <a href="#editing-and-the-hci-validation-gate">diagram 3</a></td>
+    </tr>
+    <tr>
+      <td>Circulate the draft</td>
+      <td>Publication manager</td>
+      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+    </tr>
+    <tr>
+      <td>Review the draft publication</td>
+      <td>Review team</td>
+      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+    </tr>
+    <tr>
+      <td>Clinical / scientific sign-off</td>
+      <td>SMEs</td>
+      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+    </tr>
+    <tr>
+      <td>Open beans for the change requests</td>
+      <td>Work plan</td>
+      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a> · <a href="reference/skills/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a></td>
+    </tr>
+    <tr>
+      <td>Authorise the release</td>
+      <td>Programme manager</td>
+      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
+    </tr>
+    <tr>
+      <td>Version, tag and publish</td>
+      <td>Publication manager</td>
+      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a> · <a href="reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
+    </tr>
+    <tr>
+      <td>Close the release beans</td>
+      <td>Work plan</td>
+      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>This diagram implements the <code class="language-plaintext highlighter-rouge">req:content-lifecycle</code> phase gates —
+<code class="language-plaintext highlighter-rouge">validate-before-review</code>, <code class="language-plaintext highlighter-rouge">review-before-test</code>, <code class="language-plaintext highlighter-rouge">test-before-publish</code>,
+<code class="language-plaintext highlighter-rouge">publish-authorized</code> — see
+<a href="https://github.com/litlfred/folio-assistant/blob/main/.claude/skills/requirements/content-lifecycle.json"><code class="language-plaintext highlighter-rouge">.claude/skills/requirements/content-lifecycle.json</code></a>.</p><hr />
+<h2 id="content-lifecycle-overview">
+  
+  
+    <a href="#content-lifecycle-overview" class="anchor-heading" aria-labelledby="content-lifecycle-overview"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content lifecycle overview
+  
+  
+</h2>
+    
+
+<p>One cycle of a folio, plan to retire. Both diagrams above appear here as call
+activities.</p>
+
+<div class="bpmn-figure">
+  <img src="assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs, integration test and QA sweep, draft-review-publish, feedback is triaged and filed as beans, then either another cycle or retirement." />
+</div>
+
+<p><a href="/folio-assistant/workflows/content-lifecycle.bpmn" class="btn btn-outline">Open the BPMN source</a></p>
+
+<p>This is the same lifecycle as the linear
+<a href="content-types.html#the-content-lifecycle">plan → author → validate → review → test → publish → feedback → retire</a>
+strip, with the actors and the loops made explicit. Note that
+<code class="language-plaintext highlighter-rouge">Editing and HCI validation</code> runs <strong>once per proposed change</strong>, not once per
+cycle — the linear strip flattens that.</p><hr />
+<h2 id="the-work-plan--tasks-as-beans">
+  
+  
+    <a href="#the-work-plan--tasks-as-beans" class="anchor-heading" aria-labelledby="the-work-plan--tasks-as-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The work plan — tasks as beans
+  
+  
+</h2>
+    
+
+<p>Every diagram has a <strong>Work plan</strong> lane, and it is not decoration. Editing work
+is tracked as <strong>beans</strong> (<a href="https://github.com/hmans/beans">hmans/beans</a>) in a
+committed <code class="language-plaintext highlighter-rouge">.beans/</code> directory, which makes it the one place where a human and
+an agent see the same answer to <em>what is done, and what is next</em>.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Where in the workflow</th>
+      <th>What happens to the work plan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Plan is agreed</td>
+      <td>The plan is seeded as beans</td>
+    </tr>
+    <tr>
+      <td>An edit starts</td>
+      <td>The bean is <strong>claimed</strong> (<code class="language-plaintext highlighter-rouge">--status in-progress</code>) before any drafting</td>
+    </tr>
+    <tr>
+      <td>Validation reports</td>
+      <td>Findings are appended to the bean</td>
+    </tr>
+    <tr>
+      <td>The change is committed</td>
+      <td>The bean is resolved — or left open with what is still outstanding</td>
+    </tr>
+    <tr>
+      <td>Review requests changes</td>
+      <td>Each request is opened as its own bean</td>
+    </tr>
+    <tr>
+      <td>A release ships</td>
+      <td>Shipped work is closed; what slipped stays open into the next cycle</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Why it is modelled as a lane rather than a note:</p>
+
+<ul>
+  <li><strong>It is shared state, not session state.</strong> <code class="language-plaintext highlighter-rouge">.beans/</code> is committed, so the plan
+survives a resumed session and is visible to sibling agents working other
+branches. An agent’s ephemeral in-memory to-do list is not.</li>
+  <li><strong>Claiming is how two workers avoid the same item.</strong> Claim before you work,
+and never resolve someone else’s bean.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">beans create</code> is not idempotent.</strong> Check for an existing bean by exact
+title before creating one — the guard, and the incident that motivates it,
+are in
+<a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a>.</li>
+  <li><strong>Beans are not sidecars.</strong> Machine-generated queues (QA <code class="language-plaintext highlighter-rouge">*.qa.json</code>, witness
+files, watcher queues) stay bulk JSON; they never become beans.</li>
+</ul><hr />
+<h2 id="who-is-who">
+  
+  
+    <a href="#who-is-who" class="anchor-heading" aria-labelledby="who-is-who"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Who is who
+  
+  
+</h2>
+    
+
+<p>The roles in the lanes, and the actor definition each one maps to. Roles
+<strong>inherit</strong> (<code class="language-plaintext highlighter-rouge">viewer</code> → <code class="language-plaintext highlighter-rouge">reviewer</code> → <code class="language-plaintext highlighter-rouge">author</code> → <code class="language-plaintext highlighter-rouge">admin</code>) and a role’s
+capabilities bound what the agent may do on its behalf (RBAC,
+<code class="language-plaintext highlighter-rouge">src/core/rbac.ts</code>).</p>
+<h3 id="people">
+  
+  
+    <a href="#people" class="anchor-heading" aria-labelledby="people"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> People
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>In the diagrams</th>
+      <th>Actor</th>
+      <th>Authority</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Editor / author</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">author</code></td>
+      <td>Creates and modifies content. Decides accept / revise / discard at the HCI gate. Inherits <code class="language-plaintext highlighter-rouge">reviewer</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Reviewer</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">reviewer</code></td>
+      <td>Views content and leaves review comments. <strong>Cannot make direct changes.</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Human / SME reviewer</strong> (editing)</td>
+      <td><code class="language-plaintext highlighter-rouge">clinical-sme</code></td>
+      <td>Domain ground truth. Answers the judgement calls a review agent escalates.</td>
+    </tr>
+    <tr>
+      <td><strong>Review team</strong> (draft)</td>
+      <td><code class="language-plaintext highlighter-rouge">content-reviewer</code></td>
+      <td>Formal approval and phase-gate sign-off — the approval authority on a draft.</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><code class="language-plaintext highlighter-rouge">qc-reviewer</code></td>
+      <td>Publication-readiness QA across layers; runs the QA reports.</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><code class="language-plaintext highlighter-rouge">technical-officer</code></td>
+      <td>Programme-area coordination and first-pass review.</td>
+    </tr>
+    <tr>
+      <td><strong>Publication manager</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">publication-manager</code></td>
+      <td>Builds, versions, tags, deploys. Does not authorise the release.</td>
+    </tr>
+    <tr>
+      <td><strong>Programme manager</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">programme-manager</code></td>
+      <td>Scope, team, timeline, governance — and <strong>release authorisation</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong>Admin</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">admin</code></td>
+      <td>Full administrative access: roles, settings, all content.</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Domain-authoring roles that appear inside <code class="language-plaintext highlighter-rouge">content-author</code> rather than as their
+own lane: <code class="language-plaintext highlighter-rouge">business-analyst</code> (L2 DAK), <code class="language-plaintext highlighter-rouge">fhir-modeller</code> (L3 FHIR),
+<code class="language-plaintext highlighter-rouge">terminologist</code> (code systems and value sets), <code class="language-plaintext highlighter-rouge">translator</code> (localisation).</p>
+<h3 id="agents-and-system-actors">
+  
+  
+    <a href="#agents-and-system-actors" class="anchor-heading" aria-labelledby="agents-and-system-actors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agents and system actors
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>In the diagrams</th>
+      <th>Actor</th>
+      <th>What it does — and what it cannot do</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Authoring agent</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">authoring-agent</code></td>
+      <td>Drafts and revises a <strong>proposed</strong> change. Has <code class="language-plaintext highlighter-rouge">content-authoring</code>; <strong>does not commit</strong> — its output goes to the editor through the validation gate.</td>
+    </tr>
+    <tr>
+      <td><strong>Review agent</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">review-agent</code></td>
+      <td>Non-mechanical validation: accuracy, voice, exposition. Has <code class="language-plaintext highlighter-rouge">review-comments</code> only — it reports findings, it does not approve.</td>
+    </tr>
+    <tr>
+      <td><strong>Mechanical validation</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-mcp</code></td>
+      <td>Lean 4 proof checking and diagnostics over MCP.</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><code class="language-plaintext highlighter-rouge">ig-publisher-service</code></td>
+      <td>FHIR IG Publisher build and QA reporting.</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The distinction the diagrams enforce: <strong>an agent can propose and can report, but
+approval and commit are a person’s.</strong> A review agent’s finding and an SME’s
+finding arrive at the same place in the pipeline — but neither of them decides;
+the editor does, and the release is authorised by the programme manager.</p>
+
+<p>For the full role list, their capabilities, and how a user is mapped to a role,
+see <a href="skills.html#roles-actors">Skills &amp; roles</a>.</p><hr />
+<h2 id="changing-these-diagrams">
+  
+  
+    <a href="#changing-these-diagrams" class="anchor-heading" aria-labelledby="changing-these-diagrams"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Changing these diagrams
+  
+  
+</h2>
+    
+
+<p>The <code class="language-plaintext highlighter-rouge">.bpmn</code> files are the source of truth.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. edit docs/workflows/&lt;diagram&gt;.bpmn — in a modeler, or by hand</span>
+<span class="c"># 2. regenerate the SVGs</span>
+bun run render:bpmn
+<span class="c"># 3. or, in CI, just check they are not stale</span>
+bun run render:bpmn:check
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">render:bpmn</code> renders each <code class="language-plaintext highlighter-rouge">.bpmn</code> with <a href="https://bpmn.io/toolkit/bpmn-js/">bpmn-js</a>
+in headless Chromium and writes <code class="language-plaintext highlighter-rouge">docs/assets/img/workflows/&lt;diagram&gt;.svg</code>. If
+the sandbox ships a Chromium that does not match the pinned Playwright build,
+point at it with <code class="language-plaintext highlighter-rouge">CHROMIUM_PATH=/path/to/chrome</code>.</p>
+
+<p>When you add an activity, add its <code class="language-plaintext highlighter-rouge">&lt;folio:skill ref="…"/&gt;</code> extension (and
+<code class="language-plaintext highlighter-rouge">&lt;folio:bean store=".beans/"/&gt;</code> if it touches the work plan) and the matching
+row in the tables above — the diagram and the skill list drifting apart is the
+failure this page exists to prevent.</p>
+<h3 id="which-diagrams-are-bpmn-and-which-are-not">
+  
+  
+    <a href="#which-diagrams-are-bpmn-and-which-are-not" class="anchor-heading" aria-labelledby="which-diagrams-are-bpmn-and-which-are-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which diagrams are BPMN, and which are not
+  
+  
+</h3>
+    
+
+<p>Every <strong>process</strong> in the docs is BPMN. The diagrams that remain Mermaid are not
+processes, and BPMN would be the wrong notation for them — a pool with lanes
+implies actors performing activities over time, which none of these have:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Diagram</th>
+      <th>Notation</th>
+      <th>Why</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">README.md</code>, <a href="index.html">home</a> — “What it does”</td>
+      <td>Mermaid</td>
+      <td>Component / data-flow map of the platform, not a sequence of activities</td>
+    </tr>
+    <tr>
+      <td><a href="architecture.html">Architecture</a> — server and adapters</td>
+      <td>Mermaid</td>
+      <td>Deployment and module structure</td>
+    </tr>
+    <tr>
+      <td><a href="skills.html">Skills &amp; roles</a> — how the five concepts compose</td>
+      <td>Mermaid</td>
+      <td>Conceptual composition, no time axis</td>
+    </tr>
+    <tr>
+      <td><a href="skills.html">Skills &amp; roles</a> — <code class="language-plaintext highlighter-rouge">viewer → reviewer → author → admin</code></td>
+      <td>Mermaid</td>
+      <td>An inheritance lattice, not a flow</td>
+    </tr>
+    <tr>
+      <td><a href="index.html">Home</a> — documentation map</td>
+      <td>Mermaid</td>
+      <td>Navigation graph</td>
+    </tr>
+    <tr>
+      <td><a href="guides/new-content-type.html">Adding a content type</a> — “What you provide”</td>
+      <td>Mermaid</td>
+      <td>What you hand over, not what you do</td>
+    </tr>
+    <tr>
+      <td><a href="guides/writing-a-paper.html">Writing a paper</a> — the Lean session</td>
+      <td>Mermaid <code class="language-plaintext highlighter-rouge">sequenceDiagram</code></td>
+      <td>An interaction transcript between you, the assistant and the MCP server. BPMN’s equivalent — a collaboration with message flows — would add ceremony without adding meaning</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>If you add a diagram that <em>does</em> have actors, activities and a control flow,
+it belongs in <code class="language-plaintext highlighter-rouge">docs/workflows/</code> as BPMN, not in a Mermaid fence.</p><hr />
+<h2 id="see-also">
+  
+  
+    <a href="#see-also" class="anchor-heading" aria-labelledby="see-also"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> See also
+  
+  
+</h2>
+    
+
+<ul>
+  <li><a href="content-types.html">Content types</a> — the linear lifecycle and what each type produces</li>
+  <li><a href="skills.html">Skills &amp; roles</a> — every skill and role, and how they compose with the LLM</li>
+  <li><a href="reference/skills/">Skill schema reference</a> — typed input/output per skill</li>
+  <li><a href="guides/agent-onboarding.html">Agent onboarding</a> — orientation for an agent dropped into a folio</li>
+</ul>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

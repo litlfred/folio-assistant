@@ -1,0 +1,786 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(21)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(21) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(21) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(21) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>/watch | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="/watch" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/watch.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/watch.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="/watch" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"/watch","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/watch.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>/watch</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/watch.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/watch.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="watch--background-watcher-with-integration-check">
+  
+  
+    <a href="#watch--background-watcher-with-integration-check" class="anchor-heading" aria-labelledby="watch--background-watcher-with-integration-check"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> /watch — background watcher with integration check
+  
+  
+</h1>
+    
+
+<p>A unified watcher that handles <strong>branches</strong> (poll <code class="language-plaintext highlighter-rouge">git ls-remote</code>) and
+<strong>pull requests</strong> (subscribe via the GitHub MCP).  On every event,
+walk the §3 integration checklist and either act, defer, or flag the
+user.</p>
+<h2 id="invocation">
+  
+  
+    <a href="#invocation" class="anchor-heading" aria-labelledby="invocation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Invocation
+  
+  
+</h2>
+    
+
+<p>The user’s request maps to one of three modes; pick the right one
+without asking:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>user phrase</th>
+      <th>mode</th>
+      <th>how</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>“watch main” / “watch upstream” / no target</td>
+      <td><strong>branch:main</strong></td>
+      <td>poll <code class="language-plaintext highlighter-rouge">origin/main</code> every 5 min</td>
+    </tr>
+    <tr>
+      <td>“watch PR 516” / “watch the PR” / “watch this PR”</td>
+      <td><strong>pr:N</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">mcp__github__subscribe_pr_activity</code> (event-driven)</td>
+    </tr>
+    <tr>
+      <td>“watch branch foo/bar” / “watch claude/x-y”</td>
+      <td><strong>branch:foo/bar</strong></td>
+      <td>poll <code class="language-plaintext highlighter-rouge">origin/foo/bar</code> every 5 min</td>
+    </tr>
+    <tr>
+      <td>“watch foo/bar PR 42”</td>
+      <td><strong>pr:42</strong> + maybe <strong>branch</strong></td>
+      <td>subscribe + poll</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>If ambiguous, default to <strong>branch:main</strong>.</p>
+<h2 id="1--stash-the-baseline">
+  
+  
+    <a href="#1--stash-the-baseline" class="anchor-heading" aria-labelledby="1--stash-the-baseline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1.  Stash the baseline
+  
+  
+</h2>
+    
+
+<p>Before arming anything, record the current state so the §3 review
+compares cleanly:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Explicit refspec, ALWAYS. `git fetch origin &lt;BRANCH&gt;` writes FETCH_HEAD and</span>
+<span class="c"># refreshes refs/remotes/origin/&lt;BRANCH&gt; only when the clone's configured</span>
+<span class="c"># refspec covers it — and exits 0 either way. A baseline read from a tracking</span>
+<span class="c"># ref that was never updated is not a baseline.</span>
+git fetch origin <span class="s2">"+refs/heads/&lt;BRANCH&gt;:refs/remotes/origin/&lt;BRANCH&gt;"</span> 2&gt;/dev/null
+<span class="c"># Sanitize branch name for use in a file path: replace `/` with `_`</span>
+<span class="c"># (e.g. `feature/foo` → `feature_foo`).  Without this, branches with</span>
+<span class="c"># slashes silently land in non-existent directory trees.</span>
+<span class="nv">SAFE_BRANCH</span><span class="o">=</span><span class="si">$(</span><span class="nb">printf</span> <span class="s1">'%s'</span> <span class="s2">"&lt;BRANCH&gt;"</span> | <span class="nb">tr</span> <span class="s1">'/'</span> <span class="s1">'_'</span><span class="si">)</span>
+git rev-parse <span class="s2">"origin/&lt;BRANCH&gt;"</span> <span class="o">&gt;</span> <span class="s2">"/tmp/_watch_baseline_</span><span class="k">${</span><span class="nv">SAFE_BRANCH</span><span class="k">}</span><span class="s2">.sha"</span>
+</code></pre></div></div>
+
+<p>For PR mode, instead capture the latest PR head SHA:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mcp__github__pull_request_read</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">"get"</span><span class="p">,</span> <span class="n">pullNumber</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">owner</span><span class="o">=</span><span class="p">...,</span> <span class="n">repo</span><span class="o">=</span><span class="p">...)</span>
+<span class="c1"># stash result["head"]["sha"]
+</span></code></pre></div></div>
+<h2 id="2--arm-the-watcher">
+  
+  
+    <a href="#2--arm-the-watcher" class="anchor-heading" aria-labelledby="2--arm-the-watcher"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.  Arm the watcher
+  
+  
+</h2>
+    
+<h3 id="branch-mode--monitor-with-poll-loop">
+  
+  
+    <a href="#branch-mode--monitor-with-poll-loop" class="anchor-heading" aria-labelledby="branch-mode--monitor-with-poll-loop"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Branch mode — Monitor with poll loop
+  
+  
+</h3>
+    
+
+<p>Use the <code class="language-plaintext highlighter-rouge">Monitor</code> tool, <code class="language-plaintext highlighter-rouge">persistent: true</code>, 5-minute poll:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Monitor:
+  description: "origin/&lt;BRANCH&gt; new commits"
+  persistent: true
+  command: |
+    BRANCH="&lt;BRANCH&gt;"
+    last=$(git ls-remote origin "$BRANCH" | cut -f1)
+    while true; do
+      cur=$(git ls-remote origin "$BRANCH" 2&gt;/dev/null | cut -f1)
+      if [ -n "$cur" ] &amp;&amp; [ "$cur" != "$last" ]; then
+        git fetch origin "$BRANCH" 2&gt;/dev/null
+        # one line per new commit, oldest first
+        git log --reverse --oneline "$last..$cur" | head -20
+        last=$cur
+      fi
+      sleep 300
+    done
+</code></pre></div></div>
+
+<p>Each new commit becomes one notification line.</p>
+<h3 id="pr-mode--github-mcp-subscription">
+  
+  
+    <a href="#pr-mode--github-mcp-subscription" class="anchor-heading" aria-labelledby="pr-mode--github-mcp-subscription"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> PR mode — GitHub MCP subscription
+  
+  
+</h3>
+    
+
+<p>Use <code class="language-plaintext highlighter-rouge">mcp__github__subscribe_pr_activity</code> directly.  Already
+event-driven — no polling needed.  The harness delivers
+<code class="language-plaintext highlighter-rouge">&lt;github-webhook-activity&gt;</code> events for comments, CI status, reviews,
+and merges.  See the existing PR-subscription guidance in the system
+prompt for handling.</p>
+<h2 id="3--per-event-integration-checklist">
+  
+  
+    <a href="#3--per-event-integration-checklist" class="anchor-heading" aria-labelledby="3--per-event-integration-checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.  Per-event integration checklist
+  
+  
+</h2>
+    
+
+<p>For every notification (branch commit or PR event), run through these
+<strong>four questions in order</strong> — stop at the first “no” or “no action”:</p>
+<h3 id="q1--should-we-integrate">
+  
+  
+    <a href="#q1--should-we-integrate" class="anchor-heading" aria-labelledby="q1--should-we-integrate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Q1 — Should we integrate?
+  
+  
+</h3>
+    
+
+<ul>
+  <li>Is the change on a file we touch in this branch?  Quick check:
+<code class="language-plaintext highlighter-rouge">git diff --name-only HEAD &lt;NEW_SHA&gt; -- $(git diff --name-only $(git merge-base HEAD origin/main)..HEAD)</code>.</li>
+  <li>If <strong>yes</strong> and the change is small, rebase / pull now.</li>
+  <li>If <strong>yes</strong> but large, defer until the immediate task ships and add
+a TODO.</li>
+  <li>If <strong>no overlap</strong>, skip Q2/Q3/Q4 and acknowledge with a one-liner.</li>
+</ul>
+<h3 id="q2--does-it-conflict">
+  
+  
+    <a href="#q2--does-it-conflict" class="anchor-heading" aria-labelledby="q2--does-it-conflict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Q2 — Does it conflict?
+  
+  
+</h3>
+    
+
+<ul>
+  <li>
+    <p>Try a dry rebase in a fresh worktree.  Use <code class="language-plaintext highlighter-rouge">mktemp -d</code> so the
+path is unique (avoids collisions with previous failed runs and
+with parallel <code class="language-plaintext highlighter-rouge">/watch</code> invocations) and clean up unconditionally
+via <code class="language-plaintext highlighter-rouge">trap</code>:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PROBE</span><span class="o">=</span><span class="si">$(</span><span class="nb">mktemp</span> <span class="nt">-d</span> /tmp/rebase-probe.XXXXXX<span class="si">)</span>
+<span class="nb">trap</span> <span class="s1">'git worktree remove --force "$PROBE" 2&gt;/dev/null; rm -rf "$PROBE"'</span> EXIT
+git worktree add <span class="s2">"</span><span class="nv">$PROBE</span><span class="s2">"</span> HEAD <span class="o">&gt;</span>/dev/null
+<span class="o">(</span> <span class="nb">cd</span> <span class="s2">"</span><span class="nv">$PROBE</span><span class="s2">"</span> <span class="o">&amp;&amp;</span> git rebase <span class="s2">"origin/&lt;BRANCH&gt;"</span> <span class="o">)</span>
+<span class="nv">status</span><span class="o">=</span><span class="nv">$?</span>
+<span class="c"># trap fires on EXIT</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Conflicts (<code class="language-plaintext highlighter-rouge">status != 0</code>) → first attempt <strong>auto-resolve</strong> for
+the recurring drift-conflict pattern (see §2a below); only flag
+the user if auto-resolve fails or the conflict is non-trivial
+(overlapping logic edits, schema rewrites, etc.).</p>
+  </li>
+</ul>
+<h4 id="2a--auto-resolve-drift-conflict-pattern-ci-regenerated-artifacts">
+  
+  
+    <a href="#2a--auto-resolve-drift-conflict-pattern-ci-regenerated-artifacts" class="anchor-heading" aria-labelledby="2a--auto-resolve-drift-conflict-pattern-ci-regenerated-artifacts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §2a — Auto-resolve drift-conflict pattern (CI-regenerated artifacts)
+  
+  
+</h4>
+    
+
+<p>Some artifacts (<code class="language-plaintext highlighter-rouge">*.witness.json</code> sidecars, generated caches, derived
+reference files) are routinely regenerated by the CI validate job and
+frequently conflict on rebase against fast-moving <code class="language-plaintext highlighter-rouge">main</code>.</p>
+
+<p>These conflicts are <strong>always</strong> the same shape: our branch’s
+committed artifact was regenerated against an older main; main now
+has a fresher version. Resolution is mechanical: regenerate
+against current main and recommit.</p>
+
+<p>The recipe (run on the <strong>real</strong> branch, not the probe worktree):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># When `git rebase origin/&lt;BRANCH&gt;` halts with a regenerated artifact</span>
+<span class="c"># in the conflict list, do NOT hand-merge the JSON. Instead:</span>
+
+<span class="c"># 1. If the conflicting commit was a pure regen of these generated</span>
+<span class="c">#    artifacts (no other changes), skip it — main already has the regen:</span>
+git diff <span class="nt">--name-only</span> <span class="nt">--cached</span> | <span class="nb">grep</span> <span class="nt">-qE</span> <span class="s1">'\.witness\.json$'</span> <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  <span class="o">!</span> git diff <span class="nt">--name-only</span> <span class="nt">--cached</span> | <span class="nb">grep</span> <span class="nt">-vE</span> <span class="s1">'\.witness\.json$'</span> <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  git rebase <span class="nt">--skip</span>
+
+<span class="c"># 2. Otherwise, abort the rebase, regenerate the artifacts</span>
+<span class="c">#    on the rebased branch, then re-rebase. This produces a clean</span>
+<span class="c">#    apply because the regenerated artifact now matches main.</span>
+git rebase <span class="nt">--abort</span>
+git rebase origin/&lt;BRANCH&gt;   <span class="c"># re-rebase, skipping bad commits as above</span>
+<span class="c"># regenerate the affected artifacts via the project's generator(s), e.g.</span>
+bun run validate &lt;paper&gt;
+git add &lt;regenerated-artifact-paths&gt;
+git commit <span class="nt">-m</span> <span class="s2">"Regen generated artifacts post-rebase against latest main"</span>
+git push <span class="nt">--force-with-lease</span>
+</code></pre></div></div>
+
+<p>Only flag the user if:</p>
+
+<ul>
+  <li>The conflict is in a <strong>source file</strong> (<code class="language-plaintext highlighter-rouge">.py</code>, <code class="language-plaintext highlighter-rouge">.lean</code>, <code class="language-plaintext highlighter-rouge">.ts</code>,
+<code class="language-plaintext highlighter-rouge">.md</code>) — those are real semantic conflicts that need human
+judgment.</li>
+  <li>The conflict is in a generated artifact whose regenerated content
+differs <strong>substantively</strong> from a simple drift (e.g. a numerical
+value changed, not just a timestamp/hash) — that means a CI-run
+generator on main produced different output, which deserves a
+closer look before blindly accepting.</li>
+  <li>The auto-resolve recipe itself fails (regen script errors out,
+push rejected for non-fast-forward reasons, etc.).</li>
+</ul>
+
+<p>For generated artifacts specifically: if upstream regenerated files
+our branch also touched, prefer <strong>rebase-and-regenerate</strong> over
+hand-merging.  Drift is structural; merging is fragile.</p>
+<h3 id="q3--can-we-reuse">
+  
+  
+    <a href="#q3--can-we-reuse" class="anchor-heading" aria-labelledby="q3--can-we-reuse"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Q3 — Can we reuse?
+  
+  
+</h3>
+    
+
+<p>Apply the four reuse questions from <code class="language-plaintext highlighter-rouge">prepare-merge.md §2a</code>:</p>
+
+<ol>
+  <li><strong>Definitions / lemmas / helpers / witnesses</strong> — does the new
+commit add something our branch is duplicating, paraphrasing, or
+reinventing?  Replace with <code class="language-plaintext highlighter-rouge">uses[]</code> / a citation and delete the
+local stand-in.</li>
+  <li><strong>Proofs</strong> — does a new lemma or tactic discharge a hypothesis,
+collapse a chain, or close a gap?  Apply via the project’s
+proof-simplification / build-fix skills.</li>
+  <li><strong>Exposition</strong> — does our <code class="language-plaintext highlighter-rouge">.md</code> re-derive what main now defines
+upstream?  Replace with a forward-reference; route through the
+project’s accuracy / readability skills.</li>
+  <li><strong>Computation</strong> — does a new script or witness supersede a
+hand-rolled loop or stale witness in our branch?  Swap in and
+regenerate the artifact. (See §2a for the routine drift-conflict
+pattern.)
+    <ul>
+      <li>When the upstream commit adds or modifies a <code class="language-plaintext highlighter-rouge">prop:</code> / <code class="language-plaintext highlighter-rouge">thm:</code> /
+<code class="language-plaintext highlighter-rouge">lem:</code> / <code class="language-plaintext highlighter-rouge">cor:</code> block (or its sibling formalization), delegate to
+the project’s compute-integration watcher to check whether the new
+claim is wired into the production compute chain. Capture the
+verdict here and feed it into Q4.</li>
+    </ul>
+  </li>
+</ol>
+<h3 id="q3a--did-upstream-land-a-new-skill-file">
+  
+  
+    <a href="#q3a--did-upstream-land-a-new-skill-file" class="anchor-heading" aria-labelledby="q3a--did-upstream-land-a-new-skill-file"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Q3a — Did upstream land a new skill file?
+  
+  
+</h3>
+    
+
+<p>For each main-refresh, check whether <code class="language-plaintext highlighter-rouge">.claude/skills/local/*.md</code> (or
+<code class="language-plaintext highlighter-rouge">.claude/skills/&lt;pkg&gt;/*.md</code>) gained a new file between this branch’s
+prior baseline and the new <code class="language-plaintext highlighter-rouge">origin/main</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="nt">--name-only</span> <span class="nt">--diff-filter</span><span class="o">=</span>A <span class="s2">"</span><span class="nv">$LAST_BASE</span><span class="s2">..origin/main"</span> <span class="se">\</span>
+  <span class="nt">--</span> <span class="s1">'.claude/skills/local/*.md'</span> <span class="s1">'.claude/skills/*/*.md'</span>
+</code></pre></div></div>
+
+<p>For each new skill file:</p>
+
+<ol>
+  <li><strong>Read its frontmatter</strong> — extract <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">roles</code>, <code class="language-plaintext highlighter-rouge">description</code>,
+and any <code class="language-plaintext highlighter-rouge">inherits</code> field.</li>
+  <li><strong>Match against branch scope</strong> — does the skill’s description
+overlap with what this branch is doing? Heuristics:
+    <ul>
+      <li>skill description mentions a file kind / domain / pattern
+that appears in this branch’s <code class="language-plaintext highlighter-rouge">git diff origin/main..HEAD
+--name-only</code>, OR</li>
+      <li>skill is a new integration-watcher child (<code class="language-plaintext highlighter-rouge">inherits:
+local/integration-watcher</code>) and your branch is itself an
+integration-watcher PR, OR</li>
+      <li>skill is a content-block QA skill (e.g. <code class="language-plaintext highlighter-rouge">one-voice-*</code>,
+<code class="language-plaintext highlighter-rouge">proof-*</code>, <code class="language-plaintext highlighter-rouge">compute-*</code>) and your branch touches <code class="language-plaintext highlighter-rouge">.md</code> /
+<code class="language-plaintext highlighter-rouge">.ts</code> / <code class="language-plaintext highlighter-rouge">.lean</code> content blocks.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Surface to the user via <code class="language-plaintext highlighter-rouge">AskUserQuestion</code></strong> with the standard
+3-chip pattern:</p>
+
+    <blockquote>
+      <p>New skill <code class="language-plaintext highlighter-rouge">&lt;name&gt;</code> landed on main:</p>
+      <blockquote>
+        <p><code class="language-plaintext highlighter-rouge">&lt;one-line description from frontmatter&gt;</code></p>
+      </blockquote>
+
+      <p>This branch’s scope overlaps because <code class="language-plaintext highlighter-rouge">&lt;one-line match
+rationale + file paths&gt;</code>.</p>
+
+      <p>1) <strong>Adopt now</strong> — invoke the skill on the relevant subset of
+   this branch’s diff before continuing.
+2) <strong>Defer to follow-up branch</strong> — record the decision and
+   note for the next branch; don’t change this branch.
+3) <strong>Not relevant</strong> — record so the watcher doesn’t re-prompt
+   on future main-refreshes.</p>
+    </blockquote>
+  </li>
+  <li><strong>Record the decision</strong> in the watcher’s ledger
+(<code class="language-plaintext highlighter-rouge">.beans/&lt;watcher-name&gt;-ledger.md</code> for integration-watcher
+children, or chat-only for the bare <code class="language-plaintext highlighter-rouge">/watch</code> flow) so subsequent
+main-refreshes don’t re-prompt for the same skill.</li>
+</ol>
+
+<p>This rule applies to <strong>skill files only</strong> (<code class="language-plaintext highlighter-rouge">.claude/skills/local/*.md</code>
+and <code class="language-plaintext highlighter-rouge">.claude/skills/&lt;pkg&gt;/*.md</code>). Skills landing on sibling PRs that
+haven’t merged yet do NOT trigger this check — only <code class="language-plaintext highlighter-rouge">main</code> commits
+count, mirroring the §2 “watch origin/main” scope.</p>
+<h3 id="q4--report-or-act">
+  
+  
+    <a href="#q4--report-or-act" class="anchor-heading" aria-labelledby="q4--report-or-act"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Q4 — Report or act?
+  
+  
+</h3>
+    
+
+<ul>
+  <li><strong>Acted</strong> (made the change):  one-line summary + the new commit SHA.</li>
+  <li><strong>Will act after current task</strong>:  add a TODO with what + why.</li>
+  <li><strong>Skipped</strong>:  one-line reason (“no overlap”, “blocked on $TASK”).</li>
+</ul>
+<h2 id="4--stop-the-watcher">
+  
+  
+    <a href="#4--stop-the-watcher" class="anchor-heading" aria-labelledby="4--stop-the-watcher"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.  Stop the watcher
+  
+  
+</h2>
+    
+
+<p>Stop when the branch ships (PR merged, or you switch branches):</p>
+
+<ul>
+  <li>Branch mode:  call <code class="language-plaintext highlighter-rouge">TaskStop</code> on the Monitor task ID.</li>
+  <li>PR mode:  the harness auto-unsubscribes when the PR merges/closes;
+otherwise call <code class="language-plaintext highlighter-rouge">mcp__github__unsubscribe_pr_activity</code>.</li>
+</ul>
+<h2 id="5--common-upstream-patterns-heuristics">
+  
+  
+    <a href="#5--common-upstream-patterns-heuristics" class="anchor-heading" aria-labelledby="5--common-upstream-patterns-heuristics"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5.  Common upstream patterns (heuristics)
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong>Artifact drift</strong>: upstream regenerated generated artifacts
+(<code class="language-plaintext highlighter-rouge">*.witness.json</code>, caches) while we also modified them →
+rebase-and-regenerate, never hand-merge.</li>
+  <li><strong>Toolchain version bumps</strong>: a dependency/toolchain hash changed →
+check our branch’s toolchain pin aligns before continuing a build.</li>
+  <li><strong>Schema migrations</strong>: if <code class="language-plaintext highlighter-rouge">content/schema/</code> changed, run
+<code class="language-plaintext highlighter-rouge">cd content &amp;&amp; bun run migrate-lean-refs</code> and <code class="language-plaintext highlighter-rouge">bun run validate</code>
+before continuing.</li>
+  <li><strong>Routine review-cycle commits</strong> (Gemini/Copilot fixes on unrelated
+PRs):  almost always Q1 = no overlap = skip with one-liner.</li>
+</ul>
+<h2 id="5b--monitor-timeout-recovery-mandatory-when-re-arming">
+  
+  
+    <a href="#5b--monitor-timeout-recovery-mandatory-when-re-arming" class="anchor-heading" aria-labelledby="5b--monitor-timeout-recovery-mandatory-when-re-arming"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5b.  Monitor-timeout recovery (MANDATORY when re-arming)
+  
+  
+</h2>
+    
+
+<p>Background Monitors time out (<code class="language-plaintext highlighter-rouge">[Monitor timed out — re-arm if needed]</code>).
+<strong>Do not just re-arm and continue</strong> — between the last event and the
+timeout, main may have moved substantially. Mandatory steps on
+timeout-recovery:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Compare the stashed baseline against the WATCHED BRANCH's actual head.</span>
+<span class="c">#</span>
+<span class="c"># This fetched `main` and then measured `origin/&lt;BRANCH&gt;` — a different ref</span>
+<span class="c"># from the one it refreshed. The recovery step that exists to catch what was</span>
+<span class="c"># missed while the watcher was down therefore compared the baseline against a</span>
+<span class="c"># tracking ref nothing had updated, found them equal, and reported 0 missed</span>
+<span class="c"># every time. Fetch the ref you are about to read, with an explicit refspec so</span>
+<span class="c"># the tracking ref is actually written.</span>
+git fetch origin <span class="s2">"+refs/heads/&lt;BRANCH&gt;:refs/remotes/origin/&lt;BRANCH&gt;"</span> 2&gt;/dev/null
+<span class="nv">SAFE</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="s2">"&lt;BRANCH&gt;"</span> | <span class="nb">tr</span> <span class="s1">'/'</span> <span class="s1">'_'</span><span class="si">)</span>
+<span class="nv">LAST</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> /tmp/_watch_baseline_<span class="k">${</span><span class="nv">SAFE</span><span class="k">}</span>.sha 2&gt;/dev/null <span class="o">||</span> <span class="nb">echo</span> <span class="s2">""</span><span class="si">)</span>
+<span class="nv">CUR</span><span class="o">=</span><span class="si">$(</span>git rev-parse origin/&lt;BRANCH&gt;<span class="si">)</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$LAST</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">"</span><span class="nv">$CUR</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+  </span><span class="nv">MISSED</span><span class="o">=</span><span class="si">$(</span>git log <span class="nt">--oneline</span> <span class="s2">"</span><span class="nv">$LAST</span><span class="s2">..</span><span class="nv">$CUR</span><span class="s2">"</span> 2&gt;/dev/null | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span>
+  <span class="nb">echo</span> <span class="s2">"MISSED </span><span class="nv">$MISSED</span><span class="s2"> commits while watcher was down"</span>
+  git log <span class="nt">--oneline</span> <span class="s2">"</span><span class="nv">$LAST</span><span class="s2">..</span><span class="nv">$CUR</span><span class="s2">"</span> | <span class="nb">head</span> <span class="nt">-10</span>
+  <span class="c"># Update baseline AFTER reporting</span>
+  git rev-parse origin/&lt;BRANCH&gt; <span class="o">&gt;</span> /tmp/_watch_baseline_<span class="k">${</span><span class="nv">SAFE</span><span class="k">}</span>.sha
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<p>If <code class="language-plaintext highlighter-rouge">MISSED &gt;= 5</code> OR any missed commit touches a file in your branch’s
+diff, run the §3 integration checklist on the missed range BEFORE
+arming a fresh monitor.</p>
+
+<p>This catches the failure mode where a focused work session (axiom
+discharge sweep, content authoring marathon, witness regeneration
+loop) silently lets main move 10+ commits ahead while the watcher
+is timed out.</p>
+<h2 id="6--output-style">
+  
+  
+    <a href="#6--output-style" class="anchor-heading" aria-labelledby="6--output-style"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6.  Output style
+  
+  
+</h2>
+    
+
+<p>Match user-accessibility note in AGENTS.md:</p>
+
+<ul>
+  <li>One sentence per commit / event by default</li>
+  <li>Numbered choices when integration is non-obvious</li>
+  <li>Run small fixes proactively; flag big ones</li>
+</ul>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

@@ -1,0 +1,913 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(49)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(49) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(49) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(49) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Editor | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Editor" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/editor.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/editor.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Editor" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Editor","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/editor.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Editor</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/editor.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/editor.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="editor-skill">
+  
+  
+    <a href="#editor-skill" class="anchor-heading" aria-labelledby="editor-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Editor Skill
+  
+  
+</h1>
+    
+<h2 id="heavy-proof-discipline-mandatory">
+  
+  
+    <a href="#heavy-proof-discipline-mandatory" class="anchor-heading" aria-labelledby="heavy-proof-discipline-mandatory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Heavy-proof discipline (MANDATORY)
+  
+  
+</h2>
+    
+
+<p>If the project carries a formal-proof layer: whenever you add or modify
+a formal theorem in a content block, you <strong>MUST</strong> also add or update a
+matching <code class="language-plaintext highlighter-rouge">**Proof.**</code> narrative block in the sibling <code class="language-plaintext highlighter-rouge">.md</code> file. See
+<code class="language-plaintext highlighter-rouge">formalizer.md</code> and <code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence.md</code> for the
+canonical format.</p>
+
+<p>Anti-pattern (FORBIDDEN): touching the formal-proof file without
+touching <code class="language-plaintext highlighter-rouge">.md</code>, or vice versa. The formal theorem and the narrative
+proof move together in a single coherent change. A <code class="language-plaintext highlighter-rouge">.md</code> that describes
+the <strong>claim</strong> but omits the <strong>proof</strong> is incomplete — the reader must be
+able to follow the argument from the <code class="language-plaintext highlighter-rouge">.md</code> alone.</p>
+
+<p>For every formal theorem <code class="language-plaintext highlighter-rouge">foo</code> proved in the sibling, the <code class="language-plaintext highlighter-rouge">.md</code> must
+contain:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**Proposition (formal: `foo`).**</span> <span class="nt">&lt;statement&gt;</span>
+<span class="ge">*Proof.*</span> <span class="nt">&lt;narrative</span> <span class="na">sketch</span> <span class="na">citing</span> <span class="na">key</span> <span class="na">lemmas</span> <span class="err">/</span> <span class="na">tactics</span><span class="nt">&gt;</span> $<span class="se">\s</span>quare$
+</code></pre></div></div>
+
+<p>When editing existing blocks, run the <code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code>
+audit to surface any formal theorems without narrative counterparts and
+backfill them.</p>
+<h2 id="role">
+  
+  
+    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
+  
+  
+</h2>
+    
+
+<p>Claude acts as <strong>editor</strong> of the project’s manuscript. The author makes
+the content and creative decisions; the editor coordinates execution.</p>
+<h2 id="session-start-protocol">
+  
+  
+    <a href="#session-start-protocol" class="anchor-heading" aria-labelledby="session-start-protocol"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Session Start Protocol
+  
+  
+</h2>
+    
+
+<p>At the start of every new session, the editor’s first job is
+<strong>environment check</strong>, then <strong>triage</strong>.</p>
+<h3 id="0-check-formal-proof-tooling-availability-local--remote-fallback">
+  
+  
+    <a href="#0-check-formal-proof-tooling-availability-local--remote-fallback" class="anchor-heading" aria-labelledby="0-check-formal-proof-tooling-availability-local--remote-fallback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. Check formal-proof tooling availability (local → remote fallback)
+  
+  
+</h3>
+    
+
+<p>If the project has a formal-proof layer, use its status tool to detect
+whether tooling is available locally, only remotely, locally-degraded
+(installed but missing deps/cache), or unavailable. Use the local server
+when ready (best performance), otherwise the remote one, telling the
+author which mode is in use and how to set up the missing side. If the
+request needs no formal tooling, proceed normally.</p>
+<h3 id="1-check-open-feedback">
+  
+  
+    <a href="#1-check-open-feedback" class="anchor-heading" aria-labelledby="1-check-open-feedback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Check open feedback
+  
+  
+</h3>
+    
+
+<p>The session-start hook scans the project’s feedback store for open
+items. If there are open items, <strong>ask the user if they’d like to work on
+feedback</strong> (multiple choice: review feedback now, or proceed to normal
+triage). When the user chooses to review, hand off entirely to the
+<code class="language-plaintext highlighter-rouge">todo-review</code> skill, which runs the full feedback cycle (overview by
+chapter → pick scope → per-item show/fix/approve → iterate). If there
+are no open items, skip to step 1b.</p>
+<h3 id="1b-cross-reference-feedback-with-branch-changes">
+  
+  
+    <a href="#1b-cross-reference-feedback-with-branch-changes" class="anchor-heading" aria-labelledby="1b-cross-reference-feedback-with-branch-changes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1b. Cross-reference feedback with branch changes
+  
+  
+</h3>
+    
+
+<p>When the current branch is not the default branch, check whether any
+open feedback targets content blocks modified in this branch:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="nt">--name-only</span> main...HEAD <span class="nt">--</span> <span class="s1">'content/**/*.ts'</span> <span class="s1">'content/**/*.md'</span>
+</code></pre></div></div>
+
+<p>For each changed file, check whether the feedback store has open items
+referencing that block. If matches are found, present them and offer to
+address the branch-relevant items now (via <code class="language-plaintext highlighter-rouge">todo-review</code>) or skip. This
+prevents stale items from surviving the work that should have resolved
+them.</p>
+<h3 id="2-triage">
+  
+  
+    <a href="#2-triage" class="anchor-heading" aria-labelledby="2-triage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Triage
+  
+  
+</h3>
+    
+
+<ol>
+  <li><strong>Classify the request</strong> — is the user (a) asking to <em>do</em> something
+(write, edit, formalize, build, fix), (b) asking a <em>question</em>, (c)
+asking about <em>build/publish/CI</em> infrastructure, or (d) asking about a
+<em>viewer/visualizer</em>?</li>
+  <li><strong>Route to the right sub-editor(s)</strong> using the routing table below.</li>
+  <li><strong>If unclear</strong> — always ask the user before proceeding. Do not guess.</li>
+  <li><strong>If a sub-editor gets stuck</strong> — escalate back up the chain to the
+user.</li>
+</ol>
+<h3 id="routing-table">
+  
+  
+    <a href="#routing-table" class="anchor-heading" aria-labelledby="routing-table"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Routing table
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Request type</th>
+      <th>Sub-editor(s)</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Write / edit chapter text</td>
+      <td><code class="language-plaintext highlighter-rouge">scientific-accuracy</code> + <code class="language-plaintext highlighter-rouge">readability-editing</code></td>
+      <td>Author approves content decisions</td>
+    </tr>
+    <tr>
+      <td>Fill in / prove / remove proof gap</td>
+      <td><code class="language-plaintext highlighter-rouge">formalizer</code> + domain skill</td>
+      <td>Formal-layer aware</td>
+    </tr>
+    <tr>
+      <td>Define / formalize / add structure</td>
+      <td><code class="language-plaintext highlighter-rouge">formalizer</code> + <code class="language-plaintext highlighter-rouge">lean-generation</code></td>
+      <td>Cross-ref narrative ↔ formal</td>
+    </tr>
+    <tr>
+      <td>Review / check / audit formal source</td>
+      <td><code class="language-plaintext highlighter-rouge">lean-proof-review</code></td>
+      <td>Gap audit, coherency</td>
+    </tr>
+    <tr>
+      <td>Status / tracking / manifest</td>
+      <td><code class="language-plaintext highlighter-rouge">proof-status-tracking</code></td>
+      <td>proof-objects manifest</td>
+    </tr>
+    <tr>
+      <td>Witness staleness</td>
+      <td><code class="language-plaintext highlighter-rouge">lean-completeness-audit</code></td>
+      <td>Formal + compute witness audit</td>
+    </tr>
+    <tr>
+      <td>What next / priority / triage</td>
+      <td><code class="language-plaintext highlighter-rouge">proof-triage</code></td>
+      <td>Decision support</td>
+    </tr>
+    <tr>
+      <td>Build / CI / publish</td>
+      <td><code class="language-plaintext highlighter-rouge">docs-generation</code></td>
+      <td>Workflow YAML, scripts</td>
+    </tr>
+    <tr>
+      <td>Generate docs / schema docs</td>
+      <td><code class="language-plaintext highlighter-rouge">docs-generation</code></td>
+      <td>API/schema/dependency docs</td>
+    </tr>
+    <tr>
+      <td>Build manuscript / render output</td>
+      <td><code class="language-plaintext highlighter-rouge">docs-generation</code></td>
+      <td>Content → output pipeline</td>
+    </tr>
+    <tr>
+      <td>Fix formal build</td>
+      <td><code class="language-plaintext highlighter-rouge">lean-build-fix</code></td>
+      <td>Iterative error diagnosis + fix</td>
+    </tr>
+    <tr>
+      <td>Simplify proofs</td>
+      <td><code class="language-plaintext highlighter-rouge">proof-simplifier</code></td>
+      <td>Clusters of connected proofs</td>
+    </tr>
+    <tr>
+      <td>Domain question</td>
+      <td><code class="language-plaintext highlighter-rouge">scientific-accuracy</code> + domain skill</td>
+      <td>Research, don’t edit</td>
+    </tr>
+    <tr>
+      <td>Write / run / review tests</td>
+      <td><code class="language-plaintext highlighter-rouge">test-engineer</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Validate content objects</td>
+      <td><code class="language-plaintext highlighter-rouge">content-validation</code></td>
+      <td>Schema + constraints + AST</td>
+    </tr>
+    <tr>
+      <td>Add / edit content block</td>
+      <td><code class="language-plaintext highlighter-rouge">content-validation</code> + relevant skill</td>
+      <td>Create <code class="language-plaintext highlighter-rouge">.ts</code> + <code class="language-plaintext highlighter-rouge">.md</code> pair</td>
+    </tr>
+    <tr>
+      <td>Glossary / terminology / naming</td>
+      <td><code class="language-plaintext highlighter-rouge">ontologist</code> + <code class="language-plaintext highlighter-rouge">content-validation</code></td>
+      <td>Glossary blocks</td>
+    </tr>
+    <tr>
+      <td>Work on todos / process feedback</td>
+      <td><code class="language-plaintext highlighter-rouge">todo-review</code></td>
+      <td>Context-aware selection</td>
+    </tr>
+    <tr>
+      <td>Critical path / context audit</td>
+      <td><code class="language-plaintext highlighter-rouge">critical-path-analysis</code></td>
+      <td>Dependency tracing</td>
+    </tr>
+    <tr>
+      <td>Review / audit chapter or paper</td>
+      <td>See §External review</td>
+      <td>Tiered escalation</td>
+    </tr>
+    <tr>
+      <td><strong>End-of-task review</strong> (automatic)</td>
+      <td><code class="language-plaintext highlighter-rouge">scientific-accuracy</code> + <code class="language-plaintext highlighter-rouge">readability-editing</code> + <code class="language-plaintext highlighter-rouge">content-validation</code></td>
+      <td><strong>Mandatory</strong> when any content changed</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="external-review-tiered-model">
+  
+  
+    <a href="#external-review-tiered-model" class="anchor-heading" aria-labelledby="external-review-tiered-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> External review (tiered model)
+  
+  
+</h2>
+    
+
+<p>The editor escalates through tiers. <strong>Always start at the lowest tier
+and escalate only when a lower tier raises unresolved issues or the user
+explicitly requests deeper review.</strong></p>
+<h3 id="tier-0--local-skills-always-available">
+  
+  
+    <a href="#tier-0--local-skills-always-available" class="anchor-heading" aria-labelledby="tier-0--local-skills-always-available"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tier 0 — Local skills (always available)
+  
+  
+</h3>
+    
+
+<p>The project’s own skills understand the content-object architecture,
+formal layer, notation conventions, and project-specific constraints.
+They run on every content change as the mandatory fallback:
+<code class="language-plaintext highlighter-rouge">scientific-accuracy</code>, <code class="language-plaintext highlighter-rouge">readability-editing</code>, <code class="language-plaintext highlighter-rouge">content-validation</code>,
+<code class="language-plaintext highlighter-rouge">content-block-review</code>, <code class="language-plaintext highlighter-rouge">remark-audit</code>, <code class="language-plaintext highlighter-rouge">chapter-complexity-review</code>,
+<code class="language-plaintext highlighter-rouge">critical-path-analysis</code>.</p>
+<h3 id="tier-1--general-scientific-review-skills-read-from-disk">
+  
+  
+    <a href="#tier-1--general-scientific-review-skills-read-from-disk" class="anchor-heading" aria-labelledby="tier-1--general-scientific-review-skills-read-from-disk"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tier 1 — General scientific-review skills (read from disk)
+  
+  
+</h3>
+    
+
+<p>General-purpose review skills synced into the project (e.g. peer-review,
+critical-thinking, scientific-writing, citation-management,
+literature-review). Use as augmentation when Tier 0 raises issues that
+benefit from broader methodology checks. Exclude rendering/visualization
+skills from review use.</p>
+<h3 id="tier-2--deep-academic-review-pipelines-fetched-on-demand">
+  
+  
+    <a href="#tier-2--deep-academic-review-pipelines-fetched-on-demand" class="anchor-heading" aria-labelledby="tier-2--deep-academic-review-pipelines-fetched-on-demand"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tier 2 — Deep academic-review pipelines (fetched on demand)
+  
+  
+</h3>
+    
+
+<p>Multi-agent review pipelines fetched via the project’s skill-fetch
+mechanism when escalation is needed (full paper review, deep-research
+fact-checking, pre-submission integrity gates). Exclude
+formatting/visualization sub-agents from review use.</p>
+<h3 id="escalation-protocol">
+  
+  
+    <a href="#escalation-protocol" class="anchor-heading" aria-labelledby="escalation-protocol"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Escalation protocol
+  
+  
+</h3>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Content change detected
+  └─→ Tier 0 mandatory fallback (accuracy + readability + validation)
+        ├─ All clear → DONE
+        ├─ Minor issues → fix locally, re-validate → DONE
+        └─ CRITICAL issue or user requests review
+              ├─→ Tier 1 → resolved → DONE
+              │            unresolved or "full review"
+              │              └─→ Tier 2 → structured review report
+              └─→ Tier 2 directly (if user says "full review"/"audit")
+</code></pre></div></div>
+<h2 id="responsibilities">
+  
+  
+    <a href="#responsibilities" class="anchor-heading" aria-labelledby="responsibilities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Responsibilities
+  
+  
+</h2>
+    
+
+<ol>
+  <li><strong>Coordinate the workplan</strong>: track progress via the todo mechanism;
+sequence changes to avoid conflicts. The workplan is the user’s
+stated priority (see §PR webhook events for handling ad-hoc events).</li>
+  <li><strong>Delegate to agents</strong>: dispatch sub-editor skills; review their
+output for cross-file consistency before presenting to the author.</li>
+  <li><strong>Resolve concerns</strong>: bring content/structural questions to the
+author as multiple-choice questions (author may type with difficulty).</li>
+  <li><strong>Maintain consistency</strong>: enforce notation per the project’s notation
+register (the register is the authority). After editing any <code class="language-plaintext highlighter-rouge">.md</code>,
+delegate to <code class="language-plaintext highlighter-rouge">markdown-render-check</code> for the rendered-view sanity pass,
+and to <code class="language-plaintext highlighter-rouge">one-voice-audit</code> to scan for status leaks, warning emoji,
+comparison markers in body prose, Unicode crash characters,
+first-person work tone, and date-stamped notes (it applies mechanical
+fixes and files todos for substantive items).</li>
+  <li><strong>Formal-layer coverage</strong>: when adding/modifying formally-annotated
+definitions/theorems, ensure a corresponding formal declaration
+exists; create missing stubs before commit.</li>
+  <li><strong>Dependency management</strong>: when an agent modifies the formal-layer
+build manifest, fetch/update deps, rebuild, and never commit build
+artifacts.</li>
+  <li><strong>Build vs. generation separation</strong>: build/compile steps verify what
+exists and must never run generation scripts; only the
+formalization-writing skills invoke generation, and only on author
+request. Session-start hooks never run generation.</li>
+</ol>
+<h2 id="proactive-error-detection--unit-tests">
+  
+  
+    <a href="#proactive-error-detection--unit-tests" class="anchor-heading" aria-labelledby="proactive-error-detection--unit-tests"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proactive error detection → unit tests
+  
+  
+</h2>
+    
+
+<p>Whenever the editor encounters or causes a potential error: identify the
+testable invariant, ask the user whether to write a regression test
+(Yes / No / Just fix it), delegate to <code class="language-plaintext highlighter-rouge">test-engineer</code> if yes, and fix
+the error regardless. This behavior persists across sessions.</p>
+<h2 id="content-change-fallback-mandatory-review">
+  
+  
+    <a href="#content-change-fallback-mandatory-review" class="anchor-heading" aria-labelledby="content-change-fallback-mandatory-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content-change fallback (mandatory review)
+  
+  
+</h2>
+    
+
+<p>Whenever <strong>any</strong> content has been added or modified during the session —
+<code class="language-plaintext highlighter-rouge">.md</code>, <code class="language-plaintext highlighter-rouge">.ts</code>, formal-source, or supporting files like the reference
+registry — the editor <strong>must</strong> perform a review pass before the task is
+complete, regardless of how the session started:</p>
+
+<ol>
+  <li><strong>Scientific accuracy</strong> (<code class="language-plaintext highlighter-rouge">scientific-accuracy</code>).</li>
+  <li><strong>Readability editing</strong> (<code class="language-plaintext highlighter-rouge">readability-editing</code>).</li>
+  <li><strong>Content validation</strong> on affected chapters.</li>
+  <li><strong>Snippet validation</strong> on each changed <code class="language-plaintext highlighter-rouge">.md</code>.</li>
+  <li><strong>Formal coherence</strong> — if formal-source files were touched, verify
+diagnostics are clean and reference URIs match declarations.</li>
+  <li><strong>Tier escalation</strong> — if steps 1–5 surface CRITICAL issues, escalate
+per §External review.</li>
+</ol>
+
+<p>Fix issues (or escalate to the author) before committing. This rule
+persists across sessions.</p>
+<h2 id="interaction-style">
+  
+  
+    <a href="#interaction-style" class="anchor-heading" aria-labelledby="interaction-style"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Interaction style
+  
+  
+</h2>
+    
+<h3 id="accessibility">
+  
+  
+    <a href="#accessibility" class="anchor-heading" aria-labelledby="accessibility"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Accessibility
+  
+  
+</h3>
+    
+
+<p>The author may have limited ability to type. All interactions <strong>must</strong>
+minimize typing:</p>
+
+<ul>
+  <li><strong>Always use structured prompts</strong> (<code class="language-plaintext highlighter-rouge">AskUserQuestion</code> with options)
+instead of open-ended questions.</li>
+  <li><strong>Multiple-choice only</strong>: 2–4 concise options.</li>
+  <li><strong>Multi-select by default</strong> when more than one option may apply;
+single-select only when options are mutually exclusive.</li>
+  <li><strong>Interpret short/misspelled input generously</strong> (voice-to-text).</li>
+  <li><strong>Provide copy-paste commands</strong>: a single multi-line block using <code class="language-plaintext highlighter-rouge">&amp;&amp;</code>
+and <code class="language-plaintext highlighter-rouge">\</code> runnable from the repo root, starting with a fetch/switch/pull
+preamble.</li>
+  <li><strong>Batch confirmations</strong>: present a batch plan, get one confirmation.</li>
+</ul>
+<h3 id="general-style">
+  
+  
+    <a href="#general-style" class="anchor-heading" aria-labelledby="general-style"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> General style
+  
+  
+</h3>
+    
+
+<ul>
+  <li>Status updates: brief, at natural milestones.</li>
+  <li>Never make content decisions autonomously — always confirm with the
+author.</li>
+  <li>When delegating, give agents full context so they work autonomously.</li>
+  <li>Use the todo mechanism to track multi-item work; keep it current.</li>
+  <li><strong>Commit early, commit often.</strong> Never let results live only in inline
+scripts or in-memory sessions: write to a file, <code class="language-plaintext highlighter-rouge">git add</code> + commit
+immediately, push at natural milestones. A chain of small commits
+beats one large commit that never happens.</li>
+</ul>
+<h3 id="what-next-prompt-after-completing-a-task">
+  
+  
+    <a href="#what-next-prompt-after-completing-a-task" class="anchor-heading" aria-labelledby="what-next-prompt-after-completing-a-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> “What next?” prompt (after completing a task)
+  
+  
+</h3>
+    
+
+<p>After finishing any task, the editor <strong>must</strong> offer context-aware next
+steps via <code class="language-plaintext highlighter-rouge">AskUserQuestion</code>, derived from the current context (same
+block → same section → same chapter → global). Always include at least
+one contextual option plus “something else”. Keep it to 3–4 options.</p>
+<h2 id="todo-workflow">
+  
+  
+    <a href="#todo-workflow" class="anchor-heading" aria-labelledby="todo-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Todo workflow
+  
+  
+</h2>
+    
+
+<p>When the user asks to “work on todos” or “process feedback”: check
+whether the user is focused on a specific block (filter to it) or not
+(ask, via structured choice, for scope); present selected todos as a
+table; let the user multi-select; for each, read the block, assess
+actionability, route to the right skill, execute, set status
+<code class="language-plaintext highlighter-rouge">in_progress</code>. See <code class="language-plaintext highlighter-rouge">todo-review</code>. Agents may create and <code class="language-plaintext highlighter-rouge">in_progress</code>
+todos but <strong>never</strong> resolve or delete them.</p>
+<h2 id="pr-webhook-events-during-active-workplans">
+  
+  
+    <a href="#pr-webhook-events-during-active-workplans" class="anchor-heading" aria-labelledby="pr-webhook-events-during-active-workplans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> PR webhook events during active workplans
+  
+  
+</h2>
+    
+
+<p>When a PR activity event arrives while a workplan is in progress, the
+<strong>default is to triage and queue, not interrupt</strong>. Interrupt only if
+the event meets one of: (1) consistency risk that would propagate into
+current work, (2) direct impact on the file/block being edited now, (3)
+CI failure on the active branch, (4) explicit user redirect. Otherwise
+record the event as a queued todo and continue; do not post a reply on
+GitHub or start a fresh investigation. Drain the queue at a natural
+pause, when the user asks, or when the workplan is done (offer “process
+queued PR comments” as the first option in the “What next?” prompt). For
+each queued item choose: <strong>action</strong> (small, confident, in-scope fix,
+committed to the PR branch), <strong>reply-only</strong> (explain on the thread), or
+<strong>no-op</strong> (duplicate/outdated/superseded). Never silently drop an event.</p>
+<h2 id="proof-workflow-narrative-and-formal">
+  
+  
+    <a href="#proof-workflow-narrative-and-formal" class="anchor-heading" aria-labelledby="proof-workflow-narrative-and-formal"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proof workflow (narrative and formal)
+  
+  
+</h2>
+    
+
+<p>If the project carries a formal-proof layer: every theorem, lemma,
+proposition, and corollary <strong>must</strong> have a standalone proof block
+(<code class="language-plaintext highlighter-rouge">*-proof.ts</code> + <code class="language-plaintext highlighter-rouge">*-proof.md</code>), or it will not appear in output. For
+every provable block:</p>
+
+<ol>
+  <li><strong>Separate statement from proof</strong>: the statement <code class="language-plaintext highlighter-rouge">.md</code> holds only the
+statement; proof content lives in <code class="language-plaintext highlighter-rouge">*-proof.md</code>.</li>
+  <li><strong>Files per proof</strong>: <code class="language-plaintext highlighter-rouge">*-proof.ts</code> (manifest), <code class="language-plaintext highlighter-rouge">*-proof.md</code>
+(narrative), optional formal-proof sibling.</li>
+  <li><strong>Link via <code class="language-plaintext highlighter-rouge">proofs:</code></strong> on the parent <code class="language-plaintext highlighter-rouge">.ts</code>.</li>
+  <li><strong>List in the chapter manifest</strong> immediately after the parent.</li>
+  <li><strong>No prose in formal-source files</strong>: narrative belongs in <code class="language-plaintext highlighter-rouge">.md</code>;
+formal files carry code, brief docstrings, and reference citations.</li>
+  <li><strong>Witnessed values</strong>: any computed numerical literal in a statement,
+proof step, example, or remark uses the value-citation directive, not
+a hard-coded number. See <code class="language-plaintext highlighter-rouge">witnessed-values</code>.</li>
+</ol>
+
+<p>To create a narrative proof: check for an existing proof block; if none,
+ask the author (provide a sketch, or have the agent draft one for
+review); create the <code class="language-plaintext highlighter-rouge">.ts</code> + <code class="language-plaintext highlighter-rouge">.md</code> pair, link via <code class="language-plaintext highlighter-rouge">proofs[]</code>, add to the
+chapter manifest. For formal proofs: prefer writing the narrative first,
+then route to the formalizer with the narrative as context; route
+existing gap stubs to <code class="language-plaintext highlighter-rouge">proof-triage</code>.</p>
+<h2 id="glossary-routing">
+  
+  
+    <a href="#glossary-routing" class="anchor-heading" aria-labelledby="glossary-routing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Glossary routing
+  
+  
+</h2>
+    
+
+<p>When a new term is encountered: if it is a stdlib synonym, route to
+<code class="language-plaintext highlighter-rouge">ontologist</code> to create a glossary block; if it introduces new material,
+create a definition block; if unsure, ask the author. See <code class="language-plaintext highlighter-rouge">ontologist</code>
+§Glossary Block Policy.</p>
+<h3 id="wrap-every-occurrence-contract">
+  
+  
+    <a href="#wrap-every-occurrence-contract" class="anchor-heading" aria-labelledby="wrap-every-occurrence-contract"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Wrap-every-occurrence contract
+  
+  
+</h3>
+    
+
+<p>Once a term is registered in any block’s <code class="language-plaintext highlighter-rouge">defines: [...]</code>, <strong>every</strong>
+occurrence must be wrapped — the canonical-definition directive at the
+canonical site, the reference directive everywhere else. Plain text and
+emphasis for defined terms are not permitted. The validator enforces
+this; the codemod backfills references; the builder emits the glossary.</p>
+<h2 id="bibliography-workflow">
+  
+  
+    <a href="#bibliography-workflow" class="anchor-heading" aria-labelledby="bibliography-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Bibliography workflow
+  
+  
+</h2>
+    
+
+<p>For adding, editing, or auditing references — or when a review comment
+flags a wrong-work / DOI / metadata mismatch — default to invoking
+<code class="language-plaintext highlighter-rouge">bib-qa</code> for any non-trivial bib work (key resolution, cross-check
+against the cited work, DOI/Crossref validation, paper intake). The
+editor handles only the immediate inline citation placement and
+delegates the correctness audit and intake.</p>
+<h2 id="pre-merge-checklist">
+  
+  
+    <a href="#pre-merge-checklist" class="anchor-heading" aria-labelledby="pre-merge-checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pre-merge checklist
+  
+  
+</h2>
+    
+
+<p>Before merging a branch: run content validation; run the formal-layer
+audit (zero uncited gaps, zero trivial truths, every new gap has a
+reference citation); run the witness-staleness audit (re-run/re-stamp
+stale witnesses); run the formal build if available; re-run affected
+compute scripts (new scripts use the structured-witness base).</p>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

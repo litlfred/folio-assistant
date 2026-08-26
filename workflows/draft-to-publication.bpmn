@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  folio-assistant — corpus to draft publication to officially published.
+
+  Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+  BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+  by `bun run render:bpmn` — never hand-edit the SVG.
+
+  The <folio:skill> extension on an activity names the folio-assistant skill
+  that implements it; <folio:bean> marks a step that reads or writes the shared
+  work plan in .beans/.
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  id="Definitions_FolioPublication"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+
+  <bpmn:import namespace="https://litlfred.github.io/folio-assistant/workflows" location="editing-hci-validation.bpmn" importType="http://www.omg.org/spec/BPMN/20100524/MODEL" />
+  <bpmn:collaboration id="Collaboration_FolioPublication">
+    <bpmn:participant id="Participant_FolioPublication" name="Folio publication — one release of the folio" processRef="Process_Publication" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Publication" name="Draft, review and publish" isExecutable="false">
+    <bpmn:documentation>
+      folio-assistant — corpus to draft publication to officially published.
+      Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+      BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+      by `bun run render:bpmn` — never hand-edit the SVG.
+      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      work plan in .beans/.
+    </bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="strict" />
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="Process_Publication_LaneSet">
+      <bpmn:lane id="Lane_Editors" name="Editors + authoring agents">
+        <bpmn:flowNodeRef>CallActivity_Editing</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
+        <bpmn:flowNodeRef>Task_OpenReleaseBean</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_OpenChangeBeans</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CloseReleaseBeans</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Build" name="Corpus + build pipeline (system)">
+        <bpmn:flowNodeRef>StartEvent_CorpusUpdated</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_BuildMerge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_BuildDraft</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_PublicationQa</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_QaGreen</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_PubMgr" name="Publication manager">
+        <bpmn:flowNodeRef>Task_CirculateDraft</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ReviewFork</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ReviewJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_PublishRelease</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_Published</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_ReviewTeam" name="Review team (content · QC · technical officer)">
+        <bpmn:flowNodeRef>Task_ReviewDraft</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ReviewOutcome</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Sme" name="Clinical / scientific SMEs">
+        <bpmn:flowNodeRef>Task_SmeSignoff</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_ProgMgr" name="Programme manager (release authority)">
+        <bpmn:flowNodeRef>Task_AuthorizeRelease</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_CorpusUpdated" name="Corpus updated">
+      <bpmn:documentation>One or more content blocks have landed in the corpus through the editing process.</bpmn:documentation>
+      <bpmn:outgoing>G01</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_OpenReleaseBean" name="Open or claim the release bean&#10;[todo-manager]">
+      <bpmn:documentation>The release itself is a bean: it carries what is in this draft, what is outstanding, and who is holding it.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="todo-manager" />
+        <folio:bean store=".beans/" op="claim" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G01</bpmn:incoming>
+      <bpmn:outgoing>G02</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_BuildMerge" name="">
+      <bpmn:incoming>G02</bpmn:incoming>
+      <bpmn:incoming>G07</bpmn:incoming>
+      <bpmn:outgoing>G03</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_BuildDraft" name="Build the draft publication&#10;[content-publish]">
+      <bpmn:documentation>Render the corpus into the draft form of the folio: PDF, HTML site, or FHIR IG.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-publish" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G03</bpmn:incoming>
+      <bpmn:outgoing>G04</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_PublicationQa" name="Run publication QA gates&#10;[content-test]">
+      <bpmn:documentation>Publication-readiness QA across layers — QC reports, IG Publisher QA, proof status, broken links, build warnings.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-test" />
+        <folio:skill ref="quality-control" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G04</bpmn:incoming>
+      <bpmn:outgoing>G05</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_QaGreen" name="Draft QA green?">
+      <bpmn:extensionElements>
+        <folio:decision ref="decisions/draft-qa-gate.dmn#Decision_DraftQaGate" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G05</bpmn:incoming>
+      <bpmn:outgoing>G06</bpmn:outgoing>
+      <bpmn:outgoing>G08</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="CallActivity_Editing" name="Editing and HCI validation&#10;[content-author]" calledElement="Process_Editing">
+      <bpmn:documentation>The editing sub-process. Every change to the corpus goes through its HCI validation gate — a red draft is fixed there, never by patching the built artifact.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-author" />
+        <folio:skill ref="content-validate" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G06</bpmn:incoming>
+      <bpmn:incoming>G17</bpmn:incoming>
+      <bpmn:outgoing>G07</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:userTask id="Task_CirculateDraft" name="Circulate the draft&#10;[content-review]">
+      <bpmn:documentation>The draft publication is circulated to the review team for formal review.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-review" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G08</bpmn:incoming>
+      <bpmn:outgoing>G09</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:parallelGateway id="Gateway_ReviewFork" name="Draft under review">
+      <bpmn:incoming>G09</bpmn:incoming>
+      <bpmn:outgoing>G10</bpmn:outgoing>
+      <bpmn:outgoing>G11</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:userTask id="Task_ReviewDraft" name="Review the draft publication&#10;[content-review]">
+      <bpmn:documentation>Content reviewer, QC reviewer and technical officer review the draft as a whole — coherence, phase-gate criteria, breaking vs non-breaking change.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-review" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G10</bpmn:incoming>
+      <bpmn:outgoing>G12</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_SmeSignoff" name="Clinical / scientific sign-off&#10;[content-review]">
+      <bpmn:documentation>Domain sign-off: clinical SMEs for a guideline, subject-matter reviewers for a paper.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-review" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G11</bpmn:incoming>
+      <bpmn:outgoing>G13</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:parallelGateway id="Gateway_ReviewJoin" name="">
+      <bpmn:incoming>G12</bpmn:incoming>
+      <bpmn:incoming>G13</bpmn:incoming>
+      <bpmn:outgoing>G14</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:exclusiveGateway id="Gateway_ReviewOutcome" name="Approved?">
+      <bpmn:incoming>G14</bpmn:incoming>
+      <bpmn:outgoing>G15</bpmn:outgoing>
+      <bpmn:outgoing>G16</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_OpenChangeBeans" name="Open beans for the change requests&#10;[todo-manager]">
+      <bpmn:documentation>Each requested change becomes a bean, so the editors and agents picking the work up next see exactly what review asked for and what is still open.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="todo-manager" />
+        <folio:skill ref="content-feedback" />
+        <folio:bean store=".beans/" op="note" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G15</bpmn:incoming>
+      <bpmn:outgoing>G17</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="Task_AuthorizeRelease" name="Authorise the release&#10;[content-publish]">
+      <bpmn:documentation>Publication requires authorisation by the programme manager or designated authority.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:policy relaxable="false" />
+              <folio:skill ref="content-publish" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G16</bpmn:incoming>
+      <bpmn:outgoing>G18</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_PublishRelease" name="Version, tag and publish&#10;[content-publish]">
+      <bpmn:documentation>Version bump, release notes, tag, build the final artifacts, deploy to the publication platform.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:policy relaxable="false" />
+              <folio:skill ref="content-publish" />
+        <folio:skill ref="ig-publication" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G18</bpmn:incoming>
+      <bpmn:outgoing>G19</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:task id="Task_CloseReleaseBeans" name="Close the release beans&#10;[todo-manager]">
+      <bpmn:documentation>What shipped is resolved; what slipped stays open and carries into the next cycle.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="todo-manager" />
+        <folio:bean store=".beans/" op="resolve" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G19</bpmn:incoming>
+      <bpmn:outgoing>G20</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndEvent_Published" name="Published officially">
+      <bpmn:incoming>G20</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="G01" sourceRef="StartEvent_CorpusUpdated" targetRef="Task_OpenReleaseBean" />
+    <bpmn:sequenceFlow id="G02" sourceRef="Task_OpenReleaseBean" targetRef="Gateway_BuildMerge" />
+    <bpmn:sequenceFlow id="G03" sourceRef="Gateway_BuildMerge" targetRef="Task_BuildDraft" />
+    <bpmn:sequenceFlow id="G04" sourceRef="Task_BuildDraft" targetRef="Task_PublicationQa" />
+    <bpmn:sequenceFlow id="G05" sourceRef="Task_PublicationQa" targetRef="Gateway_QaGreen" />
+    <bpmn:sequenceFlow id="G06" name="no" sourceRef="Gateway_QaGreen" targetRef="CallActivity_Editing" />
+    <bpmn:sequenceFlow id="G07" sourceRef="CallActivity_Editing" targetRef="Gateway_BuildMerge" />
+    <bpmn:sequenceFlow id="G08" name="yes" sourceRef="Gateway_QaGreen" targetRef="Task_CirculateDraft" />
+    <bpmn:sequenceFlow id="G09" sourceRef="Task_CirculateDraft" targetRef="Gateway_ReviewFork" />
+    <bpmn:sequenceFlow id="G10" sourceRef="Gateway_ReviewFork" targetRef="Task_ReviewDraft" />
+    <bpmn:sequenceFlow id="G11" sourceRef="Gateway_ReviewFork" targetRef="Task_SmeSignoff" />
+    <bpmn:sequenceFlow id="G12" sourceRef="Task_ReviewDraft" targetRef="Gateway_ReviewJoin" />
+    <bpmn:sequenceFlow id="G13" sourceRef="Task_SmeSignoff" targetRef="Gateway_ReviewJoin" />
+    <bpmn:sequenceFlow id="G14" sourceRef="Gateway_ReviewJoin" targetRef="Gateway_ReviewOutcome" />
+    <bpmn:sequenceFlow id="G15" name="no" sourceRef="Gateway_ReviewOutcome" targetRef="Task_OpenChangeBeans" />
+    <bpmn:sequenceFlow id="G16" name="yes" sourceRef="Gateway_ReviewOutcome" targetRef="Task_AuthorizeRelease" />
+    <bpmn:sequenceFlow id="G17" sourceRef="Task_OpenChangeBeans" targetRef="CallActivity_Editing" />
+    <bpmn:sequenceFlow id="G18" sourceRef="Task_AuthorizeRelease" targetRef="Task_PublishRelease" />
+    <bpmn:sequenceFlow id="G19" sourceRef="Task_PublishRelease" targetRef="Task_CloseReleaseBeans" />
+    <bpmn:sequenceFlow id="G20" sourceRef="Task_CloseReleaseBeans" targetRef="EndEvent_Published" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_FolioPublication">
+      <bpmndi:BPMNShape id="Participant_FolioPublication_di" bpmnElement="Participant_FolioPublication" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="2480" height="1050" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Editors_di" bpmnElement="Lane_Editors" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="2450" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_WorkPlan_di" bpmnElement="Lane_WorkPlan" isHorizontal="true">
+        <dc:Bounds x="190" y="230" width="2450" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Build_di" bpmnElement="Lane_Build" isHorizontal="true">
+        <dc:Bounds x="190" y="380" width="2450" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_PubMgr_di" bpmnElement="Lane_PubMgr" isHorizontal="true">
+        <dc:Bounds x="190" y="530" width="2450" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_ReviewTeam_di" bpmnElement="Lane_ReviewTeam" isHorizontal="true">
+        <dc:Bounds x="190" y="680" width="2450" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Sme_di" bpmnElement="Lane_Sme" isHorizontal="true">
+        <dc:Bounds x="190" y="830" width="2450" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_ProgMgr_di" bpmnElement="Lane_ProgMgr" isHorizontal="true">
+        <dc:Bounds x="190" y="980" width="2450" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_CorpusUpdated_di" bpmnElement="StartEvent_CorpusUpdated">
+        <dc:Bounds x="262" y="437" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="225" y="477" width="110" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_OpenReleaseBean_di" bpmnElement="Task_OpenReleaseBean">
+        <dc:Bounds x="375" y="260" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_BuildMerge_di" bpmnElement="Gateway_BuildMerge" isMarkerVisible="true">
+        <dc:Bounds x="575" y="430" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_BuildDraft_di" bpmnElement="Task_BuildDraft">
+        <dc:Bounds x="695" y="410" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PublicationQa_di" bpmnElement="Task_PublicationQa">
+        <dc:Bounds x="855" y="410" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_QaGreen_di" bpmnElement="Gateway_QaGreen" isMarkerVisible="true">
+        <dc:Bounds x="1055" y="430" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1112" y="442" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_Editing_di" bpmnElement="CallActivity_Editing">
+        <dc:Bounds x="855" y="110" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CirculateDraft_di" bpmnElement="Task_CirculateDraft">
+        <dc:Bounds x="1175" y="560" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ReviewFork_di" bpmnElement="Gateway_ReviewFork">
+        <dc:Bounds x="1375" y="580" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1432" y="592" width="120" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ReviewDraft_di" bpmnElement="Task_ReviewDraft">
+        <dc:Bounds x="1495" y="710" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SmeSignoff_di" bpmnElement="Task_SmeSignoff">
+        <dc:Bounds x="1495" y="860" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ReviewJoin_di" bpmnElement="Gateway_ReviewJoin">
+        <dc:Bounds x="1695" y="580" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ReviewOutcome_di" bpmnElement="Gateway_ReviewOutcome" isMarkerVisible="true">
+        <dc:Bounds x="1855" y="730" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1825" y="700" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_OpenChangeBeans_di" bpmnElement="Task_OpenChangeBeans">
+        <dc:Bounds x="1975" y="260" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AuthorizeRelease_di" bpmnElement="Task_AuthorizeRelease">
+        <dc:Bounds x="1975" y="1010" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PublishRelease_di" bpmnElement="Task_PublishRelease">
+        <dc:Bounds x="2135" y="560" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CloseReleaseBeans_di" bpmnElement="Task_CloseReleaseBeans">
+        <dc:Bounds x="2295" y="260" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Published_di" bpmnElement="EndEvent_Published">
+        <dc:Bounds x="2502" y="587" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2465" y="627" width="110" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="G01_di" bpmnElement="G01">
+        <di:waypoint x="298" y="455" />
+        <di:waypoint x="440" y="455" />
+        <di:waypoint x="440" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G02_di" bpmnElement="G02">
+        <di:waypoint x="505" y="305" />
+        <di:waypoint x="600" y="305" />
+        <di:waypoint x="600" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G03_di" bpmnElement="G03">
+        <di:waypoint x="625" y="455" />
+        <di:waypoint x="695" y="455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G04_di" bpmnElement="G04">
+        <di:waypoint x="825" y="455" />
+        <di:waypoint x="855" y="455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G05_di" bpmnElement="G05">
+        <di:waypoint x="985" y="455" />
+        <di:waypoint x="1055" y="455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G06_di" bpmnElement="G06">
+        <di:waypoint x="1080" y="430" />
+        <di:waypoint x="1080" y="225" />
+        <di:waypoint x="920" y="225" />
+        <di:waypoint x="920" y="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1086" y="300" width="25" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G07_di" bpmnElement="G07">
+        <di:waypoint x="855" y="155" />
+        <di:waypoint x="560" y="155" />
+        <di:waypoint x="560" y="455" />
+        <di:waypoint x="575" y="455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G08_di" bpmnElement="G08">
+        <di:waypoint x="1080" y="480" />
+        <di:waypoint x="1080" y="605" />
+        <di:waypoint x="1175" y="605" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1086" y="520" width="25" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G09_di" bpmnElement="G09">
+        <di:waypoint x="1305" y="605" />
+        <di:waypoint x="1375" y="605" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G10_di" bpmnElement="G10">
+        <di:waypoint x="1400" y="630" />
+        <di:waypoint x="1400" y="755" />
+        <di:waypoint x="1495" y="755" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G11_di" bpmnElement="G11">
+        <di:waypoint x="1400" y="630" />
+        <di:waypoint x="1400" y="905" />
+        <di:waypoint x="1495" y="905" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G12_di" bpmnElement="G12">
+        <di:waypoint x="1625" y="755" />
+        <di:waypoint x="1720" y="755" />
+        <di:waypoint x="1720" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G13_di" bpmnElement="G13">
+        <di:waypoint x="1625" y="905" />
+        <di:waypoint x="1720" y="905" />
+        <di:waypoint x="1720" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G14_di" bpmnElement="G14">
+        <di:waypoint x="1745" y="605" />
+        <di:waypoint x="1880" y="605" />
+        <di:waypoint x="1880" y="730" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G15_di" bpmnElement="G15">
+        <di:waypoint x="1905" y="755" />
+        <di:waypoint x="2040" y="755" />
+        <di:waypoint x="2040" y="350" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2046" y="700" width="25" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G16_di" bpmnElement="G16">
+        <di:waypoint x="1880" y="780" />
+        <di:waypoint x="1880" y="1055" />
+        <di:waypoint x="1975" y="1055" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1886" y="960" width="25" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G17_di" bpmnElement="G17">
+        <di:waypoint x="2040" y="260" />
+        <di:waypoint x="2040" y="155" />
+        <di:waypoint x="985" y="155" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G18_di" bpmnElement="G18">
+        <di:waypoint x="2105" y="1055" />
+        <di:waypoint x="2200" y="1055" />
+        <di:waypoint x="2200" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G19_di" bpmnElement="G19">
+        <di:waypoint x="2265" y="605" />
+        <di:waypoint x="2360" y="605" />
+        <di:waypoint x="2360" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G20_di" bpmnElement="G20">
+        <di:waypoint x="2425" y="305" />
+        <di:waypoint x="2520" y="305" />
+        <di:waypoint x="2520" y="587" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

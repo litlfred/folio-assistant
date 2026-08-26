@@ -1,0 +1,1097 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(59)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(59) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(59) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(59) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lean Environment Setup | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Lean Environment Setup" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-environment-setup.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-environment-setup.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lean Environment Setup" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Lean Environment Setup","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-environment-setup.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Lean Environment Setup</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/lean-environment-setup.md"><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/lean-environment-setup.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="lean-environment-setup">
+  
+  
+    <a href="#lean-environment-setup" class="anchor-heading" aria-labelledby="lean-environment-setup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lean Environment Setup
+  
+  
+</h1>
+    
+<h2 id="-fast-route--read-this-before-declaring-lean-unavailable">
+  
+  
+    <a href="#-fast-route--read-this-before-declaring-lean-unavailable" class="anchor-heading" aria-labelledby="-fast-route--read-this-before-declaring-lean-unavailable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ⮕ FAST ROUTE — read this BEFORE declaring Lean “unavailable”
+  
+  
+</h2>
+    
+
+<blockquote>
+  <p>On <strong>any</strong> Lean env/tool failure — LSP “no valid project path”,
+<code class="language-plaintext highlighter-rouge">leansearch</code> SSL error, <code class="language-plaintext highlighter-rouge">lake exe cache get</code> 403, <code class="language-plaintext highlighter-rouge">elan toolchain
+install</code> SSL/<code class="language-plaintext highlighter-rouge">failed to parse release data</code>, empty <code class="language-plaintext highlighter-rouge">~/.elan/toolchains/</code>,
+<code class="language-plaintext highlighter-rouge">lake build</code> timeout — <strong>do NOT conclude “Lean is unavailable.”</strong> Several of
+these (cache-403, toolchain-host-firewalled, leansearch/loogle SSL) have
+<strong>documented workarounds in this very file</strong> (§”Mathlib cache 403 fallback”</p>
+  <ul>
+    <li>§”Web-sandbox addendum” + §”Offline Mathlib search”). The recurring
+failure mode is <em>agents re-deriving these workarounds — or giving up —
+instead of grepping for them.</em></li>
+  </ul>
+
+  <p><strong>Discipline:</strong> when a tool or environment operation fails, FIRST
+<code class="language-plaintext highlighter-rouge">grep -ri "&lt;error keyword&gt;" .claude/skills/ skills/ AGENTS.md docs/</code>
+<strong>before</strong> declaring the capability unavailable. Only after the documented
+workarounds are tried and hit a <em>hard</em> network block may you fall back to a
+rigorous hand-audit — and then say so explicitly.</p>
+
+  <p><strong>If the install is long/uncertain, DELEGATE it to a sub-agent</strong> (see
+§”Delegate the install to a sub-agent” near the foot of this file) so the
+main task is not blocked on a multi-minute toolchain fetch + mathlib build.</p>
+</blockquote>
+<h2 id="architecture">
+  
+  
+    <a href="#architecture" class="anchor-heading" aria-labelledby="architecture"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Architecture
+  
+  
+</h2>
+    
+
+<p>All MCP functionality — including Lean tools — is served through a single
+<code class="language-plaintext highlighter-rouge">paper-assistant</code> MCP server. There is <strong>no separate lean-lsp MCP entry</strong>.
+The paper-assistant detects lean/lake on the PATH and enables Lean tools
+automatically.</p>
+<h2 id="when-to-use-this-skill">
+  
+  
+    <a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use This Skill
+  
+  
+</h2>
+    
+
+<ul>
+  <li>At session start when the Lean build status reports Lean as unavailable</li>
+  <li>When paper-assistant Lean tools fail with “No such file or directory: ‘lake’”</li>
+  <li>When a user says “set up Lean” or “install Lean”</li>
+</ul>
+<h2 id="prerequisites">
+  
+  
+    <a href="#prerequisites" class="anchor-heading" aria-labelledby="prerequisites"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Prerequisites
+  
+  
+</h2>
+    
+
+<p>The paper-assistant’s Lean tools require these on the PATH:</p>
+
+<ol>
+  <li><strong>elan</strong> — Lean toolchain manager (<code class="language-plaintext highlighter-rouge">~/.elan/bin/</code>)</li>
+  <li><strong>lean</strong> — the Lean compiler (installed via elan)</li>
+  <li><strong>lake</strong> — the Lean build tool (installed with lean)</li>
+  <li><strong>uv</strong> — Python package manager (optional, for uvx-based tools)</li>
+  <li><strong>ripgrep</strong> — for local symbol search (optional)</li>
+</ol>
+<h2 id="setup-procedure">
+  
+  
+    <a href="#setup-procedure" class="anchor-heading" aria-labelledby="setup-procedure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Setup Procedure
+  
+  
+</h2>
+    
+<h3 id="step-1-check-current-state">
+  
+  
+    <a href="#step-1-check-current-state" class="anchor-heading" aria-labelledby="step-1-check-current-state"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 1: Check current state
+  
+  
+</h3>
+    
+
+<p>Use the <code class="language-plaintext highlighter-rouge">lean_status</code> MCP tool. It reports the current mode
+(local/remote/local-degraded/none) and what’s missing.</p>
+<h3 id="step-2-install-lean-toolchain">
+  
+  
+    <a href="#step-2-install-lean-toolchain" class="anchor-heading" aria-labelledby="step-2-install-lean-toolchain"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 2: Install Lean toolchain
+  
+  
+</h3>
+    
+
+<p>Use the <code class="language-plaintext highlighter-rouge">lean_setup</code> MCP tool. It handles the full installation:
+elan, lean, lake, uv, ripgrep, lake update, Mathlib cache, and build.
+Safe to re-run — skips already-installed components.</p>
+
+<p>If <code class="language-plaintext highlighter-rouge">lean_setup</code> fails (e.g., 403 errors from network restrictions in
+sandboxed environments), proceed to Step 3.</p>
+<h3 id="step-3-diagnose-network-restrictions">
+  
+  
+    <a href="#step-3-diagnose-network-restrictions" class="anchor-heading" aria-labelledby="step-3-diagnose-network-restrictions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 3: Diagnose network restrictions
+  
+  
+</h3>
+    
+
+<p>In sandboxed/cloud environments (GitHub Codespaces, Claude Code cloud,
+CI runners), outbound HTTPS to <code class="language-plaintext highlighter-rouge">github.com</code> or <code class="language-plaintext highlighter-rouge">raw.githubusercontent.com</code>
+may be blocked. Test:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sSf</span> <span class="nt">--max-time</span> 5 https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh <span class="nt">-o</span> /dev/null <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">"OK"</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">"BLOCKED"</span>
+curl <span class="nt">-sSf</span> <span class="nt">--max-time</span> 5 https://github.com/leanprover/lean4/releases <span class="nt">-o</span> /dev/null <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">"OK"</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">"BLOCKED"</span>
+</code></pre></div></div>
+
+<p>If blocked, local Lean installation may be impossible. The workarounds
+below cover most sandbox cases before that conclusion is warranted.</p>
+<h3 id="step-4-verify-lean-tools-via-paper-assistant">
+  
+  
+    <a href="#step-4-verify-lean-tools-via-paper-assistant" class="anchor-heading" aria-labelledby="step-4-verify-lean-tools-via-paper-assistant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 4: Verify Lean tools via paper-assistant
+  
+  
+</h3>
+    
+
+<p>After setup, verify with the <code class="language-plaintext highlighter-rouge">lean_status</code> MCP tool. If mode is
+<code class="language-plaintext highlighter-rouge">local</code>, Lean is fully operational.</p>
+<h2 id="docker-based-setup-offline">
+  
+  
+    <a href="#docker-based-setup-offline" class="anchor-heading" aria-labelledby="docker-based-setup-offline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Docker-based setup (offline)
+  
+  
+</h2>
+    
+
+<p>If a paper-assistant Docker image is available, all tools (Lean, TeX,
+Bun) are pre-installed and ready to use without any network access:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--rm</span> <span class="nt">--entrypoint</span> <span class="s2">""</span> <span class="se">\</span>
+  <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>:/work <span class="nt">-w</span> /work <span class="se">\</span>
+  &lt;paper-assistant-image&gt;:latest <span class="se">\</span>
+  bash <span class="nt">-c</span> <span class="s2">"lean --version &amp;&amp; lake --version &amp;&amp; pdflatex --version | head -1"</span>
+</code></pre></div></div>
+
+<p>Render hooks can auto-detect Docker and use the image as a fallback when
+local tools are missing.</p>
+<h2 id="fallback-structural-analysis-without-lean">
+  
+  
+    <a href="#fallback-structural-analysis-without-lean" class="anchor-heading" aria-labelledby="fallback-structural-analysis-without-lean"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fallback: Structural Analysis Without Lean
+  
+  
+</h2>
+    
+
+<p>When Lean is not installed, agents can still:</p>
+
+<ul>
+  <li>Read <code class="language-plaintext highlighter-rouge">.lean</code> files with the Read tool</li>
+  <li>Search for <code class="language-plaintext highlighter-rouge">sorry</code> with Grep</li>
+  <li>Validate content object schemas via <code class="language-plaintext highlighter-rouge">paper-assistant</code> MCP</li>
+  <li>Check cross-references between <code class="language-plaintext highlighter-rouge">.ts</code> manifests and <code class="language-plaintext highlighter-rouge">.lean</code> files</li>
+  <li>Verify naming conventions (label → declaration mapping)</li>
+  <li>Audit <code class="language-plaintext highlighter-rouge">status</code> fields against file contents</li>
+</ul>
+
+<p>What agents <strong>cannot</strong> do without Lean:</p>
+
+<ul>
+  <li>Type-check proofs</li>
+  <li>Get goal states at positions</li>
+  <li>Search Mathlib via the hosted leansearch/loogle services — but the
+<strong>offline grep substitute</strong> below works with or without Lean</li>
+  <li>Verify axiom dependencies</li>
+  <li>Get autocompletions or hover info</li>
+</ul>
+<h3 id="offline-mathlib-search--when-hosted-leansearchloogle-are-ssl-blocked">
+  
+  
+    <a href="#offline-mathlib-search--when-hosted-leansearchloogle-are-ssl-blocked" class="anchor-heading" aria-labelledby="offline-mathlib-search--when-hosted-leansearchloogle-are-ssl-blocked"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Offline Mathlib search — when hosted leansearch/loogle are SSL-blocked
+  
+  
+</h3>
+    
+
+<p>In a web sandbox the hosted search services (<code class="language-plaintext highlighter-rouge">loogle.lean-lang.org</code>,
+<code class="language-plaintext highlighter-rouge">leansearch.net</code>) may fail with <code class="language-plaintext highlighter-rouge">SSL: CERTIFICATE_VERIFY_FAILED</code>
+(self-signed cert in the proxy chain), so the <code class="language-plaintext highlighter-rouge">lean_loogle</code> /
+<code class="language-plaintext highlighter-rouge">lean_leansearch</code> MCP tools error out. Use these <strong>offline</strong> substitutes
+— they need no network:</p>
+
+<ol>
+  <li><strong>Grep the Mathlib source</strong> (closest analogue to a loogle name/substring
+search; works <em>with or without</em> Lean installed). The full source ships
+with any clone and with a cache restore — thousands of <code class="language-plaintext highlighter-rouge">.lean</code> files
+under <code class="language-plaintext highlighter-rouge">.lake/packages/mathlib/Mathlib/</code>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">grep</span> <span class="nt">-rn</span> <span class="s2">"theorem det_succ_row_zero"</span> .lake/packages/mathlib/Mathlib/
+<span class="nb">grep</span> <span class="nt">-rn</span> <span class="s2">"det_fin"</span> .lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/
+</code></pre></div>    </div>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">lean_local_search</code> (MCP)</strong> — offline; searches declarations in the
+current project + imported modules (once a file is loaded).</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">lean_hover_info</code> / <code class="language-plaintext highlighter-rouge">lean_declaration_file</code> (MCP)</strong> — offline once a
+file is loaded; type signature / source of a known name.</li>
+</ol>
+
+<p><strong>Why not run loogle locally?</strong> loogle is a Lean exe that imports and indexes
+<em>all</em> of Mathlib, so it needs Mathlib oleans for <strong>its own</strong> toolchain, which
+may pin a newer toolchain than the repo cache; standing it up means a
+from-source Mathlib rebuild that cannot reuse commit-pinned cache oleans. The
+grep route answers the same questions in seconds.</p>
+<h2 id="troubleshooting">
+  
+  
+    <a href="#troubleshooting" class="anchor-heading" aria-labelledby="troubleshooting"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Troubleshooting
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Symptom</th>
+      <th>Cause</th>
+      <th>Fix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>“No such file or directory: ‘lake’”</td>
+      <td>lean not on PATH</td>
+      <td><code class="language-plaintext highlighter-rouge">export PATH="$HOME/.elan/bin:$PATH"</code> or install elan</td>
+    </tr>
+    <tr>
+      <td>elan install 403</td>
+      <td>Network restrictions</td>
+      <td>Use the GitHub-release manual install (§”Web-sandbox addendum” item 1)</td>
+    </tr>
+    <tr>
+      <td>“lake update” hangs</td>
+      <td>Git fetch blocked</td>
+      <td>Check <code class="language-plaintext highlighter-rouge">git ls-remote</code> works for mathlib4</td>
+    </tr>
+    <tr>
+      <td>Lean tools timeout</td>
+      <td>Workspace not built</td>
+      <td>Run <code class="language-plaintext highlighter-rouge">lake build</code> at the <strong>repo root</strong> (root workspace builds all paper packages)</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">lake exe cache get</code> → 403 on all shards</strong></td>
+      <td><strong>Mathlib cache host blocked from this network</strong></td>
+      <td><strong>See “Mathlib cache 403 fallback” below — clone mathlib source locally + git insteadOf</strong></td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> MCP times out at 60s</strong></td>
+      <td><strong>No prebuilt oleans + cache 403</strong></td>
+      <td><strong>Same fix as cache 403 above — local clone unblocks LSP</strong></td>
+    </tr>
+    <tr>
+      <td>“toolchain not installed”</td>
+      <td>Wrong lean version</td>
+      <td><code class="language-plaintext highlighter-rouge">elan toolchain install $(cat lean-toolchain)</code> from the repo root</td>
+    </tr>
+    <tr>
+      <td>paper-assistant shows <code class="language-plaintext highlighter-rouge">✗ lean</code></td>
+      <td>lean not on PATH</td>
+      <td>Add <code class="language-plaintext highlighter-rouge">$HOME/.elan/bin</code> to PATH in shell profile</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="mathlib-cache-403-fallback-proven-workaround">
+  
+  
+    <a href="#mathlib-cache-403-fallback-proven-workaround" class="anchor-heading" aria-labelledby="mathlib-cache-403-fallback-proven-workaround"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mathlib cache 403 fallback (proven workaround)
+  
+  
+</h2>
+    
+
+<p><strong>Symptom.</strong> In sandboxed cloud environments, <code class="language-plaintext highlighter-rouge">lake exe cache get</code> returns
+403 forbidden on every mathlib oleans shard, and <code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code>
+MCP times out at 60 s because no prebuilt oleans are available.</p>
+
+<blockquote>
+  <p><strong>⚡ FIRST RESORT — restore prebuilt oleans (~2 min). Do NOT build from
+source until you have tried this.</strong></p>
+
+  <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts/lake-cache.sh restore
+</code></pre></div>  </div>
+
+  <p>That is the whole procedure — it derives the package and branch from
+<code class="language-plaintext highlighter-rouge">lean-toolchain</code> plus the branch family, fetches into a private ref
+(no <code class="language-plaintext highlighter-rouge">FETCH_HEAD</code> race), handles both on-disk cache formats, and
+<strong>verifies oleans actually landed</strong> instead of trusting that an
+extract implies a usable cache. Exit <code class="language-plaintext highlighter-rouge">1</code> = miss, <code class="language-plaintext highlighter-rouge">3</code> = corrupt.</p>
+
+  <p>Full command set and failure guide: the <code class="language-plaintext highlighter-rouge">lean-cache-restore</code> skill.</p>
+
+  <p><strong>This is the single most common wasted hour</strong> — the from-source
+sections below are a <em>fallback</em>, not the default. If you do end up
+building, run <code class="language-plaintext highlighter-rouge">scripts/lake-cache.sh seed</code> afterwards so the next
+agent restores in 2 minutes instead of rebuilding.</p>
+
+  <p>The hand-written git recipe that used to live here has been removed:
+it carried a <code class="language-plaintext highlighter-rouge">FETCH_HEAD</code> race that silently truncated the tarball
+(surfacing as <code class="language-plaintext highlighter-rouge">gzip: not in gzip format</code>, indistinguishable from a
+corrupt cache), and a <code class="language-plaintext highlighter-rouge">git ls-tree</code> call that returned nothing when
+run from a package subdirectory — reporting a perfectly good branch as
+empty. Both are fixed in the script; do not reconstruct the recipe.</p>
+
+  <p><strong>Out-of-cone modules.</strong> A cache branch carries only the oleans in the
+paper’s dependency closure at seed time. A module outside it (e.g. a
+representation-theory import a new file pulls in) still compiles from
+source — that is not a broken restore. Fold it into the next reseed.</p>
+</blockquote>
+
+<p><strong>Fallback workaround — source clone + from-source build (only when the
+cache-branch restore above misses):</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Step 1: Clone mathlib source locally (~144 MB).</span>
+<span class="nb">cd</span> .. <span class="o">&amp;&amp;</span> git clone https://github.com/leanprover-community/mathlib4.git
+<span class="nb">cd</span> -
+
+<span class="c"># Step 2: Set a global git insteadOf so Lake's mathlib fetches go to</span>
+<span class="c"># the local clone instead of the network.</span>
+git config <span class="nt">--global</span> url.<span class="s2">"file:///home/user/mathlib4"</span>.insteadOf <span class="se">\</span>
+  <span class="s2">"https://github.com/leanprover-community/mathlib4"</span>
+
+<span class="c"># Step 3: Verify by running an LSP query on a mathlib-importing file.</span>
+<span class="c"># The first query will still be slow (cold workspace) but should</span>
+<span class="c"># return real diagnostics rather than timing out.</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>🟦 When even the mathlib <code class="language-plaintext highlighter-rouge">git clone</code> 403s (repo-scoped git proxy) —
+use the codeload tarball via the egress proxy.</strong> On stricter web sandboxes
+the git <code class="language-plaintext highlighter-rouge">insteadOf</code> rewrites <em>every</em> <code class="language-plaintext highlighter-rouge">https://github.com/</code> to a
+<strong>repo-scoped</strong> git proxy that only allows this repo, so Step 1’s
+<code class="language-plaintext highlighter-rouge">git clone …/mathlib4</code> returns <strong>403</strong> (and so does <code class="language-plaintext highlighter-rouge">lake exe cache get</code>).
+But the <strong>HTTPS egress proxy still reaches <code class="language-plaintext highlighter-rouge">codeload.github.com</code></strong> — only
+the <em>git</em> path is scoped — so fetch the source tarball at the <strong>pinned
+manifest rev</strong> (must match the restored cache oleans) directly:</p>
+
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">REV</span><span class="o">=</span><span class="si">$(</span>python3 <span class="nt">-c</span> <span class="s2">"import json,sys; print(next(p['rev'] for p in json.load(open('lake-manifest.json'))['packages'] if p['name']=='mathlib'))"</span><span class="si">)</span>
+curl <span class="nt">-fsS</span> <span class="nt">--cacert</span> /root/.ccr/ca-bundle.crt <span class="se">\</span>
+  <span class="s2">"https://codeload.github.com/leanprover-community/mathlib4/tar.gz/</span><span class="nv">$REV</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">-o</span> /tmp/mathlib-src.tar.gz
+<span class="nb">tar </span>xzf /tmp/mathlib-src.tar.gz <span class="nt">-C</span> /tmp
+<span class="nb">cp</span> <span class="nt">-r</span> <span class="s2">"/tmp/mathlib4-</span><span class="nv">$REV</span><span class="s2">/Mathlib"</span> .lake/packages/mathlib/   <span class="c"># stage source ALONGSIDE restored oleans</span>
+</code></pre></div>  </div>
+
+  <p><strong>Then build the missing delta with <code class="language-plaintext highlighter-rouge">lean</code>-direct — NOT <code class="language-plaintext highlighter-rouge">lake build</code>.</strong>
+With source staged next to restored oleans, <code class="language-plaintext highlighter-rouge">lake build &lt;anything&gt;</code>
+sees the package dir differs from the manifest, prints
+<code class="language-plaintext highlighter-rouge">mathlib: URL has changed; deleting … and cloning again</code>, <strong>deletes the
+restored oleans</strong>, and re-clones (→ 403). Instead compute the
+missing-olean closure of your target and compile each missing module
+with <code class="language-plaintext highlighter-rouge">lean --root=&lt;pkgRoot&gt; -o &lt;lib&gt;/&lt;Mod&gt;.olean &lt;src&gt;</code> (set <code class="language-plaintext highlighter-rouge">LEAN_PATH</code>
+to every <code class="language-plaintext highlighter-rouge">*/.lake/build/lib/lean</code>). For a package file pass the package’s
+own <code class="language-plaintext highlighter-rouge">leanOptions</code> (e.g. <code class="language-plaintext highlighter-rouge">-D autoImplicit=false</code>) — otherwise you get
+spurious <code class="language-plaintext highlighter-rouge">Field ?m</code>/instance-diamond errors that look like real bugs but
+are just the missing option.</p>
+</blockquote>
+
+<p>After the clone/redirect succeeds, <code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> returns real
+error / warning items (not the timeout sentinel), unblocking iterative Lean
+proof development.</p>
+
+<p><strong>Why this is the right diagnostic step.</strong> Without LSP feedback, blind
+proof iteration is a trap — agents push speculative “plausible” proofs that
+fail to compile, and the trust-but-verify rule forces reverts. The local
+mathlib clone is the cheapest path to a warm LSP when the cache is
+unreachable.</p>
+<h3 id="build-from-source-path-when-you-dont-need-iterative-lsp">
+  
+  
+    <a href="#build-from-source-path-when-you-dont-need-iterative-lsp" class="anchor-heading" aria-labelledby="build-from-source-path-when-you-dont-need-iterative-lsp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Build-from-source path (when you don’t need iterative LSP)
+  
+  
+</h3>
+    
+
+<p>If your task is <strong>bulk diagnostics regen</strong> or <strong>one-shot
+build-everything</strong>, the local clone + <code class="language-plaintext highlighter-rouge">git insteadOf</code> above is
+sufficient — you don’t need the cache at all. <code class="language-plaintext highlighter-rouge">lake build</code> happily
+compiles Mathlib from source; it’s just slower.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># After the clone + insteadOf above:</span>
+<span class="nb">nohup </span>lake build MyPaper <span class="o">&gt;</span> /tmp/lake-build.log 2&gt;&amp;1 &amp;
+<span class="nb">tail</span> <span class="nt">-f</span> /tmp/lake-build.log              <span class="c"># monitor</span>
+<span class="nb">grep</span> <span class="nt">-c</span> <span class="s1">'^✔'</span> /tmp/lake-build.log         <span class="c"># sample progress</span>
+</code></pre></div></div>
+
+<p>Throughput slows as Mathlib modules get heavier (Algebra, Data, then
+Topology / Analysis). Plausible full-Mathlib build: <strong>1–3 hours</strong>, plus
+~10 min for the paper. Once the build finishes, <code class="language-plaintext highlighter-rouge">lake exe cache get</code>
+becomes irrelevant — the oleans are local.</p>
+<h3 id="web-sandbox-addendum--three-failure-modes-the-recipe-above-omits">
+  
+  
+    <a href="#web-sandbox-addendum--three-failure-modes-the-recipe-above-omits" class="anchor-heading" aria-labelledby="web-sandbox-addendum--three-failure-modes-the-recipe-above-omits"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Web-sandbox addendum — three failure modes the recipe above omits
+  
+  
+</h3>
+    
+
+<p>A stricter network policy can surface three gaps:</p>
+
+<ol>
+  <li>
+    <p><strong>The elan toolchain host is firewalled too — not just the cache.</strong>
+<code class="language-plaintext highlighter-rouge">release.lean-lang.org</code> may return <code class="language-plaintext highlighter-rouge">Host not in allowlist</code>, so
+<code class="language-plaintext highlighter-rouge">lean_setup</code> / <code class="language-plaintext highlighter-rouge">elan toolchain install</code> aborts with
+<code class="language-plaintext highlighter-rouge">failed to parse release data … Unexpected character: H</code> (an HTML
+error page, not JSON). Workaround: the <strong>GitHub release asset is usually
+allowlisted</strong> (<code class="language-plaintext highlighter-rouge">github.com/leanprover/lean4/releases/...</code> → 200). Install
+the toolchain by hand (substitute your pinned version):</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install</span> <span class="nt">-y</span> zstd            <span class="c"># tarballs are .tar.zst</span>
+<span class="nv">VER</span><span class="o">=</span><span class="si">$(</span><span class="nb">cut</span> <span class="nt">-d</span>: <span class="nt">-f2</span> lean-toolchain | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'\r'</span><span class="si">)</span>   <span class="c"># e.g. v4.24.0 (strip leading v for the asset path)</span>
+<span class="nv">TC</span><span class="o">=</span><span class="nv">$HOME</span>/.elan/toolchains/leanprover--lean4---<span class="nv">$VER</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$TC</span><span class="s2">"</span> /tmp/lx
+curl <span class="nt">-sSL</span> <span class="nt">-o</span> /tmp/lean.tar.zst <span class="se">\</span>
+  <span class="s2">"https://github.com/leanprover/lean4/releases/download/</span><span class="nv">$VER</span><span class="s2">/lean-</span><span class="k">${</span><span class="nv">VER</span><span class="p">#v</span><span class="k">}</span><span class="s2">-linux.tar.zst"</span>
+<span class="nb">tar</span> <span class="nt">--use-compress-program</span><span class="o">=</span>unzstd <span class="nt">-xf</span> /tmp/lean.tar.zst <span class="nt">-C</span> /tmp/lx
+<span class="nb">cp</span> <span class="nt">-a</span> /tmp/lx/lean-<span class="k">${</span><span class="nv">VER</span><span class="p">#v</span><span class="k">}</span><span class="nt">-linux</span>/. <span class="s2">"</span><span class="nv">$TC</span><span class="s2">/"</span>
+elan toolchain list   <span class="c"># should now list leanprover/lean4:&lt;VER&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>A <code class="language-plaintext highlighter-rouge">--depth 1</code> shallow mathlib clone BREAKS lake’s checkout.</strong> Lake
+pins a mathlib revision; a shallow clone lacks it, so the checkout dies
+with <code class="language-plaintext highlighter-rouge">external command 'git' exited with code 128</code>. Use a <strong>full</strong> clone,
+or <code class="language-plaintext highlighter-rouge">cd ../mathlib4 &amp;&amp; git fetch --unshallow</code> before building. (A shallow
+clone is fine only for the LSP-warm path, not for <code class="language-plaintext highlighter-rouge">lake build</code>.)</p>
+  </li>
+  <li>
+    <p><strong>The global <code class="language-plaintext highlighter-rouge">insteadOf</code> can trigger a destructive re-clone loop.</strong>
+With the redirect set, lake may decide the mathlib remote “URL has
+changed”, then <strong>delete <code class="language-plaintext highlighter-rouge">.lake/packages/mathlib</code> and re-clone on every
+build</strong> — wiping progress each run. If you see repeated <code class="language-plaintext highlighter-rouge">info: mathlib:
+URL has changed; deleting … cloning again</code>, unset the redirect
+(<code class="language-plaintext highlighter-rouge">git config --global --unset
+url."file:///home/user/mathlib4".insteadOf</code>) and let lake fetch
+normally, or pre-populate <code class="language-plaintext highlighter-rouge">.lake/packages/mathlib</code> from the local clone
+once and leave the redirect off.</p>
+  </li>
+</ol>
+
+<p><strong>Bottom line for the strictest sandboxes:</strong> if even a full clone +
+un-shallow can’t get <code class="language-plaintext highlighter-rouge">lake build MyPaper</code> past the transitive-dep fetch,
+Lean is <strong>not mechanically compilable</strong> in that session — fall back to a
+rigorous hand-audit and say so explicitly rather than claiming a green
+build you could not run.</p>
+<h3 id="two-more-gotchas-after-a-lake-cache-restore">
+  
+  
+    <a href="#two-more-gotchas-after-a-lake-cache-restore" class="anchor-heading" aria-labelledby="two-more-gotchas-after-a-lake-cache-restore"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two more gotchas after a <code class="language-plaintext highlighter-rouge">lake-cache/*</code> restore
+  
+  
+</h3>
+    
+
+<p>Both can cost a session <strong>even though the restore itself succeeded</strong>, and
+both occur with <strong>no</strong> <code class="language-plaintext highlighter-rouge">insteadOf</code> redirect set:</p>
+
+<ol>
+  <li>
+    <p><strong>The cache may omit the root <code class="language-plaintext highlighter-rouge">Mathlib.olean</code>.</strong> A cache branch ships
+thousands of Mathlib <em>submodule</em> oleans but possibly <strong>not</strong> the root
+aggregator (if the paper lib never imports bare <code class="language-plaintext highlighter-rouge">Mathlib</code>, it was never
+built/cached). A NEW file doing <code class="language-plaintext highlighter-rouge">import Mathlib</code> then fails with
+<code class="language-plaintext highlighter-rouge">object file '…/Mathlib.olean' … does not exist</code> despite thousands of
+oleans present. <strong>Fix:</strong> import specific modules — e.g.
+<code class="language-plaintext highlighter-rouge">import Mathlib.Analysis.SpecialFunctions.Sqrt</code> <code class="language-plaintext highlighter-rouge">+ import Mathlib.Tactic</code>
+— never bare <code class="language-plaintext highlighter-rouge">Mathlib</code> (also the minimal-imports rule).</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">lake env lean</code> / <code class="language-plaintext highlighter-rouge">lake build</code> re-resolves deps and WIPES the restored
+oleans.</strong> On the restored tree, lake may decide several packages’ remote
+URLs “have changed” → <code class="language-plaintext highlighter-rouge">deleting … cloning again</code> → the Mathlib olean
+count crashes. <strong>This happens without any <code class="language-plaintext highlighter-rouge">insteadOf</code> redirect.</strong> <strong>Fix
+for verifying a single self-contained file: bypass lake</strong> — run <code class="language-plaintext highlighter-rouge">lean</code>
+directly with a manual <code class="language-plaintext highlighter-rouge">LEAN_PATH</code>:</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">LP</span><span class="o">=</span><span class="si">$(</span>find <span class="s2">"</span><span class="nv">$ROOT</span><span class="s2">/.lake/packages"</span> <span class="nt">-maxdepth</span> 5 <span class="nt">-type</span> d <span class="nt">-path</span> <span class="s1">'*/.lake/build/lib/lean'</span> | <span class="nb">tr</span> <span class="s1">'\n'</span> <span class="s1">':'</span><span class="si">)</span>
+<span class="c"># for a file importing other paper modules, also add the workspace + paper oleans:</span>
+<span class="nv">LP</span><span class="o">=</span><span class="s2">"</span><span class="nv">$LP$ROOT</span><span class="s2">/.lake/build/lib/lean:</span><span class="nv">$ROOT</span><span class="s2">/content/&lt;paper&gt;/lean/.lake/build/lib/lean"</span>
+<span class="nb">env </span><span class="nv">LEAN_PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$LP</span><span class="s2">"</span> <span class="nv">ELAN_NO_OVERRIDE_NOTICE</span><span class="o">=</span>1 lean path/to/File.lean   <span class="c"># EXIT 0 = checks</span>
+</code></pre></div>    </div>
+    <p>lake never runs ⇒ nothing re-resolves. (Whole-lib builds still need lake;
+then expect the re-clone and budget for it.)</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p><strong>🟥 VERIFY a single file with <code class="language-plaintext highlighter-rouge">lean</code>-direct — NEVER <code class="language-plaintext highlighter-rouge">lake build</code>.</strong> To
+<em>verify</em> a PR’s one or two changed <code class="language-plaintext highlighter-rouge">.lean</code> files, run <code class="language-plaintext highlighter-rouge">lean</code>-direct (the
+gotcha-#2 recipe above). Do <strong>not</strong> reach for <code class="language-plaintext highlighter-rouge">lake build &lt;Module&gt;</code>: even
+for a single module it re-resolves the dependency graph and <strong>rebuilds
+Mathlib from source</strong> — the <code class="language-plaintext highlighter-rouge">import Mathlib.Tactic</code> closure alone is
+thousands of modules / 40+ min — <em>and</em> it wipes the restored oleans. The
+Mathlib oleans <strong>are reachable</strong> via the cache branch — <code class="language-plaintext highlighter-rouge">git fetch
+--depth=1</code> + extract is ~2 min. Do not conclude “Mathlib is unreachable /
+Lean uncompilable” until the cache restore + <code class="language-plaintext highlighter-rouge">lean</code>-direct path has been
+tried.</p>
+
+  <p><strong>Recovery if you already ran <code class="language-plaintext highlighter-rouge">lake build</code> and it started rebuilding:</strong>
+check <code class="language-plaintext highlighter-rouge">find .lake/packages/mathlib -name '*.olean' | wc -l</code>; if it dropped
+well below the restored count, <strong>kill lake and RE-RESTORE the cache
+branch</strong> before <code class="language-plaintext highlighter-rouge">lean</code>-direct. (To kill lake without the <code class="language-plaintext highlighter-rouge">pkill -f</code> pattern
+matching its own argv, use a bracket escape: <code class="language-plaintext highlighter-rouge">pkill -f 'lake buil[d]'</code>.)</p>
+</blockquote>
+
+<p><strong>When to use which:</strong></p>
+
+<ul>
+  <li>LSP iteration on one or two files → cache 403 fallback above (warm
+workspace, ~minutes to first useful diagnostic).</li>
+  <li>Mass regen of compile diagnostics across all <code class="language-plaintext highlighter-rouge">.lean</code> files → from-source
+build first, then per-file <code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> pass; budget 2-3
+hours end-to-end.</li>
+  <li>Single-PR proof discharge → cache fallback; from-source build is overkill.</li>
+</ul>
+
+<p><strong>Container-restart caveat.</strong> In Claude Code on the web, the container may
+restart between sessions and lose <code class="language-plaintext highlighter-rouge">/tmp/</code> and <code class="language-plaintext highlighter-rouge">.lake/</code>. A mathlib clone at
+<code class="language-plaintext highlighter-rouge">../mathlib4</code> typically persists (it lives in the working tree’s parent). On
+resume: re-confirm the <code class="language-plaintext highlighter-rouge">git insteadOf</code> redirect, then re-launch the build if
+needed. The build is fully incremental — only changed modules rebuild.</p>
+<h3 id="-fast-sandbox-build-recipe-try-first-when-less-firewalled">
+  
+  
+    <a href="#-fast-sandbox-build-recipe-try-first-when-less-firewalled" class="anchor-heading" aria-labelledby="-fast-sandbox-build-recipe-try-first-when-less-firewalled"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ✅ Fast sandbox build recipe (try FIRST when less-firewalled)
+  
+  
+</h3>
+    
+
+<p>A less-firewalled web session can build from source cleanly — often with no
+clone at all:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 0. The toolchain is frequently ALREADY installed by a prior lean_setup —</span>
+<span class="c">#    it's just not on PATH. Check before reinstalling:</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.elan/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+lake <span class="nt">--version</span>           <span class="c"># if this prints "Lake version … (Lean 4.x.y)", you're set</span>
+<span class="nb">ls</span> .lake/packages/mathlib/Mathlib/Data/Real/Basic.lean   <span class="c"># mathlib SOURCE usually already fetched</span>
+
+<span class="c"># 1. Build a SINGLE module (its dep cone only), NOT the whole paper — far less to compile.</span>
+<span class="c">#    Use -R: a stale "compiled configuration is invalid" error means reconfigure.</span>
+<span class="nv">ELAN_NO_OVERRIDE_NOTICE</span><span class="o">=</span>1 <span class="nb">nohup </span>lake build <span class="nt">-R</span> MyPaper.SomeModule <span class="se">\</span>
+  <span class="o">&gt;</span> /tmp/lake.log 2&gt;&amp;1 &amp;
+<span class="c"># 2. Watch for completion with a backgrounded until-loop (NOT foreground tail):</span>
+<span class="o">(</span> <span class="k">while </span>pgrep <span class="nt">-f</span> <span class="s2">"lake build -R"</span> <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">do </span><span class="nb">sleep </span>30<span class="p">;</span> <span class="k">done</span><span class="p">;</span> <span class="nb">tail</span> <span class="nt">-25</span> /tmp/lake.log <span class="o">)</span> &amp;
+</code></pre></div></div>
+
+<p><strong>What works / what’s blocked in this class of sandbox:</strong></p>
+<ul>
+  <li>✅ <code class="language-plaintext highlighter-rouge">github.com</code> dep clones (aesop, Qq, batteries, <strong>mathlib</strong>) — succeed.</li>
+  <li>✅ Building Mathlib <strong>from source</strong> — works (toolchain already installed).</li>
+  <li>❌ <code class="language-plaintext highlighter-rouge">lake exe cache get</code> — <strong>hangs</strong> (olean cache server unreachable); go
+straight to from-source.</li>
+  <li>A single-module dep cone is often a few hundred Mathlib modules, ~tens of
+minutes; a full paper is 1–3 h.</li>
+</ul>
+
+<blockquote>
+  <p><strong>⚠️ CACHE FALSE-POSITIVE GREEN — verify a real recompile before trusting
+exit 0.</strong> After RESTORING a cache branch, the restored oleans for a module
+you then <em>edit</em> can be treated as up-to-date by Lake’s trace check, so
+<code class="language-plaintext highlighter-rouge">lake build -R &lt;Module&gt;</code> returns <strong>exit 0 with an empty log without
+recompiling your new code</strong> — a false-positive green. A red proof
+(<code class="language-plaintext highlighter-rouge">unsolved goals</code>) only surfaces on a genuine rebuild. <strong>Rule: after
+restoring the cache, force a real recompile of any module you changed
+before trusting green</strong> — <code class="language-plaintext highlighter-rouge">touch &lt;file&gt;.lean</code> first, and confirm the log
+ends with <code class="language-plaintext highlighter-rouge">Build completed successfully (N jobs)</code> (a recompile shows
+tactic-timing lines; a skipped build shows nothing). Do NOT infer success
+from exit code alone, and beware compound commands: a trailing <code class="language-plaintext highlighter-rouge">grep -c …</code>
+prints <code class="language-plaintext highlighter-rouge">0</code> but <strong>exits 1</strong> when there are zero matches, masquerading as a
+build failure. Prefer <code class="language-plaintext highlighter-rouge">grep -c … ; true</code> or read the explicit “Build
+completed” line.</p>
+</blockquote>
+<h3 id="️-preserve-the-build--seedrestore-the-lake-cache-orphan-branch">
+  
+  
+    <a href="#️-preserve-the-build--seedrestore-the-lake-cache-orphan-branch" class="anchor-heading" aria-labelledby="️-preserve-the-build--seedrestore-the-lake-cache-orphan-branch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 🗄️ PRESERVE THE BUILD — seed/restore the <code class="language-plaintext highlighter-rouge">lake-cache/*</code> orphan branch
+  
+  
+</h3>
+    
+
+<p><strong>Every agent rebuilding Mathlib from scratch is the waste to avoid.</strong>
+Durable cross-container preservation lives on <strong>orphan branches</strong>
+<code class="language-plaintext highlighter-rouge">lake-cache/&lt;package&gt;-&lt;toolchain-slug&gt;</code> (slug for <code class="language-plaintext highlighter-rouge">v4.24.0</code> = <code class="language-plaintext highlighter-rouge">v4-24-0</code>).
+These survive container reclaim (git-versioned), unlike <code class="language-plaintext highlighter-rouge">.lake/</code>
+(ephemeral) or <code class="language-plaintext highlighter-rouge">../mathlib4</code> (parent-tree, often persists but not
+guaranteed).</p>
+
+<p>The cache branch stores the oleans as a <strong>compressed tarball split into
+&lt;100 MB chunks</strong> (<code class="language-plaintext highlighter-rouge">lake-oleans.tgz.part00…</code>), because GitHub hard-rejects
+any single file &gt; 100 MB on push. NOT the raw <code class="language-plaintext highlighter-rouge">.lake/</code> tree (a raw multi-GB
+tree push is hostile). Both restore and seed use a <strong>separate <code class="language-plaintext highlighter-rouge">git
+worktree</code></strong> so your main working tree is never disturbed — do NOT <code class="language-plaintext highlighter-rouge">git
+switch --orphan</code> in the main tree (it leaves every file untracked and traps
+you on switch-back).</p>
+
+<p><strong>RESTORE first (before any from-source build):</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts/lake-cache.sh restore     <span class="c"># exit 1 = not seeded yet; 3 = corrupt</span>
+</code></pre></div></div>
+<p>Do not hand-roll this. The earlier hand-written version raced on
+<code class="language-plaintext highlighter-rouge">FETCH_HEAD</code> and used a cwd-relative <code class="language-plaintext highlighter-rouge">git ls-tree</code> that returned nothing
+when run from a package subdirectory — reporting a good branch as empty.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+&gt; **⚠ Post-restore hazard — verify mathlib's origin URL BEFORE running
+&gt; lake.** The tar carries `.lake/packages/mathlib/.git` from the *seeding*
+&gt; container; if its `origin` URL differs from the manifest URL (e.g. it
+&gt; recorded the seeder's git proxy), the first `lake` invocation prints
+&gt; `mathlib: URL has changed` and **deletes the restored package — including
+&gt; its oleans — before re-cloning**. Check first:
+&gt;
+&gt; ```bash
+&gt; git -C .lake/packages/mathlib remote get-url origin   # must match lake-manifest.json
+&gt; git -C .lake/packages/mathlib remote set-url origin \
+&gt;   https://github.com/leanprover-community/mathlib4    # fix a mismatch
+&gt; ```
+&gt;
+&gt; **Variant: packages restored with NO `.git` at all.** If the seed tar
+&gt; carries package sources + oleans but no `.git` dirs, do **not** let lake
+&gt; touch the tree. **Graft** valid git state in place first — per
+&gt; `lake-manifest.json` entry: `git init` + `git remote add origin &lt;url&gt;` +
+&gt; `git fetch --depth=1 origin &lt;rev&gt;` + `git checkout -qf &lt;rev&gt;` inside each
+&gt; package dir. Lake then accepts every package untouched. A package dir
+&gt; missing entirely is fine — lake clones just that one.
+
+**SEED after a successful build** (so the NEXT agent restores in ~2 min
+instead of rebuilding) — worktree-based, tarball created in-repo:
+```bash
+WT=/tmp/lake-cache-wt
+SLUG=$(cut -d: -f2 lean-toolchain | tr -d '\r' | tr . -); BR="lake-cache/&lt;package&gt;-$SLUG"
+# 1. Pack the built oleans (compressed). Create the tarball where the
+#    worktree can `git add` it — git cannot add a path outside its tree.
+#    ⚠ The paper package build lives in the NESTED Lake dir
+#    `content/*/lean/.lake/build`; if root `.lake/build` does not exist in
+#    this checkout, the glob silently ships a tarball with ZERO paper oleans
+#    (only Mathlib). The restore-check (Step 4 below) is what catches this.
+# (No `2&gt;/dev/null` — a missing path must fail LOUDLY.)
+tar czf /tmp/lake-oleans.tgz content/*/lean/.lake/build .lake/packages/*/.lake/build
+# 2. Orphan branch in a SEPARATE worktree (main tree untouched, no trap).
+git worktree add --orphan -b "$BR" "$WT" 2&gt;/dev/null \
+  || { git worktree add --detach "$WT"; git -C "$WT" checkout --orphan "$BR"; \
+       git -C "$WT" rm -rfq --cached . 2&gt;/dev/null; git -C "$WT" clean -fdxq; }
+# 3. Split into &lt;100 MB chunks INSIDE the worktree (GitHub rejects &gt;100 MB files).
+( cd "$WT" &amp;&amp; split -b 90m -d /tmp/lake-oleans.tgz lake-oleans.tgz.part )
+git -C "$WT" add 'lake-oleans.tgz.part*'
+git -C "$WT" commit -qm "seed lean cache: oleans @ $(cat lean-toolchain) (chunked &lt;100MB)"
+git -C "$WT" push -u origin "$BR"
+git worktree remove --force "$WT"                      # main branch never left
+</code></pre></div></div>
+<blockquote>
+  <p><strong>HTTP 413 on the seed push.</strong> A web-sandbox git proxy may cap a single
+push payload — a large one-commit pack is rejected with <code class="language-plaintext highlighter-rouge">RPC failed; HTTP
+413</code>. Workaround: commit <strong>each ~90 MB chunk as its own commit</strong> inside the
+worktree and <code class="language-plaintext highlighter-rouge">git push</code> after each one (<code class="language-plaintext highlighter-rouge">--force</code> on the first push to
+replace the old cache history). Restorers are unaffected — the restore
+recipe reads the tip tree, which contains all chunks.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Step 4 — VERIFY the seed in a clean temp dir (MANDATORY — catches the
+paper-oleans-missing bug).</strong> A silent bad seed corrupts the cache for every
+downstream session, so prove the pushed branch restores before trusting it:</p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">T</span><span class="o">=</span>/tmp/restore-check<span class="p">;</span> <span class="nb">rm</span> <span class="nt">-rf</span> <span class="s2">"</span><span class="nv">$T</span><span class="s2">"</span><span class="p">;</span> <span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$T</span><span class="s2">"</span>
+<span class="c"># Restore into a scratch Lake root and let the script do the verifying:</span>
+<span class="c"># it counts oleans and exits 3 if the extract produced none, which is</span>
+<span class="c"># exactly the paper-oleans-missing bug this step exists to catch.</span>
+scripts/lake-cache.sh restore <span class="nt">--lake-root</span> <span class="s2">"</span><span class="nv">$T</span><span class="s2">"</span> <span class="nt">--branch</span> <span class="s2">"</span><span class="nv">$BR</span><span class="s2">"</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">"exit=</span><span class="nv">$?</span><span class="s2">"</span>
+</code></pre></div>  </div>
+  <p>Seeding to a <code class="language-plaintext highlighter-rouge">-test</code> branch suffix first (then a ref-only force-push
+cutover to production — the blobs are already on the remote, so the cutover
+uploads nothing and dodges the 413) is the safe path for the load-bearing
+production branch.</p>
+</blockquote>
+
+<p>Keep the number of cache branches bounded (an owner cap). A CI workflow can
+prune/refresh on <code class="language-plaintext highlighter-rouge">lean-toolchain</code>/<code class="language-plaintext highlighter-rouge">lakefile.toml</code> changes — if CI billing is
+up, prefer triggering it over an ad-hoc multi-GB agent push.</p>
+
+<p><strong>Rule for agents going forward:</strong> RESTORE → (build only if miss) → SEED.
+Never silently rebuild Mathlib and throw the oleans away.</p>
+<h2 id="delegate-the-install-to-a-sub-agent-recommended-for-the-main-task">
+  
+  
+    <a href="#delegate-the-install-to-a-sub-agent-recommended-for-the-main-task" class="anchor-heading" aria-labelledby="delegate-the-install-to-a-sub-agent-recommended-for-the-main-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Delegate the install to a sub-agent (recommended for the main task)
+  
+  
+</h2>
+    
+
+<p>The full bootstrap (elan + GitHub-toolchain workaround + full mathlib clone</p>
+<ul>
+  <li>from-source olean build) is <strong>long, fiddly, and frequently blocked</strong> — it
+should <strong>not</strong> run in the foreground of a content/proof task. Kick off a
+<strong>background sub-agent</strong> so the main session keeps moving, then verify the
+target file(s) when it reports back.</li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Agent(
+  subagent_type = "general-purpose",
+  run_in_background = true,
+  description = "Bootstrap Lean + verify &lt;file&gt;",
+  prompt = &lt;the runbook below + the specific file/lemma to compile&gt;
+)
+</code></pre></div></div>
+
+<p><strong>Sub-agent runbook (give it these env facts so it doesn’t re-derive them):</strong></p>
+
+<ol>
+  <li><strong>Probe the network first:</strong> <code class="language-plaintext highlighter-rouge">curl -sI https://github.com</code> (usually 200)
+vs <code class="language-plaintext highlighter-rouge">curl -sI https://release.lean-lang.org</code> (often 403 in web sandboxes).
+This decides the toolchain path: if <code class="language-plaintext highlighter-rouge">release.lean-lang.org</code> is blocked,
+use the <strong>GitHub-release manual install</strong> in §”Web-sandbox addendum” item 1.
+Set <code class="language-plaintext highlighter-rouge">ELAN_UPDATE_CHECK=0</code> to suppress <code class="language-plaintext highlighter-rouge">release.lean-lang.org</code> pings.</li>
+  <li><strong>Mathlib:</strong> a <strong>full</strong> clone (NOT <code class="language-plaintext highlighter-rouge">--depth 1</code> — shallow breaks <code class="language-plaintext highlighter-rouge">lake</code>’s
+rev checkout) at the repo-pinned commit (<code class="language-plaintext highlighter-rouge">grep inputRev lake-manifest.json</code>).
+For a <em>single-file</em> check, a scratch lake project with <code class="language-plaintext highlighter-rouge">require mathlib from
+"&lt;local path&gt;"</code> (path dep) sidesteps the <code class="language-plaintext highlighter-rouge">insteadOf</code> re-clone loop.</li>
+  <li><strong>Build is slow</strong> (no cache → oleans from source). Let it run; report
+progress. Compile the <strong>statement</strong> first (<code class="language-plaintext highlighter-rouge">sorry</code> ⇒ only a sorry warning),
+then the proof.</li>
+  <li><strong>Report findings even if blocked</strong> — the exact failing step + whether it
+is a <em>hard</em> network block vs. just slow. If even a full clone can’t get past
+the transitive-dep fetch, Lean is <strong>not mechanically compilable</strong> in that
+session — say so explicitly and fall back to a rigorous hand-audit; do
+<strong>not</strong> claim a green build you could not run.</li>
+</ol>
+
+<p><strong>Why a sub-agent:</strong> the install can take many minutes (toolchain fetch) to
+hours (full mathlib from source). Foreground-blocking the main task on it is
+the anti-pattern; the sub-agent isolates the wait and returns a clean verdict.</p>
+<h2 id="path-configuration">
+  
+  
+    <a href="#path-configuration" class="anchor-heading" aria-labelledby="path-configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> PATH Configuration
+  
+  
+</h2>
+    
+
+<p>Session scripts should source a Lean-env helper (e.g.
+<code class="language-plaintext highlighter-rouge">scripts/lib/lean-env.sh</code>) that sets:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.elan/bin:</span><span class="nv">$HOME</span><span class="s2">/.local/bin:</span><span class="nv">$HOME</span><span class="s2">/.bun/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>The paper-assistant inherits the shell’s PATH when launched via <code class="language-plaintext highlighter-rouge">.mcp.json</code>.
+Ensure elan’s bin directory is on the PATH in the shell profile
+(<code class="language-plaintext highlighter-rouge">~/.bashrc</code>, <code class="language-plaintext highlighter-rouge">~/.zshrc</code>, or <code class="language-plaintext highlighter-rouge">~/.profile</code>).</p>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

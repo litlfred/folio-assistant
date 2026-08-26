@@ -1,0 +1,828 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(58)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(58) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(58) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(58) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lean Completeness Audit | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Lean Completeness Audit" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lean Completeness Audit" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Lean Completeness Audit","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/lean-completeness-audit.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Lean Completeness Audit</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/lean-completeness-audit.md"><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/lean-completeness-audit.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="lean-completeness-audit-skill">
+  
+  
+    <a href="#lean-completeness-audit-skill" class="anchor-heading" aria-labelledby="lean-completeness-audit-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lean Completeness Audit Skill
+  
+  
+</h1>
+    
+<h2 id="role">
+  
+  
+    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
+  
+  
+</h2>
+    
+
+<p>Verify that every paper’s Lean formalization is structurally complete:
+correct Lake project setup, all required imports present, content
+blocks that require <code class="language-plaintext highlighter-rouge">.lean</code> files have them, and all witnesses are
+current (not stale).</p>
+<h2 id="when-to-use-this-skill">
+  
+  
+    <a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use This Skill
+  
+  
+</h2>
+    
+
+<ul>
+  <li>“audit lean completeness”</li>
+  <li>“check lean coverage”</li>
+  <li>“which blocks are missing lean files?”</li>
+  <li>“verify lean project setup”</li>
+  <li>“formalization gaps”</li>
+  <li>“stale witnesses” / “witness staleness”</li>
+  <li>After adding a new paper or chapter</li>
+  <li>Before tagging a release</li>
+  <li>After modifying any <code class="language-plaintext highlighter-rouge">.lean</code> or <code class="language-plaintext highlighter-rouge">.py</code> computation file</li>
+</ul>
+<h2 id="automated-audit-scripts">
+  
+  
+    <a href="#automated-audit-scripts" class="anchor-heading" aria-labelledby="automated-audit-scripts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Automated Audit Scripts
+  
+  
+</h2>
+    
+<h3 id="deep-lean-audit-chapter-by-chapter">
+  
+  
+    <a href="#deep-lean-audit-chapter-by-chapter" class="anchor-heading" aria-labelledby="deep-lean-audit-chapter-by-chapter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Deep Lean audit (chapter-by-chapter)
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/lean-audit.ts            <span class="c"># console report</span>
+bun run scripts/lean-audit.ts <span class="nt">--json</span>     <span class="c"># JSON for programmatic use</span>
+bun run scripts/lean-audit.ts <span class="nt">--chapter</span> ch5  <span class="c"># filter to one chapter</span>
+bun run scripts/lean-audit.ts <span class="nt">--strict</span>   <span class="c"># exit 1 on uncited sorry</span>
+bun run scripts/lean-audit.ts <span class="nt">--strict</span> <span class="nt">--check-axioms</span>  <span class="c"># also fail on axioms</span>
+bun run scripts/lean-audit.ts <span class="nt">--help</span>     <span class="c"># full CLI reference</span>
+</code></pre></div></div>
+
+<p>This script produces:</p>
+<ul>
+  <li>Sorry inventory with citation checking</li>
+  <li>Trivial truth detection (<code class="language-plaintext highlighter-rouge">True := by trivial</code> placeholders)</li>
+  <li>Axiom inventory</li>
+  <li>Witness staleness (commit SHA comparison)</li>
+  <li>Chapter-by-chapter breakdown</li>
+</ul>
+<h3 id="unified-witness-staleness-audit-lean--python">
+  
+  
+    <a href="#unified-witness-staleness-audit-lean--python" class="anchor-heading" aria-labelledby="unified-witness-staleness-audit-lean--python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Unified witness staleness audit (Lean + Python)
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/witness-audit.ts             <span class="c"># full audit</span>
+bun run scripts/witness-audit.ts <span class="nt">--lean-only</span> <span class="c"># only Lean witnesses</span>
+bun run scripts/witness-audit.ts <span class="nt">--py-only</span>   <span class="c"># only Python witnesses</span>
+bun run scripts/witness-audit.ts <span class="nt">--json</span>      <span class="c"># JSON output</span>
+</code></pre></div></div>
+<h3 id="lean-witness-management">
+  
+  
+    <a href="#lean-witness-management" class="anchor-heading" aria-labelledby="lean-witness-management"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lean witness management
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/lean-witness.ts status   <span class="c"># show all witness statuses</span>
+bun run scripts/lean-witness.ts check &lt;file&gt;  <span class="c"># check single file</span>
+bun run scripts/lean-witness.ts stamp &lt;file&gt;  <span class="c"># create witness after build</span>
+</code></pre></div></div>
+<h3 id="python-witness-staleness">
+  
+  
+    <a href="#python-witness-staleness" class="anchor-heading" aria-labelledby="python-witness-staleness"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Python witness staleness
+  
+  
+</h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>computations
+python3 witness_base.py check-all        <span class="c"># check all Python witnesses</span>
+python3 witness_base.py check-stale &lt;file&gt;  <span class="c"># check single witness</span>
+</code></pre></div></div>
+<h2 id="audit-steps">
+  
+  
+    <a href="#audit-steps" class="anchor-heading" aria-labelledby="audit-steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Audit Steps
+  
+  
+</h2>
+    
+<h3 id="1-lake-project-discovery">
+  
+  
+    <a href="#1-lake-project-discovery" class="anchor-heading" aria-labelledby="1-lake-project-discovery"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Lake Project Discovery
+  
+  
+</h3>
+    
+
+<p>Verify every paper with <code class="language-plaintext highlighter-rouge">.lean</code> files has a proper Lake project:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./scripts/lean-build-all.sh  <span class="c"># discovers via lean-toolchain files</span>
+</code></pre></div></div>
+
+<p><strong>Required files</strong> in each <code class="language-plaintext highlighter-rouge">content/&lt;paper&gt;/lean/</code>:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">lakefile.toml</code> — Lake project config</li>
+  <li><code class="language-plaintext highlighter-rouge">lean-toolchain</code> — pinned Lean version</li>
+  <li>Root module file (e.g., <code class="language-plaintext highlighter-rouge">MyPaper.lean</code>)</li>
+</ul>
+
+<p><strong>Cross-checks</strong>:</p>
+<ul>
+  <li>All <code class="language-plaintext highlighter-rouge">lean-toolchain</code> files pin the same Lean version</li>
+  <li>All <code class="language-plaintext highlighter-rouge">lakefile.toml</code> files pin the same Mathlib commit hash</li>
+  <li><code class="language-plaintext highlighter-rouge">srcDir</code> in lakefile matches the directory structure</li>
+</ul>
+<h3 id="2-import-graph-completeness">
+  
+  
+    <a href="#2-import-graph-completeness" class="anchor-heading" aria-labelledby="2-import-graph-completeness"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Import Graph Completeness
+  
+  
+</h3>
+    
+
+<p>For each paper, verify the root module transitively imports all <code class="language-plaintext highlighter-rouge">.lean</code>
+files in the project:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># List all .lean files</span>
+find content/&lt;paper&gt;/lean/ <span class="nt">-name</span> <span class="s1">'*.lean'</span> <span class="nt">-not</span> <span class="nt">-path</span> <span class="s1">'*/.lake/*'</span> | <span class="nb">sort</span>
+
+<span class="c"># Check root module imports</span>
+<span class="nb">cat </span>content/&lt;paper&gt;/lean/&lt;Root&gt;.lean
+</code></pre></div></div>
+
+<p>Any <code class="language-plaintext highlighter-rouge">.lean</code> file not reachable from the root module won’t be built.</p>
+<h3 id="3-content-block--lean-coverage">
+  
+  
+    <a href="#3-content-block--lean-coverage" class="anchor-heading" aria-labelledby="3-content-block--lean-coverage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Content Block → Lean Coverage
+  
+  
+</h3>
+    
+
+<p>Cross-reference content <code class="language-plaintext highlighter-rouge">.ts</code> manifests against <code class="language-plaintext highlighter-rouge">.lean</code> files.
+Per AGENTS.md rules:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Block kind</th>
+      <th><code class="language-plaintext highlighter-rouge">.lean</code> required?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">definition</code></td>
+      <td><strong>Yes</strong> (enforced)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">theorem</code>, <code class="language-plaintext highlighter-rouge">lemma</code>, <code class="language-plaintext highlighter-rouge">proposition</code>, <code class="language-plaintext highlighter-rouge">corollary</code></td>
+      <td>Expected (warning)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">conjecture</code>, <code class="language-plaintext highlighter-rouge">example</code>, <code class="language-plaintext highlighter-rouge">remark</code></td>
+      <td>Optional</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>For each paper:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Find all content blocks with lean declarations</span>
+<span class="nb">cd </span>content/&lt;paper&gt;
+<span class="nb">grep</span> <span class="nt">-r</span> <span class="s1">'"lean"'</span> <span class="nt">--include</span><span class="o">=</span><span class="s1">'*.ts'</span> <span class="nt">-l</span> | <span class="nb">sort</span>
+</code></pre></div></div>
+
+<p>Check that each <code class="language-plaintext highlighter-rouge">lean.ref</code> URI in a <code class="language-plaintext highlighter-rouge">.ts</code> manifest (form <code class="language-plaintext highlighter-rouge">"&lt;pkg&gt;:&lt;Decl&gt;"</code>,
+parse with <code class="language-plaintext highlighter-rouge">parseLeanRef()</code>) has a corresponding
+declaration in the <code class="language-plaintext highlighter-rouge">.lean</code> files.</p>
+<h3 id="4-cross-paper-import-audit">
+  
+  
+    <a href="#4-cross-paper-import-audit" class="anchor-heading" aria-labelledby="4-cross-paper-import-audit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Cross-Paper Import Audit
+  
+  
+</h3>
+    
+
+<p>Check for stale cross-paper imports (an import to a module that was
+moved to another paper):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># In each paper's .lean files, find imports referencing other papers</span>
+<span class="nb">grep</span> <span class="nt">-rn</span> <span class="s1">'^import'</span> content/<span class="k">*</span>/lean/ <span class="nt">--include</span><span class="o">=</span><span class="s1">'*.lean'</span> | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'.lake'</span>
+</code></pre></div></div>
+
+<p>Flag any import that references a module from a different paper’s
+namespace (these need cross-paper Lake dependencies or should be removed).</p>
+<h3 id="5-import-explicitness-audit">
+  
+  
+    <a href="#5-import-explicitness-audit" class="anchor-heading" aria-labelledby="5-import-explicitness-audit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Import Explicitness Audit
+  
+  
+</h3>
+    
+
+<p>Check that <code class="language-plaintext highlighter-rouge">.lean</code> files explicitly import the Mathlib modules they use,
+rather than relying on transitive imports (which break when upstream
+imports change):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Find files using tactics without explicit imports</span>
+<span class="k">for </span>f <span class="k">in</span> <span class="si">$(</span>find content/<span class="k">*</span>/lean/ <span class="nt">-name</span> <span class="s1">'*.lean'</span> <span class="nt">-not</span> <span class="nt">-path</span> <span class="s1">'*/.lake/*'</span><span class="si">)</span><span class="p">;</span> <span class="k">do
+  </span><span class="nv">uses_omega</span><span class="o">=</span><span class="si">$(</span><span class="nb">grep</span> <span class="nt">-l</span> <span class="s1">'\bomega\b'</span> <span class="s2">"</span><span class="nv">$f</span><span class="s2">"</span> 2&gt;/dev/null<span class="si">)</span>
+  <span class="nv">imports_omega</span><span class="o">=</span><span class="si">$(</span><span class="nb">grep</span> <span class="nt">-l</span> <span class="s1">'Mathlib.Tactic.Omega'</span> <span class="s2">"</span><span class="nv">$f</span><span class="s2">"</span> 2&gt;/dev/null<span class="si">)</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$uses_omega</span><span class="s2">"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$imports_omega</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"MISSING: </span><span class="nv">$f</span><span class="s2"> uses omega but doesn't import Mathlib.Tactic.Omega"</span>
+  <span class="k">fi
+done</span>
+</code></pre></div></div>
+
+<p>Key Mathlib features that should be explicitly imported when used:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Required import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Nat.Prime</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Mathlib.Data.Nat.Prime.Basic</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Nat.Coprime</code>, <code class="language-plaintext highlighter-rouge">Nat.gcd</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Mathlib.Data.Nat.GCD.Basic</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">omega</code> tactic</td>
+      <td><code class="language-plaintext highlighter-rouge">Mathlib.Tactic.Omega</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">norm_num</code> tactic</td>
+      <td><code class="language-plaintext highlighter-rouge">Mathlib.Tactic.NormNum</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">positivity</code> tactic</td>
+      <td><code class="language-plaintext highlighter-rouge">Mathlib.Tactic.Positivity</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">field_simp</code> tactic</td>
+      <td><code class="language-plaintext highlighter-rouge">Mathlib.Tactic.FieldSimp</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">linarith</code>/<code class="language-plaintext highlighter-rouge">nlinarith</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Mathlib.Tactic.Linarith</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ring</code> tactic</td>
+      <td><code class="language-plaintext highlighter-rouge">Mathlib.Tactic.Ring</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Real.sqrt</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Mathlib.Analysis.SpecialFunctions.Pow.Real</code></td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="6-sorry-audit">
+  
+  
+    <a href="#6-sorry-audit" class="anchor-heading" aria-labelledby="6-sorry-audit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Sorry Audit
+  
+  
+</h3>
+    
+
+<p>List all <code class="language-plaintext highlighter-rouge">sorry</code> occurrences and verify each has a bibliographic citation:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">grep</span> <span class="nt">-rn</span> <span class="s1">'sorry'</span> content/<span class="k">*</span>/lean/ <span class="nt">--include</span><span class="o">=</span><span class="s1">'*.lean'</span> | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'.lake'</span>
+</code></pre></div></div>
+
+<p>Per AGENTS.md: every <code class="language-plaintext highlighter-rouge">sorry</code> must have a <code class="language-plaintext highlighter-rouge">-- Ref: [key]</code> comment.</p>
+<h4 id="3b-cond-conditional-class-carve-out-do-not-discharge-these">
+  
+  
+    <a href="#3b-cond-conditional-class-carve-out-do-not-discharge-these" class="anchor-heading" aria-labelledby="3b-cond-conditional-class-carve-out-do-not-discharge-these"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §3b-cond conditional-class carve-out (do NOT discharge these)
+  
+  
+</h4>
+    
+
+<p>Per the project authoring conventions-cond, a <code class="language-plaintext highlighter-rouge">sorry</code> inside a Lean <code class="language-plaintext highlighter-rouge">class</code> body <strong>is the
+conjectural input</strong> — it is permanent by design, NOT a missing-proof
+gap. Maintain a catalogue of class-body sorries so a sweep can
+distinguish them from missing proofs.</p>
+
+<p>Before flagging a sorry as missing proof:</p>
+
+<ol>
+  <li>Scroll up from the <code class="language-plaintext highlighter-rouge">sorry</code> line until you hit either <code class="language-plaintext highlighter-rouge">class &lt;Name&gt;</code>
+(catalogued — leave alone) or <code class="language-plaintext highlighter-rouge">theorem | lemma | def | instance</code>
+(regular sorry — verify <code class="language-plaintext highlighter-rouge">-- Ref:</code> annotation).</li>
+  <li>For class-body sorries, check the catalog. If the class name is
+listed, it’s expected; move on.</li>
+  <li>If a class-body sorry is NOT in the catalog, it was added after the
+catalog was generated — regenerate the catalog before triaging.</li>
+</ol>
+
+<p><strong>Counting caveat:</strong> use <code class="language-plaintext highlighter-rouge">\bsorry\b(?!-)</code> rather than <code class="language-plaintext highlighter-rouge">\bsorry\b</code> so the
+docstring phrase <code class="language-plaintext highlighter-rouge">sorry-free</code> is not over-counted (it is a common
+false-positive cluster).</p>
+<h4 id="proof-objectsjson-staleness-warning">
+  
+  
+    <a href="#proof-objectsjson-staleness-warning" class="anchor-heading" aria-labelledby="proof-objectsjson-staleness-warning"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">proof-objects.json</code> staleness warning
+  
+  
+</h4>
+    
+
+<p>A <code class="language-plaintext highlighter-rouge">proof-objects.json</code> extractor that reads generated LaTeX artefacts
+(<code class="language-plaintext highlighter-rouge">chapters/*.tex</code>) can produce 0 objects in a content-object-based repo,
+leaving the committed file frozen with placeholder <code class="language-plaintext highlighter-rouge">kind: '?'</code> /
+<code class="language-plaintext highlighter-rouge">status: '?'</code>. <strong>Do NOT rely on <code class="language-plaintext highlighter-rouge">proof-objects.json</code> as a current status
+source.</strong> Use direct grep for axiom / sorry counts and the catalogue
+references above for §3b-cond class sorries.</p>
+<h3 id="7-trivial-truth-audit">
+  
+  
+    <a href="#7-trivial-truth-audit" class="anchor-heading" aria-labelledby="7-trivial-truth-audit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Trivial Truth Audit
+  
+  
+</h3>
+    
+
+<p>Detect placeholder proofs that prove <code class="language-plaintext highlighter-rouge">True</code> instead of the actual statement:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">grep</span> <span class="nt">-rn</span> <span class="s1">'True\s*:=\s*by\s*trivial'</span> content/ <span class="nt">--include</span><span class="o">=</span><span class="s1">'*.lean'</span> | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'.lake'</span>
+</code></pre></div></div>
+
+<p>These are <strong>not genuine proofs</strong> — the theorem statement is <code class="language-plaintext highlighter-rouge">True</code> (always
+provable), not the actual mathematical claim. They must be either:</p>
+<ul>
+  <li>Replaced with the correct statement and proof</li>
+  <li>Converted to comments / documentation</li>
+  <li>Removed entirely</li>
+</ul>
+
+<p>See <code class="language-plaintext highlighter-rouge">lean-proof-vacuity-audit.md</code> for the full vacuous-proof family.</p>
+<h3 id="8-build-verification">
+  
+  
+    <a href="#8-build-verification" class="anchor-heading" aria-labelledby="8-build-verification"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Build Verification
+  
+  
+</h3>
+    
+
+<p>Run builds for all papers:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./scripts/lean-build-all.sh
+</code></pre></div></div>
+
+<p>Report:</p>
+<ul>
+  <li>Papers that build cleanly (0 errors, 0 sorry)</li>
+  <li>Papers that build with sorry (warnings only)</li>
+  <li>Papers that fail to build (errors)</li>
+</ul>
+<h3 id="9-witness-staleness-audit">
+  
+  
+    <a href="#9-witness-staleness-audit" class="anchor-heading" aria-labelledby="9-witness-staleness-audit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Witness Staleness Audit
+  
+  
+</h3>
+    
+
+<p>After a successful build, stamp witnesses and check for staleness:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Stamp a witness after successful Lean build</span>
+bun run scripts/lean-witness.ts stamp &lt;lean-file&gt;
+
+<span class="c"># Check if witnesses are current</span>
+bun run scripts/witness-audit.ts
+</code></pre></div></div>
+
+<p><strong>Staleness criteria for Lean witnesses:</strong></p>
+<ul>
+  <li>Content hash of <code class="language-plaintext highlighter-rouge">.lean</code> file has changed since witness was stamped</li>
+  <li>Git commit SHA of the file has changed since witness was stamped</li>
+</ul>
+
+<p><strong>Staleness criteria for Python computation witnesses:</strong></p>
+<ul>
+  <li>Script content hash has changed since witness was generated</li>
+  <li>Script’s git commit SHA has changed since witness was generated</li>
+</ul>
+
+<p><strong>Witness infrastructure for Python scripts:</strong>
+New computations should use <code class="language-plaintext highlighter-rouge">witness_base.py</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">witness_base</span> <span class="kn">import</span> <span class="n">WitnessBuilder</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">WitnessBuilder</span><span class="p">(</span><span class="s">"my-computation"</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s">"sympy"</span><span class="p">)</span>
+<span class="n">w</span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span><span class="s">"Computes X from Y"</span><span class="p">)</span>
+<span class="n">w</span><span class="p">.</span><span class="n">set_content_block</span><span class="p">(</span><span class="s">"prop:my-proposition"</span><span class="p">)</span>
+<span class="n">w</span><span class="p">.</span><span class="n">add_assertion</span><span class="p">(</span><span class="s">"result"</span><span class="p">,</span> <span class="n">computed</span><span class="o">=</span><span class="mf">1.234</span><span class="p">,</span> <span class="n">expected</span><span class="o">=</span><span class="mf">1.234</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+<span class="n">w</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># writes my-computation.witness.json with commitSha tracking
+</span></code></pre></div></div>
+
+<p>Legacy witnesses (without <code class="language-plaintext highlighter-rouge">engine</code>/<code class="language-plaintext highlighter-rouge">commitSha</code>/<code class="language-plaintext highlighter-rouge">assertions</code>) should be
+migrated to use <code class="language-plaintext highlighter-rouge">witness_base.py</code> when the computation is next modified.</p>
+<h2 id="output-format">
+  
+  
+    <a href="#output-format" class="anchor-heading" aria-labelledby="output-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Output Format
+  
+  
+</h2>
+    
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## Lean Completeness Audit</span>
+
+<span class="gu">### Project Setup</span>
+| Paper | lakefile | toolchain | root module | status |
+|-------|---------|-----------|-------------|--------|
+| my-paper | ✓ | v4.24.0 | MyPaper.lean | ✓ |
+
+<span class="gu">### Build Status</span>
+| Paper | errors | warnings | sorry count |
+|-------|--------|----------|-------------|
+
+<span class="gu">### Missing Lean Files</span>
+| Paper | Block | Kind | Label | Status |
+|-------|-------|------|-------|--------|
+
+<span class="gu">### Stale Imports</span>
+(list any cross-paper imports that need attention)
+
+<span class="gu">### Sorry Without Citation</span>
+(list any sorry missing -- Ref: comment)
+
+<span class="gu">### Trivial Truths (Placeholders)</span>
+(list any <span class="sb">`True := by trivial`</span> declarations)
+
+<span class="gu">### Witness Staleness</span>
+| Type | Total | Current | Stale | Pending |
+|------|-------|---------|-------|---------|
+| Lean | N | N | N | N |
+| Python | N | N (structured) | N | N (legacy) |
+</code></pre></div></div>
+<h2 id="checklist">
+  
+  
+    <a href="#checklist" class="anchor-heading" aria-labelledby="checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist
+  
+  
+</h2>
+    
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All papers with .lean files have Lake projects</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All lean-toolchain files agree on version</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All lakefile.toml files pin same Mathlib commit</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Root modules import all project .lean files</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Definition blocks all have corresponding .lean files</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No stale cross-paper imports</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All sorry have bibliographic citations</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No trivial truth placeholders (True := by trivial)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All papers build (at least with warnings)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All Lean witnesses are current (not stale)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All Python computation witnesses are current (not stale)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Legacy Python witnesses identified for migration to witness_base.py</li>
+</ul>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

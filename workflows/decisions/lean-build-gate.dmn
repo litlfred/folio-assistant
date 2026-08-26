@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  "Build green, no sorries?" — Gateway_LeanGreen in authoring-a-paper.bpmn.
+
+  Computed, not judged. The facts come from tools that already exist:
+
+    buildOk          lean_build succeeded
+    deferredSorries  proof_status (JSON output) sorries[] where isConjectural is
+                     false, summing lineCount
+
+  The conjectural/deferred split is the reason this is a table rather than
+  "no sorries". `proof-axis-dashboard` distinguishes a sorry that stands in for
+  an open conjecture — intentional, and not a reason to hold formalisation —
+  from one that is a proof somebody has not closed yet. A gate that counted both
+  would block on the conjectures the paper is about.
+-->
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             id="Definitions_LeanBuildGate"
+             name="Lean build gate"
+             namespace="https://litlfred.github.io/folio-assistant/decisions">
+  <decision id="Decision_LeanBuildGate" name="Build green, no sorries?">
+    <decisionTable id="Table_LeanBuildGate" hitPolicy="FIRST">
+      <input id="In_BuildOk" label="lake build succeeded">
+        <inputExpression id="Expr_BuildOk" typeRef="boolean">
+          <text>buildOk</text>
+        </inputExpression>
+      </input>
+      <input id="In_DeferredSorries" label="deferred (closeable) sorries">
+        <inputExpression id="Expr_DeferredSorries" typeRef="number">
+          <text>deferredSorries</text>
+        </inputExpression>
+      </input>
+      <output id="Out_LeanGate" name="outcome" typeRef="string" />
+
+      <rule id="Rule_BuildRed">
+        <description>A red build is not a proof state to reason about.</description>
+        <inputEntry id="IE_BuildRed_1"><text>false</text></inputEntry>
+        <inputEntry id="IE_BuildRed_2"><text>-</text></inputEntry>
+        <outputEntry id="OE_BuildRed"><text>"not yet"</text></outputEntry>
+      </rule>
+      <rule id="Rule_SorriesRemain">
+        <description>Deferred sorries are proofs nobody closed; conjectural ones do not count.</description>
+        <inputEntry id="IE_Sorries_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Sorries_2"><text>&gt; 0</text></inputEntry>
+        <outputEntry id="OE_Sorries"><text>"not yet"</text></outputEntry>
+      </rule>
+      <rule id="Rule_Green">
+        <description>Build green and nothing closeable left open.</description>
+        <inputEntry id="IE_Green_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Green_2"><text>-</text></inputEntry>
+        <outputEntry id="OE_Green"><text>"green"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

@@ -1,0 +1,917 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(19)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(19) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(19) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(19) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>/q-usage-watcher | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="/q-usage-watcher" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/q-usage-watcher.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/q-usage-watcher.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="/q-usage-watcher" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"/q-usage-watcher","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/q-usage-watcher.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>/q-usage-watcher</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/q-usage-watcher.md"><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/q-usage-watcher.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="q-usage-watcher">
+  
+  
+    <a href="#q-usage-watcher" class="anchor-heading" aria-labelledby="q-usage-watcher"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> /q-usage-watcher
+  
+  
+</h1>
+    
+
+<blockquote>
+  <p><strong>Folio-optional axis.</strong> The <code class="language-plaintext highlighter-rouge">q-usage</code> criteria encode a substrate
+deformation parameter <code class="language-plaintext highlighter-rouge">q</code> and its regimes — one folio’s mathematics,
+not a platform concern. They are registered only when the folio opts
+in via <code class="language-plaintext highlighter-rouge">folio.config.json</code>:</p>
+
+  <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"qaAxes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"q-usage"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div>  </div>
+
+  <p>Without that, <code class="language-plaintext highlighter-rouge">q-usage</code> criteria are absent from the registry and this
+watcher has nothing to run. See <code class="language-plaintext highlighter-rouge">folioOptionalAxes()</code> in
+<code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code>.</p>
+</blockquote>
+
+<p>A concrete instance of <a href="/folio-assistant/reference/skill-instructions/integration-watcher.html"><code class="language-plaintext highlighter-rouge">local/integration-watcher</code></a>.
+The parent encodes the shared mechanics; this file fills the nine
+domain-specific slots A–I and documents the q-regime taxonomy.</p>
+
+<p><strong>Setup:</strong> use <code class="language-plaintext highlighter-rouge">NAME=q-usage-watcher</code> everywhere the parent’s §1
+references <code class="language-plaintext highlighter-rouge">${NAME}</code>. Files at <code class="language-plaintext highlighter-rouge">.beans/q-usage-watcher-queue.json</code>
+and <code class="language-plaintext highlighter-rouge">.beans/q-usage-watcher-ledger.md</code>.</p>
+
+<p><strong>Authoritative references</strong>:</p>
+
+<ul>
+  <li><a href="../../../AGENTS.md">AGENTS.md §7c — base-ring convention</a> (generic
+<code class="language-plaintext highlighter-rouge">R</code> vs archimedean <code class="language-plaintext highlighter-rouge">ℝ</code>).</li>
+  <li><a href="../../../content/quantum-observable-universe/notation/notation-collisions.md"><code class="language-plaintext highlighter-rouge">notation-collisions.md</code></a>
+— base-ring convention notation row.</li>
+  <li><a href="../../../content/pipeline/qa-checkers-q-usage.ts"><code class="language-plaintext highlighter-rouge">qa-checkers-q-usage.ts</code></a>
+— the checker implementation, with the chapter → expected-regime
+registry.</li>
+</ul>
+<h2 id="slot-a--goal-statement">
+  
+  
+    <a href="#slot-a--goal-statement" class="anchor-heading" aria-labelledby="slot-a--goal-statement"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot A — Goal statement
+  
+  
+</h2>
+    
+
+<p>Every content block in the paper handles the substrate parameter <code class="language-plaintext highlighter-rouge">q</code>
+in one of several regimes — formal symbolic <code class="language-plaintext highlighter-rouge">q</code>, <code class="language-plaintext highlighter-rouge">q : R</code> for a generic
+commutative ring <code class="language-plaintext highlighter-rouge">R</code>, archimedean <code class="language-plaintext highlighter-rouge">q : ℝ</code> with positivity hypotheses,
+<code class="language-plaintext highlighter-rouge">|q| &gt; 1</code> / <code class="language-plaintext highlighter-rouge">|q| &lt; 1</code> formal-power-series convergence, <code class="language-plaintext highlighter-rouge">q</code> a root of
+unity, or pinned to the substrate value <code class="language-plaintext highlighter-rouge">q_0 ≈ 1.10977859…</code>. Each
+chapter has a narrative-expected profile (categorical/symbolic chapters
+should keep statements over generic <code class="language-plaintext highlighter-rouge">R</code>; archimedean chapters use
+<code class="language-plaintext highlighter-rouge">ℝ</code> + <code class="language-plaintext highlighter-rouge">fixed q_0</code>). The watcher detects each block’s regime vector and
+flags blocks whose vector mismatches the chapter — most commonly:
+fixed-q_0 numerical pins in a categorical chapter, <code class="language-plaintext highlighter-rouge">Real.*</code> archimedean
+functions in a generic-R block, root-of-unity constructions used
+without declaration, or formal-power-series prose using <code class="language-plaintext highlighter-rouge">q &gt; 1</code>
+instead of <code class="language-plaintext highlighter-rouge">|q| &gt; 1</code>.</p>
+<h3 id="q-regime-taxonomy">
+  
+  
+    <a href="#q-regime-taxonomy" class="anchor-heading" aria-labelledby="q-regime-taxonomy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Q-regime taxonomy
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Tag</th>
+      <th>Meaning</th>
+      <th>Typical evidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">na</code></td>
+      <td>Block doesn’t mention <code class="language-plaintext highlighter-rouge">q</code></td>
+      <td>no <code class="language-plaintext highlighter-rouge">$q$</code>, no <code class="language-plaintext highlighter-rouge">\bq\b</code>, no <code class="language-plaintext highlighter-rouge">q_0</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">symbolic</code></td>
+      <td>Formal <code class="language-plaintext highlighter-rouge">q</code> (polynomial / power-series identity)</td>
+      <td><code class="language-plaintext highlighter-rouge">H_n(q)</code>, <code class="language-plaintext highlighter-rouge">\mathbb{Z}[q, q^{-1}]</code>, Hecke generator relations</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">generic-R</code></td>
+      <td><code class="language-plaintext highlighter-rouge">q : R</code> for <code class="language-plaintext highlighter-rouge">{R : Type*} [CommRing R]</code> (Lean)</td>
+      <td><code class="language-plaintext highlighter-rouge">{R : Type*}</code>, <code class="language-plaintext highlighter-rouge">[CommRing R]</code>, <code class="language-plaintext highlighter-rouge">(q : R)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">real-positive</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0 &lt; q</code> (archimedean specialisation)</td>
+      <td><code class="language-plaintext highlighter-rouge">Real.sqrt</code>, <code class="language-plaintext highlighter-rouge">Real.cos</code>, <code class="language-plaintext highlighter-rouge">linarith</code>, <code class="language-plaintext highlighter-rouge">positivity</code>, <code class="language-plaintext highlighter-rouge">noncomputable def f (q : ℝ)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">real-gt-1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">q &gt; 1</code> literal</td>
+      <td><code class="language-plaintext highlighter-rouge">$q &gt; 1$</code>, <code class="language-plaintext highlighter-rouge">q &gt; 1</code> in <code class="language-plaintext highlighter-rouge">.lean</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">real-lt-1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0 &lt; q &lt; 1</code> literal</td>
+      <td><code class="language-plaintext highlighter-rouge">$0 &lt; q &lt; 1$</code>, <code class="language-plaintext highlighter-rouge">q &lt; 1</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mod-gt-1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">|q| &gt; 1</code> (formal-power-series regime)</td>
+      <td><code class="language-plaintext highlighter-rouge">\|q\| &gt; 1</code>, <code class="language-plaintext highlighter-rouge">\lvert q \rvert &gt; 1</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mod-lt-1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">|q| &lt; 1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">\|q\| &lt; 1</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">unit-circle</code></td>
+      <td><code class="language-plaintext highlighter-rouge">|q| = 1</code> (finite quantum group regime)</td>
+      <td><code class="language-plaintext highlighter-rouge">\|q\| = 1</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">root-of-unity</code></td>
+      <td><code class="language-plaintext highlighter-rouge">q</code> a primitive <code class="language-plaintext highlighter-rouge">N</code>-th root</td>
+      <td><code class="language-plaintext highlighter-rouge">q = e^{2πi/N}</code>, fusion category, Lusztig integral form, modular crystal, divided-power algebra</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fixed-q0</code></td>
+      <td>Numerical substrate value</td>
+      <td><code class="language-plaintext highlighter-rouge">q ≈ 1.1097…</code>, <code class="language-plaintext highlighter-rouge">q_0</code>, <code class="language-plaintext highlighter-rouge">MeV</code>, <code class="language-plaintext highlighter-rouge">CODATA</code>, <code class="language-plaintext highlighter-rouge">ppb</code></td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="chapter--expected-regime-profile">
+  
+  
+    <a href="#chapter--expected-regime-profile" class="anchor-heading" aria-labelledby="chapter--expected-regime-profile"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Chapter → expected-regime profile
+  
+  
+</h3>
+    
+
+<p>Chapters are partitioned into three groups in the implementation:</p>
+
+<ul>
+  <li><strong>categorical</strong> — <code class="language-plaintext highlighter-rouge">quantum-universes</code>, <code class="language-plaintext highlighter-rouge">lifting-and-descent</code>,
+<code class="language-plaintext highlighter-rouge">braids-and-knots</code>, <code class="language-plaintext highlighter-rouge">appendix-knot-operations</code>, <code class="language-plaintext highlighter-rouge">appendix-surreals</code>.
+Expected: <code class="language-plaintext highlighter-rouge">symbolic</code>, <code class="language-plaintext highlighter-rouge">generic-R</code>. <strong>Fixed-q_0 leak is a fail.</strong></li>
+  <li><strong>archimedean</strong> — <code class="language-plaintext highlighter-rouge">mass-theory</code>, <code class="language-plaintext highlighter-rouge">particle-interactions</code>,
+<code class="language-plaintext highlighter-rouge">gravity-spacetime</code>, <code class="language-plaintext highlighter-rouge">climax-volume-mass</code>, <code class="language-plaintext highlighter-rouge">observations</code>,
+<code class="language-plaintext highlighter-rouge">predicted-spectra</code>, <code class="language-plaintext highlighter-rouge">measurement-observation</code>,
+<code class="language-plaintext highlighter-rouge">molecular-construction</code>, <code class="language-plaintext highlighter-rouge">organic-chemistry</code>, <code class="language-plaintext highlighter-rouge">fluid-dynamics</code>,
+<code class="language-plaintext highlighter-rouge">appendix-qvalues</code>, <code class="language-plaintext highlighter-rouge">appendix-atomic-mass-calculations</code>. Expected:
+<code class="language-plaintext highlighter-rouge">real-positive</code>, <code class="language-plaintext highlighter-rouge">real-gt-1</code>, <code class="language-plaintext highlighter-rouge">fixed-q0</code>.</li>
+  <li><strong>mixed</strong> — <code class="language-plaintext highlighter-rouge">models-of-qous</code>, <code class="language-plaintext highlighter-rouge">quantum-observable-universes</code>,
+<code class="language-plaintext highlighter-rouge">stochastic-mechanics</code>, <code class="language-plaintext highlighter-rouge">information-theory</code>, <code class="language-plaintext highlighter-rouge">mass-endomorphism</code>,
+<code class="language-plaintext highlighter-rouge">brings-surface</code>, <code class="language-plaintext highlighter-rouge">q-geometric-langlands</code>. The expected set is
+documented in <code class="language-plaintext highlighter-rouge">CHAPTER_EXPECTED_REGIMES</code> in <code class="language-plaintext highlighter-rouge">qa-checkers-q-usage.ts</code>.</li>
+</ul>
+
+<p>The complete per-chapter map is in
+<a href="../../../content/pipeline/qa-checkers-q-usage.ts"><code class="language-plaintext highlighter-rouge">qa-checkers-q-usage.ts</code></a>
+under <code class="language-plaintext highlighter-rouge">CHAPTER_EXPECTED_REGIMES</code>. To update a chapter’s expected set,
+edit that registry — the watcher reads it directly, no extra wiring
+required.</p>
+<h2 id="slot-b--3-trigger-filter">
+  
+  
+    <a href="#slot-b--3-trigger-filter" class="anchor-heading" aria-labelledby="slot-b--3-trigger-filter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot B — §3 trigger filter
+  
+  
+</h2>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SHA</span><span class="o">=</span>&lt;event sha&gt;
+<span class="nv">changed</span><span class="o">=</span><span class="si">$(</span>git diff-tree <span class="nt">--no-commit-id</span> <span class="nt">--name-only</span> <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$SHA</span><span class="s2">"</span><span class="si">)</span>
+
+<span class="nv">is_q_usage_event</span><span class="o">=</span><span class="nb">false</span>
+
+<span class="c"># (i) any block .ts / .md / .lean change</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$changed</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="nt">-qE</span> <span class="s1">'content/quantum-observable-universe/.*\.(md|ts|lean)$'</span> <span class="se">\</span>
+  <span class="o">&amp;&amp;</span> <span class="nv">is_q_usage_event</span><span class="o">=</span><span class="nb">true</span>
+
+<span class="c"># (ii) the checker module or registry itself changed (sweep all blocks)</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$changed</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="nt">-qE</span> <span class="s1">'content/pipeline/(qa-checkers-q-usage|qa-criteria-registry|q-usage-audit)\.ts$'</span> <span class="se">\</span>
+  <span class="o">&amp;&amp;</span> <span class="nv">is_q_usage_event</span><span class="o">=</span><span class="nb">true</span>
+
+<span class="c"># (iii) the chapter-regime table or notation register changed</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$changed</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="nt">-qE</span> <span class="s1">'content/quantum-observable-universe/notation/notation-(collisions|register)\.md$'</span> <span class="se">\</span>
+  <span class="o">&amp;&amp;</span> <span class="nv">is_q_usage_event</span><span class="o">=</span><span class="nb">true</span>
+</code></pre></div></div>
+
+<p>For PR review-comment events, pass through if the comment body
+mentions: <code class="language-plaintext highlighter-rouge">q regime</code>, <code class="language-plaintext highlighter-rouge">q usage</code>, <code class="language-plaintext highlighter-rouge">q_0</code>, <code class="language-plaintext highlighter-rouge">Real.sqrt</code>, <code class="language-plaintext highlighter-rouge">|q|</code>, <code class="language-plaintext highlighter-rouge">q &gt; 1</code>,
+<code class="language-plaintext highlighter-rouge">q &lt; 1</code>, <code class="language-plaintext highlighter-rouge">root of unity</code>, <code class="language-plaintext highlighter-rouge">fusion category</code>, <code class="language-plaintext highlighter-rouge">Lusztig</code>, <code class="language-plaintext highlighter-rouge">Kashiwara</code>,
+<code class="language-plaintext highlighter-rouge">fixed q_0</code>, <code class="language-plaintext highlighter-rouge">archimedean leak</code>, <code class="language-plaintext highlighter-rouge">categorical chapter</code>, <code class="language-plaintext highlighter-rouge">wall side</code>.</p>
+<h2 id="slot-c--4b-dispatch-table">
+  
+  
+    <a href="#slot-c--4b-dispatch-table" class="anchor-heading" aria-labelledby="slot-c--4b-dispatch-table"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot C — §4b dispatch table
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Specialist</th>
+      <th>When to run</th>
+      <th>What it checks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">q-usage-audit.ts</code></td>
+      <td>Any changed block</td>
+      <td>Runs the full 7-criterion suite, updates <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code>, emits witness</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">q-usage-audit.ts --chapter &lt;dir&gt;</code></td>
+      <td>Chapter-scoped change</td>
+      <td>Same but on one chapter</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">qa-checkers-q-usage.ts</code> (direct call from <code class="language-plaintext highlighter-rouge">qa-sweep</code>)</td>
+      <td>Any sweep run</td>
+      <td>Per-criterion checker function for the new q-usage axis</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">production-vs-exploratory-discipline</code></td>
+      <td>Fixed-q_0 leak finding</td>
+      <td>Cross-axis — fixed-q_0 leak in a categorical chapter often signals an exploratory block that needs the production-vs-exploratory decision</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">compute-audit</code> (existing skill)</td>
+      <td>Real.* leak finding</td>
+      <td>Cross-axis — Real.* in a Lean block flags archimedean specialisation; compute-audit verifies the archimedean side actually consumes it</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="slot-d--4c-finding-taxonomy">
+  
+  
+    <a href="#slot-d--4c-finding-taxonomy" class="anchor-heading" aria-labelledby="slot-d--4c-finding-taxonomy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot D — §4c finding taxonomy
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Violation</th>
+      <th>Severity</th>
+      <th>Definition</th>
+      <th>Auto-fix possible?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">q-usage-regime-detected</code></td>
+      <td>minor (always pass)</td>
+      <td>Infrastructure — records the regime vector in the sidecar</td>
+      <td>n/a</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">q-usage-fixed-q0-leak</code></td>
+      <td>major</td>
+      <td>Categorical chapter + numerical <code class="language-plaintext highlighter-rouge">q_0</code> / substrate pin in the block</td>
+      <td>Sometimes — move the block to an archimedean chapter, or split off the numerical evaluation to a <code class="language-plaintext highlighter-rouge">archimedean-specialisation</code> block</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">q-usage-archimedean-in-categorical-chapter</code></td>
+      <td>major</td>
+      <td>Categorical chapter + <code class="language-plaintext highlighter-rouge">Real.*</code> / <code class="language-plaintext highlighter-rouge">linarith</code> / <code class="language-plaintext highlighter-rouge">positivity</code> / <code class="language-plaintext highlighter-rouge">MeV</code> / <code class="language-plaintext highlighter-rouge">CODATA</code> reference</td>
+      <td>Sometimes — same fix patterns as fixed-q_0 leak; sometimes the <code class="language-plaintext highlighter-rouge">Real.*</code> is legitimate (<code class="language-plaintext highlighter-rouge">Real.sqrt 5</code> for Lagrange resolvent) and just needs a tag</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">q-usage-positivity-implicit</code></td>
+      <td>minor (warn)</td>
+      <td><code class="language-plaintext highlighter-rouge">Real.sqrt q</code> / <code class="language-plaintext highlighter-rouge">Real.log q</code> / <code class="language-plaintext highlighter-rouge">Real.rpow</code> on <code class="language-plaintext highlighter-rouge">q</code> without <code class="language-plaintext highlighter-rouge">0 &lt; q</code> hypothesis</td>
+      <td>Author-assist — add the missing hypothesis</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">q-usage-modulus-vs-real-mismatch</code></td>
+      <td>minor (warn)</td>
+      <td>Formal-power-series / shuffle / Macdonald prose uses <code class="language-plaintext highlighter-rouge">q &gt; 1</code> instead of <code class="language-plaintext highlighter-rouge">|q| &gt; 1</code></td>
+      <td>Author-assist — rewrite to modulus form</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">q-usage-root-of-unity-undeclared</code></td>
+      <td>minor (warn)</td>
+      <td>Fusion category / Lusztig / Kashiwara construct used without explicit root-of-unity regime declaration</td>
+      <td>Author-assist — add <code class="language-plaintext highlighter-rouge">q = e^{2πi/N}</code> / “primitive N-th root” declaration</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">q-usage-narrative-chapter-mismatch</code></td>
+      <td>minor (warn)</td>
+      <td>Block’s regime vector disjoint from chapter’s expected profile (none of the detected regimes is expected)</td>
+      <td>Author-assist — move block to a chapter whose profile matches</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="slot-e--4d-discharge-bands">
+  
+  
+    <a href="#slot-e--4d-discharge-bands" class="anchor-heading" aria-labelledby="slot-e--4d-discharge-bands"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot E — §4d discharge bands
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Band</th>
+      <th>Examples</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Auto-discharge</strong></td>
+      <td>None today — all q-usage findings touch semantic placement of a block and need author input. The infrastructure criterion <code class="language-plaintext highlighter-rouge">q-usage-regime-detected</code> is always recorded automatically.</td>
+    </tr>
+    <tr>
+      <td><strong>Author-assist</strong></td>
+      <td>All seven criteria — <code class="language-plaintext highlighter-rouge">fixed-q_0</code> placement, <code class="language-plaintext highlighter-rouge">Real.*</code> placement, positivity-hypothesis additions, modulus-vs-real prose rewrites, root-of-unity declaration insertions, chapter relocations.</td>
+    </tr>
+    <tr>
+      <td><strong>Defer</strong></td>
+      <td>A block with an author-granted <strong>dispensation</strong> in its sidecar (per §Dispensations below) — the dispensation overrides the script’s fail. The paper content (<code class="language-plaintext highlighter-rouge">.ts</code> / <code class="language-plaintext highlighter-rouge">.md</code> / <code class="language-plaintext highlighter-rouge">.lean</code>) is never tagged for dispensation; the dispensation lives entirely in the audit sidecar.</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="dispensations--how-to-grant-per-block-opt-out-strict">
+  
+  
+    <a href="#dispensations--how-to-grant-per-block-opt-out-strict" class="anchor-heading" aria-labelledby="dispensations--how-to-grant-per-block-opt-out-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §Dispensations — how to grant per-block opt-out (STRICT)
+  
+  
+</h2>
+    
+
+<p>Dispensations live in the sidecar <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code>, <strong>never</strong> in the
+paper content (<code class="language-plaintext highlighter-rouge">.ts</code> / <code class="language-plaintext highlighter-rouge">.md</code> / <code class="language-plaintext highlighter-rouge">.lean</code>). The <code class="language-plaintext highlighter-rouge">block-qa/v1</code> schema’s
+multi-reviewer mechanism is the dispensation primitive: a
+<code class="language-plaintext highlighter-rouge">kind: "human"</code> reviewer entry with <code class="language-plaintext highlighter-rouge">result: "pass"</code> overrides the
+script’s <code class="language-plaintext highlighter-rouge">result: "fail"</code> for the same criterion, as long as the
+human entry’s <code class="language-plaintext highlighter-rouge">field_hash</code> matches the current source files (the
+qa-sweep “most-recent matching-hash entry wins” rule).</p>
+<h3 id="pattern">
+  
+  
+    <a href="#pattern" class="anchor-heading" aria-labelledby="pattern"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pattern
+  
+  
+</h3>
+    
+
+<p>A dispensed block’s sidecar looks like:</p>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"q-usage-fixed-q0-leak"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="c1">// The script's raw finding — preserved for audit trail.</span><span class="w">
+    </span><span class="nl">"field_hash"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"md"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ab12…"</span><span class="p">,</span><span class="w"> </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cd34…"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fail"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"major"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"evidence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"reviewer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"script"</span><span class="p">,</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"q-usage-audit"</span><span class="p">,</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"reviewed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-06-01T13:32:21Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"reviewed_sha"</span><span class="p">:</span><span class="w"> </span><span class="s2">"70cc682c…"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="c1">// Author dispensation — overrides the script entry.</span><span class="w">
+    </span><span class="nl">"field_hash"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"md"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ab12…"</span><span class="p">,</span><span class="w"> </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cd34…"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"reviewer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"human"</span><span class="p">,</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"litlfred"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"reviewed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-06-02"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"reviewed_sha"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;sha at dispensation time&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Acknowledged archimedean specialisation. This block is the substrate-evaluation companion of `prop:proton-mass-substrate-identity` (which keeps the generic-q categorical statement). Dispensation kind: archimedean-specialisation. Re-grant after any change to the .md / .ts."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+<h3 id="rules">
+  
+  
+    <a href="#rules" class="anchor-heading" aria-labelledby="rules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rules
+  
+  
+</h3>
+    
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">field_hash</code> on the human entry must match the current source
+files.</strong> If a sibling file is later edited, the hash drifts, the
+human entry becomes stale, and the script’s fail re-surfaces. The
+author re-grants the dispensation (or removes it) on the next
+sweep.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">notes:</code> must explain the dispensation rationale.</strong> A free-text
+sentence (or two) — what kind of dispensation (archimedean
+specialisation / paired-block / acknowledged-Class-A / etc.) and
+why this block is the exception. Reviewers reading the sidecar
+need the context.</li>
+  <li><strong>Never tag the paper content</strong> with dispensation metadata. The
+<code class="language-plaintext highlighter-rouge">wall:</code> field on a <code class="language-plaintext highlighter-rouge">.ts</code> manifest is a SEPARATE concept — it
+declares the block’s intrinsic archimedean / algebraic side for
+the detangler axis. Don’t conflate the two.</li>
+  <li><strong>Apply at the criterion granularity.</strong> A block can be dispensed
+for <code class="language-plaintext highlighter-rouge">q-usage-fixed-q0-leak</code> while still failing
+<code class="language-plaintext highlighter-rouge">q-usage-archimedean-in-categorical-chapter</code> — each criterion is
+tracked independently. Add one human entry per dispensed criterion.</li>
+</ol>
+<h3 id="why-this-works">
+  
+  
+    <a href="#why-this-works" class="anchor-heading" aria-labelledby="why-this-works"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this works
+  
+  
+</h3>
+    
+
+<ul>
+  <li><strong>Zero schema change</strong> — <code class="language-plaintext highlighter-rouge">block-qa/v1</code> already supports
+multi-reviewer entries with the most-recent-matching-hash-wins
+rule.</li>
+  <li><strong>CI / qa-sweep / qa-staleness / one-voice-integration-watcher
+already understand the pattern</strong> — they don’t need to know about
+q-usage specifically; the dispensation works because it’s a
+generic block-qa primitive.</li>
+  <li><strong>Hash-staleness is safety.</strong> A dispensation written against
+yesterday’s content can’t silently mask today’s drift. Re-granting
+is the explicit acknowledgement that the dispensation still applies.</li>
+  <li><strong>Paper content stays clean.</strong> Readers reading the <code class="language-plaintext highlighter-rouge">.md</code> / <code class="language-plaintext highlighter-rouge">.ts</code>
+see no audit metadata.</li>
+</ul>
+<h3 id="anti-pattern-do-not-do">
+  
+  
+    <a href="#anti-pattern-do-not-do" class="anchor-heading" aria-labelledby="anti-pattern-do-not-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Anti-pattern (do NOT do)
+  
+  
+</h3>
+    
+
+<ul>
+  <li>❌ Add <code class="language-plaintext highlighter-rouge">wall: "archimedean-specialisation"</code> (or any other
+audit-control tag) to the block’s <code class="language-plaintext highlighter-rouge">.ts</code> manifest. This was the
+previous (pre-2026-06-01) approach; it was rejected for mixing
+audit concerns with paper content.</li>
+  <li>❌ Set a <code class="language-plaintext highlighter-rouge">human</code> entry’s <code class="language-plaintext highlighter-rouge">result: "pass"</code> without populating
+<code class="language-plaintext highlighter-rouge">notes:</code> — undocumented dispensation defeats the audit trail.</li>
+  <li>❌ Re-use one human entry across multiple criteria — each
+criterion gets its own entry under its own key in <code class="language-plaintext highlighter-rouge">criteria</code>.</li>
+</ul>
+<h2 id="slot-f--4e-author-ask-templates">
+  
+  
+    <a href="#slot-f--4e-author-ask-templates" class="anchor-heading" aria-labelledby="slot-f--4e-author-ask-templates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot F — §4e author-ask templates
+  
+  
+</h2>
+    
+
+<p>Per-violation template:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**q-usage-watcher ask — `&lt;block&gt;`**</span> (from <span class="nt">&lt;source&gt;</span>)
+<span class="p">
+-</span> Finding: <span class="sb">`&lt;criterion-id&gt;`</span> (severity <span class="sb">`&lt;sev&gt;`</span>)
+<span class="p">-</span> Chapter: <span class="sb">`&lt;chapter-dir&gt;`</span> (expected regime: <span class="sb">`&lt;expected-set&gt;`</span>)
+<span class="p">-</span> Detected regime vector: <span class="sb">`&lt;detected-set&gt;`</span>
+<span class="p">-</span> File: <span class="nt">&lt;github-blob-url</span> <span class="na">to</span> <span class="err">`.</span><span class="na">md</span><span class="err">`</span><span class="nt">&gt;</span>
+<span class="p">-</span> Evidence: <span class="sb">`&lt;file:line&gt;`</span> — <span class="sb">`&lt;verbatim quote&gt;`</span>
+<span class="p">-</span> Question:
+<span class="p">  1.</span> Add <span class="sb">`wall: "archimedean"`</span> / <span class="sb">`"archimedean-specialisation"`</span> tag on
+     <span class="sb">`&lt;ts-file&gt;`</span> (treat as legitimate archimedean specialisation)
+<span class="p">  2.</span> Move the block to an archimedean chapter (suggest: <span class="sb">`&lt;best-fit&gt;`</span>)
+<span class="p">  3.</span> Split off the numerical evaluation into a sibling
+     <span class="sb">`&lt;block&gt;-substrate-evaluation.md`</span> in the appropriate archimedean
+     chapter; keep the categorical statement here.
+<span class="p">  4.</span> (root-of-unity only) Add explicit "primitive N-th root" / <span class="sb">`q = e^{2πi/N}`</span>
+     declaration to the .md
+<span class="p">  5.</span> (positivity-implicit only) Add the missing <span class="sb">`hq : 0 &lt; q`</span> hypothesis
+<span class="p">  6.</span> Acknowledge — mark as wontfix with reason
+</code></pre></div></div>
+<h2 id="slot-g--5a-backlog-discovery">
+  
+  
+    <a href="#slot-g--5a-backlog-discovery" class="anchor-heading" aria-labelledby="slot-g--5a-backlog-discovery"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot G — §5a backlog discovery
+  
+  
+</h2>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Run the audit, read the witness, queue every fail + warn</span>
+bun run content/pipeline/q-usage-audit.ts <span class="nt">--no-write</span> <span class="nt">--json</span> <span class="se">\</span>
+  | jq <span class="nt">-r</span> <span class="s1">'.findings[] | "\(.severity)\t\(.criterion)\t\(.chapter)/\(.label)\t\(.result)"'</span>
+</code></pre></div></div>
+<h2 id="slot-h--5b-prioritisation">
+  
+  
+    <a href="#slot-h--5b-prioritisation" class="anchor-heading" aria-labelledby="slot-h--5b-prioritisation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot H — §5b prioritisation
+  
+  
+</h2>
+    
+
+<ol>
+  <li><strong>Severity</strong> (major &gt; minor).</li>
+  <li><strong>Categorical-chapter fails first</strong> (those represent the strongest
+wall-violation signal).</li>
+  <li><strong>Downstream dependents</strong> — blocks cited by many others move earlier
+so the fix lands before downstream readers reach a confused state.</li>
+  <li><strong>Alphabetical</strong> as tie-breaker.</li>
+</ol>
+<h2 id="slot-i--6-invariants">
+  
+  
+    <a href="#slot-i--6-invariants" class="anchor-heading" aria-labelledby="slot-i--6-invariants"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot I — §6 invariants
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Invariant</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>No new categorical-chapter block with fixed-q_0 leak</td>
+      <td>Compared against baseline in <code class="language-plaintext highlighter-rouge">docs/audits/&lt;date&gt;-q-usage-audit.witness.json</code></td>
+    </tr>
+    <tr>
+      <td>No new <code class="language-plaintext highlighter-rouge">Real.*</code> on <code class="language-plaintext highlighter-rouge">q</code> without positivity hypothesis</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <td>Regime detector hash stable</td>
+      <td><code class="language-plaintext highlighter-rouge">qa-checkers-q-usage.ts</code> <code class="language-plaintext highlighter-rouge">script_hash</code> matches the value recorded in the watcher’s PR baseline (a checker-logic change invalidates all sidecar entries; treat as a sweep trigger)</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="how-to-run-the-audit-one-liners">
+  
+  
+    <a href="#how-to-run-the-audit-one-liners" class="anchor-heading" aria-labelledby="how-to-run-the-audit-one-liners"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to run the audit (one-liners)
+  
+  
+</h2>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Full sweep, write sidecars + witness</span>
+bun run content/pipeline/q-usage-audit.ts
+
+<span class="c"># Dry run (report only, no writes)</span>
+bun run content/pipeline/q-usage-audit.ts <span class="nt">--no-write</span>
+
+<span class="c"># Single chapter</span>
+bun run content/pipeline/q-usage-audit.ts <span class="nt">--chapter</span> braids-and-knots
+
+<span class="c"># JSON output (for piping into jq / queue)</span>
+bun run content/pipeline/q-usage-audit.ts <span class="nt">--no-write</span> <span class="nt">--json</span>
+
+<span class="c"># Strict (exit 1 on any fail — for CI)</span>
+bun run content/pipeline/q-usage-audit.ts <span class="nt">--no-write</span> <span class="nt">--strict</span>
+</code></pre></div></div>
+<h2 id="cross-references">
+  
+  
+    <a href="#cross-references" class="anchor-heading" aria-labelledby="cross-references"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cross-references
+  
+  
+</h2>
+    
+
+<ul>
+  <li>Parent: <a href="/folio-assistant/reference/skill-instructions/integration-watcher.html"><code class="language-plaintext highlighter-rouge">local/integration-watcher</code></a></li>
+  <li>Sibling watchers: <a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html"><code class="language-plaintext highlighter-rouge">canonical-watcher</code></a>,
+<a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html"><code class="language-plaintext highlighter-rouge">proof-integration-watcher</code></a>,
+<a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html"><code class="language-plaintext highlighter-rouge">compute-integration-watcher</code></a>,
+<a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html"><code class="language-plaintext highlighter-rouge">detangler-integration-watcher</code></a>,
+<a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html"><code class="language-plaintext highlighter-rouge">one-voice-integration-watcher</code></a>.</li>
+  <li>Skill for placement decisions:
+<a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html"><code class="language-plaintext highlighter-rouge">production-vs-exploratory-discipline</code></a>.</li>
+  <li>Checker source: <a href="../../../content/pipeline/qa-checkers-q-usage.ts"><code class="language-plaintext highlighter-rouge">content/pipeline/qa-checkers-q-usage.ts</code></a>.</li>
+  <li>CLI runner: <a href="../../../content/pipeline/q-usage-audit.ts"><code class="language-plaintext highlighter-rouge">content/pipeline/q-usage-audit.ts</code></a>.</li>
+  <li>Criterion registry entries:
+<a href="../../../content/pipeline/qa-criteria-registry.ts"><code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code></a>
+(search for the <code class="language-plaintext highlighter-rouge">Q_USAGE</code> const array).</li>
+</ul>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

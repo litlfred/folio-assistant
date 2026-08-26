@@ -1,0 +1,1423 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(6)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Skill instructions | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Skill instructions" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Skill instructions" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Skill instructions","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="skill-instructions">
+  
+  
+    <a href="#skill-instructions" class="anchor-heading" aria-labelledby="skill-instructions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Skill instructions
+  
+  
+</h1>
+    
+
+<p>The prose <strong>instruction bodies</strong> the LLM loads (via <code class="language-plaintext highlighter-rouge">skill_fetch</code>) when it
+runs a skill. These are generated from the skill source markdowns, so the
+published reference always matches what the agent actually reads.</p>
+
+<p>For each skill’s <em>typed input/output contract</em>, see the
+<a href="../skills/">Skill schema reference</a>; for the conceptual overview of skills,
+roles, and how they compose with the LLM, see <a href="../../skills.html">Skills &amp; roles</a>.</p>
+<h2 id="lifecycle-skills">
+  
+  
+    <a href="#lifecycle-skills" class="anchor-heading" aria-labelledby="lifecycle-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lifecycle skills
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="content-author.html">Content Authoring</a></td>
+      <td><code class="language-plaintext highlighter-rouge">content-author</code></td>
+      <td><a href="../skills/content-author.html">schema</a></td>
+      <td>Create and develop content artifacts according to the project plan.</td>
+    </tr>
+    <tr>
+      <td><a href="content-feedback.html">Content Feedback Collection</a></td>
+      <td><code class="language-plaintext highlighter-rouge">content-feedback</code></td>
+      <td><a href="../skills/content-feedback.html">schema</a></td>
+      <td>Gather and triage feedback on published content for future iterations.</td>
+    </tr>
+    <tr>
+      <td><a href="content-plan.html">Content Planning</a></td>
+      <td><code class="language-plaintext highlighter-rouge">content-plan</code></td>
+      <td><a href="../skills/content-plan.html">schema</a></td>
+      <td>Plan content development by defining scope, team, timeline, and sprint cadence.</td>
+    </tr>
+    <tr>
+      <td><a href="content-publish.html">Content Publication</a></td>
+      <td><code class="language-plaintext highlighter-rouge">content-publish</code></td>
+      <td><a href="../skills/content-publish.html">schema</a></td>
+      <td>Package, version, and publish approved content.</td>
+    </tr>
+    <tr>
+      <td><a href="content-retire.html">Content Retirement</a></td>
+      <td><code class="language-plaintext highlighter-rouge">content-retire</code></td>
+      <td>—</td>
+      <td>Deprecate and retire content that is no longer current or needed.</td>
+    </tr>
+    <tr>
+      <td><a href="content-review.html">Content Review</a></td>
+      <td><code class="language-plaintext highlighter-rouge">content-review</code></td>
+      <td><a href="../skills/content-review.html">schema</a></td>
+      <td>Formal review and approval of validated content before publication.</td>
+    </tr>
+    <tr>
+      <td><a href="content-test.html">Content Testing</a></td>
+      <td><code class="language-plaintext highlighter-rouge">content-test</code></td>
+      <td><a href="../skills/content-test.html">schema</a></td>
+      <td>End-to-end testing of content artifacts in realistic scenarios.</td>
+    </tr>
+    <tr>
+      <td><a href="content-validate.html">Content Validation</a></td>
+      <td><code class="language-plaintext highlighter-rouge">content-validate</code></td>
+      <td><a href="../skills/content-validate.html">schema</a></td>
+      <td>Validate authored content against schemas, standards, and clinical accuracy.</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="agent-skills">
+  
+  
+    <a href="#agent-skills" class="anchor-heading" aria-labelledby="agent-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agent skills
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="corpus-grep.html">Corpus-Grep</a></td>
+      <td><code class="language-plaintext highlighter-rouge">corpus-grep</code></td>
+      <td>—</td>
+      <td>&gt; <strong>Disambiguation.</strong> This skill formalizes the <strong>backward</strong> check</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="platform-core-folio-core">
+  
+  
+    <a href="#platform-core-folio-core" class="anchor-heading" aria-labelledby="platform-core-folio-core"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Platform core (folio-core)
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="bean-coordination.html">Bean Coordination</a></td>
+      <td><code class="language-plaintext highlighter-rouge">bean-coordination</code></td>
+      <td>—</td>
+      <td>The <strong>bean-based work-plan system</strong> — the <a href="https://github.com/hmans/beans"><code class="language-plaintext highlighter-rouge">beans</code></a></td>
+    </tr>
+    <tr>
+      <td><a href="bib-human-review.html">bib-human-review</a></td>
+      <td><code class="language-plaintext highlighter-rouge">bib-human-review</code></td>
+      <td>—</td>
+      <td>Status sidecar: <code class="language-plaintext highlighter-rouge">content/schema/references.review.json</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="bib-photo-ingestion-watcher.html">bib-photo-ingestion-watcher</a></td>
+      <td><code class="language-plaintext highlighter-rouge">bib-photo-ingestion-watcher</code></td>
+      <td>—</td>
+      <td>The automation half of the <a href="/folio-assistant/reference/skill-instructions/bib-human-review.html"><code class="language-plaintext highlighter-rouge">bib-human-review</code></a> workflow.</td>
+    </tr>
+    <tr>
+      <td><a href="bib-qa.html">Bibliography QA</a></td>
+      <td><code class="language-plaintext highlighter-rouge">bib-qa</code></td>
+      <td>—</td>
+      <td>pip install paper-search-mcp pyalex</td>
+    </tr>
+    <tr>
+      <td><a href="block-density.html">Block Density</a></td>
+      <td><code class="language-plaintext highlighter-rouge">block-density</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="canonical-watcher.html">/canonical-watcher</a></td>
+      <td><code class="language-plaintext highlighter-rouge">canonical-watcher</code></td>
+      <td>—</td>
+      <td>A concrete instance of <code class="language-plaintext highlighter-rouge">local/integration-watcher</code>. The parent encodes</td>
+    </tr>
+    <tr>
+      <td><a href="chapter-complexity-review.html">Chapter Complexity Review</a></td>
+      <td><code class="language-plaintext highlighter-rouge">chapter-complexity-review</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="compute-integration-watcher.html">Compute Integration Watcher</a></td>
+      <td><code class="language-plaintext highlighter-rouge">compute-integration-watcher</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="content-graph.html">Content Graph</a></td>
+      <td><code class="language-plaintext highlighter-rouge">content-graph</code></td>
+      <td>—</td>
+      <td>cd content &amp;&amp; python3 pipeline/content-graph-analysis.py</td>
+    </tr>
+    <tr>
+      <td><a href="continual-progress.html">/continual-progress</a></td>
+      <td><code class="language-plaintext highlighter-rouge">continual-progress</code></td>
+      <td>—</td>
+      <td>Sibling agents and the author can only coordinate with work they can</td>
+    </tr>
+    <tr>
+      <td><a href="coordinate.html">/coordinate</a></td>
+      <td><code class="language-plaintext highlighter-rouge">coordinate</code></td>
+      <td>—</td>
+      <td>When several Claude branches are converging on the same long-term goal</td>
+    </tr>
+    <tr>
+      <td><a href="delivery-summary.html">Delivery Summary</a></td>
+      <td><code class="language-plaintext highlighter-rouge">delivery-summary</code></td>
+      <td>—</td>
+      <td>After completing a feature or edit (i.e., after pushing changes), provide:</td>
+    </tr>
+    <tr>
+      <td><a href="deployment-auth.html">Deployment &amp; Auth</a></td>
+      <td><code class="language-plaintext highlighter-rouge">deployment-auth</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="detangler-integration-watcher.html">/detangler-integration-watcher</a></td>
+      <td><code class="language-plaintext highlighter-rouge">detangler-integration-watcher</code></td>
+      <td>—</td>
+      <td>A concrete instance of <code class="language-plaintext highlighter-rouge">local/integration-watcher</code>. The parent encodes</td>
+    </tr>
+    <tr>
+      <td><a href="devils-advocate-watcher.html">/devils-advocate-watcher</a></td>
+      <td><code class="language-plaintext highlighter-rouge">devils-advocate-watcher</code></td>
+      <td>—</td>
+      <td>A concrete instance of <a href="/folio-assistant/reference/skill-instructions/integration-watcher.html"><code class="language-plaintext highlighter-rouge">integration-watcher</code></a>.</td>
+    </tr>
+    <tr>
+      <td><a href="diff.html">Diff</a></td>
+      <td><code class="language-plaintext highlighter-rouge">diff</code></td>
+      <td>—</td>
+      <td>Show what changed at the content-block level, with viewer links and</td>
+    </tr>
+    <tr>
+      <td><a href="dispatch-agent.html">/dispatch-agent</a></td>
+      <td><code class="language-plaintext highlighter-rouge">dispatch-agent</code></td>
+      <td>—</td>
+      <td>The expensive failure mode of multi-agent dispatch is <strong>going dark</strong>: you</td>
+    </tr>
+    <tr>
+      <td><a href="docs-generation.html">Documentation Generation</a></td>
+      <td><code class="language-plaintext highlighter-rouge">docs-generation</code></td>
+      <td>—</td>
+      <td>cd content &amp;&amp; bun run pipeline/build.ts \</td>
+    </tr>
+    <tr>
+      <td><a href="editor.html">Editor</a></td>
+      <td><code class="language-plaintext highlighter-rouge">editor</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="exposition-swarm-drain.html">/exposition-swarm-drain</a></td>
+      <td><code class="language-plaintext highlighter-rouge">exposition-swarm-drain</code></td>
+      <td>—</td>
+      <td>Bring every narrative block up to the <strong>Milnor exposition standard</strong></td>
+    </tr>
+    <tr>
+      <td><a href="glossary-build.html">Glossary Build</a></td>
+      <td><code class="language-plaintext highlighter-rouge">glossary-build</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="html-rendering-qc.html">HTML Rendering QC</a></td>
+      <td><code class="language-plaintext highlighter-rouge">html-rendering-qc</code></td>
+      <td>—</td>
+      <td>grep -rn ‘\operatorname’ content/<em>*/</em>.md</td>
+    </tr>
+    <tr>
+      <td><a href="idle-backlog.html">idle-backlog</a></td>
+      <td><code class="language-plaintext highlighter-rouge">idle-backlog</code></td>
+      <td>—</td>
+      <td>Generalises the AGENTS.md §”5-minute idle trigger” / “Work the queue while idle”</td>
+    </tr>
+    <tr>
+      <td><a href="integration-audit.html">/integration-audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">integration-audit</code></td>
+      <td>—</td>
+      <td>A maintenance command for the multi-axis QA-sidecar pipeline (<code class="language-plaintext highlighter-rouge">voice</code>,</td>
+    </tr>
+    <tr>
+      <td><a href="integration-backlog.html">/integration-backlog</a></td>
+      <td><code class="language-plaintext highlighter-rouge">integration-backlog</code></td>
+      <td>—</td>
+      <td>A workflow skill that turns each integration-watcher’s open findings</td>
+    </tr>
+    <tr>
+      <td><a href="integration-watch.html">/integration-watch</a></td>
+      <td><code class="language-plaintext highlighter-rouge">integration-watch</code></td>
+      <td>—</td>
+      <td>A thin dispatcher in front of <a href="/folio-assistant/reference/skill-instructions/integration-watcher.html"><code class="language-plaintext highlighter-rouge">integration-watcher</code></a></td>
+    </tr>
+    <tr>
+      <td><a href="integration-watcher.html">integration-watcher (abstract parent)</a></td>
+      <td><code class="language-plaintext highlighter-rouge">integration-watcher</code></td>
+      <td>—</td>
+      <td>A concrete watcher (this skill’s child) <strong>watches incoming activity</strong></td>
+    </tr>
+    <tr>
+      <td><a href="markdown-render-check.html">Markdown Render Check</a></td>
+      <td><code class="language-plaintext highlighter-rouge">markdown-render-check</code></td>
+      <td>—</td>
+      <td>git diff HEAD~1 HEAD –name-only – ‘*.md’</td>
+    </tr>
+    <tr>
+      <td><a href="md-authoring.html">Markdown Authoring Conventions</a></td>
+      <td><code class="language-plaintext highlighter-rouge">md-authoring</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="one-voice-audit.html">One-Voice Audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">one-voice-audit</code></td>
+      <td>—</td>
+      <td>grep -rEn “[✅❌⚠⏳🔧🚧☑☒]|✓|✗|★” “$CONTENT” –include=”*.md”</td>
+    </tr>
+    <tr>
+      <td><a href="one-voice-integration-watcher.html">/one-voice-integration-watcher</a></td>
+      <td><code class="language-plaintext highlighter-rouge">one-voice-integration-watcher</code></td>
+      <td>—</td>
+      <td>A concrete instance of <a href="/folio-assistant/reference/skill-instructions/integration-watcher.html"><code class="language-plaintext highlighter-rouge">local/integration-watcher</code></a>.</td>
+    </tr>
+    <tr>
+      <td><a href="one-voice-style-guide.html">One-Voice Style Guide</a></td>
+      <td><code class="language-plaintext highlighter-rouge">one-voice-style-guide</code></td>
+      <td>—</td>
+      <td>&gt; <strong>See also:</strong> <code class="language-plaintext highlighter-rouge">one-voice-audit</code> is the mechanical sweep (greps for</td>
+    </tr>
+    <tr>
+      <td><a href="ontologist.html">Semantic Ontologist (Ambiguity Detection &amp; Glossary)</a></td>
+      <td><code class="language-plaintext highlighter-rouge">ontologist</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="pending-show.html">/pending-show</a></td>
+      <td><code class="language-plaintext highlighter-rouge">pending-show</code></td>
+      <td>—</td>
+      <td>Quick status display. Read-only. Run any time to answer “where am I?”</td>
+    </tr>
+    <tr>
+      <td><a href="pickup.html">Pickup</a></td>
+      <td><code class="language-plaintext highlighter-rouge">pickup</code></td>
+      <td>—</td>
+      <td>Continue work on existing open PRs with minimal wasted tokens. This skill</td>
+    </tr>
+    <tr>
+      <td><a href="prepare-merge-auto.html">/prepare-merge-auto</a></td>
+      <td><code class="language-plaintext highlighter-rouge">prepare-merge-auto</code></td>
+      <td>—</td>
+      <td>Runs the full <code class="language-plaintext highlighter-rouge">/prepare-merge</code> workflow PLUS:</td>
+    </tr>
+    <tr>
+      <td><a href="production-vs-exploratory-discipline.html">Production vs exploratory vs numerology</a></td>
+      <td><code class="language-plaintext highlighter-rouge">production-vs-exploratory-discipline</code></td>
+      <td>—</td>
+      <td>N_TRUNCATION = 5</td>
+    </tr>
+    <tr>
+      <td><a href="readability-editing.html">Readability Editing</a></td>
+      <td><code class="language-plaintext highlighter-rouge">readability-editing</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="scientific-accuracy.html">Scientific Accuracy</a></td>
+      <td><code class="language-plaintext highlighter-rouge">scientific-accuracy</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="session-intent.html">/session-intent</a></td>
+      <td><code class="language-plaintext highlighter-rouge">session-intent</code></td>
+      <td>—</td>
+      <td>A coordination failure mode recurs whenever agents have no durable</td>
+    </tr>
+    <tr>
+      <td><a href="symbiotic-interaction.html">symbiotic-interaction</a></td>
+      <td><code class="language-plaintext highlighter-rouge">symbiotic-interaction</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="test-engineer.html">Test Engineer</a></td>
+      <td><code class="language-plaintext highlighter-rouge">test-engineer</code></td>
+      <td>—</td>
+      <td>bun test                              # from scripts/tests/</td>
+    </tr>
+    <tr>
+      <td><a href="todo-manager.html">Session Task Manager (<code class="language-plaintext highlighter-rouge">beans</code>)</a></td>
+      <td><code class="language-plaintext highlighter-rouge">todo-manager</code></td>
+      <td>—</td>
+      <td>&gt; <strong>Disambiguation:</strong></td>
+    </tr>
+    <tr>
+      <td><a href="todo-review.html">Todo Review</a></td>
+      <td><code class="language-plaintext highlighter-rouge">todo-review</code></td>
+      <td>—</td>
+      <td>&gt; <strong>Disambiguation:</strong></td>
+    </tr>
+    <tr>
+      <td><a href="uses-editorial-review.html"><code class="language-plaintext highlighter-rouge">uses[]</code> Editorial Review</a></td>
+      <td><code class="language-plaintext highlighter-rouge">uses-editorial-review</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="watch.html">/watch</a></td>
+      <td><code class="language-plaintext highlighter-rouge">watch</code></td>
+      <td>—</td>
+      <td>A unified watcher that handles <strong>branches</strong> (poll <code class="language-plaintext highlighter-rouge">git ls-remote</code>) and</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="paper-adapter-folio-paper-adapter">
+  
+  
+    <a href="#paper-adapter-folio-paper-adapter" class="anchor-heading" aria-labelledby="paper-adapter-folio-paper-adapter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Paper adapter (folio-paper-adapter)
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="build-docs.html">/build-docs</a></td>
+      <td><code class="language-plaintext highlighter-rouge">build-docs</code></td>
+      <td>—</td>
+      <td>Builds the Lean HTML documentation using <code class="language-plaintext highlighter-rouge">doc-gen4</code> locally, to save CI</td>
+    </tr>
+    <tr>
+      <td><a href="build-pdf.html">/build-pdf</a></td>
+      <td><code class="language-plaintext highlighter-rouge">build-pdf</code></td>
+      <td>—</td>
+      <td>Builds the PDF locally to save CI minutes: the monolithic <code class="language-plaintext highlighter-rouge">main.pdf</code> and</td>
+    </tr>
+    <tr>
+      <td><a href="category-theory.html">Category Theory Formalization</a></td>
+      <td><code class="language-plaintext highlighter-rouge">category-theory</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="chapter-analysis.html">Chapter Analysis &amp; Formalization</a></td>
+      <td><code class="language-plaintext highlighter-rouge">chapter-analysis</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="compute-audit.html">Compute Audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">compute-audit</code></td>
+      <td>—</td>
+      <td>python3 script.py –args …</td>
+    </tr>
+    <tr>
+      <td><a href="compute-author.html">Compute-author</a></td>
+      <td><code class="language-plaintext highlighter-rouge">compute-author</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="content-block-review.html">Content Block Review</a></td>
+      <td><code class="language-plaintext highlighter-rouge">content-block-review</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="content-validation.html">Content Validation</a></td>
+      <td><code class="language-plaintext highlighter-rouge">content-validation</code></td>
+      <td>—</td>
+      <td>bun run scripts/run-validate.ts content/<paper>   # after setup-folio-assistant.sh</paper></td>
+    </tr>
+    <tr>
+      <td><a href="critical-path-analysis.html">Critical Path Analysis &amp; Context Review</a></td>
+      <td><code class="language-plaintext highlighter-rouge">critical-path-analysis</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="definition-clarity-audit.html">definition-clarity-audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">definition-clarity-audit</code></td>
+      <td>—</td>
+      <td>A content block can be <strong>schema-clean, ref-resolving, proof-backed</strong> and still be</td>
+    </tr>
+    <tr>
+      <td><a href="document-intake.html">Document Intake</a></td>
+      <td><code class="language-plaintext highlighter-rouge">document-intake</code></td>
+      <td>—</td>
+      <td>&gt; <strong>Bib human-review integration.</strong> Track per-upload ingestion</td>
+    </tr>
+    <tr>
+      <td><a href="ffi-roundtrip-audit.html">FFI roundtrip audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">ffi-roundtrip-audit</code></td>
+      <td>—</td>
+      <td>total = mp.mpf(0)</td>
+    </tr>
+    <tr>
+      <td><a href="formalizer.html">Lean 4 Formalizer (Narrative to Proof)</a></td>
+      <td><code class="language-plaintext highlighter-rouge">formalizer</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="groebner-basis.html">Gröbner Basis</a></td>
+      <td><code class="language-plaintext highlighter-rouge">groebner-basis</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="latex-build-cache.html">LaTeX build performance</a></td>
+      <td><code class="language-plaintext highlighter-rouge">latex-build-cache</code></td>
+      <td>—</td>
+      <td>A from-scratch compile re-parses the heavy preamble on **every latexmk</td>
+    </tr>
+    <tr>
+      <td><a href="latex-validation.html">LaTeX Validation</a></td>
+      <td><code class="language-plaintext highlighter-rouge">latex-validation</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="lean-build-fix.html">Lean Build Fix</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-build-fix</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="lean-cache-restore.html">Lean cache: the authoring loop</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-cache-restore</code></td>
+      <td>—</td>
+      <td>scripts/lake-cache.sh contribute   # give the build back</td>
+    </tr>
+    <tr>
+      <td><a href="lean-completeness-audit.html">Lean Completeness Audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-completeness-audit</code></td>
+      <td>—</td>
+      <td>find content/<paper>/lean/ -name '*.lean' -not -path '*/.lake/*' | sort</paper></td>
+    </tr>
+    <tr>
+      <td><a href="lean-environment-setup.html">Lean Environment Setup</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-environment-setup</code></td>
+      <td>—</td>
+      <td>cd .. &amp;&amp; git clone https://github.com/leanprover-community/mathlib4.git</td>
+    </tr>
+    <tr>
+      <td><a href="lean-formal-graph.html">Lean formal dependency graph</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-formal-graph</code></td>
+      <td>—</td>
+      <td>bun run content/pipeline/content-graph.ts content/<paper></paper></td>
+    </tr>
+    <tr>
+      <td><a href="lean-generation.html">Lean File Generation</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-generation</code></td>
+      <td>—</td>
+      <td>Description here.</td>
+    </tr>
+    <tr>
+      <td><a href="lean-mathlibext-curator.html"><code class="language-plaintext highlighter-rouge">MathlibExt</code> Curator</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-mathlibext-curator</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="lean-proof-review.html">Lean Proof Review</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-proof-review</code></td>
+      <td>—</td>
+      <td>git diff origin/main…HEAD – ‘*.lean’ \</td>
+    </tr>
+    <tr>
+      <td><a href="lean-proof-vacuity-audit.html">lean-proof-vacuity-audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-proof-vacuity-audit</code></td>
+      <td>—</td>
+      <td>A proof can be <strong>sorry-free, axiom-clean, and statement-faithful</strong> and still</td>
+    </tr>
+    <tr>
+      <td><a href="lean-substantive-pass.html">/lean-substantive-pass</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-substantive-pass</code></td>
+      <td>—</td>
+      <td>The job of this skill is to take an abstract `class FooContext where</td>
+    </tr>
+    <tr>
+      <td><a href="lean-witness-audit.html">Lean Witness Audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-witness-audit</code></td>
+      <td>—</td>
+      <td>python3 witness_base.py check-stale my-computation.witness.json</td>
+    </tr>
+    <tr>
+      <td><a href="paper-importer.html">Paper Importer</a></td>
+      <td><code class="language-plaintext highlighter-rouge">paper-importer</code></td>
+      <td>—</td>
+      <td>&gt; <strong>Bib human-review integration.</strong> When importing a paper whose</td>
+    </tr>
+    <tr>
+      <td><a href="proof-conciseness.html">Proof Conciseness</a></td>
+      <td><code class="language-plaintext highlighter-rouge">proof-conciseness</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="proof-editor.html">Proof Editor (Coordinator)</a></td>
+      <td><code class="language-plaintext highlighter-rouge">proof-editor</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="proof-exposition-review.html">Proof Exposition Review</a></td>
+      <td><code class="language-plaintext highlighter-rouge">proof-exposition-review</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="proof-gap-audit.html">Proof Gap Audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">proof-gap-audit</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="proof-integration-watcher.html">/proof-integration-watcher</a></td>
+      <td><code class="language-plaintext highlighter-rouge">proof-integration-watcher</code></td>
+      <td>—</td>
+      <td>A concrete instance of <a href="/folio-assistant/reference/skill-instructions/integration-watcher.html"><code class="language-plaintext highlighter-rouge">local/integration-watcher</code></a>.</td>
+    </tr>
+    <tr>
+      <td><a href="proof-narrative-lean-equivalence.html">Proof Narrative ↔ Lean Equivalence Audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code></td>
+      <td>—</td>
+      <td>grep -rn ‘:= by (rfl|trivial|True.intro)’ content/<em>*/</em>.lean</td>
+    </tr>
+    <tr>
+      <td><a href="proof-simplifier.html">Proof Simplifier</a></td>
+      <td><code class="language-plaintext highlighter-rouge">proof-simplifier</code></td>
+      <td>—</td>
+      <td>bun run content/pipeline/refactor-strategy.ts –lean 4.24.0 –applicable</td>
+    </tr>
+    <tr>
+      <td><a href="proof-status-tracking.html">Proof Status Tracking</a></td>
+      <td><code class="language-plaintext highlighter-rouge">proof-status-tracking</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="proof-triage.html">Proof Triage &amp; Resolution</a></td>
+      <td><code class="language-plaintext highlighter-rouge">proof-triage</code></td>
+      <td>—</td>
+      <td>[[require]]</td>
+    </tr>
+    <tr>
+      <td><a href="proposition-consolidation-audit.html">/proposition-consolidation-audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">proposition-consolidation-audit</code></td>
+      <td>—</td>
+      <td>grep -lE “^export default (proposition|theorem|lemma|corollary)” \</td>
+    </tr>
+    <tr>
+      <td><a href="q-usage-watcher.html">/q-usage-watcher</a></td>
+      <td><code class="language-plaintext highlighter-rouge">q-usage-watcher</code></td>
+      <td>—</td>
+      <td>&gt; <strong>Folio-optional axis.</strong> The <code class="language-plaintext highlighter-rouge">q-usage</code> criteria encode a substrate</td>
+    </tr>
+    <tr>
+      <td><a href="remark-audit.html">Remark Audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">remark-audit</code></td>
+      <td>—</td>
+      <td>cd content &amp;&amp; grep -rl ‘“remark”’ –include=’*.ts’ | sort</td>
+    </tr>
+    <tr>
+      <td><a href="rendering-auditor.html">Rendering Auditor</a></td>
+      <td><code class="language-plaintext highlighter-rouge">rendering-auditor</code></td>
+      <td>—</td>
+      <td>cd content &amp;&amp; bun run pipeline/build.ts <paper>/<paper>.ts \</paper></paper></td>
+    </tr>
+    <tr>
+      <td><a href="rendering-fixes.html">Rendering Fixes</a></td>
+      <td><code class="language-plaintext highlighter-rouge">rendering-fixes</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="semantic-review-scoping.html">Semantic review scoping</a></td>
+      <td><code class="language-plaintext highlighter-rouge">semantic-review-scoping</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="simulator-math-audit.html">Simulator Math Audit</a></td>
+      <td><code class="language-plaintext highlighter-rouge">simulator-math-audit</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="simulator.html">Simulator</a></td>
+      <td><code class="language-plaintext highlighter-rouge">simulator</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="verify-local-substrate.html">Verify Anchor Connectivity</a></td>
+      <td><code class="language-plaintext highlighter-rouge">verify-local-substrate</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="witnessed-values.html">Witnessed Values</a></td>
+      <td><code class="language-plaintext highlighter-rouge">witnessed-values</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table></div>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">authoring-math</code> and <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> packages ship
+skill <em>definitions</em> + typed schemas today; their prose instruction bodies
+will appear here as they are authored.</p>
+</blockquote>
+
+          
+
+          
+            <hr>
+<h2 class="text-delta">Table of contents</h2>
+
+<ul>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/build-docs.html">/build-docs</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/build-pdf.html">/build-pdf</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html">/canonical-watcher</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/continual-progress.html">/continual-progress</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/coordinate.html">/coordinate</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html">/detangler-integration-watcher</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html">/devils-advocate-watcher</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html">/dispatch-agent</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html">/exposition-swarm-drain</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/integration-audit.html">/integration-audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/integration-backlog.html">/integration-backlog</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/integration-watch.html">/integration-watch</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html">/lean-substantive-pass</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html">/one-voice-integration-watcher</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/pending-show.html">/pending-show</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html">/prepare-merge-auto</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html">/proof-integration-watcher</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html">/proposition-consolidation-audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html">/q-usage-watcher</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/session-intent.html">/session-intent</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/watch.html">/watch</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/bean-coordination.html">Bean Coordination</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/bib-qa.html">Bibliography QA</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/block-density.html">Block Density</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/category-theory.html">Category Theory Formalization</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html">Chapter Analysis & Formalization</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html">Chapter Complexity Review</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/compute-audit.html">Compute Audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html">Compute Integration Watcher</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/compute-author.html">Compute-author</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/content-author.html">Content Authoring</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/content-block-review.html">Content Block Review</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/content-feedback.html">Content Feedback Collection</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/content-graph.html">Content Graph</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/content-plan.html">Content Planning</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/content-publish.html">Content Publication</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/content-retire.html">Content Retirement</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/content-review.html">Content Review</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/content-test.html">Content Testing</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/content-validate.html">Content Validation</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/content-validation.html">Content Validation</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/corpus-grep.html">Corpus-Grep</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html">Critical Path Analysis & Context Review</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/delivery-summary.html">Delivery Summary</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/deployment-auth.html">Deployment & Auth</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/diff.html">Diff</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/document-intake.html">Document Intake</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/docs-generation.html">Documentation Generation</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/editor.html">Editor</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html">FFI roundtrip audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/glossary-build.html">Glossary Build</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/groebner-basis.html">Gröbner Basis</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html">HTML Rendering QC</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/latex-validation.html">LaTeX Validation</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html">LaTeX build performance</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/formalizer.html">Lean 4 Formalizer (Narrative to Proof)</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html">Lean Build Fix</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html">Lean Completeness Audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html">Lean Environment Setup</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/lean-generation.html">Lean File Generation</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html">Lean Proof Review</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html">Lean Witness Audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html">Lean formal dependency graph</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/md-authoring.html">Markdown Authoring Conventions</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html">Markdown Render Check</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html">One-Voice Audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html">One-Voice Style Guide</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/paper-importer.html">Paper Importer</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/pickup.html">Pickup</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html">Production vs exploratory vs numerology</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html">Proof Conciseness</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/proof-editor.html">Proof Editor (Coordinator)</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html">Proof Exposition Review</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html">Proof Gap Audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html">Proof Narrative ↔ Lean Equivalence Audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html">Proof Simplifier</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html">Proof Status Tracking</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/proof-triage.html">Proof Triage & Resolution</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/readability-editing.html">Readability Editing</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/remark-audit.html">Remark Audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html">Rendering Auditor</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html">Rendering Fixes</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html">Scientific Accuracy</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/ontologist.html">Semantic Ontologist (Ambiguity Detection & Glossary)</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html">Semantic review scoping</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/todo-manager.html">Session Task Manager (`beans`)</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/simulator.html">Simulator</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html">Simulator Math Audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/test-engineer.html">Test Engineer</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/todo-review.html">Todo Review</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html">Verify Anchor Connectivity</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/witnessed-values.html">Witnessed Values</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/bib-human-review.html">bib-human-review</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html">bib-photo-ingestion-watcher</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html">definition-clarity-audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/idle-backlog.html">idle-backlog</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/integration-watcher.html">integration-watcher (abstract parent)</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html">lean-proof-vacuity-audit</a>
+  </li>
+  
+  <li>
+    <a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html">symbiotic-interaction</a>
+  </li>
+  
+</ul>
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+

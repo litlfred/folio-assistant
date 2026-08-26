@@ -1,0 +1,844 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(68)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(68) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(6) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(6) > ul > li:nth-child(68) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(6) > ul.nav-list > li.nav-list-item:nth-child(68) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Paper Importer | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Paper Importer" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/paper-importer.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/paper-importer.html" />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Paper Importer" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Paper Importer","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/paper-importer.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/" class="site-title lh-tight">
+  folio-assistant
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill instructions submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skill-instructions/" class="nav-list-link">Skill instructions</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-docs.html" class="nav-list-link">/build-docs</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/build-pdf.html" class="nav-list-link">/build-pdf</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html" class="nav-list-link">/canonical-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/continual-progress.html" class="nav-list-link">/continual-progress</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/coordinate.html" class="nav-list-link">/coordinate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html" class="nav-list-link">/detangler-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/devils-advocate-watcher.html" class="nav-list-link">/devils-advocate-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/dispatch-agent.html" class="nav-list-link">/dispatch-agent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/exposition-swarm-drain.html" class="nav-list-link">/exposition-swarm-drain</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-audit.html" class="nav-list-link">/integration-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-backlog.html" class="nav-list-link">/integration-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watch.html" class="nav-list-link">/integration-watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-substantive-pass.html" class="nav-list-link">/lean-substantive-pass</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html" class="nav-list-link">/one-voice-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pending-show.html" class="nav-list-link">/pending-show</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/prepare-merge-auto.html" class="nav-list-link">/prepare-merge-auto</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html" class="nav-list-link">/proof-integration-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proposition-consolidation-audit.html" class="nav-list-link">/proposition-consolidation-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/q-usage-watcher.html" class="nav-list-link">/q-usage-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/session-intent.html" class="nav-list-link">/session-intent</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/watch.html" class="nav-list-link">/watch</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bean-coordination.html" class="nav-list-link">Bean Coordination</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-qa.html" class="nav-list-link">Bibliography QA</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/block-density.html" class="nav-list-link">Block Density</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/category-theory.html" class="nav-list-link">Category Theory Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-analysis.html" class="nav-list-link">Chapter Analysis & Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/chapter-complexity-review.html" class="nav-list-link">Chapter Complexity Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-audit.html" class="nav-list-link">Compute Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html" class="nav-list-link">Compute Integration Watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/compute-author.html" class="nav-list-link">Compute-author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-author.html" class="nav-list-link">Content Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-block-review.html" class="nav-list-link">Content Block Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-feedback.html" class="nav-list-link">Content Feedback Collection</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-graph.html" class="nav-list-link">Content Graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-plan.html" class="nav-list-link">Content Planning</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-publish.html" class="nav-list-link">Content Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-retire.html" class="nav-list-link">Content Retirement</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-test.html" class="nav-list-link">Content Testing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validate.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/content-validation.html" class="nav-list-link">Content Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/corpus-grep.html" class="nav-list-link">Corpus-Grep</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/critical-path-analysis.html" class="nav-list-link">Critical Path Analysis & Context Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/delivery-summary.html" class="nav-list-link">Delivery Summary</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/deployment-auth.html" class="nav-list-link">Deployment & Auth</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/diff.html" class="nav-list-link">Diff</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/document-intake.html" class="nav-list-link">Document Intake</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/docs-generation.html" class="nav-list-link">Documentation Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/editor.html" class="nav-list-link">Editor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ffi-roundtrip-audit.html" class="nav-list-link">FFI roundtrip audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/glossary-build.html" class="nav-list-link">Glossary Build</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/groebner-basis.html" class="nav-list-link">Gröbner Basis</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/html-rendering-qc.html" class="nav-list-link">HTML Rendering QC</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-validation.html" class="nav-list-link">LaTeX Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/latex-build-cache.html" class="nav-list-link">LaTeX build performance</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/formalizer.html" class="nav-list-link">Lean 4 Formalizer (Narrative to Proof)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-build-fix.html" class="nav-list-link">Lean Build Fix</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-completeness-audit.html" class="nav-list-link">Lean Completeness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-environment-setup.html" class="nav-list-link">Lean Environment Setup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-generation.html" class="nav-list-link">Lean File Generation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-review.html" class="nav-list-link">Lean Proof Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-witness-audit.html" class="nav-list-link">Lean Witness Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-formal-graph.html" class="nav-list-link">Lean formal dependency graph</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/md-authoring.html" class="nav-list-link">Markdown Authoring Conventions</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/markdown-render-check.html" class="nav-list-link">Markdown Render Check</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-audit.html" class="nav-list-link">One-Voice Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/one-voice-style-guide.html" class="nav-list-link">One-Voice Style Guide</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/paper-importer.html" class="nav-list-link">Paper Importer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/pickup.html" class="nav-list-link">Pickup</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html" class="nav-list-link">Production vs exploratory vs numerology</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-conciseness.html" class="nav-list-link">Proof Conciseness</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-editor.html" class="nav-list-link">Proof Editor (Coordinator)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-exposition-review.html" class="nav-list-link">Proof Exposition Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-gap-audit.html" class="nav-list-link">Proof Gap Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-narrative-lean-equivalence.html" class="nav-list-link">Proof Narrative ↔ Lean Equivalence Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-simplifier.html" class="nav-list-link">Proof Simplifier</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-status-tracking.html" class="nav-list-link">Proof Status Tracking</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/proof-triage.html" class="nav-list-link">Proof Triage & Resolution</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/readability-editing.html" class="nav-list-link">Readability Editing</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/remark-audit.html" class="nav-list-link">Remark Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-auditor.html" class="nav-list-link">Rendering Auditor</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/rendering-fixes.html" class="nav-list-link">Rendering Fixes</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/scientific-accuracy.html" class="nav-list-link">Scientific Accuracy</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/ontologist.html" class="nav-list-link">Semantic Ontologist (Ambiguity Detection & Glossary)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/semantic-review-scoping.html" class="nav-list-link">Semantic review scoping</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-manager.html" class="nav-list-link">Session Task Manager (`beans`)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator.html" class="nav-list-link">Simulator</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/simulator-math-audit.html" class="nav-list-link">Simulator Math Audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/test-engineer.html" class="nav-list-link">Test Engineer</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/todo-review.html" class="nav-list-link">Todo Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/verify-local-substrate.html" class="nav-list-link">Verify Anchor Connectivity</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/witnessed-values.html" class="nav-list-link">Witnessed Values</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-human-review.html" class="nav-list-link">bib-human-review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html" class="nav-list-link">bib-photo-ingestion-watcher</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/definition-clarity-audit.html" class="nav-list-link">definition-clarity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/idle-backlog.html" class="nav-list-link">idle-backlog</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/integration-watcher.html" class="nav-list-link">integration-watcher (abstract parent)</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/lean-proof-vacuity-audit.html" class="nav-list-link">lean-proof-vacuity-audit</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skill-instructions/symbiotic-interaction.html" class="nav-list-link">symbiotic-interaction</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Skill schema reference submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/reference/skills/" class="nav-list-link">Skill schema reference</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/reference/skills/bpmn-authoring.html" class="nav-list-link">BPMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-author.html" class="nav-list-link">Content Author</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-feedback.html" class="nav-list-link">Content Feedback</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-plan.html" class="nav-list-link">Content Plan</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-publish.html" class="nav-list-link">Content Publish</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-review.html" class="nav-list-link">Content Review</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-test.html" class="nav-list-link">Content Test</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/content-validate.html" class="nav-list-link">Content Validate</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/dmn-authoring.html" class="nav-list-link">DMN Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/fhir-validation.html" class="nav-list-link">FHIR Validation</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/ig-publication.html" class="nav-list-link">IG Publication</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l2-dak-authoring.html" class="nav-list-link">L2 DAK Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/l3-fhir-authoring.html" class="nav-list-link">L3 FHIR Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/latex-authoring.html" class="nav-list-link">LaTeX Authoring</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/lean-formalization.html" class="nav-list-link">Lean Formalization</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/proof-verification.html" class="nav-list-link">Proof Verification</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/quality-control.html" class="nav-list-link">Quality Control</a></li><li class="nav-list-item"><a href="/folio-assistant/reference/skills/terminology-management.html" class="nav-list-link">Terminology Management</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-platform-skills-migration.html" class="nav-list-link">Platform skills migration — qou → folio-assistant bundles</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/llm-authoring-tool-integration.html" class="nav-list-link">Proposal — Lean tooling as skills and QA checks</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/rag-document-ingestion.html" class="nav-list-link">Proposal — a document-ingestion layer, and where RAG actually belongs</a></li><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-orchestration.html" class="nav-list-link">Proposal — making agentic workflow execution deterministic</a></li><li class="nav-list-item"><a href="/folio-assistant/migrations/2026-06-29-skills-classification.html" class="nav-list-link">Skills classification: what belongs in folio-assistant vs stays in qou</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
+          
+          target="_blank" rel="noopener noreferrer"
+          
+        >
+          GitHub
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Paper Importer</span></li>
+  </ol>
+</nav>
+
+
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/paper-importer.md"><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/paper-importer.md</code></a> — do not edit here.</p>
+</blockquote>
+<h1 id="paper-importer">
+  
+  
+    <a href="#paper-importer" class="anchor-heading" aria-labelledby="paper-importer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Paper Importer
+  
+  
+</h1>
+    
+
+<blockquote>
+  <p><strong>Bib human-review integration.</strong> When importing a paper whose
+results back a <code class="language-plaintext highlighter-rouge">references.ts</code> entry, place the formalisation in a <strong>per-paper
+Lean package</strong> (wrap, don’t duplicate, any overlap with the main paper’s results)
+and drive the ref’s status through <a href="/folio-assistant/reference/skill-instructions/bib-human-review.html"><code class="language-plaintext highlighter-rouge">bib-human-review</code></a>
+(<code class="language-plaintext highlighter-rouge">source-in-repo</code> once the cited passage is identified → <code class="language-plaintext highlighter-rouge">validated</code> after
+source-match + bib validation). The on-photo automation lives in
+<a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html"><code class="language-plaintext highlighter-rouge">bib-photo-ingestion-watcher</code></a>.</p>
+</blockquote>
+<h2 id="overview">
+  
+  
+    <a href="#overview" class="anchor-heading" aria-labelledby="overview"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Overview
+  
+  
+</h2>
+    
+
+<p>This skill imports external mathematical papers into the content object
+system. It handles three input formats:</p>
+
+<ol>
+  <li><strong>PDF upload</strong> — stored in <code class="language-plaintext highlighter-rouge">uploads/&lt;paper-id&gt;/</code>, OCR/text-extracted</li>
+  <li><strong>LaTeX source upload</strong> — stored in <code class="language-plaintext highlighter-rouge">uploads/&lt;paper-id&gt;/</code>, parsed directly</li>
+  <li><strong>arXiv reference</strong> — fetched via arXiv API, source downloaded to <code class="language-plaintext highlighter-rouge">uploads/</code></li>
+</ol>
+
+<p>The output is a new paper directory under <code class="language-plaintext highlighter-rouge">content/</code> with properly typed
+content objects (.ts + .md triples), ready for formalization.</p>
+<h2 id="when-to-use-this-skill">
+  
+  
+    <a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use This Skill
+  
+  
+</h2>
+    
+
+<ul>
+  <li>User says “import paper”, “add paper from arXiv”, “upload PDF/LaTeX”</li>
+  <li>User provides an arXiv ID (e.g. <code class="language-plaintext highlighter-rouge">2301.12345</code>) or URL</li>
+  <li>User wants to incorporate external results into the formalization</li>
+  <li>Proof-writer skills need to reference external theorems</li>
+</ul>
+<h2 id="import-pipeline">
+  
+  
+    <a href="#import-pipeline" class="anchor-heading" aria-labelledby="import-pipeline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Import Pipeline
+  
+  
+</h2>
+    
+<h3 id="phase-1-acquisition">
+  
+  
+    <a href="#phase-1-acquisition" class="anchor-heading" aria-labelledby="phase-1-acquisition"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 1: Acquisition
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PDF file</td>
+      <td>Store in <code class="language-plaintext highlighter-rouge">uploads/&lt;paper-id&gt;/original.pdf</code></td>
+    </tr>
+    <tr>
+      <td>LaTeX file(s)</td>
+      <td>Store in <code class="language-plaintext highlighter-rouge">uploads/&lt;paper-id&gt;/</code> preserving structure</td>
+    </tr>
+    <tr>
+      <td>arXiv ID</td>
+      <td>Fetch metadata via API, download source tarball to <code class="language-plaintext highlighter-rouge">uploads/&lt;paper-id&gt;/</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Preferred fetch path:</strong> when the session
+network allows <code class="language-plaintext highlighter-rouge">arxiv.org</code>, use the <code class="language-plaintext highlighter-rouge">paper-search-mcp</code> MCP server
+rather than raw <code class="language-plaintext highlighter-rouge">curl</code> / <code class="language-plaintext highlighter-rouge">WebFetch</code>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Use for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">paper-search-mcp.search_arxiv(query=…)</code></td>
+      <td>resolve an author/title to an arxiv ID + canonical metadata (title, authors, year, abstract, primary category) — feeds <code class="language-plaintext highlighter-rouge">import-meta.json</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">paper-search-mcp.download_arxiv(arxiv_id, output_dir="uploads/&lt;paper-id&gt;/")</code></td>
+      <td>fetch the PDF to <code class="language-plaintext highlighter-rouge">uploads/</code> with the canonical arxiv-id-named filename — single call, no shell</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">paper-search-mcp.read_arxiv_paper(arxiv_id)</code></td>
+      <td>parsed text body for downstream environment extraction (Phase 2) — useful when PDF OCR is brittle</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">openalex-paper-search.get_work(doi=…)</code></td>
+      <td>metadata-only path for papers without an arxiv preprint (paywalled or pre-arxiv era) — fills the same <code class="language-plaintext highlighter-rouge">import-meta.json</code> shape</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Sandboxed sessions (Claude-Code-on-the-web with the github-only
+allowlist) cannot reach <code class="language-plaintext highlighter-rouge">arxiv.org</code> / <code class="language-plaintext highlighter-rouge">api.openalex.org</code>; the MCP
+servers stay configured but fail soft. In those sessions, queue
+the actual fetch onto <code class="language-plaintext highlighter-rouge">scripts/upload-bib-papers.sh</code> running on a
+normal-network machine (handoff documented in
+<a href="/folio-assistant/reference/skill-instructions/bib-qa.html#batch-intake-pipeline"><code class="language-plaintext highlighter-rouge">bib-qa.md §Batch intake pipeline</code></a>).</p>
+
+<p>All uploads are committed to the repo under <code class="language-plaintext highlighter-rouge">uploads/</code> for reprocessing.
+Metadata is stored in <code class="language-plaintext highlighter-rouge">uploads/&lt;paper-id&gt;/import-meta.json</code>:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"arxiv"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arxivId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2301.12345"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://arxiv.org/abs/2301.12345"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"authors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"..."</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"fetchedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-03-22T..."</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"latex"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"files"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"main.tex"</span><span class="p">,</span><span class="w"> </span><span class="s2">"macros.tex"</span><span class="p">,</span><span class="w"> </span><span class="s2">"..."</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+<h3 id="phase-2-environment-extraction">
+  
+  
+    <a href="#phase-2-environment-extraction" class="anchor-heading" aria-labelledby="phase-2-environment-extraction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 2: Environment Extraction
+  
+  
+</h3>
+    
+
+<p>Scan LaTeX source (or extracted text from PDF) for formal environments:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>\begin{theorem} ... \end{theorem}       → TheoremBlock
+\begin{definition} ... \end{definition} → DefinitionBlock
+\begin{proposition} ... \end{proposition} → PropositionBlock
+\begin{lemma} ... \end{lemma}           → LemmaBlock
+\begin{corollary} ... \end{corollary}   → CorollaryBlock
+\begin{conjecture} ... \end{conjecture} → ConjectureBlock
+\begin{example} ... \end{example}       → ExampleBlock
+\begin{remark} ... \end{remark}         → RemarkBlock
+\begin{proof} ... \end{proof}           → ProofBlock
+</code></pre></div></div>
+
+<p>Also extract:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">\label{}</code> → used for cross-references</li>
+  <li><code class="language-plaintext highlighter-rouge">\ref{}</code> / <code class="language-plaintext highlighter-rouge">\cite{}</code> → mapped to <code class="language-plaintext highlighter-rouge">uses[]</code> dependencies</li>
+  <li>Sectioning (<code class="language-plaintext highlighter-rouge">\section{}</code>, <code class="language-plaintext highlighter-rouge">\chapter{}</code>) → chapter/section structure</li>
+  <li>Custom theorem environments (<code class="language-plaintext highlighter-rouge">\newtheorem{thm}</code> etc.)</li>
+</ul>
+
+<p><strong>Important</strong>: This phase requires user interaction. Present extracted
+blocks to the user for review before committing:</p>
+<ul>
+  <li>Show count of each kind found</li>
+  <li>Let user preview, rename, skip, or re-classify blocks</li>
+  <li>Let user define the paper ID and chapter structure</li>
+</ul>
+<h3 id="phase-3-content-object-generation">
+  
+  
+    <a href="#phase-3-content-object-generation" class="anchor-heading" aria-labelledby="phase-3-content-object-generation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 3: Content Object Generation
+  
+  
+</h3>
+    
+
+<p>For each confirmed block, generate:</p>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">.ts</code> manifest</strong> — using <code class="language-plaintext highlighter-rouge">content/schema/builders.ts</code>:
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">theorem</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../schema/builders</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">theorem</span><span class="p">({</span>
+  <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">thm:imported-main-result</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Main Theorem (Smith 2024)</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">uses</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">def:imported-widget</span><span class="dl">"</span><span class="p">],</span>
+  <span class="na">tags</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">imported</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">arxiv:2301.12345</span><span class="dl">"</span><span class="p">],</span>
+  <span class="na">meta</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">source</span><span class="p">:</span> <span class="dl">"</span><span class="s2">arxiv:2301.12345</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">originalLabel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">thm:main</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">originalSection</span><span class="p">:</span> <span class="dl">"</span><span class="s2">3.2</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">importedAt</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2026-03-22T...</span><span class="dl">"</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">.md</code> content</strong> — the environment body converted from LaTeX to
+project markdown conventions:
+    <ul>
+      <li>Inline math: <code class="language-plaintext highlighter-rouge">$...$</code> (preserved)</li>
+      <li>Display math: <code class="language-plaintext highlighter-rouge">$$...$$</code></li>
+      <li>Complex TeX: fenced ` ```tex ` blocks</li>
+      <li>Cross-refs: <code class="language-plaintext highlighter-rouge">[text](#label)</code> with imported prefix</li>
+    </ul>
+  </li>
+</ol>
+<h3 id="phase-4-lean-stub-generation-optional-user-confirmed">
+  
+  
+    <a href="#phase-4-lean-stub-generation-optional-user-confirmed" class="anchor-heading" aria-labelledby="phase-4-lean-stub-generation-optional-user-confirmed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 4: Lean Stub Generation (Optional, User-Confirmed)
+  
+  
+</h3>
+    
+
+<p>User selects which blocks to formalize. For each:</p>
+
+<ol>
+  <li>Generate <code class="language-plaintext highlighter-rouge">.lean</code> file with declaration stub + <code class="language-plaintext highlighter-rouge">sorry</code>:
+    <div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- Imported from: arXiv:2301.12345, Section 3.2
+-- Ref: [smith2024] https://doi.org/10.xxxx/xxxxx</span>
+
+<span class="o">/</span><span class="cd">-- Main theorem from Smith (2024). -/</span>
+<span class="k">theorem</span> <span class="n">imported_main_result</span> : <span class="o">...</span> := <span class="k">by</span>
+  <span class="n">sorry</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Update <code class="language-plaintext highlighter-rouge">.ts</code> manifest (use the package-qualified <code class="language-plaintext highlighter-rouge">ref</code> URI; see
+<code class="language-plaintext highlighter-rouge">folio-assistant/schemas/lean-packages.ts</code> for package names):
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">lean</span><span class="p">:</span> <span class="p">{</span> <span class="nl">ref</span><span class="p">:</span> <span class="dl">"</span><span class="s2">&lt;paper-pkg&gt;:&lt;Paper&gt;.Imported.Smith2024.imported_main_result</span><span class="dl">"</span> <span class="p">},</span>
+<span class="nx">status</span><span class="p">:</span> <span class="dl">"</span><span class="s2">stated</span><span class="dl">"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Every <code class="language-plaintext highlighter-rouge">sorry</code> MUST have a <code class="language-plaintext highlighter-rouge">-- Ref:</code> comment citing the source paper.</li>
+</ol>
+<h3 id="phase-5-todo-suggestions-not-auto-created">
+  
+  
+    <a href="#phase-5-todo-suggestions-not-auto-created" class="anchor-heading" aria-labelledby="phase-5-todo-suggestions-not-auto-created"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 5: Todo Suggestions (NOT Auto-Created)
+  
+  
+</h3>
+    
+
+<p>The importer <strong>suggests</strong> todos to the user but does NOT create them
+automatically. Suggestions are presented in the UI for user confirmation:</p>
+
+<ul>
+  <li>“Formalize proof of [thm:imported-X]” — when a theorem has no .lean</li>
+  <li>“Verify statement of [def:imported-Y]” — for all imported definitions</li>
+  <li>“Connect [thm:imported-Z] to existing [thm:main-result]” — when
+dependency analysis suggests a relationship</li>
+  <li>“Add CSL-JSON entry for [source]” — if citation not in references.ts</li>
+</ul>
+
+<p>Only when the user explicitly confirms a suggestion does it become a todo
+in the feedback system.</p>
+<h2 id="integration-with-proof-writer-skills">
+  
+  
+    <a href="#integration-with-proof-writer-skills" class="anchor-heading" aria-labelledby="integration-with-proof-writer-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Integration with Proof-Writer Skills
+  
+  
+</h2>
+    
+<h3 id="how-proof-writers-use-imported-papers">
+  
+  
+    <a href="#how-proof-writers-use-imported-papers" class="anchor-heading" aria-labelledby="how-proof-writers-use-imported-papers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How proof-writers use imported papers
+  
+  
+</h3>
+    
+
+<p>The <code class="language-plaintext highlighter-rouge">formalizer</code>, <code class="language-plaintext highlighter-rouge">proof-triage</code>, and <code class="language-plaintext highlighter-rouge">category-theory</code> skills can:</p>
+
+<ol>
+  <li><strong>Search imported blocks</strong> via <code class="language-plaintext highlighter-rouge">tags: ["imported"]</code> filter</li>
+  <li><strong>Reference imported theorems</strong> in <code class="language-plaintext highlighter-rouge">uses[]</code> of main paper blocks</li>
+  <li><strong>Look up original context</strong> via <code class="language-plaintext highlighter-rouge">meta.source</code> and the upload files</li>
+  <li><strong>Cite sorry’d proofs</strong> with the imported paper’s reference</li>
+</ol>
+<h3 id="cross-paper-dependency-tracking">
+  
+  
+    <a href="#cross-paper-dependency-tracking" class="anchor-heading" aria-labelledby="cross-paper-dependency-tracking"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cross-paper dependency tracking
+  
+  
+</h3>
+    
+
+<p>When a block in one paper <code class="language-plaintext highlighter-rouge">uses</code> a block from another paper, use
+<strong>qualified references</strong> with the target paper’s directory name:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// In the main paper, referencing another paper in the folio</span>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">proposition</span><span class="p">({</span>
+  <span class="na">label</span><span class="p">:</span> <span class="dl">"</span><span class="s2">prop:some-derived-result</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">uses</span><span class="p">:</span> <span class="p">[</span>
+    <span class="dl">"</span><span class="s2">rem:some-local-remark</span><span class="dl">"</span><span class="p">,</span>                  <span class="c1">// same paper (bare label)</span>
+    <span class="dl">"</span><span class="s2">other-paper:cor:foo</span><span class="dl">"</span><span class="p">,</span>                    <span class="c1">// cross-paper (paper-dir:label)</span>
+  <span class="p">],</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><strong>Syntax:</strong></p>
+<ul>
+  <li>Same paper: bare label (<code class="language-plaintext highlighter-rouge">"def:foo"</code>)</li>
+  <li>Same folio: <code class="language-plaintext highlighter-rouge">"paper-dir:label"</code> (<code class="language-plaintext highlighter-rouge">"other-paper:cor:foo"</code>)</li>
+  <li>External folio: full URL (<code class="language-plaintext highlighter-rouge">"https://folio.example.org/viewer/#/view/paper-id"</code>)</li>
+</ul>
+
+<p>The validation pipeline (<code class="language-plaintext highlighter-rouge">uses-resolve</code> in <code class="language-plaintext highlighter-rouge">constraints.ts</code>) skips
+qualified refs — they are resolved at folio level, not per-paper.</p>
+<h3 id="folio-registration-and-viewer-url">
+  
+  
+    <a href="#folio-registration-and-viewer-url" class="anchor-heading" aria-labelledby="folio-registration-and-viewer-url"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Folio registration and viewer URL
+  
+  
+</h3>
+    
+
+<p>Every imported paper must be registered in <code class="language-plaintext highlighter-rouge">content/folio.ts</code>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">paperRef</span><span class="p">({</span>
+  <span class="na">dir</span><span class="p">:</span> <span class="dl">"</span><span class="s2">other-paper</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Title of the Imported Paper</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">url</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/viewer/#/view/other-paper</span><span class="dl">"</span><span class="p">,</span>  <span class="c1">// viewer route</span>
+  <span class="na">tags</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">algebra</span><span class="dl">"</span><span class="p">],</span>
+<span class="p">}),</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">url</code> field enables:</p>
+<ul>
+  <li>Cross-paper link resolution in the viewer</li>
+  <li>CSL-JSON <code class="language-plaintext highlighter-rouge">URL</code> field for folio-hosted citations</li>
+  <li>Read-only import of external folios for referencing</li>
+</ul>
+<h3 id="bibliography-integration-for-imported-papers">
+  
+  
+    <a href="#bibliography-integration-for-imported-papers" class="anchor-heading" aria-labelledby="bibliography-integration-for-imported-papers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Bibliography integration for imported papers
+  
+  
+</h3>
+    
+
+<p>When the imported paper has a folio viewer URL, include the URL
+in its CSL-JSON entry in <code class="language-plaintext highlighter-rouge">content/schema/references.ts</code>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ref</span><span class="p">({</span>
+  <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">smithjones2004</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">article-journal</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">author</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="na">family</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Smith</span><span class="dl">"</span><span class="p">,</span> <span class="na">given</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Alice</span><span class="dl">"</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">family</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Jones</span><span class="dl">"</span><span class="p">,</span> <span class="na">given</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Bob</span><span class="dl">"</span> <span class="p">},</span>
+  <span class="p">],</span>
+  <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">On the structure of widgets</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">issued</span><span class="p">:</span> <span class="p">{</span> <span class="dl">"</span><span class="s2">date-parts</span><span class="dl">"</span><span class="p">:</span> <span class="p">[[</span><span class="mi">2004</span><span class="p">]]</span> <span class="p">},</span>
+  <span class="na">URL</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://arxiv.org/abs/math/0409565</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">}),</span>
+</code></pre></div></div>
+
+<p>The dependency graph links across papers. Proof-writers can traverse
+this to understand what external results are being relied upon.</p>
+<h3 id="imported-theorem-discovery">
+  
+  
+    <a href="#imported-theorem-discovery" class="anchor-heading" aria-labelledby="imported-theorem-discovery"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Imported theorem discovery
+  
+  
+</h3>
+    
+
+<p>Proof-writers should check imported papers when:</p>
+<ul>
+  <li>Stuck on a sorry → search imported blocks for relevant lemmas</li>
+  <li>Planning formalization → check if imported results provide shortcuts</li>
+  <li>Writing proofs → <code class="language-plaintext highlighter-rouge">uses[]</code> chain may lead to an imported theorem</li>
+</ul>
+
+<p>Use the tag filter: <code class="language-plaintext highlighter-rouge">tags.includes("imported")</code> on any block search.</p>
+<h2 id="arxiv-integration">
+  
+  
+    <a href="#arxiv-integration" class="anchor-heading" aria-labelledby="arxiv-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> arXiv Integration
+  
+  
+</h2>
+    
+<h3 id="fetching-papers">
+  
+  
+    <a href="#fetching-papers" class="anchor-heading" aria-labelledby="fetching-papers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fetching papers
+  
+  
+</h3>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET https://export.arxiv.org/api/query?id_list=2301.12345
+</code></pre></div></div>
+
+<p>Returns Atom XML with title, authors, abstract, categories.</p>
+<h3 id="source-download">
+  
+  
+    <a href="#source-download" class="anchor-heading" aria-labelledby="source-download"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Source download
+  
+  
+</h3>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET https://arxiv.org/e-print/2301.12345
+</code></pre></div></div>
+
+<p>Returns <code class="language-plaintext highlighter-rouge">.tar.gz</code> of LaTeX source (when available).</p>
+<h3 id="metadata-extraction">
+  
+  
+    <a href="#metadata-extraction" class="anchor-heading" aria-labelledby="metadata-extraction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Metadata extraction
+  
+  
+</h3>
+    
+
+<p>Parse the Atom response for:</p>
+<ul>
+  <li>Title, authors, abstract</li>
+  <li>DOI (if available)</li>
+  <li>Categories (math.AG, hep-th, etc.)</li>
+  <li>Published/updated dates</li>
+</ul>
+<h2 id="bibliography-integration">
+  
+  
+    <a href="#bibliography-integration" class="anchor-heading" aria-labelledby="bibliography-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Bibliography Integration
+  
+  
+</h2>
+    
+
+<p>When importing, check <code class="language-plaintext highlighter-rouge">content/schema/references.ts</code> for existing entry:</p>
+<ul>
+  <li>If found, use that citation key</li>
+  <li>If not found, add a <code class="language-plaintext highlighter-rouge">ref()</code> entry (user confirms)</li>
+  <li>After adding, run <code class="language-plaintext highlighter-rouge">bun run export-bibtex</code> to regenerate <code class="language-plaintext highlighter-rouge">references.bib</code></li>
+</ul>
+
+<p>Generated CSL-JSON entry in <code class="language-plaintext highlighter-rouge">references.ts</code>:</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ref</span><span class="p">({</span>
+  <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">smith2024</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">article-journal</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">On the Structure of Widgets</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">author</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="na">family</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Smith</span><span class="dl">"</span><span class="p">,</span> <span class="na">given</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Alice</span><span class="dl">"</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">family</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Jones</span><span class="dl">"</span><span class="p">,</span> <span class="na">given</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Bob</span><span class="dl">"</span> <span class="p">},</span>
+  <span class="p">],</span>
+  <span class="dl">"</span><span class="s2">container-title</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">arXiv preprint</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">issued</span><span class="p">:</span> <span class="p">{</span> <span class="dl">"</span><span class="s2">date-parts</span><span class="dl">"</span><span class="p">:</span> <span class="p">[[</span><span class="mi">2024</span><span class="p">]]</span> <span class="p">},</span>
+  <span class="na">note</span><span class="p">:</span> <span class="dl">"</span><span class="s2">arXiv:2301.12345</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">}),</span>
+</code></pre></div></div>
+<h2 id="file-organization">
+  
+  
+    <a href="#file-organization" class="anchor-heading" aria-labelledby="file-organization"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> File Organization
+  
+  
+</h2>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uploads/
+  &lt;paper-id&gt;/
+    import-meta.json          ← source metadata
+    original.pdf              ← uploaded PDF (if applicable)
+    main.tex                  ← LaTeX source (if applicable)
+    *.tex                     ← additional source files
+    extracted-blocks.json     ← extraction results (cached)
+
+content/
+  &lt;paper-id&gt;/
+    &lt;paper-id&gt;.ts             ← paper manifest
+    imported-&lt;source&gt;/
+      imported-&lt;source&gt;.ts    ← chapter manifest
+      &lt;block-name&gt;.ts         ← content object manifests
+      &lt;block-name&gt;.md         ← content markdown
+      &lt;block-name&gt;.lean       ← Lean stubs (when requested)
+</code></pre></div></div>
+<h2 id="checklist">
+  
+  
+    <a href="#checklist" class="anchor-heading" aria-labelledby="checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist
+  
+  
+</h2>
+    
+
+<p>Before completing an import:</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Source files stored in <code class="language-plaintext highlighter-rouge">uploads/&lt;paper-id&gt;/</code> with <code class="language-plaintext highlighter-rouge">import-meta.json</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />User has reviewed and confirmed extracted blocks</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All <code class="language-plaintext highlighter-rouge">.ts</code> manifests use correct builders and label prefixes</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All <code class="language-plaintext highlighter-rouge">.md</code> files follow project markdown conventions</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All blocks tagged with <code class="language-plaintext highlighter-rouge">["imported", "&lt;source-ref&gt;"]</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">meta.source</code> populated on every imported block</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />CSL-JSON entry exists in <code class="language-plaintext highlighter-rouge">content/schema/references.ts</code> (or suggested to user)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Any <code class="language-plaintext highlighter-rouge">.lean</code> files have <code class="language-plaintext highlighter-rouge">sorry</code> with <code class="language-plaintext highlighter-rouge">-- Ref:</code> citations</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">.ts</code> manifests have <code class="language-plaintext highlighter-rouge">lean.ref</code> URI set for definition blocks</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Todo suggestions presented to user (NOT auto-created)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Chapter manifest references all blocks in order</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Paper manifest added to <code class="language-plaintext highlighter-rouge">content/folio.ts</code> (or existing paper updated)</li>
+</ul>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = {}
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+
