@@ -1414,3 +1414,82 @@ three cases are now named by the target itself — `source` (authored),
 `generated` (rendered by us), `extracted` (pulled from hand-made material,
 pending promotion). The PDF is no longer a third guess; it is one render target
 among three.
+
+### 12.16 `smart-base`: what exists, and what should migrate
+
+Surveyed `litlfred/smart-base` at `5891a22` — **54 Python scripts, 24,775
+lines**, plus XSLT and XSD under `input/scripts/includes/`.
+
+#### The PDF renderer does not exist
+
+Confirmed. The only PDF dependency in the toolchain is `pdfplumber`, used by
+`extractpr.py` to **read** PDFs when extracting personas. There is no
+block → PDF path, no LaTeX, no HTML-to-PDF converter. The PDF representation
+§12.15 calls for has to be built.
+
+#### Two of the target-direction pieces already exist
+
+`input/scripts/includes/bpmn2fhirfsh.xsl` (720 lines) transforms **BPMN → FHIR
+FSH**, and `dmn2html.xslt` (161) renders DMN to HTML. Those are already the
+*render* arrow: an authored source artefact producing a published
+representation. They are the closest thing to a working precedent for the
+renderer §12.15 wants, and the least speculative starting point.
+
+#### The inventory, by arrow
+
+| Group | Scripts | ≈ lines | Standing |
+|---|---|---|---|
+| **Extract** — spreadsheet/BPMN/PDF → computable | `dd_`, `dt_` (1,305), `req_`, `bpmn_`, `svg_`, `extractpr`, `isco08_`, `DHI`, `extractor`, `extract_dak` | ~3,500 | Transitional, same as this branch's ingest writer |
+| **Render / generate** | `bpmn2fhirfsh.xsl`, `dmn2html.xslt`, `dmn_questionnaire_generator`, `transform_dmn`, `generate_jsonld_vocabularies` (738), `generate_*_schemas` (2,315), `generate_smart_liquid`, `generate_dak_from_sushi`, `generate_dak_api_hub` (3,823) | ~9,000 | **The valuable half** — target-direction |
+| **Translation** | `extract_translations` (1,158), `inject_translations` (933), `pull_*` ×4, `translation_config`, `register_translation_project`, `translation_report`, `translation_security`, … | ~5,500 | See below |
+| **IG build / CI** | `run_ig_publisher` (1,360), `create_package_release`, `inject_build_banner`, `stamp_deploy*`, `prune_branches`, `resolve_branch`, `pr_comment_*` | ~4,000 | Belongs with the IG, not the platform |
+
+#### The translation subsystem is bigger news than expected
+
+~5,500 lines wiring Weblate, Crowdin and Launchpad, with string extraction,
+injection, per-project registration and a completeness report. That is the
+**multilingual axis** §12.2 argued for on FRBR grounds — WHO publishing in six
+official languages, a translation being *the same recommendation in another
+Expression* — and it turns out to be an established subsystem rather than a
+future requirement.
+
+It substantially raises the stakes on the representation model: a DAK block has
+representations along **two** axes at once, format (source / IG / Excel / PDF)
+and language. That is exactly Work → Expression → Manifestation, and it is the
+strongest argument yet for adopting the FRBR pattern rather than approximating
+it.
+
+#### An independent convergence worth recording
+
+`smart-base` already generates JSON-LD (`generate_jsonld_vocabularies.py`, 738
+lines) with a declared `@context`. Its namespace IRIs and folio's, chosen
+separately:
+
+| Prefix | smart-base | folio (§12.5) |
+|---|---|---|
+| `prov` | `http://www.w3.org/ns/prov#` | **identical** |
+| `fhir` | `http://hl7.org/fhir/` | **identical** |
+
+Both pin `@version: 1.1`. The vocabularies do not overlap otherwise — theirs
+covers ValueSet enumeration semantics (`schema:`, `rdfs:`), mine document
+structure (`doco:`, `deo:`) — so they compose rather than compete. WHO also
+stamps `prov:generatedAtTime`, which is a stronger generated-artefact signal
+than the source-comment marker `isGeneratedArtefact` currently keys on, and
+worth preferring where present.
+
+#### Recommended migration order
+
+Not attempted here — 24,775 lines is a programme, and the entry point is the
+author's call. But the order the evidence suggests:
+
+1. **`bpmn2fhirfsh.xsl` and `dmn2html.xslt`** — smallest, already
+   target-direction, and they prove the render chain end to end.
+2. **`generate_*_schemas` and `generate_jsonld_vocabularies`** — align with the
+   `@context` this branch already publishes, given the IRIs match.
+3. **The extractors** — they pair with `gen-library-jsonld.ts`, which does the
+   same job for papers.
+4. **The translation subsystem** — largest, and needs the representation axis
+   decided first.
+
+IG build/CI scripts should probably stay in the IG repos: they orchestrate the
+publisher, not the content.

@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-15T15:27:40Z
-updated_at: 2026-08-26T20:05:00Z
+updated_at: 2026-08-26T20:30:00Z
 ---
 
 
@@ -508,3 +508,39 @@ three cases: source / generated / extracted. PDF is one render target, not a
 third guess.
 
 895 pass / 0 fail.
+
+## smart-base survey (§12.16)
+
+litlfred/smart-base @ 5891a22: **54 Python scripts, 24,775 lines** + XSLT/XSD.
+
+**PDF renderer confirmed absent.** Only PDF dependency is `pdfplumber`, used by
+extractpr.py to READ pdfs for persona extraction. No block→PDF path at all.
+
+**Two target-direction pieces already exist:** `includes/bpmn2fhirfsh.xsl` (720
+lines, BPMN → FHIR FSH) and `dmn2html.xslt` (161, DMN → HTML). Closest working
+precedent for the §12.15 renderer, and the least speculative starting point.
+
+**Inventory by arrow:** extract ~3,500 (dd/dt/req/bpmn/svg/personas — dt_extractor
+alone is 1,305); render+generate ~9,000 (the valuable half); translation ~5,500;
+IG build/CI ~4,000 (belongs with the IG, not the platform).
+
+**Translation subsystem is bigger news than expected** — ~5,500 lines wiring
+Weblate/Crowdin/Launchpad with extraction, injection, per-project registration,
+completeness reporting. That IS the multilingual axis §12.2 argued for on FRBR
+grounds, and it's established rather than future. Raises the stakes on the
+representation model: a DAK block varies along TWO axes at once — format
+(source/IG/Excel/PDF) and language. Work→Expression→Manifestation, exactly.
+
+**Independent convergence:** smart-base already emits JSON-LD
+(generate_jsonld_vocabularies.py, 738 lines). Its namespace IRIs vs mine,
+chosen separately: prov `http://www.w3.org/ns/prov#` IDENTICAL, fhir
+`http://hl7.org/fhir/` IDENTICAL, both `@version: 1.1`. Vocabularies otherwise
+complementary (theirs schema:/rdfs: for ValueSet enumeration semantics, mine
+doco:/deo: for document structure). They also stamp `prov:generatedAtTime` —
+a stronger generated-artefact signal than the source-comment marker
+isGeneratedArtefact keys on; worth preferring where present.
+
+**Migration order recommended, not attempted** (24,775 lines is a programme):
+XSLT pair first (smallest, proves the chain) → generate_* schemas/jsonld (IRIs
+already align) → extractors (pair with gen-library-jsonld) → translation
+(largest, needs the representation axis decided first).
