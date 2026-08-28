@@ -14,6 +14,7 @@ import { resolve } from "path";
 import { existsSync, readFileSync } from "fs";
 import { FolioServer } from "./server.js";
 import { PaperContentAdapter } from "../adapters/paper/index.js";
+import { DocumentContentAdapter } from "../adapters/document/index.js";
 import { GitHelper } from "./core/git.js";
 import { FeedbackStore } from "./core/feedback.js";
 import { log } from "./core/logging.js";
@@ -137,8 +138,20 @@ if (adapterModule) {
     adapter = new PaperContentAdapter(repoRoot, gitHelper, feedbackStore);
   }
 } else {
-  // Built-in adapter selection
+  // Built-in adapter selection.
+  //
+  // `document` is the base content type — prose folios with no Lean and no
+  // required TeX — and `paper` is the specialization that adds both. The
+  // default stays `paper` because every folio predating the document type
+  // declares `contentType: "paper"` or nothing at all, and the paper adapter
+  // is a superset: it registers the document tools too. Defaulting the other
+  // way would silently drop `lean_build` from an existing folio whose config
+  // happens to omit `contentType`.
   switch (adapterType) {
+    case "document":
+      adapter = new DocumentContentAdapter(repoRoot, gitHelper, feedbackStore);
+      log("init", `Using document adapter (repo: ${repoRoot})`);
+      break;
     case "paper":
     default:
       adapter = new PaperContentAdapter(repoRoot, gitHelper, feedbackStore);

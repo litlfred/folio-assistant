@@ -4,8 +4,8 @@
  * no-target/auto-detect paths degrade gracefully (no real pipeline spawn).
  */
 import { test, expect, describe } from "bun:test";
-import { registerBibTools } from "../../adapters/paper/tools/bib.ts";
-import { registerTransformTools } from "../../adapters/paper/tools/transform.ts";
+import { registerBibTools } from "../../adapters/document/tools/bib.ts";
+import { registerTransformTools } from "../../adapters/document/tools/transform.ts";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 /** An MCP tool handler, as the registration stubs below see it. */

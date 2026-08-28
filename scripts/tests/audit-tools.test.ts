@@ -3,7 +3,7 @@
  * tool registers with a handler (no real pipeline spawn).
  */
 import { test, expect, describe } from "bun:test";
-import { registerAuditTools } from "../../adapters/paper/tools/audit.ts";
+import { registerAuditTools } from "../../adapters/document/tools/audit.ts";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 /** An MCP tool handler, as the registration stubs below see it. */

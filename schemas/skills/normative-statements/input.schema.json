@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/normative-statements/input.schema.json",
+  "title": "Normative Statement Input",
+  "description": "Input schema for the normative-statements skill: carry one recommendation, requirement or rule as a labelled block.",
+  "type": "object",
+  "required": ["label", "statement", "force"],
+  "properties": {
+    "label": { "type": "string", "description": "Stable identifier. The folio picks its own prefix convention (e.g. rec:) — the platform reserves none." },
+    "title": { "type": "string", "description": "Short form for indexes and cross-references." },
+    "statement": { "type": "string", "description": "The normative statement itself. One statement per block: a block holding three cannot be cited, reviewed or superseded individually." },
+    "force": {
+      "type": "string",
+      "enum": ["must", "should", "may", "good-practice", "research-priority"],
+      "description": "Normative strength. Stated in the prose as well — nothing in the block structure encodes it."
+    },
+    "grading": { "type": "string", "description": "The issuing body's own strength/certainty grade, verbatim (e.g. a GRADE rating). Free text: the taxonomy is domain-specific." },
+    "publishedNumber": { "type": "string", "description": "The number this statement carries in the published edition. Kept out of the label, which must survive renumbering." },
+    "uses": { "type": "array", "items": { "type": "string" }, "description": "Blocks a reader must have read to act on this one — term definitions, the scope statement, the evidence summary." }
+  }
+}

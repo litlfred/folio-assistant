@@ -93,6 +93,148 @@ export type ContentAdapter = (typeof CONTENT_ADAPTERS)[number];
  */
 export const PAPER_BLOCK_KINDS = BLOCK_KINDS;
 
+// ── Content profiles ─────────────────────────────────────────────
+
+/**
+ * The **profiles** of the `paper` adapter's vocabulary.
+ *
+ * A profile is a *restriction* of one adapter's kind set, and is a different
+ * axis from {@link CONTENT_ADAPTERS} — which is a disjoint partition of
+ * namespaces. Getting those two confused is easy and costly, so the
+ * distinction is worth stating plainly:
+ *
+ * | | adapter | profile |
+ * |---|---|---|
+ * | relation between members | disjoint | nested |
+ * | a kind belongs to | exactly one | one or more |
+ * | answers | "whose vocabulary is this word from?" | "may *this* folio use it?" |
+ * | consumed by | QA criterion scoping ({@link adapterForKind}) | folio validation ({@link kindsOutsideProfile}) |
+ *
+ * `adapterForKind` therefore stays total and unambiguous: every kind below is
+ * still a `paper` kind, and no QA criterion's scope changes because a profile
+ * exists. A DAK kind is in no profile at all — it is a different adapter, not
+ * a narrower paper.
+ *
+ * ## Why the split is where it is
+ *
+ * A *document* is the general case: policy guidance, a report, a standard, a
+ * chapter of prose with tables and figures. A *paper* is that plus blocks
+ * whose assertion is a formal mathematical claim, carried by a `.lean`
+ * sibling. That is the whole difference — the tree of chapters and sections,
+ * the `uses[]` editorial graph, QA sidecars, the HCI validation gate and the
+ * publication pipeline are common to both, which is why they are one adapter
+ * with two profiles rather than two adapters.
+ *
+ * The dividing line is machine-checkable at its sharpest point: `definition`
+ * is the one kind whose `lean` field is **required** rather than optional
+ * (`DefinitionBlock.lean: LeanRef` in `types.ts`), so a document folio cannot
+ * contain one without failing schema validation. A test pins that, so the
+ * partition cannot drift away from the type that motivates it.
+ *
+ * The theorem-like kinds join it for a reason that is editorial rather than
+ * structural: their `lean` is optional, so a document *could* hold a
+ * `theorem` with no formalization — but a theorem whose proof nothing checks
+ * is the failure mode the paper profile exists to prevent, and offering the
+ * kind in a folio with no Lean toolchain invites exactly that. `example`,
+ * `remark`, `algorithm` and `proof`-free prose keep their optional `lean` and
+ * stay in the document profile; a document folio simply never populates it,
+ * which {@link DOCUMENT_FORBIDS_LEAN} states and validation enforces.
+ */
+export const CONTENT_PROFILES = ["document", "paper"] as const;
+export type ContentProfile = (typeof CONTENT_PROFILES)[number];
+
+/**
+ * The kinds whose assertion *is* a formal mathematical claim.
+ *
+ * Written out rather than derived, because the criterion ("the block asserts
+ * mathematics") is a judgement about meaning that no field on the type
+ * exposes. What *is* derived is its complement — see
+ * {@link DOCUMENT_BLOCK_KINDS} — so the two can never overlap or leave a kind
+ * unclassified, which is the failure a second hand-written list would invite.
+ */
+export const MATH_BLOCK_KINDS = [
+  "definition",
+  "theorem",
+  "lemma",
+  "proposition",
+  "corollary",
+  "conjecture",
+  "proof",
+] as const satisfies readonly BlockKind[];
+
+export type MathBlockKind = (typeof MATH_BLOCK_KINDS)[number];
+
+/**
+ * Everything a document folio may contain: the paper vocabulary minus
+ * {@link MATH_BLOCK_KINDS}.
+ *
+ * Derived, so a kind added to `BLOCK_KINDS` lands here automatically. That
+ * default is the permissive one, which is the opposite of the choice made for
+ * QA criterion scoping — deliberately. A criterion misfiring on a kind it was
+ * never written for reads as a real finding and wastes a reviewer; a new kind
+ * being *offerable* in a document folio at worst offers something nobody
+ * wants, and the profile test names every member so the classification is
+ * reviewed rather than inherited silently.
+ */
+export const DOCUMENT_BLOCK_KINDS = BLOCK_KINDS.filter(
+  (k): k is Exclude<BlockKind, MathBlockKind> =>
+    !(MATH_BLOCK_KINDS as readonly string[]).includes(k),
+);
+
+export type DocumentBlockKind = (typeof DOCUMENT_BLOCK_KINDS)[number];
+
+/** Which kinds each profile admits. */
+export const PROFILE_BLOCK_KINDS: Record<ContentProfile, readonly BlockKind[]> = {
+  document: DOCUMENT_BLOCK_KINDS,
+  paper: PAPER_BLOCK_KINDS,
+};
+
+/**
+ * Whether a document folio may carry a `lean` field on a block at all.
+ *
+ * `false`, and stated as a named constant rather than left implicit, because
+ * the kinds a document keeps (`example`, `remark`, `algorithm`, `simulator`)
+ * still *declare* an optional `lean` — the type permits what the profile
+ * forbids. Validation reads this; without it the rule would live only in
+ * whichever checker happened to implement it.
+ */
+export const DOCUMENT_FORBIDS_LEAN = true;
+
+/** Does `profile` admit blocks of `kind`? Unknown kinds are never admitted. */
+export function profileAcceptsKind(profile: ContentProfile, kind: string): boolean {
+  return (PROFILE_BLOCK_KINDS[profile] as readonly string[]).includes(kind);
+}
+
+/**
+ * The kinds in `kinds` that `profile` does not admit, de-duplicated and in
+ * the profile-independent order of `BLOCK_KINDS`.
+ *
+ * Returns unknown kinds too: a folio holding a kind no adapter recognises is
+ * a finding whichever profile it declares, and swallowing it here is how it
+ * would reach a renderer instead of a validator.
+ */
+export function kindsOutsideProfile(
+  profile: ContentProfile,
+  kinds: readonly string[],
+): string[] {
+  const seen = new Set(kinds.filter((k) => !profileAcceptsKind(profile, k)));
+  const known = (BLOCK_KINDS as readonly string[]).filter((k) => seen.has(k));
+  const unknown = [...seen].filter((k) => !(BLOCK_KINDS as readonly string[]).includes(k)).sort();
+  return [...known, ...unknown];
+}
+
+/**
+ * The profile a folio declares, from its `folio.config.json` `contentType`.
+ *
+ * `paper` is the fallback for an unrecognised or absent value, which is the
+ * safe direction here and only here: the paper profile is the *wider* set, so
+ * a misconfigured folio is never told a block it legitimately contains is
+ * forbidden. The narrower default would reject real content on a typo.
+ */
+export function profileForContentType(contentType: string | undefined): ContentProfile {
+  return contentType === "document" ? "document" : "paper";
+}
+
 /**
  * The `dak` adapter's block kinds — WHO SMART Guidelines L2 and L3.
  *

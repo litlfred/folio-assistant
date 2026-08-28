@@ -12,8 +12,8 @@ import {
   tryParseJson,
   runPipeline,
   asToolText,
-} from "../../adapters/paper/tools/_pipeline.ts";
-import { registerQaTools } from "../../adapters/paper/tools/qa.ts";
+} from "../../adapters/document/tools/_pipeline.ts";
+import { registerQaTools } from "../../adapters/document/tools/qa.ts";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 /**

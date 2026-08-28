@@ -2,11 +2,12 @@
  * Content validation and build tools.
  *
  * Tools:
- *   content_validate  — Validate content objects (schema + constraints + AST)
- *   content_build     — Build content objects → LaTeX chapters
- *   content_list      — List all content objects with status
+ *   content_validate      — Validate content objects (schema + constraints + AST)
+ *   content_profile_check — Check every block against the folio's declared profile
+ *   content_build         — Build content objects → LaTeX chapters
+ *   content_list          — List all content objects with status
  *
- * @module scripts/mcp-server/tools/validate
+ * @module folio-assistant/adapters/document/tools/validate
  */
 
 import { z } from "zod";
@@ -15,7 +16,8 @@ import { existsSync, readdirSync, readFileSync } from "fs";
 import { join, basename } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { REPO_ROOT, CONTENT_DIR } from "../paths.js";
-// Note: paths are resolved from the paper adapter's paths module.
+import { checkFolioProfile, formatProfileCheck } from "../../../content/pipeline/profile-check.js";
+// Note: paths are resolved from the document adapter's paths module.
 
 /** Find all paper directories under content/. */
 function discoverPapers(): string[] {
@@ -118,16 +120,54 @@ export function registerValidateTools(server: McpServer): void {
           totalWarnings += (output.match(/⚠/g) || []).length;
         }
 
+        // Profile conformance runs on every validate rather than as an
+        // opt-in tool. It is the one check that knows what *kind* of folio
+        // this is, and a document folio that has quietly acquired a theorem
+        // fails at publication — long after the block was written, and in a
+        // renderer whose error message says nothing about profiles.
+        const profileResult = checkFolioProfile(REPO_ROOT, paperDir);
+        totalErrors += profileResult.violations.length;
+
         return {
           content: [{
             type: "text" as const,
             text: `Validation: ${totalErrors} error(s), ${totalWarnings} warning(s)\n\n` +
-              results.join("\n\n"),
+              results.join("\n\n") +
+              `\n\n## Profile conformance\n\n${formatProfileCheck(profileResult)}`,
           }],
         };
       } catch (e) {
         return {
           content: [{ type: "text" as const, text: `Validation error: ${e instanceof Error ? e.message : String(e)}` }],
+        };
+      }
+    },
+  );
+
+  // ── content_profile_check ────────────────────────────────────
+
+  server.tool(
+    "content_profile_check",
+    "Check every block against the content profile the folio declares in " +
+    "folio.config.json. A `document` folio must hold no block whose assertion " +
+    "is a formal mathematical claim, and no `lean` field or `.lean` sibling " +
+    "anywhere. Run standalone to check the whole folio; content_validate runs " +
+    "it per document.",
+    {
+      document: z.string().optional()
+        .describe("Restrict to one document under content/ (default: the whole folio)"),
+    },
+    async ({ document }) => {
+      try {
+        const scope = document ? join(CONTENT_DIR, document) : CONTENT_DIR;
+        if (document && !existsSync(scope)) {
+          return { content: [{ type: "text" as const, text: `Document not found: ${scope}` }] };
+        }
+        const result = checkFolioProfile(REPO_ROOT, scope);
+        return { content: [{ type: "text" as const, text: formatProfileCheck(result) }] };
+      } catch (e) {
+        return {
+          content: [{ type: "text" as const, text: `Profile check error: ${e instanceof Error ? e.message : String(e)}` }],
         };
       }
     },

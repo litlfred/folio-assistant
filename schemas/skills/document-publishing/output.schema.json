@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/document-publishing/output.schema.json",
+  "title": "Document Publishing Output",
+  "type": "object",
+  "required": ["outputPath", "blockCount"],
+  "properties": {
+    "outputPath": { "type": "string" },
+    "engine": { "type": "string", "description": "The engine actually used, or absent for md/html." },
+    "blockCount": { "type": "integer" },
+    "chapterCount": { "type": "integer" },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": { "type": "string", "enum": ["error", "warn"] },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  }
+}

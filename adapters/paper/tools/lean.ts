@@ -19,7 +19,7 @@ import { execSync, spawnSync, type SpawnSyncReturns } from "child_process";
 import { existsSync, readFileSync, statSync } from "fs";
 import { join, resolve } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { LEAN_DIR, REPO_ROOT } from "../paths.js";
+import { LEAN_DIR, REPO_ROOT } from "../../document/paths.js";
 
 /** Check if a command is available. */
 function hasCommand(cmd: string): boolean {
