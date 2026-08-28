@@ -173,66 +173,6 @@ export function registerValidateTools(server: McpServer): void {
     },
   );
 
-  // ── content_build ────────────────────────────────────────────
-
-  server.tool(
-    "content_build",
-    "Build content objects into LaTeX chapter files. Runs validation " +
-    "first, then renders .ts + .md → .tex output.",
-    {
-      paper: z.string().optional()
-        .describe("Paper name (auto-detected if only one)"),
-      output_dir: z.string().optional()
-        .describe("Output directory for .tex files (default: chapters/)"),
-    },
-    async ({ paper, output_dir }) => {
-      try {
-        const papers = discoverPapers();
-        const paperName = paper || papers[0];
-        if (!paperName) {
-          return {
-            content: [{ type: "text" as const, text: "No papers found in content/" }],
-          };
-        }
-
-        const paperDir = join(CONTENT_DIR, paperName);
-        const docTs = join(paperDir, `${paperName}.ts`);
-        const outDir = output_dir || join(REPO_ROOT, "chapters");
-
-        if (!existsSync(docTs)) {
-          return {
-            content: [{ type: "text" as const, text: `Paper manifest not found: ${docTs}` }],
-          };
-        }
-
-        const result = spawnSync("bun", [
-          "run", join(CONTENT_DIR, "pipeline/build.ts"),
-          docTs,
-          "--out-dir", outDir,
-        ], {
-          cwd: CONTENT_DIR,
-          stdio: "pipe",
-          timeout: 120_000,
-        });
-
-        const output = result.stdout?.toString() || "";
-        const stderr = result.stderr?.toString() || "";
-
-        return {
-          content: [{
-            type: "text" as const,
-            text: `Build ${result.status === 0 ? "succeeded" : "failed"} (exit ${result.status})\n\n` +
-              output + (stderr ? `\nStderr: ${stderr}` : ""),
-          }],
-        };
-      } catch (e) {
-        return {
-          content: [{ type: "text" as const, text: `Build error: ${e instanceof Error ? e.message : String(e)}` }],
-        };
-      }
-    },
-  );
-
   // ── content_list ─────────────────────────────────────────────
 
   server.tool(
@@ -288,6 +228,75 @@ export function registerValidateTools(server: McpServer): void {
       } catch (e) {
         return {
           content: [{ type: "text" as const, text: `List error: ${e instanceof Error ? e.message : String(e)}` }],
+        };
+      }
+    },
+  );
+}
+
+/**
+ * The build step that emits LaTeX. Paper adapter only.
+ *
+ * A document folio's build is `document_render_md` — Markdown assembly, no
+ * `.tex` anywhere. Registering `content_build` on one would offer a build that
+ * produces chapter files nothing in that folio can compile.
+ */
+export function registerPaperBuildTools(server: McpServer): void {
+  // ── content_build ────────────────────────────────────────────
+
+  server.tool(
+    "content_build",
+    "Build content objects into LaTeX chapter files. Runs validation " +
+    "first, then renders .ts + .md → .tex output.",
+    {
+      paper: z.string().optional()
+        .describe("Paper name (auto-detected if only one)"),
+      output_dir: z.string().optional()
+        .describe("Output directory for .tex files (default: chapters/)"),
+    },
+    async ({ paper, output_dir }) => {
+      try {
+        const papers = discoverPapers();
+        const paperName = paper || papers[0];
+        if (!paperName) {
+          return {
+            content: [{ type: "text" as const, text: "No papers found in content/" }],
+          };
+        }
+
+        const paperDir = join(CONTENT_DIR, paperName);
+        const docTs = join(paperDir, `${paperName}.ts`);
+        const outDir = output_dir || join(REPO_ROOT, "chapters");
+
+        if (!existsSync(docTs)) {
+          return {
+            content: [{ type: "text" as const, text: `Paper manifest not found: ${docTs}` }],
+          };
+        }
+
+        const result = spawnSync("bun", [
+          "run", join(CONTENT_DIR, "pipeline/build.ts"),
+          docTs,
+          "--out-dir", outDir,
+        ], {
+          cwd: CONTENT_DIR,
+          stdio: "pipe",
+          timeout: 120_000,
+        });
+
+        const output = result.stdout?.toString() || "";
+        const stderr = result.stderr?.toString() || "";
+
+        return {
+          content: [{
+            type: "text" as const,
+            text: `Build ${result.status === 0 ? "succeeded" : "failed"} (exit ${result.status})\n\n` +
+              output + (stderr ? `\nStderr: ${stderr}` : ""),
+          }],
+        };
+      } catch (e) {
+        return {
+          content: [{ type: "text" as const, text: `Build error: ${e instanceof Error ? e.message : String(e)}` }],
         };
       }
     },

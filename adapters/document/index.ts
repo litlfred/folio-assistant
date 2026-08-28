@@ -40,7 +40,7 @@ import { registerValidateTools } from "./tools/validate.js";
 import { registerQaTools } from "./tools/qa.js";
 import { registerBibTools } from "./tools/bib.js";
 import { registerTransformTools } from "./tools/transform.js";
-import { registerAuditTools } from "./tools/audit.js";
+import { registerDocumentAuditTools } from "./tools/audit.js";
 import { registerDepsTools } from "../../src/tools/check-deps.js";
 import { registerPreferenceTools } from "../../src/tools/preferences.js";
 import { registerPreviewTools } from "../../src/tools/preview.js";
@@ -1080,6 +1080,6 @@ End every response with suggested follow-ups:
     registerQaTools(server);
     registerBibTools(server);
     registerTransformTools(server);
-    registerAuditTools(server);
+    registerDocumentAuditTools(server);
   }
 }

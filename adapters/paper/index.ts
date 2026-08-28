@@ -16,7 +16,12 @@
  *   `.lean` sibling; and
  * - **two toolchains** to serve them: the Lean lifecycle (`lean_setup`,
  *   `lean_build`, `lean_check`, `lean_status`) and the LaTeX renderer
- *   (`paper_render_pdf`, `paper_render_html`, `formula_render`).
+ *   (`paper_render_pdf`, `paper_render_html`, `formula_render`); and
+ * - **the tools that read those artifacts** — `content_build` (which emits
+ *   `.tex`), `migrate_lean_refs`, `proof_status`, `latex_preflight`, and ten
+ *   audits over `.tex` output, Lean witnesses and the theorem-like kinds. On a
+ *   document folio each of those would answer nothing forever, and a check
+ *   that never looked reporting clean is worse than one that is absent.
  *
  * Everything else is inherited, which is why this file is short. If a change
  * belongs in both content types, it belongs in the base class; if it needs a
@@ -30,6 +35,10 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { DocumentContentAdapter } from "../document/index.js";
 import { registerLeanTools } from "./tools/lean.js";
 import { registerLatexRenderTools } from "../document/tools/render.js";
+import { registerPaperAuditTools } from "../document/tools/audit.js";
+import { registerPaperQaTools } from "../document/tools/qa.js";
+import { registerPaperBuildTools } from "../document/tools/validate.js";
+import { registerPaperTransformTools } from "../document/tools/transform.js";
 
 export class PaperContentAdapter extends DocumentContentAdapter {
   readonly type: string = "paper";
@@ -47,6 +56,10 @@ export class PaperContentAdapter extends DocumentContentAdapter {
   protected override registerContentTools(server: McpServer): void {
     super.registerContentTools(server);
     registerLatexRenderTools(server);
+    registerPaperAuditTools(server);
+    registerPaperQaTools(server);
+    registerPaperBuildTools(server);
+    registerPaperTransformTools(server);
     registerLeanTools(server);
   }
 }

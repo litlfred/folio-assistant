@@ -17,6 +17,7 @@ import {
   ActorDefinitionSchema,
   CapabilityDefinitionSchema,
   RequirementSchema,
+  SkillDefinitionSchema,
 } from "../schemas/constraints.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -62,6 +63,20 @@ validateDir(
   join(rootDir, ".claude", "skills", "requirements"),
   RequirementSchema,
   "requirements",
+);
+
+// Validate skill definitions.
+//
+// `.claude/skills/local/` was the one JSON directory this script's own
+// docstring claimed to cover and did not, so a definition could name a
+// nonexistent conformance keyword, a stray field, or a missing `roles` and
+// nothing would say so until something tried to load it. Only `.json` here —
+// the directory also holds `.md` instruction bodies, which `validateDir`
+// already filters out.
+validateDir(
+  join(rootDir, ".claude", "skills", "local"),
+  SkillDefinitionSchema,
+  "local",
 );
 
 // Validate skill package manifests

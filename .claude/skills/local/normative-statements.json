@@ -1,0 +1,17 @@
+{
+  "id": "normative-statements",
+  "name": "Normative Statements",
+  "description": "Carry a recommendation, requirement or rule as a labelled, titled prose block — the pattern a document folio uses in place of a first-class recommendation kind, which does not exist. Explicitly NOT `definition` (a math kind whose lean field is required) or `theorem` (outside the document profile).",
+  "roles": ["author", "authoring-agent", "content-reviewer", "admin"],
+  "requiredCapabilities": [
+    { "capabilityId": "bun-runtime", "degradation": "fail" }
+  ],
+  "routingPatterns": [
+    "recommendation", "normative", "requirement", "good practice",
+    "guideline statement", "must", "should"
+  ],
+  "tags": ["document", "normative", "guidance", "authoring"],
+  "package": "authoring-document",
+  "lifecycleStages": ["author", "review"],
+  "schemaRef": "schemas/skills/normative-statements"
+}
