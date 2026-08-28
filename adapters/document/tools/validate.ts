@@ -12,11 +12,15 @@
 
 import { z } from "zod";
 import { spawnSync } from "child_process";
-import { existsSync, readdirSync, readFileSync } from "fs";
+import { existsSync, readdirSync } from "fs";
 import { join, basename } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { REPO_ROOT, CONTENT_DIR } from "../paths.js";
 import { checkFolioProfile, formatProfileCheck } from "../../../content/pipeline/profile-check.js";
+import {
+  readBlockManifest,
+  readUnlabelledBlockManifest,
+} from "../../../content/pipeline/qa-utils.js";
 // Note: paths are resolved from the document adapter's paths module.
 
 /** Find all paper directories under content/. */
@@ -195,30 +199,42 @@ export function registerValidateTools(server: McpServer): void {
           for (const chDir of findChapterDirs(paperDir)) {
             const chPath = join(paperDir, chDir);
             const manifests = findManifests(chPath);
-            lines.push(`\n## ${chDir} (${manifests.length} objects)`);
+            // Header count comes from what is actually listed, not from how
+            // many `.ts` files the directory holds — those differ by the
+            // chapter manifest and any helper module, and a count that
+            // disagrees with the rows beneath it is worse than no count.
+            const rows: string[] = [];
 
             for (const name of manifests) {
-              const hasMd = existsSync(join(chPath, `${name}.md`));
-              const hasLean = existsSync(join(chPath, `${name}.lean`));
+              const tsPath = join(chPath, `${name}.ts`);
+
+              // A block's kind comes from the BUILDER it calls, not from a
+              // literal `kind:` field — `prose({...})` yields `kind: "prose"`
+              // at runtime and the source never spells it out. This used to
+              // match a `kind:` string literal, which no builder-authored
+              // manifest contains, so every block in every folio listed as
+              // `unknown`. `readBlockManifest` is the canonical reader — masked
+              // against strings and comments, and mapping DAK's kebab-case
+              // kinds back from their camelCase builders — and is what the QA
+              // sweep, the content graph and the propagation sweeps all use.
+              //
+              // It also returns `undefined` for a `.ts` that is not a block, so
+              // the chapter manifest sitting in the same directory stops being
+              // listed as a content object of that chapter.
+              const block =
+                readBlockManifest(tsPath) ?? readUnlabelledBlockManifest(tsPath);
+              if (!block) continue;
+
               const companions = [
-                hasMd ? "md" : "",
-                hasLean ? "lean" : "",
+                existsSync(join(chPath, `${name}.md`)) ? "md" : "",
+                existsSync(join(chPath, `${name}.lean`)) ? "lean" : "",
               ].filter(Boolean).join(", ");
 
-              // Try to read the .ts to get kind/label
-              try {
-                const tsContent = readFileSync(join(chPath, `${name}.ts`), "utf-8");
-                const kindMatch = tsContent.match(/kind:\s*["'](\w+)["']/);
-                const labelMatch = tsContent.match(/label:\s*["']([^"']+)["']/);
-
-                const kind = kindMatch?.[1] || "unknown";
-                const label = labelMatch?.[1] || name;
-
-                lines.push(`  ${kind.padEnd(12)} ${label.padEnd(35)} [${companions}]`);
-              } catch {
-                lines.push(`  ${"?".padEnd(12)} ${name.padEnd(35)} ${"".padEnd(19)} [${companions}]`);
-              }
+              rows.push(`  ${block.kind.padEnd(12)} ${block.label.padEnd(35)} [${companions}]`);
             }
+
+            lines.push(`\n## ${chDir} (${rows.length} block${rows.length === 1 ? "" : "s"})`);
+            lines.push(...rows);
           }
         }
 

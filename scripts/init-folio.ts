@@ -509,9 +509,13 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   write("GEMINI.md", `# GEMINI.md\n\nThis folio's agent guidance is maintained agent-generically in \`AGENTS.md\`.\n\nSee [AGENTS.md](./AGENTS.md).\n`);
 
   // 6. Version control.
+  const platformPresent = existsSync(join(root, assistant));
   if (!o.skipVcs && !o.dryRun) {
     linkPlatform(root, assistant, o, result);
-  } else if (o.link === "submodule") {
+  } else if (o.link === "submodule" && !platformPresent) {
+    // Only when it is actually absent. Emitting this unconditionally told a
+    // caller who had already added the submodule (and passed --skip-vcs
+    // precisely because of that) to add it again.
     result.notes.push(`Add the platform: git submodule add ${FOLIO_ASSISTANT_REPO} ${assistant}`);
   }
 
