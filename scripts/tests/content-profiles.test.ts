@@ -48,11 +48,11 @@ describe("the profile partition", () => {
   test("the document profile is named explicitly, not inherited silently", () => {
     // Spelled out so that a kind moving between profiles is a reviewed diff
     // rather than a consequence of an unrelated edit to BLOCK_KINDS.
-    expect([...DOCUMENT_BLOCK_KINDS].sort()).toEqual(
+    expect([...(DOCUMENT_BLOCK_KINDS as readonly string[])].sort()).toEqual(
       ["algorithm", "diagram", "equation", "example", "prose", "remark", "simulator", "table"],
     );
-    expect([...MATH_BLOCK_KINDS].sort()).toEqual(
-      ["conjecture", "corollary", "definition", "lemma", "proposition", "proof", "theorem"].sort(),
+    expect([...(MATH_BLOCK_KINDS as readonly string[])].sort()).toEqual(
+      ["conjecture", "corollary", "definition", "lemma", "proof", "proposition", "theorem"],
     );
   });
 
