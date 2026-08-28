@@ -12,8 +12,8 @@ import {
   tryParseJson,
   runPipeline,
   asToolText,
-} from "../../adapters/paper/tools/_pipeline.ts";
-import { registerQaTools } from "../../adapters/paper/tools/qa.ts";
+} from "../../adapters/document/tools/_pipeline.ts";
+import { registerQaTools, registerPaperQaTools } from "../../adapters/document/tools/qa.ts";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 /**
@@ -68,15 +68,22 @@ describe("_pipeline helper", () => {
   });
 });
 
+/** Register one half and report what it produced. */
+function record(register: (s: McpServer) => void): Record<string, { desc: string; schema: unknown; handler: ToolHandler }> {
+  const registered: Record<string, { desc: string; schema: unknown; handler: ToolHandler }> = {};
+  const stub: ToolRecorder = {
+    tool(name, desc, schema, handler) { registered[name] = { desc, schema, handler }; },
+  };
+  register(stub as unknown as McpServer);
+  return registered;
+}
+
 describe("registerQaTools", () => {
   test("registers the expected mechanical tools with handlers", () => {
-    const registered: Record<string, { desc: string; schema: unknown; handler: ToolHandler }> = {};
-    const stub: ToolRecorder = {
-      tool(name, desc, schema, handler) {
-        registered[name] = { desc, schema, handler };
-      },
-    };
-    registerQaTools(stub as unknown as McpServer);
+    // Both halves together must still cover the module's whole table — that is
+    // a property of the table, not of either adapter, and splitting the
+    // registration must not let an entry fall out of coverage.
+    const registered = { ...record(registerQaTools), ...record(registerPaperQaTools) };
 
     for (const name of [
       "qa_sweep",
@@ -89,6 +96,19 @@ describe("registerQaTools", () => {
       expect(registered[name]).toBeDefined();
       expect(typeof registered[name].handler).toBe("function");
       expect(registered[name].desc.length).toBeGreaterThan(10);
+    }
+  });
+
+  test("the paper-only QA tools are NOT in the document half", () => {
+    // `proof_status` counts sorries in Lean files and `latex_preflight` parses
+    // .tex source. On a document folio both would report clean forever, and a
+    // check that never looked is indistinguishable from one that passed.
+    const doc = record(registerQaTools);
+    expect(doc["proof_status"]).toBeUndefined();
+    expect(doc["latex_preflight"]).toBeUndefined();
+    // …and the document half keeps everything a prose folio can actually use.
+    for (const name of ["qa_sweep", "bib_qa", "glossary_check", "content_export"]) {
+      expect(doc[name]).toBeDefined();
     }
   });
 

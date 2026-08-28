@@ -62,7 +62,8 @@ are logged with timing.
 
 A content adapter encapsulates everything type-specific: which artifacts exist,
 how to validate them, how to build/render them, and which extra MCP tools to
-register. The `paper` adapter (`adapters/paper/`) provides Lean lifecycle tools
+register. The `document` adapter (`adapters/document/`) is the base for prose
+folios; the `paper` adapter (`adapters/paper/`) extends it and provides Lean lifecycle tools
 (`lean_setup`/`build`/`check`/`status`), validation, and rendering
 (`paper_render_pdf`/`html`, `formula_render`). New content types add a new
 adapter — see [Adding a content type](guides/new-content-type.html).

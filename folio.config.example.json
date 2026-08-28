@@ -1,9 +1,9 @@
 {
-  "$schema": "https://github.com/litlfred/qou/blob/main/folio-assistant/folio-config-schema.json",
-  "contentType": "paper",
-  "adapter": "paper",
-  "adapterModule": "./adapters/paper/index.ts",
-  "feedbackDir": "folio-assistant/feedback",
+  "_comment": "Example folio.config.json. There is deliberately no $schema key: no such schema file is published, and pointing at one that does not exist is worse than pointing at nothing. `folio_init` writes one of these for you — see the README's 'Start a new folio'. `contentType` selects both the adapter and the block-kind profile: 'document' for prose folios (no Lean, no TeX needed to publish), 'paper' for a document that additionally carries Lean-backed mathematics. The paper adapter extends the document one, so a paper folio gets every document tool too.",
+  "contentType": "document",
+  "adapter": "document",
+  "adapterModule": "./folio-assistant/adapters/document/index.ts",
+  "feedbackDir": ".folio-feedback",
   "skills": ".claude/skills/local",
   "viewer": {
     "dir": "folio-assistant/viewer",

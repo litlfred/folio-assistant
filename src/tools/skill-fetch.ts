@@ -37,12 +37,20 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 // Locally-served skill packages (no network fetch). Each maps a package name to
 // the directory holding its `<skill>.md` instruction bodies. The skill lists are
 // read from disk so they stay in sync with the files — no hardcoded names.
-//   - folio-assistant       : the agent skills under src/skills/
-//   - folio-core            : content-agnostic platform bundle (skills/folio-core)
-//   - folio-paper-adapter   : formal-math paper-adapter bundle (skills/folio-paper-adapter)
+//   - folio-assistant        : the agent skills under src/skills/
+//   - folio-core             : content-agnostic platform bundle (skills/folio-core)
+//   - folio-document-adapter : prose-folio bundle, no Lean and no required TeX
+//   - folio-paper-adapter    : formal-math paper-adapter bundle (skills/folio-paper-adapter)
+//
+// `folio-document-adapter` and `folio-paper-adapter` are the two halves of one
+// content model, not alternatives to pick between: a paper folio wants both,
+// because a paper is a document whose blocks may additionally carry Lean. A
+// document folio wants the first only — the paper bundle's skills assume a
+// toolchain it does not have.
 const LOCAL_PACKAGES: Record<string, string> = {
   "folio-assistant": resolve(__dirname, "..", "skills"),
   "folio-core": resolve(__dirname, "..", "..", "skills", "folio-core"),
+  "folio-document-adapter": resolve(__dirname, "..", "..", "skills", "folio-document-adapter"),
   "folio-paper-adapter": resolve(__dirname, "..", "..", "skills", "folio-paper-adapter"),
 };
 
@@ -59,7 +67,8 @@ export function registerSkillFetchTools(server: McpServer): void {
     "skill_fetch",
     "Fetch a skill's instruction body for the agent to follow. Serves the local " +
     "platform bundles (package_name 'folio-assistant' = agent skills, 'folio-core' = " +
-    "content-agnostic platform skills, 'folio-paper-adapter' = formal-math paper skills) " +
+    "content-agnostic platform skills, 'folio-document-adapter' = prose-folio skills " +
+    "(no Lean, no required TeX), 'folio-paper-adapter' = formal-math paper skills) " +
     "and external reference packages (Tier 2 escalation: academic-paper-reviewer, " +
     "deep-research, academic-pipeline).",
     {
@@ -69,7 +78,8 @@ export function registerSkillFetchTools(server: McpServer): void {
         "'academic-paper-reviewer' (package_name 'academic-research-skills')"
       ),
       package_name: z.string().default("folio-core").describe(
-        "Package name. Local: 'folio-assistant' | 'folio-core' | 'folio-paper-adapter'. " +
+        "Package name. Local: 'folio-assistant' | 'folio-core' | 'folio-document-adapter' | " +
+        "'folio-paper-adapter'. " +
         "Reference: 'academic-research-skills'."
       ),
     },

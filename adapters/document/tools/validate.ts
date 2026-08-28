@@ -2,20 +2,26 @@
  * Content validation and build tools.
  *
  * Tools:
- *   content_validate  — Validate content objects (schema + constraints + AST)
- *   content_build     — Build content objects → LaTeX chapters
- *   content_list      — List all content objects with status
+ *   content_validate      — Validate content objects (schema + constraints + AST)
+ *   content_profile_check — Check every block against the folio's declared profile
+ *   content_build         — Build content objects → LaTeX chapters
+ *   content_list          — List all content objects with status
  *
- * @module scripts/mcp-server/tools/validate
+ * @module folio-assistant/adapters/document/tools/validate
  */
 
 import { z } from "zod";
 import { spawnSync } from "child_process";
-import { existsSync, readdirSync, readFileSync } from "fs";
+import { existsSync, readdirSync } from "fs";
 import { join, basename } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { REPO_ROOT, CONTENT_DIR } from "../paths.js";
-// Note: paths are resolved from the paper adapter's paths module.
+import { checkFolioProfile, formatProfileCheck } from "../../../content/pipeline/profile-check.js";
+import {
+  readBlockManifest,
+  readUnlabelledBlockManifest,
+} from "../../../content/pipeline/qa-utils.js";
+// Note: paths are resolved from the document adapter's paths module.
 
 /** Find all paper directories under content/. */
 function discoverPapers(): string[] {
@@ -118,11 +124,20 @@ export function registerValidateTools(server: McpServer): void {
           totalWarnings += (output.match(/⚠/g) || []).length;
         }
 
+        // Profile conformance runs on every validate rather than as an
+        // opt-in tool. It is the one check that knows what *kind* of folio
+        // this is, and a document folio that has quietly acquired a theorem
+        // fails at publication — long after the block was written, and in a
+        // renderer whose error message says nothing about profiles.
+        const profileResult = checkFolioProfile(REPO_ROOT, paperDir);
+        totalErrors += profileResult.violations.length;
+
         return {
           content: [{
             type: "text" as const,
             text: `Validation: ${totalErrors} error(s), ${totalWarnings} warning(s)\n\n` +
-              results.join("\n\n"),
+              results.join("\n\n") +
+              `\n\n## Profile conformance\n\n${formatProfileCheck(profileResult)}`,
           }],
         };
       } catch (e) {
@@ -133,6 +148,116 @@ export function registerValidateTools(server: McpServer): void {
     },
   );
 
+  // ── content_profile_check ────────────────────────────────────
+
+  server.tool(
+    "content_profile_check",
+    "Check every block against the content profile the folio declares in " +
+    "folio.config.json. A `document` folio must hold no block whose assertion " +
+    "is a formal mathematical claim, and no `lean` field or `.lean` sibling " +
+    "anywhere. Run standalone to check the whole folio; content_validate runs " +
+    "it per document.",
+    {
+      document: z.string().optional()
+        .describe("Restrict to one document under content/ (default: the whole folio)"),
+    },
+    async ({ document }) => {
+      try {
+        const scope = document ? join(CONTENT_DIR, document) : CONTENT_DIR;
+        if (document && !existsSync(scope)) {
+          return { content: [{ type: "text" as const, text: `Document not found: ${scope}` }] };
+        }
+        const result = checkFolioProfile(REPO_ROOT, scope);
+        return { content: [{ type: "text" as const, text: formatProfileCheck(result) }] };
+      } catch (e) {
+        return {
+          content: [{ type: "text" as const, text: `Profile check error: ${e instanceof Error ? e.message : String(e)}` }],
+        };
+      }
+    },
+  );
+
+  // ── content_list ─────────────────────────────────────────────
+
+  server.tool(
+    "content_list",
+    "List all content objects across all papers with their kind, " +
+    "label, lean status, and companion files.",
+    {
+      paper: z.string().optional()
+        .describe("Paper name (default: all papers)"),
+    },
+    async ({ paper }) => {
+      try {
+        const papers = paper ? [paper] : discoverPapers();
+        const lines: string[] = [];
+
+        for (const p of papers) {
+          const paperDir = join(CONTENT_DIR, p);
+          lines.push(`# ${p}`);
+
+          for (const chDir of findChapterDirs(paperDir)) {
+            const chPath = join(paperDir, chDir);
+            const manifests = findManifests(chPath);
+            // Header count comes from what is actually listed, not from how
+            // many `.ts` files the directory holds — those differ by the
+            // chapter manifest and any helper module, and a count that
+            // disagrees with the rows beneath it is worse than no count.
+            const rows: string[] = [];
+
+            for (const name of manifests) {
+              const tsPath = join(chPath, `${name}.ts`);
+
+              // A block's kind comes from the BUILDER it calls, not from a
+              // literal `kind:` field — `prose({...})` yields `kind: "prose"`
+              // at runtime and the source never spells it out. This used to
+              // match a `kind:` string literal, which no builder-authored
+              // manifest contains, so every block in every folio listed as
+              // `unknown`. `readBlockManifest` is the canonical reader — masked
+              // against strings and comments, and mapping DAK's kebab-case
+              // kinds back from their camelCase builders — and is what the QA
+              // sweep, the content graph and the propagation sweeps all use.
+              //
+              // It also returns `undefined` for a `.ts` that is not a block, so
+              // the chapter manifest sitting in the same directory stops being
+              // listed as a content object of that chapter.
+              const block =
+                readBlockManifest(tsPath) ?? readUnlabelledBlockManifest(tsPath);
+              if (!block) continue;
+
+              const companions = [
+                existsSync(join(chPath, `${name}.md`)) ? "md" : "",
+                existsSync(join(chPath, `${name}.lean`)) ? "lean" : "",
+              ].filter(Boolean).join(", ");
+
+              rows.push(`  ${block.kind.padEnd(12)} ${block.label.padEnd(35)} [${companions}]`);
+            }
+
+            lines.push(`\n## ${chDir} (${rows.length} block${rows.length === 1 ? "" : "s"})`);
+            lines.push(...rows);
+          }
+        }
+
+        return {
+          content: [{ type: "text" as const, text: lines.join("\n") }],
+        };
+      } catch (e) {
+        return {
+          content: [{ type: "text" as const, text: `List error: ${e instanceof Error ? e.message : String(e)}` }],
+        };
+      }
+    },
+  );
+}
+
+/**
+ * The build step that emits LaTeX. Paper adapter only.
+ *
+ * A document folio's build is `document_render_md` — Markdown assembly, no
+ * `.tex` anywhere. Registering `content_build` on one would offer a build that
+ * produces chapter files nothing in that folio can compile.
+ */
+export function registerPaperBuildTools(server: McpServer): void {
   // ── content_build ────────────────────────────────────────────
 
   server.tool(
@@ -188,66 +313,6 @@ export function registerValidateTools(server: McpServer): void {
       } catch (e) {
         return {
           content: [{ type: "text" as const, text: `Build error: ${e instanceof Error ? e.message : String(e)}` }],
-        };
-      }
-    },
-  );
-
-  // ── content_list ─────────────────────────────────────────────
-
-  server.tool(
-    "content_list",
-    "List all content objects across all papers with their kind, " +
-    "label, lean status, and companion files.",
-    {
-      paper: z.string().optional()
-        .describe("Paper name (default: all papers)"),
-    },
-    async ({ paper }) => {
-      try {
-        const papers = paper ? [paper] : discoverPapers();
-        const lines: string[] = [];
-
-        for (const p of papers) {
-          const paperDir = join(CONTENT_DIR, p);
-          lines.push(`# ${p}`);
-
-          for (const chDir of findChapterDirs(paperDir)) {
-            const chPath = join(paperDir, chDir);
-            const manifests = findManifests(chPath);
-            lines.push(`\n## ${chDir} (${manifests.length} objects)`);
-
-            for (const name of manifests) {
-              const hasMd = existsSync(join(chPath, `${name}.md`));
-              const hasLean = existsSync(join(chPath, `${name}.lean`));
-              const companions = [
-                hasMd ? "md" : "",
-                hasLean ? "lean" : "",
-              ].filter(Boolean).join(", ");
-
-              // Try to read the .ts to get kind/label
-              try {
-                const tsContent = readFileSync(join(chPath, `${name}.ts`), "utf-8");
-                const kindMatch = tsContent.match(/kind:\s*["'](\w+)["']/);
-                const labelMatch = tsContent.match(/label:\s*["']([^"']+)["']/);
-
-                const kind = kindMatch?.[1] || "unknown";
-                const label = labelMatch?.[1] || name;
-
-                lines.push(`  ${kind.padEnd(12)} ${label.padEnd(35)} [${companions}]`);
-              } catch {
-                lines.push(`  ${"?".padEnd(12)} ${name.padEnd(35)} ${"".padEnd(19)} [${companions}]`);
-              }
-            }
-          }
-        }
-
-        return {
-          content: [{ type: "text" as const, text: lines.join("\n") }],
-        };
-      } catch (e) {
-        return {
-          content: [{ type: "text" as const, text: `List error: ${e instanceof Error ? e.message : String(e)}` }],
         };
       }
     },

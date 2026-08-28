@@ -17,6 +17,9 @@ specific content, and any content shown is illustrative only.
 - **[Reseeding the Lean cache](reseeding-the-lean-cache.html)** — exact
   local procedure to rebuild the olean cache branches, which are
   currently unusable for builds.
+- **[Writing a document](writing-a-document.html)** — structured prose: policy
+  guidance, standards, reports, handbooks. No Lean, no TeX. Start here if your
+  folio is not mathematics.
 - **[Writing a paper with folio-assistant](writing-a-paper.html)** — the flagship
   tutorial: a full LLM-driven walk-through with a mock chat session and workflow
   diagrams.

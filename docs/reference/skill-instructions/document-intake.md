@@ -172,6 +172,18 @@ environments, sections, cross-references.
 
 #### For structured / normative guidelines:
 
+> **Superseded for a `document` folio.** The table below predates the
+> `document` content type. Two of its mappings are now wrong there:
+> `definition` is a **math** kind whose `lean` field is *required*, so a
+> guideline recommendation mapped onto it will not validate at all; and
+> `proposition` and `conjecture` are math kinds that `content_profile_check`
+> rejects outright. In a document folio, a normative statement is carried by a
+> **labelled, titled `prose` block** — load `normative-statements` from the
+> `folio-document-adapter` package for the convention and its limits.
+>
+> The table stands as written for a **paper** folio, which is the case it was
+> written for and where all seven kinds are available.
+
 Many guideline and standards documents have a recurring normative
 structure that maps onto content-block kinds:
 
@@ -195,6 +207,10 @@ domain-specific; record it in `intake.json.classification.normativeLevel`.
 > recommendation grammar) belongs in a domain adapter bundle, not the
 > generic paper adapter. This skill detects the *shape* and hands off the
 > domain-specific mapping rules to the relevant adapter.
+>
+> That hand-off now has somewhere to go: `folio-document-adapter` is the bundle
+> for prose folios, and `normative-statements` is where the recommendation
+> grammar belongs.
 
 #### Tables and figures — run `scripts/pdf-tables.py`
 

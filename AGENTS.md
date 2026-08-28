@@ -25,6 +25,67 @@ Published at
 Read that first. **The rest of this file is a reference** — commands and
 conventions to come back to, not a path through the project.
 
+## Content types — `document` is the base, `paper` extends it
+
+A **document** folio is structured prose: policy guidance, a standard, a report.
+A **paper** is that plus the seven block kinds whose assertion is a formal
+mathematical claim, backed by `.lean` siblings and typeset through LaTeX.
+
+That relation is encoded, not just described. `PaperContentAdapter` extends
+`DocumentContentAdapter`; `MATH_BLOCK_KINDS` is written out in
+`schemas/block-kinds.ts` and `DOCUMENT_BLOCK_KINDS` is its **derived**
+complement, so a kind added to `BLOCK_KINDS` cannot go unclassified.
+
+**Profiles are a different axis from adapters, and conflating them is costly.**
+Adapters (`paper`, `dak`) partition kinds into disjoint namespaces;
+`adapterForKind` is what QA criterion scoping reads, and it must stay total and
+unambiguous. Profiles (`document`, `paper`) *nest*: every document kind is also
+a paper kind. Making `document` a third adapter would have made
+`adapterForKind` ambiguous on all eight shared kinds. When you add a content
+type, ask whether it needs different **code** or only different **rules** — if
+only rules, it is a profile plus a subclass, not an adapter.
+
+Enforcement is `content/pipeline/profile-check.ts`, run on every
+`content_validate`. It catches what schema validation structurally cannot: a
+`theorem` is a valid `theorem` whatever folio it sits in, and `constraints.ts`
+cannot read `folio.config.json`. Two rules — kind within profile, and (document
+only) no `lean` field and no `.lean` sibling, because `remark`, `example`,
+`algorithm` and `simulator` all *declare* an optional `lean` that the type
+permits and the profile forbids.
+
+**The document render path takes no TeX.** `content/pipeline/render-markdown.ts`
+assembles the folio to one Markdown file; `document_render_{md,html,pdf}` take
+it through pandoc, the PDF via weasyprint/prince/wkhtmltopdf. It never falls
+back to `latexmk`, deliberately — a PDF that silently came out of LaTeX would
+misreport what the folio needs to build, and the next person on a clean machine
+pays for that. It is registered for **both** content types, because it is the
+render that works while drafting on a machine with no TeX.
+
+**There is no `recommendation` block kind.** A normative statement is carried
+by a labelled, titled `prose` block; `skills/folio-document-adapter/normative-statements.md`
+states the convention and its limits. Adding a real kind means a builder, a Zod
+schema, a label prefix, viewer registration, constraint rows and QA criteria —
+about thirty files — and it is tracked separately rather than half-done. Note
+that `document-intake.md` still maps guideline recommendations onto
+`definition`; that predates the document profile and is wrong for a document
+folio, where `definition`'s `lean` field is required.
+
+## Starting a new folio
+
+`bun run init-folio --help`, or the `folio_init` MCP tool. It writes `content/`,
+`uploads/`, `library/`, the document + chapter + first block manifests,
+`folio.config.json`, the `content/schema/` builder shim, `AGENTS.md` with
+`CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the session-start hook and the beans
+store — and links the platform as a submodule or a sibling checkout.
+
+Two things about it worth knowing before you edit it. The builder shim exists so
+the path to folio-assistant is written down **once**: block manifests import
+`../schema/builders`, never the platform directly, so re-linking is a two-file
+edit rather than a corpus sweep. And `folio_init` is registered among the
+**generic** tools, not in an adapter, because it runs before the folio has a
+content type — a bare repo falls back to the paper adapter, so an
+adapter-scoped tool would be unreachable in exactly the case it exists for.
+
 ## Commands
 
 ```sh
@@ -34,6 +95,7 @@ bun test                    # unit tests
 bunx playwright test        # e2e tests   (npm script: test:e2e)
 eslint .                    # lint
 bun run src/index.ts --check-deps   # probe environment capabilities
+bun run init-folio --help           # scaffold a new folio repository
 ```
 
 ## Work-plan & todos — use `beans`

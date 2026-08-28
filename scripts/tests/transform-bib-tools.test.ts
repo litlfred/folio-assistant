@@ -4,8 +4,8 @@
  * no-target/auto-detect paths degrade gracefully (no real pipeline spawn).
  */
 import { test, expect, describe } from "bun:test";
-import { registerBibTools } from "../../adapters/paper/tools/bib.ts";
-import { registerTransformTools } from "../../adapters/paper/tools/transform.ts";
+import { registerBibTools } from "../../adapters/document/tools/bib.ts";
+import { registerTransformTools, registerPaperTransformTools } from "../../adapters/document/tools/transform.ts";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 /** An MCP tool handler, as the registration stubs below see it. */
@@ -46,11 +46,21 @@ describe("registerBibTools", () => {
 
 describe("registerTransformTools", () => {
   const reg = collect(registerTransformTools);
+  const paperReg = collect(registerPaperTransformTools);
+
+  test("migrate_lean_refs is paper-only", () => {
+    // It rewrites `lean.ref` syntax, and a document folio has no `lean` field
+    // on any block — there it would report success having transformed nothing.
+    expect(reg["migrate_lean_refs"]).toBeUndefined();
+    expect(paperReg["migrate_lean_refs"]).toBeDefined();
+  });
 
   test("registers transform tools with handlers", () => {
+    // Both halves together must still cover the module's whole table.
+    const all = { ...reg, ...paperReg };
     for (const name of ["codemod", "prune_deps", "migrate_lean_refs"]) {
-      expect(reg[name]).toBeDefined();
-      expect(typeof reg[name].handler).toBe("function");
+      expect(all[name]).toBeDefined();
+      expect(typeof all[name].handler).toBe("function");
     }
   });
 

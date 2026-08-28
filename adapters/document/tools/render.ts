@@ -1,17 +1,27 @@
 /**
- * Render tools — PDF, HTML, and formula preview.
+ * Render tools.
  *
- * Tools:
+ * Registered by the **document** adapter (no LaTeX toolchain required):
+ *   document_render_md   — Assemble the folio to one Markdown file
+ *   document_render_html — Markdown → standalone HTML (pandoc)
+ *   document_render_pdf  — Markdown → PDF via an HTML engine, no TeX
+ *
+ * Registered additionally by the **paper** adapter (needs TeX Live):
  *   paper_render_pdf   — Render full paper, chapter, or section to PDF
- *   paper_render_html  — Render to HTML (via pandoc)
+ *   paper_render_html  — Render main.tex to HTML (via pandoc)
  *   formula_render     — Quick-render a single formula/diagram to PNG
  *
- * @module scripts/mcp-server/tools/render
+ * The two families are separate registration functions rather than one list
+ * because the difference between the content types is exactly which of them
+ * a folio can run: `paper_render_pdf` shells out to `latexmk`, and a document
+ * folio is defined by not needing a TeX installation to publish.
+ *
+ * @module folio-assistant/adapters/document/tools/render
  */
 
 import { z } from "zod";
 import { execSync, spawnSync } from "child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { join, resolve, dirname } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { Paper } from "../../../schemas/types";
@@ -28,7 +38,12 @@ function hasCommand(cmd: string): boolean {
   }
 }
 
-export function registerRenderTools(server: McpServer): void {
+/**
+ * The LaTeX-backed render tools. Requires `latexmk` / `pdflatex` at call time
+ * — each tool probes for its binary and reports its absence rather than
+ * failing opaquely, so registering them on a machine without TeX is safe.
+ */
+export function registerLatexRenderTools(server: McpServer): void {
 
   // ── paper_render_pdf ─────────────────────────────────────────
 
@@ -440,6 +455,272 @@ ${body}
       } catch (e) {
         return {
           content: [{ type: "text" as const, text: `Formula render error: ${e instanceof Error ? e.message : String(e)}` }],
+        };
+      }
+    },
+  );
+}
+
+// ── Document render tools (no TeX) ───────────────────────────────
+
+/**
+ * PDF engines pandoc can drive **without** a TeX installation, in the order
+ * they are tried.
+ *
+ * `wkhtmltopdf` is last deliberately: it is unmaintained upstream and its
+ * CSS support predates flexbox, so it is a fallback rather than a choice.
+ * `weasyprint` and `prince` both render the same HTML the `document_render_html`
+ * tool produces, which is what makes the PDF and the HTML agree.
+ */
+const HTML_PDF_ENGINES = ["weasyprint", "prince", "wkhtmltopdf"] as const;
+
+/**
+ * Resolve the document manifest to render.
+ *
+ * Deliberately fails rather than guessing when a folio holds more than one
+ * document and the caller named none: rendering the wrong one produces a
+ * plausible artifact, which is worse than an error.
+ */
+function resolveDocumentManifest(name?: string): { path: string; slug: string } | string {
+  const contentDir = join(REPO_ROOT, "content");
+  if (!existsSync(contentDir)) {
+    return `Error: no content/ directory at ${REPO_ROOT}. Run folio_init first, or point --repo at your folio.`;
+  }
+  const candidates = readdirSync(contentDir, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
+    .filter((slug) => existsSync(join(contentDir, slug, `${slug}.ts`)));
+
+  if (candidates.length === 0) {
+    return `Error: no document manifest found. Expected content/<slug>/<slug>.ts under ${contentDir}.`;
+  }
+  if (name) {
+    if (!candidates.includes(name)) {
+      return `Error: no such document '${name}'. Available: ${candidates.join(", ")}`;
+    }
+    return { path: join(contentDir, name, `${name}.ts`), slug: name };
+  }
+  if (candidates.length > 1) {
+    return `Error: ${candidates.length} documents in this folio — pass \`document\`. Available: ${candidates.join(", ")}`;
+  }
+  return { path: join(contentDir, candidates[0], `${candidates[0]}.ts`), slug: candidates[0] };
+}
+
+/** Format the issue list a build returns, or a clean bill of health. */
+function summariseIssues(issues: { level: string; message: string }[]): string {
+  if (issues.length === 0) return "No issues.";
+  const errors = issues.filter((i) => i.level === "error");
+  const warns = issues.filter((i) => i.level === "warn");
+  const lines = [`${errors.length} error(s), ${warns.length} warning(s):`];
+  for (const i of issues.slice(0, 20)) lines.push(`  [${i.level}] ${i.message}`);
+  if (issues.length > 20) lines.push(`  … ${issues.length - 20} more`);
+  return lines.join("\n");
+}
+
+/**
+ * The render tools a document folio gets: Markdown assembly, and HTML/PDF
+ * output that needs no TeX.
+ *
+ * Registered by {@link DocumentContentAdapter}; the paper adapter registers
+ * these **and** {@link registerLatexRenderTools}, because a paper is a
+ * document that additionally has a LaTeX pipeline.
+ */
+export function registerDocumentRenderTools(server: McpServer): void {
+
+  // ── document_render_md ───────────────────────────────────────
+
+  server.tool(
+    "document_render_md",
+    "Assemble the document (chapters → sections → blocks) into one Markdown " +
+    "file. No LaTeX toolchain required. This is the input the HTML and PDF " +
+    "renderers consume, and is worth rendering on its own to inspect ordering.",
+    {
+      document: z.string().optional()
+        .describe("Document slug under content/ (auto-detected if the folio holds one)"),
+    },
+    async ({ document }) => {
+      const resolved = resolveDocumentManifest(document);
+      if (typeof resolved === "string") {
+        return { content: [{ type: "text" as const, text: resolved }] };
+      }
+      try {
+        const { buildDocumentMarkdown } = await import("../../../content/pipeline/render-markdown.js");
+        const result = await buildDocumentMarkdown(resolved.path);
+        if (!existsSync(BUILD_DIR)) mkdirSync(BUILD_DIR, { recursive: true });
+        const outPath = join(BUILD_DIR, `${resolved.slug}.md`);
+        writeFileSync(outPath, result.markdown, "utf-8");
+        return {
+          content: [{
+            type: "text" as const,
+            text: `Markdown assembled: ${outPath}\n` +
+              `Chapters: ${result.chapterSlugs.length} · Blocks: ${result.blockCount} · ` +
+              `${(result.markdown.length / 1024).toFixed(0)} KB\n\n${summariseIssues(result.issues)}`,
+          }],
+        };
+      } catch (e) {
+        return {
+          content: [{ type: "text" as const, text: `Render error: ${e instanceof Error ? e.message : String(e)}` }],
+        };
+      }
+    },
+  );
+
+  // ── document_render_html ─────────────────────────────────────
+
+  server.tool(
+    "document_render_html",
+    "Render the document to standalone HTML via pandoc, from the assembled " +
+    "Markdown. No LaTeX toolchain required.",
+    {
+      document: z.string().optional()
+        .describe("Document slug under content/ (auto-detected if the folio holds one)"),
+      toc: z.boolean().default(true).describe("Emit a table of contents"),
+      css: z.string().optional()
+        .describe("Path to a stylesheet to inline, relative to the repo root"),
+      math_renderer: z.enum(["katex", "mathjax", "none"]).default("katex")
+        .describe("Math rendering engine. 'none' leaves $…$ untouched — correct for a document with no mathematics."),
+    },
+    async ({ document, toc, css, math_renderer }) => {
+      if (!hasCommand("pandoc")) {
+        return {
+          content: [{
+            type: "text" as const,
+            text: "Error: pandoc not installed. Install: apt install pandoc (Ubuntu) / brew install pandoc (macOS).",
+          }],
+        };
+      }
+      const resolved = resolveDocumentManifest(document);
+      if (typeof resolved === "string") {
+        return { content: [{ type: "text" as const, text: resolved }] };
+      }
+      try {
+        const { buildDocumentMarkdown } = await import("../../../content/pipeline/render-markdown.js");
+        const result = await buildDocumentMarkdown(resolved.path);
+        if (!existsSync(BUILD_DIR)) mkdirSync(BUILD_DIR, { recursive: true });
+        const mdPath = join(BUILD_DIR, `${resolved.slug}.md`);
+        writeFileSync(mdPath, result.markdown, "utf-8");
+
+        const outPath = join(BUILD_DIR, `${resolved.slug}.html`);
+        const args = [mdPath, "-o", outPath, "--standalone", "--from", "gfm+raw_html"];
+        if (toc) args.push("--toc", "--number-sections");
+        if (math_renderer === "katex") args.push("--katex");
+        else if (math_renderer === "mathjax") args.push("--mathjax");
+        if (css) {
+          const cssPath = resolve(REPO_ROOT, css);
+          if (!existsSync(cssPath)) {
+            return { content: [{ type: "text" as const, text: `Error: stylesheet not found: ${cssPath}` }] };
+          }
+          args.push("--css", cssPath, "--embed-resources");
+        }
+
+        const r = spawnSync("pandoc", args, { cwd: REPO_ROOT, stdio: "pipe", timeout: 120_000 });
+        if (r.status !== 0 || !existsSync(outPath)) {
+          return {
+            content: [{
+              type: "text" as const,
+              text: `Pandoc failed (exit ${r.status}):\n${r.stderr?.toString().slice(-1000) || "unknown error"}`,
+            }],
+          };
+        }
+        return {
+          content: [{
+            type: "text" as const,
+            text: `HTML rendered: ${outPath}\n` +
+              `Size: ${(readFileSync(outPath).length / 1024).toFixed(0)} KB · Math: ${math_renderer}\n\n` +
+              summariseIssues(result.issues),
+          }],
+        };
+      } catch (e) {
+        return {
+          content: [{ type: "text" as const, text: `Render error: ${e instanceof Error ? e.message : String(e)}` }],
+        };
+      }
+    },
+  );
+
+  // ── document_render_pdf ──────────────────────────────────────
+
+  server.tool(
+    "document_render_pdf",
+    "Render the document to PDF through an HTML engine (weasyprint, prince, " +
+    "or wkhtmltopdf) — no TeX installation required. Reports which engines " +
+    "are missing rather than falling back to LaTeX.",
+    {
+      document: z.string().optional()
+        .describe("Document slug under content/ (auto-detected if the folio holds one)"),
+      engine: z.enum(["auto", ...HTML_PDF_ENGINES]).default("auto")
+        .describe("PDF engine. 'auto' picks the first installed of weasyprint, prince, wkhtmltopdf."),
+      css: z.string().optional()
+        .describe("Path to a print stylesheet, relative to the repo root"),
+    },
+    async ({ document, engine, css }) => {
+      if (!hasCommand("pandoc")) {
+        return { content: [{ type: "text" as const, text: "Error: pandoc not installed. Install: apt install pandoc." }] };
+      }
+      const chosen = engine === "auto" ? HTML_PDF_ENGINES.find(hasCommand) : engine;
+      if (!chosen) {
+        // An absent toolchain reports as absent. It never falls through to
+        // latexmk: a document folio is defined by not requiring TeX, so a
+        // PDF that silently came from LaTeX would misreport what the folio
+        // actually needs to build.
+        return {
+          content: [{
+            type: "text" as const,
+            text: "Error: no TeX-free PDF engine installed. Install one of:\n" +
+              HTML_PDF_ENGINES.map((e) => `  ${e}`).join("\n") +
+              "\n\n  pip install weasyprint      (recommended)\n" +
+              "  apt install wkhtmltopdf\n\n" +
+              "`document_render_html` works without any of them.",
+          }],
+        };
+      }
+      if (engine !== "auto" && !hasCommand(chosen)) {
+        return { content: [{ type: "text" as const, text: `Error: requested engine '${chosen}' is not installed.` }] };
+      }
+
+      const resolved = resolveDocumentManifest(document);
+      if (typeof resolved === "string") {
+        return { content: [{ type: "text" as const, text: resolved }] };
+      }
+      try {
+        const { buildDocumentMarkdown } = await import("../../../content/pipeline/render-markdown.js");
+        const result = await buildDocumentMarkdown(resolved.path);
+        if (!existsSync(BUILD_DIR)) mkdirSync(BUILD_DIR, { recursive: true });
+        const mdPath = join(BUILD_DIR, `${resolved.slug}.md`);
+        writeFileSync(mdPath, result.markdown, "utf-8");
+
+        const outPath = join(BUILD_DIR, `${resolved.slug}.pdf`);
+        const args = [mdPath, "-o", outPath, "--from", "gfm+raw_html",
+          `--pdf-engine=${chosen}`, "--toc", "--number-sections"];
+        if (css) {
+          const cssPath = resolve(REPO_ROOT, css);
+          if (!existsSync(cssPath)) {
+            return { content: [{ type: "text" as const, text: `Error: stylesheet not found: ${cssPath}` }] };
+          }
+          args.push("--css", cssPath);
+        }
+
+        const r = spawnSync("pandoc", args, { cwd: REPO_ROOT, stdio: "pipe", timeout: 300_000 });
+        if (r.status !== 0 || !existsSync(outPath)) {
+          return {
+            content: [{
+              type: "text" as const,
+              text: `pandoc --pdf-engine=${chosen} failed (exit ${r.status}):\n` +
+                `${r.stderr?.toString().slice(-1500) || "unknown error"}`,
+            }],
+          };
+        }
+        return {
+          content: [{
+            type: "text" as const,
+            text: `PDF rendered: ${outPath}\n` +
+              `Engine: ${chosen} (no TeX) · Size: ${(readFileSync(outPath).length / 1024).toFixed(0)} KB\n\n` +
+              summariseIssues(result.issues),
+          }],
+        };
+      } catch (e) {
+        return {
+          content: [{ type: "text" as const, text: `Render error: ${e instanceof Error ? e.message : String(e)}` }],
         };
       }
     },

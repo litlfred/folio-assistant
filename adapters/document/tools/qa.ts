@@ -1,5 +1,5 @@
 /**
- * Mechanical QA / publication / transform tools for the paper adapter.
+ * Mechanical QA / publication / transform tools.
  *
  * Each tool exposes the deterministic core of a content-pipeline script as an
  * MCP tool that returns structured findings. The judgment layer (what to fix)
@@ -14,7 +14,13 @@
  *   glossary_check  — verify the generated glossary index is up to date
  *   content_export  — export content to viewer JSON (transform)
  *
- * @module adapters/paper/tools/qa
+ * Two of these are **paper only**, for the same reason the audit module is
+ * split: `proof_status` counts `sorry`s across Lean files and `latex_preflight`
+ * parses `.tex` source, and a document folio has neither. Registered on one,
+ * they would report clean forever — a check that never looked, reporting no
+ * findings, is indistinguishable from a check that passed.
+ *
+ * @module folio-assistant/adapters/document/tools/qa
  */
 
 import { z } from "zod";
@@ -26,6 +32,7 @@ import { runPipeline, asToolText, autoPaper, tryParseJson } from "./_pipeline.js
 
 const paperArg = (p?: string) => (p ? `content/${p}` : undefined);
 
+/** The QA tools that mean something on a prose folio. Registered by both adapters. */
 export function registerQaTools(server: McpServer): void {
   // ── qa_sweep ─────────────────────────────────────────────────
   server.tool(
@@ -46,32 +53,6 @@ export function registerQaTools(server: McpServer): void {
       if (only) args.push("--only", only);
       return asToolText("qa_sweep", runPipeline("qa-sweep", args));
     },
-  );
-
-  // ── proof_status ─────────────────────────────────────────────
-  server.tool(
-    "proof_status",
-    "Proof-formalization coverage dashboard: per-block status, sorry counts, " +
-      "and axis breakdown (read-only).",
-    {
-      paper: z.string().optional().describe("Paper name (auto-detected if only one)"),
-    },
-    async ({ paper }) => {
-      const args: string[] = [];
-      const pp = paperArg(autoPaper(paper));
-      if (pp) args.push(pp);
-      args.push("--json");
-      return asToolText("proof_status", runPipeline("proof-axis-dashboard", args));
-    },
-  );
-
-  // ── latex_preflight ──────────────────────────────────────────
-  server.tool(
-    "latex_preflight",
-    "Preflight the rendered LaTeX source for unknown macros and overfull boxes " +
-      "before a full build (read-only; never fails the call).",
-    {},
-    async () => asToolText("latex_preflight", runPipeline("latex-preflight", ["--json", "--warn"])),
   );
 
   // ── bib_qa ───────────────────────────────────────────────────
@@ -131,5 +112,36 @@ export function registerQaTools(server: McpServer): void {
       if (out) args.push("--out", out);
       return asToolText("content_export", runPipeline("export-json", args));
     },
+  );
+}
+
+/**
+ * The QA tools that read Lean or LaTeX. Paper adapter only.
+ */
+export function registerPaperQaTools(server: McpServer): void {
+  // ── proof_status ─────────────────────────────────────────────
+  server.tool(
+    "proof_status",
+    "Proof-formalization coverage dashboard: per-block status, sorry counts, " +
+      "and axis breakdown (read-only).",
+    {
+      paper: z.string().optional().describe("Paper name (auto-detected if only one)"),
+    },
+    async ({ paper }) => {
+      const args: string[] = [];
+      const pp = paperArg(autoPaper(paper));
+      if (pp) args.push(pp);
+      args.push("--json");
+      return asToolText("proof_status", runPipeline("proof-axis-dashboard", args));
+    },
+  );
+
+  // ── latex_preflight ──────────────────────────────────────────
+  server.tool(
+    "latex_preflight",
+    "Preflight the rendered LaTeX source for unknown macros and overfull boxes " +
+      "before a full build (read-only; never fails the call).",
+    {},
+    async () => asToolText("latex_preflight", runPipeline("latex-preflight", ["--json", "--warn"])),
   );
 }

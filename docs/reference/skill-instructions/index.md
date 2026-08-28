@@ -85,6 +85,15 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [`uses[]` Editorial Review](uses-editorial-review.html) | `uses-editorial-review` | — |  |
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 
+## Document adapter (folio-document-adapter)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [document-authoring](document-authoring.html) | `document-authoring` | [schema](../skills/document-authoring.html) | Author a **document** folio: policy guidance, a standard, a report, a |
+| [document-publishing](document-publishing.html) | `document-publishing` | [schema](../skills/document-publishing.html) | Take a document folio from corpus to published artifact — without a TeX |
+| [document-structure](document-structure.html) | `document-structure` | [schema](../skills/document-structure.html) | Decide and maintain the chapter/section skeleton of a document folio. |
+| [normative-statements](normative-statements.html) | `normative-statements` | [schema](../skills/normative-statements.html) | Carry a **recommendation, requirement or rule** in a document folio — the |
+
 ## Paper adapter (folio-paper-adapter)
 
 | Skill | Id | Schema | Summary |

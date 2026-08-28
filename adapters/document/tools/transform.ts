@@ -8,7 +8,7 @@
  *   prune_deps         — prune transitive `uses:` edges that are implied
  *   migrate_lean_refs  — migrate legacy lean-ref syntax to the current form
  *
- * @module adapters/paper/tools/transform
+ * @module folio-assistant/adapters/document/tools/transform
  */
 
 import { z } from "zod";
@@ -67,6 +67,15 @@ export function registerTransformTools(server: McpServer): void {
   );
 
   // ── migrate_lean_refs ────────────────────────────────────────
+}
+
+/**
+ * The transforms that only a paper has anything to transform.
+ *
+ * `migrate_lean_refs` rewrites `lean.ref` syntax; a document folio has no
+ * `lean` field on any block, so on one it is a no-op that reports success.
+ */
+export function registerPaperTransformTools(server: McpServer): void {
   server.tool(
     "migrate_lean_refs",
     "Migrate legacy lean-ref syntax to the current `<pkg>:<Decl>` form. DRY-RUN " +
