@@ -11,9 +11,9 @@
  */
 
 import { z } from "zod";
-import { spawnSync } from "child_process";
+import { spawnSync, type SpawnSyncReturns } from "child_process";
 import { existsSync, readdirSync } from "fs";
-import { join, basename } from "path";
+import { join, basename, resolve } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { REPO_ROOT, CONTENT_DIR } from "../paths.js";
 import { checkFolioProfile, formatProfileCheck } from "../../../content/pipeline/profile-check.js";
@@ -46,6 +46,51 @@ function findChapterDirs(paperDir: string): string[] {
   return readdirSync(paperDir, { withFileTypes: true })
     .filter(d => d.isDirectory())
     .map(d => d.name);
+}
+
+/**
+ * Where the validation pipeline lives, or `undefined` if it is nowhere.
+ *
+ * Two layouts are in the wild and both are legitimate:
+ *
+ * - the folio carries its own `content/pipeline/` (the `qou` layout, from
+ *   when the platform was vendored inside the content repo), and
+ * - the folio carries only `content/schema/` and reaches the pipeline in the
+ *   platform checkout — which is what `folio_init` scaffolds.
+ *
+ * The folio's own copy wins when present, so a folio that has deliberately
+ * forked the pipeline keeps its fork. Resolving ONLY to the folio's copy is
+ * what made this tool report a clean bill of health on every scaffolded folio
+ * — see {@link runValidatePipeline}.
+ */
+export function resolveValidateScript(): string | undefined {
+  const inFolio = join(CONTENT_DIR, "pipeline", "validate.ts");
+  if (existsSync(inFolio)) return inFolio;
+  // `adapters/document/tools/` -> platform root.
+  const inPlatform = resolve(import.meta.dir, "..", "..", "..", "content", "pipeline", "validate.ts");
+  return existsSync(inPlatform) ? inPlatform : undefined;
+}
+
+/**
+ * Did the pipeline actually run, or did it fail to start?
+ *
+ * The distinction is the whole point of this function. `validate.ts` exits
+ * non-zero when it FINDS problems, so a non-zero status alone is a normal,
+ * informative outcome. What is not normal is exiting non-zero having printed
+ * nothing to stdout: that is the shape of a module-not-found, a syntax error,
+ * or a missing runtime — the pipeline never reached a single check.
+ *
+ * Before this, the caller counted `✗` and `⚠` in an empty stdout, got zero of
+ * each, and reported "Validation: 0 error(s), 0 warning(s)". The stderr was
+ * appended far below the headline. Every folio `folio_init` scaffolds hit
+ * exactly that path, because none of them has `content/pipeline/`.
+ *
+ * "Absent tool ⇒ n/a, never a false pass" is the rule this restores.
+ */
+export function pipelineFailedToRun(r: SpawnSyncReturns<Buffer>, stdout: string): boolean {
+  if (r.error) return true;              // spawn itself failed (no `bun`, timeout)
+  if (r.status === null) return true;    // killed by signal / timed out
+  return r.status !== 0 && stdout.trim() === "";
 }
 
 export function registerValidateTools(server: McpServer): void {
@@ -85,44 +130,51 @@ export function registerValidateTools(server: McpServer): void {
         const results: string[] = [];
         let totalErrors = 0;
         let totalWarnings = 0;
+        /** Set when the pipeline could not be run at all — never a clean report. */
+        let pipelineError: string | undefined;
 
-        if (chapter) {
-          // Validate a single chapter dir
-          const chapterPath = join(paperDir, chapter);
-          if (!existsSync(chapterPath)) {
-            return {
-              content: [{ type: "text" as const, text: `Chapter not found: ${chapterPath}` }],
-            };
-          }
-          const result = spawnSync("bun", [
-            "run", join(CONTENT_DIR, "pipeline/validate.ts"),
-            chapterPath,
-          ], {
-            cwd: CONTENT_DIR,
-            stdio: "pipe",
-            timeout: 60_000,
-          });
-          const output = result.stdout?.toString() || "";
-          const stderr = result.stderr?.toString() || "";
-          results.push(`## ${chapter}\n${output}${stderr ? `\nStderr: ${stderr}` : ""}`);
-          totalErrors += (output.match(/✗/g) || []).length;
-          totalWarnings += (output.match(/⚠/g) || []).length;
-        } else {
-          // Validate whole paper (paper manifest + all chapters)
-          const result = spawnSync("bun", [
-            "run", join(CONTENT_DIR, "pipeline/validate.ts"),
-            paperDir,
-          ], {
-            cwd: CONTENT_DIR,
-            stdio: "pipe",
-            timeout: 120_000,
-          });
-          const output = result.stdout?.toString() || "";
-          const stderr = result.stderr?.toString() || "";
-          results.push(output + (stderr ? `\nStderr: ${stderr}` : ""));
-          totalErrors += (output.match(/✗/g) || []).length;
-          totalWarnings += (output.match(/⚠/g) || []).length;
+        const script = resolveValidateScript();
+        if (chapter && !existsSync(join(paperDir, chapter))) {
+          return {
+            content: [{ type: "text" as const, text: `Chapter not found: ${join(paperDir, chapter)}` }],
+          };
         }
+
+        if (!script) {
+          // Reported as an error, not as a clean run with a footnote. A folio
+          // whose schema and constraint checks did not execute has not been
+          // validated, whatever the block-level checks below say.
+          pipelineError =
+            "Could not locate `content/pipeline/validate.ts` in either this folio " +
+            `(${join(CONTENT_DIR, "pipeline")}) or the platform checkout. ` +
+            "Schema and constraint validation DID NOT RUN.";
+        } else {
+          const target = chapter ? join(paperDir, chapter) : paperDir;
+          const result = spawnSync("bun", ["run", script, target], {
+            cwd: CONTENT_DIR,
+            stdio: "pipe",
+            timeout: chapter ? 60_000 : 120_000,
+          });
+          const output = result.stdout?.toString() || "";
+          const stderr = result.stderr?.toString() || "";
+
+          if (pipelineFailedToRun(result, output)) {
+            pipelineError =
+              `\`${script}\` failed to run (exit ${result.status ?? "signal"}). ` +
+              "Schema and constraint validation DID NOT RUN.\n" +
+              (result.error ? `${result.error.message}\n` : "") +
+              (stderr.trim() ? stderr.trim() : "(no stderr)");
+          } else {
+            const header = chapter ? `## ${chapter}\n` : "";
+            results.push(`${header}${output}${stderr ? `\nStderr: ${stderr}` : ""}`);
+            totalErrors += (output.match(/✗/g) || []).length;
+            totalWarnings += (output.match(/⚠/g) || []).length;
+          }
+        }
+
+        // A pipeline that did not run counts as an error in its own right, so
+        // the headline number can never read 0 while a check was skipped.
+        if (pipelineError) totalErrors += 1;
 
         // Profile conformance runs on every validate rather than as an
         // opt-in tool. It is the one check that knows what *kind* of folio
@@ -132,11 +184,17 @@ export function registerValidateTools(server: McpServer): void {
         const profileResult = checkFolioProfile(REPO_ROOT, paperDir);
         totalErrors += profileResult.violations.length;
 
+        const banner = pipelineError
+          ? `\n\n## ⚠ Pipeline did not run\n\n${pipelineError}\n`
+          : "";
+
         return {
           content: [{
             type: "text" as const,
-            text: `Validation: ${totalErrors} error(s), ${totalWarnings} warning(s)\n\n` +
-              results.join("\n\n") +
+            text: `Validation: ${totalErrors} error(s), ${totalWarnings} warning(s)` +
+              (pipelineError ? " — INCOMPLETE, see below" : "") +
+              banner +
+              (results.length ? `\n\n${results.join("\n\n")}` : "") +
               `\n\n## Profile conformance\n\n${formatProfileCheck(profileResult)}`,
           }],
         };
