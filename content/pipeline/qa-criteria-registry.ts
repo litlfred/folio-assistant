@@ -2031,6 +2031,7 @@ const DAK: QaCriterionDefinition[] = [
     depends_on: ["ts"],
     automated: true,
   },
+];
 // ── Domain: trap (language-trap / model-idiom audit) ────────────
 //
 // Ten trap categories marking unedited model idiom in scholarly
