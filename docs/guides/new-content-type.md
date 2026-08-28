@@ -29,9 +29,28 @@ flowchart LR
     P --> Manifest[package-manifest.json · Docker deps]
 ```
 
+## Before you add one: could it be a *profile* instead?
+
+Two content types that share a content model and differ only in which block
+kinds they admit do **not** need two adapters. `document` and `paper` are one
+adapter with two *profiles* — nested restrictions of one vocabulary — and the
+`paper` adapter is a fifty-line subclass of the `document` one.
+
+The test is whether the new type needs different *code* (a different resolver,
+different tools, a different render path) or only different *rules* about what
+its blocks may be. If it is only rules, add a profile in
+`schemas/block-kinds.ts` and a subclass; you get the whole platform for a
+fraction of the work, and there is one implementation to keep correct rather
+than two.
+
+Adapters are for genuinely disjoint namespaces — `paper` and `dak` share no
+block kind at all.
+
 ## 1. The content adapter
 
-Model the `paper` adapter (`adapters/paper/`). An adapter:
+Model the `document` adapter (`adapters/document/`), which is the base for
+prose folios, or `paper` (`adapters/paper/`) for how a specialization extends
+one. An adapter:
 
 - implements the content-adapter interface the `FolioServer` expects (list /
   validate / build, plus any type-specific tools);
@@ -88,6 +107,7 @@ package only adds the *authoring* skills unique to the type.
 
 ## Checklist
 
+- [ ] Considered a *profile* first — a subclass plus a kind list, not a new adapter
 - [ ] Adapter under `adapters/<type>/` implementing list/validate/build + tools
 - [ ] `folio.config.json` points at the adapter
 - [ ] Skill package + `package-manifest.json` with Docker deps
