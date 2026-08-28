@@ -45,6 +45,7 @@ import { registerDepsTools } from "../../src/tools/check-deps.js";
 import { registerPreferenceTools } from "../../src/tools/preferences.js";
 import { registerPreviewTools } from "../../src/tools/preview.js";
 import { registerSkillFetchTools } from "../../src/tools/skill-fetch.js";
+import { registerFolioInitTools } from "../../src/tools/folio-init.js";
 
 import type {
   ContentAdapter,
@@ -1064,6 +1065,9 @@ End every response with suggested follow-ups:
     registerPreferenceTools(server);
     registerPreviewTools(server);
     registerSkillFetchTools(server);
+    // `folio_init` runs BEFORE a folio has a content type, so it has to be
+    // reachable whichever adapter a bare repo happened to fall back to.
+    registerFolioInitTools(server);
   }
 
   /**

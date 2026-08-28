@@ -32,7 +32,7 @@
  */
 
 import { existsSync, readFileSync } from "fs";
-import { dirname, join } from "path";
+import { dirname, isAbsolute, join, resolve } from "path";
 
 import type { Block, Chapter, Paper, Section } from "../../schemas/types";
 import { isSectionRef } from "../../adapters/manifest-entries";
@@ -116,9 +116,19 @@ export function renderBlockMarkdown(
 
   if (opts.anchors !== false && label) lines.push(`<a id="${label}"></a>`);
 
+  const title = blockTitle(block);
   if (heading) {
-    const title = blockTitle(block);
     lines.push(title ? `**${heading}.** *${title}*` : `**${heading}.**`);
+    lines.push("");
+  } else if (title) {
+    // A kind with no heading is `prose`, and unheaded prose is the whole
+    // reason `KIND_HEADING` omits it — stamping "**Prose.**" over every
+    // paragraph would be noise on the corpus's most common kind. But a prose
+    // block that carries a *title* is not anonymous narrative: it is the
+    // pattern `normative-statements` prescribes for a recommendation, where
+    // the title is the headline a reader cites. Dropping it here would lose
+    // the most load-bearing line of a policy document.
+    lines.push(`**${title}.**`);
     lines.push("");
   }
 
@@ -218,9 +228,14 @@ export async function buildDocumentMarkdown(
   opts: MarkdownRenderOptions = {},
 ): Promise<MarkdownBuildResult> {
   const issues: MarkdownBuildResult["issues"] = [];
-  const docDir = dirname(paperPath);
+  // `import()` of a relative specifier resolves against THIS module, not the
+  // caller's cwd — so a relative `paperPath` silently looks for the folio
+  // inside the platform. Resolve against cwd here rather than making every
+  // caller remember to.
+  const manifestPath = isAbsolute(paperPath) ? paperPath : resolve(process.cwd(), paperPath);
+  const docDir = dirname(manifestPath);
 
-  const paperMod = await import(paperPath);
+  const paperMod = await import(manifestPath);
   const paper: Paper = paperMod.default;
 
   const blocks = new Map<string, LoadedBlockEntry>();
