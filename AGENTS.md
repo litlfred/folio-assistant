@@ -305,6 +305,46 @@ than closing it: the watchdog going blind must not read as good news, and a red
 Complements `5rfy`, which fixed workflows that never *fire*. This is the
 opposite defect — one that fires constantly and fails every time.
 
+## Subagents with persistent memory (`.claude/agents/`)
+
+Three subagents are defined under [`.claude/agents/`](.claude/agents/), each
+carrying `memory: project` in its frontmatter. That gives the agent its own
+directory under `.claude/agent-memory/<agent-name>/`; the first 200 lines (or
+25 KB) of that directory's `MEMORY.md` are injected into the subagent's system
+prompt when it starts, and it reads and writes the directory as it works.
+
+| agent | owns |
+|---|---|
+| `platform-boundary-guard` | keeping folio specifics out of platform code; adapter-vs-profile; the qou↔platform split |
+| `ci-health-watcher` | whether a workflow is actually working on the default branch |
+| `content-pipeline-navigator` | validate / render / build / qa-sweep, schemas, block kinds, script ownership |
+
+Each `MEMORY.md` labels every entry as exactly one of:
+
+- **STABLE** — a path, a command, a rule. Trustworthy.
+- **TRAP** — a specific way the task goes wrong, with the evidence that
+  established it. The reason to have memory at all: every genericity failure
+  in this document was paid for once, and a TRAP is what stops it being paid
+  for twice.
+- **BASELINE** — a measured number, stored **with the command that produced it
+  and the date, and never quoted as a current answer.** `ci-health-watcher`'s
+  memory takes this furthest and holds no workflow state at all, because every
+  such number is a live signal that goes stale by design.
+
+**Maintaining them is part of the work.** A session that establishes a durable
+fact in one of these areas adds it as a TRAP in the same PR; a session that
+re-measures a BASELINE updates the entry with the fresh number and date. A
+memory file that only accretes becomes the thing it exists to prevent.
+
+`MEMORY.md` is the injected entry point, so keep it under 200 lines — split
+detail into sibling files the agent reads on demand. `memory: project` writes
+under `.claude/agent-memory/`, which is **committed**; `memory: local` writes
+under `.claude/agent-memory-local/`, gitignored, for anything per-machine.
+
+The agents defer to this file and to `skills/` as the source of truth. Memory
+summarises; the skill governs. Where the two disagree, the skill wins and the
+memory entry is wrong — fix it.
+
 ## At session start
 
 Surface the work-plan before starting: run `beans prime` (and `beans list`), or
