@@ -22,6 +22,9 @@
 #      paths and exited 0, so the step reported a clean baseline it had never
 #      computed. Repointed at the trees that hold the 44 real files, which
 #      surfaced 24 live F401s; those were drained, so the rule is an error.
+#      This job also RUNS `scripts/tests/*.test.py`, which previously ran
+#      nowhere: run-tests.sh delegates to `bun test` and that collects only
+#      `*.test.ts`, so the Python tests were green by never executing.
 #
 #   3. TypeScript gate — HARD FAIL on `bun test`, `bun run lint`, and
 #      `tsc --noEmit`. Each is a real regression gate rather than a baseline
@@ -141,6 +144,30 @@ jobs:
             --exclude '**/_deprecated/**' \
             $targets
 
+      # The Python tests under scripts/tests/ ran nowhere. run-tests.sh
+      # delegates to `bun test`, which only collects `*.test.ts`, and no
+      # workflow named them — so pdf-text-repair.test.py and
+      # who-l1-extractor.test.py were green by never being executed. They
+      # are self-contained (no pypdf, no network) and take under a second.
+      #
+      # Discovered rather than listed, so a new one is picked up by
+      # existing; a listed set is a set that goes stale.
+      - name: Python tests (scripts/tests/*.test.py)
+        run: |
+          set -uo pipefail
+          shopt -s nullglob
+          tests=(scripts/tests/*.test.py)
+          if [ ${#tests[@]} -eq 0 ]; then
+            echo "SKIP — no Python tests present."
+            exit 0
+          fi
+          rc=0
+          for t in "${tests[@]}"; do
+            echo "=== $t ==="
+            python3 "$t" || rc=1
+          done
+          exit $rc
+
   typescript:
     name: TypeScript — tests, lint, types (hard)
     runs-on: ubuntu-latest
@@ -166,6 +193,14 @@ jobs:
 
       - name: tsc --noEmit
         run: bunx tsc --noEmit -p tsconfig.json
+
+      # The base workflow processes are strict; a content package may relax a
+      # step only by declaring it with a reason, and never a step the BPMN marks
+      # relaxable="false". This fails when a relaxation names something that no
+      # longer exists — otherwise it sits in the file looking like policy while
+      # permitting nothing, and nobody finds out until the day it matters.
+      - name: workflow policy
+        run: bun run check:workflow-policy
 
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a

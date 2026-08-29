@@ -1,0 +1,164 @@
+# CI health watchdog — the backstop for the report nobody is in the room to read.
+#
+# `docs-site.yml` was triggered by all 30 `main` pushes between 2026-06-29 and
+# 2026-08-26, and failed every one. Bean `xom7` fixed the *visibility* half:
+# `scripts/check-ci-health.ts` classifies every workflow's state on the default
+# branch, and `session-start-coord-sweep.sh` prints it where agent attention
+# already goes.
+#
+# That leaves the half this workflow is for. A report printed at session start
+# is only ever seen by someone who starts a session. The failure mode being
+# guarded against is precisely a quiet stretch with nobody looking — which is
+# the stretch in which no session starts either. Bean `ynu8`.
+#
+# Why not just GitHub's own failure email: it sent 30 of them, and the whole
+# premise of `xom7` is that it is a channel nobody reads. So this does not add
+# another. It maintains ONE tracking issue, which shows in the repo's open-issue
+# count on the front page, and closes it when `main` is clean again.
+#
+# Cost: this repository is PUBLIC, so standard GitHub-hosted runners are free.
+# One ~40s job a week.
+
+name: CI health watchdog
+
+on:
+  # Weekly, not daily. The defect is "nobody noticed for two months", not
+  # "nobody noticed for a day", and the session-start sweep already covers every
+  # day somebody is actually working. A weekly backstop bounds the blind spot to
+  # seven days without turning the tracking issue into a feed.
+  schedule:
+    - cron: '17 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: ci-health
+  cancel-in-progress: false
+
+jobs:
+  report:
+    name: Report CI health on the default branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # REQUIRED, and not an optimisation to shave off. The `superseded`
+          # rule asks `git log -1 --format=%cI -- <workflow file>` to find out
+          # whether a red verdict predates a change to the file that produced
+          # it. A shallow clone cannot answer, `workflowChangedAt` returns
+          # undefined, and the check correctly leaves the failure reported —
+          # which would resurrect the two permanent false fires that rule exists
+          # to retire (`witness-refresh.yml`, `qa-sweep.yml`; bean `lq7e`).
+          # The whole history is 3.8 MiB.
+          fetch-depth: 0
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Check CI health
+        id: check
+        run: |
+          set +e
+          bun run scripts/check-ci-health.ts --out "$RUNNER_TEMP/ci-health.md"
+          status=$?
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          # 0 = clean, 1 = live failure(s), 2 = could not check. Anything else
+          # is a crash in the checker, and is treated as "could not check".
+          # bun exits 1 on an uncaught exception too, so exit 1 alone does not
+          # distinguish "found live failures" from "crashed". The report file is
+          # what separates them: `--out` writes it before any exit path, so a
+          # red always has one and a crash before that point does not. Without
+          # this, a crash would open a tracking issue quoting a stale file.
+          report="$RUNNER_TEMP/ci-health.md"
+          if [ "$status" = "1" ] && [ ! -s "$report" ]; then
+            echo "::warning::checker exited 1 without writing a report — treating as unchecked"
+            status=2
+          fi
+          case "$status" in
+            0) echo "verdict=clean" >> "$GITHUB_OUTPUT" ;;
+            1) echo "verdict=red" >> "$GITHUB_OUTPUT" ;;
+            *) echo "verdict=unknown" >> "$GITHUB_OUTPUT" ;;
+          esac
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Ensured for BOTH issue paths, not just the one that creates. The clean
+      # path filters `gh issue list --label ci-health` too, and on a repo where
+      # nothing has ever gone red that label would not otherwise exist yet.
+      # Skipped on `unknown`, where neither path runs and a label hiccup must
+      # not be what fails the job.
+      - name: Ensure the tracking label exists
+        if: steps.check.outputs.verdict != 'unknown'
+        run: gh label create ci-health --color B60205 --description "Automated CI health watchdog" --force
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Open or update the tracking issue
+        if: steps.check.outputs.verdict == 'red'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          {
+            cat "$RUNNER_TEMP/ci-health.md"
+            echo
+            echo "---"
+            echo
+            echo "Maintained by [\`ci-health.yml\`]($RUN_URL). This issue is edited in place"
+            echo "each week and closed automatically once \`main\` is clean, so its body is"
+            echo "always the current state rather than a log. Bean \`ynu8\`."
+          } > "$RUNNER_TEMP/issue-body.md"
+
+          existing=$(gh issue list --label ci-health --state open \
+            --json number --jq '.[0].number // empty')
+
+          if [ -n "$existing" ]; then
+            # Edit rather than comment: an edit does not notify, so a failure
+            # that persists for weeks stays one unread-count of one.
+            gh issue edit "$existing" --body-file "$RUNNER_TEMP/issue-body.md"
+            echo "updated issue #$existing"
+          else
+            gh issue create \
+              --title "CI is red on the default branch" \
+              --label ci-health \
+              --body-file "$RUNNER_TEMP/issue-body.md"
+          fi
+
+      - name: Close the tracking issue when main is clean
+        if: steps.check.outputs.verdict == 'clean'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          existing=$(gh issue list --label ci-health --state open \
+            --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" \
+              --comment "Every workflow with a recent run on the default branch is green again. Closed by \`ci-health.yml\`."
+            echo "closed issue #$existing"
+          else
+            echo "clean, and no tracking issue open — nothing to do."
+          fi
+
+      # "Could not check" is not "healthy". The checker refuses to render an
+      # unreachable API as green, and so does this: the tracking issue is left
+      # exactly as it is — NEVER closed — and the job fails, which makes this
+      # workflow itself red on `main`, which next week's run will report. The
+      # watchdog is watched by the watchdog.
+      - name: Refuse to report success on an unchecked repo
+        if: steps.check.outputs.verdict == 'unknown'
+        run: |
+          echo "::error::CI health could not be determined (exit ${{ steps.check.outputs.status }})."
+          echo "::error::Treat this as unknown, not as green. The tracking issue was left untouched."
+          exit 1

@@ -1,9 +1,9 @@
 {
-  "$schema": "https://github.com/litlfred/qou/blob/main/folio-assistant/folio-config-schema.json",
-  "contentType": "paper",
-  "adapter": "paper",
-  "adapterModule": "./adapters/paper/index.ts",
-  "feedbackDir": "folio-assistant/feedback",
+  "_comment": "Example folio.config.json. There is deliberately no $schema key: no such schema file is published, and pointing at one that does not exist is worse than pointing at nothing. `folio_init` writes one of these for you — see the README's 'Start a new folio'. `contentType` selects both the adapter and the block-kind profile: 'document' for prose folios (no Lean, no TeX needed to publish), 'paper' for a document that additionally carries Lean-backed mathematics. The paper adapter extends the document one, so a paper folio gets every document tool too.",
+  "contentType": "document",
+  "adapter": "document",
+  "adapterModule": "./folio-assistant/adapters/document/index.ts",
+  "feedbackDir": ".folio-feedback",
   "skills": ".claude/skills/local",
   "viewer": {
     "dir": "folio-assistant/viewer",
@@ -12,6 +12,12 @@
   "simulators": {
     "dir": "folio-assistant/simulators",
     "pyodideCache": true
+  },
+  "readme": {
+    "_comment": "Controls the contents table `readme_toc` writes between the <!-- folio:toc:begin --> and <!-- folio:toc:end --> markers in README.md. `linkStyle` decides what a published PDF link points at: 'blob' (default) is github.com/<owner>/<repo>/blob/<publishRef>/<path>, which resolves for anyone with repository access — PUBLIC OR PRIVATE — and renders PDFs inline; 'pages' is the GitHub Pages URL, which only resolves while the Pages site is public; 'raw' is raw.githubusercontent.com, which serves public repositories only (it 404s on a private repo without a token, and a browser session does not supply one). `repoUrl` defaults to the `origin` remote. Every PDF link is verified against `publishRef` before it is emitted, so an unpublished chapter renders an em dash instead of a dead link.",
+    "linkStyle": "blob",
+    "publishRef": "gh-pages",
+    "pagesBaseUrl": ""
   },
   "googleDrive": {
     "_comment": "Optional. Set folderPath to auto-push PDFs to Google Drive on every content edit and full build. Credentials are resolved from GOOGLE_APPLICATION_CREDENTIALS env var, ~/.config/google-drive-mcp/credentials.json (OAuth2), or gcloud ADC — never stored here.",

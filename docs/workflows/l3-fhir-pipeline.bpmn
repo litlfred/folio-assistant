@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline.
+
+  Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+  BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+  by `bun run render:bpmn` — never hand-edit the SVG.
+
+  The <folio:skill> extension on an activity names the folio-assistant skill
+  that implements it; <folio:bean> marks a step that reads or writes the shared
+  work plan in .beans/.
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  id="Definitions_L3Fhir"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+
+  <bpmn:import namespace="https://litlfred.github.io/folio-assistant/workflows" location="l2-dak-authoring.bpmn" importType="http://www.omg.org/spec/BPMN/20100524/MODEL" />
+  <bpmn:collaboration id="Collaboration_L3Fhir">
+    <bpmn:participant id="Participant_L3Fhir" name="WHO SMART Guidelines — L2 DAK to published FHIR IG" processRef="Process_L3Fhir" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_L3Fhir" name="L3 FHIR IG pipeline" isExecutable="false">
+    <bpmn:documentation>
+      folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline.
+      Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+      BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+      by `bun run render:bpmn` — never hand-edit the SVG.
+      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      work plan in .beans/.
+    </bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="advisory" />
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="Process_L3Fhir_LaneSet">
+      <bpmn:lane id="Lane_Modeller" name="FHIR modeller">
+        <bpmn:flowNodeRef>StartEvent_L2Ready</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_MapL2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AuthorFsh</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
+        <bpmn:flowNodeRef>Task_QcBeans</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Build" name="Build pipeline — SUSHI · validator · IG Publisher">
+        <bpmn:flowNodeRef>Task_Sushi</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Validate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Valid</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_IgPublisher</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Qc" name="QC reviewer">
+        <bpmn:flowNodeRef>Task_QcGates</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_QcPass</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_PubMgr" name="Publication manager">
+        <bpmn:flowNodeRef>Task_PublishIg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_IgPublished</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_L2Ready" name="L2 DAK ready">
+      <bpmn:documentation>Produced by l2-dak-authoring.bpmn.</bpmn:documentation>
+      <bpmn:outgoing>C01</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Task_MapL2" name="Map L2 → L3&#10;[l3-fhir-authoring]">
+      <bpmn:documentation>Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="l3-fhir-authoring" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>C01</bpmn:incoming>
+      <bpmn:outgoing>C02</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_AuthorFsh" name="Author FSH profiles&#10;[l3-fhir-authoring]">
+      <bpmn:extensionElements>
+        <folio:skill ref="l3-fhir-authoring" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>C02</bpmn:incoming>
+      <bpmn:incoming>C06</bpmn:incoming>
+      <bpmn:incoming>C10</bpmn:incoming>
+      <bpmn:outgoing>C03</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Sushi" name="SUSHI compile → FHIR JSON&#10;[l3-fhir-authoring]">
+      <bpmn:extensionElements>
+        <folio:skill ref="l3-fhir-authoring" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>C03</bpmn:incoming>
+      <bpmn:outgoing>C04</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Validate" name="Validate against profiles&#10;[fhir-validation]">
+      <bpmn:extensionElements>
+        <folio:skill ref="fhir-validation" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>C04</bpmn:incoming>
+      <bpmn:outgoing>C05</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_Valid" name="FHIR valid?">
+      <bpmn:incoming>C05</bpmn:incoming>
+      <bpmn:outgoing>C06</bpmn:outgoing>
+      <bpmn:outgoing>C07</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_QcGates" name="QC gates&#10;[quality-control]">
+      <bpmn:extensionElements>
+        <folio:skill ref="quality-control" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>C07</bpmn:incoming>
+      <bpmn:outgoing>C08</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_QcPass" name="QC clean?">
+      <bpmn:incoming>C08</bpmn:incoming>
+      <bpmn:outgoing>C09</bpmn:outgoing>
+      <bpmn:outgoing>C11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_QcBeans" name="File QC findings as beans&#10;[todo-manager]">
+      <bpmn:documentation>QC findings do not stay in a report nobody re-reads — each becomes a bean the modeller and the agents both see.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="todo-manager" />
+        <folio:bean store=".beans/" op="note" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>C09</bpmn:incoming>
+      <bpmn:outgoing>C10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:serviceTask id="Task_IgPublisher" name="IG Publisher build&#10;[ig-publication]">
+      <bpmn:extensionElements>
+        <folio:skill ref="ig-publication" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>C11</bpmn:incoming>
+      <bpmn:outgoing>C12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_PublishIg" name="Publish the IG site&#10;[content-publish]">
+      <bpmn:documentation>Release authorisation and review follow draft-to-publication.bpmn.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-publish" />
+        <folio:skill ref="ig-publication" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>C12</bpmn:incoming>
+      <bpmn:outgoing>C13</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_IgPublished" name="Published IG site">
+      <bpmn:incoming>C13</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="C01" sourceRef="StartEvent_L2Ready" targetRef="Task_MapL2" />
+    <bpmn:sequenceFlow id="C02" sourceRef="Task_MapL2" targetRef="Task_AuthorFsh" />
+    <bpmn:sequenceFlow id="C03" sourceRef="Task_AuthorFsh" targetRef="Task_Sushi" />
+    <bpmn:sequenceFlow id="C04" sourceRef="Task_Sushi" targetRef="Task_Validate" />
+    <bpmn:sequenceFlow id="C05" sourceRef="Task_Validate" targetRef="Gateway_Valid" />
+    <bpmn:sequenceFlow id="C06" name="no" sourceRef="Gateway_Valid" targetRef="Task_AuthorFsh" />
+    <bpmn:sequenceFlow id="C07" name="yes" sourceRef="Gateway_Valid" targetRef="Task_QcGates" />
+    <bpmn:sequenceFlow id="C08" sourceRef="Task_QcGates" targetRef="Gateway_QcPass" />
+    <bpmn:sequenceFlow id="C09" name="no" sourceRef="Gateway_QcPass" targetRef="Task_QcBeans" />
+    <bpmn:sequenceFlow id="C10" sourceRef="Task_QcBeans" targetRef="Task_AuthorFsh" />
+    <bpmn:sequenceFlow id="C11" name="yes" sourceRef="Gateway_QcPass" targetRef="Task_IgPublisher" />
+    <bpmn:sequenceFlow id="C12" sourceRef="Task_IgPublisher" targetRef="Task_PublishIg" />
+    <bpmn:sequenceFlow id="C13" sourceRef="Task_PublishIg" targetRef="EndEvent_IgPublished" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_L3Fhir">
+      <bpmndi:BPMNShape id="Participant_L3Fhir_di" bpmnElement="Participant_L3Fhir" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1960" height="750" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Modeller_di" bpmnElement="Lane_Modeller" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1930" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_WorkPlan_di" bpmnElement="Lane_WorkPlan" isHorizontal="true">
+        <dc:Bounds x="190" y="230" width="1930" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Build_di" bpmnElement="Lane_Build" isHorizontal="true">
+        <dc:Bounds x="190" y="380" width="1930" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Qc_di" bpmnElement="Lane_Qc" isHorizontal="true">
+        <dc:Bounds x="190" y="530" width="1930" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_PubMgr_di" bpmnElement="Lane_PubMgr" isHorizontal="true">
+        <dc:Bounds x="190" y="680" width="1930" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_L2Ready_di" bpmnElement="StartEvent_L2Ready">
+        <dc:Bounds x="262" y="137" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="225" y="177" width="110" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_MapL2_di" bpmnElement="Task_MapL2">
+        <dc:Bounds x="375" y="110" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AuthorFsh_di" bpmnElement="Task_AuthorFsh">
+        <dc:Bounds x="535" y="110" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Sushi_di" bpmnElement="Task_Sushi">
+        <dc:Bounds x="695" y="410" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Validate_di" bpmnElement="Task_Validate">
+        <dc:Bounds x="855" y="410" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Valid_di" bpmnElement="Gateway_Valid" isMarkerVisible="true">
+        <dc:Bounds x="1055" y="430" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1112" y="442" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_QcGates_di" bpmnElement="Task_QcGates">
+        <dc:Bounds x="1175" y="560" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_QcPass_di" bpmnElement="Gateway_QcPass" isMarkerVisible="true">
+        <dc:Bounds x="1375" y="580" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1432" y="592" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_QcBeans_di" bpmnElement="Task_QcBeans">
+        <dc:Bounds x="1495" y="260" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_IgPublisher_di" bpmnElement="Task_IgPublisher">
+        <dc:Bounds x="1655" y="410" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PublishIg_di" bpmnElement="Task_PublishIg">
+        <dc:Bounds x="1815" y="710" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_IgPublished_di" bpmnElement="EndEvent_IgPublished">
+        <dc:Bounds x="2022" y="737" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1985" y="777" width="110" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="C01_di" bpmnElement="C01">
+        <di:waypoint x="298" y="155" />
+        <di:waypoint x="375" y="155" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C02_di" bpmnElement="C02">
+        <di:waypoint x="505" y="155" />
+        <di:waypoint x="535" y="155" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C03_di" bpmnElement="C03">
+        <di:waypoint x="665" y="155" />
+        <di:waypoint x="760" y="155" />
+        <di:waypoint x="760" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C04_di" bpmnElement="C04">
+        <di:waypoint x="825" y="455" />
+        <di:waypoint x="855" y="455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C05_di" bpmnElement="C05">
+        <di:waypoint x="985" y="455" />
+        <di:waypoint x="1055" y="455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C06_di" bpmnElement="C06">
+        <di:waypoint x="1080" y="430" />
+        <di:waypoint x="1080" y="215" />
+        <di:waypoint x="600" y="215" />
+        <di:waypoint x="600" y="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1086" y="300" width="25" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C07_di" bpmnElement="C07">
+        <di:waypoint x="1080" y="480" />
+        <di:waypoint x="1080" y="605" />
+        <di:waypoint x="1175" y="605" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1086" y="520" width="25" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C08_di" bpmnElement="C08">
+        <di:waypoint x="1305" y="605" />
+        <di:waypoint x="1375" y="605" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C09_di" bpmnElement="C09">
+        <di:waypoint x="1400" y="580" />
+        <di:waypoint x="1400" y="305" />
+        <di:waypoint x="1495" y="305" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1406" y="500" width="25" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C10_di" bpmnElement="C10">
+        <di:waypoint x="1560" y="260" />
+        <di:waypoint x="1560" y="100" />
+        <di:waypoint x="600" y="100" />
+        <di:waypoint x="600" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C11_di" bpmnElement="C11">
+        <di:waypoint x="1425" y="605" />
+        <di:waypoint x="1720" y="605" />
+        <di:waypoint x="1720" y="500" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1440" y="572" width="25" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C12_di" bpmnElement="C12">
+        <di:waypoint x="1785" y="455" />
+        <di:waypoint x="1880" y="455" />
+        <di:waypoint x="1880" y="710" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="C13_di" bpmnElement="C13">
+        <di:waypoint x="1945" y="755" />
+        <di:waypoint x="2022" y="755" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

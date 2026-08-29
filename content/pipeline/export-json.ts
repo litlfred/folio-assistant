@@ -28,7 +28,11 @@ import type {
   LeanRef,
 } from "../../schemas/types";
 import type { Data as CSLData } from "csl-json";
-import { references, referenceMap } from "./references-registry-di";
+import {
+  references,
+  referenceMap,
+  referenceRegistryConfigured,
+} from "./references-registry-di";
 import { findContentRepoRoot, findPapers, soleFolioPaper } from "./repo-root";
 import { mergeCitations } from "./citations";
 import { isWitnessed } from "../../scripts/lean-witness";
@@ -306,10 +310,17 @@ async function main() {
         if (b.cites) for (const key of b.cites) chapterCiteKeys.add(key);
       }
     }
-    const bibliography = [...chapterCiteKeys]
-      .sort()
-      .map(key => referenceMap.get(key))
-      .filter((r): r is CSLData => r !== undefined);
+    // Guarded for the same reason as the paper-level `references` below:
+    // `referenceMap` is a Proxy over the injected registry and throws when
+    // none is configured. A block may legitimately carry `cites[]` in a folio
+    // that has not wired a bibliography yet — those keys simply resolve to
+    // nothing, which is what `.filter` already handles.
+    const bibliography = referenceRegistryConfigured()
+      ? [...chapterCiteKeys]
+          .sort()
+          .map((key) => referenceMap.get(key))
+          .filter((r): r is CSLData => r !== undefined)
+      : [];
 
     chapters.push({
       number: ch.number,
@@ -326,7 +337,17 @@ async function main() {
     authors: paper.authors,
     date: paper.date,
     chapters,
-    references,
+    // A folio with no bibliography is a normal folio — a new one has no
+    // references yet, and `folio_init` scaffolds none. `references` is a Proxy
+    // over the injected registry, so touching it at all THROWS when none is
+    // configured, and the export died on the last field it assembles after
+    // doing all the work.
+    //
+    // `validate.ts` already had the right shape for this: ask
+    // `referenceRegistryConfigured()` rather than catch, so "this folio has no
+    // bibliography" stays distinguishable from "the lookup failed". Export an
+    // empty list and say so, rather than refusing to export the document.
+    references: referenceRegistryConfigured() ? references : [],
     macros: paper.macros,
     meta: paper.meta,
     _built: new Date().toISOString(),
@@ -338,6 +359,13 @@ async function main() {
     .slice(0, 12);
 
   const exported: ExportedPaper = { ...result, _hash: hash };
+
+  if (!referenceRegistryConfigured()) {
+    console.log(
+      "  ℹ no reference registry configured — exported with an empty " +
+        "`references` list; cites[] were NOT resolved",
+    );
+  }
 
   const json = JSON.stringify(exported, null, 2);
 

@@ -78,6 +78,7 @@ const GROUPS: Group[] = [
   { category: "Lifecycle skills", dir: join(REPO_ROOT, "skills", "content-lifecycle"), repoPrefix: "skills/content-lifecycle" },
   { category: "Agent skills", dir: join(REPO_ROOT, "src", "skills"), repoPrefix: "src/skills" },
   { category: "Platform core (folio-core)", dir: join(REPO_ROOT, "skills", "folio-core"), repoPrefix: "skills/folio-core" },
+  { category: "Document adapter (folio-document-adapter)", dir: join(REPO_ROOT, "skills", "folio-document-adapter"), repoPrefix: "skills/folio-document-adapter" },
   { category: "Paper adapter (folio-paper-adapter)", dir: join(REPO_ROOT, "skills", "folio-paper-adapter"), repoPrefix: "skills/folio-paper-adapter" },
 ];
 

@@ -23,6 +23,7 @@ on:
       - 'docs/**'
       - 'schemas/**'
       - 'scripts/gen-schema-docs.ts'
+      - 'scripts/render-bpmn.ts'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -52,6 +53,14 @@ jobs:
       - name: Regenerate skill instruction pages
         run: bun run scripts/gen-skill-docs.ts
 
+      # The BPMN sources under docs/workflows/ are the source of truth; the SVGs
+      # the workflow pages embed are rendered from them with bpmn-js in headless
+      # Chromium, so the published site can never show a stale diagram.
+      - name: Render BPMN workflow diagrams
+        run: |
+          npx --yes playwright install --with-deps chromium
+          bun run render:bpmn
+
       # Build the Jekyll site from docs/ using the github-pages gem
       # (whitelists jekyll-remote-theme, so just-the-docs works).
       - name: Build Jekyll site
@@ -59,6 +68,15 @@ jobs:
         with:
           source: ./docs
           destination: ./_site
+
+      # actions/jekyll-build-pages runs Jekyll in a container as root, so _site/
+      # comes back owned by root and every later step — which runs as `runner` —
+      # is locked out of it. That is why TypeDoc could not create _site/api and
+      # `touch _site/.nojekyll` failed with Permission denied, and why this
+      # workflow had failed 30 consecutive runs (back to at least 2026-08-07)
+      # while the published site sat unchanged.
+      - name: Take ownership of the Jekyll output
+        run: sudo chown -R "$(id -u):$(id -g)" ./_site
 
       - name: Generate TypeScript API reference (TypeDoc)
         run: |

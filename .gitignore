@@ -1,8 +1,14 @@
 node_modules/
 dist/
+# Jekyll build output — the docs site is built from docs/, never committed.
+_site/
 *.js
 *.js.map
 *.d.ts
+# ...except hand-written ambient declarations. `types/` holds ones for packages
+# that ship none (bpmn-moddle); the blanket rule above is for generated output,
+# and without this exception a fresh clone fails `tsc` on a missing module.
+!types/*.d.ts
 .env
 .env.*
 *.log
@@ -49,3 +55,19 @@ __pycache__/
 # (e.g. content/schema/references.ts -> <content-repo>/content/schema/references.ts).
 # Machine-local absolute paths — useful in a working clone, meaningless in git.
 content/schema/
+
+# The same script bridges the bibliography by a SECOND path, because the
+# platform imports it two ways — qa-checkers-extended.ts reads
+# <clone>/content/schema/references (above) and export-bibtex.ts reads
+# <clone>/schemas/references (here). That second link was added later and
+# never ignored, so it has been showing up as an untracked file in every
+# working clone.
+#
+# Scoped to the one path, NOT the directory: schemas/ holds real tracked
+# source (block-qa.ts, lean-packages.ts, ...) and ignoring it wholesale
+# would silence `git add` on all of it.
+/schemas/references.ts
+
+# Per-machine subagent memory (`memory: local` scope). The committed
+# `project` scope lives at .claude/agent-memory/ and is tracked.
+.claude/agent-memory-local/

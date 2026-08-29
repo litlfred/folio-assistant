@@ -75,9 +75,17 @@ class QaFieldHash(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
+    # Paper adapter companions.
     md: Optional[str] = None
     ts: Optional[str] = None
     lean: Optional[str] = None
+    # WHO SMART Guidelines L2 DAK companions.
+    bpmn: Optional[str] = None
+    dmn: Optional[str] = None
+    xlsx: Optional[str] = None
+    # WHO SMART Guidelines L3 FHIR companions.
+    fsh: Optional[str] = None
+    cql: Optional[str] = None
 
 
 class QaScore(BaseModel):
@@ -140,6 +148,36 @@ class QaCriterionEntry(BaseModel):
     # ISO-8601 UTC datetime; legacy agent entries may carry a bare ISO date.
     reviewed_at: str
     reviewed_sha: Optional[str] = None
+
+    @model_validator(mode="after")
+    def _agent_violation_needs_evidence(self) -> "QaCriterionEntry":
+        """An agent verdict asserting a violation must carry its evidence.
+
+        Mirrors the ``allOf`` conditional in ``block-qa.schema.json``. The
+        ``result`` docstring has always said so -- "fail = violated (evidence
+        must cite file:line + verbatim quote)" -- but nothing enforced it, and
+        1302 agent fail/warn entries accumulated with ``evidence`` empty, their
+        reasoning filed under ``notes``/``referee_argument`` instead.
+
+        Scoped to ``reviewer.kind == "agent"`` deliberately: 933 SCRIPT
+        fail/warn entries carry no reason under any key, so a universal rule
+        would reject them on arrival. Widening it is the end state and is
+        blocked on fixing those checkers.
+        """
+        if self.result not in ("fail", "warn"):
+            return self
+        if getattr(self.reviewer, "kind", None) != "agent":
+            return self
+        ev = self.evidence
+        empty = ev is None or (isinstance(ev, str) and not ev.strip()) or (
+            isinstance(ev, list) and not ev
+        )
+        if empty:
+            raise ValueError(
+                f"result={self.result!r} from an agent reviewer requires "
+                "non-empty `evidence` citing what was found"
+            )
+        return self
     notes: Optional[str] = None
 
     @model_validator(mode="after")

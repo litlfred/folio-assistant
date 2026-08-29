@@ -25,7 +25,25 @@ import { dirname, relative, resolve } from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
-const REPO_ROOT = resolve(dirname(__filename), "..", "..");
+
+/**
+ * The PLATFORM root (folio-assistant itself). Criterion sources such as
+ * `content/pipeline/qa-checkers-python.ts` live here, and the sidecars record
+ * them platform-relative (`source_file`), so criterion hashing must use this.
+ */
+const PLATFORM_ROOT = resolve(dirname(__filename), "..", "..");
+
+/**
+ * The CONTENT repo root (qou, …). The audited scripts live here and the
+ * sidecars record them content-relative (`script_path`), so walking must use
+ * this.
+ *
+ * These were ONE constant, and that is the whole bug: the platform root was
+ * being joined onto a content-relative `SCRIPT_ROOTS` entry, yielding a
+ * doubled path that does not exist, so the walker yielded nothing and the
+ * sweep exited 0 over an empty set.
+ */
+const CONTENT_ROOT = findContentRepoRoot();
 
 import {
   QA_CRITERIA_BY_ID,
@@ -41,7 +59,12 @@ import {
   saveQaScriptSidecar,
   type CriterionScriptHashes,
 } from "./qa-utils";
-import { walkScripts, type ScriptTarget } from "./script-walker";
+import {
+  walkScripts,
+  SCRIPT_ROOTS,
+  type ScriptTarget,
+} from "./script-walker";
+import { findContentRepoRoot } from "./repo-root";
 import {
   checkDoesNotDefaultToFloat,
   checkComputeNoMpfToFloatCast,
@@ -114,7 +137,7 @@ const SCRIPT_CHECKERS: Record<string, ScriptCheckerFn> = {
   },
   connected_to_ci_pipeline: (t) => {
     if (t.language !== "python") return { result: "n/a", hits: [] };
-    return checkConnectedToCiPipeline(t.abs, REPO_ROOT);
+    return checkConnectedToCiPipeline(t.abs, CONTENT_ROOT);
   },
   deprecated: (t) => {
     if (t.language !== "python") return { result: "n/a", hits: [] };
@@ -216,7 +239,7 @@ async function run(): Promise<void> {
       id,
       getCriterionSourceFile(id),
       getCriterionExtraInputs(id),
-      REPO_ROOT,
+      PLATFORM_ROOT,
     );
   }
   const engineVersion = `bun-${Bun.version}`;
@@ -227,7 +250,7 @@ async function run(): Promise<void> {
   let totalMajor = 0;
   let totalMinor = 0;
 
-  for (const target of walkScripts(REPO_ROOT)) {
+  for (const target of walkScripts(CONTENT_ROOT)) {
     if (args.filter && !args.filter.test(target.rel)) continue;
     totalScripts++;
 
@@ -311,7 +334,7 @@ async function run(): Promise<void> {
         entry.severity = def.default_severity;
         entry.evidence = checkRes.hits
           .slice(0, 5)
-          .map((h) => `${relative(REPO_ROOT, h.file)}:${h.line}: ${h.text}`)
+          .map((h) => `${relative(CONTENT_ROOT, h.file)}:${h.line}: ${h.text}`)
           .join(" | ");
         if (def.default_severity === "critical") {
           sweepRow.fail_critical++;
@@ -362,10 +385,37 @@ async function run(): Promise<void> {
         last_run_sha: headSha,
         engine_version: engineVersion,
       };
-      saveQaScriptSidecar(sidecar, REPO_ROOT);
+      saveQaScriptSidecar(sidecar, CONTENT_ROOT);
     }
   }
 
+  if (totalScripts === 0) {
+    // A sweep over nothing used to print "0 findings" and exit 0, which
+    // reads exactly like a clean sweep of everything. It is not a result,
+    // it is a misconfiguration, and it hid a broken root for months. Say so,
+    // name the roots actually walked, and fail.
+    console.error("");
+    console.error("script-sweep: NO SCRIPTS WERE AUDITED — this is a");
+    console.error("  misconfiguration, not a clean result. The roots below");
+    console.error("  are joined onto the CONTENT repo root; check that you");
+    console.error("  are running from the content repo and that they exist.");
+    console.error(`    content root : ${CONTENT_ROOT}`);
+    console.error(`    platform root: ${PLATFORM_ROOT}`);
+    for (const r of SCRIPT_ROOTS) {
+      const abs = resolve(CONTENT_ROOT, r.dir);
+      console.error(
+        `    root         : ${r.dir} -> ${abs}` +
+          `  [${existsSync(abs) ? "exists" : "MISSING"}]`,
+      );
+    }
+    if (args.filter) {
+      console.error(
+        `  NOTE: --filter ${args.filter} was set; a filter matching nothing`,
+      );
+      console.error("        also lands here, and is not a misconfiguration.");
+    }
+    process.exitCode = 1;
+  }
   if (args.json) {
     console.log(
       JSON.stringify(

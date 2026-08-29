@@ -23,6 +23,7 @@
  */
 
 import { existsSync, readFileSync, readdirSync } from "fs";
+import type { CheckerPaths } from "../../schemas/block-qa";
 import { resolve, dirname, join, relative } from "path";
 import { fileURLToPath } from "url";
 import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
@@ -3199,7 +3200,7 @@ export function checkVoiceStatementNoInterpretation(
 
 export const EXTENDED_AUTOMATED_CHECKERS: Record<
   string,
-  (paths: { md?: string; ts?: string; lean?: string }) => CheckerResult
+  (paths: CheckerPaths) => CheckerResult
 > = {
   // bibliography
   "bib-cite-resolves": (p) => checkBibCiteResolves(p.md, p.lean),

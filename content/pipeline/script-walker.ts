@@ -3,8 +3,13 @@
  *
  * Walks the script roots declared in `SCRIPT_ROOTS` and yields one
  * descriptor per audited script. Currently covers Python compute
- * scripts under `folio-assistant/computations/`; extending to
+ * scripts under the CONTENT repo's `computations/`; extending to
  * TypeScript or Rust just adds another entry to `SCRIPT_ROOTS`.
+ *
+ * `SCRIPT_ROOTS` entries are relative to the **content repo**, and
+ * `walkScripts` must be handed that root — see `findContentRepoRoot()` in
+ * ./repo-root. Handing it the platform root instead is what made this
+ * walker a silent no-op; see the note on `SCRIPT_ROOTS` below.
  *
  * @module content/pipeline/script-walker
  */
@@ -50,9 +55,28 @@ export interface ScriptRoot {
   language: ScriptLanguage;
 }
 
+/**
+ * Paths here are relative to the **content repo** (`qou`, …), never to
+ * folio-assistant. That is the same convention the sidecars already record:
+ * a `script-qa/*.script-qa.json` carries `script_path:
+ * "computations/hecke/hecke_characters.py"`, with no `folio-assistant/`
+ * prefix.
+ *
+ * This read `folio-assistant/computations` and was joined onto the PLATFORM
+ * root, producing `<folio-assistant>/folio-assistant/computations` — a
+ * doubled path that does not exist. `walkRoot` returns early on
+ * `!existsSync`, so the sweep audited **zero** scripts and exited 0 reporting
+ * "0 script(s) audited / 0 findings" — indistinguishable from a clean sweep
+ * of everything. Measured on `qou` at the time of the fix: 1086 of 1798
+ * script-qa sidecars were hash-stale and unrefreshable behind it.
+ *
+ * `repo-root.ts` already diagnosed this class in its own docstring —
+ * "the caller reported a clean run over nothing" — and this walker was
+ * simply never migrated onto it.
+ */
 export const SCRIPT_ROOTS: ScriptRoot[] = [
   {
-    dir: "folio-assistant/computations",
+    dir: "computations",
     exts: [".py"],
     language: "python",
   },

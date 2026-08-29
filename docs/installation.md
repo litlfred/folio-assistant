@@ -86,13 +86,19 @@ cp folio.config.example.json /path/to/your/content-repo/folio.config.json
 
 ```json
 {
-  "contentType": "paper",
-  "adapter": "paper",
-  "adapterModule": "./adapters/paper/index.ts",
-  "feedbackDir": "folio-assistant/feedback",
+  "contentType": "document",
+  "adapter": "document",
+  "adapterModule": "./folio-assistant/adapters/document/index.ts",
+  "feedbackDir": ".folio-feedback",
   "skills": ".claude/skills/local"
 }
 ```
+
+`contentType` selects both the adapter and the block-kind *profile*. Use
+`"paper"` (and `adapters/paper/index.ts`) for a folio with Lean-backed
+mathematics — the paper adapter extends the document one, so it offers every
+document tool as well. `folio_init` writes this file for you; see
+[Start a new folio](https://github.com/litlfred/folio-assistant#start-a-new-folio).
 
 ---
 

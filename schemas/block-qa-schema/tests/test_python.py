@@ -230,3 +230,71 @@ def test_json_schema_files_present():
     script = json.loads((schema_dir / "qa-script.schema.json").read_text())
     assert script["title"] == "QaScriptSidecar"
     assert script["properties"]["$schema"]["const"] == "qa-script/v1"
+
+
+# ── agent violations must carry evidence ──────────────────────────────────
+#
+# The `result` docstring has always said "fail = violated (evidence must cite
+# file:line + verbatim quote)", but nothing enforced it and 1302 agent
+# fail/warn entries accumulated with `evidence` empty. These pin the rule in
+# the Pydantic mirror; the JSON Schema carries the same condition as an
+# `allOf`.
+
+
+def _agent_entry(**over):
+    base = {
+        "field_hash": {"md": "a1b2c3d4e5f6"},
+        "result": "fail",
+        "reviewer": {"kind": "agent", "id": "local/qa-agent-drain"},
+        "reviewed_at": "2026-08-25T00:00:00Z",
+    }
+    base.update(over)
+    return base
+
+
+@pytest.mark.parametrize("result", ["fail", "warn"])
+def test_agent_violation_requires_evidence(result):
+    with pytest.raises(ValueError, match="requires non-empty `evidence`"):
+        QaCriterionEntry.model_validate(_agent_entry(result=result))
+
+
+@pytest.mark.parametrize("blank", ["", "   "])
+def test_agent_violation_rejects_blank_evidence(blank):
+    with pytest.raises(ValueError):
+        QaCriterionEntry.model_validate(_agent_entry(evidence=blank))
+
+
+def test_agent_violation_rejects_empty_evidence_list():
+    with pytest.raises(ValueError):
+        QaCriterionEntry.model_validate(_agent_entry(evidence=[]))
+
+
+def test_agent_violation_accepts_string_evidence():
+    e = QaCriterionEntry.model_validate(
+        _agent_entry(evidence="braid.lean:22:28: error(unknownIdentifier)")
+    )
+    assert e.result == "fail"
+
+
+def test_agent_violation_accepts_structured_evidence():
+    # The shape some agent reviewers emit; blessed by the `evidence` schema.
+    e = QaCriterionEntry.model_validate(
+        _agent_entry(evidence=[{"line": 18, "text": "claims 'exact'"}])
+    )
+    assert e.evidence
+
+
+@pytest.mark.parametrize("result", ["pass", "n/a"])
+def test_non_violation_needs_no_evidence(result):
+    # A verdict that found nothing has nothing to evidence; requiring it here
+    # would hollow out the sweep from the other side.
+    assert QaCriterionEntry.model_validate(_agent_entry(result=result))
+
+
+def test_script_reviewer_is_out_of_scope():
+    # Deliberate: 933 script fail/warn entries carry no reason under any key,
+    # so a universal rule would reject them on arrival. Widening this is the
+    # end state, blocked on fixing those checkers.
+    assert QaCriterionEntry.model_validate(
+        _agent_entry(reviewer={"kind": "script", "id": "qa-checkers-uses.ts"})
+    )

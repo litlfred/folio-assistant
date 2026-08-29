@@ -1,0 +1,91 @@
+# Generated-file drift gate for the JSON-LD projection of content blocks.
+#
+# Each content block is authored as `<block>.ts` and published as a generated
+# `<block>.jsonld` sibling, so an external consumer can reference a block
+# without a TypeScript toolchain and so ingested `library/**` documents and
+# authored blocks share one graph vocabulary. Two files on disk means two
+# truths unless something enforces otherwise — this is that something.
+#
+# Same posture as atomic-mass-gen-check.yml: regenerate, fail on divergence,
+# never hand-edit the generated file. Fast (no Lean, no LaTeX) so it can gate
+# every PR.
+#
+# In folio-assistant itself the block half no-ops — the platform holds no
+# papers — but the `@context` half is real here, and both halves run once the
+# platform is embedded in a folio.
+
+name: JSON-LD generated-file drift
+
+on:
+  pull_request:
+    paths:
+      - 'content/**/*.ts'
+      - 'content/**/*.jsonld'
+      - 'schemas/jsonld.ts'
+      - 'schemas/constraints.ts'
+      - 'schemas/block-kinds.ts'
+      - 'content/pipeline/gen-block-jsonld.ts'
+      - 'content/pipeline/gen-library-jsonld.ts'
+      - 'library/**/structure.json'
+      - 'library/**/candidates.json'
+      - 'scripts/gen-jsonld-context.ts'
+      - 'ns/content/v1.jsonld'
+      - '.github/workflows/jsonld-gen-check.yml'
+  push:
+    paths:
+      - 'content/**/*.ts'
+      - 'content/**/*.jsonld'
+      - 'schemas/jsonld.ts'
+      - 'schemas/constraints.ts'
+      - 'schemas/block-kinds.ts'
+      - 'content/pipeline/gen-block-jsonld.ts'
+      - 'content/pipeline/gen-library-jsonld.ts'
+      - 'library/**/structure.json'
+      - 'library/**/candidates.json'
+      - 'scripts/gen-jsonld-context.ts'
+      - 'ns/content/v1.jsonld'
+      - '.github/workflows/jsonld-gen-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift-check:
+    name: .jsonld siblings in sync with .ts manifests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # The published @context is generated from schemas/jsonld.ts. It is the
+      # one artefact both authored and ingested nodes reference by URL, so a
+      # stale copy misdescribes the whole graph rather than one block.
+      - name: Context in sync
+        run: bun run scripts/gen-jsonld-context.ts --check
+
+      # HARD GATE: regenerate every sibling and fail on divergence. Also fails
+      # on a block manifest that will not import — a block that throws is a
+      # finding, not a file to pass over.
+      - name: Block siblings in sync
+        run: bun run content/pipeline/gen-block-jsonld.ts --check
+
+      # Ingested documents. Same gate, other population: `library/**` nodes are
+      # generated from structure.json + candidates.json, so a hand-edit or a
+      # re-run of Stage A/B without regenerating leaves the graph describing a
+      # document that no longer exists in that shape.
+      - name: Library nodes in sync
+        run: bun run content/pipeline/gen-library-jsonld.ts --check
+
+      - name: Label resolution + emitter tests
+        run: |
+          bun test scripts/tests/jsonld-label-resolution.test.ts \
+                   scripts/tests/gen-block-jsonld.test.ts \
+                   scripts/tests/gen-library-jsonld.test.ts \
+                   scripts/tests/mcp-graph-tools.test.ts

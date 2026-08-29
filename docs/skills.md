@@ -63,10 +63,10 @@ A skill is defined across a few layers — not a single file. For any skill:
 
 | Layer | Location | Status |
 |-------|----------|--------|
-| **Definition** (roles, required capabilities, requirements, routing patterns, lifecycle stages, schema ref) | `.claude/skills/local/<skill>.json` | ✅ all 18 authoring skills |
-| **Typed contract** (input/output JSON Schema) | `schemas/skills/<skill>/` | ✅ all 18 — see [reference](reference/skills/) |
-| **Instruction body** (prose how-to the LLM loads) — browse them in the [Skill instructions](reference/skill-instructions/) reference | `skills/content-lifecycle/*.md`, `src/skills/*.md` | ✅ lifecycle + agent skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages currently ship the manifest + JSON definitions) |
-| **Package** (Docker/runtime deps) | `skills/<package>/package-manifest.json` | ✅ all three packages |
+| **Definition** (roles, required capabilities, requirements, routing patterns, lifecycle stages, schema ref) | `.claude/skills/local/<skill>.json` | ✅ all 22 authoring skills — validated in CI by `scripts/validate-skills.ts` |
+| **Typed contract** (input/output JSON Schema) | `schemas/skills/<skill>/` | ✅ all 22 — see [reference](reference/skills/) |
+| **Instruction body** (prose how-to the LLM loads) — browse them in the [Skill instructions](reference/skill-instructions/) reference | `skills/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ lifecycle, agent, platform-bundle and **authoring-document** skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages ship the manifest + JSON definitions) |
+| **Package** (Docker/runtime deps) | `skills/<package>/package-manifest.json` | ✅ all four packages |
 
 So *yes, the skills exist* — as structured definitions + typed schemas, with prose
 bodies shipped for the lifecycle and agent skills. The `skill_fetch` MCP tool
@@ -88,6 +88,15 @@ The lifecycle stages that apply to **every** content type:
 | [`content-publish`](reference/skills/content-publish.html) | publish | Render & deploy |
 | [`content-feedback`](reference/skills/content-feedback.html) | feedback | Collect & triage feedback |
 | `content-retire` | retire | Deprecate / archive |
+
+### Documents & policy guidance: `authoring-document`
+
+| Skill | Purpose |
+|-------|---------|
+| [`document-authoring`](reference/skills/document-authoring.html) | Create and revise blocks in a prose folio |
+| [`document-structure`](reference/skills/document-structure.html) | Chapters and sections — add, remove, reorder |
+| [`normative-statements`](reference/skills/normative-statements.html) | Carry a recommendation, requirement or rule |
+| [`document-publishing`](reference/skills/document-publishing.html) | Markdown → HTML / PDF, no TeX |
 
 ### Papers & books: `authoring-math`
 
@@ -126,6 +135,11 @@ package `folio-assistant`):
 > `deployment-auth` now live (generalized) in the **`folio-core`** bundle below —
 > fetch them with `package_name="folio-core"`.
 
+A paper folio wants the `authoring-document` skills too: a paper *is* a
+document plus Lean-bearing blocks, so `document-structure` and
+`document-publishing` apply to both. The two bundles are halves of one content
+model, not alternatives to choose between.
+
 ### Local coordination skills (`.claude/skills/local`)
 
 | Skill | Purpose |
@@ -134,9 +148,9 @@ package `folio-assistant`):
 | `bean-coordination` | Multi-agent claim/coordination discipline |
 | `todo-manager` | beans-as-todos discipline |
 
-### Platform skill bundles (`skills/folio-core`, `skills/folio-paper-adapter`)
+### Platform skill bundles (`skills/folio-core`, `skills/folio-document-adapter`, `skills/folio-paper-adapter`)
 
-Two larger **platform bundles** migrated from the qou content repo (see
+Larger **platform bundles**, two of them migrated from the qou content repo (see
 [migration record](migrations/2026-06-29-platform-skills-migration.html) and
 issue [#27](https://github.com/litlfred/folio-assistant/issues/27)). These are
 content-agnostic and meant to be synced into any folio:
@@ -144,6 +158,7 @@ content-agnostic and meant to be synced into any folio:
 | Bundle | Skills | Scope |
 |--------|-------:|-------|
 | **`folio-core`** | 43 | Agent coordination, the watcher framework, QA / render / bibliography / glossary pipeline, docs, deployment — applies to *any* content type. |
+| **`folio-document-adapter`** | 4 | Prose folios: block authoring, chapter/section structure, normative statements, and the TeX-free publication path. Applies to papers too. |
 | **`folio-paper-adapter`** | 40 | Formal-math paper-adapter (any Lean 4 + LaTeX paper): Lean workflow, proof tooling, content-object validation, LaTeX, paper structure, import, simulators. |
 
 Irreducible QOU physics skills were skipped; QOU-specific examples in the rest
@@ -160,6 +175,10 @@ were generalized. Each bundle ships a `package-manifest.json`.
 Roles answer *who the agent is acting as*. The current user is mapped to a role
 by `role-assignments.json`, and the role's capabilities bound what the agent may
 do (RBAC). Roles **inherit** (e.g. `author` inherits `reviewer`).
+
+> To see these roles *as lanes* — who edits, who reviews, who signs off, and
+> which steps an agent may take on its own — read
+> [Publication workflow → Who is who](publication-workflow.html#who-is-who).
 
 ```mermaid
 flowchart LR
@@ -187,10 +206,16 @@ flowchart LR
 
 ### System actors
 
-| Actor | Provides |
-|-------|----------|
-| `lean-mcp` | Lean 4 proof checking & diagnostics via MCP |
-| `ig-publisher-service` | FHIR IG Publisher build & QA reporting |
+| Actor | Provides | Cannot |
+|-------|----------|--------|
+| `authoring-agent` | Drafts and revises a **proposed** change to a content block | Commit — its output goes to the editor through the validation gate |
+| `review-agent` | Non-mechanical validation: accuracy, voice, exposition | Approve — it reports findings only |
+| `lean-mcp` | Lean 4 proof checking & diagnostics via MCP | — |
+| `ig-publisher-service` | FHIR IG Publisher build & QA reporting | — |
+
+Where each of these sits in the process — and what an agent may and may not
+decide — is modelled in the
+[publication workflow](publication-workflow.html) BPMN diagrams.
 
 ### Role assignment
 
@@ -223,6 +248,7 @@ by priority. The shipped defaults:
 
 ## See also
 
+- [Publication workflow](publication-workflow.html) — BPMN swimlanes: which skill runs at which step, and who decides
 - [Skill instructions](reference/skill-instructions/) — the prose how-to bodies the LLM loads
 - [Skill schema reference](reference/skills/) — typed input/output for each skill
 - [Content types](content-types.html) — which skills each content type uses

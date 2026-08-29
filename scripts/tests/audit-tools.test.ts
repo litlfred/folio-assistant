@@ -3,7 +3,11 @@
  * tool registers with a handler (no real pipeline spawn).
  */
 import { test, expect, describe } from "bun:test";
-import { registerAuditTools } from "../../adapters/paper/tools/audit.ts";
+import {
+  registerAuditTools,
+  registerDocumentAuditTools,
+  registerPaperAuditTools,
+} from "../../adapters/document/tools/audit.ts";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 /** An MCP tool handler, as the registration stubs below see it. */
@@ -44,5 +48,49 @@ describe("registerAuditTools", () => {
       expect(reg[name].desc.toLowerCase()).toContain("read-only");
     }
     expect(Object.keys(reg).length).toBe(expected.length);
+  });
+});
+
+describe("the audit split by content type", () => {
+  function record(register: (s: McpServer) => void): Set<string> {
+    const names = new Set<string>();
+    const recorder: ToolRecorder = { tool(name) { names.add(name); } };
+    register(recorder as unknown as McpServer);
+    return names;
+  }
+
+  const doc = record(registerDocumentAuditTools);
+  const paper = record(registerPaperAuditTools);
+  const all = record(registerAuditTools);
+
+  test("the two halves partition the table — nothing lost, nothing duplicated", () => {
+    for (const n of doc) expect(paper.has(n)).toBe(false);
+    expect(doc.size + paper.size).toBe(all.size);
+    expect(new Set([...doc, ...paper])).toEqual(all);
+  });
+
+  test("audits that read .tex, .lean or a math kind are paper-only", () => {
+    // On a document folio each of these answers nothing, forever. Registering
+    // one there means an agent can run it, get a clean report, and conclude
+    // its corpus was checked.
+    for (const n of [
+      "lean_compile_audit", "proof_narrative_equiv", "latex_overfull",
+      "tex_validate", "tex_source_audit", "wall_violations",
+      "conjectural_propagation", "trivial_skeleton_audit",
+      "dangling_remarks", "conditional_class_audit",
+    ]) {
+      expect(paper.has(n)).toBe(true);
+      expect(doc.has(n)).toBe(false);
+    }
+  });
+
+  test("content-agnostic audits stay available to a document folio", () => {
+    for (const n of [
+      "qa_staleness", "section_title_audit", "defterm_validate",
+      "value_validate", "glossary_candidates", "wiring_audit",
+      "status_sections_audit",
+    ]) {
+      expect(doc.has(n)).toBe(true);
+    }
   });
 });

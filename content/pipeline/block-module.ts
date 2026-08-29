@@ -50,8 +50,9 @@
 
 import { readdir } from "node:fs/promises";
 import { writeFileSync, rmSync } from "node:fs";
+import { createRequire } from "node:module";
 import { join, dirname, basename } from "node:path";
-import { BLOCK_KINDS } from "../../schemas/types";
+import { ALL_BLOCK_KINDS } from "../../schemas/block-kinds";
 
 /** A block as the pipeline sees it, plus where it came from. */
 export interface LoadedBlock {
@@ -69,7 +70,10 @@ export interface BlockLoadFailure {
   error: string;
 }
 
-const KINDS = new Set<string>(BLOCK_KINDS);
+// Both adapters: a DAK manifest is loaded by the same import path as a paper
+// one, and a kind outside either set is a legitimate skip (a chapter manifest,
+// a helper module) rather than a failure.
+const KINDS = new Set<string>(ALL_BLOCK_KINDS);
 
 /**
  * Import one `.ts` and return it as a block.
@@ -81,7 +85,70 @@ const KINDS = new Set<string>(BLOCK_KINDS);
  */
 export async function loadBlockModule(tsPath: string): Promise<LoadedBlock | undefined> {
   const mod = (await import(tsPath)) as { default?: unknown };
-  const block = mod.default as Record<string, unknown> | undefined;
+  return asLoadedBlock(mod.default, tsPath);
+}
+
+/**
+ * The synchronous sibling of `loadBlockModule`.
+ *
+ * `walkBlocks` — the enumeration every QA tool runs on — is a synchronous
+ * generator with fourteen production callers, so it could not `await` an
+ * import. That is the only reason it still reads block identity out of source
+ * text with a regex, and the reason `fsl7` sat open: *"repointing needs either
+ * a sync loader or a restructure … A sync loader, which bullet 1 already names.
+ * Still absent."*
+ *
+ * It is absent no longer. Bun's `require` loads a TypeScript ES module
+ * synchronously, so a block's builder runs and its validated default export
+ * comes back in one call, with no promise to await.
+ *
+ * ## Cost
+ *
+ * Measured over 300 generated block manifests plus 10 non-block helpers, cold:
+ *
+ *     regex readBlockManifest   16.0 ms    0.052 ms / file
+ *     loadBlockModuleSync       67.1 ms    0.216 ms / file
+ *
+ * Four times the regex, and 0.76 s across a corpus of three and a half
+ * thousand. Consistent with the 0.66 ms/block the async loader measured above.
+ *
+ * ## Runtime
+ *
+ * `require` of a `.ts` ES module is a **Bun** capability. Under a runtime that
+ * cannot do it the call throws, which is the honest outcome: a caller must not
+ * get silence and conclude the corpus is clean. Everything in
+ * `content/pipeline` already runs under Bun.
+ *
+ * ## This does not decide which files to execute
+ *
+ * Importing a module runs it. `walkBlocks` recurses a content root and reads
+ * every `.ts` beneath it, and a content tree holds more than block manifests —
+ * `content/pipeline/qa-agent-drain-queue.ts` in this very repo starts a sweep
+ * at import time. So the caller decides what is worth executing *before*
+ * calling this, and `readBlockManifest`'s masked regex is exactly that gate:
+ * cheap, and it already refuses a builder call written inside a string or a
+ * comment (`#125`). Candidate detection stays textual; block *identity* comes
+ * from here.
+ */
+export function loadBlockModuleSync(tsPath: string): LoadedBlock | undefined {
+  const mod = requireSync(tsPath) as { default?: unknown };
+  return asLoadedBlock(mod.default, tsPath);
+}
+
+/** `createRequire` is resolved once; building one per call is measurable. */
+let cachedRequire: ((id: string) => unknown) | undefined;
+
+function requireSync(tsPath: string): unknown {
+  cachedRequire ??= createRequire(import.meta.url) as unknown as (id: string) => unknown;
+  return cachedRequire(tsPath);
+}
+
+/**
+ * Shared by both loaders, so "what counts as a block" cannot drift between the
+ * sync and async paths — the drift this whole module exists to end.
+ */
+function asLoadedBlock(value: unknown, file: string): LoadedBlock | undefined {
+  const block = value as Record<string, unknown> | undefined;
   if (!block || typeof block !== "object") return undefined;
   const kind = block.kind;
   const label = block.label;
@@ -92,7 +159,7 @@ export async function loadBlockModule(tsPath: string): Promise<LoadedBlock | und
     kind,
     label,
     uses: Array.isArray(rawUses) ? rawUses.filter((u): u is string => typeof u === "string") : [],
-    file: tsPath,
+    file,
     block,
   };
 }

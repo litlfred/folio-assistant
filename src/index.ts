@@ -14,6 +14,7 @@ import { resolve } from "path";
 import { existsSync, readFileSync } from "fs";
 import { FolioServer } from "./server.js";
 import { PaperContentAdapter } from "../adapters/paper/index.js";
+import { DocumentContentAdapter } from "../adapters/document/index.js";
 import { GitHelper } from "./core/git.js";
 import { FeedbackStore } from "./core/feedback.js";
 import { log } from "./core/logging.js";
@@ -61,6 +62,19 @@ if (args.includes("--check-deps")) {
       if (d.required) missingReq++;
     }
   }
+  // Declared capability probes. These are a separate mechanism from the list
+  // above — `.claude/skills/capabilities/*.json` is what skills declare
+  // `requiredCapabilities` against — and until now nothing executed them, so a
+  // skill's prerequisite could be missing with no way to find out. The two
+  // hardcoded lists remain (here and in src/tools/check-deps.ts); unifying
+  // them is a separate change.
+  const { loadCapabilities, probeAll, formatCapabilityReport } = await import("./tools/capabilities.js");
+  const caps = loadCapabilities(resolve(import.meta.dir, ".."));
+  if (caps.length) {
+    console.log("\nDeclared capabilities (.claude/skills/capabilities/):\n");
+    console.log(formatCapabilityReport(probeAll(caps)));
+  }
+
   console.log(missingReq > 0
     ? `\n⚠  ${missingReq} required dep(s) missing!\n`
     : `\n✓  All required deps present.\n`);
@@ -124,8 +138,20 @@ if (adapterModule) {
     adapter = new PaperContentAdapter(repoRoot, gitHelper, feedbackStore);
   }
 } else {
-  // Built-in adapter selection
+  // Built-in adapter selection.
+  //
+  // `document` is the base content type — prose folios with no Lean and no
+  // required TeX — and `paper` is the specialization that adds both. The
+  // default stays `paper` because every folio predating the document type
+  // declares `contentType: "paper"` or nothing at all, and the paper adapter
+  // is a superset: it registers the document tools too. Defaulting the other
+  // way would silently drop `lean_build` from an existing folio whose config
+  // happens to omit `contentType`.
   switch (adapterType) {
+    case "document":
+      adapter = new DocumentContentAdapter(repoRoot, gitHelper, feedbackStore);
+      log("init", `Using document adapter (repo: ${repoRoot})`);
+      break;
     case "paper":
     default:
       adapter = new PaperContentAdapter(repoRoot, gitHelper, feedbackStore);

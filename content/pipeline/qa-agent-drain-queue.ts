@@ -12,7 +12,7 @@
  *
  *   bun run content/pipeline/qa-agent-drain-queue.ts \
  *     content/quantum-observable-universe [--batch-size 25] \
- *     [--out todos/qa-agent-drain-queue.json]
+ *     [--out build/qa-agent-drain-queue.json]
  *
  * Output (todos/ is gitignored — a runtime artifact, regenerated on
  * demand): { total_gaps, total_blocks, total_batches, batches[] }.
@@ -48,7 +48,7 @@ const bsNum = bsVal && !bsVal.startsWith("-") ? Number(bsVal) : NaN;
 const batchSize = Number.isInteger(bsNum) && bsNum > 0 ? bsNum : 25;
 const outIdx = process.argv.indexOf("--out");
 const out =
-  outIdx >= 0 ? process.argv[outIdx + 1] : "todos/qa-agent-drain-queue.json";
+  outIdx >= 0 ? process.argv[outIdx + 1] : "build/qa-agent-drain-queue.json";
 
 // Agent-only criteria = registry entries with automated === false.
 const AGENT_CRITS = QA_CRITERIA_REGISTRY.filter((c) => !c.automated);

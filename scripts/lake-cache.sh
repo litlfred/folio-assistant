@@ -610,12 +610,35 @@ or pass --force for a deliberate downgrade."
       cd "$wt" || exit 1
       git checkout --orphan "$br" >/dev/null 2>&1
       git rm -rf . >/dev/null 2>&1 || true
-      cp "$tmp"/lake-oleans.tgz.part* .
-      git add lake-oleans.tgz.part*
-      git -c user.name=folio-lake-cache-bot \
-          -c user.email=folio-lake-cache-bot@users.noreply.github.com \
-          commit -q -m "lake-cache: $pkg at $slug ($n oleans, $own own)"
-      git push -f origin "$br"
+      # GitHub rejects any single push whose pack exceeds 2 GiB. Splitting
+      # the tarball into <100 MB parts clears the per-BLOB limit but not the
+      # per-PACK one: a cache above 2 GiB (Mathlib deps + own oleans) lands
+      # every part in ONE commit -> ONE pack -> "pack exceeds maximum allowed
+      # size (2.00 GiB)". So push the parts in batches across incremental
+      # commits: the first push (-f) resets the orphan branch, each later push
+      # fast-forwards and ships only that batch's objects. LAKE_CACHE_SEED_BATCH
+      # parts * 90 MB per push stays well under the cap (15 -> ~1.35 GiB).
+      local _batch="${LAKE_CACHE_SEED_BATCH:-15}" _fp=0 _first=1
+      for _p in "$tmp"/lake-oleans.tgz.part*; do
+        cp "$_p" .
+        git add "$(basename "$_p")"
+        _fp=$((_fp + 1))
+        if [ $((_fp % _batch)) -eq 0 ]; then
+          git -c user.name=folio-lake-cache-bot \
+              -c user.email=folio-lake-cache-bot@users.noreply.github.com \
+              commit -q -m "lake-cache: $pkg at $slug (through part $_fp)"
+          if [ "$_first" -eq 1 ]; then git push -f origin "$br" || exit 1; _first=0
+          else git push origin "$br" || exit 1; fi
+        fi
+      done
+      # Final partial batch (and the whole-thing case when parts <= _batch).
+      if ! git diff --cached --quiet; then
+        git -c user.name=folio-lake-cache-bot \
+            -c user.email=folio-lake-cache-bot@users.noreply.github.com \
+            commit -q -m "lake-cache: $pkg at $slug ($n oleans, $own own)"
+        if [ "$_first" -eq 1 ]; then git push -f origin "$br" || exit 1
+        else git push origin "$br" || exit 1; fi
+      fi
     )
     local rc=$?
     git worktree remove --force "$wt" >/dev/null 2>&1 || true

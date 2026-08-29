@@ -39,7 +39,8 @@ import { registerPreviewTools } from "./tools/preview.js";
 import { registerPreferenceTools } from "./tools/preferences.js";
 import { registerLeanTools } from "./tools/lean.js";
 import { registerDepsTools } from "./tools/check-deps.js";
-import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT } from "./paths.js";
+import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT, LIBRARY_DIR } from "./paths.js";
+import { executeGraphTool } from "./tools/graph.js";
 import {
   currentBranch, listBranches, fetchOrigin, isCurrentBranch,
   readFileBranch, fileExistsBranch, importTsBranch, listDirBranch,
@@ -273,6 +274,12 @@ function listAllFeedback(status?: string): { paperId: string; rootName: string; 
 // ── Content resolution (dynamic, no static JSON) ────────────────
 
 const CONTENT_DIR = resolve(REPO_ROOT, "content");
+
+/** The two node populations the graph tools read. */
+const GRAPH_ROOTS = [
+  { name: "content", dir: CONTENT_DIR },
+  { name: "library", dir: LIBRARY_DIR },
+];
 import { leanPackageByName } from "../../schemas/lean-packages.js";
 import {
   blockCaption, blockExamples, blockLean, blockProofs, blockTex,
@@ -2374,6 +2381,68 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
             required: [],
           },
         },
+        {
+          name: "search_graph",
+          description:
+            "Search the JSON-LD content graph across BOTH authored blocks and ingested library documents. " +
+            "Unlike search_blocks (authored content only, one paper), this spans ingested sources too. " +
+            "Use when the question may be answered by an ingested paper or guideline rather than by the folio's own prose.",
+          input_schema: {
+            type: "object" as const,
+            properties: {
+              query: { type: "string", description: "Substring to look for" },
+              provenance: {
+                type: "string",
+                enum: ["authored", "ingested"],
+                description: "Restrict to one population. Omit to search both.",
+              },
+              searchText: {
+                type: "boolean",
+                description:
+                  "Also scan companion Markdown bodies, not just metadata. Slower; reads files.",
+              },
+              limit: { type: "number", description: "Max hits (default 20)" },
+            },
+            required: ["query"],
+          },
+        },
+        {
+          name: "get_neighbors",
+          description:
+            "Walk the content graph outward from one node. direction 'out' answers " +
+            "'what must a reader have read first?'; direction 'in' answers 'what breaks if this changes?' — " +
+            "the reverse direction is not otherwise available without a full corpus scan. " +
+            "Accepts an @id or an authored label such as 'thm:main'.",
+          input_schema: {
+            type: "object" as const,
+            properties: {
+              id: { type: "string", description: "Node @id or authored label" },
+              direction: { type: "string", enum: ["out", "in", "both"] },
+              hops: { type: "number", description: "Traversal depth, 1–6 (default 1)" },
+              edges: {
+                type: "array",
+                items: { type: "string" },
+                description:
+                  "Restrict to these edge terms (uses, interprets, cites, contains, …). Omit for all.",
+              },
+            },
+            required: ["id"],
+          },
+        },
+        {
+          name: "get_graph_stats",
+          description:
+            "Node and edge counts for the content graph, broken down by provenance and kind, " +
+            "plus whether each root directory exists. Use this to tell 'nothing matched' from " +
+            "'that population has not been built yet' before reporting an empty search.",
+          input_schema: {
+            type: "object" as const,
+            properties: {
+              refresh: { type: "boolean", description: "Rebuild the index from disk first" },
+            },
+            required: [],
+          },
+        },
       ];
 
       // ── Tool execution (calls server functions directly, no HTTP) ──
@@ -2505,6 +2574,14 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
               }
               return JSON.stringify(matches);
             }
+
+            case "search_graph":
+            case "get_neighbors":
+            case "get_graph_stats":
+              // Implemented in ./tools/graph.ts so the handlers are reachable
+              // from a test — this switch is inside a request handler and was
+              // covered by nothing but `tsc`.
+              return executeGraphTool(name, input, GRAPH_ROOTS)!;
 
             case "get_imports": {
               const uploadsDir = join(REPO_ROOT, "uploads");

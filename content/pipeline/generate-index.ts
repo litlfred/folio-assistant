@@ -7,15 +7,14 @@
  * then writes a markdown table with links to each block's location.
  *
  * Usage:
- *   bun run content/pipeline/generate-index.ts
- *   bun run content/pipeline/generate-index.ts --paper NAME   # multi-paper folio
+ *   bun run content/pipeline/generate-index.ts [paper-name]
  */
 
 import { writeFileSync } from "fs";
 import { join} from "path";
-import type { Section, SectionRef } from "../../schemas/types";
 import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
+import type { Section, SectionRef } from "../../schemas/types";
 
 // Was rooted at this file's own location, which is the PLATFORM — but every
 // path below is folio content. `findContentRepoRoot()` walks up from cwd;
@@ -23,16 +22,33 @@ import { requirePaper } from "./repo-root";
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
 const CONTENT_ROOT = join(REPO_ROOT, "content");
-const args = process.argv.slice(2);
-const argValue = (flag: string) =>
-  args.includes(flag) ? args[args.indexOf(flag) + 1] : undefined;
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-// `--paper` matters in a MULTI-paper folio, where `requirePaper()` with no
-// argument throws "N papers found — name one explicitly" and, without this
-// flag, left no way to name one. qou carries five.
-const PAPER_NAME = requirePaper(argValue("--paper"));
+// The bare `requirePaper()` this replaces took no argument, so in a folio with
+// more than one paper it THREW every time and there was no way to name the
+// paper -- qou has five, so its committed definition-index.md could not be
+// regenerated at all. Positional argv matches `find-dangling-remarks.ts`.
+const PAPER_NAME = requirePaper(process.argv[2]);
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
 const INDEX_MD = join(PAPER_DIR, "index-of-definitions", "definition-index.md");
+
+/** A `SectionRef` is `{ name }` only; an inline `Section` carries `blocks`. */
+function isInlineSection(s: Section | SectionRef): s is Section {
+  return Array.isArray((s as Section).blocks);
+}
+
+/**
+ * Plural section headings, keyed by block kind. Explicit because the kind set
+ * is fixed and small; the fallback below only covers a kind added later.
+ */
+const KIND_HEADINGS: Record<string, string> = {
+  definition: "Definitions",
+  theorem: "Theorems",
+  proposition: "Propositions",
+  lemma: "Lemmas",
+  corollary: "Corollaries",
+  conjecture: "Conjectures",
+  example: "Examples",
+};
 
 const INDEXED_KINDS = new Set([
   "definition", "theorem", "proposition", "lemma",
@@ -55,7 +71,6 @@ async function main() {
   const paper = paperMod.default;
 
   const entries: IndexEntry[] = [];
-  /** Blocks the walk could not load, reported rather than silently dropped. */
   const skipped: string[] = [];
 
   // Auto-number chapters from manifest order: skip unnumbered ones (tabLabel set)
@@ -67,15 +82,11 @@ async function main() {
     // Chapters with tabLabel are unnumbered (Introduction, Glossary, etc.)
     const chapterNumber = ch.tabLabel != null ? undefined : autoNum++;
 
-    // Walk sections AND their subsections. A single-level loop over
-    // `ch.sections` misses every block in a nested `section({...})`, and
-    // chapters do nest — `mass-theory.ts` alone puts ~107 indexed blocks
-    // inside subsections. Measured against qou 2026-08-24: the walk found
-    // 1102 entries where the file it overwrites listed 1269, and the 167
-    // it omitted were registered blocks in nested subsections, not retired
-    // ones. A generator that silently narrows the index it rewrites is the
-    // worst shape for this: the total is printed as if it were the corpus.
-    const walkSection = async (section: Section): Promise<void> => {
+    // `Section.subsections` nests arbitrarily deep. Walking only
+    // `ch.sections[].blocks` silently omitted every block in a subsection --
+    // e.g. `def:archimedean-realization-functor`, live and manifest-listed,
+    // was absent from the index while three blocks still cited it.
+    const visitSection = async (section: Section) => {
       for (const rootName of section.blocks ?? []) {
         try {
           const blockMod = await import(join(chDir, `${rootName}.ts`));
@@ -91,25 +102,24 @@ async function main() {
             section: section.title,
             lean: block.lean?.ref,
           });
-        } catch (e) {
-          // Was a silent `catch {}`. A block that failed to import then
-          // vanished from the index with nothing said — an absent entry
-          // indistinguishable from a block that has no label.
-          skipped.push(`${chRef.dir}/${rootName}: ${(e as Error).message.split("\n")[0]}`);
+        } catch (err) {
+          // A silent skip here is how a live block leaves the index without
+          // anyone noticing: the run still reports a clean "Index written",
+          // just over fewer entries. Report, then continue.
+          skipped.push(
+            `${chRef.dir}/${rootName}: ` +
+              (err instanceof Error ? err.message.split("\n")[0] : String(err)),
+          );
         }
       }
+      // A SectionRef (`{ name }`) carries no blocks of its own; only inline
+      // subsections are walked here.
       for (const sub of section.subsections ?? []) {
-        const inline = sub as Partial<Section>;
-        if (Array.isArray(inline.blocks) || Array.isArray(inline.subsections)) {
-          await walkSection(sub as Section);
-        } else if ((sub as SectionRef).name) {
-          // A `SectionRef` names a file this walker does not resolve.
-          // Report rather than drop: entries behind it would be missing.
-          skipped.push(`${chRef.dir}: unresolved sectionRef "${(sub as SectionRef).name}"`);
-        }
+        if (isInlineSection(sub)) await visitSection(sub);
       }
     };
-    for (const section of ch.sections) await walkSection(section);
+
+    for (const section of ch.sections) await visitSection(section);
   }
 
   // Sort by kind, then alphabetically by title
@@ -136,12 +146,13 @@ async function main() {
     const group = groups.get(kind);
     if (!group) continue;
 
-    // Naive `+ "s"` wrote "## Corollarys". The committed index said
-    // "Corollaries", so the heading had been hand-corrected and every
-    // regeneration silently undid it.
-    const PLURAL: Record<string, string> = { corollary: "Corollaries" };
-    const kindTitle =
-      PLURAL[kind] ?? kind.charAt(0).toUpperCase() + kind.slice(1) + "s";
+    // Naive `+ "s"` produced "Corollarys"; a consonant + `y` pluralises to
+    // `ies`. This heading is the only place the kind is shown to a reader,
+    // and definition-index.md is REGENERATED on every run -- so a hand-fix
+    // to that file is erased, and this is the only durable fix site.
+    const kindTitle = KIND_HEADINGS[kind]
+      ?? kind.charAt(0).toUpperCase() + kind.slice(1)
+         + (/[^aeiou]y$/.test(kind) ? "" : "s");
     lines.push(`## ${kindTitle}\n`);
     lines.push("| Label | Title | Chapter | Lean |");
     lines.push("|-------|-------|---------|------|");
@@ -154,14 +165,14 @@ async function main() {
     lines.push("");
   }
 
+  if (skipped.length) {
+    console.error(`\n${skipped.length} block(s) SKIPPED — not in the index:`);
+    for (const m of skipped) console.error(`  ✗ ${m}`);
+    console.error("");
+  }
+
   writeFileSync(INDEX_MD, lines.join("\n") + "\n");
   console.log(`Index written: ${entries.length} entries → ${INDEX_MD}`);
-  if (skipped.length > 0) {
-    console.log(`  ! ${skipped.length} block(s) NOT indexed — the total above is`);
-    console.log(`    short by that many, and these are why:`);
-    for (const s of skipped.slice(0, 20)) console.log(`      ${s}`);
-    if (skipped.length > 20) console.log(`      ... ${skipped.length - 20} more`);
-  }
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

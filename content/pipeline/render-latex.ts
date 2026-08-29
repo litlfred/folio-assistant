@@ -138,12 +138,74 @@ const VERBATIM_TRANSLIT: Record<string, string> = {
   "═": "=", "║": "|", "╔": "+", "╗": "+", "╚": "+", "╝": "+",
   "▲": "^", "►": ">", "▼": "v", "◄": "<", "△": "^", "▽": "v",
   "◁": "<", "▷": ">", "➤": ">",
+  // Chars with no T1 glyph AND no `\newunicodechar` mapping in
+  // latex/preamble.tex — empirically determined by compiling every
+  // distinct non-ASCII char in the corpus against the real preamble
+  // (see NO_LATEX_SETUP below for the probe). Each aborts pdflatex.
+  "ᵀ": "^T", "ⁱ": "^i", "ˣ": "^x", "₊": "_+", "₋": "_-", "ₗ": "_l",
+  "ℑ": "Im", "↠": "->>", "∤": "!|", "∮": "oint", "≟": "=?",
+  "⊇": "supseteq", "⊔": "union+", "⋯": "...", "☉": "(sun)",
+  "𝐂": "C", "𝓕": "F", "𝓜": "M", "𝔎": "K", "𝔐": "M", "𝔓": "P",
+  "𝔟": "b", "𝔤": "g", "𝔥": "h", "𝔯": "r", "𝕆": "O", "𝕜": "k",
+  // U+FFFD is a mojibake artefact of a bad decode upstream; render it
+  // visibly rather than aborting, so the corrupted source is findable.
+  "�": "?",
 };
+
+/**
+ * The subset of {@link VERBATIM_TRANSLIT} whose keys have **no LaTeX
+ * setup at all** — neither a T1 glyph, nor a `\newunicodechar` mapping
+ * in `latex/preamble.tex`, nor one of LaTeX's built-in `utf8.def`
+ * declarations. These abort pdflatex with
+ * `Unicode character … not set up for use with LaTeX` in *any* context,
+ * including `\texttt{}`.
+ *
+ * Derived empirically: emit every distinct non-ASCII char in the corpus,
+ * one per line, into a document using the real preamble, compile, and
+ * collect the chars pdflatex rejects. Re-run that probe when the
+ * preamble's `\newunicodechar` block changes.
+ *
+ * Kept separate from the full verbatim table on purpose. Inline code
+ * renders to `\texttt{}`, which is NOT a verbatim catcode regime, so
+ * `\newunicodechar` **does** apply there — transliterating everything
+ * would gratuitously turn a nicely-mapped `→` into `->`. Only the
+ * genuinely-unsupported chars need rewriting.
+ */
+const NO_LATEX_SETUP: readonly string[] = [
+  "ς", "ᵀ", "ⁱ", "ˣ", "⁺", "ⁿ", "₊", "₋", "ₗ", "ℑ", "℘", "↠", "∇",
+  "∉", "∤", "∪", "∫", "∮", "≟", "⊇", "⊔", "⋯", "⌊", "⌋", "═",
+  "■", "☉", "⟶", "�", "𝐂", "𝓕", "𝓜", "𝔎", "𝔐", "𝔓", "𝔟",
+  "𝔤", "𝔥", "𝔯", "𝕆", "𝕜", "𝟙",
+];
+
+const INLINE_CODE_TRANSLIT: Record<string, string> = Object.fromEntries(
+  NO_LATEX_SETUP.filter((ch) => ch in VERBATIM_TRANSLIT).map((ch) => [
+    ch,
+    VERBATIM_TRANSLIT[ch]!,
+  ]),
+);
 
 function transliterateForVerbatim(text: string): string {
   let out = "";
   for (const ch of text) {
     out += VERBATIM_TRANSLIT[ch] ?? ch;
+  }
+  return out;
+}
+
+/**
+ * Rewrite only the chars that have no LaTeX setup whatsoever, for use
+ * inside `\texttt{}`. Everything else — including every char the
+ * preamble maps with `\newunicodechar` — is passed through unchanged,
+ * so inline code keeps its current appearance.
+ *
+ * Without this, a Lean snippet such as `` `q : Rˣ` `` reached the PDF as
+ * `\texttt{q : Rˣ}` and aborted the whole build.
+ */
+function transliterateForInlineCode(text: string): string {
+  let out = "";
+  for (const ch of text) {
+    out += INLINE_CODE_TRANSLIT[ch] ?? ch;
   }
   return out;
 }
@@ -275,7 +337,16 @@ export function splitLongMath(math: string, minLen = 36): string {
  * instead of overflowing. Inert at normal text width.
  */
 function breakableCode(text: string): string {
-  return escapeLatexSegment(text).replace(/(\\_|[:./-])/g, "$1\\allowbreak{}");
+  return escapeLatexSegment(text)
+    .replace(/(\\_|[:./-])/g, "$1\\allowbreak{}")
+    // Also break at camelCase humps. Lean declaration names are long, dotted
+    // AND internally camelCased (`QOU.QuantumObservableUniverses.DilogPentagon\
+    // Associator`); separator-only breaks leave segments so long that the line
+    // carrying one has almost no glue left to justify with, which is a loose
+    // line — 53 of this corpus's 131 Underfull \hbox warnings. \allowbreak is
+    // zero-width, so this adds break opportunities without altering the
+    // rendered identifier.
+    .replace(/([a-z0-9])([A-Z])/g, "$1\\allowbreak{}$2");
 }
 
 // ── Markdown → LaTeX conversion (AST-based) ─────────────────────
@@ -368,9 +439,52 @@ export function clearMdAstCache(): void {
  *   | table         | \begin{tabular}...\end{tabular}      |
  *   | paragraph     | children + blank line                |
  */
+/**
+ * Environments that typeset as a single full-width unbreakable box.
+ * A run-in heading immediately followed by one of these cannot be
+ * line-broken between the two — see {@link terminateRunInHeadings}.
+ */
+const FULL_WIDTH_BOX_ENVS =
+  "adjustbox|tabular|tabularx|longtable|center|tikzcd|tikzpicture|verbatim";
+
+/**
+ * Terminate a `\paragraph` / `\subparagraph` run-in heading when the very
+ * next thing is a full-width box.
+ *
+ * `\paragraph{…}` is a RUN-IN heading: the following material joins the
+ * SAME paragraph. That is what we want in the common case ("**Statement**
+ * The claim is …"), but when the next item is a full-width box the line
+ * becomes heading-plus-box, which cannot be broken, and pdflatex reports a
+ * massive Overfull \hbox. Measured on the qou paper: 21 such sites,
+ * including the two worst boxes in the whole 1033-page document at 268pt
+ * and 252pt over — i.e. text running ~3.5 inches off the page.
+ *
+ * Note the diagnosis is NOT "the table is too wide": these tables are
+ * already wrapped in `\begin{adjustbox}{max width=\linewidth}` and fit
+ * fine. The overflowing material is the *heading text*, which is why
+ * making the table narrower never helped.
+ *
+ * `\mbox{}\par` closes the heading's own line. Verified against the real
+ * preamble: the isolated case reproduces at exactly 268.35pt and drops to
+ * zero with this terminator (`\leavevmode\par` and `\hfill\break` also
+ * work; `\mbox{}\par` is the canonical idiom).
+ *
+ * Applied only before a box, so ordinary run-in headings keep their
+ * current appearance.
+ */
+function terminateRunInHeadings(latex: string): string {
+  return latex.replace(
+    new RegExp(
+      String.raw`(\\(?:sub)?paragraph\{(?:[^{}]|\{[^{}]*\})*\})(\s*\n\s*\n\s*)(\\begin\{(?:${FULL_WIDTH_BOX_ENVS})\})`,
+      "g",
+    ),
+    "$1\\mbox{}\\par$2$3",
+  );
+}
+
 export function markdownToLatex(md: string): string {
   const tree = parseMdCached(md);
-  return renderMdastNode(tree).trim();
+  return terminateRunInHeadings(renderMdastNode(tree).trim());
 }
 
 /**
@@ -727,7 +841,10 @@ function renderMdastNode(node: MdNode): string {
     case "inlineCode":
       // Inline code: `text` → \texttt{...} with break opportunities so long
       // identifiers wrap in narrow table cells instead of overflowing.
-      return `\\texttt{${breakableCode(node.value)}}`;
+      // Chars with no LaTeX setup at all are rewritten first: \texttt is
+      // not verbatim, so \newunicodechar still applies and only the
+      // genuinely-unsupported chars need it (see transliterateForInlineCode).
+      return `\\texttt{${breakableCode(transliterateForInlineCode(node.value))}}`;
 
     case "code":
       if (node.lang === "tex") {
@@ -1052,6 +1169,13 @@ export function renderBlock(
   mdContent: string,
   sourceDir?: string,
   rootName?: string,
+  /**
+   * Label of the section this block is being rendered inside, if any.
+   * A prose block is frequently the section's own intro and carries the
+   * SAME label as its section; the section already emits that `\label`,
+   * so emitting it again would make it multiply-defined.
+   */
+  enclosingSectionLabel?: string,
 ): string {
   const lines: string[] = [];
 
@@ -1064,6 +1188,27 @@ export function renderBlock(
 
   switch (block.kind) {
     case "prose": {
+      // A labelled prose block must be referenceable. Without this,
+      // `case "prose"` emitted the body and nothing else, so every
+      // `[…](#sec:foo)` pointing at a prose block rendered as a dangling
+      // \hyperref — five of them in the qou paper (sec:frobenius-integration,
+      // sec:knot-notation-convention, sec:thurston-relaxation,
+      // sec:fine-structure-data, sec:approach-to-exceptional-divisor).
+      // \phantomsection is required for hyperref to anchor a \label that
+      // is not attached to a numbered heading.
+      //
+      // Skipped when the block reuses its section's label: a prose block
+      // is often the section intro and shares that label, and the section
+      // has already emitted it. Emitting both makes the label multiply
+      // defined (15 of them on the first pass at this fix) — and the
+      // section's own anchor is the better target anyway.
+      if (
+        "label" in block &&
+        block.label &&
+        block.label !== enclosingSectionLabel
+      ) {
+        lines.push(`\\phantomsection\\label{${block.label}}`);
+      }
       lines.push(markdownToLatex(mdContent));
       break;
     }
@@ -1321,8 +1466,34 @@ function collectReferencedLabels(
     if ("examples" in block && Array.isArray(block.examples)) {
       for (const label of block.examples) refs.add(label);
     }
+    // A glossary term used via `:refterm[…]{#slug}` (or the short form
+    // `:refterm[slug]`, or the LaTeX `\refterm{slug}`) IS a reference.
+    // Counting only `examples[]` meant a glossary entry cited solely by
+    // refterm was dropped in compact mode, so its `term:<slug>` anchor —
+    // which lives in the block BODY, not in its label — was never emitted
+    // and every such link dangled. Six of them in the qou paper, from
+    // live prose in appendix-surreals.
+    for (const m of entry.mdContent.matchAll(
+      /:refterm\[([^\]]*)\](?:\{#([^}]+)\})?/g,
+    )) {
+      refs.add(`term:${m[2] ?? m[1]}`);
+    }
+    for (const m of entry.mdContent.matchAll(/\\refterm\{([^}]+)\}/g)) {
+      refs.add(`term:${m[1]}`);
+    }
   }
   return refs;
+}
+
+/** The `term:` slugs a block DEFINES via `:defterm[…]{#slug}`. */
+function definedTermLabels(mdContent: string): string[] {
+  const out: string[] = [];
+  for (const m of mdContent.matchAll(
+    /:defterm\[([^\]]*)\](?:\{#([^}]+)\})?/g,
+  )) {
+    out.push(`term:${m[2] ?? m[1]}`);
+  }
+  return out;
 }
 
 /**
@@ -1337,6 +1508,7 @@ function shouldIncludeBlock(
   block: Block,
   referencedLabels: Set<string>,
   opts: RenderOptions,
+  mdContent = "",
 ): boolean {
   const mode = opts.printMode ?? "compact";
   if (mode === "formal") return true;
@@ -1357,7 +1529,44 @@ function shouldIncludeBlock(
 
   // Include if this block's label is referenced by another block
   const label = "label" in block ? block.label : undefined;
-  return label != null && referencedLabels.has(label);
+  if (label != null && referencedLabels.has(label)) return true;
+
+  // …or if it DEFINES a glossary term that another block refterm's. The
+  // `term:` anchor lives in the body, so excluding the block would leave
+  // the reference unresolvable — only the entries actually cited are
+  // pulled in, so compact mode stays compact.
+  //
+  // `opts.referencedTerms` is the DOCUMENT-wide set; `referencedLabels`
+  // is chapter-local. Both are consulted because the common case is
+  // cross-chapter (body prose citing the glossary chapter), which the
+  // chapter-local set cannot see.
+  const defined = definedTermLabels(mdContent);
+  if (defined.length === 0) return false;
+  return defined.some(
+    (t) => referencedLabels.has(t) || opts.referencedTerms?.has(t) === true,
+  );
+}
+
+/**
+ * Scan every loaded block for glossary-term references and return the
+ * document-wide `term:<slug>` set for {@link RenderOptions.referencedTerms}.
+ */
+export function collectReferencedTerms(
+  blocks: Map<string, { block: Block; mdContent: string; sourceDir?: string }>,
+): Set<string> {
+  const refs = new Set<string>();
+  for (const { mdContent } of blocks.values()) {
+    if (!mdContent) continue;
+    for (const m of mdContent.matchAll(
+      /:refterm\[([^\]]*)\](?:\{#([^}]+)\})?/g,
+    )) {
+      refs.add(`term:${m[2] ?? m[1]}`);
+    }
+    for (const m of mdContent.matchAll(/\\refterm\{([^}]+)\}/g)) {
+      refs.add(`term:${m[1]}`);
+    }
+  }
+  return refs;
 }
 
 // ── Chapter rendering ────────────────────────────────────────────
@@ -1439,7 +1648,9 @@ export function renderSection(
         lines.push(`% ERROR: block "${rootName}" not found`);
         continue;
       }
-      if (!shouldIncludeBlock(entry.block, referencedLabels, opts)) {
+      if (
+        !shouldIncludeBlock(entry.block, referencedLabels, opts, entry.mdContent)
+      ) {
         // Emit a phantom label so \hyperref[label]{...} references from
         // other blocks resolve without "Hyper reference undefined" warnings.
         const label = (entry.block && typeof entry.block === "object"
@@ -1451,7 +1662,15 @@ export function renderSection(
         }
         continue;
       }
-      lines.push(renderBlock(entry.block, entry.mdContent, entry.sourceDir, rootName));
+      lines.push(
+        renderBlock(
+          entry.block,
+          entry.mdContent,
+          entry.sourceDir,
+          rootName,
+          section.label,
+        ),
+      );
       lines.push(""); // blank line between blocks
     }
   };

@@ -1,0 +1,1024 @@
+---
+# folio-assistant-p2en
+title: 'Formal RAG document-ingestion layer: options assessment + integration contract'
+status: completed
+type: task
+priority: normal
+created_at: 2026-08-15T15:27:40Z
+updated_at: 2026-08-26T19:16:00Z
+---
+
+
+## Assessment landed (PR #119)
+
+`docs/proposals/rag-document-ingestion.md`. Three measured constraints
+decided it: 230/339 uploads (68%) are arXiv (source beats OCR); host is
+cx23 = 2 vCPU/4 GB vs RAGFlow's 16 GB minimum (no co-hosting); and
+`content/**` is already semantically chunked with a `uses[]` graph (a RAG
+engine would hold a weaker second copy).
+
+Recommends acquire → parse (Docling) → route-by-class → index (LanceDB,
+embedded), with generic RAG as the *fallback* rather than the front door.
+For WHO L2 DAK the generic-first ordering is destructive — BPMN/DMN/Excel
+have structured extractors in `smart-base` already.
+
+Next: author picks a stage to build (§10) and answers §11 Q1–Q3.
+
+## Stage 1 built and run (scripts/pdf-structure.py)
+
+Egress checked per the author's hunch: the MCP servers DO exist
+(`qou/.mcp.json` has paper-search-mcp + openalex-paper-search) but
+arxiv.org / export.arxiv.org / api.openalex.org all return 403 policy
+denials. PyPI is reachable. So the offline PDF path had to be Stage 1,
+not the network acquire — proposal §10 reordered accordingly.
+
+Whole-corpus run: 339 PDFs / 12,166 pages -> 332 docs, 0 failures,
+**7,313 sections / 24.7M chars greppable** (52 MB). Title 96.7% (vs
+DocInfo 37%), authors 72.6%, abstract 68.4%, arXiv id 64.2% from the
+page-1 stamp. TOC: 188 outline / 137 inferred / 7 none.
+
+Residue that defines Stage 3: 7 no-TOC, 17 unsectioned, 7 likely-scanned.
+Those ~20 are where Docling earns its place; the other 312 do not need it.
+
+Next: Stage B extractors (candidates.json) — math claims -> formalization
+candidates, WHO L1 -> recommendation blocks. Both propose, never write to
+content/.
+
+## Follow-ups landed (qou PR #5134)
+
+- corpus-grep checklist gains path 5, `library/*/sections/` — the 24.7M
+  chars are now reachable by the discipline that most needs them.
+- 43 references.ts entries marked `stage: "missing"` (claimed upload,
+  file never committed). Recorded, not repaired.
+- 246 uncited library documents queued in
+  `docs/audits/2026-08-15-library-uncited-triage.md`, ranked by extracted
+  formalizable content (a proxy for offered material, NOT relevance).
+
+## Stage 3 (Docling) is network-blocked, like Stage 2
+
+huggingface.co and cdn-lfs.huggingface.co return the same 403 policy
+denial as arxiv.org, and that is where Docling's layout/TableFormer/
+formula models come from. So BOTH network-dependent stages are dead in a
+sandbox, which is the strongest version of the argument for the
+pypdf-only Stage 1. Stage 3 is a workstation/CI stage: run where egress
+allows, commit artefacts, let sandboxed sessions consume them.
+
+Work list is ~20 documents (7 no-TOC, 17 unsectioned, 7 scanned).
+
+## L1 extractor: logic tested, real layout still unproven
+
+who.int / iris.who.int / cdn.who.int are 403 like arxiv and huggingface,
+and no guideline-like document exists in the library, so validation
+against a real WHO L1 PDF is impossible in a sandboxed session. Added
+`scripts/tests/who-l1-extractor.test.py` instead: a synthetic fixture
+built from document-intake's documented L1 structure, asserting all five
+normative elements map to the right block kinds, GRADE + strength are
+detected, routing goes to l2-dak-authoring, and no formalization
+candidates are emitted.
+
+The negative half of that test found a real bug: RE_GRADE alternated on
+bare `\bhigh|moderate|low`, so "high malaria burden" in a nearby
+paragraph flagged a recommendation as GRADE-adjacent. Certainty levels
+must now bind to a certainty/quality/evidence noun.
+
+`candidates.json` still reports `"validated": false` for who-l1 and must
+keep doing so until a real guideline runs through it. Only affects the
+who-l1 class; the 332 math-class candidates are unchanged (extract_math
+never touches RE_GRADE).
+
+## Schema layer decided and built (§12)
+
+The landed assessment chose *tools* and left the *schema* open, which is why
+`pdf-structure/v1` is a flat `sections[]` with a `level` int. Author's
+constraints settled it: an independent standard where one exists, a graph not
+a flat list, no XML stored, each block standing alone as a file.
+
+`DoclingDocument` fails the first — it is Pydantic models in `docling-core`,
+no spec, no standards body, LF AI & Data hosting is maintenance not
+specification. Demoted to input adapter. TEI fails the fourth: XML is a tree,
+and a standalone block needs its own `<TEI>` + header, turning every pointer
+into a cross-document URI.
+
+Resolution: vocabulary from the standards (DoCO/DEO, Web Annotation, PROV-O,
+SKOS, FHIR), model from RDF, serialisation JSON-LD. XML formats stay export
+targets only. Akoma Ntoso survives as its *naming convention* — FRBR
+Work/Expression/Manifestation is the only candidate modelling a translation as
+the same recommendation and a national adaptation as a derived one, which WHO
++ other jurisdictions requires.
+
+Authored blocks keep TypeScript. Each gains a generated `.jsonld` sibling
+(one more `Companions` role), committed and drift-gated.
+
+**The hazard worth remembering:** a folio label looks like a JSON-LD compact
+IRI and is not one. `def:` names a kind, not a namespace, and JSON-LD splits
+on the first colon — so `def:foo` and `paper:def:foo` would resolve to two
+different IRIs for one block, and `unital-groebner-bases:cor:pbw` becomes a
+*valid* absolute IRI with scheme `unital-groebner-bases`. Both fail silently
+and under-count every join. Fixed by minting `@id` in `resolveLabel()` and
+never emitting labels as IRIs; unresolvable refs are reported, not emitted.
+No content changes.
+
+Also caught while writing: `doco:contains` does not exist (DoCO imports
+`po:contains` from the Pattern Ontology). Mapped to the verified
+super-property `dcterms:hasPart` instead, and `certainty` omitted pending a
+checkable FHIR predicate. Rule recorded in §12.5: a published `@context`
+never carries an unverified IRI.
+
+Landed: `schemas/jsonld.ts`, `ns/content/v1.jsonld`,
+`scripts/gen-jsonld-context.ts`, `content/pipeline/gen-block-jsonld.ts`,
+two test files (30 tests), `.github/workflows/jsonld-gen-check.yml`.
+740 pass / 0 fail, typecheck + lint clean.
+
+Still open: ingest node granularity (section-level vs every theorem/figure/
+table as its own file) — affects only the ingest writer; `@id` rename policy
+once anything annotates a block; whether to emit real RDF.
+
+## MCP read side landed (§12.7)
+
+The sharper form of the §1 retrieval gap: MCP was **write-only toward
+ingestion**. It creates `uploads/<id>/` on import and `get_imports` lists what
+was imported, but nothing ever read a `structure.json`, a `sections/*.md` or a
+candidate. 24.7M extracted chars reachable by grep and nothing else.
+
+`content/pipeline/graph-index.ts` is the first thing that spends the `.jsonld`
+decision: one directory walk over `content/` + `library/` yields one node map
+plus **reverse adjacency**. Three MCP tools on it — `search_graph`,
+`get_neighbors`, `get_graph_stats`.
+
+`get_neighbors --in` is the one nothing else provides: "what breaks if this
+changes?" today needs a full corpus scan.
+
+Three properties held deliberately: absent root reports `present: false` (not
+zero matches) so "not built yet" is distinguishable from "nothing matched";
+every cap reports itself (`totalMatches`, `textScanTruncated`, `truncated`);
+a colliding `@id` is recorded in `malformed` rather than resolved by picking
+a winner.
+
+`content-graph.ts` stays authoritative for authored content — it imports
+manifests and that import is a validation step. The index reads the published
+projection instead, which is cheaper and spans ingested docs. The CI drift
+gate is what makes trusting both at once sound.
+
+Also runnable without an MCP client:
+`bun run content/pipeline/graph-index.ts --stats|--search|--neighbors`.
+
+773 pass / 0 fail, typecheck + lint clean. Real run in folio-assistant
+correctly reports content present/0 nodes, library absent.
+
+**Not verified:** the three MCP tool handlers are typechecked but not
+exercised by a test — no test drives the server's request path. And no run
+against a real corpus has happened; the folio repo is where that has to occur.
+
+## Granularity decided; QA companion roles widened
+
+Author's decision: content blocks are **fine-grained and self-contained** — a
+decision table, a math proposition, a FHIR ValueSet each a block — and
+groupings (sections) are built from an *ordered list* of block refs, as in the
+QOU chapter/section model. That dissolves the objection that fine-grained
+nodes would have no file of their own: the blocks own the files, a section is
+a manifest.
+
+Operational definition that settles it: **a content block is what a QA sidecar
+runs against** (`qa-utils.ts:810`, `<stem>.qa.json`).
+
+L2/L3 block vocabulary — WHO's own sites (smart.who.int, build.fhir.org) are
+403 like who.int, but the repo already carries the canonical lists:
+- L2 (`schemas/skills/l2-dak-authoring`): personas, user-scenarios,
+  business-processes, data-dictionary, decision-logic, scheduling-logic,
+  indicators, functional-requirements, non-functional-requirements
+- L3 (`schemas/skills/l3-fhir-authoring`): logical-model, profile,
+  questionnaire, cql-library, structure-map, plan-definition, measure,
+  test-case, actor-definition, requirements
+
+**The bug this exposed and fixed.** `depends_on` was typed
+`Array<"md"|"ts"|"lean">` — the paper adapter's companion set — and it gates
+*applicability*, not just freshness. So no criterion could attach to a `.dmn`
+or `.fsh`, and worse: every WHO block would hit qa-sweep's hard-coded `.md`
+branch and record a clean `n/a` for every axis. QA would report a swept,
+healthy corpus it had never read. Same failure shape as the stale
+BLOCK_BUILDER_RE that hid 461 blocks.
+
+Now `COMPANION_ROLES` = md, ts, lean, bpmn, dmn, xlsx, fsh, cql. The two
+hard-coded `if`s are one `applicabilityGap()` over the criterion's declared
+roles. Verified no-op for the paper corpus: `sameScriptVerdict` compares
+`notes`, and `missingCompanionNote` reproduces the existing strings byte for
+byte, so no sidecar rewrites on the next sweep — pinned by a test.
+
+Two judgement calls recorded:
+- **No `json` role.** Compiled FHIR JSON is a SUSHI build output of `.fsh`, not
+  an authored companion; it also warns as a Pydantic field (shadows
+  `BaseModel.json`) — confirmed against pydantic 2.13.4, not assumed.
+- **`xlsx` is not textual.** A ZIP container: hashable, not greppable.
+
+All three cross-language mirrors updated together (TS, canonical JSON Schema,
+Python, JS) rather than left to drift.
+
+793 pass / 0 fail, typecheck + lint clean.
+
+**Still open:** adapter-scoped vs globally-tagged BLOCK_KINDS — adding ~19 WHO
+kinds to the single global list makes every math axis nominally applicable to
+a ValueSet. That is the next fork, and it gates the ingest writer.
+
+## Adapter-scoped block kinds (§12.8)
+
+Took the adapter-scoped call rather than globally-tagged; author said go
+without picking and this matches the existing `adapters/paper/` seam.
+
+`CONTENT_ADAPTERS` = paper | dak. `PAPER_BLOCK_KINDS` is an **alias** for
+`BLOCK_KINDS` (not a copy — a second hand-maintained list is the exact drift
+`block-kinds.ts` exists to prevent), so the compile-time exhaustiveness proof
+against the `Block` union is untouched. `DAK_BLOCK_KINDS` adds 19 L2/L3 kinds.
+`adapterForKind()` returns `undefined` for an unknown kind rather than
+defaulting to paper — defaulting is precisely how a math axis would come to
+run against a ValueSet.
+
+QA criteria gained `adapters?`, gated in the sweep **before** the companion
+gate. The load-bearing choice is the default: **absent means `["paper"]`, not
+"all"**. All ~47 registered criteria are paper axes, so "all" would need every
+one edited to stay correct and would misfire silently on any missed. A test
+asserts every registered criterion resolves to `["paper"]`, so adding a DAK
+criterion without declaring scope fails.
+
+Failure mode this prevents is not a harmless n/a: it is
+`voice-scholarly-default: fail` on a decision table, which reads like a real
+finding.
+
+**Declared, not authorable.** DAK kinds are not in the `Block` union and have
+no builder, Zod schema or viewer registration, so `walkBlocks` cannot discover
+one. Pinned by a test so it stays a stated limitation rather than a kind that
+looks supported and silently yields nothing. That authoring work is next, and
+the ingest writer follows it.
+
+807 pass / 0 fail, typecheck + lint clean. Verified no-op for the existing
+corpus: every kind `walkBlocks` can encounter resolves to paper, and every
+registered criterion admits every paper kind.
+
+## DAK blocks authorable (§12.9)
+
+`schemas/dak-blocks.ts` — 19 interfaces, `DakBlock` union with its own
+exhaustiveness proof against `DAK_BLOCK_KINDS`, Zod schemas with label-prefix
+enforcement, builders, `layerForKind` deriving L2/L3 from one table. Exported
+via `schemas/index.ts`; smoke-tested through the package root.
+
+**The subtle bit:** builder name and kind string separate for the first time.
+Paper kinds are single words so `BLOCK_BUILDER_RE` alternated over kinds
+directly; `decision-table` cannot be an identifier, so builders are camelCase
+and `kindForBuilder` maps back. Left unmapped, blocks would be discovered under
+kind `decisionTable` — matching no criterion and no adapter, i.e. the 461-block
+disappearance in a new place, with no compile error. Pinned by a test that a
+DAK manifest is discovered under its KIND.
+
+Prefixes: 19 new, none colliding with the 17 paper/structural ones, canonical
+in `block-kinds.ts` so `KNOWN_LABEL_PREFIXES` and `KIND_PREFIXES` both derive
+from one list — the existing sync assertion still passes.
+
+Deliberately not modelled: field-level semantics. A `value-set` block has a
+label, edges and a `.fsh` pointer, not `ValueSet.compose.include`. Those
+belong to the artefact formats, which have validators already; a parallel copy
+would drift. Same reason it is typed `folio:ValueSet` not `fhir:ValueSet`.
+
+`realises` added as the L1→L2→L3 traceability edge, which makes DAK coverage a
+graph query via `get_neighbors` rather than a bespoke script.
+
+832 pass / 0 fail, typecheck + lint clean.
+
+**Next: the ingest writer.** Every dependency now exists. Also worth noting: no
+`dak`-scoped QA criterion has been written, so that mechanism is live with
+nothing registered in it.
+
+## First DAK QA axes (§12.10) — and a wiring hole they found
+
+Five criteria in `qa-checkers-dak.ts`: companion-present, bpmn-has-process,
+dmn-has-decision-table, fsh-declares-kind, label-prefix-matches-kind. All
+`adapters: ["dak"]`. Structural presence and well-formedness only — semantic
+conformance needs the real validators (fhir-validation, SUSHI, a DMN engine)
+and a grep-level reimplementation would disagree with the authoritative verdict.
+
+`dak-companion-present` is the interesting one: it catches a missing `.dmn`, so
+it must NOT list `.dmn` in `depends_on` (which gates applicability and would
+n/a exactly the blocks it is for). Depends on `ts`, declares the artefacts under
+`also_invalidated_by`. First criterion to need that documented distinction.
+
+**Hole this exposed in my own §12.8 work.** `qa-sweep` built
+`const paths = { md, ts, lean }` and passed it to both `hashBlockFiles` and the
+checker. So the types and the applicability gate knew about `.dmn`/`.fsh`, but
+the sweep still hashed three files — a DAK verdict could never go stale when
+its decision table changed. My companion-role tests covered `hashBlockFiles`
+and `entryIsFresh` in isolation and passed; they did not cover the call site.
+Fixed: `paths = block.companions`, checker signature is `CheckerPaths`.
+
+Added `ADAPTER_COMPANION_ROLES` + `incompatibleCompanions()` so a
+paper-criterion-depends-on-.dmn mismatch is checkable rather than showing up as
+a permanently-n/a criterion that looks registered.
+
+Four guard tests from the previous commit correctly failed (they asserted the
+registry was all-paper) and were rewritten to the stronger invariant rather
+than relaxed. One stale test comment corrected — it still claimed DAK kinds had
+no builder or Zod schema, which §12.9 made false.
+
+852 pass / 0 fail, typecheck + lint clean.
+
+**Next: real-corpus run.** Everything on this branch is still fixtures.
+
+## Real-corpus run (§12.11) — two defects fixtures could not find
+
+Cloned litlfred/qou @ a5e9957, symlinked the platform to reproduce the real
+embedding. 5 papers, 3692 .ts files.
+
+**3550 blocks emitted, 0 load failures. 3550 nodes / 7631 edges, 0 malformed.
+Second run --check clean (deterministic).**
+
+**(a) Pre-existing repo bug.** `alg:` and `prose:` were absent from
+KNOWN_LABEL_PREFIXES though LABEL_PREFIXES maps `algorithm -> "alg:"` and 16
+alg + 18 prose blocks use them. So isCrossPaperRef returned TRUE for a block's
+own same-paper label. Effect: render-latex emits cross-paper refs as plain text
+not \hyperref, so 9 in-paper links lost hyperlinks in the PDF; and build.ts
+excluded them from undefined-reference warnings. Registered both. Not caused by
+this work — just never asked the question that exposes it.
+
+**(b) My own generator's collision.** `blockToJsonLd` fell back to
+`.../blocks/UNRESOLVED` for a prefix-less own-label, so ALL such blocks shared
+one @id — the index correctly refused to overwrite and 12 real blocks vanished
+while the generator reported success. Fixed with `mintNodeId` (never fails;
+prefix-less label becomes its own segment). Asymmetry vs resolveLabel is
+deliberate: a block's own label is identity and cannot be wrong, a reference is
+a claim that must resolve. Every fixture label had a prefix — which is exactly
+why fixtures missed it.
+
+Reverse query works on real data: `--neighbors def:quantum-universe --in` → 25
+dependents across uses + interprets.
+
+33 dangling refs remain — qou content defects (labels with no prefix at all).
+Reported, not repaired; another repo's content is its own call.
+
+856 pass / 0 fail, typecheck + lint clean.
+
+**Still open:** MCP handlers untested; no DAK corpus to exercise the dak axes.
+
+## Ingest writer landed; graph closed (§12.12)
+
+`gen-library-jsonld.ts`. Real run: 443 docs → **435 ingested, 16,669 blocks**.
+Combined graph **29,780 nodes / 85,016 edges, 0 malformed** (3,550 authored +
+26,230 ingested). §1's retrieval gap is closed — the extracted corpus is now
+queryable, not just greppable.
+
+Model as decided: blocks own files, a section is an ordered manifest of block
+refs and carries no text. Section prose becomes one `prose` block pointing at
+the EXISTING `sections/<sid>.md` — no copy, so 24.7M chars stay where the
+corpus-grep checklist looks. Extraction is incremental: better extractors turn
+prose into typed blocks without changing any section's @id.
+
+Attribution kept sharp: every node `provenance: "ingested"` + `sourceDocument`,
+and the extractor's own disposition string ("proposals only … nothing here is
+folio content") carried verbatim onto the manifest rather than paraphrased.
+
+**Two more real-run findings:**
+- `searchGraph`'s 400-file text cap was 6x too tight AND biased: a full scan of
+  20,191 files takes 1.6s and finds 322 matches vs 55, and iteration hits
+  authored nodes first so the ingested population — the whole reason full-text
+  search exists — was never scanned. Default now 50,000.
+- MCP handlers were in a nested function inside a request handler, covered by
+  tsc and nothing else — exactly where §12.11's two defects hid, both of which
+  typechecked. Extracted to `adapters/mcp-server/tools/graph.ts`, now driven by
+  14 tests and verified against the real corpus. One behaviour change: an
+  unknown edge term was silently filtered (answering a narrower question than
+  asked); now reported.
+
+888 pass / 0 fail, typecheck + lint clean. CI gate + npm scripts extended.
+
+**Still open:** the five dak axes have never run on real content (no DAK corpus
+exists); 33 dangling refs are qou content defects; promotion library→content
+remains manual by design.
+
+## DAK axes vs real WHO content (§12.13)
+
+Three real repos: smart-dak-immz 3fe6a17, smart-dak-bds 6953ede,
+smart-immunizations 12ec2fc (L3).
+
+**Best result:** the block/companion model is not imposed — WHO already uses
+it. 279 .cql ↔ 279 .fsh Library instances pairing 1:1 by stem; 8 business
+processes as 8 .bpmn.
+
+Checkers that could run: `dak-bpmn-has-process` 8/8 pass on real WHO BPMN;
+`dak-fsh-declares-kind` 739/739 verdicts agree with ground truth.
+
+**Design error found.** REQUIRED_COMPANION mapped decision-table and
+scheduling-logic to `.dmn`, following this repo's own dmn-authoring skill and
+the l2-dak-authoring BPMN. **Zero .dmn across all three repos** — WHO ships
+decision-support logic as .xlsx. Would have failed every decision-table block
+for an artefact WHO doesn't produce. Deeper cause is structural: ONE WORKBOOK
+HOLDS MANY BLOCKS (one spreadsheet covers every decision table, one dictionary
+every data element), so a per-block companion doesn't exist until an extraction
+stage splits them — the DAK counterpart of Stage B, not built. Six kinds now in
+WORKBOOK_BACKED_KINDS, exempt by measurement.
+
+**A strengthening the data vetoed.** Was about to key dak-fsh-declares-kind on
+`InstanceOf:` to discriminate the five Instance-mapped kinds. Real WHO FSH names
+PROFILE URLs, not resource types: 138 cpg-recommendationdefinition, 41
+proportion-measure-cqfm vs 279 bare Library. Would have caused 138 false
+failures on a correct corpus. Stays coarse; resolving profiles is SUSHI's job.
+
+**Honest limit:** 3 of 5 axes check manifest↔artefact relationships, and real
+WHO repos have artefacts but no folio manifests. Only the artefact-reading half
+is validated. Full exercise needs DAK blocks authored over this content.
+
+Also unmodelled: WHO ships CodeSystem (6) and ConceptMap (3) FSH resources with
+no corresponding DAK block kind.
+
+891 pass / 0 fail, typecheck + lint clean.
+
+## DAK representations + generated FHIR (§12.14)
+
+Author's three facts, all confirmed against the real repos:
+
+1. **DAK content has a FHIR IG representation.** smart-dak-immz is "L2" yet has
+   536 .fsh — because the L2 DAK is itself published as a FHIR IG. Its
+   input/fsh/ subdirs map ~1:1 onto DAK components (models, plandefinitions,
+   activitydefinitions, requirements, scenarios, actors, measures,
+   questionnaires, valuesets, codesystems, conceptmaps, libraries).
+2. **Some of that FHIR is autogenerated from L2.** Measured: 266 of 536 .fsh in
+   smart-dak-immz carry an explicit marker; 0 of 739 in smart-immunizations (L3
+   IG, authored). Marker names the source row:
+   `//functional requirment instance generated from row 73` →
+   IMMZ.FXNREQ.075.D.fsh from the requirements xlsx.
+3. **A PDF representation is intended, not built.**
+
+**Model consequence:** a DAK block is ONE WORK with SEVERAL EXPRESSIONS — the
+L2 spreadsheet row, the FHIR IG resource, the future PDF section. Not three
+blocks, not three companions. That is the FRBR pattern §12.2 already argued for
+on multilingual/jurisdictional grounds, now independently motivated from the
+WHO side.
+
+**Built:** `isGeneratedArtefact()` + checkers returning `n/a` WITH A REASON for
+generated artefacts. A finding on a generated .fsh is unactionable — the fix is
+the spreadsheet row or the generator. Validated on real content: 266/536 and
+0/739, matching ground-truth grep exactly. Conservative by design: only an
+explicit marker counts, since silently exempting authored content is the
+costlier error. Regex matches WHO's typo `requirment` verbatim on purpose.
+
+**Corrected §12.13, one section old:** I said workbook-backed kinds have no
+per-block artefact until an extraction stage exists. True of the SOURCE, false
+of the published DAK — WHO's tooling already splits it, one FHIR instance per
+row. Still not *required* (derived, not authored), but the reason changed.
+
+**Open, better posed:** the block model needs a REPRESENTATION axis distinct
+from companions — source / generated / rendered. Companions answer "what files
+does this block have"; representations answer "which is authoritative".
+Deferred until the PDF representation exists rather than guessing a third case.
+
+895 pass / 0 fail, typecheck + lint clean.
+
+## Target architecture stated (§12.15) — the arrow inverts
+
+Author: the DAK content block should render BOTH a PDF (+ some Excels) AND the
+DAK IG; source/PDF/Excel live in the DAK repos. Today those are hand-made and
+we extract computable artifacts from them; the goal is the reverse — build and
+edit components in folio-assistant, then rendering packages them together.
+("deck"/"lock" were voice-recognition for DAK/block; confirmed.)
+
+```
+TODAY   hand .xlsx/.bpmn --extract--> FHIR IG   (PDF absent)
+TARGET  content blocks --render--> PDF · Excel · FHIR IG
+```
+
+This is exactly the paper adapter's shape — blocks are source, render-latex /
+generate-block-tex / generate-main-tex produce .tex, latexmk the PDF. Nobody
+hand-writes .tex and extracts blocks from it. DAK wants the same chain, three
+outputs.
+
+**Re-assessment of what I built:**
+- Load-bearing at the target: block model, adapter scoping, DAK kinds+builders,
+  companion roles, adapter-scoped QA, JSON-LD projection, graph index, MCP read
+  side. All of it is "authored source" infrastructure.
+- **Transitional:** `gen-library-jsonld.ts` IS the extract arrow. Not wasted —
+  435 docs / 26,230 nodes of hand-made material still must become computable —
+  but it is the on-ramp, not the architecture. Labelled as such.
+- **Inverts:** `REQUIRED_COMPANION`'s FHIR rows. Today .fsh is the authored
+  source of the L3 IG so requiring it is right; at the target it is a RENDER
+  OUTPUT, and requiring an authored block to carry its own .fsh is the analogue
+  of requiring a paper block to ship its own .tex. Split: .md/.ts/.bpmn/.dmn/.cql
+  stay authored; .fsh/.xlsx/PDF cross the line. FLAGGED, not changed —
+  enforcing a state that doesn't exist would report defects in correct corpora.
+
+**Missing to reach the target:** a DAK renderer (block → FSH → SUSHI → IG;
+block → .xlsx; block → PDF), the analogue of render-latex.ts.
+
+The §12.14 representation axis is no longer speculative — the target names its
+three cases: source / generated / extracted. PDF is one render target, not a
+third guess.
+
+895 pass / 0 fail.
+
+## smart-base survey (§12.16)
+
+litlfred/smart-base @ 5891a22: **54 Python scripts, 24,775 lines** + XSLT/XSD.
+
+**PDF renderer confirmed absent.** Only PDF dependency is `pdfplumber`, used by
+extractpr.py to READ pdfs for persona extraction. No block→PDF path at all.
+
+**Two target-direction pieces already exist:** `includes/bpmn2fhirfsh.xsl` (720
+lines, BPMN → FHIR FSH) and `dmn2html.xslt` (161, DMN → HTML). Closest working
+precedent for the §12.15 renderer, and the least speculative starting point.
+
+**Inventory by arrow:** extract ~3,500 (dd/dt/req/bpmn/svg/personas — dt_extractor
+alone is 1,305); render+generate ~9,000 (the valuable half); translation ~5,500;
+IG build/CI ~4,000 (belongs with the IG, not the platform).
+
+**Translation subsystem is bigger news than expected** — ~5,500 lines wiring
+Weblate/Crowdin/Launchpad with extraction, injection, per-project registration,
+completeness reporting. That IS the multilingual axis §12.2 argued for on FRBR
+grounds, and it's established rather than future. Raises the stakes on the
+representation model: a DAK block varies along TWO axes at once — format
+(source/IG/Excel/PDF) and language. Work→Expression→Manifestation, exactly.
+
+**Independent convergence:** smart-base already emits JSON-LD
+(generate_jsonld_vocabularies.py, 738 lines). Its namespace IRIs vs mine,
+chosen separately: prov `http://www.w3.org/ns/prov#` IDENTICAL, fhir
+`http://hl7.org/fhir/` IDENTICAL, both `@version: 1.1`. Vocabularies otherwise
+complementary (theirs schema:/rdfs: for ValueSet enumeration semantics, mine
+doco:/deo: for document structure). They also stamp `prov:generatedAtTime` —
+a stronger generated-artefact signal than the source-comment marker
+isGeneratedArtefact keys on; worth preferring where present.
+
+**Migration order recommended, not attempted** (24,775 lines is a programme):
+XSLT pair first (smallest, proves the chain) → generate_* schemas/jsonld (IRIs
+already align) → extractors (pair with gen-library-jsonld) → translation
+(largest, needs the representation axis decided first).
+
+## Correction: load smart-base, don't migrate it
+
+Author corrected my §12.16 migration recommendation: the scripts are **needed
+where they are** — the DAK repos' GitHub Actions invoke them. Vendoring copies
+would be the second drifting copy §2c argues against, this time of a toolchain.
+Real need: folio-assistant LOADS from smart-base, and packages what it finds as
+agentic skills.
+
+Added, using the mechanism the repo already has:
+- `.claude/skills/capabilities/smart-base.json` — resolves SMART_BASE_HOME
+  (default /opt/smart-base), requires python3
+- `.claude/skills/local/smart-base-tools.json` — degradation "skip"
+- registered in the authoring-who-smart-guidelines package manifest
+Both validate against CapabilityDefinitionSchema / SkillDefinitionSchema.
+
+**Gap this exposed:** `.claude/skills/capabilities/*.json` declared HOW to
+detect every tool and **nothing ever executed them**. `--check-deps` had its own
+hardcoded list; `src/tools/check-deps.ts` a second. So probes were documentation
+and skills' `requiredCapabilities` had nothing to check against — which breaks
+§5's "absent tool ⇒ n/a, never a false pass", since an unexecuted probe can't
+deliver it.
+
+Built `src/tools/capabilities.ts` (loader + probe + requires resolution) and
+wired it into `--check-deps`. The requires resolution pays immediately: reports
+`lean-atlas — requires lean-toolchain` and `plantuml — requires graphviz`
+distinctly from a bare probe failure; those need different fixes. A dependent's
+own probe is NOT run when a prerequisite is unmet (would fail confusingly or
+succeed and hide the break). Verified smart-base flips ○→✓ with
+SMART_BASE_HOME set to the real checkout.
+
+**Not done:** the two hardcoded dep lists remain; unifying them is a separate
+change with its own blast radius. --check-deps now labels which mechanism each
+line comes from.
+
+913 pass / 0 fail, typecheck + lint clean.
+
+## First smart-base-backed skill — render arrow proven (§12.17)
+
+`smart-base-tools` skill + `scripts/smart-base-transform.py` wrapping the two
+XSLT transforms, loaded from SMART_BASE_HOME, never vendored.
+
+**Real run: 8 WHO .bpmn → 313 FSH files, 0 failures, 201 distinct paths, 112
+collisions.** First time the render arrow (authored source → published
+representation) works end to end, using WHO's own stylesheet.
+
+Three things the real run taught the wrapper:
+1. Output is an ENVELOPE not a document — `<files><file name=…>` — 157 entries
+   for IMMZ.D alone. Treating it as one document would have lost 156.
+2. Don't serialise+re-parse: one real process emits FSH containing an
+   `xsl:`-prefixed attribute that is well-formed in the result tree and NOT
+   well-formed round-tripped through a string. Use lxml's parsed tree directly.
+3. Outputs collide: 313 → 201 distinct paths (shared actors, two near-duplicate
+   copies of one process). Silent overwrite would report 313 successes and leave
+   201 files. Now counted and named on stderr.
+
+Degradation verified both ways: no checkout → --check exits non-zero naming
+SMART_BASE_HOME; transform exits 3 with reasons; neither claims success. That's
+§5's contract reaching the toolchain layer, enforced by the capability probe
+from the previous commit.
+
+913 pass / 0 fail (TS) + 16 python checks. Not wrapped: extractors, generate_*
+family, translation subsystem. IG build/CI want no skill — Actions is caller.
+
+## DAK PDF renderer — first cut (§12.18)
+
+Merged main (11 commits; resolved an additive package.json conflict, installed
+new dep dmn-moddle). 992 pass / 0 fail after.
+
+Main's DMN work let me finally exercise `dak-dmn-has-decision-table` against
+REAL DMN — the repo now authors `docs/workflows/decisions/*.dmn`. Both pass.
+That checker had never fired.
+
+`scripts/dak-pdf.ts`: the third render target, which existed nowhere.
+- smart-dak-immz: 35 sections → **43-page PDF, 231KB, valid trailer**
+- smart-dak-bds: 33 sections → PDF
+- smart-immunizations: 34 sections → PDF
+
+Titles from sushi-config.yaml, narrative from input/pagecontent/*.md via
+remark, printed by the Playwright Chromium.
+
+**Omissions printed INSIDE the PDF**, not just the run log: 8 BPMN processes
+listed-not-drawn (no diagram renderer, input/images/ empty), 5 workbooks
+unrendered (where most DAK substance lives). A PDF that silently dropped the
+decision tables would look complete to the reader least able to notice, and
+that reader never sees stdout. Same discipline as the graph index's truncation
+reporting and the transform's collision counting.
+
+**Container detail:** installed playwright expects chromium_headless_shell-1228,
+container ships -1194; re-download is blocked. Renderer probes
+PLAYWRIGHT_BROWSERS_PATH for the real binary and passes executablePath. Without
+it the error reads like a missing browser rather than version skew.
+
+**Where blocks come in:** this renders the CURRENT hand-authored pagecontent/,
+because that's what exists. pagecontent/ is exactly the seam where authored DAK
+blocks replace it — the assembler takes sections of {title, html, source},
+which is what a block sequence already is.
+
+992 pass / 0 fail, typecheck + lint clean. Added dep: remark-html.
+
+## BPMN diagrams + WHO styling (§12.19)
+
+**Two corrections, both author-prompted.**
+
+1. **Styling existed; I under-searched.** §12.16 looked only in
+   `input/scripts/`. `smart-base/local-template/package/content/assets/css/dmn.css`
+   has the WHO palette (--dmn-who-blue #0093d0), light/dark, DMN table rules,
+   injected via `_append.fragment-css.html`; plus liquid fragments and
+   `templates/liquid/*.liquid`. My first cut invented generic serif CSS — the
+   second-weaker-copy mistake I keep flagging in others' code. dak-pdf.ts now
+   loads dmn.css from SMART_BASE_HOME, and says so in the HTML when it can't.
+   (Still no @media print/@page anywhere in smart-base — it's IG HTML styling,
+   not PDF. But it's WHO's.)
+
+2. **Diagrams now drawn.** scripts/bpmn-render.ts, bpmn-js in the same Chromium:
+   **8 of 8 WHO processes, 0 failures.** PDF 231KB → 308KB, BPMN omission gone.
+   Works only because all 8 files carry DI (20–264 BPMNShape each) — bpmn-js
+   renders a layout, doesn't compute one.
+
+**I was wrong twice mid-flight and should record it:** IMMZ.D failed with
+"element <IMMZ.D17> already exists". I first said duplicate id in WHO's file —
+FALSE, no duplicate ids at all. Real cause: IMMZ.D17 is both a shape in the
+top-level diagram AND the root of its own drilled-down subprocess plane (legal
+BPMN; drilldown is a Modeler feature). My second fix (fresh viewer per diagram)
+also failed — the rejection is at importXML, before render.
+`keepPrimaryPlane()` strips planes after the first pre-import and returns the
+count (IMMZ.D: 7). Catching the failure would have meant no diagram for that
+file. Text-level strip on purpose — re-serialising risks rewriting the
+namespace prefixes DI references depend on.
+
+**Note for next:** author says sgex is DEAD CODE and its scripts should be
+stolen/moved into folio-assistant — the opposite of smart-base (which stays
+because DAK Actions invoke it). Not yet surveyed.
+
+1001 pass / 0 fail. Added deps: bpmn-js, remark-html.
+
+## sgex survey (§12.20) — 3 of 36, not "lots"
+
+sgex is dead code, so unlike smart-base its scripts SHOULD move here. Surveyed
+@ d8288af: scripts/ has 36 entries.
+
+**Authoring/publication — 3:**
+- generate-dak-publication-poc.js (2,150) — DAK publication generator, HTML +
+  ePub, WHO branding, template variables, **@media print / @page rules**
+- generate-dak-faq-docs.js (896)
+- bpmn-to-svg.js (73) — bpmn-js under jsdom
+
+**The other 33 are CI plumbing for the dead app**: manage-pr-comment,
+run-security-checks, verify-csp-fix, verify-ghpages-build, test-deployment,
+analyze-github-issues… They'd become skills for nothing. Honest count is 3 of
+36, not "lots" — matters for scoping: a day on two files, not a programme.
+
+**The print styling was real, and I'd searched the wrong repo.** §12.16 said no
+PDF styling, having looked at smart-base. Author remembered otherwise and was
+right: it's in generate-dak-publication-poc.js — @media print with
+page-break-before, page-break-inside:avoid on cards, 10pt print body, link
+handling. Both statements stand: none in smart-base, some in sgex. My error was
+concluding the first meant the second.
+
+**Second BPMN approach worth weighing:** sgex's bpmn-to-svg.js uses jsdom, not
+a browser — lighter, no Chromium/executablePath probe, but jsdom has no layout
+engine so text-measurement-dependent rendering may degrade. Should compare on
+the same 8 WHO processes before assuming the Chromium route wins; heavier is
+only justified if output is better.
+
+**Order:** (1) port the print CSS into dak-pdf.ts — smallest, improves an
+existing artefact; (2) actually READ the 2,150-line publication POC — large head
+start or cautionary tale, can't tell from its docstring; (3) compare the two
+BPMN renderers.
+
+## Print CSS ported; POC read properly (§12.21)
+
+**Ported** the print-relevant + branding parts of sgex's 486-line CSS into
+dak-pdf.ts: A4 @page, Arial 11pt (10pt print), WHO blue #0078d4,
+page-break-inside:avoid on figures, and a[href^=http]::after printing the URL.
+Left the card/grid selectors — this document has no such markup.
+
+**The margin boxes could NOT be ported.** POC uses
+`@page { @top-center{} @bottom-center{ content:"Page " counter(page) } }` —
+CSS Paged Media margin boxes, implemented by Prince/WeasyPrint, **NOT by
+Chromium**. Copied verbatim they'd silently produce no header and no page
+numbers — the worst kind of port, it looks done. Moved to Playwright
+headerTemplate/footerTemplate. **Verified by extracting PDF text: 42/42 pages
+carry the running header, 42/42 carry "Page N of M".** (Reading the PDF needed
+scripts/_pypdf_compat.py — this container's cryptography panics via pyo3
+instead of raising ImportError, exactly what that shim is for.)
+
+**The POC is a cautionary tale, not a head start.** Read properly:
+- generateMockContent() = ~300 lines of HARDCODED prose per component type
+- analyzeDAKRepository() opens "Mock DAK repository analysis — in real
+  implementation this would…" — it does not read a repository
+- generateTableOfContents() INVENTS page numbers (page:3, index+4, page:99)
+- processMarkdownContent() is regex markdown, self-described as "would use
+  markdown-it in real implementation" — remark is strictly better
+- API architecture points at http://localhost:3002, part of the dead app
+- 17 occurrences of "mock"
+
+Of 2,150 lines the stylesheet was the asset; it's taken. NOTHING ELSE should be
+ported. dak-pdf.ts already reads real repos, renders real markdown, draws real
+BPMN, and derives its TOC from sections actually assembled — all of which the
+POC only simulates. Worth saying plainly because the file's header oversells it
+("API-driven service architecture", "WYSIWYG-ready", "multi-format output") and
+a reader trusting it would spend days porting scaffolding around mocks.
+
+1001 pass / 0 fail.
+
+## generate-dak-faq-docs.js read (§12.22) — the input beat the script
+
+Applied the same scepticism. It is NOT mocked (zero "mock", all five declared
+sources exist) — but still not portable:
+- every source path is sgex's own; it documents a dead app to itself
+- startMCPServer() runs `npm run build` in the dead service, spawns
+  dist/index.js, polls 127.0.0.1:3001/health for 30s — porting it means
+  porting that service
+- extraction is literal-heading regex (`## Overview`, `## \d+\. `); rename a
+  heading and a section silently empties
+- its own markdownToHtml() — same weakness as the POC; we have remark
+- getCSS() ~240 lines is SCREEN-ONLY: one @media (max-width:768px), no @page,
+  no print rules. Nothing for dak-pdf.ts; the WHO blues are already ported.
+
+**What IS worth taking is what it reads.** docs/dak/faq/component-questions-
+draft.md = 27 questions across the nine WHO DAK components. DAK-domain, not
+sgex-specific — exactly the queries an MCP RAG service over the graph should
+answer. Plus the contract of the 7 implemented ones:
+- QuestionDefinition: id, level, parameters, tags, componentTypes, assetTypes
+- QuestionLevel dak/component/asset — same three tiers as document/section/
+  block, arrived at independently
+- QuestionResult: `structured` AND `narrative` + warnings/errors — precisely
+  what a RAG tool needs
+- CacheHint: scope, key, ttl, **dependencies** file list for invalidation
+
+Implementations themselves: no. All 7 carry dead react/react-i18next imports,
+parse XML with browser DOMParser, and DecisionTableInputsQuestion declares
+assetTypes:['dmn'] when there is not ONE .dmn in any of the three WHO repos
+(§12.13: WHO ships decision logic as .xlsx). Ported as written, both
+decision-table questions answer nothing forever against real content — the same
+trap already caught in REQUIRED_COMPANION.
+
+**Inversion:** sgex parses a file per question; we already have the graph. Of
+the 27: ~8 answerable from `uses`/`realises` today (requirement-traceability is
+literally what `realises` was added for), ~16 need companion parsing (.bpmn
+steps/decision points, .xlsx constraints/terminology/calculations), 3 have
+nowhere to attach.
+
+**Real gap found:** catalog component 1 is "Health Interventions and
+Recommendations". DAK_BLOCK_KINDS has NO health-intervention kind — verified
+absent across schemas/ and content/pipeline/. So publication-references,
+guideline-sections and intervention-scope have no block to hang on, and the L1
+end of `realises` points at something this repo cannot represent. Nine WHO
+components, nine L2 kinds, but not the same nine.
+
+sgex is now settled: POC (CSS only), faq-docs (catalog + contract only),
+bpmn-to-svg.js still worth a jsdom-vs-Chromium comparison.
+
+## sgex "skills" checked — none exist; its agent guidance does (§12.23)
+
+sgex has NO skills dir. Verified: git ls-remote origin HEAD == local HEAD ==
+d8288af, frozen 2025-10-25. What it has is .github/copilot-instructions.md (608
+lines of agent guidance). Two things in it belong here.
+
+**1. The component list — sources genuinely disagree.** That one file contains
+TWO non-agreeing lists: a heading "The 8 Core DAK Components" listing artefact
+types (Data Entry Forms, Terminology, FHIR Profiles/Extensions, Test Data — a
+mix of L2 and L3, not WHO's list at all), and directly beneath it a Component
+Representations table giving the 8 real components with L2/L3 forms. User
+confirmed the cause: **test scenarios is a LATER addition**; WHO publishes 8,
+the 9th came after sgex was written. Anything counting against an old source is
+off by one silently.
+
+Pinned in code now: DAK_COMPONENTS (9, WHO's wording + the 3 WHO publication
+URLs), DAK_COMPONENT_DESCRIPTIONS, DAK_COMPONENT_KINDS. Mapping deliberately
+not 1:1 — requirements is one component whose NAME is a conjunction (2 kinds);
+decision-support-logic gains scheduling-logic; core-data-elements collects
+structure-map. Test asserts every kind lands in exactly one component.
+
+sgex's representation table independently corroborates my L2→L3 pairing on every
+row, and adds: L2 of health interventions = **IRIS publications**, L2 of core
+data elements = **OCL concepts**.
+
+**2. Gap sharpened — I over-reported in §12.22.** dakComponentsWithoutL2() =
+[health-interventions-and-recommendations, test-scenarios].
+- health-interventions: no kind at EITHER layer, the only such component. L1 end
+  of every `realises` edge → that edge points at something unrepresentable and
+  nothing detects the dangle.
+- test-scenarios: DOES have test-case, but that's L3 FHIR. The L2 narrative
+  scenario has no kind. §12.22 called it unrepresented — too strong.
+Both asserted as-is, so adding either kind FAILS the test and forces docs to
+move with code. (My first pass wrote "every component names at least one kind";
+the test immediately failed on health-interventions — fixed to assert reality.)
+
+**3. NO HEURISTICS POLICY → a real hole found.** sgex's policy (no inferring
+type from names, no fallback detection, fail loudly) is the same discipline as
+§5's "absent tool ⇒ n/a, never a false pass". Applying it: sgex states the DAK
+test mechanically — a repo is a DAK IFF root sushi-config.yaml declares
+`smart.who.int.base`. **dak-pdf.ts had NO such check** — it read a title and
+rendered any directory as a DAK.
+
+dakIdentity() now decides explicitly + carries the pinned version. Verified:
+smart-dak-immz `current`, smart-dak-bds `current`, smart-immunizations `0.2.0`,
+folio-assistant correctly rejected. 3/3 real WHO repos. Non-DAK still rendered
+(refusing is less useful) but the cover SAYS so instead of the "Digital
+Adaptation Kit" line. Test builds the structural lookalike
+(input/business-processes/ + input/dictionary/, no config) and asserts NOT a DAK
+— exactly what a naming heuristic would have accepted.
+
+Also retired the /^title:/m regex for a real YAML parse. Honest scope: it was
+NOT producing wrong titles on any repo in hand (indentation kept nested titles
+from matching); the claim is only that the same parse was already needed for the
+dependency check, so the regex was a second weaker reader. Corrected my own
+overstated docstring + test comment on that.
+
+1017 pass / 0 fail, tsc + eslint clean.
+
+Remaining sgex: DAK_LOGICAL_MODEL_UPDATE_PLAN.md (1668) and
+docs/dak-publication-software-architecture.md (457) unread; bpmn-to-svg.js
+jsdom-vs-Chromium comparison still open.
+
+## WHO's own logical models found + starter-kit SOPs (§12.24)
+
+sgex's DAK_LOGICAL_MODEL_UPDATE_PLAN.md (1668 lines) is 95% dead sgex service
+plan — BUT its first 30 lines quote WHO's DAK.fsh, and that quote **verified
+accurate** against smart-base input/fsh/models/DAK.fsh. First sgex claim to
+survive checking. Primary source now in hand (smart-base checkout was already
+on disk at /home/user/litlfred/smart-base).
+
+**Component list SETTLED — 4 sources, 3 agree:**
+- smart-base DAK.fsh: 9, ends testScenarios; description literally says "all 9
+  DAK components" ✓
+- starter-kit l2_dak_authoring.md **TABLE**: same 9, same numbering ✓
+- starter-kit l2_dak_authoring.md **INTRO PROSE**: a DIFFERENT 9 — scheduling
+  logic promoted to #7, test scenarios ABSENT. Contradicts its own table three
+  paragraphs later. Stale. ✗
+- sgex copilot-instructions: 8 (predates) + a bogus artefact-type list ✗
+
+Both machine-readable sources agree with the table → that's what DAK_COMPONENTS
+encodes. **Settles scheduling-logic**, which §12.23 hedged on: the SOP table
+itself says scheduling logic is "a specific type of decision-support logic" and
+documents it INSIDE that row; DAK.fsh gives it no field. Only the stale prose
+promotes it. Stays a kind, not a 10th component.
+
+Added DAK_COMPONENT_FIELDS with WHO's own field names (healthInterventions,
+personas, userScenarios, ...). Tests now PARSE DAK.fsh and assert: exactly 9
+`0..* *Source` declarations, every field we name is one of them, WHO declares
+none we haven't listed, and no scheduling component. smart-base absent ⇒
+reported UNVERIFIED, never a pass (§5 contract). 3 tests ran for real, not
+skipped.
+
+**The Source pattern + a constraint nothing enforces.** Every component is
+`0..* <Name>Source`, each offering url | canonical | instance — WHO's own answer
+to "where does a content block live". But each says "**exactly one of** the
+following must be provided" in Description PROSE, and there is **not one
+Invariant:/obeys in ANY of WHO's logical models** (grepped all 17). A DAK
+supplying all three, or none, validates clean. That's a QA criterion we can
+carry and the FHIR toolchain structurally cannot — exactly what .qa.json is for.
+
+**Both gap kinds now have WHO shapes (don't invent them):**
+- HealthInterventions.fsh: id, description[x] (string or uri), `reference 1..*
+  **DublinCore**` — and DublinCore's namespace is ALREADY in our JSON-LD context
+  as dcterms:. Content source per SOP: UHC menu of essential interventions + WHO
+  classification of digital health interventions (an IRIS publication — that's
+  what sgex's table meant by "IRIS Publications").
+- TestScenario.fsh: `feature 1..1 uri` → a **Gherkin .feature file**. So the L2
+  test-scenario companion role is `.feature`, alongside .bpmn/.dmn/.fsh/.cql.
+
+Also: WHO ships 11 per-component logical models, incl. FunctionalRequirement.fsh
+and NonFunctionalRequirement.fsh as SEPARATE models — independently corroborates
+my 2-kind split that §12.23 flagged as a deliberate departure. It's WHO's own
+structure. FunctionalRequirement is user-story shaped: activity/actor/
+capability("I want")/benefit("so that"). And `description[x] string or uri` =
+"Markdown content OR a URI to a Markdown file" recurs everywhere — exactly our
+.md companion pattern.
+
+**Workbook question ANSWERED (was blocked on user decision since §12.18).**
+starter-kit input/images/ ships the OFFICIAL DAK component templates as .xlsx:
+core data dictionary, decision-support logic, scheduling logic, indicators and
+performance metrics, high-level functional+non-functional requirements — at v2
+AND v2.1. Canonical sheet structure for exactly the components §12.13 found are
+workbook-backed. A reader is now bounded against a published template instead of
+reverse-engineering one repo.
+
+1021 pass / 0 fail, tsc + eslint clean.
+
+Starter kit has ~4300 lines of SOP across 30 pagecontent files (l3_*.md per
+artefact type, checklist.md 297, authoring_conventions.md, qa_check.md) — only
+l2_dak_authoring.md read so far.
+
+## Gap CLOSED — both kinds added from WHO's shapes (§12.25)
+
+dakComponentsWithoutL2() now returns []. Both pinning assertions INVERTED (not
+deleted) so the closing shows in the diff.
+
+**health-intervention** (component 1, L1 end of every `realises`). From
+HealthInterventions.fsh: id, description[x], `reference 1..* DublinCore`. The
+1..* is ENFORCED at construction — `references: []` throws. References carry
+Dublin Core objects (title required) per WHO's DublinCore.fsh, whose namespace
+we already had as dcterms:. Prefix `hi:`.
+
+**test-scenario** (component 9), deliberately DISTINCT from L3 test-case: L2 =
+narrative a reviewer signs off, L3 = FHIR conformance artefact. test-scenarios
+maps to both, one per layer, test asserts layers differ. TestScenario.fsh gives
+`feature 1..1 uri` → added `feature` companion role + REQUIRED_COMPANION row.
+Real requirement, unlike workbook-backed kinds: WHO's model is one .feature per
+scenario, not one workbook per many blocks. resolveCompanions iterates
+COMPANION_ROLES so declaring the role was the whole wiring. Prefix `tscen:`.
+
+**User's note on IG-publisher-generated JSON/JSON-LD — checked, and it changes
+the answer for the better.** smart-base has generate_jsonld_vocabularies.py,
+generate_logical_model_schemas.py, generate_valueset_schemas.py. Reading the
+logical-model one: generated `@type` is a plain string carrying only an EXAMPLE
+("LogicalModel-HealthInterventions"), while `resourceDefinition` is a **const**
+pinned to the StructureDefinition canonical URL — same IRI DAKComponentSources
+.fsh uses as `canonical ^type[0].targetProfile`. So the canonical URL is the
+stable identifier, NOT the @type string.
+
+→ folio: typing STANDS (a block is a manifest, not a FHIR resource), and added
+DAK_KIND_TO_WHO_MODEL as a separate assertion: the WHO logical model this block
+instantiates. 10 kinds mapped. PARTIAL BY CONSTRUCTION — scheduling-logic has
+none (WHO folds it into decision support), L3 kinds have none (FHIR artefacts,
+not component models). Test asserts those absences AND that every IRI present
+sits under WHO's canonical base. Same rule as §2's doco:contains: no unverified
+IRI in a published graph.
+
+Also fixed a test that hardcoded ["bpmn","fsh","cql"] — now checks
+REQUIRED_COMPANION roles against COMPANION_ROLES + ADAPTER_COMPANION_ROLES.dak,
+which is what "one this can check" actually means (resolution iterates the
+vocabulary).
+
+Type system caught the JSON-LD map when I added the kinds — the exhaustiveness
+guard did its job.
+
+1027 pass / 0 fail, tsc + eslint clean.
+
+
+## MERGED to main (36ca385)
+
+Prepare-merge discipline run, then merged. Main had moved 4 commits; merged in
+(conflict in package.json, additive both sides — kept `gen:jsonld*` and main's
+`check:ci-health`).
+
+Gates: 1060 pass / 0 fail, tsc clean, `eslint .` clean, gen-schema-docs +
+gen-skill-docs produce no diff, check:workflow-policy green (1 legal
+relaxation), gen:jsonld:check up to date.
+
+**render:bpmn:check was RED — investigated rather than waved through.** Not
+mine: scripts/render-bpmn.ts came from main and only honoured an explicit
+CHROMIUM_PATH, so it died on this container's Playwright build skew (expects
+chromium_headless_shell-1228, ships -1194) with an error telling the reader to
+re-download browsers — which is blocked here. Fixed by falling back to the same
+PLAYWRIGHT_BROWSERS_PATH probe bpmn-render.ts already had. All 6 workflow SVGs
+now verify with NO env var set.
+
+Deliberately did NOT merge the two BPMN scripts despite the near-identical
+names: render-bpmn.ts is the docs pipeline (fixed paths + --check staleness
+gate), bpmn-render.ts is the library (arbitrary inputs, sub-process planes).
+Applying keepPrimaryPlane to the docs sources could change committed SVGs and
+break the gate guarding them. Added a docstring note saying which is which; they
+now share one probe instead of two copies.
+
+main == branch head. Direct push to main succeeded (not protected). GitHub
+reports 1 low dependabot vulnerability on the default branch — pre-existing, not
+from this work.
+
+## Closed — follow-on split to `sopq`
+
+The question this bean was opened for is answered: the ingestion schema is a
+JSON-LD graph, one file per node, vocabulary taken from published standards
+(DoCO/DEO, CiTO, W3C Web Annotation, PROV-O, Dublin Core, SKOS), with FRBR-style
+URIs for jurisdiction and translation identity. Blocks are fine-grained and
+self-contained, sections are ordered manifests over them, QA sidecars run per
+block through adapter-scoped criteria, and the MCP RAG tools read the graph.
+Merged to main at 41e815a.
+
+Remaining work is a different question — deriving QA criteria from WHO's own
+published authoring standards rather than from what a corpus happens to contain
+— so it is `sopq`, not more of this. Two findings already in hand are recorded
+there: the unenforceable "exactly one of" constraint in every `*Source`, and the
+official `.xlsx` component templates that bound the deferred workbook reader.
+

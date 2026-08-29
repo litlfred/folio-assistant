@@ -28,11 +28,14 @@ import type {
   QaFieldHash,
   QaCriterionEntry,
   QaScriptSidecar,
+  CompanionRole,
 } from "../../schemas/block-qa";
-import { BLOCK_KINDS } from "../../schemas/types";
+import { COMPANION_ROLES } from "../../schemas/block-qa";
+import { ALL_BLOCK_BUILDER_ALT, kindForBuilder } from "../../schemas/block-kinds";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 import { leanStatementHash } from "./lean-signature";
 import { findContentRepoRoot } from "./repo-root";
+import { loadBlockModuleSync, type BlockLoadFailure } from "./block-module";
 
 // ── Hashing ─────────────────────────────────────────────────────
 
@@ -46,20 +49,24 @@ export function hashFile(path: string): string | undefined {
   return createHash("sha256").update(buf).digest("hex").slice(0, 12);
 }
 
-/** Build a {md, ts, lean} hash bundle, omitting absent files. */
-export function hashBlockFiles(paths: {
-  md?: string;
-  ts?: string;
-  lean?: string;
-}): QaFieldHash {
+/**
+ * Build a companion hash bundle, omitting absent files.
+ *
+ * Accepts any {@link CompanionRole}, not just the paper adapter's
+ * `md`/`ts`/`lean` — a WHO L2 block hashes its `.dmn`, an L3 block its
+ * `.fsh`. Roles the caller does not pass are simply absent, so every
+ * existing `{md, ts, lean}` call site is unchanged.
+ */
+export function hashBlockFiles(
+  paths: Partial<Record<CompanionRole, string>>,
+): QaFieldHash {
   const out: QaFieldHash = {};
-  if (paths.md) {
-    const h = hashFile(paths.md);
-    if (h) out.md = h;
-  }
-  if (paths.ts) {
-    const h = hashFile(paths.ts);
-    if (h) out.ts = h;
+  for (const role of COMPANION_ROLES) {
+    if (role === "lean") continue; // handled below — it also derives a statement hash
+    const p = paths[role];
+    if (!p) continue;
+    const h = hashFile(p);
+    if (h) out[role] = h;
   }
   if (paths.lean) {
     const h = hashFile(paths.lean);
@@ -556,18 +563,98 @@ export function listPackageLeanFiles(repoRoot: string): string[] {
 
 // ── Block discovery ─────────────────────────────────────────────
 
+/**
+ * Resolve every companion file present for a block stem.
+ *
+ * Roles the caller has already resolved (`md`, `ts`, and especially `lean`,
+ * which may live in the Lake tree rather than beside the manifest) are passed
+ * in and taken as-is. The rest are plain `<stem>.<role>` siblings.
+ *
+ * Returning a map rather than named fields is what lets `qa-sweep` gate
+ * applicability by iterating a criterion's `depends_on` instead of carrying a
+ * hard-coded `if` per role — which is how `.dmn` and `.fsh` blocks would
+ * otherwise have fallen through to `n/a-no-md` and recorded a clean verdict
+ * for an axis that never ran.
+ */
+/**
+ * The first companion role a criterion needs and the block does not have, or
+ * `undefined` when the criterion applies.
+ *
+ * Pure and exported so the applicability rule can be tested directly. It used
+ * to be two hard-coded `if` statements inside `qa-sweep`'s block loop, keyed
+ * on `.md` and `.lean` — the paper adapter's companion set. A criterion over a
+ * `.dmn` decision table or a `.fsh` profile therefore had no gate, and every
+ * WHO L2/L3 block took the `.md` branch and recorded a clean `n/a` for an axis
+ * that never ran.
+ *
+ * Order matters and follows the criterion's own `depends_on` array, so the
+ * reported role (and the sidecar `notes` string built from it) is stable.
+ */
+export function applicabilityGap(
+  depends_on: readonly CompanionRole[],
+  companions: Partial<Record<CompanionRole, string>>,
+): CompanionRole | undefined {
+  return depends_on.find((role) => !companions[role]);
+}
+
+/** The sidecar `notes` string recorded when {@link applicabilityGap} fires. */
+export function missingCompanionNote(role: CompanionRole): string {
+  return `block has no .${role} sibling`;
+}
+
+export function resolveCompanions(
+  root: string,
+  known: Partial<Record<CompanionRole, string>> = {},
+): Partial<Record<CompanionRole, string>> {
+  const out: Partial<Record<CompanionRole, string>> = {};
+  for (const role of COMPANION_ROLES) {
+    const preset = known[role];
+    if (preset !== undefined) {
+      out[role] = preset;
+      continue;
+    }
+    if (role in known) continue; // explicitly resolved to absent
+    const p = `${root}.${role}`;
+    if (existsSync(p)) out[role] = p;
+  }
+  return out;
+}
+
 export interface BlockPaths {
   /** Block label (e.g. `def:carbon-valence`). Read from the .ts file. */
   label: string;
   /** Block kind (`definition`, `proposition`, `remark`, …). */
   kind: string;
-  /** Root name shared by all sibling files (e.g. `carbon-valence`). */
+  /**
+   * Absolute path **stem** shared by all sibling files — the sibling paths
+   * minus their extension, e.g. `/abs/path/to/carbon-valence`. Append an
+   * extension to get a sibling: `` `${root}.lean` ``.
+   *
+   * Not a bare basename, which is what this said before ("Root name … e.g.
+   * `carbon-valence`"). A caller who believed that and wrote
+   * `join(dirname(b.ts), \`${b.root}.lean\`)` doubles the path and matches
+   * nothing — and gets a clean `0` rather than an error, which is exactly how a
+   * sibling-coverage measurement reported "0 siblings across 3486 blocks" and
+   * looked plausible enough to nearly publish.
+   */
   root: string;
   /** Absolute paths to present sibling files. */
   ts: string;
   md?: string;
   lean?: string;
   qa?: string;
+  /**
+   * Every present companion, keyed by role — the paper adapter's
+   * `md`/`ts`/`lean` plus the WHO L2/L3 siblings (`bpmn`, `dmn`, `fsh`,
+   * `cql`, `json`, `xlsx`).
+   *
+   * `md`, `ts` and `lean` are mirrored here as well as in their own fields, so
+   * a caller iterating `depends_on` generically does not have to special-case
+   * the three that predate the map. `lean` carries the Lake-resolved path when
+   * there is no literal sibling, which is why it is copied rather than
+   * re-derived from `root`.
+   */
+  companions: Partial<Record<CompanionRole, string>>;
 }
 
 /**
@@ -585,14 +672,40 @@ export interface BlockPaths {
  * not in the `Block` union, and `readBlockManifest` is documented to reject
  * them.
  */
+// Alternates over BUILDER names, not kind strings. For the paper adapter the
+// two are the same token; for the `dak` adapter they are not, because a kind
+// like `decision-table` is data and a hyphen is not a valid identifier — so
+// the builder is `decisionTable` and `kindForBuilder` maps back. Longest-first
+// ordering matters in an alternation: without it `profile` would shadow
+// nothing here, but `measure` would shadow a future `measureGroup`.
 const BLOCK_BUILDER_RE = new RegExp(
-  `export\\s+default\\s+(${BLOCK_KINDS.join("|")})\\s*\\(`,
+  `export\\s+default\\s+(${ALL_BLOCK_BUILDER_ALT})\\s*\\(`,
 );
 
 /**
  * Read `export default <kind>({ ... label: "...", ... })` from a .ts
  * manifest. Returns the block's kind + label, or `undefined` if the
  * file is not a single-block manifest (chapter, paper, etc.).
+ *
+ * **This detects a candidate; it does not establish identity.** Reading a
+ * label out of source text is wrong in three demonstrated ways, pinned in
+ * `scripts/tests/block-walk-verify.test.ts`:
+ *
+ * | source                          | this reads        | the block *is*   |
+ * |---------------------------------|-------------------|------------------|
+ * | `label: LBL` (a constant)       | `undefined` — skipped | `prop:computed` |
+ * | an earlier `label:` in a helper | `not-the-block`   | `prop:real`      |
+ * | `proposition({label:"theorem:x"})` | `theorem:x`    | rejected by the schema |
+ *
+ * The middle row is the dangerous one: not a miss but a *wrong answer*, which
+ * keys a sidecar and a graph node to a label the block does not have.
+ * `walkBlocks(root, { verify: true })` settles identity by loading the module
+ * instead — see `loadBlockModuleSync`.
+ *
+ * What this stays authoritative for is **whether a file may be executed at
+ * all**. A content tree holds more than manifests, and importing runs them, so
+ * the masked regex below is the gate that decides what the loader is allowed to
+ * touch. Keep it cheap and keep it textual.
  *
  * **Matched against a string- and comment-masked copy**, so a builder call or
  * a `label:` written inside a string literal or a comment cannot make an
@@ -620,7 +733,11 @@ export function readBlockManifest(
   if (!kindMatch) return undefined;
   const label = parseStringField(src, "label");
   if (!label) return undefined;
-  return { kind: kindMatch[1], label };
+  // The regex captures a BUILDER name; the block's kind is what it builds.
+  // Identical for paper kinds, different for every multi-word DAK kind.
+  const kind = kindForBuilder(kindMatch[1]!);
+  if (!kind) return undefined;
+  return { kind, label };
 }
 
 /**
@@ -650,7 +767,9 @@ export function readUnlabelledBlockManifest(
   const kindMatch = maskStringsAndComments(src).match(BLOCK_BUILDER_RE);
   if (!kindMatch) return undefined;
   const slug = tsPath.split("/").pop()!.replace(/\.ts$/, "");
-  return { kind: kindMatch[1], label: slug };
+  const kind = kindForBuilder(kindMatch[1]!);
+  if (!kind) return undefined;
+  return { kind, label: slug };
 }
 
 export interface WalkBlocksOptions {
@@ -673,6 +792,55 @@ export interface WalkBlocksOptions {
    * than inventing one.
    */
   includeUnlabelled?: boolean;
+
+  /**
+   * Settle each block's `kind` and `label` by **importing** it, instead of
+   * reading them out of its source text.
+   *
+   * The textual read is wrong in three ways `readBlockManifest` now documents,
+   * and the middle one returns a confidently wrong label rather than nothing.
+   * Importing runs the builder, so what comes back is the block the rest of the
+   * pipeline sees, validated against the schema.
+   *
+   * `readBlockManifest` still decides *which* files are candidates — importing
+   * executes a module, and a content tree holds scripts as well as manifests
+   * (`qa-agent-drain-queue.ts` starts a sweep at import time). Verification
+   * upgrades identity; it does not widen what gets executed.
+   *
+   * **Default `true`, on measured evidence.** This repo has twice learned that
+   * changing what the walk enumerates must be measured against real content
+   * before it lands — `#125` admitted a non-block, `qou/3fui` missed 63 real
+   * ones and the measurement reversed the recommendation the change had been
+   * argued on. So `verify-block-walk.ts` was written first and run against the
+   * `qou` corpus, all 3557 blocks:
+   *
+   *     textual walk : 3557 blocks in  493 ms
+   *     verified walk: 3557 blocks in 1473 ms
+   *     identity differences 0 · found by only one mode 0 · failed to import 0
+   *
+   * A second of wall-clock, and nothing else about that corpus moves. What it
+   * buys is the three failure classes above becoming impossible rather than
+   * merely absent-so-far. Measured on **one** corpus; `verify: false` is the
+   * escape hatch, and re-run that command on any other folio before relying on
+   * the default there.
+   *
+   * The one new coupling: importing a block resolves its imports, and a folio's
+   * blocks import the platform through a symlink its setup script creates
+   * (`<folio>/folio-assistant`). Without it every block fails to load — the
+   * walk still yields all of them under their textual identity, and says so.
+   */
+  verify?: boolean;
+
+  /**
+   * Where a block that fails to import is reported.
+   *
+   * A block that throws is a *finding*, not a file to pass over — that is how a
+   * sweep reports clean by looking at nothing. Omit this and failures go to
+   * stderr, once per file. Either way the block is still yielded, carrying its
+   * degraded textual identity: dropping it would trade a loud problem for a
+   * silent coverage hole, which is the `qou/3fui` mistake in reverse.
+   */
+  onLoadFailure?: (failure: BlockLoadFailure) => void;
 }
 
 export function* walkBlocks(
@@ -694,6 +862,8 @@ export function* walkBlocks(
   // the .lean (wall-side, compute-prop-has-probe/-consumer, voice, q-usage).
   const REPO_ROOT = findContentRepoRoot();
   const lakeCache: LakeTreeCache = new Map();
+  const verify = opts.verify ?? true;
+  const report = makeFailureReporter(opts);
 
   function* recurse(d: string): Generator<BlockPaths> {
     if (!existsSync(d)) return;
@@ -705,12 +875,22 @@ export function* walkBlocks(
       if (st.isDirectory()) {
         yield* recurse(full);
       } else if (entry.endsWith(".ts")) {
-        // Skip chapter / paper manifests by checking the export shape.
-        let manifest = readBlockManifest(full);
-        if (!manifest && opts.includeUnlabelled) {
-          manifest = readUnlabelledBlockManifest(full);
-        }
+        // Skip chapter / paper manifests by checking the export shape. The
+        // masked builder-call match is the gate on what may be *executed*
+        // below; the label is a question about identity, answered after.
+        const textual = readBlockManifest(full);
+        // Reading the unlabelled shape costs a second read + mask, so only pay
+        // it when someone can act on the answer.
+        const unlabelled =
+          textual || !(verify || opts.includeUnlabelled)
+            ? undefined
+            : readUnlabelledBlockManifest(full);
+        if (!textual && !unlabelled) continue; // not a block manifest at all
+        const manifest = verify
+          ? verifiedManifest(full, textual, unlabelled, report)
+          : textualIdentity(textual, unlabelled);
         if (!manifest) continue;
+        if (!manifest.labelled && !opts.includeUnlabelled) continue;
         const root = full.slice(0, -3); // strip ".ts"
         const md = root + ".md";
         const lean = root + ".lean";
@@ -724,19 +904,129 @@ export function* walkBlocks(
           const refMatch = tsSrc.match(/ref:\s*["']([^"']+)["']/);
           leanResolved = resolveCanonicalLean(refMatch?.[1], REPO_ROOT, lakeCache);
         }
+        const mdResolved = existsSync(md) ? md : undefined;
         yield {
           label: manifest.label,
           kind: manifest.kind,
           root,
           ts: full,
-          md: existsSync(md) ? md : undefined,
+          md: mdResolved,
           lean: leanResolved,
           qa: existsSync(qa) ? qa : undefined,
+          companions: resolveCompanions(root, {
+            ts: full,
+            md: mdResolved,
+            lean: leanResolved,
+          }),
         };
       }
     }
   }
   yield* recurse(rootDir);
+}
+
+type TextualManifest = { kind: string; label: string };
+/**
+ * `labelled` records whether the block has a real `label:` — which only the
+ * module can settle — as opposed to standing in under its slug. `walkBlocks`
+ * needs the distinction *after* verification, because a computed label makes a
+ * block labelled even though its source text does not say so.
+ */
+type VerifiedManifest = TextualManifest & { labelled: boolean };
+
+/** The reading `walkBlocks` has always used: whatever the source text says. */
+function textualIdentity(
+  textual: TextualManifest | undefined,
+  unlabelled: TextualManifest | undefined,
+): VerifiedManifest | undefined {
+  if (textual) return { ...textual, labelled: true };
+  if (unlabelled) return { ...unlabelled, labelled: false };
+  return undefined;
+}
+
+/**
+ * Replace a textually-read `{ kind, label }` with the one the module actually
+ * exports.
+ *
+ * On a throw the textual reading is kept and the failure reported: the block
+ * stays in the walk (so no criterion silently stops covering it) while the
+ * reason it could not be verified is visible. A `undefined` return from the
+ * loader means the default export is not a block after all — the candidate gate
+ * was fooled — which is likewise reported rather than silently dropped.
+ */
+function verifiedManifest(
+  tsPath: string,
+  textual: TextualManifest | undefined,
+  unlabelled: TextualManifest | undefined,
+  report: FailureReporter,
+): VerifiedManifest | undefined {
+  const degraded = () => textualIdentity(textual, unlabelled);
+  try {
+    const loaded = loadBlockModuleSync(tsPath);
+    // A label the module actually carries. This is the only reading that can
+    // be trusted, and it is how a computed `label:` — invisible to the regex —
+    // becomes a labelled block rather than being skipped or mistaken for prose.
+    if (loaded) return { kind: loaded.kind, label: loaded.label, labelled: true };
+  } catch (e) {
+    report(tsPath, String(e).replace(/\s+/g, " ").slice(0, 300));
+    return degraded();
+  }
+  // The loader found no labelled block. When the source had no textual label
+  // either, that agrees with `prose()` connective tissue and its slug identity
+  // stands. When the source *did* carry a label, the candidate gate was fooled
+  // by a file whose default export is not a block — a finding.
+  if (unlabelled) return { ...unlabelled, labelled: false };
+  report(
+    tsPath,
+    `default export is not a labelled block, but the source looks like a ` +
+      `manifest (read textually as ${textual?.kind} ${textual?.label})`,
+  );
+  return degraded();
+}
+
+/**
+ * How many unloadable files are named before the rest are only counted.
+ *
+ * When a folio is checked out without its `folio-assistant` symlink, *every*
+ * block fails for the same reason — measured: 3557 of 3557 on `qou`. Naming
+ * them one by one buries the single line that says what to fix under three and
+ * a half thousand that do not, so the enumeration stops and the tail is
+ * summarised.
+ */
+const MAX_NAMED_LOAD_FAILURES = 5;
+
+type FailureReporter = (file: string, error: string) => void;
+
+/**
+ * One reporter per walk, **not** one per process.
+ *
+ * A process runs several walks — `qa-sweep` calls `usesGraphHash` before its
+ * own — and a budget shared across them means the second walk's genuine
+ * failures are swallowed by the first walk's having spent it. Scoping the
+ * counter to the walk keeps each one's report complete on its own terms.
+ */
+function makeFailureReporter(opts: WalkBlocksOptions): FailureReporter {
+  const sink = opts.onLoadFailure;
+  if (sink) return (file, error) => sink({ file, error });
+  const seen = new Set<string>();
+  return (file, error) => {
+    if (seen.has(file)) return;
+    seen.add(file);
+    if (seen.size <= MAX_NAMED_LOAD_FAILURES) {
+      console.warn(
+        `  ⚠ ${file} could not be loaded; using its source text for kind/label.\n` +
+          `      ${error}`,
+      );
+    } else if (seen.size === MAX_NAMED_LOAD_FAILURES + 1) {
+      console.warn(
+        `  ⚠ …and more blocks that would not load. Every one is walked under its\n` +
+          `      source-text identity, so nothing is skipped — but none of them was\n` +
+          `      verified. If this is the whole corpus, the cause is usually a folio\n` +
+          `      checked out without its platform symlink (<folio>/folio-assistant).\n` +
+          `      Run: bun run content/pipeline/verify-block-walk.ts <content-root>`,
+      );
+    }
+  };
 }
 
 // ── QA report IO ────────────────────────────────────────────────
@@ -825,9 +1115,9 @@ export function saveQaReport(path: string, report: BlockQaReport): void {
  * thing that changed.
  */
 export function freshnessKeys(def: {
-  depends_on: Array<"md" | "ts" | "lean">;
-  also_invalidated_by?: Array<"md" | "ts" | "lean" | "graph">;
-}): Array<"md" | "ts" | "lean" | "graph"> {
+  depends_on: CompanionRole[];
+  also_invalidated_by?: Array<CompanionRole | "graph">;
+}): Array<CompanionRole | "graph"> {
   return [...new Set([...def.depends_on, ...(def.also_invalidated_by ?? [])])];
 }
 
@@ -843,7 +1133,7 @@ export function freshnessKeys(def: {
 export function entryIsFresh(
   entry: QaCriterionEntry,
   current: QaFieldHash,
-  depends_on: Array<"md" | "ts" | "lean" | "graph">,
+  depends_on: Array<CompanionRole | "graph">,
   current_script_hashes?: CriterionScriptHashes,
   lean_granularity?: "file" | "statement",
 ): boolean {
@@ -1009,7 +1299,7 @@ export function summariseFreshness(
   const out: CriterionFreshness[] = [];
   for (const [criterion, entries] of Object.entries(report.criteria)) {
     const def = QA_CRITERIA_BY_ID[criterion];
-    const dependsOn = def ? freshnessKeys(def) : (["md"] as Array<"md" | "ts" | "lean">);
+    const dependsOn = def ? freshnessKeys(def) : (["md"] as CompanionRole[]);
     const sh = scriptHashesByCriterion?.[criterion];
     const fresh: QaCriterionEntry[] = [];
     const stale: QaCriterionEntry[] = [];

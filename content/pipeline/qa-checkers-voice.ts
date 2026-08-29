@@ -25,10 +25,12 @@
  */
 
 import { readFileSync, existsSync } from "fs";
+import type { CheckerPaths } from "../../schemas/block-qa";
 import { EXTENDED_AUTOMATED_CHECKERS } from "./qa-checkers-extended";
 import { USES_AUTOMATED_CHECKERS } from "./qa-checkers-uses";
 import { COST_AUTOMATED_CHECKERS } from "./qa-checkers-cost";
 import { TRIVIALITY_AUTOMATED_CHECKERS } from "./qa-checkers-triviality";
+import { RENDER_AUTOMATED_CHECKERS } from "./qa-checkers-render";
 
 export interface CheckerHit {
   file: string;
@@ -466,7 +468,7 @@ const ALGEBRAIC_LEAN_RE = /\b(CommRing|Field|GroupWithZero|\{R : Type\*\}|\(R :=
  * legitimate patterns — an `R → ℝ` realisation map, or a conjecture whose
  * real claim carries generic support — that cannot be cleanly separated.
  */
-const ARCHIMEDEAN_TYPE_RE = /ℝ|\bReal\b|LinearOrderedField/;
+export const ARCHIMEDEAN_TYPE_RE = /ℝ|\bReal\b|LinearOrderedField/;
 
 /** Acknowledgement of an archimedean specialisation (§7c), matched against
  *  the `.md` narrative + the `.ts` `authorNotes`. Case-insensitive so
@@ -1193,7 +1195,7 @@ export function checkStatusSectionHeader(mdPath: string): CheckerResult {
 
 export const AUTOMATED_CHECKERS: Record<
   string,
-  (paths: { md?: string; ts?: string; lean?: string }) => CheckerResult
+  (paths: CheckerPaths) => CheckerResult
 > = {
   "voice-status-leak": (p) =>
     p.md ? checkStatusLeak(p.md, p.ts) : { result: "pass", hits: [] },
@@ -1240,4 +1242,7 @@ export const AUTOMATED_CHECKERS: Record<
   ...COST_AUTOMATED_CHECKERS,
   // Machine-triviality oracle (scaffold; inert without a cache).
   ...TRIVIALITY_AUTOMATED_CHECKERS,
+  // Render integrity — source patterns that abort pdflatex. Bodies in
+  // `qa-checkers-render.ts`.
+  ...RENDER_AUTOMATED_CHECKERS,
 };

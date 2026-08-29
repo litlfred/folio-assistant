@@ -12,7 +12,7 @@ import { LEAN_REF_PATTERN, leanPackageByName, parseLeanRef } from "./lean-packag
 import type { Block } from "./types.js";
 // Leaf module — importing the kind list from `types.js` would be a runtime
 // cycle, and `appliesTo` is built at module init, exactly when that bites.
-import { BLOCK_KINDS } from "./block-kinds.js";
+import { BLOCK_KINDS, DAK_LABEL_PREFIXES } from "./block-kinds.js";
 
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
@@ -252,11 +252,30 @@ export const RemotePackageRefSchema = z.object({
 
 
 
-export const KNOWN_LABEL_PREFIXES = [
+/**
+ * Every recognised label prefix, with its colon.
+ *
+ * The paper and structural prefixes are written out; the `dak` adapter's are
+ * derived from `DAK_LABEL_PREFIXES` so that this list and `KIND_PREFIXES` in
+ * `jsonld.ts` cannot drift as kinds are added. Their agreement is asserted by
+ * `assertPrefixesInSync`.
+ */
+export const KNOWN_LABEL_PREFIXES: readonly string[] = [
   "def:", "thm:", "lem:", "prop:", "cor:", "rem:", "ex:", "conj:",
   "prf:", "sim:", "eq:", "fig:", "tbl:",
+  // `alg:` and `prose:` were missing until 2026-08-26. `LABEL_PREFIXES` maps
+  // `algorithm -> "alg:"`, so 16 algorithm blocks and 18 prose blocks in qou
+  // carried labels this list did not recognise — which made
+  // `isCrossPaperRef("alg:markov-trace")` return true for a block's own
+  // same-paper label. The consequence was silent and user-visible:
+  // `render-latex.ts` emits cross-paper references as plain text rather than
+  // `\hyperref`, so 9 in-paper links lost their hyperlink in the PDF, and
+  // `build.ts` excluded them from its undefined-reference warning, so a
+  // dangling link to an algorithm would never have been reported.
+  "alg:", "prose:",
   "sec:", "chap:", "app:", "bib:",
-] as const;
+  ...Object.values(DAK_LABEL_PREFIXES).map((p) => `${p}:`),
+];
 
 export function isCrossPaperRef(label: string): boolean {
   return label.includes(":") && !KNOWN_LABEL_PREFIXES.some(p => label.startsWith(p));
@@ -264,8 +283,15 @@ export function isCrossPaperRef(label: string): boolean {
 
 // ── Label patterns ───────────────────────────────────────────────
 
-/** Label prefix must match object kind. */
-const LABEL_PREFIXES: Record<string, string> = {
+/**
+ * Label prefix must match object kind.
+ *
+ * Exported because the ingest writer mints block ids for extracted content and
+ * must use the same prefixes an author would — a fourth hand-written copy is
+ * how `alg:` came to be missing from `KNOWN_LABEL_PREFIXES` for as long as it
+ * was.
+ */
+export const LABEL_PREFIXES: Record<string, string> = {
   definition: "def:",
   theorem: "thm:",
   lemma: "lem:",
@@ -395,7 +421,11 @@ export const AuthorNoteSchema = z.object({
   see: z.string().optional(),
 });
 
-const BlockBaseSchema = z.object({
+/**
+ * Shared block fields, exported so the `dak` adapter's schemas in
+ * `dak-blocks.ts` extend the same base rather than restating it.
+ */
+export const BlockBaseSchema = z.object({
   title: z.string().optional(),
   uses: z.array(z.string()).optional(),
   foreshadows: z.array(z.string()).optional(),

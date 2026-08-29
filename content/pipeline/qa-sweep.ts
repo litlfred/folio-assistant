@@ -111,6 +111,8 @@ import {
   freshnessKeys,
   preserveNonScriptEntries,
   sameScriptVerdict,
+  applicabilityGap,
+  missingCompanionNote,
   computeCriterionScriptHashes,
   saveQaScriptSidecar,
   type CriterionScriptHashes,
@@ -123,6 +125,7 @@ import {
   getCriterionExtraInputs,
 } from "./qa-criteria-registry";
 import { AUTOMATED_CHECKERS } from "./qa-checkers-voice";
+import { DAK_AUTOMATED_CHECKERS } from "./qa-checkers-dak";
 import { usesGraphHash } from "./uses-graph-hash";
 
 import type { CheckerResult } from "./qa-checkers-extended";
@@ -130,7 +133,10 @@ import type {
   BlockQaReport,
   QaCriterionEntry,
   QaScriptSidecar,
+  CompanionRole,
 } from "../../schemas/block-qa";
+import { criterionAdapters } from "../../schemas/block-qa";
+import { adapterForKind } from "../../schemas/block-kinds";
 
 
 // ── CLI parsing ─────────────────────────────────────────────────
@@ -197,8 +203,8 @@ interface BlockSweepResult {
     outcome:
       | "fresh-skip"
       | "needs-agent"
-      | "n/a-no-md"
-      | "n/a-no-lean"
+      | `n/a-no-${CompanionRole}`
+      | "n/a-wrong-adapter"
       | CheckerResult["result"];
     severity?: "critical" | "major" | "minor";
     hits?: number;
@@ -295,7 +301,13 @@ function run(): void {
   for (const block of walkBlocks(walkRoot, { includeUnlabelled: true })) {
     if (blockRootFilter && block.root !== blockRootFilter) continue;
     totalBlocks++;
-    const paths = { md: block.md, ts: block.ts, lean: block.lean };
+    // Every present companion, not the paper triple. Building `{md, ts,
+    // lean}` here was the wiring half of the `depends_on` defect: the type
+    // system and the applicability gate learned about `.dmn` and `.fsh`, but
+    // the sweep still hashed three files, so a DAK block's verdict could
+    // never go stale when its decision table changed — a cached `pass` would
+    // outlive the logic it judged.
+    const paths = block.companions;
     const currentHashes = hashBlockFiles(paths);
 
     // Load or initialise report.
@@ -410,7 +422,7 @@ function run(): void {
       }
 
       // If non-automated, mark as needing agent and continue.
-      const checker = AUTOMATED_CHECKERS[criterionId];
+      const checker = AUTOMATED_CHECKERS[criterionId] ?? DAK_AUTOMATED_CHECKERS[criterionId];
       if (!def.automated || !checker) {
         sweepResult.criteria_needs_agent++;
         totalNeedsAgent++;
@@ -438,14 +450,24 @@ function run(): void {
         deps_hash: scriptHashes?.deps_hash,
       };
 
-      if (def.depends_on.includes("md") && !block.md) {
+      // Adapter gate, ahead of the companion gate. A criterion written for
+      // the paper adapter must not run against a WHO L2/L3 block: a
+      // `voice-scholarly-default` verdict on a FHIR ValueSet is a category
+      // error, and it would land as a `fail` rather than as an obviously
+      // wrong `n/a`. Criteria default to `["paper"]` (see `criterionAdapters`)
+      // so the ~47 existing definitions stay correct unedited.
+      const blockAdapter = adapterForKind(block.kind);
+      const criterionScope = criterionAdapters(def);
+      if (!blockAdapter || !criterionScope.includes(blockAdapter)) {
         const naEntry: QaCriterionEntry = {
           field_hash: fieldHash,
           result: "n/a",
           reviewer: { ...scriptReviewer },
           reviewed_at: nowIso,
           reviewed_sha: headSha,
-          notes: "block has no .md sibling",
+          notes: blockAdapter
+            ? `criterion applies to ${criterionScope.join("/")}; block kind "${block.kind}" is ${blockAdapter}`
+            : `unknown block kind "${block.kind}" — no adapter`,
         };
         const priorNa = existing.find((e) => e?.reviewer?.kind === "script");
         report.criteria[criterionId] = [
@@ -456,18 +478,27 @@ function run(): void {
         ];
         sweepResult.details.push({
           criterion: criterionId,
-          outcome: "n/a-no-md",
+          outcome: "n/a-wrong-adapter",
         });
         continue;
       }
-      if (def.depends_on.includes("lean") && !block.lean) {
+
+      // Applicability gate, over whichever companion roles the criterion
+      // declares. This was two hard-coded `if`s for `.md` and `.lean` — the
+      // paper adapter's companion set — so a criterion depending on a `.dmn`
+      // or `.fsh` had no gate at all, and every WHO L2/L3 block fell through
+      // the `.md` branch to a clean `n/a` for an axis that never ran. A
+      // criterion that reports `n/a` on a corpus it did not check is
+      // indistinguishable downstream from one that found nothing wrong.
+      const missingRole = applicabilityGap(def.depends_on, block.companions);
+      if (missingRole) {
         const naEntry: QaCriterionEntry = {
           field_hash: fieldHash,
           result: "n/a",
           reviewer: { ...scriptReviewer },
           reviewed_at: nowIso,
           reviewed_sha: headSha,
-          notes: "block has no .lean sibling",
+          notes: missingCompanionNote(missingRole),
         };
         const priorNa = existing.find((e) => e?.reviewer?.kind === "script");
         report.criteria[criterionId] = [
@@ -478,7 +509,7 @@ function run(): void {
         ];
         sweepResult.details.push({
           criterion: criterionId,
-          outcome: "n/a-no-lean",
+          outcome: `n/a-no-${missingRole}`,
         });
         continue;
       }

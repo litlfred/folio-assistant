@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/document-publishing/input.schema.json",
+  "title": "Document Publishing Input",
+  "description": "Input schema for the document-publishing skill: render a document folio without a TeX installation.",
+  "type": "object",
+  "required": ["document", "format"],
+  "properties": {
+    "document": { "type": "string", "description": "Document slug under content/." },
+    "format": {
+      "type": "string",
+      "enum": ["md", "html", "pdf"],
+      "description": "Output format. All three assemble Markdown first; html and pdf then run pandoc."
+    },
+    "pdfEngine": {
+      "type": "string",
+      "enum": ["auto", "weasyprint", "prince", "wkhtmltopdf"],
+      "default": "auto",
+      "description": "HTML-to-PDF engine. Never latexmk: a document folio is defined by not requiring TeX to publish."
+    },
+    "css": { "type": "string", "description": "Stylesheet path relative to the repo root. Belongs in the folio repo — a house style is content." },
+    "toc": { "type": "boolean", "default": true }
+  }
+}

@@ -25,6 +25,67 @@ Published at
 Read that first. **The rest of this file is a reference** — commands and
 conventions to come back to, not a path through the project.
 
+## Content types — `document` is the base, `paper` extends it
+
+A **document** folio is structured prose: policy guidance, a standard, a report.
+A **paper** is that plus the seven block kinds whose assertion is a formal
+mathematical claim, backed by `.lean` siblings and typeset through LaTeX.
+
+That relation is encoded, not just described. `PaperContentAdapter` extends
+`DocumentContentAdapter`; `MATH_BLOCK_KINDS` is written out in
+`schemas/block-kinds.ts` and `DOCUMENT_BLOCK_KINDS` is its **derived**
+complement, so a kind added to `BLOCK_KINDS` cannot go unclassified.
+
+**Profiles are a different axis from adapters, and conflating them is costly.**
+Adapters (`paper`, `dak`) partition kinds into disjoint namespaces;
+`adapterForKind` is what QA criterion scoping reads, and it must stay total and
+unambiguous. Profiles (`document`, `paper`) *nest*: every document kind is also
+a paper kind. Making `document` a third adapter would have made
+`adapterForKind` ambiguous on all eight shared kinds. When you add a content
+type, ask whether it needs different **code** or only different **rules** — if
+only rules, it is a profile plus a subclass, not an adapter.
+
+Enforcement is `content/pipeline/profile-check.ts`, run on every
+`content_validate`. It catches what schema validation structurally cannot: a
+`theorem` is a valid `theorem` whatever folio it sits in, and `constraints.ts`
+cannot read `folio.config.json`. Two rules — kind within profile, and (document
+only) no `lean` field and no `.lean` sibling, because `remark`, `example`,
+`algorithm` and `simulator` all *declare* an optional `lean` that the type
+permits and the profile forbids.
+
+**The document render path takes no TeX.** `content/pipeline/render-markdown.ts`
+assembles the folio to one Markdown file; `document_render_{md,html,pdf}` take
+it through pandoc, the PDF via weasyprint/prince/wkhtmltopdf. It never falls
+back to `latexmk`, deliberately — a PDF that silently came out of LaTeX would
+misreport what the folio needs to build, and the next person on a clean machine
+pays for that. It is registered for **both** content types, because it is the
+render that works while drafting on a machine with no TeX.
+
+**There is no `recommendation` block kind.** A normative statement is carried
+by a labelled, titled `prose` block; `skills/folio-document-adapter/normative-statements.md`
+states the convention and its limits. Adding a real kind means a builder, a Zod
+schema, a label prefix, viewer registration, constraint rows and QA criteria —
+about thirty files — and it is tracked separately rather than half-done. Note
+that `document-intake.md` still maps guideline recommendations onto
+`definition`; that predates the document profile and is wrong for a document
+folio, where `definition`'s `lean` field is required.
+
+## Starting a new folio
+
+`bun run init-folio --help`, or the `folio_init` MCP tool. It writes `content/`,
+`uploads/`, `library/`, the document + chapter + first block manifests,
+`folio.config.json`, the `content/schema/` builder shim, `AGENTS.md` with
+`CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the session-start hook and the beans
+store — and links the platform as a submodule or a sibling checkout.
+
+Two things about it worth knowing before you edit it. The builder shim exists so
+the path to folio-assistant is written down **once**: block manifests import
+`../schema/builders`, never the platform directly, so re-linking is a two-file
+edit rather than a corpus sweep. And `folio_init` is registered among the
+**generic** tools, not in an adapter, because it runs before the folio has a
+content type — a bare repo falls back to the paper adapter, so an
+adapter-scoped tool would be unreachable in exactly the case it exists for.
+
 ## Commands
 
 ```sh
@@ -34,6 +95,10 @@ bun test                    # unit tests
 bunx playwright test        # e2e tests   (npm script: test:e2e)
 eslint .                    # lint
 bun run src/index.ts --check-deps   # probe environment capabilities
+bun run init-folio --help           # scaffold a new folio repository
+bun run readme:sync                 # refresh a folio README's generated sections
+bun run readme:sync:check           # ...and fail if any is stale (for CI)
+bun run readme:sections             # list the sections a README can opt into
 ```
 
 ## Work-plan & todos — use `beans`
@@ -114,6 +179,172 @@ Full discipline: `.claude/skills/local/todo-manager.md` and
 > `todo-review` skill over `feedback/<paper>/*.ts`) — that is a separate domain
 > feature, not the agent work-plan.
 
+## README sections — the folio owns the file, the platform owns the markers
+
+`content/pipeline/readme-sections.ts` holds a registry of generated sections —
+`folio:toc`, `folio:lean-coverage`, `folio:lean-modules`, `folio:simulators`,
+`folio:workflows` — and writes each one **only where the README already carries
+its `<!-- marker:begin -->` / `<!-- marker:end -->` pair**. A folio opts in per
+section; nothing outside a marked region is ever touched. `bun run readme:sync`,
+`readme:sync:check` for CI, `readme:sections` to list them, or the `readme_sync`
+MCP tool, registered among the **generic** tools: a document folio has chapters,
+simulators and workflows for the same reason a paper folio does, and simply
+never carries the Lean markers.
+
+**The predecessor could not have that property.** `scripts/generate-readme.sh`
+ended in `cp "$OUT" README.md` — it replaced the whole file, with one folio's
+content held in the platform: the title `# Quantum Observable Universe`, three
+`litlfred/qou` badges, a Knot Registry of Alexander-Briggs indices, a Project
+Structure table naming `content/quantum-observable-universe/lean/`, and a CC BY
+4.0 licence block. Run it in any other folio and the author loses their README.
+Only five of its sections were derived from the tree at all; the rest was prose,
+and prose about a folio belongs to that folio. It is deleted, along with
+`scripts/readme-metadata.ts`, whose only consumer it was.
+
+Three literals went with it, each worth recognising in new code: modules were
+prefixed `QOU.` regardless of the folio's Lake library (now read from
+`lakefile.toml`, and left **unprefixed** when no lakefile names one — a wrong
+namespace is worse than none, because it is what a reader pastes into an
+`import`); workflow descriptions came from a hardcoded map of twelve `qou`
+filenames consulted *before* the workflow's own `name:` (now always the
+`name:`); and the simulator directory was the literal
+`folio-assistant/simulators` (now `folio.config.json`).
+
+**"Could not determine" is a third state, everywhere.** A section returns
+`skip` and the region is left exactly as it was. That is not decoration: qou
+configures its simulators under `folio-assistant/simulators`, which exists only
+once the platform submodule is checked out, and the first version rendered
+"directory absent" as "this folio has no simulators" — replacing a correct
+nine-row table with a sentence. Same rule as the TOC's unreadable publish ref.
+An empty directory is still a determined empty.
+
+The contents table itself replaced a part of that script with two defects
+worth remembering, because both are easy to write again.
+
+**It described one folio from inside the platform.** The paper directory, the
+title, the badges and a `PAGES` constant were literals in a platform script,
+so it emitted a chapter table for `quantum-observable-universe` and for
+nothing else — in a repo whose `folio.ts` lists five papers. It also resolved
+its own helpers against the folio root (`bun run scripts/readme-metadata.ts`),
+where the platform's scripts are not, so it could only run from a platform
+checkout — which has no papers.
+
+**It composed links instead of resolving them.** Every PDF cell was
+`${PAGES}/papers/<paper>/chapters/<dir>.pdf`, built by convention and checked
+against nothing. The folio's `gh-pages` branch has no `chapters/` directory,
+so all twenty-three chapter links were 404 and had always been; three of six
+appendix links happened to resolve. Every PDF cell is now looked up in a real
+`git ls-tree` of the publish ref, and a chapter with no published PDF renders
+`—`. "Could not read the publish ref" is a **third** state, reported as such:
+a shallow clone with no `gh-pages` must not silently blank a table that was
+right yesterday.
+
+**On link style — `raw` is not the private-repo answer.** A private folio
+whose README links to `https://<owner>.github.io/...` is unreachable for
+exactly the people who have repository access, and
+`raw.githubusercontent.com` does not fix it: it 404s on a private repo
+without a token, and a browser session cookie does not authenticate it. The
+default is `blob` — `github.com/<owner>/<repo>/blob/<ref>/<path>` — which
+follows the viewer's GitHub session, works whether the repo is public or
+private, and renders PDFs inline. `pages` and `raw` remain available in
+`folio.config.json` under `readme.linkStyle`, and each prints a note under
+the table saying who can follow its links.
+
+**Adding a section** is one entry in `SECTIONS`: a marker, a one-line summary
+for `--list`, and a renderer returning Markdown plus operator notes. The CLI,
+the MCP tool and the staleness check all read the registry, so nothing else
+needs touching.
+
+## CI health — a red workflow looks exactly like a green one from in here
+
+`docs-site.yml` fired on every push to `main` and **failed all 30 times** over
+two months. The trigger was fine; the *outcome* was invisible, so the published
+site sat stale and nothing in the repo said so. Bean `xom7`.
+
+`bun run check:ci-health` reports each workflow's state on the default branch —
+consecutive failures, days since the last green, and whether it has run at all
+recently. The session-start sweep prints it, so it lands where you already look.
+Three rules it follows, and you should too when reading it: **"could not check"
+is never rendered as green**; a red that has not re-run in a week is flagged as
+possibly stale rather than as an active fire; and a red whose **workflow file
+changed after the failing run** is reported as `superseded` — the version that
+failed is gone, so the verdict is stale. `superseded` is never rendered as green
+and never counted as a live failure, because a later edit is evidence the
+failing version is gone, not evidence the new one works.
+
+That third rule exists because two of this repo's workflows would otherwise be
+red forever. `witness-refresh.yml` and `qa-sweep.yml` failed to *parse* on
+2026-08-07 — which is why GitHub ran them on `push` despite both being
+`workflow_dispatch`-only, and why their runs are named by path rather than by
+`name:`. They were fixed the next day. They only run on dispatch and the report
+only reads the default branch, so nothing will ever run them here again. Bean
+`lq7e`. **Do not "fix" them by dispatching**: both fail by design in this repo —
+`qa-sweep` preflights on `content/package.json` and `witness-refresh` needs
+`folio-assistant/computations/`, and the platform carries no folio.
+
+**A report is only read by someone in the room.** The session-start sweep covers
+every day somebody is working; the failure being guarded against is a quiet
+stretch with nobody looking, which is exactly the stretch in which no session
+starts either. So `.github/workflows/ci-health.yml` runs the same check weekly
+and maintains **one** tracking issue labelled `ci-health` — opened when the
+default branch has a live failure, edited in place while it persists (an edit
+does not notify, so a long outage stays one unread item), and closed
+automatically when `main` is clean. It deliberately does not send another
+email: GitHub sent 30 and the premise of `xom7` is that nobody reads them. The
+three live badges at the top of `README.md` are the same state at the front
+door. Bean `ynu8`.
+
+Two things about that workflow are load-bearing rather than incidental. It
+checks out with `fetch-depth: 0`, because the `superseded` rule asks `git log`
+when a workflow file last changed and a shallow clone cannot answer — which
+would resurrect the false fires it exists to retire. And on "could not check"
+(exit 2) it leaves the tracking issue **untouched** and fails the job, rather
+than closing it: the watchdog going blind must not read as good news, and a red
+`ci-health.yml` is itself reported by next week's run.
+
+Complements `5rfy`, which fixed workflows that never *fire*. This is the
+opposite defect — one that fires constantly and fails every time.
+
+## Subagents with persistent memory (`.claude/agents/`)
+
+Three subagents are defined under [`.claude/agents/`](.claude/agents/), each
+carrying `memory: project` in its frontmatter. That gives the agent its own
+directory under `.claude/agent-memory/<agent-name>/`; the first 200 lines (or
+25 KB) of that directory's `MEMORY.md` are injected into the subagent's system
+prompt when it starts, and it reads and writes the directory as it works.
+
+| agent | owns |
+|---|---|
+| `platform-boundary-guard` | keeping folio specifics out of platform code; adapter-vs-profile; the qou↔platform split |
+| `ci-health-watcher` | whether a workflow is actually working on the default branch |
+| `content-pipeline-navigator` | validate / render / build / qa-sweep, schemas, block kinds, script ownership |
+
+Each `MEMORY.md` labels every entry as exactly one of:
+
+- **STABLE** — a path, a command, a rule. Trustworthy.
+- **TRAP** — a specific way the task goes wrong, with the evidence that
+  established it. The reason to have memory at all: every genericity failure
+  in this document was paid for once, and a TRAP is what stops it being paid
+  for twice.
+- **BASELINE** — a measured number, stored **with the command that produced it
+  and the date, and never quoted as a current answer.** `ci-health-watcher`'s
+  memory takes this furthest and holds no workflow state at all, because every
+  such number is a live signal that goes stale by design.
+
+**Maintaining them is part of the work.** A session that establishes a durable
+fact in one of these areas adds it as a TRAP in the same PR; a session that
+re-measures a BASELINE updates the entry with the fresh number and date. A
+memory file that only accretes becomes the thing it exists to prevent.
+
+`MEMORY.md` is the injected entry point, so keep it under 200 lines — split
+detail into sibling files the agent reads on demand. `memory: project` writes
+under `.claude/agent-memory/`, which is **committed**; `memory: local` writes
+under `.claude/agent-memory-local/`, gitignored, for anything per-machine.
+
+The agents defer to this file and to `skills/` as the source of truth. Memory
+summarises; the skill governs. Where the two disagree, the skill wins and the
+memory entry is wrong — fix it.
+
 ## At session start
 
 Surface the work-plan before starting: run `beans prime` (and `beans list`), or
@@ -152,6 +383,64 @@ a background subagent, not the foreground.
 - Lean tooling roadmap (Lean Atlas / Compass, Nazrin, refactor cluster,
   LeanDojo) — where each earns a place and how it wires into existing skills:
   `docs/proposals/llm-authoring-tool-integration.md`.
+- **Every process in this repo is BPMN** — six `.bpmn` files under
+  `docs/workflows/`, indexed by `docs/publication-workflow.md`. Read that page
+  before changing how a proposed edit is validated, who approves what, or where
+  beans are claimed: it is the normative picture of the HCI validation gate
+  (mechanical + non-mechanical), the draft-review-publish path, and the work-plan
+  lane. Three are content-agnostic (`editing-hci-validation`,
+  `draft-to-publication`, `content-lifecycle`); three are per content type
+  (`authoring-a-paper`, `l2-dak-authoring`, `l3-fhir-pipeline`).
+  **The `.bpmn` is the source of truth**; `docs/assets/img/workflows/*.svg` is
+  generated — run `bun run render:bpmn` after editing one, and
+  `bun run render:bpmn:check` fails if an SVG is stale. Each activity carries a
+  `<folio:skill ref="…"/>` extension naming the skill that implements it, and
+  `<folio:bean store=".beans/"/>` where it touches the work plan — add both when
+  you add an activity.
+  **Adding a diagram:** if it has actors, activities and a control flow, it is a
+  process — author it as BPMN under `docs/workflows/`, not as a Mermaid fence.
+  Mermaid stays for the things that are *not* processes (component maps, the
+  role-inheritance lattice, the docs navigation graph); the audit of which is
+  which is in `docs/publication-workflow.md`.
+- **The diagrams are executable** — `workflow_list` / `workflow_start` /
+  `workflow_next` / `workflow_complete` (MCP) run a process from
+  `docs/workflows/*.bpmn`. `workflow_next` tells you what is enabled **now**,
+  which lane owns it and which skill implements it; `workflow_complete` refuses
+  a step that is not enabled, so work cannot be claimed out of order. State is
+  committed under `.folio/workflow/`, like beans, so a sibling session sees it.
+  **The base processes are STRICT.** `editing-hci-validation`,
+  `draft-to-publication` and `content-lifecycle` carry
+  `<folio:policy enforcement="strict"/>`: `workflow_gate` refuses a step that is
+  not enabled. The per-content-type processes are `advisory` — their package
+  owns what adequate means in that domain. Absent policy means strict.
+  **To relax a base step**, declare it in `skills/<package>/workflow-policy.json`
+  with a **reason** — no reason, no load — and never a step marked
+  `relaxable="false"` (`Task_ReviewFindings`, `Gateway_EditorDecision`,
+  `Task_Commit`, `Task_AuthorizeRelease`, `Task_PublishRelease`: the editor
+  seeing the findings, the decision, the write, and release authorisation).
+  `bun run check:workflow-policy` validates every relaxation and runs in CI.
+  Rationale: `docs/proposals/workflow-orchestration.md` §4.
+  **The commit boundary enforces it.** `scripts/check-corpus-gate.ts`, run in a
+  folio repo from a pre-commit hook or CI, refuses a changed block that no
+  instance records the editor having authorised — no instance, not past the
+  decision, or discarded. It refuses when it cannot tell, too: a file that reads
+  as a manifest but will not import is refused rather than waved through.
+  `.qa.json` is excluded (the sweep writes it). Use `--warn` to adopt gradually.
+  **Some gateways are computed, not chosen.** One carrying `<folio:decision/>`
+  is backed by a DMN table in `docs/workflows/decisions/`: pass `facts` (e.g.
+  `{ failCritical: 0, failMajor: 2 }` from `qa_sweep` totals) and the table
+  returns the branch. `workflow_complete` refuses a hand-supplied `outcome`
+  there — asserting the answer would defeat the point. Adding one means adding
+  the `.dmn`, the `folio:decision` ref, and nothing else: the loader checks
+  every outcome the table can return names a real branch.
+  **Bean-marked steps are the bean operation, not a note about it.** An activity
+  with `<folio:bean op="claim|note|resolve"/>` performs it on the instance's bean
+  when you complete the step: `claim` sets `in-progress` (idempotent), `note`
+  appends what you pass as `note`, and `resolve` completes the bean **only once
+  the instance itself has completed** — a still-running process gets a note,
+  because whether work is done is a judgement and `AGENTS.md` says a bean is not
+  closed on someone else's say-so. `work_plan_prime` reports every instance's
+  position next to its bean, so the plan and the process are one answer.
 - Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this
