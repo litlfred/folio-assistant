@@ -96,6 +96,8 @@ bunx playwright test        # e2e tests   (npm script: test:e2e)
 eslint .                    # lint
 bun run src/index.ts --check-deps   # probe environment capabilities
 bun run init-folio --help           # scaffold a new folio repository
+bun run readme:toc                  # regenerate a folio README's contents table
+bun run readme:toc:check            # ...and fail if it is stale (for CI)
 ```
 
 ## Work-plan & todos — use `beans`
@@ -175,6 +177,49 @@ Full discipline: `.claude/skills/local/todo-manager.md` and
 > Not to be confused with the content-review **feedback** workflow (the
 > `todo-review` skill over `feedback/<paper>/*.ts`) — that is a separate domain
 > feature, not the agent work-plan.
+
+## README contents — generated per paper, and every link is checked
+
+`content/pipeline/readme-toc.ts` writes one section and one table **per paper
+in the folio** — `folio.ts` order, chapter titles from the manifests — between
+the `<!-- folio:toc:begin -->` / `<!-- folio:toc:end -->` markers in the
+folio's `README.md`. `bun run readme:toc`, `readme:toc:check` for CI, or the
+`readme_toc` MCP tool. `folio_init` scaffolds a README carrying the markers.
+It is registered among the **generic** tools: a document folio has chapters and
+a README for the same reason a paper folio does.
+
+It replaces a section of `scripts/generate-readme.sh` that had two defects
+worth remembering, because both are easy to write again.
+
+**It described one folio from inside the platform.** The paper directory, the
+title, the badges and a `PAGES` constant were literals in a platform script,
+so it emitted a chapter table for `quantum-observable-universe` and for
+nothing else — in a repo whose `folio.ts` lists five papers. It also resolved
+its own helpers against the folio root (`bun run scripts/readme-metadata.ts`),
+where the platform's scripts are not, so it could only run from a platform
+checkout — which has no papers. Scripts resolve against `$PLATFORM` now;
+content against the git toplevel.
+
+**It composed links instead of resolving them.** Every PDF cell was
+`${PAGES}/papers/<paper>/chapters/<dir>.pdf`, built by convention and checked
+against nothing. The folio's `gh-pages` branch has no `chapters/` directory,
+so all twenty-three chapter links were 404 and had always been; three of six
+appendix links happened to resolve. Every PDF cell is now looked up in a real
+`git ls-tree` of the publish ref, and a chapter with no published PDF renders
+`—`. "Could not read the publish ref" is a **third** state, reported as such:
+a shallow clone with no `gh-pages` must not silently blank a table that was
+right yesterday.
+
+**On link style — `raw` is not the private-repo answer.** A private folio
+whose README links to `https://<owner>.github.io/...` is unreachable for
+exactly the people who have repository access, and
+`raw.githubusercontent.com` does not fix it: it 404s on a private repo
+without a token, and a browser session cookie does not authenticate it. The
+default is `blob` — `github.com/<owner>/<repo>/blob/<ref>/<path>` — which
+follows the viewer's GitHub session, works whether the repo is public or
+private, and renders PDFs inline. `pages` and `raw` remain available in
+`folio.config.json` under `readme.linkStyle`, and each prints a note under
+the table saying who can follow its links.
 
 ## CI health — a red workflow looks exactly like a green one from in here
 

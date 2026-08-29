@@ -6,7 +6,7 @@
  * Used by scripts/generate-readme.sh to avoid GNU-specific shell tools.
  */
 
-import { readdir, stat, readFile } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
 import { join, basename } from "path";
 
 // The FOLIO's root. `join(import.meta.dir, "..")` is the PLATFORM's, which
@@ -20,37 +20,25 @@ const root = findContentRepoRoot();
 
 interface PaperInfo { title: string; dir: string; abstract?: string }
 
+/**
+ * The folio's papers, in authored order, with abstracts.
+ *
+ * Discovery (folio.ts order, manifest titles) is `readme-toc.ts`'s — it is
+ * the same question the contents table asks, and two regex copies of it drift.
+ * Only the abstract, which no table shows, is read here.
+ */
 async function getPapers(): Promise<PaperInfo[]> {
-  // Authoritative paper order comes from content/folio.ts (paperRef calls
-  // in source order). Falling back to readdir was non-deterministic — the
-  // OS returns directory entries in arbitrary order, so README.md churned
-  // on every regenerate. The folio manifest is the canonical source.
   const contentDir = join(root, "content");
-  const folioPath = join(contentDir, "folio.ts");
-  const folioSrc = await readFile(folioPath, "utf-8");
-  // Match `paperRef({ dir: "..." })` in source order.
-  const orderedDirs = [
-    ...folioSrc.matchAll(/paperRef\(\s*\{[^}]*?dir:\s*["']([^"']+)["']/gs),
-  ].map(m => m[1]);
-
-  const papers: PaperInfo[] = [];
-  for (const dir of orderedDirs) {
-    const manifest = join(contentDir, dir, `${dir}.ts`);
-    try {
-      await stat(manifest);
-    } catch { continue; }
-    const src = await readFile(manifest, "utf-8");
-    // Backreferenced quote: an apostrophe inside a double-quoted title
-    // (e.g. `title: "Bring's Surface"`) must not terminate the match.
-    const titleMatch = src.match(/title:\s*("|')((?:\\.|(?!\1).)*)\1/);
-    const abstractMatch = src.match(/abstract:\s*\n?\s*("|')((?:\\.|(?!\1).)*)\1/);
-    papers.push({
-      title: titleMatch?.[2] ?? dir,
-      dir,
-      abstract: abstractMatch?.[2],
-    });
-  }
-  return papers;
+  return Promise.all(
+    discoverPapers(root).map(async (p) => {
+      let abstract: string | undefined;
+      try {
+        const src = await readFile(join(contentDir, p.dir, `${p.dir}.ts`), "utf-8");
+        abstract = src.match(/abstract:\s*\n?\s*("|')((?:\\.|(?!\1).)*)\1/)?.[2];
+      } catch { /* a paper without an abstract is not an error */ }
+      return { title: p.title, dir: p.dir, abstract };
+    }),
+  );
 }
 
 // ── Chapters (from paper manifest, preserving authored order) ───────────────
@@ -59,27 +47,7 @@ interface ChapterInfo { dir: string; title: string; kind: "chapter" | "appendix"
 
 async function getChapters(): Promise<ChapterInfo[]> {
   const { paper } = statsTarget();
-  const manifest = join(root, "content", paper, `${paper}.ts`);
-  const src = await readFile(manifest, "utf-8");
-  // Extract dir values from chapterRef({ dir: "..." }) in order
-  const dirs = [...src.matchAll(/chapterRef\(\{\s*dir:\s*["']([^"']+)["']/g)].map(m => m[1]);
-
-  const chapters: ChapterInfo[] = [];
-  for (const dir of dirs) {
-    const chapterTs = join(root, "content", paper, dir, `${dir}.ts`);
-    let title = dir;
-    try {
-      const chSrc = await readFile(chapterTs, "utf-8");
-      const m = chSrc.match(/title:\s*("|')((?:\\.|(?!\1).)*)\1/);
-      if (m) title = m[2];
-    } catch {}
-
-    const kind = dir.startsWith("appendix-") ? "appendix"
-               : dir.startsWith("index-") ? "index"
-               : "chapter";
-    chapters.push({ dir, title, kind });
-  }
-  return chapters;
+  return chaptersOf(root, paper);
 }
 
 // ── Lean modules ────────────────────────────────────────────────────────────
@@ -178,6 +146,7 @@ async function getWorkflows(): Promise<WorkflowInfo[]> {
 
 import { computeStats } from "./lean-coverage";
 import { findContentRepoRoot, findPapers, soleFolioPaper } from "../content/pipeline/repo-root";
+import { chaptersOf, discoverPapers } from "../content/pipeline/readme-toc";
 import { LEAN_PACKAGES } from "../schemas/lean-packages";
 
 /**
