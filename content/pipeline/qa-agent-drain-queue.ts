@@ -38,7 +38,18 @@ import { requirePaper } from "./repo-root";
 // would land inside folio-assistant, not the content repo).
 process.chdir(findContentRepoRoot());
 
-const root = process.argv[2] ?? join("content", requirePaper());
+const _paperIdx = process.argv.indexOf("--paper");
+const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+const _positional = (() => {
+  const a = process.argv.slice(2);
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] === "--paper") { i++; continue; }
+    if (a[i].startsWith("--")) continue;
+    return a[i];
+  }
+  return undefined;
+})();
+const root = _positional ?? join("content", requirePaper(_paperArg));
 const bsIdx = process.argv.indexOf("--batch-size");
 const bsVal =
   bsIdx >= 0 && bsIdx + 1 < process.argv.length
