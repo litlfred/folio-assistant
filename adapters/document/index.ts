@@ -46,6 +46,7 @@ import { registerPreferenceTools } from "../../src/tools/preferences.js";
 import { registerPreviewTools } from "../../src/tools/preview.js";
 import { registerSkillFetchTools } from "../../src/tools/skill-fetch.js";
 import { registerFolioInitTools } from "../../src/tools/folio-init.js";
+import { registerReadmeTocTools } from "../../src/tools/readme-toc.js";
 
 import type {
   ContentAdapter,
@@ -1068,6 +1069,9 @@ End every response with suggested follow-ups:
     // `folio_init` runs BEFORE a folio has a content type, so it has to be
     // reachable whichever adapter a bare repo happened to fall back to.
     registerFolioInitTools(server);
+    // A folio's README lists its papers and chapters whatever the content
+    // type, so the contents table is generic too.
+    registerReadmeTocTools(server);
   }
 
   /**

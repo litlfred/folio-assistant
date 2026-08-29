@@ -52,6 +52,8 @@
     "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
     "check:workflow-policy": "bun run scripts/check-workflow-policy.ts",
+    "readme:toc": "bun run content/pipeline/readme-toc.ts",
+    "readme:toc:check": "bun run content/pipeline/readme-toc.ts --check",
     "render:bpmn": "bun run scripts/render-bpmn.ts",
     "render:bpmn:check": "bun run scripts/render-bpmn.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json"

@@ -10,6 +10,15 @@
 # via bun, avoiding GNU-specific shell tools for portability.
 
 set -euo pipefail
+
+# The PLATFORM (folio-assistant) and the FOLIO are different repositories: the
+# folio embeds the platform as a submodule or a symlinked sibling. Resolving
+# the helper scripts against the folio root — `bun run scripts/…` after cd'ing
+# to the git toplevel — looked for them in the folio, which does not ship them,
+# so this script could only ever run from inside the platform checkout, where
+# there are no papers to describe. Scripts resolve against THIS FILE; content
+# resolves against the git toplevel, which is the folio.
+PLATFORM="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$(git rev-parse --show-toplevel)"
 
 OUT="$(mktemp)"
@@ -17,7 +26,7 @@ trap 'rm -f "$OUT"' EXIT
 
 # ── Extract metadata via bun (portable) ─────────────────────────────────────
 
-META="$(bun run scripts/readme-metadata.ts)"
+META="$(bun run "$PLATFORM/scripts/readme-metadata.ts")"
 
 # jq-free JSON access via bun one-liners
 json_get() { echo "$META" | bun -e "const d=JSON.parse(await Bun.stdin.text()); $1"; }
@@ -64,59 +73,23 @@ producing `chapters/*.tex` output. LaTeX is a **rendering target**,
 not the source of truth.
 ARCH
 
-# ── Papers ───────────────────────────────────────────────────────────────────
+# ── Contents (one table per paper in the folio) ─────────────────────────────
+#
+# Was two hand-rolled sections here: a Papers table, and a Chapters table for
+# a single hardcoded paper with `https://litlfred.github.io/qou/...` composed
+# into every PDF cell. Both are now `content/pipeline/readme-toc.ts`, which
+# covers EVERY paper in the folio and verifies each PDF link against the
+# publish ref instead of assuming a layout. The old cells were composed, never
+# checked, and every chapter link they produced was a 404.
 
-section "Papers"
+section "Contents"
 
-line "The repository hosts multiple papers as a **folio**:"
+line "One section per paper in the folio.  The **Source** column links to the"
+line "content objects; the **PDF** column links to the published standalone"
+line "build, and shows \`—\` for a chapter that has not been published."
 line ""
-line "| Paper | Directory |"
-line "|-------|-----------|"
 
-json_get '
-  for (const p of d.papers)
-    console.log(`| ${p.title} | \`content/${p.dir}/\` |`);
-' >> "$OUT"
-
-# ── Chapters (main paper) ───────────────────────────────────────────────────
-
-section "Chapters (Quantum Observable Universe)"
-
-line "Each chapter is also published as a standalone PDF on GitHub Pages —"
-line "useful when you only want the relevant slice of the paper rather than"
-line "the full document.  The **PDF** column links to the standalone build;"
-line "the **Directory** column links to the source content objects."
-line ""
-line "| # | Directory | Title | Standalone PDF |"
-line "|---|-----------|-------|----------------|"
-
-json_get '
-  const PAGES = "https://litlfred.github.io/qou/papers/quantum-observable-universe";
-  // Front-matter group is bundled into a single front-matter.pdf
-  const FRONT_MATTER = new Set(["introduction", "notation", "glossary", "index-of-definitions"]);
-  let chNum = 0;
-  for (const c of d.chapters) {
-    let pdfCell = "—";
-    if (c.kind === "chapter") {
-      if (FRONT_MATTER.has(c.dir)) {
-        pdfCell = `[front-matter.pdf](${PAGES}/chapters/front-matter.pdf)`;
-      } else {
-        pdfCell = `[${c.dir}.pdf](${PAGES}/chapters/${c.dir}.pdf)`;
-      }
-      console.log(`| ${chNum} | \`${c.dir}/\` | ${c.title} | ${pdfCell} |`);
-      chNum++;
-    } else if (c.kind === "appendix") {
-      pdfCell = `[${c.dir}.pdf](${PAGES}/${c.dir}.pdf)`;
-      console.log(`| App | \`${c.dir}/\` | ${c.title} | ${pdfCell} |`);
-    } else {
-      // index-of-definitions etc — bundled in front-matter
-      if (FRONT_MATTER.has(c.dir)) {
-        pdfCell = `[front-matter.pdf](${PAGES}/chapters/front-matter.pdf)`;
-      }
-      console.log(`| — | \`${c.dir}/\` | ${c.title} | ${pdfCell} |`);
-    }
-  }
-' >> "$OUT"
+bun run "$PLATFORM/content/pipeline/readme-toc.ts" --stdout --fetch >> "$OUT"
 
 # ── Lean 4 Formalization ────────────────────────────────────────────────────
 
