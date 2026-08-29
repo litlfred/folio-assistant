@@ -411,14 +411,21 @@ function folioReadme(o: InitFolioOptions): string {
 
 ${o.authors.join(", ")}
 
-<!-- The table below is generated. Refresh it with \`readme_toc\` (MCP) or
-     \`bun run readme:toc\` from the platform checkout, after adding or
-     renaming a chapter. Edits between the markers are overwritten. -->
+<!-- Regions between a \`folio:*:begin\` / \`folio:*:end\` pair are generated:
+     refresh them with \`readme_sync\` (MCP) or \`bun run readme:sync\` from the
+     platform checkout. Edits inside a pair are overwritten; everything else in
+     this file is yours and is never touched. \`bun run readme:sections\` lists
+     the sections you can add. -->
 
 ## Contents
 
 <!-- folio:toc:begin -->
 <!-- folio:toc:end -->
+
+## Workflows
+
+<!-- folio:workflows:begin -->
+<!-- folio:workflows:end -->
 `;
 }
 
@@ -532,9 +539,10 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   write("uploads/README.md", uploadsReadme());
   write("library/README.md", libraryReadme());
 
-  // 4b. The folio README, carrying the markers `readme_toc` writes between.
-  // Without them the tool refuses rather than guessing where the table goes,
-  // so a folio scaffolded without a README could not run it at all.
+  // 4b. The folio README, carrying the markers `readme_sync` writes between.
+  // A section is written only where its markers already appear, so a folio
+  // scaffolded without them would get nothing from the tool — and the markers
+  // are also the documentation of which sections exist.
   write("README.md", folioReadme(o));
 
   // 5. Agent guidance: AGENTS.md is authoritative, the other two are stubs.

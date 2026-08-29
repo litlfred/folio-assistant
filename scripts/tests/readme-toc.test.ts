@@ -18,7 +18,7 @@ import { tmpdir } from "os";
 import {
   chaptersOf,
   discoverPapers,
-  injectToc,
+  injectSection,
   loadReadmeConfig,
   renderToc,
   type ReadmeTocConfig,
@@ -209,11 +209,11 @@ describe("every paper in the folio gets a table", () => {
   });
 });
 
-describe("injectToc", () => {
+describe("injectSection", () => {
   const readme = "# T\n\n<!-- folio:toc:begin -->\nold\n<!-- folio:toc:end -->\n\ntail\n";
 
   test("replaces the marked region and leaves the rest alone", () => {
-    const { content, changed } = injectToc(readme, "new body", "folio:toc");
+    const { content, changed } = injectSection(readme, "new body", "folio:toc");
     expect(changed).toBe(true);
     expect(content).toContain("new body");
     expect(content).not.toContain("old");
@@ -221,11 +221,11 @@ describe("injectToc", () => {
   });
 
   test("re-injecting identical content is a no-op", () => {
-    const once = injectToc(readme, "new body", "folio:toc").content;
-    expect(injectToc(once, "new body", "folio:toc").changed).toBe(false);
+    const once = injectSection(readme, "new body", "folio:toc").content;
+    expect(injectSection(once, "new body", "folio:toc").changed).toBe(false);
   });
 
   test("missing markers throw rather than silently appending or doing nothing", () => {
-    expect(() => injectToc("# T\n", "body", "folio:toc")).toThrow(/marker comments/);
+    expect(() => injectSection("# T\n", "body", "folio:toc")).toThrow(/marker comments/);
   });
 });

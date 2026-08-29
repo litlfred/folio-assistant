@@ -44,10 +44,10 @@
  */
 
 import { execFileSync } from "child_process";
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 
-import { findContentRepoRoot, findPapers } from "./repo-root";
+import { findPapers } from "./repo-root";
 
 // ── Configuration ───────────────────────────────────────────────────────────
 
@@ -429,14 +429,18 @@ export interface InjectResult {
 }
 
 /**
- * Replace the marked region of a README with `body`.
+ * Replace one marked region of a README with `body`.
  *
  * Marker-delimited rather than whole-file, so a folio keeps its own prose and
- * only the generated table is owned by this script. Absent markers are an
- * error: silently appending the section, or silently doing nothing, both hide
- * a misconfiguration behind a clean exit.
+ * only the generated block is owned by the generator. This is the whole
+ * safety property of the mechanism: the predecessor, `generate-readme.sh`,
+ * ended in `cp "$OUT" README.md` and would replace any folio's README with
+ * one particular folio's title, badges and tables.
+ *
+ * Absent markers are an error rather than an append or a no-op: both hide a
+ * misconfiguration behind a clean exit.
  */
-export function injectToc(readme: string, body: string, marker: string): InjectResult {
+export function injectSection(readme: string, body: string, marker: string): InjectResult {
   const begin = `<!-- ${marker}:begin -->`;
   const end = `<!-- ${marker}:end -->`;
   const start = readme.indexOf(begin);
@@ -452,89 +456,7 @@ export function injectToc(readme: string, body: string, marker: string): InjectR
   return { content: next, changed: next !== readme };
 }
 
-// ── CLI ─────────────────────────────────────────────────────────────────────
-
-/** Shared by the CLI and the `readme_toc` MCP tool. */
-export function runReadmeToc(opts: {
-  root?: string;
-  check?: boolean;
-  stdout?: boolean;
-  readmePath?: string;
-  linkStyle?: LinkStyle;
-  fetch?: boolean;
-}): { text: string; exitCode: number } {
-  const root = opts.root ?? findContentRepoRoot();
-  const cfg = loadReadmeConfig(root);
-  if (opts.linkStyle) cfg.linkStyle = opts.linkStyle;
-
-  const toc = renderToc(root, cfg, opts.fetch ?? false);
-  const notes: string[] = [];
-  if (toc.publishRefUnavailable) {
-    notes.push(
-      `publish ref '${cfg.publishRef}' not readable here — PDF column omitted. ` +
-        `Re-run with --fetch, or: git fetch --depth 1 origin ` +
-        `${cfg.publishRef}:refs/remotes/origin/${cfg.publishRef}`,
-    );
-  } else if (toc.missingPdfs.length > 0) {
-    notes.push(
-      `${toc.missingPdfs.length} chapter(s) have no published PDF and render '—': ` +
-        toc.missingPdfs.map((m) => `${m.paper}/${m.chapter}`).join(", "),
-    );
-  }
-
-  if (opts.stdout) return { text: toc.markdown, exitCode: 0 };
-
-  const readmePath = opts.readmePath ?? join(root, "README.md");
-  if (!existsSync(readmePath)) {
-    return { text: `No README at ${readmePath}.`, exitCode: 2 };
-  }
-  const current = readFileSync(readmePath, "utf-8");
-  const injected = injectToc(current, toc.markdown, cfg.marker);
-
-  if (opts.check) {
-    return injected.changed
-      ? {
-          text: [`${readmePath} contents table is out of date. Run: bun run readme:toc`, ...notes].join(
-            "\n",
-          ),
-          exitCode: 1,
-        }
-      : { text: [`${readmePath} contents table is up to date.`, ...notes].join("\n"), exitCode: 0 };
-  }
-
-  if (injected.changed) writeFileSync(readmePath, injected.content);
-  return {
-    text: [
-      injected.changed ? `${readmePath} contents table updated.` : `${readmePath} already current.`,
-      ...notes,
-    ].join("\n"),
-    exitCode: 0,
-  };
-}
-
-if (import.meta.main) {
-  const argv = process.argv.slice(2);
-  const flag = (name: string): string | undefined => {
-    const i = argv.indexOf(`--${name}`);
-    return i >= 0 ? argv[i + 1] : undefined;
-  };
-  const style = flag("link-style");
-  if (style && !["blob", "pages", "raw"].includes(style)) {
-    console.error(`--link-style must be blob, pages or raw (got '${style}')`);
-    process.exit(2);
-  }
-  try {
-    const result = runReadmeToc({
-      check: argv.includes("--check"),
-      fetch: argv.includes("--fetch"),
-      stdout: argv.includes("--stdout"),
-      readmePath: flag("readme"),
-      linkStyle: style as LinkStyle | undefined,
-    });
-    (result.exitCode === 0 ? console.log : console.error)(result.text);
-    process.exit(result.exitCode);
-  } catch (e) {
-    console.error(e instanceof Error ? e.message : String(e));
-    process.exit(2);
-  }
-}
+// The CLI and the MCP surface live in `readme-sections.ts`, which drives this
+// renderer and the other generated sections through one registry. Two entry
+// points writing the same README is how a "contents table" ends up disagreeing
+// with a "sections" run.
