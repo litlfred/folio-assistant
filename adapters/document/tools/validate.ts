@@ -13,7 +13,7 @@
 import { z } from "zod";
 import { spawnSync, type SpawnSyncReturns } from "child_process";
 import { existsSync, readdirSync } from "fs";
-import { join, basename, resolve } from "path";
+import { join, basename } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { REPO_ROOT, CONTENT_DIR } from "../paths.js";
 import { checkFolioProfile, formatProfileCheck } from "../../../content/pipeline/profile-check.js";
@@ -21,6 +21,7 @@ import {
   readBlockManifest,
   readUnlabelledBlockManifest,
 } from "../../../content/pipeline/qa-utils.js";
+import { resolvePipelineScript } from "./_pipeline.js";
 // Note: paths are resolved from the document adapter's paths module.
 
 /** Find all paper directories under content/. */
@@ -64,11 +65,10 @@ function findChapterDirs(paperDir: string): string[] {
  * — see {@link runValidatePipeline}.
  */
 export function resolveValidateScript(): string | undefined {
-  const inFolio = join(CONTENT_DIR, "pipeline", "validate.ts");
-  if (existsSync(inFolio)) return inFolio;
-  // `adapters/document/tools/` -> platform root.
-  const inPlatform = resolve(import.meta.dir, "..", "..", "..", "content", "pipeline", "validate.ts");
-  return existsSync(inPlatform) ? inPlatform : undefined;
+  // Delegates to the shared resolver so this and every `runPipeline` tool
+  // cannot drift on which layouts they support. They had separate copies of
+  // this logic for exactly one commit, which is one too many.
+  return resolvePipelineScript("validate");
 }
 
 /**
