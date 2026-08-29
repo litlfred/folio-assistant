@@ -67,3 +67,7 @@ content/schema/
 # source (block-qa.ts, lean-packages.ts, ...) and ignoring it wholesale
 # would silence `git add` on all of it.
 /schemas/references.ts
+
+# Per-machine subagent memory (`memory: local` scope). The committed
+# `project` scope lives at .claude/agent-memory/ and is tracked.
+.claude/agent-memory-local/
