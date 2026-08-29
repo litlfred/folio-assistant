@@ -57,6 +57,14 @@ const argValue = (flag: string) =>
 // `--paper` matters in a MULTI-paper folio: `requirePaper()` with no argument
 // throws "5 papers found — name one explicitly", and until this flag existed
 // there was no way to name one, so the script could not run there at all.
+//
+// A FLAG here, where `generate-index.ts` and `find-dangling-remarks.ts` both
+// take the paper positionally as `process.argv[2]`. That is deliberate, not
+// drift: those two take no flags, while this script takes `--apply`. Under the
+// positional convention, `prune-transitive-deps.ts --apply` would read
+// `argv[2] === "--apply"` as the paper name and `requirePaper` would hand it
+// straight back, so the run would look for a paper called `--apply` instead of
+// pruning anything.
 // (qou carries five: bach2013-double-slit, fred2005-formal-groups,
 // quantum-observable-universe, unital-groebner-bases, visualizer.)
 const PAPER_NAME = requirePaper(argValue("--paper"));
