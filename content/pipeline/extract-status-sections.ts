@@ -11,7 +11,7 @@
  *     (CLAUDE.md §4d) and removed from the `.md`. Done ONLY when the `.ts`
  *     is injectable (ends in `});`, no existing `authorNotes`); otherwise
  *     the block is SKIPPED (the `.md` section is left in place) and flagged.
- *   - **todo-class**: the section is appended to `.beans/paper-todos.json`
+ *   - **todo-class**: the section is appended to `build/paper-todos.json`
  *     and removed from the `.md`.
  *   - **substantive-class** (real math under a status header): NEVER
  *     touched — reported for a manual re-heading pass.
@@ -90,7 +90,7 @@ function main() {
   const paper = requirePaper(get("--paper"));
   const chapter = get("--chapter");
   const write = args.includes("--write");
-  const beansTodos = ".beans/paper-todos.json";
+  const beansTodos = "build/paper-todos.json";
 
   let root = join("content", paper);
   if (chapter) root = join(root, chapter);
