@@ -34,8 +34,19 @@ Which route was used is recorded per entry, so a consumer can weight it.
 Usage:
     pdf-structure.py <pdf> [<pdf>...] [-o OUTDIR] [--no-sections] [--json]
     pdf-structure.py --corpus uploads/ -o uploads/
+    pdf-structure.py <pdf> --backend pymupdf     # force a backend
 
-Dependencies: pypdf (BSD-3-Clause). Install: pip install pypdf
+Backends: the reader is swappable (see the "backends" section). PyMuPDF is
+preferred when installed because its text layer is cleaner on math PDFs and,
+more importantly, it exposes the embedded bookmarks directly (`get_toc()`) —
+real section boundaries instead of the text-heuristic guess in
+`infer_headings`. pypdf is the fallback, so this runs wherever either library
+is present; the extractor used is recorded in `source.extractor`.
+
+Dependencies (either one suffices; both optional at import time):
+    pypdf    (BSD-3-Clause)  — pip install pypdf
+    PyMuPDF  (AGPL-3.0)      — pip install pymupdf   (preferred; see licence note
+                                                       in the backends section)
 """
 
 from __future__ import annotations
@@ -55,12 +66,15 @@ from typing import Any
 
 warnings.filterwarnings("ignore")
 
-# pypdf's import chain reaches `cryptography`, which panics rather than raising
-# ImportError when its native extension is broken -- see scripts/_pypdf_compat.py.
+# The PDF reader is chosen at runtime -- see the "backends" section. Both
+# PyMuPDF (preferred) and pypdf are imported lazily inside their backends, so
+# this module loads wherever *either* is installed, and a broken or absent
+# pypdf no longer blocks the PyMuPDF path (the failure that first motivated
+# this abstraction). `import_pypdf` carries the cryptography-panic workaround
+# documented in scripts/_pypdf_compat.py; the "no backend at all" check lives
+# in `open_backend`.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _pypdf_compat import import_pypdf  # noqa: E402
-
-PdfReader = import_pypdf("PdfReader")
 
 SCHEMA = "pdf-structure/v1"
 
@@ -324,54 +338,11 @@ def slugify(s: str, maxlen: int = 48) -> str:
 
 
 # ---------------------------------------------------------------- extraction
-
-def page_texts(reader: PdfReader) -> list[str]:
-    out = []
-    for p in reader.pages:
-        try:
-            out.append(p.extract_text() or "")
-        except Exception:
-            out.append("")
-    return out
-
-
-def read_outline(reader: PdfReader) -> list[TocEntry]:
-    """PDF bookmarks, flattened with nesting depth preserved."""
-    try:
-        raw = reader.outline
-    except Exception:
-        return []
-    if not raw:
-        return []
-
-    entries: list[TocEntry] = []
-
-    def page_of(item: Any) -> int | None:
-        try:
-            return reader.get_destination_page_number(item) + 1
-        except Exception:
-            return None
-
-    def walk(node: Any, level: int) -> None:
-        for item in node:
-            if isinstance(item, list):
-                walk(item, level + 1)
-                continue
-            try:
-                title = str(item.get("/Title", "")).strip()
-            except Exception:
-                continue
-            if not title:
-                continue
-            num = None
-            m = re.match(r"^\s*(\d+(?:\.\d+)*)\.?\s+(.*)$", title)
-            if m:
-                num, title = m.group(1), m.group(2).strip()
-            entries.append(TocEntry(level, title, page_of(item), "outline", num))
-
-    walk(raw, 1)
-    return entries
-
+#
+# Page text and the raw outline now come from a backend (see the "backends"
+# section); the shared `_toc_entries` there turns a backend's raw TOC into
+# `TocEntry` values. `infer_headings` is the fallback used only when a
+# document carries no embedded outline.
 
 def infer_headings(pages: list[str]) -> list[TocEntry]:
     """Heading detection for documents with no outline (43% of the corpus)."""
@@ -685,27 +656,218 @@ def text_is_unusable(pages: list[str]) -> bool:
     return bool(head) and letters < 0.55 * len(head)
 
 
+# ---------------------------------------------------------------- backends
+#
+# The extractor is swappable. A backend exposes exactly the three things this
+# producer consumes -- page texts, a raw table of contents, and the DocInfo
+# dictionary -- and nothing more, so a new one is cheap to add and the rest of
+# the script never learns which library read the PDF.
+#
+# PyMuPDF (import name `pymupdf`, historically `fitz`) is preferred when
+# installed, for two reasons measured on this corpus:
+#   * its text layer is cleaner on math PDFs than pypdf's, and
+#   * `get_toc()` returns the REAL embedded bookmarks, so on the 57% of the
+#     corpus that carries an outline the section split is driven by the
+#     author's own headings instead of the text heuristic in `infer_headings`.
+# pypdf stays as the fallback so the script runs wherever either library is
+# present -- including an environment whose pypdf is broken, which is what
+# first motivated this abstraction.
+#
+# LICENCE NOTE. PyMuPDF is AGPL-3.0 (or a commercial licence), whereas pypdf is
+# BSD-3-Clause. This module therefore never *requires* PyMuPDF: it is imported
+# lazily and used only when already installed, exactly like the optional
+# camelot backend in `pdf-tables.py`. The Dockerfile installs pypdf, not
+# PyMuPDF, so the shipped image stays BSD-licensed; an operator who wants the
+# better outlines opts in with `pip install pymupdf`. Keep it that way unless
+# the maintainer decides to take on the AGPL dependency deliberately.
+
+
+def _toc_entries(raw: list[tuple[int, str, int | None]]) -> list[TocEntry]:
+    """Turn a backend's raw `(level, title, page)` rows into `TocEntry`s.
+
+    Shared by every backend so the leading-number parse ("2.1 Foo" -> number
+    "2.1", title "Foo") and the `source="outline"` tag are written in one
+    place regardless of which library produced the bookmarks.
+    """
+    entries: list[TocEntry] = []
+    for level, title, page in raw:
+        title = str(title).strip()
+        if not title:
+            continue
+        num = None
+        m = re.match(r"^\s*(\d+(?:\.\d+)*)\.?\s+(.*)$", title)
+        if m:
+            num, title = m.group(1), m.group(2).strip()
+            if not title:                       # a bare "2.1" with no words
+                title, num = num, None
+        entries.append(TocEntry(max(1, int(level)), title, page, "outline", num))
+    return entries
+
+
+class _Backend:
+    """Interface: page texts, a raw TOC, DocInfo. Subclasses import lazily."""
+
+    name = "?"
+
+    def page_texts(self) -> list[str]:
+        raise NotImplementedError
+
+    def raw_toc(self) -> list[tuple[int, str, int | None]]:
+        """`(level, title, page)` rows; page is 1-based or None."""
+        raise NotImplementedError
+
+    def docinfo(self) -> dict[str, str]:
+        raise NotImplementedError
+
+
+class PyMuPDFBackend(_Backend):
+    name = "pymupdf"
+
+    def __init__(self, path: str) -> None:
+        import pymupdf  # lazy; AGPL, optional (see licence note above)
+        self._doc = pymupdf.open(path)
+
+    def page_texts(self) -> list[str]:
+        out: list[str] = []
+        for page in self._doc:
+            try:
+                out.append(page.get_text() or "")
+            except Exception:
+                out.append("")
+        return out
+
+    def raw_toc(self) -> list[tuple[int, str, int | None]]:
+        try:
+            toc = self._doc.get_toc(simple=True)
+        except Exception:
+            return []
+        rows: list[tuple[int, str, int | None]] = []
+        for entry in toc:
+            # get_toc yields [level, title, page]; page is 1-based, or <= 0
+            # when the bookmark has no resolvable destination.
+            try:
+                level, title, page = entry[0], entry[1], entry[2]
+            except (IndexError, TypeError):
+                continue
+            rows.append((level, title, page if isinstance(page, int) and page > 0 else None))
+        return rows
+
+    def docinfo(self) -> dict[str, str]:
+        try:
+            md = self._doc.metadata or {}
+        except Exception:
+            return {}
+        # Map PyMuPDF's lower-cased keys onto the same DocInfo key names the
+        # pypdf path emits, so the artefact shape is backend-independent.
+        keys = {"title": "Title", "author": "Author", "producer": "Producer",
+                "creator": "Creator", "creationDate": "CreationDate"}
+        return {out: str(md[k]) for k, out in keys.items() if md.get(k)}
+
+
+class PyPDFBackend(_Backend):
+    name = "pypdf"
+
+    def __init__(self, path: str) -> None:
+        PdfReader = import_pypdf("PdfReader")  # lazy; carries the crypto workaround
+        self._reader = PdfReader(path)
+
+    def page_texts(self) -> list[str]:
+        out: list[str] = []
+        for p in self._reader.pages:
+            try:
+                out.append(p.extract_text() or "")
+            except Exception:
+                out.append("")
+        return out
+
+    def raw_toc(self) -> list[tuple[int, str, int | None]]:
+        reader = self._reader
+        try:
+            raw = reader.outline
+        except Exception:
+            return []
+        if not raw:
+            return []
+        rows: list[tuple[int, str, int | None]] = []
+
+        def page_of(item: Any) -> int | None:
+            try:
+                return reader.get_destination_page_number(item) + 1
+            except Exception:
+                return None
+
+        def walk(node: Any, level: int) -> None:
+            for item in node:
+                if isinstance(item, list):
+                    walk(item, level + 1)
+                    continue
+                try:
+                    title = str(item.get("/Title", "")).strip()
+                except Exception:
+                    continue
+                if not title:
+                    continue
+                rows.append((level, title, page_of(item)))
+
+        walk(raw, 1)
+        return rows
+
+    def docinfo(self) -> dict[str, str]:
+        try:
+            info = self._reader.metadata or {}
+            return {k.lstrip("/"): str(v) for k, v in info.items()
+                    if k in ("/Title", "/Author", "/Producer", "/Creator", "/CreationDate")}
+        except Exception:
+            return {}
+
+
+_BACKENDS = {"pymupdf": PyMuPDFBackend, "pypdf": PyPDFBackend}
+# `--backend auto` preference order: PyMuPDF first (cleaner text + real
+# outlines), pypdf as the fallback.
+_AUTO_ORDER = ("pymupdf", "pypdf")
+
+
+def open_backend(path: str, prefer: str = "auto") -> _Backend:
+    """Construct a reader for `path`.
+
+    `auto` walks the preference order and falls back to the next backend on
+    any failure -- an absent library, a broken one, or a file the library
+    cannot open. An explicit backend name is strict: it is tried alone, so a
+    forced choice (for comparison or debugging) is honoured rather than
+    silently swapped. `SystemExit` is caught because `import_pypdf` exits when
+    pypdf is simply absent, which in a fallback chain just means "try the next
+    one".
+    """
+    order = _AUTO_ORDER if prefer == "auto" else (prefer,)
+    errors: list[str] = []
+    for name in order:
+        try:
+            return _BACKENDS[name](path)
+        except (Exception, SystemExit) as exc:  # noqa: BLE001
+            errors.append(f"{name}: {type(exc).__name__}: {exc}".strip())
+    raise RuntimeError(
+        "no usable PDF backend for " + os.path.basename(path)
+        + " -- " + "; ".join(errors)
+        + " (install one: pip install pymupdf  OR  pip install pypdf)"
+    )
+
+
 def process(path: str, outdir: str | None = None, use_ocr: bool = False,
-            ) -> tuple[dict[str, Any], list[Section]]:
-    reader = PdfReader(path)
-    pages = page_texts(reader)
+            backend: str = "auto") -> tuple[dict[str, Any], list[Section]]:
+    reader = open_backend(path, backend)
+    pages = reader.page_texts()
     ocr_used = False
     if use_ocr and text_is_unusable(pages):
         cached = ocr_pages(path, outdir)
         if cached:
             pages, ocr_used = cached, True
 
-    outline = read_outline(reader)
+    outline = _toc_entries(reader.raw_toc())
     toc = outline or infer_headings(pages)
     meta = parse_front_matter(pages)
     sections = split_sections(pages, toc)
 
-    try:
-        info = reader.metadata or {}
-        docinfo = {k.lstrip("/"): str(v) for k, v in info.items()
-                   if k in ("/Title", "/Author", "/Producer", "/Creator", "/CreationDate")}
-    except Exception:
-        docinfo = {}
+    docinfo = reader.docinfo()
 
     empty = sum(1 for p in pages if len(p.strip()) < 20)
     doc_id = derive_doc_id(path, meta)
@@ -722,6 +884,10 @@ def process(path: str, outdir: str | None = None, use_ocr: bool = False,
             # PDF's own text. A consumer that ranks or cites this document
             # should know the text is a transcription.
             "text_source": "ocr" if ocr_used else "embedded",
+            # Which reader library produced this artefact ("pymupdf" | "pypdf").
+            # Additive provenance: it lets a consumer tell an outline read by
+            # PyMuPDF's get_toc() from one walked out of pypdf's outline object.
+            "extractor": reader.name,
         },
         "metadata": meta | {"docinfo": docinfo},
         "toc": [asdict(e) for e in toc],
@@ -778,6 +944,10 @@ def main() -> int:
     ap.add_argument("--ocr", action="store_true",
                     help="for a PDF whose text layer is absent or mojibake, use the "
                          "cached OCR text written by pdf-ocr.py (which must be run first)")
+    ap.add_argument("--backend", choices=("auto", "pymupdf", "pypdf"), default="auto",
+                    help="PDF reader backend. auto (default) prefers PyMuPDF when "
+                         "installed (cleaner text + real embedded outlines) and falls "
+                         "back to pypdf; naming one forces it (strict, no fallback).")
     args = ap.parse_args()
 
     targets = list(args.pdfs)
@@ -792,7 +962,7 @@ def main() -> int:
     ok = failed = 0
     for path in targets:
         try:
-            artefact, sections = process(path, args.outdir, args.ocr)
+            artefact, sections = process(path, args.outdir, args.ocr, args.backend)
         except Exception as exc:
             failed += 1
             print(f"FAIL  {os.path.basename(path)}: {type(exc).__name__}: {exc}",
@@ -813,6 +983,7 @@ def main() -> int:
             flag = " SCANNED?" if d["likely_scanned"] else ""
             print(f"ok  {artefact['doc_id']:<34} "
                   f"{artefact['source']['pages']:>4}pp  "
+                  f"[{artefact['source']['extractor'][:3]}]  "
                   f"toc={d['toc_entries']:<3}({artefact['toc_source'][:3]})  "
                   f"sec={d['sections']:<3}  {d['chars_total']//1000:>4}kc{flag}")
         ok += 1
