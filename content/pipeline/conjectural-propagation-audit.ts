@@ -38,8 +38,25 @@ const LOAD_FAILURES: BlockLoadFailure[] = [];
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-const ROOT = join(REPO_ROOT, "content", requirePaper());
-const WITNESS_OUT = process.argv[2] ??
+// `--paper <name>` (not a positional): several of these scripts already
+// use argv[2] for an output path or a `--strict` flag, so a positional
+// would collide. Matches `extract-status-sections.ts`.
+const _paperIdx = process.argv.indexOf("--paper");
+const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+const ROOT = join(REPO_ROOT, "content", requirePaper(_paperArg));
+// First non-flag argument. `process.argv[2]` alone would pick up `--paper`
+// (or its value), which is how this script came to write its witness to a
+// file literally named `--paper`.
+const _positional = (() => {
+  const a = process.argv.slice(2);
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] === "--paper") { i++; continue; }
+    if (a[i].startsWith("--")) continue;
+    return a[i];
+  }
+  return undefined;
+})();
+const WITNESS_OUT = _positional ??
   join(REPO_ROOT, "docs/audits/2026-05-01-p3-1-conjectural-propagation.witness.json");
 
 interface Block {

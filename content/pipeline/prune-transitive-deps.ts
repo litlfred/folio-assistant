@@ -51,7 +51,12 @@ const CONTENT_ROOT = join(REPO_ROOT, "content");
 const args = process.argv.slice(2);
 const APPLY = args.includes("--apply");
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-const PAPER_NAME = requirePaper();
+// `--paper <name>` (not a positional): several of these scripts already
+// use argv[2] for an output path or a `--strict` flag, so a positional
+// would collide. Matches `extract-status-sections.ts`.
+const _paperIdx = process.argv.indexOf("--paper");
+const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+const PAPER_NAME = requirePaper(_paperArg);
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
 
 // ── Load all blocks ─────────────────────────────────────────────

@@ -39,7 +39,12 @@ import type { BlockLoadFailure } from "./block-module";
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-const ROOT = join(REPO_ROOT, "content", requirePaper());
+// `--paper <name>` (not a positional): several of these scripts already
+// use argv[2] for an output path or a `--strict` flag, so a positional
+// would collide. Matches `extract-status-sections.ts`.
+const _paperIdx = process.argv.indexOf("--paper");
+const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+const ROOT = join(REPO_ROOT, "content", requirePaper(_paperArg));
 const STRICT = process.argv.includes("--strict");
 
 // Optional baseline-allowlist file (declared before WITNESS_OUT so its
