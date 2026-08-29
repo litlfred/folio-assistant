@@ -13,7 +13,7 @@
 
 import { spawnSync } from "child_process";
 import { existsSync, readdirSync } from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import { get } from "../paths.js";
 
 export interface PipelineResult {
@@ -29,7 +29,53 @@ export interface PipelineResult {
   error?: string;
 }
 
-/** Absolute path to a `content/pipeline/<script>.ts` file. */
+/**
+ * The platform's own `content/pipeline/`.
+ *
+ * `adapters/document/tools/` -> platform root. Computed rather than passed so
+ * that a tool never has to know where it is installed.
+ */
+function platformPipelineDir(): string {
+  return resolve(import.meta.dir, "..", "..", "..", "content", "pipeline");
+}
+
+/**
+ * Absolute path to a `content/pipeline/<script>.ts` file, or `undefined` when
+ * neither the folio nor the platform has one.
+ *
+ * Two layouts are in the wild and both are legitimate:
+ *
+ * - the folio carries its own `content/pipeline/` — the `qou` layout, from
+ *   when the platform was vendored inside the content repo; and
+ * - the folio carries only `content/schema/` and reaches the pipeline in the
+ *   platform checkout, which is what `folio_init` scaffolds.
+ *
+ * Resolving ONLY against the folio meant every pipeline-backed tool — around
+ * twenty-five of them, the whole QA, audit, bibliography and transform surface
+ * — returned `pipeline script not found` on every scaffolded folio. That was
+ * at least honest (see {@link runPipeline}), unlike the same defect in
+ * `content_validate`, which reported a clean run; but honest and inert is
+ * still inert.
+ *
+ * The folio's own copy wins when present, so a folio that has deliberately
+ * forked a pipeline script keeps its fork.
+ */
+export function resolvePipelineScript(script: string): string | undefined {
+  const name = script.endsWith(".ts") ? script : `${script}.ts`;
+  const inFolio = join(get.REPO_ROOT(), "content", "pipeline", name);
+  if (existsSync(inFolio)) return inFolio;
+  const inPlatform = join(platformPipelineDir(), name);
+  return existsSync(inPlatform) ? inPlatform : undefined;
+}
+
+/**
+ * Absolute path to the folio's `content/pipeline/<script>.ts`.
+ *
+ * @deprecated Prefer {@link resolvePipelineScript}, which also finds the
+ * platform's copy. Kept because it is exported and says something true — where
+ * the script would live *in this folio* — but it must not be used to decide
+ * whether a script exists.
+ */
 export function pipelineScriptPath(script: string): string {
   const name = script.endsWith(".ts") ? script : `${script}.ts`;
   return join(get.REPO_ROOT(), "content", "pipeline", name);
@@ -60,15 +106,17 @@ export function runPipeline(
   args: string[] = [],
   opts: { timeoutMs?: number } = {},
 ): PipelineResult {
-  const path = pipelineScriptPath(script);
-  if (!existsSync(path)) {
+  const path = resolvePipelineScript(script);
+  if (!path) {
     return {
       ok: false,
       script,
       exitCode: null,
       stdout: "",
       stderr: "",
-      error: `pipeline script not found: content/pipeline/${script}.ts`,
+      error:
+        `pipeline script not found: content/pipeline/${script}.ts — ` +
+        `looked in this folio and in the platform checkout`,
     };
   }
   const res = spawnSync("bun", ["run", path, ...args], {
