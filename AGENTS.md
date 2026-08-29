@@ -96,8 +96,9 @@ bunx playwright test        # e2e tests   (npm script: test:e2e)
 eslint .                    # lint
 bun run src/index.ts --check-deps   # probe environment capabilities
 bun run init-folio --help           # scaffold a new folio repository
-bun run readme:toc                  # regenerate a folio README's contents table
-bun run readme:toc:check            # ...and fail if it is stale (for CI)
+bun run readme:sync                 # refresh a folio README's generated sections
+bun run readme:sync:check           # ...and fail if any is stale (for CI)
+bun run readme:sections             # list the sections a README can opt into
 ```
 
 ## Work-plan & todos — use `beans`
@@ -178,17 +179,46 @@ Full discipline: `.claude/skills/local/todo-manager.md` and
 > `todo-review` skill over `feedback/<paper>/*.ts`) — that is a separate domain
 > feature, not the agent work-plan.
 
-## README contents — generated per paper, and every link is checked
+## README sections — the folio owns the file, the platform owns the markers
 
-`content/pipeline/readme-toc.ts` writes one section and one table **per paper
-in the folio** — `folio.ts` order, chapter titles from the manifests — between
-the `<!-- folio:toc:begin -->` / `<!-- folio:toc:end -->` markers in the
-folio's `README.md`. `bun run readme:toc`, `readme:toc:check` for CI, or the
-`readme_toc` MCP tool. `folio_init` scaffolds a README carrying the markers.
-It is registered among the **generic** tools: a document folio has chapters and
-a README for the same reason a paper folio does.
+`content/pipeline/readme-sections.ts` holds a registry of generated sections —
+`folio:toc`, `folio:lean-coverage`, `folio:lean-modules`, `folio:simulators`,
+`folio:workflows` — and writes each one **only where the README already carries
+its `<!-- marker:begin -->` / `<!-- marker:end -->` pair**. A folio opts in per
+section; nothing outside a marked region is ever touched. `bun run readme:sync`,
+`readme:sync:check` for CI, `readme:sections` to list them, or the `readme_sync`
+MCP tool, registered among the **generic** tools: a document folio has chapters,
+simulators and workflows for the same reason a paper folio does, and simply
+never carries the Lean markers.
 
-It replaces a section of `scripts/generate-readme.sh` that had two defects
+**The predecessor could not have that property.** `scripts/generate-readme.sh`
+ended in `cp "$OUT" README.md` — it replaced the whole file, with one folio's
+content held in the platform: the title `# Quantum Observable Universe`, three
+`litlfred/qou` badges, a Knot Registry of Alexander-Briggs indices, a Project
+Structure table naming `content/quantum-observable-universe/lean/`, and a CC BY
+4.0 licence block. Run it in any other folio and the author loses their README.
+Only five of its sections were derived from the tree at all; the rest was prose,
+and prose about a folio belongs to that folio. It is deleted, along with
+`scripts/readme-metadata.ts`, whose only consumer it was.
+
+Three literals went with it, each worth recognising in new code: modules were
+prefixed `QOU.` regardless of the folio's Lake library (now read from
+`lakefile.toml`, and left **unprefixed** when no lakefile names one — a wrong
+namespace is worse than none, because it is what a reader pastes into an
+`import`); workflow descriptions came from a hardcoded map of twelve `qou`
+filenames consulted *before* the workflow's own `name:` (now always the
+`name:`); and the simulator directory was the literal
+`folio-assistant/simulators` (now `folio.config.json`).
+
+**"Could not determine" is a third state, everywhere.** A section returns
+`skip` and the region is left exactly as it was. That is not decoration: qou
+configures its simulators under `folio-assistant/simulators`, which exists only
+once the platform submodule is checked out, and the first version rendered
+"directory absent" as "this folio has no simulators" — replacing a correct
+nine-row table with a sentence. Same rule as the TOC's unreadable publish ref.
+An empty directory is still a determined empty.
+
+The contents table itself replaced a part of that script with two defects
 worth remembering, because both are easy to write again.
 
 **It described one folio from inside the platform.** The paper directory, the
@@ -197,8 +227,7 @@ so it emitted a chapter table for `quantum-observable-universe` and for
 nothing else — in a repo whose `folio.ts` lists five papers. It also resolved
 its own helpers against the folio root (`bun run scripts/readme-metadata.ts`),
 where the platform's scripts are not, so it could only run from a platform
-checkout — which has no papers. Scripts resolve against `$PLATFORM` now;
-content against the git toplevel.
+checkout — which has no papers.
 
 **It composed links instead of resolving them.** Every PDF cell was
 `${PAGES}/papers/<paper>/chapters/<dir>.pdf`, built by convention and checked
@@ -220,6 +249,11 @@ follows the viewer's GitHub session, works whether the repo is public or
 private, and renders PDFs inline. `pages` and `raw` remain available in
 `folio.config.json` under `readme.linkStyle`, and each prints a note under
 the table saying who can follow its links.
+
+**Adding a section** is one entry in `SECTIONS`: a marker, a one-line summary
+for `--list`, and a renderer returning Markdown plus operator notes. The CLI,
+the MCP tool and the staleness check all read the registry, so nothing else
+needs touching.
 
 ## CI health — a red workflow looks exactly like a green one from in here
 
