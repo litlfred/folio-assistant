@@ -12,7 +12,7 @@
  * `content/pipeline/qa-checkers-voice.ts`). It walks every content
  * `.md`, captures each flagged section's body, classifies the
  * extraction target, and writes a `.beans/` work-queue (same JSON
- * shape as `.beans/qa-agent-drain-queue.json`) so the cleanup can be
+ * shape as `build/qa-agent-drain-queue.json`) so the cleanup can be
  * drained in reviewable batches.
  *
  * Classification (a hint for the reviewer — adjudicate, don't trust
@@ -31,7 +31,7 @@
  * Usage:
  *   bun run content/pipeline/audit-status-sections.ts
  *   bun run content/pipeline/audit-status-sections.ts --paper quantum-observable-universe
- *   bun run content/pipeline/audit-status-sections.ts --out .beans/status-section-audit.json
+ *   bun run content/pipeline/audit-status-sections.ts --out build/status-section-audit.json
  *
  * @module content/pipeline/audit-status-sections
  */
@@ -126,7 +126,7 @@ function main() {
     args.includes("--paper") ? args[args.indexOf("--paper") + 1] : undefined,
   );
   const out =
-    args.includes("--out") ? args[args.indexOf("--out") + 1] : ".beans/status-section-audit.json";
+    args.includes("--out") ? args[args.indexOf("--out") + 1] : "build/status-section-audit.json";
   const root = join("content", paper);
 
   const mds = walkMd(root);
@@ -184,7 +184,7 @@ function main() {
     total_sections: totalSections,
     by_classification: byClass,
     extraction_targets: {
-      todo: ".beans/ (this directory)",
+      todo: "a bean, via `beans create` — see AGENTS.md",
       authorNotes: "block .ts `authorNotes` field (CLAUDE.md §4d)",
       substantive: "re-head to a scholarly section title; keep the math",
     },

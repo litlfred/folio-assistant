@@ -26,7 +26,7 @@
  *  2. **Voice / story coherence** (needs an agent): does each title,
  *     read against its responsible parent, follow the narrative and
  *     stand on its own? Emitted as a per-chapter worklist
- *     (`todos/section-title-audit.json`, gitignored) carrying the
+ *     (`build/section-title-audit.json`, gitignored; override with --out) carrying the
  *     parent chain so an agent can adjudicate. Criterion id:
  *     `voice-section-title-coherence` (chapter-scoped; see the note in
  *     `qa-criteria-registry.ts`). This audit is NOT a per-block sweep
@@ -624,9 +624,18 @@ async function main(): Promise<void> {
       flags: flags.filter((f) => f.node === n).map((f) => f.kind),
     })),
   }));
-  writeFileSync("todos/section-title-audit.json", JSON.stringify(
+  // Was hardcoded to `todos/section-title-audit.json` — the one script here
+  // with no way to redirect it, and `todos/*.json` is the separate todo store
+  // AGENTS.md says not to stand up. `build/` is gitignored in every folio
+  // layout, including what `folio_init` scaffolds; `todos/` was not, so the
+  // first run in a scaffolded folio dirtied its git status.
+  const outIdx = process.argv.indexOf("--out");
+  const worklistOut =
+    outIdx >= 0 ? process.argv[outIdx + 1] : "build/section-title-audit.json";
+  mkdirSync(dirname(worklistOut), { recursive: true });
+  writeFileSync(worklistOut, JSON.stringify(
     { generated: new Date().toISOString(), max_len: MAX_LEN, total_titles: allNodes.length, hard_defects: hard.length, soft_warnings: soft.length, structure_findings: structureFlags, chapters: worklist }, null, 2));
-  console.log(`\n  worklist → todos/section-title-audit.json (review each title for conciseness + coherence against its parent)`);
+  console.log(`\n  worklist → ${worklistOut} (review each title for conciseness + coherence against its parent)`);
 
   if (writeSidecar) {
     writeSidecars(allNodes, flags, structureFlags, rawSectionsByChapter, thorough);
