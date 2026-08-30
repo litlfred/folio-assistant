@@ -1,10 +1,11 @@
 ---
 # folio-assistant-bfyw
 title: Two audits write into .beans/ and todos/ — locations AGENTS.md forbids
-status: in-progress
+status: completed
 type: bug
+priority: normal
 created_at: 2026-08-29T06:32:29Z
-updated_at: 2026-08-29T06:32:29Z
+updated_at: 2026-08-30T10:37:02Z
 ---
 
 Revived by #144. audit-status-sections defaults to .beans/status-section-audit.json (pollutes the bean store); qa-section-title-audit writes todos/section-title-audit.json (the todos/*.json store AGENTS.md says not to stand up) and its docstring claims it is gitignored, which is false in a folio_init layout.
@@ -64,3 +65,17 @@ submodule — no stray files.
 defaults into `build/`, and that the formerly-hardcoded one honours `--out`.
 
 Gates: 1190 pass / 0 fail, tsc clean, eslint clean.
+
+
+## Closed 2026-08-30 — all four verified repointed
+
+Status was `in-progress` while the "was / now" table already recorded the work.
+Checked each of the four against the tree: zero live references to `.beans/*.json`
+or `todos/*.json` remain; all four write under `build/`, and
+`qa-section-title-audit.ts` has the `--out` flag the table promised.
+
+**One near-miss worth recording.** A naive grep reports `qa-section-title-audit.ts`
+as still carrying a forbidden path. It is a HISTORICAL COMMENT —
+`// Was hardcoded to todos/section-title-audit.json` — explaining the fix. The
+live default is `build/section-title-audit.json`. Counting comment text as a
+live path would have reopened a correctly-closed bean.
