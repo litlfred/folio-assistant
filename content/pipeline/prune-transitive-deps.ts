@@ -29,6 +29,7 @@
  * Usage:
  *   bun run content/pipeline/prune-transitive-deps.ts              # dry-run (report only)
  *   bun run content/pipeline/prune-transitive-deps.ts --apply      # rewrite .ts files
+ *   bun run content/pipeline/prune-transitive-deps.ts --paper NAME # multi-paper folio
  *
  * @module content/pipeline/prune-transitive-deps
  */
@@ -45,18 +46,72 @@ import { verifyEditedBlock } from "./block-module";
 // path below is folio content. `findContentRepoRoot()` walks up from cwd;
 // it must not use `import.meta.dir`, which resolves back through a folio's
 // `folio-assistant/` symlink to the platform.
-const REPO_ROOT = findContentRepoRoot();
-const CONTENT_ROOT = join(REPO_ROOT, "content");
-
 const args = process.argv.slice(2);
 const APPLY = args.includes("--apply");
+
+// Read `--flag <value>`, rejecting a flag that was given without one.
+//
+// The bare `args[args.indexOf(flag) + 1]` this replaced took whatever followed
+// the flag, whatever it was. `--paper --apply` therefore handed `requirePaper`
+// the string `"--apply"`, which it returns unchanged — an explicit name is
+// trusted, by design, since a paper directory is exactly what the caller means
+// to name — and the run then died much later looking for a paper directory
+// called `--apply`. `--paper` in last position gave `undefined`, which falls
+// through to the "N papers found — name one explicitly" error, hiding the fact
+// that the caller *did* try to name one.
+//
+// This is the mirror image of the positional hazard described below, which is
+// why the flag form is not automatically the safe one: whichever convention you
+// pick, one token has to be checked for being a flag rather than a value.
+//
+// Deliberately evaluated ABOVE `findContentRepoRoot()`, so a usage error is
+// reported as a usage error wherever you run it, rather than being pre-empted
+// by "no content repo found" when the mistake is in the argv.
+const argValue = (flag: string): string | undefined => {
+  const i = args.indexOf(flag);
+  if (i === -1) return undefined;
+  const v = args[i + 1];
+  if (v === undefined || v.startsWith("-")) {
+    throw new Error(
+      `${flag} needs a value — \`${flag} <paper-name>\`. ` +
+        (v === undefined
+          ? "Nothing followed it."
+          : `Got \`${v}\`, which is another flag.`),
+    );
+  }
+  return v;
+};
+const PAPER_ARG = argValue("--paper");
+
+const REPO_ROOT = findContentRepoRoot();
+const CONTENT_ROOT = join(REPO_ROOT, "content");
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-// `--paper <name>` (not a positional): several of these scripts already
-// use argv[2] for an output path or a `--strict` flag, so a positional
-// would collide. Matches `extract-status-sections.ts`.
-const _paperIdx = process.argv.indexOf("--paper");
-const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
-const PAPER_NAME = requirePaper(_paperArg);
+// `--paper` matters in a MULTI-paper folio: `requirePaper()` with no argument
+// throws "5 papers found — name one explicitly", and until this flag existed
+// the script could not run there at all.
+//
+// A FLAG rather than a positional. `main`'s 21498cc ("nine scripts were
+// unrunnable in a multi-paper folio") gives the general reason and is the
+// better one: several scripts in this directory already use `argv[2]` for an
+// output path or a `--strict` flag, so a positional would collide;
+// `extract-status-sections.ts` is the match. It is also forced here
+// specifically, because this script takes `--apply`: under a positional
+// convention `prune-transitive-deps.ts --apply` would read `argv[2]` as the
+// paper name and `requirePaper` would hand `"--apply"` straight back.
+//
+// That positional hazard is the MIRROR IMAGE of the flag hazard `argValue`
+// guards above. Neither convention is free: whichever you pick, one token has
+// to be checked for being a flag rather than a value.
+//
+// (An earlier version of this comment said `generate-index.ts` and
+// `find-dangling-remarks.ts` both take the paper positionally and that a flag
+// here was a deliberate exception. 21498cc converted `generate-index.ts` to the
+// flag form, so the flag is the convention now and `find-dangling-remarks.ts`
+// is the remaining positional holdout.)
+//
+// (qou carries five papers: bach2013-double-slit, fred2005-formal-groups,
+// quantum-observable-universe, unital-groebner-bases, visualizer.)
+const PAPER_NAME = requirePaper(PAPER_ARG);
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
 
 // ── Load all blocks ─────────────────────────────────────────────

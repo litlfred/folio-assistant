@@ -102,10 +102,12 @@ function label(tsPath: string): string | undefined {
  *  3. duplicate entry — inflates every degree/cone metric downstream;
  *  4. transitive redundancy — A uses B, B uses C, A also lists C.
  *
- * (4) is sound on the editorial relation specifically: reading-order
- * IS transitive, so listing C adds nothing a reader gains. It is never
- * applied to formal edges, where a direct dependency is a fact about
- * the proof term rather than a claim about reading order.
+ * (4) is sound on the `uses` relation specifically: a prerequisite of a
+ * prerequisite is one too, so listing C adds nothing a reader gains. It
+ * is NOT sound on the wider editorial relation — an `interprets` edge
+ * carries no prerequisite forward (see the note at the check itself) —
+ * and it is never applied to formal edges, where a direct dependency is
+ * a fact about the proof term rather than a claim about reading order.
  */
 export function checkUsesEditorialHygiene(tsPath?: string): CheckerResult {
   if (!tsPath || !existsSync(tsPath)) return { result: "n/a", hits: [] };
@@ -164,21 +166,43 @@ export function checkUsesEditorialHygiene(tsPath?: string): CheckerResult {
     seen.add(u);
   }
 
-  // 4. transitive redundancy: an entry also reachable through another
-  //    entry. Walk the editorial relation only.
+  // 4. transitive redundancy: an entry also reachable through another entry.
   const direct = [...seen];
   let redundant = 0;
+  //
+  // Walk `uses` ONLY — not the full editorial relation.
+  //
+  // Redundancy here means "the reader already had to read `u` to get through
+  // `other`", and only `uses` transmits that. An `interprets` edge does not:
+  // owner ruling 2026-08-24 — sending a reader to a remark ABOUT B lets them
+  // take B's assertions for granted, and follow the reference if they want
+  // more; it does not mean they have read B's prerequisites. So a path that
+  // leaves a block by its `interprets` edge carries nothing forward, and an
+  // entry reachable only that way is not redundant.
+  //
+  // This is what the criterion was SPECIFIED to do — bean `folio-assistant-r0ax`,
+  // 2026-08-07: "transitive redundancy (A uses B, B uses C, A uses C)". It
+  // walked `cone(other, "editorial")`, which meant `uses` until `i8ad`
+  // (2026-08-15) made `interprets` an editorial edge, silently widening it.
+  // `ContentGraph.usesCone` is that walk, named — there is no `EdgeKind` for
+  // `uses`, because `uses`/`interprets` is a different axis from the
+  // editorial/formal provenance `EdgeKind` records.
+  //
+  // The cost of the widening, measured over qou 2026-08-24: 374 blocks warned,
+  // carrying 594 redundancy reports, and ALL 594 were `interprets`-only — not
+  // one ran through `uses`. Every one of them also named
+  // `prune-transitive-deps.ts` as the remedy, which reduces `uses[]` alone and
+  // would have reported nothing for any of them.
   for (const u of direct) {
     for (const other of direct) {
       if (other === u) continue;
-      if (g.cone(other, "editorial").has(u)) {
-        hit(
-          `transitively redundant "${u}" — already reachable via "${other}"; ` +
-            `run prune-transitive-deps.ts`,
-        );
-        redundant++;
-        break;
-      }
+      if (!g.usesCone(other).has(u)) continue;
+      hit(
+        `transitively redundant "${u}" — already reachable via "${other}"; ` +
+          `run prune-transitive-deps.ts`,
+      );
+      redundant++;
+      break;
     }
   }
 

@@ -23,9 +23,9 @@
 import { readdirSync, readFileSync, statSync, writeFileSync, mkdirSync } from "fs";
 import { join, dirname, basename, relative } from "path";
 import { requirePaper } from "./repo-root";
+import { paperArg } from "./cli-args";
 
-const _paperIdx = process.argv.indexOf("--paper");
-const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+const _paperArg = paperArg();
 const _positional = (() => {
   const a = process.argv.slice(2);
   for (let i = 0; i < a.length; i++) {

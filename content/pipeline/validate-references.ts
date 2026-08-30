@@ -24,6 +24,7 @@ import { join } from "path";
 import { references, referenceMap, CSLEntrySchema } from "./references-registry-di";
 import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
+import { paperArg } from "./cli-args";
 
 // Was rooted at this file's own location, which is the PLATFORM — but every
 // path below is folio content. `findContentRepoRoot()` walks up from cwd;
@@ -31,8 +32,7 @@ import { requirePaper } from "./repo-root";
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
 const args = process.argv.slice(2);
-const _paperIdx = process.argv.indexOf("--paper");
-const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+const _paperArg = paperArg();
 
 const strict = args.includes("--strict");
 

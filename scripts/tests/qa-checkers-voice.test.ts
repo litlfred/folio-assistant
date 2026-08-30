@@ -18,6 +18,7 @@ import { join } from "path";
 import { tmpdir } from "os";
 import {
   checkEditorializing,
+  checkScholarlyDefault,
   checkWallSide,
 } from "../../content/pipeline/qa-checkers-voice.ts";
 
@@ -203,3 +204,107 @@ describe("checkWallSide — ack branch keyed on hasRealType, not tactic-inclusiv
     expect(checkWallSide(plainMd(), lean, ts).result).toBe("fail");
   });
 });
+
+describe("checkScholarlyDefault — 'Right' is a technical adjective, not an interjection", () => {
+  const md = (line: string) =>
+    checkScholarlyDefault(tmp("t.md", line), undefined).result;
+  const leanDoc = (line: string) =>
+    checkScholarlyDefault(undefined, tmp("t.lean", `/-- ${line} -/\ndef f := 0\n`))
+      .result;
+
+  // The bare `Right\b` this pattern used to carry hit 22 Lean docstring
+  // lines in the qou corpus (2026-08-24) and was wrong on 21 of them.
+  test("'Right multiplication by a generator' passes", () => {
+    expect(md("Right multiplication by a generator preserves the parabolic.")).toBe("pass");
+  });
+  test("'Right action of the Hecke generator' passes", () => {
+    expect(md("Right action of the Hecke generator on the module.")).toBe("pass");
+  });
+  test("'Right gauge action' passes inside a Lean docstring", () => {
+    expect(leanDoc("Right gauge action `SU(2)_R`.")).toBe("pass");
+  });
+  test("'Right, so ...' still fails (genuine interjection)", () => {
+    expect(md("Right, so the bracket closes.")).toBe("fail");
+  });
+  test("'Right now we encode ...' still fails (lecturer cadence)", () => {
+    expect(md("Right now we encode the real-part magnitude.")).toBe("fail");
+  });
+  test("neighbouring bare-comma openers are untouched", () => {
+    expect(md("Alright the construction proceeds.")).toBe("fail");
+    expect(md("Okay so the map is defined.")).toBe("fail");
+  });
+});
+
+describe("checkScholarlyDefault — 'So the' is conclusion-drawing, not lecture cadence", () => {
+  const md = (line: string) =>
+    checkScholarlyDefault(tmp("t.md", line), undefined).result;
+
+  // 246 of the 261 corpus-wide hits came from the bare `So (?:...|the)`
+  // alternative, and none of them was the draft narration it was written for.
+  test("'So the sum is well-defined' passes", () => {
+    expect(md("So the sum is well-defined and independent of the choice.")).toBe("pass");
+  });
+  test("'So the two sides line up' passes", () => {
+    expect(md("So the two sides line up under the pairing.")).toBe("pass");
+  });
+  test("'So the plan is ...' still fails (the narration it was for)", () => {
+    expect(md("So the plan is to reduce to the abelian case.")).toBe("fail");
+  });
+  test("'So the idea is ...' still fails", () => {
+    expect(md("So the idea is to push the estimate through.")).toBe("fail");
+  });
+  test("'So now we turn to' still fails", () => {
+    expect(md("So now we turn to the second factor.")).toBe("fail");
+  });
+});
+
+describe("checkScholarlyDefault — bare-word alternatives do not glue to the next word", () => {
+  const md = (line: string) =>
+    checkScholarlyDefault(tmp("t.md", line), undefined).result;
+
+  // Without `\b`, `the` matched through the prefix of there/they/these.
+  test("'So there is no inverse' passes", () => {
+    expect(md("So there is no inverse to apply here.")).toBe("pass");
+  });
+  test("'So they are stated over the same ring' passes", () => {
+    expect(md("So they are stated over the same generic ring.")).toBe("pass");
+  });
+  test("'So these two agree' passes", () => {
+    expect(md("So these two agree on the overlap.")).toBe("pass");
+  });
+  // Under the /i flag, `(?:we|I)` matched the lowercase i of "is".
+  test("'So what is proved here is the reduction' passes", () => {
+    expect(md("So what is proved here is the reduction.")).toBe("pass");
+  });
+  test("'So what we do next' still fails", () => {
+    expect(md("So what we do next is bound the tail.")).toBe("fail");
+  });
+});
+
+describe("checkScholarlyDefault — a wrap continuation is not a sentence start", () => {
+  test("'right, since ...' as a continuation line passes", () => {
+    // The sentence began on the previous line and wrapped mid-clause.
+    const p = tmp(
+      "wrap.md",
+      "The action is on the\nright, since the ring need not be commutative.\n",
+    );
+    expect(checkScholarlyDefault(p, undefined).result).toBe("pass");
+  });
+  test("the same opener after a full stop still fails", () => {
+    const p = tmp(
+      "start.md",
+      "The action is on one side.\nRight, so the ring need not be commutative.\n",
+    );
+    expect(checkScholarlyDefault(p, undefined).result).toBe("fail");
+  });
+  test("an opener at the very first line still fails", () => {
+    expect(
+      checkScholarlyDefault(tmp("first.md", "Okay so the map is defined.\n"), undefined).result,
+    ).toBe("fail");
+  });
+  test("an opener after a blank line still fails", () => {
+    const p = tmp("para.md", "A closing sentence\n\nBasically, the map is defined.\n");
+    expect(checkScholarlyDefault(p, undefined).result).toBe("fail");
+  });
+});
+

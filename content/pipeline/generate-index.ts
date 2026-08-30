@@ -15,6 +15,7 @@ import { join} from "path";
 import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
 import type { Section, SectionRef } from "../../schemas/types";
+import { paperArg } from "./cli-args";
 
 // Was rooted at this file's own location, which is the PLATFORM — but every
 // path below is folio content. `findContentRepoRoot()` walks up from cwd;
@@ -28,9 +29,7 @@ const CONTENT_ROOT = join(REPO_ROOT, "content");
 // CANNOT take a positional because their argv[2] is already an output path.
 // The positional fallback is kept because `main` landed that form here and
 // callers may rely on it -- for this script argv[2] is free, so both work.
-const _paperIdx = process.argv.indexOf("--paper");
-const _paperArg =
-  _paperIdx >= 0 ? process.argv[_paperIdx + 1] : process.argv[2];
+const _paperArg = paperArg() ?? process.argv[2];
 const PAPER_NAME = requirePaper(_paperArg);
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
 const INDEX_MD = join(PAPER_DIR, "index-of-definitions", "definition-index.md");

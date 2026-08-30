@@ -25,6 +25,7 @@ import { walkBlocks, hashFile, loadQaReport } from "./qa-utils";
 import { QA_CRITERIA_REGISTRY } from "./qa-criteria-registry";
 import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
+import { paperArg } from "./cli-args";
 
 // chdir to the content-repo root before any path work. The default
 // `root` and `--out` paths are repo-relative, and `walkBlocks` yields
@@ -38,8 +39,7 @@ import { requirePaper } from "./repo-root";
 // would land inside folio-assistant, not the content repo).
 process.chdir(findContentRepoRoot());
 
-const _paperIdx = process.argv.indexOf("--paper");
-const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+const _paperArg = paperArg();
 const _positional = (() => {
   const a = process.argv.slice(2);
   for (let i = 0; i < a.length; i++) {

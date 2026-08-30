@@ -49,6 +49,7 @@ import {
 // folio-assistant but audits a downstream content repo; deriving the root
 // from this file's own location lands inside the platform tree instead.
 import { findContentRepoRoot, findPapers } from "./repo-root.ts";
+import { paperArg } from "./cli-args";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 
@@ -80,8 +81,7 @@ const jsonReport = args.includes("--json");
 const noOrphans = args.includes("--no-orphans");
 const chapterFilterIdx = args.indexOf("--chapter");
 const chapterFilter = chapterFilterIdx >= 0 ? args[chapterFilterIdx + 1] : undefined;
-const paperFilterIdx = args.indexOf("--paper");
-const paperFilter = paperFilterIdx >= 0 ? args[paperFilterIdx + 1] : undefined;
+const paperFilter = paperArg(args);
 
 /**
  * Reject anything this tool does not understand, instead of ignoring it.

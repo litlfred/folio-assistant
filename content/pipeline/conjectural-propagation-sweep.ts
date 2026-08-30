@@ -14,6 +14,7 @@ import { readdirSync, readFileSync, statSync, writeFileSync, mkdirSync } from "f
 import { join, basename, dirname, relative } from "path";
 import { BLOCK_KIND_ALT } from "../../schemas/types";
 import { requirePaper } from "./repo-root";
+import { paperArg } from "./cli-args";
 
 /**
  * `export default <kind>({` — the builder call that identifies a block.
@@ -54,8 +55,7 @@ function walk(dir: string) {
 // `--paper <name>` (not a positional): several of these scripts already
 // use argv[2] for an output path or a `--strict` flag, so a positional
 // would collide. Matches `extract-status-sections.ts`.
-const _paperIdx = process.argv.indexOf("--paper");
-const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+const _paperArg = paperArg();
 walk(join("content", requirePaper(_paperArg)));
 
 const conjectureLabels = new Set<string>();

@@ -25,6 +25,12 @@
  */
 import { describe, test, expect } from "bun:test";
 import { readFileSync } from "fs";
+import {
+  ProseSchema,
+  EquationSchema,
+  DiagramSchema,
+  TableSchema,
+} from "../../schemas/constraints.ts";
 import { join } from "path";
 
 const ROOT = join(import.meta.dir, "..", "..");
@@ -158,5 +164,71 @@ describe("every block kind carries the editorial relation", () => {
     // `equation` was the sole exception, in both TS and Zod.
     const missing = [...tsByKind].filter(([, n]) => !tsFields(n).has("uses")).map(([k]) => k);
     expect(missing).toEqual([]);
+  });
+});
+
+describe("every block kind carries `authorNotes`", () => {
+  /**
+   * PARITY COULD NOT CATCH THIS ONE, which is why it needs its own test.
+   * `authorNotes` was absent from `prose`, `equation`, `diagram` and `table`
+   * on BOTH sides, so the TS-vs-Zod comparison above was perfectly happy: the
+   * two agreed, and they agreed on being wrong. A test that only compares two
+   * implementations of the same idea is blind to a field neither implements.
+   *
+   * The cost was silent. The Zod objects are non-strict, so a block declaring
+   * `authorNotes` had the key stripped and the parse succeeded — the note was
+   * neither rendered, nor validated, nor reported, and nothing told the
+   * author. qou #5115 found five real notes being discarded that way and
+   * deliberately left them, because deleting the key destroys authored prose.
+   * Granted 2026-08-24, bean `folio-assistant-5nle`.
+   */
+  test("`authorNotes` is declared on every kind, in TS", () => {
+    const missing = [...tsByKind]
+      .filter(([, n]) => !tsFields(n).has("authorNotes"))
+      .map(([k]) => k)
+      .sort();
+    expect(missing).toEqual([]);
+  });
+
+  test("`authorNotes` is declared on every kind, in Zod", () => {
+    const missing = [...zodByKind]
+      .filter(([, fields]) => !fields.has("authorNotes"))
+      .map(([k]) => k)
+      .sort();
+    expect(missing).toEqual([]);
+  });
+});
+
+describe("`authorNotes` survives validation, not just declaration", () => {
+  /**
+   * The source-text tests above prove the field is DECLARED. This proves it
+   * is KEPT — which is the property that was actually broken, and the one a
+   * reader of the schema cannot verify by eye. A non-strict `z.object` that
+   * omits a key strips it and still returns success, so "the parse passed"
+   * was never evidence the note was there.
+   */
+  const note = { kind: "status" as const, date: "2026-06-08", body: "kept" };
+  const cases: [string, { safeParse: (v: unknown) => { success: boolean; data?: unknown } }, Record<string, unknown>][] = [
+    ["prose", ProseSchema, { kind: "prose", label: "x" }],
+    ["equation", EquationSchema, { kind: "equation" }],
+    ["diagram", DiagramSchema, { kind: "diagram" }],
+    ["table", TableSchema, { kind: "table" }],
+  ];
+  for (const [name, schema, base] of cases) {
+    test(`${name}: an authorNote round-trips`, () => {
+      const r = schema.safeParse({ ...base, authorNotes: [note] });
+      expect(r.success).toBe(true);
+      expect((r.data as { authorNotes?: unknown[] }).authorNotes).toEqual([note]);
+    });
+  }
+
+  test("granting the field did not weaken validation", () => {
+    // An unknown `kind` must still be rejected -- otherwise the grant would
+    // have traded a silent strip for a silent accept.
+    const r = ProseSchema.safeParse({
+      kind: "prose",
+      authorNotes: [{ kind: "nonsense", body: "x" }],
+    });
+    expect(r.success).toBe(false);
   });
 });

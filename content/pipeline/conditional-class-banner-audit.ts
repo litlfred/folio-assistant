@@ -33,6 +33,7 @@ import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
 import { loadBlocksUnder, reportLoadFailures } from "./block-module";
 import type { BlockLoadFailure } from "./block-module";
+import { paperArg } from "./cli-args";
 // Was rooted at this file's own location, which is the PLATFORM — but every
 // path below is folio content. `findContentRepoRoot()` walks up from cwd;
 // it must not use `import.meta.dir`, which resolves back through a folio's
@@ -42,8 +43,7 @@ const REPO_ROOT = findContentRepoRoot();
 // `--paper <name>` (not a positional): several of these scripts already
 // use argv[2] for an output path or a `--strict` flag, so a positional
 // would collide. Matches `extract-status-sections.ts`.
-const _paperIdx = process.argv.indexOf("--paper");
-const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+const _paperArg = paperArg();
 const ROOT = join(REPO_ROOT, "content", requirePaper(_paperArg));
 const STRICT = process.argv.includes("--strict");
 
