@@ -521,6 +521,80 @@ owner before committing.</li>
 
 <p><strong>Never</strong> the batch anti-fix: wrapping the conclusion in a structure field and
 projecting it. That converts a <em>visible</em> gap (<code class="language-plaintext highlighter-rouge">sorry</code>) into an <em>invisible</em> one.</p>
+<h3 id="demonstrating-non-degeneracy--the-theorem-pair-pattern">
+  
+  
+    <a href="#demonstrating-non-degeneracy--the-theorem-pair-pattern" class="anchor-heading" aria-labelledby="demonstrating-non-degeneracy--the-theorem-pair-pattern"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Demonstrating non-degeneracy — the theorem-pair pattern
+  
+  
+</h3>
+    
+
+<p>Step 2 requires the conditional class to be “non-degenerate”, and that is where
+most of these go wrong: a class is written, a <code class="language-plaintext highlighter-rouge">canonical</code> instance sets its data
+to zero so the propositional field becomes <code class="language-plaintext highlighter-rouge">rfl</code>, and the class asserts nothing
+for anyone. Demoting <code class="language-plaintext highlighter-rouge">instance</code> → <code class="language-plaintext highlighter-rouge">def</code> stops typeclass resolution supplying it
+silently, but it does not <em>say</em> what the hypothesis is worth.</p>
+
+<p><strong>Parameterise the class over the data, then state the residual vacuity as a
+proved pair.</strong> Worked example in
+<a href="../../.."><code class="language-plaintext highlighter-rouge">QOU/Archimedean/JetOrderIndependence.lean</code></a> — read it before
+inventing your own:</p>
+
+<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">/</span><span class="cd">-- The identically-zero transport error. -/</span>
+<span class="k">def</span> <span class="n">trivialError</span> : <span class="n">TransportErrorData</span> <span class="n">where</span>
+  <span class="n">shadow</span> := <span class="k">fun</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="mi">0</span>
+  <span class="n">physical</span> := <span class="k">fun</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="mi">0</span>
+  <span class="o">...</span>
+
+<span class="o">/</span><span class="cd">-- **The bound is vacuous at the zero error (PROVED).** So an instance for an</span>
+    <span class="o">*</span><span class="n">unspecified</span><span class="o">*</span> <span class="o">`</span><span class="n">E</span><span class="o">`</span> <span class="n">asserts</span> <span class="n">nothing</span>: <span class="n">it</span> <span class="n">is</span> <span class="n">satisfiable</span><span class="o">.</span> <span class="o">-/</span>
+<span class="k">instance</span> <span class="n">trivialError_bound</span> : <span class="n">SurrealParallelTransportBound</span> <span class="n">trivialError</span> <span class="n">where</span> <span class="o">...</span>
+
+<span class="o">/</span><span class="cd">-- **…and non-vacuous at any error with a non-zero physical shadow (PROVED).**</span>
+    <span class="n">For</span> <span class="n">a</span> <span class="n">specific</span> <span class="o">`</span><span class="n">E</span><span class="o">`</span> <span class="n">the</span> <span class="n">bound</span> <span class="n">is</span> <span class="n">a</span> <span class="n">real</span> <span class="n">constraint</span> <span class="n">that</span> <span class="n">can</span> <span class="n">fail</span><span class="o">.</span> <span class="o">-/</span>
+<span class="k">theorem</span> <span class="n">not_bound_of_physical_ne_zero</span> (<span class="n">h</span> : <span class="n">E</span><span class="o">.</span><span class="n">physical</span> <span class="n">N</span> <span class="o">≠</span> <span class="mi">0</span>) :
+    <span class="o">¬</span> <span class="n">Nonempty</span> (<span class="n">SurrealParallelTransportBound</span> <span class="n">E</span>) := <span class="o">...</span>
+</code></pre></div></div>
+
+<p>Read together the two say exactly what an instance buys: <strong>the hypothesis
+carries no information until the datum is pinned down, and real information as
+soon as it is.</strong> The trap becomes a machine-checked fact instead of a latent
+one — which is strictly better than forbidding the trivial model, because a
+non-degeneracy field on the class would prevent the trivial model <em>and</em>
+prevent saying anything about it.</p>
+
+<p>Parameterising alone is not enough: it stops the class choosing its own shadow,
+but a consumer can still instantiate at the zero datum. The pair is what closes
+that.</p>
+
+<p>Detected mechanically by <strong>two</strong> criteria in <code class="language-plaintext highlighter-rouge">content/pipeline/qa-checkers-vacuity.ts</code>,
+which partition the defect rather than overlap — a decl the first flags is
+skipped by the second:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">lean-no-vacuous-instance-data</code> — degenerate data <em>written as a constant</em>
+(<code class="language-plaintext highlighter-rouge">_ := 0</code>, <code class="language-plaintext highlighter-rouge">PUnit.unit</code>, <code class="language-plaintext highlighter-rouge">default</code>) plus a reflexivity discharge.</li>
+  <li><code class="language-plaintext highlighter-rouge">lean-no-definitional-laundering</code> — data that is <strong>not</strong> constant and is still
+chosen so the claim becomes <code class="language-plaintext highlighter-rouge">rfl</code>. Three shapes: an argument-ignoring body
+(<code class="language-plaintext highlighter-rouge">def F (args…) : Prop := True</code>), a constant one lambda deep
+(<code class="language-plaintext highlighter-rouge">member := fun _ =&gt; True</code>), and a field defined to BE the right-hand side its
+class field compares against (<code class="language-plaintext highlighter-rouge">w := fun _ =&gt; cableWidthColor</code> under
+<code class="language-plaintext highlighter-rouge">is_color : ∀ A, w A = cableWidthColor</code>).</li>
+</ul>
+
+<p>The two lists were measured <strong>disjoint</strong> on the qou corpus on 2026-08-24: a hand
+read found eight laundering sites, the constant detector found twenty-five, and
+no site appeared in both. If you are auditing for vacuity, running only one of
+them is running half the check.</p>
+
+<p>The third shape grades <code class="language-plaintext highlighter-rouge">warn</code>, not <code class="language-plaintext highlighter-rouge">fail</code>, and says “REVIEW (not a verdict)” in
+its own evidence. Pinning a field to a formula and observing the law then holds
+by <code class="language-plaintext highlighter-rouge">rfl</code> is a legitimate way to exhibit a model; whether the class field was a
+<em>constraint</em> the instance had to meet or a <em>definition</em> it was entitled to make
+is a question about what the class was for, and no regex answers it. Answer it
+and record the answer — do not treat the hit as a defect, and do not dismiss it
+because the docstring already argues it is fine.</p>
 <h2 id="detection-heuristic-candidate-grep--agent-confirmation">
   
   

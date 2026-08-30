@@ -318,7 +318,136 @@ sandboxes do <strong>not</strong> ship it, so reinstall on demand (Go ships in t
 <code class="language-plaintext highlighter-rouge">beans update &lt;child-id&gt; --parent &lt;session-id&gt;</code></li>
   <li><strong>No manual <code class="language-plaintext highlighter-rouge">.md</code> checklists:</strong> Never use <code class="language-plaintext highlighter-rouge">session-beans.md</code> or raw Markdown <code class="language-plaintext highlighter-rouge">- [ ]</code> checklists to track global tasks. Always use the <code class="language-plaintext highlighter-rouge">beans</code> CLI to prevent namespace pollution and maintain the official project tracking.</li>
   <li><strong>Check before you create:</strong> <code class="language-plaintext highlighter-rouge">beans create</code> is <strong>not</strong> idempotent. Run the existence check below before every <code class="language-plaintext highlighter-rouge">beans create</code> — no exceptions, including the session milestone.</li>
+  <li><strong>Brief before you work:</strong> claiming a bean records <em>which</em> item is taken; the opening brief records what it is taken <strong>for</strong>. Write it before the first tool call, in the chat. See §”Opening brief” below.</li>
 </ol>
+<h2 id="opening-brief">
+  
+  
+    <a href="#opening-brief" class="anchor-heading" aria-labelledby="opening-brief"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opening brief
+  
+  
+</h2>
+    
+
+<p><strong>Claiming a bean records the work. Briefing it is what makes the work
+resumable.</strong> Both are required, and the brief comes first — before the first
+tool call, in the chat, not in the commit.</p>
+
+<p>AGENTS.md §”Opening a bean or a topic” states the rule and when it applies.
+This is the shape.</p>
+<h3 id="the-four-parts">
+  
+  
+    <a href="#the-four-parts" class="anchor-heading" aria-labelledby="the-four-parts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The four parts
+  
+  
+</h3>
+    
+
+<p><strong>1. The problem, stated for someone who was not here.</strong> Expand every
+identifier on first use. Not “fixing <code class="language-plaintext highlighter-rouge">qou-93hu</code>” but “bean <code class="language-plaintext highlighter-rouge">qou-93hu</code> — the
+<code class="language-plaintext highlighter-rouge">CriticalExponent</code> conjecture carrier, whose only field is <code class="language-plaintext highlighter-rouge">(3 * 4 : ℕ) = 12</code>, a
+closed numeral identity with no exponent variable in it, so the class constrains
+nothing.”</p>
+
+<p><strong>2. What you know, and how you know it.</strong> Every number with its provenance:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>provenance</th>
+      <th>how to say it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>measured this session</td>
+      <td>“measured just now: 22 of 22 seeded, 0 missed”</td>
+    </tr>
+    <tr>
+      <td>carried from a prior session</td>
+      <td>“recorded 2026-08-24 as 43 drifted; not re-measured”</td>
+    </tr>
+    <tr>
+      <td>asserted by a bean or a doc</td>
+      <td>“bean <code class="language-plaintext highlighter-rouge">qou-q7lf</code> says X — <strong>unverified</strong>”</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>That third row is the one that bites. A sibling’s bean is not a primary source,
+and neither is a source file’s <code class="language-plaintext highlighter-rouge">## Status</code> note; both go stale, and a specific,
+recent, confidently-worded bean is exactly the kind that gets believed.</p>
+
+<p><strong>3. The route and the gate.</strong> How you plan to do it, what you will verify
+against, and <strong>what would falsify the approach</strong>. A plan with no failure mode is
+not a plan; it is an intention. If the gate is a script, name it and its
+expected output.</p>
+
+<p><strong>4. What you are NOT doing.</strong> The adjacent defect you are leaving, the scope
+you decline to widen into, the thing you will flag rather than fix. Stating it
+up front is what stops it becoming either silent scope creep or a silent
+omission — and it puts the scope call where it can still be argued with, which
+is before the diff.</p>
+<h3 id="worked-example">
+  
+  
+    <a href="#worked-example" class="anchor-heading" aria-labelledby="worked-example"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Worked example
+  
+  
+</h3>
+    
+
+<blockquote>
+  <p><strong>Starting <code class="language-plaintext highlighter-rouge">qou-93hu</code></strong> — the <code class="language-plaintext highlighter-rouge">CriticalExponent</code> §3b-cond hypothesis class in
+<code class="language-plaintext highlighter-rouge">lean/QOU/AlgebraicSubstrate/ConditionalClasses.lean</code>.</p>
+
+  <p><strong>The problem.</strong> Its single field is <code class="language-plaintext highlighter-rouge">alpha_three_eq_four : (3 * 4 : ℕ) = 12</code>
+— a closed numeral identity with the values already substituted in, so no
+exponent variable occurs in it and <code class="language-plaintext highlighter-rouge">rfl</code> proves it whatever the physics. Four
+sibling carriers in the same file are vacuous too, but they are at least the
+right <em>shape</em> (parameter-quantified inequalities); this one has no quantifier
+and no free variable at all.</p>
+
+  <p><strong>What I know.</strong> Measured this session: bound as <code class="language-plaintext highlighter-rouge">[C]</code> in 5 files; the probe
+baseline records it <code class="language-plaintext highlighter-rouge">proved-vacuous</code>; the class’s own docstring already claims
+“α = 4/3”, so the target value is not something I need to invent. Not
+measured: whether any downstream proof depends on the field’s <em>current</em> type.</p>
+
+  <p><strong>Route.</strong> Make α a class parameter — <code class="language-plaintext highlighter-rouge">class CriticalExponent (α : ℝ) : Prop
+where alpha_eq : α = 4/3</code>. A <code class="language-plaintext highlighter-rouge">Prop</code> class cannot carry data, so α must be a
+parameter, not a field. Gate: lean-direct exit 0 on all three affected
+modules, plus a content probe proving <code class="language-plaintext highlighter-rouge">¬ CriticalExponent 2</code> — because
+inhabitability at 4/3 alone would not show the class constrains anything.
+<strong>Falsifier:</strong> if <code class="language-plaintext highlighter-rouge">¬ CriticalExponent 2</code> will not go through, the encoding is
+not doing what I claim and I stop.</p>
+
+  <p><strong>Not doing.</strong> The other four carriers need analytic setup their docstrings
+only gesture at — the author’s mathematics, not a cleanup. Also leaving the
+separate <code class="language-plaintext highlighter-rouge">CriticalExponent</code> in <code class="language-plaintext highlighter-rouge">core-levi-form.lean</code>, a different carrier in a
+different namespace.</p>
+</blockquote>
+
+<p>~200 words, and it would have let a reader stop the work, redirect it, or pick
+it up cold.</p>
+<h3 id="the-failure-this-prevents">
+  
+  
+    <a href="#the-failure-this-prevents" class="anchor-heading" aria-labelledby="the-failure-this-prevents"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The failure this prevents
+  
+  
+</h3>
+    
+
+<p>An agent that has spent an hour inside a problem writes in the private
+vocabulary it built along the way, and a reader — the author, or the next agent
+— has to reconstruct that vocabulary before evaluating anything. The brief is
+written at the one moment when the agent still knows which parts are
+non-obvious, because it has just finished finding them out.</p>
+
+<p><strong>Cheapest correct move when you do not want to spend the words: do not start
+the topic.</strong> A task you cannot brief is one you have not understood well enough
+to begin.</p>
 <h2 id="check-before-you-create--beans-create-is-not-idempotent-strict">
   
   
