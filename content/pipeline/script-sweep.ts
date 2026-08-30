@@ -75,6 +75,7 @@ import {
   checkConnectedToCiPipeline,
   checkDeprecated,
   checkUsesLibraryFrameworkAppropriately,
+  checkAssertionsAreFalsifiable,
 } from "./qa-checkers-python";
 import type { CheckerResult } from "./qa-checkers-voice";
 import type {
@@ -146,6 +147,10 @@ const SCRIPT_CHECKERS: Record<string, ScriptCheckerFn> = {
   uses_library_framework_appropriately: (t) => {
     if (t.language !== "python") return { result: "n/a", hits: [] };
     return checkUsesLibraryFrameworkAppropriately(t.abs);
+  },
+  assertions_are_falsifiable: (t) => {
+    if (t.language !== "python") return { result: "n/a", hits: [] };
+    return checkAssertionsAreFalsifiable(t.abs);
   },
 };
 
