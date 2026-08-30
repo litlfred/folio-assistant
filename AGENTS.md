@@ -427,8 +427,18 @@ the topic.** A task you cannot brief is a task you have not understood well
 enough to begin, and beginning it anyway is how a session produces work that has
 to be unwound.
 
-Full protocol, with the worked example: `.claude/skills/local/todo-manager.md`
+Full protocol, with the worked example:
+[`skills/folio-core/todo-manager.md`](skills/folio-core/todo-manager.md)
 §"Opening brief".
+
+> **Two `todo-manager.md` exist and they have diverged — noted, not resolved
+> here.** `skills/folio-core/todo-manager.md` (3 inbound references, and the one
+> this file's other links point at) and `.claude/skills/local/todo-manager.md`
+> (5 inbound references) differ by **186 lines** as of 2026-08-30. §"Opening
+> brief" was added to both so this change does not widen the gap, but which copy
+> is canonical is a question for whoever owns the skills layout — resolving a
+> 186-line divergence as a side effect of an unrelated edit is how one of them
+> quietly becomes wrong.
 
 ## More
 
