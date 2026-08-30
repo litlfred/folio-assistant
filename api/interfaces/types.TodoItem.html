@@ -21,14 +21,14 @@ field carries structured context at the discretion of the creating
 agent or user.</p>
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">TodoItem</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#assignee">assignee</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#comment">comment</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#createdat">createdAt</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#data">data</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#id">id</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#origin">origin</a><span class="tsd-signature-symbol">:</span> <a href="../types/types.TodoOrigin.html" class="tsd-signature-type tsd-kind-type-alias">TodoOrigin</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#priority">priority</a><span class="tsd-signature-symbol">:</span> <a href="../types/types.TodoPriority.html" class="tsd-signature-type tsd-kind-type-alias">TodoPriority</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#related">related</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#status">status</a><span class="tsd-signature-symbol">:</span> <a href="../types/types.TodoStatus.html" class="tsd-signature-type tsd-kind-type-alias">TodoStatus</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#summary">summary</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#targetlabel">targetLabel</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#updatedat">updatedAt</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#updatedby">updatedBy</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div>
-<section class="tsd-panel tsd-hierarchy" data-refl="395">
+<section class="tsd-panel tsd-hierarchy" data-refl="399">
 <h4>Hierarchy (<a href="../hierarchy.html#types.TodoItem">View Summary</a>)</h4>
 <ul class="tsd-hierarchy">
 <li class="tsd-hierarchy-item"><span class="tsd-hierarchy-target">TodoItem</span>
 <ul class="tsd-hierarchy">
 <li class="tsd-hierarchy-item"><a href="types.FeedbackItem.html" class="tsd-signature-type tsd-kind-interface">FeedbackItem</a></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1303">types.ts:1303</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1399">types.ts:1399</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -59,91 +59,91 @@ agent or user.</p>
 <div class="tsd-comment tsd-typography"><p>Who this is assigned to (agent name or &quot;author&quot;).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1319">types.ts:1319</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1415">types.ts:1415</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="comment"><span>comment</span><a href="#comment" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">comment</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Markdown narrative with context, rationale, questions.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1309">types.ts:1309</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1405">types.ts:1405</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="createdat"><span>created<wbr/>At</span><a href="#createdat" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">createdAt</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>ISO 8601 timestamp of creation.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1321">types.ts:1321</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1417">types.ts:1417</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="data"><code class="tsd-tag">Optional</code><span>data</span><a href="#data" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">data</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></div>
 <div class="tsd-comment tsd-typography"><p>Structured data — schema is at agent/user discretion.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1327">types.ts:1327</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1423">types.ts:1423</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="id"><span>id</span><a href="#id" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Unique ID (e.g. &quot;todo-001&quot; or a nanoid).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1305">types.ts:1305</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1401">types.ts:1401</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="origin"><span>origin</span><a href="#origin" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">origin</span><span class="tsd-signature-symbol">:</span> <a href="../types/types.TodoOrigin.html" class="tsd-signature-type tsd-kind-type-alias">TodoOrigin</a></div>
 <div class="tsd-comment tsd-typography"><p>Who/what created this todo.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1315">types.ts:1315</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1411">types.ts:1411</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="priority"><span>priority</span><a href="#priority" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">priority</span><span class="tsd-signature-symbol">:</span> <a href="../types/types.TodoPriority.html" class="tsd-signature-type tsd-kind-type-alias">TodoPriority</a></div>
 <div class="tsd-comment tsd-typography"><p>Triage priority.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1313">types.ts:1313</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1409">types.ts:1409</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="related"><code class="tsd-tag">Optional</code><span>related</span><a href="#related" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">related</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Labels of related todos (for threading).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1329">types.ts:1329</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1425">types.ts:1425</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="status"><span>status</span><a href="#status" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">status</span><span class="tsd-signature-symbol">:</span> <a href="../types/types.TodoStatus.html" class="tsd-signature-type tsd-kind-type-alias">TodoStatus</a></div>
 <div class="tsd-comment tsd-typography"><p>Current lifecycle status.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1311">types.ts:1311</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1407">types.ts:1407</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="summary"><span>summary</span><a href="#summary" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">summary</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Short summary (one line).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1307">types.ts:1307</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1403">types.ts:1403</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="targetlabel"><code class="tsd-tag">Optional</code><span>target<wbr/>Label</span><a href="#targetlabel" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">targetLabel</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Label of the block this todo is attached to (e.g. &quot;def:rigid-monoidal-category&quot;).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1317">types.ts:1317</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1413">types.ts:1413</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="updatedat"><code class="tsd-tag">Optional</code><span>updated<wbr/>At</span><a href="#updatedat" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">updatedAt</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>ISO 8601 timestamp of last update.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1323">types.ts:1323</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1419">types.ts:1419</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="updatedby"><code class="tsd-tag">Optional</code><span>updated<wbr/>By</span><a href="#updatedby" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">updatedBy</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Agent/user who last updated.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/types.ts#L1325">types.ts:1325</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f6ee7c831d5350b42bce901d30e9f9ac521c6eb9/schemas/types.ts#L1421">types.ts:1421</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
