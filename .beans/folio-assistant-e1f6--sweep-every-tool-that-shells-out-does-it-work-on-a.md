@@ -1,10 +1,11 @@
 ---
 # folio-assistant-e1f6
 title: 'Sweep: every tool that shells out — does it work on a scaffolded folio, and what does it print when its dependency is missing?'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-08-29T02:41:13Z
-updated_at: 2026-08-29T02:41:13Z
+updated_at: 2026-08-30T10:37:02Z
 ---
 
 Follow-on from p9a2. Two properties per tool: (a) honest reporting when the dependency is absent, (b) actually functional on a folio_init layout.
@@ -82,3 +83,22 @@ against an empty registry is unverified. Worth a follow-up if a folio starts
 carrying references.
 
 Gates: 1181 pass / 0 fail, tsc clean, eslint clean.
+
+
+## Closed 2026-08-30 — resolution fix verified in the code
+
+Status was `in-progress` with no open items in the body. The claimed fix is
+present: `resolvePipelineScript` in `adapters/document/tools/_pipeline.ts`,
+used by 3 files, documented to try the folio's own `content/pipeline/` first
+and fall back to the platform's.
+
+**What I checked, because it looked wrong at first.** The OLD folio-only
+resolver `pipelineScriptPath` is still in that file, still a bare
+`join(REPO_ROOT, "content", "pipeline", name)` with no fallback — i.e. exactly
+the defect this bean describes. It is **dead**: zero production callers. Its
+only references are its own definition and `scripts/tests/qa-tools.test.ts`,
+which asserts the old behaviour.
+
+That leftover is not a defect but it is a hazard, and a test pinning a dead
+function's behaviour is a test that can never matter — the class
+`folio-assistant-6fnb` catalogued. Split out rather than left implicit here.
