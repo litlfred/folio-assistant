@@ -368,6 +368,49 @@ export class ContentGraph {
   }
 
   /**
+   * Transitive cone from `label` following **`uses[]` edges only**, not the
+   * full editorial relation. Cycle-safe, like `cone`.
+   *
+   * `uses` and `interprets` are both editorial, because both state a
+   * reader-facing prerequisite (bean `i8ad`). They are not interchangeable
+   * under *transitivity*, which is what a cone measures. Owner ruling
+   * 2026-08-24: sending a reader to a remark ABOUT B lets them take B's
+   * assertions for granted, and follow the reference if they want more; it
+   * does not mean they have read B's prerequisites. A path that leaves a
+   * block by its `interprets` edge therefore carries nothing forward.
+   *
+   * So `cone(label, "editorial")` is the wrong measure for any question of
+   * the form "did the reader already have to read this?" — use this one. It
+   * remains the right measure for impact ("what breaks if this changes?"),
+   * which is why the default cone is still the union.
+   *
+   * There is deliberately no `EdgeKind` for `uses`: the kind axis is
+   * provenance (editorial vs formal) and `uses`/`interprets` is a different
+   * axis, recorded per-edge in `editorialField`. Widening `EdgeKind` would
+   * make `kind === "editorial"` stop meaning "every editorial edge".
+   */
+  usesCone(label: string): Set<string> {
+    const step = (n: string): string[] => [
+      ...new Set(
+        this.outEdges(n, "editorial")
+          .filter((e) => e.editorialField === "uses")
+          .map((e) => e.to),
+      ),
+    ];
+    const seen = new Set<string>();
+    const stack = [...step(label)];
+    while (stack.length) {
+      const n = stack.pop()!;
+      if (n === label || seen.has(n)) continue;
+      seen.add(n);
+      for (const next of step(n)) {
+        if (next !== label && !seen.has(next)) stack.push(next);
+      }
+    }
+    return seen;
+  }
+
+  /**
    * Formal edges out of `label` whose target is not reachable from
    * `label` through the **editorial** relation.
    *

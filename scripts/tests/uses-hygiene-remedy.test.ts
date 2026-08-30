@@ -44,12 +44,12 @@ describe.skipIf(!hasFolio())("uses-editorial-hygiene redundancy walks `uses` onl
       const r = checkUsesEditorialHygiene(b.ts);
       const direct = [...new Set(parseUses(readFileSync(b.ts, "utf-8")))];
 
-      const redundantVia = (rel: "uses" | "editorial"): boolean =>
+      const redundantVia = (coneOf: (n: string) => Set<string>): boolean =>
         direct.some((u) =>
-          direct.some((other) => other !== u && g.cone(other, rel).has(u)),
+          direct.some((other) => other !== u && coneOf(other).has(u)),
         );
-      const viaUses = redundantVia("uses");
-      const viaEditorial = redundantVia("editorial");
+      const viaUses = redundantVia((n) => g.usesCone(n));
+      const viaEditorial = redundantVia((n) => g.cone(n, "editorial"));
 
       // The ruling, as an invariant: `uses` decides, nothing else.
       if (r.result === "warn") {
@@ -90,7 +90,7 @@ describe.skipIf(!hasFolio())("uses-editorial-hygiene redundancy walks `uses` onl
         const m = text.match(/redundant "([^"]+)" — already reachable via "([^"]+)"/);
         if (!m) continue;
         const [, u, other] = m;
-        expect(g.cone(other, "uses").has(u)).toBe(true);
+        expect(g.usesCone(other).has(u)).toBe(true);
         expect(text).toContain("run prune-transitive-deps.ts");
       }
     }

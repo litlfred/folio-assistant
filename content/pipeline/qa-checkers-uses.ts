@@ -184,6 +184,9 @@ export function checkUsesEditorialHygiene(tsPath?: string): CheckerResult {
   // 2026-08-07: "transitive redundancy (A uses B, B uses C, A uses C)". It
   // walked `cone(other, "editorial")`, which meant `uses` until `i8ad`
   // (2026-08-15) made `interprets` an editorial edge, silently widening it.
+  // `ContentGraph.usesCone` is that walk, named — there is no `EdgeKind` for
+  // `uses`, because `uses`/`interprets` is a different axis from the
+  // editorial/formal provenance `EdgeKind` records.
   //
   // The cost of the widening, measured over qou 2026-08-24: 374 blocks warned,
   // carrying 594 redundancy reports, and ALL 594 were `interprets`-only — not
@@ -193,7 +196,7 @@ export function checkUsesEditorialHygiene(tsPath?: string): CheckerResult {
   for (const u of direct) {
     for (const other of direct) {
       if (other === u) continue;
-      if (!g.cone(other, "uses").has(u)) continue;
+      if (!g.usesCone(other).has(u)) continue;
       hit(
         `transitively redundant "${u}" — already reachable via "${other}"; ` +
           `run prune-transitive-deps.ts`,
