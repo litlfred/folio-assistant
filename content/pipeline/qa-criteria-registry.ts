@@ -876,6 +876,101 @@ const PROOF: QaCriterionDefinition[] = [
     applies_to: ["theorem", "lemma", "proposition", "corollary"],
   },
   {
+    id: "lean-no-vacuous-instance-data",
+    domain: "proof",
+    description:
+      "No instance discharges a propositional field by reflexivity BECAUSE " +
+      "its data fields were chosen degenerate. The signature is the " +
+      "conjunction — constant data (`_ := 0`, `PUnit.unit`, `default`) AND a " +
+      "`rfl`/`trivial` discharge of a field relating that data. Either half " +
+      "alone is usually legitimate: a genuine zero object has constant data, " +
+      "and plenty of real laws are reflexivity. Together they mean the claim " +
+      "was arranged away rather than proved. An unconditional `instance` is " +
+      "the severe form, since typeclass resolution supplies it everywhere and " +
+      "every downstream theorem taking the class stops being conditional. " +
+      "AST-checked, no agent turn. THE REMEDY, best-first: (1) parameterise " +
+      "the class over the data so it cannot choose its own degenerate " +
+      "shadow, then state the residual vacuity as a PROVED THEOREM PAIR — " +
+      "one instance at the trivial datum showing the hypothesis is " +
+      "satisfiable, one theorem showing it fails at any non-trivial datum. " +
+      "That turns the trap into a machine-checked fact about what the " +
+      "hypothesis is worth, instead of forbidding it. See " +
+      "`QOU/Archimedean/JetOrderIndependence.lean` (`trivialError_bound` " +
+      "beside `not_bound_of_physical_ne_zero`) for the worked pattern. " +
+      "(2) Failing that, demote `instance` to `def` so the model must be " +
+      "named and a reader of a downstream theorem can see what discharged " +
+      "the hypothesis. (3) A non-degeneracy field on the class is the " +
+      "blunt option: it prevents the trivial model but also prevents saying " +
+      "anything about it. " +
+      "Routes to `lean-proof-vacuity-audit`.",
+    default_severity: "critical",
+    depends_on: ["lean"],
+    automated: true,
+    applies_to: ["definition", "theorem", "lemma", "proposition", "corollary"],
+  },
+  {
+    id: "lean-no-definitional-laundering",
+    domain: "proof",
+    description:
+      "The sibling `lean-no-vacuous-instance-data` models vacuity as CONSTANT " +
+      "data. This criterion covers the shape that model cannot see: data that " +
+      "is NOT constant and is still chosen so the claim becomes `rfl`. A hand " +
+      "pass over the qou corpus found eight such sites and the constant " +
+      "detector found twenty-five, with a zero overlap. Three detections, all " +
+      "conjunctive: (1) ARGUMENT-IGNORING BODY — `def F (args…) : Prop := " +
+      "True` (or `False`), possibly after `let` bindings whose results are " +
+      "discarded, so every claim stated in terms of `F` is free without any " +
+      "instance being written; (2) LAMBDA-WRAPPED CONSTANT — `member := fun _ " +
+      "=> True` beside a reflexivity discharge, the sibling's exact " +
+      "conjunction with the constant one lambda deeper than its anchored " +
+      "regex reaches; (3) DEFINITIONAL IDENTITY — the class declares `claim : " +
+      "∀ …, data args = RHS` and the instance assigns `data := fun … => RHS` " +
+      "with that same RHS, then discharges `claim` by reflexivity. " +
+      "AST-checked, no agent turn. " +
+      "DETECTION 3 IS A READING, NOT A VERDICT: pinning a field to a formula " +
+      "and observing the law then holds by `rfl` is a legitimate way to " +
+      "exhibit a model, and whether the class field was a CONSTRAINT the " +
+      "instance had to meet or a DEFINITION it was entitled to make is not a " +
+      "syntactic question. Those hits grade `warn` and say so; when the " +
+      "author's docstring disputes the reading the hit records that too. " +
+      "Detections 1 and 2 grade `fail`. " +
+      "SCOPE, HONESTLY: detection 3 reads only classes declared in the SAME " +
+      "file — resolving an imported class means resolving imports, and a " +
+      "wrong resolution is a confident false report about a decl never read. " +
+      "Semantic constancy (`w A := 3 * A * 0`) needs `whnf`, i.e. the " +
+      "elaborator, and is out of reach here. An argument-free `def X : Prop " +
+      ":= True` is deliberately NOT reported: that is " +
+      "`proof-no-trivial-true`'s `def-disguised-true` pattern. " +
+      "THE REMEDY is the sibling criterion's, and it is the same remedy " +
+      "because it is the same defect one level up: parameterise the class " +
+      "over the data so the instance cannot choose its own shadow, then state " +
+      "the residual vacuity as a proved theorem pair — one instance at the " +
+      "trivial datum, one theorem that the class fails at a non-trivial one. " +
+      "`QOU/MassTheory/CableWidthBraneTowerLift.lean` (`colorRule` beside " +
+      "`not_widthRule_of_ne`) is the worked pattern. " +
+      "Routes to `lean-proof-vacuity-audit`.",
+    default_severity: "critical",
+    depends_on: ["lean"],
+    automated: true,
+    applies_to: ["definition", "theorem", "lemma", "proposition", "corollary"],
+  },
+  {
+    id: "lean-docstring-honesty",
+    domain: "proof",
+    description:
+      "A docstring that says the term carries a `sorry`, is axiomatised, or " +
+      "holds a conjecture as a placeholder must be telling the truth: the " +
+      "body contains an actual `sorry` or `axiom`. A docstring is the only " +
+      "place an incompleteness is recorded when the term is in fact closed by " +
+      "construction, and a wrong one is worse than no note at all — a `sorry` " +
+      "is visible to `#print axioms`, a `rfl` on `0 = 0` is not. " +
+      "AST-checked, no agent turn. Routes to `lean-proof-vacuity-audit`.",
+    default_severity: "major",
+    depends_on: ["lean"],
+    automated: true,
+    applies_to: ["definition", "theorem", "lemma", "proposition", "corollary"],
+  },
+  {
     id: "proof-no-false-premise",
     domain: "proof",
     description:
@@ -1763,6 +1858,28 @@ const SCRIPT_QUALITY: QaCriterionDefinition[] = [
       "precision. Strings and `#` comments are stripped before " +
       "scanning to avoid false positives on narrative references.",
     default_severity: "major",
+    depends_on: ["ts"],
+    automated: true,
+    source_file: "content/pipeline/qa-checkers-python.ts",
+  },
+  {
+    id: "assertions_are_falsifiable",
+    domain: "script-quality",
+    description:
+      "A witness assertion must be able to FAIL. Fires when an " +
+      "`add_assertion(...)` call passes the same expression as both " +
+      "`computed` and `expected`, so the assertion holds by construction " +
+      "and the resulting `allPassed: true` says nothing about what the " +
+      "script produced — which is what a block's `computation.status: " +
+      "\"verified\"` rests on. Keyword and positional forms both checked. " +
+      "Regex, not AST (no Python runtime in the sweep): measured 90% recall " +
+      "at 100% sampled precision against an AST census, and it " +
+      "under-reports by design, since a missed tautology stays a backlog " +
+      "item while a false one costs an author an argument with the checker. " +
+      "Remedy: supply the real expected value; if none exists yet, assert a " +
+      "different property that can fail rather than re-deriving the " +
+      "computation under test, which is the same defect spelled out.",
+    default_severity: "critical",
     depends_on: ["ts"],
     automated: true,
     source_file: "content/pipeline/qa-checkers-python.ts",

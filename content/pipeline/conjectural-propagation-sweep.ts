@@ -51,7 +51,12 @@ function walk(dir: string) {
   }
 }
 
-walk(join("content", requirePaper()));
+// `--paper <name>` (not a positional): several of these scripts already
+// use argv[2] for an output path or a `--strict` flag, so a positional
+// would collide. Matches `extract-status-sections.ts`.
+const _paperIdx = process.argv.indexOf("--paper");
+const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+walk(join("content", requirePaper(_paperArg)));
 
 const conjectureLabels = new Set<string>();
 for (const b of blocks.values()) if (b.kind === "conjecture") conjectureLabels.add(b.label);
@@ -156,7 +161,19 @@ if (empty.length) {
   reportLines.push("");
 }
 
-const outputPath = process.argv[2] ?? "docs/audits/2026-05-01-conjectural-propagation-sweep.md";
+// First non-flag argument. `process.argv[2]` alone would pick up `--paper`
+// (or its value), which is how this script came to write its witness to a
+// file literally named `--paper`.
+const _positional = (() => {
+  const a = process.argv.slice(2);
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] === "--paper") { i++; continue; }
+    if (a[i].startsWith("--")) continue;
+    return a[i];
+  }
+  return undefined;
+})();
+const outputPath = _positional ?? "docs/audits/2026-05-01-conjectural-propagation-sweep.md";
 mkdirSync(dirname(outputPath), { recursive: true });
 writeFileSync(outputPath, reportLines.join("\n"));
 console.log(`Wrote ${outputPath}`);

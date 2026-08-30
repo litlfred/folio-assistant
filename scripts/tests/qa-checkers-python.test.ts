@@ -27,7 +27,20 @@ import {
   checkConnectedToCiPipeline,
   checkDeprecated,
   checkUsesLibraryFrameworkAppropriately,
+  checkAssertionsAreFalsifiable,
 } from "../../content/pipeline/qa-checkers-python";
+
+/** Write `source` to a temp `.py` and run `fn` against its path. */
+function withPy<T>(source: string, fn: (p: string) => T): T {
+  const dir = mkdtempSync(join(tmpdir(), "qa-py-"));
+  try {
+    const file = join(dir, "fixture.py");
+    writeFileSync(file, source);
+    return fn(file);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
 
 function runChecker(source: string): {
   bare_literals: number;
@@ -668,5 +681,69 @@ describe("checkUsesLibraryFrameworkAppropriately", () => {
       checkUsesLibraryFrameworkAppropriately,
     );
     expect(r.result).toBe("pass");
+  });
+});
+
+describe("assertions_are_falsifiable", () => {
+  test("fires when computed and expected are the same expression", () => {
+    const src = `
+w.add_assertion("gluon", computed=sel[0], expected=sel[0], source="ILP")
+`;
+    const r = withPy(src, (p) => checkAssertionsAreFalsifiable(p));
+    expect(r.result).toBe("fail");
+    expect(r.hits[0].text).toContain("compares `sel[0]` to itself");
+  });
+
+  test("fires on literal-vs-literal, the clearest form", () => {
+    const src = `
+wb.add_assertion("kernel_ran", computed=1, expected=1, tolerance=0)
+`;
+    expect(withPy(src, (p) => checkAssertionsAreFalsifiable(p)).result).toBe("fail");
+  });
+
+  test("fires across a multi-line call", () => {
+    const src = `
+w.add_assertion(
+    "tr_M",
+    computed=r["tr_M"],
+    expected=r["tr_M"],
+    tolerance=1e-10,
+)
+`;
+    expect(withPy(src, (p) => checkAssertionsAreFalsifiable(p)).result).toBe("fail");
+  });
+
+  test("does NOT fire when the two sides differ", () => {
+    const src = `
+w.add_assertion("vol", computed=vol_computed, expected=2.0298, tolerance=1e-6)
+`;
+    expect(withPy(src, (p) => checkAssertionsAreFalsifiable(p)).result).toBe("pass");
+  });
+
+  test("does NOT fire inside a docstring", () => {
+    // `witness.py` documents its own API with a same-value example. Firing on
+    // the documentation of the function under test was the first corpus run's
+    // only false positive.
+    const src = [
+      '"""Usage:',
+      '',
+      '    w.add_assertion("Vol(4_1)", computed=2.0298, expected=2.0298)',
+      '"""',
+      'x = 1',
+    ].join("\n");
+    expect(withPy(src, (p) => checkAssertionsAreFalsifiable(p)).result).toBe("pass");
+  });
+
+  test("still sees string-valued tautologies", () => {
+    // Only TRIPLE-quoted blocks are blanked; blanking every string literal
+    // would trade the docstring false positive for these real ones.
+    const src = `
+w.add_assertion("resid", computed="0", expected="0")
+`;
+    expect(withPy(src, (p) => checkAssertionsAreFalsifiable(p)).result).toBe("fail");
+  });
+
+  test("n/a when the file has no assertions at all", () => {
+    expect(withPy("x = 1\n", (p) => checkAssertionsAreFalsifiable(p)).result).toBe("n/a");
   });
 });

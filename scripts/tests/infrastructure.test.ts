@@ -6,10 +6,11 @@
  */
 
 import { describe, test, expect } from "bun:test";
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 import { execSync } from "child_process";
 import { REPO_ROOT, FOLIO_ROOT, hasFolio } from "./helpers";
+import { maskComments } from "../../content/pipeline/uses-field";
 
 /** Skip folio-side assertions when no content repo is attached. */
 const folio = hasFolio();
@@ -246,6 +247,57 @@ describe.skipIf(!folio)(".gitignore", () => {
 
   test("blocks content/quantum-observable-universe/lean/.lake/", () => {
     expect(gitignore).toContain("content/quantum-observable-universe/lean/.lake/");
+  });
+});
+
+// ── Test-suite path anchoring ───────────────────────────────────
+
+/**
+ * `run-tests.sh` does `cd "$SCRIPT_DIR"` before `bun test`, so under the
+ * canonical runner `process.cwd()` is `scripts/tests/`, NOT the repo root. A
+ * test that builds a repo path with `join(process.cwd(), ...)` therefore points
+ * at `scripts/tests/<path>`, which does not exist — and the failure surfaces as
+ * whatever the code under test does with a missing file rather than as "wrong
+ * path". `qa-criterion-hash.test.ts` lost its real-module guard that way: the
+ * hash came back `null` from an ENOENT, indistinguishable from the checker
+ * shape drift the guard exists to catch, and the test only ever passed when the
+ * suite was invoked by hand from the repo root.
+ *
+ * Repo paths in tests anchor at `import.meta.dir` (`REPO_ROOT` in `helpers.ts`)
+ * — which is also what survives a folio embedding this repo by symlink.
+ */
+describe("tests anchor repo paths at import.meta.dir, not process.cwd()", () => {
+  // `join(process.cwd(), ...)` / `resolve(process.cwd(), ...)`, across line
+  // breaks, plus the `process.cwd() + "/..."` spelling. Bare `process.cwd()` is
+  // NOT flagged: saving and restoring it around a `process.chdir` is legitimate
+  // and several tests do exactly that.
+  const CWD_ANCHORED = /(?:\b(?:join|resolve)\(\s*process\.cwd\(\)|process\.cwd\(\)\s*\+)/g;
+  /** Opt-out for a test that genuinely means "relative to wherever we are". */
+  const ALLOW = "allow-cwd-anchored-paths";
+
+  const dir = join(REPO_ROOT, "scripts/tests");
+  const files = readdirSync(dir).filter((f) => f.endsWith(".ts"));
+
+  test("scans a plausible number of test files", () => {
+    // Guards the guard: a bad directory or filter would make it vacuous.
+    expect(files.length).toBeGreaterThan(50);
+  });
+
+  test("no test builds a repo path from the runner's cwd", () => {
+    const offenders: string[] = [];
+    for (const file of files) {
+      const source = readFileSync(join(dir, file), "utf-8");
+      if (source.includes(ALLOW)) continue;
+      // Comments are prose ABOUT the anti-pattern — this block's own docstring
+      // included. `maskComments` blanks them in place, so offsets and line
+      // numbers still point at the real source.
+      const code = maskComments(source);
+      for (const m of code.matchAll(CWD_ANCHORED)) {
+        const line = code.slice(0, m.index).split("\n").length;
+        offenders.push(`${file}:${line}: ${m[0].replace(/\s+/g, " ")}`);
+      }
+    }
+    expect(offenders).toEqual([]);
   });
 });
 

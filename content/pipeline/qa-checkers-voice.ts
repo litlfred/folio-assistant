@@ -30,6 +30,7 @@ import { EXTENDED_AUTOMATED_CHECKERS } from "./qa-checkers-extended";
 import { USES_AUTOMATED_CHECKERS } from "./qa-checkers-uses";
 import { COST_AUTOMATED_CHECKERS } from "./qa-checkers-cost";
 import { TRIVIALITY_AUTOMATED_CHECKERS } from "./qa-checkers-triviality";
+import { VACUITY_AUTOMATED_CHECKERS } from "./qa-checkers-vacuity";
 import { RENDER_AUTOMATED_CHECKERS } from "./qa-checkers-render";
 
 export interface CheckerHit {
@@ -1242,6 +1243,10 @@ export const AUTOMATED_CHECKERS: Record<
   ...COST_AUTOMATED_CHECKERS,
   // Machine-triviality oracle (scaffold; inert without a cache).
   ...TRIVIALITY_AUTOMATED_CHECKERS,
+  // Vacuity-by-construction: degenerate instance data that makes a
+  // propositional field `rfl`, and docstrings that claim a `sorry` the
+  // body does not carry. Bodies in `qa-checkers-vacuity.ts`.
+  ...VACUITY_AUTOMATED_CHECKERS,
   // Render integrity — source patterns that abort pdflatex. Bodies in
   // `qa-checkers-render.ts`.
   ...RENDER_AUTOMATED_CHECKERS,

@@ -1049,3 +1049,119 @@ export function checkUsesLibraryFrameworkAppropriately(
     hits,
   };
 }
+
+// ─── assertions_are_falsifiable ────────────────────────────────
+
+/**
+ * An `add_assertion(...)` call whose `computed` and `expected` are the SAME
+ * expression, so the assertion holds by construction.
+ *
+ * `allPassed: true` is what a block's `computation.status: "verified"` rests
+ * on. Where the assertion compares an expression to itself, `verified` means
+ * the script ran — not that anything it produced was checked. The corpus case
+ * that motivated this: `universal-ilp.py` asserted
+ * `computed=sel[0], expected=sel[0]` at all five levels, so its witness
+ * recorded `"computed": "sigma_1", "expected": "sigma_1"` and passed
+ * regardless of what the script computed (bean `qou-v5fp`). An AST census then
+ * found 266 of 3,482 such calls across 195 files (bean `qou-26f2`).
+ *
+ * ## Why regex and not AST
+ *
+ * Same trade-off as the rest of this module — no Python runtime in the QA
+ * sweep. Measured against the AST census on the qou corpus, the regex finds
+ * 240 of the 266 (90% recall) at 100% precision on the sampled hits. It
+ * **under**-reports, which is the right direction for a `fail`-grade
+ * criterion: a missed tautology stays a bean item, whereas a false one costs
+ * an author an argument with the checker.
+ *
+ * The known recall gap is calls spanning many lines with the two keywords far
+ * apart; `ASSERT_CALL_RE` bounds the window rather than matching greedily to
+ * the next `)`, which a nested call would otherwise swallow.
+ */
+/** Triple-quoted Python blocks — docstrings and block comments. */
+const PY_TRIPLE_QUOTED_RE = /"""[\s\S]*?"""|'''[\s\S]*?'''/g;
+
+const ASSERT_CALL_RE = /add_assertion\s*\(([\s\S]{0,600}?)\)\s*(?:$|[,\n])/gm;
+const KW_COMPUTED_RE = /(?:^|[\s,(])computed\s*=\s*([^,)]+)/;
+const KW_EXPECTED_RE = /(?:^|[\s,(])expected\s*=\s*([^,)]+)/;
+
+/**
+ * Normalise an argument expression for comparison: collapse whitespace, drop a
+ * trailing comment. Deliberately NOT semantic — `len(xs)` beside
+ * `len(list(xs))` is just as vacuous and is not caught. See the caveat on
+ * `qou-26f2`: this count is a lower bound.
+ */
+function normArg(s: string): string {
+  return s.replace(/#.*$/, "").replace(/\s+/g, " ").trim();
+}
+
+/**
+ * `assertions_are_falsifiable` — a witness assertion must be able to fail.
+ *
+ * Fires when `computed` and `expected` are textually the same expression.
+ * Both keyword form (`computed=x, expected=x`) and the positional form
+ * (`add_assertion(name, x, x)`) are checked.
+ */
+export function checkAssertionsAreFalsifiable(scriptPath: string): CheckerResult {
+  if (!existsSync(scriptPath)) return { result: "n/a", hits: [] };
+  let src: string;
+  try {
+    src = readFileSync(scriptPath, "utf-8");
+  } catch {
+    return { result: "n/a", hits: [] };
+  }
+  if (!src.includes("add_assertion")) return { result: "n/a", hits: [] };
+
+  // Blank out triple-quoted blocks, preserving newlines so reported line
+  // numbers stay true. `witness.py`'s own module docstring illustrates the API
+  // with `computed=2.0298, expected=2.0298`, and firing on the documentation
+  // of the function under test was the one false positive the first corpus run
+  // produced.
+  //
+  // Only TRIPLE-quoted strings are blanked, not every string literal: a number
+  // of genuine tautologies pass string values (`expected="0"`), and stripping
+  // those would trade one false positive for a batch of missed real ones.
+  const scan = src.replace(PY_TRIPLE_QUOTED_RE, (block) =>
+    block.replace(/[^\n]/g, " "),
+  );
+
+  const hits: CheckerHit[] = [];
+  for (const m of scan.matchAll(ASSERT_CALL_RE)) {
+    const body = m[1];
+    const c = body.match(KW_COMPUTED_RE);
+    const e = body.match(KW_EXPECTED_RE);
+    let computed: string | undefined;
+    let expected: string | undefined;
+    if (c && e) {
+      computed = normArg(c[1]);
+      expected = normArg(e[1]);
+    } else if (!c && !e) {
+      // Positional: add_assertion(name, computed, expected, …). Only consider
+      // it when there is no keyword form at all, so a half-keyword call is
+      // skipped rather than mis-parsed.
+      const parts = body.split(",");
+      if (parts.length < 3) continue;
+      computed = normArg(parts[1]);
+      expected = normArg(parts[2]);
+    } else {
+      continue;
+    }
+    if (!computed || !expected || computed !== expected) continue;
+    const line = scan.slice(0, m.index ?? 0).split("\n").length;
+    hits.push({
+      file: scriptPath,
+      line,
+      text:
+        `\`add_assertion\` compares \`${computed}\` to itself — ` +
+        `\`computed\` and \`expected\` are the same expression, so this ` +
+        `assertion holds by construction and \`allPassed\` says nothing ` +
+        `about what the script produced. Supply the value the assertion is ` +
+        `meant to check. If no independent expected value exists yet, assert ` +
+        `a different property that CAN fail rather than a longer tautology ` +
+        `— re-deriving the computation under test is the same defect spelled ` +
+        `out (bean \`qou-26f2\`).`,
+    });
+  }
+
+  return { result: hits.length > 0 ? "fail" : "pass", hits };
+}

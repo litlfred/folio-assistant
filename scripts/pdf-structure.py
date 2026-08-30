@@ -117,7 +117,46 @@ RE_NOT_HEADING = re.compile(
 # Periods must be allowed — initials are near-universal — so a sentence is
 # excluded by looking for ". " followed by a lower-case word instead.
 RE_AUTHORS = re.compile(r"^[A-ZÀ-ʯ](?![^\n]*[.!?]\s+[a-z])[^!?]{2,120}$")
+
+# Marks that only a byline carries: an initial ("D. J."), an affiliation
+# superscript ("Kreimer 2)", "Lv*1"), or a dagger/asterisk footnote. A title
+# continuation has none of these, so their presence outranks the abstract test.
+RE_BYLINE_MARKER = re.compile(
+    r"(?:\b[A-ZÀ-ʯ]\.(?:\s|$)"          # an initial with its period
+    r"|\d\s*\)"                          # "1)" affiliation marker
+    r"|[∗*†‡§]"                           # footnote marks
+    r"|\b[A-ZÀ-ʯ][a-zà-ʯ]+\s*\*?\d)"     # "Lv*1", "Zhou 2"
+)
+
+# Punctuation that betrays a list of names: a comma between them, or a
+# conjunction. Necessary but far from sufficient — see `looks_like_byline`,
+# which uses it as one of two routes and vetoes both with the abstract test.
 RE_AUTHOR_HINT = re.compile(r"(,\s|\band\b|\&)", re.I)
+# Words that join names in a byline, and carry no evidence either way.
+BYLINE_CONNECTORS = {"and", "&", "und", "et", "e", "y"}
+# Nobiliary particles and name prefixes, which are lower-case yet name-like.
+NAME_PARTICLES = {
+    "van", "von", "de", "der", "den", "del", "della", "di", "da", "das", "dos",
+    "du", "la", "le", "ten", "ter", "bin", "ibn", "al", "mac", "mc", "st",
+}
+# Function words a *title* uses and a byline does not. Their presence is the
+# cheapest proof that a line is title text rather than a list of names.
+TITLE_FUNCTION_WORDS = {
+    "a", "an", "the", "of", "for", "in", "on", "with", "to", "from", "via",
+    "at", "as", "into", "over", "under", "between", "through", "without",
+    "upon", "its", "their", "some", "new", "toward", "towards", "about",
+    "against", "among", "beyond", "near", "per", "than", "that", "which",
+    "when", "where", "why", "how", "is", "are", "be", "do", "does",
+}
+# Lines that end the title even though they are neither a byline nor the
+# abstract marker: a numbered section heading, or the start of a table of
+# contents. Without this the title runs on into the body — a bound book
+# chapter with no byline took its whole first paragraph as its title.
+RE_TITLE_STOP = re.compile(
+    r"^\s*(?:\d+(?:\.\d+)*\.?\s+[A-ZÀ-ʯ]"
+    r"|contents\b|table of contents\b|introduction\b|keywords?\b|key words\b)",
+    re.I,
+)
 # Report numbers / preprint stamps that precede the title.
 RE_REPORT_NO = re.compile(
     r"^\s*(?:[A-Z]{2,}[-–—/]{1,2}[\w\-–/.]*\d|[a-z\-]+(?:\.[A-Z]{2})?/\d{7}"
@@ -225,9 +264,22 @@ def rejoin_caps(s: str, vocab) -> str:
     # attestation, because the same shape is also a symbol followed by an
     # ordinary word — ungated, this turned the French "Soit K un corps"
     # into "Soit Kun corps".
+    #
+    # Attestation of the JOIN is not enough on its own, because the join can
+    # be a real word while the split was never damage. Seidel's title, "A long
+    # exact sequence for symplectic Floer cohomology", became "Along exact
+    # sequence": `along` is attested on nearly every page of a symplectic
+    # paper, so the join passed — and the paper this repo most wanted became
+    # unfindable by its own name.
+    #
+    # A genuine kerning split leaves a fragment, not a word: "olume", "ector",
+    # "opology". So the tail must be unattested as well. Erring this way is
+    # the safe direction — a missed join leaves text readable, a wrong join
+    # destroys a title.
     s = RE_SPLIT_CAP.sub(
         lambda m: m.group(1) + m.group(2)
-        if freq(m.group(1) + m.group(2)) else m.group(0), s)
+        if freq(m.group(1) + m.group(2)) and not freq(m.group(2))
+        else m.group(0), s)
 
     # Whole runs, longest first. A name can be broken more than once —
     # "J ÉR ÔME" — and joining pairwise never fires there, because the
@@ -432,6 +484,138 @@ def infer_headings(pages: list[str]) -> list[TocEntry]:
     return entries
 
 
+def looks_like_byline(line: str, abstract_words: set[str]) -> bool:
+    """Is `line` a list of author names rather than more of the title?
+
+    This replaces a punctuation test — a line counted as the byline only if it
+    held a comma, "and", or "&" — which failed in both directions. Every
+    **single-author** byline slipped through and was appended to the title
+    (`"FLOER COHOMOLOGY AND PENCILS OF QUADRICS IVAN SMITH"`), and a title
+    continuation that happened to contain "and" was taken *as* the byline,
+    truncating the title and losing the real authors
+    (`"...IN THE MIRROR OF THE PROJECTIVE"` / `"PLANE AND A BINODAL CUBIC
+    CURVE"`). Measured on nine documents ingested 2026-08-24, one title in
+    nine came out correct.
+
+    Two signals, because neither is sufficient alone.
+
+    **Shape.** A byline is names: capitalised words, initials, and nobiliary
+    particles, joined by connectors. One `TITLE_FUNCTION_WORDS` member settles
+    it — no byline says "of" or "the". This alone kills the *"PLANE AND A
+    BINODAL CUBIC CURVE"* case on its bare article "A".
+
+    **The abstract.** Shape cannot separate `"TOM BRIDGELAND"` from
+    `"TORUS KNOT"`; both are two capitalised words. But an author is rarely
+    named in their own abstract, while the nouns of a title are almost always
+    restated in it. So a line whose name-like words are mostly *already in the
+    abstract* is title text. Majority rather than any single hit, so a paper
+    whose author shares a surname with its subject — Roth, on Roth's theorem —
+    is not derailed by one coincidence.
+
+    Document frequency was tried first and rejected: running heads repeat the
+    author surname on every even page, so a name is not rarer than a title
+    word in the text as a whole. The abstract is the part of the document that
+    discriminates.
+
+    `line` must already be repaired (`repair_text` + `rejoin_caps`).
+    Letter-spacing damage splits "IVAN" into "IV AN", and "AN" is a function
+    word — so testing the raw line rejects exactly the bylines this exists to
+    catch.
+    """
+    toks = [t.strip(".,;:()[]") for t in re.split(r"[\s,;]+", line) if t.strip(".,;:()[]")]
+    content = [t for t in toks if t.lower() not in BYLINE_CONNECTORS]
+    if not content:
+        return False
+
+    # The abstract test: a line whose capitalised words are mostly already in
+    # the abstract is title text, because an author is rarely named in their
+    # own abstract while the nouns of a title are almost always restated.
+    words = [t.lower() for t in content if len(t) >= 3 and t[:1].isupper()]
+    hits = sum(1 for w in words if w in abstract_words) if abstract_words else 0
+    # A STRICT majority, and never on the strength of one word.
+    #
+    # `>= half` collapses to "any single hit" on a two-name byline: filtering
+    # initials and digits leaves `['broadhurst', 'kreimer']`, and one match
+    # satisfies `1 * 2 >= 2`. The old docstring defended "majority rather than
+    # any single hit" — true of a long byline, false of exactly the short one
+    # this test is usually asked about.
+    in_abstract = bool(words and hits >= 2 and hits * 2 > len(words))
+
+    # …and the veto does not apply at all to a line carrying INITIALS or
+    # affiliation markers. Those are positive byline evidence that a title
+    # continuation does not have, and they outrank the abstract heuristic,
+    # whose premise — "an author is rarely named in their own abstract" — is
+    # simply false in physics: `hep-th/0001202`'s abstract names both
+    # Broadhurst and Kreimer, and that is ordinary self-reference.
+    if RE_BYLINE_MARKER.search(line):
+        in_abstract = False
+
+    # Route 1, inherited: punctuation. A comma, "and" or "&" between names.
+    # Kept because it is what catches the messy real-world byline — emails,
+    # affiliations and daggers inline — which no name-shape test survives:
+    # "Nori Jacoby (nori jacoby@hotmail.com) and Ruth Lawrence (...)". Dropping
+    # it for the shape rule alone ran 104 titles on into their affiliations.
+    #
+    # The abstract veto is applied to this route ONLY when the sole signal is a
+    # bare "and"/"&" with no comma. That is precisely the title-continuation
+    # case — "...IN THE MIRROR OF THE PROJECTIVE" / "PLANE AND A BINODAL CUBIC
+    # CURVE" — while a genuine multi-author byline separates with commas.
+    # Vetoing the comma case as well cost 40 titles their stopping point, the
+    # byline no longer being detected at all: "Modern Theory of Nuclear Forces
+    # E. Epelbaum∗" ran on into "Forschungszentrum Jülich, Institut für ...".
+    if RE_AUTHOR_HINT.search(line):
+        if in_abstract and "," not in line:
+            return False
+        return True
+
+    if in_abstract:
+        return False
+
+    # Route 2, new: name shape, for the single-author byline that carries no
+    # punctuation at all and so was invisible to route 1.
+    #
+    # The token cap belongs to THIS route only. A real byline is often long and
+    # messy — "Ma¨ ıté Dupuis1,∗ and Florian Girelli 2, 1,†" is nine tokens of
+    # kerning damage, superscripts and affiliation markers — and route 1
+    # already recognises it by its punctuation. Applying the cap to both routes
+    # rejected those and let the title run on into the affiliation.
+    if len(content) > 8:
+        return False
+    all_caps = line == line.upper()
+    names: list[str] = []
+    initials = 0
+    for tok in content:
+        low = tok.lower()
+        # Particles are tested before the short-token rule, or "DE LA FACULTÉ"
+        # banks two "initials" and passes as a byline.
+        if low in NAME_PARTICLES:
+            continue
+        if len(tok) == 1 and tok.isalpha() and low not in ("a", "i"):
+            initials += 1
+            continue
+        # In an ALL-CAPS line case carries no information and kerning damage is
+        # the norm, so a one- or two-letter token is a fragment, not a word.
+        # "IVAN SMITH" extracts as "IV AN SMITH" and the damage repeats in the
+        # running heads, so "ivan" is never attested and `rejoin_caps` cannot
+        # repair it; reading "AN" as the article rejects the byline outright.
+        if all_caps and len(tok) <= 2 and tok.isalpha():
+            initials += 1
+            continue
+        if low in TITLE_FUNCTION_WORDS:
+            return False
+        if not tok[:1].isupper():
+            return False
+        if len(tok) >= 3:
+            names.append(low)
+
+    if not names:
+        return False
+    # A lone capitalised word is a title continuation far more often than a
+    # byline — "...FOR NUMBER" / "FIELDS" cost 23 titles their tail. Demand a
+    # second name, or an initial beside it ("E. Epelbaum").
+    return len(names) >= 2 or initials >= 1
+
+
 def parse_front_matter(pages: list[str]) -> dict[str, Any]:
     """Title, authors, abstract, arXiv id, DOI — from page-1 text."""
     p1 = pages[0] if pages else ""
@@ -475,6 +659,11 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
     #
     # The old rule started at line 10.
     def furniture(l: str) -> bool:
+        # "Chapter 5" / "Part II" / "Appendix A" head a book division and are
+        # not the title. Left in, a bound chapter took "Chapter 5" as its
+        # title and pushed its real one ("ROTH'S LEMMA") into the byline.
+        if re.match(r"^(?:chapter|section|part|appendix)\s+[\dIVXLC]+\.?$", l, re.I):
+            return True
         return bool(re.search(r"ar\s*X\s*iv", l, re.I) or RE_REPORT_NO.match(l))
 
     start = 0
@@ -521,26 +710,6 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
             continue
         break
 
-    title_lines: list[str] = []
-    author_lines: list[str] = []
-    for l in lines[start:start + 20]:
-        if re.match(r"^abstract\b", l, re.I):
-            break
-        if not l or len(l) < 3 or re.match(r"^\d+$", l) or RE_REPORT_NO.match(l):
-            if title_lines and not l:
-                # blank line after a title usually precedes the authors
-                continue
-            continue
-        # An author line: capitalised, comma/and-separated, no trailing colon,
-        # and we already have some title text.
-        if title_lines and RE_AUTHORS.match(l) and RE_AUTHOR_HINT.search(l) \
-                and not l.endswith(":") and len(l) < 120:
-            author_lines.append(l)
-            break
-        title_lines.append(l)
-        if len(" ".join(title_lines)) > 180:
-            break
-
     # The document's own token set, used to decide whether an all-caps
     # split is real, and built from *repaired* text so an accented name
     # can attest its own join.
@@ -554,6 +723,61 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
                     re.findall(r"[^\W\d_]{3,}", repair_text("\n".join(pages))))
 
     fix = lambda s: rejoin_caps(repair_text(s), vocab).strip(" .,")
+
+    # The abstract's vocabulary, needed *before* the title/byline walk because
+    # `looks_like_byline` uses it to tell a name from a title noun. Read
+    # straight from page-1 text rather than from `meta["abstract"]`, which is
+    # assembled further down and would make the two mutually dependent.
+    abstract_words: set[str] = set()
+    _am = re.search(r"\babstract\b\s*[.:—–-]?\s*", p1, re.I)
+    if _am:
+        _tail = p1[_am.end(): _am.end() + 2600]
+        # Cut at the first section heading — the SAME cut `meta["abstract"]`
+        # uses below, so the two cannot disagree about what the abstract is.
+        #
+        # A raw window overruns the abstract into the body, the author
+        # addresses and the bibliography, and then "named in the abstract"
+        # becomes "named anywhere on page 1" — which every author is.
+        # `arxiv-math-0304010v1` lost its byline to exactly this: all four of
+        # Vladimir/Ivanov/Grigori/Olshanski were found, so the veto fired at
+        # full strength on a line that is nothing but names.
+        _cut = re.search(
+            r"\n\s*(?:1\s*\.?\s+Introduction\b|Introduction\b|Contents\b"
+            r"|Keywords?\b|Key words\b|MSC\b|AMS\b|\d{4}\s+Mathematics)",
+            _tail, re.I,
+        )
+        if _cut:
+            _tail = _tail[: _cut.start()]
+        abstract_words = {w.lower() for w in re.findall(r"[^\W\d_]{3,}", _tail)}
+
+    title_lines: list[str] = []
+    author_lines: list[str] = []
+    for l in lines[start:start + 20]:
+        if re.match(r"^abstract\b", l, re.I):
+            break
+        if not l or len(l) < 3 or re.match(r"^\d+$", l) or RE_REPORT_NO.match(l):
+            if title_lines and not l:
+                # blank line after a title usually precedes the authors
+                continue
+            continue
+        # A numbered section heading or a table of contents ends the title,
+        # even where the document carries no byline at all to stop it.
+        if title_lines and RE_TITLE_STOP.match(l):
+            break
+        # An author line: capitalised, name-shaped, no trailing colon, and we
+        # already have some title text. `looks_like_byline` is given the
+        # *repaired* line — letter-spacing damage splits "IVAN" into "IV AN",
+        # and "AN" reads as a function word, so the raw line rejects the very
+        # bylines this is here to catch.
+        if title_lines and RE_AUTHORS.match(l) and not l.endswith(":") \
+                and len(l) < 120 \
+                and looks_like_byline(fix(l), abstract_words):
+            author_lines.append(l)
+            break
+        title_lines.append(l)
+        if len(" ".join(title_lines)) > 180:
+            break
+
     title = fix(" ".join(title_lines))
     meta["title"] = title or None
     authors = fix(" ".join(author_lines))
@@ -561,13 +785,13 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
     # The lines the title was assembled from, kept separately.
     #
     # Joining them destroys the one boundary that reliably separates a
-    # title from its byline: the line break. When the author-line test
-    # above misses — it needs a comma or an "and", so a single-author
-    # byline slips through — the byline is appended to the title and no
-    # downstream heuristic can recover it, because in an all-caps title
-    # "THEORY TOM BRIDGELAND" is indistinguishable from "TORUS KNOT" by
-    # shape alone. With the lines kept, a consumer can test the last one
-    # on its own.
+    # title from its byline: the line break. `looks_like_byline` now makes
+    # that test in-place, so the byline no longer silently lands in the
+    # title — but the lines stay exported anyway. The case that motivated
+    # them is real and unsolved by shape alone ("THEORY TOM BRIDGELAND" is
+    # indistinguishable from "TORUS KNOT"); the byline test settles it with
+    # the abstract's vocabulary, which is evidence, not proof. A consumer
+    # that disagrees can still re-split on the original boundary.
     meta["title_lines"] = [fix(l) for l in title_lines] or None
 
     # Abstract: everything after the marker, cut at the first section heading.

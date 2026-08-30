@@ -88,16 +88,28 @@ const CONTENT_ROOT = join(REPO_ROOT, "content");
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
 // `--paper` matters in a MULTI-paper folio: `requirePaper()` with no argument
 // throws "5 papers found — name one explicitly", and until this flag existed
-// there was no way to name one, so the script could not run there at all.
+// the script could not run there at all.
 //
-// A FLAG here, where `generate-index.ts` and `find-dangling-remarks.ts` both
-// take the paper positionally as `process.argv[2]`. That is deliberate, not
-// drift: those two take no flags, while this script takes `--apply`. Under the
-// positional convention, `prune-transitive-deps.ts --apply` would read
-// `argv[2] === "--apply"` as the paper name and `requirePaper` would hand it
-// straight back, so the run would look for a paper called `--apply` instead of
-// pruning anything.
-// (qou carries five: bach2013-double-slit, fred2005-formal-groups,
+// A FLAG rather than a positional. `main`'s 21498cc ("nine scripts were
+// unrunnable in a multi-paper folio") gives the general reason and is the
+// better one: several scripts in this directory already use `argv[2]` for an
+// output path or a `--strict` flag, so a positional would collide;
+// `extract-status-sections.ts` is the match. It is also forced here
+// specifically, because this script takes `--apply`: under a positional
+// convention `prune-transitive-deps.ts --apply` would read `argv[2]` as the
+// paper name and `requirePaper` would hand `"--apply"` straight back.
+//
+// That positional hazard is the MIRROR IMAGE of the flag hazard `argValue`
+// guards above. Neither convention is free: whichever you pick, one token has
+// to be checked for being a flag rather than a value.
+//
+// (An earlier version of this comment said `generate-index.ts` and
+// `find-dangling-remarks.ts` both take the paper positionally and that a flag
+// here was a deliberate exception. 21498cc converted `generate-index.ts` to the
+// flag form, so the flag is the convention now and `find-dangling-remarks.ts`
+// is the remaining positional holdout.)
+//
+// (qou carries five papers: bach2013-double-slit, fred2005-formal-groups,
 // quantum-observable-universe, unital-groebner-bases, visualizer.)
 const PAPER_NAME = requirePaper(PAPER_ARG);
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
