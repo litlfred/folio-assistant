@@ -148,6 +148,20 @@ TITLE_FUNCTION_WORDS = {
     "against", "among", "beyond", "near", "per", "than", "that", "which",
     "when", "where", "why", "how", "is", "are", "be", "do", "does",
 }
+# Words that mark an *affiliation* rather than a name. A byline line never
+# contains one; the line immediately after a byline very often does, which is
+# why this is needed only when continuing a multi-line byline (see the
+# continuation loop below). Webster & Williamson, `arxiv-0911.4494v2`, is the
+# case that surfaced it: both authors sit on one line, and the next line is
+# "Department of Mathematics, Mathematical Institute" — short enough and
+# few-worded enough to pass every other continuation guard.
+AFFILIATION_WORDS = {
+    "department", "departement", "départment", "dept", "institute", "institut",
+    "university", "universite", "université", "universität", "universiteit",
+    "universidad", "università", "school", "college", "faculty", "laboratory",
+    "laboratoire", "centre", "center", "academy", "academia", "division",
+    "observatory", "hospital", "cnrs", "inria", "mit", "campus",
+}
 # Lines that end the title even though they are neither a byline nor the
 # abstract marker: a numbered section heading, or the start of a table of
 # contents. Without this the title runs on into the body — a bound book
@@ -752,7 +766,15 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
 
     title_lines: list[str] = []
     author_lines: list[str] = []
-    for l in lines[start:start + 20]:
+    _window = lines[start:start + 20]
+
+    def _is_byline(l: str) -> bool:
+        return bool(
+            RE_AUTHORS.match(l) and not l.endswith(":") and len(l) < 120
+            and looks_like_byline(fix(l), abstract_words)
+        )
+
+    for _i, l in enumerate(_window):
         if re.match(r"^abstract\b", l, re.I):
             break
         if not l or len(l) < 3 or re.match(r"^\d+$", l) or RE_REPORT_NO.match(l):
@@ -769,10 +791,41 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
         # *repaired* line — letter-spacing damage splits "IVAN" into "IV AN",
         # and "AN" reads as a function word, so the raw line rejects the very
         # bylines this is here to catch.
-        if title_lines and RE_AUTHORS.match(l) and not l.endswith(":") \
-                and len(l) < 120 \
-                and looks_like_byline(fix(l), abstract_words):
+        if title_lines and _is_byline(l):
             author_lines.append(l)
+            # A byline can span several lines: one author per line is ordinary
+            # journal typography, and breaking at the first cost `authors_raw`
+            # every co-author after the first. Ohtsuki & Takata, *Geom. Topol.*
+            # 19 (2015) 853–952, is the case that surfaced it — the title page
+            # reads "TOMOTADA OHTSUKI" / "TOSHIE TAKATA" on two lines, and the
+            # exported `authors_raw` named only Ohtsuki. That is not a cosmetic
+            # loss: `authors_raw` is what citation generators read, so a
+            # dropped co-author becomes a misattribution in the corpus.
+            #
+            # Keep consuming while the lines still look like bylines. The
+            # continuation test is deliberately stricter than `_is_byline`,
+            # which is calibrated for the *first* line and is not selective
+            # enough to be run unanchored: on its own it accepts the opening
+            # sentence of an abstract, which is how the first version of this
+            # loop swallowed "Abstract. The oriented skein category ..." into
+            # Brundan's byline. So the continuation additionally has to stop
+            # where the outer loop would, and has to be shaped like a byline
+            # *line* — a name or two, not a clause. Both regressions were
+            # caught by re-ingesting four filed PDFs and diffing `authors_raw`
+            # against what the previous code produced.
+            for l2 in _window[_i + 1:]:
+                if not l2 or len(l2) < 3:
+                    break
+                if re.match(r"^abstract\b", l2, re.I) or RE_TITLE_STOP.match(l2):
+                    break
+                if len(l2) >= 60 or len(l2.split()) > 5:
+                    break
+                if {w.lower() for w in re.findall(r"[^\W\d_]+", l2)} \
+                        & AFFILIATION_WORDS:
+                    break
+                if not _is_byline(l2):
+                    break
+                author_lines.append(l2)
             break
         title_lines.append(l)
         if len(" ".join(title_lines)) > 180:
