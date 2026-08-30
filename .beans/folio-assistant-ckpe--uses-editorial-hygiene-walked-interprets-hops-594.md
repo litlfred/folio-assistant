@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ckpe
 title: uses-editorial-hygiene walked interprets hops; 594 of 594 redundancy reports were wrong
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-08-24T20:27:21Z
-updated_at: 2026-08-24T20:27:21Z
+updated_at: 2026-08-30T07:30:49Z
 ---
 
 ## The ruling that settles it
@@ -80,3 +81,22 @@ among the four hidden findings of qou bean `qou-h1p7`; chasing that single warn
 to its named remedy found the remedy reported nothing, and asking why produced
 the 594.
 
+
+2026-08-30 — on branch `claude/stalled-prs-scope-map-ufyvla`, PR #151 (open).
+
+The fix landed as `cone(other, "uses")`, which does not type-check: `EdgeKind`
+is `"editorial" | "formal"` (provenance), and `uses`/`interprets` is a
+different axis carried per-edge in `editorialField`. `bun test` runs the
+transpiled code and does not type-check, so the suite and eslint were both
+green over an expression that does not compile; PR 151's hard TypeScript gate
+caught it. Same defect shape as the criterion itself: an absent check looks
+exactly like a passing one.
+
+Replaced with `ContentGraph.usesCone(label)` — a cycle-safe transitive cone
+over editorial edges whose `editorialField` is `uses`. Semantics unchanged, so
+the 594/594 measurement stands. `EdgeKind` deliberately NOT widened: adding
+`"uses"` would make `kind === "editorial"` stop meaning every editorial edge
+and silently change `cone`/`out`/`in`/`outEdges` for existing callers.
+
+Now verified on all four gates, not two: tsc --noEmit clean, bun test
+1214/38/0, eslint clean, generated docs no diff.
