@@ -93,7 +93,8 @@ expected output.
 **4. What you are NOT doing.** The adjacent defect you are leaving, the scope
 you decline to widen into, the thing you will flag rather than fix. Stating it
 up front is what stops it becoming either silent scope creep or a silent
-omission.
+omission — and it puts the scope call where it can still be argued with, which
+is before the diff.
 
 ### Worked example
 
@@ -107,11 +108,10 @@ omission.
 > right *shape* (parameter-quantified inequalities); this one has no quantifier
 > and no free variable at all.
 >
-> **What I know.** Measured this session: the carrier is bound as `[C]` in 5
-> files; the probe baseline records it `proved-vacuous`; the class's own
-> docstring already claims "α = 4/3", so the target value is not something I
-> need to invent. Not measured: whether any downstream proof depends on the
-> field's *current* type.
+> **What I know.** Measured this session: bound as `[C]` in 5 files; the probe
+> baseline records it `proved-vacuous`; the class's own docstring already claims
+> "α = 4/3", so the target value is not something I need to invent. Not
+> measured: whether any downstream proof depends on the field's *current* type.
 >
 > **Route.** Make α a class parameter — `class CriticalExponent (α : ℝ) : Prop
 > where alpha_eq : α = 4/3`. A `Prop` class cannot carry data, so α must be a
@@ -122,27 +122,30 @@ omission.
 > not doing what I claim and I stop.
 >
 > **Not doing.** The other four carriers need analytic setup their docstrings
-> only gesture at — that is the author's mathematics, not a cleanup. Also
-> leaving the separate `CriticalExponent` in `core-levi-form.lean`, which is a
-> different carrier in a different namespace.
+> only gesture at — the author's mathematics, not a cleanup. Also leaving the
+> separate `CriticalExponent` in `core-levi-form.lean`, a different carrier in a
+> different namespace.
 
-That brief is ~200 words and would have let a reader stop the work, redirect it,
-or pick it up cold. Note the last line especially: the scope call is visible
-*before* the diff, which is where it can still be argued with.
+~200 words, and it would have let a reader stop the work, redirect it, or pick
+it up cold.
 
 ### The failure this prevents
 
 An agent that has spent an hour inside a problem writes in the private
 vocabulary it built along the way, and a reader — the author, or the next agent
-— has to reconstruct that vocabulary before they can evaluate anything. The
-brief is written at the one moment when the agent still knows which parts are
+— has to reconstruct that vocabulary before evaluating anything. The brief is
+written at the one moment when the agent still knows which parts are
 non-obvious, because it has just finished finding them out.
+
+**Cheapest correct move when you do not want to spend the words: do not start
+the topic.** A task you cannot brief is one you have not understood well enough
+to begin.
 
 ## Coordination discipline
 
 1. **Claim before you work.** Mark the bean `in-progress` so sibling sessions
    working the same goal do not duplicate the effort.
-1a. **Brief it in the same turn you claim it** (§"Opening brief" above). The
+   **Brief it in the same turn you claim it** (§"Opening brief" above). The
    claim tells a sibling the item is taken; the brief tells them, and the
    author, what it is being taken *for*.
 2. **One source of truth per concern.** Do not fork a bean into a parallel
