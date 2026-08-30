@@ -549,6 +549,19 @@ export function listPackageLeanFiles(repoRoot: string): string[] {
       while (stack.length) {
         const dir = stack.pop()!;
         for (const e of readdirSync(dir, { withFileTypes: true })) {
+          // `.lake/` is Lake's BUILD DIRECTORY: vendored third-party sources
+          // (Mathlib, Batteries, …) plus build output. Measured on qou
+          // 2026-08-30: 8,013 of the 10,412 `.lean` files under the Lake root
+          // live there — 77 %. Walking them makes every consumer audit its own
+          // dependencies: the q-usage audit reported `wall-base-ring-minimal`
+          // findings against `.lake/packages/mathlib/Mathlib/Algebra/CharP/*`,
+          // "…and 1474 more".
+          //
+          // This function's own contract is why the exclusion is correct and
+          // not merely convenient: it feeds "orphan-coverage scans that audit
+          // Lean files reachable by NO block's `lean.ref`". A Mathlib file is
+          // not an orphan of this corpus — it is not ours to cover.
+          if (e.isDirectory() && e.name === ".lake") continue;
           const full = join(dir, e.name);
           if (e.isDirectory()) stack.push(full);
           else if (e.isFile() && e.name.endsWith(".lean")) out.push(full);
@@ -560,6 +573,7 @@ export function listPackageLeanFiles(repoRoot: string): string[] {
   }
   return out;
 }
+
 
 // ── Block discovery ─────────────────────────────────────────────
 
