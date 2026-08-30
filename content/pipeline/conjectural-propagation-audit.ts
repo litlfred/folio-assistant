@@ -26,6 +26,7 @@ import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
 import { loadBlocksUnder, reportLoadFailures } from "./block-module";
 import type { BlockLoadFailure } from "./block-module";
+import { paperArg } from "./cli-args";
 
 /** Blocks that would not import. Surfaced, never silently dropped. */
 const LOAD_FAILURES: BlockLoadFailure[] = [];
@@ -41,8 +42,7 @@ const REPO_ROOT = findContentRepoRoot();
 // `--paper <name>` (not a positional): several of these scripts already
 // use argv[2] for an output path or a `--strict` flag, so a positional
 // would collide. Matches `extract-status-sections.ts`.
-const _paperIdx = process.argv.indexOf("--paper");
-const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+const _paperArg = paperArg();
 const ROOT = join(REPO_ROOT, "content", requirePaper(_paperArg));
 // First non-flag argument. `process.argv[2]` alone would pick up `--paper`
 // (or its value), which is how this script came to write its witness to a

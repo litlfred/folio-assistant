@@ -41,6 +41,7 @@ import { join, dirname, basename } from "path";
 import { checkStatusSectionHeader } from "./qa-checkers-voice";
 import { BLOCK_KIND_ALT } from "../../schemas/types";
 import { requirePaper } from "./repo-root";
+import { paperArg } from "./cli-args";
 
 /** Builder call identifying a block's kind — see `BLOCK_KIND_ALT`. */
 const BUILDER_RE = new RegExp(`\\b(${BLOCK_KIND_ALT})\\s*\\(`);
@@ -122,9 +123,7 @@ function classify(body: string): Classification {
 function main() {
   const args = process.argv.slice(2);
   // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-  const paper = requirePaper(
-    args.includes("--paper") ? args[args.indexOf("--paper") + 1] : undefined,
-  );
+  const paper = requirePaper(paperArg(args));
   const out =
     args.includes("--out") ? args[args.indexOf("--out") + 1] : "build/status-section-audit.json";
   const root = join("content", paper);

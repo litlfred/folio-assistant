@@ -33,13 +33,13 @@ import { resolve, join, basename } from "path";
 import { BlockSchema } from "../../schemas/constraints";
 import type { Block } from "../../schemas/types";
 import { requirePaper, findContentRepoRoot } from "./repo-root";
+import { paperArg } from "./cli-args";
 
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
 // `--paper <name>` (not a positional): several of these scripts already
 // use argv[2] for an output path or a `--strict` flag, so a positional
 // would collide. Matches `extract-status-sections.ts`.
-const _paperIdx = process.argv.indexOf("--paper");
-const _paperArg = _paperIdx >= 0 ? process.argv[_paperIdx + 1] : undefined;
+const _paperArg = paperArg();
 const PAPER = requirePaper(_paperArg);
 const PAPER_DIR = join(findContentRepoRoot(), "content", PAPER);
 const OUT_JSON = resolve(__dirname, "../audit-wiring.json");

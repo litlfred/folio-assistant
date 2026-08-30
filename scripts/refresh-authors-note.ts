@@ -21,6 +21,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { computeStats } from "./lean-coverage";
 import { findContentRepoRoot, findPapers, soleFolioPaper } from "../content/pipeline/repo-root";
+import { paperArg } from "../content/pipeline/cli-args";
 
 /**
  * The paper to report on, and the folio's `content/` root.
@@ -34,10 +35,7 @@ import { findContentRepoRoot, findPapers, soleFolioPaper } from "../content/pipe
 function statsTarget(): { paper: string; contentRoot: string } {
   const repoRoot = findContentRepoRoot();
   const contentRoot = join(repoRoot, "content");
-  const argIdx = process.argv.indexOf("--paper");
-  const paper = argIdx >= 0 && process.argv[argIdx + 1]
-    ? process.argv[argIdx + 1]
-    : soleFolioPaper(repoRoot);
+  const paper = paperArg() ?? soleFolioPaper(repoRoot);
   if (!paper) {
     // Exit cleanly rather than throwing: this is a CLI entry point, and a raw
     // stack trace buries the one line that tells the operator what to do.
