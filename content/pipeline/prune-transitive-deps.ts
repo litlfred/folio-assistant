@@ -46,13 +46,45 @@ import { verifyEditedBlock } from "./block-module";
 // path below is folio content. `findContentRepoRoot()` walks up from cwd;
 // it must not use `import.meta.dir`, which resolves back through a folio's
 // `folio-assistant/` symlink to the platform.
-const REPO_ROOT = findContentRepoRoot();
-const CONTENT_ROOT = join(REPO_ROOT, "content");
-
 const args = process.argv.slice(2);
 const APPLY = args.includes("--apply");
-const argValue = (flag: string) =>
-  args.includes(flag) ? args[args.indexOf(flag) + 1] : undefined;
+
+// Read `--flag <value>`, rejecting a flag that was given without one.
+//
+// The bare `args[args.indexOf(flag) + 1]` this replaced took whatever followed
+// the flag, whatever it was. `--paper --apply` therefore handed `requirePaper`
+// the string `"--apply"`, which it returns unchanged — an explicit name is
+// trusted, by design, since a paper directory is exactly what the caller means
+// to name — and the run then died much later looking for a paper directory
+// called `--apply`. `--paper` in last position gave `undefined`, which falls
+// through to the "N papers found — name one explicitly" error, hiding the fact
+// that the caller *did* try to name one.
+//
+// This is the mirror image of the positional hazard described below, which is
+// why the flag form is not automatically the safe one: whichever convention you
+// pick, one token has to be checked for being a flag rather than a value.
+//
+// Deliberately evaluated ABOVE `findContentRepoRoot()`, so a usage error is
+// reported as a usage error wherever you run it, rather than being pre-empted
+// by "no content repo found" when the mistake is in the argv.
+const argValue = (flag: string): string | undefined => {
+  const i = args.indexOf(flag);
+  if (i === -1) return undefined;
+  const v = args[i + 1];
+  if (v === undefined || v.startsWith("-")) {
+    throw new Error(
+      `${flag} needs a value — \`${flag} <paper-name>\`. ` +
+        (v === undefined
+          ? "Nothing followed it."
+          : `Got \`${v}\`, which is another flag.`),
+    );
+  }
+  return v;
+};
+const PAPER_ARG = argValue("--paper");
+
+const REPO_ROOT = findContentRepoRoot();
+const CONTENT_ROOT = join(REPO_ROOT, "content");
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
 // `--paper` matters in a MULTI-paper folio: `requirePaper()` with no argument
 // throws "5 papers found — name one explicitly", and until this flag existed
@@ -67,7 +99,7 @@ const argValue = (flag: string) =>
 // pruning anything.
 // (qou carries five: bach2013-double-slit, fred2005-formal-groups,
 // quantum-observable-universe, unital-groebner-bases, visualizer.)
-const PAPER_NAME = requirePaper(argValue("--paper"));
+const PAPER_NAME = requirePaper(PAPER_ARG);
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
 
 // ── Load all blocks ─────────────────────────────────────────────
