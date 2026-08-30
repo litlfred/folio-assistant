@@ -1,11 +1,11 @@
 ---
 # folio-assistant-a39g
 title: pipelineScriptPath is dead, and its only test pins the behaviour that made it dead
-status: todo
+status: completed
 type: task
 priority: low
 created_at: 2026-08-30T10:41:21Z
-updated_at: 2026-08-30T10:41:52Z
+updated_at: 2026-08-30T14:24:38Z
 ---
 
 ## The finding
@@ -77,3 +77,45 @@ correctly deprecated; the suite keeps one test that can never matter.
 History: split out of `folio-assistant-e1f6` at its closure (2026-08-30), where
 it was found while verifying that the shell-out resolver fix had actually
 landed.
+
+
+## CLOSED 2026-08-30 — option 3 taken
+
+Converted the dead test into one that asserts the **deprecation contract**, per
+the recommendation above. `pipelineScriptPath` keeps its export and its
+`@deprecated` note; what changed is what the suite asserts about it.
+
+**The discriminator is a script name that exists nowhere**, which needs no
+fixture and holds under both folio layouts:
+
+- `pipelineScriptPath(nowhere)` → a folio-rooted path, always, **without
+  touching the filesystem**.
+- `resolvePipelineScript(nowhere)` → `undefined`.
+- `runPipeline(nowhere)` → `ok: false`, error contains
+  `"pipeline script not found"` — which is *why* the routing matters: a caller
+  trusting the first would spawn a missing file.
+
+That turns the one artifact that misled into the one that explains the fix, and
+it now fails in both directions that matter — if someone "fixes"
+`pipelineScriptPath` to do an existence check (silently making it a second
+resolver), or if `resolvePipelineScript` regresses to returning a path blindly.
+
+### Proved live by mutation, not assumed
+
+A test that passes is not evidence it can fail — that is the whole `6fnb`
+class. So the regression was actually introduced:
+
+    mutant: resolvePipelineScript returns `inPlatform` unconditionally
+      -> 6 pass, 2 fail
+    restored
+      -> 8 pass, 0 fail   (was 7 before this change)
+
+The mutant is also caught by the pre-existing `runPipeline returns a structured
+error for a missing script` test, so there is redundancy here rather than sole
+coverage — worth stating plainly rather than claiming this test is the only
+guard.
+
+**Not done, and deliberately:** `pipelineScriptPath` still has zero production
+callers. Option 1 (delete both) stays available and is a one-line follow-up if
+the export is ever confirmed unused out of tree. The function is honest and
+inert; the misleading part was the test, and that is what was fixed.
