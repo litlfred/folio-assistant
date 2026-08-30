@@ -431,14 +431,38 @@ Full protocol, with the worked example:
 [`skills/folio-core/todo-manager.md`](skills/folio-core/todo-manager.md)
 §"Opening brief".
 
-> **Two `todo-manager.md` exist and they have diverged — noted, not resolved
-> here.** `skills/folio-core/todo-manager.md` (3 inbound references, and the one
-> this file's other links point at) and `.claude/skills/local/todo-manager.md`
-> (5 inbound references) differ by **186 lines** as of 2026-08-30. §"Opening
-> brief" was added to both so this change does not widen the gap, but which copy
-> is canonical is a question for whoever owns the skills layout — resolving a
-> 186-line divergence as a side effect of an unrelated edit is how one of them
-> quietly becomes wrong.
+> **🛑 THREE `todo-manager.md` exist, not two — and the third is what took
+> `main` red (corrected 2026-08-30).** This note said "two" on the strength of
+> a `grep` for inbound references rather than a `find` for files, in a note
+> whose own subject is briefing a topic accurately. The third copy exists, is
+> generated, and is CI-gated; I edited the source without regenerating it and
+> merged #153 with `TypeScript — tests, lint, types (hard)` red. Measured on
+> `main` at 2026-08-30, all three:
+>
+> | copy | lines | inbound refs | generated? | CI-gated? |
+> |---|---|---|---|---|
+> | `skills/folio-core/todo-manager.md` | 201 | 3 | no — hand-authored | yes, indirectly (its mirror drifts) |
+> | `docs/reference/skill-instructions/todo-manager.md` | 202 | 1 | **yes**, from the row above | **yes** — `gen-skill-docs.ts --check` |
+> | `.claude/skills/local/todo-manager.md` | 167 | **5** | no | **no** |
+>
+> **The divergence is still two-way**, so the open question below is unchanged:
+> the mirror tracks `folio-core` to within its 15 lines of injected front matter
+> and nav, while `.claude/skills/local/` differs from `folio-core` by **188**
+> diff lines. What the third copy changes is the *failure mode*, and the two
+> hand-authored copies fail in opposite directions:
+>
+> - Edit `skills/folio-core/` and forget `bun run scripts/gen-skill-docs.ts`,
+>   and CI goes red. Loud, and it caught me.
+> - Edit `.claude/skills/local/` and nothing checks anything. `GROUPS` in
+>   [`scripts/gen-skill-docs.ts`](scripts/gen-skill-docs.ts) lists
+>   `skills/content-lifecycle`, `src/skills`, `skills/folio-core` and the two
+>   adapter dirs — **`.claude/skills/local/` is not among them.** So the copy
+>   with the *most* inbound references is the one with no guard at all.
+>
+> Which copy is canonical remains a question for whoever owns the skills layout;
+> resolving a 188-line divergence as a side effect of an unrelated edit is still
+> how one of them quietly becomes wrong. §"Opening brief" is in both
+> hand-authored copies so this change does not widen the gap.
 
 ## More
 
