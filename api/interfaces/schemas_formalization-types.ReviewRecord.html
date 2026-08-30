@@ -13,7 +13,7 @@
 <h1>Interface ReviewRecord</h1></div>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">ReviewRecord</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#commit_sha">commit_sha</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#confidence">confidence</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#issues">issues</a><span class="tsd-signature-symbol">?:</span> <a href="schemas_formalization-types.ReviewIssue.html" class="tsd-signature-type tsd-kind-interface">ReviewIssue</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#lean_status">lean_status</a><span class="tsd-signature-symbol">?:</span> <a href="schemas_formalization-types.LeanReviewStatus.html" class="tsd-signature-type tsd-kind-interface">LeanReviewStatus</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#notes">notes</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#review_type">review_type</a><span class="tsd-signature-symbol">:</span> <a href="../types/schemas_formalization-types.ReviewType.html" class="tsd-signature-type tsd-kind-type-alias">ReviewType</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#reviewer_id">reviewer_id</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#reviewer_type">reviewer_type</a><span class="tsd-signature-symbol">:</span> <a href="../types/schemas_formalization-types.ReviewerType.html" class="tsd-signature-type tsd-kind-type-alias">ReviewerType</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#severity_counts">severity_counts</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/schemas_formalization-types.Severity.html" class="tsd-signature-type tsd-kind-type-alias">Severity</a><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#timestamp">timestamp</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#verdict">verdict</a><span class="tsd-signature-symbol">:</span> <a href="../types/schemas_formalization-types.Verdict.html" class="tsd-signature-type tsd-kind-type-alias">Verdict</a><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L100">formalization-types.ts:100</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L100">formalization-types.ts:100</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -40,63 +40,63 @@
 <h3 class="tsd-anchor-link" id="commit_sha"><code class="tsd-tag">Optional</code><span>commit_<wbr/>sha</span><a href="#commit_sha" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">commit_sha</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L113">formalization-types.ts:113</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L113">formalization-types.ts:113</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="confidence"><code class="tsd-tag">Optional</code><span>confidence</span><a href="#confidence" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">confidence</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>Reviewer's confidence in the verdict (0–1).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L109">formalization-types.ts:109</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L109">formalization-types.ts:109</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="issues"><code class="tsd-tag">Optional</code><span>issues</span><a href="#issues" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">issues</span><span class="tsd-signature-symbol">?:</span> <a href="schemas_formalization-types.ReviewIssue.html" class="tsd-signature-type tsd-kind-interface">ReviewIssue</a><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L111">formalization-types.ts:111</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L111">formalization-types.ts:111</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="lean_status"><code class="tsd-tag">Optional</code><span>lean_<wbr/>status</span><a href="#lean_status" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">lean_status</span><span class="tsd-signature-symbol">?:</span> <a href="schemas_formalization-types.LeanReviewStatus.html" class="tsd-signature-type tsd-kind-interface">LeanReviewStatus</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L112">formalization-types.ts:112</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L112">formalization-types.ts:112</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="notes"><code class="tsd-tag">Optional</code><span>notes</span><a href="#notes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">notes</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L114">formalization-types.ts:114</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L114">formalization-types.ts:114</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="review_type"><span>review_<wbr/>type</span><a href="#review_type" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">review_type</span><span class="tsd-signature-symbol">:</span> <a href="../types/schemas_formalization-types.ReviewType.html" class="tsd-signature-type tsd-kind-type-alias">ReviewType</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L104">formalization-types.ts:104</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L104">formalization-types.ts:104</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="reviewer_id"><span>reviewer_<wbr/>id</span><a href="#reviewer_id" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">reviewer_id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Identifier for the reviewer (model name, GitHub username, etc.).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L102">formalization-types.ts:102</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L102">formalization-types.ts:102</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="reviewer_type"><span>reviewer_<wbr/>type</span><a href="#reviewer_type" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">reviewer_type</span><span class="tsd-signature-symbol">:</span> <a href="../types/schemas_formalization-types.ReviewerType.html" class="tsd-signature-type tsd-kind-type-alias">ReviewerType</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L103">formalization-types.ts:103</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L103">formalization-types.ts:103</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="severity_counts"><code class="tsd-tag">Optional</code><span>severity_<wbr/>counts</span><a href="#severity_counts" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">severity_counts</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/schemas_formalization-types.Severity.html" class="tsd-signature-type tsd-kind-type-alias">Severity</a><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L110">formalization-types.ts:110</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L110">formalization-types.ts:110</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="timestamp"><span>timestamp</span><a href="#timestamp" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">timestamp</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>ISO-8601 timestamp.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L106">formalization-types.ts:106</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L106">formalization-types.ts:106</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="verdict"><span>verdict</span><a href="#verdict" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">verdict</span><span class="tsd-signature-symbol">:</span> <a href="../types/schemas_formalization-types.Verdict.html" class="tsd-signature-type tsd-kind-type-alias">Verdict</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/02b74932e584517d462bf841f94fe8ba3baf75e4/schemas/formalization-types.ts#L107">formalization-types.ts:107</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3c3077ff9f9fdaee7a189da7892bd7a76aa603a/schemas/formalization-types.ts#L107">formalization-types.ts:107</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
