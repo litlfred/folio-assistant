@@ -610,92 +610,76 @@ having none and skip the anti-shrink guard entirely.
   # shellcheck disable=SC2064
   trap "rm -rf '$tmp'" RETURN
 
-  # 90 MB parts: GitHub rejects blobs over 100 MB.
+  if [ "$PUSH" -eq 1 ]; then
+    # Stream the tarball STRAIGHT INTO THE OBJECT STORE.
+    #
+    # `split --filter` hands each chunk to `git hash-object -w --stdin`, so a
+    # part never exists as a file and there is no worktree to check out and no
+    # copy to make. The only growth is the objects themselves. Measured on qou
+    # (2026-08-30, .lake 7.7 GB -> 2.34 GB of parts):
+    #
+    #   worktree path   parts 2.34 + checkout 1.3 + copies 2.34 + objects 2.34
+    #                   ~= 8.2 GB peak  -> ENOSPC in a 7.3 GB container
+    #   this path       objects 2.34 + one chunk in flight 90 MB  ~= 2.4 GB
+    #
+    # 90 MB parts clear GitHub's 100 MB blob limit; `-d -a 3` gives NUMERIC
+    # suffixes, which the restore requires -- it matches `\.tgz\.part[0-9]+$`,
+    # so alphabetic suffixes produce a branch it reports as carrying no parts.
+    local manifest; manifest="$tmp/manifest"
+    tar czf - -C "$root" .lake \
+      | split -d -a 3 -b 90m \
+          --filter='sha=$(git hash-object -w --stdin) && printf "%s %s\n" "$sha" "$FILE" >> '"$manifest" \
+          - "lake-oleans.tgz.part" \
+      || die "failed to stream the split tarball into the object store"
+    local nparts; nparts=$(wc -l < "$manifest")
+    [ "$nparts" -gt 0 ] || die "no parts produced"
+
+    # Push in batches. GitHub rejects any single push whose pack exceeds 2 GiB,
+    # and $_batch * 90 MB stays under it (15 -> ~1.35 GiB). Each commit's tree
+    # is the parts SO FAR, so every push after the first is a fast-forward
+    # carrying only that batch's blobs.
+    #
+    # The tip always carries the counted subject: `would_shrink` parses it, and
+    # a tip left on an intermediate "(through part N)" message reads as "no
+    # recorded counts" and silently disables the guard.
+    local _batch="${LAKE_CACHE_SEED_BATCH:-15}" cursor=0 parent="" tree commit msg
+    while [ "$cursor" -lt "$nparts" ]; do
+      local prev="$cursor"
+      cursor=$(( cursor + _batch )); [ "$cursor" -gt "$nparts" ] && cursor="$nparts"
+      [ "$cursor" -gt "$prev" ] || die "seed batching made no progress ($prev -> $cursor)"
+      tree=$(while read -r _sha _name; do
+               printf '100644 blob %s\t%s\n' "$_sha" "$_name"
+             done < <(head -n "$cursor" "$manifest") | git mktree) \
+        || die "git mktree failed"
+      if [ "$cursor" -eq "$nparts" ]; then msg="$subj"
+      else msg="lake-cache: $pkg at $slug (through part $cursor)"; fi
+      if [ -z "$parent" ]; then
+        commit=$(git -c user.name=folio-lake-cache-bot \
+                     -c user.email=folio-lake-cache-bot@users.noreply.github.com \
+                     commit-tree "$tree" -m "$msg")
+      else
+        commit=$(git -c user.name=folio-lake-cache-bot \
+                     -c user.email=folio-lake-cache-bot@users.noreply.github.com \
+                     commit-tree "$tree" -p "$parent" -m "$msg")
+      fi
+      parent="$commit"
+      printf '  parts %s/%s ... ' "$cursor" "$nparts"
+      git push -f origin "$commit:refs/heads/$br" >/dev/null 2>&1 \
+        || die "push to '$br' failed at parts $cursor/$nparts"
+      printf 'ok\n'
+    done
+    printf '\npushed %s (%s oleans, %s own, %s parts)\n' "$br" "$n" "$own" "$nparts"
+    return 0
+  fi
+
+  # Dry path: the manual recipe below needs the parts as real files.
   #
   # `-d` is REQUIRED, not cosmetic. Without it `split` emits alphabetic
   # suffixes (`partaa`, `partab`), and the restore matches
-  # `\.tgz\.part[0-9]+$` — so a seed made without `-d` produces parts
-  # the restore cannot see, and reports the branch as carrying neither
-  # parts nor a tree. The live branches are numeric (`part00`…), i.e.
-  # they were NOT produced by this code path.
-  #
-  # `-a 3` gives headroom to 1000 parts (~90 GB); the default width of 2
-  # errors out rather than extending once it runs out of suffixes.
+  # `\.tgz\.part[0-9]+$` -- so a seed made without `-d` produces parts
+  # the restore cannot see. `-a 3` gives headroom to 1000 parts.
   tar czf - -C "$root" .lake | split -d -a 3 -b 90m - "$tmp/lake-oleans.tgz.part" \
     || die "failed to create the split tarball"
-  # (was: a `mv "$f" "$f"` loop renaming every part to itself — a no-op
-  #  left over from when `split` produced alphabetic suffixes. It emitted
-  #  "are the same file" once per part and did nothing. The `split -d`
-  #  above already writes the numeric names we want.)
-
-  if [ "$PUSH" -eq 1 ]; then
-    # CI path. Uses a detached worktree so the caller's working tree is
-    # never switched — `git switch --orphan` in the main tree leaves
-    # every file untracked and strands the job on switch-back.
-    local wt; wt=$(mktemp -d) || die "mktemp failed"
-    git worktree add --detach "$wt" >/dev/null 2>&1 || die "git worktree add failed"
-    (
-      cd "$wt" || exit 1
-      git checkout --orphan "$br" >/dev/null 2>&1
-      git rm -rf . >/dev/null 2>&1 || true
-      # GitHub rejects any single push whose pack exceeds 2 GiB. Splitting
-      # the tarball into <100 MB parts clears the per-BLOB limit but not the
-      # per-PACK one: a cache above 2 GiB (Mathlib deps + own oleans) lands
-      # every part in ONE commit -> ONE pack -> "pack exceeds maximum allowed
-      # size (2.00 GiB)". So push the parts in batches across incremental
-      # commits: the first push (-f) resets the orphan branch, each later push
-      # fast-forwards and ships only that batch's objects. LAKE_CACHE_SEED_BATCH
-      # parts * 90 MB per push stays well under the cap (15 -> ~1.35 GiB).
-      #
-      # `mv`, not `cp`.  The parts already exist in $tmp; copying them means the
-      # tarball is on disk TWICE for the whole loop, on top of the worktree
-      # checkout and the objects `git add` writes.  Measured on the qou package
-      # (2026-08-30): .lake 7.7 GB -> 2.34 GB of parts, worktree 1.3 GB, objects
-      # 2.34 GB.  With `cp` that peaks near 8.2 GB and dies on ENOSPC in a
-      # standard session container (7.3 GB free); with `mv` the parts migrate
-      # rather than duplicate and the peak is ~6.0 GB, which fits.
-      #
-      # Lower still is possible -- `split --filter='git hash-object -w --stdin'`
-      # writes each chunk straight into the object store, never materialising a
-      # part and skipping the worktree entirely (~2.3 GB peak, verified against
-      # this same cache).  That is a larger change to a path CI depends on, so it
-      # is noted rather than taken here; qou's `scripts/lake-cache-stage-push.sh`
-      # carries a working implementation.
-      local _batch="${LAKE_CACHE_SEED_BATCH:-15}" _fp=0 _first=1
-      for _p in "$tmp"/lake-oleans.tgz.part*; do
-        mv "$_p" .
-        git add "$(basename "$_p")"
-        _fp=$((_fp + 1))
-        if [ $((_fp % _batch)) -eq 0 ]; then
-          git -c user.name=folio-lake-cache-bot \
-              -c user.email=folio-lake-cache-bot@users.noreply.github.com \
-              commit -q -m "lake-cache: $pkg at $slug (through part $_fp)"
-          if [ "$_first" -eq 1 ]; then git push -f origin "$br" || exit 1; _first=0
-          else git push origin "$br" || exit 1; fi
-        fi
-      done
-      # Final batch -- and the TIP MUST CARRY THE COUNTS.
-      #
-      # `--allow-empty` is load-bearing, not defensive. When the part count is an
-      # exact multiple of $_batch the loop has already committed everything, the
-      # index is clean, and the old `if ! git diff --cached --quiet` skipped this
-      # commit -- leaving the tip subject as "(through part N)", which
-      # `parse_counts` cannot read. `would_shrink` then treats the branch as
-      # having no recorded counts and waves through a partial reseed over a
-      # complete cache. At the default batch of 15 that fires at 15, 30, 45 parts
-      # (~1.35, ~2.7, ~4 GB) -- ordinary sizes, not corner cases.
-      git -c user.name=folio-lake-cache-bot \
-          -c user.email=folio-lake-cache-bot@users.noreply.github.com \
-          commit -q --allow-empty -m "$subj"
-      if [ "$_first" -eq 1 ]; then git push -f origin "$br" || exit 1
-      else git push origin "$br" || exit 1; fi
-    )
-    local rc=$?
-    git worktree remove --force "$wt" >/dev/null 2>&1 || true
-    [ "$rc" -ne 0 ] && die "push to '$br' failed"
-    printf '\npushed %s (%s oleans, %s own)\n' "$br" "$n" "$own"
-    return 0
-  fi
 
   printf '\nParts written to %s\n' "$tmp"
   printf 'Push them to the orphan branch with:\n\n'
