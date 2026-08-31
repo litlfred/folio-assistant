@@ -505,13 +505,31 @@ Known packages: $(cmd_list_names | tr '\n' ' ')"
 # commit and skips the payload).
 #
 # Returns 0 when publishing is safe, 1 when it would shrink the branch.
+# The seed commit SUBJECT is a parsed interface: `would_shrink` reads the
+# incumbent's counts back out of it, and an unparseable subject is treated as
+# "no recorded counts", which SILENTLY DISABLES the anti-shrink guard. Nothing
+# at the point of writing used to say so, and it has already been broken twice:
+# once by a hand seed that appended ", 99% traced" inside the parens, and once
+# structurally (see the counted-tip note in cmd_seed). Writer and reader now
+# live side by side, and `cmd_seed` round-trips the subject before pushing.
+seed_subject() {  # pkg slug oleans own
+  printf 'lake-cache: %s at %s (%s oleans, %s own)' "$1" "$2" "$3" "$4"
+}
+
+# Tolerates trailing text before the closing paren, so subjects like
+# "(6172 oleans, 2443 own, 99% traced)" still parse rather than reading as a
+# legacy branch with no counts.
+parse_counts() {  # subject -> "<oleans> <own>", empty if unparseable
+  printf '%s' "$1" | sed -n 's/.*(\([0-9]*\) oleans, \([0-9]*\) own[,)].*/\1 \2/p'
+}
+
 branch_counts() {  # branch -> "<oleans> <own>", empty if unreadable
   local ref="refs/lake-cache-prevcheck"
   git update-ref -d "$ref" 2>/dev/null || true
   timeout 60 git fetch --depth=1 --filter=blob:none -q origin "+$1:$ref" 2>/dev/null || return 1
   local msg; msg=$(git log -1 --format=%s "$ref" 2>/dev/null)
   git update-ref -d "$ref" 2>/dev/null || true
-  printf '%s' "$msg" | sed -n 's/.*(\([0-9]*\) oleans, \([0-9]*\) own).*/\1 \2/p'
+  parse_counts "$msg"
 }
 
 would_shrink() {  # branch cand_oleans cand_own
@@ -577,6 +595,16 @@ or pass --force for a deliberate downgrade."
     warn "--force: publishing a smaller cache than the incumbent"
   fi
 
+  # Round-trip the subject through the reader before force-pushing anything.
+  # Cheap, and it is the check whose absence disabled the guard twice.
+  local subj; subj=$(seed_subject "$pkg" "$slug" "$n" "$own")
+  [ "$(parse_counts "$subj")" = "$n $own" ] \
+    || die "refusing to seed: the commit subject this would write does not parse
+back to its own counts, so \`would_shrink\` would read the published branch as
+having none and skip the anti-shrink guard entirely.
+  subject: $subj
+  parsed:  '$(parse_counts "$subj")'  (expected '$n $own')"
+
   printf 'seeding %s from %s (%s oleans, %s own, %s%% traced)\n' "$br" "$root/.lake" "$n" "$own" "$cov"
   local tmp; tmp=$(mktemp -d) || die "mktemp failed"
   # shellcheck disable=SC2064
@@ -618,9 +646,24 @@ or pass --force for a deliberate downgrade."
       # commits: the first push (-f) resets the orphan branch, each later push
       # fast-forwards and ships only that batch's objects. LAKE_CACHE_SEED_BATCH
       # parts * 90 MB per push stays well under the cap (15 -> ~1.35 GiB).
+      #
+      # `mv`, not `cp`.  The parts already exist in $tmp; copying them means the
+      # tarball is on disk TWICE for the whole loop, on top of the worktree
+      # checkout and the objects `git add` writes.  Measured on the qou package
+      # (2026-08-30): .lake 7.7 GB -> 2.34 GB of parts, worktree 1.3 GB, objects
+      # 2.34 GB.  With `cp` that peaks near 8.2 GB and dies on ENOSPC in a
+      # standard session container (7.3 GB free); with `mv` the parts migrate
+      # rather than duplicate and the peak is ~6.0 GB, which fits.
+      #
+      # Lower still is possible -- `split --filter='git hash-object -w --stdin'`
+      # writes each chunk straight into the object store, never materialising a
+      # part and skipping the worktree entirely (~2.3 GB peak, verified against
+      # this same cache).  That is a larger change to a path CI depends on, so it
+      # is noted rather than taken here; qou's `scripts/lake-cache-stage-push.sh`
+      # carries a working implementation.
       local _batch="${LAKE_CACHE_SEED_BATCH:-15}" _fp=0 _first=1
       for _p in "$tmp"/lake-oleans.tgz.part*; do
-        cp "$_p" .
+        mv "$_p" .
         git add "$(basename "$_p")"
         _fp=$((_fp + 1))
         if [ $((_fp % _batch)) -eq 0 ]; then
@@ -631,14 +674,21 @@ or pass --force for a deliberate downgrade."
           else git push origin "$br" || exit 1; fi
         fi
       done
-      # Final partial batch (and the whole-thing case when parts <= _batch).
-      if ! git diff --cached --quiet; then
-        git -c user.name=folio-lake-cache-bot \
-            -c user.email=folio-lake-cache-bot@users.noreply.github.com \
-            commit -q -m "lake-cache: $pkg at $slug ($n oleans, $own own)"
-        if [ "$_first" -eq 1 ]; then git push -f origin "$br" || exit 1
-        else git push origin "$br" || exit 1; fi
-      fi
+      # Final batch -- and the TIP MUST CARRY THE COUNTS.
+      #
+      # `--allow-empty` is load-bearing, not defensive. When the part count is an
+      # exact multiple of $_batch the loop has already committed everything, the
+      # index is clean, and the old `if ! git diff --cached --quiet` skipped this
+      # commit -- leaving the tip subject as "(through part N)", which
+      # `parse_counts` cannot read. `would_shrink` then treats the branch as
+      # having no recorded counts and waves through a partial reseed over a
+      # complete cache. At the default batch of 15 that fires at 15, 30, 45 parts
+      # (~1.35, ~2.7, ~4 GB) -- ordinary sizes, not corner cases.
+      git -c user.name=folio-lake-cache-bot \
+          -c user.email=folio-lake-cache-bot@users.noreply.github.com \
+          commit -q --allow-empty -m "$subj"
+      if [ "$_first" -eq 1 ]; then git push -f origin "$br" || exit 1
+      else git push origin "$br" || exit 1; fi
     )
     local rc=$?
     git worktree remove --force "$wt" >/dev/null 2>&1 || true
