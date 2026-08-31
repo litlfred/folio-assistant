@@ -618,9 +618,24 @@ or pass --force for a deliberate downgrade."
       # commits: the first push (-f) resets the orphan branch, each later push
       # fast-forwards and ships only that batch's objects. LAKE_CACHE_SEED_BATCH
       # parts * 90 MB per push stays well under the cap (15 -> ~1.35 GiB).
+      #
+      # `mv`, not `cp`.  The parts already exist in $tmp; copying them means the
+      # tarball is on disk TWICE for the whole loop, on top of the worktree
+      # checkout and the objects `git add` writes.  Measured on the qou package
+      # (2026-08-30): .lake 7.7 GB -> 2.34 GB of parts, worktree 1.3 GB, objects
+      # 2.34 GB.  With `cp` that peaks near 8.2 GB and dies on ENOSPC in a
+      # standard session container (7.3 GB free); with `mv` the parts migrate
+      # rather than duplicate and the peak is ~6.0 GB, which fits.
+      #
+      # Lower still is possible -- `split --filter='git hash-object -w --stdin'`
+      # writes each chunk straight into the object store, never materialising a
+      # part and skipping the worktree entirely (~2.3 GB peak, verified against
+      # this same cache).  That is a larger change to a path CI depends on, so it
+      # is noted rather than taken here; qou's `scripts/lake-cache-stage-push.sh`
+      # carries a working implementation.
       local _batch="${LAKE_CACHE_SEED_BATCH:-15}" _fp=0 _first=1
       for _p in "$tmp"/lake-oleans.tgz.part*; do
-        cp "$_p" .
+        mv "$_p" .
         git add "$(basename "$_p")"
         _fp=$((_fp + 1))
         if [ $((_fp % _batch)) -eq 0 ]; then
