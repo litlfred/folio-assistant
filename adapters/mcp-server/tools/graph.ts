@@ -23,9 +23,15 @@ import {
   type GraphIndex,
 } from "../../../content/pipeline/graph-index";
 import { GRAPH_EDGE_TERMS, type GraphEdgeTerm } from "../../../schemas/jsonld";
+import { graphSearch, formatPath } from "../../../content/pipeline/graph-search";
 
 /** Tool names this module owns. */
-export const GRAPH_TOOL_NAMES = ["search_graph", "get_neighbors", "get_graph_stats"] as const;
+export const GRAPH_TOOL_NAMES = [
+  "search_graph",
+  "get_neighbors",
+  "get_graph_stats",
+  "corpus_search",
+] as const;
 export type GraphToolName = (typeof GRAPH_TOOL_NAMES)[number];
 
 export function isGraphTool(name: string): name is GraphToolName {
@@ -117,5 +123,48 @@ export function executeGraphTool(
 
     case "get_graph_stats":
       return JSON.stringify(graphStats(getGraphIndex(roots, input.refresh === true)));
+
+    // `search_graph` and `get_neighbors` are disjoint: one answers "which nodes
+    // contain these words", the other "what is adjacent to this node". Using
+    // them together means searching, copying an id, walking, and repeating per
+    // hit — so in practice the graph contributes nothing to a search, which is
+    // the one thing it is uniquely able to do. This composes them: seed
+    // lexically, expand structurally, and say which is which.
+    case "corpus_search": {
+      const idx = getGraphIndex(roots);
+      const r = graphSearch(idx, typeof input.query === "string" ? input.query : "", {
+        hops: typeof input.hops === "number" ? input.hops : 1,
+        direction:
+          input.direction === "in" || input.direction === "out" || input.direction === "both"
+            ? input.direction
+            : "both",
+        provenance: typeof input.provenance === "string" ? input.provenance : undefined,
+        searchText: input.searchText === true,
+        limit: typeof input.limit === "number" ? input.limit : 20,
+      });
+      // The reason is flattened to a string here rather than left structured:
+      // it is what a reader has to act on, and `~uses` vs `uses` — traversed
+      // backwards vs forwards — is the difference between "this depends on the
+      // seed" and "the seed depends on this".
+      return JSON.stringify({
+        query: r.query,
+        summary: r.summary,
+        emptyRoots: r.emptyRoots,
+        dangling: r.dangling.slice(0, 20),
+        truncated: r.truncated,
+        hits: r.hits.map((h) => ({
+          id: h.id,
+          label: h.label,
+          title: h.title,
+          kind: h.kind,
+          provenance: h.provenance,
+          why:
+            h.reason.via === "match"
+              ? `match:${h.reason.matchedIn}`
+              : `${h.reason.hops}hop via ${formatPath(h.reason.path) || "?"}` +
+                ` from ${h.reason.seed}`,
+        })),
+      });
+    }
   }
 }

@@ -2407,6 +2407,54 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
           },
         },
         {
+          name: "corpus_search",
+          description:
+            "Search the authored corpus AND the ingested library together, then follow the " +
+            "graph out from what matched. THIS IS THE ONE TO REACH FOR before declaring " +
+            "anything open, unproved, or novel: search_graph finds prior work only if it " +
+            "used your words, whereas a block one `uses` hop from the match is found " +
+            "whatever it calls itself — and prior work written in different words is the " +
+            "case that actually costs a session. Every hit says whether it MATCHED or was " +
+            "REACHED, and by which edge; a `~` prefix means the edge was traversed " +
+            "backwards, i.e. that node depends on the seed rather than the other way round. " +
+            "Counts are split authored vs ingested, because 'open in this corpus' and " +
+            "'settled in a paper we hold' are different verdicts — many ingested hits and " +
+            "no authored ones means CITE it, not derive it. Reports any root that exists " +
+            "but holds no graph nodes, which is what an ungenerated .jsonld corpus looks " +
+            "like and is otherwise indistinguishable from 'nobody has done this'.",
+          input_schema: {
+            type: "object" as const,
+            properties: {
+              query: { type: "string", description: "Words to seed on" },
+              hops: {
+                type: "number",
+                description:
+                  "Expansion depth (default 1, max 4). 0 is a plain lexical search.",
+              },
+              direction: {
+                type: "string",
+                enum: ["out", "in", "both"],
+                description:
+                  "'out' = what the seeds depend on; 'in' = what depends on them. " +
+                  "Default both, with each hop labelled.",
+              },
+              provenance: {
+                type: "string",
+                enum: ["authored", "ingested"],
+                description: "Restrict SEEDS to one population. Expansion still crosses both.",
+              },
+              searchText: {
+                type: "boolean",
+                description:
+                  "Also scan companion Markdown for seeds. Off by default; turn it on " +
+                  "when a label/title search comes back empty.",
+              },
+              limit: { type: "number", description: "Seed cap before expansion (default 20)" },
+            },
+            required: ["query"],
+          },
+        },
+        {
           name: "get_neighbors",
           description:
             "Walk the content graph outward from one node. direction 'out' answers " +
@@ -2575,6 +2623,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
               return JSON.stringify(matches);
             }
 
+            case "corpus_search":
             case "search_graph":
             case "get_neighbors":
             case "get_graph_stats":
