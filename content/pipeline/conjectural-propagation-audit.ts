@@ -19,7 +19,7 @@
  * Definitions are exempt — they name constructions, not logical
  * claims.
  */
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { leanPackageByName } from "../../schemas/lean-packages.ts";
 import { findContentRepoRoot } from "./repo-root";
@@ -73,12 +73,60 @@ const PROVABLE = new Set(["theorem", "proposition", "lemma", "corollary"]);
  * CLAUDE.md §3b-cond. Returns true iff EITHER:
  *   (a) the `.lean` sibling contains a `class` declaration, OR
  *   (b) the lean.ref-resolved file under `<paper>/lean/<Decl/Path>.lean`
- *       contains a `class` declaration.
+ *       contains a `class` declaration, or
+ *   (c) the file that actually *declares* the ref's final segment,
+ *       located by searching the package's Lake root, contains one.
  *
  * The fallback (b) is needed because not every block keeps its
  * Lean implementation as a direct sibling — many live under the
  * Lake-package directory structure (qou:QOU.X.Y → lean/QOU/X/Y.lean).
+ *
+ * (c) is needed because a `lean.ref` is a **namespace + declaration**
+ * path, not a file path, and (b) appends the declaration name as a
+ * final path segment. That only resolves when the file happens to be
+ * named after the declaration it holds. Measured on
+ * `content/quantum-observable-universe` (2026-09-03): (b) resolved to a
+ * **non-existent** file for all seven conjectures then reported as
+ * blocking, and three of those seven — `GradedMarkovTraceExistence`
+ * (`QOU/IwahoriHecke/MarkovTrace.lean:93`), `KashaevSurreal`
+ * (`QOU/AppendixSurreals/Conjectures.lean:463`) and
+ * `TowerGeometricLowerBound`
+ * (`QOU/Mass/LevelSelectionLogarithmic.lean:48`) — already had exactly
+ * the `class` the audit was reporting as absent. This is candidate (3),
+ * the grep fallback, of the `lean.ref` resolution order the content
+ * convention already specifies (AGENTS.md §0a); the audit implemented
+ * only (1) and (2).
+ *
+ * Note the blast radius is smaller than the false-positive count: those
+ * three accounted for 22 conjecture-instances but only **5** violator
+ * blocks, because most of the affected blocks are independently blocked
+ * by a genuinely un-axiomatised conjecture in the same cone.
  */
+/**
+ * Every `.lean` under a Lake root, cached per root. Built once and
+ * reused: (c) below would otherwise walk the tree per conjecture.
+ */
+const LEAN_FILES = new Map<string, string[]>();
+async function leanFilesUnder(root: string): Promise<string[]> {
+  const hit = LEAN_FILES.get(root);
+  if (hit) return hit;
+  const out: string[] = [];
+  const walk = async (dir: string) => {
+    let entries;
+    try { entries = await readdir(dir, { withFileTypes: true }); }
+    catch { return; }
+    for (const e of entries) {
+      if (e.name === ".lake" || e.name === "build") continue;
+      const p = join(dir, e.name);
+      if (e.isDirectory()) await walk(p);
+      else if (e.name.endsWith(".lean")) out.push(p);
+    }
+  };
+  await walk(root);
+  LEAN_FILES.set(root, out);
+  return out;
+}
+
 async function isClassAxiomatised(conjBlock: Block): Promise<boolean> {
   const checkText = (text: string) => /\bclass\s+\w+/.test(text);
 
@@ -105,11 +153,36 @@ async function isClassAxiomatised(conjBlock: Block): Promise<boolean> {
       pkg.lakeRoot,
       declPath.replace(/\./g, "/") + ".lean",
     );
-    const text = await readFile(leanFile, "utf8");
-    return checkText(text);
+    try {
+      const text = await readFile(leanFile, "utf8");
+      return checkText(text);
+    } catch { /* (b) missed — a lean.ref is a namespace path, not a
+                 file path. Fall through to the grep fallback. */ }
+
+    // (c) grep fallback: find the file that declares the ref's final
+    // segment. Matches the `lean.ref` resolution order in AGENTS.md §0a.
+    const decl = declPath.split(".").pop()!;
+    if (!decl) return false;
+    const declRe = new RegExp(
+      String.raw`^\s*(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+)*` +
+      String.raw`(?:class|structure|theorem|lemma|def|abbrev|instance|axiom|opaque)\s+` +
+      escapeRe(decl) + String.raw`\b`,
+      "m",
+    );
+    for (const f of await leanFilesUnder(join(REPO_ROOT, pkg.lakeRoot))) {
+      let text: string;
+      try { text = await readFile(f, "utf8"); } catch { continue; }
+      if (declRe.test(text)) return checkText(text);
+    }
+    return false;
   } catch {
     return false;
   }
+}
+
+/** Escape a declaration name for use inside a RegExp. */
+function escapeRe(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 /**
