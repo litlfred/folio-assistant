@@ -301,6 +301,7 @@ export type ParsedReference =
   | { form: "absolute"; iri: string }
   | { form: "same-paper"; prefix: string; slug: string }
   | { form: "cross-paper"; namespace: string[]; prefix: string; slug: string }
+  | { form: "bare-label"; label: string }
   | { form: "unresolvable"; raw: string; reason: string };
 
 /**
@@ -324,11 +325,22 @@ export type ParsedReference =
 export function parseReference(ref: string): ParsedReference {
   if (/^https?:\/\//i.test(ref)) return { form: "absolute", iri: ref };
   if (!ref.includes(":")) {
-    return {
-      form: "unresolvable",
-      raw: ref,
-      reason: "no ':' — a label must carry a kind prefix (e.g. \"def:foo\")",
-    };
+    // NOT unresolvable. A colon-free reference is a same-paper label that
+    // happens to carry no kind prefix, and `mintNodeId` already turns exactly
+    // that into an `@id` — so the reference and the target's own identity are
+    // computable by one shared rule, with nothing guessed.
+    //
+    // It used to be reported `unresolvable` and the edge was DROPPED. Measured
+    // on the qou corpus that silently deleted 35 real edges pointing at five
+    // real `prose` blocks whose labels are legitimately prefix-less (the Type
+    // system table gives `prose` no required prefix). The graph's whole value
+    // is its edges, so losing them to a convention check is the wrong trade.
+    //
+    // A typo is not hidden by this: it mints an IRI no node claims, which
+    // surfaces as a dangling edge in `neighbors` — visible, rather than
+    // absent. The two genuinely ambiguous cases below stay strict, because
+    // there the namespace/label split cannot be determined at all.
+    return { form: "bare-label", label: ref };
   }
 
   const parts = ref.split(":");
@@ -381,10 +393,15 @@ export function segmentToLabel(segment: string): string | undefined {
  * it supplies the namespace for the same-paper form, which is why the caller
  * must pass it rather than this being a pure string function.
  *
- * Returns `undefined` for an unresolvable reference. Callers should report
- * those rather than drop them: an unresolvable entry is a content defect
- * (a typo, or a label whose prefix was never registered), and silently
- * omitting the edge is how a graph loses edges without anyone noticing.
+ * Returns `undefined` only for a reference whose namespace/label split cannot
+ * be determined at all — an unknown kind prefix, or an empty slug. Callers
+ * should report those rather than drop them: silently omitting the edge is how
+ * a graph loses edges without anyone noticing.
+ *
+ * A reference with NO kind prefix is not in that category and does resolve,
+ * by the same rule {@link mintNodeId} uses for a prefix-less label. It is a
+ * convention deviation worth REPORTING (`prose` aside, labels carry a prefix)
+ * but not worth DROPPING AN EDGE over — see the note in {@link parseReference}.
  */
 export function resolveLabel(ref: string, paper: string): string | undefined {
   const parsed = parseReference(ref);
@@ -398,6 +415,10 @@ export function resolveLabel(ref: string, paper: string): string | undefined {
         `papers/${parsed.namespace.join("/")}/blocks/` +
         labelToSegment(parsed.prefix, parsed.slug)
       );
+    case "bare-label":
+      // The same segment rule `mintNodeId` applies to a prefix-less label, so
+      // a reference and its target agree by construction rather than by luck.
+      return `papers/${paper}/blocks/${bareLabelSegment(parsed.label)}`;
     case "unresolvable":
       return undefined;
   }
@@ -423,8 +444,19 @@ export function mintNodeId(label: string, paper: string): string {
   if (resolved) return resolved;
   // No kind prefix. Use the label verbatim as the segment: unique within a
   // paper because labels are, and readable, which an opaque hash would not be.
+  return `papers/${paper}/blocks/${bareLabelSegment(label)}`;
+}
+
+/**
+ * The `@id` segment for a label with no kind prefix.
+ *
+ * Shared by {@link mintNodeId} and {@link resolveLabel} on purpose: a block's
+ * own identity and a reference to it must be computed by ONE rule, or an edge
+ * lands on an IRI the target never claimed.
+ */
+function bareLabelSegment(label: string): string {
   const segment = label.replace(/[^A-Za-z0-9._~-]+/g, "-").replace(/^-+|-+$/g, "");
-  return `papers/${paper}/blocks/${segment || "unlabelled"}`;
+  return segment || "unlabelled";
 }
 
 /** The IRI for a bibliography key (`cites[]` entries are not labels). */

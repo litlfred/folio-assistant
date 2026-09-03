@@ -97,8 +97,16 @@ describe("parseReference — refuses to guess", () => {
     expect(resolveLabel("unital-groebner-bases:mystery:pbw", "qou")).toBeUndefined();
   });
 
-  test("a bare word with no colon is unresolvable", () => {
-    expect(parseReference("quantum-universe").form).toBe("unresolvable");
+  test("a bare word with no colon is a bare label, not unresolvable", () => {
+    // It was `unresolvable` until running the generator over the qou corpus:
+    // that dropped 35 real edges aimed at five real `prose` blocks, whose
+    // labels are legitimately prefix-less (the Type system table gives `prose`
+    // no required prefix). A colon-free reference has no namespace/label
+    // ambiguity to refuse — it is a same-paper label — so it is its own form.
+    expect(parseReference("quantum-universe")).toEqual({
+      form: "bare-label",
+      label: "quantum-universe",
+    });
   });
 
   test("an empty slug is unresolvable", () => {
@@ -189,10 +197,29 @@ describe("mintNodeId — a block's own label always yields an id", () => {
     }
   });
 
-  test("but a prefix-less REFERENCE stays unresolvable", () => {
-    // The asymmetry is deliberate: a block's own label is its identity and
-    // cannot be wrong, whereas a reference is a claim that must resolve.
-    // Making resolveLabel this forgiving would mask every typo.
-    expect(resolveLabel("tm-general-form", "qou")).toBeUndefined();
+  test("a prefix-less REFERENCE resolves to the id that label would mint", () => {
+    // These must agree or an edge lands on an IRI its target never claimed,
+    // which is indistinguishable from the target not existing. One shared
+    // helper computes both, and this is the test that says so.
+    expect(resolveLabel("tm-general-form", "qou")).toBe(mintNodeId("tm-general-form", "qou"));
+    expect(resolveLabel("tm-general-form", "qou")).toBe("papers/qou/blocks/tm-general-form");
+  });
+
+  test("resolving a prefix-less reference does not mask a typo", () => {
+    // The old contract refused these on the grounds that forgiveness "would
+    // mask every typo". It does the opposite. A typo mints an IRI no node
+    // claims, so the edge is EMITTED and shows up as dangling the moment the
+    // graph is walked — whereas refusing it deleted the edge, and a missing
+    // edge is exactly what nobody notices. Visible-and-wrong beats absent.
+    const typo = resolveLabel("tm-genrel-form", "qou");
+    expect(typo).toBe("papers/qou/blocks/tm-genrel-form");
+    expect(typo).not.toBe(mintNodeId("tm-general-form", "qou"));
+  });
+
+  test("a genuinely ambiguous reference is still refused", () => {
+    // Widening the bare-label case must not widen these: with a colon present
+    // and no known kind prefix, there is no way to tell namespace from label.
+    expect(resolveLabel("unital-groebner-bases:mystery:pbw", "qou")).toBeUndefined();
+    expect(resolveLabel("def:", "qou")).toBeUndefined();
   });
 });

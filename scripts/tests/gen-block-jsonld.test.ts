@@ -51,7 +51,7 @@ beforeAll(async () => {
       kind: "theorem",
       label: "thm:main",
       title: "Main theorem",
-      uses: ["def:widget", "def:widget", "other-paper:cor:pbw", "bogus-ref"],
+      uses: ["def:widget", "def:widget", "other-paper:cor:pbw", "bare-ref", "ns:mystery:bogus"],
       foreshadows: ["conj:later"],
       lean: { ref: "qou:QOU.Main", sorryFree: true },
       meta: { chapter: 1 },
@@ -94,16 +94,37 @@ describe("gen-block-jsonld", () => {
     expect(doc.uses).toEqual([
       "papers/test-paper/blocks/def-widget",
       "papers/other-paper/blocks/cor-pbw",
+      // Prefix-less, and KEPT. Refusing these dropped 35 real edges on the
+      // qou corpus, aimed at five real `prose` blocks whose labels carry no
+      // prefix because `prose` does not require one.
+      "papers/test-paper/blocks/bare-ref",
     ]);
   });
 
   test("an unresolvable reference is reported, not silently emitted", () => {
     const dangling: Parameters<typeof blockToJsonLd>[2] = [];
     const doc = blockToJsonLd(blocks.get("thm:main")!, PAPER, dangling);
+    // Only the one that is genuinely ambiguous: a colon is present and no
+    // segment is a known kind prefix, so namespace and label cannot be told
+    // apart. A bare word has no such ambiguity and is not in this list.
     expect(dangling).toHaveLength(1);
-    expect(dangling[0]!.ref).toBe("bogus-ref");
+    expect(dangling[0]!.ref).toBe("ns:mystery:bogus");
     expect(dangling[0]!.field).toBe("uses");
-    expect(JSON.stringify(doc)).not.toContain("bogus-ref");
+    expect(JSON.stringify(doc)).not.toContain("mystery");
+  });
+
+  test("a prefix-less reference is reported as unconventional, not dropped", () => {
+    // The two lists exist so the convention stays visible without the edge
+    // being the thing that pays for it. Kept apart because they need opposite
+    // responses: dangling is data loss, this is a naming nit.
+    const dangling: Parameters<typeof blockToJsonLd>[2] = [];
+    const unconventional: NonNullable<Parameters<typeof blockToJsonLd>[3]> = [];
+    const doc = blockToJsonLd(blocks.get("thm:main")!, PAPER, dangling, unconventional);
+    expect(unconventional).toHaveLength(1);
+    expect(unconventional[0]!.ref).toBe("bare-ref");
+    expect(unconventional[0]!.field).toBe("uses");
+    expect(JSON.stringify(doc)).toContain("papers/test-paper/blocks/bare-ref");
+    expect(dangling.map((d) => d.ref)).not.toContain("bare-ref");
   });
 
   test("lean.ref stays a literal — a Lean decl is not a web resource", () => {
