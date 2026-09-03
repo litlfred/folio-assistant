@@ -108,8 +108,23 @@ const paperFilter = paperArg(args);
 const KNOWN_FLAGS = new Set([
   "--no-write", "--strict", "--json", "--no-orphans", "--chapter", "--paper",
 ]);
+/**
+ * The flags that consume the token after them. Derived by scanning `args`
+ * rather than from a per-flag index binding: the `--paper` sweep of #151
+ * replaced this file's `paperFilterIdx` with `paperArg(args)` and left the
+ * set below still naming it, so the module failed to load outright with
+ * `ReferenceError: paperFilterIdx is not defined` — taking every
+ * `q-usage-audit` invocation and its CLI test down with it.
+ *
+ * Re-adding a bare `indexOf` on the flag name is NOT the fix: that is exactly
+ * the unguarded idiom `scripts/tests/cli-args-paper-guard.test.ts` forbids,
+ * and it fails that test — which is text-based, so even naming the idiom
+ * verbatim in a comment trips it. Scanning for the flag tokens gets the
+ * indices without re-introducing the idiom, and handles a repeated flag.
+ */
+const VALUE_FLAGS = new Set(["--chapter", "--paper"]);
 const flagValueIdx = new Set(
-  [chapterFilterIdx, paperFilterIdx].filter((i) => i >= 0).map((i) => i + 1),
+  args.flatMap((a, i) => (VALUE_FLAGS.has(a) ? [i + 1] : [])),
 );
 const unknownArgs = args.filter(
   (a, i) => !KNOWN_FLAGS.has(a) && !flagValueIdx.has(i),
