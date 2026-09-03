@@ -40,10 +40,21 @@ import { BLOCK_KINDS } from "../../schemas/types";
  * `BlockSchema` is `z.discriminatedUnion(...).superRefine(...)`, i.e. a
  * `ZodEffects` wrapping the union. Unwrap rather than importing the fifteen
  * schemas by name, so a kind added later is covered without editing this file.
+ *
+ * Asserted STRUCTURALLY — `{ innerType(): { options: … } }` — rather than
+ * through `z.ZodEffects<z.ZodDiscriminatedUnion<…>>`. Naming zod's own
+ * generics looks tighter and is not: `ZodDiscriminatedUnionOption<"kind">`
+ * requires the shape to be `{ kind: ZodTypeAny } & ZodRawShape`, which a bare
+ * `ZodObject<ZodRawShape>` does not satisfy, so the "precise" spelling is a
+ * `tsc` error (TS2344) while proving nothing extra at runtime. The runtime
+ * checks below are what establish the shape — including the first test, which
+ * fails unless every `BLOCK_KINDS` member turns up here.
  */
-const union = (BlockSchema as unknown as z.ZodEffects<z.ZodDiscriminatedUnion<"kind", z.ZodObject<z.ZodRawShape>[]>>)
-  .innerType();
-const options = union.options as z.ZodObject<z.ZodRawShape>[];
+const options: z.ZodObject<z.ZodRawShape>[] = (
+  BlockSchema as unknown as {
+    innerType(): { options: z.ZodObject<z.ZodRawShape>[] };
+  }
+).innerType().options;
 
 const shapeOf = (schema: z.ZodObject<z.ZodRawShape>) => Object.keys(schema.shape);
 
