@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { paperArg, requireFlagValue } from "../../content/pipeline/cli-args";
+import { paperArg, requireFlagValue, flagValueIndices } from "../../content/pipeline/cli-args";
 
 /**
  * The `--paper` guard, and the invariant that stops it being re-broken.
@@ -83,5 +83,30 @@ describe("no script re-introduces the unguarded idiom", () => {
       }
     }
     expect(offenders).toEqual([]);
+  });
+});
+
+describe("flagValueIndices — the position the guard needs, without the raw idiom", () => {
+  test("names the slot AFTER each present flag", () => {
+    expect([...flagValueIndices(["--paper", "qou", "--strict"], ["--paper"])]).toEqual([1]);
+  });
+
+  test("an absent flag contributes nothing, so a stray arg stays unrecognised", () => {
+    expect(flagValueIndices(["--strict"], ["--paper", "--chapter"]).size).toBe(0);
+  });
+
+  test("several flags at once", () => {
+    const idx = flagValueIndices(["--chapter", "ch1", "--paper", "qou"], ["--paper", "--chapter"]);
+    expect([...idx].sort((a, b) => a - b)).toEqual([1, 3]);
+  });
+
+  test("the audit that needed it still IMPORTS", async () => {
+    // The regression this exists for was not a wrong answer — it was a
+    // ReferenceError at MODULE SCOPE. `paperFilterIdx` was left behind when the
+    // `--paper` sweep moved the read onto the shared helper, so every import of
+    // q-usage-audit threw and the failure surfaced as two unrelated CLI tests.
+    // Importing it is the whole assertion.
+    const mod = await import("../../content/pipeline/q-usage-audit");
+    expect(mod).toBeDefined();
   });
 });

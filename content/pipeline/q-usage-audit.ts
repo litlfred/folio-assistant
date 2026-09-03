@@ -49,7 +49,7 @@ import {
 // folio-assistant but audits a downstream content repo; deriving the root
 // from this file's own location lands inside the platform tree instead.
 import { findContentRepoRoot, findPapers } from "./repo-root.ts";
-import { paperArg } from "./cli-args";
+import { paperArg, flagValueIndices } from "./cli-args";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 
@@ -108,9 +108,16 @@ const paperFilter = paperArg(args);
 const KNOWN_FLAGS = new Set([
   "--no-write", "--strict", "--json", "--no-orphans", "--chapter", "--paper",
 ]);
-const flagValueIdx = new Set(
-  [chapterFilterIdx, paperFilterIdx].filter((i) => i >= 0).map((i) => i + 1),
-);
+// `paperFilterIdx` used to be bound here beside `chapterFilterIdx`. When the
+// `--paper` sweep moved the READ onto the shared guarded helper, the INDEX went
+// with it — and this line kept referring to the name, so the module threw on
+// import and took the whole audit down with it. The position is a real need
+// (an unknown-argument guard must not mistake a flag's value for a stray
+// positional) and it is not what `paperArg` returns, so it is asked for by
+// name rather than recovered with a raw `indexOf` — which is the very idiom
+// the sweep removed and `cli-args-paper-guard` keeps out.
+const flagValueIdx = flagValueIndices(args, ["--paper"]);
+if (chapterFilterIdx >= 0) flagValueIdx.add(chapterFilterIdx + 1);
 const unknownArgs = args.filter(
   (a, i) => !KNOWN_FLAGS.has(a) && !flagValueIdx.has(i),
 );
