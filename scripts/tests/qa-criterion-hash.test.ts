@@ -1,11 +1,31 @@
 import { describe, expect, test, beforeEach } from "bun:test";
-import { mkdtempSync, writeFileSync, rmSync } from "fs";
+import { mkdtempSync, writeFileSync, rmSync, existsSync } from "fs";
 import { tmpdir } from "os";
-import { join } from "path";
+import { join, resolve } from "path";
 import {
   criterionSourceHash,
   _resetCriterionHashCache,
 } from "../../content/pipeline/qa-criterion-hash";
+
+/**
+ * The PLATFORM checkout — this file's own location, NOT `process.cwd()`.
+ *
+ * The real-module guard at the bottom of this file used to build its path with
+ * `join(process.cwd(), ...)`, and `run-tests.sh` does `cd "$SCRIPT_DIR"` before
+ * `bun test`. So under the canonical runner the guard looked for the checker at
+ * `scripts/tests/content/pipeline/qa-checkers-voice.ts`, `parseFile` hit ENOENT
+ * and returned null, and the assertion failed on a null that had nothing to do
+ * with how checkers are written — the one thing the guard exists to watch. It
+ * resolved only when the suite happened to be invoked from the repo root.
+ *
+ * Same anchor as `helpers.ts`'s `REPO_ROOT`, and the right one for a PLATFORM
+ * file even when a folio embeds this repo as a `folio-assistant/` symlink:
+ * `import.meta.dir` resolves back through the symlink to the real platform
+ * path. (Anchoring CONTENT paths here would be the opposite mistake — see the
+ * `FOLIO_ROOT` note in `helpers.ts`.)
+ */
+const PLATFORM = resolve(import.meta.dir, "..", "..");
+const VOICE_CHECKERS = join(PLATFORM, "content/pipeline/qa-checkers-voice.ts");
 
 // Each case writes a throwaway checker module. Hashes are memoized by absolute
 // path, so every fixture gets a fresh temp dir as well as a cache reset.
@@ -110,13 +130,24 @@ describe("criterionSourceHash", () => {
 
   test("resolves criteria in the real voice checker module", () => {
     // Guards the fixture shape against drifting from how checkers are really
-    // written (an exported `*_AUTOMATED_CHECKERS` record of arrow dispatchers).
-    const real = join(
-      process.cwd(),
-      "content/pipeline/qa-checkers-voice.ts",
+    // written (an exported record of arrow dispatchers). What the record is
+    // NAMED is not part of that: `findCriterionEntry` matches the property key
+    // inside any object literal in the module, so the real export being a bare
+    // `AUTOMATED_CHECKERS` rather than the `*_AUTOMATED_CHECKERS` the module
+    // docstring describes makes no difference, and neither do the six
+    // `...*_AUTOMATED_CHECKERS` spreads that close it — the entry that gets
+    // hashed is one property assignment, not the record.
+    //
+    // Assert the file is THERE first. Every way of getting the path wrong —
+    // wrong anchor, a moved or renamed checker — otherwise surfaces as a bare
+    // `null` from the ENOENT path inside `parseFile`, which reads exactly like
+    // the shape drift this test is supposed to detect.
+    expect(existsSync(VOICE_CHECKERS)).toBe(true);
+    const scholarly = criterionSourceHash(
+      VOICE_CHECKERS,
+      "voice-scholarly-default",
     );
-    const scholarly = criterionSourceHash(real, "voice-scholarly-default");
-    const wall = criterionSourceHash(real, "wall-side-correct");
+    const wall = criterionSourceHash(VOICE_CHECKERS, "wall-side-correct");
     expect(scholarly).toBeTruthy();
     expect(wall).toBeTruthy();
     expect(scholarly).not.toBe(wall);

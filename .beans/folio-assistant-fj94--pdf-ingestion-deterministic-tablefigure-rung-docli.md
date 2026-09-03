@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fj94
 title: 'PDF ingestion: deterministic table/figure rung + Docling capability probe'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-26T20:40:19Z
-updated_at: 2026-08-26T20:54:31Z
+updated_at: 2026-08-26T21:03:21Z
 ---
 
 Claimed by `claude/pdf-ingestion-pipeline-y6koyj`.
@@ -39,3 +39,7 @@ Claimed by `claude/pdf-ingestion-pipeline-y6koyj`.
   depend on a table backend or reasoning about two SHAs.
 - Not exposed as an MCP tool — the integration point is the skill, matching
   `pdf-extract.py` and `pdf-ocr.py`.
+
+
+Merged as `a553883` via PR #140 with all four CI gates green on `72c6b4d`.
+Follow-up (corpus run) is unclaimed and needs a folio repo — not carried here.

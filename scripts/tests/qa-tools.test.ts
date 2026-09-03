@@ -9,6 +9,7 @@
 import { test, expect, describe } from "bun:test";
 import {
   pipelineScriptPath,
+  resolvePipelineScript,
   tryParseJson,
   runPipeline,
   asToolText,
@@ -33,10 +34,48 @@ type ToolHandler = (
 
 
 describe("_pipeline helper", () => {
-  test("pipelineScriptPath resolves under content/pipeline with .ts", () => {
+  test("pipelineScriptPath names a folio path and appends .ts", () => {
     const p = pipelineScriptPath("qa-sweep");
     expect(p.endsWith("/content/pipeline/qa-sweep.ts")).toBe(true);
     expect(pipelineScriptPath("x.ts").endsWith("/content/pipeline/x.ts")).toBe(true);
+  });
+
+  // THE DEPRECATION CONTRACT — this is what keeps the test above meaningful.
+  //
+  // `pipelineScriptPath` is @deprecated and has zero production callers; every
+  // live caller uses `resolvePipelineScript`. Asserting the old function's
+  // behaviour on its own therefore pinned a dead subject, and worse, pinned the
+  // FOLIO-ONLY resolution that the new function exists to replace: resolving
+  // against the folio alone is the defect that made every pipeline-backed tool
+  // fail on a scaffolded folio (see `resolvePipelineScript`'s docstring).
+  //
+  // So assert the DIFFERENCE instead. The discriminator is a name that exists
+  // nowhere, which needs no fixture and holds under both folio layouts:
+  //
+  //   pipelineScriptPath   answers "where WOULD this live in this folio"
+  //                        -> a path, always, without touching the filesystem
+  //   resolvePipelineScript answers "where IS it, here or in the platform"
+  //                        -> undefined when the answer is nowhere
+  //
+  // This fails if anyone "fixes" pipelineScriptPath to do an existence check
+  // (making it silently a second resolver), or if resolvePipelineScript
+  // regresses to returning a path blindly. Bean folio-assistant-a39g.
+  test("pipelineScriptPath vs resolvePipelineScript: the deprecation contract", () => {
+    const nowhere = "definitely-not-a-real-pipeline-script-a39g";
+
+    // The deprecated one never consults the filesystem: it answers for a
+    // script that does not exist, in this folio or anywhere else.
+    const named = pipelineScriptPath(nowhere);
+    expect(named.endsWith(`/content/pipeline/${nowhere}.ts`)).toBe(true);
+
+    // The live one does consult it, and says so honestly.
+    expect(resolvePipelineScript(nowhere)).toBeUndefined();
+
+    // Which is exactly why runPipeline must route through the second, not the
+    // first: a caller that trusted `named` above would spawn a missing file.
+    const res = runPipeline(nowhere);
+    expect(res.ok).toBe(false);
+    expect(res.error).toContain("pipeline script not found");
   });
 
   test("tryParseJson extracts JSON after a banner, else undefined", () => {

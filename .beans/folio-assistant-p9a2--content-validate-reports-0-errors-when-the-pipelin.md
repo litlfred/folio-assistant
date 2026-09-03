@@ -1,10 +1,11 @@
 ---
 # folio-assistant-p9a2
 title: content_validate reports 0 errors when the pipeline never ran
-status: in-progress
+status: completed
 type: bug
+priority: normal
 created_at: 2026-08-28T20:08:28Z
-updated_at: 2026-08-28T20:08:28Z
+updated_at: 2026-08-30T10:37:02Z
 ---
 
 Found by authoring real content in folio-test. content_validate resolves validate.ts from the FOLIO's content/pipeline/, which folio_init does not create — so the spawn fails with 'Module not found', stdout is empty, the ✗/⚠ counts are 0, and the tool reports 'Validation: 0 error(s), 0 warning(s)'. A check that never looked, reporting clean.
@@ -66,3 +67,19 @@ Both were false *negatives* in reporting tools, and both survived because the
 output looked like success. Worth considering a sweep of the remaining tools
 that shell out to a pipeline, asking of each: what does this print if the
 thing it runs is missing?
+
+
+## Closed 2026-08-30 — verified, not assumed
+
+Status was `in-progress` while the body already described finished work. The
+fix is present and exercised:
+
+- `pipelineFailedToRun` and the `INCOMPLETE` label are in
+  `adapters/document/tools/validate.ts`.
+- `scripts/tests/validate-pipeline-guard.test.ts` — **7 pass / 0 fail**,
+  9 expect() calls, run just now.
+
+One note on the verification, because the first run was misleading: it failed
+with `Cannot find package 'zod'` on a fresh clone. That was the ENVIRONMENT,
+not the code — `bun install` (335 packages), then 7/7. A test failure on an
+uninstalled checkout is not evidence about the code.

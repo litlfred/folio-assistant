@@ -61,6 +61,49 @@ describe("no-orphan-sidecar", () => {
     rmSync(dir, { recursive: true, force: true });
   });
 
+  test("does not flag a paper-level audit artefact that shares the extension", async () => {
+    // `qa-section-title-audit.ts` writes `content/<paper>/section-title-audit.qa.json`,
+    // keyed by paper and chapter rather than by block. It has no `.ts` by
+    // design, and four live in the qou corpus. Bean `qou-efzm` had them
+    // recorded as orphans left behind by a deleted block; the file shape says
+    // they were never blocks. Deleting them would destroy live audit state the
+    // producing tool would rewrite.
+    const dir = chapter(["alpha"]);
+    writeFileSync(
+      join(dir, "section-title-audit.qa.json"),
+      JSON.stringify({ criterion: "voice-section-title-coherence", paper: "p", chapters: {} }),
+    );
+    const { issues } = await validateObjects(dir);
+    expect(orphanIssues(issues).length).toBe(0);
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("still flags a genuine orphan sitting beside a paper-level artefact", async () => {
+    // The discriminator must not become a blanket exemption for the directory.
+    const dir = chapter(["alpha"], ["ghost"]);
+    writeFileSync(
+      join(dir, "section-title-audit.qa.json"),
+      JSON.stringify({ criterion: "voice-section-title-coherence", paper: "p", chapters: {} }),
+    );
+    const { issues } = await validateObjects(dir);
+    const found = orphanIssues(issues);
+    expect(found.length).toBe(1);
+    expect(found[0].message).toContain("ghost.qa.json");
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("flags an unparseable sidecar rather than excusing it", async () => {
+    // Treating unreadable as "not a block sidecar" would let a real orphan
+    // hide behind a truncated write, so the helper fails toward reporting.
+    const dir = chapter(["alpha"]);
+    writeFileSync(join(dir, "corrupt.qa.json"), "{ this is not json");
+    const { issues } = await validateObjects(dir);
+    const found = orphanIssues(issues);
+    expect(found.length).toBe(1);
+    expect(found[0].message).toContain("corrupt.qa.json");
+    rmSync(dir, { recursive: true, force: true });
+  });
+
   test("is an error, not a warning", async () => {
     // An audit report for a block that does not exist is not a style nit — it
     // can never be refreshed and it corrupts corpus counts.

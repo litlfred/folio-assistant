@@ -49,6 +49,7 @@ import {
 } from "../../schemas/jsonld";
 import { loadBlocksUnder, reportLoadFailures, type LoadedBlock } from "./block-module";
 import { findContentRepoRoot, findPapers } from "./repo-root";
+import { paperArg } from "./cli-args";
 
 /** A reference that could not be resolved to an IRI, with where it came from. */
 interface DanglingRef {
@@ -199,8 +200,7 @@ function serialise(doc: Record<string, unknown>): string {
 async function run(): Promise<number> {
   const argv = process.argv.slice(2);
   const check = argv.includes("--check");
-  const paperArg = argv[argv.indexOf("--paper") + 1];
-  const explicitPaper = argv.includes("--paper") ? paperArg : undefined;
+  const explicitPaper = paperArg(argv);
 
   const root = findContentRepoRoot();
   const papers = explicitPaper ? [explicitPaper] : findPapers(root);

@@ -353,6 +353,117 @@ bean list parsed from `.beans/`, plus how far the default branch has moved and
 recent sibling `claude/*` branch activity). Heavy triage of new commits belongs in
 a background subagent, not the foreground.
 
+## Opening a bean or a topic — brief it before you touch anything (STRICT)
+
+**When you begin work on a bean, or on any topic large enough to be one, open
+that turn with a brief.** Not after the first tool call, not folded into the
+report at the end — before the work, in the chat, where the author and the next
+agent will read it.
+
+The brief answers three questions, in this order:
+
+1. **What am I doing, and why is it worth doing?** State the problem in terms
+   someone outside this session can evaluate. Expand every identifier on first
+   use — a bean ID, a witness stem, a Lean declaration and a field name are all
+   opaque without their gloss.
+2. **What do I already know?** The measurements you are relying on, with their
+   provenance: measured this session, carried from a prior one, or asserted by a
+   bean you have not verified. A number without its date and command is a claim,
+   not evidence.
+3. **How do I plan to do it, and how will I know it worked?** The route, the
+   gate you will verify against, and — the part that gets dropped — **what would
+   falsify the approach**. If you cannot say what a failure would look like, you
+   do not yet have a plan.
+
+Then say what you are **not** doing and why: the adjacent thing you are
+deliberately leaving, the scope you are declining to widen into.
+
+### Why this is a rule and not a style preference
+
+**Sessions end mid-thread.** Containers are reclaimed, context windows fill, a
+branch is picked up days later by an agent with none of the reasoning that
+produced it. The bean body and the commit are durable; the chain of inference
+that made them sensible is not, unless it is written down at the point where it
+was still obvious. An agent resuming cold should be able to read the brief and
+continue — not reconstruct the predecessor's rabbit hole first.
+
+**It catches wrong work before it is done rather than after.** A route stated in
+advance can be corrected by the author in one line. The same route discovered in
+a finished diff costs a review cycle and, often, a revert.
+
+**It is the same discipline as the `AskUserQuestion` frame, applied to work
+instead of decisions.** That rule exists because a terse question forces the
+author to type follow-ups asking for context the agent already had. A terse
+*start* does the same thing one step earlier.
+
+### Proportionality, so this does not become ceremony
+
+The brief scales with the work, and the trigger is **irreversibility and
+surprise**, not line count.
+
+- **A one-line fix with an obvious route needs no brief.** Say what you are
+  doing and do it.
+- **Anything touching a shipped gate, a shared artifact, a Lean declaration
+  with consumers, or a number a reader sees — brief it.**
+- **Anything where you expect to be wrong some of the time — brief it**, and say
+  where you expect to be wrong. Research is the case this is most valuable for
+  and most often skipped, on the grounds that the outcome is unknown. The
+  unknown outcome is the reason to write down the route.
+
+### What a thin brief looks like, and why it fails
+
+> Starting `qou-93hu` — fixing CriticalExponent.
+
+Names the bean and nothing else. It does not say the field is a closed numeral
+identity with no exponent variable in it, so a reader cannot tell whether this
+is cosmetic or load-bearing; it does not say the class signature changes, so
+nobody can warn that every binder in two consumer modules moves with it; and it
+does not say what "fixed" will be checked against, so the agent is free to
+declare victory on a compile. Each of those omissions is a place the author
+could have intervened for the cost of reading one sentence.
+
+**Cheapest correct move when you do not want to spend the words: do not start
+the topic.** A task you cannot brief is a task you have not understood well
+enough to begin, and beginning it anyway is how a session produces work that has
+to be unwound.
+
+Full protocol, with the worked example:
+[`skills/folio-core/todo-manager.md`](skills/folio-core/todo-manager.md)
+§"Opening brief".
+
+> **🛑 THREE `todo-manager.md` exist, not two — and the third is what took
+> `main` red (corrected 2026-08-30).** This note said "two" on the strength of
+> a `grep` for inbound references rather than a `find` for files, in a note
+> whose own subject is briefing a topic accurately. The third copy exists, is
+> generated, and is CI-gated; I edited the source without regenerating it and
+> merged #153 with `TypeScript — tests, lint, types (hard)` red. Measured on
+> `main` at 2026-08-30, all three:
+>
+> | copy | lines | inbound refs | generated? | CI-gated? |
+> |---|---|---|---|---|
+> | `skills/folio-core/todo-manager.md` | 201 | 3 | no — hand-authored | yes, indirectly (its mirror drifts) |
+> | `docs/reference/skill-instructions/todo-manager.md` | 202 | 1 | **yes**, from the row above | **yes** — `gen-skill-docs.ts --check` |
+> | `.claude/skills/local/todo-manager.md` | 167 | **5** | no | **no** |
+>
+> **The divergence is still two-way**, so the open question below is unchanged:
+> the mirror tracks `folio-core` to within its 15 lines of injected front matter
+> and nav, while `.claude/skills/local/` differs from `folio-core` by **188**
+> diff lines. What the third copy changes is the *failure mode*, and the two
+> hand-authored copies fail in opposite directions:
+>
+> - Edit `skills/folio-core/` and forget `bun run scripts/gen-skill-docs.ts`,
+>   and CI goes red. Loud, and it caught me.
+> - Edit `.claude/skills/local/` and nothing checks anything. `GROUPS` in
+>   [`scripts/gen-skill-docs.ts`](scripts/gen-skill-docs.ts) lists
+>   `skills/content-lifecycle`, `src/skills`, `skills/folio-core` and the two
+>   adapter dirs — **`.claude/skills/local/` is not among them.** So the copy
+>   with the *most* inbound references is the one with no guard at all.
+>
+> Which copy is canonical remains a question for whoever owns the skills layout;
+> resolving a 188-line divergence as a side effect of an unrelated edit is still
+> how one of them quietly becomes wrong. §"Opening brief" is in both
+> hand-authored copies so this change does not widen the gap.
+
 ## More
 
 - **`uses[]` and `interprets` are the EDITORIAL relation** — what a *reader*

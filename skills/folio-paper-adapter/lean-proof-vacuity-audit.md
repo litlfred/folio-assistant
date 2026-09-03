@@ -202,6 +202,73 @@ proof:
 **Never** the batch anti-fix: wrapping the conclusion in a structure field and
 projecting it. That converts a *visible* gap (`sorry`) into an *invisible* one.
 
+### Demonstrating non-degeneracy — the theorem-pair pattern
+
+Step 2 requires the conditional class to be "non-degenerate", and that is where
+most of these go wrong: a class is written, a `canonical` instance sets its data
+to zero so the propositional field becomes `rfl`, and the class asserts nothing
+for anyone. Demoting `instance` → `def` stops typeclass resolution supplying it
+silently, but it does not *say* what the hypothesis is worth.
+
+**Parameterise the class over the data, then state the residual vacuity as a
+proved pair.** Worked example in
+[`QOU/Archimedean/JetOrderIndependence.lean`](../../..) — read it before
+inventing your own:
+
+```lean
+/-- The identically-zero transport error. -/
+def trivialError : TransportErrorData where
+  shadow := fun _ => 0
+  physical := fun _ => 0
+  ...
+
+/-- **The bound is vacuous at the zero error (PROVED).** So an instance for an
+    *unspecified* `E` asserts nothing: it is satisfiable. -/
+instance trivialError_bound : SurrealParallelTransportBound trivialError where ...
+
+/-- **…and non-vacuous at any error with a non-zero physical shadow (PROVED).**
+    For a specific `E` the bound is a real constraint that can fail. -/
+theorem not_bound_of_physical_ne_zero (h : E.physical N ≠ 0) :
+    ¬ Nonempty (SurrealParallelTransportBound E) := ...
+```
+
+Read together the two say exactly what an instance buys: **the hypothesis
+carries no information until the datum is pinned down, and real information as
+soon as it is.** The trap becomes a machine-checked fact instead of a latent
+one — which is strictly better than forbidding the trivial model, because a
+non-degeneracy field on the class would prevent the trivial model *and*
+prevent saying anything about it.
+
+Parameterising alone is not enough: it stops the class choosing its own shadow,
+but a consumer can still instantiate at the zero datum. The pair is what closes
+that.
+
+Detected mechanically by **two** criteria in `content/pipeline/qa-checkers-vacuity.ts`,
+which partition the defect rather than overlap — a decl the first flags is
+skipped by the second:
+
+- `lean-no-vacuous-instance-data` — degenerate data *written as a constant*
+  (`_ := 0`, `PUnit.unit`, `default`) plus a reflexivity discharge.
+- `lean-no-definitional-laundering` — data that is **not** constant and is still
+  chosen so the claim becomes `rfl`. Three shapes: an argument-ignoring body
+  (`def F (args…) : Prop := True`), a constant one lambda deep
+  (`member := fun _ => True`), and a field defined to BE the right-hand side its
+  class field compares against (`w := fun _ => cableWidthColor` under
+  `is_color : ∀ A, w A = cableWidthColor`).
+
+The two lists were measured **disjoint** on the qou corpus on 2026-08-24: a hand
+read found eight laundering sites, the constant detector found twenty-five, and
+no site appeared in both. If you are auditing for vacuity, running only one of
+them is running half the check.
+
+The third shape grades `warn`, not `fail`, and says "REVIEW (not a verdict)" in
+its own evidence. Pinning a field to a formula and observing the law then holds
+by `rfl` is a legitimate way to exhibit a model; whether the class field was a
+*constraint* the instance had to meet or a *definition* it was entitled to make
+is a question about what the class was for, and no regex answers it. Answer it
+and record the answer — do not treat the hit as a defect, and do not dismiss it
+because the docstring already argues it is fine.
+
 ## Detection heuristic (candidate grep → agent confirmation)
 
 0. **Runnable scanner (preferred).** `bun run

@@ -31,6 +31,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, mkdirSy
 import { join, dirname } from "path";
 import { checkStatusSectionHeader } from "./qa-checkers-voice";
 import { requirePaper } from "./repo-root";
+import { requireFlagValue } from "./cli-args";
 
 const TODO_RE =
   /\b(?:TODO|FIXME|XXX|HACK|to-?do|pending|punt(?:ed|ing)?|kick\s+the\s+can|not\s+yet\s+(?:implemented|written|done|filled)|remaining\s+work|work\s+remaining|next\s+steps?|needs?\s+(?:work|fixing|attention|filling))\b/i;
@@ -86,7 +87,8 @@ interface TodoEntry { block: string; header: string; body: string; }
 
 function main() {
   const args = process.argv.slice(2);
-  const get = (f: string) => (args.includes(f) ? args[args.indexOf(f) + 1] : undefined);
+  // Guards every flag it reads, not just `--paper`: same defect, same fix.
+  const get = (f: string) => requireFlagValue(args, f);
   const paper = requirePaper(get("--paper"));
   const chapter = get("--chapter");
   const write = args.includes("--write");

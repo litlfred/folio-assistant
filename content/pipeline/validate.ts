@@ -34,6 +34,28 @@ import { referenceRegistryConfigured, getReferenceRegistry } from "./references-
 
 // ── File discovery ───────────────────────────────────────────────
 
+/**
+ * Is this `*.qa.json` a **block** sidecar, as opposed to a paper-level audit
+ * artefact that merely shares the extension?
+ *
+ * Block sidecars declare `"$schema": "block-qa/v1"`. Paper-level outputs such
+ * as `section-title-audit.qa.json` are keyed by paper and chapter and carry no
+ * `$schema` at all — they have no `.ts` by design and must not be read as
+ * orphaned blocks.
+ *
+ * Unreadable or unparseable returns `true` on purpose: a corrupt sidecar
+ * should be reported, not silently reclassified as "not a block's".
+ */
+function isBlockSidecar(path: string): boolean {
+  try {
+    const parsed: unknown = JSON.parse(readFileSync(path, "utf8"));
+    if (typeof parsed !== "object" || parsed === null) return true;
+    return (parsed as { $schema?: unknown }).$schema === "block-qa/v1";
+  } catch {
+    return true;
+  }
+}
+
 /** Find all .ts manifest files in a directory (excluding index, pipeline). */
 function discoverManifests(dir: string): string[] {
   if (!existsSync(dir)) return [];
@@ -114,6 +136,25 @@ async function loadBlocksFromDir(
       if (!f.endsWith(".qa.json")) continue;
       const base = f.slice(0, -".qa.json".length);
       if (existsSync(join(dir, `${base}.ts`))) continue;
+      // Not every `*.qa.json` is a BLOCK sidecar, and the ones that are not
+      // have no `.ts` by design. `qa-section-title-audit.ts` writes
+      // `content/<paper>/section-title-audit.qa.json` — keyed by paper and
+      // chapter, never by block — and four of those sit in the qou corpus
+      // (bean `qou-efzm`, which had them recorded as orphans left behind by a
+      // deleted block; the file shape says they were never blocks at all).
+      // Deleting them would destroy live audit state that the producing tool
+      // would simply rewrite.
+      //
+      // They escape today only because this scan is non-recursive and they
+      // live at the paper root rather than in a chapter dir — but they still
+      // inflate every census taken over `**/*.qa.json`, which is the very
+      // thing the comment above says this check exists to prevent.
+      //
+      // Discriminate on the block sidecar's own `$schema`. A file that fails
+      // to parse is deliberately NOT skipped: a corrupt sidecar is worth
+      // reporting, and treating unreadable as "not a block sidecar" would let
+      // a real orphan hide behind a truncated write.
+      if (!isBlockSidecar(join(dir, f))) continue;
       issues.push({
         level: "error",
         block: base,

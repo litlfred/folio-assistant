@@ -30,6 +30,7 @@ import { EXTENDED_AUTOMATED_CHECKERS } from "./qa-checkers-extended";
 import { USES_AUTOMATED_CHECKERS } from "./qa-checkers-uses";
 import { COST_AUTOMATED_CHECKERS } from "./qa-checkers-cost";
 import { TRIVIALITY_AUTOMATED_CHECKERS } from "./qa-checkers-triviality";
+import { VACUITY_AUTOMATED_CHECKERS } from "./qa-checkers-vacuity";
 import { RENDER_AUTOMATED_CHECKERS } from "./qa-checkers-render";
 
 export interface CheckerHit {
@@ -876,9 +877,35 @@ const SECOND_PERSON_RE =
 /**
  * Lecturer cadence — informal sentence openers more at home in a
  * lecture than a paper.
+ *
+ * `Right` requires a following comma (`Right, so ...`) or `now`
+ * (`Right now we encode ...`). The bare `Right\b` this used to carry
+ * flagged ordinary mathematical English: measured against the qou
+ * corpus 2026-08-24, 22 Lean docstring lines opened with `Right`, and
+ * 21 of them were "Right multiplication by", "Right action of",
+ * "Right adjoint", "Right identity", "Right zero law" — a 21/22
+ * false-positive rate. The remaining one ("Right now we encode") is
+ * still caught. The neighbouring `OK,?` / `Okay,?` / `Alright,?`
+ * keep their optional comma: none of those three is ever a technical
+ * term, so there is nothing for them to collide with.
+ *
+ * `So the` was the same defect an order of magnitude larger. The bare
+ * alternative `So (?:...|the)` fired on every mathematical "So the sum is
+ * well-defined" / "So the two sides line up" — conclusion-drawing, not
+ * lecture cadence. Measured against the qou corpus 2026-08-24: **246 of the
+ * 261** `voice-scholarly-default` hits corpus-wide came from it (94%), across
+ * 18 `.md` and 190 `.lean` files, and **zero** were the draft narration it
+ * was written for. Narrowed to the narration nouns it was after (`So the
+ * plan/idea/point/upshot/...`), which is what "So the" means when it IS a
+ * lecturer opener.
+ *
+ * Every bare-word alternative now ends in `\b`. Without it `the` matched
+ * through the prefix of the following word, so `So there is no inverse` /
+ * `So they are stated over the same ring` / `So these two agree` all fired —
+ * 12 of the 246 were that glue rather than "So the" at all.
  */
 const LECTURER_OPENER_RE =
-  /^\s*(?:So (?:what (?:we|I)(?:'re)?(?: going to)?(?: do)?|let'?s|now|first|why|here|the)|Now (?:we (?:want|need|will|are|have|move|turn|introduce|consider)|let'?s|that|here|first|comes?)|OK,?\b|Okay,?\b|Alright,?\b|Well,|Right,?\b|Anyway,|Anyhow,|Basically,|Briefly,|Long story short|Recap:|In short,|To recap,|At this point,?\s+(?:we|let'?s)|First (?:off|things first)|Before (?:we|getting|moving|diving)|Without further ado)/i;
+  /^\s*(?:So (?:what (?:we|I)\b(?:'re)?(?: going to)?(?: do)?|let'?s\b|now\b|first\b|why\b|here\b|the (?:plan|idea|point|upshot|deal|thing|trick|takeaway|story|moral|gist)\b)|Now (?:we (?:want|need|will|are|have|move|turn|introduce|consider)\b|let'?s\b|that\b|here\b|first\b|comes?\b)|OK,?\b|Okay,?\b|Alright,?\b|Well,|Right(?:,|\s+now\b)|Anyway,|Anyhow,|Basically,|Briefly,|Long story short|Recap:|In short,|To recap,|At this point,?\s+(?:we|let'?s)|First (?:off|things first)|Before (?:we|getting|moving|diving)|Without further ado)/i;
 
 /**
  * Past-tense narration of the paper's own derivation. Paper voice
@@ -889,6 +916,27 @@ const LECTURER_OPENER_RE =
  */
 const PAPER_PAST_TENSE_RE =
   /\b(we (?:constructed|defined|showed|proved|established|derived|computed|verified|developed|introduced|formulated|presented|gave|wrote|stated|sketched|argued|claimed|noted|observed|demonstrated|argued|exhibited|obtained))\s+(?:above|earlier|before|previously|in the (?:previous|preceding|earlier)|just\s+now|just\s+above|in (?:a|the) (?:prior|preceding|earlier) (?:section|paragraph|chapter|lemma|theorem|proposition)|several (?:lines|paragraphs|sections) (?:above|back|ago)|further\s+up|up\s+the\s+page)/i;
+
+/**
+ * `LECTURER_OPENER_RE` is the only `^`-anchored rule here, and both scans
+ * feed it one line at a time — so on hard-wrapped prose it also sees every
+ * WRAP CONTINUATION as if it were a sentence start. Measured 2026-08-24:
+ * `SpechtActionInjective.lean:65` reads "...it acts on the `right, since the
+ * ring need not be commutative)." across a line break, and the continuation
+ * line "right, since ..." fired `Right,`.
+ *
+ * A line begins a sentence iff nothing precedes it, the previous line is
+ * blank or structural (heading, bullet, table row, fence, display-math
+ * delimiter), or the previous line ends in terminating punctuation. Anything
+ * else is the middle of a sentence, where an "opener" is not an opener.
+ */
+function startsSentence(prev: string | undefined): boolean {
+  if (prev === undefined) return true;
+  const t = prev.trim();
+  if (t === "") return true;
+  if (/^(?:[#>|]|[-*+]\s|\d+\.\s|```|\$\$|-\/|\/-)/.test(t)) return true;
+  return /(?:[.:!?]|\$\$|-\/)["'`)\]]*$/.test(t);
+}
 
 export function checkScholarlyDefault(
   mdPath: string | undefined,
@@ -916,7 +964,10 @@ export function checkScholarlyDefault(
       if (SECOND_PERSON_RE.test(cleanedLine)) {
         hits.push({ file: mdPath, line: i + 1, text: l.trim().slice(0, 200) });
       }
-      if (LECTURER_OPENER_RE.test(cleanedLine)) {
+      if (
+        LECTURER_OPENER_RE.test(cleanedLine) &&
+        startsSentence(i > 0 ? lines[i - 1] : undefined)
+      ) {
         hits.push({ file: mdPath, line: i + 1, text: l.trim().slice(0, 200) });
       }
       if (PAPER_PAST_TENSE_RE.test(cleanedLine)) {
@@ -938,7 +989,8 @@ export function checkScholarlyDefault(
         // offender. The three RE's use the same matchers as the
         // .md scan above (incl. PAPER_PAST_TENSE_RE — missing
         // from the previous version).
-        span.body.split("\n").forEach((dl, j) => {
+        const docLines = span.body.split("\n");
+        docLines.forEach((dl, j) => {
           const cleanedLine = stripInlineCode(dl);
           const lineNo = span.startLine + j;
           // SECOND_PERSON_RE is case-insensitive, not anchored — fine.
@@ -951,8 +1003,13 @@ export function checkScholarlyDefault(
           }
           // LECTURER_OPENER_RE uses `^` so it must match line-start.
           // Per-line iteration applies the anchor naturally; the prior
-          // whole-doc-string scan needed the `m` flag.
-          if (LECTURER_OPENER_RE.test(cleanedLine)) {
+          // whole-doc-string scan needed the `m` flag. `startsSentence`
+          // then rejects wrap continuations, which line-start alone
+          // cannot tell apart from real sentence starts.
+          if (
+            LECTURER_OPENER_RE.test(cleanedLine) &&
+            startsSentence(j > 0 ? docLines[j - 1] : undefined)
+          ) {
             hits.push({
               file: leanPath,
               line: lineNo,
@@ -1186,6 +1243,10 @@ export const AUTOMATED_CHECKERS: Record<
   ...COST_AUTOMATED_CHECKERS,
   // Machine-triviality oracle (scaffold; inert without a cache).
   ...TRIVIALITY_AUTOMATED_CHECKERS,
+  // Vacuity-by-construction: degenerate instance data that makes a
+  // propositional field `rfl`, and docstrings that claim a `sorry` the
+  // body does not carry. Bodies in `qa-checkers-vacuity.ts`.
+  ...VACUITY_AUTOMATED_CHECKERS,
   // Render integrity — source patterns that abort pdflatex. Bodies in
   // `qa-checkers-render.ts`.
   ...RENDER_AUTOMATED_CHECKERS,

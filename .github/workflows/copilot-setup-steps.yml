@@ -24,14 +24,42 @@ jobs:
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       # ── elan + pinned Lean toolchain ──────────────────────────────────
-      # Reads the toolchain version from the root lean-toolchain file so
-      # this step automatically tracks any future toolchain bumps.
+      # Pins the toolchain from a root `lean-toolchain` WHEN THERE IS ONE, so
+      # the step tracks a future toolchain bump on its own.
+      #
+      # There is no root `lean-toolchain` in this repository, and there never
+      # has been. That is correct rather than an oversight: folio-assistant is
+      # the PLATFORM, and Lean lives in a folio — every other toolchain
+      # reference under `.github/` reaches into
+      # `content/<paper>/lean/lean-toolchain` or takes the path as an input.
+      # This step used to end in an unguarded
+      # `elan toolchain install "$(cat lean-toolchain)"`, which failed the job
+      # on EVERY Copilot review run here regardless of the diff — reported on
+      # PR #151. Worth being precise about how, because the obvious reading is
+      # wrong: the failing `cat` does NOT trip bash's `-e`. Its status is
+      # swallowed by the command substitution, so `cat` only writes
+      # "No such file or directory" to stderr and yields the empty string. What
+      # actually fails is the next thing along — `elan toolchain install ""`
+      # exits 101 with `error: invalid toolchain name: ''`. Test `cat` alone and
+      # it looks innocent; the guard has to sit in front of `elan`.
+      #
+      # The review itself still ran, so the symptom was a permanently red check
+      # plus Copilot's "a failing setup step may mean the review is missing
+      # context" — exactly the kind of standing red nobody reads.
+      #
+      # Absent is therefore reported, not failed. Do NOT "fix" this by adding a
+      # root `lean-toolchain`: it would pin one folio's toolchain inside the
+      # platform, the genericity failure AGENTS.md is largely a list of.
       - name: Install elan and Lean toolchain
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
             | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-          "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
+          if [ -f lean-toolchain ]; then
+            "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
+          else
+            echo "::notice::no root lean-toolchain — folio-assistant is the platform and Lean lives in a folio; elan installed with no toolchain pinned"
+          fi
 
       # ── Mathlib cache ─────────────────────────────────────────────────
       # `lake exe cache get` downloads pre-built Mathlib `.olean` files so

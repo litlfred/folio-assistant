@@ -49,6 +49,7 @@ import {
 // folio-assistant but audits a downstream content repo; deriving the root
 // from this file's own location lands inside the platform tree instead.
 import { findContentRepoRoot, findPapers } from "./repo-root.ts";
+import { paperArg } from "./cli-args";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 
@@ -71,8 +72,6 @@ const PLATFORM_ROOT = resolve(SCRIPT_DIR, "..", "..");
  * the seven `q-usage-*` criteria unrefreshable in every downstream sidecar.
  * Observed live on qou #4673.
  */
-const REPO_ROOT = findContentRepoRoot();
-
 // ── CLI args ────────────────────────────────────────────────────
 
 const args = process.argv.slice(2);
@@ -82,8 +81,57 @@ const jsonReport = args.includes("--json");
 const noOrphans = args.includes("--no-orphans");
 const chapterFilterIdx = args.indexOf("--chapter");
 const chapterFilter = chapterFilterIdx >= 0 ? args[chapterFilterIdx + 1] : undefined;
-const paperFilterIdx = args.indexOf("--paper");
-const paperFilter = paperFilterIdx >= 0 ? args[paperFilterIdx + 1] : undefined;
+const paperFilter = paperArg(args);
+
+/**
+ * Reject anything this tool does not understand, instead of ignoring it.
+ *
+ * This audit is CORPUS-WIDE by design — it walks every paper and rewrites a
+ * sidecar per block. Its only scoping is `--paper` / `--chapter`; there is no
+ * positional interface and never has been. Silently discarding an unrecognised
+ * argument therefore turns a caller who *believes* they scoped the run into a
+ * caller who rewrites the whole corpus.
+ *
+ * That is not hypothetical. Invoked as
+ *
+ *     q-usage-audit.ts content/<paper>/braids-and-knots/why-b3.md
+ *
+ * intending to refresh ONE block, it ignored the path and modified **3,573
+ * sidecars**, created untracked `.qa.json` files for blocks that had none, and
+ * emitted a witness — the mass-refresh the content repo's own idle-pass policy
+ * forbids ("cap ≤ 10 sidecars per pass"; "never mass-refresh"). Reverting it
+ * was possible only because the tree was otherwise clean. qou bean `qou-fx71`.
+ *
+ * Exiting non-zero here costs a caller one error message; the alternative cost
+ * a full revert.
+ */
+const KNOWN_FLAGS = new Set([
+  "--no-write", "--strict", "--json", "--no-orphans", "--chapter", "--paper",
+]);
+const flagValueIdx = new Set(
+  [chapterFilterIdx, paperFilterIdx].filter((i) => i >= 0).map((i) => i + 1),
+);
+const unknownArgs = args.filter(
+  (a, i) => !KNOWN_FLAGS.has(a) && !flagValueIdx.has(i),
+);
+if (unknownArgs.length > 0) {
+  console.error(
+    `q-usage-audit: unrecognised argument(s): ${unknownArgs.join(", ")}\n` +
+      `\nThis audit is corpus-wide and has no positional/per-file interface.\n` +
+      `Scope it with:  --paper <name>   --chapter <name>\n` +
+      `Other flags:    --no-write  --strict  --json  --no-orphans\n` +
+      `\nRefusing to run: a discarded scope argument would rewrite every\n` +
+      `sidecar in the corpus (measured: 3,573). See qou bean qou-fx71.`,
+  );
+  // EX_USAGE (sysexits.h). NOT 2 -- this tool already exits 2 for "no content
+  // repo found", and a caller scripting around it must be able to tell a bad
+  // argument from a bad working directory.
+  process.exit(64);
+}
+
+// ── Content repo discovery (AFTER args are validated) ───────────
+
+const REPO_ROOT = findContentRepoRoot();
 
 /**
  * Papers to audit: `--paper <name>` if given, else every paper in the

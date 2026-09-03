@@ -1022,3 +1022,35 @@ published authoring standards rather than from what a corpus happens to contain
 there: the unenforceable "exactly one of" constraint in every `*Source`, and the
 official `.xlsx` component templates that bound the deferred workbook reader.
 
+Pre-existing unrelated failure found while running the suite: folio-assistant-zevm.
+
+
+---
+
+## Status audit 2026-08-24 — staying in-progress, and why
+
+Stage 1 (`scripts/pdf-structure.py`) is built, run corpus-wide, and now
+**repaired**: the title/byline split defect it shipped with is
+`folio-assistant-gx86`, fixed in 432f8b7 and measured (46 titles improved, 8
+regressed; 73 bylines recovered, 7 lost over 382 documents). Residue tracked as
+`folio-assistant-whwf`.
+
+The downstream consumer arrived and worked end to end: qou `qou-qad3` ingested
+nine PDFs through this pipeline into `library/<doc-id>/` with all five artefacts
+and then registered all nine in `references.ts` — closed today. That is the
+first full acquire -> parse -> index -> cite round trip this proposal specified,
+which is worth recording as evidence the contract holds.
+
+**Open, and the reason this bean stays in-progress:**
+
+- Stage 2 (network acquire) and Stage 3 (Docling) are both **egress-blocked**
+  in a sandbox — arxiv.org, api.openalex.org, huggingface.co and cdn-lfs all
+  return 403 policy denials. Unchanged today. The proposal's answer is that
+  Stage 3 is a workstation/CI stage: run where egress allows, commit artefacts,
+  let sandboxed sessions consume them. Nobody has done that run.
+- The ~20 residue documents (7 no-TOC, 17 unsectioned, 7 likely-scanned) that
+  define Stage 3's value are still unaddressed.
+- Proposal 11 Q1-Q3 are still unanswered by the author, and 10 still needs a
+  stage picked.
+
+None of that is blocked on this repo, which is exactly why it has not moved.

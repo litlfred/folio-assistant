@@ -15,6 +15,7 @@ import { join} from "path";
 import { findContentRepoRoot } from "./repo-root";
 import { requirePaper } from "./repo-root";
 import type { Section, SectionRef } from "../../schemas/types";
+import { paperArg } from "./cli-args";
 
 // Was rooted at this file's own location, which is the PLATFORM — but every
 // path below is folio content. `findContentRepoRoot()` walks up from cwd;
@@ -23,11 +24,13 @@ import type { Section, SectionRef } from "../../schemas/types";
 const REPO_ROOT = findContentRepoRoot();
 const CONTENT_ROOT = join(REPO_ROOT, "content");
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-// The bare `requirePaper()` this replaces took no argument, so in a folio with
-// more than one paper it THREW every time and there was no way to name the
-// paper -- qou has five, so its committed definition-index.md could not be
-// regenerated at all. Positional argv matches `find-dangling-remarks.ts`.
-const PAPER_NAME = requirePaper(process.argv[2]);
+// `--paper <name>`, falling back to a positional. The flag is the convention
+// this file's siblings use (`extract-status-sections.ts`), and four of them
+// CANNOT take a positional because their argv[2] is already an output path.
+// The positional fallback is kept because `main` landed that form here and
+// callers may rely on it -- for this script argv[2] is free, so both work.
+const _paperArg = paperArg() ?? process.argv[2];
+const PAPER_NAME = requirePaper(_paperArg);
 const PAPER_DIR = join(CONTENT_ROOT, PAPER_NAME);
 const INDEX_MD = join(PAPER_DIR, "index-of-definitions", "definition-index.md");
 

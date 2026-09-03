@@ -34,8 +34,19 @@ Which route was used is recorded per entry, so a consumer can weight it.
 Usage:
     pdf-structure.py <pdf> [<pdf>...] [-o OUTDIR] [--no-sections] [--json]
     pdf-structure.py --corpus uploads/ -o uploads/
+    pdf-structure.py <pdf> --backend pymupdf     # force a backend
 
-Dependencies: pypdf (BSD-3-Clause). Install: pip install pypdf
+Backends: the reader is swappable (see the "backends" section). PyMuPDF is
+preferred when installed because its text layer is cleaner on math PDFs and,
+more importantly, it exposes the embedded bookmarks directly (`get_toc()`) —
+real section boundaries instead of the text-heuristic guess in
+`infer_headings`. pypdf is the fallback, so this runs wherever either library
+is present; the extractor used is recorded in `source.extractor`.
+
+Dependencies (either one suffices; both optional at import time):
+    pypdf    (BSD-3-Clause)  — pip install pypdf
+    PyMuPDF  (AGPL-3.0)      — pip install pymupdf   (preferred; see licence note
+                                                       in the backends section)
 """
 
 from __future__ import annotations
@@ -55,12 +66,15 @@ from typing import Any
 
 warnings.filterwarnings("ignore")
 
-# pypdf's import chain reaches `cryptography`, which panics rather than raising
-# ImportError when its native extension is broken -- see scripts/_pypdf_compat.py.
+# The PDF reader is chosen at runtime -- see the "backends" section. Both
+# PyMuPDF (preferred) and pypdf are imported lazily inside their backends, so
+# this module loads wherever *either* is installed, and a broken or absent
+# pypdf no longer blocks the PyMuPDF path (the failure that first motivated
+# this abstraction). `import_pypdf` carries the cryptography-panic workaround
+# documented in scripts/_pypdf_compat.py; the "no backend at all" check lives
+# in `open_backend`.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _pypdf_compat import import_pypdf  # noqa: E402
-
-PdfReader = import_pypdf("PdfReader")
 
 SCHEMA = "pdf-structure/v1"
 
@@ -117,7 +131,46 @@ RE_NOT_HEADING = re.compile(
 # Periods must be allowed — initials are near-universal — so a sentence is
 # excluded by looking for ". " followed by a lower-case word instead.
 RE_AUTHORS = re.compile(r"^[A-ZÀ-ʯ](?![^\n]*[.!?]\s+[a-z])[^!?]{2,120}$")
+
+# Marks that only a byline carries: an initial ("D. J."), an affiliation
+# superscript ("Kreimer 2)", "Lv*1"), or a dagger/asterisk footnote. A title
+# continuation has none of these, so their presence outranks the abstract test.
+RE_BYLINE_MARKER = re.compile(
+    r"(?:\b[A-ZÀ-ʯ]\.(?:\s|$)"          # an initial with its period
+    r"|\d\s*\)"                          # "1)" affiliation marker
+    r"|[∗*†‡§]"                           # footnote marks
+    r"|\b[A-ZÀ-ʯ][a-zà-ʯ]+\s*\*?\d)"     # "Lv*1", "Zhou 2"
+)
+
+# Punctuation that betrays a list of names: a comma between them, or a
+# conjunction. Necessary but far from sufficient — see `looks_like_byline`,
+# which uses it as one of two routes and vetoes both with the abstract test.
 RE_AUTHOR_HINT = re.compile(r"(,\s|\band\b|\&)", re.I)
+# Words that join names in a byline, and carry no evidence either way.
+BYLINE_CONNECTORS = {"and", "&", "und", "et", "e", "y"}
+# Nobiliary particles and name prefixes, which are lower-case yet name-like.
+NAME_PARTICLES = {
+    "van", "von", "de", "der", "den", "del", "della", "di", "da", "das", "dos",
+    "du", "la", "le", "ten", "ter", "bin", "ibn", "al", "mac", "mc", "st",
+}
+# Function words a *title* uses and a byline does not. Their presence is the
+# cheapest proof that a line is title text rather than a list of names.
+TITLE_FUNCTION_WORDS = {
+    "a", "an", "the", "of", "for", "in", "on", "with", "to", "from", "via",
+    "at", "as", "into", "over", "under", "between", "through", "without",
+    "upon", "its", "their", "some", "new", "toward", "towards", "about",
+    "against", "among", "beyond", "near", "per", "than", "that", "which",
+    "when", "where", "why", "how", "is", "are", "be", "do", "does",
+}
+# Lines that end the title even though they are neither a byline nor the
+# abstract marker: a numbered section heading, or the start of a table of
+# contents. Without this the title runs on into the body — a bound book
+# chapter with no byline took its whole first paragraph as its title.
+RE_TITLE_STOP = re.compile(
+    r"^\s*(?:\d+(?:\.\d+)*\.?\s+[A-ZÀ-ʯ]"
+    r"|contents\b|table of contents\b|introduction\b|keywords?\b|key words\b)",
+    re.I,
+)
 # Report numbers / preprint stamps that precede the title.
 RE_REPORT_NO = re.compile(
     r"^\s*(?:[A-Z]{2,}[-–—/]{1,2}[\w\-–/.]*\d|[a-z\-]+(?:\.[A-Z]{2})?/\d{7}"
@@ -225,9 +278,22 @@ def rejoin_caps(s: str, vocab) -> str:
     # attestation, because the same shape is also a symbol followed by an
     # ordinary word — ungated, this turned the French "Soit K un corps"
     # into "Soit Kun corps".
+    #
+    # Attestation of the JOIN is not enough on its own, because the join can
+    # be a real word while the split was never damage. Seidel's title, "A long
+    # exact sequence for symplectic Floer cohomology", became "Along exact
+    # sequence": `along` is attested on nearly every page of a symplectic
+    # paper, so the join passed — and the paper this repo most wanted became
+    # unfindable by its own name.
+    #
+    # A genuine kerning split leaves a fragment, not a word: "olume", "ector",
+    # "opology". So the tail must be unattested as well. Erring this way is
+    # the safe direction — a missed join leaves text readable, a wrong join
+    # destroys a title.
     s = RE_SPLIT_CAP.sub(
         lambda m: m.group(1) + m.group(2)
-        if freq(m.group(1) + m.group(2)) else m.group(0), s)
+        if freq(m.group(1) + m.group(2)) and not freq(m.group(2))
+        else m.group(0), s)
 
     # Whole runs, longest first. A name can be broken more than once —
     # "J ÉR ÔME" — and joining pairwise never fires there, because the
@@ -324,54 +390,11 @@ def slugify(s: str, maxlen: int = 48) -> str:
 
 
 # ---------------------------------------------------------------- extraction
-
-def page_texts(reader: PdfReader) -> list[str]:
-    out = []
-    for p in reader.pages:
-        try:
-            out.append(p.extract_text() or "")
-        except Exception:
-            out.append("")
-    return out
-
-
-def read_outline(reader: PdfReader) -> list[TocEntry]:
-    """PDF bookmarks, flattened with nesting depth preserved."""
-    try:
-        raw = reader.outline
-    except Exception:
-        return []
-    if not raw:
-        return []
-
-    entries: list[TocEntry] = []
-
-    def page_of(item: Any) -> int | None:
-        try:
-            return reader.get_destination_page_number(item) + 1
-        except Exception:
-            return None
-
-    def walk(node: Any, level: int) -> None:
-        for item in node:
-            if isinstance(item, list):
-                walk(item, level + 1)
-                continue
-            try:
-                title = str(item.get("/Title", "")).strip()
-            except Exception:
-                continue
-            if not title:
-                continue
-            num = None
-            m = re.match(r"^\s*(\d+(?:\.\d+)*)\.?\s+(.*)$", title)
-            if m:
-                num, title = m.group(1), m.group(2).strip()
-            entries.append(TocEntry(level, title, page_of(item), "outline", num))
-
-    walk(raw, 1)
-    return entries
-
+#
+# Page text and the raw outline now come from a backend (see the "backends"
+# section); the shared `_toc_entries` there turns a backend's raw TOC into
+# `TocEntry` values. `infer_headings` is the fallback used only when a
+# document carries no embedded outline.
 
 def infer_headings(pages: list[str]) -> list[TocEntry]:
     """Heading detection for documents with no outline (43% of the corpus)."""
@@ -432,6 +455,138 @@ def infer_headings(pages: list[str]) -> list[TocEntry]:
     return entries
 
 
+def looks_like_byline(line: str, abstract_words: set[str]) -> bool:
+    """Is `line` a list of author names rather than more of the title?
+
+    This replaces a punctuation test — a line counted as the byline only if it
+    held a comma, "and", or "&" — which failed in both directions. Every
+    **single-author** byline slipped through and was appended to the title
+    (`"FLOER COHOMOLOGY AND PENCILS OF QUADRICS IVAN SMITH"`), and a title
+    continuation that happened to contain "and" was taken *as* the byline,
+    truncating the title and losing the real authors
+    (`"...IN THE MIRROR OF THE PROJECTIVE"` / `"PLANE AND A BINODAL CUBIC
+    CURVE"`). Measured on nine documents ingested 2026-08-24, one title in
+    nine came out correct.
+
+    Two signals, because neither is sufficient alone.
+
+    **Shape.** A byline is names: capitalised words, initials, and nobiliary
+    particles, joined by connectors. One `TITLE_FUNCTION_WORDS` member settles
+    it — no byline says "of" or "the". This alone kills the *"PLANE AND A
+    BINODAL CUBIC CURVE"* case on its bare article "A".
+
+    **The abstract.** Shape cannot separate `"TOM BRIDGELAND"` from
+    `"TORUS KNOT"`; both are two capitalised words. But an author is rarely
+    named in their own abstract, while the nouns of a title are almost always
+    restated in it. So a line whose name-like words are mostly *already in the
+    abstract* is title text. Majority rather than any single hit, so a paper
+    whose author shares a surname with its subject — Roth, on Roth's theorem —
+    is not derailed by one coincidence.
+
+    Document frequency was tried first and rejected: running heads repeat the
+    author surname on every even page, so a name is not rarer than a title
+    word in the text as a whole. The abstract is the part of the document that
+    discriminates.
+
+    `line` must already be repaired (`repair_text` + `rejoin_caps`).
+    Letter-spacing damage splits "IVAN" into "IV AN", and "AN" is a function
+    word — so testing the raw line rejects exactly the bylines this exists to
+    catch.
+    """
+    toks = [t.strip(".,;:()[]") for t in re.split(r"[\s,;]+", line) if t.strip(".,;:()[]")]
+    content = [t for t in toks if t.lower() not in BYLINE_CONNECTORS]
+    if not content:
+        return False
+
+    # The abstract test: a line whose capitalised words are mostly already in
+    # the abstract is title text, because an author is rarely named in their
+    # own abstract while the nouns of a title are almost always restated.
+    words = [t.lower() for t in content if len(t) >= 3 and t[:1].isupper()]
+    hits = sum(1 for w in words if w in abstract_words) if abstract_words else 0
+    # A STRICT majority, and never on the strength of one word.
+    #
+    # `>= half` collapses to "any single hit" on a two-name byline: filtering
+    # initials and digits leaves `['broadhurst', 'kreimer']`, and one match
+    # satisfies `1 * 2 >= 2`. The old docstring defended "majority rather than
+    # any single hit" — true of a long byline, false of exactly the short one
+    # this test is usually asked about.
+    in_abstract = bool(words and hits >= 2 and hits * 2 > len(words))
+
+    # …and the veto does not apply at all to a line carrying INITIALS or
+    # affiliation markers. Those are positive byline evidence that a title
+    # continuation does not have, and they outrank the abstract heuristic,
+    # whose premise — "an author is rarely named in their own abstract" — is
+    # simply false in physics: `hep-th/0001202`'s abstract names both
+    # Broadhurst and Kreimer, and that is ordinary self-reference.
+    if RE_BYLINE_MARKER.search(line):
+        in_abstract = False
+
+    # Route 1, inherited: punctuation. A comma, "and" or "&" between names.
+    # Kept because it is what catches the messy real-world byline — emails,
+    # affiliations and daggers inline — which no name-shape test survives:
+    # "Nori Jacoby (nori jacoby@hotmail.com) and Ruth Lawrence (...)". Dropping
+    # it for the shape rule alone ran 104 titles on into their affiliations.
+    #
+    # The abstract veto is applied to this route ONLY when the sole signal is a
+    # bare "and"/"&" with no comma. That is precisely the title-continuation
+    # case — "...IN THE MIRROR OF THE PROJECTIVE" / "PLANE AND A BINODAL CUBIC
+    # CURVE" — while a genuine multi-author byline separates with commas.
+    # Vetoing the comma case as well cost 40 titles their stopping point, the
+    # byline no longer being detected at all: "Modern Theory of Nuclear Forces
+    # E. Epelbaum∗" ran on into "Forschungszentrum Jülich, Institut für ...".
+    if RE_AUTHOR_HINT.search(line):
+        if in_abstract and "," not in line:
+            return False
+        return True
+
+    if in_abstract:
+        return False
+
+    # Route 2, new: name shape, for the single-author byline that carries no
+    # punctuation at all and so was invisible to route 1.
+    #
+    # The token cap belongs to THIS route only. A real byline is often long and
+    # messy — "Ma¨ ıté Dupuis1,∗ and Florian Girelli 2, 1,†" is nine tokens of
+    # kerning damage, superscripts and affiliation markers — and route 1
+    # already recognises it by its punctuation. Applying the cap to both routes
+    # rejected those and let the title run on into the affiliation.
+    if len(content) > 8:
+        return False
+    all_caps = line == line.upper()
+    names: list[str] = []
+    initials = 0
+    for tok in content:
+        low = tok.lower()
+        # Particles are tested before the short-token rule, or "DE LA FACULTÉ"
+        # banks two "initials" and passes as a byline.
+        if low in NAME_PARTICLES:
+            continue
+        if len(tok) == 1 and tok.isalpha() and low not in ("a", "i"):
+            initials += 1
+            continue
+        # In an ALL-CAPS line case carries no information and kerning damage is
+        # the norm, so a one- or two-letter token is a fragment, not a word.
+        # "IVAN SMITH" extracts as "IV AN SMITH" and the damage repeats in the
+        # running heads, so "ivan" is never attested and `rejoin_caps` cannot
+        # repair it; reading "AN" as the article rejects the byline outright.
+        if all_caps and len(tok) <= 2 and tok.isalpha():
+            initials += 1
+            continue
+        if low in TITLE_FUNCTION_WORDS:
+            return False
+        if not tok[:1].isupper():
+            return False
+        if len(tok) >= 3:
+            names.append(low)
+
+    if not names:
+        return False
+    # A lone capitalised word is a title continuation far more often than a
+    # byline — "...FOR NUMBER" / "FIELDS" cost 23 titles their tail. Demand a
+    # second name, or an initial beside it ("E. Epelbaum").
+    return len(names) >= 2 or initials >= 1
+
+
 def parse_front_matter(pages: list[str]) -> dict[str, Any]:
     """Title, authors, abstract, arXiv id, DOI — from page-1 text."""
     p1 = pages[0] if pages else ""
@@ -475,6 +630,11 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
     #
     # The old rule started at line 10.
     def furniture(l: str) -> bool:
+        # "Chapter 5" / "Part II" / "Appendix A" head a book division and are
+        # not the title. Left in, a bound chapter took "Chapter 5" as its
+        # title and pushed its real one ("ROTH'S LEMMA") into the byline.
+        if re.match(r"^(?:chapter|section|part|appendix)\s+[\dIVXLC]+\.?$", l, re.I):
+            return True
         return bool(re.search(r"ar\s*X\s*iv", l, re.I) or RE_REPORT_NO.match(l))
 
     start = 0
@@ -521,26 +681,6 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
             continue
         break
 
-    title_lines: list[str] = []
-    author_lines: list[str] = []
-    for l in lines[start:start + 20]:
-        if re.match(r"^abstract\b", l, re.I):
-            break
-        if not l or len(l) < 3 or re.match(r"^\d+$", l) or RE_REPORT_NO.match(l):
-            if title_lines and not l:
-                # blank line after a title usually precedes the authors
-                continue
-            continue
-        # An author line: capitalised, comma/and-separated, no trailing colon,
-        # and we already have some title text.
-        if title_lines and RE_AUTHORS.match(l) and RE_AUTHOR_HINT.search(l) \
-                and not l.endswith(":") and len(l) < 120:
-            author_lines.append(l)
-            break
-        title_lines.append(l)
-        if len(" ".join(title_lines)) > 180:
-            break
-
     # The document's own token set, used to decide whether an all-caps
     # split is real, and built from *repaired* text so an accented name
     # can attest its own join.
@@ -554,6 +694,61 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
                     re.findall(r"[^\W\d_]{3,}", repair_text("\n".join(pages))))
 
     fix = lambda s: rejoin_caps(repair_text(s), vocab).strip(" .,")
+
+    # The abstract's vocabulary, needed *before* the title/byline walk because
+    # `looks_like_byline` uses it to tell a name from a title noun. Read
+    # straight from page-1 text rather than from `meta["abstract"]`, which is
+    # assembled further down and would make the two mutually dependent.
+    abstract_words: set[str] = set()
+    _am = re.search(r"\babstract\b\s*[.:—–-]?\s*", p1, re.I)
+    if _am:
+        _tail = p1[_am.end(): _am.end() + 2600]
+        # Cut at the first section heading — the SAME cut `meta["abstract"]`
+        # uses below, so the two cannot disagree about what the abstract is.
+        #
+        # A raw window overruns the abstract into the body, the author
+        # addresses and the bibliography, and then "named in the abstract"
+        # becomes "named anywhere on page 1" — which every author is.
+        # `arxiv-math-0304010v1` lost its byline to exactly this: all four of
+        # Vladimir/Ivanov/Grigori/Olshanski were found, so the veto fired at
+        # full strength on a line that is nothing but names.
+        _cut = re.search(
+            r"\n\s*(?:1\s*\.?\s+Introduction\b|Introduction\b|Contents\b"
+            r"|Keywords?\b|Key words\b|MSC\b|AMS\b|\d{4}\s+Mathematics)",
+            _tail, re.I,
+        )
+        if _cut:
+            _tail = _tail[: _cut.start()]
+        abstract_words = {w.lower() for w in re.findall(r"[^\W\d_]{3,}", _tail)}
+
+    title_lines: list[str] = []
+    author_lines: list[str] = []
+    for l in lines[start:start + 20]:
+        if re.match(r"^abstract\b", l, re.I):
+            break
+        if not l or len(l) < 3 or re.match(r"^\d+$", l) or RE_REPORT_NO.match(l):
+            if title_lines and not l:
+                # blank line after a title usually precedes the authors
+                continue
+            continue
+        # A numbered section heading or a table of contents ends the title,
+        # even where the document carries no byline at all to stop it.
+        if title_lines and RE_TITLE_STOP.match(l):
+            break
+        # An author line: capitalised, name-shaped, no trailing colon, and we
+        # already have some title text. `looks_like_byline` is given the
+        # *repaired* line — letter-spacing damage splits "IVAN" into "IV AN",
+        # and "AN" reads as a function word, so the raw line rejects the very
+        # bylines this is here to catch.
+        if title_lines and RE_AUTHORS.match(l) and not l.endswith(":") \
+                and len(l) < 120 \
+                and looks_like_byline(fix(l), abstract_words):
+            author_lines.append(l)
+            break
+        title_lines.append(l)
+        if len(" ".join(title_lines)) > 180:
+            break
+
     title = fix(" ".join(title_lines))
     meta["title"] = title or None
     authors = fix(" ".join(author_lines))
@@ -561,13 +756,13 @@ def parse_front_matter(pages: list[str]) -> dict[str, Any]:
     # The lines the title was assembled from, kept separately.
     #
     # Joining them destroys the one boundary that reliably separates a
-    # title from its byline: the line break. When the author-line test
-    # above misses — it needs a comma or an "and", so a single-author
-    # byline slips through — the byline is appended to the title and no
-    # downstream heuristic can recover it, because in an all-caps title
-    # "THEORY TOM BRIDGELAND" is indistinguishable from "TORUS KNOT" by
-    # shape alone. With the lines kept, a consumer can test the last one
-    # on its own.
+    # title from its byline: the line break. `looks_like_byline` now makes
+    # that test in-place, so the byline no longer silently lands in the
+    # title — but the lines stay exported anyway. The case that motivated
+    # them is real and unsolved by shape alone ("THEORY TOM BRIDGELAND" is
+    # indistinguishable from "TORUS KNOT"); the byline test settles it with
+    # the abstract's vocabulary, which is evidence, not proof. A consumer
+    # that disagrees can still re-split on the original boundary.
     meta["title_lines"] = [fix(l) for l in title_lines] or None
 
     # Abstract: everything after the marker, cut at the first section heading.
@@ -685,27 +880,218 @@ def text_is_unusable(pages: list[str]) -> bool:
     return bool(head) and letters < 0.55 * len(head)
 
 
+# ---------------------------------------------------------------- backends
+#
+# The extractor is swappable. A backend exposes exactly the three things this
+# producer consumes -- page texts, a raw table of contents, and the DocInfo
+# dictionary -- and nothing more, so a new one is cheap to add and the rest of
+# the script never learns which library read the PDF.
+#
+# PyMuPDF (import name `pymupdf`, historically `fitz`) is preferred when
+# installed, for two reasons measured on this corpus:
+#   * its text layer is cleaner on math PDFs than pypdf's, and
+#   * `get_toc()` returns the REAL embedded bookmarks, so on the 57% of the
+#     corpus that carries an outline the section split is driven by the
+#     author's own headings instead of the text heuristic in `infer_headings`.
+# pypdf stays as the fallback so the script runs wherever either library is
+# present -- including an environment whose pypdf is broken, which is what
+# first motivated this abstraction.
+#
+# LICENCE NOTE. PyMuPDF is AGPL-3.0 (or a commercial licence), whereas pypdf is
+# BSD-3-Clause. This module therefore never *requires* PyMuPDF: it is imported
+# lazily and used only when already installed, exactly like the optional
+# camelot backend in `pdf-tables.py`. The Dockerfile installs pypdf, not
+# PyMuPDF, so the shipped image stays BSD-licensed; an operator who wants the
+# better outlines opts in with `pip install pymupdf`. Keep it that way unless
+# the maintainer decides to take on the AGPL dependency deliberately.
+
+
+def _toc_entries(raw: list[tuple[int, str, int | None]]) -> list[TocEntry]:
+    """Turn a backend's raw `(level, title, page)` rows into `TocEntry`s.
+
+    Shared by every backend so the leading-number parse ("2.1 Foo" -> number
+    "2.1", title "Foo") and the `source="outline"` tag are written in one
+    place regardless of which library produced the bookmarks.
+    """
+    entries: list[TocEntry] = []
+    for level, title, page in raw:
+        title = str(title).strip()
+        if not title:
+            continue
+        num = None
+        m = re.match(r"^\s*(\d+(?:\.\d+)*)\.?\s+(.*)$", title)
+        if m:
+            num, title = m.group(1), m.group(2).strip()
+            if not title:                       # a bare "2.1" with no words
+                title, num = num, None
+        entries.append(TocEntry(max(1, int(level)), title, page, "outline", num))
+    return entries
+
+
+class _Backend:
+    """Interface: page texts, a raw TOC, DocInfo. Subclasses import lazily."""
+
+    name = "?"
+
+    def page_texts(self) -> list[str]:
+        raise NotImplementedError
+
+    def raw_toc(self) -> list[tuple[int, str, int | None]]:
+        """`(level, title, page)` rows; page is 1-based or None."""
+        raise NotImplementedError
+
+    def docinfo(self) -> dict[str, str]:
+        raise NotImplementedError
+
+
+class PyMuPDFBackend(_Backend):
+    name = "pymupdf"
+
+    def __init__(self, path: str) -> None:
+        import pymupdf  # lazy; AGPL, optional (see licence note above)
+        self._doc = pymupdf.open(path)
+
+    def page_texts(self) -> list[str]:
+        out: list[str] = []
+        for page in self._doc:
+            try:
+                out.append(page.get_text() or "")
+            except Exception:
+                out.append("")
+        return out
+
+    def raw_toc(self) -> list[tuple[int, str, int | None]]:
+        try:
+            toc = self._doc.get_toc(simple=True)
+        except Exception:
+            return []
+        rows: list[tuple[int, str, int | None]] = []
+        for entry in toc:
+            # get_toc yields [level, title, page]; page is 1-based, or <= 0
+            # when the bookmark has no resolvable destination.
+            try:
+                level, title, page = entry[0], entry[1], entry[2]
+            except (IndexError, TypeError):
+                continue
+            rows.append((level, title, page if isinstance(page, int) and page > 0 else None))
+        return rows
+
+    def docinfo(self) -> dict[str, str]:
+        try:
+            md = self._doc.metadata or {}
+        except Exception:
+            return {}
+        # Map PyMuPDF's lower-cased keys onto the same DocInfo key names the
+        # pypdf path emits, so the artefact shape is backend-independent.
+        keys = {"title": "Title", "author": "Author", "producer": "Producer",
+                "creator": "Creator", "creationDate": "CreationDate"}
+        return {out: str(md[k]) for k, out in keys.items() if md.get(k)}
+
+
+class PyPDFBackend(_Backend):
+    name = "pypdf"
+
+    def __init__(self, path: str) -> None:
+        PdfReader = import_pypdf("PdfReader")  # lazy; carries the crypto workaround
+        self._reader = PdfReader(path)
+
+    def page_texts(self) -> list[str]:
+        out: list[str] = []
+        for p in self._reader.pages:
+            try:
+                out.append(p.extract_text() or "")
+            except Exception:
+                out.append("")
+        return out
+
+    def raw_toc(self) -> list[tuple[int, str, int | None]]:
+        reader = self._reader
+        try:
+            raw = reader.outline
+        except Exception:
+            return []
+        if not raw:
+            return []
+        rows: list[tuple[int, str, int | None]] = []
+
+        def page_of(item: Any) -> int | None:
+            try:
+                return reader.get_destination_page_number(item) + 1
+            except Exception:
+                return None
+
+        def walk(node: Any, level: int) -> None:
+            for item in node:
+                if isinstance(item, list):
+                    walk(item, level + 1)
+                    continue
+                try:
+                    title = str(item.get("/Title", "")).strip()
+                except Exception:
+                    continue
+                if not title:
+                    continue
+                rows.append((level, title, page_of(item)))
+
+        walk(raw, 1)
+        return rows
+
+    def docinfo(self) -> dict[str, str]:
+        try:
+            info = self._reader.metadata or {}
+            return {k.lstrip("/"): str(v) for k, v in info.items()
+                    if k in ("/Title", "/Author", "/Producer", "/Creator", "/CreationDate")}
+        except Exception:
+            return {}
+
+
+_BACKENDS = {"pymupdf": PyMuPDFBackend, "pypdf": PyPDFBackend}
+# `--backend auto` preference order: PyMuPDF first (cleaner text + real
+# outlines), pypdf as the fallback.
+_AUTO_ORDER = ("pymupdf", "pypdf")
+
+
+def open_backend(path: str, prefer: str = "auto") -> _Backend:
+    """Construct a reader for `path`.
+
+    `auto` walks the preference order and falls back to the next backend on
+    any failure -- an absent library, a broken one, or a file the library
+    cannot open. An explicit backend name is strict: it is tried alone, so a
+    forced choice (for comparison or debugging) is honoured rather than
+    silently swapped. `SystemExit` is caught because `import_pypdf` exits when
+    pypdf is simply absent, which in a fallback chain just means "try the next
+    one".
+    """
+    order = _AUTO_ORDER if prefer == "auto" else (prefer,)
+    errors: list[str] = []
+    for name in order:
+        try:
+            return _BACKENDS[name](path)
+        except (Exception, SystemExit) as exc:  # noqa: BLE001
+            errors.append(f"{name}: {type(exc).__name__}: {exc}".strip())
+    raise RuntimeError(
+        "no usable PDF backend for " + os.path.basename(path)
+        + " -- " + "; ".join(errors)
+        + " (install one: pip install pymupdf  OR  pip install pypdf)"
+    )
+
+
 def process(path: str, outdir: str | None = None, use_ocr: bool = False,
-            ) -> tuple[dict[str, Any], list[Section]]:
-    reader = PdfReader(path)
-    pages = page_texts(reader)
+            backend: str = "auto") -> tuple[dict[str, Any], list[Section]]:
+    reader = open_backend(path, backend)
+    pages = reader.page_texts()
     ocr_used = False
     if use_ocr and text_is_unusable(pages):
         cached = ocr_pages(path, outdir)
         if cached:
             pages, ocr_used = cached, True
 
-    outline = read_outline(reader)
+    outline = _toc_entries(reader.raw_toc())
     toc = outline or infer_headings(pages)
     meta = parse_front_matter(pages)
     sections = split_sections(pages, toc)
 
-    try:
-        info = reader.metadata or {}
-        docinfo = {k.lstrip("/"): str(v) for k, v in info.items()
-                   if k in ("/Title", "/Author", "/Producer", "/Creator", "/CreationDate")}
-    except Exception:
-        docinfo = {}
+    docinfo = reader.docinfo()
 
     empty = sum(1 for p in pages if len(p.strip()) < 20)
     doc_id = derive_doc_id(path, meta)
@@ -722,6 +1108,10 @@ def process(path: str, outdir: str | None = None, use_ocr: bool = False,
             # PDF's own text. A consumer that ranks or cites this document
             # should know the text is a transcription.
             "text_source": "ocr" if ocr_used else "embedded",
+            # Which reader library produced this artefact ("pymupdf" | "pypdf").
+            # Additive provenance: it lets a consumer tell an outline read by
+            # PyMuPDF's get_toc() from one walked out of pypdf's outline object.
+            "extractor": reader.name,
         },
         "metadata": meta | {"docinfo": docinfo},
         "toc": [asdict(e) for e in toc],
@@ -778,6 +1168,10 @@ def main() -> int:
     ap.add_argument("--ocr", action="store_true",
                     help="for a PDF whose text layer is absent or mojibake, use the "
                          "cached OCR text written by pdf-ocr.py (which must be run first)")
+    ap.add_argument("--backend", choices=("auto", "pymupdf", "pypdf"), default="auto",
+                    help="PDF reader backend. auto (default) prefers PyMuPDF when "
+                         "installed (cleaner text + real embedded outlines) and falls "
+                         "back to pypdf; naming one forces it (strict, no fallback).")
     args = ap.parse_args()
 
     targets = list(args.pdfs)
@@ -792,7 +1186,7 @@ def main() -> int:
     ok = failed = 0
     for path in targets:
         try:
-            artefact, sections = process(path, args.outdir, args.ocr)
+            artefact, sections = process(path, args.outdir, args.ocr, args.backend)
         except Exception as exc:
             failed += 1
             print(f"FAIL  {os.path.basename(path)}: {type(exc).__name__}: {exc}",
@@ -813,6 +1207,7 @@ def main() -> int:
             flag = " SCANNED?" if d["likely_scanned"] else ""
             print(f"ok  {artefact['doc_id']:<34} "
                   f"{artefact['source']['pages']:>4}pp  "
+                  f"[{artefact['source']['extractor'][:3]}]  "
                   f"toc={d['toc_entries']:<3}({artefact['toc_source'][:3]})  "
                   f"sec={d['sections']:<3}  {d['chars_total']//1000:>4}kc{flag}")
         ok += 1

@@ -23,6 +23,19 @@
 import { readdirSync, readFileSync, statSync, writeFileSync, mkdirSync } from "fs";
 import { join, dirname, basename, relative } from "path";
 import { requirePaper } from "./repo-root";
+import { paperArg } from "./cli-args";
+
+const _paperArg = paperArg();
+const _positional = (() => {
+  const a = process.argv.slice(2);
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] === "--paper") { i++; continue; }
+    if (a[i].startsWith("--")) continue;
+    return a[i];
+  }
+  return undefined;
+})();
+
 
 type Hit = { file: string; line: number; pattern: string; text: string; triage: "citation" | "tau-side-label" | "appendix-surreals" | "verification-witness" | "candidate" };
 
@@ -98,7 +111,7 @@ function walk(dir: string, results: Hit[]) {
 }
 
 const results: Hit[] = [];
-walk(join("content", requirePaper()), results);
+walk(join("content", requirePaper(_paperArg)), results);
 const seen = new Set<string>();
 const unique = results.filter(h => { const k = `${h.file}|${h.line}|${h.pattern}`; if (seen.has(k)) return false; seen.add(k); return true; });
 
@@ -116,7 +129,7 @@ const witness = {
   hits: unique,
 };
 
-const outputPath = process.argv[2] ?? "folio-assistant/computations/wall-violations.witness.json";
+const outputPath = _positional ?? "folio-assistant/computations/wall-violations.witness.json";
 mkdirSync(dirname(outputPath), { recursive: true });
 writeFileSync(outputPath, JSON.stringify(witness, null, 2) + "\n");
 console.log(`Wrote ${outputPath}`);
