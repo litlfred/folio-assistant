@@ -57,8 +57,35 @@ function interfaces(src: string): Map<string, { ext?: string; fields: Set<string
 
 const ifaces = interfaces(tsSrc);
 
+/**
+ * `type X = Omit<Y, "a" | "b">;` aliases, keyed by name.
+ *
+ * `prose`, `equation`, `diagram` and `table` extend `BlockBase` through one of
+ * these, because their `label` is optional where the base's is required and
+ * TS rejects a direct `extends` that loosens a property. Without following the
+ * alias, `tsFields` returns only each interface's OWN four or five fields and
+ * every inherited field reads as "in Zod, not in TS" — i.e. this test would
+ * fail on a tree where the drift it exists to catch had just been fixed.
+ * That is what it did.
+ */
+function omitAliases(src: string): Map<string, { from: string; omit: Set<string> }> {
+  const out = new Map<string, { from: string; omit: Set<string> }>();
+  for (const m of src.matchAll(/type (\w+) = Omit<(\w+),\s*([^>]*)>;/g)) {
+    const omit = new Set([...m[3].matchAll(/"(\w+)"/g)].map((k) => k[1]));
+    out.set(m[1], { from: m[2], omit });
+  }
+  return out;
+}
+
+const aliases = omitAliases(tsSrc);
+
 /** A block interface's fields, including everything it inherits. */
 function tsFields(name: string): Set<string> {
+  const alias = aliases.get(name);
+  if (alias) {
+    const inner = tsFields(alias.from);
+    return new Set([...inner].filter((f) => !alias.omit.has(f)));
+  }
   const entry = ifaces.get(name);
   if (!entry) return new Set();
   const inherited = entry.ext ? tsFields(entry.ext) : new Set<string>();
