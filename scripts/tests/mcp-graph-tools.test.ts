@@ -53,6 +53,16 @@ beforeAll(() => {
     uses: ["papers/qou/blocks/def-widget"],
     provenance: "authored",
   });
+  w(CONTENT, "cor-scaling", {
+    "@id": "papers/qou/blocks/cor-scaling",
+    label: "cor:scaling",
+    kind: "corollary",
+    // Deliberately says nothing about widgets: it is reachable ONLY through
+    // the graph, which is the whole difference from search_graph.
+    title: "Asymptotic scaling law",
+    uses: ["papers/qou/blocks/thm-main"],
+    provenance: "authored",
+  });
   w(LIBRARY, "prose-sec-000", {
     "@id": "library/doc-1/blocks/prose-sec-000",
     kind: "prose",
@@ -71,8 +81,9 @@ afterAll(() => {
 });
 
 describe("dispatch", () => {
-  test("owns exactly the three declared tools", () => {
+  test("owns exactly the four declared tools", () => {
     expect([...GRAPH_TOOL_NAMES].sort()).toEqual([
+      "corpus_search",
       "get_graph_stats",
       "get_neighbors",
       "search_graph",
@@ -145,8 +156,8 @@ describe("get_neighbors", () => {
 describe("get_graph_stats", () => {
   test("reports both roots and their counts", () => {
     const s = call("get_graph_stats");
-    expect(s.nodes).toBe(3);
-    expect(s.byProvenance).toEqual({ authored: 2, ingested: 1 });
+    expect(s.nodes).toBe(4);
+    expect(s.byProvenance).toEqual({ authored: 3, ingested: 1 });
   });
 
   test("an absent root is reported absent, so 'not built' differs from 'no match'", () => {
@@ -158,5 +169,53 @@ describe("get_graph_stats", () => {
     );
     expect(s.roots.find((r: { name: string }) => r.name === "library").present).toBe(false);
     invalidateGraphIndex();
+  });
+});
+
+describe("corpus_search", () => {
+  test("reaches a node that does not contain the query", () => {
+    // `cor:scaling` says nothing about widgets; it is two hops from the seeds
+    // through `uses`. This is the case a lexical search structurally cannot
+    // answer, and the reason the tool exists.
+    const r = call("corpus_search", { query: "widget", hops: 2 });
+    const ids = r.hits.map((h: { id: string }) => h.id);
+    expect(ids).toContain("papers/qou/blocks/cor-scaling");
+    const hit = r.hits.find((h: { id: string }) => h.id === "papers/qou/blocks/cor-scaling");
+    expect(hit.why).toMatch(/hop via/);
+  });
+
+  test("hops: 0 is exactly search_graph", () => {
+    const c = call("corpus_search", { query: "widget", hops: 0 });
+    const s = call("search_graph", { query: "widget" });
+    expect(c.hits.map((h: { id: string }) => h.id).sort()).toEqual(
+      s.hits.map((h: { id: string }) => h.id).sort(),
+    );
+    expect(c.summary.expanded).toBe(0);
+  });
+
+  test("says whether a hit MATCHED or was REACHED, and which way the edge ran", () => {
+    // `uses` and `~uses` are opposite facts about who depends on whom, so a
+    // reason that omitted the direction would be worse than no reason.
+    const r = call("corpus_search", { query: "Widget theorem", hops: 1 });
+    const why = Object.fromEntries(
+      r.hits.map((h: { label: string; why: string }) => [h.label, h.why]),
+    );
+    expect(why["thm:main"]).toMatch(/^match:/);
+    expect(why["def:widget"]).toBe("1hop via uses from papers/qou/blocks/thm-main");
+    expect(why["cor:scaling"]).toBe("1hop via ~uses from papers/qou/blocks/thm-main");
+  });
+
+  test("splits counts by provenance rather than merging them", () => {
+    // "Open in this corpus" and "settled in a paper we hold" are different
+    // verdicts; a merged total cannot express either.
+    const r = call("corpus_search", { query: "widget", hops: 0 });
+    expect(r.summary.seedsByProvenance.authored).toBe(2);
+    expect(r.summary.seedsByProvenance.ingested).toBe(1);
+  });
+
+  test("a query that seeds on nothing says so, rather than looking like an absence", () => {
+    const r = call("corpus_search", { query: "torsion", hops: 3 });
+    expect(r.summary.noSeeds).toBe(true);
+    expect(r.hits).toHaveLength(0);
   });
 });

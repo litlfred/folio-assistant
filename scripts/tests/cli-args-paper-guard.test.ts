@@ -85,3 +85,15 @@ describe("no script re-introduces the unguarded idiom", () => {
     expect(offenders).toEqual([]);
   });
 });
+
+describe("q-usage-audit still IMPORTS", () => {
+  test("the module loads at all", async () => {
+    // The regression this guards was not a wrong answer — it was a
+    // ReferenceError at MODULE SCOPE. `paperFilterIdx` was left behind when
+    // the `--paper` sweep moved the read onto the shared helper, so every
+    // import threw and it surfaced as two unrelated CLI test failures.
+    // Importing it is the whole assertion.
+    const mod = await import("../../content/pipeline/q-usage-audit");
+    expect(mod).toBeDefined();
+  });
+});

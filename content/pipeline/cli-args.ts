@@ -78,3 +78,4 @@ export function requireFlagValue(
 export function paperArg(argv: readonly string[] = process.argv): string | undefined {
   return requireFlagValue(argv, "--paper");
 }
+

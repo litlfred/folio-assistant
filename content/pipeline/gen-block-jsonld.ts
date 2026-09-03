@@ -59,6 +59,21 @@ interface DanglingRef {
   reason: string;
 }
 
+/**
+ * A reference that DID resolve but deviates from the label convention.
+ *
+ * Kept apart from {@link DanglingRef} because the two need opposite responses:
+ * a dangling reference lost an edge and must be fixed before the graph is
+ * trusted, whereas this one is in the graph and merely reads oddly. Merging
+ * them would either overstate a convention nit as data loss, or — the way it
+ * actually failed — resolve the nit by DELETING the edge.
+ */
+interface UnconventionalRef {
+  block: string;
+  field: string;
+  ref: string;
+}
+
 const SCALAR_FIELDS = ["title"] as const;
 const REF_LIST_FIELDS = ["uses", "foreshadows", "proofs", "examples"] as const;
 const PLAIN_LIST_FIELDS = ["tags", "defines"] as const;
@@ -82,6 +97,7 @@ export function blockToJsonLd(
   loaded: LoadedBlock,
   paper: string,
   dangling: DanglingRef[],
+  unconventional: UnconventionalRef[] = [],
 ): Record<string, unknown> {
   const b = loaded.block;
 
@@ -106,6 +122,12 @@ export function blockToJsonLd(
       const resolved = resolveLabel(r, paper);
       if (resolved) {
         out.push(resolved);
+        // Resolved, but written without a kind prefix. Reported so the
+        // convention stays visible; the edge is kept, because dropping it was
+        // the old behaviour and it cost 35 real edges on the qou corpus.
+        if (parseReference(r).form === "bare-label") {
+          unconventional.push({ block: loaded.label, field, ref: r });
+        }
       } else {
         const parsed = parseReference(r);
         dangling.push({
@@ -128,6 +150,11 @@ export function blockToJsonLd(
     const resolved = resolveLabel(b.interprets, paper);
     if (resolved) {
       doc.interprets = resolved;
+      if (parseReference(b.interprets).form === "bare-label") {
+        unconventional.push({
+          block: loaded.label, field: "interprets", ref: b.interprets,
+        });
+      }
     } else {
       const parsed = parseReference(b.interprets);
       dangling.push({
@@ -190,6 +217,7 @@ async function run(): Promise<number> {
   let unchanged = 0;
   const stale: string[] = [];
   const dangling: DanglingRef[] = [];
+  const unconventional: UnconventionalRef[] = [];
   let anyLoadFailure = false;
 
   for (const paper of papers) {
@@ -204,7 +232,7 @@ async function run(): Promise<number> {
 
     for (const loaded of [...blocks.values()].sort((a, b) => a.file.localeCompare(b.file))) {
       const out = loaded.file.replace(/\.ts$/, ".jsonld");
-      const next = serialise(blockToJsonLd(loaded, paper, dangling));
+      const next = serialise(blockToJsonLd(loaded, paper, dangling, unconventional));
       const prev = existsSync(out) ? readFileSync(out, "utf-8") : undefined;
 
       if (prev === next) {
@@ -233,6 +261,23 @@ async function run(): Promise<number> {
     );
   }
 
+  if (unconventional.length) {
+    const blocks = new Set(unconventional.map((u) => u.block));
+    const targets = [...new Set(unconventional.map((u) => u.ref))].sort();
+    console.warn(
+      `\n${unconventional.length} reference(s) in ${blocks.size} block(s) name a ` +
+        `label with no kind prefix:`,
+    );
+    console.warn(`  ${targets.slice(0, 12).join(", ")}` +
+      (targets.length > 12 ? `, … and ${targets.length - 12} more` : ""));
+    console.warn(
+      "These ARE in the emitted graph — they resolve by the same rule a\n" +
+        "prefix-less label mints its own @id with. Reported because the\n" +
+        "convention is a prefix (`prose` excepted); a target that does not\n" +
+        "exist will surface as a dangling edge when the graph is walked.",
+    );
+  }
+
   if (check) {
     if (stale.length) {
       console.error(
@@ -249,7 +294,8 @@ async function run(): Promise<number> {
 
   console.log(
     `gen-block-jsonld: ${written} written, ${unchanged} unchanged` +
-      (dangling.length ? `, ${dangling.length} dangling reference(s)` : ""),
+      (dangling.length ? `, ${dangling.length} dangling reference(s)` : "") +
+      (unconventional.length ? `, ${unconventional.length} prefix-less reference(s)` : ""),
   );
   return anyLoadFailure ? 1 : 0;
 }
