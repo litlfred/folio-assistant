@@ -17,7 +17,7 @@ import {
   loadGraphIndex,
   defaultRoots,
 } from "../../content/pipeline/graph-index";
-import { graphSearch } from "../../content/pipeline/graph-search";
+import { graphSearch, formatPath } from "../../content/pipeline/graph-search";
 
 let ROOT: string;
 let index: GraphIndex;
@@ -78,6 +78,35 @@ describe("graphSearch", () => {
     if (thm.reason.via === "graph") {
       expect(thm.reason.seed).toBe("b/def-widget");
       expect(thm.reason.hops).toBe(1);
+    }
+  });
+
+  test("a backwards-traversed edge keeps its path and is marked reversed", () => {
+    // `thm:main` uses `def:widget`, so from the seed `def:widget` this edge is
+    // INCOMING. `neighbors` orients every edge by the graph (`from` -> `to`),
+    // not by travel, so the reached node arrives as the edge's `from`. Keying
+    // the path on `to` alone left it empty and the hop rendered `via ?` —
+    // measured on the qou corpus at 20 of 50 graph-reached nodes, all of them
+    // the incoming half of the default `direction: "both"`.
+    const r = graphSearch(index, "widget", { hops: 1, direction: "both" });
+    const thm = r.hits.find((h) => h.id === "b/thm-main")!;
+    expect(thm.reason.via).toBe("graph");
+    if (thm.reason.via === "graph") {
+      expect(thm.reason.path).toEqual([{ edge: "uses", dir: "in" }]);
+      expect(formatPath(thm.reason.path)).toBe("~uses");
+    }
+  });
+
+  test("direction distinguishes who depends on whom", () => {
+    // The same `uses` edge, seeded from the other end, is traversed forwards.
+    // Without `dir` both render `uses` and the two opposite facts — "the seed
+    // depends on this" and "this depends on the seed" — are indistinguishable.
+    const r = graphSearch(index, "Main theorem", { hops: 1, direction: "both" });
+    const def = r.hits.find((h) => h.id === "b/def-widget")!;
+    expect(def.reason.via).toBe("graph");
+    if (def.reason.via === "graph") {
+      expect(def.reason.path).toEqual([{ edge: "uses", dir: "out" }]);
+      expect(formatPath(def.reason.path)).toBe("uses");
     }
   });
 

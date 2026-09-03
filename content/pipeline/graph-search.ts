@@ -56,7 +56,30 @@ import type { GraphEdgeTerm } from "../../schemas/jsonld";
 /** How a result got into the answer. */
 export type Reason =
   | { via: "match"; matchedIn: string; snippet?: string }
-  | { via: "graph"; seed: string; hops: number; path: GraphEdgeTerm[] };
+  | { via: "graph"; seed: string; hops: number; path: PathStep[] };
+
+/**
+ * One hop of a path from a seed, with the direction it was traversed.
+ *
+ * `dir` is NOT decoration. The edge vocabulary is directed and asymmetric —
+ * "A `uses` B" and "B `uses` A" are opposite facts about who depends on whom —
+ * and expansion follows edges BOTH ways by default. A path that recorded only
+ * the term would report the same `uses` for a node the seed depends on and for
+ * a node that depends on the seed, which is the one distinction a reader of an
+ * impact question actually needs.
+ *
+ * `"out"` means seed -> node (the seed's manifest names this node);
+ * `"in"` means node -> seed (this node's manifest names the seed).
+ */
+export interface PathStep {
+  edge: GraphEdgeTerm;
+  dir: "out" | "in";
+}
+
+/** Render a path for humans: `uses/cites`, with reversed hops marked `~`. */
+export function formatPath(path: PathStep[]): string {
+  return path.map((s) => (s.dir === "in" ? `~${s.edge}` : s.edge)).join("/");
+}
 
 export interface GraphSearchHit {
   id: string;
@@ -198,14 +221,39 @@ export function graphSearch(
       for (const d of nb.dangling) dangling.add(d);
 
       // Reconstruct hop + edge path per reached node from the edge list.
-      const hopOf = new Map<string, number>();
-      const edgeOf = new Map<string, GraphEdgeTerm[]>();
-      for (const e of nb.edges) {
-        const prev = hopOf.get(e.to);
-        if (prev === undefined || e.hop < prev) {
-          hopOf.set(e.to, e.hop);
-          edgeOf.set(e.to, [...(edgeOf.get(e.from) ?? []), e.edge]);
-        }
+      //
+      // `neighbors` orients every edge by the GRAPH (`from` -> `to`), not by
+      // the direction of travel. Under the default `direction: "both"` an
+      // INCOMING edge therefore arrives as `{from: <the newly reached node>,
+      // to: <the node already visited>}` — the reached endpoint is `from`, not
+      // `to`. Keying the path on `e.to` alone silently loses it for every such
+      // edge, and incoming edges are roughly half the traffic: measured on the
+      // qou corpus, a 1-hop "Temperley-Lieb" search rendered 20 of 50
+      // graph-reached nodes as `via ?` because their only edge was incoming.
+      //
+      // So decide per edge which end is new: the origin is whichever endpoint
+      // already sits at a STRICTLY lower hop. If both do, the edge closes a
+      // cycle and reaches nothing; if neither does, it is unreachable from
+      // this seed and is skipped rather than guessed at.
+      const hopOf = new Map<string, number>([[seed, 0]]);
+      const edgeOf = new Map<string, PathStep[]>([[seed, []]]);
+      for (const e of [...nb.edges].sort((a, b) => a.hop - b.hop)) {
+        const fromHop = hopOf.get(e.from);
+        const toHop = hopOf.get(e.to);
+        const fromIsOrigin = fromHop !== undefined && fromHop < e.hop;
+        const toIsOrigin = toHop !== undefined && toHop < e.hop;
+        if (fromIsOrigin === toIsOrigin) continue;
+        const origin = fromIsOrigin ? e.from : e.to;
+        const reached = fromIsOrigin ? e.to : e.from;
+        const prev = hopOf.get(reached);
+        if (prev !== undefined && prev <= e.hop) continue;
+        hopOf.set(reached, e.hop);
+        edgeOf.set(reached, [
+          ...(edgeOf.get(origin) ?? []),
+          // Travelling from -> to is the edge's own direction; the other way
+          // round we followed it backwards, and say so.
+          { edge: e.edge, dir: fromIsOrigin ? "out" : "in" },
+        ]);
       }
       for (const n of nb.nodes) {
         if (n.id === seed || seen.has(n.id)) continue;  // seeds outrank expansions
@@ -296,7 +344,7 @@ if (import.meta.main) {
     for (const h of r.hits) {
       const why = h.reason.via === "match"
         ? `match:${h.reason.matchedIn}`
-        : `graph:${h.reason.hops}hop via ${h.reason.path.join("/") || "?"} from ${h.reason.seed}`;
+        : `graph:${h.reason.hops}hop via ${formatPath(h.reason.path) || "?"} from ${h.reason.seed}`;
       console.log(`  [${h.provenance}] ${h.label ?? h.id}`);
       console.log(`      ${h.title ?? ""}`.trimEnd());
       console.log(`      ${why}`);
