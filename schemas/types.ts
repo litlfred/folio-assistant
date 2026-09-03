@@ -940,151 +940,77 @@ export interface SimulatorBlock extends BlockBase {
 // ── Prose (non-environment content) ──────────────────────────────
 
 /**
+ * The four kinds below — `prose`, `equation`, `diagram`, `table` — differ
+ * from the other eleven only in that their `label` is OPTIONAL. Everything
+ * else they carry is `BlockBase`, so they extend it (minus `label`) rather
+ * than restating it.
+ *
+ * ## They used to restate it, and restating is how they kept losing fields
+ *
+ * Each was a standalone interface listing its own field set, and the set was
+ * always a little behind. The record is in the field comments this change
+ * replaces: `EquationBlock` was the only member of the `Block` union with
+ * neither `uses` nor a base supplying it; `tags` was in the Zod schema and
+ * not the type; then on 2026-08-24 `authorNotes` had to be granted to all
+ * four by hand (bean `folio-assistant-5nle`), after qou #5115 found five
+ * real author notes being discarded.
+ *
+ * That grant fixed the field it was about and left the mechanism in place.
+ * Measured after it, `defines` was still absent from all four, and `cites`,
+ * `simulator` and `computation` from three. A Zod object is non-strict, so
+ * each of those was accepted at authoring time and silently stripped.
+ *
+ * `defines` is the one that bites: AGENTS.md §4c requires every glossary
+ * term to be declared in `defines[]`, and the `defterm-declared` rule reads
+ * that array — so a `table` or `prose` block introducing a term could not
+ * declare it at all, and the omission looked like an authoring choice.
+ *
+ * The identical defect has a scar two hundred lines down: see `BLOCK_KINDS`,
+ * where `algorithm` and `table` reached the union and never reached five
+ * hand-maintained copies of it, excluding 461 qou blocks — 13% of the corpus
+ * — from every sweep. Restating a set that already exists is the shared
+ * cause, and `_blockKindsAreExhaustive` is the fix that was applied there.
+ *
+ * Extending is the same fix here: a field added to `BlockBase` now reaches
+ * these four, and cannot be forgotten one at a time.
+ */
+type OptionalLabelBlockBase = Omit<BlockBase, "label">;
+
+/**
  * Freeform narrative text between environments.
  * Content lives entirely in the sibling .md file.
  */
-export interface ProseBlock {
+export interface ProseBlock extends OptionalLabelBlockBase {
   kind: "prose";
-  /** Optional label for cross-referencing. */
-  label?: string;
-  /** Optional section-style title rendered as a paragraph heading. */
-  title?: string;
-  /** Labels of content blocks this prose depends on (for the dependency graph). */
-  uses?: string[];
-  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
-  foreshadows?: string[];
-  /** Bibliography keys cited by this block. */
-  cites?: string[];
-  tags?: string[];
-  companions?: Companions;
-  /** Pre-rendered assets for ```tex blocks. */
-  rendered?: RenderedAsset[];
-  meta?: Record<string, unknown>;
   /**
-   * Author-tracking notes — see `BlockBase.authorNotes` for the full
-   * contract and the `kind` taxonomy.
-   *
-   * GRANTED 2026-08-24. `prose`, `equation`, `diagram` and `table` do not
-   * extend `BlockBase`; they are standalone interfaces with deliberately
-   * small field sets, and this one was simply missing from all four. The
-   * Zod schemas are non-strict, so a block declaring it had the key
-   * SILENTLY STRIPPED before anything downstream saw it -- the note was
-   * neither rendered, nor validated, nor reported, and the author had no
-   * way to tell. Five real notes were being discarded that way in qou
-   * (`fine-structure-data`, `tm-interaction-completeness`,
-   * `millennium-bounds-via-surreals-intro`,
-   * `hecke-log-decomposition-table-data`,
-   * `q-beta-form-a-n1-symbolic-table-data`); qou #5115 found them and
-   * deliberately left them, because deleting the key destroys authored
-   * prose and granting the field is a schema decision.
-   *
-   * There is no reason a standalone kind cannot carry one: an author note
-   * is editorial metadata ABOUT a block, not content within it, and the
-   * render default is SKIP either way. Same shape of fix as the earlier
-   * `uses`/`tags` pass recorded on `EquationBlock.uses`.
+   * Optional, and free-form: prose labels are not required to carry a
+   * `kind:` prefix, unlike every other labelled block.
    */
-  authorNotes?: AuthorNote[];
-
+  label?: string;
 }
 
 // ── Display math / equations ─────────────────────────────────────
 
 /** Standalone display equation. Short TeX can live inline; complex in .md. */
-export interface EquationBlock {
+export interface EquationBlock extends OptionalLabelBlockBase {
   kind: "equation";
   /** Equation label (e.g. "eq:snake-identities"). */
   label?: string;
-  /** Optional display title. */
-  title?: string;
-  tags?: string[];
-  /** Editorial dependencies — see `BlockBase.uses`. Equation was the ONLY
-   *  member of the `Block` union carrying neither `uses` nor a base that
-   *  supplies it; its three standalone siblings (`prose`, `diagram`, `table`)
-   *  all declare it. `tags` was likewise present in the Zod schema and absent
-   *  here. */
-  uses?: string[];
-  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
-  foreshadows?: string[];
   /** Inline TeX for the equation (short enough to live in .ts). */
   tex?: string;
-  companions?: Companions;
-  /** Pre-rendered equation (e.g. SVG from MathJax/KaTeX server). */
-  rendered?: RenderedAsset[];
-  meta?: Record<string, unknown>;
-  /**
-   * Author-tracking notes — see `BlockBase.authorNotes` for the full
-   * contract and the `kind` taxonomy.
-   *
-   * GRANTED 2026-08-24. `prose`, `equation`, `diagram` and `table` do not
-   * extend `BlockBase`; they are standalone interfaces with deliberately
-   * small field sets, and this one was simply missing from all four. The
-   * Zod schemas are non-strict, so a block declaring it had the key
-   * SILENTLY STRIPPED before anything downstream saw it -- the note was
-   * neither rendered, nor validated, nor reported, and the author had no
-   * way to tell. Five real notes were being discarded that way in qou
-   * (`fine-structure-data`, `tm-interaction-completeness`,
-   * `millennium-bounds-via-surreals-intro`,
-   * `hecke-log-decomposition-table-data`,
-   * `q-beta-form-a-n1-symbolic-table-data`); qou #5115 found them and
-   * deliberately left them, because deleting the key destroys authored
-   * prose and granting the field is a schema decision.
-   *
-   * There is no reason a standalone kind cannot carry one: an author note
-   * is editorial metadata ABOUT a block, not content within it, and the
-   * render default is SKIP either way. Same shape of fix as the earlier
-   * `uses`/`tags` pass recorded on `EquationBlock.uses`.
-   */
-  authorNotes?: AuthorNote[];
-
 }
 
 // ── Diagrams ─────────────────────────────────────────────────────
 
 /** Commutative diagram or figure. Source is tikzcd or other diagram TeX. */
-export interface DiagramBlock {
+export interface DiagramBlock extends OptionalLabelBlockBase {
   kind: "diagram";
   /** Diagram label (e.g. "fig:monoidal-structure"). */
   label?: string;
-  /** Optional display title (rendered as a figure heading). */
-  title?: string;
   /** tikzcd or diagram TeX source (can live inline for short diagrams). */
   tex?: string;
   /** Caption text (rendered below diagram in LaTeX). */
   caption?: string;
-  tags?: string[];
-  /** Labels of content blocks this diagram depends on (for the dependency graph). */
-  uses?: string[];
-  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
-  foreshadows?: string[];
-  companions?: Companions;
-  /** Pre-rendered diagram (e.g. SVG from tikzcd server-side render). */
-  rendered?: RenderedAsset[];
-  meta?: Record<string, unknown>;
-  /**
-   * Author-tracking notes — see `BlockBase.authorNotes` for the full
-   * contract and the `kind` taxonomy.
-   *
-   * GRANTED 2026-08-24. `prose`, `equation`, `diagram` and `table` do not
-   * extend `BlockBase`; they are standalone interfaces with deliberately
-   * small field sets, and this one was simply missing from all four. The
-   * Zod schemas are non-strict, so a block declaring it had the key
-   * SILENTLY STRIPPED before anything downstream saw it -- the note was
-   * neither rendered, nor validated, nor reported, and the author had no
-   * way to tell. Five real notes were being discarded that way in qou
-   * (`fine-structure-data`, `tm-interaction-completeness`,
-   * `millennium-bounds-via-surreals-intro`,
-   * `hecke-log-decomposition-table-data`,
-   * `q-beta-form-a-n1-symbolic-table-data`); qou #5115 found them and
-   * deliberately left them, because deleting the key destroys authored
-   * prose and granting the field is a schema decision.
-   *
-   * There is no reason a standalone kind cannot carry one: an author note
-   * is editorial metadata ABOUT a block, not content within it, and the
-   * render default is SKIP either way. Same shape of fix as the earlier
-   * `uses`/`tags` pass recorded on `EquationBlock.uses`.
-   */
-  authorNotes?: AuthorNote[];
-
 }
 
 /**
@@ -1093,7 +1019,7 @@ export interface DiagramBlock {
  * rather than inlined in a remark or proposition, so they can be
  * labelled and cross-referenced independently.
  */
-export interface TableBlock {
+export interface TableBlock extends OptionalLabelBlockBase {
   kind: "table";
   /** Table label (e.g. "tbl:mass-predictions"). */
   label?: string;
@@ -1101,44 +1027,6 @@ export interface TableBlock {
   tex?: string;
   /** Caption text (rendered above table in LaTeX). */
   caption?: string;
-  /** Title for the table (rendered as bold header). */
-  title?: string;
-  tags?: string[];
-  /** Blocks that this table summarises data from. */
-  uses?: string[];
-  /** Subset of `uses[]` that points deliberately forward — see `BlockBase.foreshadows`. */
-  foreshadows?: string[];
-  /** Witness/script the table values are derived from (mirrors RemarkBlock).
-   *  Lets tables that cite `:val[…]` literals declare the upstream witness
-   *  dep, same as remark/proof/definition blocks. */
-  computation?: Computation;
-  companions?: Companions;
-  rendered?: RenderedAsset[];
-  meta?: Record<string, unknown>;
-  /**
-   * Author-tracking notes — see `BlockBase.authorNotes` for the full
-   * contract and the `kind` taxonomy.
-   *
-   * GRANTED 2026-08-24. `prose`, `equation`, `diagram` and `table` do not
-   * extend `BlockBase`; they are standalone interfaces with deliberately
-   * small field sets, and this one was simply missing from all four. The
-   * Zod schemas are non-strict, so a block declaring it had the key
-   * SILENTLY STRIPPED before anything downstream saw it -- the note was
-   * neither rendered, nor validated, nor reported, and the author had no
-   * way to tell. Five real notes were being discarded that way in qou
-   * (`fine-structure-data`, `tm-interaction-completeness`,
-   * `millennium-bounds-via-surreals-intro`,
-   * `hecke-log-decomposition-table-data`,
-   * `q-beta-form-a-n1-symbolic-table-data`); qou #5115 found them and
-   * deliberately left them, because deleting the key destroys authored
-   * prose and granting the field is a schema decision.
-   *
-   * There is no reason a standalone kind cannot carry one: an author note
-   * is editorial metadata ABOUT a block, not content within it, and the
-   * render default is SKIP either way. Same shape of fix as the earlier
-   * `uses`/`tags` pass recorded on `EquationBlock.uses`.
-   */
-  authorNotes?: AuthorNote[];
 }
 
 // ── The discriminated union ──────────────────────────────────────

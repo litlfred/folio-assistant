@@ -588,82 +588,54 @@ export const SimulatorSchema = BlockBaseSchema.extend({
   views: z.array(SimulatorViewSchema).optional(),
 });
 
-export const ProseSchema = z.object({
+// ── prose / equation / diagram / table ───────────────────────────
+//
+// These four RESTATED the base fields instead of extending
+// `BlockBaseSchema`, and restating is how they kept losing fields. The
+// 2026-08-24 grant (bean `folio-assistant-5nle`) added `authorNotes` to all
+// four by hand and stopped there; `defines` was still missing from all four,
+// and `cites` / `simulator` / `computation` from three of them. A zod object
+// is non-strict, so every one of those was accepted at authoring time and
+// silently stripped — no error, no warning from the schema itself.
+//
+// `defines` is the one that bites. AGENTS.md §4c REQUIRES every glossary
+// term to be declared in `defines[]`, and the `defterm-declared` rule reads
+// that array; on these four kinds it was being discarded before the rule ever
+// saw it, so a `table` or `prose` block introducing a term could not be
+// declared at all.
+//
+// The same defect has a scar in this file's neighbour: see `BLOCK_KINDS` in
+// schemas/types.ts, where `algorithm` and `table` were added to the union and
+// never propagated to five hand-maintained lists, excluding 461 qou blocks
+// from every sweep. Restating a set that already exists is the shared cause.
+//
+// So: extend the base, and add only what is genuinely kind-specific. A field
+// added to `BlockBaseSchema` from now on reaches these four automatically.
+export const ProseSchema = BlockBaseSchema.extend({
   kind: z.literal("prose"),
+  // Deliberately NOT `labelForKind("prose")` — prose blocks carry free-form
+  // labels (`intro-...`, `rem:...`), so the prefix rule does not apply.
   label: z.string().optional(),
-  title: z.string().optional(),
-  cites: z.array(z.string()).optional(),
-  tags: z.array(z.string()).optional(),
-  uses: z.array(z.string()).optional(),
-  foreshadows: z.array(z.string()).optional(),
-  companions: CompanionsSchema.optional(),
-  rendered: z.array(RenderedAssetSchema).optional(),
-  meta: z.record(z.string(), z.unknown()).optional(),
-  // GRANTED 2026-08-24 (bean folio-assistant-5nle). These four schemas are
-  // non-strict, so a block declaring `authorNotes` had the key silently
-  // stripped and the note was neither rendered nor reported. See
-  // `BlockBase.authorNotes` in schemas/types.ts.
-  authorNotes: z.array(AuthorNoteSchema).optional(),
-
 });
 
-export const EquationSchema = z.object({
+export const EquationSchema = BlockBaseSchema.extend({
   kind: z.literal("equation"),
   label: labelForKind("equation").optional(),
-  title: z.string().optional(),
   tex: z.string().optional(),
-  tags: z.array(z.string()).optional(),
-  uses: z.array(z.string()).optional(),
-  foreshadows: z.array(z.string()).optional(),
-  companions: CompanionsSchema.optional(),
-  rendered: z.array(RenderedAssetSchema).optional(),
-  meta: z.record(z.string(), z.unknown()).optional(),
-  // GRANTED 2026-08-24 (bean folio-assistant-5nle). These four schemas are
-  // non-strict, so a block declaring `authorNotes` had the key silently
-  // stripped and the note was neither rendered nor reported. See
-  // `BlockBase.authorNotes` in schemas/types.ts.
-  authorNotes: z.array(AuthorNoteSchema).optional(),
-
 });
 
-export const DiagramSchema = z.object({
+export const DiagramSchema = BlockBaseSchema.extend({
   kind: z.literal("diagram"),
   label: labelForKind("diagram").optional(),
-  title: z.string().optional(),
   tex: z.string().optional(),
   caption: z.string().optional(),
-  tags: z.array(z.string()).optional(),
-  uses: z.array(z.string()).optional(),
-  foreshadows: z.array(z.string()).optional(),
-  companions: CompanionsSchema.optional(),
-  rendered: z.array(RenderedAssetSchema).optional(),
-  meta: z.record(z.string(), z.unknown()).optional(),
-  // GRANTED 2026-08-24 (bean folio-assistant-5nle). These four schemas are
-  // non-strict, so a block declaring `authorNotes` had the key silently
-  // stripped and the note was neither rendered nor reported. See
-  // `BlockBase.authorNotes` in schemas/types.ts.
-  authorNotes: z.array(AuthorNoteSchema).optional(),
-
 });
 
-export const TableSchema = z.object({
+export const TableSchema = BlockBaseSchema.extend({
   kind: z.literal("table"),
   label: labelForKind("table").optional(),
   tex: z.string().optional(),
   caption: z.string().optional(),
-  title: z.string().optional(),
-  tags: z.array(z.string()).optional(),
-  uses: z.array(z.string()).optional(),
-  foreshadows: z.array(z.string()).optional(),
-  computation: ComputationSchema.optional(),
-  companions: CompanionsSchema.optional(),
-  rendered: z.array(RenderedAssetSchema).optional(),
-  meta: z.record(z.string(), z.unknown()).optional(),
-  // GRANTED 2026-08-24 (bean folio-assistant-5nle). These four schemas are
-  // non-strict, so a block declaring `authorNotes` had the key silently
-  // stripped and the note was neither rendered nor reported. See
-  // `BlockBase.authorNotes` in schemas/types.ts.
-  authorNotes: z.array(AuthorNoteSchema).optional(),
 });
 
 /** Discriminated union — validates any Block. */
