@@ -79,27 +79,3 @@ export function paperArg(argv: readonly string[] = process.argv): string | undef
   return requireFlagValue(argv, "--paper");
 }
 
-/**
- * The argv positions occupied by the VALUE of each given flag.
- *
- * An unknown-argument guard has to tell a stray positional from the value of a
- * flag it knows, and that needs the position rather than the value — which is
- * the one thing {@link paperArg} does not return. Without this a caller writes
- * `argv.indexOf("--paper")` back into its own module, which is the idiom the
- * `--paper` sweep removed from thirteen scripts and `cli-args-paper-guard`
- * exists to keep out. Ask here instead: one lookup, one place to change.
- *
- * A flag that is absent contributes nothing, so an unrecognised flag stays
- * unrecognised.
- */
-export function flagValueIndices(
-  argv: readonly string[],
-  flags: readonly string[],
-): Set<number> {
-  const out = new Set<number>();
-  for (const f of flags) {
-    const i = argv.indexOf(f);
-    if (i >= 0) out.add(i + 1);
-  }
-  return out;
-}
