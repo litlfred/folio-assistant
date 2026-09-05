@@ -1105,75 +1105,75 @@
     
     "relUrl": "/reference/skill-instructions/compute-integration-watcher.html"
   },"158": {
-    "doc": "Content Authoring",
-    "title": "Content Authoring",
-    "content": "Create and develop content artifacts according to the project plan. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-author.html#content-authoring",
-    
-    "relUrl": "/reference/skill-instructions/content-author.html#content-authoring"
-  },"159": {
-    "doc": "Content Authoring",
-    "title": "Responsibilities",
-    "content": ". | Translate source material into structured digital artifacts | Create business process diagrams (BPMN 2.0) | Author data dictionaries and core data elements | Develop decision-support logic | Create user scenarios and personas | Author functional and non-functional requirements | Define indicators and measures | Verify authored content against the repo’s own CI before opening a PR — dispatch the relevant workflow on your branch and record the result (see below) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-author.html#responsibilities",
-    
-    "relUrl": "/reference/skill-instructions/content-author.html#responsibilities"
-  },"160": {
-    "doc": "Content Authoring",
-    "title": "Don’t hand off on a workflow nobody ran",
-    "content": "Authoring is not finished at “it builds here”. Before the PR, push and dispatch the repo’s verification workflow against your branch (gh workflow run &lt;wf&gt;.yml --ref &lt;branch&gt;, or actions_run_trigger), wait for it, and put the run URL and conclusion in the PR body. Red → fix and re-dispatch. If you lack actions: write, state that in the PR along with the command a maintainer should run. Check when that workflow last ran, too. A repo can carry a CI file that has not executed in months: qou’s lean_ci.yml last ran 2026-04-25 and failed, and in the interval 37 Lean modules stopped compiling — some with parse errors, meaning they had never compiled. Nothing caught it because nothing ran. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-author.html#dont-hand-off-on-a-workflow-nobody-ran",
-    
-    "relUrl": "/reference/skill-instructions/content-author.html#dont-hand-off-on-a-workflow-nobody-ran"
-  },"161": {
-    "doc": "Content Authoring",
-    "title": "Actors",
-    "content": ". | Business Analyst (L2 authoring lead) | FHIR Modeller (L3 authoring lead) | Terminologist (terminology governance) | Clinical SME (clinical validation) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-author.html#actors",
-    
-    "relUrl": "/reference/skill-instructions/content-author.html#actors"
-  },"162": {
-    "doc": "Content Authoring",
-    "title": "Inputs",
-    "content": ". | Project plan | Source guidelines/recommendations | Existing content (if iterating) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-author.html#inputs",
-    
-    "relUrl": "/reference/skill-instructions/content-author.html#inputs"
-  },"163": {
-    "doc": "Content Authoring",
-    "title": "Outputs",
-    "content": ". | Authored content artifacts | Draft versions ready for validation | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-author.html#outputs",
-    
-    "relUrl": "/reference/skill-instructions/content-author.html#outputs"
-  },"164": {
-    "doc": "Content Authoring",
-    "title": "Content Authoring",
-    "content": "Generated from skills/content-lifecycle/content-author.md — do not edit here. Typed contract: schema reference. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-author.html",
-    
-    "relUrl": "/reference/skill-instructions/content-author.html"
-  },"165": {
     "doc": "Content Author",
     "title": "Content Author",
     "content": "Skill id: content-author . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
     "url": "/folio-assistant/reference/skills/content-author.html",
     
     "relUrl": "/reference/skills/content-author.html"
-  },"166": {
+  },"159": {
     "doc": "Content Author",
     "title": "Input",
     "content": "Input schema for general content authoring. | Field | Type | Required | Description | . | contentType | \"document\" | \"fhir-ig\" | \"lean-proof\" | \"bpmn\" | \"data-dictionary\" | yes | Type of content to author. | . | sourceRef | string | no | Reference to source material. | . | outputDir | string | no | Output directory for authored content. | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-author.html#input",
     
     "relUrl": "/reference/skills/content-author.html#input"
-  },"167": {
+  },"160": {
     "doc": "Content Author",
     "title": "Output",
     "content": "Output schema for general content authoring. | Field | Type | Required | Description | . | artifacts | array | yes |   | . artifacts[] . | Field | Type | Required | Description | . | path | string | yes |   | . | type | string | yes |   | . | status | \"draft\" | \"ready-for-validation\" | no |   | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-author.html#output",
     
     "relUrl": "/reference/skills/content-author.html#output"
+  },"161": {
+    "doc": "Content Authoring",
+    "title": "Content Authoring",
+    "content": "Create and develop content artifacts according to the project plan. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-author.html#content-authoring",
+    
+    "relUrl": "/reference/skill-instructions/content-author.html#content-authoring"
+  },"162": {
+    "doc": "Content Authoring",
+    "title": "Responsibilities",
+    "content": ". | Translate source material into structured digital artifacts | Create business process diagrams (BPMN 2.0) | Author data dictionaries and core data elements | Develop decision-support logic | Create user scenarios and personas | Author functional and non-functional requirements | Define indicators and measures | Verify authored content against the repo’s own CI before opening a PR — dispatch the relevant workflow on your branch and record the result (see below) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-author.html#responsibilities",
+    
+    "relUrl": "/reference/skill-instructions/content-author.html#responsibilities"
+  },"163": {
+    "doc": "Content Authoring",
+    "title": "Don’t hand off on a workflow nobody ran",
+    "content": "Authoring is not finished at “it builds here”. Before the PR, push and dispatch the repo’s verification workflow against your branch (gh workflow run &lt;wf&gt;.yml --ref &lt;branch&gt;, or actions_run_trigger), wait for it, and put the run URL and conclusion in the PR body. Red → fix and re-dispatch. If you lack actions: write, state that in the PR along with the command a maintainer should run. Check when that workflow last ran, too. A repo can carry a CI file that has not executed in months: qou’s lean_ci.yml last ran 2026-04-25 and failed, and in the interval 37 Lean modules stopped compiling — some with parse errors, meaning they had never compiled. Nothing caught it because nothing ran. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-author.html#dont-hand-off-on-a-workflow-nobody-ran",
+    
+    "relUrl": "/reference/skill-instructions/content-author.html#dont-hand-off-on-a-workflow-nobody-ran"
+  },"164": {
+    "doc": "Content Authoring",
+    "title": "Actors",
+    "content": ". | Business Analyst (L2 authoring lead) | FHIR Modeller (L3 authoring lead) | Terminologist (terminology governance) | Clinical SME (clinical validation) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-author.html#actors",
+    
+    "relUrl": "/reference/skill-instructions/content-author.html#actors"
+  },"165": {
+    "doc": "Content Authoring",
+    "title": "Inputs",
+    "content": ". | Project plan | Source guidelines/recommendations | Existing content (if iterating) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-author.html#inputs",
+    
+    "relUrl": "/reference/skill-instructions/content-author.html#inputs"
+  },"166": {
+    "doc": "Content Authoring",
+    "title": "Outputs",
+    "content": ". | Authored content artifacts | Draft versions ready for validation | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-author.html#outputs",
+    
+    "relUrl": "/reference/skill-instructions/content-author.html#outputs"
+  },"167": {
+    "doc": "Content Authoring",
+    "title": "Content Authoring",
+    "content": "Generated from skills/content-lifecycle/content-author.md — do not edit here. Typed contract: schema reference. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-author.html",
+    
+    "relUrl": "/reference/skill-instructions/content-author.html"
   },"168": {
     "doc": "Content Block Review",
     "title": "Content Block Review",
@@ -1231,68 +1231,68 @@
     
     "relUrl": "/reference/skill-instructions/content-block-review.html"
   },"176": {
-    "doc": "Content Feedback Collection",
-    "title": "Content Feedback Collection",
-    "content": "Gather and triage feedback on published content for future iterations. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html#content-feedback-collection",
-    
-    "relUrl": "/reference/skill-instructions/content-feedback.html#content-feedback-collection"
-  },"177": {
-    "doc": "Content Feedback Collection",
-    "title": "Responsibilities",
-    "content": ". | Collect feedback from implementers and users | Triage feedback by severity and scope | Map feedback to specific content components | Create issues/tickets for actionable feedback | Prioritize feedback for next iteration | Coordinate with clinical SMEs for clinical feedback | Track feedback resolution across versions | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html#responsibilities",
-    
-    "relUrl": "/reference/skill-instructions/content-feedback.html#responsibilities"
-  },"178": {
-    "doc": "Content Feedback Collection",
-    "title": "Actors",
-    "content": ". | Technical Officer (triage lead) | Programme Manager (prioritization) | Clinical SME (clinical feedback assessment) | Business Analyst (implementer feedback) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html#actors",
-    
-    "relUrl": "/reference/skill-instructions/content-feedback.html#actors"
-  },"179": {
-    "doc": "Content Feedback Collection",
-    "title": "Inputs",
-    "content": ". | Published content (current version) | User/implementer feedback (issues, comments, surveys) | Country implementation reports | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html#inputs",
-    
-    "relUrl": "/reference/skill-instructions/content-feedback.html#inputs"
-  },"180": {
-    "doc": "Content Feedback Collection",
-    "title": "Outputs",
-    "content": ". | Triaged feedback log | Prioritized backlog for next iteration | Change requests linked to feedback | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html#outputs",
-    
-    "relUrl": "/reference/skill-instructions/content-feedback.html#outputs"
-  },"181": {
-    "doc": "Content Feedback Collection",
-    "title": "Content Feedback Collection",
-    "content": "Generated from skills/content-lifecycle/content-feedback.md — do not edit here. Typed contract: schema reference. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html",
-    
-    "relUrl": "/reference/skill-instructions/content-feedback.html"
-  },"182": {
     "doc": "Content Feedback",
     "title": "Content Feedback",
     "content": "Skill id: content-feedback . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
     "url": "/folio-assistant/reference/skills/content-feedback.html",
     
     "relUrl": "/reference/skills/content-feedback.html"
-  },"183": {
+  },"177": {
     "doc": "Content Feedback",
     "title": "Input",
     "content": "Input schema for feedback collection and triage. | Field | Type | Required | Description | . | source | \"github-issues\" | \"survey\" | \"implementation-report\" | \"clinical-review\" | yes | Source of feedback. | . | publishedVersion | string | no | Version the feedback relates to. | . | feedbackItems | array | no |   | . feedbackItems[] . | Field | Type | Required | Description | . | description | string | yes |   | . | severity | \"critical\" | \"major\" | \"minor\" | \"enhancement\" | no |   | . | component | string | no |   | . | reporter | string | no |   | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-feedback.html#input",
     
     "relUrl": "/reference/skills/content-feedback.html#input"
-  },"184": {
+  },"178": {
     "doc": "Content Feedback",
     "title": "Output",
     "content": "Output schema for triaged feedback. | Field | Type | Required | Description | . | triagedItems | array | yes |   | . | summary | object | no |   | . triagedItems[] . | Field | Type | Required | Description | . | id | string | yes |   | . | priority | \"P0\" | \"P1\" | \"P2\" | \"P3\" | yes |   | . | disposition | \"backlog\" | \"next-sprint\" | \"wont-fix\" | \"duplicate\" | \"needs-info\" | yes |   | . | assignee | string | no |   | . | linkedIssue | string | no |   | . summary . | Field | Type | Required | Description | . | total | integer | no |   | . | critical | integer | no |   | . | major | integer | no |   | . | minor | integer | no |   | . | enhancement | integer | no |   | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-feedback.html#output",
     
     "relUrl": "/reference/skills/content-feedback.html#output"
+  },"179": {
+    "doc": "Content Feedback Collection",
+    "title": "Content Feedback Collection",
+    "content": "Gather and triage feedback on published content for future iterations. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html#content-feedback-collection",
+    
+    "relUrl": "/reference/skill-instructions/content-feedback.html#content-feedback-collection"
+  },"180": {
+    "doc": "Content Feedback Collection",
+    "title": "Responsibilities",
+    "content": ". | Collect feedback from implementers and users | Triage feedback by severity and scope | Map feedback to specific content components | Create issues/tickets for actionable feedback | Prioritize feedback for next iteration | Coordinate with clinical SMEs for clinical feedback | Track feedback resolution across versions | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html#responsibilities",
+    
+    "relUrl": "/reference/skill-instructions/content-feedback.html#responsibilities"
+  },"181": {
+    "doc": "Content Feedback Collection",
+    "title": "Actors",
+    "content": ". | Technical Officer (triage lead) | Programme Manager (prioritization) | Clinical SME (clinical feedback assessment) | Business Analyst (implementer feedback) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html#actors",
+    
+    "relUrl": "/reference/skill-instructions/content-feedback.html#actors"
+  },"182": {
+    "doc": "Content Feedback Collection",
+    "title": "Inputs",
+    "content": ". | Published content (current version) | User/implementer feedback (issues, comments, surveys) | Country implementation reports | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html#inputs",
+    
+    "relUrl": "/reference/skill-instructions/content-feedback.html#inputs"
+  },"183": {
+    "doc": "Content Feedback Collection",
+    "title": "Outputs",
+    "content": ". | Triaged feedback log | Prioritized backlog for next iteration | Change requests linked to feedback | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html#outputs",
+    
+    "relUrl": "/reference/skill-instructions/content-feedback.html#outputs"
+  },"184": {
+    "doc": "Content Feedback Collection",
+    "title": "Content Feedback Collection",
+    "content": "Generated from skills/content-lifecycle/content-feedback.md — do not edit here. Typed contract: schema reference. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-feedback.html",
+    
+    "relUrl": "/reference/skill-instructions/content-feedback.html"
   },"185": {
     "doc": "Content Graph",
     "title": "Content Graph — Editorial Organisation Skill",
@@ -1385,131 +1385,131 @@
     
     "relUrl": "/reference/skill-instructions/content-graph.html"
   },"198": {
-    "doc": "Content Planning",
-    "title": "Content Planning",
-    "content": "Plan content development by defining scope, team, timeline, and sprint cadence. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-plan.html#content-planning",
-    
-    "relUrl": "/reference/skill-instructions/content-plan.html#content-planning"
-  },"199": {
-    "doc": "Content Planning",
-    "title": "Responsibilities",
-    "content": ". | Define content scope and objectives | Form development team (roles, responsibilities) | Establish governance model (RASCI matrix) | Plan iteration/sprint cadence | Coordinate stakeholder engagement | Define acceptance criteria | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-plan.html#responsibilities",
-    
-    "relUrl": "/reference/skill-instructions/content-plan.html#responsibilities"
-  },"200": {
-    "doc": "Content Planning",
-    "title": "Actors",
-    "content": ". | Programme Manager (lead) | Technical Officer (support) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-plan.html#actors",
-    
-    "relUrl": "/reference/skill-instructions/content-plan.html#actors"
-  },"201": {
-    "doc": "Content Planning",
-    "title": "Inputs",
-    "content": ". | Stakeholder requirements | Existing guidelines or source material | Resource constraints | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-plan.html#inputs",
-    
-    "relUrl": "/reference/skill-instructions/content-plan.html#inputs"
-  },"202": {
-    "doc": "Content Planning",
-    "title": "Outputs",
-    "content": ". | Project plan document | Team roster with role assignments | Sprint/iteration schedule | Governance model (RASCI) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-plan.html#outputs",
-    
-    "relUrl": "/reference/skill-instructions/content-plan.html#outputs"
-  },"203": {
-    "doc": "Content Planning",
-    "title": "Content Planning",
-    "content": "Generated from skills/content-lifecycle/content-plan.md — do not edit here. Typed contract: schema reference. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-plan.html",
-    
-    "relUrl": "/reference/skill-instructions/content-plan.html"
-  },"204": {
     "doc": "Content Plan",
     "title": "Content Plan",
     "content": "Skill id: content-plan . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
     "url": "/folio-assistant/reference/skills/content-plan.html",
     
     "relUrl": "/reference/skills/content-plan.html"
-  },"205": {
+  },"199": {
     "doc": "Content Plan",
     "title": "Input",
     "content": "Input schema for content planning — scope, team, timeline, governance. | Field | Type | Required | Description | . | projectName | string | yes |   | . | scope | string | no | Description of the content scope. | . | targetDate | string (date) | no |   | . | teamSize | integer | no | min: 1 | . | sprintDuration | \"1w\" | \"2w\" | \"3w\" | \"4w\" | no | default: \"2w\" | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-plan.html#input",
     
     "relUrl": "/reference/skills/content-plan.html#input"
-  },"206": {
+  },"200": {
     "doc": "Content Plan",
     "title": "Output",
     "content": "Output schema for content planning. | Field | Type | Required | Description | . | plan | object | yes |   | . plan . | Field | Type | Required | Description | . | projectName | string | yes |   | . | sprints | array | yes |   | . | team | array | yes |   | . plan.sprints[] . | Field | Type | Required | Description | . | number | integer | no |   | . | startDate | string (date) | no |   | . | endDate | string (date) | no |   | . | goals | array | no |   | . plan.team[] . | Field | Type | Required | Description | . | actorId | string | no |   | . | name | string | no |   | . | responsibilities | array | no |   | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-plan.html#output",
     
     "relUrl": "/reference/skills/content-plan.html#output"
-  },"207": {
-    "doc": "Content Publication",
-    "title": "Content Publication",
-    "content": "Package, version, and publish approved content. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-publish.html#content-publication",
+  },"201": {
+    "doc": "Content Planning",
+    "title": "Content Planning",
+    "content": "Plan content development by defining scope, team, timeline, and sprint cadence. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-plan.html#content-planning",
     
-    "relUrl": "/reference/skill-instructions/content-publish.html#content-publication"
-  },"208": {
-    "doc": "Content Publication",
+    "relUrl": "/reference/skill-instructions/content-plan.html#content-planning"
+  },"202": {
+    "doc": "Content Planning",
     "title": "Responsibilities",
-    "content": ". | Update version numbers (semantic versioning: major.minor.patch) | Create publication metadata (publication-request.json for FHIR IGs) | Build final artifacts (IG Publisher build, LaTeX compilation) | Create release branches and tags | Create GitHub releases with release notes | Deploy to publication platform (smart.who.int, arXiv, etc.) | Reset development branch to draft status for next cycle | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-publish.html#responsibilities",
+    "content": ". | Define content scope and objectives | Form development team (roles, responsibilities) | Establish governance model (RASCI matrix) | Plan iteration/sprint cadence | Coordinate stakeholder engagement | Define acceptance criteria | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-plan.html#responsibilities",
     
-    "relUrl": "/reference/skill-instructions/content-publish.html#responsibilities"
-  },"209": {
-    "doc": "Content Publication",
+    "relUrl": "/reference/skill-instructions/content-plan.html#responsibilities"
+  },"203": {
+    "doc": "Content Planning",
     "title": "Actors",
-    "content": ". | Publication Manager (lead) | Programme Manager (release authorization) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-publish.html#actors",
+    "content": ". | Programme Manager (lead) | Technical Officer (support) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-plan.html#actors",
     
-    "relUrl": "/reference/skill-instructions/content-publish.html#actors"
-  },"210": {
-    "doc": "Content Publication",
+    "relUrl": "/reference/skill-instructions/content-plan.html#actors"
+  },"204": {
+    "doc": "Content Planning",
     "title": "Inputs",
-    "content": ". | Approved and tested content | Version increment decision (major/minor/patch) | Release notes | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-publish.html#inputs",
+    "content": ". | Stakeholder requirements | Existing guidelines or source material | Resource constraints | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-plan.html#inputs",
     
-    "relUrl": "/reference/skill-instructions/content-publish.html#inputs"
-  },"211": {
-    "doc": "Content Publication",
+    "relUrl": "/reference/skill-instructions/content-plan.html#inputs"
+  },"205": {
+    "doc": "Content Planning",
     "title": "Outputs",
-    "content": ". | Published artifacts (IG, PDF, etc.) | GitHub release with tags | Publication URL | Updated version in development branch | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-publish.html#outputs",
+    "content": ". | Project plan document | Team roster with role assignments | Sprint/iteration schedule | Governance model (RASCI) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-plan.html#outputs",
     
-    "relUrl": "/reference/skill-instructions/content-publish.html#outputs"
-  },"212": {
-    "doc": "Content Publication",
-    "title": "Content Publication",
-    "content": "Generated from skills/content-lifecycle/content-publish.md — do not edit here. Typed contract: schema reference. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-publish.html",
+    "relUrl": "/reference/skill-instructions/content-plan.html#outputs"
+  },"206": {
+    "doc": "Content Planning",
+    "title": "Content Planning",
+    "content": "Generated from skills/content-lifecycle/content-plan.md — do not edit here. Typed contract: schema reference. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-plan.html",
     
-    "relUrl": "/reference/skill-instructions/content-publish.html"
-  },"213": {
+    "relUrl": "/reference/skill-instructions/content-plan.html"
+  },"207": {
     "doc": "Content Publish",
     "title": "Content Publish",
     "content": "Skill id: content-publish . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
     "url": "/folio-assistant/reference/skills/content-publish.html",
     
     "relUrl": "/reference/skills/content-publish.html"
-  },"214": {
+  },"208": {
     "doc": "Content Publish",
     "title": "Input",
     "content": "Input schema for content publication. | Field | Type | Required | Description | . | versionIncrement | \"major\" | \"minor\" | \"patch\" | yes |   | . | releaseNotes | string | no |   | . | target | \"github-release\" | \"npm\" | \"fhir-registry\" | \"arxiv\" | no | Publication target. | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-publish.html#input",
     
     "relUrl": "/reference/skills/content-publish.html#input"
-  },"215": {
+  },"209": {
     "doc": "Content Publish",
     "title": "Output",
     "content": "Output schema for content publication. | Field | Type | Required | Description | . | version | string | yes |   | . | status | \"published\" | \"failed\" | yes |   | . | publishedUrl | string | no |   | . | releaseTag | string | no |   | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-publish.html#output",
     
     "relUrl": "/reference/skills/content-publish.html#output"
+  },"210": {
+    "doc": "Content Publication",
+    "title": "Content Publication",
+    "content": "Package, version, and publish approved content. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-publish.html#content-publication",
+    
+    "relUrl": "/reference/skill-instructions/content-publish.html#content-publication"
+  },"211": {
+    "doc": "Content Publication",
+    "title": "Responsibilities",
+    "content": ". | Update version numbers (semantic versioning: major.minor.patch) | Create publication metadata (publication-request.json for FHIR IGs) | Build final artifacts (IG Publisher build, LaTeX compilation) | Create release branches and tags | Create GitHub releases with release notes | Deploy to publication platform (smart.who.int, arXiv, etc.) | Reset development branch to draft status for next cycle | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-publish.html#responsibilities",
+    
+    "relUrl": "/reference/skill-instructions/content-publish.html#responsibilities"
+  },"212": {
+    "doc": "Content Publication",
+    "title": "Actors",
+    "content": ". | Publication Manager (lead) | Programme Manager (release authorization) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-publish.html#actors",
+    
+    "relUrl": "/reference/skill-instructions/content-publish.html#actors"
+  },"213": {
+    "doc": "Content Publication",
+    "title": "Inputs",
+    "content": ". | Approved and tested content | Version increment decision (major/minor/patch) | Release notes | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-publish.html#inputs",
+    
+    "relUrl": "/reference/skill-instructions/content-publish.html#inputs"
+  },"214": {
+    "doc": "Content Publication",
+    "title": "Outputs",
+    "content": ". | Published artifacts (IG, PDF, etc.) | GitHub release with tags | Publication URL | Updated version in development branch | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-publish.html#outputs",
+    
+    "relUrl": "/reference/skill-instructions/content-publish.html#outputs"
+  },"215": {
+    "doc": "Content Publication",
+    "title": "Content Publication",
+    "content": "Generated from skills/content-lifecycle/content-publish.md — do not edit here. Typed contract: schema reference. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-publish.html",
+    
+    "relUrl": "/reference/skill-instructions/content-publish.html"
   },"216": {
     "doc": "Content Retirement",
     "title": "Content Retirement",
@@ -1555,143 +1555,143 @@
   },"222": {
     "doc": "Content Review",
     "title": "Content Review",
-    "content": "Formal review and approval of validated content before publication. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-review.html#content-review",
-    
-    "relUrl": "/reference/skill-instructions/content-review.html#content-review"
-  },"223": {
-    "doc": "Content Review",
-    "title": "Responsibilities",
-    "content": ". | Review L2 content before L3 begins (phase gate) | Review L3 content before publication (phase gate) | Assess breaking vs. non-breaking changes | Ensure alignment with source guidelines | Approve draft publications for stakeholder circulation | Provide final publication release sign-off | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-review.html#responsibilities",
-    
-    "relUrl": "/reference/skill-instructions/content-review.html#responsibilities"
-  },"224": {
-    "doc": "Content Review",
-    "title": "Actors",
-    "content": ". | Content Reviewer (lead, approval authority) | Technical Officer (first-pass review) | Clinical SME (clinical sign-off) | Programme Manager (governance oversight) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-review.html#actors",
-    
-    "relUrl": "/reference/skill-instructions/content-review.html#actors"
-  },"225": {
-    "doc": "Content Review",
-    "title": "Inputs",
-    "content": ". | Validated content artifacts | Validation reports | Change log / diff from previous version | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-review.html#inputs",
-    
-    "relUrl": "/reference/skill-instructions/content-review.html#inputs"
-  },"226": {
-    "doc": "Content Review",
-    "title": "Outputs",
-    "content": ". | Review decision (approve / request-changes / reject) | Review comments and required modifications | Approval record (who, when, conditions) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-review.html#outputs",
-    
-    "relUrl": "/reference/skill-instructions/content-review.html#outputs"
-  },"227": {
-    "doc": "Content Review",
-    "title": "Content Review",
-    "content": "Generated from skills/content-lifecycle/content-review.md — do not edit here. Typed contract: schema reference. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-review.html",
-    
-    "relUrl": "/reference/skill-instructions/content-review.html"
-  },"228": {
-    "doc": "Content Review",
-    "title": "Content Review",
     "content": "Skill id: content-review . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
     "url": "/folio-assistant/reference/skills/content-review.html",
     
     "relUrl": "/reference/skills/content-review.html"
-  },"229": {
+  },"223": {
     "doc": "Content Review",
     "title": "Input",
     "content": "Input schema for formal content review and approval workflow. | Field | Type | Required | Description | . | reviewType | \"l2-to-l3-gate\" | \"l3-to-publish-gate\" | \"change-assessment\" | \"final-signoff\" | yes | Type of review phase gate. | . | contentRef | string | yes | Git ref or path to the content being reviewed. | . | previousVersion | string | no | Git ref of the previous approved version (for diff). | . | validationReport | string | no | Path to the validation report for this content. | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-review.html#input",
     
     "relUrl": "/reference/skills/content-review.html#input"
-  },"230": {
+  },"224": {
     "doc": "Content Review",
     "title": "Output",
     "content": "Output schema for content review decisions. | Field | Type | Required | Description | . | decision | \"approve\" | \"request-changes\" | \"reject\" | yes |   | . | reviewer | string | no |   | . | reviewDate | string (date-time) | no |   | . | comments | array | no |   | . | conditions | array | no | Conditions that must be met before the approval is final. | . comments[] . | Field | Type | Required | Description | . | location | string | no |   | . | severity | \"blocking\" | \"suggestion\" | \"praise\" | no |   | . | comment | string | no |   | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-review.html#output",
     
     "relUrl": "/reference/skills/content-review.html#output"
-  },"231": {
-    "doc": "Content Testing",
-    "title": "Content Testing",
-    "content": "End-to-end testing of content artifacts in realistic scenarios. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-test.html#content-testing",
+  },"225": {
+    "doc": "Content Review",
+    "title": "Content Review",
+    "content": "Formal review and approval of validated content before publication. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-review.html#content-review",
     
-    "relUrl": "/reference/skill-instructions/content-test.html#content-testing"
-  },"232": {
-    "doc": "Content Testing",
+    "relUrl": "/reference/skill-instructions/content-review.html#content-review"
+  },"226": {
+    "doc": "Content Review",
     "title": "Responsibilities",
-    "content": ". | Execute test plans and test scripts | Verify StructureMap extraction output (FHIR) | Verify CQL execution and measure calculations (FHIR) | Run Lean proof verification (formal math) | Dispatch the repo’s Lean CI workflow on your branch and fold the result into the PR — see below; a local build is not CI green | Validate LaTeX compilation and output (formal math) | Test cross-component integration | Run regression tests against previous versions | Document test results | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-test.html#responsibilities",
+    "content": ". | Review L2 content before L3 begins (phase gate) | Review L3 content before publication (phase gate) | Assess breaking vs. non-breaking changes | Ensure alignment with source guidelines | Approve draft publications for stakeholder circulation | Provide final publication release sign-off | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-review.html#responsibilities",
     
-    "relUrl": "/reference/skill-instructions/content-test.html#responsibilities"
-  },"233": {
-    "doc": "Content Testing",
-    "title": "Running CI, not just assuming it",
-    "content": "A local lake build runs on a warm .lake, your toolchain, and whatever build flags you set. CI runs cold, on its own toolchain, with none of that. They fail differently, so a local green is evidence about your machine, not about the branch. So: push, then dispatch the workflow against your branch (gh workflow run &lt;lean-ci&gt;.yml --ref &lt;branch&gt;, or the actions_run_trigger MCP tool), wait for it, and record run URL + conclusion in the PR body. Red → fix and re-dispatch. If dispatch is refused for lack of actions: write, say so in the PR and give the command a maintainer should run — never leave it silently unmentioned. Also check when CI last ran (actions_list → list_workflow_runs). The existence of a workflow is not evidence that anything is being checked: qou’s lean_ci.yml last ran 2026-04-25 and failed on main. Nothing dispatched it for four months, and 37 modules stopped compiling unnoticed — several with plain parse errors, i.e. files that had never compiled at all. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-test.html#running-ci-not-just-assuming-it",
-    
-    "relUrl": "/reference/skill-instructions/content-test.html#running-ci-not-just-assuming-it"
-  },"234": {
-    "doc": "Content Testing",
-    "title": "A green build only covers what the target reaches",
-    "content": "Before reading “build green” as a claim about the corpus, check what the build target actually compiles. Build systems default to narrow roots: Lake’s lean_lib uses globs := roots.map Glob.one, so lake build compiles the root module plus its transitive imports — not the source directory. srcDir widens where sources are found, never what is built. Measured in qou on 2026-08-08: lake build reached 853 of the 1618 modules under lean/QOU/. The other 766 (47%) had no olean at all — among them the module holding the single sorry gating the Specht chain, which is why the package build’s sorry-warning list omitted it. The check is cheap in any build system — count artifacts against sources: . find .lake/build/lib/lean/QOU -name '*.olean' | wc -l # 860 find QOU -name '*.lean' | wc -l # 1618 . A ratio far from 1 means the green is scoped, and any corpus-wide number read off that build — sorry counts, coverage, warning totals — is an undercount by construction. Say what the build covered, not just that it passed. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-test.html#a-green-build-only-covers-what-the-target-reaches",
-    
-    "relUrl": "/reference/skill-instructions/content-test.html#a-green-build-only-covers-what-the-target-reaches"
-  },"235": {
-    "doc": "Content Testing",
+    "relUrl": "/reference/skill-instructions/content-review.html#responsibilities"
+  },"227": {
+    "doc": "Content Review",
     "title": "Actors",
-    "content": ". | QC Reviewer (lead) | FHIR Modeller (technical testing) | Business Analyst (scenario testing) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-test.html#actors",
+    "content": ". | Content Reviewer (lead, approval authority) | Technical Officer (first-pass review) | Clinical SME (clinical sign-off) | Programme Manager (governance oversight) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-review.html#actors",
     
-    "relUrl": "/reference/skill-instructions/content-test.html#actors"
-  },"236": {
-    "doc": "Content Testing",
+    "relUrl": "/reference/skill-instructions/content-review.html#actors"
+  },"228": {
+    "doc": "Content Review",
     "title": "Inputs",
-    "content": ". | Approved content artifacts | Test plans and test data | Expected outcomes / golden files | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-test.html#inputs",
+    "content": ". | Validated content artifacts | Validation reports | Change log / diff from previous version | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-review.html#inputs",
     
-    "relUrl": "/reference/skill-instructions/content-test.html#inputs"
-  },"237": {
-    "doc": "Content Testing",
+    "relUrl": "/reference/skill-instructions/content-review.html#inputs"
+  },"229": {
+    "doc": "Content Review",
     "title": "Outputs",
-    "content": ". | Test results report | Coverage metrics | Regression comparison | Issue list (if failures) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-test.html#outputs",
+    "content": ". | Review decision (approve / request-changes / reject) | Review comments and required modifications | Approval record (who, when, conditions) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-review.html#outputs",
     
-    "relUrl": "/reference/skill-instructions/content-test.html#outputs"
-  },"238": {
-    "doc": "Content Testing",
-    "title": "Content Testing",
-    "content": "Generated from skills/content-lifecycle/content-test.md — do not edit here. Typed contract: schema reference. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-test.html",
+    "relUrl": "/reference/skill-instructions/content-review.html#outputs"
+  },"230": {
+    "doc": "Content Review",
+    "title": "Content Review",
+    "content": "Generated from skills/content-lifecycle/content-review.md — do not edit here. Typed contract: schema reference. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-review.html",
     
-    "relUrl": "/reference/skill-instructions/content-test.html"
-  },"239": {
+    "relUrl": "/reference/skill-instructions/content-review.html"
+  },"231": {
     "doc": "Content Test",
     "title": "Content Test",
     "content": "Skill id: content-test . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
     "url": "/folio-assistant/reference/skills/content-test.html",
     
     "relUrl": "/reference/skills/content-test.html"
-  },"240": {
+  },"232": {
     "doc": "Content Test",
     "title": "Input",
     "content": "Input schema for end-to-end content testing. | Field | Type | Required | Description | . | targetPath | string | yes |   | . | testPlan | string | no | Path to test plan file. | . | testData | string | no | Path to test data directory. | . | regressionBaseline | string | no | Git ref for regression baseline. | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-test.html#input",
     
     "relUrl": "/reference/skills/content-test.html#input"
-  },"241": {
+  },"233": {
     "doc": "Content Test",
     "title": "Output",
     "content": "Output schema for content testing results. | Field | Type | Required | Description | . | overallStatus | \"pass\" | \"fail\" | yes |   | . | testResults | array | yes |   | . | coverage | object | no |   | . testResults[] . | Field | Type | Required | Description | . | testId | string | yes |   | . | status | \"pass\" | \"fail\" | \"skipped\" | yes |   | . | message | string | no |   | . | duration | number | no |   | . coverage . | Field | Type | Required | Description | . | total | integer | no |   | . | passed | integer | no |   | . | failed | integer | no |   | . | skipped | integer | no |   | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-test.html#output",
     
     "relUrl": "/reference/skills/content-test.html#output"
+  },"234": {
+    "doc": "Content Testing",
+    "title": "Content Testing",
+    "content": "End-to-end testing of content artifacts in realistic scenarios. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-test.html#content-testing",
+    
+    "relUrl": "/reference/skill-instructions/content-test.html#content-testing"
+  },"235": {
+    "doc": "Content Testing",
+    "title": "Responsibilities",
+    "content": ". | Execute test plans and test scripts | Verify StructureMap extraction output (FHIR) | Verify CQL execution and measure calculations (FHIR) | Run Lean proof verification (formal math) | Dispatch the repo’s Lean CI workflow on your branch and fold the result into the PR — see below; a local build is not CI green | Validate LaTeX compilation and output (formal math) | Test cross-component integration | Run regression tests against previous versions | Document test results | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-test.html#responsibilities",
+    
+    "relUrl": "/reference/skill-instructions/content-test.html#responsibilities"
+  },"236": {
+    "doc": "Content Testing",
+    "title": "Running CI, not just assuming it",
+    "content": "A local lake build runs on a warm .lake, your toolchain, and whatever build flags you set. CI runs cold, on its own toolchain, with none of that. They fail differently, so a local green is evidence about your machine, not about the branch. So: push, then dispatch the workflow against your branch (gh workflow run &lt;lean-ci&gt;.yml --ref &lt;branch&gt;, or the actions_run_trigger MCP tool), wait for it, and record run URL + conclusion in the PR body. Red → fix and re-dispatch. If dispatch is refused for lack of actions: write, say so in the PR and give the command a maintainer should run — never leave it silently unmentioned. Also check when CI last ran (actions_list → list_workflow_runs). The existence of a workflow is not evidence that anything is being checked: qou’s lean_ci.yml last ran 2026-04-25 and failed on main. Nothing dispatched it for four months, and 37 modules stopped compiling unnoticed — several with plain parse errors, i.e. files that had never compiled at all. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-test.html#running-ci-not-just-assuming-it",
+    
+    "relUrl": "/reference/skill-instructions/content-test.html#running-ci-not-just-assuming-it"
+  },"237": {
+    "doc": "Content Testing",
+    "title": "A green build only covers what the target reaches",
+    "content": "Before reading “build green” as a claim about the corpus, check what the build target actually compiles. Build systems default to narrow roots: Lake’s lean_lib uses globs := roots.map Glob.one, so lake build compiles the root module plus its transitive imports — not the source directory. srcDir widens where sources are found, never what is built. Measured in qou on 2026-08-08: lake build reached 853 of the 1618 modules under lean/QOU/. The other 766 (47%) had no olean at all — among them the module holding the single sorry gating the Specht chain, which is why the package build’s sorry-warning list omitted it. The check is cheap in any build system — count artifacts against sources: . find .lake/build/lib/lean/QOU -name '*.olean' | wc -l # 860 find QOU -name '*.lean' | wc -l # 1618 . A ratio far from 1 means the green is scoped, and any corpus-wide number read off that build — sorry counts, coverage, warning totals — is an undercount by construction. Say what the build covered, not just that it passed. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-test.html#a-green-build-only-covers-what-the-target-reaches",
+    
+    "relUrl": "/reference/skill-instructions/content-test.html#a-green-build-only-covers-what-the-target-reaches"
+  },"238": {
+    "doc": "Content Testing",
+    "title": "Actors",
+    "content": ". | QC Reviewer (lead) | FHIR Modeller (technical testing) | Business Analyst (scenario testing) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-test.html#actors",
+    
+    "relUrl": "/reference/skill-instructions/content-test.html#actors"
+  },"239": {
+    "doc": "Content Testing",
+    "title": "Inputs",
+    "content": ". | Approved content artifacts | Test plans and test data | Expected outcomes / golden files | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-test.html#inputs",
+    
+    "relUrl": "/reference/skill-instructions/content-test.html#inputs"
+  },"240": {
+    "doc": "Content Testing",
+    "title": "Outputs",
+    "content": ". | Test results report | Coverage metrics | Regression comparison | Issue list (if failures) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-test.html#outputs",
+    
+    "relUrl": "/reference/skill-instructions/content-test.html#outputs"
+  },"241": {
+    "doc": "Content Testing",
+    "title": "Content Testing",
+    "content": "Generated from skills/content-lifecycle/content-test.md — do not edit here. Typed contract: schema reference. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-test.html",
+    
+    "relUrl": "/reference/skill-instructions/content-test.html"
   },"242": {
     "doc": "Content types",
     "title": "Content types",
@@ -1742,68 +1742,68 @@
     
     "relUrl": "/content-types.html#others--extending-folio-assistant"
   },"249": {
-    "doc": "Content Validation",
-    "title": "Content Validation",
-    "content": "Validate authored content against schemas, standards, and clinical accuracy. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-validate.html#content-validation",
-    
-    "relUrl": "/reference/skill-instructions/content-validate.html#content-validation"
-  },"250": {
-    "doc": "Content Validation",
-    "title": "Responsibilities",
-    "content": ". | Run schema validation against defined constraints | Validate FHIR resources (if applicable) | Run SUSHI compilation (if applicable) | Execute IG Publisher QA checks (if applicable) | Verify Lean proofs compile (if applicable) | Check cross-component consistency | Validate terminology bindings | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-validate.html#responsibilities",
-    
-    "relUrl": "/reference/skill-instructions/content-validate.html#responsibilities"
-  },"251": {
-    "doc": "Content Validation",
-    "title": "Actors",
-    "content": ". | QC Reviewer (lead) | FHIR Modeller (technical validation) | Terminologist (terminology validation) | Clinical SME (clinical accuracy) | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-validate.html#actors",
-    
-    "relUrl": "/reference/skill-instructions/content-validate.html#actors"
-  },"252": {
-    "doc": "Content Validation",
-    "title": "Inputs",
-    "content": ". | Authored content artifacts | Validation rules and schemas | Reference standards | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-validate.html#inputs",
-    
-    "relUrl": "/reference/skill-instructions/content-validate.html#inputs"
-  },"253": {
-    "doc": "Content Validation",
-    "title": "Outputs",
-    "content": ". | Validation report (pass/fail per artifact) | Issue list with severity and remediation guidance | . ",
-    "url": "/folio-assistant/reference/skill-instructions/content-validate.html#outputs",
-    
-    "relUrl": "/reference/skill-instructions/content-validate.html#outputs"
-  },"254": {
-    "doc": "Content Validation",
-    "title": "Content Validation",
-    "content": "Generated from skills/content-lifecycle/content-validate.md — do not edit here. Typed contract: schema reference. ",
-    "url": "/folio-assistant/reference/skill-instructions/content-validate.html",
-    
-    "relUrl": "/reference/skill-instructions/content-validate.html"
-  },"255": {
     "doc": "Content Validate",
     "title": "Content Validate",
     "content": "Skill id: content-validate . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
     "url": "/folio-assistant/reference/skills/content-validate.html",
     
     "relUrl": "/reference/skills/content-validate.html"
-  },"256": {
+  },"250": {
     "doc": "Content Validate",
     "title": "Input",
     "content": "Input schema for content validation. | Field | Type | Required | Description | . | targetPath | string | yes | Path to content to validate. | . | validationRules | array | no | Specific validation rule IDs to run (empty = all applicable). | . | schemaRefs | array | no | Schema files to validate against. | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-validate.html#input",
     
     "relUrl": "/reference/skills/content-validate.html#input"
-  },"257": {
+  },"251": {
     "doc": "Content Validate",
     "title": "Output",
     "content": "Output schema for content validation results. | Field | Type | Required | Description | . | overallStatus | \"pass\" | \"warnings\" | \"errors\" | yes |   | . | results | array | yes |   | . results[] . | Field | Type | Required | Description | . | rule | string | yes |   | . | status | \"pass\" | \"fail\" | \"warning\" | \"skipped\" | yes |   | . | message | string | no |   | . | location | string | no |   | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/content-validate.html#output",
     
     "relUrl": "/reference/skills/content-validate.html#output"
+  },"252": {
+    "doc": "Content Validation",
+    "title": "Content Validation",
+    "content": "Validate authored content against schemas, standards, and clinical accuracy. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-validate.html#content-validation",
+    
+    "relUrl": "/reference/skill-instructions/content-validate.html#content-validation"
+  },"253": {
+    "doc": "Content Validation",
+    "title": "Responsibilities",
+    "content": ". | Run schema validation against defined constraints | Validate FHIR resources (if applicable) | Run SUSHI compilation (if applicable) | Execute IG Publisher QA checks (if applicable) | Verify Lean proofs compile (if applicable) | Check cross-component consistency | Validate terminology bindings | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-validate.html#responsibilities",
+    
+    "relUrl": "/reference/skill-instructions/content-validate.html#responsibilities"
+  },"254": {
+    "doc": "Content Validation",
+    "title": "Actors",
+    "content": ". | QC Reviewer (lead) | FHIR Modeller (technical validation) | Terminologist (terminology validation) | Clinical SME (clinical accuracy) | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-validate.html#actors",
+    
+    "relUrl": "/reference/skill-instructions/content-validate.html#actors"
+  },"255": {
+    "doc": "Content Validation",
+    "title": "Inputs",
+    "content": ". | Authored content artifacts | Validation rules and schemas | Reference standards | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-validate.html#inputs",
+    
+    "relUrl": "/reference/skill-instructions/content-validate.html#inputs"
+  },"256": {
+    "doc": "Content Validation",
+    "title": "Outputs",
+    "content": ". | Validation report (pass/fail per artifact) | Issue list with severity and remediation guidance | . ",
+    "url": "/folio-assistant/reference/skill-instructions/content-validate.html#outputs",
+    
+    "relUrl": "/reference/skill-instructions/content-validate.html#outputs"
+  },"257": {
+    "doc": "Content Validation",
+    "title": "Content Validation",
+    "content": "Generated from skills/content-lifecycle/content-validate.md — do not edit here. Typed contract: schema reference. ",
+    "url": "/folio-assistant/reference/skill-instructions/content-validate.html",
+    
+    "relUrl": "/reference/skill-instructions/content-validate.html"
   },"258": {
     "doc": "Content Validation",
     "title": "Content Validation Skill",
@@ -2785,82 +2785,82 @@
     
     "relUrl": "/reference/skill-instructions/docs-generation.html"
   },"398": {
-    "doc": "document-authoring",
-    "title": "document-authoring",
-    "content": "Author a document folio: policy guidance, a standard, a report, a handbook — anything whose content is structured prose rather than machine- checked mathematics. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#document-authoring",
-    
-    "relUrl": "/reference/skill-instructions/document-authoring.html#document-authoring"
-  },"399": {
-    "doc": "document-authoring",
-    "title": "What a document folio is",
-    "content": "The same content model as a paper, minus the formal layer: . content/&lt;slug&gt;/ &lt;slug&gt;.ts the document manifest (chapters, in order) &lt;chapter-dir&gt;/ &lt;chapter-dir&gt;.ts the chapter manifest (sections, in order) &lt;block-root&gt;.ts one block manifest &lt;block-root&gt;.md that block's narrative body &lt;block-root&gt;.qa.json QA sidecar (machine-written; never hand-edit) . A block is the unit of authorship, review, feedback and QA. Its .ts carries the metadata — label, title, uses[] — and its .md carries the prose. They are separate files so a reviewer’s diff is over prose, not over a manifest. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#what-a-document-folio-is",
-    
-    "relUrl": "/reference/skill-instructions/document-authoring.html#what-a-document-folio-is"
-  },"400": {
-    "doc": "document-authoring",
-    "title": "The kinds you may use",
-    "content": "prose, example, remark, algorithm, simulator, equation, diagram, table. Not definition, theorem, lemma, proposition, corollary, conjecture, proof. Those seven are the paper profile: their assertion is a formal mathematical claim backed by a .lean sibling, and a document folio has no Lean toolchain to check one. content_profile_check enforces this, and content_validate runs it on every pass. If you find yourself wanting a theorem, you want one of two things: . | a normative statement — a recommendation, a requirement, a rule. See normative-statements for how to carry one in this profile, and read it before reaching for a math kind. | an actual theorem — in which case this folio is a paper. Change folio.config.json to \"contentType\": \"paper\" deliberately, and know that you are taking on Lean and TeX as dependencies. | . ",
-    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#the-kinds-you-may-use",
-    
-    "relUrl": "/reference/skill-instructions/document-authoring.html#the-kinds-you-may-use"
-  },"401": {
-    "doc": "document-authoring",
-    "title": "Adding a block",
-    "content": ". | Find the section it belongs to. content_list shows the tree. A block only reaches the output if a section’s blocks[] names it — writing the files is not enough, and a block nobody lists renders nowhere and is swept by nothing. | Write &lt;root&gt;.ts — the builder call for the kind, with label, optional title, and uses[]. | Write &lt;root&gt;.md — the prose. GitHub-flavoured Markdown; tables, footnotes and raw HTML all survive to the output unchanged, because the document render path assembles Markdown rather than translating it. | Add the root name to the section’s blocks[], in reading order. | content_validate before you consider it done. | . ",
-    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#adding-a-block",
-    
-    "relUrl": "/reference/skill-instructions/document-authoring.html#adding-a-block"
-  },"402": {
-    "doc": "document-authoring",
-    "title": "uses[] is editorial, and it is yours to maintain",
-    "content": "uses[] lists the blocks a reader must already have read to follow this one. It is a judgement about narrative order, not a mechanical fact — nothing derives it and nothing should. In a paper folio there is a machine-derived formal graph alongside it; in a document folio there is not, so uses[] is the only dependency signal the corpus carries. That makes it more load- bearing here, not less: every ordering metric, every impact question (“what has to change if this recommendation changes?”), and the reading-order review all read it. List direct neighbours only. If A needs B and B needs C, A lists B. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#uses-is-editorial-and-it-is-yours-to-maintain",
-    
-    "relUrl": "/reference/skill-instructions/document-authoring.html#uses-is-editorial-and-it-is-yours-to-maintain"
-  },"403": {
-    "doc": "document-authoring",
-    "title": "Rendering",
-    "content": "document_render_md assembles the whole folio into one Markdown file — run it to inspect ordering before you render anything else. document_render_html and document_render_pdf go through pandoc; the PDF path uses an HTML engine (weasyprint, prince, wkhtmltopdf) and never falls back to LaTeX. If no engine is installed it says so, because a document folio that quietly needed TeX to publish would be a paper folio wearing the wrong label. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#rendering",
-    
-    "relUrl": "/reference/skill-instructions/document-authoring.html#rendering"
-  },"404": {
-    "doc": "document-authoring",
-    "title": "What belongs in the folio, and what belongs here",
-    "content": "Subject matter — the actual recommendations, the vocabulary, the chapters — lives in the folio repo, as content. This platform holds the formalism. If you are about to add a domain constant or a subject-specific rule to folio-assistant, you are in the wrong repository. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#what-belongs-in-the-folio-and-what-belongs-here",
-    
-    "relUrl": "/reference/skill-instructions/document-authoring.html#what-belongs-in-the-folio-and-what-belongs-here"
-  },"405": {
-    "doc": "document-authoring",
-    "title": "document-authoring",
-    "content": "Generated from skills/folio-document-adapter/document-authoring.md — do not edit here. Typed contract: schema reference. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html",
-    
-    "relUrl": "/reference/skill-instructions/document-authoring.html"
-  },"406": {
     "doc": "Document Authoring",
     "title": "Document Authoring",
     "content": "Skill id: document-authoring . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
     "url": "/folio-assistant/reference/skills/document-authoring.html",
     
     "relUrl": "/reference/skills/document-authoring.html"
-  },"407": {
+  },"399": {
     "doc": "Document Authoring",
     "title": "Input",
     "content": "Input schema for the document-authoring skill: create or revise one content block in a document folio. | Field | Type | Required | Description | . | document | string | yes | Document slug under content/. | . | chapter | string | yes | Chapter directory name within the document. | . | section | string | yes | Label or title of the section whose blocks[] will name this block. | . | kind | \"prose\" | \"example\" | \"remark\" | \"algorithm\" | \"simulator\" | \"equation\" | \"diagram\" | \"table\" | yes | Block kind. Restricted to the document profile: the seven math kinds (definition, theorem, lemma, proposition, corollary, conjecture, proof) are the paper profile and are rejected by content_profile_check. | . | label | string | yes | Stable identifier, e.g. rec:cold-chain-audit. Becomes the block’s HTML anchor; must survive renumbering. | . | title | string | no | Short display title. | . | uses | array | no | Labels of the blocks a reader must already have read. Direct neighbours only, never the transitive closure. Editorial judgement — never derived. | . | body | string | no | GitHub-flavoured Markdown for the block’s .md file. | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/document-authoring.html#input",
     
     "relUrl": "/reference/skills/document-authoring.html#input"
-  },"408": {
+  },"400": {
     "doc": "Document Authoring",
     "title": "Output",
     "content": "| Field | Type | Required | Description | . | label | string | yes |   | . | filesWritten | array | yes | Repo-relative paths written (.ts and .md). | . | listedInSection | boolean | yes | Whether the block root was added to a section’s blocks[]. False means the block renders nowhere — the most common way authored work disappears. | . | validation | object | no |   | . validation . | Field | Type | Required | Description | . | errors | integer | no |   | . | warnings | integer | no |   | . | profileViolations | integer | no |   | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/document-authoring.html#output",
     
     "relUrl": "/reference/skills/document-authoring.html#output"
+  },"401": {
+    "doc": "document-authoring",
+    "title": "document-authoring",
+    "content": "Author a document folio: policy guidance, a standard, a report, a handbook — anything whose content is structured prose rather than machine- checked mathematics. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#document-authoring",
+    
+    "relUrl": "/reference/skill-instructions/document-authoring.html#document-authoring"
+  },"402": {
+    "doc": "document-authoring",
+    "title": "What a document folio is",
+    "content": "The same content model as a paper, minus the formal layer: . content/&lt;slug&gt;/ &lt;slug&gt;.ts the document manifest (chapters, in order) &lt;chapter-dir&gt;/ &lt;chapter-dir&gt;.ts the chapter manifest (sections, in order) &lt;block-root&gt;.ts one block manifest &lt;block-root&gt;.md that block's narrative body &lt;block-root&gt;.qa.json QA sidecar (machine-written; never hand-edit) . A block is the unit of authorship, review, feedback and QA. Its .ts carries the metadata — label, title, uses[] — and its .md carries the prose. They are separate files so a reviewer’s diff is over prose, not over a manifest. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#what-a-document-folio-is",
+    
+    "relUrl": "/reference/skill-instructions/document-authoring.html#what-a-document-folio-is"
+  },"403": {
+    "doc": "document-authoring",
+    "title": "The kinds you may use",
+    "content": "prose, example, remark, algorithm, simulator, equation, diagram, table. Not definition, theorem, lemma, proposition, corollary, conjecture, proof. Those seven are the paper profile: their assertion is a formal mathematical claim backed by a .lean sibling, and a document folio has no Lean toolchain to check one. content_profile_check enforces this, and content_validate runs it on every pass. If you find yourself wanting a theorem, you want one of two things: . | a normative statement — a recommendation, a requirement, a rule. See normative-statements for how to carry one in this profile, and read it before reaching for a math kind. | an actual theorem — in which case this folio is a paper. Change folio.config.json to \"contentType\": \"paper\" deliberately, and know that you are taking on Lean and TeX as dependencies. | . ",
+    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#the-kinds-you-may-use",
+    
+    "relUrl": "/reference/skill-instructions/document-authoring.html#the-kinds-you-may-use"
+  },"404": {
+    "doc": "document-authoring",
+    "title": "Adding a block",
+    "content": ". | Find the section it belongs to. content_list shows the tree. A block only reaches the output if a section’s blocks[] names it — writing the files is not enough, and a block nobody lists renders nowhere and is swept by nothing. | Write &lt;root&gt;.ts — the builder call for the kind, with label, optional title, and uses[]. | Write &lt;root&gt;.md — the prose. GitHub-flavoured Markdown; tables, footnotes and raw HTML all survive to the output unchanged, because the document render path assembles Markdown rather than translating it. | Add the root name to the section’s blocks[], in reading order. | content_validate before you consider it done. | . ",
+    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#adding-a-block",
+    
+    "relUrl": "/reference/skill-instructions/document-authoring.html#adding-a-block"
+  },"405": {
+    "doc": "document-authoring",
+    "title": "uses[] is editorial, and it is yours to maintain",
+    "content": "uses[] lists the blocks a reader must already have read to follow this one. It is a judgement about narrative order, not a mechanical fact — nothing derives it and nothing should. In a paper folio there is a machine-derived formal graph alongside it; in a document folio there is not, so uses[] is the only dependency signal the corpus carries. That makes it more load- bearing here, not less: every ordering metric, every impact question (“what has to change if this recommendation changes?”), and the reading-order review all read it. List direct neighbours only. If A needs B and B needs C, A lists B. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#uses-is-editorial-and-it-is-yours-to-maintain",
+    
+    "relUrl": "/reference/skill-instructions/document-authoring.html#uses-is-editorial-and-it-is-yours-to-maintain"
+  },"406": {
+    "doc": "document-authoring",
+    "title": "Rendering",
+    "content": "document_render_md assembles the whole folio into one Markdown file — run it to inspect ordering before you render anything else. document_render_html and document_render_pdf go through pandoc; the PDF path uses an HTML engine (weasyprint, prince, wkhtmltopdf) and never falls back to LaTeX. If no engine is installed it says so, because a document folio that quietly needed TeX to publish would be a paper folio wearing the wrong label. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#rendering",
+    
+    "relUrl": "/reference/skill-instructions/document-authoring.html#rendering"
+  },"407": {
+    "doc": "document-authoring",
+    "title": "What belongs in the folio, and what belongs here",
+    "content": "Subject matter — the actual recommendations, the vocabulary, the chapters — lives in the folio repo, as content. This platform holds the formalism. If you are about to add a domain constant or a subject-specific rule to folio-assistant, you are in the wrong repository. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html#what-belongs-in-the-folio-and-what-belongs-here",
+    
+    "relUrl": "/reference/skill-instructions/document-authoring.html#what-belongs-in-the-folio-and-what-belongs-here"
+  },"408": {
+    "doc": "document-authoring",
+    "title": "document-authoring",
+    "content": "Generated from skills/folio-document-adapter/document-authoring.md — do not edit here. Typed contract: schema reference. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-authoring.html",
+    
+    "relUrl": "/reference/skill-instructions/document-authoring.html"
   },"409": {
     "doc": "Document Intake",
     "title": "Document Intake",
@@ -2932,152 +2932,152 @@
     
     "relUrl": "/reference/skill-instructions/document-intake.html"
   },"419": {
-    "doc": "document-publishing",
-    "title": "document-publishing",
-    "content": "Take a document folio from corpus to published artifact — without a TeX installation. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#document-publishing",
-    
-    "relUrl": "/reference/skill-instructions/document-publishing.html#document-publishing"
-  },"420": {
-    "doc": "document-publishing",
-    "title": "The pipeline",
-    "content": "content/** → document_render_md → build/&lt;slug&gt;.md → document_render_html → build/&lt;slug&gt;.html → document_render_pdf → build/&lt;slug&gt;.pdf . One assembly step, then pandoc. document_render_md is not an intermediate to skip past: run it first and read it. It is the only place the whole document appears in reading order in one file, and ordering problems are invisible block-by-block. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#the-pipeline",
-    
-    "relUrl": "/reference/skill-instructions/document-publishing.html#the-pipeline"
-  },"421": {
-    "doc": "document-publishing",
-    "title": "Before rendering",
-    "content": "Run, in this order, and fix what each reports before moving on: . | content_validate — schema, constraints, and profile conformance. A document folio that has acquired a math block or a .lean sibling fails here, which is the point: it fails at authoring time rather than at publication. | qa_sweep — the QA axes over each block’s sidecar. | document_render_md — read the assembly. Look for: sections that came out empty (a block written but never listed in blocks[]), blocks in an order that does not read, and the &gt; **Missing block:** marker, which means a section names a root that failed to load. | . ",
-    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#before-rendering",
-    
-    "relUrl": "/reference/skill-instructions/document-publishing.html#before-rendering"
-  },"422": {
-    "doc": "document-publishing",
-    "title": "PDF without LaTeX",
-    "content": "document_render_pdf drives pandoc with an HTML engine — weasyprint (recommended), prince, or wkhtmltopdf. If none is installed it reports which are missing and stops. It does not fall back to latexmk, even on a machine that has it. A document folio is defined by not requiring TeX to publish, and a PDF that silently came out of LaTeX would misreport what the folio actually needs — the next person to build it on a clean machine is the one who pays. document_render_html needs only pandoc, so it works when the PDF path cannot. When you are drafting rather than publishing, prefer it. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#pdf-without-latex",
-    
-    "relUrl": "/reference/skill-instructions/document-publishing.html#pdf-without-latex"
-  },"423": {
-    "doc": "document-publishing",
-    "title": "Styling",
-    "content": "Both HTML and PDF accept css, a stylesheet path relative to the repo root. Keep it in the folio repo, not here — a house style is content, and the platform ships no default beyond pandoc’s. The same stylesheet drives both outputs, so a print rule (@page, page breaks, running heads) belongs in it alongside the screen rules rather than in a second file that drifts. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#styling",
-    
-    "relUrl": "/reference/skill-instructions/document-publishing.html#styling"
-  },"424": {
-    "doc": "document-publishing",
-    "title": "What is not implemented",
-    "content": "No citations, no bibliography, no glossary, no automatic cross-reference numbering. \\cite{…} passes through verbatim — visible in the output rather than silently dropped — so a folio that needs references today should write them as Markdown links or footnotes. Cross-references do work: every labelled block emits an HTML anchor, so [see the scope statement](#rec:scope) resolves in both HTML and PDF. Use the block’s label, not a heading-derived anchor — the heading anchor changes whenever the title is edited, which is exactly when the link most needs to keep working. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#what-is-not-implemented",
-    
-    "relUrl": "/reference/skill-instructions/document-publishing.html#what-is-not-implemented"
-  },"425": {
-    "doc": "document-publishing",
-    "title": "Release",
-    "content": "Publication authorisation is the base process’s, not this skill’s: Task_AuthorizeRelease and Task_PublishRelease are non-relaxable in draft-to-publication.bpmn and no content type can opt out of them. Render, review, then take the release decision through the workflow — workflow_next will tell you what is enabled. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#release",
-    
-    "relUrl": "/reference/skill-instructions/document-publishing.html#release"
-  },"426": {
-    "doc": "document-publishing",
-    "title": "document-publishing",
-    "content": "Generated from skills/folio-document-adapter/document-publishing.md — do not edit here. Typed contract: schema reference. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html",
-    
-    "relUrl": "/reference/skill-instructions/document-publishing.html"
-  },"427": {
     "doc": "Document Publishing",
     "title": "Document Publishing",
     "content": "Skill id: document-publishing . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
     "url": "/folio-assistant/reference/skills/document-publishing.html",
     
     "relUrl": "/reference/skills/document-publishing.html"
-  },"428": {
+  },"420": {
     "doc": "Document Publishing",
     "title": "Input",
     "content": "Input schema for the document-publishing skill: render a document folio without a TeX installation. | Field | Type | Required | Description | . | document | string | yes | Document slug under content/. | . | format | \"md\" | \"html\" | \"pdf\" | yes | Output format. All three assemble Markdown first; html and pdf then run pandoc. | . | pdfEngine | \"auto\" | \"weasyprint\" | \"prince\" | \"wkhtmltopdf\" | no | HTML-to-PDF engine. Never latexmk: a document folio is defined by not requiring TeX to publish. (default: \"auto\") | . | css | string | no | Stylesheet path relative to the repo root. Belongs in the folio repo — a house style is content. | . | toc | boolean | no | default: true | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/document-publishing.html#input",
     
     "relUrl": "/reference/skills/document-publishing.html#input"
-  },"429": {
+  },"421": {
     "doc": "Document Publishing",
     "title": "Output",
     "content": "| Field | Type | Required | Description | . | outputPath | string | yes |   | . | engine | string | no | The engine actually used, or absent for md/html. | . | blockCount | integer | yes |   | . | chapterCount | integer | no |   | . | issues | array | no |   | . issues[] . | Field | Type | Required | Description | . | level | \"error\" | \"warn\" | no |   | . | message | string | no |   | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/document-publishing.html#output",
     
     "relUrl": "/reference/skills/document-publishing.html#output"
+  },"422": {
+    "doc": "document-publishing",
+    "title": "document-publishing",
+    "content": "Take a document folio from corpus to published artifact — without a TeX installation. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#document-publishing",
+    
+    "relUrl": "/reference/skill-instructions/document-publishing.html#document-publishing"
+  },"423": {
+    "doc": "document-publishing",
+    "title": "The pipeline",
+    "content": "content/** → document_render_md → build/&lt;slug&gt;.md → document_render_html → build/&lt;slug&gt;.html → document_render_pdf → build/&lt;slug&gt;.pdf . One assembly step, then pandoc. document_render_md is not an intermediate to skip past: run it first and read it. It is the only place the whole document appears in reading order in one file, and ordering problems are invisible block-by-block. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#the-pipeline",
+    
+    "relUrl": "/reference/skill-instructions/document-publishing.html#the-pipeline"
+  },"424": {
+    "doc": "document-publishing",
+    "title": "Before rendering",
+    "content": "Run, in this order, and fix what each reports before moving on: . | content_validate — schema, constraints, and profile conformance. A document folio that has acquired a math block or a .lean sibling fails here, which is the point: it fails at authoring time rather than at publication. | qa_sweep — the QA axes over each block’s sidecar. | document_render_md — read the assembly. Look for: sections that came out empty (a block written but never listed in blocks[]), blocks in an order that does not read, and the &gt; **Missing block:** marker, which means a section names a root that failed to load. | . ",
+    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#before-rendering",
+    
+    "relUrl": "/reference/skill-instructions/document-publishing.html#before-rendering"
+  },"425": {
+    "doc": "document-publishing",
+    "title": "PDF without LaTeX",
+    "content": "document_render_pdf drives pandoc with an HTML engine — weasyprint (recommended), prince, or wkhtmltopdf. If none is installed it reports which are missing and stops. It does not fall back to latexmk, even on a machine that has it. A document folio is defined by not requiring TeX to publish, and a PDF that silently came out of LaTeX would misreport what the folio actually needs — the next person to build it on a clean machine is the one who pays. document_render_html needs only pandoc, so it works when the PDF path cannot. When you are drafting rather than publishing, prefer it. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#pdf-without-latex",
+    
+    "relUrl": "/reference/skill-instructions/document-publishing.html#pdf-without-latex"
+  },"426": {
+    "doc": "document-publishing",
+    "title": "Styling",
+    "content": "Both HTML and PDF accept css, a stylesheet path relative to the repo root. Keep it in the folio repo, not here — a house style is content, and the platform ships no default beyond pandoc’s. The same stylesheet drives both outputs, so a print rule (@page, page breaks, running heads) belongs in it alongside the screen rules rather than in a second file that drifts. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#styling",
+    
+    "relUrl": "/reference/skill-instructions/document-publishing.html#styling"
+  },"427": {
+    "doc": "document-publishing",
+    "title": "What is not implemented",
+    "content": "No citations, no bibliography, no glossary, no automatic cross-reference numbering. \\cite{…} passes through verbatim — visible in the output rather than silently dropped — so a folio that needs references today should write them as Markdown links or footnotes. Cross-references do work: every labelled block emits an HTML anchor, so [see the scope statement](#rec:scope) resolves in both HTML and PDF. Use the block’s label, not a heading-derived anchor — the heading anchor changes whenever the title is edited, which is exactly when the link most needs to keep working. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#what-is-not-implemented",
+    
+    "relUrl": "/reference/skill-instructions/document-publishing.html#what-is-not-implemented"
+  },"428": {
+    "doc": "document-publishing",
+    "title": "Release",
+    "content": "Publication authorisation is the base process’s, not this skill’s: Task_AuthorizeRelease and Task_PublishRelease are non-relaxable in draft-to-publication.bpmn and no content type can opt out of them. Render, review, then take the release decision through the workflow — workflow_next will tell you what is enabled. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html#release",
+    
+    "relUrl": "/reference/skill-instructions/document-publishing.html#release"
+  },"429": {
+    "doc": "document-publishing",
+    "title": "document-publishing",
+    "content": "Generated from skills/folio-document-adapter/document-publishing.md — do not edit here. Typed contract: schema reference. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-publishing.html",
+    
+    "relUrl": "/reference/skill-instructions/document-publishing.html"
   },"430": {
-    "doc": "document-structure",
-    "title": "document-structure",
-    "content": "Decide and maintain the chapter/section skeleton of a document folio. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#document-structure",
-    
-    "relUrl": "/reference/skill-instructions/document-structure.html#document-structure"
-  },"431": {
-    "doc": "document-structure",
-    "title": "Structure is authored, not inferred",
-    "content": "Nothing derives the outline from the prose. Three manifests hold it, and each is an ordered list: . | File | Holds | Order means | . | content/&lt;slug&gt;/&lt;slug&gt;.ts | chapters: ChapterRef[] | reading order of chapters | . | &lt;chapter&gt;/&lt;chapter&gt;.ts | sections: Section[] | reading order within the chapter | . | a section’s blocks: string[] | block root names | reading order within the section | . A block reaches the output iff some section names it. This is the single most common way work disappears: the .ts and .md are written, committed, and reviewed, and the block renders nowhere because nothing lists it. Adding the name to blocks[] is part of adding a block, not a follow-up. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#structure-is-authored-not-inferred",
-    
-    "relUrl": "/reference/skill-instructions/document-structure.html#structure-is-authored-not-inferred"
-  },"432": {
-    "doc": "document-structure",
-    "title": "Sections may nest exactly one level",
-    "content": "subsections[] on a section carries another section, whose blocks[] render under a deeper heading. One level only — the renderers flatten at that depth, so a third level silently loses its blocks rather than nesting further. If you need a third level, you need another chapter. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#sections-may-nest-exactly-one-level",
-    
-    "relUrl": "/reference/skill-instructions/document-structure.html#sections-may-nest-exactly-one-level"
-  },"433": {
-    "doc": "document-structure",
-    "title": "Chapter granularity",
-    "content": "A chapter is the unit a reviewer is asked to read in one sitting, and the unit the work plan tracks. Prefer more, smaller chapters over few large ones: a chapter is also the unit that gets rewritten, and a 40-block chapter is one nobody will re-order. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#chapter-granularity",
-    
-    "relUrl": "/reference/skill-instructions/document-structure.html#chapter-granularity"
-  },"434": {
-    "doc": "document-structure",
-    "title": "Adding a chapter",
-    "content": ". | mkdir content/&lt;slug&gt;/&lt;chapter-dir&gt; | Write &lt;chapter-dir&gt;/&lt;chapter-dir&gt;.ts — title, optional label, and sections[] (which may start empty). | Add { dir: \"&lt;chapter-dir&gt;\" } to the document manifest’s chapters[], in the position it should be read. | content_validate. | . The directory name is the chapter’s slug; it appears in build output and in every path a reviewer sees, so name it for what the chapter is about rather than for its position. A ch3- prefix is a rename waiting to happen the first time something moves. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#adding-a-chapter",
-    
-    "relUrl": "/reference/skill-instructions/document-structure.html#adding-a-chapter"
-  },"435": {
-    "doc": "document-structure",
-    "title": "Reordering",
-    "content": "Move the entry in chapters[] — nothing else. Do not rename directories to encode order: labels, uses[] targets, feedback records and QA sidecars all key on names, and a rename breaks every one of them for a change that the manifest already expresses. After any reorder, re-read uses[] across the moved chapter: an editorial edge that pointed backwards may now point forwards, which is a real finding about reading order rather than a mechanical detail. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#reordering",
-    
-    "relUrl": "/reference/skill-instructions/document-structure.html#reordering"
-  },"436": {
-    "doc": "document-structure",
-    "title": "document-structure",
-    "content": "Generated from skills/folio-document-adapter/document-structure.md — do not edit here. Typed contract: schema reference. ",
-    "url": "/folio-assistant/reference/skill-instructions/document-structure.html",
-    
-    "relUrl": "/reference/skill-instructions/document-structure.html"
-  },"437": {
     "doc": "Document Structure",
     "title": "Document Structure",
     "content": "Skill id: document-structure . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
     "url": "/folio-assistant/reference/skills/document-structure.html",
     
     "relUrl": "/reference/skills/document-structure.html"
-  },"438": {
+  },"431": {
     "doc": "Document Structure",
     "title": "Input",
     "content": "Input schema for the document-structure skill: add, remove or reorder chapters and sections. | Field | Type | Required | Description | . | document | string | yes | Document slug under content/. | . | operation | \"add-chapter\" | \"add-section\" | \"reorder-chapters\" | \"reorder-sections\" | yes | Structural change to make. Reordering edits the manifest only — directories are never renamed, because labels, uses[], feedback and QA sidecars all key on names. | . | chapter | string | no | Chapter directory name. Required for every operation except reorder-chapters. | . | title | string | no | Human-readable title, for the add-* operations. | . | position | integer | no | Zero-based index to insert at. Appends when omitted. | . | order | array | no | The complete new order, for the reorder-* operations. Must be a permutation of the existing entries. | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/document-structure.html#input",
     
     "relUrl": "/reference/skills/document-structure.html#input"
-  },"439": {
+  },"432": {
     "doc": "Document Structure",
     "title": "Output",
     "content": "| Field | Type | Required | Description | . | manifestsChanged | array | yes |   | . | chapters | array | no | Chapter directory names in their new reading order. | . | forwardReferences | array | no | Labels whose uses[] now points forward in reading order. A real finding after a reorder, not a mechanical detail. | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/document-structure.html#output",
     
     "relUrl": "/reference/skills/document-structure.html#output"
+  },"433": {
+    "doc": "document-structure",
+    "title": "document-structure",
+    "content": "Decide and maintain the chapter/section skeleton of a document folio. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#document-structure",
+    
+    "relUrl": "/reference/skill-instructions/document-structure.html#document-structure"
+  },"434": {
+    "doc": "document-structure",
+    "title": "Structure is authored, not inferred",
+    "content": "Nothing derives the outline from the prose. Three manifests hold it, and each is an ordered list: . | File | Holds | Order means | . | content/&lt;slug&gt;/&lt;slug&gt;.ts | chapters: ChapterRef[] | reading order of chapters | . | &lt;chapter&gt;/&lt;chapter&gt;.ts | sections: Section[] | reading order within the chapter | . | a section’s blocks: string[] | block root names | reading order within the section | . A block reaches the output iff some section names it. This is the single most common way work disappears: the .ts and .md are written, committed, and reviewed, and the block renders nowhere because nothing lists it. Adding the name to blocks[] is part of adding a block, not a follow-up. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#structure-is-authored-not-inferred",
+    
+    "relUrl": "/reference/skill-instructions/document-structure.html#structure-is-authored-not-inferred"
+  },"435": {
+    "doc": "document-structure",
+    "title": "Sections may nest exactly one level",
+    "content": "subsections[] on a section carries another section, whose blocks[] render under a deeper heading. One level only — the renderers flatten at that depth, so a third level silently loses its blocks rather than nesting further. If you need a third level, you need another chapter. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#sections-may-nest-exactly-one-level",
+    
+    "relUrl": "/reference/skill-instructions/document-structure.html#sections-may-nest-exactly-one-level"
+  },"436": {
+    "doc": "document-structure",
+    "title": "Chapter granularity",
+    "content": "A chapter is the unit a reviewer is asked to read in one sitting, and the unit the work plan tracks. Prefer more, smaller chapters over few large ones: a chapter is also the unit that gets rewritten, and a 40-block chapter is one nobody will re-order. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#chapter-granularity",
+    
+    "relUrl": "/reference/skill-instructions/document-structure.html#chapter-granularity"
+  },"437": {
+    "doc": "document-structure",
+    "title": "Adding a chapter",
+    "content": ". | mkdir content/&lt;slug&gt;/&lt;chapter-dir&gt; | Write &lt;chapter-dir&gt;/&lt;chapter-dir&gt;.ts — title, optional label, and sections[] (which may start empty). | Add { dir: \"&lt;chapter-dir&gt;\" } to the document manifest’s chapters[], in the position it should be read. | content_validate. | . The directory name is the chapter’s slug; it appears in build output and in every path a reviewer sees, so name it for what the chapter is about rather than for its position. A ch3- prefix is a rename waiting to happen the first time something moves. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#adding-a-chapter",
+    
+    "relUrl": "/reference/skill-instructions/document-structure.html#adding-a-chapter"
+  },"438": {
+    "doc": "document-structure",
+    "title": "Reordering",
+    "content": "Move the entry in chapters[] — nothing else. Do not rename directories to encode order: labels, uses[] targets, feedback records and QA sidecars all key on names, and a rename breaks every one of them for a change that the manifest already expresses. After any reorder, re-read uses[] across the moved chapter: an editorial edge that pointed backwards may now point forwards, which is a real finding about reading order rather than a mechanical detail. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-structure.html#reordering",
+    
+    "relUrl": "/reference/skill-instructions/document-structure.html#reordering"
+  },"439": {
+    "doc": "document-structure",
+    "title": "document-structure",
+    "content": "Generated from skills/folio-document-adapter/document-structure.md — do not edit here. Typed contract: schema reference. ",
+    "url": "/folio-assistant/reference/skill-instructions/document-structure.html",
+    
+    "relUrl": "/reference/skill-instructions/document-structure.html"
   },"440": {
     "doc": "Editor",
     "title": "Editor Skill",
@@ -3856,54 +3856,54 @@
     
     "relUrl": "/reference/skills/ig-publication.html#output"
   },"551": {
-    "doc": "Skill instructions",
-    "title": "Skill instructions",
-    "content": "The prose instruction bodies the LLM loads (via skill_fetch) when it runs a skill. These are generated from the skill source markdowns, so the published reference always matches what the agent actually reads. For each skill’s typed input/output contract, see the Skill schema reference; for the conceptual overview of skills, roles, and how they compose with the LLM, see Skills &amp; roles. ",
-    "url": "/folio-assistant/reference/skill-instructions/",
-    
-    "relUrl": "/reference/skill-instructions/"
-  },"552": {
-    "doc": "Skill instructions",
-    "title": "Lifecycle skills",
-    "content": "| Skill | Id | Schema | Summary | . | Content Authoring | content-author | schema | Create and develop content artifacts according to the project plan. | . | Content Feedback Collection | content-feedback | schema | Gather and triage feedback on published content for future iterations. | . | Content Planning | content-plan | schema | Plan content development by defining scope, team, timeline, and sprint cadence. | . | Content Publication | content-publish | schema | Package, version, and publish approved content. | . | Content Retirement | content-retire | — | Deprecate and retire content that is no longer current or needed. | . | Content Review | content-review | schema | Formal review and approval of validated content before publication. | . | Content Testing | content-test | schema | End-to-end testing of content artifacts in realistic scenarios. | . | Content Validation | content-validate | schema | Validate authored content against schemas, standards, and clinical accuracy. | . ",
-    "url": "/folio-assistant/reference/skill-instructions/#lifecycle-skills",
-    
-    "relUrl": "/reference/skill-instructions/#lifecycle-skills"
-  },"553": {
-    "doc": "Skill instructions",
-    "title": "Agent skills",
-    "content": "| Skill | Id | Schema | Summary | . | Corpus-Grep | corpus-grep | — | &gt; Disambiguation. This skill formalizes the backward check | . ",
-    "url": "/folio-assistant/reference/skill-instructions/#agent-skills",
-    
-    "relUrl": "/reference/skill-instructions/#agent-skills"
-  },"554": {
-    "doc": "Skill instructions",
-    "title": "Platform core (folio-core)",
-    "content": "| Skill | Id | Schema | Summary | . | Bean Coordination | bean-coordination | — | The bean-based work-plan system — the beans | . | bib-human-review | bib-human-review | — | Status sidecar: content/schema/references.review.json. | . | bib-photo-ingestion-watcher | bib-photo-ingestion-watcher | — | The automation half of the bib-human-review workflow. | . | Bibliography QA | bib-qa | — | pip install paper-search-mcp pyalex | . | Block Density | block-density | — |   | . | /canonical-watcher | canonical-watcher | — | A concrete instance of local/integration-watcher. The parent encodes | . | Chapter Complexity Review | chapter-complexity-review | — |   | . | Compute Integration Watcher | compute-integration-watcher | — |   | . | Content Graph | content-graph | — | cd content &amp;&amp; python3 pipeline/content-graph-analysis.py | . | /continual-progress | continual-progress | — | Sibling agents and the author can only coordinate with work they can | . | /coordinate | coordinate | — | When several Claude branches are converging on the same long-term goal | . | Delivery Summary | delivery-summary | — | After completing a feature or edit (i.e., after pushing changes), provide: | . | Deployment &amp; Auth | deployment-auth | — |   | . | /detangler-integration-watcher | detangler-integration-watcher | — | A concrete instance of local/integration-watcher. The parent encodes | . | /devils-advocate-watcher | devils-advocate-watcher | — | A concrete instance of integration-watcher. | . | Diff | diff | — | Show what changed at the content-block level, with viewer links and | . | /dispatch-agent | dispatch-agent | — | The expensive failure mode of multi-agent dispatch is going dark: you | . | Documentation Generation | docs-generation | — | cd content &amp;&amp; bun run pipeline/build.ts \\ | . | Editor | editor | — |   | . | /exposition-swarm-drain | exposition-swarm-drain | — | Bring every narrative block up to the Milnor exposition standard | . | Glossary Build | glossary-build | — |   | . | HTML Rendering QC | html-rendering-qc | — | grep -rn ‘\\operatorname’ content/*/.md | . | idle-backlog | idle-backlog | — | Generalises the AGENTS.md §”5-minute idle trigger” / “Work the queue while idle” | . | /integration-audit | integration-audit | — | A maintenance command for the multi-axis QA-sidecar pipeline (voice, | . | /integration-backlog | integration-backlog | — | A workflow skill that turns each integration-watcher’s open findings | . | /integration-watch | integration-watch | — | A thin dispatcher in front of integration-watcher | . | integration-watcher (abstract parent) | integration-watcher | — | A concrete watcher (this skill’s child) watches incoming activity | . | Markdown Render Check | markdown-render-check | — | git diff HEAD~1 HEAD –name-only – ‘*.md’ | . | Markdown Authoring Conventions | md-authoring | — |   | . | One-Voice Audit | one-voice-audit | — | grep -rEn “[✅❌⚠⏳🔧🚧☑☒]|✓|✗|★” “$CONTENT” –include=”*.md” | . | /one-voice-integration-watcher | one-voice-integration-watcher | — | A concrete instance of local/integration-watcher. | . | One-Voice Style Guide | one-voice-style-guide | — | &gt; See also: one-voice-audit is the mechanical sweep (greps for | . | Semantic Ontologist (Ambiguity Detection &amp; Glossary) | ontologist | — |   | . | /pending-show | pending-show | — | Quick status display. Read-only. Run any time to answer “where am I?” | . | Pickup | pickup | — | Continue work on existing open PRs with minimal wasted tokens. This skill | . | /prepare-merge-auto | prepare-merge-auto | — | Runs the full /prepare-merge workflow PLUS: | . | Production vs exploratory vs numerology | production-vs-exploratory-discipline | — | N_TRUNCATION = 5 | . | Readability Editing | readability-editing | — |   | . | Scientific Accuracy | scientific-accuracy | — |   | . | /session-intent | session-intent | — | A coordination failure mode recurs whenever agents have no durable | . | symbiotic-interaction | symbiotic-interaction | — |   | . | Test Engineer | test-engineer | — | bun test # from scripts/tests/ | . | Session Task Manager (beans) | todo-manager | — | &gt; Disambiguation: | . | Todo Review | todo-review | — | &gt; Disambiguation: | . | uses[] Editorial Review | uses-editorial-review | — |   | . | /watch | watch | — | A unified watcher that handles branches (poll git ls-remote) and | . ",
-    "url": "/folio-assistant/reference/skill-instructions/#platform-core-folio-core",
-    
-    "relUrl": "/reference/skill-instructions/#platform-core-folio-core"
-  },"555": {
-    "doc": "Skill instructions",
-    "title": "Document adapter (folio-document-adapter)",
-    "content": "| Skill | Id | Schema | Summary | . | document-authoring | document-authoring | schema | Author a document folio: policy guidance, a standard, a report, a | . | document-publishing | document-publishing | schema | Take a document folio from corpus to published artifact — without a TeX | . | document-structure | document-structure | schema | Decide and maintain the chapter/section skeleton of a document folio. | . | normative-statements | normative-statements | schema | Carry a recommendation, requirement or rule in a document folio — the | . ",
-    "url": "/folio-assistant/reference/skill-instructions/#document-adapter-folio-document-adapter",
-    
-    "relUrl": "/reference/skill-instructions/#document-adapter-folio-document-adapter"
-  },"556": {
-    "doc": "Skill instructions",
-    "title": "Paper adapter (folio-paper-adapter)",
-    "content": "| Skill | Id | Schema | Summary | . | /build-docs | build-docs | — | Builds the Lean HTML documentation using doc-gen4 locally, to save CI | . | /build-pdf | build-pdf | — | Builds the PDF locally to save CI minutes: the monolithic main.pdf and | . | Category Theory Formalization | category-theory | — |   | . | Chapter Analysis &amp; Formalization | chapter-analysis | — |   | . | Compute Audit | compute-audit | — | python3 script.py –args … | . | Compute-author | compute-author | — |   | . | Content Block Review | content-block-review | — |   | . | Content Validation | content-validation | — | bun run scripts/run-validate.ts content/ # after setup-folio-assistant.sh . | . | Critical Path Analysis &amp; Context Review | critical-path-analysis | — |   | . | definition-clarity-audit | definition-clarity-audit | — | A content block can be schema-clean, ref-resolving, proof-backed and still be | . | Document Intake | document-intake | — | &gt; Bib human-review integration. Track per-upload ingestion | . | FFI roundtrip audit | ffi-roundtrip-audit | — | total = mp.mpf(0) | . | Lean 4 Formalizer (Narrative to Proof) | formalizer | — |   | . | Gröbner Basis | groebner-basis | — |   | . | LaTeX build performance | latex-build-cache | — | A from-scratch compile re-parses the heavy preamble on **every latexmk | . | LaTeX Validation | latex-validation | — |   | . | Lean Build Fix | lean-build-fix | — |   | . | Lean cache: the authoring loop | lean-cache-restore | — | scripts/lake-cache.sh contribute # give the build back | . | Lean Completeness Audit | lean-completeness-audit | — | find content//lean/ -name '*.lean' -not -path '*/.lake/*' | sort . | . | Lean Environment Setup | lean-environment-setup | — | cd .. &amp;&amp; git clone https://github.com/leanprover-community/mathlib4.git | . | Lean formal dependency graph | lean-formal-graph | — | bun run content/pipeline/content-graph.ts content/ . | . | Lean File Generation | lean-generation | — | Description here. | . | MathlibExt Curator | lean-mathlibext-curator | — |   | . | Lean Proof Review | lean-proof-review | — | git diff origin/main…HEAD – ‘*.lean’ \\ | . | lean-proof-vacuity-audit | lean-proof-vacuity-audit | — | A proof can be sorry-free, axiom-clean, and statement-faithful and still | . | /lean-substantive-pass | lean-substantive-pass | — | The job of this skill is to take an abstract `class FooContext where | . | Lean Witness Audit | lean-witness-audit | — | python3 witness_base.py check-stale my-computation.witness.json | . | Paper Importer | paper-importer | — | &gt; Bib human-review integration. When importing a paper whose | . | Proof Conciseness | proof-conciseness | — |   | . | Proof Editor (Coordinator) | proof-editor | — |   | . | Proof Exposition Review | proof-exposition-review | — |   | . | Proof Gap Audit | proof-gap-audit | — |   | . | /proof-integration-watcher | proof-integration-watcher | — | A concrete instance of local/integration-watcher. | . | Proof Narrative ↔ Lean Equivalence Audit | proof-narrative-lean-equivalence | — | grep -rn ‘:= by (rfl|trivial|True.intro)’ content/*/.lean | . | Proof Simplifier | proof-simplifier | — | bun run content/pipeline/refactor-strategy.ts –lean 4.24.0 –applicable | . | Proof Status Tracking | proof-status-tracking | — |   | . | Proof Triage &amp; Resolution | proof-triage | — | [[require]] | . | /proposition-consolidation-audit | proposition-consolidation-audit | — | grep -lE “^export default (proposition|theorem|lemma|corollary)” \\ | . | /q-usage-watcher | q-usage-watcher | — | &gt; Folio-optional axis. The q-usage criteria encode a substrate | . | Remark Audit | remark-audit | — | cd content &amp;&amp; grep -rl ‘“remark”’ –include=’*.ts’ | sort | . | Rendering Auditor | rendering-auditor | — | cd content &amp;&amp; bun run pipeline/build.ts /.ts \\ . | . | Rendering Fixes | rendering-fixes | — |   | . | Semantic review scoping | semantic-review-scoping | — |   | . | Simulator Math Audit | simulator-math-audit | — |   | . | Simulator | simulator | — |   | . | Verify Anchor Connectivity | verify-local-substrate | — |   | . | Witnessed Values | witnessed-values | — |   | . The authoring-math and authoring-who-smart-guidelines packages ship skill definitions + typed schemas today; their prose instruction bodies will appear here as they are authored. ",
-    "url": "/folio-assistant/reference/skill-instructions/#paper-adapter-folio-paper-adapter",
-    
-    "relUrl": "/reference/skill-instructions/#paper-adapter-folio-paper-adapter"
-  },"557": {
     "doc": "Skill schema reference",
     "title": "Skill schema reference",
     "content": "Every folio-assistant skill declares a typed input and output contract as JSON Schema (draft-07). These pages are generated from those schemas so the published reference can never drift from what the framework actually validates. | Skill | Id | Description | . | BPMN Authoring | bpmn-authoring | Input schema for BPMN 2.0 business process authoring. | . | Content Author | content-author | Input schema for general content authoring. | . | Content Feedback | content-feedback | Input schema for feedback collection and triage. | . | Content Plan | content-plan | Input schema for content planning — scope, team, timeline, governance. | . | Content Publish | content-publish | Input schema for content publication. | . | Content Review | content-review | Input schema for formal content review and approval workflow. | . | Content Test | content-test | Input schema for end-to-end content testing. | . | Content Validate | content-validate | Input schema for content validation. | . | DMN Authoring | dmn-authoring | Input schema for DMN (Decision Model and Notation) decision table authoring. | . | Document Authoring | document-authoring | Input schema for the document-authoring skill: create or revise one content block in a document folio. | . | Document Publishing | document-publishing | Input schema for the document-publishing skill: render a document folio without a TeX installation. | . | Document Structure | document-structure | Input schema for the document-structure skill: add, remove or reorder chapters and sections. | . | FHIR Validation | fhir-validation | Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks. | . | IG Publication | ig-publication | Input schema for FHIR Implementation Guide publication. | . | L2 DAK Authoring | l2-dak-authoring | Input schema for L2 Digital Adaptation Kit authoring. Translates WHO clinical guidelines into structured digital artifacts. | . | L3 FHIR Authoring | l3-fhir-authoring | Input schema for L3 FHIR IG authoring. Creates machine-readable FHIR artifacts from L2 DAK specifications. | . | LaTeX Authoring | latex-authoring | Input schema for the latex-authoring skill. | . | Lean Formalization | lean-formalization | Input schema for the lean-formalization skill. Describes source material to be formalized in Lean 4. | . | Normative Statement | normative-statements | Input schema for the normative-statements skill: carry one recommendation, requirement or rule as a labelled block. | . | Proof Verification | proof-verification | Input schema for the proof-verification skill. Verifies Lean proofs and tracks sorry obligations. | . | Quality Control | quality-control | Input schema for quality control checks across content lifecycle. | . | Terminology Management | terminology-management | Input schema for terminology management — CodeSystems, ValueSets, ConceptMaps. | . See also the Skill instructions (the prose how-to bodies the LLM loads) and the TypeScript API reference for the content-object model (Block, Chapter, Paper, builders, and Zod constraints). ",
     "url": "/folio-assistant/reference/skills/",
     
     "relUrl": "/reference/skills/"
+  },"552": {
+    "doc": "Skill instructions",
+    "title": "Skill instructions",
+    "content": "The prose instruction bodies the LLM loads (via skill_fetch) when it runs a skill. These are generated from the skill source markdowns, so the published reference always matches what the agent actually reads. For each skill’s typed input/output contract, see the Skill schema reference; for the conceptual overview of skills, roles, and how they compose with the LLM, see Skills &amp; roles. ",
+    "url": "/folio-assistant/reference/skill-instructions/",
+    
+    "relUrl": "/reference/skill-instructions/"
+  },"553": {
+    "doc": "Skill instructions",
+    "title": "Lifecycle skills",
+    "content": "| Skill | Id | Schema | Summary | . | Content Authoring | content-author | schema | Create and develop content artifacts according to the project plan. | . | Content Feedback Collection | content-feedback | schema | Gather and triage feedback on published content for future iterations. | . | Content Planning | content-plan | schema | Plan content development by defining scope, team, timeline, and sprint cadence. | . | Content Publication | content-publish | schema | Package, version, and publish approved content. | . | Content Retirement | content-retire | — | Deprecate and retire content that is no longer current or needed. | . | Content Review | content-review | schema | Formal review and approval of validated content before publication. | . | Content Testing | content-test | schema | End-to-end testing of content artifacts in realistic scenarios. | . | Content Validation | content-validate | schema | Validate authored content against schemas, standards, and clinical accuracy. | . ",
+    "url": "/folio-assistant/reference/skill-instructions/#lifecycle-skills",
+    
+    "relUrl": "/reference/skill-instructions/#lifecycle-skills"
+  },"554": {
+    "doc": "Skill instructions",
+    "title": "Agent skills",
+    "content": "| Skill | Id | Schema | Summary | . | Corpus-Grep | corpus-grep | — | &gt; Disambiguation. This skill formalizes the backward check | . ",
+    "url": "/folio-assistant/reference/skill-instructions/#agent-skills",
+    
+    "relUrl": "/reference/skill-instructions/#agent-skills"
+  },"555": {
+    "doc": "Skill instructions",
+    "title": "Platform core (folio-core)",
+    "content": "| Skill | Id | Schema | Summary | . | Bean Coordination | bean-coordination | — | The bean-based work-plan system — the beans | . | bib-human-review | bib-human-review | — | Status sidecar: content/schema/references.review.json. | . | bib-photo-ingestion-watcher | bib-photo-ingestion-watcher | — | The automation half of the bib-human-review workflow. | . | Bibliography QA | bib-qa | — | pip install paper-search-mcp pyalex | . | Block Density | block-density | — |   | . | /canonical-watcher | canonical-watcher | — | A concrete instance of local/integration-watcher. The parent encodes | . | Chapter Complexity Review | chapter-complexity-review | — |   | . | Compute Integration Watcher | compute-integration-watcher | — |   | . | Content Graph | content-graph | — | cd content &amp;&amp; python3 pipeline/content-graph-analysis.py | . | /continual-progress | continual-progress | — | Sibling agents and the author can only coordinate with work they can | . | /coordinate | coordinate | — | When several Claude branches are converging on the same long-term goal | . | Delivery Summary | delivery-summary | — | After completing a feature or edit (i.e., after pushing changes), provide: | . | Deployment &amp; Auth | deployment-auth | — |   | . | /detangler-integration-watcher | detangler-integration-watcher | — | A concrete instance of local/integration-watcher. The parent encodes | . | /devils-advocate-watcher | devils-advocate-watcher | — | A concrete instance of integration-watcher. | . | Diff | diff | — | Show what changed at the content-block level, with viewer links and | . | /dispatch-agent | dispatch-agent | — | The expensive failure mode of multi-agent dispatch is going dark: you | . | Documentation Generation | docs-generation | — | cd content &amp;&amp; bun run pipeline/build.ts \\ | . | Editor | editor | — |   | . | /exposition-swarm-drain | exposition-swarm-drain | — | Bring every narrative block up to the Milnor exposition standard | . | Glossary Build | glossary-build | — |   | . | HTML Rendering QC | html-rendering-qc | — | grep -rn ‘\\operatorname’ content/*/.md | . | idle-backlog | idle-backlog | — | Generalises the AGENTS.md §”5-minute idle trigger” / “Work the queue while idle” | . | /integration-audit | integration-audit | — | A maintenance command for the multi-axis QA-sidecar pipeline (voice, | . | /integration-backlog | integration-backlog | — | A workflow skill that turns each integration-watcher’s open findings | . | /integration-watch | integration-watch | — | A thin dispatcher in front of integration-watcher | . | integration-watcher (abstract parent) | integration-watcher | — | A concrete watcher (this skill’s child) watches incoming activity | . | Markdown Render Check | markdown-render-check | — | git diff HEAD~1 HEAD –name-only – ‘*.md’ | . | Markdown Authoring Conventions | md-authoring | — |   | . | One-Voice Audit | one-voice-audit | — | grep -rEn “[✅❌⚠⏳🔧🚧☑☒]|✓|✗|★” “$CONTENT” –include=”*.md” | . | /one-voice-integration-watcher | one-voice-integration-watcher | — | A concrete instance of local/integration-watcher. | . | One-Voice Style Guide | one-voice-style-guide | — | &gt; See also: one-voice-audit is the mechanical sweep (greps for | . | Semantic Ontologist (Ambiguity Detection &amp; Glossary) | ontologist | — |   | . | /pending-show | pending-show | — | Quick status display. Read-only. Run any time to answer “where am I?” | . | Pickup | pickup | — | Continue work on existing open PRs with minimal wasted tokens. This skill | . | /prepare-merge-auto | prepare-merge-auto | — | Runs the full /prepare-merge workflow PLUS: | . | Production vs exploratory vs numerology | production-vs-exploratory-discipline | — | N_TRUNCATION = 5 | . | Readability Editing | readability-editing | — |   | . | Scientific Accuracy | scientific-accuracy | — |   | . | /session-intent | session-intent | — | A coordination failure mode recurs whenever agents have no durable | . | symbiotic-interaction | symbiotic-interaction | — |   | . | Test Engineer | test-engineer | — | bun test # from scripts/tests/ | . | Session Task Manager (beans) | todo-manager | — | &gt; Disambiguation: | . | Todo Review | todo-review | — | &gt; Disambiguation: | . | uses[] Editorial Review | uses-editorial-review | — |   | . | /watch | watch | — | A unified watcher that handles branches (poll git ls-remote) and | . ",
+    "url": "/folio-assistant/reference/skill-instructions/#platform-core-folio-core",
+    
+    "relUrl": "/reference/skill-instructions/#platform-core-folio-core"
+  },"556": {
+    "doc": "Skill instructions",
+    "title": "Document adapter (folio-document-adapter)",
+    "content": "| Skill | Id | Schema | Summary | . | document-authoring | document-authoring | schema | Author a document folio: policy guidance, a standard, a report, a | . | document-publishing | document-publishing | schema | Take a document folio from corpus to published artifact — without a TeX | . | document-structure | document-structure | schema | Decide and maintain the chapter/section skeleton of a document folio. | . | normative-statements | normative-statements | schema | Carry a recommendation, requirement or rule in a document folio — the | . ",
+    "url": "/folio-assistant/reference/skill-instructions/#document-adapter-folio-document-adapter",
+    
+    "relUrl": "/reference/skill-instructions/#document-adapter-folio-document-adapter"
+  },"557": {
+    "doc": "Skill instructions",
+    "title": "Paper adapter (folio-paper-adapter)",
+    "content": "| Skill | Id | Schema | Summary | . | /build-docs | build-docs | — | Builds the Lean HTML documentation using doc-gen4 locally, to save CI | . | /build-pdf | build-pdf | — | Builds the PDF locally to save CI minutes: the monolithic main.pdf and | . | Category Theory Formalization | category-theory | — |   | . | Chapter Analysis &amp; Formalization | chapter-analysis | — |   | . | Compute Audit | compute-audit | — | python3 script.py –args … | . | Compute-author | compute-author | — |   | . | Content Block Review | content-block-review | — |   | . | Content Validation | content-validation | — | bun run scripts/run-validate.ts content/ # after setup-folio-assistant.sh . | . | Critical Path Analysis &amp; Context Review | critical-path-analysis | — |   | . | definition-clarity-audit | definition-clarity-audit | — | A content block can be schema-clean, ref-resolving, proof-backed and still be | . | Document Intake | document-intake | — | &gt; Bib human-review integration. Track per-upload ingestion | . | FFI roundtrip audit | ffi-roundtrip-audit | — | total = mp.mpf(0) | . | Lean 4 Formalizer (Narrative to Proof) | formalizer | — |   | . | Gröbner Basis | groebner-basis | — |   | . | LaTeX build performance | latex-build-cache | — | A from-scratch compile re-parses the heavy preamble on **every latexmk | . | LaTeX Validation | latex-validation | — |   | . | Lean Build Fix | lean-build-fix | — |   | . | Lean cache: the authoring loop | lean-cache-restore | — | scripts/lake-cache.sh contribute # give the build back | . | Lean Completeness Audit | lean-completeness-audit | — | find content//lean/ -name '*.lean' -not -path '*/.lake/*' | sort . | . | Lean Environment Setup | lean-environment-setup | — | cd .. &amp;&amp; git clone https://github.com/leanprover-community/mathlib4.git | . | Lean formal dependency graph | lean-formal-graph | — | bun run content/pipeline/content-graph.ts content/ . | . | Lean File Generation | lean-generation | — | Description here. | . | MathlibExt Curator | lean-mathlibext-curator | — |   | . | Lean Proof Review | lean-proof-review | — | git diff origin/main…HEAD – ‘*.lean’ \\ | . | lean-proof-vacuity-audit | lean-proof-vacuity-audit | — | A proof can be sorry-free, axiom-clean, and statement-faithful and still | . | /lean-substantive-pass | lean-substantive-pass | — | The job of this skill is to take an abstract `class FooContext where | . | Lean Witness Audit | lean-witness-audit | — | python3 witness_base.py check-stale my-computation.witness.json | . | Paper Importer | paper-importer | — | &gt; Bib human-review integration. When importing a paper whose | . | Proof Conciseness | proof-conciseness | — |   | . | Proof Editor (Coordinator) | proof-editor | — |   | . | Proof Exposition Review | proof-exposition-review | — |   | . | Proof Gap Audit | proof-gap-audit | — |   | . | /proof-integration-watcher | proof-integration-watcher | — | A concrete instance of local/integration-watcher. | . | Proof Narrative ↔ Lean Equivalence Audit | proof-narrative-lean-equivalence | — | grep -rn ‘:= by (rfl|trivial|True.intro)’ content/*/.lean | . | Proof Simplifier | proof-simplifier | — | bun run content/pipeline/refactor-strategy.ts –lean 4.24.0 –applicable | . | Proof Status Tracking | proof-status-tracking | — |   | . | Proof Triage &amp; Resolution | proof-triage | — | [[require]] | . | /proposition-consolidation-audit | proposition-consolidation-audit | — | grep -lE “^export default (proposition|theorem|lemma|corollary)” \\ | . | /q-usage-watcher | q-usage-watcher | — | &gt; Folio-optional axis. The q-usage criteria encode a substrate | . | Remark Audit | remark-audit | — | cd content &amp;&amp; grep -rl ‘“remark”’ –include=’*.ts’ | sort | . | Rendering Auditor | rendering-auditor | — | cd content &amp;&amp; bun run pipeline/build.ts /.ts \\ . | . | Rendering Fixes | rendering-fixes | — |   | . | Semantic review scoping | semantic-review-scoping | — |   | . | Simulator Math Audit | simulator-math-audit | — |   | . | Simulator | simulator | — |   | . | Verify Anchor Connectivity | verify-local-substrate | — |   | . | Witnessed Values | witnessed-values | — |   | . The authoring-math and authoring-who-smart-guidelines packages ship skill definitions + typed schemas today; their prose instruction bodies will appear here as they are authored. ",
+    "url": "/folio-assistant/reference/skill-instructions/#paper-adapter-folio-paper-adapter",
+    
+    "relUrl": "/reference/skill-instructions/#paper-adapter-folio-paper-adapter"
   },"558": {
     "doc": "Authoring guides",
     "title": "Authoring guides",
@@ -5375,68 +5375,68 @@
     
     "relUrl": "/guides/new-content-type.html#checklist"
   },"768": {
-    "doc": "normative-statements",
-    "title": "normative-statements",
-    "content": "Carry a recommendation, requirement or rule in a document folio — the thing an L1 health-policy guidance note, a standard, or a terms-of-reference document exists to state. ",
-    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html#normative-statements",
-    
-    "relUrl": "/reference/skill-instructions/normative-statements.html#normative-statements"
-  },"769": {
-    "doc": "normative-statements",
-    "title": "The problem this addresses",
-    "content": "A normative statement is not prose. It is the block readers cite, implementers trace to, and reviewers sign off individually. It wants a label, a stable identity, and a place in the dependency graph — everything a theorem has, and nothing a paragraph of prose has. It is also not a theorem. Nothing proves it. Its authority is the issuing body’s, not a proof’s. ",
-    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html#the-problem-this-addresses",
-    
-    "relUrl": "/reference/skill-instructions/normative-statements.html#the-problem-this-addresses"
-  },"770": {
-    "doc": "normative-statements",
-    "title": "What to do today",
-    "content": "Use a prose block with a label and a title, and state the normative force in the first sentence. // content/&lt;slug&gt;/&lt;chapter&gt;/rec-cold-chain-audit.ts import { prose } from \"@folio/schemas/builders\"; export default prose({ label: \"rec:cold-chain-audit\", title: \"Audit the cold chain quarterly\", uses: [\"rec:scope\", \"prose:cold-chain-terms\"], }); . The block’s .md holds the statement itself, and its label becomes the anchor every cross-reference targets ([see](#rec:cold-chain-audit)). | label — a rec:-style prefix of your folio’s own choosing, kept consistent across the corpus. The platform does not reserve one, so pick it once and write it down in the folio’s own AGENTS.md. | title — the short form the document’s index and any cross-reference will show. | uses[] — the blocks a reader must have read to act on this one: definitions of terms it uses, the scope statement it sits under, the evidence summary it rests on. This is what makes “what else changes if this recommendation changes?” answerable. | . State the strength explicitly in the prose (should, must, is recommended, and the grading system the issuing body uses), because nothing in the block structure encodes it. Keep one statement per block. A block holding three recommendations cannot be cited, reviewed, superseded or traced individually, and splitting it later means renumbering everything that referenced it. ",
-    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html#what-to-do-today",
-    
-    "relUrl": "/reference/skill-instructions/normative-statements.html#what-to-do-today"
-  },"771": {
-    "doc": "normative-statements",
-    "title": "What not to do",
-    "content": ". | Do not use definition. It is a math kind: its lean field is required, so the block will not validate in a document folio at all. Earlier guidance in document-intake suggested mapping guideline recommendations onto definition — that predates the document profile and is wrong for a document folio. | Do not use theorem or proposition for a good-practice statement. They are outside this profile and content_profile_check rejects them. | Do not encode the recommendation number in the label alone. Numbers are renumbered between editions; the label must survive that. Put the published number in the title or the prose. | . ",
-    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html#what-not-to-do",
-    
-    "relUrl": "/reference/skill-instructions/normative-statements.html#what-not-to-do"
-  },"772": {
-    "doc": "normative-statements",
-    "title": "The gap, stated plainly",
-    "content": "There is no first-class recommendation block kind. Adding one means a builder, a Zod schema, a label prefix, viewer registration, constraint rows and QA criteria — roughly thirty files — and it is tracked separately rather than half-done here. Until it lands, a labelled prose block is the honest carrier: it is structurally correct (a titled, labelled, individually reviewable node in the uses[] graph) and only misses a kind name that says what it is. If you are choosing between waiting for that kind and writing the folio: write the folio. A prose block converts to a recommendation block by changing one builder call. ",
-    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html#the-gap-stated-plainly",
-    
-    "relUrl": "/reference/skill-instructions/normative-statements.html#the-gap-stated-plainly"
-  },"773": {
-    "doc": "normative-statements",
-    "title": "normative-statements",
-    "content": "Generated from skills/folio-document-adapter/normative-statements.md — do not edit here. Typed contract: schema reference. ",
-    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html",
-    
-    "relUrl": "/reference/skill-instructions/normative-statements.html"
-  },"774": {
     "doc": "Normative Statement",
     "title": "Normative Statement",
     "content": "Skill id: normative-statements . Generated from JSON Schema — do not edit by hand. Run bun run scripts/gen-schema-docs.ts. ",
     "url": "/folio-assistant/reference/skills/normative-statements.html",
     
     "relUrl": "/reference/skills/normative-statements.html"
-  },"775": {
+  },"769": {
     "doc": "Normative Statement",
     "title": "Input",
     "content": "Input schema for the normative-statements skill: carry one recommendation, requirement or rule as a labelled block. | Field | Type | Required | Description | . | label | string | yes | Stable identifier. The folio picks its own prefix convention (e.g. rec:) — the platform reserves none. | . | title | string | no | Short form for indexes and cross-references. | . | statement | string | yes | The normative statement itself. One statement per block: a block holding three cannot be cited, reviewed or superseded individually. | . | force | \"must\" | \"should\" | \"may\" | \"good-practice\" | \"research-priority\" | yes | Normative strength. Stated in the prose as well — nothing in the block structure encodes it. | . | grading | string | no | The issuing body’s own strength/certainty grade, verbatim (e.g. a GRADE rating). Free text: the taxonomy is domain-specific. | . | publishedNumber | string | no | The number this statement carries in the published edition. Kept out of the label, which must survive renumbering. | . | uses | array | no | Blocks a reader must have read to act on this one — term definitions, the scope statement, the evidence summary. | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/normative-statements.html#input",
     
     "relUrl": "/reference/skills/normative-statements.html#input"
-  },"776": {
+  },"770": {
     "doc": "Normative Statement",
     "title": "Output",
     "content": "| Field | Type | Required | Description | . | label | string | yes |   | . | kind | \"prose\" (const) | yes | Always prose today. There is no first-class recommendation kind: adding one means a builder, schema, label prefix, viewer registration, constraint rows and QA criteria, and it is tracked separately rather than half-done. A prose block converts by changing one builder call. | . | anchor | string | no | The HTML anchor emitted for this block, equal to its label. | . | citedBy | array | no | Labels whose uses[] names this statement. | . Raw schema . ",
     "url": "/folio-assistant/reference/skills/normative-statements.html#output",
     
     "relUrl": "/reference/skills/normative-statements.html#output"
+  },"771": {
+    "doc": "normative-statements",
+    "title": "normative-statements",
+    "content": "Carry a recommendation, requirement or rule in a document folio — the thing an L1 health-policy guidance note, a standard, or a terms-of-reference document exists to state. ",
+    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html#normative-statements",
+    
+    "relUrl": "/reference/skill-instructions/normative-statements.html#normative-statements"
+  },"772": {
+    "doc": "normative-statements",
+    "title": "The problem this addresses",
+    "content": "A normative statement is not prose. It is the block readers cite, implementers trace to, and reviewers sign off individually. It wants a label, a stable identity, and a place in the dependency graph — everything a theorem has, and nothing a paragraph of prose has. It is also not a theorem. Nothing proves it. Its authority is the issuing body’s, not a proof’s. ",
+    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html#the-problem-this-addresses",
+    
+    "relUrl": "/reference/skill-instructions/normative-statements.html#the-problem-this-addresses"
+  },"773": {
+    "doc": "normative-statements",
+    "title": "What to do today",
+    "content": "Use a prose block with a label and a title, and state the normative force in the first sentence. // content/&lt;slug&gt;/&lt;chapter&gt;/rec-cold-chain-audit.ts import { prose } from \"@folio/schemas/builders\"; export default prose({ label: \"rec:cold-chain-audit\", title: \"Audit the cold chain quarterly\", uses: [\"rec:scope\", \"prose:cold-chain-terms\"], }); . The block’s .md holds the statement itself, and its label becomes the anchor every cross-reference targets ([see](#rec:cold-chain-audit)). | label — a rec:-style prefix of your folio’s own choosing, kept consistent across the corpus. The platform does not reserve one, so pick it once and write it down in the folio’s own AGENTS.md. | title — the short form the document’s index and any cross-reference will show. | uses[] — the blocks a reader must have read to act on this one: definitions of terms it uses, the scope statement it sits under, the evidence summary it rests on. This is what makes “what else changes if this recommendation changes?” answerable. | . State the strength explicitly in the prose (should, must, is recommended, and the grading system the issuing body uses), because nothing in the block structure encodes it. Keep one statement per block. A block holding three recommendations cannot be cited, reviewed, superseded or traced individually, and splitting it later means renumbering everything that referenced it. ",
+    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html#what-to-do-today",
+    
+    "relUrl": "/reference/skill-instructions/normative-statements.html#what-to-do-today"
+  },"774": {
+    "doc": "normative-statements",
+    "title": "What not to do",
+    "content": ". | Do not use definition. It is a math kind: its lean field is required, so the block will not validate in a document folio at all. Earlier guidance in document-intake suggested mapping guideline recommendations onto definition — that predates the document profile and is wrong for a document folio. | Do not use theorem or proposition for a good-practice statement. They are outside this profile and content_profile_check rejects them. | Do not encode the recommendation number in the label alone. Numbers are renumbered between editions; the label must survive that. Put the published number in the title or the prose. | . ",
+    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html#what-not-to-do",
+    
+    "relUrl": "/reference/skill-instructions/normative-statements.html#what-not-to-do"
+  },"775": {
+    "doc": "normative-statements",
+    "title": "The gap, stated plainly",
+    "content": "There is no first-class recommendation block kind. Adding one means a builder, a Zod schema, a label prefix, viewer registration, constraint rows and QA criteria — roughly thirty files — and it is tracked separately rather than half-done here. Until it lands, a labelled prose block is the honest carrier: it is structurally correct (a titled, labelled, individually reviewable node in the uses[] graph) and only misses a kind name that says what it is. If you are choosing between waiting for that kind and writing the folio: write the folio. A prose block converts to a recommendation block by changing one builder call. ",
+    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html#the-gap-stated-plainly",
+    
+    "relUrl": "/reference/skill-instructions/normative-statements.html#the-gap-stated-plainly"
+  },"776": {
+    "doc": "normative-statements",
+    "title": "normative-statements",
+    "content": "Generated from skills/folio-document-adapter/normative-statements.md — do not edit here. Typed contract: schema reference. ",
+    "url": "/folio-assistant/reference/skill-instructions/normative-statements.html",
+    
+    "relUrl": "/reference/skill-instructions/normative-statements.html"
   },"777": {
     "doc": "One-Voice Audit",
     "title": "One-Voice Audit",
