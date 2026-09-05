@@ -99,6 +99,7 @@ bun run init-folio --help           # scaffold a new folio repository
 bun run readme:sync                 # refresh a folio README's generated sections
 bun run readme:sync:check           # ...and fail if any is stale (for CI)
 bun run readme:sections             # list the sections a README can opt into
+bun run readme:audit                # verify the README's links still resolve
 ```
 
 ## Work-plan & todos — use `beans`
@@ -254,6 +255,25 @@ the table saying who can follow its links.
 for `--list`, and a renderer returning Markdown plus operator notes. The CLI,
 the MCP tool and the staleness check all read the registry, so nothing else
 needs touching.
+
+**The authored half is audited, not generated.** `readme_audit` /
+`bun run readme:audit` (`content/pipeline/readme-links.ts`) verifies every
+Markdown link in the file and writes nothing: relative paths against the
+working tree, links naming one of the repo's own refs against a real
+`git ls-tree` of that ref, and Pages URLs under the folio's `pagesBaseUrl`
+against the publish ref the site is served from. Between the two tools no link
+in a folio README is unaccounted for — sync owns the marked regions, audit
+checks everything else.
+
+It exists because generating the rest was the wrong instinct. qou's Published
+Artefacts table listed `blueprint/` and `docs/`, neither of which has ever
+existed on `gh-pages`; both rows were dead in both columns. But its labels —
+"Folio landing page", "Blueprint (interactive graph)", the Project Structure
+descriptions — are prose worth keeping, and a generator would have had to
+invent them. The defect was never a stale layout; it was targets that do not
+resolve. **Third state again:** an external host, an in-page anchor, and a ref
+this checkout cannot read are all reported as NOT CHECKED, never as dead, so a
+shallow clone does not produce a wall of false findings.
 
 ## CI health — a red workflow looks exactly like a green one from in here
 

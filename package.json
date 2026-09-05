@@ -55,6 +55,7 @@
     "readme:sync": "bun run content/pipeline/readme-sections.ts",
     "readme:sync:check": "bun run content/pipeline/readme-sections.ts --check",
     "readme:sections": "bun run content/pipeline/readme-sections.ts --list",
+    "readme:audit": "bun run content/pipeline/readme-links.ts",
     "render:bpmn": "bun run scripts/render-bpmn.ts",
     "render:bpmn:check": "bun run scripts/render-bpmn.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json"
