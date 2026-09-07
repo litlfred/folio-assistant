@@ -815,6 +815,36 @@ def split_sections(pages: list[str], toc: list[TocEntry]) -> list[Section]:
 
     page_lines = [p.splitlines() for p in pages]
     sections: list[Section] = []
+
+    # Everything before the first located mark. Without this the text above
+    # `marks[0]` is never emitted by the loop below and is silently lost --
+    # and the shape is perverse, because the `if not marks` branch above
+    # keeps the WHOLE document, so a file with zero headings is safe while
+    # one with a single late heading loses everything before it.
+    #
+    # Measured over the 623-document qou library (fraction of raw page text
+    # surviving sectioning): median 0.977, so this is not a systemic loss --
+    # but 18 documents keep under 50% and 44 under 90%. Worst cases:
+    # `arxiv-1304.4737v1` locates only 1 of its 6 correct TOC headings, and
+    # that one is "Acknowledgements" on page 14 of 18, so the entire paper
+    # is dropped (28.9% kept); DeTurck-Gluck `0406276v1` infers one heading,
+    # "References" on page 38 of 40, and keeps 8.4%.
+    #
+    # The id is deliberately NON-NUMERIC. Numbering this `sec-000` would
+    # shift every following section id, and section ids are cited outside
+    # this repo (docs/audits/* in litlfred/qou reference `sec-NNN-...`).
+    fpi, fli, _ = marks[0]
+    if fpi > 0 or fli > 0:
+        head_buf: list[str] = []
+        for p_i in range(0, fpi + 1):
+            src = page_lines[p_i]
+            head_buf.extend(src[:fli] if p_i == fpi else src)
+        head = re.sub(r"\n{3,}", "\n\n", "\n".join(head_buf)).strip()
+        if head:
+            sections.append(Section(
+                "sec-front-matter", None, "Front matter", 1, 1, fpi + 1,
+                len(head), len(head.split()), head))
+
     for i, (pi, li, e) in enumerate(marks):
         if i + 1 < len(marks):
             epi, eli, _ = marks[i + 1]
