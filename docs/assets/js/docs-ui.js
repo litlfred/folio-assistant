@@ -9,8 +9,22 @@
  * encoder's own <svg>, which is built from bits rather than from the string.
  *
  * Depends on vendor/qrcode.js and vendor/qrcode_UTF8.js being loaded first.
- * Cross-checked by scripts/tests/qr.test.js, which decodes the encoder's
+ * Cross-checked by scripts/tests/qr.test.ts, which decodes the encoder's
  * output with an independent reader.
+ *
+ * KNOWN LIMITATION, stated rather than hidden. Those tests cover the
+ * ENCODER. Nothing tests the INTEGRATION -- whether the sidebar markup this
+ * script hooks into is really what just-the-docs emits. `_config.yml` uses
+ * `remote_theme: just-the-docs/just-the-docs` UNPINNED, so that markup can
+ * change with no commit in this repo, and the site cannot be built in the
+ * environment this was written in (no network for the remote theme, and no
+ * DOM library to stand in for a browser).
+ *
+ * So the mount below DEGRADES LOUDLY rather than silently: several selectors
+ * are tried, the control still mounts into the header when the title anchor
+ * is not where it expects, and a miss warns to the console naming what was
+ * looked for. A feature that quietly does nothing is indistinguishable from
+ * a feature nobody clicked. This is mitigation, not verification.
  */
 (function () {
   "use strict";
@@ -35,14 +49,49 @@
     '<path d="M13 13h3v3h-3v-3zm5 0h3v2h-3v-2zm-5 5h2v3h-2v-3zm4 1h4v2h-4v-2zm2-3h2v2h-2v-2z"/>' +
     "</svg>";
 
+  // Ordered most specific first. just-the-docs has used `.site-title` across
+  // many versions, but the theme is unpinned, so a miss here is configuration
+  // drift rather than an impossible state.
+  var TITLE_SELECTORS = [".site-title", "#site-title", ".site-header .site-title",
+                         ".side-bar .site-title", ".site-header a"];
+  var HEADER_SELECTORS = [".site-header", ".site-header-container", ".side-bar header",
+                          ".side-bar"];
+
+  function firstMatch(selectors) {
+    for (var i = 0; i < selectors.length; i++) {
+      var found = document.querySelector(selectors[i]);
+      if (found) return found;
+    }
+    return null;
+  }
+
   function mountQr() {
-    var header = document.querySelector(".site-header");
-    var title = header && header.querySelector(".site-title");
-    if (!title || typeof qrcode !== "function") return;
+    if (typeof qrcode !== "function") {
+      console.warn("docs-ui: QR encoder not loaded; vendor/qrcode.js must be included first.");
+      return;
+    }
+    var title = firstMatch(TITLE_SELECTORS);
+    var header = title ? title.parentNode : firstMatch(HEADER_SELECTORS);
+    if (!header) {
+      // The one unrecoverable case: no sidebar header of any shape.
+      console.warn("docs-ui: no site header found (tried " + HEADER_SELECTORS.join(", ") +
+                   "); the page QR was not mounted.");
+      return;
+    }
+    if (!title) {
+      // Degraded but usable: the control works, it just sits on its own
+      // rather than beside a title it could not locate.
+      console.warn("docs-ui: no site title found (tried " + TITLE_SELECTORS.join(", ") +
+                   "); mounting the page QR into the header without it.");
+    }
 
     var host = el("div", { class: "fa-qr-host", "data-open": "false" });
-    title.parentNode.insertBefore(host, title);
-    host.appendChild(title);
+    if (title) {
+      title.parentNode.insertBefore(host, title);
+      host.appendChild(title);
+    } else {
+      header.appendChild(host);
+    }
 
     var toggle = el("button", {
       type: "button",
