@@ -251,8 +251,55 @@
   border-radius: 0;
 }
 
-@media (max-width: 800px) {
+/* ── Narrow viewports ──────────────────────────────────────────────────── */
+
+/* 799.98px, NOT 800px, and the two-hundredths matter.
+ *
+ * just-the-docs' own `md` breakpoint is `@media (min-width: 50rem)` — 800px —
+ * so at EXACTLY 800px the theme is already in its desktop layout. A
+ * `max-width: 800px` query here overlaps it by one pixel and applies mobile
+ * rules on top of a desktop sidebar. Mirroring the theme means stopping just
+ * short of where it starts. */
+@media (max-width: 799.98px) {
   .fa-figure-tools { flex-wrap: wrap; }
+
+  /* THE QR GOES FIXED ON MOBILE, because below this breakpoint the thing it
+   * was anchored to stops being fixed itself.
+   *
+   * `.side-bar` is `position: fixed` only inside the theme's `mq(md)` block
+   * (its _sass/layout.scss). Under 800px it is an ordinary in-flow element at
+   * the top of the document, so an absolutely-positioned panel inside it
+   * scrolls away with the header — which is exactly the report: on a phone the
+   * code does not stay put when you scroll. On desktop the same rule was
+   * always correct, because there the sidebar does not move.
+   *
+   * Fixed positioning is safe here rather than merely hopeful: a transformed,
+   * filtered or perspective ancestor would capture `fixed` and turn it back
+   * into scroll-away behaviour, and there is no `transform` anywhere in the
+   * theme's layout.scss. `.side-bar { z-index: 0 }` does not interfere either
+   * — at this width the element is `static`, so `z-index` does not apply and
+   * it creates no stacking context for the panel to be trapped inside.
+   *
+   * Centred rather than pinned to the left edge: the panel is wider here than
+   * the header slot it grew out of, and a code held up to be scanned wants to
+   * be in the middle of the screen, not tucked into a corner. */
+  .fa-qr-panel {
+    position: fixed;
+    /* Plain value first: a browser without env() treats the max() line as
+       invalid and DROPS it, which would otherwise leave `top` at the base
+       rule's 0 and tuck the code under a notch. */
+    top: 0.75rem;
+    top: max(0.75rem, env(safe-area-inset-top, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    /* Bigger than the desktop 14rem: on a phone this is usually being read by
+       someone else's camera, and scan reliability is mostly module size. */
+    max-width: min(78vw, 20rem);
+    /* Above the theme's own header and nav, which sit at low z-indexes. */
+    z-index: 1000;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.45);
+  }
+
   .fa-qr-panel svg, .fa-qr-caption { max-width: 100%; }
 }
 
