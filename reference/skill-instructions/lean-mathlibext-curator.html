@@ -81,6 +81,23 @@
   }
 </style>
 
+<!--
+  Site UI: a QR of the current page in the sidebar header, and zoom /
+  full-width controls on the figures.
+
+  Loaded as same-origin files with no inline script, so no script-src
+  relaxation is needed. The QR is generated in the browser from
+  window.location.href rather than baked per page at build time, so it is
+  right for anchors, query strings, and both the directory and .html forms of
+  the same page. The UTF-8 shim must come after the encoder: without it the
+  encoder's stringToBytes is single-byte and a non-ASCII character in a URL
+  silently encodes to mojibake.
+-->
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
+<script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
+<script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js" defer></script>
+
 
 </head>
 
