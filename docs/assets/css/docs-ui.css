@@ -28,12 +28,44 @@
   font-size: 0.9em;
 }
 
+/* THE WRAPPER TAKES OVER A CONTRACT IT INTERRUPTED, and `width: 100%` was the
+ * wrong way to do it.
+ *
+ * just-the-docs lays `.site-header` out as `display: flex` with exactly two
+ * children: `.site-title`, which carries `flex-grow: 1`, and `#menu-button`,
+ * which sits at the right end. That button is `display: none` at `mq(md)` — it
+ * exists ONLY on mobile, and it is the hamburger that reveals `#main-header`,
+ * which is where SEARCH and the GitHub aux link live (`display: none` below
+ * the breakpoint, `&.nav-open { display: block }`).
+ *
+ * `mountQr` moves the title INTO this wrapper, so the theme's `flex-grow: 1`
+ * stopped applying to a child of `.site-header` and started applying to a
+ * child of this. The wrapper was given `width: 100%` instead — which is not
+ * the same thing. A flex item also defaults to `min-width: auto`, so it
+ * refuses to shrink below its own min-content; with a title, two icon buttons
+ * and a 100% width in the row, the overflow goes somewhere, and on a narrow
+ * phone that somewhere is the hamburger going off the right edge. On desktop
+ * the same rule was harmless because the button is not rendered at all.
+ *
+ * `flex: 1 1 auto` is the theme's `flex-grow: 1` transplanted to the element
+ * that now occupies that slot. `min-width: 0` is what lets it actually shrink,
+ * so the title gives way and the button stays on screen. */
 .fa-qr-host {
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Same reason one level down: without this the title is itself a flex item at
+   `min-width: auto` and refuses to shrink, so the wrapper's `min-width: 0`
+   buys nothing. Ellipsis rather than a wrap, because the header row is a fixed
+   height and a wrapped title would be clipped instead. */
+.fa-qr-host .site-title {
+  min-width: 0;
+  overflow: hidden;
 }
 
 /* The title row keeps its height while the code is open. Without this the
