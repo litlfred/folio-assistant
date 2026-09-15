@@ -20,6 +20,14 @@
 
 /* ── Header QR ─────────────────────────────────────────────────────────── */
 
+/* The sidebar title sits on one row with two icon buttons now, and at the
+   theme's default size it crowds them and wraps on a narrow window. Relative
+   to the inherited size rather than a fixed rem, so it still tracks the
+   theme's own responsive steps. */
+.fa-qr-host .site-title {
+  font-size: 0.9em;
+}
+
 .fa-qr-host {
   position: relative;
   display: flex;
@@ -203,11 +211,32 @@
  * sit flush against the card's edge. */
 .fa-figure-wrap {
   overflow-x: auto;
-  background: #fff;
-  padding: 0.5rem;
   border: 1px solid rgba(128, 128, 128, 0.35);
   border-radius: 6px;
   margin: 1em 0 0.4em;
+}
+
+/* THE WHITE IS ON `.fa-figure-scope`, WHICH IS THE ONE CLASS BOTH KINDS GET.
+ *
+ * `mountFigure` adds it to every figure it takes over -- the `.bpmn-figure`
+ * elements authored in the markdown AND the `.fa-figure-wrap` this script
+ * builds around a Mermaid diagram or a loose SVG. Putting the rule here means
+ * the two cannot drift: previously the BPMN white came from head_custom.html
+ * and the Mermaid white (when it existed at all) from a separate rule here,
+ * which is how one of them ended up dark while the other stayed light.
+ *
+ * `!important` is aimed at head_custom.html's own `.bpmn-figure` background,
+ * which would otherwise win by source order in the built page depending on
+ * which stylesheet the theme emits last. The value it overrides is the same
+ * white, so this is about which rule is AUTHORITATIVE, not about changing it.
+ *
+ * It applies in full width too -- `.is-fullwidth` only changes geometry. A
+ * figure that went transparent when widened would show the dark page through
+ * a drawing that is dark-on-light, which is the black-on-black failure again
+ * with an extra click in front of it. */
+.fa-figure-scope {
+  background: #fff !important;
+  padding: 0.5rem;
 }
 
 /* Full-bleed. The width and offset are set by JS from the element's measured
