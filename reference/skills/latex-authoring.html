@@ -405,7 +405,10 @@
 <footer>
   
 
-  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p>
+  <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35035618701"><code>ef88d3d</code></a> &middot; 2026-09-15T23:26:35Z</p>
+
 
   <div class="d-md-none mt-4 fs-2">
     
@@ -442,51 +445,43 @@
    just-the-docs interpolates this file's contents directly into
    `var config = <here>; mermaid.initialize(config);`
    — see that theme's `_includes/components/mermaid.html` — so this must be a
-   bare JavaScript EXPRESSION. No `export`, no statements, no trailing
-   semicolon.
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
 
-   WHY IT IS NOT A LITERAL. Mermaid's DEFAULT theme is a light one: pale
-   lilac node fills, near-black label text, thin grey connectors. On this
-   site's dark background the nodes read as bright cards and the edges
-   between them are close to invisible, which is the opposite of what a flow
-   diagram is for. But the reader can now switch schemes from the header, so
-   the right palette is not a build-time fact — it is whatever they last
-   chose. This reads the same localStorage key the toggle writes
-   (`docs/assets/js/docs-ui.js`, SCHEME_KEY).
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (docs/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
 
-   The earlier attempt put a white backdrop behind the diagram from
-   docs-ui.css instead. That was the wrong layer twice over: it never
-   applied, because the wrapper it styled was attached by a selector this
-   theme does not emit; and even applied it makes a light card float in a
-   dark page rather than making the drawing belong to it. Configuring the
-   renderer is the fix; painting behind it was a workaround for not having
-   done so. */
-(function () {
-  var scheme = null;
-  try { scheme = window.localStorage.getItem("fa-color-scheme"); } catch (_e) { /* private mode */ }
-  if (scheme !== "light" && scheme !== "dark") {
-    /* No stored choice: fall back to what _config.yml compiled in. Read from
-       the same JSON block docs-ui.js reads, so the two cannot disagree. */
-    var node = document.getElementById("fa-site-scheme");
-    try { scheme = node ? JSON.parse(node.textContent).scheme : "light"; }
-    catch (_e) { scheme = "light"; }
-  }
-  return {
-    /* Mermaid's own built-in palettes, so the contrast ratios inside a
-       diagram are upstream's rather than something hand-tuned here that
-       drifts the first time a diagram type we have not used yet appears. */
-    theme: scheme === "dark" ? "dark" : "default",
-    themeVariables: {
-      /* The one value worth overriding: it is the only one that has to agree
-         with a colour chosen outside Mermaid — just-the-docs' own page
-         background for each scheme. */
-      background: scheme === "dark" ? "#27262b" : "#ffffff"
-    },
-    /* Long swimlane labels wrap rather than forcing the diagram wider than
-       the zoom controls can usefully bring back. */
-    flowchart: { useMaxWidth: true }
-  };
-})()
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
 ;
   mermaid.initialize(config);
   mermaid.run({
