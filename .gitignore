@@ -71,3 +71,10 @@ content/schema/
 # Per-machine subagent memory (`memory: local` scope). The committed
 # `project` scope lives at .claude/agent-memory/ and is tracked.
 .claude/agent-memory-local/
+
+# docs/assets/js is SOURCE, not build output. The rule above exists because
+# compiled JS is generated next to its .ts; these files are hand-written and
+# vendored assets that Jekyll serves verbatim to the browser, so there is no
+# build step that could regenerate them.
+!docs/assets/js/
+!docs/assets/js/**/*.js
