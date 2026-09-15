@@ -78,3 +78,11 @@ content/schema/
 # build step that could regenerate them.
 !docs/assets/js/
 !docs/assets/js/**/*.js
+
+# Same reason, different directory. `docs/_includes/mermaid_config.js` is the
+# hook just-the-docs interpolates into its `mermaid.initialize()` call (see
+# that theme's `_includes/components/mermaid.html`). It is a .js file that is
+# hand-written source and lives OUTSIDE docs/assets, so the exception above
+# does not reach it — `git add` reported nothing and the file would simply
+# never have deployed.
+!docs/_includes/*.js
