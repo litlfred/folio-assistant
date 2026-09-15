@@ -40,6 +40,16 @@
   encoder's stringToBytes is single-byte and a non-ASCII character in a URL
   silently encodes to mojibake.
 -->
+<!--
+  The configured colour scheme, published for docs/assets/js/docs-ui.js.
+
+  just-the-docs' first stylesheet is `just-the-docs-default.css`, which is
+  whatever `color_scheme` in _config.yml compiled to -- so `jtd.getTheme()`
+  returns the string "default" on a fresh load, never "dark". The scheme
+  toggle needs to know what "default" MEANS here, and reading it from the
+  config is the one way that does not go stale when the config changes.
+-->
+<script type="application/json" id="fa-site-scheme">{"scheme": "{{ site.color_scheme | default: 'light' }}"}</script>
 <link rel="stylesheet" href="{{ '/assets/css/docs-ui.css' | relative_url }}">
 <script src="{{ '/assets/js/vendor/qrcode.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/vendor/qrcode_UTF8.js' | relative_url }}" defer></script>
