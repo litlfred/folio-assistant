@@ -169,10 +169,32 @@
     out.addEventListener("click", function () { if (step > 0) { step--; apply(); } });
     into.addEventListener("click", function () { if (step < ZOOM_STEPS.length - 1) { step++; apply(); } });
     reset.addEventListener("click", function () { step = DEFAULT_STEP; apply(); });
+    // Full-bleed by MEASUREMENT, not by the centred-element margin trick. The
+    // figure sits in a content column offset right by the sidebar, so
+    // `margin-left: calc(-1 * (100vw - 100%) / 2)` overshoots by about the
+    // sidebar width at each edge -- which is what "way oversize" looked like.
+    // Reading the element's own left edge needs no assumption about the
+    // theme's geometry, and clientWidth excludes the scrollbar, which 100vw
+    // does not.
+    function applyFullWidth() {
+      if (!scope.classList.contains("is-fullwidth")) {
+        scope.style.marginLeft = "";
+        scope.style.width = "";
+        return;
+      }
+      scope.style.marginLeft = "";
+      scope.style.width = "";
+      var left = scope.getBoundingClientRect().left;
+      scope.style.marginLeft = -left + "px";
+      scope.style.width = document.documentElement.clientWidth + "px";
+    }
     wide.addEventListener("click", function () {
       var on = scope.classList.toggle("is-fullwidth");
       wide.setAttribute("aria-pressed", on ? "true" : "false");
+      applyFullWidth();
     });
+    // The measured offset is only right for the width it was measured at.
+    window.addEventListener("resize", applyFullWidth);
 
     [out, level, into, reset, wide].forEach(function (n) { tools.appendChild(n); });
     scope.parentNode.insertBefore(tools, scope);
@@ -204,9 +226,13 @@
       if (/icon/i.test(node.getAttribute("class") || "")) return;
       var box = node.getBoundingClientRect();
       if (box.width < MIN_FIGURE_PX && box.height < MIN_FIGURE_PX) return;
+      // Mermaid renders into a wrapper div; wrap THAT rather than the <svg>,
+      // so the scroll container and the zoom rules sit outside everything the
+      // renderer owns and it is not fighting us for the element's style.
+      var target = node.closest(".mermaid") || node;
       var wrap = el("div", { class: "bpmn-figure" });
-      node.parentNode.insertBefore(wrap, node);
-      wrap.appendChild(node);
+      target.parentNode.insertBefore(wrap, target);
+      wrap.appendChild(target);
       mountFigure(wrap, true);
     });
   }
