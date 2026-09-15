@@ -3,9 +3,19 @@
  * controls on the workflow figures.
  *
  * Everything here is scoped to classes this site adds itself, so a
- * just-the-docs upgrade cannot collide with it. Colours are taken from the
- * theme's own custom properties where they exist, with a literal fallback,
- * so the controls stay legible under the dark scheme without hard-coding it.
+ * just-the-docs upgrade cannot collide with it.
+ *
+ * A note on the `var(--x, literal)` colours below, because the header of this
+ * file used to claim more than was true. It said colours are "taken from the
+ * theme's own custom properties where they exist" — just-the-docs is Sass and
+ * defines NONE of `--sidebar-color`, `--border-color` or `--link-color`, so
+ * every one of those resolves to its literal fallback, always. The var() form
+ * is kept because it costs nothing and would start working if the theme ever
+ * exposed them; what is not kept is the impression that it already does.
+ *
+ * Since the fallbacks were all dark-scheme values and the header now offers a
+ * light mode, the ones that actually differ between schemes are overridden
+ * under `:root[data-fa-scheme="light"]`, which docs-ui.js sets.
  */
 
 /* ── Header QR ─────────────────────────────────────────────────────────── */
@@ -66,6 +76,14 @@
   /* Opaque: it sits over the navigation, and a transparent code on top of
      link text is unreadable to a phone camera as well as to a person. */
   background: var(--sidebar-color, #27262b);
+}
+
+/* The panel is opaque on purpose — it sits over navigation links, and a
+   transparent code on top of text is unreadable to a phone camera as well as
+   to a person. Which opaque colour depends on the scheme. */
+:root[data-fa-scheme="light"] .fa-qr-panel {
+  background: #fff;
+  color: #27262b;
 }
 
 .fa-qr-host[data-open="true"] .fa-qr-panel { display: block; }
@@ -160,13 +178,27 @@
   min-width: 0;
 }
 
-/* Legibility under the dark scheme. The BPMN SVGs carry their own white
-   backdrop, but a Mermaid diagram does not: it renders in its default LIGHT
-   palette -- pale fills, dark text, thin edges -- which on a dark page leaves
-   the connector lines nearly invisible. The wrapper supplies the backdrop the
-   drawing assumes, and the padding keeps the outermost strokes off the edge. */
+/* The wrapper this script puts around a non-BPMN figure.
+ *
+ * It is deliberately NOT `.bpmn-figure`, which head_custom.html paints white.
+ * A BPMN export carries its own white backdrop and wants a container that
+ * matches it; a Mermaid diagram now renders in Mermaid's DARK theme
+ * (docs/_includes/mermaid_config.js), so a white card behind it would be
+ * exactly the contrast problem inverted.
+ *
+ * This replaces an earlier `.fa-plain { background: #fff }` rule that was
+ * meant to make Mermaid legible on a dark page. It never applied — the
+ * wrapper was attached via `.mermaid`, a class this theme does not emit — and
+ * the approach was wrong anyway: a light card floating in a dark page is not
+ * the same as a drawing that belongs to it. */
+.fa-figure-wrap {
+  overflow-x: auto;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 6px;
+  margin: 1em 0 0.4em;
+}
+
 .fa-figure-scope.fa-plain {
-  background: #fff;
   padding: 0.5rem;
 }
 

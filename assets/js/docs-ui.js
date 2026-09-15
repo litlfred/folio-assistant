@@ -39,6 +39,113 @@
     return node;
   }
 
+  /* ── Colour scheme ───────────────────────────────────────────────────── */
+
+  // A lightbulb: glass, filament, and the screw base. Same 24x24 box and the
+  // same currentColor fill as the QR glyph so the two sit as a pair.
+  var BULB_ON =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zm-2 12.1A5 5 0 1 1 14 14.1l-.5.33V16h-3v-1.57l-.5-.33z"/>' +
+    '<path d="M9 19h6v1.2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V19z"/>' +
+    "</svg>";
+
+  var BULB_OFF =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zm-2 12.1A5 5 0 1 1 14 14.1l-.5.33V16h-3v-1.57l-.5-.33z" opacity="0.45"/>' +
+    '<path d="M9 19h6v1.2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V19z" opacity="0.45"/>' +
+    '<path d="M4.2 3.3 20.7 19.8l-1.4 1.4L2.8 4.7z"/>' +
+    "</svg>";
+
+  var SCHEME_KEY = "fa-color-scheme";
+
+  // `site.color_scheme` from _config.yml, emitted by head_custom.html as a
+  // JSON data block -- not executable script, so the page needs no
+  // script-src relaxation for it.
+  //
+  // It matters because just-the-docs' first stylesheet is
+  // `just-the-docs-default.css`, which is the CONFIGURED scheme compiled in.
+  // `jtd.getTheme()` parses that filename, so on a fresh load it reports
+  // "default", never "dark" -- and "default" means whatever this site chose.
+  function configuredScheme() {
+    var node = document.getElementById("fa-site-scheme");
+    if (!node) return "light";
+    try {
+      var scheme = JSON.parse(node.textContent).scheme;
+      return scheme === "dark" ? "dark" : "light";
+    } catch (_e) {
+      return "light";
+    }
+  }
+
+  function storedScheme() {
+    try { return window.localStorage.getItem(SCHEME_KEY); } catch (_e) { return null; }
+  }
+
+  function currentScheme() {
+    var stored = storedScheme();
+    if (stored === "light" || stored === "dark") return stored;
+    if (window.jtd && typeof window.jtd.getTheme === "function") {
+      var t = window.jtd.getTheme();
+      if (t === "light" || t === "dark") return t;
+    }
+    return configuredScheme();
+  }
+
+  function applyScheme(name) {
+    if (!window.jtd || typeof window.jtd.setTheme !== "function") {
+      console.warn("docs-ui: jtd.setTheme is unavailable; the colour scheme was not changed. " +
+                   "just-the-docs is an unpinned remote theme, so this is version drift.");
+      return false;
+    }
+    // Always explicit. Passing "default" would work today and would break the
+    // day _config.yml's color_scheme changes, because "default" is a moving
+    // target and "dark" is not.
+    window.jtd.setTheme(name);
+    document.documentElement.setAttribute("data-fa-scheme", name);
+    return true;
+  }
+
+  function mountThemeToggle(host, before) {
+    var btn = el("button", { type: "button", class: "fa-qr-toggle fa-theme-toggle" });
+
+    function paint(name) {
+      // The icon shows the scheme you are IN, not the one you would get. A
+      // lit bulb for light, a struck-through one for dark. Labelling it with
+      // the destination instead is the other convention and is a coin-flip
+      // either way; what is not optional is that the label says which.
+      btn.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
+      btn.setAttribute("aria-label",
+        name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light");
+      btn.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
+    }
+
+    var scheme = currentScheme();
+    // Apply the stored choice even on first paint: `jtd.getTheme()` reflects
+    // the stylesheet the server sent, which does not know what this reader
+    // picked last visit.
+    if (storedScheme()) applyScheme(scheme);
+    else document.documentElement.setAttribute("data-fa-scheme", scheme);
+    paint(scheme);
+
+    btn.addEventListener("click", function () {
+      var next = currentScheme() === "light" ? "dark" : "light";
+      if (!applyScheme(next)) return;
+      try { window.localStorage.setItem(SCHEME_KEY, next); } catch (_e) { /* private mode */ }
+      paint(next);
+
+      // Mermaid picks its palette once, in `mermaid.initialize()`, from
+      // docs/_includes/mermaid_config.js -- which reads the same key. It is
+      // loaded as a module and never exposed, so there is no handle here to
+      // re-run it with the new theme. A reload is the honest way to make the
+      // diagrams agree with the page, and it is skipped entirely on the pages
+      // that have none, which is most of them.
+      if (document.querySelector(".language-mermaid")) window.location.reload();
+    });
+
+    host.insertBefore(btn, before);
+    return btn;
+  }
+
   /* ── Header QR ───────────────────────────────────────────────────────── */
 
   // A static glyph: three finder squares and a scatter of modules. Inline so
@@ -101,6 +208,11 @@
     });
     toggle.innerHTML = GLYPH; // static markup defined above, no input involved
     host.appendChild(toggle);
+
+    // Left of the QR icon, per the header's reading order: the title, then
+    // the scheme switch, then the code. Inserted before `toggle` rather than
+    // appended, so it stays left of it if more controls are added later.
+    mountThemeToggle(host, toggle);
 
     var panel = el("button", {
       type: "button",
@@ -196,6 +308,50 @@
     // The measured offset is only right for the width it was measured at.
     window.addEventListener("resize", applyFullWidth);
 
+    // Scroll pass-through in full width.
+    //
+    // `overflow-x: auto` on the figure makes it a scroll container on BOTH
+    // axes -- CSS promotes the other axis from `visible` to `auto` -- so in
+    // full width, where the figure spans the whole viewport, a wheel anywhere
+    // in that band is eaten by the figure instead of moving the page. The
+    // band is mostly empty: the drawing is centred and the rest is padding.
+    //
+    // So: if the pointer is NOT over the drawing, and the figure is short
+    // enough that scrolling INSIDE it is not what the reader can have meant,
+    // send the wheel to the page. The height cut-off is the caller's --
+    // 80% of the viewport -- and it is the right shape: a figure taller than
+    // that has real vertical travel of its own and should keep its wheel.
+    //
+    // Only the vertical component is taken. Horizontal wheel (shift-wheel, or
+    // a trackpad swipe) is how you pan a wide diagram from the empty band,
+    // and that still works.
+    var MAX_PASSTHROUGH_FRACTION = 0.8;
+
+    scope.addEventListener("wheel", function (e) {
+      if (!scope.classList.contains("is-fullwidth")) return;
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+
+      var viewport = document.documentElement.clientHeight;
+      if (scope.getBoundingClientRect().height > MAX_PASSTHROUGH_FRACTION * viewport) return;
+
+      var art = scope.querySelector("img, svg");
+      if (art) {
+        var a = art.getBoundingClientRect();
+        if (e.clientX >= a.left && e.clientX <= a.right &&
+            e.clientY >= a.top  && e.clientY <= a.bottom) return;
+      }
+
+      // deltaY is not always pixels: deltaMode 1 is lines and 2 is pages.
+      // Scrolling by a raw line count moves the page by three pixels and
+      // reads as the wheel being broken.
+      var d = e.deltaY;
+      if (e.deltaMode === 1) d *= 16;
+      else if (e.deltaMode === 2) d *= viewport;
+
+      e.preventDefault();
+      window.scrollBy(0, d);
+    }, { passive: false });
+
     [out, level, into, reset, wide].forEach(function (n) { tools.appendChild(n); });
     scope.parentNode.insertBefore(tools, scope);
     apply();
@@ -226,18 +382,58 @@
       if (/icon/i.test(node.getAttribute("class") || "")) return;
       var box = node.getBoundingClientRect();
       if (box.width < MIN_FIGURE_PX && box.height < MIN_FIGURE_PX) return;
-      // Mermaid renders into a wrapper div; wrap THAT rather than the <svg>,
-      // so the scroll container and the zoom rules sit outside everything the
-      // renderer owns and it is not fighting us for the element's style.
-      var target = node.closest(".mermaid") || node;
-      var wrap = el("div", { class: "bpmn-figure" });
+      // Mermaid renders into a wrapper element; wrap THAT rather than the
+      // <svg>, so the scroll container and the zoom rules sit outside
+      // everything the renderer owns and it is not fighting us for the
+      // element's style.
+      //
+      // The selector is `.language-mermaid`, which is what THIS theme emits
+      // and what it hands to `mermaid.run()` -- see just-the-docs
+      // `_includes/components/mermaid.html`. It was `.mermaid`, Mermaid's own
+      // conventional class, which this theme never sets: `closest` returned
+      // null every time, so the <svg> was wrapped directly and the renderer
+      // kept ownership of the element the zoom rules were trying to size.
+      var target = node.closest(".language-mermaid") || node;
+      var wrap = el("div", { class: "fa-figure-wrap" });
       target.parentNode.insertBefore(wrap, target);
       wrap.appendChild(target);
       mountFigure(wrap, true);
     });
   }
 
-  function init() { mountQr(); mountFigures(); }
+  function init() {
+    mountQr();
+    mountFigures();
+
+    // Mermaid renders AFTER this runs, and nothing tells us when.
+    //
+    // just-the-docs loads it as `<script type="module">` and calls
+    // `mermaid.run()` after the dynamic import resolves, which is necessarily
+    // later than DOMContentLoaded. So the single scan above sees a
+    // `.language-mermaid` element holding source text and no <svg> at all --
+    // which is why the diagrams on this site had no zoom, no full width and
+    // no wrapper, while the BPMN figures (plain <img>, present in the HTML)
+    // had all three. Re-scanning on a timer would work and would also be a
+    // guess about how long the import takes.
+    if (!("MutationObserver" in window)) return;
+    var main = document.querySelector(".main-content") || document.body;
+    var pending = null;
+    var observer = new MutationObserver(function () {
+      // Coalesce: Mermaid emits many mutations per diagram, and mountFigures
+      // is idempotent but not free.
+      if (pending !== null) return;
+      pending = window.setTimeout(function () {
+        pending = null;
+        mountFigures();
+      }, 50);
+    });
+    observer.observe(main, { childList: true, subtree: true });
+    // Mermaid is the only thing expected to add a figure after load, so stop
+    // watching once it has had its chance. An observer left on the document
+    // body for the life of the page fires on every future DOM change,
+    // including the ones mountFigures itself makes.
+    window.setTimeout(function () { observer.disconnect(); }, 10000);
+  }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
