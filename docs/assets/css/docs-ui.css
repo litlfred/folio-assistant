@@ -180,26 +180,34 @@
 
 /* The wrapper this script puts around a non-BPMN figure.
  *
- * It is deliberately NOT `.bpmn-figure`, which head_custom.html paints white.
- * A BPMN export carries its own white backdrop and wants a container that
- * matches it; a Mermaid diagram now renders in Mermaid's DARK theme
- * (docs/_includes/mermaid_config.js), so a white card behind it would be
- * exactly the contrast problem inverted.
+ * IT IS WHITE IN BOTH COLOUR SCHEMES, deliberately, and this rule has now been
+ * wrong in both directions in one session — worth recording which is which.
  *
- * This replaces an earlier `.fa-plain { background: #fff }` rule that was
- * meant to make Mermaid legible on a dark page. It never applied — the
- * wrapper was attached via `.mermaid`, a class this theme does not emit — and
- * the approach was wrong anyway: a light card floating in a dark page is not
- * the same as a drawing that belongs to it. */
+ * A Mermaid diagram used to render in Mermaid's LIGHT palette against the dark
+ * page with no backdrop at all: pale nodes glaring, connector lines close to
+ * invisible. The first fix painted a white card behind it and did nothing,
+ * because the wrapper was attached via `.mermaid`, a class just-the-docs does
+ * not emit. The second fix dropped the card and set Mermaid's DARK theme
+ * instead — which worked as designed and was worse: dark-on-dark, the
+ * diagram's own near-black backdrop dissolving into the page.
+ *
+ * The settled answer (owner's call) is that a schematic is a FIGURE and
+ * figures are printed on white, whatever the surrounding page is doing. So the
+ * card is back, Mermaid is pinned to its light palette
+ * (docs/_includes/mermaid_config.js), and these now get the same treatment as
+ * the BPMN exports in `.bpmn-figure` — which carry their own white backdrop
+ * and could never have followed a scheme anyway. One treatment for both beats
+ * two that each look right in only one mode.
+ *
+ * The padding is not decoration: without it the drawing's outermost strokes
+ * sit flush against the card's edge. */
 .fa-figure-wrap {
   overflow-x: auto;
+  background: #fff;
+  padding: 0.5rem;
   border: 1px solid rgba(128, 128, 128, 0.35);
   border-radius: 6px;
   margin: 1em 0 0.4em;
-}
-
-.fa-figure-scope.fa-plain {
-  padding: 0.5rem;
 }
 
 /* Full-bleed. The width and offset are set by JS from the element's measured
@@ -217,4 +225,19 @@
 @media (max-width: 800px) {
   .fa-figure-tools { flex-wrap: wrap; }
   .fa-qr-panel svg, .fa-qr-caption { max-width: 100%; }
+}
+
+/* ── Build stamp ───────────────────────────────────────────────────────── */
+
+/* Quiet by default — it is diagnostic, not content — but selectable and
+   copyable, which is the whole point when someone needs to say which build
+   they were looking at. */
+.fa-build-stamp {
+  opacity: 0.6;
+  font-size: 0.7rem;
+}
+
+.fa-build-stamp code {
+  font-size: inherit;
+  padding: 0 0.2em;
 }
