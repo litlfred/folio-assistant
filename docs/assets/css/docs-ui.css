@@ -1,0 +1,150 @@
+/*
+ * Docs-site UI affordances: the header QR toggle, and zoom / full-width
+ * controls on the workflow figures.
+ *
+ * Everything here is scoped to classes this site adds itself, so a
+ * just-the-docs upgrade cannot collide with it. Colours are taken from the
+ * theme's own custom properties where they exist, with a literal fallback,
+ * so the controls stay legible under the dark scheme without hard-coding it.
+ */
+
+/* ── Header QR ─────────────────────────────────────────────────────────── */
+
+.fa-qr-host {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.fa-qr-toggle {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.fa-qr-toggle:hover,
+.fa-qr-toggle:focus-visible {
+  border-color: var(--link-color, #7253ed);
+  outline: none;
+}
+
+.fa-qr-toggle svg { width: 1rem; height: 1rem; fill: currentColor; }
+
+/* The expanded code replaces the title row rather than pushing it down, so
+   the sidebar navigation below does not jump. */
+.fa-qr-panel {
+  display: none;
+  width: 100%;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.fa-qr-host[data-open="true"] .fa-qr-panel { display: block; }
+.fa-qr-host[data-open="true"] .fa-qr-toggle,
+.fa-qr-host[data-open="true"] .site-title { display: none; }
+
+.fa-qr-panel svg {
+  display: block;
+  width: 100%;
+  max-width: 13rem;
+  height: auto;
+  border-radius: 4px;
+}
+
+.fa-qr-caption {
+  display: block;
+  margin-top: 0.35rem;
+  max-width: 13rem;
+  font-size: 0.65rem;
+  line-height: 1.3;
+  opacity: 0.75;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+/* ── Figure controls ───────────────────────────────────────────────────── */
+
+.fa-figure-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0.6em 0 0.2em;
+  font-size: 0.75rem;
+}
+
+.fa-figure-tools button {
+  min-width: 1.9rem;
+  padding: 0.15rem 0.45rem;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.4;
+}
+
+.fa-figure-tools button:hover,
+.fa-figure-tools button:focus-visible {
+  border-color: var(--link-color, #7253ed);
+  outline: none;
+}
+
+.fa-figure-tools button[aria-pressed="true"] {
+  border-color: var(--link-color, #7253ed);
+  box-shadow: inset 0 0 0 1px var(--link-color, #7253ed);
+}
+
+.fa-figure-tools .fa-zoom-level {
+  min-width: 3.2rem;
+  text-align: center;
+  opacity: 0.8;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Zoom multiplies whatever width the figure already had. The 1200px floor is
+   the one head_custom.html sets so a swimlane does not compress into
+   illegibility; scaling it keeps that floor meaningful at every zoom step. */
+.fa-figure-scope img,
+.fa-figure-scope > svg {
+  width: calc(var(--fa-zoom, 1) * 100%);
+  min-width: calc(var(--fa-zoom, 1) * 1200px);
+  max-width: none;
+  height: auto;
+}
+
+/* A non-BPMN SVG has no 1200px floor to scale -- it is whatever size it is. */
+.fa-figure-scope.fa-plain img,
+.fa-figure-scope.fa-plain > svg {
+  min-width: 0;
+  width: calc(var(--fa-zoom, 1) * 100%);
+}
+
+/* Full-bleed: break out of the centred content column to the viewport width.
+   The negative margin is half the difference between the viewport and the
+   element's own width, which is the standard trick and needs no knowledge of
+   the theme's padding. */
+.fa-figure-scope.is-fullwidth {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(-1 * (100vw - 100%) / 2);
+  border-radius: 0;
+}
+
+@media (max-width: 800px) {
+  .fa-figure-tools { flex-wrap: wrap; }
+  .fa-qr-panel svg, .fa-qr-caption { max-width: 100%; }
+}
