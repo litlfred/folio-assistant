@@ -132,32 +132,53 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Zoom multiplies whatever width the figure already had. The 1200px floor is
-   the one head_custom.html sets so a swimlane does not compress into
-   illegibility; scaling it keeps that floor meaningful at every zoom step. */
+/* Zoom multiplies whatever width the figure already had.
+ *
+ * Two things here are deliberate and were both wrong in the first version.
+ *
+ * The selector is a DESCENDANT one (` svg`), not a child one (` > svg`).
+ * Mermaid renders into a wrapper div, so the figure's direct child is that
+ * div and a child selector matched nothing -- the zoom percentage changed
+ * and the drawing did not move.
+ *
+ * And the declarations are !important, which is not laziness. Mermaid writes
+ * `style="max-width: NNNpx"` inline onto the <svg> it generates, and an
+ * inline style beats any stylesheet rule. Without overriding it the width
+ * here is computed and then ignored. `height: auto` with the SVG's own
+ * viewBox is what makes it scale rather than stretch. */
 .fa-figure-scope img,
-.fa-figure-scope > svg {
-  width: calc(var(--fa-zoom, 1) * 100%);
+.fa-figure-scope svg {
+  width: calc(var(--fa-zoom, 1) * 100%) !important;
   min-width: calc(var(--fa-zoom, 1) * 1200px);
-  max-width: none;
-  height: auto;
+  max-width: none !important;
+  height: auto !important;
 }
 
-/* A non-BPMN SVG has no 1200px floor to scale -- it is whatever size it is. */
+/* A non-BPMN figure has no 1200px floor to scale -- it is whatever size it is. */
 .fa-figure-scope.fa-plain img,
-.fa-figure-scope.fa-plain > svg {
+.fa-figure-scope.fa-plain svg {
   min-width: 0;
-  width: calc(var(--fa-zoom, 1) * 100%);
 }
 
-/* Full-bleed: break out of the centred content column to the viewport width.
-   The negative margin is half the difference between the viewport and the
-   element's own width, which is the standard trick and needs no knowledge of
-   the theme's padding. */
+/* Legibility under the dark scheme. The BPMN SVGs carry their own white
+   backdrop, but a Mermaid diagram does not: it renders in its default LIGHT
+   palette -- pale fills, dark text, thin edges -- which on a dark page leaves
+   the connector lines nearly invisible. The wrapper supplies the backdrop the
+   drawing assumes, and the padding keeps the outermost strokes off the edge. */
+.fa-figure-scope.fa-plain {
+  background: #fff;
+  padding: 0.5rem;
+}
+
+/* Full-bleed. The width and offset are set by JS from the element's measured
+   position, NOT by the usual `margin-left: calc(-1 * (100vw - 100%) / 2)`
+   trick. That trick assumes the element is CENTRED in the viewport; here it
+   sits in a content column offset to the right by the sidebar, so the
+   calculation pulled it too far left and ran it too far right -- overshooting
+   by roughly the sidebar width at each edge. Measuring is exact and needs no
+   assumption about the theme's geometry at all. */
 .fa-figure-scope.is-fullwidth {
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: calc(-1 * (100vw - 100%) / 2);
+  max-width: none;
   border-radius: 0;
 }
 
