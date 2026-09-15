@@ -182,11 +182,28 @@
   function mountFigures() {
     document.querySelectorAll(".bpmn-figure").forEach(function (f) { mountFigure(f, false); });
 
-    // Any other SVG in the body gets the same controls, wrapped so the
-    // scrolling and sizing rules have something to attach to.
+    // Any other SVG in the body gets the same controls -- but only if it is a
+    // FIGURE. The first version of this matched `.main-content svg`, which in
+    // just-the-docs also matches the anchor-heading link icons and the search
+    // glyph, so every heading on the page grew a zoom toolbar squeezed into a
+    // few pixels. An icon is distinguishable from a figure three ways, and all
+    // three are cheap:
+    //   - it lives inside something interactive or navigational;
+    //   - it says so in its class name;
+    //   - it is small.
+    // Requiring all three to pass keeps a genuinely small diagram out of the
+    // controls, which is the right failure direction: a missing toolbar is a
+    // nuisance, a toolbar on every heading is unusable.
+    var ICON_CONTEXT = "a, button, nav, label, summary, .search, .site-header, .site-footer, .breadcrumb-nav";
+    var MIN_FIGURE_PX = 240;
+
     document.querySelectorAll(".main-content img[src$='.svg'], .main-content svg").forEach(function (node) {
       if (node.closest(".bpmn-figure") || node.closest(".fa-qr-host")) return;
       if (node.closest(".fa-figure-scope")) return;
+      if (node.closest(ICON_CONTEXT)) return;
+      if (/icon/i.test(node.getAttribute("class") || "")) return;
+      var box = node.getBoundingClientRect();
+      if (box.width < MIN_FIGURE_PX && box.height < MIN_FIGURE_PX) return;
       var wrap = el("div", { class: "bpmn-figure" });
       node.parentNode.insertBefore(wrap, node);
       wrap.appendChild(node);
