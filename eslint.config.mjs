@@ -48,6 +48,16 @@ export default tseslint.config(
       // and then runs `bun run lint` gets a wall of errors from TypeDoc's
       // bundled assets.
       "_site/**",
+      // Vendored third-party code, committed verbatim with its licence. It is
+      // not ours to restyle: an unused `buffer` parameter and a bare
+      // expression statement are this project's rules applied to a file that
+      // never agreed to them, and "fixing" them would mean editing a file
+      // whose whole value is that it matches its upstream byte for byte.
+      // Reported as 8 errors on 2026-09-15 when docs/assets/js/vendor landed;
+      // the diagnosis took longer than it should have because `*.js` is
+      // gitignored here, so nothing else in the repo had ever put hand-written
+      // JavaScript in front of eslint.
+      "**/vendor/**",
     ],
   },
   ...tseslint.configs.recommended,
