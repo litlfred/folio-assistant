@@ -11,11 +11,16 @@
 /* ── Header QR ─────────────────────────────────────────────────────────── */
 
 .fa-qr-host {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.4rem;
   width: 100%;
 }
+
+/* The title row keeps its height while the code is open. Without this the
+   host collapses (both children are hidden) and the sidebar nav jumps up. */
+.fa-qr-host[data-open="true"] { min-height: 1.75rem; }
 
 .fa-qr-toggle {
   flex: 0 0 auto;
@@ -41,15 +46,26 @@
 
 .fa-qr-toggle svg { width: 1rem; height: 1rem; fill: currentColor; }
 
-/* The expanded code replaces the title row rather than pushing it down, so
-   the sidebar navigation below does not jump. */
+/* The expanded code is a POPOVER anchored to the title row, not a flex child
+   of it. As an in-flow child it was taller than the header, and a fixed-height
+   flex row with align-items:center overflows in BOTH directions -- so the code
+   rendered half above the header and outside the sidebar's padding. Absolute
+   positioning at top/left 0 pins its top-left corner to where the title starts,
+   so it grows downward and stays inside the sidebar. */
 .fa-qr-panel {
   display: none;
-  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  max-width: 14rem;
+  padding: 0.5rem;
   cursor: pointer;
-  border: 0;
-  padding: 0;
-  background: transparent;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-radius: 6px;
+  /* Opaque: it sits over the navigation, and a transparent code on top of
+     link text is unreadable to a phone camera as well as to a person. */
+  background: var(--sidebar-color, #27262b);
 }
 
 .fa-qr-host[data-open="true"] .fa-qr-panel { display: block; }
@@ -86,6 +102,7 @@
 }
 
 .fa-figure-tools button {
+  white-space: nowrap;
   min-width: 1.9rem;
   padding: 0.15rem 0.45rem;
   border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
