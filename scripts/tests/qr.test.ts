@@ -27,25 +27,42 @@ import { createContext, runInContext } from "node:vm";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
+/** The slice of the vendored encoder's API this file uses. It attaches to the
+ *  sandbox global rather than exporting, so the shape is declared here. */
+interface QrModel {
+  addData(data: string): void;
+  make(): void;
+  getModuleCount(): number;
+  isDark(row: number, col: number): boolean;
+  createSvgTag(cellSize?: number, margin?: number): string;
+}
+type QrFactory = (typeNumber: number, errorCorrectionLevel: string) => QrModel;
+
 const here = dirname(fileURLToPath(import.meta.url));
-const ctx = {};
+const ctx: { qrcode?: QrFactory } = {};
 createContext(ctx);
 runInContext(readFileSync(join(here, "../../docs/assets/js/vendor/qrcode.js"), "utf8"), ctx);
 // The UTF-8 shim must load after the encoder; without it `stringToBytes` is
 // single-byte and any non-ASCII character in a URL encodes to mojibake.
 runInContext(readFileSync(join(here, "../../docs/assets/js/vendor/qrcode_UTF8.js"), "utf8"), ctx);
-const qrcode = ctx.qrcode;
+const loaded = ctx.qrcode;
+// Not a formality: if the vendored file ever stops attaching to the global,
+// every test below would fail with a confusing TypeError instead of saying so.
+if (!loaded) throw new Error("vendored qrcode.js did not attach `qrcode` to the sandbox");
+// Re-bound after the guard because narrowing at module scope does not reach
+// into a closure over the original binding.
+const qrcode: QrFactory = loaded;
 
 // Level-M geometry, versions 1–10.
 const TOTAL        = [0, 26, 44, 70, 100, 134, 172, 196, 242, 292, 346];
 const EC_PER_BLOCK = [0, 10, 16, 26,  18,  24,  16,  18,  22,  22,  26];
 const BLOCKS       = [0,  1,  1,  1,   2,   2,   4,   4,   4,   5,   5];
-const dataCodewords = (v) => TOTAL[v] - EC_PER_BLOCK[v] * BLOCKS[v];
+const dataCodewords = (v: number) => TOTAL[v] - EC_PER_BLOCK[v] * BLOCKS[v];
 
-const ALIGN = [[], [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34],
+const ALIGN: number[][] = [[], [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34],
                [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50]];
 
-const MASKS = [
+const MASKS: Array<(r: number, c: number) => boolean> = [
   (r, c) => (r + c) % 2 === 0,
   (r) => r % 2 === 0,
   (r, c) => c % 3 === 0,
@@ -56,7 +73,7 @@ const MASKS = [
   (r, c) => (((r + c) % 2) + ((r * c) % 3)) % 2 === 0,
 ];
 
-function encode(text) {
+function encode(text: string) {
   const q = qrcode(0, "M");
   q.addData(text);
   q.make();
@@ -67,13 +84,13 @@ function encode(text) {
     for (let c = 0; c < size; c++) row.push(q.isDark(r, c) ? 1 : 0);
     modules.push(row);
   }
-  return { size, modules, tag: (cell, margin) => q.createSvgTag(cell, margin) };
+  return { size, modules, tag: (cell: number, margin: number) => q.createSvgTag(cell, margin) };
 }
 
 /** Everything the standard reserves: no data bit is ever placed here. */
-function functionMap(size, version) {
+function functionMap(size: number, version: number) {
   const fn = Array.from({ length: size }, () => new Array(size).fill(false));
-  const block = (r0, c0, h, w) => {
+  const block = (r0: number, c0: number, h: number, w: number) => {
     for (let r = r0; r < r0 + h; r++)
       for (let c = c0; c < c0 + w; c++)
         if (r >= 0 && c >= 0 && r < size && c < size) fn[r][c] = true;
@@ -93,7 +110,7 @@ function functionMap(size, version) {
 }
 
 /** Read a rendered matrix back to the string that produced it. */
-function decode(size, modules) {
+function decode(size: number, modules: number[][]) {
   const version = (size - 17) / 4;
 
   // The 15-bit format word is (5 data bits << 10) | 10 BCH bits, XORed with
@@ -101,12 +118,12 @@ function decode(size, modules) {
   // mask are the TOP five bits of the unmasked word, not the bottom five.
   // Getting either of those backwards decodes to plausible-looking garbage,
   // which is why this is read from both copies and they are required to agree.
-  const readFormat = (positions) => {
+  const readFormat = (positions: Array<[number, number]>) => {
     let word = 0;
     for (const [r, c] of positions) word = (word << 1) | modules[r][c];
     return word;
   };
-  const copy1 = [];
+  const copy1: Array<[number, number]> = [];
   for (let i = 0; i < 15; i++) {
     if (i < 6) copy1.push([8, i]);
     else if (i === 6) copy1.push([8, 7]);
@@ -114,7 +131,7 @@ function decode(size, modules) {
     else if (i === 8) copy1.push([7, 8]);
     else copy1.push([14 - i, 8]);
   }
-  const copy2 = [];
+  const copy2: Array<[number, number]> = [];
   // Copy 2 is 7 modules UP the left column, then 8 along the top row --
   // the module at (size-8, 8) between them is the always-dark module and is
   // NOT a format bit. Including it shifts the second half by one and makes
@@ -153,21 +170,21 @@ function decode(size, modules) {
   const n = BLOCKS[version], total = dataCodewords(version);
   const short = Math.floor(total / n), numLong = total % n;
   const lens = Array.from({ length: n }, (_, i) => short + (i >= n - numLong ? 1 : 0));
-  const blocks = lens.map(() => []);
+  const blocks: number[][] = lens.map(() => []);
   let idx = 0;
   for (let c = 0; c < short + (numLong ? 1 : 0); c++)
     for (let b = 0; b < n; b++) if (c < lens[b]) blocks[b].push(codewords[idx++]);
-  const data = [].concat(...blocks);
+  const data: number[] = ([] as number[]).concat(...blocks);
 
   let pos = 0;
-  const take = (k) => {
+  const take = (k: number) => {
     let v = 0;
     for (let i = 0; i < k; i++, pos++) v = (v << 1) | ((data[pos >> 3] >> (7 - (pos & 7))) & 1);
     return v;
   };
   const mode = take(4);
   const len = take(version < 10 ? 8 : 16);
-  const out = [];
+  const out: number[] = [];
   for (let i = 0; i < len; i++) out.push(take(8));
   return { version, level, mode, text: new TextDecoder().decode(Uint8Array.from(out)) };
 }
