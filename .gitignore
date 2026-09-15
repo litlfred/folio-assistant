@@ -86,3 +86,7 @@ content/schema/
 # does not reach it — `git add` reported nothing and the file would simply
 # never have deployed.
 !docs/_includes/*.js
+
+# Build stamp written by .github/workflows/docs-site.yml at deploy time.
+# Never committed: a sha in the repo names the commit BEFORE the deploy.
+docs/_data/build.yml

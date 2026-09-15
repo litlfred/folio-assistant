@@ -115,4 +115,24 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "error",
     },
   },
+
+  // Liquid fragments under docs/_includes are not modules and not scripts:
+  // Jekyll interpolates them into the middle of a statement somewhere else.
+  // `mermaid_config.js` becomes the right-hand side of
+  // `var config = <file>;` in just-the-docs' own
+  // `_includes/components/mermaid.html`, so its entire contents are one
+  // expression by design and `no-unused-expressions` is measuring the wrong
+  // thing.
+  //
+  // Scoped to this directory and to that ONE rule rather than ignoring the
+  // path, because the rest of eslint is doing real work here: it is what
+  // caught the file's five unused catch bindings, and a parse error in this
+  // fragment would otherwise surface as a broken docs site rather than as a
+  // failed check.
+  {
+    files: ["docs/_includes/**/*.js"],
+    rules: {
+      "@typescript-eslint/no-unused-expressions": "off",
+    },
+  },
 );

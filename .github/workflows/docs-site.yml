@@ -61,6 +61,23 @@ jobs:
           npx --yes playwright install --with-deps chromium
           bun run render:bpmn
 
+      # Stamp the build so a reader can tell WHAT IS DEPLOYED from the page
+      # itself. Without it the only way to know whether a change is live is to
+      # compare rendered behaviour against a guess -- and a stale browser cache
+      # is indistinguishable from a deploy that has not run. Written as a data
+      # file rather than into _config.yml so the config stays reviewable and
+      # the build cannot half-apply.
+      - name: Stamp the build sha
+        run: |
+          mkdir -p docs/_data
+          {
+            echo "sha: \"${GITHUB_SHA}\""
+            echo "short_sha: \"${GITHUB_SHA:0:7}\""
+            echo "built_at: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\""
+            echo "run_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\""
+          } > docs/_data/build.yml
+          cat docs/_data/build.yml
+
       # Build the Jekyll site from docs/ using the github-pages gem
       # (whitelists jekyll-remote-theme, so just-the-docs works).
       - name: Build Jekyll site

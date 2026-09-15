@@ -133,13 +133,11 @@
       try { window.localStorage.setItem(SCHEME_KEY, next); } catch (_e) { /* private mode */ }
       paint(next);
 
-      // Mermaid picks its palette once, in `mermaid.initialize()`, from
-      // docs/_includes/mermaid_config.js -- which reads the same key. It is
-      // loaded as a module and never exposed, so there is no handle here to
-      // re-run it with the new theme. A reload is the honest way to make the
-      // diagrams agree with the page, and it is skipped entirely on the pages
-      // that have none, which is most of them.
-      if (document.querySelector(".language-mermaid")) window.location.reload();
+      // No reload. Diagrams are pinned to Mermaid's LIGHT palette on a white
+      // card in both schemes (docs/_includes/mermaid_config.js), so nothing on
+      // the page needs re-rendering when the scheme changes. An earlier
+      // version reloaded here because the diagram palette followed the scheme;
+      // that coupling is gone and the reload went with it.
     });
 
     host.insertBefore(btn, before);
