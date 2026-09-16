@@ -349,3 +349,50 @@
   font-size: inherit;
   padding: 0 0.2em;
 }
+
+/* ── Drag-to-pan, and the links inside a diagram ───────────────────────── */
+
+/* THE AFFORDANCE IS THE WHOLE FEATURE HERE.
+ *
+ * Panning a zoomed diagram by dragging is not discoverable — there is no
+ * scrollbar thumb to aim at once the drawing is wider than the card, and
+ * nothing on screen says the surface is grabbable. The cursor is the only
+ * signal, so it is not decoration: without it the behaviour exists and nobody
+ * finds it.
+ *
+ * `grab`/`grabbing` rather than `move`: `move` reads as "this element can be
+ * relocated", which is the opposite of what happens — the drawing stays put
+ * and the viewport moves over it.
+ *
+ * Gated on `.is-pannable`, which the JS sets only when the figure actually
+ * overflows its card. A grab cursor over a figure that fits promises a drag
+ * that does nothing, and then the cursor is the only thing that was wrong. */
+.fa-figure-scope.is-pannable {
+  cursor: grab;
+}
+
+.fa-figure-scope.is-panning {
+  cursor: grabbing;
+  /* Without this a drag across a label selects the text instead of panning,
+     and the selection highlight follows the pointer. The JS also suppresses
+     the click that ends a drag; this is the visual half of the same fix. */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* A subprocess box in a BPMN export is a real link now (render-bpmn.ts wraps
+ * the call-activity shape in an <a>), but an SVG <a> inherits none of the
+ * browser's link chrome — no colour change, no pointer, nothing. Say so. */
+.fa-subprocess-link {
+  cursor: pointer;
+}
+
+.fa-subprocess-link:hover rect,
+.fa-subprocess-link:focus-visible rect {
+  stroke-width: 2.5px;
+}
+
+.fa-subprocess-link:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
