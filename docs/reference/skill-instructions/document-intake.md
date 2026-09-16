@@ -149,12 +149,13 @@ Two failure modes it exists to prevent, both observed in practice:
 | Format | Extraction method |
 |--------|-------------------|
 | PDF (text) | `scripts/pdf-extract.py` (ladder; `pdftotext` when available) |
-| PDF (scan) | `scripts/pdf-extract.py` → exit 2, then Tesseract OCR / Claude vision |
+| PDF (scan) | `scripts/pdf-extract.py` → exit 2, then `scripts/pdf-ocr.py` (Tesseract) or Claude vision |
 | LaTeX | Direct parse (strip preamble) |
 | HTML | Readability + turndown |
 | DOCX | Pandoc → markdown |
 | Images | Claude vision API |
 | PDF (tables/figures) | `scripts/pdf-tables.py` → `tables.json` (see Stage 3) |
+| PDF (sections) | `scripts/pdf-structure.py` → `structure.json` + `sections/*.md` (see Stage 3) |
 
 For scanned documents the script's OCR rung fires automatically **if**
 `tesseract` and `pdftoppm` are installed (`apt-get install -y tesseract-ocr
@@ -167,6 +168,48 @@ Claude's vision capability, which reads structure that OCR flattens.
 ### Stage 3: Structural Analysis (→ `structured`)
 
 Analyze extracted text for formal environments and document structure.
+
+#### The three producers this stage actually runs
+
+**Documented here because nothing else named them**, and they are the scripts
+that built the corpus: measured on `qou`, 715 `library/*/structure.json` and 26
+`library/*/ocr/` trees exist, and until now no skill in either repo pointed at
+the programs that wrote them. An agent following Stage 2 alone reaches
+`pdf-extract.py`, which writes loose text — not the greppable `sections/` tree
+the corpus-grep checklist reads.
+
+| script | writes | notes |
+|---|---|---|
+| [`scripts/pdf-structure.py`](../../scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (title, authors, arXiv/DOI from the page-1 stamp), TOC from the PDF outline or inferred from heading patterns, per-section text split |
+| [`scripts/pdf-ocr.py`](../../scripts/pdf-ocr.py) | `library/<doc-id>/ocr/page-NNN.txt` | `pdftoppm -r 300 -png` then `tesseract`; per-page cache; script auto-detected via Tesseract's own OSD |
+| [`scripts/extract-candidates.py`](../../scripts/extract-candidates.py) | `library/<doc-id>/candidates.json` | pure regex, imports no PDF library; **proposals, never content** — nothing here writes to `content/` and nothing here creates Lean |
+
+```bash
+python3 scripts/pdf-ocr.py FILE.pdf --outdir library/<doc-id>/   # only if scanned
+python3 scripts/pdf-structure.py FILE.pdf --outdir library --ocr
+python3 scripts/extract-candidates.py library/<doc-id>/
+```
+
+Three things about how they fit together, each of which has already cost
+someone time:
+
+* **`pdf-structure.py` READS OCR, it never runs it.** Its `--ocr` flag consults
+  the cache `pdf-ocr.py` wrote, gated on `text_is_unusable()` (under 120
+  chars/page, or under 55 % letters — mojibake). So on a scanned document the
+  order is `pdf-ocr.py` first, `pdf-structure.py --ocr` second. Run them the
+  other way round and the sections come out empty.
+* **An OCR'd document whose structure was never re-run is invisible to the
+  section grep.** Measured on `qou`: 26 `ocr/` directories exist but only 11
+  `structure.json` record `"text_source": "ocr"` — so roughly 15 documents have
+  their text on disk and a stub in `sections/`. A `sections/` grep misses them
+  entirely. `library/procrsoclondona92/` is the worked case: 1,916 bytes of
+  JSTOR download banner in `sections/` against 46,511 bytes of real text in
+  `ocr/`.
+* **The backends are optional and their absence is reported, not guessed.**
+  `pdf-structure.py` prefers PyMuPDF (better text on maths, real outlines) and
+  falls back to `pypdf`; the Dockerfile ships `pypdf` only, deliberately, so the
+  image stays BSD-licensed against PyMuPDF's AGPL. Check with
+  `python3 scripts/pdf-ocr.py --check`.
 
 #### For academic papers:
 Same as paper-importer Phase 2 — detect theorem/definition/lemma
