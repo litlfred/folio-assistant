@@ -492,7 +492,7 @@ was written in it was the only rung that worked.</li>
     </tr>
     <tr>
       <td>PDF (scan)</td>
-      <td><code class="language-plaintext highlighter-rouge">scripts/pdf-extract.py</code> → exit 2, then Tesseract OCR / Claude vision</td>
+      <td><code class="language-plaintext highlighter-rouge">scripts/pdf-extract.py</code> → exit 2, then <code class="language-plaintext highlighter-rouge">scripts/pdf-ocr.py</code> (Tesseract) or Claude vision</td>
     </tr>
     <tr>
       <td>LaTeX</td>
@@ -514,6 +514,10 @@ was written in it was the only rung that worked.</li>
       <td>PDF (tables/figures)</td>
       <td><code class="language-plaintext highlighter-rouge">scripts/pdf-tables.py</code> → <code class="language-plaintext highlighter-rouge">tables.json</code> (see Stage 3)</td>
     </tr>
+    <tr>
+      <td>PDF (sections)</td>
+      <td><code class="language-plaintext highlighter-rouge">scripts/pdf-structure.py</code> → <code class="language-plaintext highlighter-rouge">structure.json</code> + <code class="language-plaintext highlighter-rouge">sections/*.md</code> (see Stage 3)</td>
+    </tr>
   </tbody>
 </table></div>
 
@@ -534,6 +538,76 @@ Claude’s vision capability, which reads structure that OCR flattens.</p>
     
 
 <p>Analyze extracted text for formal environments and document structure.</p>
+<h4 id="the-three-producers-this-stage-actually-runs">
+  
+  
+    <a href="#the-three-producers-this-stage-actually-runs" class="anchor-heading" aria-labelledby="the-three-producers-this-stage-actually-runs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The three producers this stage actually runs
+  
+  
+</h4>
+    
+
+<p><strong>Documented here because nothing else named them</strong>, and they are the scripts
+that built the corpus: measured on <code class="language-plaintext highlighter-rouge">qou</code>, 715 <code class="language-plaintext highlighter-rouge">library/*/structure.json</code> and 26
+<code class="language-plaintext highlighter-rouge">library/*/ocr/</code> trees exist, and until now no skill in either repo pointed at
+the programs that wrote them. An agent following Stage 2 alone reaches
+<code class="language-plaintext highlighter-rouge">pdf-extract.py</code>, which writes loose text — not the greppable <code class="language-plaintext highlighter-rouge">sections/</code> tree
+the corpus-grep checklist reads.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>script</th>
+      <th>writes</th>
+      <th>notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="../../scripts/pdf-structure.py"><code class="language-plaintext highlighter-rouge">scripts/pdf-structure.py</code></a></td>
+      <td><code class="language-plaintext highlighter-rouge">library/&lt;doc-id&gt;/structure.json</code> + <code class="language-plaintext highlighter-rouge">sections/NN-slug.md</code></td>
+      <td>metadata (title, authors, arXiv/DOI from the page-1 stamp), TOC from the PDF outline or inferred from heading patterns, per-section text split</td>
+    </tr>
+    <tr>
+      <td><a href="../../scripts/pdf-ocr.py"><code class="language-plaintext highlighter-rouge">scripts/pdf-ocr.py</code></a></td>
+      <td><code class="language-plaintext highlighter-rouge">library/&lt;doc-id&gt;/ocr/page-NNN.txt</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pdftoppm -r 300 -png</code> then <code class="language-plaintext highlighter-rouge">tesseract</code>; per-page cache; script auto-detected via Tesseract’s own OSD</td>
+    </tr>
+    <tr>
+      <td><a href="../../scripts/extract-candidates.py"><code class="language-plaintext highlighter-rouge">scripts/extract-candidates.py</code></a></td>
+      <td><code class="language-plaintext highlighter-rouge">library/&lt;doc-id&gt;/candidates.json</code></td>
+      <td>pure regex, imports no PDF library; <strong>proposals, never content</strong> — nothing here writes to <code class="language-plaintext highlighter-rouge">content/</code> and nothing here creates Lean</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 scripts/pdf-ocr.py FILE.pdf <span class="nt">--outdir</span> library/&lt;doc-id&gt;/   <span class="c"># only if scanned</span>
+python3 scripts/pdf-structure.py FILE.pdf <span class="nt">--outdir</span> library <span class="nt">--ocr</span>
+python3 scripts/extract-candidates.py library/&lt;doc-id&gt;/
+</code></pre></div></div>
+
+<p>Three things about how they fit together, each of which has already cost
+someone time:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">pdf-structure.py</code> READS OCR, it never runs it.</strong> Its <code class="language-plaintext highlighter-rouge">--ocr</code> flag consults
+the cache <code class="language-plaintext highlighter-rouge">pdf-ocr.py</code> wrote, gated on <code class="language-plaintext highlighter-rouge">text_is_unusable()</code> (under 120
+chars/page, or under 55 % letters — mojibake). So on a scanned document the
+order is <code class="language-plaintext highlighter-rouge">pdf-ocr.py</code> first, <code class="language-plaintext highlighter-rouge">pdf-structure.py --ocr</code> second. Run them the
+other way round and the sections come out empty.</li>
+  <li><strong>An OCR’d document whose structure was never re-run is invisible to the
+section grep.</strong> Measured on <code class="language-plaintext highlighter-rouge">qou</code>: 26 <code class="language-plaintext highlighter-rouge">ocr/</code> directories exist but only 11
+<code class="language-plaintext highlighter-rouge">structure.json</code> record <code class="language-plaintext highlighter-rouge">"text_source": "ocr"</code> — so roughly 15 documents have
+their text on disk and a stub in <code class="language-plaintext highlighter-rouge">sections/</code>. A <code class="language-plaintext highlighter-rouge">sections/</code> grep misses them
+entirely. <code class="language-plaintext highlighter-rouge">library/procrsoclondona92/</code> is the worked case: 1,916 bytes of
+JSTOR download banner in <code class="language-plaintext highlighter-rouge">sections/</code> against 46,511 bytes of real text in
+<code class="language-plaintext highlighter-rouge">ocr/</code>.</li>
+  <li><strong>The backends are optional and their absence is reported, not guessed.</strong>
+<code class="language-plaintext highlighter-rouge">pdf-structure.py</code> prefers PyMuPDF (better text on maths, real outlines) and
+falls back to <code class="language-plaintext highlighter-rouge">pypdf</code>; the Dockerfile ships <code class="language-plaintext highlighter-rouge">pypdf</code> only, deliberately, so the
+image stays BSD-licensed against PyMuPDF’s AGPL. Check with
+<code class="language-plaintext highlighter-rouge">python3 scripts/pdf-ocr.py --check</code>.</li>
+</ul>
 <h4 id="for-academic-papers">
   
   
@@ -948,7 +1022,7 @@ To resume:</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35079422177"><code>ba9d607</code></a> &middot; 2026-09-16T09:27:15Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35083175386"><code>5179f98</code></a> &middot; 2026-09-16T10:07:22Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
