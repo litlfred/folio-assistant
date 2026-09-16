@@ -533,3 +533,37 @@
   .side-bar { width: 16.5rem; }
   .side-bar + .main { margin-left: 16.5rem; }
 }
+
+/* ── Edit-the-source affordance ────────────────────────────────────────── */
+
+/* 130 of the site's 155 pages are GENERATED and say "do not edit here". That
+ * sentence tells a reader where not to go and, until now, nothing told them
+ * where to go instead -- the correct source path was already in the banner,
+ * but as a /blob/ link, which is read-only. These links point at /edit/, which
+ * is GitHub's in-browser editor.
+ *
+ * Styled as an affordance rather than as prose because it is an ACTION sitting
+ * inside a sentence that forbids the obvious one. Running "do not edit here"
+ * and "edit it there" together as plain text is how a reader ends up editing
+ * the generated copy anyway.
+ *
+ * Deliberately NOT the theme's `.btn`: a button in every one of 130 callouts
+ * is louder than the content it sits above. This is a link that looks
+ * clickable, which is all it needs to be. */
+.fa-edit-source {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  padding: 0.1em 0.45em;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-radius: 4px;
+  font-size: 0.85em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.fa-edit-source:hover,
+.fa-edit-source:focus-visible {
+  border-color: var(--link-color, #7253ed);
+  text-decoration: underline;
+}
