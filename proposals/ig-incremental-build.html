@@ -288,7 +288,15 @@ how to measure it from a DAK’s own published site.
 <strong>Ships with this proposal:</strong> <code class="language-plaintext highlighter-rouge">content/pipeline/fsh-cone.ts</code>, the measurement instrument
 of §3.3, which is also the first component of §5.
 <strong>Companion:</strong> <a href="/folio-assistant/proposals/ig-incremental-build-overview.html"><code class="language-plaintext highlighter-rouge">ig-incremental-build-overview.md</code></a> —
-the change register, and where each change sits in the review and publish pipeline.</p>
+the change register, and where each change sits in the review and publish pipeline.
+<strong>Decisions taken 2026-09-16</strong> (bean <code class="language-plaintext highlighter-rouge">rna3</code>, <a href="https://github.com/litlfred/folio-assistant/issues/192">#192</a>):
+the publisher is pinned and its version recorded so a change is what triggers a rerun
+(§1.2, §5.1); the terminology cache becomes a branch cache of its own, partitioned so a
+cone pulls only what it needs (§5.6); publisher output stays on gh-pages with a Just the
+Docs landing page, and longer term the publisher becomes a <em>renderer</em> of content that
+agentic skills and the render pipeline author as structured <code class="language-plaintext highlighter-rouge">.ts</code>, its output
+incorporated into the Just the Docs pipeline that publishes the site (§5.7). The
+specific asks to the IG Publisher and validator are §8.</p>
 
 <p>A WHO SMART Guidelines DAK publishes its FHIR Implementation Guide through
 <code class="language-plaintext highlighter-rouge">smart-base</code>’s <code class="language-plaintext highlighter-rouge">ghbuild.yml</code>: one monolithic <code class="language-plaintext highlighter-rouge">publisher.jar</code> run per push, and every
@@ -373,7 +381,7 @@ delete files &gt; 100 MB ──► deploy whole output/ to gh-pages (JamesIves, 
     <tr>
       <td><code class="language-plaintext highlighter-rouge">publisher.jar</code></td>
       <td><code class="language-plaintext highlighter-rouge">releases/latest</code> — <strong>unpinned</strong></td>
-      <td>No. Also non-reproducible: two runs a day apart can use different publishers.</td>
+      <td>No. Also non-reproducible: two runs a day apart can use different publishers. <strong>Decision:</strong> pin it, and write the version into the build’s outputs, so that a publisher change is <em>detectable</em> and is the thing that tells a later run it must rebuild rather than restore (§5.1, §8 A3).</td>
     </tr>
     <tr>
       <td>SUSHI, Python, pip packages inside the container</td>
@@ -1346,9 +1354,139 @@ after seven days and caps at 10 GB, so it cannot be the only copy). <code class=
 of the six slug components moved, because “publisher bumped” and “someone changed a
 dependency version” want different responses.</p>
 
+<p><strong>The terminology cache is a branch cache of its own (decision, 2026-09-16).</strong> It is
+big, it is slow to rebuild, and it does not belong in the DAK repository — the same
+three reasons the oleans live on <code class="language-plaintext highlighter-rouge">lake-cache/*</code> branches and not in <code class="language-plaintext highlighter-rouge">qou</code>. So:
+<code class="language-plaintext highlighter-rouge">tx-cache/&lt;pkg&gt;-&lt;slug&gt;</code>, an orphan branch, split under 100 MB like the Lean parts,
+restored into the directory the IG names with its <code class="language-plaintext highlighter-rouge">path-tx-cache</code> parameter. Three facts
+from <code class="language-plaintext highlighter-rouge">TerminologyCache.java</code> make this workable. The cache is <strong>one file per code
+system</strong> — <code class="language-plaintext highlighter-rouge">snomed_&lt;version&gt;.cache</code>, <code class="language-plaintext highlighter-rouge">loinc_&lt;version&gt;.cache</code>, <code class="language-plaintext highlighter-rouge">ucum.cache</code>,
+<code class="language-plaintext highlighter-rouge">all-systems.cache</code>, others named from their system URL — so a cone-restricted run can
+restore <strong>only the files for the systems its cone binds to</strong> and leave the rest on the
+branch. Each file carries a header nonce, so a partial directory is a valid cache, not a
+corrupt one. And <code class="language-plaintext highlighter-rouge">version.ctl</code> holds the cache format version (<code class="language-plaintext highlighter-rouge">FIXED_CACHE_VERSION</code>,
+currently <code class="language-plaintext highlighter-rouge">4</code>); when the publisher bumps it, the publisher itself clears the directory —
+“a version change drops the cache” is native behaviour, and the branch name’s slug does
+the same one level up. The risk is <strong>size</strong>: SNOMED entries dominate, and nobody has
+measured a WHO DAK’s <code class="language-plaintext highlighter-rouge">txCache/</code> here (§3.1). Seed once, <code class="language-plaintext highlighter-rouge">du -sh</code> it, and if a single
+code system’s file passes the part limit, the selective restore is the mitigation rather
+than a nicety. The selective restore also wants one thing from upstream — a record of
+which cache files a resource’s validation touched — and works without it by
+restoring every file for the slug. (That one thing is asked for as part of the AST, §8
+A1 — “terminology cache files touched” per resource — not as a terminology feature;
+the partition and the branch are ours.)</p>
+
 <p>What is deliberately <strong>not</strong> cached: anything keyed on <code class="language-plaintext highlighter-rouge">latest</code> or <code class="language-plaintext highlighter-rouge">#current</code>, and
 <code class="language-plaintext highlighter-rouge">qa.html</code> as a file — it is recomputed from outcomes every time, so it can never
-describe a build that did not happen.</p><hr />
+describe a build that did not happen.</p>
+<h3 id="57-the-site--gh-pages-a-just-the-docs-landing-page-then-the-publisher-as-a-renderer-inside-the-just-the-docs-pipeline">
+  
+  
+    <a href="#57-the-site--gh-pages-a-just-the-docs-landing-page-then-the-publisher-as-a-renderer-inside-the-just-the-docs-pipeline" class="anchor-heading" aria-labelledby="57-the-site--gh-pages-a-just-the-docs-landing-page-then-the-publisher-as-a-renderer-inside-the-just-the-docs-pipeline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5.7 The site — gh-pages, a Just the Docs landing page, then the publisher as a renderer inside the Just the Docs pipeline
+  
+  
+</h3>
+    
+
+<p>Decision, 2026-09-16, in three steps of increasing reach.</p>
+
+<p><strong>Now:</strong> the publisher’s output keeps going to <code class="language-plaintext highlighter-rouge">gh-pages</code>, as <code class="language-plaintext highlighter-rouge">ghbuild.yml</code> does today;
+nothing about where the IG is served changes. <strong>Next:</strong> the root <code class="language-plaintext highlighter-rouge">index.html</code> of the
+published site is a <strong>rendered Just the Docs page</strong> — the same pipeline that renders this
+documentation (<code class="language-plaintext highlighter-rouge">site-content/&lt;page&gt;/*.ts</code> manifests → <code class="language-plaintext highlighter-rouge">gen-docs-pages.ts</code> → Jekyll with
+the Just the Docs theme) — that links into the publisher’s pages rather than being the
+template’s own landing page. That is a deploy-layout change in smart-base (the publisher
+output under a sub-path, or the landing page written over the template’s <code class="language-plaintext highlighter-rouge">index.html</code>
+after the build) and needs nothing from the publisher.</p>
+
+<p><strong>Longer term, the arrow points the other way.</strong> The <strong>source is structured <code class="language-plaintext highlighter-rouge">.ts</code>
+content</strong> — blocks that agentic skills and the render pipeline author, in the folio
+model this platform already has for a DAK (<code class="language-plaintext highlighter-rouge">DAK_BLOCK_KINDS</code>, the <code class="language-plaintext highlighter-rouge">dak</code> adapter). The
+<strong>IG Publisher is one renderer of that content</strong>: the FHIR artefacts derived from the
+blocks go through it, and what it renders — the per-artefact fragments, the aggregates —
+is <strong>incorporated into the Just the Docs render pipeline</strong>, which assembles the whole
+site and publishes it to gh-pages in the controlled way it assembles this one. The
+publisher stops being the site generator and becomes a stage whose output the site
+generator consumes as data. That is the “block as source, everything else as render”
+target of <a href="/folio-assistant/proposals/rag-document-ingestion.html"><code class="language-plaintext highlighter-rouge">rag-document-ingestion.md</code> §12.15</a> with the IG
+as one of the renders, and it is why the meta-index of §5.5 is a separate step: the
+site assembler needs the index as data, not as <code class="language-plaintext highlighter-rouge">toc.html</code>.</p>
+
+<p><strong>The easy way to feed the publisher.</strong> The publisher processes one thing: a standard
+IG folder — <code class="language-plaintext highlighter-rouge">ig.ini</code>, <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>, <code class="language-plaintext highlighter-rouge">input/fsh/</code>, <code class="language-plaintext highlighter-rouge">input/pagecontent/</code>,
+<code class="language-plaintext highlighter-rouge">input/images/</code>. So the render pipeline’s job is to <strong>assemble that folder from
+<code class="language-plaintext highlighter-rouge">content/&lt;ig&gt;/&lt;ig&gt;.ts</code> and its blocks</strong>, and then SUSHI and the publisher run exactly as
+they do today, on input they already understand. No publisher change, no adapter in the
+publisher, no knowledge of folios anywhere but here. The projection is mechanical
+because the <code class="language-plaintext highlighter-rouge">dak</code> adapter’s block kinds already are the IG’s artefact kinds, and a
+block’s companion file (<code class="language-plaintext highlighter-rouge">&lt;root&gt;.fsh</code>, <code class="language-plaintext highlighter-rouge">.bpmn</code>, <code class="language-plaintext highlighter-rouge">.dmn</code>, <code class="language-plaintext highlighter-rouge">.cql</code>, resolved by root-name
+convention) is the artefact’s source:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Block</th>
+      <th>Companion</th>
+      <th>Lands in the IG folder as</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>the root manifest <code class="language-plaintext highlighter-rouge">content/&lt;ig&gt;/&lt;ig&gt;.ts</code> — id, canonical, title, version, dependencies, pages, menu</td>
+      <td>—</td>
+      <td><code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>, <code class="language-plaintext highlighter-rouge">ig.ini</code> (template pinned, <code class="language-plaintext highlighter-rouge">path-tx-cache</code> set)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">profile</code>, <code class="language-plaintext highlighter-rouge">logical-model</code>, <code class="language-plaintext highlighter-rouge">value-set</code>, <code class="language-plaintext highlighter-rouge">questionnaire</code>, <code class="language-plaintext highlighter-rouge">plan-definition</code>, <code class="language-plaintext highlighter-rouge">measure</code>, <code class="language-plaintext highlighter-rouge">structure-map</code>, <code class="language-plaintext highlighter-rouge">actor-definition</code>, <code class="language-plaintext highlighter-rouge">test-case</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.fsh</code></td>
+      <td><code class="language-plaintext highlighter-rouge">input/fsh/&lt;kind&gt;s/&lt;id&gt;.fsh</code> — one file per block</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cql-library</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.cql</code></td>
+      <td><code class="language-plaintext highlighter-rouge">input/cql/&lt;id&gt;.cql</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">business-process</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.bpmn</code></td>
+      <td><code class="language-plaintext highlighter-rouge">input/business-processes/&lt;id&gt;.bpmn</code>, then FSH through smart-base’s <code class="language-plaintext highlighter-rouge">bpmn2fhirfsh.xsl</code> (already wrapped as <code class="language-plaintext highlighter-rouge">smart-base-tools</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">decision-table</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.dmn</code></td>
+      <td><code class="language-plaintext highlighter-rouge">input/dmn/&lt;id&gt;.dmn</code>, then HTML through <code class="language-plaintext highlighter-rouge">dmn2html.xslt</code> (same skill) and the <code class="language-plaintext highlighter-rouge">PlanDefinition</code> FSH the DAK convention derives</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">data-element</code>, <code class="language-plaintext highlighter-rouge">indicator</code>, <code class="language-plaintext highlighter-rouge">persona</code>, <code class="language-plaintext highlighter-rouge">user-scenario</code>, requirements, <code class="language-plaintext highlighter-rouge">health-intervention</code>, <code class="language-plaintext highlighter-rouge">test-scenario</code></td>
+      <td>prose, tables</td>
+      <td><code class="language-plaintext highlighter-rouge">input/pagecontent/&lt;id&gt;.md</code>, and the L2 spreadsheets where the DAK conventions want them</td>
+    </tr>
+    <tr>
+      <td>prose blocks</td>
+      <td><code class="language-plaintext highlighter-rouge">.md</code></td>
+      <td><code class="language-plaintext highlighter-rouge">input/pagecontent/&lt;id&gt;.md</code>, page tree from the manifest</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>One file per block is not incidental: it keeps <code class="language-plaintext highlighter-rouge">fsh-cone.ts</code> valid at block level (a
+block edit is one changed FSH file, and its cone is the block’s cone), it makes the
+per-artefact record (§5.2) the block’s record, and it means the restricted checkout of
+§5.4 is a restricted <em>render</em> — assemble only the cone’s files. The renderer is the
+render arrow of <a href="/folio-assistant/proposals/rag-document-ingestion.html"><code class="language-plaintext highlighter-rouge">rag-document-ingestion.md</code> §12.15</a>, the
+inverse of the extractors that produced today’s DAKs, and it belongs beside
+<code class="language-plaintext highlighter-rouge">render-markdown.ts</code> in <code class="language-plaintext highlighter-rouge">content/pipeline/</code>. Its first version is a directory writer and
+a <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> emitter; nothing in it is hard.</p>
+
+<p>What it asks of the publisher is small and agnostic — a render-only mode that stops
+after fragments and aggregates without running its own Jekyll, and, as part of the AST,
+a manifest of what was rendered where (§8 C1, A4) — because incorporating a render into
+another pipeline needs the render as files with a contract, not as a finished site.
+Nothing about <em>which</em> pipeline incorporates it, or <em>what</em> assembled its input, goes
+upstream. Until those exist, the fragments are
+already on disk under <code class="language-plaintext highlighter-rouge">temp/pages/_includes/</code> after any build and can be consumed as
+they are; the contract is inferred rather than given, which is the honest description
+of every interface in this section until §8 is answered.</p><hr />
 <h2 id="6-ownership--publisher-smart-base-ci-folio-assistant">
   
   
@@ -1432,9 +1570,288 @@ per-artefact records of §5.2, and <code class="language-plaintext highlighter-r
 the full build’s. Falsifier: any aggregate that cannot be regenerated from records
 alone — that aggregate is then a per-run cost and is listed as such, not hidden.</p>
 
-<p><strong>Phase 5 — upstream.</strong> Take §2.3’s two limits to Zulip with the measurements of §3.3
-in hand: keep the context warm across watch iterations, and make the tracker location
-a parameter so CI can persist it.</p>
+<p><strong>Phase 5 — upstream.</strong> Take §8 to Zulip with the measurements of §3.3 and §3.5 in
+hand. The AST (§8 A) first and on its own: it changes no build behaviour, it is agnostic
+about who consumes it, and it unblocks the record store.</p><hr />
+<h2 id="8-upstream--the-specific-asks-to-the-ig-publisher-and-the-validator">
+  
+  
+    <a href="#8-upstream--the-specific-asks-to-the-ig-publisher-and-the-validator" class="anchor-heading" aria-labelledby="8-upstream--the-specific-asks-to-the-ig-publisher-and-the-validator"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Upstream — the specific asks to the IG Publisher and the validator
+  
+  
+</h2>
+    
+
+<p>Each row is grounded in the source read on 2026-09-16 (<code class="language-plaintext highlighter-rouge">HL7/fhir-ig-publisher@master</code>,
+<code class="language-plaintext highlighter-rouge">hapifhir/org.hl7.fhir.core@master</code>) and says what exists today, so the discussion starts
+from the code rather than from a wish. “Without it” is what this proposal does in the
+meantime — every ask has a fallback, and none blocks Phase 1 or 2.</p>
+
+<p><strong>The rule for the list: nothing folio-assistant-specific goes upstream.</strong> The publisher
+wants to be agnostic about who consumes it, and it should be. So there is no ask about
+Just the Docs, <code class="language-plaintext highlighter-rouge">.ts</code> manifests, orphan-branch caches or dependency cones; those are ours.
+What is asked for is the <strong>AST</strong> — the publisher already computes a model of the IG
+(resources, their dependencies, outcomes, what was rendered where, how long each took)
+and throws it away at the end of the run. Serialising it costs the publisher no behaviour
+change and serves every consumer equally: Simplifier, build.fhir.org, WHO’s pipeline, a
+cache, an indexer. Everything else on the list is phrased for any CI user, and the two
+smaller asks each have a precedent already in the code.</p>
+<h3 id="81-already-there--use-do-not-ask">
+  
+  
+    <a href="#81-already-there--use-do-not-ask" class="anchor-heading" aria-labelledby="81-already-there--use-do-not-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8.1 Already there — use, do not ask
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Capability</th>
+      <th>Where</th>
+      <th>Used by</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Per-resource skip lists <code class="language-plaintext highlighter-rouge">-no-validate T/id,…</code>, <code class="language-plaintext highlighter-rouge">-no-narrative T/id,…</code>, wildcards <code class="language-plaintext highlighter-rouge">*/*</code>, <code class="language-plaintext highlighter-rouge">Type/*</code>, <code class="language-plaintext highlighter-rouge">*/id</code></td>
+      <td><code class="language-plaintext highlighter-rouge">PublisherProcessor.passesValidationFilter</code>, <code class="language-plaintext highlighter-rouge">passesNarrativeFilter</code></td>
+      <td>R6, the skip-list route</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-generation-off</code>, <code class="language-plaintext highlighter-rouge">-validation-off</code>, <code class="language-plaintext highlighter-rouge">-no-sushi</code>, <code class="language-plaintext highlighter-rouge">-no-network</code>, <code class="language-plaintext highlighter-rouge">-package-cache-folder</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Publisher.java</code> CLI</td>
+      <td>R2, R6</td>
+    </tr>
+    <tr>
+      <td>The terminology cache directory as an IG parameter, <code class="language-plaintext highlighter-rouge">path-tx-cache</code></td>
+      <td><code class="language-plaintext highlighter-rouge">PublisherIGLoader.java:429</code></td>
+      <td>R2, §5.6</td>
+    </tr>
+    <tr>
+      <td>Per-code-system cache files with a header nonce; <code class="language-plaintext highlighter-rouge">version.ctl</code> clears on format change</td>
+      <td><code class="language-plaintext highlighter-rouge">TerminologyCache.java</code></td>
+      <td>§5.6 selective restore</td>
+    </tr>
+    <tr>
+      <td>A StructureDefinition with a snapshot present is <strong>not</strong> regenerated</td>
+      <td><code class="language-plaintext highlighter-rouge">ContextUtilities.generateSnapshot</code>: <code class="language-plaintext highlighter-rouge">!p.hasSnapshot() \|\| isProfileNeedsRegenerate(p)</code></td>
+      <td>§5.3 cold start from derived FHIR</td>
+    </tr>
+    <tr>
+      <td>Per-phase timings, <code class="language-plaintext highlighter-rouge">qa-time-report.json</code>; per-file messages in <code class="language-plaintext highlighter-rouge">qa.json</code> (<code class="language-plaintext highlighter-rouge">files[].errs</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">Publisher.java:681–724</code></td>
+      <td>§3.1, R8</td>
+    </tr>
+    <tr>
+      <td>Validator <code class="language-plaintext highlighter-rouge">server &lt;port&gt;</code> with <code class="language-plaintext highlighter-rouge">/validateResource</code>; <code class="language-plaintext highlighter-rouge">client</code>; <code class="language-plaintext highlighter-rouge">SessionCache</code> (60-min TTL); <code class="language-plaintext highlighter-rouge">-watch-mode single\|all</code>; <code class="language-plaintext highlighter-rouge">-txCache</code></td>
+      <td><code class="language-plaintext highlighter-rouge">org.hl7.fhir.validation.cli</code></td>
+      <td>R5</td>
+    </tr>
+    <tr>
+      <td>Rapido’s file-level dependency list: a generic <code class="language-plaintext highlighter-rouge">DependencyElementVisitor</code> over every element, plus ValueSet include/exclude system and value-set edges and <code class="language-plaintext highlighter-rouge">baseDefinition</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Publisher.java:948–1000</code></td>
+      <td>U4 asks only that it be <em>written out</em></td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="82-the-asks">
+  
+  
+    <a href="#82-the-asks" class="anchor-heading" aria-labelledby="82-the-asks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8.2 The asks
+  
+  
+</h3>
+    
+
+<p>Four asks. The first is the one that matters; the other three are small and each has a
+precedent in the code.</p>
+<h4 id="a-the-ast--serialise-what-the-publisher-already-computes">
+  
+  
+    <a href="#a-the-ast--serialise-what-the-publisher-already-computes" class="anchor-heading" aria-labelledby="a-the-ast--serialise-what-the-publisher-already-computes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A. The AST — serialise what the publisher already computes
+  
+  
+</h4>
+    
+
+<p>One machine-readable output per build, written every run whether differential or not.
+It is a serialisation of state the publisher already holds in memory and discards; no
+build behaviour changes. Four parts, which could be one file or four:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>Content</th>
+      <th>Today</th>
+      <th>Who benefits</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>A1 — per-resource records</strong> (<code class="language-plaintext highlighter-rouge">artefacts.ndjson</code>)</td>
+      <td>one record per resource: canonical, type, id, source path(s), content hash, dependencies (A2), validation messages, narrative generated or suppressed, fragments emitted, terminology cache files touched, time in validation / narrative / generation</td>
+      <td>spread across <code class="language-plaintext highlighter-rouge">qa.json</code> (<code class="language-plaintext highlighter-rouge">files[].errs</code>), <code class="language-plaintext highlighter-rouge">qa-time-report.json</code> (per phase, not per resource), <code class="language-plaintext highlighter-rouge">canonicals.json</code>, <code class="language-plaintext highlighter-rouge">fragment-usage-analysis.csv</code> and the <code class="language-plaintext highlighter-rouge">temp/</code> tree, with different keys; <code class="language-plaintext highlighter-rouge">ValidationTimeTracker</code> aggregates by category, not by resource</td>
+      <td>any cache (it is the record of §5.2), any indexer, any CI deciding what to rebuild, anyone asking “which resources are slow”</td>
+    </tr>
+    <tr>
+      <td><strong>A2 — the dependency graph</strong> (<code class="language-plaintext highlighter-rouge">dependencies.json</code>)</td>
+      <td>file → files, resource → canonicals, with the edge kind</td>
+      <td>computed by <code class="language-plaintext highlighter-rouge">loadDependencyList</code> — a <code class="language-plaintext highlighter-rouge">DependencyElementVisitor</code> over every element, plus ValueSet include/exclude and <code class="language-plaintext highlighter-rouge">baseDefinition</code> edges (<code class="language-plaintext highlighter-rouge">Publisher.java:948–1000</code>) — for Rapido’s change list, then discarded</td>
+      <td>any incremental build, any impact analysis; it is the publisher-side cone and sees edges a source-level tool cannot</td>
+    </tr>
+    <tr>
+      <td><strong>A3 — the toolchain</strong> (<code class="language-plaintext highlighter-rouge">toolchain.json</code>)</td>
+      <td>publisher version, template id and <em>resolved</em> version (never <code class="language-plaintext highlighter-rouge">#current</code>), terminology server and version, dependency package ids and versions</td>
+      <td><code class="language-plaintext highlighter-rouge">qa.json</code> carries <code class="language-plaintext highlighter-rouge">version</code> and <code class="language-plaintext highlighter-rouge">tool</code>; the template version is in the template info; the rest is in the log</td>
+      <td>anyone who needs to know whether two builds are comparable — “so we know if we need to rerun”</td>
+    </tr>
+    <tr>
+      <td><strong>A4 — what was rendered where</strong> (<code class="language-plaintext highlighter-rouge">pages.json</code>)</td>
+      <td>the page tree with each page’s front matter and the fragments it includes; each artefact’s fragment list</td>
+      <td>the IG resource’s <code class="language-plaintext highlighter-rouge">definition.page</code> tree plus whatever is on disk under <code class="language-plaintext highlighter-rouge">temp/pages/</code></td>
+      <td>any downstream site pipeline or indexer that incorporates the render rather than the finished site</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><em>Why this one is agnostic by construction:</em> it asks for nothing to be done differently,
+only for what is done to be written down. Simplifier, build.fhir.org and WHO all consume
+the publisher’s output; all of them would read A1–A4. <em>Without it:</em> §3.3’s source-level
+cone for A2; a join across five files for A1; log parsing for A3; <code class="language-plaintext highlighter-rouge">temp/pages/</code> for A4 —
+each works, each is fragile against a rename.</p>
+<h4 id="b-differential-builds-from-an-ephemeral-runner">
+  
+  
+    <a href="#b-differential-builds-from-an-ephemeral-runner" class="anchor-heading" aria-labelledby="b-differential-builds-from-an-ephemeral-runner"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> B. Differential builds from an ephemeral runner
+  
+  
+</h4>
+    
+
+<p>Phrased for any CI, because every CI runner is ephemeral.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Ask</th>
+      <th>Today</th>
+      <th>Without it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>B1</strong></td>
+      <td>A <strong>state directory</strong> for the differential build — <code class="language-plaintext highlighter-rouge">-rapido-state &lt;dir&gt;</code> or a <code class="language-plaintext highlighter-rouge">path-rapido-state</code> IG parameter — holding the tracker and what <code class="language-plaintext highlighter-rouge">temp/</code> a differential build needs, with the contract stated (“restore this and a differential build is valid”), and a machine-readable statement when it fell back to a complete build, and why.</td>
+      <td><code class="language-plaintext highlighter-rouge">.build-tracker.ini</code> lives inside the terminology-cache directory (<code class="language-plaintext highlighter-rouge">Publisher.java:378</code>); <code class="language-plaintext highlighter-rouge">temp/</code> is cleared on complete builds only; the contract is inferred from the code.</td>
+      <td>Persist <code class="language-plaintext highlighter-rouge">txCache/</code> (which carries the tracker) and <code class="language-plaintext highlighter-rouge">temp/</code> wholesale, and observe.</td>
+    </tr>
+    <tr>
+      <td><strong>B2</strong></td>
+      <td><strong>Load once.</strong> Separate “load dependencies, template, terminology” from “process this IG” so the loaded context survives a watch iteration and a second differential pass.</td>
+      <td>Every watch iteration constructs a fresh <code class="language-plaintext highlighter-rouge">PublisherFields</code> and re-runs <code class="language-plaintext highlighter-rouge">Load IG</code> (<code class="language-plaintext highlighter-rouge">Publisher.java:207–216</code>).</td>
+      <td>The validator’s <code class="language-plaintext highlighter-rouge">server</code> mode covers validation only (D); the publisher pays the load every run.</td>
+    </tr>
+    <tr>
+      <td><strong>B3</strong></td>
+      <td><strong>Graduate it</strong>: a stable flag, a statement of which outputs are exact in differential mode and which are approximate (cross-references from unchanged pages; the aggregates), tests.</td>
+      <td><code class="language-plaintext highlighter-rouge">-rapido</code> / <code class="language-plaintext highlighter-rouge">-cascais</code>, “Report issues to Grahame on Zulip”.</td>
+      <td>The skip lists: exact, coarser.</td>
+    </tr>
+  </tbody>
+</table></div>
+<h4 id="c-a-render-only-mode">
+  
+  
+    <a href="#c-a-render-only-mode" class="anchor-heading" aria-labelledby="c-a-render-only-mode"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> C. A render-only mode
+  
+  
+</h4>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Ask</th>
+      <th>Today</th>
+      <th>Without it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>C1</strong></td>
+      <td><strong><code class="language-plaintext highlighter-rouge">-no-jekyll</code></strong>: stop after fragments and the whole-IG aggregates are in <code class="language-plaintext highlighter-rouge">temp/</code>; document the fragment naming (<code class="language-plaintext highlighter-rouge">&lt;Type&gt;-&lt;id&gt;-&lt;kind&gt;.xhtml</code> under <code class="language-plaintext highlighter-rouge">temp/pages/_includes/</code>) as an output interface.</td>
+      <td>The switch already exists for one consumer: <code class="language-plaintext highlighter-rouge">runTool()</code> returns before Jekyll in Simplifier mode (<code class="language-plaintext highlighter-rouge">PublisherGenerator.java:3921–3929</code>). The ask is to make that path public and named. With generation on, everyone else always runs Jekyll; <code class="language-plaintext highlighter-rouge">-generation-off</code> skips fragments <em>and</em> Jekyll.</td>
+      <td>Run with Jekyll and take <code class="language-plaintext highlighter-rouge">temp/</code> anyway — the Jekyll minutes are paid for nothing.</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><em>Agnostic because:</em> any consumer with its own site pipeline — Simplifier today, others
+tomorrow — wants the render as files with a contract, not as a finished site. What we do
+with those files (§5.7) is our business, not the publisher’s.</p>
+<h4 id="d-the-validator-as-a-service">
+  
+  
+    <a href="#d-the-validator-as-a-service" class="anchor-heading" aria-labelledby="d-the-validator-as-a-service"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> D. The validator as a service
+  
+  
+</h4>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Ask</th>
+      <th>Today</th>
+      <th>Without it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>D1</strong></td>
+      <td><strong>Document the cold-start path</strong>: loading an IG’s own <code class="language-plaintext highlighter-rouge">package.tgz</code> (with snapshots), <code class="language-plaintext highlighter-rouge">expansions.json</code> and a terminology cache into a fresh engine, and what it saves.</td>
+      <td>Snapshots present are reused (<code class="language-plaintext highlighter-rouge">ContextUtilities.generateSnapshot</code> checks <code class="language-plaintext highlighter-rouge">hasSnapshot()</code>); the terminology cache is persisted; nothing states this as a supported path.</td>
+      <td>Measure it ourselves and rely on behaviour that is not promised.</td>
+    </tr>
+    <tr>
+      <td><strong>D2</strong></td>
+      <td><strong>Addressable sessions</strong> in <code class="language-plaintext highlighter-rouge">server</code> mode: a caller-supplied session key, so an orchestrator can address the warm engine for a given toolchain; optionally snapshot / expand / narrative endpoints beside <code class="language-plaintext highlighter-rouge">/validateResource</code>.</td>
+      <td><code class="language-plaintext highlighter-rouge">SessionCache</code> keys are server-generated; one endpoint.</td>
+      <td>Our own JVM wrapper over the in-process API.</td>
+    </tr>
+    <tr>
+      <td><strong>D3</strong></td>
+      <td><em>(optional)</em> <code class="language-plaintext highlighter-rouge">-watch-mode dependents</code>: changed files plus what depends on them, from A2.</td>
+      <td><code class="language-plaintext highlighter-rouge">single</code> revalidates the changed file; <code class="language-plaintext highlighter-rouge">all</code> everything.</td>
+      <td>A2 or our cone, plus an explicit file list.</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="83-order-for-the-conversation">
+  
+  
+    <a href="#83-order-for-the-conversation" class="anchor-heading" aria-labelledby="83-order-for-the-conversation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8.3 Order for the conversation
+  
+  
+</h3>
+    
+
+<p><strong>A first, and on its own.</strong> It is one ask, it changes no behaviour, and it is the
+only one whose value does not depend on anything else being agreed — the record store,
+the meta-index and the cone all read it, and so would anyone else. <strong>B second</strong>: it
+makes the publisher’s own differential build usable from the only place WHO builds.
+<strong>C</strong> is small and has the Simplifier precedent. <strong>D</strong> is the validator team’s, and D1 is
+a documentation ask.</p>
+
+<p>What stays on our side of the line, deliberately: the branch caches and their layout,
+the selective terminology restore, the Just the Docs landing page and pipeline, the
+<code class="language-plaintext highlighter-rouge">.ts</code> content model, the cone tool. None of it needs the publisher to know it exists.</p>
 <h2 id="not-done-and-not-verified">
   
   
@@ -1464,7 +1881,7 @@ not traced through; the cone graph is source-level (§3.4).</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35084247248"><code>ec36caa</code></a> &middot; 2026-09-16T10:19:12Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35125682608"><code>97bc64a</code></a> &middot; 2026-09-16T17:03:23Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
