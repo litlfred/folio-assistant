@@ -44,3 +44,22 @@ publisher / smart-base CI / folio-assistant MCP). Gate: `bun test`, `eslint`, do
 
 **Not doing.** Not editing smart-base's workflow (GitHub Actions is its caller), not
 implementing the MCP service in this pass, not touching publisher Java.
+
+## Progress (2026-09-16)
+
+- Issue #181, draft PR #182 on `claude/eager-davinci-adros1`.
+- `docs/proposals/ig-incremental-build.md`: as-is pipeline (smart-base `ghbuild.yml`),
+  publisher phase model from source (nine `TimeTracker` phases → `qa-time-report.json`;
+  `-no-validate`/`-no-narrative` skip lists; experimental `-rapido` differential build),
+  validator `server` mode + `SessionCache`, design (three steps, `ig-cache.sh` contract,
+  Lean ↔ IG mapping), ownership, five phases with falsifiers.
+- `content/pipeline/fsh-cone.ts` + `scripts/tests/fsh-cone.test.ts`: source-level cones,
+  `--changed`, `--history`. Measured on `smart-immunizations`: 1,059 nodes / 2,478 edges;
+  forward cone median 0, p90 6, p99 241, max 278 (RuleSet `LogicLibrary`); per-commit
+  replay over 257 commits: mean rebuild 8.2 % of the IG, bimodal (half ≤ 50 nodes, two in
+  five on a hub ≥ 200).
+- Traps recorded: every RuleSet in both DAKs is parameterised — key by name or no `insert`
+  resolves; `//` comment stripping must not eat `http://` canonicals; CQL `include` of a
+  library with no file (FHIRHelpers) is external, not a phantom node.
+- Not measured: phase timings (registries, tx.fhir.org, github.io blocked here). Read
+  `qa-time-report.json` on a published DAK site.

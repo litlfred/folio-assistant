@@ -21,10 +21,15 @@ exit codes as the contract — split into the three separable steps the author n
 2. **re-rendering of only the changed artefact's cone**;
 3. a **meta-index rebuild** that runs on its own.
 
-The headline measurement (§3.3): over the 1,059 artefacts of `smart-immunizations`, the
-median artefact has **zero** dependents and the 90th percentile has **three**. A
-per-cone rebuild is therefore not a marginal optimisation; for almost every edit it
-turns "rebuild the IG" into "rebuild four resources and the index".
+The headline measurements (§3.3, §3.5): over the 1,059 artefacts of
+`smart-immunizations`, the median artefact has **zero** dependents and the 90th
+percentile has **six**. The tail is real — a dozen shared RuleSets, CQL libraries and
+ActivityDefinitions each invalidate a quarter of the IG — but it is a dozen nodes out of
+a thousand. Replayed over 257 real commits, an incremental build would have done
+**about an eighth** of the per-artefact work a full rebuild does on every push: half
+the commits rebuild under five per cent of the IG, two in five land on a hub and rebuild
+a quarter. Neither number touches the fixed per-run cost, which is why the design has
+three steps and not one.
 
 ---
 
@@ -249,52 +254,78 @@ rebuild it.
 
 ```
 bun run content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv]
+bun run content/pipeline/fsh-cone.ts <ig-root> --changed input/fsh/profiles/IMMZPatient.fsh
 ```
+
+One parser fact that changed the tail of these numbers and is worth knowing about any
+DAK: **every RuleSet in both repositories is parameterised** (`RuleSet: Name(p1, p2)`),
+and `smart-immunizations` inserts them 4,419 times. A first pass that keyed RuleSets by
+their full declaration text resolved none of those inserts and reported RuleSets as
+leaves; the shipped tool keys them by name.
 
 | | `smart-immunizations` | `smart-base` |
 |---|---|---|
-| nodes / internal edges | 1,059 / 1,818 | 159 / 74 |
-| nodes with **no** dependents | 728 (69 %) | 126 (79 %) |
-| forward cone — median · p75 · p90 · p99 · max | **0 · 1 · 3 · 38 · 275** | 0 · 0 · 1 · 10 · 13 |
-| backward cone (nodes) — median · p90 · max | 0 · 11 · 70 | 0 · 1 · 10 |
-| backward cone (source **files**, incl. own) — median · p90 · max | **1 · 11 · 55** of 1,017 | 1 · 2 · 11 of 109 |
+| nodes / internal edges | 1,059 / 2,478 | 157 / 128 |
+| nodes with **no** dependents | 715 (68 %) | 112 (71 %) |
+| forward cone — median · p75 · p90 · p99 · max | **0 · 1 · 6 · 241 · 278** | 0 · 1 · 2 · 13 · 41 |
+| backward cone (nodes) — median · p90 · max | 3 · 10 · 71 | 0 · 2 · 10 |
+| backward cone (source **files**, incl. own) — median · p90 · max | **3 · 11 · 58** of 1,017 | 1 · 3 · 11 of 107 |
 
-The fan-out is concentrated exactly where a reader of the IG would guess:
+The distribution is two-humped. 715 nodes invalidate nothing and another 214 invalidate
+one or two; then almost nothing until a cluster of hubs, each a quarter of the IG:
 
-| forward cone | node | kind |
-|---|---|---|
-| 275 | `WHOCommon` | CQL |
-| 274 | `WHOConcepts` | CQL |
-| 273 | `WHOElements` | CQL |
-| 272 | `IMMZCommon`, `IMMZConcepts` | CQL |
-| 271 | `IMMZElements` | CQL |
-| 184 / 183 | `WHOEncounterElements` / `IMMZEncounterElements` | CQL |
-| 42 / 41 | `IMMZAgeConcepts` / `IMMZIndicatorElements` | CQL |
-| 38 | `IMMZ.Z.DE33`, `IMMZ.Z.DE23` | ValueSet |
-| 36 | one of the five profiles | Profile |
+| forward cone | node | kind | why it is a hub |
+|---|---|---|---|
+| 278 | `LogicLibrary` | RuleSet | inserted by every Library instance |
+| 275 – 271 | `WHOCommon`, `WHOConcepts`, `WHOElements`, `IMMZCommon`, `IMMZConcepts`, `IMMZElements` | CQL | included by every decision and indicator library |
+| 265 / 108 | `IMMZD2DTCR` / `IMMZD2DTMR` | ActivityDefinition | the shared CommunicationRequest / MedicationRequest actions every PlanDefinition points at |
+| 264 | `PlanDefMain`, `PlanDefCommunicationRequestAction` | RuleSet | inserted by every PlanDefinition |
+| 241 / 73 | `AddWithExpandCanonical` / `AddWithExpand` | RuleSet | inserted 1,364 / 461 times across value sets and plans |
+| 184 / 183 | `WHOEncounterElements` / `IMMZEncounterElements` | CQL | |
+| 38 | **34** value sets `IMMZ.Z.DE1` … `IMMZ.Z.DE33` | ValueSet | all bound into the same 38 questionnaire and model artefacts |
+| 36 | `IMMZPatient` | Profile | the Patient profile — the ask's own example |
+
+Every hub is an **authoring convenience**: a RuleSet, a common library, a shared action.
+That is the right thing to be a hub — the whole point of a RuleSet is that one edit
+changes every user — and it is also the thing that changes least often once an IG is
+past its first drafts (§3.5 measures this rather than asserting it).
 
 By kind, in `smart-immunizations`: the 510 Instances have median 0 and p90 1
-dependents; the 192 ValueSets median 0, p90 38 (the two shared ones); the 5 Profiles
-median 1, max 36. The largest backward cones are the two data-model Logicals
-(`IMMZD1`: 70 nodes in 49 files; `IMMZD13`: 66 in 53) and the QuestionnaireResponse
-examples that instantiate them (54 nodes, 55 files).
+dependents; the 192 ValueSets median 0, p90 38 (the shared family); the 14 RuleSets
+median 43, p90 264; the 5 Profiles median 1 and max 36. The largest backward cones are
+the two data-model Logicals (`IMMZD1`: 71 nodes in 50 files; `IMMZD13`: 67 in 54) and
+the QuestionnaireResponse examples that instantiate them (58 nodes, 58 files).
+
+`--changed` answers the incremental-build question for a concrete edit — what to
+rebuild (the forward cone including the changed nodes) and what to check out (the
+files of the rebuilt nodes and their backward cones):
+
+| changed file | declares | rebuild (nodes) | checkout (files of 1,017) |
+|---|---|---|---|
+| `profiles/IMMZAdverseEvent.fsh` | a profile nothing points at | **1** | 4 |
+| `profiles/IMMZPatient.fsh` | the Patient profile | 37 | 102 |
+| `valuesets/IMMZ.Z.DE33.fsh` | one of the shared value-set family | 39 | 98 |
+| `cql/WHOCommon.cql` | the common CQL library | 276 | 279 |
+| `rulesets/rulesets-plandefinition.fsh` | four PlanDefinition RuleSets | 268 | 269 |
 
 ### 3.4 What the numbers say, and what they cannot
 
-**The falsifier did not fire.** The brief for this work said: if a typical artefact's
-dependents are most of the IG, a per-cone rebuild saves little and the design has to
-lean on phase-level caching instead. A p90 of three dependents is the opposite
-finding. For nine edits in ten, the per-resource work after a change is four resources
-or fewer out of a thousand.
-
-**The hub is CQL, and it is real work.** A change to `WHOCommon` legitimately
-invalidates ~275 Libraries, PlanDefinitions and Measures — a quarter of the IG. That is
-the correct cone, not a defect in the graph; it is still a quarter, not the whole.
+**The falsifier did not fire, but it left a mark.** The brief for this work said: if a
+typical artefact's dependents are most of the IG, a per-cone rebuild saves little and
+the design has to lean on phase-level caching instead. A p90 of six dependents is the
+opposite finding: for nine edits in ten, the per-resource work after a change is seven
+resources or fewer out of a thousand. The mark is the p99 of 241 — about a dozen nodes,
+all shared RuleSets, common CQL and two shared ActivityDefinitions, each of which
+legitimately invalidates a quarter of the IG. Those cones are correct, not a defect in
+the graph; a quarter is still not the whole; and §3.5 shows how often real commits land
+on them.
 
 **The restricted checkout is small.** SUSHI compiles a tank as one unit and fails on a
 missing referenced entity, so a checkout that compiles must contain the backward cone.
-That is a median of one file and a p90 of eleven, out of 1,017 — plus the alias file(s)
-and `sushi-config.yaml`, which every checkout needs.
+That is a median of three files and a p90 of eleven, out of 1,017 — plus the alias
+file(s) and `sushi-config.yaml`, which every checkout needs. (The median is three rather
+than one because almost every instance inserts a RuleSet, and the RuleSet file comes
+along.)
 
 Three caveats, stated so nobody quotes these numbers past their reach. (i) This is the
 **source-level** graph, not the publisher's: it does not see rendering-time edges
@@ -302,7 +333,40 @@ Three caveats, stated so nobody quotes these numbers past their reach. (i) This 
 separate step, §5.5). (ii) Edges into dependency packages are not counted; a change
 *there* is a toolchain change and re-keys the whole cache (§5.1). (iii) The CQL →
 Library edge is by naming convention, and `insert` RuleSets are counted as
-dependencies — correctly, since SUSHI expands them at compile time.
+dependencies — correctly, since SUSHI expands them at compile time, and it is this
+edge that makes the RuleSets hubs.
+
+### 3.5 What real commits would have rebuilt
+
+Cone sizes describe artefacts; what a build pays for is commits. So the graph at HEAD
+was applied to the changed-file list of every commit in the DAKs' own histories
+(`fsh-cone.ts --history N`; `git fetch --deepen` on the shallow clones):
+
+| | `smart-immunizations` | `smart-base` |
+|---|---|---|
+| commits inspected (`--history 400`) · window | 400 · 2023-03 → 2026-07 | 400 · 2026-03 → 2026-08 |
+| of which touch `input/fsh` or `input/cql` | 257 | 35 |
+| … touching only files that declare nothing at HEAD (renamed or deleted since) | 94 | 7 |
+| rebuild per commit, all 257 / 35 — median · p75 · p90 · max | 6 · 272 · 278 · 630 | 5 · 34 · 41 · 61 |
+| rebuild per commit, the 163 / 28 that resolve — median · p75 · p90 · mean | **44 · 274 · 283 · 137** | 6 · 34 · 41 · 17 |
+| commits rebuilding ≤ 50 nodes / > 200 nodes (of those that resolve) | 86 / 67 | 26 / 0 |
+| **mean per-commit rebuild as a share of the IG** | **8.2 %** (12.9 % excluding the zeros) | 8.5 % (10.6 %) |
+| checkout per commit (files) — median · p90 · max | 20 · 286 · 676 of 1,017 | 7 · 35 · 36 of 107 |
+
+Read it as two populations, because that is what it is. **Half** of the resolving
+`smart-immunizations` commits rebuild fifty nodes or fewer — under five per cent of the
+IG. **Two in five** land on a hub (a RuleSet, a common CQL library, the value-set
+family) and rebuild a quarter or more; the four largest are the mass refactors of
+2024-03, 2024-12 and 2025-02, each touching dozens of source files at once. Averaged
+over the whole history, an incremental build would have done **about an eighth of the
+per-artefact work** a full rebuild does on every push — a twelvefold reduction on the
+work that scales with the IG, with the fixed per-run cost of §4 untouched and needing
+its own remedy.
+
+Two honesty notes. The graph is HEAD's, so a commit that touched files since renamed
+or deleted declares nothing and scores zero; those 94 commits are reported separately
+above rather than pulled into the median. And a commit is not a push: several commits
+per push shrink the count of builds but not the union of their cones.
 
 ---
 
@@ -320,7 +384,9 @@ currently `latest` and `#current` so that a content hash means something.
 
 **Per-artefact cost, proportional to the IG:** snapshot, validate, narrate, generate
 fragments, for each of ~1,060 resources, with ~71 fragments per StructureDefinition.
-This is what a cone attacks, and §3.3 says the attack works: p90 three dependents.
+This is what a cone attacks, and §3.3 and §3.5 say the attack works: p90 six
+dependents per artefact, and about an eighth of the work per commit over the real
+history.
 
 What is *not* in the cone graph but changes everything, and must therefore key the
 cache rather than be tracked as an edge: the publisher version, the template version,
@@ -439,7 +505,7 @@ supports at the time:
 
 The **restricted checkout** is the backward cone of C — `git sparse-checkout` of those
 files plus `sushi-config.yaml`, `ig.ini`, the alias file(s) and the pages in C — which
-§3.3 measured at a median of one file and a p90 of eleven. Its purpose is to let SUSHI
+§3.3 measured at a median of three files and a p90 of eleven. Its purpose is to let SUSHI
 compile *only* what the rebuild needs; the publisher's site assembly is not run on the
 restricted tree but on the **merge** of restored records and the freshly built ones,
 which is step 3.
