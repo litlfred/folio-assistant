@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-core/deployment-auth.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/deployment-auth.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/deployment-auth.md){: .fa-edit-source }
 
 {% raw %}
 # Deployment & Auth Skill

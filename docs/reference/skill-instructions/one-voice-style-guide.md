@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-core/one-voice-style-guide.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/one-voice-style-guide.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/one-voice-style-guide.md){: .fa-edit-source }
 
 {% raw %}
 # One-Voice Style Guide — Author Voice Profile

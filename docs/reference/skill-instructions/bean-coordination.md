@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-core/bean-coordination.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/bean-coordination.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/bean-coordination.md){: .fa-edit-source }
 
 {% raw %}
 # Bean Coordination

@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-core/symbiotic-interaction.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/symbiotic-interaction.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/symbiotic-interaction.md){: .fa-edit-source }
 
 {% raw %}
 # symbiotic-interaction — the three registers of author input

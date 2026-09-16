@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-document-adapter/normative-statements.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-document-adapter/normative-statements.md) — do not edit here. Typed contract: [schema reference](../skills/normative-statements.html).
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-document-adapter/normative-statements.md){: .fa-edit-source }
 
 {% raw %}
 # normative-statements

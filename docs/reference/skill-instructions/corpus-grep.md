@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`src/skills/corpus-grep.md`](https://github.com/litlfred/folio-assistant/blob/main/src/skills/corpus-grep.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/src/skills/corpus-grep.md){: .fa-edit-source }
 
 {% raw %}
 # Corpus-Grep Skill

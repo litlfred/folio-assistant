@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-paper-adapter/lean-proof-review.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/lean-proof-review.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/lean-proof-review.md){: .fa-edit-source }
 
 {% raw %}
 # Lean Proof Review

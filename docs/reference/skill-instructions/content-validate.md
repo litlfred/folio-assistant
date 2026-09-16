@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/content-lifecycle/content-validate.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-validate.md) — do not edit here. Typed contract: [schema reference](../skills/content-validate.html).
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/content-validate.md){: .fa-edit-source }
 
 {% raw %}
 # Content Validation

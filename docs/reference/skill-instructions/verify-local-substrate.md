@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-paper-adapter/verify-local-substrate.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/verify-local-substrate.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/verify-local-substrate.md){: .fa-edit-source }
 
 {% raw %}
 # Verify Anchor Connectivity

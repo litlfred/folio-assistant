@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-core/detangler-integration-watcher.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/detangler-integration-watcher.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/detangler-integration-watcher.md){: .fa-edit-source }
 
 {% raw %}
 # /detangler-integration-watcher
