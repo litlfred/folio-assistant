@@ -53,7 +53,7 @@
         <bpmn:flowNodeRef>Task_LogFindings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_QcBeans</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_Build" name="Incremental build (system) — restore · cone · SUSHI · render · index · site">
+      <bpmn:lane id="Lane_Build" name="Incremental build (system)">
         <bpmn:flowNodeRef>Task_Restore</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Restore</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Cone</bpmn:flowNodeRef>
@@ -64,7 +64,7 @@
         <bpmn:flowNodeRef>Task_Index</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Site</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_Services" name="Publisher and validator services (JVM) — the loaded context">
+      <bpmn:lane id="Lane_Services" name="Publisher + validator services (JVM)">
         <bpmn:flowNodeRef>Task_FullBuild</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ContextLoad</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Validate</bpmn:flowNodeRef>
@@ -301,7 +301,7 @@
       <bpmndi:BPMNShape id="Gateway_Restore_di" bpmnElement="Gateway_Restore" isMarkerVisible="true">
         <dc:Bounds x="575" y="430" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="545" y="396" width="110" height="28" />
+          <dc:Bounds x="530" y="396" width="140" height="28" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_FullBuild_di" bpmnElement="Task_FullBuild">
@@ -328,7 +328,7 @@
       <bpmndi:BPMNShape id="Gateway_Valid_di" bpmnElement="Gateway_Valid" isMarkerVisible="true">
         <dc:Bounds x="1535" y="580" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1505" y="546" width="110" height="28" />
+          <dc:Bounds x="1490" y="546" width="140" height="28" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_LogFindings_di" bpmnElement="Task_LogFindings">
@@ -358,7 +358,7 @@
       <bpmndi:BPMNShape id="Gateway_QcPass_di" bpmnElement="Gateway_QcPass" isMarkerVisible="true">
         <dc:Bounds x="2495" y="730" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2465" y="696" width="110" height="28" />
+          <dc:Bounds x="2450" y="696" width="140" height="28" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_QcBeans_di" bpmnElement="Task_QcBeans">
@@ -373,7 +373,7 @@
       <bpmndi:BPMNShape id="Gateway_Path_di" bpmnElement="Gateway_Path" isMarkerVisible="true">
         <dc:Bounds x="2655" y="880" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2625" y="846" width="110" height="28" />
+          <dc:Bounds x="2610" y="846" width="140" height="28" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_DeployPreview_di" bpmnElement="Task_DeployPreview">
@@ -411,16 +411,15 @@
         <di:waypoint x="625" y="455" />
         <di:waypoint x="695" y="455" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="648" y="425" width="25" height="27" />
+          <dc:Bounds x="631" y="425" width="25" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F04_di" bpmnElement="F04">
-        <di:waypoint x="625" y="455" />
-        <di:waypoint x="675" y="455" />
-        <di:waypoint x="675" y="605" />
+        <di:waypoint x="600" y="480" />
+        <di:waypoint x="600" y="605" />
         <di:waypoint x="695" y="605" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="638" y="425" width="25" height="27" />
+          <dc:Bounds x="608" y="486" width="25" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F05_di" bpmnElement="F05">
@@ -455,7 +454,7 @@
         <di:waypoint x="1560" y="580" />
         <di:waypoint x="1560" y="350" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1566" y="451" width="25" height="27" />
+          <dc:Bounds x="1568" y="512" width="25" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F12_di" bpmnElement="F12">
@@ -463,12 +462,11 @@
         <di:waypoint x="1560" y="173" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F13_di" bpmnElement="F13">
-        <di:waypoint x="1585" y="605" />
-        <di:waypoint x="1635" y="605" />
-        <di:waypoint x="1635" y="455" />
+        <di:waypoint x="1560" y="580" />
+        <di:waypoint x="1560" y="455" />
         <di:waypoint x="1655" y="455" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1598" y="575" width="25" height="27" />
+          <dc:Bounds x="1568" y="512" width="25" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F14_di" bpmnElement="F14">
@@ -503,7 +501,7 @@
         <di:waypoint x="2520" y="730" />
         <di:waypoint x="2520" y="350" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2526" y="526" width="25" height="27" />
+          <dc:Bounds x="2528" y="662" width="25" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F21_di" bpmnElement="F21">
@@ -511,21 +509,19 @@
         <di:waypoint x="2520" y="173" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F22_di" bpmnElement="F22">
-        <di:waypoint x="2545" y="755" />
-        <di:waypoint x="2635" y="755" />
-        <di:waypoint x="2635" y="905" />
+        <di:waypoint x="2520" y="780" />
+        <di:waypoint x="2520" y="905" />
         <di:waypoint x="2655" y="905" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2578" y="725" width="25" height="27" />
+          <dc:Bounds x="2528" y="786" width="25" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F23_di" bpmnElement="F23">
-        <di:waypoint x="2705" y="905" />
-        <di:waypoint x="2755" y="905" />
-        <di:waypoint x="2755" y="755" />
+        <di:waypoint x="2680" y="880" />
+        <di:waypoint x="2680" y="755" />
         <di:waypoint x="2775" y="755" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2701" y="875" width="59" height="27" />
+          <dc:Bounds x="2688" y="812" width="59" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F24_di" bpmnElement="F24">
@@ -536,7 +532,7 @@
         <di:waypoint x="2705" y="905" />
         <di:waypoint x="2775" y="905" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2695" y="875" width="91" height="27" />
+          <dc:Bounds x="2711" y="875" width="91" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F26_di" bpmnElement="F26">

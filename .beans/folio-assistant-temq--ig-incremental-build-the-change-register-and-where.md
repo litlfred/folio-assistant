@@ -1,7 +1,7 @@
 ---
 # folio-assistant-temq
 title: IG incremental build — the change register and where each change sits in the review and publish pipeline
-status: in-progress
+status: completed
 type: task
 priority: high
 tags:
@@ -50,3 +50,15 @@ it is not a pipeline change and gets moved to "open decisions" instead of the ma
   "Making the build incremental" (site-content section + regenerated pages).
 - Gates: gen-docs-pages --check, render:bpmn:check, gen-skill-docs/gen-schema-docs
   --check, check:workflow-policy, eslint, bun test (1,442 pass).
+
+## Summary of Changes
+
+- `docs/proposals/ig-incremental-build-overview.md` — the change register (R1–R11),
+  the review-path and publish-path maps, the activity-by-activity table, one worked
+  run with exit codes, roll-out by phase, six decisions for the author.
+- `docs/workflows/ig-incremental-build.bpmn` + generated SVG — the incremental build as
+  a BPMN process (six lanes, 27 nodes, advisory), generated layout; loads in the
+  workflow interpreter; indexed on the publication-workflow page and shown in the WHO
+  SMART IG guide ("Making the build incremental").
+- PR #188 (issue #187). Follow-ups, each its own bean when the author picks one: the
+  eleven register rows, in the phase order of the proposal's §7.
