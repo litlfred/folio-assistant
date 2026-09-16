@@ -42,6 +42,7 @@
         <bpmn:flowNodeRef>Task_ReviewFindings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_EditorDecision</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Discarded</bpmn:flowNodeRef>
+              <bpmn:flowNodeRef>CallActivity_Evidence</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
         <bpmn:flowNodeRef>Task_ClaimBean</bpmn:flowNodeRef>
@@ -91,12 +92,22 @@
       <bpmn:incoming>Flow_02</bpmn:incoming>
       <bpmn:outgoing>Flow_03</bpmn:outgoing>
     </bpmn:task>
+    <bpmn:callActivity id="CallActivity_Evidence" name="Gather and verify the evidence&#10;[evidence-retrieval]" calledElement="Process_EvidenceRetrieval">
+      <bpmn:documentation>Before anything is drafted: the author reads the guidance ALREADY in this content, frames the question as PICO, retrieves candidates across the three evidence classes, and has each candidate's authority resolved against its publisher's own API. A recommendation reaches the drafting step with its evidence attached, or with the gap recorded.
+
+This step has nothing to do for content that carries no recommendations -- a mathematics folio has none -- and is skipped there rather than satisfied vacuously.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:link href="evidence.html#the-subprocess" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03</bpmn:incoming>
+      <bpmn:outgoing>Flow_Evidence</bpmn:outgoing>
+    </bpmn:callActivity>
     <bpmn:serviceTask id="Task_DraftEdit" name="Draft the block edit&#10;[content-author]">
       <bpmn:documentation>The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="content-author" />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_03</bpmn:incoming>
+      <bpmn:incoming>Flow_Evidence</bpmn:incoming>
       <bpmn:outgoing>Flow_04</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_ProposalReady" name="Proposed change ready">
@@ -231,7 +242,8 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_01" sourceRef="StartEvent_EditRequested" targetRef="Task_DescribeChange" />
     <bpmn:sequenceFlow id="Flow_02" sourceRef="Task_DescribeChange" targetRef="Task_ClaimBean" />
-    <bpmn:sequenceFlow id="Flow_03" sourceRef="Task_ClaimBean" targetRef="Task_DraftEdit" />
+    <bpmn:sequenceFlow id="Flow_03" sourceRef="Task_ClaimBean" targetRef="CallActivity_Evidence" />
+    <bpmn:sequenceFlow id="Flow_Evidence" sourceRef="CallActivity_Evidence" targetRef="Task_DraftEdit" />
     <bpmn:sequenceFlow id="Flow_04" sourceRef="Task_DraftEdit" targetRef="Gateway_ProposalReady" />
     <bpmn:sequenceFlow id="Flow_05" sourceRef="Gateway_ProposalReady" targetRef="Gateway_ValidationFork" />
     <bpmn:sequenceFlow id="Flow_06" name="mechanical" sourceRef="Gateway_ValidationFork" targetRef="Task_SchemaValidate" />
@@ -294,6 +306,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ClaimBean_di" bpmnElement="Task_ClaimBean">
         <dc:Bounds x="535" y="260" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_Evidence_di" bpmnElement="CallActivity_Evidence">
+        <dc:Bounds x="535" y="110" width="130" height="90" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_DraftEdit_di" bpmnElement="Task_DraftEdit">
         <dc:Bounds x="695" y="410" width="130" height="90" />
@@ -386,9 +401,14 @@
         <di:waypoint x="600" y="260" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_03_di" bpmnElement="Flow_03">
-        <di:waypoint x="665" y="305" />
-        <di:waypoint x="760" y="305" />
-        <di:waypoint x="760" y="410" />
+        <di:waypoint x="600" y="260" />
+        <di:waypoint x="600" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Evidence_di" bpmnElement="Flow_Evidence">
+        <di:waypoint x="665" y="155" />
+        <di:waypoint x="680" y="155" />
+        <di:waypoint x="680" y="455" />
+        <di:waypoint x="695" y="455" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04_di" bpmnElement="Flow_04">
         <di:waypoint x="825" y="455" />
