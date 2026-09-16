@@ -6,6 +6,12 @@ which stage of the review and publish pipeline each change runs.
 **Bean:** `temq` · **Issue:** [#187](https://github.com/litlfred/folio-assistant/issues/187)
 · builds on [#181](https://github.com/litlfred/folio-assistant/issues/181) /
 [#182](https://github.com/litlfred/folio-assistant/pull/182)
+**Updated 2026-09-16** (bean `rna3`, [#192](https://github.com/litlfred/folio-assistant/issues/192)):
+three decisions taken — the publisher pinned and recorded (R1), the terminology cache as a
+branch cache of its own (R2, R7, §6.3), the site on gh-pages with a Just the Docs landing
+page and, longer term, the publisher as a renderer of `.ts`-authored content inside the
+Just the Docs pipeline (R9, §6.7) — and R11 now points at the itemised
+upstream asks, [`ig-incremental-build.md` §8](ig-incremental-build.md#8-upstream--the-specific-asks-to-the-ig-publisher-and-the-validator).
 
 How to read it. §1 shows the pipeline as it runs today, in the two forms a reader already
 knows — smart-base's GitHub workflows and this repo's BPMN processes. §2 is the **change
@@ -64,17 +70,17 @@ pipeline path, the smart-base step, and the BPMN activity.
 
 | # | Change | Why (evidence) | Where it runs | Owner | Phase |
 |---|---|---|---|---|---|
-| R1 | **Pin the toolchain** — publisher version, template version, SUSHI version recorded | unpinned `releases/latest` and `#current` make two runs of one commit differ, and make no content-addressed key possible ([§1.2](ig-incremental-build.md#12-what-is-derived-from-scratch-on-every-run), [§5.1](ig-incremental-build.md#51-the-key)) | every trigger: `ghbuild.yml` publisher step; `ig.ini` in the DAK | smart-base, the DAK | 1 |
-| R2 | **Persist derived state between runs** — terminology cache, package cache; later `temp/` and the Rapido tracker | every CI run is cold against tx.fhir.org and re-downloads every dependency ([§1.2](ig-incremental-build.md#12-what-is-derived-from-scratch-on-every-run)) | restore at the start of **every** build; save only after a green build of the default branch | smart-base (workflow), this repo (`ig-cache.sh`) | 1 → 4 |
+| R1 | **Pin the toolchain, and record it** — publisher version, template version, SUSHI version written into the build's outputs | unpinned `releases/latest` and `#current` make two runs of one commit differ, and make no content-addressed key possible ([§1.2](ig-incremental-build.md#12-what-is-derived-from-scratch-on-every-run), [§5.1](ig-incremental-build.md#51-the-key)). **Decided:** the recorded version is what tells a later run whether it must rebuild rather than restore | every trigger: `ghbuild.yml` publisher step; `ig.ini` in the DAK; `toolchain.json` in the output (§8 A3) | smart-base, the DAK | 1 |
+| R2 | **Persist derived state between runs** — the terminology cache as **a branch cache of its own**, `tx-cache/<pkg>-<slug>`, per-code-system files so a cone pulls only the systems it binds to; the package cache; later `temp/` and the Rapido tracker | every CI run is cold against tx.fhir.org and re-downloads every dependency ([§1.2](ig-incremental-build.md#12-what-is-derived-from-scratch-on-every-run)); the cache is big and slow and does not belong in the DAK repository ([§5.6](ig-incremental-build.md#56-the-cache-service)). **Decided.** Size is the stated risk — measure `txCache/` on the first seed | restore at the start of **every** build into the IG's `path-tx-cache`; save only after a green build of the default branch | smart-base (workflow), this repo (`ig-cache.sh`) | 1 → 4 |
 | R3 | **The toolchain slug and per-artefact trace** — the content-addressed key | a cache without a key that names the publisher, template, SUSHI, dependency versions and tx server cannot be honest ([§5.1](ig-incremental-build.md#51-the-key)) | computed at the start of every build; stamped in every record; compared by `ig-cache doctor` | this repo | 4 (R1 is its precondition) |
 | R4 | **The dependency cone** — `content/pipeline/fsh-cone.ts`, landed in #182 | the median artefact has 0 dependents, p90 6; replayed over 257 commits, an incremental build does an eighth of the per-artefact work ([§3.3](ig-incremental-build.md#33-dependency-cones-at-source-level), [§3.5](ig-incremental-build.md#35-what-real-commits-would-have-rebuilt)) | authoring loop (`--changed` before validating); review (the cone report on the PR); publish (selects the rebuild set) | this repo (done); wiring: smart-base | 0 done, wiring 3 |
 | R5 | **The warm validator as an MCP service** — `fhir_context_load`, `fhir_validate`, `fhir_snapshot`, `fhir_expand`, `fhir_narrative`, `fhir_context_status` over the validator's `server` mode; a real `fhir-validator` capability probe | the loaded object model exists only in a warm process and is never serialised ([§2.4](ig-incremental-build.md#24-the-validator-already-runs-as-a-service), [§5.3](ig-incremental-build.md#53-step-1--the-warm-validator-and-what-cache-the-binary-ast-means-in-practice)) | authoring loop: validate one resource in seconds; review `/validate`: validate the cone; publish: `Task_Validate` restricted to the cone | this repo | 2 |
 | R6 | **The cone-restricted publisher run** — `-no-validate` / `-no-narrative` complements today; Rapido's differential build once its tracker is persisted | per-artefact cost scales with the IG; the cone attacks exactly that ([§4](ig-incremental-build.md#4-where-the-time-goes-and-what-a-cone-can-and-cannot-do-about-it), [§5.4](ig-incremental-build.md#54-step-2--re-render-only-the-cone)) | `Task_IgPublisher`, the `ghbuild.yml` publisher step, both paths | this repo (orchestrator), smart-base (wiring), HL7 (Rapido) | 3 |
 | R7 | **Per-artefact records and `ig-cache.sh`** — `restore · seed · verify · doctor`, exit 0 / 1 / 2 / 3 like `lake-cache.sh` | the Lean shape, and the third state: a miss is a normal outcome, never a silent rebuild ([§5.2](ig-incremental-build.md#52-the-per-artefact-record-the-olean), [§5.6](ig-incremental-build.md#56-the-cache-service)) | restore: first step of every build; seed: last step of a green default-branch build; verify inside seed; doctor on a slug mismatch | this repo | 4 |
 | R8 | **The meta-index rebuild as its own step** — `ig_metaindex_rebuild`, including the QA aggregate from records | the whole-IG aggregates are the only genuinely global work; it must never re-derive an artefact ([§5.5](ig-incremental-build.md#55-step-3--the-meta-index-rebuild)) | after R6 in every build; alone when only pages or the menu changed; feeds `Task_QcGates` and `Task_PublicationQa` through `qa.json` | this repo | 4 |
-| R9 | **Incremental site assembly and deploy** — Jekyll over byte-identical fragments, deploy only what changed | the residual whole-site cost after everything else is per-artefact ([§5.5](ig-incremental-build.md#55-step-3--the-meta-index-rebuild)) | the end of every build; the deploy steps of `ghbuild.yml` | smart-base, the WHO template | 4 / 5 — least certain |
+| R9 | **The site: publisher output on gh-pages, a Just the Docs landing page, then the publisher as a renderer inside the Just the Docs pipeline** — now: deploy as today; next: the root `index.html` is a rendered Just the Docs page linking into the publisher's pages; longer term: content is authored as structured `.ts` by agentic skills and the render pipeline, the IG Publisher renders the FHIR artefacts derived from it, and its render is incorporated into the Just the Docs pipeline that publishes the whole site | **Decided.** Block as source, the IG as one render of it; the site assembled the controlled way this documentation is, and the residual whole-site Jekyll cost goes with it ([§5.7](ig-incremental-build.md#57-the-site--gh-pages-a-just-the-docs-landing-page-then-the-publisher-as-a-renderer-inside-the-just-the-docs-pipeline), [§5.5](ig-incremental-build.md#55-step-3--the-meta-index-rebuild)) | the deploy steps of `ghbuild.yml` (landing page: no publisher change); `Task_Site` in `ig-incremental-build.bpmn` (incorporating the render: §8 C1, A4) | smart-base (deploy), this repo (pipeline), HL7 (C1, A4) | 4 / 5 |
 | R10 | **Housekeeping in this repo** — retire the four dangling script references in the SMART skills; register the new tools as skills so BPMN activities can carry a `folio:skill ref` | `ig-publication`, `fhir-validation`, `l3-fhir-authoring` and `quality-control` reference scripts that do not exist ([§1.3](ig-incremental-build.md#13-what-this-repo-says-it-has-and-does-not)) | `.claude/skills/local/*.json`, `--check-deps`, `docs/workflows/` | this repo | 2 |
-| R11 | **Upstream asks** — keep the loaded context across Rapido watch iterations; make the tracker's location a parameter | Rapido starts cold every CI run because its tracker lives beside the unpersisted terminology cache ([§2.3](ig-incremental-build.md#23-upstream-is-already-halfway-there-rapido-mode)) | the publisher itself; unblocks R6's second route | HL7 (Zulip) | 5 |
+| R11 | **Upstream asks** — four, itemised in [§8](ig-incremental-build.md#8-upstream--the-specific-asks-to-the-ig-publisher-and-the-validator), none folio-specific: **A, the AST** (serialise what the publisher already computes: per-resource records, the dependency graph, the toolchain, what was rendered where); **B**, differential builds from an ephemeral runner (a state directory, load once, graduate Rapido); **C**, a render-only `-no-jekyll` mode with the Simplifier path as precedent; **D**, the validator as a documented, addressable service | the publisher wants to be agnostic about its consumers, and the AST is agnostic by construction — it asks for nothing to be done differently, only for what is done to be written down ([§8.1](ig-incremental-build.md#81-already-there--use-do-not-ask), [§8.2](ig-incremental-build.md#82-the-asks)) | the publisher and the validator; A unblocks R7/R8, B unblocks R6's second route, C unblocks R9 | HL7 (Zulip) | 5 |
 
 ### What each change is, in a few lines
 
@@ -139,11 +145,25 @@ resource. Outputs: `ImplementationGuide.definition.resource[]`, `artifacts`, `to
 `qa.json` / `qa.html` as the aggregate of per-artefact outcomes. One rule: it never
 re-derives an artefact. A missing record is exit 1, "build required".
 
-**R9 — site assembly and deploy.** `jekyll build --incremental` over a `temp/` in
-which unchanged fragments are byte-identical, and a deploy that pushes only changed
-files instead of the whole `output/` tree. This is the least certain row: it depends
-on the WHO template as much as on the pipeline, and it is where a page-level renderer
-would eventually replace Jekyll.
+**R9 — the site.** Three steps of increasing reach, decided 2026-09-16. The publisher's
+output keeps going to gh-pages exactly as `ghbuild.yml` deploys it today. Next, the
+root `index.html` becomes a rendered Just the Docs page — the pipeline that renders this
+documentation, `site-content/*.ts` → `gen-docs-pages.ts` → Jekyll — linking into the
+publisher's pages; that is a deploy-layout change in smart-base and needs nothing from
+the publisher. Longer term the arrow reverses: the **source is structured `.ts`
+content** authored by agentic skills and the render pipeline; the **IG Publisher is one
+renderer of it**, taking the FHIR artefacts derived from the blocks; and its render is
+**incorporated into the Just the Docs pipeline**, which assembles the whole site in the
+controlled way it assembles this one. The easy way in is on our side: the render
+pipeline **assembles the standard IG folder** — `ig.ini`, `sushi-config.yaml`,
+`input/fsh/`, `input/pagecontent/` — from `content/<ig>/<ig>.ts` and its blocks' companion
+files, one file per block, and SUSHI and the publisher then run on input they already
+understand (proposal §5.7, with the block-to-folder table). For the far end the
+publisher needs only two agnostic things: a render-only mode that stops after fragments
+and aggregates without running its own Jekyll, and, as part of the AST, a manifest of
+what was rendered where — §8's C1 and A4. Which pipeline incorporates the render, and
+what assembled its input, is ours, not the publisher's. Until then the fragments are on
+disk under `temp/pages/_includes/` after any build and can be consumed as they are.
 
 **R10 — housekeeping.** Four skill definitions in this repo reference
 `scripts/sushi-build.sh`, `scripts/ig-publisher-build.sh`, `scripts/create-release.sh`
@@ -154,10 +174,19 @@ probe, and register `fsh-cone`, the validator tools, `ig-cache` and
 `ig-incremental-build.bpmn` can carry `folio:skill ref`s instead of tool names in
 parentheses.
 
-**R11 — upstream.** Two asks to Grahame on Zulip, with §3.3's numbers in hand: keep
-the loaded context across watch iterations (today every iteration constructs a fresh
-`PublisherFields` and re-runs `Load IG`), and make the tracker's location a parameter
-so CI can persist it.
+**R11 — upstream.** Four asks to Grahame on Zulip, itemised in the proposal's §8 with
+what exists today and what we do without each, under one rule: nothing
+folio-assistant-specific goes upstream, because the publisher wants to be agnostic
+about who consumes it. The ask that matters is **the AST** — the publisher already
+computes a model of the IG (resources, dependencies, outcomes, what was rendered
+where, timings) and discards it; serialising it changes no behaviour and serves every
+consumer equally. Then, phrased for any CI: a state directory and load-once for the
+differential build; a render-only mode, for which the Simplifier path is already the
+precedent in the code; and the validator as a documented, addressable service. §8.1
+lists what is already there and should be used rather than asked for — the skip lists,
+`path-tx-cache`, snapshot reuse, `qa-time-report.json`, the validator's `server` mode.
+The branch caches, the selective terminology restore, the Just the Docs pipeline and the
+cone tool stay on our side of the line.
 
 ---
 
@@ -275,8 +304,11 @@ Each is a short answer; none blocks Phase 1.
    first tier. Proposed: both.
 2. **Who may seed.** Only green builds of the default branch and releases · also
    approved previews. Proposed: default branch and releases only.
-3. **The terminology cache.** Commit `txCache/` to the DAK repositories · keep it only
-   in the cache store. Proposed: the cache store, so the repository stays content.
+3. **The terminology cache.** **Decided 2026-09-16:** a branch cache of its own,
+   `tx-cache/<pkg>-<slug>`, like the olean cache — big and slow and not wanted in the
+   main repository; per-code-system files so a cone pulls only the terminology it needs;
+   a version change drops it. Open within the decision: whether size makes it
+   prohibitive — measure the first seed (§5.6 of the proposal).
 4. **Hub edits.** Always incremental (a 275-node cone still saves three quarters) ·
    short-circuit to a full build above a threshold. Proposed: always incremental, with
    the threshold as a flag.
@@ -285,6 +317,12 @@ Each is a short answer; none blocks Phase 1.
    Proposed: the cache service and MCP tools here, the workflow wiring in smart-base —
    the same split as `smart-base-tools`.
 6. **HL7's auto-build.** Leave `fhirbuild.yml` as it is. Proposed: yes; it is not ours.
+7. **The site.** **Decided 2026-09-16:** publisher output stays on gh-pages; the root
+   `index.html` becomes a rendered Just the Docs page; longer term, content is authored
+   as structured `.ts` by agentic skills and the render pipeline, the IG Publisher
+   renders it, and its render is incorporated into the Just the Docs pipeline that
+   publishes the site (R9, proposal §5.7). Open within the decision: sub-path for the
+   publisher output versus a landing page written over the template's `index.html`.
 
 ## Not verified
 
