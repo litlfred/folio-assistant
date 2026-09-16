@@ -100,6 +100,7 @@ describe("the HCI validation gate holds", () => {
 
     step("Task_DescribeChange");
     step("Task_ClaimBean");
+    step("CallActivity_Evidence");
     step("Task_DraftEdit");
 
     // The parallel fork put a token on each mechanical check AND on the
@@ -135,7 +136,8 @@ describe("the HCI validation gate holds", () => {
       const step = (n: string, outcome?: string) => complete(model, state, n, { outcome });
       step("Task_DescribeChange");
       step("Task_ClaimBean");
-      step("Task_DraftEdit");
+      step("CallActivity_Evidence");
+    step("Task_DraftEdit");
       step("Task_SchemaValidate");
       step("Task_SyntaxSpell");
       step("Task_BuildGates");
@@ -166,6 +168,7 @@ describe("the HCI validation gate holds", () => {
     const step = (n: string, outcome?: string) => complete(model, state, n, { outcome });
     step("Task_DescribeChange");
     step("Task_ClaimBean");
+    step("CallActivity_Evidence");
     step("Task_DraftEdit");
     step("Task_SchemaValidate");
     step("Task_SyntaxSpell");
@@ -195,6 +198,7 @@ describe("decisions are asked for, not guessed", () => {
     const state = startInstance(model, { id: "t6", subject: "def:x" });
     complete(model, state, "Task_DescribeChange");
     complete(model, state, "Task_ClaimBean");
+    complete(model, state, "CallActivity_Evidence");
     complete(model, state, "Task_DraftEdit");
 
     expect(() => complete(model, state, "Gateway_ReviewerKind")).toThrow(/is a decision/);

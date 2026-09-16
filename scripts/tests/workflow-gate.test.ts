@@ -85,6 +85,7 @@ describe("a declared relaxation permits a step, and is attributed", () => {
     const state = startInstance(model, { id: "g3", subject: "def:x" });
     complete(model, state, "Task_DescribeChange");
     complete(model, state, "Task_ClaimBean");
+    complete(model, state, "CallActivity_Evidence");
     complete(model, state, "Task_DraftEdit");
     complete(model, state, "Gateway_ReviewerKind", { outcome: "no" });
 
