@@ -134,6 +134,43 @@ export const BLOCK_KIND_TO_FOLIO_TYPE: Record<BlockKind, string> = {
  * here would put wrong triples in a published graph, which is worse than
  * leaving a kind untyped.
  */
+/**
+ * Types for the DOCS SITE's own graph.
+ *
+ * The site is not a folio — `gen-block-jsonld` declines to run here for
+ * exactly that reason ("folio-assistant is the platform; papers live in the
+ * folio repo") — but its pages are still nodes, and a reader asking
+ * `corpus_search` where the ingestion pipeline is documented should find the
+ * page as readily as they find a block.
+ *
+ * `folio:WebPage` is a NEW term rather than a borrowed one. schema.org has
+ * `schema:WebPage`, and this corpus has never used schema.org anywhere — the
+ * committed vocabularies are DCTERMS, SPAR (DoCO/DEO/CiTO) and one PROV term.
+ * Introducing a whole namespace for one class, when the house rule is
+ * "generalising is sound; inventing is not", would be inventing by import. A
+ * `folio:` term for a folio-specific concept is what that rule allows.
+ *
+ * The DoCO half is borrowed and verified: a page is `doco:Section` (its own
+ * containment is `dcterms:hasPart`, per the note on `contains` below), an
+ * asset node is `doco:Figure` — the same class `diagram` blocks already get.
+ */
+export const SITE_PAGE_TYPES = ["folio:WebPage", "doco:Section"] as const;
+export const SITE_NARRATIVE_TYPES = ["folio:Prose", "doco:Section"] as const;
+export const SITE_ASSET_TYPES = ["folio:Figure", "doco:Figure"] as const;
+
+/**
+ * Relative IRI for a docs-site node. `site/<slug>` for a page, and
+ * `site/<slug>/nodes/<id>` for one of its children — the same
+ * document/section/block shape `gen-library-jsonld` mints for an ingested
+ * source, so both populations read the same way when the graph is walked.
+ *
+ * The slug keeps its slashes: `guides/writing-a-paper` publishes at that path
+ * and an IRI that flattened it would no longer say where the page is.
+ */
+export function siteIri(slug: string, nodeId?: string): string {
+  return nodeId ? `site/${slug}/nodes/${nodeId}` : `site/${slug}`;
+}
+
 export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = {
   equation: "doco:Formula",
   diagram: "doco:Figure",
