@@ -396,3 +396,45 @@
   outline: 2px solid #2563eb;
   outline-offset: 2px;
 }
+
+/* ── Full-width content on wide screens ────────────────────────────────── */
+
+/* THE THEME CENTRES A FIXED-WIDTH COLUMN; THIS MAKES IT FILL INSTEAD.
+ *
+ * Measured from the built stylesheet on gh-pages (assets/css/
+ * just-the-docs-default.css), not assumed, because the rule that does the
+ * centring is not the obvious one:
+ *
+ *   @media (min-width: 50rem)   .main            { max-width: 50rem }
+ *   @media (min-width: 50rem)   .side-bar + .main{ margin-left: 15.5rem }
+ *   @media (min-width: 66.5rem) .side-bar        { width: calc((100% - 66.5rem) / 2 + 16.5rem); min-width: 16.5rem }
+ *   @media (min-width: 66.5rem) .side-bar + .main{ margin-left: Max(16.5rem, calc((100% - 66.5rem) / 2 + 16.5rem)) }
+ *
+ * 66.5rem is 16.5 (nav) + 50 (content). Above that width the SIDEBAR grows to
+ * absorb half the surplus, which is what pushes the text column into the
+ * middle of the screen — so capping `.main` alone would leave the content
+ * floating, and widening `.main` alone would leave it overlapping the nav.
+ * Both halves are needed.
+ *
+ * Below 66.5rem only the cap is removed: the theme's 15.5rem sidebar there is
+ * already flush left and there is no surplus to absorb, so nothing else should
+ * move.
+ *
+ * Equal specificity to the theme's own rules; docs-ui.css is emitted after
+ * just-the-docs-*.css in the built page, so source order decides and no
+ * `!important` is needed. If that emission order ever changes these rules go
+ * silently dead — the symptom is a narrow column returning on a wide monitor,
+ * not a broken layout.
+ *
+ * Long lines are the accepted cost. The request was explicit: text should fill
+ * the screen width with the nav anchored left. On an ultrawide the measure
+ * gets long; a cap can be reintroduced as a `max-width` on `.main-content`
+ * if that turns out to matter more than the fill. */
+@media (min-width: 50rem) {
+  .main { max-width: none; }
+}
+
+@media (min-width: 66.5rem) {
+  .side-bar { width: 16.5rem; }
+  .side-bar + .main { margin-left: 16.5rem; }
+}
