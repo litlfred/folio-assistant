@@ -50,8 +50,11 @@
  * `flex: 1 1 auto` is the theme's `flex-grow: 1` transplanted to the element
  * that now occupies that slot. `min-width: 0` is what lets it actually shrink,
  * so the title gives way and the button stays on screen. */
+/* No `position: relative` here any more. It existed to be the containing block
+   for the absolutely-positioned code panel; the panel is in the sidebar column
+   now, so the relative positioning anchored nothing and only made the rule
+   look like it still governed the code's placement. */
 .fa-qr-host {
-  position: relative;
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -70,8 +73,6 @@
 
 /* The title row keeps its height while the code is open. Without this the
    host collapses (both children are hidden) and the sidebar nav jumps up. */
-.fa-qr-host[data-open="true"] { min-height: 1.75rem; }
-
 .fa-qr-toggle {
   flex: 0 0 auto;
   display: inline-flex;
@@ -96,26 +97,114 @@
 
 .fa-qr-toggle svg { width: 1rem; height: 1rem; fill: currentColor; }
 
-/* The expanded code is a POPOVER anchored to the title row, not a flex child
-   of it. As an in-flow child it was taller than the header, and a fixed-height
-   flex row with align-items:center overflows in BOTH directions -- so the code
-   rendered half above the header and outside the sidebar's padding. Absolute
-   positioning at top/left 0 pins its top-left corner to where the title starts,
-   so it grows downward and stays inside the sidebar. */
+/* THE CODE SITS BELOW THE TITLE, IN THE SIDEBAR COLUMN -- it is no longer a
+   popover that replaces the title.
+   
+   Why it could not be one before: the theme caps the header row at
+   `height: 3.75rem; max-height: 3.75rem`, so an in-flow code inside the header
+   overflows in both directions (a fixed-height flex row with
+   `align-items: center` centres the overflow). The previous version worked
+   around that by absolutely positioning the code over the title and hiding the
+   title and the toggle while it was open.
+   
+   The fix is placement, not positioning: `mountQr` inserts the panel as a
+   SIBLING of `.site-header` inside `.side-bar`, between the header and the
+   nav. There it is in normal flow in the sidebar's flex column, it pushes the
+   nav down rather than covering it, and the title stays where it is. */
 .fa-qr-panel {
   display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  max-width: 14rem;
   padding: 0.5rem;
   cursor: pointer;
   border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
   border-radius: 6px;
-  /* Opaque: it sits over the navigation, and a transparent code on top of
-     link text is unreadable to a phone camera as well as to a person. */
+  /* Opaque: when pinned it sits over content, and a transparent code on top of
+     text is unreadable to a phone camera as well as to a person. */
   background: var(--sidebar-color, #27262b);
+}
+
+/* THE SIDEBAR-COLUMN LOOK IS DESKTOP-ONLY.
+   
+   Below 50rem the panel is a centred floating card (see the narrow-viewport
+   section further down) and must keep its full border and its corners. These
+   rules are scoped so they cannot reach it there -- an earlier draft applied
+   `border-width: 0 0 1px; border-radius: 0` unconditionally and turned the
+   phone card into a bordered strip.
+   
+   The widths are the theme's own: it gives `.site-nav`, `.site-header` and
+   `.site-footer` exactly `width: 100%`, and `width: 16.5rem` from 66.5rem up.
+   `.side-bar` is `flex-flow: column nowrap; align-items: flex-end` at this
+   breakpoint, so a child with no explicit width shrinks to its content and
+   hangs off the right edge instead of filling the column.
+   
+   `flex: 0 0 auto` because `.site-nav` is the `1 1 auto` child that absorbs
+   the leftover height -- the code must not compete with it for space. */
+@media (min-width: 50rem) {
+  .fa-qr-panel.fa-qr-in-sidebar {
+    width: 100%;
+    flex: 0 0 auto;
+    margin: 0;
+    border-width: 0 0 1px;
+    border-radius: 0;
+  }
+}
+
+@media (min-width: 66.5rem) {
+  .fa-qr-panel.fa-qr-in-sidebar { width: 16.5rem; }
+}
+
+/* ── The code survives a full-width figure ─────────────────────────────── */
+
+/* WHEN A FIGURE IS EXPANDED TO THE FULL DISPLAY WIDTH, IT COVERS THE SIDEBAR.
+   
+   That is painting order, not a z-index someone forgot: the theme sets
+   `.side-bar { z-index: 0 }`, which makes it a stacking context painted at 0,
+   while `.main` is `position: relative` with `z-index: auto` and comes later
+   in tree order -- so `.main`, and the full-bleed figure inside it, paints on
+   top. Anything in the sidebar disappears behind the diagram, and no z-index
+   ON the code can help while it is inside that stacking context.
+   
+   So two things, and BOTH are needed:
+   
+   1. `z-index: auto` on the sidebar removes the stacking context, letting a
+      descendant's z-index reach the root. The sidebar itself keeps painting
+      exactly where it did (positioned, auto, before `.main` in tree order),
+      so nothing else moves.
+   2. The code goes `position: fixed` and pins itself to the sidebar column's
+      geometry -- 3.75rem is the theme's exact `.site-header` height, and the
+      widths are its exact sidebar widths. It leaves the flex column, so the
+      nav springs back up underneath it.
+   
+   The result is the requested one: widescreen a diagram, scroll a particular
+   piece of narrative into view, and still have the code on screen to point a
+   phone at.
+   
+   `:root.fa-has-fullwidth` is set by docs-ui.js from the DOM whenever any
+   figure is in full-width mode, and recomputed rather than counted so it
+   cannot drift.
+   
+   Note this is driven by the FULL-WIDTH CONTROL, not by a viewport
+   breakpoint. If pinning should instead happen at some screen width, the
+   change is the media query on these two rules -- the mechanism is the same. */
+@media (min-width: 50rem) {
+  :root.fa-has-fullwidth .side-bar { z-index: auto; }
+
+  :root.fa-has-fullwidth .fa-qr-panel.fa-qr-in-sidebar[data-open="true"] {
+    position: fixed;
+    top: 3.75rem;
+    left: 0;
+    width: 15.5rem;
+    z-index: 1200;
+    /* Back to a real card: it is floating over a drawing now, not sitting in
+       a column, so it needs its own edge again. */
+    border-width: 1px;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.45);
+  }
+}
+
+@media (min-width: 66.5rem) {
+  :root.fa-has-fullwidth .fa-qr-panel.fa-qr-in-sidebar[data-open="true"] {
+    width: 16.5rem;
+  }
 }
 
 /* The panel is opaque on purpose — it sits over navigation links, and a
@@ -126,9 +215,15 @@
   color: #27262b;
 }
 
-.fa-qr-host[data-open="true"] .fa-qr-panel { display: block; }
-.fa-qr-host[data-open="true"] .fa-qr-toggle,
-.fa-qr-host[data-open="true"] .site-title { display: none; }
+/* Keyed on the PANEL, not on the host. The panel lives in the sidebar column
+   now, so it is not a descendant of the host and a
+   `.fa-qr-host[data-open] .fa-qr-panel` selector matches nothing. `mountQr`
+   mirrors the attribute onto both.
+   
+   The rules that hid `.site-title` and `.fa-qr-toggle` while the code was open
+   are GONE: they existed only because the code was covering the slot those two
+   occupy, and the whole point of the new placement is that it does not. */
+.fa-qr-panel[data-open="true"] { display: block; }
 
 .fa-qr-panel svg {
   display: block;
