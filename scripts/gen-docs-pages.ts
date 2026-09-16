@@ -163,7 +163,7 @@ function renderPage(page: WebPage): string {
   lines.push("</details>");
   lines.push("");
   lines.push(
-    `_This page is generated from [\`content/docs/${page.slug}/\`](${REPO_WEB}/tree/main/site-content/${page.slug.replace(/\//g, "-")}) — ` +
+    `_This page is generated from [\`site-content/${page.slug.replace(/\//g, "-")}/\`](${REPO_WEB}/tree/main/site-content/${page.slug.replace(/\//g, "-")}) — ` +
       `each section below links to its own source._`,
   );
   lines.push("");
