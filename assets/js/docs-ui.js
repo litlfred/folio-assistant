@@ -269,12 +269,26 @@
     var reset = el("button", { type: "button", "aria-label": "Reset zoom" }, "Reset");
     var wide = el("button", { type: "button", "aria-label": "Expand to the full display width", "aria-pressed": "false" }, "Full width");
 
+    // The grab cursor is a PROMISE, so only make it when there is somewhere to
+    // pan to. A figure that fits its card has no scroll room, and a `grab`
+    // cursor over it says otherwise -- the drag would do nothing and the
+    // cursor would be the only thing that had lied. Re-measured on every zoom
+    // change, inside rAF because the custom property has to reach layout
+    // before scrollWidth means anything. The +1 absorbs sub-pixel rounding,
+    // which otherwise flickers the class on and off at exactly 100%.
+    function markPannable() {
+      requestAnimationFrame(function () {
+        scope.classList.toggle("is-pannable", scope.scrollWidth > scope.clientWidth + 1);
+      });
+    }
+
     function apply() {
       var z = ZOOM_STEPS[step];
       scope.style.setProperty("--fa-zoom", String(z));
       level.textContent = Math.round(z * 100) + "%";
       out.disabled = step === 0;
       into.disabled = step === ZOOM_STEPS.length - 1;
+      markPannable();
     }
     out.addEventListener("click", function () { if (step > 0) { step--; apply(); } });
     into.addEventListener("click", function () { if (step < ZOOM_STEPS.length - 1) { step++; apply(); } });
@@ -297,6 +311,7 @@
       var left = scope.getBoundingClientRect().left;
       scope.style.marginLeft = -left + "px";
       scope.style.width = document.documentElement.clientWidth + "px";
+      markPannable();
     }
     wide.addEventListener("click", function () {
       var on = scope.classList.toggle("is-fullwidth");
@@ -350,6 +365,55 @@
       window.scrollBy(0, d);
     }, { passive: false });
 
+    // Click and drag to pan.
+    //
+    // The figure is already a scroll container, so panning is just moving its
+    // scroll offsets — no transform, which means it composes with zoom and with
+    // the subprocess links instead of fighting them.
+    //
+    // Two details keep a drag from eating a click. The 4px threshold means a
+    // plain click never becomes a pan, so a subprocess link still navigates;
+    // and once a pan HAS happened the following click is swallowed in the
+    // capture phase, so releasing over a link does not follow it. Pointer
+    // events rather than mouse events, so a touch drag works the same way.
+    var drag = null;
+    var panned = false;
+
+    scope.addEventListener("pointerdown", function (e) {
+      if (e.button !== 0) return;
+      // A control or a link owns its own press.
+      if (e.target.closest && e.target.closest("a, button, input, select, textarea")) return;
+      drag = { x: e.clientX, y: e.clientY, sl: scope.scrollLeft, st: scope.scrollTop, moved: false };
+      try { scope.setPointerCapture(e.pointerId); } catch (_e) { /* not captureable */ }
+    });
+
+    scope.addEventListener("pointermove", function (e) {
+      if (!drag) return;
+      var dx = e.clientX - drag.x;
+      var dy = e.clientY - drag.y;
+      if (!drag.moved && Math.abs(dx) + Math.abs(dy) < 4) return;
+      drag.moved = true;
+      scope.classList.add("is-panning");
+      scope.scrollLeft = drag.sl - dx;
+      scope.scrollTop = drag.st - dy;
+      e.preventDefault();
+    });
+
+    function endPan() {
+      if (!drag) return;
+      panned = drag.moved;
+      drag = null;
+      scope.classList.remove("is-panning");
+    }
+    scope.addEventListener("pointerup", endPan);
+    scope.addEventListener("pointercancel", endPan);
+    scope.addEventListener("click", function (e) {
+      if (!panned) return;
+      panned = false;
+      e.preventDefault();
+      e.stopPropagation();
+    }, true);
+
     [out, level, into, reset, wide].forEach(function (n) { tools.appendChild(n); });
     scope.parentNode.insertBefore(tools, scope);
     apply();
@@ -399,9 +463,64 @@
     });
   }
 
+  /* ── Inline the diagram SVGs ─────────────────────────────────────────── */
+
+  // An `<img src="...svg">` renders the drawing and is otherwise INERT: links
+  // inside it never fire and nothing in it can be dragged. The subprocess boxes
+  // in the workflow diagrams are `<a>` elements (added by scripts/render-bpmn.ts)
+  // and they are dead for exactly that reason, so the figure has to be a real
+  // `<svg>` in this document.
+  //
+  // Fetched rather than server-side included because the SVGs are build output
+  // under assets/, which Jekyll's `include` cannot reach. Same-origin, and the
+  // markup is our own build artefact.
+  //
+  // Degrades to the existing static image: if the fetch or the parse fails the
+  // `<img>` is left exactly as it was, with one warning naming the file.
+  function inlineDiagrams(done) {
+    var imgs = [].slice.call(
+      document.querySelectorAll('.bpmn-figure img[src$=".svg"], .main-content img[src$=".svg"]'),
+    );
+    if (!imgs.length || typeof window.fetch !== "function" || typeof window.DOMParser !== "function") {
+      done();
+      return;
+    }
+    var pending = imgs.length;
+    function settle() { if (--pending === 0) done(); }
+
+    imgs.forEach(function (img) {
+      var src = img.getAttribute("src");
+      window
+        .fetch(src)
+        .then(function (r) {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.text();
+        })
+        .then(function (text) {
+          var parsed = new window.DOMParser().parseFromString(text, "image/svg+xml");
+          var svg = parsed.documentElement;
+          if (!svg || String(svg.nodeName).toLowerCase() !== "svg") throw new Error("not an svg");
+          // The alt text was the accessible name; keep it on the element that
+          // replaces it, or the diagram becomes invisible to a screen reader.
+          var alt = img.getAttribute("alt");
+          if (alt) {
+            svg.setAttribute("role", "img");
+            svg.setAttribute("aria-label", alt);
+          }
+          img.parentNode.replaceChild(document.importNode(svg, true), img);
+        })
+        .catch(function (e) {
+          console.warn("docs-ui: could not inline " + src + " (" + e.message + "); it stays a static image, so its links will not work.");
+        })
+        .then(settle, settle);
+    });
+  }
+
   function init() {
     mountQr();
-    mountFigures();
+    // Figures are mounted only after the inlining settles, so the scan sees the
+    // real <svg> rather than the <img> it replaces and does not wrap both.
+    inlineDiagrams(mountFigures);
 
     // Mermaid renders AFTER this runs, and nothing tells us when.
     //
