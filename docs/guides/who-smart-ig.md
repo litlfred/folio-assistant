@@ -15,7 +15,7 @@ nav_order: 3
 {:toc}
 </details>
 
-_This page is generated from [`content/docs/guides/who-smart-ig/`](https://github.com/litlfred/folio-assistant/tree/main/site-content/guides-who-smart-ig) — each section below links to its own source._
+_This page is generated from [`site-content/guides-who-smart-ig/`](https://github.com/litlfred/folio-assistant/tree/main/site-content/guides-who-smart-ig) — each section below links to its own source._
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-who-smart-ig/overview.md){: .fa-node-edit title="Edit site-content/guides-who-smart-ig/overview.md" }
 

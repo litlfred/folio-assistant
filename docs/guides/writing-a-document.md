@@ -15,7 +15,7 @@ nav_order: 2
 {:toc}
 </details>
 
-_This page is generated from [`content/docs/guides/writing-a-document/`](https://github.com/litlfred/folio-assistant/tree/main/site-content/guides-writing-a-document) — each section below links to its own source._
+_This page is generated from [`site-content/guides-writing-a-document/`](https://github.com/litlfred/folio-assistant/tree/main/site-content/guides-writing-a-document) — each section below links to its own source._
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/overview.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/overview.md" }
 

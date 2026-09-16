@@ -14,7 +14,7 @@ nav_order: 6
 {:toc}
 </details>
 
-_This page is generated from [`content/docs/publication-workflow/`](https://github.com/litlfred/folio-assistant/tree/main/site-content/publication-workflow) — each section below links to its own source._
+_This page is generated from [`site-content/publication-workflow/`](https://github.com/litlfred/folio-assistant/tree/main/site-content/publication-workflow) — each section below links to its own source._
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/overview.md){: .fa-node-edit title="Edit site-content/publication-workflow/overview.md" }
 
