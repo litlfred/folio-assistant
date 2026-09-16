@@ -215,13 +215,40 @@
     var panel = el("button", {
       type: "button",
       class: "fa-qr-panel",
+      "data-open": "false",
       "aria-label": "Hide the QR code",
     });
     var art = el("span");
     var caption = el("span", { class: "fa-qr-caption" });
     panel.appendChild(art);
     panel.appendChild(caption);
-    host.appendChild(panel);
+
+    // THE PANEL IS A SIBLING OF THE HEADER, NOT A CHILD OF IT, and the theme's
+    // own numbers are why.
+    //
+    // At the desktop breakpoint just-the-docs makes `.site-header` a
+    // HARD-CAPPED row -- `height: 3.75rem; max-height: 3.75rem` -- inside a
+    // `.side-bar` that is `position: fixed; flex-flow: column nowrap`. A code
+    // placed inside that header cannot make it taller, so it either overflows
+    // the cap or gets clipped. That is what forced the previous version to be
+    // an absolutely-positioned popover that REPLACED the title (the title and
+    // the toggle were both `display: none` while it was open).
+    //
+    // The request is that the code sit below the title with the title still
+    // there, so it has to be a sibling in the sidebar's flex column, between
+    // `.site-header` and `.site-nav`. In that slot it is in normal flow, it
+    // pushes the nav down instead of covering it, and it inherits the
+    // sidebar's fixed positioning for free.
+    //
+    // The fallback matters: a theme with no `.side-bar` still gets a working
+    // control, just anchored to the header as before.
+    var sideBar = header.closest ? header.closest(".side-bar") : null;
+    if (sideBar && header.parentNode === sideBar) {
+      sideBar.insertBefore(panel, header.nextSibling);
+      panel.classList.add("fa-qr-in-sidebar");
+    } else {
+      host.appendChild(panel);
+    }
 
     function render() {
       var url = window.location.href;
@@ -237,11 +264,20 @@
     function open(isOpen) {
       if (isOpen) render();
       host.setAttribute("data-open", isOpen ? "true" : "false");
+      // Mirrored onto the panel because the panel is no longer a DESCENDANT of
+      // the host -- it lives in the sidebar column now, so a
+      // `.fa-qr-host[data-open] .fa-qr-panel` selector would never match it.
+      panel.setAttribute("data-open", isOpen ? "true" : "false");
       toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
       (isOpen ? panel : toggle).focus();
     }
 
-    toggle.addEventListener("click", function () { open(true); });
+    // A real toggle now. It used to be one-way (the button hid itself on open
+    // and only the panel could close it), which was the only option while the
+    // panel was covering the button's own slot.
+    toggle.addEventListener("click", function () {
+      open(host.getAttribute("data-open") !== "true");
+    });
     panel.addEventListener("click", function () { open(false); });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && host.getAttribute("data-open") === "true") open(false);
@@ -254,6 +290,25 @@
   }
 
   /* ── Figure zoom and full width ──────────────────────────────────────── */
+
+  // A FULL-BLEED FIGURE COVERS THE SIDEBAR, and that is a painting-order fact,
+  // not a guess: the theme sets `.side-bar { z-index: 0 }`, which makes it a
+  // stacking context painted at 0, while `.main` is `position: relative` with
+  // `z-index: auto` and comes LATER in tree order -- so `.main` paints on top.
+  // A figure expanded to the full display width therefore hides anything in
+  // the sidebar, the QR code included, and no z-index on the code can rescue
+  // it from inside that stacking context.
+  //
+  // So the root carries a flag saying "something is full width right now", and
+  // the stylesheet uses it to let the code out of the sidebar's stacking
+  // context and pin it. Recomputed from the DOM rather than counted, because a
+  // counter drifts the moment a figure is removed or re-mounted.
+  function markFullWidthOnRoot() {
+    document.documentElement.classList.toggle(
+      "fa-has-fullwidth",
+      !!document.querySelector(".fa-figure-scope.is-fullwidth"),
+    );
+  }
 
   function mountFigure(scope, isPlain) {
     if (scope.dataset.faTools === "1") return;
@@ -317,6 +372,7 @@
       var on = scope.classList.toggle("is-fullwidth");
       wide.setAttribute("aria-pressed", on ? "true" : "false");
       applyFullWidth();
+      markFullWidthOnRoot();
     });
     // The measured offset is only right for the width it was measured at.
     window.addEventListener("resize", applyFullWidth);
