@@ -9,6 +9,14 @@ how to measure it from a DAK's own published site.
 of §3.3, which is also the first component of §5.
 **Companion:** [`ig-incremental-build-overview.md`](ig-incremental-build-overview.md) —
 the change register, and where each change sits in the review and publish pipeline.
+**Decisions taken 2026-09-16** (bean `rna3`, [#192](https://github.com/litlfred/folio-assistant/issues/192)):
+the publisher is pinned and its version recorded so a change is what triggers a rerun
+(§1.2, §5.1); the terminology cache becomes a branch cache of its own, partitioned so a
+cone pulls only what it needs (§5.6); publisher output stays on gh-pages with a Just the
+Docs landing page, and longer term the publisher becomes a *renderer* of content that
+agentic skills and the render pipeline author as structured `.ts`, its output
+incorporated into the Just the Docs pipeline that publishes the site (§5.7). The
+specific asks to the IG Publisher and validator are §8.
 
 A WHO SMART Guidelines DAK publishes its FHIR Implementation Guide through
 `smart-base`'s `ghbuild.yml`: one monolithic `publisher.jar` run per push, and every
@@ -66,7 +74,7 @@ delete files > 100 MB ──► deploy whole output/ to gh-pages (JamesIves, wit
 
 | Derived thing | Depends on | Cached between runs? |
 |---|---|---|
-| `publisher.jar` | `releases/latest` — **unpinned** | No. Also non-reproducible: two runs a day apart can use different publishers. |
+| `publisher.jar` | `releases/latest` — **unpinned** | No. Also non-reproducible: two runs a day apart can use different publishers. **Decision:** pin it, and write the version into the build's outputs, so that a publisher change is *detectable* and is the thing that tells a later run it must rebuild rather than restore (§5.1, §8 A3). |
 | SUSHI, Python, pip packages inside the container | image + registries | No. `npm install -g fsh-sushi` per run. |
 | FHIR package cache (`hl7.fhir.r4.core`, `smart.who.int.base`, 8 dependencies for `smart-immunizations`) | `sushi-config.yaml` dependencies | No. `-package-cache-folder ./fhir-package-cache` is created empty each run. `grep actions/cache ghbuild.yml` → 0 hits; only the four translation workflows use `actions/cache`. |
 | IG template | `template = who.template.root#current` in `ig.ini` | No — and `#current` resolves to `pcm.loadPackage(id, "current")`, the build-server head. Uncacheable by content, and a second source of run-to-run drift. |
@@ -547,9 +555,96 @@ after seven days and caps at 10 GB, so it cannot be the only copy). `doctor` say
 of the six slug components moved, because "publisher bumped" and "someone changed a
 dependency version" want different responses.
 
+**The terminology cache is a branch cache of its own (decision, 2026-09-16).** It is
+big, it is slow to rebuild, and it does not belong in the DAK repository — the same
+three reasons the oleans live on `lake-cache/*` branches and not in `qou`. So:
+`tx-cache/<pkg>-<slug>`, an orphan branch, split under 100 MB like the Lean parts,
+restored into the directory the IG names with its `path-tx-cache` parameter. Three facts
+from `TerminologyCache.java` make this workable. The cache is **one file per code
+system** — `snomed_<version>.cache`, `loinc_<version>.cache`, `ucum.cache`,
+`all-systems.cache`, others named from their system URL — so a cone-restricted run can
+restore **only the files for the systems its cone binds to** and leave the rest on the
+branch. Each file carries a header nonce, so a partial directory is a valid cache, not a
+corrupt one. And `version.ctl` holds the cache format version (`FIXED_CACHE_VERSION`,
+currently `4`); when the publisher bumps it, the publisher itself clears the directory —
+"a version change drops the cache" is native behaviour, and the branch name's slug does
+the same one level up. The risk is **size**: SNOMED entries dominate, and nobody has
+measured a WHO DAK's `txCache/` here (§3.1). Seed once, `du -sh` it, and if a single
+code system's file passes the part limit, the selective restore is the mitigation rather
+than a nicety. The selective restore also wants one thing from upstream — a record of
+which cache files a resource's validation touched — and works without it by
+restoring every file for the slug. (That one thing is asked for as part of the AST, §8
+A1 — "terminology cache files touched" per resource — not as a terminology feature;
+the partition and the branch are ours.)
+
 What is deliberately **not** cached: anything keyed on `latest` or `#current`, and
 `qa.html` as a file — it is recomputed from outcomes every time, so it can never
 describe a build that did not happen.
+
+### 5.7 The site — gh-pages, a Just the Docs landing page, then the publisher as a renderer inside the Just the Docs pipeline
+
+Decision, 2026-09-16, in three steps of increasing reach.
+
+**Now:** the publisher's output keeps going to `gh-pages`, as `ghbuild.yml` does today;
+nothing about where the IG is served changes. **Next:** the root `index.html` of the
+published site is a **rendered Just the Docs page** — the same pipeline that renders this
+documentation (`site-content/<page>/*.ts` manifests → `gen-docs-pages.ts` → Jekyll with
+the Just the Docs theme) — that links into the publisher's pages rather than being the
+template's own landing page. That is a deploy-layout change in smart-base (the publisher
+output under a sub-path, or the landing page written over the template's `index.html`
+after the build) and needs nothing from the publisher.
+
+**Longer term, the arrow points the other way.** The **source is structured `.ts`
+content** — blocks that agentic skills and the render pipeline author, in the folio
+model this platform already has for a DAK (`DAK_BLOCK_KINDS`, the `dak` adapter). The
+**IG Publisher is one renderer of that content**: the FHIR artefacts derived from the
+blocks go through it, and what it renders — the per-artefact fragments, the aggregates —
+is **incorporated into the Just the Docs render pipeline**, which assembles the whole
+site and publishes it to gh-pages in the controlled way it assembles this one. The
+publisher stops being the site generator and becomes a stage whose output the site
+generator consumes as data. That is the "block as source, everything else as render"
+target of [`rag-document-ingestion.md` §12.15](rag-document-ingestion.md) with the IG
+as one of the renders, and it is why the meta-index of §5.5 is a separate step: the
+site assembler needs the index as data, not as `toc.html`.
+
+**The easy way to feed the publisher.** The publisher processes one thing: a standard
+IG folder — `ig.ini`, `sushi-config.yaml`, `input/fsh/`, `input/pagecontent/`,
+`input/images/`. So the render pipeline's job is to **assemble that folder from
+`content/<ig>/<ig>.ts` and its blocks**, and then SUSHI and the publisher run exactly as
+they do today, on input they already understand. No publisher change, no adapter in the
+publisher, no knowledge of folios anywhere but here. The projection is mechanical
+because the `dak` adapter's block kinds already are the IG's artefact kinds, and a
+block's companion file (`<root>.fsh`, `.bpmn`, `.dmn`, `.cql`, resolved by root-name
+convention) is the artefact's source:
+
+| Block | Companion | Lands in the IG folder as |
+|---|---|---|
+| the root manifest `content/<ig>/<ig>.ts` — id, canonical, title, version, dependencies, pages, menu | — | `sushi-config.yaml`, `ig.ini` (template pinned, `path-tx-cache` set) |
+| `profile`, `logical-model`, `value-set`, `questionnaire`, `plan-definition`, `measure`, `structure-map`, `actor-definition`, `test-case` | `.fsh` | `input/fsh/<kind>s/<id>.fsh` — one file per block |
+| `cql-library` | `.cql` | `input/cql/<id>.cql` |
+| `business-process` | `.bpmn` | `input/business-processes/<id>.bpmn`, then FSH through smart-base's `bpmn2fhirfsh.xsl` (already wrapped as `smart-base-tools`) |
+| `decision-table` | `.dmn` | `input/dmn/<id>.dmn`, then HTML through `dmn2html.xslt` (same skill) and the `PlanDefinition` FSH the DAK convention derives |
+| `data-element`, `indicator`, `persona`, `user-scenario`, requirements, `health-intervention`, `test-scenario` | prose, tables | `input/pagecontent/<id>.md`, and the L2 spreadsheets where the DAK conventions want them |
+| prose blocks | `.md` | `input/pagecontent/<id>.md`, page tree from the manifest |
+
+One file per block is not incidental: it keeps `fsh-cone.ts` valid at block level (a
+block edit is one changed FSH file, and its cone is the block's cone), it makes the
+per-artefact record (§5.2) the block's record, and it means the restricted checkout of
+§5.4 is a restricted *render* — assemble only the cone's files. The renderer is the
+render arrow of [`rag-document-ingestion.md` §12.15](rag-document-ingestion.md), the
+inverse of the extractors that produced today's DAKs, and it belongs beside
+`render-markdown.ts` in `content/pipeline/`. Its first version is a directory writer and
+a `sushi-config.yaml` emitter; nothing in it is hard.
+
+What it asks of the publisher is small and agnostic — a render-only mode that stops
+after fragments and aggregates without running its own Jekyll, and, as part of the AST,
+a manifest of what was rendered where (§8 C1, A4) — because incorporating a render into
+another pipeline needs the render as files with a contract, not as a finished site.
+Nothing about *which* pipeline incorporates it, or *what* assembled its input, goes
+upstream. Until those exist, the fragments are
+already on disk under `temp/pages/_includes/` after any build and can be consumed as
+they are; the contract is inferred rather than given, which is the honest description
+of every interface in this section until §8 is answered.
 
 ---
 
@@ -600,9 +695,106 @@ per-artefact records of §5.2, and `ig_metaindex_rebuild`. Gate: a clean clone p
 the full build's. Falsifier: any aggregate that cannot be regenerated from records
 alone — that aggregate is then a per-run cost and is listed as such, not hidden.
 
-**Phase 5 — upstream.** Take §2.3's two limits to Zulip with the measurements of §3.3
-in hand: keep the context warm across watch iterations, and make the tracker location
-a parameter so CI can persist it.
+**Phase 5 — upstream.** Take §8 to Zulip with the measurements of §3.3 and §3.5 in
+hand. The AST (§8 A) first and on its own: it changes no build behaviour, it is agnostic
+about who consumes it, and it unblocks the record store.
+
+---
+
+## 8. Upstream — the specific asks to the IG Publisher and the validator
+
+Each row is grounded in the source read on 2026-09-16 (`HL7/fhir-ig-publisher@master`,
+`hapifhir/org.hl7.fhir.core@master`) and says what exists today, so the discussion starts
+from the code rather than from a wish. "Without it" is what this proposal does in the
+meantime — every ask has a fallback, and none blocks Phase 1 or 2.
+
+**The rule for the list: nothing folio-assistant-specific goes upstream.** The publisher
+wants to be agnostic about who consumes it, and it should be. So there is no ask about
+Just the Docs, `.ts` manifests, orphan-branch caches or dependency cones; those are ours.
+What is asked for is the **AST** — the publisher already computes a model of the IG
+(resources, their dependencies, outcomes, what was rendered where, how long each took)
+and throws it away at the end of the run. Serialising it costs the publisher no behaviour
+change and serves every consumer equally: Simplifier, build.fhir.org, WHO's pipeline, a
+cache, an indexer. Everything else on the list is phrased for any CI user, and the two
+smaller asks each have a precedent already in the code.
+
+### 8.1 Already there — use, do not ask
+
+| Capability | Where | Used by |
+|---|---|---|
+| Per-resource skip lists `-no-validate T/id,…`, `-no-narrative T/id,…`, wildcards `*/*`, `Type/*`, `*/id` | `PublisherProcessor.passesValidationFilter`, `passesNarrativeFilter` | R6, the skip-list route |
+| `-generation-off`, `-validation-off`, `-no-sushi`, `-no-network`, `-package-cache-folder` | `Publisher.java` CLI | R2, R6 |
+| The terminology cache directory as an IG parameter, `path-tx-cache` | `PublisherIGLoader.java:429` | R2, §5.6 |
+| Per-code-system cache files with a header nonce; `version.ctl` clears on format change | `TerminologyCache.java` | §5.6 selective restore |
+| A StructureDefinition with a snapshot present is **not** regenerated | `ContextUtilities.generateSnapshot`: `!p.hasSnapshot() \|\| isProfileNeedsRegenerate(p)` | §5.3 cold start from derived FHIR |
+| Per-phase timings, `qa-time-report.json`; per-file messages in `qa.json` (`files[].errs`) | `Publisher.java:681–724` | §3.1, R8 |
+| Validator `server <port>` with `/validateResource`; `client`; `SessionCache` (60-min TTL); `-watch-mode single\|all`; `-txCache` | `org.hl7.fhir.validation.cli` | R5 |
+| Rapido's file-level dependency list: a generic `DependencyElementVisitor` over every element, plus ValueSet include/exclude system and value-set edges and `baseDefinition` | `Publisher.java:948–1000` | U4 asks only that it be *written out* |
+
+### 8.2 The asks
+
+Four asks. The first is the one that matters; the other three are small and each has a
+precedent in the code.
+
+#### A. The AST — serialise what the publisher already computes
+
+One machine-readable output per build, written every run whether differential or not.
+It is a serialisation of state the publisher already holds in memory and discards; no
+build behaviour changes. Four parts, which could be one file or four:
+
+| Part | Content | Today | Who benefits |
+|---|---|---|---|
+| **A1 — per-resource records** (`artefacts.ndjson`) | one record per resource: canonical, type, id, source path(s), content hash, dependencies (A2), validation messages, narrative generated or suppressed, fragments emitted, terminology cache files touched, time in validation / narrative / generation | spread across `qa.json` (`files[].errs`), `qa-time-report.json` (per phase, not per resource), `canonicals.json`, `fragment-usage-analysis.csv` and the `temp/` tree, with different keys; `ValidationTimeTracker` aggregates by category, not by resource | any cache (it is the record of §5.2), any indexer, any CI deciding what to rebuild, anyone asking "which resources are slow" |
+| **A2 — the dependency graph** (`dependencies.json`) | file → files, resource → canonicals, with the edge kind | computed by `loadDependencyList` — a `DependencyElementVisitor` over every element, plus ValueSet include/exclude and `baseDefinition` edges (`Publisher.java:948–1000`) — for Rapido's change list, then discarded | any incremental build, any impact analysis; it is the publisher-side cone and sees edges a source-level tool cannot |
+| **A3 — the toolchain** (`toolchain.json`) | publisher version, template id and *resolved* version (never `#current`), terminology server and version, dependency package ids and versions | `qa.json` carries `version` and `tool`; the template version is in the template info; the rest is in the log | anyone who needs to know whether two builds are comparable — "so we know if we need to rerun" |
+| **A4 — what was rendered where** (`pages.json`) | the page tree with each page's front matter and the fragments it includes; each artefact's fragment list | the IG resource's `definition.page` tree plus whatever is on disk under `temp/pages/` | any downstream site pipeline or indexer that incorporates the render rather than the finished site |
+
+*Why this one is agnostic by construction:* it asks for nothing to be done differently,
+only for what is done to be written down. Simplifier, build.fhir.org and WHO all consume
+the publisher's output; all of them would read A1–A4. *Without it:* §3.3's source-level
+cone for A2; a join across five files for A1; log parsing for A3; `temp/pages/` for A4 —
+each works, each is fragile against a rename.
+
+#### B. Differential builds from an ephemeral runner
+
+Phrased for any CI, because every CI runner is ephemeral.
+
+| # | Ask | Today | Without it |
+|---|---|---|---|
+| **B1** | A **state directory** for the differential build — `-rapido-state <dir>` or a `path-rapido-state` IG parameter — holding the tracker and what `temp/` a differential build needs, with the contract stated ("restore this and a differential build is valid"), and a machine-readable statement when it fell back to a complete build, and why. | `.build-tracker.ini` lives inside the terminology-cache directory (`Publisher.java:378`); `temp/` is cleared on complete builds only; the contract is inferred from the code. | Persist `txCache/` (which carries the tracker) and `temp/` wholesale, and observe. |
+| **B2** | **Load once.** Separate "load dependencies, template, terminology" from "process this IG" so the loaded context survives a watch iteration and a second differential pass. | Every watch iteration constructs a fresh `PublisherFields` and re-runs `Load IG` (`Publisher.java:207–216`). | The validator's `server` mode covers validation only (D); the publisher pays the load every run. |
+| **B3** | **Graduate it**: a stable flag, a statement of which outputs are exact in differential mode and which are approximate (cross-references from unchanged pages; the aggregates), tests. | `-rapido` / `-cascais`, "Report issues to Grahame on Zulip". | The skip lists: exact, coarser. |
+
+#### C. A render-only mode
+
+| # | Ask | Today | Without it |
+|---|---|---|---|
+| **C1** | **`-no-jekyll`**: stop after fragments and the whole-IG aggregates are in `temp/`; document the fragment naming (`<Type>-<id>-<kind>.xhtml` under `temp/pages/_includes/`) as an output interface. | The switch already exists for one consumer: `runTool()` returns before Jekyll in Simplifier mode (`PublisherGenerator.java:3921–3929`). The ask is to make that path public and named. With generation on, everyone else always runs Jekyll; `-generation-off` skips fragments *and* Jekyll. | Run with Jekyll and take `temp/` anyway — the Jekyll minutes are paid for nothing. |
+
+*Agnostic because:* any consumer with its own site pipeline — Simplifier today, others
+tomorrow — wants the render as files with a contract, not as a finished site. What we do
+with those files (§5.7) is our business, not the publisher's.
+
+#### D. The validator as a service
+
+| # | Ask | Today | Without it |
+|---|---|---|---|
+| **D1** | **Document the cold-start path**: loading an IG's own `package.tgz` (with snapshots), `expansions.json` and a terminology cache into a fresh engine, and what it saves. | Snapshots present are reused (`ContextUtilities.generateSnapshot` checks `hasSnapshot()`); the terminology cache is persisted; nothing states this as a supported path. | Measure it ourselves and rely on behaviour that is not promised. |
+| **D2** | **Addressable sessions** in `server` mode: a caller-supplied session key, so an orchestrator can address the warm engine for a given toolchain; optionally snapshot / expand / narrative endpoints beside `/validateResource`. | `SessionCache` keys are server-generated; one endpoint. | Our own JVM wrapper over the in-process API. |
+| **D3** | *(optional)* `-watch-mode dependents`: changed files plus what depends on them, from A2. | `single` revalidates the changed file; `all` everything. | A2 or our cone, plus an explicit file list. |
+
+### 8.3 Order for the conversation
+
+**A first, and on its own.** It is one ask, it changes no behaviour, and it is the
+only one whose value does not depend on anything else being agreed — the record store,
+the meta-index and the cone all read it, and so would anyone else. **B second**: it
+makes the publisher's own differential build usable from the only place WHO builds.
+**C** is small and has the Simplifier precedent. **D** is the validator team's, and D1 is
+a documentation ask.
+
+What stays on our side of the line, deliberately: the branch caches and their layout,
+the selective terminology restore, the Just the Docs landing page and pipeline, the
+`.ts` content model, the cone tool. None of it needs the publisher to know it exists.
 
 ## Not done, and not verified
 
