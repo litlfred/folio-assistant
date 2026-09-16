@@ -8,15 +8,26 @@ nav_order: 2
 # Writing a document with folio-assistant
 {: .no_toc }
 
-Policy guidance, a standard, a report, a handbook — structured prose, authored
-with an LLM, published without a TeX installation.
-
+<details open markdown="block">
+  <summary>On this page</summary>
+  {: .text-delta }
 1. TOC
 {:toc}
+</details>
+
+_This page is generated from [`content/docs/guides/writing-a-document/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/guides-writing-a-document) — each section below links to its own source._
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/overview.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/overview.md" }
+
+Policy guidance, a standard, a report, a handbook — structured prose, authored
+with an LLM, published without a TeX installation.
 
 ---
 
 ## What a document folio is
+{: #what-a-document-folio-is }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/authoring-a-document.bpmn){: .fa-node-edit title="Edit docs/../workflows/authoring-a-document.bpmn" }
 
 Everything a paper folio is, minus the formal layer. The same tree of chapters
 and sections over typed **blocks**, the same editorial `uses[]` graph, the same
@@ -31,7 +42,7 @@ them. No Lean. No LaTeX.
 > Lean lifecycle and the LaTeX renderer on top. If you find yourself wanting a
 > feature "the paper adapter has", check first — you probably already have it.
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-what-a-document-folio-is">
   <img src="../assets/img/workflows/authoring-a-document.svg"
        alt="BPMN swimlane diagram of document authoring, plan to published.">
 </div>
@@ -42,6 +53,9 @@ them. No Lean. No LaTeX.
 ---
 
 ## 1 · Scaffold the folio
+{: #1-scaffold-the-folio }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/1-scaffold-the-folio.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/1-scaffold-the-folio.md" }
 
 In a new, empty repository:
 
@@ -73,6 +87,9 @@ The starter block is a placeholder that says so. Replace it.
 ---
 
 ## 2 · The content model
+{: #2-the-content-model }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/2-the-content-model.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/2-the-content-model.md" }
 
 ```
 content/cold-chain-guidance/
@@ -90,6 +107,9 @@ authored work disappears: the `.ts` and `.md` are written, committed and
 reviewed, and the block renders nowhere because nothing lists it.
 
 ### The kinds you may use
+{: #the-kinds-you-may-use }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/the-kinds-you-may-use.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/the-kinds-you-may-use.md" }
 
 `prose`, `example`, `remark`, `algorithm`, `simulator`, `equation`, `diagram`,
 `table`.
@@ -100,6 +120,9 @@ or `proof`. `content_profile_check` rejects them, and runs on every
 when you try to publish.
 
 ### `uses[]` matters more here than in a paper
+{: #uses-matters-more-here-than-in-a-paper }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md" }
 
 `uses[]` lists the blocks a **reader** must already have read to follow this
 one. It is an editorial judgement — nothing derives it, and nothing should.
@@ -113,6 +136,9 @@ it. List direct neighbours only.
 ---
 
 ## 3 · Author with the agent
+{: #3-author-with-the-agent }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/3-author-with-the-agent.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/3-author-with-the-agent.md" }
 
 Ask in plain language. The agent loads the skills it needs over MCP.
 
@@ -132,6 +158,9 @@ the recommendation.
 Reads `uses[]` and the content graph.
 
 ### Carrying a recommendation
+{: #carrying-a-recommendation }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/carrying-a-recommendation.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/carrying-a-recommendation.md" }
 
 A normative statement is the block readers cite and implementers trace to. It
 wants a label, a stable identity and a place in the dependency graph.
@@ -166,6 +195,9 @@ skill.
 ---
 
 ## 4 · Validate
+{: #4-validate }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/4-validate.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/4-validate.md" }
 
 ```
 content_validate          schema + constraints + profile conformance
@@ -188,6 +220,9 @@ when that is what you actually meant.
 ---
 
 ## 5 · Render
+{: #5-render }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/5-render.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/5-render.md" }
 
 ```
 content/**  →  document_render_md   →  build/<slug>.md
@@ -219,6 +254,9 @@ page breaks, running heads) in the same file as the screen rules, so the two
 outputs cannot drift.
 
 ### Not implemented
+{: #not-implemented }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/not-implemented.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/not-implemented.md" }
 
 No citations, no bibliography, no glossary, no automatic cross-reference
 numbering. `\cite{…}` passes through **verbatim**, visible in the output rather
@@ -234,6 +272,9 @@ working.
 ---
 
 ## Moving between content types
+{: #moving-between-content-types }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/moving-between-content-types.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/moving-between-content-types.md" }
 
 `folio.config.json`'s `contentType` is the switch.
 
@@ -247,6 +288,9 @@ lists exactly what is in the way.
 ---
 
 ## Where things are
+{: #where-things-are }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/where-things-are.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/where-things-are.md" }
 
 | | |
 |---|---|

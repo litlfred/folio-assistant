@@ -8,18 +8,29 @@ nav_order: 3
 # Authoring a WHO SMART IG (L3)
 {: .no_toc }
 
+<details open markdown="block">
+  <summary>On this page</summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+_This page is generated from [`content/docs/guides/who-smart-ig/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/guides-who-smart-ig) — each section below links to its own source._
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/overview.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/overview.md" }
+
 The *L3* layer turns an L2 DAK into a computable **FHIR Implementation Guide**.
 This guide covers authoring FHIR artifacts as FSH, compiling with SUSHI,
 validating, and publishing with the HL7 IG Publisher — all driven by the LLM.
 
 **Skill package:** `authoring-who-smart-guidelines`
 
-1. TOC
-{:toc}
-
 ---
 
 ## Prerequisites
+{: #prerequisites }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/prerequisites.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/prerequisites.md" }
 
 The L3 toolchain is heavier than the platform baseline. The
 `authoring-who-smart-guidelines` package's Docker manifest provisions it; to run
@@ -35,8 +46,11 @@ locally you need:
 Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 
 ## The L3 pipeline
+{: #the-l3-pipeline }
 
-<div class="bpmn-figure">
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit docs/../workflows/l3-fhir-pipeline.bpmn" }
+
+<div class="bpmn-figure" id="figure-the-l3-pipeline">
   <img src="../assets/img/workflows/l3-fhir-pipeline.svg"
        alt="BPMN swimlane diagram: the FHIR modeller maps L2 to L3 and authors FSH, the build pipeline compiles with SUSHI and validates against profiles, a failed validation returns to FSH authoring, the QC reviewer's gates file findings as beans when they fail, and a clean run goes through the IG Publisher to a published IG site.">
 </div>
@@ -52,6 +66,9 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 | Publish the IG | [`ig-publication`](../reference/skills/ig-publication.html) |
 
 ## Workflow
+{: #workflow }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/workflow.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/workflow.md" }
 
 1. **Map L2 → L3** — `l3-fhir-authoring`: turn each data element into a FHIR
    profile, each value set into a `ValueSet`, each decision into a
@@ -63,6 +80,9 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 5. **Publish** — `ig-publication` runs the IG Publisher and renders the site.
 
 ## A mock session
+{: #a-mock-session }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/a-mock-session.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/a-mock-session.md" }
 
 > **You:** Generate the FHIR profile and value set for the immunization data
 > dictionary from the L2 DAK, then build the IG.
@@ -78,6 +98,9 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 > conformance ✓, terminology bindings resolved ✓.
 
 ## Next
+{: #next }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/next.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/next.md" }
 
 - [Content types — WHO SMART IGs](../content-types.html#who-smart-implementation-guides-l3)
 - [Authoring a WHO SMART DAK (L2)](who-smart-dak.html) — the upstream L2 layer

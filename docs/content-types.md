@@ -7,6 +7,17 @@ nav_order: 4
 # Content types
 {: .no_toc }
 
+<details open markdown="block">
+  <summary>On this page</summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+_This page is generated from [`content/docs/content-types/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/content-types) — each section below links to its own source._
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/overview.md){: .fa-node-edit title="Edit content/docs/content-types/overview.md" }
+
 folio-assistant is **content-agnostic**: the platform knows nothing about any
 particular paper or guideline. Each *kind* of content is supported by a
 **content adapter** (code that knows how to validate/build/render that kind) and
@@ -16,17 +27,17 @@ a **skill package** (the authoring formalism — what an author and the LLM do).
 > kept separate from any concrete content; concrete artifacts live in their own
 > content repository.
 
-1. TOC
-{:toc}
-
 ---
 
 ## The content lifecycle
+{: #the-content-lifecycle }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/content-lifecycle.bpmn){: .fa-node-edit title="Edit docs/workflows/content-lifecycle.bpmn" }
 
 Every content type moves through the same lifecycle, provided by the
 cross-cutting **`content-lifecycle`** skill package:
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-the-content-lifecycle">
   <img src="assets/img/workflows/content-lifecycle.svg"
        alt="BPMN swimlane diagram of one folio cycle: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs per proposed change, an integration test and QA sweep follows, then draft-review-publish; feedback is triaged and filed as beans, and the cycle either repeats or the folio is retired.">
 </div>
@@ -59,6 +70,9 @@ assembled draft. Both expand into their own diagrams on the
 ---
 
 ## Documents & policy guidance
+{: #documents-policy-guidance }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/authoring-a-document.bpmn){: .fa-node-edit title="Edit docs/workflows/authoring-a-document.bpmn" }
 
 **Skill package:** `authoring-document` ·
 **Adapter:** `document` ·
@@ -86,7 +100,7 @@ Relevant skill schemas:
 [`normative-statements`](reference/skills/normative-statements.html),
 [`document-publishing`](reference/skills/document-publishing.html).
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-documents-policy-guidance">
   <img src="assets/img/workflows/authoring-a-document.svg"
        alt="BPMN swimlane diagram of document authoring: the author plans, the plan is seeded as beans, an agent scaffolds the folio and authors blocks, the build pipeline checks the declared profile before validating and rendering to Markdown, HTML and PDF, and a reviewer gates publication.">
 </div>
@@ -95,6 +109,9 @@ Relevant skill schemas:
 {: .bpmn-source }
 
 ### Carrying a normative statement
+{: #carrying-a-normative-statement }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/carrying-a-normative-statement.md){: .fa-node-edit title="Edit content/docs/content-types/carrying-a-normative-statement.md" }
 
 A recommendation, requirement or rule is the block readers cite and
 implementers trace to. It wants a label, a stable identity and a place in the
@@ -112,6 +129,9 @@ predates this content type and is wrong for a document folio, where
 ---
 
 ## Scientific papers & books
+{: #scientific-papers-books }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/scientific-papers-books.md){: .fa-node-edit title="Edit content/docs/content-types/scientific-papers-books.md" }
 
 **Skill package:** `authoring-math` ·
 **Adapter:** `paper` ·
@@ -169,6 +189,9 @@ Relevant skill schemas:
 ---
 
 ## WHO SMART Guidelines DAKs (L2)
+{: #who-smart-guidelines-daks-l2 }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit docs/workflows/l2-dak-authoring.bpmn" }
 
 **Skill package:** `authoring-who-smart-guidelines` ·
 **Guide:** [Authoring a WHO SMART DAK](guides/who-smart-dak.html)
@@ -189,7 +212,7 @@ Relevant skill schemas:
 [`dmn-authoring`](reference/skills/dmn-authoring.html),
 [`terminology-management`](reference/skills/terminology-management.html).
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
   <img src="assets/img/workflows/l2-dak-authoring.svg"
        alt="BPMN swimlane diagram of L2 DAK authoring: a parallel gateway fans out personas, BPMN processes, DMN decision logic, the data dictionary and indicators across the business-analyst lane alongside the terminologist's bindings, then clinical SME validation gates assembly of the DAK.">
 </div>
@@ -197,10 +220,12 @@ Relevant skill schemas:
 [BPMN 2.0 source](workflows/l2-dak-authoring.bpmn) · [full-size SVG](assets/img/workflows/l2-dak-authoring.svg)
 {: .bpmn-source }
 
-
 ---
 
 ## WHO SMART Implementation Guides (L3)
+{: #who-smart-implementation-guides-l3 }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit docs/workflows/l3-fhir-pipeline.bpmn" }
 
 **Skill package:** `authoring-who-smart-guidelines` ·
 **Guide:** [Authoring a WHO SMART IG](guides/who-smart-ig.html)
@@ -219,7 +244,7 @@ Relevant skill schemas:
 [`ig-publication`](reference/skills/ig-publication.html),
 [`quality-control`](reference/skills/quality-control.html).
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
   <img src="assets/img/workflows/l3-fhir-pipeline.svg"
        alt="BPMN swimlane diagram of the L3 pipeline: map L2 to L3, author FSH, SUSHI compile, validate against profiles with a loop back to FSH on failure, QC gates that file findings as beans, IG Publisher build, and publication of the IG site.">
 </div>
@@ -230,6 +255,9 @@ Relevant skill schemas:
 ---
 
 ## Others — extending folio-assistant
+{: #others-extending-folio-assistant }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/others-extending-folio-assistant.md){: .fa-node-edit title="Edit content/docs/content-types/others-extending-folio-assistant.md" }
 
 New content types are first-class: add a content **adapter** and a skill
 **package**, and the lifecycle, RBAC, and MCP plumbing come for free. See

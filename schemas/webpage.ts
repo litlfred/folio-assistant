@@ -62,8 +62,21 @@ export interface WebPageAsset {
    * cannot see the SVG gets only this.
    */
   alt: string;
-  /** Link text for the "open the source" button under the figure. */
-  sourceLinkText?: string;
+  /**
+   * The link line under the figure. TWO shapes exist in the corpus today and
+   * this models both rather than normalising one into the other:
+   *
+   *   `[Open the BPMN source](…){: .btn .btn-outline }`          -> "button"
+   *   `[BPMN 2.0 source](…) · [full-size SVG](…)` + `{: .bpmn-source }` -> "caption"
+   *
+   * They are different kramdown constructs, not a style choice: the first is
+   * an inline attribute list on a single link, the second a paragraph-level
+   * one under a line carrying several. Collapsing them would silently restyle
+   * four figures on `content-types.md`, which is a visible change nobody
+   * asked for.
+   */
+  sourceLinks?: { text: string; href: string }[];
+  linkStyle?: "button" | "caption";
 }
 
 export interface WebPageNode {
@@ -81,9 +94,21 @@ export interface WebPageNode {
   /** Heading depth under the page's `# title`. Default 2. */
   level?: 2 | 3;
   /**
+   * Narrative that INTRODUCES the asset, emitted before it.
+   *
+   * Two fields rather than one plus a position flag, because the corpus has
+   * sections with prose on BOTH sides of a figure — measured: `The content
+   * lifecycle` is 121 characters before and 1321 after, `From corpus to
+   * published folio` 128 and 2577. A single block with a before/after switch
+   * cannot express those without reordering the page, which is a visible
+   * change to a reader and was not asked for.
+   */
+  lead?: string;
+  /**
    * Root name of a block `.ts` + `.md` pair in the page directory, exactly as
    * `Section.blocks` names them. The `.md` is this node's narrative and is the
-   * edit target for a narrative node.
+   * edit target for a narrative node. When the node carries an asset this is
+   * the prose AFTER it.
    */
   block?: string;
   /** An asset this node presents, with its own edit target. */
@@ -98,6 +123,13 @@ export interface WebPage {
    */
   slug: string;
   title: string;
+  /**
+   * The page's `# heading`, when it differs from the nav title. Two guides do
+   * differ today — the nav says "Writing a document" while the page opens
+   * "Writing a document with folio-assistant" — so this is a real distinction
+   * in the corpus, not a hypothetical. Omit it and the title is used for both.
+   */
+  heading?: string;
   /** just-the-docs nav front matter. */
   navOrder?: number;
   parent?: string;
