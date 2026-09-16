@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-core/test-engineer.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/test-engineer.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/test-engineer.md){: .fa-edit-source }
 
 {% raw %}
 # Test Engineer Skill

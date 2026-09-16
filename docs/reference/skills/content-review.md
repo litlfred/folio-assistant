@@ -22,7 +22,7 @@ Input schema for formal content review and approval workflow.
 | `validationReport` | string | no | Path to the validation report for this content. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-review/input.schema.json)
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-review/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/content-review/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -45,4 +45,4 @@ Output schema for content review decisions.
 | `comment` | string | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-review/output.schema.json)
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-review/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/content-review/output.schema.json){: .fa-edit-source }

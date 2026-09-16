@@ -26,6 +26,11 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 
 import { join, resolve, basename } from "path";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
+// A pencil, as a text glyph rather than an inline SVG. 130 generated pages
+// each carrying an SVG is 130 copies of the same markup in the repo and in
+// every reader's download; one character is not.
+const EDIT_GLYPH = "\u270E";
+
 const OUT_DIR = join(REPO_ROOT, "docs", "reference", "skill-instructions");
 
 /**
@@ -134,6 +139,13 @@ function main(): void {
 
       const hasSchema = existsSync(join(SCHEMA_DIR, `${name}.md`));
       const sourceUrl = `https://github.com/litlfred/folio-assistant/blob/main/${group.repoPrefix}/${file}`;
+      // `/edit/`, not `/blob/`. The banner has always carried the CORRECT
+      // source path -- the thing it lacked was a way to act on it. GitHub's
+      // in-browser editor lives at /edit/<branch>/<path>; /blob/ is read-only,
+      // so a reader who spotted a typo had to navigate to the file, find the
+      // pencil, and then edit. This is the same target, one click instead of
+      // three.
+      const editUrl = `https://github.com/litlfred/folio-assistant/edit/main/${group.repoPrefix}/${file}`;
 
       const page: string[] = [];
       page.push("---");
@@ -147,6 +159,12 @@ function main(): void {
         `> Generated from [\`${group.repoPrefix}/${file}\`](${sourceUrl}) — do not edit here.` +
           (hasSchema ? ` Typed contract: [schema reference](../skills/${name}.html).` : ""),
       );
+      page.push(">");
+      // The edit affordance is a SEPARATE line inside the callout rather than
+      // more prose on the end of it. "do not edit here" and "edit it there"
+      // are opposite instructions, and running them into one sentence is how
+      // a reader ends up editing the generated copy anyway.
+      page.push(`> [${EDIT_GLYPH} Edit this page's source](${editUrl}){: .fa-edit-source }`);
       page.push("");
       // Wrap the body in a Liquid raw block so prose containing `{{ }}` / `{% %}`
       // (math, code, templates) is emitted verbatim, not parsed by Jekyll.

@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-document-adapter/document-publishing.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-document-adapter/document-publishing.md) — do not edit here. Typed contract: [schema reference](../skills/document-publishing.html).
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-document-adapter/document-publishing.md){: .fa-edit-source }
 
 {% raw %}
 # document-publishing

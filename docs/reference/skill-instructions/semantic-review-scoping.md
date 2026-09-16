@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-paper-adapter/semantic-review-scoping.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/semantic-review-scoping.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/semantic-review-scoping.md){: .fa-edit-source }
 
 {% raw %}
 # Semantic review scoping

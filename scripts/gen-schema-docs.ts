@@ -22,6 +22,10 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSy
 import { join, resolve } from "path";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
+// Same pencil as gen-skill-docs.ts, and for the same reason: a text glyph
+// rather than an inline SVG repeated once per generated page.
+const EDIT_GLYPH = "\u270E";
+
 const SKILLS_DIR = join(REPO_ROOT, "schemas", "skills");
 const OUT_DIR = join(REPO_ROOT, "docs", "reference", "skills");
 
@@ -197,6 +201,9 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
   lines.push("");
   lines.push(`> Skill id: \`${skill}\``);
   lines.push("");
+  // "do not edit by hand" only tells a reader where NOT to go. The schema
+  // files are the real source and are editable; the per-section links below
+  // now carry an editor target alongside the raw view.
   lines.push("_Generated from JSON Schema — do not edit by hand. Run `bun run scripts/gen-schema-docs.ts`._");
   lines.push("");
 
@@ -206,7 +213,10 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
     if (input.description) lines.push(input.description + "\n");
     lines.push(renderProperties(input, 3));
     lines.push("");
-    lines.push(`[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/${skill}/input.schema.json)`);
+    lines.push(
+      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/${skill}/input.schema.json)` +
+        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/${skill}/input.schema.json){: .fa-edit-source }`,
+    );
     lines.push("");
   }
 
@@ -216,7 +226,10 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
     if (output.description) lines.push(output.description + "\n");
     lines.push(renderProperties(output, 3));
     lines.push("");
-    lines.push(`[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/${skill}/output.schema.json)`);
+    lines.push(
+      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/${skill}/output.schema.json)` +
+        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/${skill}/output.schema.json){: .fa-edit-source }`,
+    );
     lines.push("");
   }
 

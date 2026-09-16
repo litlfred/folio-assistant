@@ -6,6 +6,8 @@ parent: Skill instructions
 
 {: .note }
 > Generated from [`skills/folio-paper-adapter/category-theory.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/category-theory.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/category-theory.md){: .fa-edit-source }
 
 {% raw %}
 # Category Theory Formalization
