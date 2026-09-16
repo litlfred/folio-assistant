@@ -1,14 +1,14 @@
 ---
 # folio-assistant-267x
 title: IG publish bottleneck analysis and dependency-cone incremental build proposal
-status: in-progress
+status: completed
 type: feature
 priority: high
 tags:
     - smart-guidelines
     - ig-publisher
 created_at: 2026-09-16T08:33:23Z
-updated_at: 2026-09-16T08:33:23Z
+updated_at: 2026-09-16T09:04:03Z
 ---
 
 ## Brief
@@ -63,3 +63,11 @@ implementing the MCP service in this pass, not touching publisher Java.
   library with no file (FHIRHelpers) is external, not a phantom node.
 - Not measured: phase timings (registries, tx.fhir.org, github.io blocked here). Read
   `qa-time-report.json` on a published DAK site.
+
+## Outcome (2026-09-16)
+
+Merged as `c2c0520` (PR #182, issue #181) with CI green. Proposal
+`docs/proposals/ig-incremental-build.md` and `content/pipeline/fsh-cone.ts` (+ test)
+are on `main`. Follow-ups are separate beans, opened when the author picks one:
+Phase 1 (smart-base pins + caches), Phase 2 (warm validator MCP), Phase 3
+(cone-restricted run), Phase 4 (`ig-cache.sh` + meta-index), upstream Rapido ask.
