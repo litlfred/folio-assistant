@@ -7,6 +7,8 @@ how to measure it from a DAK's own published site.
 · **PR:** [#182](https://github.com/litlfred/folio-assistant/pull/182)
 **Ships with this proposal:** `content/pipeline/fsh-cone.ts`, the measurement instrument
 of §3.3, which is also the first component of §5.
+**Companion:** [`ig-incremental-build-overview.md`](ig-incremental-build-overview.md) —
+the change register, and where each change sits in the review and publish pipeline.
 
 A WHO SMART Guidelines DAK publishes its FHIR Implementation Guide through
 `smart-base`'s `ghbuild.yml`: one monolithic `publisher.jar` run per push, and every

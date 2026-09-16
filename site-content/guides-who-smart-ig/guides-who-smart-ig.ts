@@ -37,6 +37,22 @@ export default webpage({
       block: "workflow",
     },
     {
+      id: "making-the-build-incremental",
+      title: "Making the build incremental",
+      asset: {
+        kind: "bpmn",
+        source: "docs/workflows/ig-incremental-build.bpmn",
+        rendered: "../assets/img/workflows/ig-incremental-build.svg",
+        alt: "BPMN swimlane diagram: a source change restores the derived state; if the cache is usable the build computes the change's dependency cone, posts the cone report for the reviewer, checks out and compiles only the cone, validates it against the warm validator service, re-renders the cone's records, merges them with the restored ones, rebuilds the meta-index and assembles the site; a cache miss or a moved toolchain falls back to a full publisher build; QC gates run on the aggregate QA and file findings as beans; a PR branch deploys a preview and never seeds, while main or a release deploys the site and seeds the cache from the green build.",
+        sourceLinks: [
+          { text: "BPMN 2.0 source", href: "../workflows/ig-incremental-build.bpmn" },
+          { text: "full-size SVG", href: "../assets/img/workflows/ig-incremental-build.svg" },
+        ],
+        linkStyle: "caption",
+      },
+      block: "making-the-build-incremental",
+    },
+    {
       id: "a-mock-session",
       title: "A mock session",
       block: "a-mock-session",
