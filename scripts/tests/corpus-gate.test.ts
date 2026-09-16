@@ -41,7 +41,11 @@ const block = (slug: string, label: string): string => {
 const authorise = async (label: string, decision = "accept"): Promise<void> => {
   const model = await loadProcessModel(join(PLATFORM, "docs/workflows/editing-hci-validation.bpmn"));
   const state = startInstance(model, { id: instanceId(model.id, label), subject: label });
-  for (const n of ["Task_DescribeChange", "Task_ClaimBean", "Task_DraftEdit",
+  // CallActivity_Evidence sits between claiming the bean and drafting: a
+  // recommendation gathers its evidence BEFORE the change is written. It is a
+  // step of the process, so a walk of the process has to take it.
+  for (const n of ["Task_DescribeChange", "Task_ClaimBean", "CallActivity_Evidence",
+                   "Task_DraftEdit",
                    "Task_SchemaValidate", "Task_SyntaxSpell", "Task_BuildGates"]) {
     complete(model, state, n);
   }
