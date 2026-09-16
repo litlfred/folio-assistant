@@ -1,0 +1,4 @@
+- [Content types](content-types.html) — the linear lifecycle and what each type produces
+- [Skills & roles](skills.html) — every skill and role, and how they compose with the LLM
+- [Skill schema reference](reference/skills/) — typed input/output per skill
+- [Agent onboarding](guides/agent-onboarding.html) — orientation for an agent dropped into a folio

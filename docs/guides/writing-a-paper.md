@@ -8,6 +8,17 @@ nav_order: 1
 # Tutorial — writing a paper with folio-assistant
 {: .no_toc }
 
+<details open markdown="block">
+  <summary>On this page</summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+_This page is generated from [`content/docs/guides/writing-a-paper/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/guides-writing-a-paper) — each section below links to its own source._
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/overview.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/overview.md" }
+
 This tutorial walks through authoring a rigorous scientific paper **with an LLM**
 driving folio-assistant: the agent plans the paper, drafts blocks, formalizes
 theorems in Lean 4, renders LaTeX, and publishes — while you steer.
@@ -16,14 +27,14 @@ It uses a small running example — *"A note on the harmonic series"* — purely
 illustrate the workflow. The content is not the point; the **formalism and the
 LLM workflow** are.
 
-1. TOC
-{:toc}
-
 ---
 
 ## The end-to-end workflow
+{: #the-end-to-end-workflow }
 
-<div class="bpmn-figure">
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/authoring-a-paper.bpmn){: .fa-node-edit title="Edit docs/../workflows/authoring-a-paper.bpmn" }
+
+<div class="bpmn-figure" id="figure-the-end-to-end-workflow">
   <img src="../assets/img/workflows/authoring-a-paper.svg"
        alt="BPMN swimlane diagram: the author plans, the plan is seeded as beans, the authoring agent scaffolds the repo and drafts blocks, Lean formalisation loops until the build is green with no sorries, the build pipeline validates and renders, a reviewer either sends it back to authoring or approves it for publication.">
 </div>
@@ -41,6 +52,9 @@ review and release that follow, as BPMN swimlane diagrams.
 ---
 
 ## Before you start
+{: #before-you-start }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/before-you-start.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/before-you-start.md" }
 
 1. [Install folio-assistant](../installation.html) and run `bun run check-deps`.
    For papers you want `bun`, `latexmk`/`texlive`, and Lean (`elan`).
@@ -52,6 +66,9 @@ review and release that follow, as BPMN swimlane diagrams.
 ---
 
 ## Step 1 — Plan the paper
+{: #step-1-plan-the-paper }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-1-plan-the-paper.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-1-plan-the-paper.md" }
 
 Start by asking the agent to load the planning skill and propose a structure.
 Behind the scenes it calls `skill_fetch content-plan`.
@@ -82,11 +99,17 @@ beans <id> --status in-progress
 ```
 
 ## Step 2 — Scaffold the repository
+{: #step-2-scaffold-the-repository }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-2-scaffold-the-repository.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-2-scaffold-the-repository.md" }
 
 The agent creates the block files and a `main.tex`, then confirms with
 `content_list`.
 
 ### Required `.gitignore` baseline
+{: #required-gitignore-baseline }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/required-gitignore-baseline.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/required-gitignore-baseline.md" }
 
 Every new folio repository starts with these entries. They are not optional
 polish — agent sandboxes accumulate scratch directories as untracked state, and
@@ -160,6 +183,9 @@ $$ H_n = \sum_{k=1}^{n} \frac{1}{k}. $$
 ```
 
 ## Step 3 — Author the content
+{: #step-3-author-the-content }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-3-author-the-content.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-3-author-the-content.md" }
 
 Ask the agent to draft prose and statements; review and refine conversationally.
 
@@ -174,6 +200,9 @@ A mock of the chat-driven authoring session:
 ![Mock chat: the author and the assistant drafting blocks](../assets/img/mock-chat.svg)
 
 ## Step 4 — Formalize in Lean
+{: #step-4-formalize-in-lean }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-4-formalize-in-lean.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-4-formalize-in-lean.md" }
 
 Now the agent sets up Lean and formalizes the definition and theorem, calling
 `lean_setup`, `lean_build`, and `lean_check`.
@@ -217,6 +246,9 @@ sequenceDiagram
 ```
 
 ## Step 5 — Validate
+{: #step-5-validate }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-5-validate.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-5-validate.md" }
 
 Validation checks every block against its schema and the project's constraint
 rules (label prefixes, required Lean links, citation resolution, …).
@@ -228,6 +260,9 @@ rules (label prefixes, required Lean links, citation resolution, …).
 > references a defined symbol ✓.
 
 ## Step 6 — Render
+{: #step-6-render }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-6-render.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-6-render.md" }
 
 The agent renders a PDF (and/or HTML) with the paper adapter.
 
@@ -246,6 +281,9 @@ You can set rendering preferences (engine, scope, math renderer) via the
 > **Assistant:** *(calls `paper_preferences action=set latex_engine=lualatex render_scope=section`)* Saved.
 
 ## Step 7 — Review & feedback
+{: #step-7-review-feedback }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-7-review-feedback.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-7-review-feedback.md" }
 
 Reviewer feedback is captured in the feedback store and routed back into the
 authoring loop (`content-review` / `content-feedback`).
@@ -256,6 +294,9 @@ authoring loop (`content-review` / `content-feedback`).
 > re-renders)* Done; feedback item resolved.
 
 ## Step 8 — Publish
+{: #step-8-publish }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-8-publish.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-8-publish.md" }
 
 Finally, publish the rendered artifacts. In CI this is the `publish` workflow;
 locally the agent runs `content_build` and the render tools, then commits.
@@ -273,6 +314,9 @@ beans <id> --status resolved
 ---
 
 ## What you end up with
+{: #what-you-end-up-with }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/what-you-end-up-with.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/what-you-end-up-with.md" }
 
 - A paper as a tree of **typed, validated blocks**
 - A **Lean 4 formalization** with zero `sorry`s and a clean axiom audit
@@ -280,6 +324,9 @@ beans <id> --status resolved
 - A reproducible **CI pipeline** (validate → build → render → publish)
 
 ## Where to go deeper
+{: #where-to-go-deeper }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/where-to-go-deeper.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/where-to-go-deeper.md" }
 
 - [Content types — papers & books](../content-types.html#scientific-papers--books)
 - Skill contracts:

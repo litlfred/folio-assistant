@@ -1,0 +1,2 @@
+- [Content types — WHO SMART IGs](../content-types.html#who-smart-implementation-guides-l3)
+- [Authoring a WHO SMART DAK (L2)](who-smart-dak.html) — the upstream L2 layer

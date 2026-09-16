@@ -30,7 +30,7 @@
  *   bun run scripts/gen-docs-pages.ts --check    # fail if any page is stale
  */
 
-import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
@@ -56,8 +56,20 @@ let written = 0;
  */
 function editTarget(page: WebPage, node: WebPageNode): string | null {
   if (node.asset) return node.asset.source;
-  if (node.block) return `content/docs/${page.slug}/${node.block}.md`;
+  const narrative = node.block ?? node.lead;
+  if (narrative) return `content/docs/${page.slug.replace(/\//g, "-")}/${narrative}.md`;
   return null;
+}
+
+function readBlock(page: WebPage, nodeId: string, block: string): string {
+  const mdPath = join(SRC_DIR, page.slug.replace(/\//g, "-"), `${block}.md`);
+  if (!existsSync(mdPath)) {
+    throw new Error(
+      `node "${nodeId}" of page "${page.slug}" names block "${block}", ` +
+        `but ${mdPath} does not exist`,
+    );
+  }
+  return readFileSync(mdPath, "utf-8").trim();
 }
 
 function emitNode(page: WebPage, node: WebPageNode): string[] {
@@ -78,6 +90,11 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
     out.push("");
   }
 
+  if (node.lead) {
+    out.push(readBlock(page, node.id, node.lead));
+    out.push("");
+  }
+
   if (node.asset) {
     const a = node.asset;
     out.push(`<div class="bpmn-figure" id="figure-${node.id}">`);
@@ -85,23 +102,25 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
     out.push(`       alt="${a.alt.replace(/"/g, "&quot;")}">`);
     out.push("</div>");
     out.push("");
-    // The source link is kept as well as the edit link: they are different
+    // The source links are kept as well as the edit link: they are different
     // acts. Reading the XML and changing it are not the same request, and the
     // existing pages have always offered the first.
-    const rel = a.source.replace(/^docs\//, "");
-    out.push(`[${a.sourceLinkText ?? "Open the source"}](${rel}){: .btn .btn-outline }`);
-    out.push("");
+    if (a.sourceLinks && a.sourceLinks.length > 0) {
+      const rendered = a.sourceLinks.map((l) => `[${l.text}](${l.href})`);
+      if (a.linkStyle === "caption") {
+        // Paragraph-level attribute list on the line BELOW, which is what
+        // kramdown needs when several links share one class.
+        out.push(rendered.join(" · "));
+        out.push("{: .bpmn-source }");
+      } else {
+        out.push(`${rendered.join(" · ")}{: .btn .btn-outline }`);
+      }
+      out.push("");
+    }
   }
 
   if (node.block) {
-    const mdPath = join(SRC_DIR, page.slug, `${node.block}.md`);
-    if (!existsSync(mdPath)) {
-      throw new Error(
-        `node "${node.id}" of page "${page.slug}" names block "${node.block}", ` +
-          `but ${mdPath} does not exist`,
-      );
-    }
-    out.push(readFileSync(mdPath, "utf-8").trim());
+    out.push(readBlock(page, node.id, node.block));
     out.push("");
   }
 
@@ -117,7 +136,7 @@ function renderPage(page: WebPage): string {
   if (page.navOrder !== undefined) lines.push(`nav_order: ${page.navOrder}`);
   lines.push("---");
   lines.push("");
-  lines.push(`# ${page.title}`);
+  lines.push(`# ${page.heading ?? page.title}`);
   lines.push("{: .no_toc }");
   lines.push("");
   lines.push("<details open markdown=\"block\">");
@@ -128,7 +147,7 @@ function renderPage(page: WebPage): string {
   lines.push("</details>");
   lines.push("");
   lines.push(
-    `_This page is generated from [\`content/docs/${page.slug}/\`](${REPO_WEB}/tree/main/content/docs/${page.slug}) — ` +
+    `_This page is generated from [\`content/docs/${page.slug}/\`](${REPO_WEB}/tree/main/content/docs/${page.slug.replace(/\//g, "-")}) — ` +
       `each section below links to its own source._`,
   );
   lines.push("");
@@ -176,10 +195,16 @@ for (const slug of slugs) {
   }
   const mod = (await import(manifest)) as { default: WebPage };
   const page = mod.default;
-  if (page.slug !== slug) {
+  // A slug may carry a path (`guides/writing-a-paper`) because the published
+  // site has a `guides/` subdirectory. The content DIRECTORY flattens it, so
+  // one level of `content/docs/` holds every page and there is no second
+  // nesting rule to remember.
+  if (page.slug.replace(/\//g, "-") !== slug) {
     throw new Error(`${manifest} declares slug "${page.slug}" but lives in ${slug}/`);
   }
-  emit(join(OUT_DIR, `${slug}.md`), renderPage(page));
+  const outPath = join(OUT_DIR, `${page.slug}.md`);
+  mkdirSync(dirname(outPath), { recursive: true });
+  emit(outPath, renderPage(page));
   console.log(`  ${check ? "·" : "✓"} ${slug}.md (${page.nodes.length} nodes)`);
 }
 

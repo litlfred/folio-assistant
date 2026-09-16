@@ -8,20 +8,31 @@ nav_order: 2
 # Authoring a WHO SMART DAK (L2)
 {: .no_toc }
 
+<details open markdown="block">
+  <summary>On this page</summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+_This page is generated from [`content/docs/guides/who-smart-dak/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/guides-who-smart-dak) — each section below links to its own source._
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/overview.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/overview.md" }
+
 A **Digital Adaptation Kit (DAK)** is the *L2* — machine-readable but
 implementation-neutral — representation of a WHO SMART Guideline. This guide
 covers authoring the L2 artifacts with folio-assistant and an LLM.
 
 **Skill package:** `authoring-who-smart-guidelines`
 
-1. TOC
-{:toc}
-
 ---
 
 ## The L2 artifacts
+{: #the-l2-artifacts }
 
-<div class="bpmn-figure">
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit docs/../workflows/l2-dak-authoring.bpmn" }
+
+<div class="bpmn-figure" id="figure-the-l2-artifacts">
   <img src="../assets/img/workflows/l2-dak-authoring.svg"
        alt="BPMN swimlane diagram: the programme manager scopes the DAK, the plan is seeded as beans, then a parallel gateway fans out the five business-analyst artifacts (personas, BPMN processes, DMN decision logic, data dictionary, indicators) alongside the terminologist's bindings; a clinical SME validates, and the DAK is assembled once accurate.">
 </div>
@@ -38,6 +49,9 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 | Review | [`content-review`](../reference/skills/content-review.html) | criteria-based |
 
 ## Workflow
+{: #workflow }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/workflow.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/workflow.md" }
 
 1. **Plan** — `content-plan`: enumerate the processes, decisions, and data
    elements the guideline implies; identify actors (business analyst, clinical
@@ -54,6 +68,9 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
    DAK criteria.
 
 ## A mock session
+{: #a-mock-session }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/a-mock-session.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/a-mock-session.md" }
 
 > **You:** Plan the L2 DAK for the immunization guideline — I need the
 > "administer vaccine" process and the "is the client due" decision.
@@ -71,6 +88,9 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 > `content_validate`)* All artifacts valid.
 
 ## Next
+{: #next }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/next.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/next.md" }
 
 Turn the L2 DAK into a computable FHIR Implementation Guide →
 [Authoring a WHO SMART IG (L3)](who-smart-ig.html).
