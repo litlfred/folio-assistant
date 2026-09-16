@@ -79,6 +79,43 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 4. **QC** — `quality-control` enforces the IG's quality gates.
 5. **Publish** — `ig-publication` runs the IG Publisher and renders the site.
 
+## Making the build incremental
+{: #making-the-build-incremental }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/ig-incremental-build.bpmn){: .fa-node-edit title="Edit docs/workflows/ig-incremental-build.bpmn" }
+
+<div class="bpmn-figure" id="figure-making-the-build-incremental">
+  <img src="../assets/img/workflows/ig-incremental-build.svg"
+       alt="BPMN swimlane diagram: a source change restores the derived state; if the cache is usable the build computes the change's dependency cone, posts the cone report for the reviewer, checks out and compiles only the cone, validates it against the warm validator service, re-renders the cone's records, merges them with the restored ones, rebuilds the meta-index and assembles the site; a cache miss or a moved toolchain falls back to a full publisher build; QC gates run on the aggregate QA and file findings as beans; a PR branch deploys a preview and never seeds, while main or a release deploys the site and seeds the cache from the green build.">
+</div>
+
+[BPMN 2.0 source](../workflows/ig-incremental-build.bpmn) · [full-size SVG](../assets/img/workflows/ig-incremental-build.svg)
+{: .bpmn-source }
+
+Every trigger in a DAK repository — a push to a PR branch, `/validate`, `/deploy`, a
+push to `main`, a release — runs the same full IG Publisher build, and a one-line edit to
+one profile costs all of it. [Proposal: incremental IG build](../proposals/ig-incremental-build.html)
+measures why that is avoidable: on `smart-immunizations` the median artefact has no
+dependents and the 90th percentile has six, so almost every edit invalidates a handful
+of resources and the index. [Its overview](../proposals/ig-incremental-build-overview.html)
+lists the eleven changes and pins each to the stage of the review and publish pipeline
+where it runs.
+
+The process above is the L3 pipeline's build lane once the derived artefacts are cached
+by dependency cone. Restore first; compute the change's cone with
+`bun run content/pipeline/fsh-cone.ts <ig-root> --changed <files>`; compile and
+validate only the cone against the warm validator; re-render the cone's records;
+rebuild the meta-index; assemble the site. A cache miss or a moved toolchain falls back
+to today's full build, and only a green build of `main` or a release seeds the cache.
+
+| Step | Implemented by |
+|------|----------------|
+| Restore and seed the derived state | `ig-cache.sh` (proposed; the `lake-cache.sh` contract) |
+| Compute the cone of the change | [`content/pipeline/fsh-cone.ts`](https://github.com/litlfred/folio-assistant/blob/main/content/pipeline/fsh-cone.ts) |
+| Validate the cone | [`fhir-validation`](../reference/skills/fhir-validation.html) over the warm validator service (proposed MCP tools) |
+| Rebuild the meta-index, assemble the site | `ig_metaindex_rebuild` (proposed), [`ig-publication`](../reference/skills/ig-publication.html) |
+| QC gates, deploy | [`quality-control`](../reference/skills/quality-control.html), [`content-publish`](../reference/skills/content-publish.html) |
+
 ## A mock session
 {: #a-mock-session }
 
