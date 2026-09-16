@@ -1666,7 +1666,8 @@ smaller asks each have a precedent already in the code.</p>
     
 
 <p>Four asks. The first is the one that matters; the other three are small and each has a
-precedent in the code.</p>
+precedent in the code. §8.4 states each as the <strong>smallest code change</strong> that would do,
+with file and line, after the investigation §8.5 records.</p>
 <h4 id="a-the-ast--serialise-what-the-publisher-already-computes">
   
   
@@ -1745,24 +1746,30 @@ each works, each is fragile against a rename.</p>
   <tbody>
     <tr>
       <td><strong>B1</strong></td>
-      <td>A <strong>state directory</strong> for the differential build — <code class="language-plaintext highlighter-rouge">-rapido-state &lt;dir&gt;</code> or a <code class="language-plaintext highlighter-rouge">path-rapido-state</code> IG parameter — holding the tracker and what <code class="language-plaintext highlighter-rouge">temp/</code> a differential build needs, with the contract stated (“restore this and a differential build is valid”), and a machine-readable statement when it fell back to a complete build, and why.</td>
-      <td><code class="language-plaintext highlighter-rouge">.build-tracker.ini</code> lives inside the terminology-cache directory (<code class="language-plaintext highlighter-rouge">Publisher.java:378</code>); <code class="language-plaintext highlighter-rouge">temp/</code> is cleared on complete builds only; the contract is inferred from the code.</td>
-      <td>Persist <code class="language-plaintext highlighter-rouge">txCache/</code> (which carries the tracker) and <code class="language-plaintext highlighter-rouge">temp/</code> wholesale, and observe.</td>
+      <td><strong>Carry the skipped files’ validation messages across a differential build</strong>, and say in <code class="language-plaintext highlighter-rouge">qa-time-report.json</code> which mode ran and why (the smallest form is §8.4 B).</td>
+      <td>A differential build validates only <code class="language-plaintext highlighter-rouge">changeList</code> (<code class="language-plaintext highlighter-rouge">PublisherProcessor.java:501</code>); unchanged files’ errors are cleared at load and never restored, yet <code class="language-plaintext highlighter-rouge">qa.html</code>, <code class="language-plaintext highlighter-rouge">qa.json</code> and <code class="language-plaintext highlighter-rouge">validation-summary.json</code> are built from all of <code class="language-plaintext highlighter-rouge">fileList</code> — so they undercount. The only signal of the mode is the <code class="language-plaintext highlighter-rouge">Rapido Mode: …</code> log line.</td>
+      <td>Assemble the QA aggregate ourselves from per-file records (§5.2, R8).</td>
     </tr>
     <tr>
       <td><strong>B2</strong></td>
-      <td><strong>Load once.</strong> Separate “load dependencies, template, terminology” from “process this IG” so the loaded context survives a watch iteration and a second differential pass.</td>
+      <td><em>(larger; not part of the smallest ask)</em> <strong>Load once.</strong> Separate “load dependencies, template, terminology” from “process this IG” so the loaded context survives a watch iteration and a second differential pass.</td>
       <td>Every watch iteration constructs a fresh <code class="language-plaintext highlighter-rouge">PublisherFields</code> and re-runs <code class="language-plaintext highlighter-rouge">Load IG</code> (<code class="language-plaintext highlighter-rouge">Publisher.java:207–216</code>).</td>
       <td>The validator’s <code class="language-plaintext highlighter-rouge">server</code> mode covers validation only (D); the publisher pays the load every run.</td>
     </tr>
     <tr>
       <td><strong>B3</strong></td>
-      <td><strong>Graduate it</strong>: a stable flag, a statement of which outputs are exact in differential mode and which are approximate (cross-references from unchanged pages; the aggregates), tests.</td>
+      <td><strong>Graduate it</strong>: a stable flag and a statement of which outputs are exact in differential mode — §8.5 records what the code says today: the aggregates are exact, the QA is not until B1.</td>
       <td><code class="language-plaintext highlighter-rouge">-rapido</code> / <code class="language-plaintext highlighter-rouge">-cascais</code>, “Report issues to Grahame on Zulip”.</td>
       <td>The skip lists: exact, coarser.</td>
     </tr>
   </tbody>
 </table></div>
+
+<p>Not asked, because the investigation in §8.5 showed it unnecessary: a state directory or
+tracker path (the tracker already lives in the terminology-cache directory a CI
+restores), a flag to stop <code class="language-plaintext highlighter-rouge">temp/</code> being flushed (a normal build never flushes it; a
+differential build keeps it by design), and a caller-supplied change list (the
+publisher’s own hash diff is dependency-aware).</p>
 <h4 id="c-a-render-only-mode">
   
   
@@ -1852,6 +1859,120 @@ a documentation ask.</p>
 <p>What stays on our side of the line, deliberately: the branch caches and their layout,
 the selective terminology restore, the Just the Docs landing page and pipeline, the
 <code class="language-plaintext highlighter-rouge">.ts</code> content model, the cone tool. None of it needs the publisher to know it exists.</p>
+<h3 id="84-the-smallest-change-per-ask">
+  
+  
+    <a href="#84-the-smallest-change-per-ask" class="anchor-heading" aria-labelledby="84-the-smallest-change-per-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8.4 The smallest change per ask
+  
+  
+</h3>
+    
+
+<p>One sentence of why, three sentences of change, each located in the source read on
+2026-09-16. Anything larger than this is not what is being asked.</p>
+
+<p><strong>A. The AST.</strong> <em>Why:</em> the publisher computes every resource’s dependencies, outcome,
+fragments and timings on every run and discards them at the end; writing them down
+changes no behaviour and any consumer can read them. <em>Change:</em> (1) In
+<code class="language-plaintext highlighter-rouge">Publisher.recordOutcome()</code> (<code class="language-plaintext highlighter-rouge">Publisher.java</code> ≈698–708), where the loop over
+<code class="language-plaintext highlighter-rouge">pf.fileList</code> writes <code class="language-plaintext highlighter-rouge">qa-time-report.json</code>’s <code class="language-plaintext highlighter-rouge">files[]</code> through
+<code class="language-plaintext highlighter-rouge">FetchedFile.processReport()</code> (<code class="language-plaintext highlighter-rouge">FetchedFile.java:322</code>), add to each file entry a
+<code class="language-plaintext highlighter-rouge">resources[]</code> array carrying, per <code class="language-plaintext highlighter-rouge">FetchedResource</code>, its <code class="language-plaintext highlighter-rouge">fhirType</code>, <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">url</code>, the
+file’s <code class="language-plaintext highlighter-rouge">getHash()</code> and <code class="language-plaintext highlighter-rouge">getCalcHash()</code>, the paths of <code class="language-plaintext highlighter-rouge">f.getDependencies()</code>, and
+<code class="language-plaintext highlighter-rouge">f.getErrors()</code> as <code class="language-plaintext highlighter-rouge">{severity, type, location, message}</code>. (2) Call
+<code class="language-plaintext highlighter-rouge">loadDependencyList(f, igf)</code> (<code class="language-plaintext highlighter-rouge">Publisher.java:948</code>) for every file in
+<code class="language-plaintext highlighter-rouge">checkDependencies()</code> regardless of <code class="language-plaintext highlighter-rouge">settings.isRapidoMode()</code>, so <code class="language-plaintext highlighter-rouge">getDependencies()</code>
+is populated in every build and not only under <code class="language-plaintext highlighter-rouge">-rapido</code>. (3) Record the fragment names
+each file produced from <code class="language-plaintext highlighter-rouge">pf.fragmentUses</code> (<code class="language-plaintext highlighter-rouge">PublisherBase.FragmentUseRecord</code>,
+<code class="language-plaintext highlighter-rouge">PublisherBase.java:1579</code>, filled at <code class="language-plaintext highlighter-rouge">PublisherGenerator.java:2503</code>) into the same
+entries, and add a top-level <code class="language-plaintext highlighter-rouge">toolchain</code> object with <code class="language-plaintext highlighter-rouge">Constants.VERSION</code>,
+<code class="language-plaintext highlighter-rouge">pf.templatePck</code>, the terminology server and <code class="language-plaintext highlighter-rouge">pf.dependencyList</code> — all of which
+<code class="language-plaintext highlighter-rouge">recordOutcome()</code> already has in hand when it writes <code class="language-plaintext highlighter-rouge">qa.json</code>.</p>
+
+<p><strong>B. Differential builds from an ephemeral runner.</strong> <em>Why:</em> Rapido’s differential build
+already keeps <code class="language-plaintext highlighter-rouge">temp/</code>, keeps its tracker in a directory a CI can restore, and
+regenerates every aggregate from the full file list — the one thing it loses is the
+validation messages of the files it skips, so the QA aggregate of a differential build
+undercounts. <em>Change:</em> (1) At the end of <code class="language-plaintext highlighter-rouge">PublisherProcessor.validate()</code>, after the
+loop over <code class="language-plaintext highlighter-rouge">pf.changeList</code> (<code class="language-plaintext highlighter-rouge">PublisherProcessor.java:501</code>), write each validated file’s
+<code class="language-plaintext highlighter-rouge">getErrors()</code> to <code class="language-plaintext highlighter-rouge">temp/_qa/&lt;file path&gt;.json</code> — <code class="language-plaintext highlighter-rouge">temp/</code> already survives a differential
+build. (2) In the differential branch of <code class="language-plaintext highlighter-rouge">Publisher.checkDependencies()</code>
+(<code class="language-plaintext highlighter-rouge">Publisher.java:940–944</code>), for every file in <code class="language-plaintext highlighter-rouge">pf.fileList</code> that is not in
+<code class="language-plaintext highlighter-rouge">pf.changeList</code>, load that file’s saved messages back into <code class="language-plaintext highlighter-rouge">f.getErrors()</code>, so
+<code class="language-plaintext highlighter-rouge">qa.html</code> (<code class="language-plaintext highlighter-rouge">Publisher.java:448</code>), <code class="language-plaintext highlighter-rouge">qa.json</code> and <code class="language-plaintext highlighter-rouge">validation-summary.json</code>
+(<code class="language-plaintext highlighter-rouge">PublisherGenerator.java:4452, 4469</code>) describe the whole IG. (3) In
+<code class="language-plaintext highlighter-rouge">recordOutcome()</code>, add to <code class="language-plaintext highlighter-rouge">qa-time-report.json</code> a top-level
+<code class="language-plaintext highlighter-rouge">build: {mode: "complete"|"differential", reason: "no-tracker"|"no-changes"|"all-changed"|"after-failure"|"differential", changed: N}</code>
+so a pipeline can tell what happened without parsing the
+<code class="language-plaintext highlighter-rouge">Rapido Mode: …</code> log line.</p>
+
+<p><strong>C. Render-only.</strong> <em>Why:</em> a consumer with its own site pipeline wants the render as
+files with a contract, not a finished site, and the switch already exists for one
+consumer. <em>Change:</em> (1) Add <code class="language-plaintext highlighter-rouge">-no-jekyll</code> to the parameter parsing in <code class="language-plaintext highlighter-rouge">Publisher.main</code>
+beside <code class="language-plaintext highlighter-rouge">-generation-off</code> (<code class="language-plaintext highlighter-rouge">Publisher.java</code> ≈1460), setting a <code class="language-plaintext highlighter-rouge">noJekyll</code> boolean on
+<code class="language-plaintext highlighter-rouge">PublisherSettings</code> like <code class="language-plaintext highlighter-rouge">generationOff</code> (<code class="language-plaintext highlighter-rouge">PublisherSettings.java:17</code>). (2) In
+<code class="language-plaintext highlighter-rouge">PublisherGenerator.runTool()</code> (<code class="language-plaintext highlighter-rouge">PublisherGenerator.java</code> ≈3921–3929) add
+<code class="language-plaintext highlighter-rouge">if (settings.isNoJekyll()) return true;</code> next to the existing
+<code class="language-plaintext highlighter-rouge">isSimplifierMode()</code> early return, and skip the HTML inspection the way
+<code class="language-plaintext highlighter-rouge">isGenerationOff()</code> already does at <code class="language-plaintext highlighter-rouge">PublisherGenerator.java:557</code>. (3) Document that
+with <code class="language-plaintext highlighter-rouge">-no-jekyll</code> the deliverable is <code class="language-plaintext highlighter-rouge">temp/</code> — pages at its root, fragments under
+<code class="language-plaintext highlighter-rouge">temp/_includes/</code> as <code class="language-plaintext highlighter-rouge">&lt;Type&gt;-&lt;id&gt;-&lt;kind&gt;.xhtml</code> — the same layout Simplifier consumes.</p>
+
+<p><strong>D. The validator as a service.</strong> <em>Why:</em> the loaded context exists only in a warm
+process, and the service that keeps it warm already exists — <code class="language-plaintext highlighter-rouge">FhirValidatorHttpService</code>
+serves <code class="language-plaintext highlighter-rouge">/validateResource</code>, <code class="language-plaintext highlighter-rouge">/snapshot</code>, <code class="language-plaintext highlighter-rouge">/narrative</code>, <code class="language-plaintext highlighter-rouge">/loadIG</code>, <code class="language-plaintext highlighter-rouge">/convert</code>,
+<code class="language-plaintext highlighter-rouge">/transform</code>, <code class="language-plaintext highlighter-rouge">/fhirpath</code>, <code class="language-plaintext highlighter-rouge">/compile</code>, <code class="language-plaintext highlighter-rouge">/version</code> (version conversion) and <code class="language-plaintext highlighter-rouge">/stop</code>
+(<code class="language-plaintext highlighter-rouge">FhirValidatorHttpService.java:54–69</code>) — so what is missing is only knowing what a
+running instance holds. <em>Change:</em> (1) Add a <code class="language-plaintext highlighter-rouge">/status</code> handler beside the others,
+returning JSON with the validator version, the FHIR version, the loaded packages as
+<code class="language-plaintext highlighter-rouge">id#version</code> from <code class="language-plaintext highlighter-rouge">engine.getIgs()</code> (the list <code class="language-plaintext highlighter-rouge">/loadIG</code> appends to,
+<code class="language-plaintext highlighter-rouge">LoadIGHTTPHandler.java:33</code>) and the terminology server, so an orchestrator can confirm
+the warm engine matches the toolchain it expects. (2) Update the <code class="language-plaintext highlighter-rouge">server</code> command’s
+help text (<code class="language-plaintext highlighter-rouge">HTTPServerCommand.java</code>) to list the endpoints it actually serves; today it
+names <code class="language-plaintext highlighter-rouge">/validateResource</code> alone. (3) Document that starting the server with <code class="language-plaintext highlighter-rouge">-ig</code> on the
+IG’s own <code class="language-plaintext highlighter-rouge">package.tgz</code> (snapshots present) and <code class="language-plaintext highlighter-rouge">-txCache</code> on a restored cache is the
+supported warm start, relying on <code class="language-plaintext highlighter-rouge">ContextUtilities.generateSnapshot</code>
+(<code class="language-plaintext highlighter-rouge">ContextUtilities.java:263</code>) leaving present snapshots alone.</p>
+<h3 id="85-what-the-investigation-found-and-what-is-therefore-not-asked">
+  
+  
+    <a href="#85-what-the-investigation-found-and-what-is-therefore-not-asked" class="anchor-heading" aria-labelledby="85-what-the-investigation-found-and-what-is-therefore-not-asked"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8.5 What the investigation found, and what is therefore not asked
+  
+  
+</h3>
+    
+
+<p>The question was whether a flag is needed to stop the publisher flushing <code class="language-plaintext highlighter-rouge">temp/</code>, so
+that an external pipeline can manage the state. <strong>No flag is needed.</strong> <code class="language-plaintext highlighter-rouge">temp/</code> is
+cleared in exactly four places: <code class="language-plaintext highlighter-rouge">clearTempFolder()</code> in the three complete-build
+branches of <code class="language-plaintext highlighter-rouge">checkDependencies()</code> (<code class="language-plaintext highlighter-rouge">Publisher.java:891, 933, 937</code>) and the template
+dev-mode branch of the loader (<code class="language-plaintext highlighter-rouge">PublisherIGLoader.java:899</code>); a normal build never
+flushes it, and a differential build keeps it by design. <code class="language-plaintext highlighter-rouge">output/</code> is cleared every
+run (<code class="language-plaintext highlighter-rouge">PublisherIGLoader.java:973</code>) and is regenerated by Jekyll from <code class="language-plaintext highlighter-rouge">temp/</code>, so it
+needs no persistence.</p>
+
+<p>The differential machinery is always on: <code class="language-plaintext highlighter-rouge">addFile()</code> puts every file into
+<code class="language-plaintext highlighter-rouge">changeList</code> unless <code class="language-plaintext highlighter-rouge">-rapido</code> is set (<code class="language-plaintext highlighter-rouge">PublisherBase.java:618</code>), so the per-file loops —
+validation (<code class="language-plaintext highlighter-rouge">PublisherProcessor.java:501</code>), narratives (<code class="language-plaintext highlighter-rouge">:1224</code>), native, HTML and
+spreadsheet outputs (<code class="language-plaintext highlighter-rouge">PublisherGenerator.java:270–309</code>) — run over everything in a
+normal build and over the changed set under <code class="language-plaintext highlighter-rouge">-rapido</code>. Every aggregate — summary
+outputs, canonical summary, profile, extension and logical lists, definitions, the
+validation pack, the spec file — loops over <code class="language-plaintext highlighter-rouge">fileList</code> and is regenerated in full every
+time. The tracker’s hashes are of content (<code class="language-plaintext highlighter-rouge">calculateHash()</code>), so a fresh checkout with
+new timestamps does not invalidate anything, and <code class="language-plaintext highlighter-rouge">getCalcHash()</code> folds in a file’s
+dependencies, which is how a ValueSet edit re-validates the profiles bound to it. The
+tracker’s <code class="language-plaintext highlighter-rouge">status.complete=true</code> is written only after QA (<code class="language-plaintext highlighter-rouge">Publisher.java:452</code>), and a
+tracker left at <code class="language-plaintext highlighter-rouge">started &amp;&amp; !complete</code> forces a complete build (<code class="language-plaintext highlighter-rouge">Publisher.java:888</code>) —
+so persisting state only from a green run is not merely our seed rule, it is what the
+publisher expects.</p>
+
+<p>Therefore not asked: a <code class="language-plaintext highlighter-rouge">-tracker</code> path (we restore the terminology-cache directory it
+lives in anyway), a caller-supplied change list (<code class="language-plaintext highlighter-rouge">getCalcHash()</code> is dependency-aware and
+more accurate than our source-level cone), a temp flag (there is no flush to stop), and
+new validator endpoints (they exist). Still true and still ours: <code class="language-plaintext highlighter-rouge">-rapido</code> is
+experimental, and the state to restore is two directories — <code class="language-plaintext highlighter-rouge">txCache/</code> (tracker and
+terminology cache) and <code class="language-plaintext highlighter-rouge">temp/</code> — keyed by the toolchain slug and taken only from a build
+whose tracker reads complete.</p>
 <h2 id="not-done-and-not-verified">
   
   
@@ -1881,7 +2002,7 @@ not traced through; the cone graph is source-level (§3.4).</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35125682608"><code>97bc64a</code></a> &middot; 2026-09-16T17:03:23Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35127451673"><code>64218c6</code></a> &middot; 2026-09-16T17:20:04Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

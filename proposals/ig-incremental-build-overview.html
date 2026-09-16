@@ -534,9 +534,9 @@ pipeline path, the smart-base step, and the BPMN activity.</p>
     </tr>
     <tr>
       <td>R11</td>
-      <td><strong>Upstream asks</strong> — four, itemised in <a href="/folio-assistant/proposals/ig-incremental-build.html#8-upstream--the-specific-asks-to-the-ig-publisher-and-the-validator">§8</a>, none folio-specific: <strong>A, the AST</strong> (serialise what the publisher already computes: per-resource records, the dependency graph, the toolchain, what was rendered where); <strong>B</strong>, differential builds from an ephemeral runner (a state directory, load once, graduate Rapido); <strong>C</strong>, a render-only <code class="language-plaintext highlighter-rouge">-no-jekyll</code> mode with the Simplifier path as precedent; <strong>D</strong>, the validator as a documented, addressable service</td>
+      <td><strong>Upstream asks</strong> — four, itemised in <a href="/folio-assistant/proposals/ig-incremental-build.html#8-upstream--the-specific-asks-to-the-ig-publisher-and-the-validator">§8</a> and stated as the smallest code change each in <a href="/folio-assistant/proposals/ig-incremental-build.html#84-the-smallest-change-per-ask">§8.4</a>, none folio-specific: <strong>A, the AST</strong> (serialise what the publisher already computes: per-resource records, the dependency graph, the toolchain, what was rendered where); <strong>B</strong>, differential builds (carry the skipped files’ validation messages across a differential build and report the mode — no state directory, no temp flag, per the investigation in <a href="/folio-assistant/proposals/ig-incremental-build.html#85-what-the-investigation-found-and-what-is-therefore-not-asked">§8.5</a>); <strong>C</strong>, a render-only <code class="language-plaintext highlighter-rouge">-no-jekyll</code> mode with the Simplifier path as precedent; <strong>D</strong>, a <code class="language-plaintext highlighter-rouge">/status</code> endpoint on the validator service that already serves validate, snapshot, narrative and load-IG</td>
       <td>the publisher wants to be agnostic about its consumers, and the AST is agnostic by construction — it asks for nothing to be done differently, only for what is done to be written down (<a href="/folio-assistant/proposals/ig-incremental-build.html#81-already-there--use-do-not-ask">§8.1</a>, <a href="/folio-assistant/proposals/ig-incremental-build.html#82-the-asks">§8.2</a>)</td>
-      <td>the publisher and the validator; A unblocks R7/R8, B unblocks R6’s second route, C unblocks R9</td>
+      <td>the publisher and the validator; A unblocks R7/R8, B makes <code class="language-plaintext highlighter-rouge">-rapido</code> from restored <code class="language-plaintext highlighter-rouge">txCache/</code> + <code class="language-plaintext highlighter-rouge">temp/</code> exact, C unblocks R9</td>
       <td>HL7 (Zulip)</td>
       <td>5</td>
     </tr>
@@ -1028,7 +1028,7 @@ instance of.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35125682608"><code>97bc64a</code></a> &middot; 2026-09-16T17:03:23Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35127451673"><code>64218c6</code></a> &middot; 2026-09-16T17:20:04Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
