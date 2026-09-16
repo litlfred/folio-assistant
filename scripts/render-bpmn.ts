@@ -53,6 +53,86 @@ const page = await browser.newPage();
 await page.setContent(`<!doctype html><html><body><div id="canvas"></div></body></html>`);
 await page.addScriptTag({ path: VIEWER });
 
+/**
+ * Map every `bpmn:process` id to the file that defines it, so a call activity's
+ * `calledElement` can be resolved to a diagram rather than to a bare id.
+ */
+const processHome = new Map<string, string>();
+for (const file of sources) {
+  const xml = await readFile(join(SRC_DIR, file), "utf8");
+  for (const m of xml.matchAll(/<bpmn:process\s+id="([^"]+)"/g)) {
+    processHome.set(m[1], basename(file, ".bpmn"));
+  }
+}
+
+/**
+ * Where a call activity should take a reader who clicks it.
+ *
+ * `<folio:link href="…"/>` on the activity wins — that is how a page says "the
+ * section for this subprocess is here", which is the useful destination when
+ * the diagram is embedded in a docs page.
+ *
+ * Without one, fall back to the called process's own rendered SVG. That is
+ * always correct and needs no knowledge of any page, so a folio that has not
+ * declared links still gets working navigation.
+ */
+function subprocessLinks(xml: string): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const m of xml.matchAll(/<bpmn:callActivity\b([^>]*)>([\s\S]*?)<\/bpmn:callActivity>/g)) {
+    const id = /\sid="([^"]+)"/.exec(m[1])?.[1];
+    if (!id) continue;
+    const explicit = /<folio:link\s+href="([^"]+)"\s*\/?>/.exec(m[2])?.[1];
+    if (explicit) {
+      out.set(id, explicit);
+      continue;
+    }
+    const called = /\scalledElement="([^"]+)"/.exec(m[1])?.[1];
+    const home = called ? processHome.get(called) : undefined;
+    // Fallback, and it is a WEAK one on purpose. Linking to the rendered SVG
+    // of the called process at least takes the reader somewhere true, but a
+    // bare file has no page chrome and no prose around it — the destination
+    // you actually want is the section that documents that subprocess, which
+    // only the model can name. So prefer `<folio:link>`; this is what happens
+    // when nobody wrote one.
+    //
+    // The path is asset-relative, which assumes the embedding page sits at
+    // the docs root. Every page that embeds a diagram today does. A page in
+    // `guides/` or `reference/` would need `../`, so if one ever embeds a
+    // diagram whose call activity has no explicit link, give it one.
+    if (home) out.set(id, `assets/img/workflows/${home}.svg`);
+  }
+  return out;
+}
+
+/**
+ * Wrap a shape's `<g>` in an `<a>`, by counting `<g>` depth from the opening
+ * tag to its own closing one.
+ *
+ * A regex cannot do this: a bpmn-js shape contains nested `<g>` elements, so
+ * `</g>` first matches an inner one and the wrapper closes in the wrong place —
+ * which produces an SVG that still parses and is quietly mis-nested. The caller
+ * asserts the count afterwards, so a shape that could not be found fails the
+ * render rather than silently losing its link.
+ */
+function wrapShapeInLink(svg: string, elementId: string, href: string): string {
+  const open = new RegExp(`<g class="djs-element[^"]*" data-element-id="${elementId}"[^>]*>`);
+  const m = open.exec(svg);
+  if (!m) return svg;
+  const start = m.index;
+  let i = start + m[0].length;
+  let depth = 1;
+  const tag = /<g\b|<\/g>/g;
+  tag.lastIndex = i;
+  let t: RegExpExecArray | null;
+  while (depth > 0 && (t = tag.exec(svg)) !== null) {
+    depth += t[0] === "</g>" ? -1 : 1;
+    i = t.index + t[0].length;
+  }
+  if (depth !== 0) return svg;
+  const a = `<a class="fa-subprocess-link" href="${href}" target="_top">`;
+  return svg.slice(0, start) + a + svg.slice(start, i) + "</a>" + svg.slice(i);
+}
+
 let stale = 0;
 
 for (const file of sources) {
@@ -110,11 +190,28 @@ for (const file of sources) {
     continue;
   }
 
+  // A subprocess box is a navigation affordance, not decoration: clicking it
+  // should take the reader to that subprocess. Only useful once the SVG is live
+  // in the DOM — inside an `<img>` it is inert — which docs-ui.js arranges by
+  // inlining these figures.
+  const links = subprocessLinks(xml);
+  let linked = responsive;
+  for (const [id, href] of links) linked = wrapShapeInLink(linked, id, href);
+  const wrapped = (linked.match(/class="fa-subprocess-link"/g) ?? []).length;
+  if (wrapped !== links.size) {
+    console.error(
+      `✗ ${file}: ${links.size} call activit(ies) to link but ${wrapped} wrapped — ` +
+        `bpmn-js shape markup changed, so the links would be silently missing`,
+    );
+    process.exitCode = 1;
+    continue;
+  }
+
   const out = join(OUT_DIR, `${basename(file, ".bpmn")}.svg`);
   const previous = existsSync(out) ? await readFile(out, "utf8") : null;
 
   if (check) {
-    if (previous !== responsive) {
+    if (previous !== linked) {
       console.error(`✗ ${basename(out)} is stale — re-run \`bun run render:bpmn\``);
       stale++;
     } else {
@@ -124,8 +221,8 @@ for (const file of sources) {
   }
 
   await mkdir(OUT_DIR, { recursive: true });
-  await writeFile(out, responsive, "utf8");
-  console.log(`${previous === responsive ? "=" : "✓"} ${basename(out)}`);
+  await writeFile(out, linked, "utf8");
+  console.log(`${previous === linked ? "=" : "✓"} ${basename(out)}`);
 }
 
 await browser.close();

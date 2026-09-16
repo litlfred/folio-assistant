@@ -77,6 +77,7 @@ and mint a doc id
 [document-intake]" calledElement="Process_ExtractStructure">
       <bpmn:documentation>See ingest-extract-structure.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
+        <folio:link href="document-ingestion.html#extract-structure" />
         <folio:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i2</bpmn:incoming>
@@ -87,6 +88,7 @@ from the assets
 [document-intake]" calledElement="Process_DeriveContent">
       <bpmn:documentation>See ingest-derive-content.bpmn. Most of this subprocess is not implemented yet.</bpmn:documentation>
       <bpmn:extensionElements>
+        <folio:link href="document-ingestion.html#derive-content" />
         <folio:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i3</bpmn:incoming>
@@ -98,6 +100,7 @@ knowledge graph
 [document-intake]" calledElement="Process_BuildL1Kg">
       <bpmn:documentation>See ingest-build-l1-kg.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
+        <folio:link href="document-ingestion.html#build-the-l1-knowledge-graph" />
         <folio:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i4</bpmn:incoming>
@@ -107,6 +110,7 @@ knowledge graph
 [paper-relevance-triage]" calledElement="Process_L1Gate">
       <bpmn:documentation>See ingest-l1-completeness-gate.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
+        <folio:link href="document-ingestion.html#the-l1-completeness-gate" />
         <folio:skill ref="paper-relevance-triage" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i5</bpmn:incoming>
