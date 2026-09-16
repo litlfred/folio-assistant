@@ -23,6 +23,8 @@ on:
       - 'docs/**'
       - 'schemas/**'
       - 'scripts/gen-schema-docs.ts'
+      - 'scripts/gen-docs-pages.ts'
+      - 'content/docs/**'
       - 'scripts/render-bpmn.ts'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
@@ -52,6 +54,14 @@ jobs:
 
       - name: Regenerate skill instruction pages
         run: bun run scripts/gen-skill-docs.ts
+
+      # Pages assembled from content/docs/<slug>/. Regenerated here for the
+      # same reason as the two above: the committed copy is browsable on
+      # GitHub, and the published one must never be the stale half of that
+      # pair. The --check form is the PR gate (code-quality-gates.yml); this is
+      # the deploy-time refresh.
+      - name: Regenerate content-backed docs pages
+        run: bun run scripts/gen-docs-pages.ts
 
       # The BPMN sources under docs/workflows/ are the source of truth; the SVGs
       # the workflow pages embed are rendered from them with bpmn-js in headless

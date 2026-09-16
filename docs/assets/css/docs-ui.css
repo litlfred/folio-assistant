@@ -567,3 +567,46 @@
   border-color: var(--link-color, #7253ed);
   text-decoration: underline;
 }
+
+/* Per-node edit link, on a generated page.
+ *
+ * Quieter than `.fa-edit-source` and floated out of the text flow, because
+ * there is one of these per SECTION rather than one per page. An affordance
+ * repeated eleven times down a page has to earn its space: it sits to the
+ * right of the heading it belongs to and stays out of the reading line.
+ *
+ * `float` rather than a flex row with the heading: the heading is emitted by
+ * kramdown as a plain `<h2>` and the link as a separate `<p>`, so there is no
+ * shared parent to make a row out of without generating wrapper markup for
+ * every node. Floating costs nothing and degrades to a normal link.
+ *
+ * Dimmed until hover, on the same reasoning as the build stamp: it is a
+ * maintenance affordance, not content, and a reader who is reading should not
+ * have to look past eleven pencils. */
+.fa-node-edit {
+  float: right;
+  margin: -2.2rem 0 0;
+  padding: 0.05em 0.4em;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-decoration: none;
+  opacity: 0.35;
+}
+
+.fa-node-edit:hover,
+.fa-node-edit:focus-visible {
+  opacity: 1;
+  border-color: var(--link-color, #7253ed);
+}
+
+/* The negative margin pulls it up beside the heading; on a narrow screen the
+ * heading wraps and that lands the link on top of the text. Below the theme's
+ * md breakpoint it goes back in the flow. */
+@media (max-width: 799.98px) {
+  .fa-node-edit {
+    float: none;
+    margin: 0 0 0.5rem;
+    opacity: 0.6;
+  }
+}
