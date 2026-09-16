@@ -373,6 +373,70 @@ bean list parsed from `.beans/`, plus how far the default branch has moved and
 recent sibling `claude/*` branch activity). Heavy triage of new commits belongs in
 a background subagent, not the foreground.
 
+## Commit early, commit often, always PR (STRICT)
+
+Three rules, and the third is the one agents get wrong.
+
+**Commit early, commit often.** Every meaningful unit of work — a fix, a
+diagram, a bean update, a measurement — gets its own commit and gets pushed.
+Do not accumulate. The chat is ephemeral and the history is durable: if the
+session is reclaimed mid-task, what survives is what you pushed.
+
+**Open the PR at the first commit, not at the end.** The PR is the visibility
+artefact, not the code. Open it as soon as there is one commit to hang it on,
+even a stub, and let the body grow as the work does. Never ask permission to
+open one — branch, commit, push and PR are all pre-authorised.
+
+**Do not hold a green PR back waiting for someone to look at it.** This is the
+rule that gets inverted in the name of care, and inverting it is not caution —
+it is a blocked reviewer.
+
+### Why the third rule needs saying
+
+An agent that has just built something it cannot fully verify — a rendered
+page, a diagram, a UI — reaches for the responsible-sounding move: leave the PR
+open, attach a preview, ask the human to confirm before merging. That feels
+safer. It is worse, for a reason worth internalising:
+
+**A human cannot assess a rendered artefact from a description of it, and a
+preview in chat is a strictly worse proxy than the deployed thing.** Holding
+the merge does not transfer the verification to them — it *withholds the only
+form in which they could do it*, and asks them to adjudicate from a screenshot
+instead.
+
+Measured here, 2026-09-16. PR #178 — the ingestion documentation, five
+generated BPMN diagrams — was CI-green, unreviewed and un-merged, held back
+with the three SVGs attached in chat and a note that the layout was
+machine-accepted but not confirmed legible. The owner's reply was
+*"jsut merge so i can help assess"*. The hold made assessment harder, not
+safer, and cost a round-trip to an author who types with difficulty.
+
+### What to do with the thing you could not verify
+
+Say it in the PR body, and merge anyway. `## Not verified` is a real section
+and an honest one; an unmerged PR is not a substitute for it. Reversibility is
+what makes this safe — a docs or content change is one revert away, and the
+cost of reverting is far below the cost of a human blocked on a decision they
+have no artefact for.
+
+The exceptions are narrow and none of them is "I am unsure":
+
+- **Never merge red.** A failing or unrun required check is a real blocker.
+- **Never merge over an unresolved review thread** you have not answered.
+- **Where the repository requires explicit merge permission, that wins.** In
+  particular `litlfred/qou` requires `/prepare-merge` plus an explicit "merge
+  it" from the author for *every* merge to `main`, and this section does not
+  relax that by a word. There, the rule reads: get it green, get it
+  mergeable, **say once that it is ready**, and then stop — do not re-ask on a
+  timer, and do not let "not merged yet" become a reason to stop pushing.
+
+### Cross-references, so these do not drift
+
+`litlfred/qou`'s `AGENTS.md` carries the same first two rules for that folio —
+§"Branch + PR workflow" rule 0 (commit early / often / push) and rule 2
+(ALWAYS-PR, and never ask whether to open one). It also carries the stricter
+merge gate above. If you change one, check the other.
+
 ## Opening a bean or a topic — brief it before you touch anything (STRICT)
 
 **When you begin work on a bean, or on any topic large enough to be one, open
