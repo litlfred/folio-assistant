@@ -290,9 +290,8 @@
 </h1>
     
 
-<p>Policy guidance, a standard, a report, a handbook — structured prose, authored
-with an LLM, published without a TeX installation.</p>
-
+<details open="">
+  <summary class="text-delta">On this page</summary>
 <ol id="markdown-toc">
   <li><a href="#what-a-document-folio-is" id="markdown-toc-what-a-document-folio-is">What a document folio is</a></li>
   <li><a href="#1--scaffold-the-folio" id="markdown-toc-1--scaffold-the-folio">1 · Scaffold the folio</a></li>
@@ -312,7 +311,16 @@ with an LLM, published without a TeX installation.</p>
   </li>
   <li><a href="#moving-between-content-types" id="markdown-toc-moving-between-content-types">Moving between content types</a></li>
   <li><a href="#where-things-are" id="markdown-toc-where-things-are">Where things are</a></li>
-</ol><hr />
+</ol>
+
+</details>
+
+<p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/site-content/guides-writing-a-document"><code class="language-plaintext highlighter-rouge">content/docs/guides/writing-a-document/</code></a> — each section below links to its own source.</em></p>
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/overview.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/overview.md">✎ Edit</a></p>
+
+<p>Policy guidance, a standard, a report, a handbook — structured prose, authored
+with an LLM, published without a TeX installation.</p><hr />
 <h2 id="what-a-document-folio-is">
   
   
@@ -321,6 +329,8 @@ with an LLM, published without a TeX installation.</p>
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/authoring-a-document.bpmn" class="fa-node-edit" title="Edit docs/../workflows/authoring-a-document.bpmn">✎ Edit</a></p>
 
 <p>Everything a paper folio is, minus the formal layer. The same tree of chapters
 and sections over typed <strong>blocks</strong>, the same editorial <code class="language-plaintext highlighter-rouge">uses[]</code> graph, the same
@@ -337,7 +347,7 @@ Lean lifecycle and the LaTeX renderer on top. If you find yourself wanting a
 feature “the paper adapter has”, check first — you probably already have it.</p>
 </blockquote>
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-what-a-document-folio-is">
   <img src="../assets/img/workflows/authoring-a-document.svg" alt="BPMN swimlane diagram of document authoring, plan to published." />
 </div>
 
@@ -350,6 +360,8 @@ feature “the paper adapter has”, check first — you probably already have i
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/1-scaffold-the-folio.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/1-scaffold-the-folio.md">✎ Edit</a></p>
 
 <p>In a new, empty repository:</p>
 
@@ -387,6 +399,8 @@ for the full file list.</p>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/2-the-content-model.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/2-the-content-model.md">✎ Edit</a></p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>content/cold-chain-guidance/
   cold-chain-guidance.ts        the document manifest — chapters, in reading order
   introduction/
@@ -409,6 +423,8 @@ reviewed, and the block renders nowhere because nothing lists it.</p>
 </h3>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/the-kinds-you-may-use.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/the-kinds-you-may-use.md">✎ Edit</a></p>
+
 <p><code class="language-plaintext highlighter-rouge">prose</code>, <code class="language-plaintext highlighter-rouge">example</code>, <code class="language-plaintext highlighter-rouge">remark</code>, <code class="language-plaintext highlighter-rouge">algorithm</code>, <code class="language-plaintext highlighter-rouge">simulator</code>, <code class="language-plaintext highlighter-rouge">equation</code>, <code class="language-plaintext highlighter-rouge">diagram</code>,
 <code class="language-plaintext highlighter-rouge">table</code>.</p>
 
@@ -424,6 +440,8 @@ when you try to publish.</p>
   
 </h3>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md">✎ Edit</a></p>
 
 <p><code class="language-plaintext highlighter-rouge">uses[]</code> lists the blocks a <strong>reader</strong> must already have read to follow this
 one. It is an editorial judgement — nothing derives it, and nothing should.</p>
@@ -441,6 +459,8 @@ it. List direct neighbours only.</p><hr />
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/3-author-with-the-agent.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/3-author-with-the-agent.md">✎ Edit</a></p>
 
 <p>Ask in plain language. The agent loads the skills it needs over MCP.</p>
 
@@ -472,6 +492,8 @@ the recommendation.</p>
   
 </h3>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/carrying-a-recommendation.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/carrying-a-recommendation.md">✎ Edit</a></p>
 
 <p>A normative statement is the block readers cite and implementers trace to. It
 wants a label, a stable identity and a place in the dependency graph.</p>
@@ -512,6 +534,8 @@ skill.</p><hr />
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/4-validate.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/4-validate.md">✎ Edit</a></p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>content_validate          schema + constraints + profile conformance
 content_profile_check     profile conformance alone, over the whole folio
 qa_sweep                  the QA axes, per block
@@ -538,6 +562,8 @@ when that is what you actually meant.</p><hr />
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/5-render.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/5-render.md">✎ Edit</a></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>content/**  →  document_render_md   →  build/&lt;slug&gt;.md
                                     →  document_render_html  →  build/&lt;slug&gt;.html
@@ -574,6 +600,8 @@ outputs cannot drift.</p>
 </h3>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/not-implemented.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/not-implemented.md">✎ Edit</a></p>
+
 <p>No citations, no bibliography, no glossary, no automatic cross-reference
 numbering. <code class="language-plaintext highlighter-rouge">\cite{…}</code> passes through <strong>verbatim</strong>, visible in the output rather
 than silently dropped, so a folio that needs references today should write them
@@ -593,6 +621,8 @@ working.</p><hr />
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/moving-between-content-types.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/moving-between-content-types.md">✎ Edit</a></p>
+
 <p><code class="language-plaintext highlighter-rouge">folio.config.json</code>’s <code class="language-plaintext highlighter-rouge">contentType</code> is the switch.</p>
 
 <p><strong>document → paper</strong> is a one-line change. You are adding toolchains, not
@@ -609,6 +639,8 @@ lists exactly what is in the way.</p><hr />
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/where-things-are.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-document/where-things-are.md">✎ Edit</a></p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -658,7 +690,7 @@ lists exactly what is in the way.</p><hr />
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35077230781"><code>c2c0520</code></a> &middot; 2026-09-16T09:04:29Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35079422177"><code>ba9d607</code></a> &middot; 2026-09-16T09:27:15Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

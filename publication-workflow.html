@@ -280,10 +280,8 @@
 </h1>
     
 
-<p>How a change gets from <em>an editor had an idea</em> to <em>the folio is officially
-published</em> — expressed as <strong>BPMN 2.0 swimlane diagrams</strong>, with the roles, the
-validation gate, the skills, and the shared work plan all named.</p>
-
+<details open="">
+  <summary class="text-delta">On this page</summary>
 <ol id="markdown-toc">
   <li><a href="#every-workflow-in-the-repo" id="markdown-toc-every-workflow-in-the-repo">Every workflow in the repo</a>    <ol>
       <li><a href="#they-also-run" id="markdown-toc-they-also-run">They also run</a></li>
@@ -300,7 +298,7 @@ validation gate, the skills, and the shared work plan all named.</p>
   </li>
   <li><a href="#from-corpus-to-published-folio" id="markdown-toc-from-corpus-to-published-folio">From corpus to published folio</a></li>
   <li><a href="#content-lifecycle-overview" id="markdown-toc-content-lifecycle-overview">Content lifecycle overview</a></li>
-  <li><a href="#the-work-plan--tasks-as-beans" id="markdown-toc-the-work-plan--tasks-as-beans">The work plan — tasks as beans</a></li>
+  <li><a href="#the-work-plan-tasks-as-beans" id="markdown-toc-the-work-plan-tasks-as-beans">The work plan — tasks as beans</a></li>
   <li><a href="#who-is-who" id="markdown-toc-who-is-who">Who is who</a>    <ol>
       <li><a href="#people" id="markdown-toc-people">People</a></li>
       <li><a href="#agents-and-system-actors" id="markdown-toc-agents-and-system-actors">Agents and system actors</a></li>
@@ -311,7 +309,17 @@ validation gate, the skills, and the shared work plan all named.</p>
     </ol>
   </li>
   <li><a href="#see-also" id="markdown-toc-see-also">See also</a></li>
-</ol><hr />
+</ol>
+
+</details>
+
+<p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/site-content/publication-workflow"><code class="language-plaintext highlighter-rouge">content/docs/publication-workflow/</code></a> — each section below links to its own source.</em></p>
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/overview.md" class="fa-node-edit" title="Edit site-content/publication-workflow/overview.md">✎ Edit</a></p>
+
+<p>How a change gets from <em>an editor had an idea</em> to <em>the folio is officially
+published</em> — expressed as <strong>BPMN 2.0 swimlane diagrams</strong>, with the roles, the
+validation gate, the skills, and the shared work plan all named.</p><hr />
 <h2 id="every-workflow-in-the-repo">
   
   
@@ -320,6 +328,8 @@ validation gate, the skills, and the shared work plan all named.</p>
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/every-workflow-in-the-repo.md" class="fa-node-edit" title="Edit site-content/publication-workflow/every-workflow-in-the-repo.md">✎ Edit</a></p>
 
 <p>Six BPMN 2.0 files, all under
 <a href="https://github.com/litlfred/folio-assistant/tree/main/docs/workflows"><code class="language-plaintext highlighter-rouge">docs/workflows/</code></a>.
@@ -402,6 +412,8 @@ sit <em>inside</em> level 3’s <code class="language-plaintext highlighter-roug
 </h3>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/they-also-run.md" class="fa-node-edit" title="Edit site-content/publication-workflow/they-also-run.md">✎ Edit</a></p>
+
 <p>Since bean <code class="language-plaintext highlighter-rouge">fq0b</code> these files are not only pictures. The MCP server interprets
 them: <code class="language-plaintext highlighter-rouge">workflow_start</code> opens an instance for a subject, <code class="language-plaintext highlighter-rouge">workflow_next</code> reports
 what is enabled <em>now</em> — with the lane that performs it and the skill that
@@ -421,6 +433,8 @@ that the commit boundary is the right place — is in
   
 </h3>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/some-decisions-are-computed-not-judged.md" class="fa-node-edit" title="Edit site-content/publication-workflow/some-decisions-are-computed-not-judged.md">✎ Edit</a></p>
 
 <p>Ten exclusive gateways sit across the six diagrams, and they are not all the
 same kind of question. <code class="language-plaintext highlighter-rouge">Accept, revise or discard?</code> is the editor’s call.
@@ -467,6 +481,8 @@ tool emits looks authoritative and is not.</p>
 </h3>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/the-base-processes-are-strict.md" class="fa-node-edit" title="Edit site-content/publication-workflow/the-base-processes-are-strict.md">✎ Edit</a></p>
+
 <p>The three content-agnostic diagrams — editing, draft-to-publication, lifecycle —
 carry <code class="language-plaintext highlighter-rouge">&lt;folio:policy enforcement="strict"/&gt;</code>. <code class="language-plaintext highlighter-rouge">workflow_gate</code> refuses a step
 they have not reached. The three per-content-type diagrams are <code class="language-plaintext highlighter-rouge">advisory</code>,
@@ -504,6 +520,8 @@ bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged<
 </h3>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/how-to-read-them.md" class="fa-node-edit" title="Edit site-content/publication-workflow/how-to-read-them.md">✎ Edit</a></p>
+
 <ul>
   <li><strong>A lane is a role.</strong> Every lane maps to an actor in
 <a href="https://github.com/litlfred/folio-assistant/tree/main/.claude/skills/actors"><code class="language-plaintext highlighter-rouge">.claude/skills/actors/</code></a> —
@@ -526,10 +544,12 @@ on this page.</li>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/editing-hci-validation.bpmn" class="fa-node-edit" title="Edit docs/workflows/editing-hci-validation.bpmn">✎ Edit</a></p>
+
 <p>This is the diagram that matters most day to day: <strong>one proposed change to one
 content block</strong>.</p>
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-editing-and-the-hci-validation-gate">
   <img src="assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram: an editor describes a change, an authoring agent drafts it, the proposed change fans out through mechanical and non-mechanical validation, the findings are shown to the editor, and only an accepted change is committed to the corpus." />
 </div>
 
@@ -542,6 +562,8 @@ content block</strong>.</p>
   
 </h3>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/the-one-rule-this-diagram-exists-to-state.md" class="fa-node-edit" title="Edit site-content/publication-workflow/the-one-rule-this-diagram-exists-to-state.md">✎ Edit</a></p>
 
 <p><strong>Nothing reaches the corpus before the editor has seen the findings.</strong> The
 authoring agent produces a <em>proposed</em> change, not a commit. That proposal fans
@@ -557,6 +579,8 @@ only step that writes content.</p>
   
 </h3>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/mechanical-vs-non-mechanical-validation.md" class="fa-node-edit" title="Edit site-content/publication-workflow/mechanical-vs-non-mechanical-validation.md">✎ Edit</a></p>
 
 <p>The parallel gateway splits the pipeline in two, and the split is the point:</p>
 
@@ -584,6 +608,8 @@ excuse a missing review, and a clean review does not excuse a red build.</p>
   
 </h3>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/activities-and-the-skills-that-implement-them.md" class="fa-node-edit" title="Edit site-content/publication-workflow/activities-and-the-skills-that-implement-them.md">✎ Edit</a></p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -683,10 +709,12 @@ content type:
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/draft-to-publication.bpmn" class="fa-node-edit" title="Edit docs/workflows/draft-to-publication.bpmn">✎ Edit</a></p>
+
 <p>The corpus is not the publication. A <strong>draft</strong> is built from it, reviewed as a
 whole by the review team, and only then released.</p>
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-from-corpus-to-published-folio">
   <img src="assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: the corpus is built into a draft publication, QA gates run, the publication manager circulates it, the review team and SMEs review in parallel, change requests become beans that re-enter editing, and an approved draft is authorised by the programme manager and published." />
 </div>
 
@@ -789,10 +817,12 @@ asked for.</li>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/content-lifecycle.bpmn" class="fa-node-edit" title="Edit docs/workflows/content-lifecycle.bpmn">✎ Edit</a></p>
+
 <p>One cycle of a folio, plan to retire. Both diagrams above appear here as call
 activities.</p>
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-content-lifecycle-overview">
   <img src="assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs, integration test and QA sweep, draft-review-publish, feedback is triaged and filed as beans, then either another cycle or retirement." />
 </div>
 
@@ -803,14 +833,16 @@ activities.</p>
 strip, with the actors and the loops made explicit. Note that
 <code class="language-plaintext highlighter-rouge">Editing and HCI validation</code> runs <strong>once per proposed change</strong>, not once per
 cycle — the linear strip flattens that.</p><hr />
-<h2 id="the-work-plan--tasks-as-beans">
+<h2 id="the-work-plan-tasks-as-beans">
   
   
-    <a href="#the-work-plan--tasks-as-beans" class="anchor-heading" aria-labelledby="the-work-plan--tasks-as-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The work plan — tasks as beans
+    <a href="#the-work-plan-tasks-as-beans" class="anchor-heading" aria-labelledby="the-work-plan-tasks-as-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The work plan — tasks as beans
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/the-work-plan-tasks-as-beans.md" class="fa-node-edit" title="Edit site-content/publication-workflow/the-work-plan-tasks-as-beans.md">✎ Edit</a></p>
 
 <p>Every diagram has a <strong>Work plan</strong> lane, and it is not decoration. Editing work
 is tracked as <strong>beans</strong> (<a href="https://github.com/hmans/beans">hmans/beans</a>) in a
@@ -876,6 +908,8 @@ files, watcher queues) stay bulk JSON; they never become beans.</li>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/who-is-who.md" class="fa-node-edit" title="Edit site-content/publication-workflow/who-is-who.md">✎ Edit</a></p>
+
 <p>The roles in the lanes, and the actor definition each one maps to. Roles
 <strong>inherit</strong> (<code class="language-plaintext highlighter-rouge">viewer</code> → <code class="language-plaintext highlighter-rouge">reviewer</code> → <code class="language-plaintext highlighter-rouge">author</code> → <code class="language-plaintext highlighter-rouge">admin</code>) and a role’s
 capabilities bound what the agent may do on its behalf (RBAC,
@@ -888,6 +922,8 @@ capabilities bound what the agent may do on its behalf (RBAC,
   
 </h3>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/people.md" class="fa-node-edit" title="Edit site-content/publication-workflow/people.md">✎ Edit</a></p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -958,6 +994,8 @@ own lane: <code class="language-plaintext highlighter-rouge">business-analyst</c
 </h3>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/agents-and-system-actors.md" class="fa-node-edit" title="Edit site-content/publication-workflow/agents-and-system-actors.md">✎ Edit</a></p>
+
 <div class="table-wrapper"><table>
   <thead>
     <tr>
@@ -1006,6 +1044,8 @@ see <a href="skills.html#roles-actors">Skills &amp; roles</a>.</p><hr />
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/changing-these-diagrams.md" class="fa-node-edit" title="Edit site-content/publication-workflow/changing-these-diagrams.md">✎ Edit</a></p>
+
 <p>The <code class="language-plaintext highlighter-rouge">.bpmn</code> files are the source of truth.</p>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. edit docs/workflows/&lt;diagram&gt;.bpmn — in a modeler, or by hand</span>
@@ -1032,6 +1072,8 @@ failure this page exists to prevent.</p>
   
 </h3>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md" class="fa-node-edit" title="Edit site-content/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md">✎ Edit</a></p>
 
 <p>Every <strong>process</strong> in the docs is BPMN. The diagrams that remain Mermaid are not
 processes, and BPMN would be the wrong notation for them — a pool with lanes
@@ -1095,6 +1137,8 @@ it belongs in <code class="language-plaintext highlighter-rouge">docs/workflows/
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/see-also.md" class="fa-node-edit" title="Edit site-content/publication-workflow/see-also.md">✎ Edit</a></p>
+
 <ul>
   <li><a href="content-types.html">Content types</a> — the linear lifecycle and what each type produces</li>
   <li><a href="skills.html">Skills &amp; roles</a> — every skill and role, and how they compose with the LLM</li>
@@ -1115,7 +1159,7 @@ it belongs in <code class="language-plaintext highlighter-rouge">docs/workflows/
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35077230781"><code>c2c0520</code></a> &middot; 2026-09-16T09:04:29Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35079422177"><code>ba9d607</code></a> &middot; 2026-09-16T09:27:15Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

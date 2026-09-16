@@ -280,6 +280,26 @@
 </h1>
     
 
+<details open="">
+  <summary class="text-delta">On this page</summary>
+<ol id="markdown-toc">
+  <li><a href="#the-content-lifecycle" id="markdown-toc-the-content-lifecycle">The content lifecycle</a></li>
+  <li><a href="#documents-policy-guidance" id="markdown-toc-documents-policy-guidance">Documents &amp; policy guidance</a>    <ol>
+      <li><a href="#carrying-a-normative-statement" id="markdown-toc-carrying-a-normative-statement">Carrying a normative statement</a></li>
+    </ol>
+  </li>
+  <li><a href="#scientific-papers-books" id="markdown-toc-scientific-papers-books">Scientific papers &amp; books</a></li>
+  <li><a href="#who-smart-guidelines-daks-l2" id="markdown-toc-who-smart-guidelines-daks-l2">WHO SMART Guidelines DAKs (L2)</a></li>
+  <li><a href="#who-smart-implementation-guides-l3" id="markdown-toc-who-smart-implementation-guides-l3">WHO SMART Implementation Guides (L3)</a></li>
+  <li><a href="#others-extending-folio-assistant" id="markdown-toc-others-extending-folio-assistant">Others — extending folio-assistant</a></li>
+</ol>
+
+</details>
+
+<p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/site-content/content-types"><code class="language-plaintext highlighter-rouge">content/docs/content-types/</code></a> — each section below links to its own source.</em></p>
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/content-types/overview.md" class="fa-node-edit" title="Edit site-content/content-types/overview.md">✎ Edit</a></p>
+
 <p>folio-assistant is <strong>content-agnostic</strong>: the platform knows nothing about any
 particular paper or guideline. Each <em>kind</em> of content is supported by a
 <strong>content adapter</strong> (code that knows how to validate/build/render that kind) and
@@ -289,19 +309,7 @@ a <strong>skill package</strong> (the authoring formalism — what an author and
   <p>This page describes the <strong>formalism</strong> of each content type. It is intentionally
 kept separate from any concrete content; concrete artifacts live in their own
 content repository.</p>
-</blockquote>
-
-<ol id="markdown-toc">
-  <li><a href="#the-content-lifecycle" id="markdown-toc-the-content-lifecycle">The content lifecycle</a></li>
-  <li><a href="#documents--policy-guidance" id="markdown-toc-documents--policy-guidance">Documents &amp; policy guidance</a>    <ol>
-      <li><a href="#carrying-a-normative-statement" id="markdown-toc-carrying-a-normative-statement">Carrying a normative statement</a></li>
-    </ol>
-  </li>
-  <li><a href="#scientific-papers--books" id="markdown-toc-scientific-papers--books">Scientific papers &amp; books</a></li>
-  <li><a href="#who-smart-guidelines-daks-l2" id="markdown-toc-who-smart-guidelines-daks-l2">WHO SMART Guidelines DAKs (L2)</a></li>
-  <li><a href="#who-smart-implementation-guides-l3" id="markdown-toc-who-smart-implementation-guides-l3">WHO SMART Implementation Guides (L3)</a></li>
-  <li><a href="#others--extending-folio-assistant" id="markdown-toc-others--extending-folio-assistant">Others — extending folio-assistant</a></li>
-</ol><hr />
+</blockquote><hr />
 <h2 id="the-content-lifecycle">
   
   
@@ -311,10 +319,12 @@ content repository.</p>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/content-lifecycle.bpmn" class="fa-node-edit" title="Edit docs/workflows/content-lifecycle.bpmn">✎ Edit</a></p>
+
 <p>Every content type moves through the same lifecycle, provided by the
 cross-cutting <strong><code class="language-plaintext highlighter-rouge">content-lifecycle</code></strong> skill package:</p>
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-the-content-lifecycle">
   <img src="assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of one folio cycle: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs per proposed change, an integration test and QA sweep follows, then draft-review-publish; feedback is triaged and filed as beans, and the cycle either repeats or the folio is retired." />
 </div>
 
@@ -382,14 +392,16 @@ the HCI validation gate, and the editor sees the findings before anything is
 committed — and <code class="language-plaintext highlighter-rouge">review</code> happens twice, once per change and once over the
 assembled draft. Both expand into their own diagrams on the
 <strong><a href="publication-workflow.html">publication workflow</a></strong> page.</p><hr />
-<h2 id="documents--policy-guidance">
+<h2 id="documents-policy-guidance">
   
   
-    <a href="#documents--policy-guidance" class="anchor-heading" aria-labelledby="documents--policy-guidance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Documents &amp; policy guidance
+    <a href="#documents-policy-guidance" class="anchor-heading" aria-labelledby="documents-policy-guidance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Documents &amp; policy guidance
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/authoring-a-document.bpmn" class="fa-node-edit" title="Edit docs/workflows/authoring-a-document.bpmn">✎ Edit</a></p>
 
 <p><strong>Skill package:</strong> <code class="language-plaintext highlighter-rouge">authoring-document</code> ·
 <strong>Adapter:</strong> <code class="language-plaintext highlighter-rouge">document</code> ·
@@ -419,7 +431,7 @@ field or a <code class="language-plaintext highlighter-rouge">.lean</code> sibli
 <a href="reference/skills/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a>,
 <a href="reference/skills/document-publishing.html"><code class="language-plaintext highlighter-rouge">document-publishing</code></a>.</p>
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-documents-policy-guidance">
   <img src="assets/img/workflows/authoring-a-document.svg" alt="BPMN swimlane diagram of document authoring: the author plans, the plan is seeded as beans, an agent scaffolds the folio and authors blocks, the build pipeline checks the declared profile before validating and rendering to Markdown, HTML and PDF, and a reviewer gates publication." />
 </div>
 
@@ -433,6 +445,8 @@ field or a <code class="language-plaintext highlighter-rouge">.lean</code> sibli
 </h3>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/content-types/carrying-a-normative-statement.md" class="fa-node-edit" title="Edit site-content/content-types/carrying-a-normative-statement.md">✎ Edit</a></p>
+
 <p>A recommendation, requirement or rule is the block readers cite and
 implementers trace to. It wants a label, a stable identity and a place in the
 dependency graph — everything a <code class="language-plaintext highlighter-rouge">theorem</code> has — and it is emphatically not a
@@ -445,14 +459,16 @@ skill states the convention and its limits. Earlier guidance in
 <code class="language-plaintext highlighter-rouge">document-intake</code> mapped guideline recommendations onto <code class="language-plaintext highlighter-rouge">definition</code> — that
 predates this content type and is wrong for a document folio, where
 <code class="language-plaintext highlighter-rouge">definition</code> is a math kind whose <code class="language-plaintext highlighter-rouge">lean</code> field is required.</p><hr />
-<h2 id="scientific-papers--books">
+<h2 id="scientific-papers-books">
   
   
-    <a href="#scientific-papers--books" class="anchor-heading" aria-labelledby="scientific-papers--books"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Scientific papers &amp; books
+    <a href="#scientific-papers-books" class="anchor-heading" aria-labelledby="scientific-papers-books"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Scientific papers &amp; books
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/content-types/scientific-papers-books.md" class="fa-node-edit" title="Edit site-content/content-types/scientific-papers-books.md">✎ Edit</a></p>
 
 <p><strong>Skill package:</strong> <code class="language-plaintext highlighter-rouge">authoring-math</code> ·
 <strong>Adapter:</strong> <code class="language-plaintext highlighter-rouge">paper</code> ·
@@ -564,6 +580,8 @@ second rule beyond “is this kind allowed”.</p>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/l2-dak-authoring.bpmn" class="fa-node-edit" title="Edit docs/workflows/l2-dak-authoring.bpmn">✎ Edit</a></p>
+
 <p><strong>Skill package:</strong> <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> ·
 <strong>Guide:</strong> <a href="guides/who-smart-dak.html">Authoring a WHO SMART DAK</a></p>
 
@@ -585,7 +603,7 @@ authors the L2 artifacts:</p>
 <a href="reference/skills/dmn-authoring.html"><code class="language-plaintext highlighter-rouge">dmn-authoring</code></a>,
 <a href="reference/skills/terminology-management.html"><code class="language-plaintext highlighter-rouge">terminology-management</code></a>.</p>
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
   <img src="assets/img/workflows/l2-dak-authoring.svg" alt="BPMN swimlane diagram of L2 DAK authoring: a parallel gateway fans out personas, BPMN processes, DMN decision logic, the data dictionary and indicators across the business-analyst lane alongside the terminologist's bindings, then clinical SME validation gates assembly of the DAK." />
 </div>
 
@@ -598,6 +616,8 @@ authors the L2 artifacts:</p>
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/l3-fhir-pipeline.bpmn" class="fa-node-edit" title="Edit docs/workflows/l3-fhir-pipeline.bpmn">✎ Edit</a></p>
 
 <p><strong>Skill package:</strong> <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> ·
 <strong>Guide:</strong> <a href="guides/who-smart-ig.html">Authoring a WHO SMART IG</a></p>
@@ -618,19 +638,21 @@ authors the L2 artifacts:</p>
 <a href="reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a>,
 <a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a>.</p>
 
-<div class="bpmn-figure">
+<div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
   <img src="assets/img/workflows/l3-fhir-pipeline.svg" alt="BPMN swimlane diagram of the L3 pipeline: map L2 to L3, author FSH, SUSHI compile, validate against profiles with a loop back to FSH on failure, QC gates that file findings as beans, IG Publisher build, and publication of the IG site." />
 </div>
 
 <p class="bpmn-source"><a href="/folio-assistant/workflows/l3-fhir-pipeline.bpmn">BPMN 2.0 source</a> · <a href="/folio-assistant/assets/img/workflows/l3-fhir-pipeline.svg">full-size SVG</a></p><hr />
-<h2 id="others--extending-folio-assistant">
+<h2 id="others-extending-folio-assistant">
   
   
-    <a href="#others--extending-folio-assistant" class="anchor-heading" aria-labelledby="others--extending-folio-assistant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Others — extending folio-assistant
+    <a href="#others-extending-folio-assistant" class="anchor-heading" aria-labelledby="others-extending-folio-assistant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Others — extending folio-assistant
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/content-types/others-extending-folio-assistant.md" class="fa-node-edit" title="Edit site-content/content-types/others-extending-folio-assistant.md">✎ Edit</a></p>
 
 <p>New content types are first-class: add a content <strong>adapter</strong> and a skill
 <strong>package</strong>, and the lifecycle, RBAC, and MCP plumbing come for free. See
@@ -649,7 +671,7 @@ authors the L2 artifacts:</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35077230781"><code>c2c0520</code></a> &middot; 2026-09-16T09:04:29Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35079422177"><code>ba9d607</code></a> &middot; 2026-09-16T09:27:15Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

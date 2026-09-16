@@ -290,19 +290,27 @@
 </h1>
     
 
-<p>The <em>L3</em> layer turns an L2 DAK into a computable <strong>FHIR Implementation Guide</strong>.
-This guide covers authoring FHIR artifacts as FSH, compiling with SUSHI,
-validating, and publishing with the HL7 IG Publisher — all driven by the LLM.</p>
-
-<p><strong>Skill package:</strong> <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code></p>
-
+<details open="">
+  <summary class="text-delta">On this page</summary>
 <ol id="markdown-toc">
   <li><a href="#prerequisites" id="markdown-toc-prerequisites">Prerequisites</a></li>
   <li><a href="#the-l3-pipeline" id="markdown-toc-the-l3-pipeline">The L3 pipeline</a></li>
   <li><a href="#workflow" id="markdown-toc-workflow">Workflow</a></li>
   <li><a href="#a-mock-session" id="markdown-toc-a-mock-session">A mock session</a></li>
   <li><a href="#next" id="markdown-toc-next">Next</a></li>
-</ol><hr />
+</ol>
+
+</details>
+
+<p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/site-content/guides-who-smart-ig"><code class="language-plaintext highlighter-rouge">content/docs/guides/who-smart-ig/</code></a> — each section below links to its own source.</em></p>
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-who-smart-ig/overview.md" class="fa-node-edit" title="Edit site-content/guides-who-smart-ig/overview.md">✎ Edit</a></p>
+
+<p>The <em>L3</em> layer turns an L2 DAK into a computable <strong>FHIR Implementation Guide</strong>.
+This guide covers authoring FHIR artifacts as FSH, compiling with SUSHI,
+validating, and publishing with the HL7 IG Publisher — all driven by the LLM.</p>
+
+<p><strong>Skill package:</strong> <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code></p><hr />
 <h2 id="prerequisites">
   
   
@@ -311,6 +319,8 @@ validating, and publishing with the HL7 IG Publisher — all driven by the LLM.<
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-who-smart-ig/prerequisites.md" class="fa-node-edit" title="Edit site-content/guides-who-smart-ig/prerequisites.md">✎ Edit</a></p>
 
 <p>The L3 toolchain is heavier than the platform baseline. The
 <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> package’s Docker manifest provisions it; to run
@@ -358,7 +368,9 @@ locally you need:</p>
 </h2>
     
 
-<div class="bpmn-figure">
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/l3-fhir-pipeline.bpmn" class="fa-node-edit" title="Edit docs/../workflows/l3-fhir-pipeline.bpmn">✎ Edit</a></p>
+
+<div class="bpmn-figure" id="figure-the-l3-pipeline">
   <img src="../assets/img/workflows/l3-fhir-pipeline.svg" alt="BPMN swimlane diagram: the FHIR modeller maps L2 to L3 and authors FSH, the build pipeline compiles with SUSHI and validates against profiles, a failed validation returns to FSH authoring, the QC reviewer's gates file findings as beans when they fail, and a clean run goes through the IG Publisher to a published IG site." />
 </div>
 
@@ -399,6 +411,8 @@ locally you need:</p>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-who-smart-ig/workflow.md" class="fa-node-edit" title="Edit site-content/guides-who-smart-ig/workflow.md">✎ Edit</a></p>
+
 <ol>
   <li><strong>Map L2 → L3</strong> — <code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code>: turn each data element into a FHIR
 profile, each value set into a <code class="language-plaintext highlighter-rouge">ValueSet</code>, each decision into a
@@ -417,6 +431,8 @@ resources.</li>
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-who-smart-ig/a-mock-session.md" class="fa-node-edit" title="Edit site-content/guides-who-smart-ig/a-mock-session.md">✎ Edit</a></p>
 
 <blockquote>
   <p><strong>You:</strong> Generate the FHIR profile and value set for the immunization data
@@ -441,6 +457,8 @@ conformance ✓, terminology bindings resolved ✓.</p>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-who-smart-ig/next.md" class="fa-node-edit" title="Edit site-content/guides-who-smart-ig/next.md">✎ Edit</a></p>
+
 <ul>
   <li><a href="../content-types.html#who-smart-implementation-guides-l3">Content types — WHO SMART IGs</a></li>
   <li><a href="who-smart-dak.html">Authoring a WHO SMART DAK (L2)</a> — the upstream L2 layer</li>
@@ -459,7 +477,7 @@ conformance ✓, terminology bindings resolved ✓.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35077230781"><code>c2c0520</code></a> &middot; 2026-09-16T09:04:29Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35079422177"><code>ba9d607</code></a> &middot; 2026-09-16T09:27:15Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

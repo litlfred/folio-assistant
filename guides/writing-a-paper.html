@@ -290,31 +290,39 @@
 </h1>
     
 
+<details open="">
+  <summary class="text-delta">On this page</summary>
+<ol id="markdown-toc">
+  <li><a href="#the-end-to-end-workflow" id="markdown-toc-the-end-to-end-workflow">The end-to-end workflow</a></li>
+  <li><a href="#before-you-start" id="markdown-toc-before-you-start">Before you start</a></li>
+  <li><a href="#step-1-plan-the-paper" id="markdown-toc-step-1-plan-the-paper">Step 1 — Plan the paper</a></li>
+  <li><a href="#step-2-scaffold-the-repository" id="markdown-toc-step-2-scaffold-the-repository">Step 2 — Scaffold the repository</a>    <ol>
+      <li><a href="#required-gitignore-baseline" id="markdown-toc-required-gitignore-baseline">Required <code class="language-plaintext highlighter-rouge">.gitignore</code> baseline</a></li>
+    </ol>
+  </li>
+  <li><a href="#step-3-author-the-content" id="markdown-toc-step-3-author-the-content">Step 3 — Author the content</a></li>
+  <li><a href="#step-4-formalize-in-lean" id="markdown-toc-step-4-formalize-in-lean">Step 4 — Formalize in Lean</a></li>
+  <li><a href="#step-5-validate" id="markdown-toc-step-5-validate">Step 5 — Validate</a></li>
+  <li><a href="#step-6-render" id="markdown-toc-step-6-render">Step 6 — Render</a></li>
+  <li><a href="#step-7-review-feedback" id="markdown-toc-step-7-review-feedback">Step 7 — Review &amp; feedback</a></li>
+  <li><a href="#step-8-publish" id="markdown-toc-step-8-publish">Step 8 — Publish</a></li>
+  <li><a href="#what-you-end-up-with" id="markdown-toc-what-you-end-up-with">What you end up with</a></li>
+  <li><a href="#where-to-go-deeper" id="markdown-toc-where-to-go-deeper">Where to go deeper</a></li>
+</ol>
+
+</details>
+
+<p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/site-content/guides-writing-a-paper"><code class="language-plaintext highlighter-rouge">content/docs/guides/writing-a-paper/</code></a> — each section below links to its own source.</em></p>
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/overview.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/overview.md">✎ Edit</a></p>
+
 <p>This tutorial walks through authoring a rigorous scientific paper <strong>with an LLM</strong>
 driving folio-assistant: the agent plans the paper, drafts blocks, formalizes
 theorems in Lean 4, renders LaTeX, and publishes — while you steer.</p>
 
 <p>It uses a small running example — <em>“A note on the harmonic series”</em> — purely to
 illustrate the workflow. The content is not the point; the <strong>formalism and the
-LLM workflow</strong> are.</p>
-
-<ol id="markdown-toc">
-  <li><a href="#the-end-to-end-workflow" id="markdown-toc-the-end-to-end-workflow">The end-to-end workflow</a></li>
-  <li><a href="#before-you-start" id="markdown-toc-before-you-start">Before you start</a></li>
-  <li><a href="#step-1--plan-the-paper" id="markdown-toc-step-1--plan-the-paper">Step 1 — Plan the paper</a></li>
-  <li><a href="#step-2--scaffold-the-repository" id="markdown-toc-step-2--scaffold-the-repository">Step 2 — Scaffold the repository</a>    <ol>
-      <li><a href="#required-gitignore-baseline" id="markdown-toc-required-gitignore-baseline">Required <code class="language-plaintext highlighter-rouge">.gitignore</code> baseline</a></li>
-    </ol>
-  </li>
-  <li><a href="#step-3--author-the-content" id="markdown-toc-step-3--author-the-content">Step 3 — Author the content</a></li>
-  <li><a href="#step-4--formalize-in-lean" id="markdown-toc-step-4--formalize-in-lean">Step 4 — Formalize in Lean</a></li>
-  <li><a href="#step-5--validate" id="markdown-toc-step-5--validate">Step 5 — Validate</a></li>
-  <li><a href="#step-6--render" id="markdown-toc-step-6--render">Step 6 — Render</a></li>
-  <li><a href="#step-7--review--feedback" id="markdown-toc-step-7--review--feedback">Step 7 — Review &amp; feedback</a></li>
-  <li><a href="#step-8--publish" id="markdown-toc-step-8--publish">Step 8 — Publish</a></li>
-  <li><a href="#what-you-end-up-with" id="markdown-toc-what-you-end-up-with">What you end up with</a></li>
-  <li><a href="#where-to-go-deeper" id="markdown-toc-where-to-go-deeper">Where to go deeper</a></li>
-</ol><hr />
+LLM workflow</strong> are.</p><hr />
 <h2 id="the-end-to-end-workflow">
   
   
@@ -324,7 +332,9 @@ LLM workflow</strong> are.</p>
 </h2>
     
 
-<div class="bpmn-figure">
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/authoring-a-paper.bpmn" class="fa-node-edit" title="Edit docs/../workflows/authoring-a-paper.bpmn">✎ Edit</a></p>
+
+<div class="bpmn-figure" id="figure-the-end-to-end-workflow">
   <img src="../assets/img/workflows/authoring-a-paper.svg" alt="BPMN swimlane diagram: the author plans, the plan is seeded as beans, the authoring agent scaffolds the repo and drafts blocks, Lean formalisation loops until the build is green with no sorries, the build pipeline validates and renders, a reviewer either sends it back to authoring or approves it for publication." />
 </div>
 
@@ -345,6 +355,8 @@ review and release that follow, as BPMN swimlane diagrams.</p><hr />
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/before-you-start.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/before-you-start.md">✎ Edit</a></p>
+
 <ol>
   <li><a href="../installation.html">Install folio-assistant</a> and run <code class="language-plaintext highlighter-rouge">bun run check-deps</code>.
 For papers you want <code class="language-plaintext highlighter-rouge">bun</code>, <code class="language-plaintext highlighter-rouge">latexmk</code>/<code class="language-plaintext highlighter-rouge">texlive</code>, and Lean (<code class="language-plaintext highlighter-rouge">elan</code>).</li>
@@ -353,14 +365,16 @@ For papers you want <code class="language-plaintext highlighter-rouge">bun</code
   <li>Create an (empty) content repository for your paper and add a
 <code class="language-plaintext highlighter-rouge">folio.config.json</code> with <code class="language-plaintext highlighter-rouge">"contentType": "paper"</code>.</li>
 </ol><hr />
-<h2 id="step-1--plan-the-paper">
+<h2 id="step-1-plan-the-paper">
   
   
-    <a href="#step-1--plan-the-paper" class="anchor-heading" aria-labelledby="step-1--plan-the-paper"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 1 — Plan the paper
+    <a href="#step-1-plan-the-paper" class="anchor-heading" aria-labelledby="step-1-plan-the-paper"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 1 — Plan the paper
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/step-1-plan-the-paper.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/step-1-plan-the-paper.md">✎ Edit</a></p>
 
 <p>Start by asking the agent to load the planning skill and propose a structure.
 Behind the scenes it calls <code class="language-plaintext highlighter-rouge">skill_fetch content-plan</code>.</p>
@@ -392,14 +406,16 @@ sessions:</p>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans create <span class="s2">"Draft harmonic-series paper: blocks + Lean"</span>
 beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>
 </code></pre></div></div>
-<h2 id="step-2--scaffold-the-repository">
+<h2 id="step-2-scaffold-the-repository">
   
   
-    <a href="#step-2--scaffold-the-repository" class="anchor-heading" aria-labelledby="step-2--scaffold-the-repository"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 2 — Scaffold the repository
+    <a href="#step-2-scaffold-the-repository" class="anchor-heading" aria-labelledby="step-2-scaffold-the-repository"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 2 — Scaffold the repository
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/step-2-scaffold-the-repository.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/step-2-scaffold-the-repository.md">✎ Edit</a></p>
 
 <p>The agent creates the block files and a <code class="language-plaintext highlighter-rouge">main.tex</code>, then confirms with
 <code class="language-plaintext highlighter-rouge">content_list</code>.</p>
@@ -411,6 +427,8 @@ beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt"
   
 </h3>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/required-gitignore-baseline.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/required-gitignore-baseline.md">✎ Edit</a></p>
 
 <p>Every new folio repository starts with these entries. They are not optional
 polish — agent sandboxes accumulate scratch directories as untracked state, and
@@ -483,14 +501,16 @@ under <code class="language-plaintext highlighter-rouge">content/harmonic-series
 For $n <span class="se">\g</span>e 1$, the <span class="ge">*$n$-th harmonic partial sum*</span> is
 $$ H_n = <span class="se">\s</span>um_{k=1}^{n} <span class="se">\f</span>rac{1}{k}. $$
 </code></pre></div></div>
-<h2 id="step-3--author-the-content">
+<h2 id="step-3-author-the-content">
   
   
-    <a href="#step-3--author-the-content" class="anchor-heading" aria-labelledby="step-3--author-the-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 3 — Author the content
+    <a href="#step-3-author-the-content" class="anchor-heading" aria-labelledby="step-3-author-the-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 3 — Author the content
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/step-3-author-the-content.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/step-3-author-the-content.md">✎ Edit</a></p>
 
 <p>Ask the agent to draft prose and statements; review and refine conversationally.</p>
 
@@ -505,14 +525,16 @@ I kept the statement Lean-friendly so it maps cleanly to <code class="language-p
 <p>A mock of the chat-driven authoring session:</p>
 
 <p><img src="/folio-assistant/assets/img/mock-chat.svg" alt="Mock chat: the author and the assistant drafting blocks" /></p>
-<h2 id="step-4--formalize-in-lean">
+<h2 id="step-4-formalize-in-lean">
   
   
-    <a href="#step-4--formalize-in-lean" class="anchor-heading" aria-labelledby="step-4--formalize-in-lean"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 4 — Formalize in Lean
+    <a href="#step-4-formalize-in-lean" class="anchor-heading" aria-labelledby="step-4-formalize-in-lean"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 4 — Formalize in Lean
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/step-4-formalize-in-lean.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/step-4-formalize-in-lean.md">✎ Edit</a></p>
 
 <p>Now the agent sets up Lean and formalizes the definition and theorem, calling
 <code class="language-plaintext highlighter-rouge">lean_setup</code>, <code class="language-plaintext highlighter-rouge">lean_build</code>, and <code class="language-plaintext highlighter-rouge">lean_check</code>.</p>
@@ -554,14 +576,16 @@ ready (Lean 4.16.0). I added:</p>
     LLM-&gt;&gt;MCP: lean_build
     MCP--&gt;&gt;LLM: green, 0 sorries
 </code></pre>
-<h2 id="step-5--validate">
+<h2 id="step-5-validate">
   
   
-    <a href="#step-5--validate" class="anchor-heading" aria-labelledby="step-5--validate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 5 — Validate
+    <a href="#step-5-validate" class="anchor-heading" aria-labelledby="step-5-validate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 5 — Validate
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/step-5-validate.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/step-5-validate.md">✎ Edit</a></p>
 
 <p>Validation checks every block against its schema and the project’s constraint
 rules (label prefixes, required Lean links, citation resolution, …).</p>
@@ -573,14 +597,16 @@ rules (label prefixes, required Lean links, citation resolution, …).</p>
 <code class="language-plaintext highlighter-rouge">def:</code> block has its required Lean link ✓, theorem has a proof block ✓, example
 references a defined symbol ✓.</p>
 </blockquote>
-<h2 id="step-6--render">
+<h2 id="step-6-render">
   
   
-    <a href="#step-6--render" class="anchor-heading" aria-labelledby="step-6--render"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 6 — Render
+    <a href="#step-6-render" class="anchor-heading" aria-labelledby="step-6-render"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 6 — Render
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/step-6-render.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/step-6-render.md">✎ Edit</a></p>
 
 <p>The agent renders a PDF (and/or HTML) with the paper adapter.</p>
 
@@ -601,14 +627,16 @@ references a defined symbol ✓.</p>
 
   <p><strong>Assistant:</strong> <em>(calls <code class="language-plaintext highlighter-rouge">paper_preferences action=set latex_engine=lualatex render_scope=section</code>)</em> Saved.</p>
 </blockquote>
-<h2 id="step-7--review--feedback">
+<h2 id="step-7-review-feedback">
   
   
-    <a href="#step-7--review--feedback" class="anchor-heading" aria-labelledby="step-7--review--feedback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 7 — Review &amp; feedback
+    <a href="#step-7-review-feedback" class="anchor-heading" aria-labelledby="step-7-review-feedback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 7 — Review &amp; feedback
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/step-7-review-feedback.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/step-7-review-feedback.md">✎ Edit</a></p>
 
 <p>Reviewer feedback is captured in the feedback store and routed back into the
 authoring loop (<code class="language-plaintext highlighter-rouge">content-review</code> / <code class="language-plaintext highlighter-rouge">content-feedback</code>).</p>
@@ -619,14 +647,16 @@ authoring loop (<code class="language-plaintext highlighter-rouge">content-revie
   <p><strong>Assistant:</strong> <em>(records feedback, edits <code class="language-plaintext highlighter-rouge">ex:H4</code> → adds $H_8$, re-validates,
 re-renders)</em> Done; feedback item resolved.</p>
 </blockquote>
-<h2 id="step-8--publish">
+<h2 id="step-8-publish">
   
   
-    <a href="#step-8--publish" class="anchor-heading" aria-labelledby="step-8--publish"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 8 — Publish
+    <a href="#step-8-publish" class="anchor-heading" aria-labelledby="step-8-publish"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 8 — Publish
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/step-8-publish.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/step-8-publish.md">✎ Edit</a></p>
 
 <p>Finally, publish the rendered artifacts. In CI this is the <code class="language-plaintext highlighter-rouge">publish</code> workflow;
 locally the agent runs <code class="language-plaintext highlighter-rouge">content_build</code> and the render tools, then commits.</p>
@@ -650,6 +680,8 @@ marked resolved.</p>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/what-you-end-up-with.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/what-you-end-up-with.md">✎ Edit</a></p>
+
 <ul>
   <li>A paper as a tree of <strong>typed, validated blocks</strong></li>
   <li>A <strong>Lean 4 formalization</strong> with zero <code class="language-plaintext highlighter-rouge">sorry</code>s and a clean axiom audit</li>
@@ -664,6 +696,8 @@ marked resolved.</p>
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-paper/where-to-go-deeper.md" class="fa-node-edit" title="Edit site-content/guides-writing-a-paper/where-to-go-deeper.md">✎ Edit</a></p>
 
 <ul>
   <li><a href="../content-types.html#scientific-papers--books">Content types — papers &amp; books</a></li>
@@ -694,7 +728,7 @@ your own session under <code class="language-plaintext highlighter-rouge">docs/a
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35077230781"><code>c2c0520</code></a> &middot; 2026-09-16T09:04:29Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35079422177"><code>ba9d607</code></a> &middot; 2026-09-16T09:27:15Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

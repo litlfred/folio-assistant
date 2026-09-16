@@ -280,10 +280,8 @@
 </h1>
     
 
-<p>How a dropped file becomes an <strong>L1 source</strong> the corpus can cite — expressed as
-<strong>BPMN 2.0 swimlane diagrams</strong>, with the Ingestion Engine as a named actor and
-every not-yet-built step linked to the bean that tracks it.</p>
-
+<details open="">
+  <summary class="text-delta">On this page</summary>
 <ol id="markdown-toc">
   <li><a href="#uploads-and-library-are-two-stages-of-one-pipeline" id="markdown-toc-uploads-and-library-are-two-stages-of-one-pipeline"><code class="language-plaintext highlighter-rouge">uploads/</code> and <code class="language-plaintext highlighter-rouge">library/</code> are two stages of one pipeline</a></li>
   <li><a href="#library-is-l1" id="markdown-toc-library-is-l1"><code class="language-plaintext highlighter-rouge">library/</code> is L1</a></li>
@@ -297,7 +295,17 @@ every not-yet-built step linked to the bean that tracks it.</p>
   <li><a href="#what-is-not-built-yet" id="markdown-toc-what-is-not-built-yet">What is not built yet</a></li>
   <li><a href="#how-much-of-this-does-dublin-core-carry" id="markdown-toc-how-much-of-this-does-dublin-core-carry">How much of this does Dublin Core carry?</a></li>
   <li><a href="#editing-an-ingested-source" id="markdown-toc-editing-an-ingested-source">Editing an ingested source</a></li>
-</ol><hr />
+</ol>
+
+</details>
+
+<p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/site-content/document-ingestion"><code class="language-plaintext highlighter-rouge">content/docs/document-ingestion/</code></a> — each section below links to its own source.</em></p>
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/overview.md" class="fa-node-edit" title="Edit site-content/document-ingestion/overview.md">✎ Edit</a></p>
+
+<p>How a dropped file becomes an <strong>L1 source</strong> the corpus can cite — expressed as
+<strong>BPMN 2.0 swimlane diagrams</strong>, with the Ingestion Engine as a named actor and
+every not-yet-built step linked to the bean that tracks it.</p><hr />
 <h2 id="uploads-and-library-are-two-stages-of-one-pipeline">
   
   
@@ -306,6 +314,8 @@ every not-yet-built step linked to the bean that tracks it.</p>
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md" class="fa-node-edit" title="Edit site-content/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md">✎ Edit</a></p>
 
 <p>They are not the same directory under two names, and the distinction is
 load-bearing:</p>
@@ -351,6 +361,8 @@ absent one, because it produces false confidence rather than a gap.</p>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/library-is-l1.md" class="fa-node-edit" title="Edit site-content/document-ingestion/library-is-l1.md">✎ Edit</a></p>
+
 <p>Anything under <code class="language-plaintext highlighter-rouge">library/</code> is <strong>L1 source content</strong>. Any knowledge-graph
 reference to a source — from a paper, an L2 DAK, an L3 IG, or any other
 artefact — resolves to it <strong>through <code class="language-plaintext highlighter-rouge">library/</code></strong>, never to a loose path or a
@@ -370,7 +382,9 @@ placed there is silently dropped.</p>
 </h2>
     
 
-<div class="bpmn-figure">
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/document-ingestion.bpmn" class="fa-node-edit" title="Edit docs/workflows/document-ingestion.bpmn">✎ Edit</a></p>
+
+<div class="bpmn-figure" id="figure-the-pipeline">
   <img src="assets/img/workflows/document-ingestion.svg" alt="BPMN swimlane diagram: a contributor drops a file in uploads; the Ingestion Engine detects its media type and mints a doc id, then calls four subprocesses in turn — extract structure, derive content, build the L1 knowledge graph, and the L1 completeness gate; an incomplete result opens a bean on the shared work plan and returns to the derive step, while a complete one is moved into library under its bibliography slug and becomes citeable as an L1 source." />
 </div>
 
@@ -403,7 +417,9 @@ same corpus an author edits and a reviewer reviews.</p>
 </h3>
     
 
-<div class="bpmn-figure">
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/ingest-extract-structure.bpmn" class="fa-node-edit" title="Edit docs/workflows/ingest-extract-structure.bpmn">✎ Edit</a></p>
+
+<div class="bpmn-figure" id="figure-extract-structure">
   <img src="assets/img/workflows/ingest-extract-structure.svg" alt="BPMN diagram: from a binary, an exclusive gateway asks whether there is an embedded text layer; if yes the text layer is extracted, if no the document is OCR'd to per-page text files; both paths split the result into section markdown files carrying a document brief, then write structure.json and extract claim candidates." />
 </div>
 
@@ -427,7 +443,9 @@ a hit is interpretable without opening anything else.</p>
 </h3>
     
 
-<div class="bpmn-figure">
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/ingest-derive-content.bpmn" class="fa-node-edit" title="Edit docs/workflows/ingest-derive-content.bpmn">✎ Edit</a></p>
+
+<div class="bpmn-figure" id="figure-derive-content">
   <img src="assets/img/workflows/ingest-derive-content.svg" alt="BPMN diagram: a parallel gateway fans out per asset kind — archive contents manifest, technical file metadata, localized image descriptions, audio transcription and translation, and tabular metadata — then joins, and every generated narrative is stamped with the human or agent that authored it." />
 </div>
 
@@ -452,7 +470,9 @@ descriptions findable as a set later. It is unrecoverable once lost.</p>
 </h3>
     
 
-<div class="bpmn-figure">
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/ingest-build-l1-kg.bpmn" class="fa-node-edit" title="Edit docs/workflows/ingest-build-l1-kg.bpmn">✎ Edit</a></p>
+
+<div class="bpmn-figure" id="figure-build-the-l1-knowledge-graph">
   <img src="assets/img/workflows/ingest-build-l1-kg.svg" alt="BPMN diagram: the engine writes a Dublin Core record, then a manifest referencing it, then the assets array with local paths or remote URLs, then binds the folder name to the bibliography slug; the corpus lane links the resulting L1 nodes into the knowledge graph." />
 </div>
 
@@ -473,7 +493,9 @@ directory are the same string.</p>
 </h3>
     
 
-<div class="bpmn-figure">
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/ingest-l1-completeness-gate.bpmn" class="fa-node-edit" title="Edit docs/workflows/ingest-l1-completeness-gate.bpmn">✎ Edit</a></p>
+
+<div class="bpmn-figure" id="figure-the-l1-completeness-gate">
   <img src="assets/img/workflows/ingest-l1-completeness-gate.svg" alt="BPMN swimlane diagram: the engine checks that every derived artefact is present, runs round-trip translation QA, and an exclusive gateway routes drift or bad terminology to a reviewer for adjudication before the L1 completeness verdict is recorded." />
 </div>
 
@@ -497,6 +519,8 @@ that edge goes to a reviewer.</p><hr />
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/what-is-not-built-yet.md" class="fa-node-edit" title="Edit site-content/document-ingestion/what-is-not-built-yet.md">✎ Edit</a></p>
 
 <p>Every one of these is drawn in the diagrams above and tracked as a bean. None is
 implemented.</p>
@@ -566,6 +590,8 @@ implemented.</p>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/how-much-of-this-does-dublin-core-carry.md" class="fa-node-edit" title="Edit site-content/document-ingestion/how-much-of-this-does-dublin-core-carry.md">✎ Edit</a></p>
+
 <p>Some of it, and it is worth being exact about which, because the answer decides
 whether a field is a <code class="language-plaintext highlighter-rouge">dcterms</code> term or something this project invents.</p>
 
@@ -594,6 +620,8 @@ memory.</p>
 </h2>
     
 
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/editing-an-ingested-source.md" class="fa-node-edit" title="Edit site-content/document-ingestion/editing-an-ingested-source.md">✎ Edit</a></p>
+
 <p>Ingestion never edits corpus content. It produces L1 records; authoring and
 review consume them through the ordinary flow in
 <a href="publication-workflow.html">the publication workflow</a>, where a change to a
@@ -616,7 +644,7 @@ new source becomes citeable when the gate passes — not before.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35077230781"><code>c2c0520</code></a> &middot; 2026-09-16T09:04:29Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35079422177"><code>ba9d607</code></a> &middot; 2026-09-16T09:27:15Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
