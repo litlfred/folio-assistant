@@ -26,6 +26,8 @@ on:
       - 'schemas/block-kinds.ts'
       - 'content/pipeline/gen-block-jsonld.ts'
       - 'content/pipeline/gen-library-jsonld.ts'
+      - 'content/pipeline/gen-site-jsonld.ts'
+      - 'site-content/**'
       - 'library/**/structure.json'
       - 'library/**/candidates.json'
       - 'scripts/gen-jsonld-context.ts'
@@ -40,6 +42,8 @@ on:
       - 'schemas/block-kinds.ts'
       - 'content/pipeline/gen-block-jsonld.ts'
       - 'content/pipeline/gen-library-jsonld.ts'
+      - 'content/pipeline/gen-site-jsonld.ts'
+      - 'site-content/**'
       - 'library/**/structure.json'
       - 'library/**/candidates.json'
       - 'scripts/gen-jsonld-context.ts'
@@ -82,6 +86,13 @@ jobs:
       # document that no longer exists in that shape.
       - name: Library nodes in sync
         run: bun run content/pipeline/gen-library-jsonld.ts --check
+
+      # The docs site's own graph. Separate from the block half because the
+      # site is not a folio -- `gen-block-jsonld` declines to run here by
+      # design, and re-merging the two populations is what broke the
+      # empty-corpus audit once already.
+      - name: Site graph drift (site-content/)
+        run: bun run content/pipeline/gen-site-jsonld.ts --check
 
       - name: Label resolution + emitter tests
         run: |
