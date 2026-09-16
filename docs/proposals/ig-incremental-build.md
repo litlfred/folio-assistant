@@ -734,7 +734,8 @@ smaller asks each have a precedent already in the code.
 ### 8.2 The asks
 
 Four asks. The first is the one that matters; the other three are small and each has a
-precedent in the code.
+precedent in the code. §8.4 states each as the **smallest code change** that would do,
+with file and line, after the investigation §8.5 records.
 
 #### A. The AST — serialise what the publisher already computes
 
@@ -761,9 +762,15 @@ Phrased for any CI, because every CI runner is ephemeral.
 
 | # | Ask | Today | Without it |
 |---|---|---|---|
-| **B1** | A **state directory** for the differential build — `-rapido-state <dir>` or a `path-rapido-state` IG parameter — holding the tracker and what `temp/` a differential build needs, with the contract stated ("restore this and a differential build is valid"), and a machine-readable statement when it fell back to a complete build, and why. | `.build-tracker.ini` lives inside the terminology-cache directory (`Publisher.java:378`); `temp/` is cleared on complete builds only; the contract is inferred from the code. | Persist `txCache/` (which carries the tracker) and `temp/` wholesale, and observe. |
-| **B2** | **Load once.** Separate "load dependencies, template, terminology" from "process this IG" so the loaded context survives a watch iteration and a second differential pass. | Every watch iteration constructs a fresh `PublisherFields` and re-runs `Load IG` (`Publisher.java:207–216`). | The validator's `server` mode covers validation only (D); the publisher pays the load every run. |
-| **B3** | **Graduate it**: a stable flag, a statement of which outputs are exact in differential mode and which are approximate (cross-references from unchanged pages; the aggregates), tests. | `-rapido` / `-cascais`, "Report issues to Grahame on Zulip". | The skip lists: exact, coarser. |
+| **B1** | **Carry the skipped files' validation messages across a differential build**, and say in `qa-time-report.json` which mode ran and why (the smallest form is §8.4 B). | A differential build validates only `changeList` (`PublisherProcessor.java:501`); unchanged files' errors are cleared at load and never restored, yet `qa.html`, `qa.json` and `validation-summary.json` are built from all of `fileList` — so they undercount. The only signal of the mode is the `Rapido Mode: …` log line. | Assemble the QA aggregate ourselves from per-file records (§5.2, R8). |
+| **B2** | *(larger; not part of the smallest ask)* **Load once.** Separate "load dependencies, template, terminology" from "process this IG" so the loaded context survives a watch iteration and a second differential pass. | Every watch iteration constructs a fresh `PublisherFields` and re-runs `Load IG` (`Publisher.java:207–216`). | The validator's `server` mode covers validation only (D); the publisher pays the load every run. |
+| **B3** | **Graduate it**: a stable flag and a statement of which outputs are exact in differential mode — §8.5 records what the code says today: the aggregates are exact, the QA is not until B1. | `-rapido` / `-cascais`, "Report issues to Grahame on Zulip". | The skip lists: exact, coarser. |
+
+Not asked, because the investigation in §8.5 showed it unnecessary: a state directory or
+tracker path (the tracker already lives in the terminology-cache directory a CI
+restores), a flag to stop `temp/` being flushed (a normal build never flushes it; a
+differential build keeps it by design), and a caller-supplied change list (the
+publisher's own hash diff is dependency-aware).
 
 #### C. A render-only mode
 
@@ -795,6 +802,108 @@ a documentation ask.
 What stays on our side of the line, deliberately: the branch caches and their layout,
 the selective terminology restore, the Just the Docs landing page and pipeline, the
 `.ts` content model, the cone tool. None of it needs the publisher to know it exists.
+
+### 8.4 The smallest change per ask
+
+One sentence of why, three sentences of change, each located in the source read on
+2026-09-16. Anything larger than this is not what is being asked.
+
+**A. The AST.** *Why:* the publisher computes every resource's dependencies, outcome,
+fragments and timings on every run and discards them at the end; writing them down
+changes no behaviour and any consumer can read them. *Change:* (1) In
+`Publisher.recordOutcome()` (`Publisher.java` ≈698–708), where the loop over
+`pf.fileList` writes `qa-time-report.json`'s `files[]` through
+`FetchedFile.processReport()` (`FetchedFile.java:322`), add to each file entry a
+`resources[]` array carrying, per `FetchedResource`, its `fhirType`, `id`, `url`, the
+file's `getHash()` and `getCalcHash()`, the paths of `f.getDependencies()`, and
+`f.getErrors()` as `{severity, type, location, message}`. (2) Call
+`loadDependencyList(f, igf)` (`Publisher.java:948`) for every file in
+`checkDependencies()` regardless of `settings.isRapidoMode()`, so `getDependencies()`
+is populated in every build and not only under `-rapido`. (3) Record the fragment names
+each file produced from `pf.fragmentUses` (`PublisherBase.FragmentUseRecord`,
+`PublisherBase.java:1579`, filled at `PublisherGenerator.java:2503`) into the same
+entries, and add a top-level `toolchain` object with `Constants.VERSION`,
+`pf.templatePck`, the terminology server and `pf.dependencyList` — all of which
+`recordOutcome()` already has in hand when it writes `qa.json`.
+
+**B. Differential builds from an ephemeral runner.** *Why:* Rapido's differential build
+already keeps `temp/`, keeps its tracker in a directory a CI can restore, and
+regenerates every aggregate from the full file list — the one thing it loses is the
+validation messages of the files it skips, so the QA aggregate of a differential build
+undercounts. *Change:* (1) At the end of `PublisherProcessor.validate()`, after the
+loop over `pf.changeList` (`PublisherProcessor.java:501`), write each validated file's
+`getErrors()` to `temp/_qa/<file path>.json` — `temp/` already survives a differential
+build. (2) In the differential branch of `Publisher.checkDependencies()`
+(`Publisher.java:940–944`), for every file in `pf.fileList` that is not in
+`pf.changeList`, load that file's saved messages back into `f.getErrors()`, so
+`qa.html` (`Publisher.java:448`), `qa.json` and `validation-summary.json`
+(`PublisherGenerator.java:4452, 4469`) describe the whole IG. (3) In
+`recordOutcome()`, add to `qa-time-report.json` a top-level
+`build: {mode: "complete"|"differential", reason: "no-tracker"|"no-changes"|"all-changed"|"after-failure"|"differential", changed: N}`
+so a pipeline can tell what happened without parsing the
+`Rapido Mode: …` log line.
+
+**C. Render-only.** *Why:* a consumer with its own site pipeline wants the render as
+files with a contract, not a finished site, and the switch already exists for one
+consumer. *Change:* (1) Add `-no-jekyll` to the parameter parsing in `Publisher.main`
+beside `-generation-off` (`Publisher.java` ≈1460), setting a `noJekyll` boolean on
+`PublisherSettings` like `generationOff` (`PublisherSettings.java:17`). (2) In
+`PublisherGenerator.runTool()` (`PublisherGenerator.java` ≈3921–3929) add
+`if (settings.isNoJekyll()) return true;` next to the existing
+`isSimplifierMode()` early return, and skip the HTML inspection the way
+`isGenerationOff()` already does at `PublisherGenerator.java:557`. (3) Document that
+with `-no-jekyll` the deliverable is `temp/` — pages at its root, fragments under
+`temp/_includes/` as `<Type>-<id>-<kind>.xhtml` — the same layout Simplifier consumes.
+
+**D. The validator as a service.** *Why:* the loaded context exists only in a warm
+process, and the service that keeps it warm already exists — `FhirValidatorHttpService`
+serves `/validateResource`, `/snapshot`, `/narrative`, `/loadIG`, `/convert`,
+`/transform`, `/fhirpath`, `/compile`, `/version` (version conversion) and `/stop`
+(`FhirValidatorHttpService.java:54–69`) — so what is missing is only knowing what a
+running instance holds. *Change:* (1) Add a `/status` handler beside the others,
+returning JSON with the validator version, the FHIR version, the loaded packages as
+`id#version` from `engine.getIgs()` (the list `/loadIG` appends to,
+`LoadIGHTTPHandler.java:33`) and the terminology server, so an orchestrator can confirm
+the warm engine matches the toolchain it expects. (2) Update the `server` command's
+help text (`HTTPServerCommand.java`) to list the endpoints it actually serves; today it
+names `/validateResource` alone. (3) Document that starting the server with `-ig` on the
+IG's own `package.tgz` (snapshots present) and `-txCache` on a restored cache is the
+supported warm start, relying on `ContextUtilities.generateSnapshot`
+(`ContextUtilities.java:263`) leaving present snapshots alone.
+
+### 8.5 What the investigation found, and what is therefore not asked
+
+The question was whether a flag is needed to stop the publisher flushing `temp/`, so
+that an external pipeline can manage the state. **No flag is needed.** `temp/` is
+cleared in exactly four places: `clearTempFolder()` in the three complete-build
+branches of `checkDependencies()` (`Publisher.java:891, 933, 937`) and the template
+dev-mode branch of the loader (`PublisherIGLoader.java:899`); a normal build never
+flushes it, and a differential build keeps it by design. `output/` is cleared every
+run (`PublisherIGLoader.java:973`) and is regenerated by Jekyll from `temp/`, so it
+needs no persistence.
+
+The differential machinery is always on: `addFile()` puts every file into
+`changeList` unless `-rapido` is set (`PublisherBase.java:618`), so the per-file loops —
+validation (`PublisherProcessor.java:501`), narratives (`:1224`), native, HTML and
+spreadsheet outputs (`PublisherGenerator.java:270–309`) — run over everything in a
+normal build and over the changed set under `-rapido`. Every aggregate — summary
+outputs, canonical summary, profile, extension and logical lists, definitions, the
+validation pack, the spec file — loops over `fileList` and is regenerated in full every
+time. The tracker's hashes are of content (`calculateHash()`), so a fresh checkout with
+new timestamps does not invalidate anything, and `getCalcHash()` folds in a file's
+dependencies, which is how a ValueSet edit re-validates the profiles bound to it. The
+tracker's `status.complete=true` is written only after QA (`Publisher.java:452`), and a
+tracker left at `started && !complete` forces a complete build (`Publisher.java:888`) —
+so persisting state only from a green run is not merely our seed rule, it is what the
+publisher expects.
+
+Therefore not asked: a `-tracker` path (we restore the terminology-cache directory it
+lives in anyway), a caller-supplied change list (`getCalcHash()` is dependency-aware and
+more accurate than our source-level cone), a temp flag (there is no flush to stop), and
+new validator endpoints (they exist). Still true and still ours: `-rapido` is
+experimental, and the state to restore is two directories — `txCache/` (tracker and
+terminology cache) and `temp/` — keyed by the toolchain slug and taken only from a build
+whose tracker reads complete.
 
 ## Not done, and not verified
 
