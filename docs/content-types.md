@@ -14,9 +14,9 @@ nav_order: 4
 {:toc}
 </details>
 
-_This page is generated from [`content/docs/content-types/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/content-types) — each section below links to its own source._
+_This page is generated from [`content/docs/content-types/`](https://github.com/litlfred/folio-assistant/tree/main/site-content/content-types) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/overview.md){: .fa-node-edit title="Edit content/docs/content-types/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/content-types/overview.md){: .fa-node-edit title="Edit site-content/content-types/overview.md" }
 
 folio-assistant is **content-agnostic**: the platform knows nothing about any
 particular paper or guideline. Each *kind* of content is supported by a
@@ -111,7 +111,7 @@ Relevant skill schemas:
 ### Carrying a normative statement
 {: #carrying-a-normative-statement }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/carrying-a-normative-statement.md){: .fa-node-edit title="Edit content/docs/content-types/carrying-a-normative-statement.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/content-types/carrying-a-normative-statement.md){: .fa-node-edit title="Edit site-content/content-types/carrying-a-normative-statement.md" }
 
 A recommendation, requirement or rule is the block readers cite and
 implementers trace to. It wants a label, a stable identity and a place in the
@@ -131,7 +131,7 @@ predates this content type and is wrong for a document folio, where
 ## Scientific papers & books
 {: #scientific-papers-books }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/scientific-papers-books.md){: .fa-node-edit title="Edit content/docs/content-types/scientific-papers-books.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/content-types/scientific-papers-books.md){: .fa-node-edit title="Edit site-content/content-types/scientific-papers-books.md" }
 
 **Skill package:** `authoring-math` ·
 **Adapter:** `paper` ·
@@ -257,7 +257,7 @@ Relevant skill schemas:
 ## Others — extending folio-assistant
 {: #others-extending-folio-assistant }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/others-extending-folio-assistant.md){: .fa-node-edit title="Edit content/docs/content-types/others-extending-folio-assistant.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/content-types/others-extending-folio-assistant.md){: .fa-node-edit title="Edit site-content/content-types/others-extending-folio-assistant.md" }
 
 New content types are first-class: add a content **adapter** and a skill
 **package**, and the lifecycle, RBAC, and MCP plumbing come for free. See

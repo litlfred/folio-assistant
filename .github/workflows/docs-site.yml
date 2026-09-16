@@ -24,7 +24,7 @@ on:
       - 'schemas/**'
       - 'scripts/gen-schema-docs.ts'
       - 'scripts/gen-docs-pages.ts'
-      - 'content/docs/**'
+      - 'site-content/**'
       - 'scripts/render-bpmn.ts'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
@@ -55,7 +55,7 @@ jobs:
       - name: Regenerate skill instruction pages
         run: bun run scripts/gen-skill-docs.ts
 
-      # Pages assembled from content/docs/<slug>/. Regenerated here for the
+      # Pages assembled from site-content/<slug>/. Regenerated here for the
       # same reason as the two above: the committed copy is browsable on
       # GitHub, and the published one must never be the stale half of that
       # pair. The --check form is the PR gate (code-quality-gates.yml); this is

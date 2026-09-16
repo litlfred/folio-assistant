@@ -10,7 +10,7 @@ slug = sys.argv[1]
 ROOT = "/home/user/folio-assistant"
 src = os.path.join(ROOT, "docs", f"{slug}.md")
 flat = slug.replace("/", "-")
-out = os.path.join(ROOT, "content", "docs", flat)
+out = os.path.join(ROOT, "site-content", flat)
 os.makedirs(out, exist_ok=True)
 
 raw = open(src).read()
@@ -132,7 +132,7 @@ for name, content in files.items():
     open(os.path.join(out, name), "w").write(content)
     stem = name[:-3]
     open(os.path.join(out, f"{stem}.ts"), "w").write(
-        'import { prose } from "../../schema/builders";\n\n'
+        'import { prose } from "../../schemas/builders.ts";\n\n'
         "export default prose({\n"
         f'  label: "sec:{flat}-{stem}",\n'
         "});\n"
@@ -141,7 +141,7 @@ for name, content in files.items():
 def ts(v):
     return json.dumps(v, ensure_ascii=False)
 
-lines = ['import { webpage } from "../../../schemas/webpage.ts";', "", "export default webpage({"]
+lines = ['import { webpage } from "../../schemas/webpage.ts";', "", "export default webpage({"]
 lines.append(f"  slug: {ts(slug)},")
 lines.append(f"  title: {ts(title)},")
 if page_h1 and page_h1 != title:

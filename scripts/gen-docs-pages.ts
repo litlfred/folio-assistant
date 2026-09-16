@@ -36,7 +36,23 @@ import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const SRC_DIR = join(REPO_ROOT, "content", "docs");
+// `site-content/`, NOT `content/docs/`, and the reason is a platform
+// invariant rather than taste: folio-assistant holds NO folio content. The
+// jsonld CI gate says so in as many words ("the block half no-ops -- the
+// platform holds no papers"), and `scripts/tests/audit-empty-corpus.test.ts`
+// enforces it by running `qa-section-title-audit` against this repo and
+// requiring it to find nothing and REFUSE, on the rule that auditing nothing
+// is a failure rather than a pass.
+//
+// A first cut put these pages under `content/docs/`. The audit promptly
+// reported "7 titles across 7 chapters" and exited 0 with three green ticks --
+// the platform had acquired a folio, and a gate designed to catch an audit
+// reading nothing was instead reading the docs site. Measured, not predicted.
+//
+// So the site's own source lives outside `content/`. It is not a folio, it is
+// the platform's documentation, and keeping the two apart is what lets the
+// emptiness gate keep working.
+const SRC_DIR = join(REPO_ROOT, "site-content");
 const OUT_DIR = join(REPO_ROOT, "docs");
 const REPO_WEB = "https://github.com/litlfred/folio-assistant";
 const EDIT_BASE = `${REPO_WEB}/edit/main`;
@@ -57,7 +73,7 @@ let written = 0;
 function editTarget(page: WebPage, node: WebPageNode): string | null {
   if (node.asset) return node.asset.source;
   const narrative = node.block ?? node.lead;
-  if (narrative) return `content/docs/${page.slug.replace(/\//g, "-")}/${narrative}.md`;
+  if (narrative) return `site-content/${page.slug.replace(/\//g, "-")}/${narrative}.md`;
   return null;
 }
 
@@ -147,7 +163,7 @@ function renderPage(page: WebPage): string {
   lines.push("</details>");
   lines.push("");
   lines.push(
-    `_This page is generated from [\`content/docs/${page.slug}/\`](${REPO_WEB}/tree/main/content/docs/${page.slug.replace(/\//g, "-")}) — ` +
+    `_This page is generated from [\`content/docs/${page.slug}/\`](${REPO_WEB}/tree/main/site-content/${page.slug.replace(/\//g, "-")}) — ` +
       `each section below links to its own source._`,
   );
   lines.push("");
