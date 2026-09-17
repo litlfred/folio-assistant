@@ -718,6 +718,20 @@ export interface BlockBase {
    * helper that emits matching `*.witness.json` files.
    */
   computation?: Computation;
+  /**
+   * BCP 47 language tag of this block's **source** content.
+   *
+   * Defaults to the folio's `translation.defaultLocale` (itself defaulting
+   * to `"en"`) when absent. Explicitly set only when a block is authored in
+   * a language other than the folio default — the common case is omission.
+   *
+   * This is the *source* language, not a translation. Translations of this
+   * block live in `translations/<locale>/` subdirectories alongside the
+   * block's own files, each carrying its own `status.json` with the target
+   * locale. See `schemas/translation.ts` for the translation status schema
+   * and `docs/translation-support.md` for the architecture.
+   */
+  lang?: string;
 }
 
 // ── Blocks that REQUIRE Lean ─────────────────────────────────────
