@@ -726,12 +726,41 @@ export interface BlockBase {
    * a language other than the folio default — the common case is omission.
    *
    * This is the *source* language, not a translation. Translations of this
-   * block live in `translations/<locale>/` subdirectories alongside the
-   * block's own files, each carrying its own `status.json` with the target
-   * locale. See `schemas/translation.ts` for the translation status schema
-   * and `docs/translation-support.md` for the architecture.
+   * block live in `translations/<locale>/` as `.po` files alongside their
+   * `.ts` manifests (TranslationNode). See `schemas/translation.ts` for
+   * the schema and `docs/translation-support.md` for the architecture.
    */
   lang?: string;
+  /**
+   * One or more PO file sources that carry translations for this block.
+   *
+   * Each entry is a path relative to the folio root, pointing to a `.po`
+   * file or to a `TranslationNode` `.ts` manifest (which itself references
+   * the `.po`). Multiple entries enable compositional translation — e.g. a
+   * block that draws terminology from a shared glossary PO and has its own
+   * block-level PO on top.
+   *
+   * ## Resolution order (fallback behavior)
+   *
+   * When `poSources` is **not declared** (the common case), the pipeline
+   * resolves PO files by convention:
+   *
+   * 1. **Block-level:** `translations/<locale>/<block-stem>.po`
+   * 2. **Chapter-level:** `translations/<locale>/<chapter-slug>.po`
+   * 3. **Folio-level:** `translations/<locale>/global.po`
+   * 4. **Dependency walk:** walk `folio.config.json` dependencies
+   *    depth-first, looking for matching PO files in each dependency's
+   *    `translations/<locale>/` directory
+   *
+   * When `poSources` **is declared**, only the listed files are consulted
+   * (no fallback). This is useful when a block needs translations from a
+   * specific non-standard location, or when the automatic resolution
+   * would pick the wrong file.
+   *
+   * Each PO source is loaded in array order; later entries override earlier
+   * ones for the same msgid, so the most specific source should be last.
+   */
+  poSources?: string[];
 }
 
 // ── Blocks that REQUIRE Lean ─────────────────────────────────────

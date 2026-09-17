@@ -1,9 +1,44 @@
 /**
- * Translation status and metadata for localized content nodes.
+ * Translation status, metadata, and node schemas for localized content.
  *
- * Each translated content node (block, section, chapter) carries a
- * `status.json` in its `translations/<locale>/` directory. This module
- * defines the shape of that file and the Zod schema that validates it.
+ * ## The translations/ directory
+ *
+ * The top-level `translations/` directory contains **only** `.pot` templates,
+ * `.po` translated files, and their `.ts` manifests (TranslationNode).
+ * Rendered output (`.md`), QA sidecars (`.qa.json`), and status metadata
+ * are properties of the TranslationNode manifest, not loose files.
+ *
+ * ```
+ * translations/
+ *   fr/
+ *     index.ts            ← TranslationNode manifest (KG node)
+ *     index.pot           ← POT template (extractable strings)
+ *     index.po            ← PO translated strings
+ *     agent-onboarding.ts
+ *     agent-onboarding.pot
+ *     agent-onboarding.po
+ *     glossary.ts         ← shared glossary PO (no POT — hand-authored)
+ *     glossary.po
+ * ```
+ *
+ * Each `.ts` file is a `TranslationNode` that references its `.po` and
+ * `.pot` siblings. This makes every translation file a **node in the
+ * knowledge graph** — addressable by label, discoverable by the pipeline,
+ * and validatable by the same content-object infrastructure that manages
+ * content blocks.
+ *
+ * ## PO source resolution (fallback behavior)
+ *
+ * When a content block does NOT declare `poSources[]` (the common case),
+ * the pipeline resolves PO files by convention:
+ *
+ * 1. **Block-level:** `translations/<locale>/<block-stem>.po`
+ * 2. **Chapter-level:** `translations/<locale>/<chapter-slug>.po`
+ * 3. **Folio-level:** `translations/<locale>/global.po`
+ * 4. **Dependency walk:** `folio.config.json` dependencies, depth-first
+ *
+ * When `poSources[]` IS declared on BlockBase, only the listed files are
+ * consulted (no fallback). Later entries override earlier for the same msgid.
  *
  * ## Official vs unofficial
  *
@@ -152,6 +187,174 @@ export const TranslationStatusSchema = z.object({
 
   flaggedForReview: z.boolean().optional(),
   flagReason: z.string().min(1).optional(),
+});
+
+// ── TranslationNode — .ts manifest for PO/POT files ─────────────
+
+/**
+ * A **TranslationNode** is a `.ts` manifest that wraps a `.po`/`.pot` pair
+ * as a first-class node in the knowledge graph.
+ *
+ * ## Why .ts manifests?
+ *
+ * Raw `.po` and `.pot` files are opaque to the content-object model —
+ * the pipeline can list them from the filesystem, but they are not nodes
+ * that can be:
+ *
+ * - **addressed by label** (`"trans:fr/index"`)
+ * - **referenced in `uses[]` or `poSources[]`**
+ * - **validated** by the same Zod-based schema infrastructure
+ * - **queried** as edges in the knowledge graph
+ *
+ * The `.ts` manifest makes them all of those things. It is a thin wrapper
+ * — the translation content stays in the `.po` file, but the node carries
+ * the metadata that makes it a first-class citizen.
+ *
+ * ## File layout
+ *
+ * ```
+ * translations/fr/index.ts      ← this manifest
+ * translations/fr/index.pot     ← POT template (optional — omit for glossaries)
+ * translations/fr/index.po      ← PO translated strings
+ * ```
+ *
+ * ## Example manifest
+ *
+ * ```ts
+ * import type { TranslationNode } from "../../schemas/translation";
+ *
+ * const node: TranslationNode = {
+ *   label: "trans:fr/index",
+ *   locale: "fr",
+ *   sourceFile: "docs/index.md",
+ *   potFile: "translations/fr/index.pot",
+ *   poFile: "translations/fr/index.po",
+ *   status: { locale: "fr", official: false, generatedBy: "agent" },
+ *   coverage: { translated: 37, total: 37, pct: 100 },
+ *   roundTripQA: { pass: 11, warn: 4, fail: 21, total: 36 },
+ * };
+ * export default node;
+ * ```
+ */
+export interface TranslationNode {
+  /**
+   * Label following the `trans:<locale>/<stem>` convention.
+   *
+   * This is the KG-addressable identifier. Content blocks reference it
+   * in `poSources[]`, and the dependency graph can walk edges to it.
+   */
+  label: string;
+
+  /** BCP 47 locale tag of the target language. */
+  locale: string;
+
+  /**
+   * Path (relative to folio root) of the **source** file this PO
+   * translates. For content blocks, this is the `.md` sibling.
+   */
+  sourceFile: string;
+
+  /**
+   * SHA-256 hash (12-char prefix) of the source file at extraction time.
+   * Used for staleness detection — if the current source hash differs,
+   * the POT is stale and needs re-extraction.
+   */
+  sourceHash?: string;
+
+  /**
+   * Path to the `.pot` template file (relative to folio root).
+   * Optional — omit for hand-authored glossary PO files that have no
+   * extractable source.
+   */
+  potFile?: string;
+
+  /**
+   * Path to the `.po` translated file (relative to folio root).
+   * This is the file that carries the actual translations.
+   */
+  poFile: string;
+
+  /**
+   * One or more additional PO files this translation depends on.
+   * Useful for shared glossaries or terminology POs that provide
+   * base translations overridden by the primary `poFile`.
+   *
+   * Loaded in order; the primary `poFile` is loaded last and
+   * overrides any duplicates.
+   */
+  poIncludes?: string[];
+
+  /** Translation status (official/unofficial, staleness, etc.). */
+  status: TranslationStatus;
+
+  /** Translation coverage metrics. */
+  coverage?: {
+    /** Number of msgid entries with a non-empty msgstr. */
+    translated: number;
+    /** Total msgid entries in the POT. */
+    total: number;
+    /** Coverage percentage (0–100). */
+    pct: number;
+  };
+
+  /**
+   * Round-trip semantic QA results.
+   *
+   * Recorded by the translation pipeline when it back-translates each
+   * string and measures semantic similarity. Stored here (not in a
+   * separate .qa.json) so the QA results are part of the node and
+   * travel with it.
+   */
+  roundTripQA?: {
+    /** Strings that passed round-trip verification (similarity ≥ threshold). */
+    pass: number;
+    /** Strings with possible semantic drift (similarity between warn and pass thresholds). */
+    warn: number;
+    /** Strings with detected semantic drift (similarity below warn threshold). */
+    fail: number;
+    /** Total strings verified. */
+    total: number;
+    /** Method used (e.g. "jaccard-word-overlap", "llm-cosine-similarity"). */
+    method?: string;
+  };
+
+  /** Optional title for display in the viewer / docs. */
+  title?: string;
+
+  /** Optional description of what this PO file covers. */
+  description?: string;
+}
+
+/** Zod schema for `TranslationNode`. */
+export const TranslationNodeSchema = z.object({
+  label: z.string().regex(/^trans:[a-z]{2,}\//, {
+    message: 'label must follow "trans:<locale>/<stem>" convention',
+  }),
+  locale: z.string().min(2),
+  sourceFile: z.string().min(1),
+  sourceHash: z.string().min(1).optional(),
+  potFile: z.string().endsWith(".pot").optional(),
+  poFile: z.string().endsWith(".po"),
+  poIncludes: z.array(z.string().endsWith(".po")).optional(),
+  status: TranslationStatusSchema,
+  coverage: z
+    .object({
+      translated: z.number().int().min(0),
+      total: z.number().int().min(0),
+      pct: z.number().min(0).max(100),
+    })
+    .optional(),
+  roundTripQA: z
+    .object({
+      pass: z.number().int().min(0),
+      warn: z.number().int().min(0),
+      fail: z.number().int().min(0),
+      total: z.number().int().min(0),
+      method: z.string().optional(),
+    })
+    .optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
 });
 
 // ── Translation config (folio.config.json section) ───────────────

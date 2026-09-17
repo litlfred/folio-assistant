@@ -49,64 +49,94 @@ FRBR pattern already argued for in bean `p2en`: a block varies along two axes �
 Expression of the same Work.
 
 ```
-content/<chapter>/<section>/<block>/
-├── block.ts            # manifest (source, lang: "en")
-├── block.md            # English prose body
-├── block.lean          # formal companion (language-independent)
-├── translations/
-│   ├── fr/
-│   │   ├── block.md        # French prose body
-│   │   ├── block.po         # French PO file (msgid/msgstr pairs)
-│   │   └── status.json      # { official: true, signedOffBy: "...", signedOffAt: "...", sourceHash: "abc123" }
-│   ├── es/
-│   │   ├── block.md
-│   │   ├── block.po
-│   │   └── status.json
-│   └── ar/
-│       ├── block.md
-│       ├── block.po
-│       └── status.json
+translations/
+├── fr/
+│   ├── index.ts             # TranslationNode manifest (KG node)
+│   ├── index.pot            # POT template (extractable strings)
+│   ├── index.po             # PO translated strings
+│   ├── agent-onboarding.ts
+│   ├── agent-onboarding.pot
+│   ├── agent-onboarding.po
+│   ├── glossary.ts          # shared glossary PO (no POT)
+│   └── glossary.po
+├── es/
+│   └── ...
+└── ar/
+    └── ...
 ```
 
-### Language on `BlockBase`
+The `translations/` directory contains **only** `.pot` templates, `.po`
+translated files, and their `.ts` manifests (`TranslationNode`). Rendered
+output (`.md`) lives in `docs/<locale>/`; QA results and status metadata
+are properties of the `TranslationNode` manifest, not separate files.
 
-The block manifest gains an optional `lang` field:
+### TranslationNode — .ts manifests as KG nodes
+
+Each `.po`/`.pot` pair is wrapped by a `.ts` manifest that makes it a
+**first-class node in the knowledge graph**:
+
+```typescript
+import type { TranslationNode } from "../../schemas/translation";
+
+const node: TranslationNode = {
+  label: "trans:fr/index",        // KG-addressable label
+  locale: "fr",
+  sourceFile: "docs/index.md",
+  potFile: "translations/fr/index.pot",
+  poFile: "translations/fr/index.po",
+  status: { locale: "fr", official: false, generatedBy: "agent" },
+  coverage: { translated: 37, total: 37, pct: 100 },
+  roundTripQA: { pass: 11, warn: 4, fail: 21, total: 36 },
+};
+export default node;
+```
+
+This makes translation files:
+- **Addressable by label** (`"trans:fr/index"`)
+- **Referenceable** in `poSources[]` on content blocks
+- **Validatable** by the same Zod-based schema infrastructure
+- **Queryable** as edges in the knowledge graph
+
+### Language and PO sources on `BlockBase`
+
+The block manifest has two optional fields for translation:
 
 ```typescript
 export interface BlockBase {
   // ... existing fields ...
   /** BCP 47 language tag of the source content. Defaults to folio's defaultLocale. */
   lang?: string;
+  /**
+   * One or more PO file sources for this block. Each entry is a path
+   * to a .po file or a TranslationNode .ts manifest. Multiple entries
+   * enable compositional translation (e.g. glossary + block-level PO).
+   */
+  poSources?: string[];
 }
 ```
 
-This is the **source** language. Translations live in the `translations/`
-subdirectory and carry their own language in the directory name.
+### PO source resolution (fallback behavior)
+
+When `poSources` is **not declared** (the common case), the pipeline
+resolves PO files by convention:
+
+1. **Block-level:** `translations/<locale>/<block-stem>.po`
+2. **Chapter-level:** `translations/<locale>/<chapter-slug>.po`
+3. **Folio-level:** `translations/<locale>/global.po`
+4. **Dependency walk:** walk `folio.config.json` dependencies depth-first,
+   looking for matching PO files in each dependency's `translations/<locale>/`
+
+When `poSources` **is declared**, only the listed files are consulted (no
+fallback). Each source is loaded in array order; later entries override
+earlier ones for the same msgid, so the most specific source should be last.
 
 ### Chapter and section level translations
 
-The same `translations/<locale>/` convention applies at every level of the
-content hierarchy:
-
-```
-content/<chapter>/
-├── chapter.ts              # chapter manifest
-├── translations/
-│   ├── fr/
-│   │   ├── chapter-title.md   # translated chapter title / front matter
-│   │   └── status.json
-│   └── es/
-│       └── ...
-├── <section>/
-│   ├── section.ts
-│   ├── translations/
-│   │   └── fr/
-│   │       └── ...
-│   └── <block>/
-│       └── translations/
-│           └── fr/
-│               └── ...
-```
+The same convention applies at every level of the content hierarchy. The
+`translations/` directory is always at the folio root — not nested inside
+`content/<chapter>/` — because PO files are translation artifacts, not
+content companions. They are referenced from content blocks via `poSources[]`
+or resolved by the fallback chain above.
 
 ---
 
