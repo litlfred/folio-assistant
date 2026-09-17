@@ -15,9 +15,9 @@ nav_order: 2
 {:toc}
 </details>
 
-_This page is generated from [`site-content/guides-writing-a-document/`](https://github.com/litlfred/folio-assistant/tree/main/site-content/guides-writing-a-document) — each section below links to its own source._
+_This page is generated from [`content/docs/guides-writing-a-document/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/guides-writing-a-document) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/overview.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/overview.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/overview.md" }
 
 Policy guidance, a standard, a report, a handbook — structured prose, authored
 with an LLM, published without a TeX installation.
@@ -55,7 +55,7 @@ them. No Lean. No LaTeX.
 ## 1 · Scaffold the folio
 {: #1-scaffold-the-folio }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/1-scaffold-the-folio.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/1-scaffold-the-folio.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/1-scaffold-the-folio.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/1-scaffold-the-folio.md" }
 
 In a new, empty repository:
 
@@ -89,7 +89,7 @@ The starter block is a placeholder that says so. Replace it.
 ## 2 · The content model
 {: #2-the-content-model }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/2-the-content-model.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/2-the-content-model.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/2-the-content-model.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/2-the-content-model.md" }
 
 ```
 content/cold-chain-guidance/
@@ -109,7 +109,7 @@ reviewed, and the block renders nowhere because nothing lists it.
 ### The kinds you may use
 {: #the-kinds-you-may-use }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/the-kinds-you-may-use.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/the-kinds-you-may-use.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/the-kinds-you-may-use.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/the-kinds-you-may-use.md" }
 
 `prose`, `example`, `remark`, `algorithm`, `simulator`, `equation`, `diagram`,
 `table`.
@@ -122,7 +122,7 @@ when you try to publish.
 ### `uses[]` matters more here than in a paper
 {: #uses-matters-more-here-than-in-a-paper }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md" }
 
 `uses[]` lists the blocks a **reader** must already have read to follow this
 one. It is an editorial judgement — nothing derives it, and nothing should.
@@ -138,7 +138,7 @@ it. List direct neighbours only.
 ## 3 · Author with the agent
 {: #3-author-with-the-agent }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/3-author-with-the-agent.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/3-author-with-the-agent.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/3-author-with-the-agent.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/3-author-with-the-agent.md" }
 
 Ask in plain language. The agent loads the skills it needs over MCP.
 
@@ -160,7 +160,7 @@ Reads `uses[]` and the content graph.
 ### Carrying a recommendation
 {: #carrying-a-recommendation }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/carrying-a-recommendation.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/carrying-a-recommendation.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/carrying-a-recommendation.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/carrying-a-recommendation.md" }
 
 A normative statement is the block readers cite and implementers trace to. It
 wants a label, a stable identity and a place in the dependency graph.
@@ -197,7 +197,7 @@ skill.
 ## 4 · Validate
 {: #4-validate }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/4-validate.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/4-validate.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/4-validate.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/4-validate.md" }
 
 ```
 content_validate          schema + constraints + profile conformance
@@ -222,7 +222,7 @@ when that is what you actually meant.
 ## 5 · Render
 {: #5-render }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/5-render.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/5-render.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/5-render.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/5-render.md" }
 
 ```
 content/**  →  document_render_md   →  build/<slug>.md
@@ -256,7 +256,7 @@ outputs cannot drift.
 ### Not implemented
 {: #not-implemented }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/not-implemented.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/not-implemented.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/not-implemented.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/not-implemented.md" }
 
 No citations, no bibliography, no glossary, no automatic cross-reference
 numbering. `\cite{…}` passes through **verbatim**, visible in the output rather
@@ -274,7 +274,7 @@ working.
 ## Moving between content types
 {: #moving-between-content-types }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/moving-between-content-types.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/moving-between-content-types.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/moving-between-content-types.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/moving-between-content-types.md" }
 
 `folio.config.json`'s `contentType` is the switch.
 
@@ -290,7 +290,7 @@ lists exactly what is in the way.
 ## Where things are
 {: #where-things-are }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-writing-a-document/where-things-are.md){: .fa-node-edit title="Edit site-content/guides-writing-a-document/where-things-are.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/where-things-are.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/where-things-are.md" }
 
 | | |
 |---|---|

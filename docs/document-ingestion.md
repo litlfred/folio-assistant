@@ -14,9 +14,9 @@ nav_order: 7
 {:toc}
 </details>
 
-_This page is generated from [`site-content/document-ingestion/`](https://github.com/litlfred/folio-assistant/tree/main/site-content/document-ingestion) — each section below links to its own source._
+_This page is generated from [`content/docs/document-ingestion/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/document-ingestion) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/overview.md){: .fa-node-edit title="Edit site-content/document-ingestion/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/overview.md){: .fa-node-edit title="Edit content/docs/document-ingestion/overview.md" }
 
 How a dropped file becomes an **L1 source** the corpus can cite — expressed as
 **BPMN 2.0 swimlane diagrams**, with the Ingestion Engine as a named actor and
@@ -27,7 +27,7 @@ every not-yet-built step linked to the bean that tracks it.
 ## `uploads/` and `library/` are two stages of one pipeline
 {: #uploads-and-library-are-two-stages-of-one-pipeline }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md){: .fa-node-edit title="Edit site-content/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md){: .fa-node-edit title="Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md" }
 
 They are not the same directory under two names, and the distinction is
 load-bearing:
@@ -47,7 +47,7 @@ absent one, because it produces false confidence rather than a gap.
 ## `library/` is L1
 {: #library-is-l1 }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/library-is-l1.md){: .fa-node-edit title="Edit site-content/document-ingestion/library-is-l1.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/library-is-l1.md){: .fa-node-edit title="Edit content/docs/document-ingestion/library-is-l1.md" }
 
 Anything under `library/` is **L1 source content**. Any knowledge-graph
 reference to a source — from a paper, an L2 DAK, an L3 IG, or any other
@@ -183,7 +183,7 @@ that edge goes to a reviewer.
 ## What is not built yet
 {: #what-is-not-built-yet }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/what-is-not-built-yet.md){: .fa-node-edit title="Edit site-content/document-ingestion/what-is-not-built-yet.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/what-is-not-built-yet.md){: .fa-node-edit title="Edit content/docs/document-ingestion/what-is-not-built-yet.md" }
 
 Every one of these is drawn in the diagrams above and tracked as a bean. None is
 implemented.
@@ -203,7 +203,7 @@ implemented.
 ## How much of this does Dublin Core carry?
 {: #how-much-of-this-does-dublin-core-carry }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/how-much-of-this-does-dublin-core-carry.md){: .fa-node-edit title="Edit site-content/document-ingestion/how-much-of-this-does-dublin-core-carry.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md){: .fa-node-edit title="Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md" }
 
 Some of it, and it is worth being exact about which, because the answer decides
 whether a field is a `dcterms` term or something this project invents.
@@ -228,7 +228,7 @@ memory.
 ## Editing an ingested source
 {: #editing-an-ingested-source }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/document-ingestion/editing-an-ingested-source.md){: .fa-node-edit title="Edit site-content/document-ingestion/editing-an-ingested-source.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/editing-an-ingested-source.md){: .fa-node-edit title="Edit content/docs/document-ingestion/editing-an-ingested-source.md" }
 
 Ingestion never edits corpus content. It produces L1 records; authoring and
 review consume them through the ordinary flow in

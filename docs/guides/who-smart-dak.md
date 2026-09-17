@@ -15,9 +15,9 @@ nav_order: 2
 {:toc}
 </details>
 
-_This page is generated from [`site-content/guides-who-smart-dak/`](https://github.com/litlfred/folio-assistant/tree/main/site-content/guides-who-smart-dak) — each section below links to its own source._
+_This page is generated from [`content/docs/guides-who-smart-dak/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/guides-who-smart-dak) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-who-smart-dak/overview.md){: .fa-node-edit title="Edit site-content/guides-who-smart-dak/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/overview.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/overview.md" }
 
 A **Digital Adaptation Kit (DAK)** is the *L2* — machine-readable but
 implementation-neutral — representation of a WHO SMART Guideline. This guide
@@ -51,7 +51,7 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 ## Workflow
 {: #workflow }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-who-smart-dak/workflow.md){: .fa-node-edit title="Edit site-content/guides-who-smart-dak/workflow.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/workflow.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/workflow.md" }
 
 1. **Plan** — `content-plan`: enumerate the processes, decisions, and data
    elements the guideline implies; identify actors (business analyst, clinical
@@ -70,7 +70,7 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 ## A mock session
 {: #a-mock-session }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-who-smart-dak/a-mock-session.md){: .fa-node-edit title="Edit site-content/guides-who-smart-dak/a-mock-session.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/a-mock-session.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/a-mock-session.md" }
 
 > **You:** Plan the L2 DAK for the immunization guideline — I need the
 > "administer vaccine" process and the "is the client due" decision.
@@ -90,7 +90,7 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 ## Next
 {: #next }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/guides-who-smart-dak/next.md){: .fa-node-edit title="Edit site-content/guides-who-smart-dak/next.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/next.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/next.md" }
 
 Turn the L2 DAK into a computable FHIR Implementation Guide →
 [Authoring a WHO SMART IG (L3)](who-smart-ig.html).

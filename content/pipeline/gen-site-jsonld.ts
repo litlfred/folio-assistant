@@ -1,5 +1,5 @@
 /**
- * Emit the docs site's own JSON-LD graph from `site-content/`.
+ * Emit the docs site's own JSON-LD graph from `content/docs/`.
  *
  * STRAWPERSON — a first cut, deliberately. The shape here (page node ->
  * ordered `contains` -> one node per child) mirrors `gen-library-jsonld.ts`
@@ -13,11 +13,11 @@
  * That generator walks `content/<paper>/` and REFUSES when it finds nothing:
  * "folio-assistant is the platform; papers live in the folio repo." That
  * refusal is load-bearing — `scripts/tests/audit-empty-corpus.test.ts`
- * enforces the same invariant from the audit side, and a docs page under
- * `content/` already broke it once this week (the section-title audit reported
- * "7 titles across 7 chapters" over the docs site and exited 0). Teaching the
- * block generator to also read `site-content/` would re-merge the two
- * populations the platform/folio split exists to keep apart.
+ * enforces the same invariant from the audit side. The docs live under
+ * `content/docs/`, which both `gen-block-jsonld.ts` and the section-title
+ * audit skip when walking paper directories — keeping the two populations
+ * (folio content vs platform documentation) apart without an out-of-tree
+ * `site-content/` workaround.
  *
  * So the site gets its own emitter, its own IRI space (`site/<slug>`), and its
  * own gate. It shares the published `@context` and the `folio:` / `doco:`
@@ -51,7 +51,7 @@ import {
 import type { WebPage, WebPageNode } from "../../schemas/webpage.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const SRC_DIR = join(REPO_ROOT, "site-content");
+const SRC_DIR = join(REPO_ROOT, "content", "docs");
 
 const check = process.argv.includes("--check");
 let written = 0;
@@ -108,7 +108,7 @@ function nodeDoc(page: WebPage, node: WebPageNode, flat: string): Record<string,
   }
   // Recorded so a consumer can find the file without re-deriving the
   // flattening rule from the slug.
-  doc.meta = { ...((doc.meta as Record<string, unknown>) ?? {}), sourceDir: `site-content/${flat}` };
+  doc.meta = { ...((doc.meta as Record<string, unknown>) ?? {}), sourceDir: `content/docs/${flat}` };
   return doc;
 }
 
@@ -128,7 +128,7 @@ if (flats.length === 0) {
   // nothing is a failure: a clean run on an empty tree is indistinguishable
   // from a clean run on a healthy one, and that is exactly how a broken path
   // survives a gate.
-  console.error("gen-site-jsonld: site-content/ exists but holds no pages — refusing to report success.");
+  console.error("gen-site-jsonld: content/docs/ exists but holds no pages — refusing to report success.");
   process.exit(1);
 }
 
@@ -155,7 +155,7 @@ for (const flat of flats) {
     provenance: "authored",
     meta: {
       publishedAt: `${page.slug}.html`,
-      sourceDir: `site-content/${flat}`,
+      sourceDir: `content/docs/${flat}`,
       ...(page.navOrder !== undefined ? { navOrder: page.navOrder } : {}),
       ...(page.parent ? { navParent: page.parent } : {}),
     },
