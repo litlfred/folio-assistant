@@ -14,9 +14,9 @@ nav_order: 6
 {:toc}
 </details>
 
-_This page is generated from [`site-content/publication-workflow/`](https://github.com/litlfred/folio-assistant/tree/main/site-content/publication-workflow) — each section below links to its own source._
+_This page is generated from [`content/docs/publication-workflow/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/publication-workflow) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/overview.md){: .fa-node-edit title="Edit site-content/publication-workflow/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/overview.md){: .fa-node-edit title="Edit content/docs/publication-workflow/overview.md" }
 
 How a change gets from *an editor had an idea* to *the folio is officially
 published* — expressed as **BPMN 2.0 swimlane diagrams**, with the roles, the
@@ -27,7 +27,7 @@ validation gate, the skills, and the shared work plan all named.
 ## Every workflow in the repo
 {: #every-workflow-in-the-repo }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/every-workflow-in-the-repo.md){: .fa-node-edit title="Edit site-content/publication-workflow/every-workflow-in-the-repo.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/every-workflow-in-the-repo.md){: .fa-node-edit title="Edit content/docs/publication-workflow/every-workflow-in-the-repo.md" }
 
 Six BPMN 2.0 files, all under
 [`docs/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/docs/workflows).
@@ -60,7 +60,7 @@ sit *inside* level 3's `Draft the block edit`, and live with their guides:
 ### They also run
 {: #they-also-run }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/they-also-run.md){: .fa-node-edit title="Edit site-content/publication-workflow/they-also-run.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/they-also-run.md){: .fa-node-edit title="Edit content/docs/publication-workflow/they-also-run.md" }
 
 Since bean `fq0b` these files are not only pictures. The MCP server interprets
 them: `workflow_start` opens an instance for a subject, `workflow_next` reports
@@ -77,7 +77,7 @@ that the commit boundary is the right place — is in
 ### Some decisions are computed, not judged
 {: #some-decisions-are-computed-not-judged }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/some-decisions-are-computed-not-judged.md){: .fa-node-edit title="Edit site-content/publication-workflow/some-decisions-are-computed-not-judged.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/some-decisions-are-computed-not-judged.md){: .fa-node-edit title="Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md" }
 
 Ten exclusive gateways sit across the six diagrams, and they are not all the
 same kind of question. `Accept, revise or discard?` is the editor's call.
@@ -102,7 +102,7 @@ tool emits looks authoritative and is not.
 ### The base processes are strict
 {: #the-base-processes-are-strict }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/the-base-processes-are-strict.md){: .fa-node-edit title="Edit site-content/publication-workflow/the-base-processes-are-strict.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-base-processes-are-strict.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-base-processes-are-strict.md" }
 
 The three content-agnostic diagrams — editing, draft-to-publication, lifecycle —
 carry `<folio:policy enforcement="strict"/>`. `workflow_gate` refuses a step
@@ -137,7 +137,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 ### How to read them
 {: #how-to-read-them }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/how-to-read-them.md){: .fa-node-edit title="Edit site-content/publication-workflow/how-to-read-them.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/how-to-read-them.md){: .fa-node-edit title="Edit content/docs/publication-workflow/how-to-read-them.md" }
 
 - **A lane is a role.** Every lane maps to an actor in
   [`.claude/skills/actors/`](https://github.com/litlfred/folio-assistant/tree/main/.claude/skills/actors) —
@@ -171,7 +171,7 @@ content block**.
 ### The one rule this diagram exists to state
 {: #the-one-rule-this-diagram-exists-to-state }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/the-one-rule-this-diagram-exists-to-state.md){: .fa-node-edit title="Edit site-content/publication-workflow/the-one-rule-this-diagram-exists-to-state.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md" }
 
 **Nothing reaches the corpus before the editor has seen the findings.** The
 authoring agent produces a *proposed* change, not a commit. That proposal fans
@@ -183,7 +183,7 @@ only step that writes content.
 ### Mechanical vs non-mechanical validation
 {: #mechanical-vs-non-mechanical-validation }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/mechanical-vs-non-mechanical-validation.md){: .fa-node-edit title="Edit site-content/publication-workflow/mechanical-vs-non-mechanical-validation.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md){: .fa-node-edit title="Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md" }
 
 The parallel gateway splits the pipeline in two, and the split is the point:
 
@@ -205,7 +205,7 @@ excuse a missing review, and a clean review does not excuse a red build.
 ### Activities and the skills that implement them
 {: #activities-and-the-skills-that-implement-them }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/activities-and-the-skills-that-implement-them.md){: .fa-node-edit title="Edit site-content/publication-workflow/activities-and-the-skills-that-implement-them.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md){: .fa-node-edit title="Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md" }
 
 | Activity | Lane | Skill |
 |----------|------|-------|
@@ -311,7 +311,7 @@ cycle — the linear strip flattens that.
 ## The work plan — tasks as beans
 {: #the-work-plan-tasks-as-beans }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/the-work-plan-tasks-as-beans.md){: .fa-node-edit title="Edit site-content/publication-workflow/the-work-plan-tasks-as-beans.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-work-plan-tasks-as-beans.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md" }
 
 Every diagram has a **Work plan** lane, and it is not decoration. Editing work
 is tracked as **beans** ([hmans/beans](https://github.com/hmans/beans)) in a
@@ -346,7 +346,7 @@ Why it is modelled as a lane rather than a note:
 ## Who is who
 {: #who-is-who }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/who-is-who.md){: .fa-node-edit title="Edit site-content/publication-workflow/who-is-who.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/who-is-who.md){: .fa-node-edit title="Edit content/docs/publication-workflow/who-is-who.md" }
 
 The roles in the lanes, and the actor definition each one maps to. Roles
 **inherit** (`viewer` → `reviewer` → `author` → `admin`) and a role's
@@ -356,7 +356,7 @@ capabilities bound what the agent may do on its behalf (RBAC,
 ### People
 {: #people }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/people.md){: .fa-node-edit title="Edit site-content/publication-workflow/people.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/people.md){: .fa-node-edit title="Edit content/docs/publication-workflow/people.md" }
 
 | In the diagrams | Actor | Authority |
 |-----------------|-------|-----------|
@@ -377,7 +377,7 @@ own lane: `business-analyst` (L2 DAK), `fhir-modeller` (L3 FHIR),
 ### Agents and system actors
 {: #agents-and-system-actors }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/agents-and-system-actors.md){: .fa-node-edit title="Edit site-content/publication-workflow/agents-and-system-actors.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/agents-and-system-actors.md){: .fa-node-edit title="Edit content/docs/publication-workflow/agents-and-system-actors.md" }
 
 | In the diagrams | Actor | What it does — and what it cannot do |
 |-----------------|-------|--------------------------------------|
@@ -399,7 +399,7 @@ see [Skills & roles](skills.html#roles-actors).
 ## Changing these diagrams
 {: #changing-these-diagrams }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/changing-these-diagrams.md){: .fa-node-edit title="Edit site-content/publication-workflow/changing-these-diagrams.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/changing-these-diagrams.md){: .fa-node-edit title="Edit content/docs/publication-workflow/changing-these-diagrams.md" }
 
 The `.bpmn` files are the source of truth.
 
@@ -424,7 +424,7 @@ failure this page exists to prevent.
 ### Which diagrams are BPMN, and which are not
 {: #which-diagrams-are-bpmn-and-which-are-not }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md){: .fa-node-edit title="Edit site-content/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md){: .fa-node-edit title="Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md" }
 
 Every **process** in the docs is BPMN. The diagrams that remain Mermaid are not
 processes, and BPMN would be the wrong notation for them — a pool with lanes
@@ -448,7 +448,7 @@ it belongs in `docs/workflows/` as BPMN, not in a Mermaid fence.
 ## See also
 {: #see-also }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/site-content/publication-workflow/see-also.md){: .fa-node-edit title="Edit site-content/publication-workflow/see-also.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/see-also.md){: .fa-node-edit title="Edit content/docs/publication-workflow/see-also.md" }
 
 - [Content types](content-types.html) — the linear lifecycle and what each type produces
 - [Skills & roles](skills.html) — every skill and role, and how they compose with the LLM

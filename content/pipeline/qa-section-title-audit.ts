@@ -155,8 +155,8 @@ function findChapterManifests(paperFilter?: string): string[] {
   const contentDir = resolve("content");
   for (const paper of readdirSync(contentDir)) {
     if (paperFilter && paper !== paperFilter) continue;
-    // Skip tooling / dependency dirs — only paper dirs hold chapters.
-    if (paper === "node_modules" || paper === "schema" || paper === "pipeline" || paper.startsWith(".")) continue;
+    // Skip tooling / dependency / docs dirs — only paper dirs hold chapters.
+    if (paper === "node_modules" || paper === "schema" || paper === "pipeline" || paper === "docs" || paper.startsWith(".")) continue;
     const paperPath = join(contentDir, paper);
     try { if (!statSync(paperPath).isDirectory()) continue; } catch { continue; }
     let dirs: string[];
