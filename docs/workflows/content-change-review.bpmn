@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             id="Definitions_1"
+             targetNamespace="https://folio-assistant.dev/workflows"
+             exporter="folio-assistant" exporterVersion="0.1.0">
+
+  <collaboration id="Collaboration_1">
+    <participant id="Author" name="Content Author" processRef="Process_Author" />
+    <participant id="Agent" name="Folio-Assistant Agent" processRef="Process_Agent" />
+    <participant id="Reviewer" name="Review Committee" processRef="Process_Reviewer" />
+    <participant id="Pipeline" name="CI/CD Pipeline" processRef="Process_Pipeline" />
+  </collaboration>
+
+  <!-- ═══ Author lane ═══ -->
+  <process id="Process_Author" isExecutable="false">
+    <startEvent id="Start_Author" name="Author requests content change" />
+
+    <task id="Task_DescribeChange" name="Describe the desired change">
+      <documentation>
+        Author describes the content change in natural language.
+        Example: "Update the immunization schedule to add a booster at 18 months."
+      </documentation>
+    </task>
+
+    <task id="Task_ReviewStaging" name="Review staged rendering">
+      <documentation>
+        Author reviews the rendered feature branch at
+        &lt;pages-url&gt;/STAGING/&lt;branch-slug&gt;/ and compares
+        against the main site. The staging banner shows the commit SHA.
+      </documentation>
+    </task>
+
+    <exclusiveGateway id="GW_AuthorSatisfied" name="Satisfied with changes?" />
+
+    <task id="Task_RequestRevision" name="Request further revisions">
+      <documentation>
+        Author provides feedback on what needs adjustment.
+        Agent iterates on the feature branch.
+      </documentation>
+    </task>
+
+    <task id="Task_SubmitForReview" name="Submit to review committee">
+      <documentation>
+        Author submits the PR for formal review by the guidance review committee.
+        The STAGING URL is the review surface.
+      </documentation>
+    </task>
+
+    <endEvent id="End_Author" name="Change submitted" />
+
+    <sequenceFlow id="f1" sourceRef="Start_Author" targetRef="Task_DescribeChange" />
+    <sequenceFlow id="f2" sourceRef="Task_DescribeChange" targetRef="Task_ReviewStaging" />
+    <sequenceFlow id="f3" sourceRef="Task_ReviewStaging" targetRef="GW_AuthorSatisfied" />
+    <sequenceFlow id="f4" sourceRef="GW_AuthorSatisfied" targetRef="Task_RequestRevision" name="No" />
+    <sequenceFlow id="f5" sourceRef="Task_RequestRevision" targetRef="Task_ReviewStaging" />
+    <sequenceFlow id="f6" sourceRef="GW_AuthorSatisfied" targetRef="Task_SubmitForReview" name="Yes" />
+    <sequenceFlow id="f7" sourceRef="Task_SubmitForReview" targetRef="End_Author" />
+  </process>
+
+  <!-- ═══ Agent lane ═══ -->
+  <process id="Process_Agent" isExecutable="false">
+    <startEvent id="Start_Agent" name="Receive change request" />
+
+    <task id="Task_DetectScope" name="Detect change scope &amp; impact">
+      <documentation>
+        Agent analyses the requested change:
+        - Which content blocks are affected?
+        - Are there downstream implications (indicators, referral logic, visit schedules)?
+        - Will deterministic logic (CQL/DMN) need updating?
+        skill: content-graph, integration-watcher
+      </documentation>
+    </task>
+
+    <task id="Task_CreateBranch" name="Create feature branch">
+      <documentation>
+        Agent creates a feature branch from main.
+        Branch naming: feature/&lt;short-description&gt;
+        Opens a PR immediately (AGENTS.md: "open the PR at the first commit").
+      </documentation>
+    </task>
+
+    <task id="Task_EditContent" name="Edit narrative content blocks">
+      <documentation>
+        Agent modifies the relevant content blocks (.md files, block manifests).
+        Validates each edit against the schema (content_validate).
+        skill: content editing, block builders
+      </documentation>
+    </task>
+
+    <task id="Task_EditLogic" name="Edit deterministic logic (if needed)">
+      <documentation>
+        If the content change affects decision logic, indicators, or workflows:
+        - Update CQL expressions
+        - Update DMN decision tables
+        - Adjust indicator definitions
+        skill: dak-authoring, fhir-pipeline
+      </documentation>
+    </task>
+
+    <task id="Task_AssessImpact" name="Assess downstream impact">
+      <documentation>
+        Agent reviews downstream implications:
+        - Will indicators need adjustment?
+        - Will referral/follow-up for next visit be impacted?
+        - Are translations affected (re-extract POT)?
+        - Do Lean proofs still hold?
+        skill: integration-watcher, translation-manager
+      </documentation>
+    </task>
+
+    <task id="Task_CommitPush" name="Commit, push, update PR">
+      <documentation>
+        Agent commits all changes to the feature branch and pushes.
+        The feature-staging.yml workflow automatically deploys to
+        STAGING/&lt;branch-slug&gt;/ and comments the URL on the PR.
+      </documentation>
+    </task>
+
+    <task id="Task_Iterate" name="Iterate on author feedback">
+      <documentation>
+        Agent receives revision requests from the author and applies changes.
+        Each push triggers a new staging deployment with updated SHA stamp.
+      </documentation>
+    </task>
+
+    <endEvent id="End_Agent" name="Feature branch ready" />
+
+    <sequenceFlow id="a1" sourceRef="Start_Agent" targetRef="Task_DetectScope" />
+    <sequenceFlow id="a2" sourceRef="Task_DetectScope" targetRef="Task_CreateBranch" />
+    <sequenceFlow id="a3" sourceRef="Task_CreateBranch" targetRef="Task_EditContent" />
+    <sequenceFlow id="a4" sourceRef="Task_EditContent" targetRef="Task_EditLogic" />
+    <sequenceFlow id="a5" sourceRef="Task_EditLogic" targetRef="Task_AssessImpact" />
+    <sequenceFlow id="a6" sourceRef="Task_AssessImpact" targetRef="Task_CommitPush" />
+    <sequenceFlow id="a7" sourceRef="Task_CommitPush" targetRef="Task_Iterate" />
+    <sequenceFlow id="a8" sourceRef="Task_Iterate" targetRef="End_Agent" />
+  </process>
+
+  <!-- ═══ Review Committee lane ═══ -->
+  <process id="Process_Reviewer" isExecutable="false">
+    <startEvent id="Start_Reviewer" name="PR submitted for review" />
+
+    <task id="Task_CompareBeforeAfter" name="Compare main vs staging">
+      <documentation>
+        Review committee opens both URLs side by side:
+        - Main site: &lt;pages-url&gt;/ (current published state)
+        - Staging: &lt;pages-url&gt;/STAGING/&lt;branch-slug&gt;/
+        The staging banner shows the commit SHA so they can verify
+        what they are reviewing matches the PR.
+      </documentation>
+    </task>
+
+    <task id="Task_ReviewImpact" name="Review impact assessment">
+      <documentation>
+        Committee reviews the agent's impact assessment:
+        - Were all downstream effects identified?
+        - Are the indicator changes acceptable?
+        - Does the logic change match the narrative intent?
+      </documentation>
+    </task>
+
+    <exclusiveGateway id="GW_Approved" name="Changes approved?" />
+
+    <task id="Task_RequestChanges" name="Request changes">
+      <documentation>
+        Committee provides feedback. PR stays open.
+        Author and agent iterate further.
+      </documentation>
+    </task>
+
+    <task id="Task_Approve" name="Approve and merge">
+      <documentation>
+        Committee approves the PR. Merge to main triggers:
+        1. docs-site.yml rebuilds the main site with the changes
+        2. feature-staging.yml cleanup job removes STAGING/&lt;slug&gt;/
+        3. The rendered content on main now carries the merged commit SHA
+      </documentation>
+    </task>
+
+    <endEvent id="End_Reviewer" name="Change accepted" />
+
+    <sequenceFlow id="r1" sourceRef="Start_Reviewer" targetRef="Task_CompareBeforeAfter" />
+    <sequenceFlow id="r2" sourceRef="Task_CompareBeforeAfter" targetRef="Task_ReviewImpact" />
+    <sequenceFlow id="r3" sourceRef="Task_ReviewImpact" targetRef="GW_Approved" />
+    <sequenceFlow id="r4" sourceRef="GW_Approved" targetRef="Task_RequestChanges" name="No" />
+    <sequenceFlow id="r5" sourceRef="Task_RequestChanges" targetRef="Task_CompareBeforeAfter" />
+    <sequenceFlow id="r6" sourceRef="GW_Approved" targetRef="Task_Approve" name="Yes" />
+    <sequenceFlow id="r7" sourceRef="Task_Approve" targetRef="End_Reviewer" />
+  </process>
+
+  <!-- ═══ Pipeline lane ═══ -->
+  <process id="Process_Pipeline" isExecutable="false">
+    <startEvent id="Start_Pipeline" name="Push to feature branch" />
+
+    <task id="Task_BuildStaging" name="Build staging site">
+      <documentation>
+        feature-staging.yml triggers:
+        1. Regenerate docs (schema, skills, content-backed pages)
+        2. Render BPMN diagrams
+        3. Stamp build with commit SHA + timestamp + branch
+        4. Build Jekyll site with STAGING/ baseurl
+        5. Inject yellow staging banner into every HTML page
+      </documentation>
+    </task>
+
+    <task id="Task_DeployStaging" name="Deploy to STAGING/&lt;slug&gt;/">
+      <documentation>
+        peaceiris/actions-gh-pages deploys to gh-pages branch
+        under STAGING/&lt;branch-slug&gt;/ with keep_files: true
+        so other staging deployments and the main site are preserved.
+      </documentation>
+    </task>
+
+    <task id="Task_CommentPR" name="Comment staging URL on PR">
+      <documentation>
+        Bot comments or updates the staging URL on the PR.
+        Includes commit SHA, branch name, and build log link.
+      </documentation>
+    </task>
+
+    <exclusiveGateway id="GW_Merged" name="PR merged?" />
+
+    <task id="Task_CleanupStaging" name="Remove STAGING/&lt;slug&gt;/">
+      <documentation>
+        When the PR is merged or closed, the cleanup job
+        removes the STAGING/&lt;slug&gt;/ directory from gh-pages
+        so stale previews don't accumulate.
+      </documentation>
+    </task>
+
+    <task id="Task_RebuildMain" name="Rebuild main site">
+      <documentation>
+        docs-site.yml triggers on the merge commit to main,
+        rebuilding the root of gh-pages with the accepted changes.
+        The build SHA stamp now reflects the merged state.
+      </documentation>
+    </task>
+
+    <endEvent id="End_Pipeline" name="Deployment complete" />
+
+    <sequenceFlow id="p1" sourceRef="Start_Pipeline" targetRef="Task_BuildStaging" />
+    <sequenceFlow id="p2" sourceRef="Task_BuildStaging" targetRef="Task_DeployStaging" />
+    <sequenceFlow id="p3" sourceRef="Task_DeployStaging" targetRef="Task_CommentPR" />
+    <sequenceFlow id="p4" sourceRef="Task_CommentPR" targetRef="GW_Merged" />
+    <sequenceFlow id="p5" sourceRef="GW_Merged" targetRef="Task_CleanupStaging" name="Yes" />
+    <sequenceFlow id="p6" sourceRef="Task_CleanupStaging" targetRef="Task_RebuildMain" />
+    <sequenceFlow id="p7" sourceRef="Task_RebuildMain" targetRef="End_Pipeline" />
+    <sequenceFlow id="p8" sourceRef="GW_Merged" targetRef="End_Pipeline" name="No (iterate)" />
+  </process>
+
+</definitions>
