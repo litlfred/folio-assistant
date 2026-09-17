@@ -1,0 +1,58 @@
+<!--
+  Unverified-translation warning banner.
+
+  Included in any translated page whose front matter has
+  `translation_status: unverified`. Shows an amber warning icon and a
+  notice explaining:
+    - that this is a machine-generated / unofficial translation
+    - how to fix it (run translation_signoff or manually review)
+
+  The banner is dismissed for the session when the user clicks ✕.
+
+  Design requirements (from issue #206 comment):
+    "unverified translated content should display warning (icon/notice + how to fix)"
+-->
+{% if page.translation_status == "unverified" %}
+<div id="translation-warning" style="
+  background: #78350f;
+  border: 1px solid #d97706;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 0 0 1.5em;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #fef3c7;
+">
+  <span style="font-size: 1.4em; flex-shrink: 0;" title="Unverified translation">⚠️</span>
+  <div style="flex: 1;">
+    <strong style="color: #fbbf24;">Unverified translation</strong><br>
+    This page has been translated automatically and has <strong>not been reviewed</strong>
+    by a subject-matter expert. It may contain inaccuracies or semantic drift.
+    {% if page.translation_source %}
+    <br><br>
+    <strong>Source:</strong>
+    <a href="{{ page.translation_source | prepend: '../' | relative_url }}" style="color: #fbbf24;">
+      {{ page.translation_source }}
+    </a> (English)
+    {% endif %}
+    <br><br>
+    <strong>How to verify:</strong> Run
+    <code style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px;">translation_signoff</code>
+    after SME review, or use
+    <code style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px;">translation_validate</code>
+    to check for staleness and coverage.
+  </div>
+  <button onclick="this.parentElement.style.display='none'" style="
+    background: none;
+    border: none;
+    color: #fbbf24;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0 4px;
+    flex-shrink: 0;
+  " title="Dismiss">✕</button>
+</div>
+{% endif %}

@@ -1,0 +1,64 @@
+<!--
+  Language selector — a globe icon + dropdown of the six UN official languages.
+
+  Sits right below the page title, next to QR code in the sidebar.
+  Design: issue #206 — "there should be an icon in the left hand navbar for
+  switching languages, next to QR code etc. the 6 UN languages should be the
+  default list."
+
+  Parameters:
+    current   — BCP 47 locale code of the current page (e.g. "fr")
+    page_base — the base page path without locale prefix or .html extension
+                 (e.g. "guides/agent-onboarding")
+
+  The selector links to locale-specific versions under docs/<base>/,
+  docs/guides/fr/<base>/, docs/guides/ar/<base>/, etc.
+  If a translation doesn't exist yet, the link is greyed out.
+-->
+<div class="language-selector" style="
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0.5em 0 1em;
+  padding: 6px 12px;
+  background: rgba(128, 128, 128, 0.15);
+  border-radius: 6px;
+  font-size: 0.85rem;
+">
+  <span style="font-size: 1.2em;" title="Select language">🌐</span>
+  {% assign current_lang = include.current | default: "en" %}
+  {% assign base = include.page_base | default: "" %}
+
+  {% assign langs = "en|ar|zh|fr|ru|es" | split: "|" %}
+  {% assign names = "English|العربية|中文|Français|Русский|Español" | split: "|" %}
+
+  {% for lang in langs %}
+    {% assign idx = forloop.index0 %}
+    {% assign name = names[idx] %}
+    {% if lang == current_lang %}
+      <span style="
+        padding: 3px 8px;
+        background: #3b82f6;
+        color: #fff;
+        border-radius: 4px;
+        font-weight: 600;
+      " title="{{ name }} (current)">{{ lang | upcase }}</span>
+    {% elsif lang == "en" %}
+      <a href="{{ base | append: '.html' | relative_url }}" style="
+        padding: 3px 8px;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #93c5fd;
+      " title="{{ name }}">{{ lang | upcase }}</a>
+    {% else %}
+      {% capture lang_path %}{{ base | split: '/' | last }}{% endcapture %}
+      {% capture dir_prefix %}{{ base | remove: lang_path | remove_first: '/' }}{% endcapture %}
+      <a href="{{ dir_prefix | append: lang | append: '/' | append: lang_path | append: '.html' | relative_url }}" style="
+        padding: 3px 8px;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #93c5fd;
+      " title="{{ name }}">{{ lang | upcase }}</a>
+    {% endif %}
+  {% endfor %}
+</div>

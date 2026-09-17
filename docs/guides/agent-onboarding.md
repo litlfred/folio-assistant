@@ -3,11 +3,13 @@ layout: default
 title: Agent onboarding
 parent: Authoring guides
 nav_order: 0
+lang: en
 ---
 
 # Agent onboarding
 {: .no_toc }
 
+{% include language-selector.html current="en" page_base="guides/agent-onboarding" %}
 You are an LLM agent that has just been dropped into a repository using
 folio-assistant. This page is your orientation: what you are looking at,
 what to do first, and where to look things up.
