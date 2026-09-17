@@ -1,29 +1,53 @@
 /**
  * PO injection — produces translated Markdown from a PO file.
  *
- * Takes a completed `.po` file and the source `.md`, substitutes
- * translated strings for source strings, restores shielded
- * non-translatable tokens, and writes the result.
+ * ## Origin: smart-base `inject_translations.py`
  *
- * ## Post-processing
+ * This module is a TypeScript port of the markdown injection logic in
+ * `WorldHealthOrganization/smart-base/input/scripts/inject_translations.py`
+ * (lines 608–818, function `inject_markdown` and helpers). The Python
+ * original injects translations into `input/pagecontent/*.md` files;
+ * this injects into folio content blocks.
  *
- * After injection, the output goes through validation:
- * 1. Structure check — same paragraph count and heading structure
- * 2. Completeness check — flags untranslated segments
- * 3. Lint — catches doubled punctuation, orphaned placeholders
+ * ## How injection works
  *
- * ## Shield restoration
+ * The injector uses the **same state machine** as `pot-extract.ts`
+ * (which mirrors `extract_translations.extract_markdown`) to identify
+ * every translatable text span in the source markdown. For each span,
+ * it looks up the `msgid` (after cleaning) in the PO translations
+ * dictionary and substitutes the `msgstr`.
  *
- * Non-translatable tokens were replaced with `{1}`, `{2}` etc during
- * extraction. This module restores them from the shield map stored
- * alongside the POT. If a translator accidentally moved or removed a
- * placeholder, that is reported as a finding rather than silently
- * dropping content.
+ * Key design choices (from smart-base):
+ *
+ * - **Paragraph re-wrapping:** When a multi-line paragraph is translated,
+ *   the first line is replaced with the full translated text and
+ *   continuation lines are blanked. Markdown renderers treat consecutive
+ *   non-blank lines as one paragraph, so this is functionally equivalent.
+ *
+ * - **Liquid variable restoration:** `{lqd_expr}` in the translated text
+ *   is restored to `{{ expr }}` Liquid syntax (smart-base compat).
+ *
+ * - **Fuzzy entries skipped:** Entries flagged `#, fuzzy` in the PO file
+ *   are not injected, matching smart-base's conservative approach.
  *
  * @module content/pipeline/po-inject
  */
 
-import { unshield, type ShieldEntry } from "./pot-extract";
+import { cleanMarkdownText } from "./pot-extract";
+
+// ── Liquid restoration ──────────────────────────────────────────
+
+/** Prefix used by pot-extract for Liquid output variables. */
+const LQD_PREFIX = "lqd_";
+const LQD_VAR_RE = /\{lqd_([^{}\n]+)\}/g;
+
+/**
+ * Restore `{lqd_expr}` gettext variables back to `{{ expr }}` Liquid
+ * syntax. Mirrors smart-base `_gettext_to_liquid()`.
+ */
+function gettextToLiquid(text: string): string {
+  return text.replace(LQD_VAR_RE, (_match, expr: string) => `{{ ${expr} }}`);
+}
 
 // ── PO parsing ──────────────────────────────────────────────────
 
@@ -44,247 +68,374 @@ export interface PoEntry {
 }
 
 /**
- * Parse a PO file into entries.
+ * Parse a PO file into a msgid → msgstr dictionary.
  *
- * Handles multiline strings (concatenated "" lines), comments,
- * flags, and context. Does not handle plural forms (not needed
- * for prose translation).
+ * Mirrors smart-base `parse_po_file()`: only entries with a non-empty
+ * msgstr are included. **Fuzzy entries are skipped** to avoid injecting
+ * uncertain translations.
  */
-export function parsePo(poContent: string): PoEntry[] {
-  const entries: PoEntry[] = [];
-  const lines = poContent.split("\n");
+export function parsePo(poContent: string): Map<string, string> {
+  const translations = new Map<string, string>();
 
-  let current: Partial<PoEntry> = {};
-  let field: "msgid" | "msgstr" | "msgctxt" | null = null;
+  // Split into blocks separated by blank lines
+  const blocks = poContent.trim().split(/\n{2,}/);
 
-  const flush = () => {
-    if (current.msgid !== undefined) {
-      entries.push({
-        references: current.references ?? [],
-        comments: current.comments ?? [],
-        flags: current.flags ?? [],
-        context: current.context,
-        msgid: current.msgid ?? "",
-        msgstr: current.msgstr ?? "",
-      });
+  for (const block of blocks) {
+    const lines = block.split("\n");
+
+    // Skip header block (first msgid is empty)
+    if (lines.some((l) => l.trim() === 'msgid ""') &&
+        !lines.some((l) => l.trim() === 'msgstr ""' && lines.indexOf(l) === lines.length - 1)) {
+      // More nuanced: skip if msgid is empty but msgstr is not
+      const msgid = extractPoValue(lines, "msgid");
+      if (msgid === "") continue;
     }
-    current = {};
-    field = null;
-  };
 
-  for (const rawLine of lines) {
-    const line = rawLine.trim();
-
-    // Comment lines
-    if (line.startsWith("#: ")) {
-      current.references = current.references ?? [];
-      current.references.push(line.slice(3));
-      continue;
-    }
-    if (line.startsWith("#. ")) {
-      current.comments = current.comments ?? [];
-      current.comments.push(line.slice(3));
-      continue;
-    }
-    if (line.startsWith("#, ")) {
-      current.flags = current.flags ?? [];
-      current.flags.push(...line.slice(3).split(",").map((f) => f.trim()));
-      continue;
-    }
-    if (line.startsWith("#")) continue; // other comments
-
-    // Empty line → flush
-    if (line === "") {
-      flush();
+    // Skip fuzzy entries
+    if (lines.some((l) => l.trim().startsWith("#,") && l.includes("fuzzy"))) {
       continue;
     }
 
-    // Field declarations
-    if (line.startsWith("msgctxt ")) {
-      field = "msgctxt";
-      current.context = unquotePo(line.slice(8));
-      continue;
-    }
-    if (line.startsWith("msgid ")) {
-      field = "msgid";
-      current.msgid = unquotePo(line.slice(6));
-      continue;
-    }
-    if (line.startsWith("msgstr ")) {
-      field = "msgstr";
-      current.msgstr = unquotePo(line.slice(7));
-      continue;
-    }
+    const msgid = extractPoValue(lines, "msgid");
+    const msgstr = extractPoValue(lines, "msgstr");
 
-    // Continuation line (multiline string)
-    if (line.startsWith('"') && field) {
-      const val = unquotePo(line);
-      if (field === "msgctxt") current.context = (current.context ?? "") + val;
-      else if (field === "msgid") current.msgid = (current.msgid ?? "") + val;
-      else if (field === "msgstr") current.msgstr = (current.msgstr ?? "") + val;
-      continue;
+    if (msgid && msgstr) {
+      translations.set(unescapePo(msgid), unescapePo(msgstr));
     }
   }
 
-  flush();
+  return translations;
+}
 
-  // Filter out the header entry (empty msgid)
+/**
+ * Parse a PO file into structured entries (for detailed analysis).
+ */
+export function parsePoEntries(poContent: string): PoEntry[] {
+  const entries: PoEntry[] = [];
+  const blocks = poContent.trim().split(/\n{2,}/);
+
+  for (const block of blocks) {
+    const lines = block.split("\n");
+
+    const references: string[] = [];
+    const comments: string[] = [];
+    const flags: string[] = [];
+    let context: string | undefined;
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (trimmed.startsWith("#: ")) references.push(trimmed.slice(3));
+      else if (trimmed.startsWith("#. ")) comments.push(trimmed.slice(3));
+      else if (trimmed.startsWith("#, ")) {
+        flags.push(...trimmed.slice(3).split(",").map((f) => f.trim()));
+      }
+    }
+
+    const msgctxtLine = lines.find((l) => l.trim().startsWith("msgctxt "));
+    if (msgctxtLine) {
+      context = unescapePo(extractPoValue(lines, "msgctxt"));
+    }
+
+    const msgid = extractPoValue(lines, "msgid");
+    const msgstr = extractPoValue(lines, "msgstr");
+
+    if (msgid !== undefined) {
+      entries.push({
+        references,
+        comments,
+        flags,
+        context,
+        msgid: unescapePo(msgid),
+        msgstr: unescapePo(msgstr),
+      });
+    }
+  }
+
+  // Filter out header entry
   return entries.filter((e) => e.msgid !== "");
 }
 
-/** Unquote a PO string value. */
-function unquotePo(s: string): string {
-  const trimmed = s.trim();
-  if (!trimmed.startsWith('"') || !trimmed.endsWith('"')) return trimmed;
-  return trimmed
-    .slice(1, -1)
+/** Extract the value of a PO field (msgid, msgstr, msgctxt) from a block. */
+function extractPoValue(lines: string[], field: string): string {
+  let value = "";
+  let inField = false;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith(`${field} `)) {
+      inField = true;
+      value = trimmed.slice(field.length + 1);
+      continue;
+    }
+
+    // Another field starts
+    if (trimmed.startsWith("msg") && !trimmed.startsWith('"')) {
+      if (inField) break;
+      continue;
+    }
+
+    // Continuation line
+    if (inField && trimmed.startsWith('"')) {
+      value += trimmed;
+    }
+  }
+
+  // Strip surrounding quotes and concatenate
+  return value
+    .replace(/^"/, "")
+    .replace(/"$/, "")
+    .replace(/"\s*"/g, "");
+}
+
+/** Unescape a PO string value. */
+function unescapePo(s: string): string {
+  return s
     .replace(/\\n/g, "\n")
     .replace(/\\t/g, "\t")
     .replace(/\\"/g, '"')
     .replace(/\\\\/g, "\\");
 }
 
+// ── Structural patterns (mirrors pot-extract.ts / smart-base) ───
+
+const MD_FRONT_MATTER_DELIM = /^---\s*$/;
+const MD_HEADING_RE = /^(#{1,6}\s+)(.+)$/;
+const MD_CODE_FENCE_RE = /^(`{3,}|~{3,})/;
+const MD_HTML_SKIP_OPEN_RE = /<(style|script|pre)\b/i;
+const MD_HTML_CLOSE_TAG_RE = /<\/(\w+)\s*>/i;
+const MD_HLINE_RE = /^[-*_]{3,}\s*$/;
+const MD_TABLE_SEP_RE = /^\|[-| :]+\|?\s*$/;
+const MD_LIST_ITEM_RE = /^(\s*(?:[-*+]|\d+\.)\s+)(.*)/;
+const MD_BLOCKQUOTE_RE = /^(>+\s?)(.*)/;
+const MD_KRAMDOWN_ATTR_RE = /^\{[:%][^}]*\}\s*$/;
+
+const MD_INJ_MIN_LEN = 3;
+
 // ── Injection ───────────────────────────────────────────────────
 
-/** Result of injecting translations into a markdown source. */
+/** Result of injecting translations into markdown. */
 export interface InjectionResult {
-  /** The translated markdown. */
+  /** The translated markdown content. */
   translated: string;
-  /** Statistics about the injection. */
+  /** Whether any substitutions were made. */
+  changed: boolean;
+  /** Statistics. */
   stats: {
-    /** Total segments in the source. */
-    totalSegments: number;
-    /** Segments that were translated. */
-    translatedSegments: number;
-    /** Segments left untranslated (empty msgstr). */
-    untranslatedSegments: number;
-    /** Segments flagged as fuzzy. */
-    fuzzySegments: number;
+    totalSpans: number;
+    translatedSpans: number;
+    untranslatedSpans: number;
   };
-  /** Validation findings. */
-  findings: InjectionFinding[];
-}
-
-export interface InjectionFinding {
-  severity: "error" | "warning" | "info";
-  message: string;
-  /** Source reference (file:line). */
-  source?: string;
 }
 
 /**
- * Inject translations from PO entries into a markdown source.
+ * Inject translations into a Markdown file.
  *
- * For each translatable segment in the source, looks up the matching
- * PO entry by msgid and substitutes the msgstr. Restores shielded
- * placeholders. Validates the result.
+ * Uses the same state machine as `extractMarkdown()` to identify
+ * every translatable text span, looks up the translation via the
+ * cleaned msgid, restores Liquid `{{ }}` syntax in the translated
+ * string, and writes it back into the source lines.
+ *
+ * Mirrors smart-base `inject_markdown()` in `inject_translations.py`
+ * lines 608–818.
  */
-export function injectTranslations(
+export function injectMarkdown(
   sourceMd: string,
-  poEntries: PoEntry[],
-  shields: Map<string, ShieldEntry[]>,
+  translations: Map<string, string>,
 ): InjectionResult {
-  const findings: InjectionFinding[] = [];
-  let translated = sourceMd;
+  const lines = sourceMd.split("\n");
+  const outLines = [...lines];
+  let changed = false;
+  let totalSpans = 0;
+  let translatedSpans = 0;
+  let untranslatedSpans = 0;
 
-  // Build lookup: msgid → PoEntry
-  const lookup = new Map<string, PoEntry>();
-  for (const entry of poEntries) {
-    lookup.set(entry.msgid, entry);
-  }
+  let inFrontMatter = false;
+  let inCodeBlock = false;
+  let codeFence: string | null = null;
+  let inHtmlBlock = false;
+  let htmlCloseTag = "";
+  const paragraphBuf: Array<{ idx: number; text: string }> = [];
 
-  let totalSegments = 0;
-  let translatedSegments = 0;
-  let untranslatedSegments = 0;
-  let fuzzySegments = 0;
+  /** Look up translation for raw text, return Liquid-restored result or null. */
+  const translate = (rawText: string): string | null => {
+    const msgid = cleanMarkdownText(rawText);
+    if (msgid.length < MD_INJ_MIN_LEN) return null;
+    totalSpans++;
+    const msgstr = translations.get(msgid);
+    if (msgstr && msgstr !== msgid) {
+      translatedSpans++;
+      return gettextToLiquid(msgstr);
+    }
+    untranslatedSpans++;
+    return null;
+  };
 
-  // For each PO entry, find and replace in the source
-  for (const entry of poEntries) {
-    totalSegments++;
+  const flushParagraph = () => {
+    if (paragraphBuf.length === 0) return;
+    const raw = paragraphBuf.map((p) => p.text).join(" ");
+    const translated = translate(raw);
+    if (translated) {
+      // Replace first line with full translated text, blank continuation lines
+      outLines[paragraphBuf[0].idx] = translated;
+      for (let i = 1; i < paragraphBuf.length; i++) {
+        outLines[paragraphBuf[i].idx] = "";
+      }
+      changed = true;
+    }
+    paragraphBuf.length = 0;
+  };
 
-    if (!entry.msgstr || entry.msgstr.trim() === "") {
-      untranslatedSegments++;
-      findings.push({
-        severity: "warning",
-        message: `Untranslated segment: "${entry.msgid.slice(0, 60)}..."`,
-        source: entry.references[0],
-      });
+  for (let idx = 0; idx < lines.length; idx++) {
+    const line = lines[idx];
+    const lineno = idx + 1;
+    const stripped = line.trim();
+
+    // --- YAML front matter ---
+    if (lineno === 1 && MD_FRONT_MATTER_DELIM.test(line)) {
+      inFrontMatter = true;
+      continue;
+    }
+    if (inFrontMatter) {
+      if (MD_FRONT_MATTER_DELIM.test(line) && lineno > 1) {
+        inFrontMatter = false;
+      }
       continue;
     }
 
-    if (entry.flags.includes("fuzzy")) {
-      fuzzySegments++;
-      findings.push({
-        severity: "info",
-        message: `Fuzzy translation: "${entry.msgid.slice(0, 60)}..."`,
-        source: entry.references[0],
-      });
+    // --- Fenced code blocks ---
+    const fenceMatch = line.match(MD_CODE_FENCE_RE);
+    if (fenceMatch) {
+      if (!inCodeBlock) {
+        flushParagraph();
+        inCodeBlock = true;
+        codeFence = fenceMatch[1];
+      } else if (codeFence && line.startsWith(codeFence[0].repeat(codeFence.length))) {
+        inCodeBlock = false;
+        codeFence = null;
+      }
+      continue;
+    }
+    if (inCodeBlock) continue;
+
+    // --- HTML blocks ---
+    if (inHtmlBlock) {
+      const closeMatch = stripped.match(MD_HTML_CLOSE_TAG_RE);
+      if (closeMatch && closeMatch[1].toLowerCase() === htmlCloseTag) {
+        inHtmlBlock = false;
+        htmlCloseTag = "";
+      }
+      continue;
+    }
+    const openMatch = stripped.match(MD_HTML_SKIP_OPEN_RE);
+    if (openMatch) {
+      const tagName = openMatch[1].toLowerCase();
+      flushParagraph();
+      const closeMatch = stripped.match(MD_HTML_CLOSE_TAG_RE);
+      if (closeMatch && closeMatch[1].toLowerCase() === tagName) continue;
+      inHtmlBlock = true;
+      htmlCloseTag = tagName;
+      continue;
     }
 
-    // Restore shields in the translated string
-    let msgstr = entry.msgstr;
-    const ref = entry.references[0];
-    const entryShields = ref ? shields.get(ref) : undefined;
-    if (entryShields) {
-      msgstr = unshield(msgstr, entryShields);
+    // --- Blank line ---
+    if (!stripped) {
+      flushParagraph();
+      continue;
     }
 
-    // Check for orphaned placeholders in the translated string
-    const orphaned = msgstr.match(/\{\d+\}/g);
-    if (orphaned) {
-      findings.push({
-        severity: "warning",
-        message: `Orphaned placeholder(s) in translation: ${orphaned.join(", ")}`,
-        source: ref,
-      });
+    // --- Headings ---
+    const headingMatch = line.match(MD_HEADING_RE);
+    if (headingMatch) {
+      flushParagraph();
+      const [, prefix, text] = headingMatch;
+      const translated = translate(text);
+      if (translated) {
+        outLines[idx] = prefix + translated;
+        changed = true;
+      }
+      continue;
     }
 
-    // Restore shields in the msgid to find the original text
-    let originalMsgid = entry.msgid;
-    if (entryShields) {
-      originalMsgid = unshield(entry.msgid, entryShields);
+    // --- Horizontal rules / table separators ---
+    if (MD_HLINE_RE.test(stripped) || MD_TABLE_SEP_RE.test(stripped)) {
+      flushParagraph();
+      continue;
     }
 
-    // Replace in the translated output
-    if (translated.includes(originalMsgid)) {
-      translated = translated.replace(originalMsgid, msgstr);
-      translatedSegments++;
-    } else {
-      findings.push({
-        severity: "warning",
-        message: `Could not find source segment to replace: "${originalMsgid.slice(0, 60)}..."`,
-        source: ref,
-      });
+    // --- List items ---
+    const listMatch = line.match(MD_LIST_ITEM_RE);
+    if (listMatch) {
+      flushParagraph();
+      const [, prefix, text] = listMatch;
+      const translated = translate(text.trim());
+      if (translated) {
+        outLines[idx] = prefix + translated;
+        changed = true;
+      }
+      continue;
     }
+
+    // --- Blockquote lines ---
+    const bqMatch = line.match(MD_BLOCKQUOTE_RE);
+    if (bqMatch) {
+      flushParagraph();
+      const [, prefix, text] = bqMatch;
+      const translated = translate(text);
+      if (translated) {
+        outLines[idx] = prefix + translated;
+        changed = true;
+      }
+      continue;
+    }
+
+    // --- Table rows ---
+    if (stripped.startsWith("|") && stripped.endsWith("|")) {
+      flushParagraph();
+      const cells = stripped.slice(1, -1).split("|");
+      const newCells: string[] = [];
+      let rowChanged = false;
+      for (const cell of cells) {
+        const translated = translate(cell.trim());
+        if (translated) {
+          // Preserve original cell whitespace for alignment
+          const leading = cell.slice(0, cell.length - cell.trimStart().length) || " ";
+          const trailing = cell.slice(cell.trimEnd().length) || " ";
+          newCells.push(leading + translated + trailing);
+          rowChanged = true;
+        } else {
+          newCells.push(cell);
+        }
+      }
+      if (rowChanged) {
+        outLines[idx] = "|" + newCells.join("|") + "|";
+        changed = true;
+      }
+      continue;
+    }
+
+    // --- Kramdown attribute lists ---
+    if (MD_KRAMDOWN_ATTR_RE.test(stripped)) {
+      flushParagraph();
+      continue;
+    }
+
+    // --- Paragraph continuation ---
+    paragraphBuf.push({ idx, text: stripped });
   }
 
-  // Post-injection validation
-  const sourceParas = sourceMd.split(/\n\n+/).length;
-  const translatedParas = translated.split(/\n\n+/).length;
-  if (Math.abs(sourceParas - translatedParas) > 2) {
-    findings.push({
-      severity: "warning",
-      message: `Paragraph count differs: source has ${sourceParas}, translated has ${translatedParas}`,
-    });
-  }
+  flushParagraph();
 
-  // Check for doubled punctuation (common translation artifact)
-  const doubledPunct = translated.match(/([.!?])\1{2,}/g);
-  if (doubledPunct) {
-    findings.push({
-      severity: "warning",
-      message: `Possible doubled punctuation: ${doubledPunct.join(", ")}`,
-    });
-  }
+  // Remove blank lines introduced by paragraph collapse
+  const result = outLines.filter((line) => line !== "").join("\n");
 
   return {
-    translated,
+    translated: result || sourceMd,
+    changed,
     stats: {
-      totalSegments,
-      translatedSegments,
-      untranslatedSegments,
-      fuzzySegments,
+      totalSpans,
+      translatedSpans,
+      untranslatedSpans,
     },
-    findings,
   };
 }

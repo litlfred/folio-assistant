@@ -235,23 +235,44 @@ duplicating PO files.
 
 ### Pre-processing (from smart-base)
 
-Before extraction, source markdown goes through pre-processing that:
+The extraction state machine is a direct port of smart-base's
+`extract_translations.py` (function `extract_markdown`, lines 700–856) and
+its text-cleaning helper `_clean_markdown_text` (lines 633–697). The same
+state machine handles:
 
-1. **Segments prose** — splits markdown by paragraph, preserving block
-   structure. Each paragraph becomes one `msgid` in the POT file.
-2. **Shields non-translatable content** — wraps math (`$...$`, `$$...$$`),
-   code blocks, labels, and other non-translatable tokens in placeholder tags
-   (e.g., `{1}`, `{2}`) so translators see clean prose without technical noise.
-3. **Normalizes whitespace** — collapses runs of whitespace and normalizes
-   line breaks, so trivial formatting differences don't create false PO diffs.
-4. **Extracts metadata** — pulls titles, alt text, captions, and other
-   structural text from manifests and markdown front matter.
+1. **YAML front matter** — skipped entirely (delimited by `---`).
+2. **Fenced code blocks** — tracked by fence character and length, skipped.
+3. **HTML skip blocks** — `<style>`, `<script>`, `<pre>` content skipped.
+4. **Headings** — each heading text → one `msgid`.
+5. **List items** — bullet/number stripped, item text → one `msgid`.
+6. **Blockquotes** — `>` prefix stripped, content → one `msgid`.
+7. **Table cells** — each cell → one `msgid`, separator rows skipped.
+8. **Kramdown attributes** — `{: .class}`, `{:toc}` skipped entirely.
+9. **Paragraph accumulation** — continuation lines joined, flushed on blank.
+10. **Text cleaning** — inline markdown stripped: HTML comments, images (→ alt
+    text), links (→ link text), autolinks, code spans, bold/italic markers,
+    HTML tags, Liquid `{% %}` tags, Liquid `{{ expr }}` → `{lqd_expr}` gettext
+    brace variables.
 
-This pre-processing is adapted from the smart-base translation subsystem
-(~5,500 lines Python), where it handles the same problem for FHIR IG narrative
-pages. The markdown extraction infrastructure is **copied to folio-assistant**
-(not loaded from smart-base) because it is generic prose processing, not
-WHO-specific tooling. The smart-base copy remains as-is.
+The TypeScript port lives in `content/pipeline/pot-extract.ts`
+(`extractMarkdown` + `cleanMarkdownText`). It is **copied into
+folio-assistant** (not loaded from smart-base) because the markdown parsing
+is generic prose processing. The smart-base Python originals remain as-is.
+
+**Source scripts in smart-base** (`input/scripts/`):
+
+| Script | Lines | Role |
+|---|---|---|
+| `extract_translations.py` | 1,158 | POT extraction: PlantUML, SVG, ArchiMate, **Markdown** |
+| `inject_translations.py` | 933 | PO injection: PlantUML, SVG, ArchiMate, **Markdown** |
+| `extract_script_strings.py` | 276 | Script/template string extraction |
+| `pull_translations.py` | 269 | Orchestrator for Weblate/Crowdin/Launchpad pulls |
+| `pull_weblate_translations.py` | 401 | Weblate API sync |
+| `pull_crowdin_translations.py` | 313 | Crowdin API sync |
+| `pull_launchpad_translations.py` | 196 | Launchpad API sync |
+| `register_translation_project.py` | 630 | Per-project Weblate registration |
+| `register_all_dak_projects.py` | 182 | Bulk DAK project registration |
+| `generate_weblate_yaml.py` | 274 | Weblate component discovery config |
 
 ### Post-processing
 
