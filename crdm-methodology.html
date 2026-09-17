@@ -14,10 +14,9 @@
   <style id="jtd-nav-activation">
   
 
-    .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(90)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(5)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
       background-image: none;
     }
 
@@ -26,14 +25,12 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(7) > ul > li:nth-child(90) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(5) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(7) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(7) > ul > li:nth-child(90) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(5) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(7) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(7) > ul.nav-list > li.nav-list-item:nth-child(90) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +50,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Todo Review | folio-assistant</title>
+<title>CRDM methodology | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Todo Review" />
+<meta property="og:title" content="CRDM methodology" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/todo-review.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/todo-review.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/crdm-methodology.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/crdm-methodology.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Todo Review" />
+<meta property="twitter:title" content="CRDM methodology" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Todo Review","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/todo-review.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"CRDM methodology","url":"https://litlfred.github.io/folio-assistant/crdm-methodology.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -270,378 +267,725 @@
 </div>
 
     <div class="main-content-wrap">
-      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
-  <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Todo Review</span></li>
-  </ol>
-</nav>
-
-
+      
       <div id="main-content" class="main-content">
         <main>
           
-            <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/todo-review.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/todo-review.md</code></a> — do not edit here.</p>
-
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/todo-review.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
-</blockquote>
-<h1 id="todo-review-skill">
+            <h1 class="no_toc" id="crdm-methodology">
   
   
-    <a href="#todo-review-skill" class="anchor-heading" aria-labelledby="todo-review-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Todo Review Skill
+    <a href="#crdm-methodology" class="anchor-heading" aria-labelledby="crdm-methodology"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> CRDM methodology
   
   
 </h1>
     
 
-<blockquote>
-  <p><strong>Disambiguation:</strong></p>
-  <ul>
-    <li><code class="language-plaintext highlighter-rouge">todo-review</code> (this file) = triage of <strong>content feedback</strong> stored
-under <code class="language-plaintext highlighter-rouge">feedback/&lt;paper&gt;/</code> (paper-scope; persistent across
-sessions; surfaced via <code class="language-plaintext highlighter-rouge">/todos</code> dashboard).</li>
-    <li><code class="language-plaintext highlighter-rouge">todo-manager</code> = the agent’s <strong>session work-plan</strong> via beans
-(durable, committed under <code class="language-plaintext highlighter-rouge">.beans/</code>).</li>
-  </ul>
+<details open="">
+  <summary class="text-delta">On this page</summary>
+<ol id="markdown-toc">
+  <li><a href="#what-is-crdm" id="markdown-toc-what-is-crdm">What is CRDM?</a></li>
+  <li><a href="#why-crdm-for-folio-assistant" id="markdown-toc-why-crdm-for-folio-assistant">Why CRDM for folio-assistant</a></li>
+  <li><a href="#when-crdm-activates" id="markdown-toc-when-crdm-activates">When the CRDM workflow activates</a></li>
+  <li><a href="#phase-1-needs-assessment" id="markdown-toc-phase-1-needs-assessment">Phase 1 — Needs assessment</a></li>
+  <li><a href="#phase-2-business-process-analysis" id="markdown-toc-phase-2-business-process-analysis">Phase 2 — Business process analysis</a></li>
+  <li><a href="#phase-3-requirements-definition" id="markdown-toc-phase-3-requirements-definition">Phase 3 — Requirements definition</a></li>
+  <li><a href="#phase-4-impact-analysis" id="markdown-toc-phase-4-impact-analysis">Phase 4 — Impact analysis and migration planning</a></li>
+  <li><a href="#phase-5-sign-off-and-beans" id="markdown-toc-phase-5-sign-off-and-beans">Phase 5 — Sign-off and bean creation</a></li>
+  <li><a href="#phase-6-iterative-development" id="markdown-toc-phase-6-iterative-development">Phase 6 — Iterative development and review</a></li>
+  <li><a href="#agent-skills-and-tooling" id="markdown-toc-agent-skills-and-tooling">Agent skills and tooling</a>    <ol>
+      <li><a href="#existing-capabilities" id="markdown-toc-existing-capabilities">Existing capabilities</a></li>
+      <li><a href="#proposed-skills" id="markdown-toc-proposed-skills">Proposed skills</a></li>
+      <li><a href="#proposed-tooling" id="markdown-toc-proposed-tooling">Proposed tooling</a></li>
+    </ol>
+  </li>
+  <li><a href="#what-is-not-built-yet" id="markdown-toc-what-is-not-built-yet">What is not built yet</a></li>
+</ol>
 
-  <p>Both can be active in one session: the agent’s work-plan
-(<code class="language-plaintext highlighter-rouge">todo-manager</code>) may include “process N feedback items via
-<code class="language-plaintext highlighter-rouge">todo-review</code>” as a single task.</p>
-</blockquote>
-<h2 id="role">
+</details>
+
+<p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/content/docs/crdm-methodology"><code class="language-plaintext highlighter-rouge">content/docs/crdm-methodology/</code></a> — each section below links to its own source.</em></p>
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/overview.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/overview.md">✎ Edit</a></p>
+
+<p>How folio-assistant uses the <strong>Collaborative Requirements Development
+Methodology</strong> (CRDM) — a structured, participatory framework from the
+<a href="https://phii.org/">Public Health Informatics Institute</a> — to manage feature
+requests, platform changes, and content-pipeline evolution. When a user,
+reviewer, or editor asks for something that is not content but
+<strong>capability</strong> — a new block kind, a rendering change, a QA criterion — the
+agent enters a CRDM-guided workflow rather than improvising a solution.</p><hr />
+<h2 id="what-is-crdm">
   
   
-    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
+    <a href="#what-is-crdm" class="anchor-heading" aria-labelledby="what-is-crdm"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is CRDM?
   
   
 </h2>
     
 
-<p>Monitor open feedback across the manuscript. At session start, offer a
-structured todo workflow. Provide triage, context-aware selection, and
-a feedback cycle until the author is satisfied.</p>
-<h2 id="when-to-use-this-skill">
-  
-  
-    <a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use This Skill
-  
-  
-</h2>
-    
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-crdm.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/what-is-crdm.md">✎ Edit</a></p>
 
-<ul>
-  <li><strong>Session start</strong> (automatic): ask if author wants to work on feedback</li>
-  <li>User asks: “show todos”, “what feedback is pending”, “review todos”</li>
-  <li>User asks: “what needs attention”, “any open items”, “work on todos”</li>
-  <li>After completing a block of work, to check if related items can be closed</li>
-</ul>
-<h2 id="feedback-storage">
-  
-  
-    <a href="#feedback-storage" class="anchor-heading" aria-labelledby="feedback-storage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Feedback Storage
-  
-  
-</h2>
-    
+<p>The <strong>Collaborative Requirements Development Methodology</strong> (CRDM)™ is a
+structured, facilitated approach developed by the
+<a href="https://phii.org/">Public Health Informatics Institute (PHII)</a> to help
+organisations document workflows and define functional requirements for
+information systems. Rather than starting with technology, the methodology
+prioritises understanding the underlying business processes first.</p>
 
-<p>Feedback lives in <code class="language-plaintext highlighter-rouge">feedback/&lt;paper-dir&gt;/</code> (<strong>tracked in git</strong>,
-committed to main via worktree). Each content block with feedback has
-a TypeScript file:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>feedback/
-  &lt;paper-dir&gt;/
-    &lt;block-a&gt;.ts
-    &lt;block-b&gt;.ts
-    ...
-</code></pre></div></div>
-
-<p>Each file exports an array of <code class="language-plaintext highlighter-rouge">FeedbackItem</code> (extends <code class="language-plaintext highlighter-rouge">TodoItem</code> with
-<code class="language-plaintext highlighter-rouge">author</code>/<code class="language-plaintext highlighter-rouge">authorEmail</code>):</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="kd">type</span> <span class="p">{</span> <span class="nx">FeedbackItem</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../schemas/types</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="p">[</span>
-  <span class="p">{</span>
-    <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">todo-mn159z53</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">summary</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">short description of the issue</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">comment</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">longer description of the issue</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">status</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">open</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">priority</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">medium</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">origin</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">human</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">assignee</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">editor-agent</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">createdAt</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2026-03-22T02:35:33.543Z</span><span class="dl">"</span>
-  <span class="p">}</span>
-<span class="p">]</span> <span class="nx">satisfies</span> <span class="nx">FeedbackItem</span><span class="p">[];</span>
-</code></pre></div></div>
-<h2 id="session-start-todo-workflow">
-  
-  
-    <a href="#session-start-todo-workflow" class="anchor-heading" aria-labelledby="session-start-todo-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Session Start: Todo Workflow
-  
-  
-</h2>
-    
-
-<p>When the editor skill enters the session start protocol and open
-feedback exists, follow this flow:</p>
-<h3 id="step-0--offer-the-todo-workflow">
-  
-  
-    <a href="#step-0--offer-the-todo-workflow" class="anchor-heading" aria-labelledby="step-0--offer-the-todo-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 0 — Offer the todo workflow
-  
-  
-</h3>
-    
-
-<p>Present a brief overview and ask:</p>
-
-<blockquote>
-  <p><strong>You have N open feedback items</strong> (X critical, Y high, Z medium).</p>
-
-  <p>Would you like to work on feedback today?</p>
-</blockquote>
-
-<p>Options:</p>
-<ul>
-  <li><strong>Yes, let’s review feedback</strong> → proceed to Step 1</li>
-  <li><strong>No, I have something else in mind</strong> → exit to normal triage</li>
-</ul>
-<h3 id="step-1--overview-and-scope-selection">
-  
-  
-    <a href="#step-1--overview-and-scope-selection" class="anchor-heading" aria-labelledby="step-1--overview-and-scope-selection"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 1 — Overview and scope selection
-  
-  
-</h3>
-    
-
-<p>Show a quick summary grouped by chapter:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Feedback Overview
-
-| Chapter | Open | Critical/High | Sample |
-|---------|------|---------------|--------|
-| Ch 1: Introduction | 12 | 3 | "this does not need to hold in general" |
-| Ch 4: Methods | 4 | 1 | "missing cross-ref to prior section" |
-| Ch 11: Results | 6 | 0 | "clarify the derivation" |
-</code></pre></div></div>
-
-<p>Then ask:</p>
-
-<blockquote>
-  <p>Where would you like to start?</p>
-</blockquote>
-
-<p>Options (dynamically generated):</p>
-<ul>
-  <li><strong>High priority first</strong> — all critical + high items across paper</li>
-  <li>**Ch N: <title>** — one option per chapter that has feedback</title></li>
-  <li><strong>Show all</strong> — flat list sorted by priority</li>
-</ul>
-<h3 id="step-2--present-the-selected-feedback">
-  
-  
-    <a href="#step-2--present-the-selected-feedback" class="anchor-heading" aria-labelledby="step-2--present-the-selected-feedback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 2 — Present the selected feedback
-  
-  
-</h3>
-    
-
-<p>Show the filtered items as a table:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Open Feedback — Ch 1 (12 items)
-
-| # | Priority | Block | Summary |
-|---|----------|-------|---------|
-| 1 | high | initial-conditions | this does not need to hold in general |
-| 2 | high | main-point | need a supporting statement for the claim |
-| 3 | medium | core-definition | clarify notation convention |
-| ... |
-</code></pre></div></div>
-
-<p>Ask: <strong>Which item(s) would you like to address?</strong> (pick by number or “all”)</p>
-<h3 id="step-3--review-and-address-each-item">
-  
-  
-    <a href="#step-3--review-and-address-each-item" class="anchor-heading" aria-labelledby="step-3--review-and-address-each-item"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 3 — Review and address each item
-  
-  
-</h3>
-    
-
-<p>For each selected feedback item:</p>
+<p>CRDM organises work into three primary areas of concentration:</p>
 
 <ol>
-  <li><strong>Show the feedback</strong> — full comment, author, date, priority</li>
-  <li><strong>Read the block</strong> — load <code class="language-plaintext highlighter-rouge">content/&lt;paper&gt;/&lt;chapter&gt;/&lt;rootName&gt;.md</code>
-and <code class="language-plaintext highlighter-rouge">.ts</code> manifest for context</li>
-  <li><strong>Propose a fix</strong> — suggest specific edits to the <code class="language-plaintext highlighter-rouge">.md</code> content</li>
-  <li><strong>Ask for approval</strong> — show the proposed changes and ask:
-    <blockquote>
-      <p>Does this address the feedback? (yes / revise / skip)</p>
-    </blockquote>
+  <li>
+    <p><strong>Business Process Analysis (BPA)</strong> — document and analyse how the
+organisation currently performs its work. Understand manual workflows,
+identify bottlenecks, clarify how data is collected and used.</p>
   </li>
-  <li><strong>Apply if approved</strong> — edit the file, mark todo as <code class="language-plaintext highlighter-rouge">in_progress</code></li>
-  <li><strong>Iterate if “revise”</strong> — ask what to change, re-propose</li>
+  <li>
+    <p><strong>Business Process Redesign (BPR)</strong> — once the current state is understood,
+identify areas for improvement. Streamline operations and design a more
+efficient future-state workflow that the new capability will support.</p>
+  </li>
+  <li>
+    <p><strong>Requirements Definition</strong> — define specific functional requirements for the
+information system based on the redesigned business processes. Ensure the
+result is fit-for-purpose, scalable, and interoperable.</p>
+  </li>
 </ol>
-<h3 id="step-4--after-each-item-offer-next-steps">
-  
-  
-    <a href="#step-4--after-each-item-offer-next-steps" class="anchor-heading" aria-labelledby="step-4--after-each-item-offer-next-steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 4 — After each item, offer next steps
-  
-  
-</h3>
-    
 
-<p>After completing (or skipping) an item:</p>
+<p>The key insight is <strong>“begin with the end in mind”</strong>: technical requirements must
+be intentionally aligned with achieving specific outcomes rather than reacting to
+a feature request at the surface level.</p>
 
 <blockquote>
-  <p><strong>Done with “this does not need to hold in general”.</strong>
-What next?</p>
-</blockquote>
-
-<p>Options (context-aware):</p>
-<ul>
-  <li><strong>Next item on this block</strong> (if more exist)</li>
-  <li><strong>Next item in this section/chapter</strong></li>
-  <li><strong>Back to overview</strong> — re-show the chapter summary</li>
-  <li><strong>Done for now</strong> — exit todo workflow</li>
-</ul>
-<h3 id="step-5--wrap-up">
-  
-  
-    <a href="#step-5--wrap-up" class="anchor-heading" aria-labelledby="step-5--wrap-up"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 5 — Wrap up
-  
-  
-</h3>
-    
-
-<p>When the author says “done” or all items in scope are addressed:</p>
-
-<blockquote>
-  <p><strong>Session feedback summary:</strong></p>
+  <p><strong>References:</strong></p>
   <ul>
-    <li>Reviewed: 5 items</li>
-    <li>Addressed: 3 (edits applied)</li>
-    <li>Skipped: 2</li>
-    <li>Remaining open: 9</li>
+    <li><a href="https://phii.org/crdm/">PHII — CRDM</a> — the canonical description</li>
+    <li><a href="https://www.path.org/our-impact/resources/collaborative-requirements-development-methodology-participatory-process-end-users-define-software-requirements-improves-system-design-implementation/">PATH — Collaborative Requirements Development Methodology</a> — the PATH adaptation for global health informatics</li>
+    <li>Issue <a href="https://github.com/litlfred/folio-assistant/issues/203">#203</a> — the request that initiated this integration</li>
   </ul>
-
-  <p>The addressed items are marked <code class="language-plaintext highlighter-rouge">in_progress</code>. You can resolve them
-from the viewer feedback panel when you’re satisfied with the changes.</p>
 </blockquote>
-<h2 id="resolving-feedback">
+<h2 id="why-crdm-for-folio-assistant">
   
   
-    <a href="#resolving-feedback" class="anchor-heading" aria-labelledby="resolving-feedback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Resolving Feedback
-  
-  
-</h2>
-    
-
-<p><strong>Only the human author</strong> may resolve or remove a FeedbackItem
-(see AGENTS.md feedback-resolution rule). Agents must never set status
-to <code class="language-plaintext highlighter-rouge">resolved</code> or <code class="language-plaintext highlighter-rouge">wontfix</code>, and must never delete items. Agents <em>may</em>
-set status to <code class="language-plaintext highlighter-rouge">in_progress</code> after making edits.</p>
-
-<p>Resolution happens in the viewer’s feedback panel (click the status
-badge on any feedback item).</p>
-<h2 id="seeding-feedback">
-  
-  
-    <a href="#seeding-feedback" class="anchor-heading" aria-labelledby="seeding-feedback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Seeding Feedback
+    <a href="#why-crdm-for-folio-assistant" class="anchor-heading" aria-labelledby="why-crdm-for-folio-assistant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why CRDM for folio-assistant
   
   
 </h2>
     
 
-<p>When <code class="language-plaintext highlighter-rouge">feedback/</code> is empty or doesn’t exist for a paper, the skill can
-bootstrap an initial set by scanning for issues:</p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/why-crdm-for-folio-assistant.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/why-crdm-for-folio-assistant.md">✎ Edit</a></p>
+
+<p>folio-assistant is a <strong>platform</strong>, not an application with a fixed feature set.
+Authors, editors, and reviewers working in folio repositories regularly discover
+needs that are not content — they are <strong>capability gaps</strong> in the platform itself:
+a missing block kind, a QA criterion that does not exist, a rendering mode that
+does not handle their document structure, a workflow step that has no tooling.</p>
+
+<p>Without a methodology, agents improvise. The history of this repository shows
+what that looks like: a feature request arrives as a chat message, the agent
+builds something that addresses the immediate symptom, and the result does not
+compose with the rest of the platform — because nobody mapped the current
+workflow, identified who else is affected, or wrote the requirements down before
+coding started.</p>
+
+<p>CRDM solves this by inserting a <strong>structured requirements phase</strong> between “I need
+this” and “here is the code”. The methodology is a natural fit because
+folio-assistant already has the primitives it needs:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Source</th>
-      <th>How to scan</th>
-      <th>Priority</th>
+      <th>CRDM concept</th>
+      <th>folio-assistant primitive</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Content validation errors</td>
-      <td><code class="language-plaintext highlighter-rouge">content_validate</code> MCP tool</td>
-      <td>high</td>
+      <td>Stakeholder identification</td>
+      <td><code class="language-plaintext highlighter-rouge">folio.config.json</code> roles, GitHub CODEOWNERS</td>
     </tr>
     <tr>
-      <td>Unresolved <code class="language-plaintext highlighter-rouge">uses[]</code> refs</td>
-      <td>Validation output</td>
-      <td>high</td>
+      <td>Business process documentation</td>
+      <td>BPMN workflow diagrams under <code class="language-plaintext highlighter-rouge">docs/workflows/</code></td>
     </tr>
     <tr>
-      <td>Missing formal-layer files for definitions</td>
-      <td>Check block kind vs siblings</td>
-      <td>medium</td>
+      <td>Requirements artefact</td>
+      <td>GitHub issue with structured fields</td>
     </tr>
     <tr>
-      <td>Missing <code class="language-plaintext highlighter-rouge">.md</code> files</td>
-      <td>Blocks without narrative</td>
-      <td>medium</td>
+      <td>Work-plan items</td>
+      <td><code class="language-plaintext highlighter-rouge">beans</code> — the single todo mechanism</td>
     </tr>
     <tr>
-      <td>Unproved-gap markers in formal layer</td>
-      <td>grep the formal-layer tree</td>
-      <td>medium</td>
+      <td>Impact analysis</td>
+      <td>Content graph (<code class="language-plaintext highlighter-rouge">content-graph.ts</code>), schema constraints, QA registry</td>
+    </tr>
+    <tr>
+      <td>Iterative review</td>
+      <td>PR-based feedback, <code class="language-plaintext highlighter-rouge">content_validate</code>, <code class="language-plaintext highlighter-rouge">qa_sweep</code></td>
     </tr>
   </tbody>
 </table></div>
-<h2 id="integration-with-other-skills">
+
+<p>The goal is not to add ceremony. It is to make the agent <strong>recognise</strong> when a
+request is a feature rather than content, and shift into a requirements-gathering
+mode rather than jumping straight to implementation.</p>
+<h2 id="when-crdm-activates">
   
   
-    <a href="#integration-with-other-skills" class="anchor-heading" aria-labelledby="integration-with-other-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Integration with Other Skills
+    <a href="#when-crdm-activates" class="anchor-heading" aria-labelledby="when-crdm-activates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When the CRDM workflow activates
   
   
 </h2>
+    
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/when-crdm-activates.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/when-crdm-activates.md">✎ Edit</a></p>
+
+<p>An agent enters the CRDM workflow when it recognises that a request is about
+<strong>platform capability</strong> rather than <strong>folio content</strong>. The triggers are:</p>
+
+<ol>
+  <li>
+    <p><strong>Explicit feature request</strong> — the user says “I need a new block kind”, “add
+a QA check for X”, “the renderer should support Y”. These are unambiguous.</p>
+  </li>
+  <li>
+    <p><strong>GitHub issue tagged as a feature or enhancement</strong> — when the agent is asked
+to resolve an issue whose labels or body describe new functionality rather
+than a content edit.</p>
+  </li>
+  <li>
+    <p><strong>Discussion-derived need</strong> — during an authoring session, the user
+encounters a limitation. The conversation shifts from “write this chapter” to
+“the platform should be able to do X”. The agent detects this shift.</p>
+  </li>
+  <li>
+    <p><strong>Schema or pipeline change</strong> — a request that would modify files under
+<code class="language-plaintext highlighter-rouge">schemas/</code>, <code class="language-plaintext highlighter-rouge">content/pipeline/</code>, <code class="language-plaintext highlighter-rouge">adapters/</code>, or <code class="language-plaintext highlighter-rouge">src/</code> rather than under a
+folio’s <code class="language-plaintext highlighter-rouge">content/&lt;paper&gt;/</code>.</p>
+  </li>
+  <li>
+    <p><strong>Cross-cutting concern</strong> — the request affects multiple folios or multiple
+content types. A single-folio content edit does not trigger CRDM; a change
+to how all folios validate does.</p>
+  </li>
+</ol>
+
+<p><strong>The detection rule:</strong> if implementing the request would require changes to
+folio-assistant (the platform repository) rather than to a folio repository, the
+request is a feature, and the agent should enter CRDM rather than coding
+directly.</p>
+
+<p>When the agent detects a CRDM trigger, it should:</p>
+
+<ol>
+  <li><strong>Acknowledge</strong> — tell the user it has recognised a feature request</li>
+  <li><strong>Cite the source</strong> — link to the issue, message, or conversation turn</li>
+  <li><strong>Propose entering the CRDM workflow</strong> — explain what that means (structured
+requirements gathering before implementation)</li>
+  <li><strong>Get consent</strong> — the user may prefer to skip the methodology for small
+changes; the agent respects that but notes the risk</li>
+</ol>
+<h2 id="phase-1-needs-assessment">
+  
+  
+    <a href="#phase-1-needs-assessment" class="anchor-heading" aria-labelledby="phase-1-needs-assessment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 1 — Needs assessment
+  
+  
+</h2>
+    
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-1-needs-assessment.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/phase-1-needs-assessment.md">✎ Edit</a></p>
+
+<p>The agent helps the user articulate <strong>what they need and why</strong>, before anyone
+discusses how to build it. This is where most ad-hoc requests go wrong — the
+solution is specified before the problem is understood.</p>
+
+<p><strong>What the agent does in this phase:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Identify the requester and stakeholders</strong> — who is asking, who else is
+affected? The word-document-import request (<a href="https://github.com/litlfred/folio-assistant/issues/197">#197</a>)
+came from one person but affects anyone doing public consultation review,
+HRH handbook adaptation, or PCMT traceability. The agent should surface
+those connections.</p>
+  </li>
+  <li>
+    <p><strong>Synthesise the need from multiple sources</strong> — a requirement rarely arrives
+as a clean statement. It comes from a chat message, a GitHub issue, a
+discussion thread, a review comment. The agent gathers these fragments and
+presents a consolidated statement of need back to the user for validation.</p>
+  </li>
+  <li>
+    <p><strong>Suggest other stakeholders</strong> — if the request touches a workflow that
+others use (e.g. country adaptation, formal review processes), the agent
+should identify who else should weigh in and propose inviting them.</p>
+  </li>
+  <li>
+    <p><strong>Document the “why”</strong> — every requirement gets a rationale. Not “import
+Word documents” but “enable public consultation comment triage through a
+structured ingestion pipeline, so that SAG members can review and approve
+changes through a formal process.”</p>
+  </li>
+</ol>
+
+<p><strong>Deliverable:</strong> a GitHub issue (or issue comment) with:</p>
+<ul>
+  <li>Statement of need</li>
+  <li>Identified stakeholders</li>
+  <li>Rationale linking the need to a concrete workflow</li>
+  <li>References to the conversation or discussion that surfaced the need</li>
+</ul>
+<h2 id="phase-2-business-process-analysis">
+  
+  
+    <a href="#phase-2-business-process-analysis" class="anchor-heading" aria-labelledby="phase-2-business-process-analysis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 2 — Business process analysis
+  
+  
+</h2>
+    
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-2-business-process-analysis.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/phase-2-business-process-analysis.md">✎ Edit</a></p>
+
+<p>Before changing the platform, understand <strong>how the work is done today</strong>. The
+agent maps the current workflow — manually if needed — and identifies where the
+gap actually sits.</p>
+
+<p><strong>What the agent does in this phase:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Map the current workflow</strong> — use the existing BPMN diagrams under
+<code class="language-plaintext highlighter-rouge">docs/workflows/</code> as a starting point. If the affected workflow is already
+diagrammed (e.g. the content lifecycle, the publication pipeline, the
+document ingestion flow), read it and identify the specific activity or
+decision point where the gap appears.</p>
+  </li>
+  <li>
+    <p><strong>Identify bottlenecks and pain points</strong> — the request “import Word
+documents” might mask a deeper problem: “the public consultation feedback
+arrives as an Excel spreadsheet and a Word document, and there is no way to
+triage 200 comments without manually reading each one.” The agent should
+probe for the real bottleneck.</p>
+  </li>
+  <li>
+    <p><strong>Check existing capabilities</strong> — before proposing new tooling, verify what
+already exists. folio-assistant’s ingestion pipeline already handles PDFs,
+images, and structured text. Does the request require a new capability or an
+extension of an existing one?</p>
+  </li>
+  <li>
+    <p><strong>Document the current state</strong> — write up the as-is workflow, either as
+prose in the issue or as a BPMN fragment. This becomes the baseline against
+which the redesign is measured.</p>
+  </li>
+</ol>
+
+<p><strong>Deliverable:</strong> a current-state workflow description attached to the issue,
+identifying exactly where the capability gap sits.</p>
+<h2 id="phase-3-requirements-definition">
+  
+  
+    <a href="#phase-3-requirements-definition" class="anchor-heading" aria-labelledby="phase-3-requirements-definition"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 3 — Requirements definition
+  
+  
+</h2>
+    
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-3-requirements-definition.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/phase-3-requirements-definition.md">✎ Edit</a></p>
+
+<p>Translate the understood need into <strong>specific, actionable requirements</strong> with
+proposed tooling descriptions. All requirements should be developed fully, with
+proposed <code class="language-plaintext highlighter-rouge">.ts</code> skills, software tooling descriptions, and requirements for
+folio-assistant SOPs.</p>
+
+<p><strong>What the agent produces in this phase:</strong></p>
+
+<ol>
+  <li><strong>Functional requirements</strong> — each stated as a testable capability:
+    <ul>
+      <li>“The ingestion engine SHALL detect <code class="language-plaintext highlighter-rouge">.docx</code> files in <code class="language-plaintext highlighter-rouge">uploads/</code> and extract
+semantic structure (headings, lists, tables) into Markdown.”</li>
+      <li>“The review triage tool SHALL present comments grouped by document section
+and allow batch accept/reject/defer decisions.”</li>
+    </ul>
+  </li>
+  <li><strong>Proposed skills and tooling</strong> — for each requirement, a concrete
+description of the skill or tool that implements it:
+    <ul>
+      <li>Skill name, description, and which adapter it belongs to</li>
+      <li>Input/output contract</li>
+      <li>MCP tool registration (if applicable)</li>
+      <li>QA criteria (if applicable)</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Schema changes</strong> — if the requirement needs new types, block kinds,
+constraint rules, or configuration fields, these are specified here with
+their Zod schemas.</p>
+  </li>
+  <li>
+    <p><strong>Pipeline changes</strong> — if the requirement needs new pipeline scripts under
+<code class="language-plaintext highlighter-rouge">content/pipeline/</code>, new validators, or new renderers, the file names and
+responsibilities are listed.</p>
+  </li>
+  <li><strong>Acceptance criteria</strong> — how we know the requirement is met. Each criterion
+should be mechanically testable where possible.</li>
+</ol>
+
+<p><strong>Deliverable:</strong> a requirements document in the GitHub issue, structured as a
+checklist of capabilities with their proposed implementations. Each requirement
+links back to the need (Phase 1) and the workflow gap (Phase 2) it addresses.</p>
+<h2 id="phase-4-impact-analysis">
+  
+  
+    <a href="#phase-4-impact-analysis" class="anchor-heading" aria-labelledby="phase-4-impact-analysis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 4 — Impact analysis and migration planning
+  
+  
+</h2>
+    
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-4-impact-analysis.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/phase-4-impact-analysis.md">✎ Edit</a></p>
+
+<p>Before implementation begins, assess <strong>what the proposed changes affect</strong> across
+the platform and any active folios.</p>
+
+<p><strong>What the agent analyses:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Content impact</strong> — does the change affect existing folio content? If a
+schema changes, which folios need migration? The content graph
+(<code class="language-plaintext highlighter-rouge">content-graph.ts</code>) and the constraint rules (<code class="language-plaintext highlighter-rouge">schemas/constraints.ts</code>)
+make this measurable.</p>
+  </li>
+  <li>
+    <p><strong>Pipeline impact</strong> — which pipeline scripts are affected? Does the change
+require new validators, new renderers, or modifications to existing ones?
+List every file under <code class="language-plaintext highlighter-rouge">content/pipeline/</code> that would be touched.</p>
+  </li>
+  <li>
+    <p><strong>QA impact</strong> — does the change add, modify, or remove QA criteria? How does
+it affect the existing QA sweep results? Any criterion change must be
+registered in <code class="language-plaintext highlighter-rouge">qa-criteria-registry.ts</code>.</p>
+  </li>
+  <li>
+    <p><strong>Adapter impact</strong> — does the change affect one adapter (paper, document,
+dak) or all? Changes to <code class="language-plaintext highlighter-rouge">DocumentContentAdapter</code> ripple into
+<code class="language-plaintext highlighter-rouge">PaperContentAdapter</code> because it extends it.</p>
+  </li>
+  <li><strong>Migration plan</strong> — if existing content or configuration must change, write
+the migration steps. Include:
+    <ul>
+      <li>Which folios are affected</li>
+      <li>What the codemod or manual migration looks like</li>
+      <li>What breaks if the migration is not run</li>
+      <li>Rollback strategy</li>
+    </ul>
+  </li>
+  <li><strong>Test plan</strong> — what tests need to be added or updated? Which existing tests
+might break?</li>
+</ol>
+
+<p><strong>Deliverable:</strong> an impact assessment section in the GitHub issue listing every
+affected file, folio, and workflow, with a migration plan if applicable.</p>
+<h2 id="phase-5-sign-off-and-beans">
+  
+  
+    <a href="#phase-5-sign-off-and-beans" class="anchor-heading" aria-labelledby="phase-5-sign-off-and-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 5 — Sign-off and bean creation
+  
+  
+</h2>
+    
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-5-sign-off-and-beans.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/phase-5-sign-off-and-beans.md">✎ Edit</a></p>
+
+<p>The requirements and impact analysis are presented to the user (and any
+identified stakeholders) for review and sign-off. This is the gate between
+requirements and implementation.</p>
+
+<p><strong>The sign-off process:</strong></p>
+
+<ol>
+  <li><strong>Present the consolidated requirements</strong> — the agent produces a summary
+comment on the GitHub issue containing:
+    <ul>
+      <li>The need statement (Phase 1)</li>
+      <li>The current-state workflow and gap (Phase 2)</li>
+      <li>The requirements checklist (Phase 3)</li>
+      <li>The impact assessment and migration plan (Phase 4)</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Solicit feedback</strong> — ask the user and stakeholders to review. The review
+happens <strong>on the issue</strong>, not in chat — so it is visible, linkable, and
+survives beyond any single session. This is the transparent review process:
+comments, questions, and revisions are all recorded in the issue thread.</p>
+  </li>
+  <li>
+    <p><strong>Iterate</strong> — if the review surfaces new requirements, missing stakeholders,
+or concerns about the impact, cycle back to the relevant phase. The issue
+thread records each iteration.</p>
+  </li>
+  <li><strong>Create beans</strong> — once the requirements are agreed, the agent creates
+<code class="language-plaintext highlighter-rouge">beans</code> for each unit of implementation work. Each bean:
+    <ul>
+      <li>References the parent issue</li>
+      <li>Has a clear title describing the deliverable</li>
+      <li>Is scoped to a single PR-sized unit of work</li>
+      <li>Is created using the <a href="https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html">check-before-create
+protocol</a>
+to avoid duplicates</li>
+    </ul>
+  </li>
+  <li><strong>Record the decision</strong> — the sign-off comment on the issue serves as the
+decision record. It states what was agreed, what was deferred, and links to
+the beans that will implement it.</li>
+</ol>
+
+<p><strong>Deliverable:</strong> a sign-off comment on the issue, plus beans for each work item.</p>
+<h2 id="phase-6-iterative-development">
+  
+  
+    <a href="#phase-6-iterative-development" class="anchor-heading" aria-labelledby="phase-6-iterative-development"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 6 — Iterative development and review
+  
+  
+</h2>
+    
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-6-iterative-development.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/phase-6-iterative-development.md">✎ Edit</a></p>
+
+<p>Once the requirements are signed off and beans are created, the agent enters
+the normal development cycle — but with the CRDM artefacts as guardrails.</p>
+
+<p><strong>How the development cycle uses CRDM artefacts:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Bean-driven work</strong> — each bean references the parent issue and its
+specific requirement. The agent claims a bean, implements it, opens a PR,
+and links both.</p>
+  </li>
+  <li>
+    <p><strong>PR review against requirements</strong> — reviewers check not just “does the code
+work?” but “does it satisfy the requirement stated in the issue?” The
+acceptance criteria from Phase 3 are the review checklist.</p>
+  </li>
+  <li>
+    <p><strong>Testing against the workflow</strong> — the redesigned workflow from Phase 2
+should be testable after implementation. Does the ingestion pipeline now
+handle Word documents? Can a reviewer triage 200 comments through the new
+tool?</p>
+  </li>
+  <li>
+    <p><strong>Feedback loops</strong> — after initial testing, users provide feedback. If the
+feedback reveals new requirements or missed cases, a new iteration of the
+CRDM phases is triggered — but scoped: only the affected requirement is
+re-assessed, not the entire feature.</p>
+  </li>
+  <li>
+    <p><strong>Documentation update</strong> — when the feature lands, the documentation pages
+(these structured <code class="language-plaintext highlighter-rouge">.ts</code>/<code class="language-plaintext highlighter-rouge">.md</code> pages under <code class="language-plaintext highlighter-rouge">content/docs/</code>) are updated to
+reflect the new capability. Workflow BPMN diagrams are updated if the
+pipeline changed.</p>
+  </li>
+  <li>
+    <p><strong>Close the loop</strong> — when all beans for the feature are resolved, the agent
+closes the parent issue with a summary of what was delivered and any
+deferred items. Deferred items become new issues for future CRDM cycles.</p>
+  </li>
+</ol>
+
+<p>This is the process that the discussion around issue
+<a href="https://github.com/litlfred/folio-assistant/issues/197">#197</a> proposed to
+generalise: create MVP tooling → test → refine → deploy. CRDM gives that
+process a name and a structure so it can be repeated for any feature request —
+whether it is Word document import, Harvard document engine workflows, HRH
+handbook adaptation, or country-level review SOPs.</p>
+<h2 id="agent-skills-and-tooling">
+  
+  
+    <a href="#agent-skills-and-tooling" class="anchor-heading" aria-labelledby="agent-skills-and-tooling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agent skills and tooling
+  
+  
+</h2>
+    
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/agent-skills-and-tooling.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/agent-skills-and-tooling.md">✎ Edit</a></p>
+
+<p>The CRDM workflow is supported by skills and tools that the agent uses at each
+phase. Some exist today; others are proposed.</p>
+<h3 id="existing-capabilities">
+  
+  
+    <a href="#existing-capabilities" class="anchor-heading" aria-labelledby="existing-capabilities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Existing capabilities
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Capability</th>
+      <th>Used in phase</th>
+      <th>How</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>GitHub issue management</strong> (<code class="language-plaintext highlighter-rouge">gh</code> CLI)</td>
+      <td>All phases</td>
+      <td>Issues are the primary artefact for requirements, impact analysis, and sign-off</td>
+    </tr>
+    <tr>
+      <td><strong>BPMN workflow authoring</strong> (skill: <code class="language-plaintext highlighter-rouge">bpmn-authoring</code>)</td>
+      <td>Phase 2</td>
+      <td>Agent can create and modify BPMN 2.0 process diagrams</td>
+    </tr>
+    <tr>
+      <td><strong>Content graph</strong> (<code class="language-plaintext highlighter-rouge">content-graph.ts</code>)</td>
+      <td>Phase 4</td>
+      <td>Dependency analysis across blocks and chapters</td>
+    </tr>
+    <tr>
+      <td><strong>QA criteria registry</strong> (<code class="language-plaintext highlighter-rouge">qa-criteria-registry.ts</code>)</td>
+      <td>Phase 3, 4</td>
+      <td>Register and scope new QA checks</td>
+    </tr>
+    <tr>
+      <td><strong>Beans</strong> (<code class="language-plaintext highlighter-rouge">beans</code> CLI)</td>
+      <td>Phase 5, 6</td>
+      <td>Work-plan creation and tracking</td>
+    </tr>
+    <tr>
+      <td><strong>Content validation</strong> (<code class="language-plaintext highlighter-rouge">content_validate</code> MCP tool)</td>
+      <td>Phase 6</td>
+      <td>Verify changes against schema and constraints</td>
+    </tr>
+    <tr>
+      <td><strong>Schema types</strong> (<code class="language-plaintext highlighter-rouge">schemas/*.ts</code>)</td>
+      <td>Phase 3</td>
+      <td>Define new types, constraints, and builders</td>
+    </tr>
+    <tr>
+      <td><strong>Document ingestion</strong> (<code class="language-plaintext highlighter-rouge">uploads/</code> → <code class="language-plaintext highlighter-rouge">library/</code> pipeline)</td>
+      <td>Phase 2</td>
+      <td>Ingest source documents for review</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="proposed-skills">
+  
+  
+    <a href="#proposed-skills" class="anchor-heading" aria-labelledby="proposed-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proposed skills
+  
+  
+</h3>
     
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
       <th>Skill</th>
-      <th>Integration</th>
+      <th>Phase</th>
+      <th>Purpose</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">editor</code></td>
-      <td>Session start triage includes feedback check</td>
+      <td><strong><code class="language-plaintext highlighter-rouge">crdm-detect</code></strong></td>
+      <td>Trigger</td>
+      <td>Recognise when a request is a feature rather than content</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">formalizer</code></td>
-      <td>Creates feedback when formal-layer gaps need attention</td>
+      <td><strong><code class="language-plaintext highlighter-rouge">crdm-needs-assessment</code></strong></td>
+      <td>Phase 1</td>
+      <td>Guide the user through needs articulation; identify stakeholders</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">proof-status-tracking</code></td>
-      <td>Feedback tracks formalization gaps</td>
+      <td><strong><code class="language-plaintext highlighter-rouge">crdm-impact-analysis</code></strong></td>
+      <td>Phase 4</td>
+      <td>Automated scan of affected schemas, pipeline scripts, adapters, and folios</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-validation</code></td>
-      <td>Validation errors seed feedback</td>
+      <td><strong><code class="language-plaintext highlighter-rouge">crdm-requirements-template</code></strong></td>
+      <td>Phase 3</td>
+      <td>Generate structured requirements from conversation</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">scientific-accuracy</code></td>
-      <td>Review comments become feedback</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">proof-triage</code></td>
-      <td>Formal-layer gap stubs generate high-priority feedback</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-block-review</code></td>
-      <td>Cross-reference issues become feedback</td>
+      <td><strong><code class="language-plaintext highlighter-rouge">review-triage</code></strong></td>
+      <td>Phase 6</td>
+      <td>Triage review comments from ingested documents (e.g. public consultation feedback)</td>
     </tr>
   </tbody>
 </table></div>
+<h3 id="proposed-tooling">
+  
+  
+    <a href="#proposed-tooling" class="anchor-heading" aria-labelledby="proposed-tooling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proposed tooling
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">crdm_start</code> MCP tool</strong></td>
+      <td>Enter CRDM mode for a given issue; scaffold the phases in the issue body</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">crdm_status</code> MCP tool</strong></td>
+      <td>Report which phase the current CRDM cycle is in and what deliverables are pending</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">stakeholder_map</code> MCP tool</strong></td>
+      <td>Given a proposed change, identify affected roles from <code class="language-plaintext highlighter-rouge">folio.config.json</code> and CODEOWNERS</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="what-is-not-built-yet">
+  
+  
+    <a href="#what-is-not-built-yet" class="anchor-heading" aria-labelledby="what-is-not-built-yet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is not built yet
+  
+  
+</h2>
+    
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-not-built-yet.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/what-is-not-built-yet.md">✎ Edit</a></p>
+
+<p>This page documents the methodology; the skills and tooling that implement it
+are in various stages of development.</p>
+
+<p><strong>Not yet implemented:</strong></p>
+
+<ul>
+  <li><strong>CRDM detection skill</strong> — the agent does not yet automatically recognise
+when a request is a feature vs content. Today this is a human judgement.</li>
+  <li><strong>Structured requirements templates</strong> — no MCP tool scaffolds the CRDM
+phases into a GitHub issue. The structure described above is manual.</li>
+  <li><strong>Automated impact analysis</strong> — the agent can read the content graph and
+schema files, but there is no dedicated tool that produces an impact report
+for a proposed change.</li>
+  <li><strong>Stakeholder mapping</strong> — no automated discovery of affected roles or
+folios from a proposed change description.</li>
+  <li><strong>Review triage tooling</strong> — the ability to ingest a Word document with
+comments and present them for structured triage is tracked in
+<a href="https://github.com/litlfred/folio-assistant/issues/197">#197</a>.</li>
+  <li><strong>BPMN diagram for the CRDM workflow itself</strong> — this page describes the
+process in prose; a BPMN diagram would make it executable and verifiable.</li>
+</ul>
+
+<p><strong>Tracked in:</strong> <a href="https://github.com/litlfred/folio-assistant/issues/203">#203</a></p>
 
           
 
