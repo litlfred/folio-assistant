@@ -1,0 +1,237 @@
+name: Feature Staging (GitHub Pages)
+
+# Deploy feature-branch rendered content to gh-pages under STAGING/<branch>/
+# so reviewers can preview changes at:
+#   https://<user>.github.io/<repo>/STAGING/<branch-slug>/
+#
+# This is the "before/after" comparison surface for publication review:
+# - main renders at the Pages root (via docs-site.yml)
+# - feature branches render under STAGING/<slug>/ (this workflow)
+# - each deployment is stamped with the commit SHA, timestamp, and
+#   source branch so it is always clear what is deployed
+#
+# Example scenario (from issue #215):
+#   Author changes the immunization schedule → agent opens a feature branch →
+#   agent renders the changed content → guidance review committee compares
+#   STAGING/update-immunization-schedule/ against the main site → approves →
+#   merge to main → STAGING/<slug>/ is cleaned up automatically.
+#
+# Cleanup: when a PR is merged or closed, the STAGING/<slug>/ directory
+# is removed from gh-pages so stale previews don't accumulate.
+#
+# **This workflow is folio-generic.** It builds the docs site (Jekyll +
+# TypeDoc), not the TeX paper PDF. A folio that also needs a staged PDF
+# build should call publish.yml with publish_branch: gh-pages and the
+# STAGING prefix — that is handled by the publish workflow's
+# `publish_branch` input.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'docs/**'
+      - 'schemas/**'
+      - 'content/**'
+      - 'skills/**'
+      - 'scripts/gen-schema-docs.ts'
+      - 'scripts/gen-docs-pages.ts'
+      - '.github/workflows/feature-staging.yml'
+  pull_request_target:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to stage (leave blank to use current branch)'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: staging-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Deploy feature branch to STAGING/ ─────────────────────────
+  stage:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || inputs.branch || github.ref }}
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install deps
+        run: bun install --frozen-lockfile || bun install
+
+      - name: Determine staging slug
+        id: slug
+        run: |
+          # Sanitise the branch name for use as a URL path segment
+          BRANCH="${{ github.event.pull_request.head.ref || inputs.branch || github.ref_name }}"
+          SLUG=$(echo "$BRANCH" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          echo "Staging slug: $SLUG"
+
+      - name: Regenerate generated docs
+        run: |
+          bun run scripts/gen-schema-docs.ts 2>&1 | tail -5 || true
+          bun run scripts/gen-skill-docs.ts 2>&1 | tail -5 || true
+          bun run scripts/gen-docs-pages.ts 2>&1 | tail -5 || true
+
+      - name: Render BPMN workflow diagrams
+        run: |
+          npx --yes playwright install --with-deps chromium
+          bun run render:bpmn 2>&1 | tail -10 || true
+
+      # Stamp the build so a reviewer can tell WHAT is deployed from the
+      # page itself — the core requirement from issue #215.
+      - name: Stamp the build
+        run: |
+          mkdir -p docs/_data
+          {
+            echo "sha: \"${GITHUB_SHA}\""
+            echo "short_sha: \"${GITHUB_SHA:0:7}\""
+            echo "built_at: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\""
+            echo "branch: \"${{ steps.slug.outputs.branch }}\""
+            echo "staging: true"
+            echo "staging_slug: \"${{ steps.slug.outputs.slug }}\""
+            echo "run_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\""
+            echo "pr_number: \"${{ github.event.pull_request.number || '' }}\""
+          } > docs/_data/build.yml
+          cat docs/_data/build.yml
+
+      # Set baseurl so Jekyll generates links relative to the STAGING subdir
+      - name: Configure Jekyll for staging subdirectory
+        run: |
+          SLUG="${{ steps.slug.outputs.slug }}"
+          # Append baseurl override to _config.yml so Jekyll generates all
+          # links relative to /folio-assistant/STAGING/<slug>/
+          echo "" >> docs/_config.yml
+          echo "# Auto-appended by feature-staging.yml" >> docs/_config.yml
+          echo "baseurl: \"/folio-assistant/STAGING/${SLUG}\"" >> docs/_config.yml
+
+      - name: Build Jekyll site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./_site
+
+      - name: Take ownership of Jekyll output
+        run: sudo chown -R "$(id -u):$(id -g)" ./_site
+
+      - name: Generate TypeDoc API reference
+        run: |
+          npx --yes typedoc \
+            --out ./_site/api \
+            --entryPointStrategy expand \
+            --readme none \
+            --hideGenerator \
+            --skipErrorChecking \
+            --name "folio-assistant API (staging: ${{ steps.slug.outputs.slug }})" \
+            schemas/types.ts schemas/constraints.ts schemas/builders.ts \
+            schemas/assistant-types.ts schemas/assistant-package.ts \
+            schemas/assistant-workflow.ts schemas/formalization-types.ts \
+            schemas/lean-packages.ts 2>&1 | tail -10
+
+      # Add a staging banner to every HTML page so a reviewer never
+      # mistakes staged content for the published site.
+      - name: Inject staging banner
+        run: |
+          SHA="${GITHUB_SHA:0:7}"
+          BRANCH="${{ steps.slug.outputs.branch }}"
+          BUILT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          PR="${{ github.event.pull_request.number || 'n/a' }}"
+          BANNER="<div style=\"background:#fbbf24;color:#1e1e1e;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999\">⚠️ <b>STAGING</b> — branch <code>${BRANCH}</code> · commit <code>${SHA}</code> · built ${BUILT} · PR #${PR} · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\">build log</a></div>"
+          find ./_site -name "*.html" -exec sed -i "s|<body|<body>${BANNER}|" {} + 2>/dev/null || true
+          echo "Injected staging banner into $(find ./_site -name '*.html' | wc -l) HTML files"
+
+      - name: Disable Jekyll on published branch
+        run: touch ./_site/.nojekyll
+
+      - name: Deploy to gh-pages/STAGING/<slug>
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          destination_dir: STAGING/${{ steps.slug.outputs.slug }}
+          publish_branch: gh-pages
+          keep_files: true
+          commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }}'
+
+      - name: Comment staging URL on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const slug = '${{ steps.slug.outputs.slug }}';
+            const sha = '${{ github.sha }}'.substring(0, 7);
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const url = `https://${owner}.github.io/${repo}/STAGING/${slug}/`;
+            const body = `## 🔍 Staging preview deployed
+
+            **URL:** ${url}
+            **Commit:** \`${sha}\`
+            **Branch:** \`${{ steps.slug.outputs.branch }}\`
+
+            Every page carries a yellow banner with the commit SHA, build time, and link to the build log.
+
+            > Compare with [main site](https://${owner}.github.io/${repo}/) to review changes.`;
+            
+            // Update existing comment or create new one
+            const comments = await github.rest.issues.listComments({
+              owner, repo, issue_number: context.issue.number,
+            });
+            const existing = comments.data.find(c => 
+              c.user.login === 'github-actions[bot]' && 
+              c.body.includes('Staging preview deployed')
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner, repo, comment_id: existing.id, body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: context.issue.number, body,
+              });
+            }
+
+  # ── Cleanup: remove STAGING/<slug>/ when PR is closed ─────────
+  cleanup:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Determine staging slug
+        id: slug
+        run: |
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          SLUG=$(echo "$BRANCH" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+
+      - name: Remove staging directory
+        run: |
+          SLUG="${{ steps.slug.outputs.slug }}"
+          if [ -d "STAGING/$SLUG" ]; then
+            rm -rf "STAGING/$SLUG"
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add -A "STAGING/$SLUG"
+            git commit -m "staging(cleanup): remove STAGING/$SLUG (PR #${{ github.event.pull_request.number }} closed)" || true
+            git push origin gh-pages
+            echo "Cleaned up STAGING/$SLUG"
+          else
+            echo "No staging directory found for $SLUG (already cleaned up)"
+          fi
