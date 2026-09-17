@@ -1,0 +1,239 @@
+{
+  "$schema": "block-qa/v1",
+  "block": "index",
+  "source_file": "docs/index.md",
+  "source_hash": "db4a49b38c9c",
+  "created_at": "2026-09-17T22:41:45.100Z",
+  "axes": {
+    "translation": {
+      "locale": "fr",
+      "coverage": "37/37",
+      "coverage_pct": 100,
+      "round_trip": {
+        "method": "jaccard-word-overlap",
+        "threshold_pass": 0.5,
+        "threshold_warn": 0.3,
+        "results_summary": {
+          "total": 36,
+          "pass": 11,
+          "warn": 4,
+          "fail": 21
+        },
+        "entries": [
+          {
+            "msgid_short": "folio-assistant",
+            "similarity": 1,
+            "status": "pass"
+          },
+          {
+            "msgid_short": "A content-agnostic agent skills framework for authoring rigo…",
+            "similarity": 0.23,
+            "status": "fail",
+            "back_translated": "un cadre de skills d'agent indépendant du content pour la authoring de contents rigoureux avec un grand modèle de langage — scientific papers et books, who smart guidelines, et implementation guides fhir — appuyé par un server mcp, un contrôle d'accès basé sur les roles, et un modèle d'objets de content typé."
+          },
+          {
+            "msgid_short": "Get started{: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }…",
+            "similarity": 0.47,
+            "status": "warn",
+            "back_translated": "démarrer{: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } installer{: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 } voir sur github{: .btn .fs-5 .mb-4 .mb-md-0 }"
+          },
+          {
+            "msgid_short": "What is folio-assistant?",
+            "similarity": 0,
+            "status": "fail",
+            "back_translated": "qu'est-ce que folio-assistant ?"
+          },
+          {
+            "msgid_short": "folio-assistant is the platform — it does not contain conten…",
+            "similarity": 0.33,
+            "status": "warn",
+            "back_translated": "folio-assistant est la platform — elle ne contient pas de content. elle fournit les skills, les schemas, les tooling et un server mcp (model context protocol) qu'un agent piloté par un llm utilise pour planifier, author, validate, review, test et publish un folio de content qui réside dans un repository separate."
+          },
+          {
+            "msgid_short": "Separation of concerns. This documentation describes the *fo…",
+            "similarity": 0.08,
+            "status": "fail",
+            "back_translated": "séparation des préoccupations. cette documentation décrit le *formalisme du"
+          },
+          {
+            "msgid_short": "framework and how to use folio-assistant* — deliberately kep…",
+            "similarity": 0.07,
+            "status": "fail",
+            "back_translated": "cadre et comment utiliser folio-assistant* — délibérément maintenue **separatee de"
+          },
+          {
+            "msgid_short": "any specific content**. Where content appears in these pages…",
+            "similarity": 0.12,
+            "status": "fail",
+            "back_translated": "tout content spécifique**. lorsque du content apparaît dans ces pages, il est purement"
+          },
+          {
+            "msgid_short": "illustrative (an example), never the canonical artifact.",
+            "similarity": 0,
+            "status": "fail",
+            "back_translated": "illustratif (un exemple), jamais l'artefact canonique."
+          },
+          {
+            "msgid_short": "Supported content types",
+            "similarity": 1,
+            "status": "pass"
+          },
+          {
+            "msgid_short": "folio-assistant is pluggable — each content type is handled …",
+            "similarity": 0.29,
+            "status": "fail",
+            "back_translated": "folio-assistant est pluggable — chaque type de content est géré par un adapter de content et un skill package correspondant. les types actuellement supported :"
+          },
+          {
+            "msgid_short": "Content type",
+            "similarity": 1,
+            "status": "pass"
+          },
+          {
+            "msgid_short": "Artifacts",
+            "similarity": 1,
+            "status": "pass"
+          },
+          {
+            "msgid_short": "Skill package",
+            "similarity": 1,
+            "status": "pass"
+          },
+          {
+            "msgid_short": "Scientific papers & books",
+            "similarity": 1,
+            "status": "pass"
+          },
+          {
+            "msgid_short": "Lean 4 formalization + LaTeX/Markdown",
+            "similarity": 1,
+            "status": "pass"
+          },
+          {
+            "msgid_short": "WHO SMART Guidelines DAKs",
+            "similarity": 0.33,
+            "status": "warn",
+            "back_translated": "digital adaptation kits (dak) des who smart guidelines"
+          },
+          {
+            "msgid_short": "L2 artifacts — BPMN, DMN, Excel data dictionaries, personas",
+            "similarity": 0.4,
+            "status": "warn",
+            "back_translated": "artifacts l2 — bpmn, dmn, dictionnaires de données excel, personas"
+          },
+          {
+            "msgid_short": "WHO SMART Implementation Guides",
+            "similarity": 0.6,
+            "status": "pass"
+          },
+          {
+            "msgid_short": "L3 FHIR resources, FSH, IG Publisher output",
+            "similarity": 0.2,
+            "status": "fail",
+            "back_translated": "resources fhir l3, fsh, sortie de l'éditeur d'ig"
+          },
+          {
+            "msgid_short": "Others",
+            "similarity": 0,
+            "status": "fail",
+            "back_translated": "autres"
+          },
+          {
+            "msgid_short": "Pluggable — add a new adapter + skill package",
+            "similarity": 0.5,
+            "status": "pass"
+          },
+          {
+            "msgid_short": "Adding a content type",
+            "similarity": 0.5,
+            "status": "pass"
+          },
+          {
+            "msgid_short": "Where to go next",
+            "similarity": 0,
+            "status": "fail",
+            "back_translated": "où aller ensuite"
+          },
+          {
+            "msgid_short": "Installation — prerequisites, clone, , capability check.",
+            "similarity": 0.1,
+            "status": "fail",
+            "back_translated": "installation — prérequis, clonage, vérification des capacités."
+          },
+          {
+            "msgid_short": "Getting started — connect the MCP server to your LLM and run…",
+            "similarity": 0.29,
+            "status": "fail",
+            "back_translated": "getting started — connectez le server mcp à votre llm et exécutez votre première compétence."
+          },
+          {
+            "msgid_short": "Tutorial: Writing a paper with folio-assistant — a full, LLM…",
+            "similarity": 0.09,
+            "status": "fail",
+            "back_translated": "tutorial : author un article avec folio-assistant — un guide complet piloté par llm avec une session de chat simulée."
+          },
+          {
+            "msgid_short": "Content types — the formalism of each authoring domain.",
+            "similarity": 0.18,
+            "status": "fail",
+            "back_translated": "content types — le formalisme de chaque domaine de authoring."
+          },
+          {
+            "msgid_short": "Publication workflow — BPMN swimlane diagrams of the editing…",
+            "similarity": 0.17,
+            "status": "fail",
+            "back_translated": "publication workflow — diagrams bpmn à swimlanes des processus d'édition et de publication : la porte de validation ihm, qui révise quoi, et le plan de travail partagé."
+          },
+          {
+            "msgid_short": "Agent onboarding — orientation for an LLM agent dropped into…",
+            "similarity": 0.17,
+            "status": "fail",
+            "back_translated": "agent onboarding — orientation pour un agent llm intégré dans un folio : premiers pas, trouver les skills, le modèle d'objets de content, fichiers qa."
+          },
+          {
+            "msgid_short": "Skills & roles — every skill and role, and how they work tog…",
+            "similarity": 0.14,
+            "status": "fail",
+            "back_translated": "skills et roles — chaque compétence et rôle, et comment ils fonctionnent ensemble avec le llm."
+          },
+          {
+            "msgid_short": "Skill schema reference — generated input/output contracts fo…",
+            "similarity": 0.06,
+            "status": "fail",
+            "back_translated": "reference du schéma de skills — contrats d'entrée/sortie générés pour chaque compétence."
+          },
+          {
+            "msgid_short": "TypeScript API reference — the content-object model (, , , b…",
+            "similarity": 0.17,
+            "status": "fail",
+            "back_translated": "reference de l'typescript api — le modèle d'objets de content (block, chapter, paper, builders, contraintes zod)."
+          },
+          {
+            "msgid_short": "Architecture — adapters, MCP server, RBAC, the block model.",
+            "similarity": 0.25,
+            "status": "fail",
+            "back_translated": "architecture — adapters, server mcp, rbac, le modèle de blocs."
+          },
+          {
+            "msgid_short": "Documentation map",
+            "similarity": 1,
+            "status": "pass"
+          },
+          {
+            "msgid_short": "The map nodes are clickable on the docs site.",
+            "similarity": 0,
+            "status": "fail",
+            "back_translated": "les nœuds de la carte sont cliquables sur le site de documentation."
+          }
+        ]
+      }
+    }
+  },
+  "reviewer": {
+    "kind": "agent",
+    "id": "folio-assistant/translation-pipeline",
+    "version": "0.1.0",
+    "agent_date": "2026-09-17T22:41:45.100Z",
+    "agent_skill": "translation-manager"
+  }
+}

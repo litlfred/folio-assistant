@@ -1,0 +1,56 @@
+<!--
+  QA sidecar indicator — shown next to the edit button on translated pages.
+
+  Reads QA data from the page's front matter (set by the translation pipeline)
+  and displays a compact badge showing round-trip verification status.
+
+  Parameters (via page front matter):
+    qa_translation_pass  — number of strings that passed round-trip QA
+    qa_translation_warn  — number of strings with possible drift
+    qa_translation_fail  — number of strings with semantic drift
+    qa_translation_total — total strings verified
+    qa_coverage_pct      — translation coverage percentage
+
+  Design: sits next to the ✎ edit button as a compact inline badge.
+-->
+{% if page.qa_translation_total %}
+{% assign total = page.qa_translation_total %}
+{% assign pass = page.qa_translation_pass | default: 0 %}
+{% assign warn = page.qa_translation_warn | default: 0 %}
+{% assign fail = page.qa_translation_fail | default: 0 %}
+{% assign cov = page.qa_coverage_pct | default: 0 %}
+
+{% if fail > 0 %}
+  {% assign badge_bg = "#991b1b" %}
+  {% assign badge_border = "#ef4444" %}
+  {% assign badge_icon = "❌" %}
+  {% assign badge_label = "QA: " | append: fail | append: " drift" %}
+{% elsif warn > 0 %}
+  {% assign badge_bg = "#78350f" %}
+  {% assign badge_border = "#d97706" %}
+  {% assign badge_icon = "⚠️" %}
+  {% assign badge_label = "QA: " | append: warn | append: " warn" %}
+{% else %}
+  {% assign badge_bg = "#14532d" %}
+  {% assign badge_border = "#22c55e" %}
+  {% assign badge_icon = "✅" %}
+  {% assign badge_label = "QA: all pass" %}
+{% endif %}
+
+<span class="qa-translation-badge" style="
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: {{ badge_bg }};
+  border: 1px solid {{ badge_border }};
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-left: 8px;
+  vertical-align: middle;
+  color: #fef3c7;
+" title="Round-trip semantic verification: {{ pass }}/{{ total }} pass, {{ warn }} warn, {{ fail }} fail. Coverage: {{ cov }}%">
+  {{ badge_icon }} {{ badge_label }}
+  <span style="opacity: 0.7; font-size: 0.7rem;">({{ pass }}/{{ total }})</span>
+</span>
+{% endif %}
