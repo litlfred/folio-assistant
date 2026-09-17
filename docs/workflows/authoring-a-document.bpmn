@@ -92,10 +92,12 @@
       <bpmn:outgoing>D04</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_AuthorBlocks" name="4 · Author blocks&#10;[document-authoring]">
-      <bpmn:documentation>Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn. A normative statement goes through normative-statements.</bpmn:documentation>
+      <bpmn:documentation>Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn. A normative statement goes through normative-statements. When the folio has active voices (folio.config.json → voices.active[]), voice-authoring-guidance pre-loads rules before writing and voice-overlay-review checks the result — see voice-review.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="document-authoring" />
         <folio:skill ref="normative-statements" />
+        <folio:skill ref="voice-authoring-guidance" />
+        <folio:skill ref="voice-overlay-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>D04</bpmn:incoming>
       <bpmn:incoming>D07</bpmn:incoming>
@@ -132,9 +134,10 @@
       <bpmn:outgoing>D10</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:userTask id="Task_Review" name="8 · Review and feedback&#10;[content-review]">
-      <bpmn:documentation>The reviewer this folio binds. authoring-document relaxes the base SME step precisely because no single lane fits every document.</bpmn:documentation>
+      <bpmn:documentation>The reviewer this folio binds. authoring-document relaxes the base SME step precisely because no single lane fits every document. Voice overlay review runs as part of the review when the folio has active voices.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="content-review" />
+        <folio:skill ref="voice-overlay-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>D10</bpmn:incoming>
       <bpmn:outgoing>D11</bpmn:outgoing>

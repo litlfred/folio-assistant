@@ -1,0 +1,54 @@
+{
+  "$schema": "voices/v1",
+  "id": "who-publication-design",
+  "name": "WHO Publication Design",
+  "description": "Visual design and layout conventions from the WPRO Publication and Information Products Style Guide (2020). Governs WHO visual identity compliance, typography, layout grids, accessibility requirements, and print/digital format specifications. Applies primarily to rendered output — diagrams, tables, and final publication assembly.",
+  "sources": [
+    {
+      "title": "Publication and Information Products Style Guide (WPRO, 2020)",
+      "url": "https://iris.who.int/items/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+    }
+  ],
+  "rules": [
+    {
+      "id": "who-pd-visual-identity",
+      "name": "WHO visual identity compliance",
+      "category": "formatting",
+      "description": "Publications must use the WHO emblem correctly: never alter, stretch, recolour, or place over busy backgrounds. The emblem must appear on the cover/title page. Programme logos may accompany but never replace the WHO emblem. Use the standard WHO colour palette.",
+      "severity": "major"
+    },
+    {
+      "id": "who-pd-accessibility",
+      "name": "Document accessibility",
+      "category": "accessibility",
+      "description": "All content — titles, headers, body text, and graphics — must be machine-readable (OCR-processed/searchable). Provide alt text for all images and diagrams. Use sufficient colour contrast (WCAG AA minimum). Ensure logical reading order in the document structure. Tables must have proper header markup. Use heading hierarchy (H1→H2→H3) without skipping levels.",
+      "severity": "critical"
+    },
+    {
+      "id": "who-pd-typography",
+      "name": "Typography standards",
+      "category": "formatting",
+      "description": "Use the WHO-specified typefaces for publications. Body text should be set at a readable size (minimum 10pt for print). Use adequate line spacing (1.2–1.5× font size). Limit the number of typefaces to two per publication (one serif, one sans-serif). Headings and body must be visually distinct.",
+      "severity": "minor"
+    },
+    {
+      "id": "who-pd-layout",
+      "name": "Layout and grid system",
+      "category": "formatting",
+      "description": "Use the WHO grid system for page layout. Maintain consistent margins and gutters. White space is a design element — do not overcrowd pages. Figures and tables should be placed as close as possible to their first reference in the text. Full-page images should bleed to the edge.",
+      "severity": "minor"
+    },
+    {
+      "id": "who-pd-isbn-doi",
+      "name": "ISBN and DOI requirements",
+      "category": "structure",
+      "description": "All WHO publications require an ISBN. Digital publications require a DOI. The ISBN barcode must appear on the back cover (print) or copyright page (digital). Include the WHO copyright notice and licence (typically CC BY-NC-SA 3.0 IGO).",
+      "severity": "major"
+    }
+  ],
+  "appliesTo": ["diagram", "table", "prose"],
+  "criteria": [
+    "voice-who-accessibility",
+    "voice-who-visual-identity"
+  ]
+}

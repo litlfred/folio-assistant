@@ -21,6 +21,38 @@ Reference this skill when authoring or editing narrative content (`.md`
 files). It ensures the project speaks with a single, consistent voice
 across all chapters, sections, and any running example.
 
+## Voice Overlays
+
+This style guide is the **base scholarly standard** — it is always
+active. A folio can additionally activate **named voice profiles** that
+layer editorial rules on top of this base. Voices are configured in
+`folio.config.json` under `voices.active[]` and defined as JSON files
+under `voices/`.
+
+A voice is NOT an adapter and NOT a profile. An adapter partitions block
+kinds; a profile partitions what a folio can contain. A voice partitions
+**how prose reads** — spelling, terminology, register, citation style,
+person, structural conventions. Two folios with the same adapter and
+profile can have different voices.
+
+| Voice | Source | Scope |
+|-------|--------|-------|
+| `milnor` | Milnor exposition hallmarks (H1–H8) | Economy, concreteness, notation clarity |
+| `who-editorial` | WHO Editorial Style Guide | British spelling, people-first language, NLM/Vancouver citations |
+| `who-guideline-development` | WHO Handbook for Guideline Development | GRADE terminology, recommendation phrasing, evidence quality |
+| `who-publication-design` | WPRO Publication Style Guide | Visual identity, accessibility, typography |
+
+When no voices are active, this base standard is the only voice.
+The platform's own documentation carries no voice.
+
+**Skills for voiced content:**
+- [`voice-authoring-guidance`](voice-authoring-guidance.md) — pre-loads
+  active voice rules before an agent begins writing.
+- [`voice-overlay-review`](voice-overlay-review.md) — checks content
+  against active voice rules after writing.
+- [`one-voice-audit`](one-voice-audit.md) — the base mechanical sweep
+  (always runs, regardless of voices).
+
 ## Author Voice Profile
 
 The project is written with **precision in the service of clarity**.

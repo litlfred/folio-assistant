@@ -171,7 +171,10 @@ Content change detected
    and to `one-voice-audit` to scan for status leaks, warning emoji,
    comparison markers in body prose, Unicode crash characters,
    first-person work tone, and date-stamped notes (it applies mechanical
-   fixes and files todos for substantive items).
+   fixes and files todos for substantive items). When the folio has
+   active voices (`folio.config.json` → `voices.active[]`), also invoke
+   `voice-authoring-guidance` before writing and `voice-overlay-review`
+   after — see `one-voice-style-guide` §Voice Overlays.
 5. **Formal-layer coverage**: when adding/modifying formally-annotated
    definitions/theorems, ensure a corresponding formal declaration
    exists; create missing stubs before commit.

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  folio-assistant — voice review process.
+
+  Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+  BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+  by `bun run render:bpmn` — never hand-edit the SVG.
+
+  The voice review is a sub-process invoked by the authoring and editing workflows.
+  It layers named voice profiles (WHO editorial, WHO guideline development, Milnor,
+  etc.) on top of the base one-voice scholarly standard. Each voice contributes
+  rules checked by both automated QA sweeps and agent reviewers.
+
+  The <folio:skill> extension on an activity names the folio-assistant skill
+  that implements it; <folio:bean> marks a step that reads or writes the shared
+  work plan in .beans/.
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  id="Definitions_VoiceReview"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+
+  <bpmn:collaboration id="Collaboration_VoiceReview">
+    <bpmn:participant id="Participant_VoiceReview" name="Voice review — editorial style overlay check" processRef="Process_VoiceReview" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_VoiceReview" name="Voice review" isExecutable="false">
+    <bpmn:documentation>
+      folio-assistant — voice review process.
+      Layers named voice profiles on top of the base one-voice scholarly standard.
+      Each voice contributes editorial rules checked by automated QA sweeps and
+      agent reviewers. Invoked as a sub-process by authoring and editing workflows.
+    </bpmn:documentation>
+    <bpmn:extensionElements>
+      <folio:policy enforcement="advisory" />
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="Process_VoiceReview_LaneSet">
+      <bpmn:lane id="Lane_Config" name="Configuration (folio.config.json)">
+        <bpmn:flowNodeRef>StartEvent_ContentChanged</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_LoadVoices</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_HasVoices</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_BaseVoice" name="Base scholarly standard (always active)">
+        <bpmn:flowNodeRef>Task_BaseOneVoice</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_VoiceOverlay" name="Voice overlay check (per active voice)">
+        <bpmn:flowNodeRef>Task_VoiceOverlaySweep</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SubProcess_PerVoice</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Agent" name="Review agent (system)">
+        <bpmn:flowNodeRef>Task_AgentAdjudicate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_AutoFixable</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AutoFix</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_EscalateToAuthor</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_QA" name="QA sidecar (block.qa.json)">
+        <bpmn:flowNodeRef>Task_WriteSidecar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_CollateJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_ReviewComplete</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <!-- Configuration lane -->
+    <bpmn:startEvent id="StartEvent_ContentChanged" name="Content block changed">
+      <bpmn:outgoing>Flow_01</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_LoadVoices" name="Load active voices&#10;from folio.config.json">
+      <bpmn:extensionElements>
+        <folio:skill ref="one-voice-style-guide" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_01</bpmn:incoming>
+      <bpmn:outgoing>Flow_02</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_HasVoices" name="Voices active?">
+      <bpmn:incoming>Flow_02</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_NoVoices</bpmn:outgoing>
+      <bpmn:outgoing>Flow_04_HasVoices</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <!-- Base scholarly standard (always runs) -->
+    <bpmn:serviceTask id="Task_BaseOneVoice" name="Run base one-voice&#10;scholarly audit">
+      <bpmn:extensionElements>
+        <folio:skill ref="one-voice-audit" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03_NoVoices</bpmn:incoming>
+      <bpmn:incoming>Flow_05_BaseAlways</bpmn:incoming>
+      <bpmn:outgoing>Flow_06</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <!-- Voice overlay (runs per active voice) -->
+    <bpmn:subProcess id="SubProcess_PerVoice" name="For each active voice">
+      <bpmn:incoming>Flow_04_HasVoices</bpmn:incoming>
+      <bpmn:outgoing>Flow_05_BaseAlways</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics />
+    </bpmn:subProcess>
+    <bpmn:serviceTask id="Task_VoiceOverlaySweep" name="Check block against&#10;voice rules">
+      <bpmn:extensionElements>
+        <folio:skill ref="voice-overlay-review" />
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+
+    <!-- Review agent -->
+    <bpmn:serviceTask id="Task_AgentAdjudicate" name="Agent adjudicates&#10;voice findings">
+      <bpmn:extensionElements>
+        <folio:skill ref="one-voice-audit" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_06</bpmn:incoming>
+      <bpmn:outgoing>Flow_07</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_AutoFixable" name="Auto-fixable?">
+      <bpmn:incoming>Flow_07</bpmn:incoming>
+      <bpmn:outgoing>Flow_08_AutoFix</bpmn:outgoing>
+      <bpmn:outgoing>Flow_09_Escalate</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_AutoFix" name="Apply mechanical fix">
+      <bpmn:extensionElements>
+        <folio:skill ref="one-voice-audit" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_08_AutoFix</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_EscalateToAuthor" name="Escalate to author&#10;for resolution">
+      <bpmn:extensionElements>
+        <folio:bean action="create" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_09_Escalate</bpmn:incoming>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <!-- QA sidecar -->
+    <bpmn:serviceTask id="Task_WriteSidecar" name="Write findings&#10;to block.qa.json">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:parallelGateway id="Gateway_CollateJoin" name="Collate">
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_13</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:endEvent id="EndEvent_ReviewComplete" name="Voice review complete">
+      <bpmn:incoming>Flow_13</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <!-- Sequence flows -->
+    <bpmn:sequenceFlow id="Flow_01" sourceRef="StartEvent_ContentChanged" targetRef="Task_LoadVoices" />
+    <bpmn:sequenceFlow id="Flow_02" sourceRef="Task_LoadVoices" targetRef="Gateway_HasVoices" />
+    <bpmn:sequenceFlow id="Flow_03_NoVoices" name="No overlay voices" sourceRef="Gateway_HasVoices" targetRef="Task_BaseOneVoice" />
+    <bpmn:sequenceFlow id="Flow_04_HasVoices" name="Voices configured" sourceRef="Gateway_HasVoices" targetRef="SubProcess_PerVoice" />
+    <bpmn:sequenceFlow id="Flow_05_BaseAlways" name="Then always run base" sourceRef="SubProcess_PerVoice" targetRef="Task_BaseOneVoice" />
+    <bpmn:sequenceFlow id="Flow_06" sourceRef="Task_BaseOneVoice" targetRef="Task_AgentAdjudicate" />
+    <bpmn:sequenceFlow id="Flow_07" sourceRef="Task_AgentAdjudicate" targetRef="Gateway_AutoFixable" />
+    <bpmn:sequenceFlow id="Flow_08_AutoFix" name="Yes — mechanical" sourceRef="Gateway_AutoFixable" targetRef="Task_AutoFix" />
+    <bpmn:sequenceFlow id="Flow_09_Escalate" name="No — needs author" sourceRef="Gateway_AutoFixable" targetRef="Task_EscalateToAuthor" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Task_AutoFix" targetRef="Task_WriteSidecar" />
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="Task_EscalateToAuthor" targetRef="Task_WriteSidecar" />
+    <bpmn:sequenceFlow id="Flow_12" sourceRef="Task_WriteSidecar" targetRef="Gateway_CollateJoin" />
+    <bpmn:sequenceFlow id="Flow_13" sourceRef="Gateway_CollateJoin" targetRef="EndEvent_ReviewComplete" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_VoiceReview">
+    <bpmndi:BPMNPlane id="BPMNPlane_VoiceReview" bpmnElement="Collaboration_VoiceReview">
+      <bpmndi:BPMNShape id="Participant_VoiceReview_di" bpmnElement="Participant_VoiceReview" isHorizontal="true">
+        <dc:Bounds x="120" y="40" width="1200" height="700" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Config_di" bpmnElement="Lane_Config" isHorizontal="true">
+        <dc:Bounds x="150" y="40" width="1170" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_BaseVoice_di" bpmnElement="Lane_BaseVoice" isHorizontal="true">
+        <dc:Bounds x="150" y="180" width="1170" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_VoiceOverlay_di" bpmnElement="Lane_VoiceOverlay" isHorizontal="true">
+        <dc:Bounds x="150" y="300" width="1170" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Agent_di" bpmnElement="Lane_Agent" isHorizontal="true">
+        <dc:Bounds x="150" y="420" width="1170" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_QA_di" bpmnElement="Lane_QA" isHorizontal="true">
+        <dc:Bounds x="150" y="560" width="1170" height="180" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

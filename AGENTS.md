@@ -86,6 +86,44 @@ edit rather than a corpus sweep. And `folio_init` is registered among the
 content type — a bare repo falls back to the paper adapter, so an
 adapter-scoped tool would be unreachable in exactly the case it exists for.
 
+## Voices — overlayable editorial profiles
+
+A **voice** is a named set of editorial rules that an agent applies when
+authoring or reviewing content. Voices layer on top of the base scholarly
+standard (`one-voice-style-guide.md`); they refine it, they do not
+replace it.
+
+**Voices are a different axis from adapters and profiles.** An adapter
+partitions block kinds; a profile partitions what a folio can contain. A
+voice partitions *how prose reads* — spelling, terminology, register,
+citation style, person, structural conventions. Two folios with the same
+adapter and profile can have different voices (a WHO guideline and a
+ministry-of-health policy document are both `document` profile but speak
+differently).
+
+Voices are configured in `folio.config.json` under `voices.active[]` and
+defined as JSON files under `voices/`. When no voices are listed, the base
+scholarly standard is the only voice. The platform's own documentation
+carries no voice.
+
+| voice id | source | scope |
+|----------|--------|-------|
+| `milnor` | Milnor exposition hallmarks (H1–H8) | Economy, concreteness, notation clarity |
+| `who-editorial` | WHO Editorial Style Guide | British spelling, people-first language, NLM/Vancouver citations |
+| `who-guideline-development` | WHO Handbook for Guideline Development | GRADE terminology, recommendation phrasing |
+| `who-publication-design` | WPRO Publication Style Guide | Visual identity, accessibility, typography |
+
+**The authoring and review cycle for voiced content:**
+1. `voice-authoring-guidance` pre-loads active voice rules before an agent
+   begins writing — voice-compliant from first draft.
+2. `voice-overlay-review` checks content against active voice rules after
+   writing, layered on top of the base `one-voice-audit`.
+3. The `voice-review.bpmn` process models the full cycle.
+
+**Voices are not mandatory.** Not all authors will want to use the WHO
+voice (e.g. a ministry of health). A folio opts in by listing voice IDs
+in its config.
+
 ## Commands
 
 ```sh

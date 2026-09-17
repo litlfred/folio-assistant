@@ -1,0 +1,123 @@
+{
+  "$schema": "voices/v1",
+  "id": "who-editorial",
+  "name": "WHO Editorial Style",
+  "description": "Editorial conventions from the WHO Editorial Style Guide. Governs British English spelling, WHO-specific punctuation, people-first terminology, NLM/Vancouver citation style, and WHO country/territory naming conventions. Applies to all narrative content in WHO-affiliated folios.",
+  "sources": [
+    {
+      "title": "WHO Editorial Style Guide",
+      "url": "https://iris.who.int/server/api/core/bitstreams/879e03ae-0446-4b41-a429-29c774c15033/content"
+    }
+  ],
+  "rules": [
+    {
+      "id": "who-ed-british-spelling",
+      "name": "British English spelling",
+      "category": "spelling",
+      "description": "Use British English spelling as the baseline for all WHO publications. Use -ise/-isation (not -ize/-ization). Use 'programme' (not 'program' unless referring to computer programs). Use 'centre' (not 'center'). Use 'behaviour' (not 'behavior'). Use 'colour' (not 'color'). Use 'defence' (not 'defense'). Use 'licence' (noun), 'license' (verb).",
+      "severity": "major",
+      "terminology": [
+        { "correct": "organisation", "incorrect": "organization", "context": "British English spelling" },
+        { "correct": "programme", "incorrect": "program", "context": "Unless referring to a computer program" },
+        { "correct": "centre", "incorrect": "center" },
+        { "correct": "behaviour", "incorrect": "behavior" },
+        { "correct": "colour", "incorrect": "color" },
+        { "correct": "defence", "incorrect": "defense" },
+        { "correct": "analyse", "incorrect": "analyze" },
+        { "correct": "recognise", "incorrect": "recognize" },
+        { "correct": "utilise", "incorrect": "utilize" },
+        { "correct": "standardise", "incorrect": "standardize" },
+        { "correct": "categorise", "incorrect": "categorize" },
+        { "correct": "characterise", "incorrect": "characterize" },
+        { "correct": "prioritise", "incorrect": "prioritize" },
+        { "correct": "immunise", "incorrect": "immunize" },
+        { "correct": "hospitalise", "incorrect": "hospitalize" }
+      ]
+    },
+    {
+      "id": "who-ed-courtesy-titles",
+      "name": "No periods after courtesy titles",
+      "category": "punctuation",
+      "description": "Do not use periods after courtesy titles: Dr (not Dr.), Mr (not Mr.), Ms (not Ms.), Mrs (not Mrs.), Prof (not Prof.).",
+      "severity": "minor",
+      "patterns": [
+        { "regex": "\\b(Dr|Mr|Ms|Mrs|Prof)\\.", "message": "WHO style: no period after courtesy titles (Dr not Dr., Mr not Mr.)" }
+      ]
+    },
+    {
+      "id": "who-ed-people-first",
+      "name": "People-first language",
+      "category": "terminology",
+      "description": "Use respectful, people-first language. Say 'person living with HIV' (not 'HIV patient' or 'AIDS victim'). Say 'person with diabetes' (not 'diabetic'). Say 'person with a disability' (not 'disabled person' or 'handicapped'). Say 'older person' (not 'the elderly'). Say 'child/person who is malnourished' (not 'malnourished child'). Avoid labelling people by their condition.",
+      "severity": "major",
+      "terminology": [
+        { "correct": "person living with HIV", "incorrect": ["HIV patient", "AIDS victim", "AIDS sufferer", "HIV-infected person"], "context": "People-first: do not define people by their condition" },
+        { "correct": "person with diabetes", "incorrect": ["diabetic", "diabetic patient"], "context": "People-first" },
+        { "correct": "person with a disability", "incorrect": ["disabled person", "handicapped", "the disabled", "crippled"], "context": "People-first" },
+        { "correct": "older person/people", "incorrect": ["the elderly", "the aged", "old people"], "context": "People-first" },
+        { "correct": "person who uses drugs", "incorrect": ["drug addict", "drug abuser", "substance abuser"], "context": "People-first" },
+        { "correct": "sex worker", "incorrect": ["prostitute"], "context": "WHO preferred terminology" }
+      ]
+    },
+    {
+      "id": "who-ed-citation-style",
+      "name": "NLM/Vancouver citation style",
+      "category": "citation",
+      "description": "References follow the NLM (National Library of Medicine) / Vancouver citation style. Include DOIs, PMIDs, and PMCIDs where available. Author names: surname followed by initials without periods or spaces (e.g. 'Smith AB'). Journal titles abbreviated per NLM standards. List up to 6 authors; after 6 use 'et al.'.",
+      "severity": "minor"
+    },
+    {
+      "id": "who-ed-country-names",
+      "name": "WHO Member State naming",
+      "category": "terminology",
+      "description": "Use official WHO Member State short names in running text. Use the full formal name only in legal/treaty contexts. Never use colloquial or outdated country names. Refer to the WHO list of Member States for official names. Some key examples: 'Republic of Korea' (not 'South Korea'), 'Democratic People's Republic of Korea' (not 'North Korea'), 'Côte d'Ivoire' (not 'Ivory Coast'), 'Türkiye' (not 'Turkey'), 'Czechia' (not 'Czech Republic').",
+      "severity": "major"
+    },
+    {
+      "id": "who-ed-abbreviations",
+      "name": "Abbreviation conventions",
+      "category": "formatting",
+      "description": "Spell out abbreviations at first use, followed by the abbreviation in parentheses. Exception: universally known abbreviations (WHO, UN, HIV, AIDS, DNA, RNA) need not be spelled out. Use no periods in abbreviations (WHO not W.H.O.). Avoid starting sentences with abbreviations.",
+      "severity": "minor"
+    },
+    {
+      "id": "who-ed-numbers",
+      "name": "Number formatting",
+      "category": "formatting",
+      "description": "Spell out numbers one through nine in running text; use figures for 10 and above. Use a space (not a comma) as a thousands separator in numbers ≥ 10 000. Use a period as the decimal marker. In tables and figures, use figures throughout. Percentages: use the % symbol with a figure (25%), not 'percent' or 'per cent'.",
+      "severity": "minor"
+    },
+    {
+      "id": "who-ed-dates",
+      "name": "Date formatting",
+      "category": "formatting",
+      "description": "Use day month year format without commas or ordinal suffixes: '15 March 2024' (not 'March 15, 2024' or '15th March 2024'). Months may be abbreviated in tables: Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec.",
+      "severity": "minor"
+    },
+    {
+      "id": "who-ed-gender-inclusive",
+      "name": "Gender-inclusive language",
+      "category": "terminology",
+      "description": "Use gender-inclusive language throughout. Avoid 'he' as a generic pronoun; use 'they' or restructure. Say 'chairperson' (not 'chairman'), 'workforce' or 'staff' (not 'manpower'), 'artificial' or 'synthetic' (not 'man-made'). Specify sex or gender only when relevant to the content.",
+      "severity": "major",
+      "terminology": [
+        { "correct": "chairperson", "incorrect": ["chairman", "chairwoman"] },
+        { "correct": "workforce/staff", "incorrect": ["manpower"] },
+        { "correct": "artificial/synthetic", "incorrect": ["man-made", "manmade"] },
+        { "correct": "humankind/humanity", "incorrect": ["mankind"] }
+      ]
+    },
+    {
+      "id": "who-ed-serial-comma",
+      "name": "No serial (Oxford) comma",
+      "category": "punctuation",
+      "description": "WHO style does not use the serial (Oxford) comma before 'and'/'or' in simple lists. Write 'apples, oranges and bananas' (not 'apples, oranges, and bananas'). Exception: use a comma before 'and'/'or' when needed for clarity in complex lists.",
+      "severity": "minor"
+    }
+  ],
+  "criteria": [
+    "voice-who-editorial-spelling",
+    "voice-who-editorial-terminology",
+    "voice-who-editorial-punctuation"
+  ]
+}
