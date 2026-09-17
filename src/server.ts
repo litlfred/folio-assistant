@@ -23,6 +23,7 @@ import { handleGlossaryGet, handleGlossaryPost } from "./routes/glossary.js";
 import { handleRelevanceGet, handleRelevancePost } from "./routes/relevance.js";
 import { registerBeansTools } from "./tools/beans-prime.js";
 import { registerWorkflowTools } from "./tools/workflow.js";
+import { registerTranslationTools } from "./tools/translation.js";
 
 // ── MIME types for static serving ────────────────────────────────
 
@@ -117,6 +118,8 @@ export class FolioServer {
     registerBeansTools(this.mcpServer, config.repoRoot);
     // Process state from docs/workflows/*.bpmn — what is enabled now, and why.
     registerWorkflowTools(this.mcpServer, config.repoRoot);
+    // Translation lifecycle: extract, inject, status, signoff, validate.
+    registerTranslationTools(this.mcpServer, config.repoRoot);
 
     // Register adapter-specific MCP tools
     if (this.adapter.registerMcpTools) {

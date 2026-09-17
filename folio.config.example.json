@@ -22,5 +22,16 @@
   "googleDrive": {
     "_comment": "Optional. Set folderPath to auto-push PDFs to Google Drive on every content edit and full build. Credentials are resolved from GOOGLE_APPLICATION_CREDENTIALS env var, ~/.config/google-drive-mcp/credentials.json (OAuth2), or gcloud ADC — never stored here.",
     "folderPath": ""
+  },
+  "translation": {
+    "_comment": "Optional. Controls the translation pipeline. defaultLocale is the source language of the folio's content (BCP 47). supportedLocales lists target languages — the six UN languages by default. translationDir is where .pot/.po files and translated .md live. officialOnly: when true, only signed-off translations are rendered; when false (default), unofficial translations render with a warning banner.",
+    "defaultLocale": "en",
+    "supportedLocales": ["ar", "zh", "en", "fr", "ru", "es"],
+    "translationDir": "translations",
+    "officialOnly": false
+  },
+  "dependencies": {
+    "_comment": "Optional. Other folio-assistant instances this folio depends on, for content, skills, and translation resolution. Walked depth-first in listed order, overlaying content and skills on top — same methodology as FHIR/SUSHI dependencies but upstream from them. Each entry has a name (for display) and a path or git URL.",
+    "folioAssistant": []
   }
 }
