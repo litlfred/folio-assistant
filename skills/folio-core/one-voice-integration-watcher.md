@@ -112,6 +112,7 @@ notation`, OR cites a content-block label.
 | `content/pipeline/qa-staleness.ts` | After every sweep — produces the post-event freshness map |
 | `one-voice-audit` (skill) | Always — applies mechanical fixes for `voice-status-leak`, `voice-emoji-content`, `voice-unicode-crash` (Category A/C/E auto-fixes per the skill) |
 | `one-voice-style-guide` (skill, agent dispatch) | For `voice-scholarly-default`, `voice-ai-slop` adjudication — non-automated; agent reads the .md + proof file and writes a reviewer entry |
+| `voice-overlay-review` (skill) | When `folio.config.json` → `voices.active[]` is non-empty — checks each block against the union of active voice profiles (terminology, spelling, formatting, methodology). No-op when no voices are configured. |
 | `chapter-complexity-review` (skill, agent dispatch) | For `fit-section-chapter` adjudication — agent compares block topic + kind against section/chapter context |
 | `ontologist` (skill) | If `notation-canonical` fires — disambiguates which canonical symbol is intended |
 | `critical-path-analysis` (skill) | If `domain-boundary-correct` fires — re-runs the cross-domain dependency trace |

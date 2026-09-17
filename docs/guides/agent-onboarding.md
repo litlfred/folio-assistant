@@ -161,6 +161,31 @@ Likewise, folio-specific *data* belongs in the folio, not the platform —
 e.g. `content/<paper>/topic-keywords.json` drives
 `detangler-topic-coherence`, and absent it the checker reports `n/a`.
 
+## 7b. Voices — editorial style overlays
+
+A folio can activate **named voice profiles** that layer editorial rules
+on top of the base one-voice scholarly standard. Voices control *how
+prose reads* — spelling, terminology, register, citation style — not
+what blocks a folio can contain (that is an adapter/profile concern).
+
+```json
+// folio.config.json
+{ "voices": { "active": ["who-editorial", "who-guideline-development"] } }
+```
+
+Voice profiles are JSON files under `voices/` in the platform. The
+platform ships `milnor`, `who-editorial`, `who-guideline-development`,
+and `who-publication-design`. A folio can also define custom voices
+in its own `voices/` directory.
+
+When a folio has active voices:
+- `voice-authoring-guidance` pre-loads rules before you write.
+- `voice-overlay-review` checks content after you write.
+- Both are invoked by `editor` automatically.
+
+When no voices are active (the default), only the base scholarly
+standard applies. The platform's own documentation carries no voice.
+
 ## 8. Shipping work
 
 ```sh

@@ -1,0 +1,87 @@
+{
+  "$schema": "voices/v1",
+  "id": "who-guideline-development",
+  "name": "WHO Guideline Development",
+  "description": "Methodological conventions from the WHO Handbook for Guideline Development (2nd edition, 2014). Governs GRADE framework usage, recommendation phrasing, evidence quality language, and guideline structural conventions. Applies primarily to normative/recommendation content in WHO SMART Guideline folios.",
+  "sources": [
+    {
+      "title": "WHO Handbook for Guideline Development (2nd edition)",
+      "url": "https://iris.who.int/server/api/core/bitstreams/809b813f-fcfe-451e-b242-d914d580c111/content"
+    }
+  ],
+  "rules": [
+    {
+      "id": "who-gd-grade-terminology",
+      "name": "GRADE framework terminology",
+      "category": "methodology",
+      "description": "Use GRADE terminology consistently. Evidence quality has exactly four levels: 'high', 'moderate', 'low', 'very low' (not 'strong evidence', 'weak evidence', 'good evidence'). Recommendation strength is either 'strong' or 'conditional' (not 'weak', 'tentative', 'suggested'). A 'strong recommendation' means benefits clearly outweigh harms for almost all patients. A 'conditional recommendation' means benefits probably outweigh harms for most patients but the balance is uncertain.",
+      "severity": "critical",
+      "terminology": [
+        { "correct": "high/moderate/low/very low quality evidence", "incorrect": ["strong evidence", "weak evidence", "good evidence", "poor evidence", "limited evidence"], "context": "GRADE: use quality levels, not strength adjectives for evidence" },
+        { "correct": "strong recommendation", "incorrect": ["firm recommendation", "definitive recommendation"], "context": "GRADE: exactly two recommendation strengths" },
+        { "correct": "conditional recommendation", "incorrect": ["weak recommendation", "tentative recommendation", "suggested recommendation", "discretionary recommendation"], "context": "GRADE: 'conditional' not 'weak'" }
+      ]
+    },
+    {
+      "id": "who-gd-recommendation-phrasing",
+      "name": "Recommendation phrasing conventions",
+      "category": "structure",
+      "description": "Strong recommendations use imperative language: 'should', 'is recommended'. Conditional recommendations use softer language: 'is suggested', 'may be considered', 'might be offered'. Never use 'must' in a recommendation (that implies a legal obligation). Each recommendation must state the population, intervention, comparator (if applicable), and outcome. Recommendations are numbered and preceded by a summary-of-findings table.",
+      "severity": "critical",
+      "patterns": [
+        { "regex": "\\bmust\\b(?!.*(?:be reported|be declared|comply|meet))", "caseSensitive": true, "message": "WHO guidelines: avoid 'must' in recommendations — it implies legal obligation. Use 'should' (strong) or 'may be considered' (conditional)." }
+      ]
+    },
+    {
+      "id": "who-gd-evidence-to-decision",
+      "name": "Evidence-to-decision framework",
+      "category": "methodology",
+      "description": "Every recommendation must consider: quality of evidence, balance of benefits and harms, values and preferences of stakeholders, resource implications, feasibility, equity impact, and human rights implications. These are documented in an evidence-to-decision (EtD) table, not in running prose.",
+      "severity": "major"
+    },
+    {
+      "id": "who-gd-systematic-review",
+      "name": "Systematic review language",
+      "category": "methodology",
+      "description": "Evidence must come from systematic reviews. Never cite individual studies as the sole basis for a recommendation. Say 'a systematic review found' (not 'a study showed'). Distinguish between 'systematic review' (comprehensive search + synthesis) and 'literature review' (less rigorous). Reference PRISMA flow diagrams for the search process.",
+      "severity": "major",
+      "terminology": [
+        { "correct": "systematic review", "incorrect": ["literature review", "narrative review"], "context": "When referring to the evidence base for a WHO recommendation" }
+      ]
+    },
+    {
+      "id": "who-gd-governance-groups",
+      "name": "Governance group terminology",
+      "category": "terminology",
+      "description": "Use correct WHO governance terminology: 'WHO steering group' (internal oversight), 'guideline development group' or 'GDG' (the expert panel that formulates recommendations), 'external review group' or 'ERG' (peer reviewers). Do not use 'advisory committee', 'task force', or 'working group' as synonyms.",
+      "severity": "minor",
+      "terminology": [
+        { "correct": "guideline development group (GDG)", "incorrect": ["advisory committee", "expert committee", "task force", "working group"], "context": "When referring to the WHO body that formulates recommendations" },
+        { "correct": "external review group (ERG)", "incorrect": ["peer review panel", "review committee"], "context": "When referring to external WHO guideline reviewers" }
+      ]
+    },
+    {
+      "id": "who-gd-conflict-of-interest",
+      "name": "Conflict of interest disclosure",
+      "category": "structure",
+      "description": "Every guideline must include a section on declarations of interest (DOI). GDG members' DOIs must be assessed and managed before deliberations. State whether conflicts were identified, how they were managed (recusal, restriction, full participation), and that the process followed WHO DOI policy.",
+      "severity": "major"
+    },
+    {
+      "id": "who-gd-good-practice",
+      "name": "Good practice statements",
+      "category": "structure",
+      "description": "A 'good practice statement' is distinct from a GRADE-based recommendation. It is used when the question does not lend itself to GRADE rating but the GDG considers the message important. Good practice statements are clearly labelled as such and are not GRADE-rated. Use 'good practice statement' (not 'expert opinion', 'consensus statement', or 'best practice').",
+      "severity": "major",
+      "terminology": [
+        { "correct": "good practice statement", "incorrect": ["expert opinion", "consensus statement", "best practice statement", "expert recommendation"], "context": "For ungraded messages from the GDG" }
+      ]
+    }
+  ],
+  "appliesTo": ["prose", "definition", "table"],
+  "criteria": [
+    "voice-who-grade-terminology",
+    "voice-who-recommendation-phrasing",
+    "voice-who-methodology"
+  ]
+}

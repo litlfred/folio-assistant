@@ -1,0 +1,74 @@
+{
+  "$schema": "voices/v1",
+  "id": "milnor",
+  "name": "Milnor Exposition Standard",
+  "description": "The John Milnor exposition standard — eight hallmarks of mathematical writing clarity. Named after John Milnor, whose expository style sets the bar for economy, concreteness, and respect for the reader. This voice is the default for paper-profile folios and is used by the exposition-swarm-drain skill for bulk narrative audit.",
+  "sources": [
+    {
+      "title": "Milnor Exposition Hallmarks (H1–H8)",
+      "url": "docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md"
+    }
+  ],
+  "rules": [
+    {
+      "id": "milnor-h1-economy",
+      "name": "H1: Economy",
+      "category": "register",
+      "description": "Every sentence is load-bearing. No filler, no padding, no throat-clearing. If a sentence can be removed without loss, it must be.",
+      "severity": "major"
+    },
+    {
+      "id": "milnor-h2-concrete",
+      "name": "H2: Concrete before abstract",
+      "category": "structure",
+      "description": "Lead with concrete examples or observations before introducing abstract formalism. The reader should see what a concept does before seeing what it is.",
+      "severity": "major"
+    },
+    {
+      "id": "milnor-h3-why-before-what",
+      "name": "H3: Why before what",
+      "category": "structure",
+      "description": "Motivate before defining. The reason a concept exists precedes its formal statement. 'We need X because Y' comes before 'Define X as...'.",
+      "severity": "major"
+    },
+    {
+      "id": "milnor-h4-notation",
+      "name": "H4: Uncluttered notation",
+      "category": "formatting",
+      "description": "Notation is minimal and consistent. Avoid proliferating subscripts, superscripts, and decorations. Reuse notation where possible; introduce new symbols only when necessary.",
+      "severity": "major"
+    },
+    {
+      "id": "milnor-h5-linear",
+      "name": "H5: Linear argument",
+      "category": "structure",
+      "description": "The argument proceeds linearly — each step follows from the previous. No forward references to unproven results, no circular dependencies, no 'as we shall see later'.",
+      "severity": "major"
+    },
+    {
+      "id": "milnor-h6-prose-carries",
+      "name": "H6: Prose carries the argument",
+      "category": "register",
+      "description": "The narrative prose, not the equations, carries the argument. Equations illustrate and formalise; the prose explains and connects. A reader who reads only the prose should understand the logical flow.",
+      "severity": "major"
+    },
+    {
+      "id": "milnor-h7-surgical",
+      "name": "H7: Surgical cleanliness",
+      "category": "register",
+      "description": "Use the right tool for the job. Don't apply heavy machinery to a problem that admits a direct argument. Don't over-generalise when the specific case is what matters.",
+      "severity": "major"
+    },
+    {
+      "id": "milnor-h8-respect",
+      "name": "H8: Respect for the reader",
+      "category": "register",
+      "description": "Respect the reader's time and intelligence. Don't repeat yourself unnecessarily. Don't belabour obvious points. Don't patronise. The reader is a competent colleague.",
+      "severity": "major"
+    }
+  ],
+  "criteria": [
+    "expo-milnor-clarity",
+    "milnor-brevity"
+  ]
+}

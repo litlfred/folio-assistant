@@ -22,5 +22,9 @@
   "googleDrive": {
     "_comment": "Optional. Set folderPath to auto-push PDFs to Google Drive on every content edit and full build. Credentials are resolved from GOOGLE_APPLICATION_CREDENTIALS env var, ~/.config/google-drive-mcp/credentials.json (OAuth2), or gcloud ADC — never stored here.",
     "folderPath": ""
+  },
+  "voices": {
+    "_comment": "Optional. Named editorial voice profiles that layer on top of the base scholarly standard. Each voice is a set of editorial rules (spelling, terminology, register, citation style) that agents apply when authoring and reviewing content. The base one-voice scholarly standard is always active; voices refine it. Example: ['who-editorial', 'who-guideline-development'] for a WHO guideline folio. The platform's own documentation carries no voice. See skills/folio-core/one-voice-style-guide.md.",
+    "active": []
   }
 }
