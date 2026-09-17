@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  folio-assistant — the CRDM requirements workflow.
+
+  Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+  BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+  by `bun run render:bpmn` — never hand-edit the SVG.
+
+  Three swim lanes: Requestor/stakeholder, Agent, Platform.
+  Shows feature detection, issue linking, the six CRDM phases, and the
+  iterative development loop.
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  id="Definitions_CRDM"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+
+  <bpmn:collaboration id="Collaboration_CRDM">
+    <bpmn:participant id="Participant_Requestor" name="Requestor / stakeholder" processRef="Process_Requestor"/>
+    <bpmn:participant id="Participant_Agent" name="Agent" processRef="Process_Agent"/>
+  </bpmn:collaboration>
+
+  <!-- Requestor swim lane -->
+  <bpmn:process id="Process_Requestor" isExecutable="false">
+    <bpmn:startEvent id="Start_R" name="Need identified"/>
+    <bpmn:task id="R_Submit" name="Submit request&#10;(chat, issue, discussion)"/>
+    <bpmn:task id="R_ReviewNeeds" name="Review synthesised&#10;needs statement"/>
+    <bpmn:task id="R_ReviewReqs" name="Review requirements&#10;and impact analysis"/>
+    <bpmn:task id="R_Signoff" name="Sign off on&#10;requirements"/>
+    <bpmn:task id="R_ReviewPR" name="Review PR /&#10;test feature"/>
+    <bpmn:task id="R_FeatureSignoff" name="Feature sign-off&#10;on issue"/>
+    <bpmn:endEvent id="End_R" name="Feature delivered"/>
+    <bpmn:sequenceFlow id="SF_r1" sourceRef="Start_R" targetRef="R_Submit"/>
+    <bpmn:sequenceFlow id="SF_r2" sourceRef="R_Submit" targetRef="R_ReviewNeeds"/>
+    <bpmn:sequenceFlow id="SF_r3" sourceRef="R_ReviewNeeds" targetRef="R_ReviewReqs"/>
+    <bpmn:sequenceFlow id="SF_r4" sourceRef="R_ReviewReqs" targetRef="R_Signoff"/>
+    <bpmn:sequenceFlow id="SF_r5" sourceRef="R_Signoff" targetRef="R_ReviewPR"/>
+    <bpmn:sequenceFlow id="SF_r6" sourceRef="R_ReviewPR" targetRef="R_FeatureSignoff"/>
+    <bpmn:sequenceFlow id="SF_r7" sourceRef="R_FeatureSignoff" targetRef="End_R"/>
+  </bpmn:process>
+
+  <!-- Agent swim lane -->
+  <bpmn:process id="Process_Agent" isExecutable="false">
+    <bpmn:startEvent id="Start_A" name="Request received"/>
+    <bpmn:task id="A_Detect" name="Detect feature request&#10;(crdm-detect skill)">
+      <bpmn:extensionElements><folio:skill ref="crdm-detect"/></bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Feature" name="Feature?"/>
+    <bpmn:endEvent id="End_Content" name="Continue authoring"/>
+    <bpmn:task id="A_ScanIssues" name="Scan open issues&#10;for match"/>
+    <bpmn:exclusiveGateway id="GW_Issue" name="Issue found?"/>
+    <bpmn:task id="A_AskCreate" name="Ask user to create&#10;or link issue"/>
+    <bpmn:task id="A_LinkIssue" name="Link to existing issue"/>
+    <bpmn:task id="A_Stakeholders" name="Phase 1: Identify&#10;stakeholders"/>
+    <bpmn:task id="A_Synthesise" name="Phase 1: Synthesise&#10;needs from sources"/>
+    <bpmn:exclusiveGateway id="GW_Needs" name="Approved?"/>
+    <bpmn:task id="A_MapWorkflow" name="Phase 2: Map current&#10;workflow (BPA)"/>
+    <bpmn:task id="A_DefineReqs" name="Phase 3–4: Define&#10;requirements + impact"/>
+    <bpmn:exclusiveGateway id="GW_Reqs" name="Approved?"/>
+    <bpmn:task id="A_CreateBeans" name="Phase 5: Create beans">
+      <bpmn:extensionElements><folio:bean action="create"/></bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:task id="A_Implement" name="Phase 6: Implement&#10;(feature branch + PR)"/>
+    <bpmn:task id="A_Summary" name="Post summary&#10;to issue"/>
+    <bpmn:exclusiveGateway id="GW_Done" name="All beans done?"/>
+    <bpmn:task id="A_Close" name="Close issue with&#10;delivery summary"/>
+    <bpmn:endEvent id="End_A" name="CRDM complete"/>
+    <bpmn:sequenceFlow id="SF_a1" sourceRef="Start_A" targetRef="A_Detect"/>
+    <bpmn:sequenceFlow id="SF_a2" sourceRef="A_Detect" targetRef="GW_Feature"/>
+    <bpmn:sequenceFlow id="SF_a3" name="no" sourceRef="GW_Feature" targetRef="End_Content"/>
+    <bpmn:sequenceFlow id="SF_a4" name="yes" sourceRef="GW_Feature" targetRef="A_ScanIssues"/>
+    <bpmn:sequenceFlow id="SF_a5" sourceRef="A_ScanIssues" targetRef="GW_Issue"/>
+    <bpmn:sequenceFlow id="SF_a6" name="no" sourceRef="GW_Issue" targetRef="A_AskCreate"/>
+    <bpmn:sequenceFlow id="SF_a7" name="yes" sourceRef="GW_Issue" targetRef="A_LinkIssue"/>
+    <bpmn:sequenceFlow id="SF_a8" sourceRef="A_AskCreate" targetRef="A_Stakeholders"/>
+    <bpmn:sequenceFlow id="SF_a9" sourceRef="A_LinkIssue" targetRef="A_Stakeholders"/>
+    <bpmn:sequenceFlow id="SF_a10" sourceRef="A_Stakeholders" targetRef="A_Synthesise"/>
+    <bpmn:sequenceFlow id="SF_a11" sourceRef="A_Synthesise" targetRef="GW_Needs"/>
+    <bpmn:sequenceFlow id="SF_a12" name="revise" sourceRef="GW_Needs" targetRef="A_Synthesise"/>
+    <bpmn:sequenceFlow id="SF_a13" name="yes" sourceRef="GW_Needs" targetRef="A_MapWorkflow"/>
+    <bpmn:sequenceFlow id="SF_a14" sourceRef="A_MapWorkflow" targetRef="A_DefineReqs"/>
+    <bpmn:sequenceFlow id="SF_a15" sourceRef="A_DefineReqs" targetRef="GW_Reqs"/>
+    <bpmn:sequenceFlow id="SF_a16" name="revise" sourceRef="GW_Reqs" targetRef="A_DefineReqs"/>
+    <bpmn:sequenceFlow id="SF_a17" name="yes" sourceRef="GW_Reqs" targetRef="A_CreateBeans"/>
+    <bpmn:sequenceFlow id="SF_a18" sourceRef="A_CreateBeans" targetRef="A_Implement"/>
+    <bpmn:sequenceFlow id="SF_a19" sourceRef="A_Implement" targetRef="A_Summary"/>
+    <bpmn:sequenceFlow id="SF_a20" sourceRef="A_Summary" targetRef="GW_Done"/>
+    <bpmn:sequenceFlow id="SF_a21" name="no" sourceRef="GW_Done" targetRef="A_Implement"/>
+    <bpmn:sequenceFlow id="SF_a22" name="yes" sourceRef="GW_Done" targetRef="A_Close"/>
+    <bpmn:sequenceFlow id="SF_a23" sourceRef="A_Close" targetRef="End_A"/>
+  </bpmn:process>
+
+  <!-- Diagram layout -->
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_CRDM">
+
+      <!-- Requestor pool -->
+      <bpmndi:BPMNShape id="Participant_Requestor_di" bpmnElement="Participant_Requestor" isHorizontal="true">
+        <dc:Bounds x="120" y="60" width="2260" height="160"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_R_di" bpmnElement="Start_R"><dc:Bounds x="182" y="122" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="R_Submit_di" bpmnElement="R_Submit"><dc:Bounds x="270" y="100" width="130" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="R_ReviewNeeds_di" bpmnElement="R_ReviewNeeds"><dc:Bounds x="760" y="100" width="140" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="R_ReviewReqs_di" bpmnElement="R_ReviewReqs"><dc:Bounds x="1200" y="100" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="R_Signoff_di" bpmnElement="R_Signoff"><dc:Bounds x="1420" y="100" width="130" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="R_ReviewPR_di" bpmnElement="R_ReviewPR"><dc:Bounds x="1760" y="100" width="130" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="R_FeatureSignoff_di" bpmnElement="R_FeatureSignoff"><dc:Bounds x="2000" y="100" width="140" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_R_di" bpmnElement="End_R"><dc:Bounds x="2222" y="122" width="36" height="36"/></bpmndi:BPMNShape>
+
+      <!-- Agent pool -->
+      <bpmndi:BPMNShape id="Participant_Agent_di" bpmnElement="Participant_Agent" isHorizontal="true">
+        <dc:Bounds x="120" y="280" width="2260" height="280"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_A_di" bpmnElement="Start_A"><dc:Bounds x="182" y="402" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_Detect_di" bpmnElement="A_Detect"><dc:Bounds x="270" y="380" width="140" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Feature_di" bpmnElement="GW_Feature" isMarkerVisible="true"><dc:Bounds x="445" y="395" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Content_di" bpmnElement="End_Content"><dc:Bounds x="452" y="502" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_ScanIssues_di" bpmnElement="A_ScanIssues"><dc:Bounds x="530" y="380" width="130" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Issue_di" bpmnElement="GW_Issue" isMarkerVisible="true"><dc:Bounds x="685" y="395" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_AskCreate_di" bpmnElement="A_AskCreate"><dc:Bounds x="660" y="300" width="130" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_LinkIssue_di" bpmnElement="A_LinkIssue"><dc:Bounds x="660" y="470" width="130" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_Stakeholders_di" bpmnElement="A_Stakeholders"><dc:Bounds x="830" y="380" width="140" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_Synthesise_di" bpmnElement="A_Synthesise"><dc:Bounds x="1000" y="380" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Needs_di" bpmnElement="GW_Needs" isMarkerVisible="true"><dc:Bounds x="1175" y="395" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_MapWorkflow_di" bpmnElement="A_MapWorkflow"><dc:Bounds x="1250" y="380" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_DefineReqs_di" bpmnElement="A_DefineReqs"><dc:Bounds x="1430" y="380" width="160" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Reqs_di" bpmnElement="GW_Reqs" isMarkerVisible="true"><dc:Bounds x="1615" y="395" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_CreateBeans_di" bpmnElement="A_CreateBeans"><dc:Bounds x="1690" y="380" width="140" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_Implement_di" bpmnElement="A_Implement"><dc:Bounds x="1850" y="380" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_Summary_di" bpmnElement="A_Summary"><dc:Bounds x="2020" y="380" width="130" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Done_di" bpmnElement="GW_Done" isMarkerVisible="true"><dc:Bounds x="2165" y="395" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_Close_di" bpmnElement="A_Close"><dc:Bounds x="2140" y="300" width="140" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_A_di" bpmnElement="End_A"><dc:Bounds x="2312" y="322" width="36" height="36"/></bpmndi:BPMNShape>
+
+      <!-- Requestor edges -->
+      <bpmndi:BPMNEdge id="SF_r1_di" bpmnElement="SF_r1"><di:waypoint x="218" y="140"/><di:waypoint x="270" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_r2_di" bpmnElement="SF_r2"><di:waypoint x="400" y="140"/><di:waypoint x="760" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_r3_di" bpmnElement="SF_r3"><di:waypoint x="900" y="140"/><di:waypoint x="1200" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_r4_di" bpmnElement="SF_r4"><di:waypoint x="1350" y="140"/><di:waypoint x="1420" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_r5_di" bpmnElement="SF_r5"><di:waypoint x="1550" y="140"/><di:waypoint x="1760" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_r6_di" bpmnElement="SF_r6"><di:waypoint x="1890" y="140"/><di:waypoint x="2000" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_r7_di" bpmnElement="SF_r7"><di:waypoint x="2140" y="140"/><di:waypoint x="2222" y="140"/></bpmndi:BPMNEdge>
+
+      <!-- Agent edges -->
+      <bpmndi:BPMNEdge id="SF_a1_di" bpmnElement="SF_a1"><di:waypoint x="218" y="420"/><di:waypoint x="270" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a2_di" bpmnElement="SF_a2"><di:waypoint x="410" y="420"/><di:waypoint x="445" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a3_di" bpmnElement="SF_a3"><di:waypoint x="470" y="445"/><di:waypoint x="470" y="502"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a4_di" bpmnElement="SF_a4"><di:waypoint x="495" y="420"/><di:waypoint x="530" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a5_di" bpmnElement="SF_a5"><di:waypoint x="660" y="420"/><di:waypoint x="685" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a6_di" bpmnElement="SF_a6"><di:waypoint x="710" y="395"/><di:waypoint x="710" y="380"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a7_di" bpmnElement="SF_a7"><di:waypoint x="710" y="445"/><di:waypoint x="710" y="470"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a8_di" bpmnElement="SF_a8"><di:waypoint x="790" y="340"/><di:waypoint x="830" y="400"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a9_di" bpmnElement="SF_a9"><di:waypoint x="790" y="470"/><di:waypoint x="830" y="440"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a10_di" bpmnElement="SF_a10"><di:waypoint x="970" y="420"/><di:waypoint x="1000" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a11_di" bpmnElement="SF_a11"><di:waypoint x="1150" y="420"/><di:waypoint x="1175" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a12_di" bpmnElement="SF_a12"><di:waypoint x="1200" y="445"/><di:waypoint x="1200" y="500"/><di:waypoint x="1075" y="500"/><di:waypoint x="1075" y="460"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a13_di" bpmnElement="SF_a13"><di:waypoint x="1225" y="420"/><di:waypoint x="1250" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a14_di" bpmnElement="SF_a14"><di:waypoint x="1400" y="420"/><di:waypoint x="1430" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a15_di" bpmnElement="SF_a15"><di:waypoint x="1590" y="420"/><di:waypoint x="1615" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a16_di" bpmnElement="SF_a16"><di:waypoint x="1640" y="445"/><di:waypoint x="1640" y="500"/><di:waypoint x="1510" y="500"/><di:waypoint x="1510" y="460"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a17_di" bpmnElement="SF_a17"><di:waypoint x="1665" y="420"/><di:waypoint x="1690" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a18_di" bpmnElement="SF_a18"><di:waypoint x="1830" y="420"/><di:waypoint x="1850" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a19_di" bpmnElement="SF_a19"><di:waypoint x="2000" y="420"/><di:waypoint x="2020" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a20_di" bpmnElement="SF_a20"><di:waypoint x="2150" y="420"/><di:waypoint x="2165" y="420"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a21_di" bpmnElement="SF_a21"><di:waypoint x="2190" y="445"/><di:waypoint x="2190" y="500"/><di:waypoint x="1925" y="500"/><di:waypoint x="1925" y="460"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a22_di" bpmnElement="SF_a22"><di:waypoint x="2190" y="395"/><di:waypoint x="2190" y="380"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_a23_di" bpmnElement="SF_a23"><di:waypoint x="2280" y="340"/><di:waypoint x="2312" y="340"/></bpmndi:BPMNEdge>
+
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
