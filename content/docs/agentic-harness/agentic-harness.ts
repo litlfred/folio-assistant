@@ -1,0 +1,58 @@
+import { webpage } from "../../../schemas/webpage.ts";
+
+export default webpage({
+  slug: "agentic-harness",
+  title: "Agentic harness",
+  navOrder: 5,
+  nodes: [
+    {
+      id: "overview",
+      block: "overview",
+    },
+    {
+      id: "interaction-states",
+      title: "Interaction states",
+      block: "interaction-states",
+    },
+    {
+      id: "session-lifecycle",
+      title: "Session lifecycle",
+      block: "session-lifecycle",
+    },
+    {
+      id: "request-classification",
+      title: "Request classification",
+      block: "request-classification",
+    },
+    {
+      id: "content-workflows",
+      title: "Content workflows",
+      block: "content-workflows",
+    },
+    {
+      id: "feature-request-workflow",
+      title: "Feature-request workflow (CRDM)",
+      block: "feature-request-workflow",
+    },
+    {
+      id: "user-provided-content",
+      title: "User-provided content and sources",
+      block: "user-provided-content",
+    },
+    {
+      id: "issue-and-bean-discipline",
+      title: "Issue and bean discipline",
+      block: "issue-and-bean-discipline",
+    },
+    {
+      id: "consolidated-skill-references",
+      title: "Consolidated skill references",
+      block: "consolidated-skill-references",
+    },
+    {
+      id: "what-is-not-built-yet",
+      title: "What is not built yet",
+      block: "what-is-not-built-yet",
+    },
+  ],
+});

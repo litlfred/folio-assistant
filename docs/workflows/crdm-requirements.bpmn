@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             id="Definitions_crdm"
+             targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
+
+  <collaboration id="Collaboration_crdm">
+    <participant id="Lane_Requestor" name="Requestor / stakeholder" processRef="Process_Requestor"/>
+    <participant id="Lane_Agent" name="Agent" processRef="Process_Agent"/>
+    <participant id="Lane_Platform" name="Platform (folio-assistant)" processRef="Process_Platform"/>
+    <messageFlow id="MF_request" sourceRef="Task_SubmitRequest" targetRef="Task_DetectFeature"/>
+    <messageFlow id="MF_needs" sourceRef="Task_SynthesiseNeeds" targetRef="Task_ReviewNeeds"/>
+    <messageFlow id="MF_needsFeedback" sourceRef="Task_ReviewNeeds" targetRef="Task_CheckNeedsApproved"/>
+    <messageFlow id="MF_requirements" sourceRef="Task_DefineRequirements" targetRef="Task_ReviewRequirements"/>
+    <messageFlow id="MF_reqFeedback" sourceRef="Task_ReviewRequirements" targetRef="Task_CheckReqsApproved"/>
+    <messageFlow id="MF_signoff" sourceRef="Task_Signoff" targetRef="Task_CreateBeans"/>
+    <messageFlow id="MF_prReview" sourceRef="Task_ReviewPR" targetRef="Task_IterateDev"/>
+    <messageFlow id="MF_featureSignoff" sourceRef="Task_FeatureSignoff" targetRef="Task_CloseIssue"/>
+  </collaboration>
+
+  <!-- Requestor / stakeholder swim lane -->
+  <process id="Process_Requestor" isExecutable="false">
+    <startEvent id="Start_Requestor" name="Need identified"/>
+    <task id="Task_SubmitRequest" name="Submit request&#10;(chat, issue, discussion)"/>
+    <task id="Task_ReviewNeeds" name="Review synthesised&#10;needs statement"/>
+    <task id="Task_ReviewRequirements" name="Review requirements&#10;and impact analysis"/>
+    <task id="Task_Signoff" name="Sign off on&#10;requirements"/>
+    <task id="Task_ReviewPR" name="Review PR /&#10;test feature"/>
+    <task id="Task_FeatureSignoff" name="Feature sign-off&#10;on issue"/>
+    <endEvent id="End_Requestor" name="Feature delivered"/>
+    <sequenceFlow id="SF_r1" sourceRef="Start_Requestor" targetRef="Task_SubmitRequest"/>
+    <sequenceFlow id="SF_r2" sourceRef="Task_SubmitRequest" targetRef="Task_ReviewNeeds"/>
+    <sequenceFlow id="SF_r3" sourceRef="Task_ReviewNeeds" targetRef="Task_ReviewRequirements"/>
+    <sequenceFlow id="SF_r4" sourceRef="Task_ReviewRequirements" targetRef="Task_Signoff"/>
+    <sequenceFlow id="SF_r5" sourceRef="Task_Signoff" targetRef="Task_ReviewPR"/>
+    <sequenceFlow id="SF_r6" sourceRef="Task_ReviewPR" targetRef="Task_FeatureSignoff"/>
+    <sequenceFlow id="SF_r7" sourceRef="Task_FeatureSignoff" targetRef="End_Requestor"/>
+  </process>
+
+  <!-- Agent swim lane -->
+  <process id="Process_Agent" isExecutable="false">
+    <task id="Task_DetectFeature" name="Detect feature request&#10;(crdm-detect skill)"/>
+    <exclusiveGateway id="GW_IsFeature" name="Feature request?"/>
+    <task id="Task_ContinueAuthoring" name="Continue normal&#10;authoring workflow"/>
+    <task id="Task_FindIssue" name="Scan open issues&#10;for match"/>
+    <exclusiveGateway id="GW_IssueFound" name="Matching issue?"/>
+    <task id="Task_AskCreateIssue" name="Ask user to create&#10;or link issue"/>
+    <task id="Task_LinkIssue" name="Link to existing&#10;issue"/>
+    <task id="Task_IdentifyStakeholders" name="Identify stakeholders&#10;(Phase 1)"/>
+    <task id="Task_SynthesiseNeeds" name="Synthesise needs&#10;from sources"/>
+    <exclusiveGateway id="GW_CheckNeedsApproved" name="Needs approved?"/>
+    <task id="Task_CheckNeedsApproved" name="Check needs feedback"/>
+    <task id="Task_MapWorkflow" name="Map current workflow&#10;(Phase 2 — BPA)"/>
+    <task id="Task_DefineRequirements" name="Define requirements&#10;+ impact analysis&#10;(Phases 3–4)"/>
+    <exclusiveGateway id="GW_CheckReqsApproved" name="Requirements approved?"/>
+    <task id="Task_CheckReqsApproved" name="Check requirements&#10;feedback"/>
+    <task id="Task_CreateBeans" name="Create beans for&#10;implementation work"/>
+    <task id="Task_Implement" name="Implement&#10;(feature branch + PR)"/>
+    <task id="Task_IterateDev" name="Iterate on&#10;PR feedback"/>
+    <task id="Task_SummariseToIssue" name="Post summary&#10;to issue"/>
+    <task id="Task_CloseIssue" name="Close issue with&#10;delivery summary"/>
+    <endEvent id="End_Agent" name="CRDM cycle complete"/>
+    <sequenceFlow id="SF_a1" sourceRef="Task_DetectFeature" targetRef="GW_IsFeature"/>
+    <sequenceFlow id="SF_a2" sourceRef="GW_IsFeature" targetRef="Task_ContinueAuthoring">
+      <conditionExpression>not a feature</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SF_a3" sourceRef="GW_IsFeature" targetRef="Task_FindIssue">
+      <conditionExpression>feature request</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SF_a4" sourceRef="Task_FindIssue" targetRef="GW_IssueFound"/>
+    <sequenceFlow id="SF_a5" sourceRef="GW_IssueFound" targetRef="Task_AskCreateIssue">
+      <conditionExpression>no match</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SF_a6" sourceRef="GW_IssueFound" targetRef="Task_LinkIssue">
+      <conditionExpression>match found</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SF_a7" sourceRef="Task_AskCreateIssue" targetRef="Task_IdentifyStakeholders"/>
+    <sequenceFlow id="SF_a8" sourceRef="Task_LinkIssue" targetRef="Task_IdentifyStakeholders"/>
+    <sequenceFlow id="SF_a9" sourceRef="Task_IdentifyStakeholders" targetRef="Task_SynthesiseNeeds"/>
+    <sequenceFlow id="SF_a10" sourceRef="Task_SynthesiseNeeds" targetRef="Task_CheckNeedsApproved"/>
+    <sequenceFlow id="SF_a11" sourceRef="Task_CheckNeedsApproved" targetRef="GW_CheckNeedsApproved"/>
+    <sequenceFlow id="SF_a12" sourceRef="GW_CheckNeedsApproved" targetRef="Task_SynthesiseNeeds">
+      <conditionExpression>revise</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SF_a13" sourceRef="GW_CheckNeedsApproved" targetRef="Task_MapWorkflow">
+      <conditionExpression>approved</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SF_a14" sourceRef="Task_MapWorkflow" targetRef="Task_DefineRequirements"/>
+    <sequenceFlow id="SF_a15" sourceRef="Task_DefineRequirements" targetRef="Task_CheckReqsApproved"/>
+    <sequenceFlow id="SF_a16" sourceRef="Task_CheckReqsApproved" targetRef="GW_CheckReqsApproved"/>
+    <sequenceFlow id="SF_a17" sourceRef="GW_CheckReqsApproved" targetRef="Task_DefineRequirements">
+      <conditionExpression>revise</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SF_a18" sourceRef="GW_CheckReqsApproved" targetRef="Task_CreateBeans">
+      <conditionExpression>approved</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SF_a19" sourceRef="Task_CreateBeans" targetRef="Task_Implement"/>
+    <sequenceFlow id="SF_a20" sourceRef="Task_Implement" targetRef="Task_SummariseToIssue"/>
+    <sequenceFlow id="SF_a21" sourceRef="Task_SummariseToIssue" targetRef="Task_IterateDev"/>
+    <sequenceFlow id="SF_a22" sourceRef="Task_IterateDev" targetRef="Task_Implement">
+      <conditionExpression>more changes needed</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SF_a23" sourceRef="Task_IterateDev" targetRef="Task_CloseIssue">
+      <conditionExpression>all beans resolved</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SF_a24" sourceRef="Task_CloseIssue" targetRef="End_Agent"/>
+  </process>
+
+  <!-- Platform swim lane (system events) -->
+  <process id="Process_Platform" isExecutable="false">
+    <task id="Task_ContentValidate" name="content_validate"/>
+    <task id="Task_QASweep" name="qa_sweep"/>
+    <task id="Task_CIGates" name="CI gates&#10;(code-quality, docs-site)"/>
+    <sequenceFlow id="SF_p1" sourceRef="Task_ContentValidate" targetRef="Task_QASweep"/>
+    <sequenceFlow id="SF_p2" sourceRef="Task_QASweep" targetRef="Task_CIGates"/>
+  </process>
+
+</definitions>

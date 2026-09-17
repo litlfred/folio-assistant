@@ -373,6 +373,33 @@ bean list parsed from `.beans/`, plus how far the default branch has moved and
 recent sibling `claude/*` branch activity). Heavy triage of new commits belongs in
 a background subagent, not the foreground.
 
+## Agentic harness — interaction model
+
+The [agentic harness](https://litlfred.github.io/folio-assistant/agentic-harness.html)
+page documents the agent–user interaction model: idle vs workflow states, request
+classification, session lifecycle, and how content workflows and the CRDM
+feature-request workflow fit together. Read it for the consolidated reference;
+the individual skills listed below remain authoritative where they differ.
+
+## Feature requests and CRDM
+
+When a user request is a **feature request** (platform capability change rather
+than content work), the agent enters the
+[CRDM requirements workflow](https://litlfred.github.io/folio-assistant/crdm-methodology.html)
+rather than implementing directly. Detection signals and session-state handling
+are in [`skills/folio-core/crdm-detect.md`](skills/folio-core/crdm-detect.md);
+the full six-phase process is in
+[`skills/folio-core/crdm-requirements-workflow.md`](skills/folio-core/crdm-requirements-workflow.md).
+
+Key rules:
+- Feature work must be linked to a GitHub issue (scan before creating; do not
+  create without user permission)
+- Always use a feature branch and PR for feature work
+- Always ask for explicit user confirmation before merging feature PRs to main
+- Post implementation summaries to the issue, not just the PR
+- Issues are for stakeholder sign-off; PRs are for code review; beans are for
+  work-plan tracking — they are not synonymous
+
 ## Commit early, commit often, always PR (STRICT)
 
 Three rules, and the third is the one agents get wrong.
