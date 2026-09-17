@@ -36,6 +36,7 @@ import { dirname, isAbsolute, join, resolve } from "path";
 
 import type { Block, Chapter, Paper, Section } from "../../schemas/types";
 import { isSectionRef } from "../../adapters/manifest-entries";
+import { kindHeading } from "../../schemas/translation";
 
 // ── Block headers ────────────────────────────────────────────────
 
@@ -47,23 +48,13 @@ import { isSectionRef } from "../../adapters/manifest-entries";
  * the most common kind in the corpus. Every other kind names itself, because
  * a reader needs to know whether they are looking at an example or a
  * normative statement.
+ *
+ * This lookup now delegates to `kindHeading(kind, locale)` from
+ * `schemas/translation.ts`, which carries translations in all six UN
+ * languages and falls back to English → title-cased kind name. The old
+ * English-only `KIND_HEADING` map is retired; the function preserves
+ * the same design intent (prose returns `undefined`).
  */
-const KIND_HEADING: Record<string, string> = {
-  definition: "Definition",
-  theorem: "Theorem",
-  lemma: "Lemma",
-  proposition: "Proposition",
-  corollary: "Corollary",
-  algorithm: "Algorithm",
-  conjecture: "Conjecture",
-  example: "Example",
-  remark: "Remark",
-  proof: "Proof",
-  simulator: "Simulator",
-  equation: "Equation",
-  diagram: "Figure",
-  table: "Table",
-};
 
 /** A block as this module needs it: the manifest plus its narrative body. */
 export interface LoadedBlockEntry {
@@ -82,6 +73,11 @@ export interface MarkdownRenderOptions {
   anchors?: boolean;
   /** Heading level the chapter title is emitted at. Sections take this + 1. */
   baseHeadingLevel?: number;
+  /**
+   * BCP 47 locale for block kind headings (e.g. "Définition" instead of
+   * "Definition" when rendering in French). Defaults to "en".
+   */
+  locale?: string;
 }
 
 /** `#` repeated, clamped to the six levels HTML actually has. */
@@ -112,7 +108,13 @@ export function renderBlockMarkdown(
   const { block, mdContent } = entry;
   const lines: string[] = [];
   const label = blockLabel(block);
-  const heading = KIND_HEADING[block.kind];
+  const locale = opts.locale ?? "en";
+  // kindHeading returns title-cased kind name as fallback; prose is not in
+  // KIND_HEADINGS, so it falls through to "Prose" — but we suppress it here
+  // for the same reason the old map omitted it: stamping "**Prose.**" over
+  // every paragraph is noise.
+  const rawHeading = kindHeading(block.kind, locale);
+  const heading = block.kind === "prose" ? undefined : rawHeading;
 
   if (opts.anchors !== false && label) lines.push(`<a id="${label}"></a>`);
 
