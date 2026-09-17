@@ -25,6 +25,21 @@ export default webpage({
       block: "when-crdm-activates",
     },
     {
+      id: "the-process",
+      title: "The process",
+      asset: {
+        kind: "bpmn",
+        source: "docs/workflows/crdm-requirements.bpmn",
+        rendered: "assets/img/workflows/crdm-requirements.svg",
+        alt: "BPMN swimlane diagram: three lanes — Requestor/stakeholder, Agent, and Platform. The requestor submits a request; the agent detects whether it is a feature, scans for matching issues, identifies stakeholders, synthesises needs (Phase 1), maps the current workflow (Phase 2), defines requirements and impact analysis (Phases 3–4), creates beans after sign-off (Phase 5), implements on feature branches with PR review loops (Phase 6), posts summaries to the issue, and closes on feature sign-off.",
+        sourceLinks: [
+          { text: "Open the BPMN source", href: "workflows/crdm-requirements.bpmn" },
+        ],
+        linkStyle: "button",
+      },
+      block: "the-process",
+    },
+    {
       id: "phase-1-needs-assessment",
       title: "Phase 1 — Needs assessment",
       block: "phase-1-needs-assessment",

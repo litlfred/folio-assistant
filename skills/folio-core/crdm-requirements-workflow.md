@@ -1,0 +1,126 @@
+# CRDM requirements workflow
+
+Once a feature request is detected (see `crdm-detect.md`), the agent follows
+this workflow to gather, validate, and implement requirements collaboratively.
+
+## Actors
+
+| Actor | Role | Swim lane |
+|---|---|---|
+| **Requestor** | The person who identified the need. May be an author, editor, reviewer, or external stakeholder. | Requestor / stakeholder |
+| **Agent** | The LLM agent running in the folio-assistant harness. Facilitates the process, synthesises inputs, implements. | Agent |
+| **Stakeholders** | Others affected by the change — identified in Phase 1. Participate in review and sign-off. | Requestor / stakeholder |
+| **Platform** | Automated systems — CI, content_validate, qa_sweep. Provides verification. | Platform |
+
+## BPMN reference
+
+The full process is diagrammed in
+[`docs/workflows/crdm-requirements.bpmn`](../../docs/workflows/crdm-requirements.bpmn).
+
+## Phase 1 — Needs assessment
+
+**Input:** the feature request (from chat, issue, discussion, or upload)
+
+1. **Identify the requester** — who is asking?
+2. **Identify stakeholders** — who else is affected? Check:
+   - `folio.config.json` roles across active folios
+   - GitHub CODEOWNERS
+   - Recent activity on related issues
+3. **Gather source material** — the request may come from:
+   - Chat messages in the current session
+   - A GitHub issue body or comment
+   - An uploaded document (Word, PDF) in `uploads/`
+   - A referenced document in `library/`
+   - An attachment to a GitHub issue comment
+4. **Synthesise a needs statement** — write a clear, jargon-free statement of
+   what is needed and why, with rationale linking to a concrete workflow
+5. **Post to the issue** — the synthesised needs statement goes on the GitHub
+   issue as a comment, not in chat
+6. **Request feedback** — ask the requestor and stakeholders to review
+
+**Loop:** iterate until the needs statement is approved.
+
+## Phase 2 — Business process analysis
+
+**Input:** approved needs statement
+
+1. **Find the current workflow** — check `docs/workflows/*.bpmn` for existing
+   process diagrams that cover the affected area
+2. **Map the gap** — where in the current workflow does the need appear?
+   Identify the specific activity or decision point
+3. **Document current state** — if no BPMN exists, document the as-is workflow
+   in prose or create a new BPMN fragment
+4. **Identify bottlenecks** — probe for the real pain point behind the stated
+   request
+
+**Post to the issue:** current-state workflow description with gap identified.
+
+## Phase 3 — Requirements definition
+
+**Input:** current-state analysis with identified gap
+
+For each requirement:
+
+1. **Functional requirement** — stated as "SHALL" / "SHOULD" / "MAY"
+2. **Proposed implementation:**
+   - Skill file (name, location, description)
+   - MCP tool registration (if applicable)
+   - Schema changes (Zod types, block kinds, constraints)
+   - Pipeline changes (validators, renderers, scripts)
+3. **Acceptance criteria** — testable conditions
+4. **Cross-references** — link to related documentation pages under
+   `content/docs/`, existing skills, existing workflows
+
+**Post to the issue:** structured requirements with acceptance criteria.
+
+## Phase 4 — Impact analysis
+
+**Input:** defined requirements
+
+1. **Schema impact** — which types, constraints, builders change?
+2. **Pipeline impact** — which scripts under `content/pipeline/` are affected?
+3. **Adapter impact** — paper, document, dak? Does it ripple?
+4. **QA impact** — new criteria? Modified criteria? Registry changes?
+5. **Folio impact** — which active folios need migration?
+6. **Test plan** — what tests to add or update?
+7. **Migration plan** — steps, rollback, what breaks without it
+
+**Post to the issue:** impact assessment and migration plan.
+
+## Phase 5 — Sign-off and bean creation
+
+**Input:** requirements + impact analysis reviewed and approved by stakeholders
+
+1. **Post sign-off summary** on the issue — what was agreed, what was deferred
+2. **Create beans** for each implementation unit:
+   - Follow the check-before-create protocol (see `todo-manager.md`)
+   - Reference the parent issue in each bean
+   - Scope to a single PR-sized unit
+
+## Phase 6 — Iterative development
+
+**Input:** beans
+
+For each bean:
+
+1. **Create feature branch** — always, no exceptions
+2. **Implement** — following the accepted requirements
+3. **Open PR** — link to the bean and the parent issue
+4. **Post summary to issue** — what the PR accomplishes
+5. **Iterate on PR feedback** — code review is on the PR
+6. **Ask user for explicit confirmation before merging to main**
+7. **Update documentation** — content/docs/ pages, workflow BPMNs
+
+When all beans are resolved:
+1. Post a delivery summary comment on the issue
+2. Close the issue (or leave for requestor to close)
+
+## Cross-references
+
+- [CRDM methodology page](https://litlfred.github.io/folio-assistant/crdm-methodology.html) — the documentation page for users
+- [`crdm-detect.md`](crdm-detect.md) — feature-request detection skill
+- [`todo-manager.md`](todo-manager.md) — bean creation protocol
+- [`bean-coordination.md`](bean-coordination.md) — cross-session bean coordination
+- [`coordinate.md`](coordinate.md) — session coordination
+- [Publication workflow](https://litlfred.github.io/folio-assistant/publication-workflow.html) — the content lifecycle this fits within
+- Issue [#203](https://github.com/litlfred/folio-assistant/issues/203)
