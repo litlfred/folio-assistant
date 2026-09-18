@@ -649,11 +649,38 @@ claims the bean, creating beans notes it, and closing resolves it — and
 resolve only lands once the instance itself has completed, because whether
 work is done is a judgement.
 
-### Still proposed
+### `stakeholder_map` — built, but not from the sources proposed
 
-| Tool | Purpose |
-|---|---|
-| **`stakeholder_map` MCP tool** | Given a proposed change, identify affected roles from `folio.config.json` and CODEOWNERS |
+It was specified here as reading "affected roles from `folio.config.json` and
+CODEOWNERS". **Neither exists.** This repository has no CODEOWNERS file, and
+`schemas/folio-config.ts` declares no role, owner, maintainer or contact
+field. Built as written, the tool would have reported no stakeholders for
+every change, forever, and looked like it worked.
+
+It reads what the repository actually has:
+
+1. **Skills declare `roles:`** in their front matter — reader, collaborator,
+   owner, auditor. Change a skill and you affect whoever holds its roles.
+2. **BPMN lanes name the accountable actor**, and each activity names the
+   skill that implements it. So a changed skill reaches a set of lanes across
+   the whole process corpus — editors, the publication manager, clinical SMEs.
+
+That second hop is the one CODEOWNERS could never have given: changing
+`todo-manager.md` reaches the work-plan lane in six separate processes,
+which is a far better prompt for "who should hear about this?" than a list
+of file owners.
+
+**It does not name people, deliberately.** `crdm-requirements.bpmn` documents
+its own stakeholder step as *"The agent asks the BA who is affected by this
+change. The BA knows the domain — the agent does not guess."* The tool
+respects that: it enumerates roles, lanes and processes so the BA is asked a
+sharper question, and it never outputs a list of humans as "the
+stakeholders". Every report ends with a **NOT DETERMINED** section naming the
+people half, any changed path that maps to no skill (unknown impact, not
+absent impact), and any skill whose `roles:` are undeclared.
+
+`bun run stakeholder-map <path>...` or `--since <ref>`; `stakeholder_map` as
+an MCP tool.
 
 ## What is not built yet
 {: #what-is-not-built-yet }
@@ -674,6 +701,12 @@ there, or lets them assume something exists because nobody updated the list.
   existing session already in the process, existing session doing content
   work). The judgement is written down; it is not yet *measured*, so see the
   caveat below.
+- **`stakeholder_map`** — reports which skills a change touches, the roles
+  they declare, and the process lanes accountable for work that uses them.
+  Built against skills and BPMN lanes rather than the CODEOWNERS and
+  `folio.config.json` fields it was specified from, because neither exists
+  here. It does not name people, because the process says the agent does not
+  guess.
 - **The process is executable** — `crdm-requirements.bpmn` loads like every
   other diagram here, so `workflow_start` / `workflow_next` /
   `workflow_complete` run it today, and `workflow_complete` refuses a step
@@ -697,16 +730,39 @@ there, or lets them assume something exists because nobody updated the list.
 - **Automated impact analysis** — the agent can read the content graph and
   the schema files, but no dedicated tool produces an impact report for a
   proposed change.
-- **Stakeholder mapping** — no automated discovery of affected roles or
-  folios from a change description.
 - **Review triage tooling** — ingesting a Word document with comments and
   presenting them for structured triage is tracked in
   [#197](https://github.com/litlfred/folio-assistant/issues/197).
 
-**Built but unverified**, which is a third state and not a milder form of
-"built": the detection skill has never been measured against real requests.
-Nobody has taken a sample of issues and chat openings and checked how often
-it fires when it should, or fires when it should not. Until that happens the
-honest claim is that the guidance exists, not that detection works.
+**Built and now measured, with a known weakness.** The detection skill used
+to sit in a third state — "built but unverified", which is not a milder form
+of built. It has since been run against every issue in this repository (27,
+the whole population, not a sample) via `bun run eval:crdm-detect`:
+
+| | fired | did not |
+|---|---|---|
+| **is a feature request** | 12 | 7 |
+| **is not** | 5 | 3 |
+
+**precision 71% · recall 63% · F1 67%** — measured 2026-09-18 on `main`.
+
+Two things that number is not. It runs the skill's **phrase list** only, so
+it is a *lower bound* on an agent that also applies judgement. And the ground
+truth is **one annotator's, unblinded** — the same agent wrote the labels and
+the scorer. Fix that before quoting these as a property of the skill rather
+than of this corpus.
+
+The failure *pattern* is more useful than the score. The seven misses include
+[#203](https://github.com/litlfred/folio-assistant/issues/203) itself — the
+issue that asked for this capability — and
+[#1](https://github.com/litlfred/folio-assistant/issues/1), the framework
+design. The five false alarms are two migration **records** of work already
+done, two asks to **document** an existing pipeline, and one bug report.
+
+That points at a specific gap: the skill's "what is NOT a feature request"
+list excludes *content* tasks — writing a section, fixing a typo, reviewing a
+chapter — but says nothing about **records of completed work** or
+**documentation about a feature**, which are what it actually confuses here.
+Those two exclusions are the cheapest available improvement.
 
 **Tracked in:** [#203](https://github.com/litlfred/folio-assistant/issues/203)

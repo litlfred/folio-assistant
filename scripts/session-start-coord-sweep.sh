@@ -32,11 +32,33 @@ flock 200 2>/dev/null || true
 BEANS_DIR="$REPO_ROOT/.beans"
 echo "## Work-plan (beans) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo
+# `install-beans.sh` installs to ~/.local/bin, which a fresh container's PATH
+# often does not carry — so LOOK THERE before concluding the CLI is absent.
+# Reporting "not on PATH" when the binary is sitting in the standard install
+# location is how a session ends up parsing .beans/ by hand all day.
+if ! command -v beans >/dev/null 2>&1 && [ -x "$HOME/.local/bin/beans" ]; then
+  PATH="$HOME/.local/bin:$PATH"
+  export PATH
+fi
+
 if command -v beans >/dev/null 2>&1; then
   beans prime 2>/dev/null || true
   beans list 2>/dev/null || echo "_(beans list returned nothing)_"
 elif [ -d "$BEANS_DIR" ]; then
-  echo "_(beans CLI not on PATH — reading .beans/ directly; run \`scripts/install-beans.sh\` for full priming)_"
+  # An IMPERATIVE, not a parenthetical. The old wording tucked the remedy
+  # inside an aside, and a session on 2026-09-18 read it, carried on parsing
+  # .beans/ by hand, and did an entire session's durable work unclaimed —
+  # which is the exact failure the work-plan exists to prevent.
+  echo "> 🫘 **BEANS CLI IS NOT INSTALLED. Install it before doing durable work:**"
+  echo ">"
+  echo "> \`\`\`sh"
+  echo "> scripts/install-beans.sh && export PATH=\"\$HOME/.local/bin:\$PATH\""
+  echo "> \`\`\`"
+  echo ">"
+  echo "> Until then the list below is parsed from \`.beans/\` directly: titles and"
+  echo "> statuses only, with no bodies, no priorities and no blocking relations —"
+  echo "> so it cannot tell you what an item actually is or what it waits on."
+  echo
   found=0
   for f in "$BEANS_DIR"/*.md; do
     [ -f "$f" ] || continue
@@ -145,10 +167,15 @@ fi
 cat <<'EOF'
 **Recommended action:**
 
-1. If you'll do durable work, claim a bean (`beans <id> --status in-progress`)
-   or open one (`beans create "<title>"`) — see AGENTS.md and
-   `.claude/skills/local/bean-coordination.md`.
-2. If the default branch moved, dispatch a **background** subagent to triage the
+1. **Install the beans CLI if the section above says it is missing** —
+   `scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"`. Do this
+   FIRST: claiming and creating beans is not possible without it, and a
+   session that skips it does its work unclaimed.
+2. If you'll do durable work, claim a bean
+   (`beans update <id> --status in-progress`) or open one
+   (`beans create "<title>"`, after the exact-title existence check in
+   AGENTS.md) — see also `.claude/skills/local/bean-coordination.md`.
+3. If the default branch moved, dispatch a **background** subagent to triage the
    new landings + sibling activity above — don't do it in the foreground.
    Escalate only if it surfaces something actionable against the work-plan.
 EOF

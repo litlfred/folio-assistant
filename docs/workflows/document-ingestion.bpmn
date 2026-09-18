@@ -106,12 +106,14 @@ knowledge graph
       <bpmn:incoming>Flow_i4</bpmn:incoming>
       <bpmn:outgoing>Flow_i5</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:callActivity id="CallActivity_Gate" name="L1 completeness gate
-[paper-relevance-triage]" calledElement="Process_L1Gate">
-      <bpmn:documentation>See ingest-l1-completeness-gate.bpmn.</bpmn:documentation>
+    <bpmn:callActivity id="CallActivity_Gate" name="L1 completeness gate" calledElement="Process_L1Gate">
+      <bpmn:documentation>See ingest-l1-completeness-gate.bpmn.
+
+NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has
+never existed, and is not `proof-triage` (that one triages proofs). Left
+uncovered until the skill is written.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:link href="document-ingestion.html#the-l1-completeness-gate" />
-        <folio:skill ref="paper-relevance-triage" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i5</bpmn:incoming>
       <bpmn:outgoing>Flow_i6</bpmn:outgoing>

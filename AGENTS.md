@@ -367,11 +367,32 @@ memory entry is wrong — fix it.
 
 ## At session start
 
-Surface the work-plan before starting: run `beans prime` (and `beans list`), or
-`scripts/session-start-coord-sweep.sh` for the CLI-independent surface (current
-bean list parsed from `.beans/`, plus how far the default branch has moved and
-recent sibling `claude/*` branch activity). Heavy triage of new commits belongs in
-a background subagent, not the foreground.
+**Install the beans CLI first, before any durable work.** A fresh container has
+no `beans` on `PATH`, and the fallback that parses `.beans/` directly gives you
+titles and statuses only — no bodies, no priorities, no blocking relations — so
+it cannot tell you what an item is or what it waits on, and you cannot claim or
+create anything with it.
+
+```sh
+scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
+```
+
+`install-beans.sh` writes to `~/.local/bin`, which is frequently not on a fresh
+container's `PATH`. The session-start sweep now prepends it when the binary is
+there, so a second session does not re-install; if the sweep says the CLI is
+missing, it genuinely is.
+
+This is a rule because skipping it is cheap and invisible. On 2026-09-18 a
+session read the sweep's then-parenthetical "run `scripts/install-beans.sh` for
+full priming", carried on reading `.beans/` by hand, and completed two merged
+PRs' worth of durable work **unclaimed** — the exact failure the work plan
+exists to prevent, and one no sibling session could have seen coming.
+
+Then surface the work-plan: `beans prime` (and `beans list`), or
+`scripts/session-start-coord-sweep.sh` for the full surface (bean list, how far
+the default branch has moved, recent sibling `claude/*` branch activity, and CI
+health). Heavy triage of new commits belongs in a background subagent, not the
+foreground.
 
 ## Agentic harness — interaction model
 

@@ -52,11 +52,19 @@
     </bpmn:startEvent>
     <bpmn:serviceTask id="Task_CheckDerived" name="Is every derived
 artefact present?">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>L1 source to L1 KG is NOT complete while a required derived artefact is missing. This is the gate that makes the derivation steps obligatory rather than aspirational.</bpmn:documentation>
       <bpmn:incoming>Flow_g1</bpmn:incoming>
       <bpmn:outgoing>Flow_g2</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_RoundTrip" name="Round-trip translation QA">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see.</bpmn:documentation>
       <bpmn:incoming>Flow_g2</bpmn:incoming>
       <bpmn:outgoing>Flow_g3</bpmn:outgoing>
@@ -69,6 +77,10 @@ terminology?">
     </bpmn:exclusiveGateway>
     <bpmn:userTask id="Task_FlagDrift" name="Adjudicate the
 flagged passage">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>A machine can detect that two readings differ. Which one is right is a human call.</bpmn:documentation>
       <bpmn:incoming>Flow_g4</bpmn:incoming>
       <bpmn:outgoing>Flow_g5</bpmn:outgoing>
@@ -76,6 +88,7 @@ flagged passage">
     <bpmn:serviceTask id="Task_Verdict" name="Record the L1
 completeness verdict">
       <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
         <folio:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_g5</bpmn:incoming>

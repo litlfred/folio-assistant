@@ -88,11 +88,14 @@
       <bpmn:incoming>Flow_04</bpmn:incoming>
       <bpmn:outgoing>Flow_07</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_L2L3Content" name="Search trusted CONTENT — L2 DAKs, L3 IGs&#10;[corpus-search]">
-      <bpmn:documentation>Already-adjudicated guidance: WHO SMART DAKs at L2 and FHIR Implementation Guides at L3. A recommendation adopted in a published DAK is evidence of a different kind from a primary study -- it is a prior decision, with its own provenance, and must be cited as that rather than laundered into primary evidence.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="corpus-search" />
-      </bpmn:extensionElements>
+    <bpmn:serviceTask id="Task_L2L3Content" name="Search trusted CONTENT — L2 DAKs, L3 IGs">
+      <bpmn:documentation>Already-adjudicated guidance: WHO SMART DAKs at L2 and FHIR Implementation Guides at L3. A recommendation adopted in a published DAK is evidence of a different kind from a primary study -- it is a prior decision, with its own provenance, and must be cited as that rather than laundered into primary evidence.
+
+NOT YET SKILL-BACKED. This step named `corpus-search`, which has never
+existed. It is not `corpus-grep`, whose job is the pre-declaration check
+that something really is an open gap — searching adjudicated L2/L3 content
+for evidence is a different task, so pointing the ref there would have been
+a plausible-looking wrong answer. Left uncovered until the skill is written.</bpmn:documentation>
       <bpmn:incoming>Flow_05</bpmn:incoming>
       <bpmn:outgoing>Flow_08</bpmn:outgoing>
     </bpmn:serviceTask>
