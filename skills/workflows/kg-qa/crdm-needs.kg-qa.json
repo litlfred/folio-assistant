@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_CRDM",
-    "path": "skills/workflows/crdm-requirements.bpmn"
+    "id": "Process_CRDM_Needs",
+    "path": "skills/workflows/crdm-needs.bpmn"
   },
-  "source_hash": "sha256:a2ae4283c47f50070f7d8426140a5ce142159913ff35dd06628c0b658b6a60ea",
+  "source_hash": "sha256:274bdd32274d835b859a6d0b97f0f25024dda03eb1e0977c379290d70945548c",
   "auditor": {
     "script": "scripts/kg-audit.ts",
     "script_hash": "sha256:4e9020c5a66aff63a269a13a3e81b26f64e2c96870df8d7623bee30ea8e287f6",
@@ -44,8 +44,12 @@
       "result": "fail",
       "findings": [
         {
-          "where": "BA_Submit",
-          "detail": "\"Describe the need (chat, issue, discussion)\" names no skill."
+          "where": "BA_ReviewNeeds",
+          "detail": "\"Review synthesised needs statement\" names no skill."
+        },
+        {
+          "where": "S_ConfirmNeeds",
+          "detail": "\"Confirm needs statement\" names no skill."
         }
       ]
     }

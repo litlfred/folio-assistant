@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_CRDM",
-    "path": "skills/workflows/crdm-requirements.bpmn"
+    "id": "Process_CRDM_Issue",
+    "path": "skills/workflows/crdm-issue-linking.bpmn"
   },
-  "source_hash": "sha256:a2ae4283c47f50070f7d8426140a5ce142159913ff35dd06628c0b658b6a60ea",
+  "source_hash": "sha256:e470e223332fc54257299123fc40d1fb1b57ae177c8232ea653911dba7a8a872",
   "auditor": {
     "script": "scripts/kg-audit.ts",
     "script_hash": "sha256:4e9020c5a66aff63a269a13a3e81b26f64e2c96870df8d7623bee30ea8e287f6",
@@ -41,18 +41,13 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "BA_Submit",
-          "detail": "\"Describe the need (chat, issue, discussion)\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 7,
+    "fail": 0,
     "n/a": 1,
     "unknown": 0
   }

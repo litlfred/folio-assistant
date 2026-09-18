@@ -1,0 +1,76 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CRDM_Deliver",
+    "path": "skills/workflows/crdm-deliver.bpmn"
+  },
+  "source_hash": "sha256:cccba681e87879b02e0ca10a77f9735a7c04302f3c76282153036bfe17261ad7",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:4e9020c5a66aff63a269a13a3e81b26f64e2c96870df8d7623bee30ea8e287f6",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Implement",
+          "detail": "names skill \"prepare-merge\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "BA_ReviewIncrement",
+          "detail": "\"Review increment (test behaviour)\" names no skill."
+        },
+        {
+          "where": "BA_ShareMVP",
+          "detail": "\"Share MVP with stakeholders\" names no skill."
+        },
+        {
+          "where": "S_TestMVP",
+          "detail": "\"Test MVP in own context\" names no skill."
+        },
+        {
+          "where": "BA_TranslateFeedback",
+          "detail": "\"Translate feedback into agent direction\" names no skill."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 2,
+    "n/a": 1,
+    "unknown": 0
+  }
+}

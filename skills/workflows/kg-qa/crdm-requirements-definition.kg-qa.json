@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_CRDM",
-    "path": "skills/workflows/crdm-requirements.bpmn"
+    "id": "Process_CRDM_Requirements",
+    "path": "skills/workflows/crdm-requirements-definition.bpmn"
   },
-  "source_hash": "sha256:a2ae4283c47f50070f7d8426140a5ce142159913ff35dd06628c0b658b6a60ea",
+  "source_hash": "sha256:71f85a763614d44a72d1b572835a6d402e37c1f236e0b50ccabc3d853f7ff2ca",
   "auditor": {
     "script": "scripts/kg-audit.ts",
     "script_hash": "sha256:4e9020c5a66aff63a269a13a3e81b26f64e2c96870df8d7623bee30ea8e287f6",
@@ -17,8 +17,13 @@
       "findings": []
     },
     "skill-servable": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_MapWorkflow",
+          "detail": "names skill \"bpmn-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -44,15 +49,19 @@
       "result": "fail",
       "findings": [
         {
-          "where": "BA_Submit",
-          "detail": "\"Describe the need (chat, issue, discussion)\" names no skill."
+          "where": "BA_ReviewReqs",
+          "detail": "\"Review requirements and impact analysis\" names no skill."
+        },
+        {
+          "where": "S_ApproveReqs",
+          "detail": "\"Approve requirements\" names no skill."
         }
       ]
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 5,
+    "fail": 2,
     "n/a": 1,
     "unknown": 0
   }
