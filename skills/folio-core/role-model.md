@@ -24,6 +24,7 @@ Four objects, each with a home:
 | **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
 | **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `skills/workflows/*.bpmn`, `skills/workflows/decisions/*.dmn` |
 | **Requirement** | a conformance obligation that **points at** the others: `satisfiedBy` names the skill or capability discharging it, `actors` who is bound, `derivedFrom` the broader requirement it specialises. | `skills/requirements/*.json` |
+| **Permission** | what an actor is **allowed to do**, in any lane. Cross-cuts roles. | `skills/permissions/permissions.json` |
 
 Schema: [`schemas/role-graph.ts`](../../schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](../../scripts/kg-audit.ts), sidecar schema
@@ -67,6 +68,48 @@ for the duration of a lane.
 > `role-has-actor` records **n/a** rather than failing. Reporting "no actor can
 > fill the corpus" is a finding nobody can act on, and a check that produces
 > those is a check somebody switches off.
+
+## An actor has three lists, and they answer three different questions
+
+```jsonc
+{ "id": "admin",
+  "roles":        ["programme-manager", "publication-manager", "editor", "author", "reviewer"],
+  "permissions":  ["admin-settings", "role-management", "release-authorization"],
+  "capabilities": ["git-push"] }
+```
+
+| field | question | scope |
+|---|---|---|
+| `roles` | what may it act **AS**? | per lane |
+| `permissions` | what may it **DO**? | every lane |
+| `capabilities` | what does its **machine have**? | the environment |
+
+**These were one field until 2026-09** (bean `ind9`), and the conflation meant
+nothing could resolve any of them: 27 claims across 19 names pointed at a
+capability registry that only ever held environment probes.
+
+**The obvious fix was wrong, and testing it is what found the real one.** "Can
+review" and "can push" are properties of a position — that is exactly the
+reasoning that moved `inherits` off actors — so permissions look like they
+belong on Role. They do not survive the data. A permission **cross-cuts**:
+`content-authoring` is held by actors taking on five different roles;
+`qa-reporting` by three, one a build pipeline and one a human QC reviewer;
+`admin` holds `admin-settings` in all five lanes it enters. Placing them on Role
+produced **36** conflicts where a permission was held by some but not all actors
+sharing a role.
+
+The line that does hold: **a skill answers what the performer of this task needs
+to KNOW, and belongs to the lane. A permission answers what this participant may
+DO, and travels with the participant through every lane it enters.**
+
+Both are audited and both are `critical` — `actor-permissions-resolve` and
+`actor-capabilities-resolve`. The latter was `major` only while the field was
+overloaded, carrying entries no vocabulary could ever resolve.
+
+**Three names were neither**: `cql-authoring`, `data-dictionary-authoring` and
+`lean-diagnostics` are skills with no body anywhere. Dropped rather than
+relocated — claiming an unmodelled thing is worse than not claiming it, and
+putting them on a role would fail `role-skills-resolve`. Bean `dtod`.
 
 ## Requirements are the fifth node kind, and they only point
 
