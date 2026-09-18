@@ -160,13 +160,18 @@ They were `.beans/` and `.harness/workflow/`. A dot-prefixed directory is absent
 from a plain `ls`, from most file browsers and from GitHub's web tree, so the two
 artefacts a person looks for first were the two hardest to find. Moved 2026-09-18.
 
-Both are **declared** in `harness.config.json` under `harness`
-(`HarnessDirsSchema` in `schemas/harness-config.ts`) rather than assumed. The
-`beans` binary is third-party and does not read that file — it reads
-`.beans.yml` — so the same path is necessarily written twice, and
-`bun run check:harness-dirs` fails when the declaration, `.beans.yml` and
-`workflow/store.ts` disagree. The duplication is unavoidable; an unchecked one
-is not.
+Both are **declared** in `agent-harness.json`, beside `schemas/` and `skills/`,
+each naming the KIND of graph it holds — `workplan` for `beans/`, `process` for
+`beans/workflow/`. That file is the one declaration of what this instance scans;
+`harness.config.json` stays the runtime config (adapter, skills dir, viewer,
+simulators, translation, dependencies) and declares no directories. See
+[`directory-conventions`](skills/folio-core/directory-conventions.md).
+
+The `beans` binary is third-party and reads `.beans.yml`, not either file, so
+the work-plan path is necessarily written twice. `bun run check:harness-dirs`
+fails when the declaration, `.beans.yml` and `workflow/store.ts` disagree, and
+refuses a dot-prefixed path. The duplication is unavoidable; an unchecked one is
+not.
 
 `.harness/` still exists and still holds `interaction.json` and `issue-comments/`;
 only the workflow state moved.

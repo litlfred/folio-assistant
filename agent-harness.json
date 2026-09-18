@@ -1,5 +1,5 @@
 {
-  "_comment": "The AgentHarness declaration for THIS instance — what directories it scans and what kind of graph each holds. See skills/folio-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/`, `kg/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it.",
+  "_comment": "The AgentHarness declaration for THIS instance \u2014 what directories it scans and what kind of graph each holds. See skills/folio-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/`, `kg/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it. NOTE ON NESTING: `beans/workflow/` sits INSIDE `beans/`, and they hold different graphs. A consumer scanning a declared directory must not assume it owns everything beneath it \u2014 check whether a deeper path is itself declared. Today the two are distinguishable by extension (`.md` beans, `.json` instance state) but that is a coincidence of the current layout, not a contract.",
   "name": "folio-assistant",
   "directories": [
     {
@@ -12,7 +12,19 @@
       "id": "kg",
       "path": "skills/",
       "graph": "kg",
-      "summary": "Skill packages. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not."
+      "summary": "Skill packages. Note the id is `kg` while the path is `skills/` \u2014 ids are stable across a relocation, paths are not."
+    },
+    {
+      "id": "workplan",
+      "path": "beans/",
+      "graph": "workplan",
+      "summary": "The work plan \u2014 what is being worked on. Read and written by the `beans` CLI and by scripts/beans-fallback.ts."
+    },
+    {
+      "id": "process-state",
+      "path": "beans/workflow/",
+      "graph": "process",
+      "summary": "One JSON file per running BPMN instance \u2014 where it got to. Owned by src/workflow/, never hand-edited."
     }
   ]
 }

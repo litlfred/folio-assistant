@@ -23,6 +23,7 @@ import { join, resolve } from "node:path";
 import { WORKFLOW_DIR } from "../../src/workflow/store.js";
 import { beansYmlPath, checkHarnessDirs } from "../check-harness-dirs.js";
 import { readHarnessConfig, resolveHarnessConfigPath } from "../../schemas/harness-config.js";
+import { BASE_GRAPH_KINDS, readDeclaration } from "../../schemas/agent-harness.js";
 import {
   createBean,
   findBean,
@@ -43,6 +44,20 @@ function scratchStore(): string {
   );
   mkdirSync(join(root, "beans"), { recursive: true });
   return root;
+}
+
+/** An `agent-harness.json` declaring the two work-plan directories. */
+function writeDeclaration(root: string, workPlan: string, processState: string): void {
+  writeFileSync(
+    join(root, "agent-harness.json"),
+    JSON.stringify({
+      name: "scratch",
+      directories: [
+        { id: "workplan", path: workPlan, graph: "workplan" },
+        { id: "process-state", path: processState, graph: "process" },
+      ],
+    }),
+  );
 }
 
 describe("the two stores are visible and agreed upon", () => {
@@ -82,10 +97,7 @@ describe("the two stores are visible and agreed upon", () => {
   test("a dot-prefixed declaration is refused", () => {
     const root = scratchStore();
     try {
-      writeFileSync(
-        join(root, "harness.config.json"),
-        JSON.stringify({ harness: { workPlan: ".beans", workflowState: "beans/workflow" } }),
-      );
+      writeDeclaration(root, ".beans", "beans/workflow");
       writeFileSync(join(root, ".beans.yml"), "beans:\n    path: .beans\n");
       mkdirSync(join(root, ".beans"), { recursive: true });
       const r = checkHarnessDirs(root);
@@ -245,33 +257,66 @@ describe("the config name — harness.config.json, and only that", () => {
     }
   });
 
-  test("check:harness-dirs reads the harness block from the new name", () => {
+  test("the harness config no longer declares directories — that is agent-harness.json's job", () => {
+    // Regression guard on a deliberate removal: a `harness` block here would be
+    // a second declaration of the same fact, free to disagree with the first.
     const root = scratchStore();
     try {
       writeFileSync(
         join(root, "harness.config.json"),
-        JSON.stringify({ harness: { workPlan: "beans", workflowState: "beans/workflow" } }),
+        JSON.stringify({ harness: { workPlan: "somewhere-else" } }),
       );
       const r = checkHarnessDirs(root);
-      expect(r.configured).toBe(true);
+      expect(r.configured).toBe(false);
+      expect(r.declaredWorkPlan).toBe("beans");
       expect(r.problems).toEqual([]);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
   });
+});
 
-  test("a folio still on the old name reads as NOT configured, not as misconfigured", () => {
+describe("the directories are declared in agent-harness.json", () => {
+  test("this repo declares both kinds, and they are the ones that moved", () => {
+    const decl = readDeclaration(REPO_ROOT)!;
+    const wp = decl.directories.find((d) => d.graph === "workplan");
+    const ps = decl.directories.find((d) => d.graph === "process");
+    expect(wp?.path).toBe("beans/");
+    expect(ps?.path).toBe("beans/workflow/");
+  });
+
+  test("both kinds exist in the harness's own table, not core's", () => {
+    // The work plan is the harness's because the harness HAS one — unlike
+    // `folio`, which only core can render.
+    expect(BASE_GRAPH_KINDS.workplan).toBeDefined();
+    expect(BASE_GRAPH_KINDS.process).toBeDefined();
+    expect(BASE_GRAPH_KINDS.workplan!.renderable).toBe(false);
+    expect(BASE_GRAPH_KINDS.process!.renderable).toBe(false);
+    expect(BASE_GRAPH_KINDS.folio).toBeUndefined();
+  });
+
+  test("they are two kinds, so a consumer asking for work cannot be handed process state", () => {
+    expect(BASE_GRAPH_KINDS.workplan!.type).not.toBe(BASE_GRAPH_KINDS.process!.type);
+  });
+
+  test("an unmigrated instance is `not configured`, never a failure", () => {
     const root = scratchStore();
     try {
-      writeFileSync(
-        join(root, "folio.config.json"),
-        JSON.stringify({ harness: { workPlan: "somewhere-else" } }),
-      );
       const r = checkHarnessDirs(root);
       expect(r.configured).toBe(false);
-      // Schema defaults apply, and they agree with .beans.yml — so no false alarm.
       expect(r.problems).toEqual([]);
-      expect(r.notes.join(" ")).toContain("defaults");
+      expect(r.notes.join(" ")).toContain("not been migrated");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a declaration that will not load is a problem, not a shrug", () => {
+    const root = scratchStore();
+    try {
+      writeFileSync(join(root, "agent-harness.json"), "{ not json");
+      const r = checkHarnessDirs(root);
+      expect(r.problems.some((x) => x.includes("will not load"))).toBe(true);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }

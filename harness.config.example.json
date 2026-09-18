@@ -1,9 +1,9 @@
 {
-  "_comment": "Example harness.config.json. There is deliberately no $schema key: no such schema file is published, and pointing at one that does not exist is worse than pointing at nothing. `folio_init` writes one of these for you — see the README's 'Start a new folio'. `contentType` selects both the adapter and the block-kind profile: 'document' for prose folios (no Lean, no TeX needed to publish), 'paper' for a document that additionally carries Lean-backed mathematics. The paper adapter extends the document one, so a paper folio gets every document tool too.",
+  "_comment": "Example harness.config.json. There is deliberately no $schema key: no such schema file is published, and pointing at one that does not exist is worse than pointing at nothing. `folio_init` writes one of these for you \u2014 see the README's 'Start a new folio'. `contentType` selects both the adapter and the block-kind profile: 'document' for prose folios (no Lean, no TeX needed to publish), 'paper' for a document that additionally carries Lean-backed mathematics. The paper adapter extends the document one, so a paper folio gets every document tool too.",
   "contentType": "document",
   "adapter": "document",
   "adapterModule": "./folio-assistant/adapters/document/index.ts",
-  "_contributes_comment": "Optional. The module this instance contributes from when ANOTHER folio lists it under dependencies.folioAssistant. Its default export is called at load time and returns the block kinds, adapter and MCP tools this instance adds. Read only when this folio is a DEPENDENCY — a root folio's own `contributes` is ignored, because the root already is everything it would contribute. Collisions do not resolve by load order: a kind or adapter claimed by two contributors throws naming both, and a dependency may never redefine one the platform already owns. Re-registering identical content from the same contributor is a no-op, so a diamond dependency graph (base -> kg -> core and sci -> core) loads cleanly. A declared module that is missing is a hard error, not a silent zero contribution.",
+  "_contributes_comment": "Optional. The module this instance contributes from when ANOTHER folio lists it under dependencies.folioAssistant. Its default export is called at load time and returns the block kinds, adapter and MCP tools this instance adds. Read only when this folio is a DEPENDENCY \u2014 a root folio's own `contributes` is ignored, because the root already is everything it would contribute. Collisions do not resolve by load order: a kind or adapter claimed by two contributors throws naming both, and a dependency may never redefine one the platform already owns. Re-registering identical content from the same contributor is a no-op, so a diamond dependency graph (base -> kg -> core and sci -> core) loads cleanly. A declared module that is missing is a hard error, not a silent zero contribution.",
   "contributes": "",
   "feedbackDir": ".folio-feedback",
   "skills": ".claude/skills/local",
@@ -15,31 +15,32 @@
     "dir": "folio-assistant/simulators",
     "pyodideCache": true
   },
-  "harness": {
-    "_comment": "Where the agent harness keeps the two stores a person needs to find. `workPlan` is the bean store (WHAT is being worked on); `workflowState` holds one JSON file per running BPMN instance (WHERE IT GOT TO). They sit adjacent and at top level rather than behind a dot, because a dot-prefixed directory is absent from a plain `ls`, from most file browsers and from GitHub's web tree. NOTE: the `beans` binary is third-party and does not read this file — it reads `.beans.yml`. So `workPlan` must MATCH `beans.path` there, and `bun run check:harness-dirs` fails when they disagree. `interaction` is the per-user preference file the session-start sweep reads first.",
-    "workPlan": "beans",
-    "workflowState": "beans/workflow",
-    "interaction": ".harness/interaction.json"
-  },
   "readme": {
-    "_comment": "Controls the contents table `readme_toc` writes between the <!-- folio:toc:begin --> and <!-- folio:toc:end --> markers in README.md. `linkStyle` decides what a published PDF link points at: 'blob' (default) is github.com/<owner>/<repo>/blob/<publishRef>/<path>, which resolves for anyone with repository access — PUBLIC OR PRIVATE — and renders PDFs inline; 'pages' is the GitHub Pages URL, which only resolves while the Pages site is public; 'raw' is raw.githubusercontent.com, which serves public repositories only (it 404s on a private repo without a token, and a browser session does not supply one). `repoUrl` defaults to the `origin` remote. Every PDF link is verified against `publishRef` before it is emitted, so an unpublished chapter renders an em dash instead of a dead link.",
+    "_comment": "Controls the contents table `readme_toc` writes between the <!-- folio:toc:begin --> and <!-- folio:toc:end --> markers in README.md. `linkStyle` decides what a published PDF link points at: 'blob' (default) is github.com/<owner>/<repo>/blob/<publishRef>/<path>, which resolves for anyone with repository access \u2014 PUBLIC OR PRIVATE \u2014 and renders PDFs inline; 'pages' is the GitHub Pages URL, which only resolves while the Pages site is public; 'raw' is raw.githubusercontent.com, which serves public repositories only (it 404s on a private repo without a token, and a browser session does not supply one). `repoUrl` defaults to the `origin` remote. Every PDF link is verified against `publishRef` before it is emitted, so an unpublished chapter renders an em dash instead of a dead link.",
     "linkStyle": "blob",
     "publishRef": "gh-pages",
     "pagesBaseUrl": ""
   },
   "googleDrive": {
-    "_comment": "Optional. Set folderPath to auto-push PDFs to Google Drive on every content edit and full build. Credentials are resolved from GOOGLE_APPLICATION_CREDENTIALS env var, ~/.config/google-drive-mcp/credentials.json (OAuth2), or gcloud ADC — never stored here.",
+    "_comment": "Optional. Set folderPath to auto-push PDFs to Google Drive on every content edit and full build. Credentials are resolved from GOOGLE_APPLICATION_CREDENTIALS env var, ~/.config/google-drive-mcp/credentials.json (OAuth2), or gcloud ADC \u2014 never stored here.",
     "folderPath": ""
   },
   "translation": {
-    "_comment": "Optional. Controls the translation pipeline. defaultLocale is the source language of the folio's content (BCP 47). supportedLocales lists target languages — the six UN languages by default. translationDir is where .pot/.po files and translated .md live. officialOnly: when true, only signed-off translations are rendered; when false (default), unofficial translations render with a warning banner.",
+    "_comment": "Optional. Controls the translation pipeline. defaultLocale is the source language of the folio's content (BCP 47). supportedLocales lists target languages \u2014 the six UN languages by default. translationDir is where .pot/.po files and translated .md live. officialOnly: when true, only signed-off translations are rendered; when false (default), unofficial translations render with a warning banner.",
     "defaultLocale": "en",
-    "supportedLocales": ["ar", "zh", "en", "fr", "ru", "es"],
+    "supportedLocales": [
+      "ar",
+      "zh",
+      "en",
+      "fr",
+      "ru",
+      "es"
+    ],
     "translationDir": "translations",
     "officialOnly": false
   },
   "dependencies": {
-    "_comment": "Optional. Other folio-assistant instances this folio depends on, for content, skills, and translation resolution. Walked depth-first in listed order, overlaying content and skills on top — same methodology as FHIR/SUSHI dependencies but upstream from them. Each entry has a name (for display) and a path or git URL.",
+    "_comment": "Optional. Other folio-assistant instances this folio depends on, for content, skills, and translation resolution. Walked depth-first in listed order, overlaying content and skills on top \u2014 same methodology as FHIR/SUSHI dependencies but upstream from them. Each entry has a name (for display) and a path or git URL.",
     "folioAssistant": []
   }
 }
