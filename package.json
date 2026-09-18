@@ -47,6 +47,7 @@
     "check:partition:edges": "bun run scripts/repo-partition.ts --edges",
     "check:workflow-refs": "bun run scripts/check-workflow-refs.ts",
     "eval:crdm-detect": "bun run scripts/eval-crdm-detect.ts",
+    "translate-bpmn": "bun run scripts/translate-bpmn.ts",
     "gen:jsonld": "bun run scripts/gen-jsonld-context.ts && bun run content/pipeline/gen-block-jsonld.ts && bun run content/pipeline/gen-library-jsonld.ts",
     "gen:jsonld:check": "bun run scripts/gen-jsonld-context.ts --check && bun run content/pipeline/gen-block-jsonld.ts --check && bun run content/pipeline/gen-library-jsonld.ts --check",
     "init-folio": "bun run scripts/init-folio.ts",

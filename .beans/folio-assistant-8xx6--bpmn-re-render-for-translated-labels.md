@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
-updated_at: 2026-09-18T15:20:19Z
+updated_at: 2026-09-18T16:54:02Z
 ---
 
 The "next" recorded on bean `t8g3`. Re-render BPMN diagrams so translated
@@ -43,3 +43,32 @@ ids and skill refs identical, 9/9 names translated, rendered SVG carries them.
 `translations/<locale>/*.bpmn` or a locale SVG, and the docs site does not
 serve one. The modules are proven; putting a French diagram on a French page
 is still to do.
+
+
+
+---
+
+**2026-09-18 — orchestration built; page wiring is the remaining blocker.**
+
+`scripts/translate-bpmn.ts` (`bun run translate-bpmn`):
+- `--extract` → **706 translatable strings across 20 diagrams**, written as
+  `translations/<locale>/workflows/<name>.pot`. Committed for `fr`, matching
+  the existing convention (only fr carries committed .pot files).
+- `--inject --locale <x>` → reads `<name>.po`, writes the localised .bpmn,
+  and **skips a diagram with no .po**, reporting which — "not translated yet"
+  is the ordinary state of all 20, not an error.
+
+**Measured before building, and it reshaped the scope:** `translations/<locale>/`
+held .po files for `index` and `agent-onboarding` and NOTHING for any diagram,
+and `docs/fr/` contains one page that embeds no diagram at all.
+
+**So page wiring is genuinely blocked and was not attempted.** No translated
+page references a workflow SVG, so rendering locale SVGs now would produce
+files nothing links to — present but unreferenced, the mirror of the dangling
+references `check:workflow-refs` gates. That needs a translated page that
+actually shows a diagram first.
+
+End-to-end test proves the property that matters for a shipped diagram: a
+fully-translated .bpmn still LOADS, with identical node ids, identical skill
+refs and identical bean ops. A pass producing good French and a disconnected
+graph would satisfy every string-level test.
