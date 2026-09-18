@@ -396,6 +396,18 @@ graph</strong>. <code class="language-plaintext highlighter-rouge">folio</code> 
       <td>no</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">workplan</code></td>
+      <td><strong>harness</strong></td>
+      <td>work items — what is being worked on (<code class="language-plaintext highlighter-rouge">beans/</code>)</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process</code></td>
+      <td><strong>harness</strong></td>
+      <td>running BPMN instances — where each got to (<code class="language-plaintext highlighter-rouge">beans/workflow/</code>)</td>
+      <td>no</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">folio</code></td>
       <td><strong><code class="language-plaintext highlighter-rouge">folio-assist-core</code></strong></td>
       <td>authored content</td>
@@ -403,6 +415,28 @@ graph</strong>. <code class="language-plaintext highlighter-rouge">folio</code> 
     </tr>
   </tbody>
 </table></div>
+
+<p><strong>Why the work plan is the harness’s and not core’s.</strong> The test is whether the
+harness <em>has</em> one, and it does: an instance has work whether or not it has
+content, and <code class="language-plaintext highlighter-rouge">agentic-harness</code> carries a <code class="language-plaintext highlighter-rouge">beans/</code> store for its own. A Tool repo
+and a Test repo have work plans too. That is a different test from the one that
+sent <code class="language-plaintext highlighter-rouge">folio</code> to core, which is about capability — only core can render.</p>
+
+<p><strong>Why <code class="language-plaintext highlighter-rouge">workplan</code> and <code class="language-plaintext highlighter-rouge">process</code> are two kinds.</strong> They sit in nested directories
+and are easy to conflate, which is exactly why they are separated. <code class="language-plaintext highlighter-rouge">workplan</code> is
+WHAT IS BEING WORKED ON — authored by people and agents, carrying judgement.
+<code class="language-plaintext highlighter-rouge">process</code> is WHERE A RUNNING PROCESS GOT TO — a token marking the interpreter
+owns, that no human is invited to edit. A consumer asking for the work plan must
+not be handed BPMN instance state.</p>
+
+<blockquote>
+  <p><strong>Nesting is not inheritance.</strong> <code class="language-plaintext highlighter-rouge">beans/workflow/</code> sits inside <code class="language-plaintext highlighter-rouge">beans/</code> and
+holds a <em>different</em> graph. A consumer scanning a declared directory must not
+assume it owns everything beneath it — check whether a deeper path is itself
+declared. Today the two happen to be distinguishable by extension (<code class="language-plaintext highlighter-rouge">.md</code>
+beans, <code class="language-plaintext highlighter-rouge">.json</code> instance state), but that is a coincidence of the current
+layout, not a contract.</p>
+</blockquote>
 
 <p><code class="language-plaintext highlighter-rouge">renderable</code> is the <strong>only</strong> behavioural distinction, and it is why <code class="language-plaintext highlighter-rouge">folio</code> is
 not the harness’s to declare: <strong><code class="language-plaintext highlighter-rouge">agent-harness</code> is not self-documenting.</strong> It
@@ -611,7 +645,7 @@ rendering pipeline depends on.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376377221"><code>e13743c</code></a> &middot; 2026-09-18T17:48:00Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35377496054"><code>4bc72c7</code></a> &middot; 2026-09-18T17:59:47Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
