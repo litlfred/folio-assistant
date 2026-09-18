@@ -1,6 +1,8 @@
 {
-  "_comment": "The AgentHarness declaration for THIS instance — what directories it scans and what kind of graph each holds. See skills/folio-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it. NOTE: `beans/` is declared ONCE, as a single `beans` graph. Its internal split — `defs` for work items, `workflows` for running BPMN state — is declared by `beans/beans.json`, not here. #263 declared the two as separate directories, one nested inside the other, which left a consumer unable to tell which owned what beneath it; the nodes now carry that.",
+  "_comment": "The AgentHarness declaration for THIS instance \u2014 what directories it scans and what kind of graph each holds. See skills/folio-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it. NOTE: `beans/` is declared ONCE, as a single `beans` graph. Its internal split \u2014 `defs` for work items, `workflows` for running BPMN state \u2014 is declared by `beans/beans.json`, not here. #263 declared the two as separate directories, one nested inside the other, which left a consumer unable to tell which owned what beneath it; the nodes now carry that.",
   "name": "folio-assistant",
+  "stub": "folio-assistant",
+  "canonicalUrl": "https://litlfred.github.io/folio-assistant",
   "directories": [
     {
       "id": "schemas",
@@ -12,13 +14,13 @@
       "id": "kg",
       "path": "skills/",
       "graph": "kg",
-      "summary": "Skill packages. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not."
+      "summary": "Skill packages. Note the id is `kg` while the path is `skills/` \u2014 ids are stable across a relocation, paths are not."
     },
     {
       "id": "beans",
       "path": "beans/",
       "graph": "beans",
-      "summary": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state)."
+      "summary": "The work plan. `beans/beans.json` declares its nodes \u2014 `defs` (work items) and `workflows` (running BPMN instance state)."
     }
   ]
 }

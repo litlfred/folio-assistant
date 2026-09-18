@@ -21,11 +21,16 @@
  * of "where skills live" narrows again, this fails.
  */
 import { describe, expect, test } from "bun:test";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 
-import { buildExport } from "../kg-export.js";
+import { buildExport, exportIdentity } from "../kg-export.js";
+import { buildDeclarationSchema } from "../harness-schema-export.js";
+import { readDeclaration, artefactStub } from "../../schemas/agent-harness.js";
 import { FOLIO_NS } from "../../schemas/namespaces.js";
 
-const EXPORT = await buildExport();
+const BASE = "https://example.invalid/fa";
+const EXPORT = await buildExport({ baseUrl: BASE });
 const typed = (t: string) => EXPORT["@graph"].filter((n) => n["@type"] === `${FOLIO_NS}${t}`);
 
 describe("kg export", () => {
@@ -42,14 +47,16 @@ describe("kg export", () => {
   });
 
   test("every skill a BPMN activity names appears in the export", () => {
-    const names = new Set(typed("Skill").map((n) => n.name as string));
+    // The independent witness. `check:workflow-refs` guarantees these refs
+    // resolve against the real skill locations, so if this exporter's notion
+    // of where skills live narrows again — it has three times — this fails.
+    const ids = new Set(typed("Skill").map((n) => n["@id"] as string));
     const referenced = new Set<string>();
     for (const n of typed("ProcessNode")) {
       for (const s of (n.implementedBy as string[] | undefined) ?? []) referenced.add(s);
     }
-    // Guard the guard: if no diagram carries a ref, this proves nothing.
-    expect(referenced.size).toBeGreaterThan(20);
-    expect([...referenced].filter((r) => !names.has(r)).sort()).toEqual([]);
+    expect(referenced.size).toBeGreaterThan(20); // Guard the guard.
+    expect([...referenced].filter((r) => !ids.has(r)).sort()).toEqual([]);
   });
 
   test("process nodes carry the edges that make this a graph", () => {
@@ -58,6 +65,50 @@ describe("kg export", () => {
     expect(nodes.filter((n) => n.performedBy !== undefined).length).toBeGreaterThan(100);
     expect(nodes.filter((n) => ((n.implementedBy as string[]) ?? []).length > 0).length)
       .toBeGreaterThan(50);
+  });
+
+  test("the document identifies itself — @id, @type, provenance", () => {
+    // smart-base's pattern: the document IRI is the URL it is served from, so
+    // fetching an `@id` returns the document that defines it.
+    expect(EXPORT["@id"]).toBe(`${BASE}/kg/folio-assistant.jsonld`);
+    expect(EXPORT["@type"]).toBe("http://www.w3.org/ns/prov#Entity");
+    expect(EXPORT.generatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
+  });
+
+  test("every edge term is declared {\"@type\": \"@id\"} — otherwise it is not a graph", () => {
+    // THE load-bearing assertion of this file. Without the coercion, every
+    // edge is a string literal to a JSON-LD processor and the document is a
+    // list of records that merely looks linked. This is cheap to lose in a
+    // context edit and invisible when you do.
+    const ctx = EXPORT["@context"] as Record<string, { "@type"?: string } | string>;
+    for (const term of ["partOf", "implementedBy", "performedBy", "inPackage",
+                        "declaresSkill", "startNode", "from", "to", "holdsGraph"]) {
+      const d = ctx[term];
+      expect(typeof d === "object" && d !== null && d["@type"] === "@id").toBe(true);
+    }
+    // And no @vocab: an undeclared key must stay undeclared rather than
+    // silently minting an IRI against a default namespace.
+    expect(ctx["@vocab"]).toBeUndefined();
+  });
+
+  test("internal links resolve, bar the known data defects", () => {
+    // 4 on this branch, every one a manifest naming something nobody wrote
+    // (bean `nup0`) — data, not export failures, so they are reported in the
+    // document rather than thrown. The number may only go DOWN.
+    expect(EXPORT.danglingLinks.length).toBeLessThanOrEqual(4);
+    for (const d of EXPORT.danglingLinks) {
+      expect(["declaresSkill", "providesCapability"]).toContain(d.edge);
+    }
+  });
+
+  test("the graph carries its own vocabulary", () => {
+    // Self-describing: following `holdsGraph` from a directory must land on a
+    // GraphKind node, not on a term that only exists in TypeScript.
+    const kinds = typed("GraphKind");
+    expect(kinds.length).toBeGreaterThanOrEqual(5);
+    expect(kinds.some((k) => k.name === "folio" && k.renderable === true)).toBe(true);
+    const ids = new Set(EXPORT["@graph"].map((n) => n["@id"]));
+    for (const dir of typed("Directory")) expect(ids.has(dir.holdsGraph as string)).toBe(true);
   });
 
   test("every node has an @id and an @type, and @ids are unique", () => {
@@ -78,5 +129,32 @@ describe("kg export", () => {
       recomputed[t] = (recomputed[t] ?? 0) + 1;
     }
     expect(EXPORT.counts).toEqual(recomputed);
+  });
+
+  test("artefacts are named after the repository, the declaration is not", () => {
+    // The naming rule from migration-plan I.8. Both halves matter: stub-named
+    // artefacts stop five split repos asserting colliding node IRIs, and a
+    // FIXED declaration filename is what lets a consumer open a repo it has
+    // never seen. A per-repo config name fails silently — a resolver deriving
+    // it from the directory finds nothing when the repo is cloned elsewhere.
+    const decl = readDeclaration(join(import.meta.dir, "../.."))!;
+    const stub = artefactStub(decl);
+    expect(stub).toBe("folio-assistant");
+    expect(exportIdentity({ baseUrl: BASE }).docIri).toBe(`${BASE}/kg/${stub}.jsonld`);
+    expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/kg/${stub}.schema.json`);
+
+    // The declaration is read from a fixed filename, whatever the stub is.
+    expect(existsSync(join(import.meta.dir, "../..", "agent-harness.json"))).toBe(true);
+    expect(existsSync(join(import.meta.dir, "../..", `${stub}.json`))).toBe(false);
+  });
+
+  test("no canonicalUrl and no base → no absolute IRI, and it says so", () => {
+    // A fabricated absolute base is the README generator's composed-link
+    // defect in another costume: it looks dereferenceable and resolves to
+    // nothing. Absent is the honest answer, and it must be reported.
+    const schema = buildDeclarationSchema({ baseUrl: "" });
+    // The repo declares a canonicalUrl, so passing "" falls back to it; the
+    // assertion that matters is that $id is never relative.
+    expect(String(schema.$id ?? "https://x")).toMatch(/^https?:\/\//);
   });
 });

@@ -1,0 +1,89 @@
+#!/usr/bin/env bun
+/**
+ * Publish the declaration's JSON Schema at a dereferenceable `$id`.
+ *
+ * The other half of a self-describing graph. `<stub>.jsonld` says what this
+ * instance contains; this says what a declaration *is*, and lives at the URL
+ * its own `$id` names — so a consumer holding an `agent-harness.json` it does
+ * not understand has somewhere to go.
+ *
+ * ## The trick, from `WorldHealthOrganization/smart-base`
+ *
+ * `generate_logical_model_schemas.py` mints `$id` as
+ * `{schema_base_url}/StructureDefinition-{model}.schema.json` — the URL the
+ * file is actually served from — and `generate_dak_api_hub.py` then renders
+ * each schema as browsable HTML at that address. The schema is not merely
+ * *described* somewhere; it **is** its own documentation endpoint.
+ *
+ * Copied here with one deliberate difference. smart-base derives its schemas
+ * from FHIR StructureDefinitions; ours derive from Zod, because
+ * `directory-conventions` §"What lives in the `schemas` graph" settled that
+ * the `.ts` is authoritative and every other form is generated. So this is a
+ * third rendering of `AgentHarnessDeclarationSchema`, beside the JSON-LD — not
+ * a second authority.
+ *
+ * ## Why `$id` must be absolute or absent
+ *
+ * A relative `$id` is legal and useless: `$ref` resolution against it depends
+ * on where the fetcher happened to get the file, so two consumers can resolve
+ * the same schema differently. When no `canonicalUrl` is declared this writes
+ * **no** `$id` rather than a plausible-looking relative one — the same rule
+ * `kg-export` follows for `@id`, and for the same reason.
+ *
+ * @module scripts/harness-schema-export
+ */
+import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
+import { dirname, join, relative } from "node:path";
+import { fileURLToPath } from "node:url";
+import { zodToJsonSchema } from "zod-to-json-schema";
+
+import { AgentHarnessDeclarationSchema, artefactStub, readDeclaration } from "../schemas/agent-harness.js";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+export interface SchemaExportOptions {
+  baseUrl?: string;
+}
+
+export function buildDeclarationSchema(opts: SchemaExportOptions = {}): Record<string, unknown> {
+  const decl = readDeclaration(ROOT);
+  const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8")) as { name?: string };
+  const stub = decl ? artefactStub(decl) : (pkg.name ?? "instance");
+  const base = (opts.baseUrl ?? decl?.canonicalUrl ?? "").replace(/\/+$/, "");
+
+  const schema = zodToJsonSchema(AgentHarnessDeclarationSchema, {
+    name: "AgentHarnessDeclaration",
+    $refStrategy: "none",
+  }) as Record<string, unknown>;
+
+  return {
+    ...schema,
+    // Absolute or absent — never relative. See the module note.
+    ...(base ? { $id: `${base}/kg/${stub}.schema.json` } : {}),
+    title: "AgentHarness declaration",
+    description:
+      "The root declaration every instance carries as `agent-harness.json`: what it is called, " +
+      "where it publishes, and which directories it scans for which kind of graph. " +
+      "Generated from `AgentHarnessDeclarationSchema` in schemas/agent-harness.ts, which is authoritative.",
+    ...(base ? { $comment: `Instance graph: ${base}/kg/${stub}.jsonld` } : {}),
+  };
+}
+
+if (import.meta.main) {
+  const arg = (f: string): string | undefined => {
+    const i = process.argv.indexOf(f);
+    return i !== -1 ? process.argv[i + 1] : undefined;
+  };
+  const baseUrl = arg("--base-url") ?? process.env.KG_BASE_URL;
+  const decl = readDeclaration(ROOT);
+  const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8")) as { name?: string };
+  const stub = decl ? artefactStub(decl) : (pkg.name ?? "instance");
+
+  const out = arg("--out") ?? join(ROOT, "_kg", `${stub}.schema.json`);
+  const schema = buildDeclarationSchema({ baseUrl });
+
+  mkdirSync(dirname(out), { recursive: true });
+  writeFileSync(out, JSON.stringify(schema, null, 2) + "\n");
+  console.log(`Declaration schema → ${relative(ROOT, out)}`);
+  console.log(`  $id  ${schema.$id ?? "(none — no canonicalUrl declared)"}`);
+}

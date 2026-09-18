@@ -6,7 +6,7 @@ description: >
   KG, and before adding a node type to the export.
 ---
 
-# KG export — publishing the graph as data, not as a page
+# KG export — publishing the graph as linked data, not as a page
 
 **`agentic-harness` has no renderer.** `folio` is the only `renderable` graph
 kind and it belongs to `folio-assist-core`, so the harness cannot put its
@@ -28,6 +28,82 @@ Per [`skills-and-tools`](skills-and-tools.md):
 
 A GitLab Pages or object-store Tool satisfies the same skill later. Nothing in
 this skill names a host, and nothing in it should.
+
+## It is JSON-LD, and the `@type: @id` coercion is the whole point
+
+Modelled on `WorldHealthOrganization/smart-base`'s
+`input/scripts/generate_jsonld_vocabularies.py`. Four things carry the weight,
+and the first is the one that is cheap to lose and invisible when you do:
+
+**1. Every edge term is declared `{"@type": "@id"}`.** Without that coercion,
+`implementedBy`, `performedBy` and `partOf` are **string literals** to any
+JSON-LD processor, and the document is a list of records that merely *looks*
+linked to a human reading the JSON. Declaring them costs one line each and is
+the difference between 900 records and a traversable graph. A test asserts it.
+
+**2. The document's `@id` is the URL it is served from**, with
+`@type: prov:Entity` and a `generatedAt` typed `xsd:dateTime`. Fetch the `@id`,
+get the document. smart-base's type-usage note is explicit about this and it is
+what makes the graph mergeable with anyone else's.
+
+**3. Node IRIs are fragments of that document** —
+`…/kg/<stub>.jsonld#skill/todo-manager`. The prettier
+`…/kg/skill/todo-manager` is a **lie**: nothing serves that path. `AGENTS.md`
+records the same defect in the README generator, which composed PDF links by
+convention and shipped twenty-three 404s. **An `@id` that looks dereferenceable
+and is not is worse than one that is obviously local.**
+
+**4. No `@vocab`, and `id`/`type` are aliased.** Every term carries its full
+namespace IRI, so an undeclared key stays undeclared instead of silently
+minting an IRI nobody chose. The aliases keep the published JSON readable as
+ordinary records for someone who does not know JSON-LD.
+
+**No `canonicalUrl` and no `--base-url` → no absolute IRIs**, reported in
+`problems[]` rather than papered over. A fabricated absolute base is the same
+failure as a fabricated link.
+
+## Staging must not claim to be canonical
+
+CI passes `--base-url` for a branch preview. Without it every staged export
+mints `@id`s pointing at `main`'s published document, and two different graphs
+assert the same IRIs — the preview would claim to **be** the canonical graph.
+That is not cosmetic: an `@id` is an assertion of identity, and duplicating one
+is how a merged graph acquires contradictory statements about the same node.
+
+## The graph carries its own vocabulary
+
+Graph kinds are **nodes**, not just TypeScript. Follow `holdsGraph` from a
+directory and you arrive at a node saying what that kind holds and whether it
+renders. Without them the vocabulary needed to interpret the document lives
+only in code the consumer cannot fetch — which is the difference between a
+self-describing graph and a graph with documentation.
+
+The schema half is `scripts/harness-schema-export.ts`: the declaration's JSON
+Schema, published at the URL its own `$id` names, so a consumer holding an
+`agent-harness.json` it does not understand has somewhere to go. It is a third
+rendering of `AgentHarnessDeclarationSchema` beside the JSON-LD — **not a
+second authority**; the Zod is authoritative, per
+[`directory-conventions`](directory-conventions.md).
+
+## Naming — artefacts take the repository's name, the config does not
+
+The **stub** (`agent-harness.json` → `stub`, defaulting to `name`) is the
+filename stem of everything this instance publishes: `<stub>.jsonld`,
+`<stub>.schema.json`. One helper, `artefactStub()`, computes it, so the two
+exporters cannot disagree about what this instance is called.
+
+smart-base does the same and derives its stub by stripping a prefix
+(`smart-base` → `base` → `https://smart.who.int/base`), so stub, directory and
+published path are one word.
+
+**The declaration file itself is deliberately NOT stub-named.** It stays
+`agent-harness.json`, exactly as smart-base's config stays `dak.json`. A
+consumer bootstrapping into a repository it knows nothing about needs **one
+fixed filename to open first**; everything that config *describes* is free to
+be named, because by the time you fetch those you have read the config naming
+them. Renaming the config to match the repo buys consistency and costs
+discovery — the wrong trade, and the reason this is written down rather than
+left to look like an oversight.
 
 ## The edges are the reason to publish
 
@@ -87,19 +163,30 @@ Three consequences, all of which the implementation carries:
    roles, capabilities and the directory declaration. **Beans are not in it** —
    `beans/` is its own graph kind with its own nodes (`defs`, `workflows`), and
    folding the work plan into the KG re-merges exactly what was separated.
-2. **Give it an `@id` under the folio namespace and an `@type`.** Both are
-   asserted by test; a node with neither is not a graph node.
+2. **Mint its `@id` with `makeIri`, and give it an `@type`.** Both are asserted
+   by test. Never hand-build an IRI: `makeIri` is what keeps every node a
+   fragment of the published document rather than an invented path.
 3. **Report what you could not read**, in `problems[]`. Never `continue`
    silently past a parse failure.
-4. **Say which edges it carries.** A node type that relates to nothing is a
-   list, and belongs in a list.
+4. **Say which edges it carries, and declare each one in the context** with
+   `{"@type": "@id"}`. A node type that relates to nothing is a list and
+   belongs in a list; an edge that is not declared is a string and might as
+   well be one.
+5. **Emit the nodes your edges point at.** Minting `performedBy` without
+   emitting a Role node left all 328 of them dangling; minting
+   `incoming`/`outgoing` without SequenceFlow nodes left sixty more. The
+   export reports `danglingLinks` for exactly this, and the four that remain
+   are data defects (bean `nup0`), not exporter bugs.
 
 ## Running it
 
 ```sh
-bun run kg:export                      # → _kg/kg.json  (gitignored)
-bun run kg:export -- --out path.json
+bun run kg:export                        # → _kg/<stub>.jsonld   (gitignored)
+bun run kg:schema                        # → _kg/<stub>.schema.json
+bun run kg:export -- --base-url https://… --out path.jsonld
 ```
+
+`--base-url` (or `KG_BASE_URL`) overrides the declaration's `canonicalUrl`.
 
 The output is a **build artifact**, deliberately not committed: it is a
 snapshot of a tree that changes every commit, so a committed copy is stale by

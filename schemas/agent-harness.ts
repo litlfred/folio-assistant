@@ -254,6 +254,35 @@ export interface ContentDirectory {
 export interface AgentHarnessDeclaration {
   /** The instance's name, e.g. `"agentic-harness"`. */
   name: string;
+  /**
+   * The repository's short name, used as the **filename stem of every artefact
+   * this instance publishes** — `<stub>.jsonld` for the knowledge graph,
+   * `<stub>.schema.json` for its schema. Defaults to `name`.
+   *
+   * WHO's `smart-base` derives its stub by stripping the `smart-` prefix from
+   * the repository name (`smart-base` → `base` → `https://smart.who.int/base`),
+   * so the stub, the directory and the published path are one word. The same
+   * convention holds here without the prefix rule: the artefact is named after
+   * the repository, so a reader who knows the repo knows the filename.
+   *
+   * Note the declaration file itself is **not** stub-named — it stays
+   * `agent-harness.json`, exactly as `smart-base`'s config stays `dak.json`. A
+   * consumer must be able to find the config without already knowing the
+   * repository's name; the artefacts it *describes* are free to be named.
+   */
+  stub?: string;
+  /**
+   * Where this instance's artefacts are published — the base every `@id` in
+   * the exported graph is minted against.
+   *
+   * Absent means **no absolute IRIs can be minted**, which the exporter reports
+   * rather than papering over with a plausible-looking guess: an `@id` that
+   * resolves to nothing is worse than an obviously relative one, because it
+   * looks dereferenceable and is not.
+   */
+  canonicalUrl?: string;
+  /** Where CI previews are served, when that differs from `canonicalUrl`. */
+  previewUrl?: string;
   /** Directories this instance scans, before inheritance. */
   directories: ContentDirectory[];
 }
@@ -271,8 +300,23 @@ export const ContentDirectorySchema = z.object({
 
 export const AgentHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
+  stub: z.string().min(1).optional(),
+  canonicalUrl: z.string().url().optional(),
+  previewUrl: z.string().url().optional(),
   directories: z.array(ContentDirectorySchema).default([]),
 });
+
+/**
+ * The stem every published artefact is named with: `stub` when declared,
+ * otherwise `name`.
+ *
+ * One function so the KG export, the schema export and any future artefact
+ * cannot disagree about what this instance is called — the naming convention
+ * is only worth having if it is computed in one place.
+ */
+export function artefactStub(d: Pick<AgentHarnessDeclaration, "name" | "stub">): string {
+  return d.stub ?? d.name;
+}
 
 // ── Reading ─────────────────────────────────────────────────────
 
