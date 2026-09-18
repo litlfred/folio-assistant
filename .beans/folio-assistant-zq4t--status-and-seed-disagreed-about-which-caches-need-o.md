@@ -1,7 +1,7 @@
 ---
 # folio-assistant-zq4t
 title: status and seed disagreed about which caches need own-package oleans — the false alarm that misdirected 5d7z
-status: done
+status: completed
 type: bug
 priority: high
 created_at: 2026-08-08T15:10:00Z

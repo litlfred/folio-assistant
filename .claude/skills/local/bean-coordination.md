@@ -31,7 +31,7 @@ substrate for coordinating across sessions.
 - **Claim before you work.** An unclaimed bean is fair game for any session;
   a claimed one is not. Respect sibling claims.
 - **Agents create and `in-progress`; they do not resolve others' items.** Only
-  close a bean you own or were handed. Never delete a sibling's bean.
+  close a bean you own or were handed. Never delete ANY bean, yours included — scrap it with its reasons; a deleted bean is indistinguishable from an accident.
 - **`beans ≠ sidecars`.** Never `beans create` a QA (`*.qa.json`) or witness
   (`*.witness.json`) queue, or any bulk machine-generated queue. Those stay as
   bulk JSON read by their own tooling.

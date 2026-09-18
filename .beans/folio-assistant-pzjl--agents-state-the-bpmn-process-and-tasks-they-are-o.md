@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pzjl
 title: Agents state the BPMN process and tasks they are operating under
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T16:15:27Z
-updated_at: 2026-09-18T16:16:02Z
+updated_at: 2026-09-18T16:37:29Z
 ---
 
 From #203 comment 5732585369 (2026-09-18 15:55).

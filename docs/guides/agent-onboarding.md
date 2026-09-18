@@ -124,7 +124,7 @@ beans update <id> --status in-progress    # CLAIM before you work
 ```
 
 Claim before working so two sessions don't pick the same item, and never
-resolve or delete a sibling's bean. Do not stand up a parallel todo
+resolve a sibling's bean, and never delete ANY bean — scrap it with reasons instead. Do not stand up a parallel todo
 store. Do not `beans create` bulk machine-generated queues (`*.qa.json`,
 witness files) — those stay as bulk JSON.
 

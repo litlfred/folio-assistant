@@ -29,7 +29,7 @@
  * Usage:  bun run check:workflow-refs  [--strict]
  * Exit:   0 clean · 1 dangling ref (or, with --strict, any uncovered activity)
  */
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { loadProcessModel, isActivity } from "../src/workflow/process-model.js";
 
@@ -178,5 +178,27 @@ if (missingDeclared.length) {
   for (const m of missingDeclared) console.log(`  \u2717 ${m}`);
 }
 
-if (dangling.length || missingDeclared.length) process.exit(1);
+/*
+ * Every diagram is reachable from the index page. Measured 2026-09-18: the
+ * page opened "Nineteen BPMN 2.0 files" and then listed EIGHT — eleven
+ * diagrams existed and were invisible to any reader who started there. A
+ * diagram nobody can find is only marginally better than one that does not
+ * exist, and the miscount proves the list was not maintained alongside the
+ * directory.
+ */
+const INDEX_DIR = join(root, "content/docs/publication-workflow");
+const unindexed: string[] = [];
+if (existsSync(INDEX_DIR)) {
+  const indexText = readdirSync(INDEX_DIR)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => readFileSync(join(INDEX_DIR, f), "utf-8"))
+    .join("\n");
+  for (const f of files) if (!indexText.includes(f)) unindexed.push(f);
+}
+if (unindexed.length) {
+  console.log("\nNOT INDEXED — a diagram no reader of the workflow page can find:");
+  for (const f of unindexed) console.log(`  \u2717 ${f}`);
+}
+
+if (dangling.length || missingDeclared.length || unindexed.length) process.exit(1);
 if (strict && totalUncovered) process.exit(1);
