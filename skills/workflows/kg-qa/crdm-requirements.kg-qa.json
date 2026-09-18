@@ -8,13 +8,26 @@
   "source_hash": "sha256:aacb53470a46b2c1fc095f7c468b7638390b6dd79c7533fe7686447b8116098f",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
+    "script_hash": "sha256:4e9020c5a66aff63a269a13a3e81b26f64e2c96870df8d7623bee30ea8e287f6",
     "engine_version": "1"
   },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
       "findings": []
+    },
+    "skill-servable": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_MapWorkflow",
+          "detail": "names skill \"bpmn-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "A_Implement",
+          "detail": "names skill \"prepare-merge\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -92,7 +105,7 @@
   },
   "totals": {
     "pass": 5,
-    "fail": 1,
+    "fail": 2,
     "n/a": 1,
     "unknown": 0
   }

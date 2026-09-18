@@ -58,7 +58,7 @@ export const KG_QA_SCHEMA = "kg-qa/v1";
 export const KG_QA_DIRNAME = "kg-qa";
 
 /** What kind of node a sidecar audits. */
-export const KG_SUBJECT_KINDS = ["process", "decision", "role", "graph"] as const;
+export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "graph"] as const;
 export type KgSubjectKind = (typeof KG_SUBJECT_KINDS)[number];
 
 /** Outcome of one criterion. `unknown` is never a pass. */
@@ -123,6 +123,14 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "An activity names a skill its lane's role does not carry — the task demands something the performer was never given.",
   },
   {
+    id: "skill-servable",
+    applies: ["process"],
+    severity: "major",
+    summary:
+      "An activity names a skill that exists on disk but that `skill_fetch` cannot serve — its directory is " +
+      "in no local package. `workflow_next` hands the agent a name, and fetching it returns \"package not found\".",
+  },
+  {
     id: "activity-names-skill",
     applies: ["process"],
     severity: "minor",
@@ -153,6 +161,36 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary: "No declared actor is eligible for this role. Advisory: the actor registry is not a permission system.",
   },
   {
+    id: "requirement-satisfied-by-resolves",
+    applies: ["requirement"],
+    severity: "critical",
+    summary:
+      "A statement's `satisfiedBy` names a skill or capability that does not exist, so the thing claimed to " +
+      "discharge the requirement cannot be opened.",
+  },
+  {
+    id: "requirement-actors-resolve",
+    applies: ["requirement"],
+    severity: "critical",
+    summary: "A requirement or statement binds an actor id the registry does not declare.",
+  },
+  {
+    id: "requirement-derived-from-resolves",
+    applies: ["requirement"],
+    severity: "critical",
+    summary:
+      "A requirement derives from a parent requirement that does not exist, so the conformance lattice has a " +
+      "hole where a reader expects the broader obligation.",
+  },
+  {
+    id: "requirement-statements-graded",
+    applies: ["requirement"],
+    severity: "major",
+    summary:
+      "A statement carries no `conformance` grade. SHALL and SHOULD are the whole point of writing a " +
+      "requirement rather than a note; an ungraded statement cannot be conformance-tested.",
+  },
+  {
     id: "decision-outcomes-used",
     applies: ["decision"],
     severity: "major",
@@ -163,10 +201,22 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["graph"],
     severity: "minor",
     summary:
-      "A skill exists on disk but nothing reaches it — no package manifest lists it, no role carries it, " +
-      "no activity names it. Reachability is a union of the three deliberately: most skills are invoked " +
-      "directly by name and never appear in a diagram, so requiring a role or an activity would report " +
-      "most of the corpus as orphaned, and a wall of false findings is how a check gets switched off.",
+      "A skill exists on disk but nothing reaches it — `skill_fetch` cannot serve it, no package manifest " +
+      "lists it, no role carries it, no activity names it. Reachability is a union deliberately: most " +
+      "skills are invoked directly by name and never appear in a diagram, so requiring a role or an " +
+      "activity would report most of the corpus as orphaned, and a wall of false findings is how a check " +
+      "gets switched off. The SERVING registry is the load-bearing member — a skill nothing can fetch is " +
+      "unreachable however many manifests name it.",
+  },
+  {
+    id: "manifest-skill-exists",
+    applies: ["graph"],
+    severity: "critical",
+    summary:
+      "A `package-manifest.json` entry names a skill the instance cannot resolve anywhere. Checked against " +
+      "the INSTANCE, never against the package's own directory listing: three manifests here are bundle " +
+      "definitions whose bodies live elsewhere, and measuring them against their own folder reported 19 " +
+      "false dangling entries (bean `nup0`).",
   },
   {
     id: "actor-roles-resolve",
@@ -175,6 +225,21 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "An actor lists a role that is not declared — the reverse of role-has-actor, and the direction " +
       "nothing checked: a typo in an actor's `roles[]` is silently ignored rather than reported.",
+  },
+  {
+    id: "actor-capabilities-resolve",
+    applies: ["graph"],
+    severity: "major",
+    summary:
+      "An actor claims a capability the registry does not declare. `major`, not `critical`, because the " +
+      "finding is an OVERLOADED FIELD rather than a broken link: `capabilities[]` mixes three things and " +
+      "only one of them has a node kind. A declared capability is an ENVIRONMENT PROBE — `docker`, " +
+      "`pandoc`, `java-runtime`, each with `detection: { method: \"command\" }`. Of the 19 undeclared " +
+      "names, ~13 are PERMISSIONS (`approval-authority`, `admin-settings`, `release-authorization`, " +
+      "`review-comments`) which no node kind models yet, and ~6 are SKILLS (`bpmn-authoring`, " +
+      "`terminology-management`, `cql-authoring`). Declaring 19 probe files to silence this would invent " +
+      "content to satisfy a check; splitting the field is the real fix and is somebody's decision, not a " +
+      "sweep's. `fhir-validator` WAS a genuinely missing probe and is now declared.",
   },
   {
     id: "actor-is-not-a-role",

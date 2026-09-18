@@ -51,3 +51,36 @@ package actually being fixed, so the ratchet cannot be unwound by editing it.
 Not urgent: nothing is broken that was working, and the registry has published
 these for as long as they have existed. It is a correctness debt with a known
 size, which is the state a bean is for.
+
+## Correction — measured 2026-09-18, bean `m4zg`
+
+**The premise in this bean's title is wrong, and the number is wrong.** It was
+measured against each package's own directory listing. Three of the manifests
+here — `authoring-document`, `authoring-math`, `authoring-who-smart-guidelines` —
+are **bundle** definitions: they curate a set of skills whose instruction bodies
+live in *other* directories (`skills/folio-document-adapter/`,
+`schemas/skills/<name>/`, `.claude/skills/local/`) or in a **remote package**
+(`skills/remote-packages/claude-scientific-skills.json` supplies
+`scientific-visualization`, `hypothesis-generation`,
+`scientific-critical-thinking`). A bundle manifest listing a skill it does not
+itself hold is the design, not a defect.
+
+Measured against the **instance** instead of the folder:
+
+| check | count |
+|---|---|
+| manifest entries naming no `.md` in their own package dir | 19 |
+| of those, resolvable elsewhere in this instance | 16 |
+| of those, supplied by a declared remote package | 3 |
+| **truly unresolvable** | **0** |
+
+`bun run kg:audit` now carries this as the `manifest-skill-exists` criterion
+(critical), resolving against `knownSkills()` **plus** remote-package
+declarations, so the correct question is asked on every run. Writing it the
+naive way first would have deleted three correct entries.
+
+**The real defect in this area was elsewhere**, and `m4zg` fixed it:
+`skills/content-lifecycle/` was missing from `LOCAL_PACKAGES` in
+`src/tools/skill-fetch.ts` while **52** `<folio:skill ref>` activities named its
+eight skills — so `workflow_next` handed an agent `content-validate` and
+`skill_fetch` answered "package not found".

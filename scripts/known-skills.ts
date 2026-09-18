@@ -28,10 +28,22 @@ export const SKILL_MD_DIRS = [
  * Groups under `.claude/skills/` that hold something other than skills.
  *
  * Each one is a different kind of node in the knowledge graph — participants,
- * environment probes, an assignment table, a shell hook — and none of them is
- * an instruction body an activity can name.
+ * environment probes, an assignment table, a shell hook, conformance
+ * requirements — and none of them is an instruction body an activity can name.
+ *
+ * `scripts/generate-registry.ts` states the same taxonomy and is the reason to
+ * trust this list rather than the directory's name: it loads `actors/` as
+ * `ActorDefinition`, `capabilities/` as `CapabilityDefinition`, `requirements/`
+ * as `Requirement` and **only `local/` as `SkillDefinition`**.
+ *
+ * `requirements/` is the one that looks most like skills and is least like
+ * them. Its entries are `{ id: "req:commit-hygiene", statements: [{ conformance:
+ * "SHALL", … }], satisfiedBy: [{ kind: "skill", ref: "content-plan" }] }` — a
+ * requirement points **at** a skill; it is not one. Reading the four of them as
+ * skills is what made `commit-hygiene`, `content-lifecycle`, `lean-verification`
+ * and `session-start` appear as reachable skill names with nothing behind them.
  */
-export const NON_SKILL_GROUPS = new Set(["actors", "capabilities", "roles", "hooks"]);
+export const NON_SKILL_GROUPS = new Set(["actors", "capabilities", "roles", "hooks", "requirements"]);
 
 /** Every skill name this instance can resolve. */
 export function knownSkills(root: string): Set<string> {

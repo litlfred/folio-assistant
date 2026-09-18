@@ -273,6 +273,12 @@ function detectCycle(graph: RoleGraph, id: string, path: string[]): void {
  * either ignoring it or acting on a field that means something else here.
  */
 export interface LoadedActor extends ActorDef {
+  /**
+   * Capability ids the actor claims — an environment probe it needs, not a
+   * skill. Carried here because nothing resolved them: `fhir-validator` was
+   * claimed by three actors and declared nowhere.
+   */
+  capabilities?: string[];
   /** The file it came from, so a finding can name it. */
   path: string;
   /** Carries `inherits` — i.e. it is modelling a role, not an actor. */
@@ -297,6 +303,7 @@ export function readActors(actorsDir: string): LoadedActor[] {
       kind: type === "person" ? "person" : type === "system" ? "system" : "agent",
       description: typeof raw.description === "string" ? raw.description : undefined,
       roles: Array.isArray(raw.roles) ? (raw.roles as string[]) : undefined,
+      capabilities: Array.isArray(raw.capabilities) ? (raw.capabilities as string[]) : undefined,
       path: p,
       looksLikeRole: Array.isArray(raw.inherits) && raw.inherits.length > 0,
     });

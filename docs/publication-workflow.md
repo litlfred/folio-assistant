@@ -330,7 +330,7 @@ Three things to note:
 This diagram implements the `req:content-lifecycle` phase gates —
 `validate-before-review`, `review-before-test`, `test-before-publish`,
 `publish-authorized` — see
-[`.claude/skills/requirements/content-lifecycle.json`](https://github.com/litlfred/folio-assistant/blob/main/.claude/skills/requirements/content-lifecycle.json).
+[`skills/requirements/content-lifecycle.json`](https://github.com/litlfred/folio-assistant/blob/main/skills/requirements/content-lifecycle.json).
 
 ---
 

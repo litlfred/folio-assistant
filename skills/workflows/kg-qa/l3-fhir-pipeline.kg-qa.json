@@ -8,13 +8,46 @@
   "source_hash": "sha256:3aab9923a7332ebdbd9b2848c795d7c45b2f020349209fa16d0b8ab3e79d2b1d",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
+    "script_hash": "sha256:4e9020c5a66aff63a269a13a3e81b26f64e2c96870df8d7623bee30ea8e287f6",
     "engine_version": "1"
   },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
       "findings": []
+    },
+    "skill-servable": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_MapL2",
+          "detail": "names skill \"l3-fhir-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_AuthorFsh",
+          "detail": "names skill \"l3-fhir-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Sushi",
+          "detail": "names skill \"l3-fhir-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "names skill \"fhir-validation\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_QcGates",
+          "detail": "names skill \"quality-control\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_IgPublisher",
+          "detail": "names skill \"ig-publication\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_PublishIg",
+          "detail": "names skill \"ig-publication\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -43,7 +76,7 @@
   },
   "totals": {
     "pass": 6,
-    "fail": 0,
+    "fail": 1,
     "n/a": 1,
     "unknown": 0
   }
