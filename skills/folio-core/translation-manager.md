@@ -281,3 +281,40 @@ pipeline (IG Publisher) are complementary and independent.
   it just needs re-review.
 - **Do not conflate FHIR resource translation with prose translation.** They
   are different pipelines with different tooling.
+- **Do not auto-remove staging previews.** Require `staging:cleanup` label.
+
+## Content-type-specific translation tools
+
+Each content type declares what formats it can translate and what scripts
+handle each format. See `schemas/translation-tools.ts` for the full
+registry.
+
+| Content type | Formats | RTL |
+|---|---|---|
+| **document** | Markdown | ✅ |
+| **paper** | Markdown + LaTeX | — |
+| **dak** (WHO L2) | Markdown + PlantUML + SVG + ArchiMate + Excel + BPMN | ✅ |
+| **ig** (WHO L3) | Markdown + FSH + FHIR JSON | ✅ |
+
+The generic pipeline (`pot-extract.ts`, `po-inject.ts`) handles Markdown.
+Adapter-specific tools extend it with format-specific extractors. The
+Python originals from smart-base live in `scripts/translation/` and are
+referenced in the registry.
+
+### RTL support
+
+Arabic (and Hebrew, Farsi, Urdu) pages are detected at load time by
+`docs-ui.js` and get `dir="rtl"` on `<html>`. The CSS in `docs-ui.css`
+provides smooth 0.4s transitions for sidebar and content layout:
+
+- Sidebar slides to the right side
+- Content flows RTL
+- Mermaid diagrams and badges stay LTR
+- BPMN diagrams need re-rendering with translated labels
+
+### Staging review
+
+When presenting translated content for review, use the `staging-review`
+skill to provide before/after URL comparison tables. See
+`schemas/staging.ts` for the `StagingComparison` schema.
+
