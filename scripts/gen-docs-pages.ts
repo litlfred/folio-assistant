@@ -264,7 +264,11 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
       const rel = join(page.slug.replace(/\//g, "-"), `${node.id}.${family}.json`);
       const abs = join(QA_ASSET_DIR, rel);
       mkdirSync(dirname(abs), { recursive: true });
-      emit(abs, JSON.stringify(doc, null, 2) + "\n", "qa");
+      // Minified: these are fetched by the browser, never read as a diff, and
+      // the corpus sweep took the set from 35 files to 134. Indentation was 32%
+      // of 2.9 MB — a third of what every reader of the site would download for
+      // whitespace nobody looks at.
+      emit(abs, JSON.stringify(doc) + "\n", "qa");
       emittedQa.add(abs);
       // `relative_url` so the path survives the site's baseurl — `/folio-assistant`
       // here, something else on a staging deploy. A hardcoded absolute path

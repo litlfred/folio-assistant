@@ -17,9 +17,8 @@ import { fileURLToPath } from "node:url";
  *
  *  - a criterion's verdict is reachable at all;
  *  - the witness behind it is named, with the hash of the checker that ran;
- *  - a verdict measured against a file that has since changed says STALE
- *    (this is live in the corpus: `what-is-not-built-yet.md` was edited at
- *    19:06 on 2026-09-18, after the 17:36 sweep that produced the sidecar);
+ *  - a verdict measured against a file that has since changed says STALE, and
+ *    names the file that moved;
  *  - a field the sidecar does not record prints "not recorded" rather than
  *    blank — `kg-audit.ts` writes no timestamp, and a blank cell reads as a
  *    value the reader missed;
@@ -42,6 +41,28 @@ const BLOCK_JSON = readFileSync(
   join(ROOT, "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json"),
   "utf8",
 );
+/**
+ * The same document with its witness marked stale.
+ *
+ * This was served straight from the corpus, where that block's verdict WAS
+ * stale — measured at 17:33 against an `.md` edited at 19:06 the same day.
+ * Re-running the sweep cleared it, which is the system behaving correctly and
+ * this test then failing for the right reason. Whether a hash comparison yields
+ * `stale` is settled in `qa-witness.test.ts` against files it controls; what
+ * belongs HERE is whether the panel renders that state — which must not depend
+ * on the corpus happening to hold an out-of-date verdict on the day the suite
+ * runs.
+ */
+const STALE_JSON = (() => {
+  const doc = JSON.parse(BLOCK_JSON) as {
+    criteria: Array<{ witnesses: Array<{ freshness: string; changed?: string[] }> }>;
+  };
+  const w = doc.criteria[0]!.witnesses[0]!;
+  w.freshness = "stale";
+  w.changed = ["md"];
+  return JSON.stringify(doc);
+})();
+
 /** A KG sidecar: one auditor, no timestamp, a `sha256:`-prefixed hash. */
 const KG_JSON = readFileSync(
   join(ROOT, "docs/assets/qa/publication-workflow/editing-and-the-hci-validation-gate.kg.json"),
@@ -76,6 +97,9 @@ const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8">
   <h2 id="node-b">A diagram node</h2>
   <p><a class="fa-node-edit" href="#">✎ Edit</a>
      <span class="fa-qa-badges">${badge("kg", "fail", "/assets/qa/kg.json", "Knowledge-graph QA: 1 fail, 0 warn, 5 pass, 1 n/a — open for witnesses")}</span></p>
+  <h2 id="node-stale">A node whose verdict has gone stale</h2>
+  <p><a class="fa-node-edit" href="#">\u270E Edit</a>
+     <span class="fa-qa-badges">${badge("block", "fail", "/assets/qa/stale.json", "Content QA: 1 fail \u2014 open for witnesses")}</span></p>
   <h2 id="node-c">A node whose projection is missing</h2>
   <p><a class="fa-node-edit" href="#">✎ Edit</a>
      <span class="fa-qa-badges">${badge("block", "pass", "/assets/qa/gone.json", "Content QA: open for witnesses")}</span></p>
@@ -90,6 +114,9 @@ test.beforeEach(async ({ page }) => {
     }
     if (url.endsWith("/assets/qa/block.json")) {
       return route.fulfill({ contentType: "application/json", body: BLOCK_JSON });
+    }
+    if (url.endsWith("/assets/qa/stale.json")) {
+      return route.fulfill({ contentType: "application/json", body: STALE_JSON });
     }
     if (url.endsWith("/assets/qa/kg.json")) {
       return route.fulfill({ contentType: "application/json", body: KG_JSON });
@@ -158,7 +185,7 @@ test("a verdict measured against a file that has since changed says STALE, and n
   page,
 }) => {
   await page.goto(PAGE_URL);
-  await page.locator(".fa-qa-fam-block").first().click();
+  await page.locator(".fa-qa-fam-block").nth(1).click();
   await page.locator(".fa-qa-crit").first().click();
 
   const witness = page.locator(".fa-qa-witness").first();
@@ -183,7 +210,7 @@ test("a field the sidecar does not record prints 'not recorded', never blank", a
 
 test("a 404 projection says so and names the file", async ({ page }) => {
   await page.goto(PAGE_URL);
-  await page.locator(".fa-qa-fam-block").nth(1).click();
+  await page.locator(".fa-qa-fam-block").nth(2).click();
   const panel = page.locator(".fa-qa-panel-error");
   await expect(panel).toBeVisible();
   await expect(panel).toContainText("Could not load the QA detail");
