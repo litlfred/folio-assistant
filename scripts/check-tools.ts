@@ -28,7 +28,7 @@
  *
  * @module scripts/check-tools
  */
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -60,11 +60,46 @@ export function knownSkills(): Set<string> {
   return names;
 }
 
+/**
+ * What a skill's input contract requires, by property name.
+ *
+ * Reads `schemas/skills/<skill>/input.schema.json` — the same directory
+ * `.claude/skills/local/<skill>.json` points at with `schemaRef`, and the same
+ * one `kg-export` publishes. Returns `undefined` for a skill with no contract,
+ * which is the common case and not a defect: most skills declare none.
+ *
+ * **`undefined` and `[]` are different answers and both are kept.** A skill
+ * with no contract cannot be checked; a skill whose contract requires nothing
+ * is checked and passes. Collapsing them would turn an unreadable file into a
+ * silent pass, which is the "could not determine rendered as green" failure
+ * this repo keeps writing down.
+ */
+export function contractRequires(root: string, skill: string): string[] | undefined {
+  const f = join(root, "schemas", "skills", skill, "input.schema.json");
+  if (!existsSync(f)) return undefined;
+  try {
+    const d = JSON.parse(readFileSync(f, "utf-8")) as { required?: unknown };
+    return Array.isArray(d.required) ? d.required.filter((x): x is string => typeof x === "string") : [];
+  } catch {
+    return undefined;
+  }
+}
+
 export interface ToolCheck {
   danglingSatisfies: Array<{ tool: string; skill: string }>;
   unknownTypes: Array<{ tool: string; port: string; ref: string }>;
   /** Command-line inputs whose type can express a shell payload. */
   unsafeArgs: Array<{ tool: string; port: string; type: string }>;
+  /**
+   * A Tool claiming to satisfy a skill whose input contract it cannot receive.
+   *
+   * `satisfies` asserts "this Tool is one concrete way to exercise that skill".
+   * If the skill's contract requires an input the Tool has no port for, the
+   * Tool cannot exercise it and the edge is false.
+   */
+  unmetContracts: Array<{ tool: string; skill: string; missing: string[]; has: string[] }>;
+  /** Skills whose contract could not be read — never counted as agreement. */
+  unreadableContracts: string[];
   skillsWithTools: number;
   skillsWithoutTools: number;
 }
@@ -75,12 +110,43 @@ export function checkTools(): ToolCheck {
   const dangling: Array<{ tool: string; skill: string }> = [];
   const unknownTypes: Array<{ tool: string; port: string; ref: string }> = [];
   const unsafeArgs: Array<{ tool: string; port: string; type: string }> = [];
+  const unmetContracts: ToolCheck["unmetContracts"] = [];
+  const unreadable = new Set<string>();
   const covered = new Set<string>();
 
   for (const t of tools()) {
+    const portNames = new Set(t.io.inputs.map((i) => i.name));
     for (const s of t.satisfies) {
       if (skills.has(s)) covered.add(s);
       else dangling.push({ tool: t.id, skill: s });
+
+      // ## What is compared, and what deliberately is not
+      //
+      // NAMES ONLY. A skill's contract is free-form JSON Schema; a Tool's `io`
+      // is named ports referencing shared `$defs` IRIs. The two shapes are not
+      // structurally comparable and pretending otherwise would produce a check
+      // that is either vacuous or wrong.
+      //
+      // Types are excluded on evidence rather than on principle: measured
+      // across the 22 contracts in this repo, nearly every property is a bare
+      // `{"type": "string"}`, so a type comparison would pass on anything.
+      //
+      // A name mismatch that is only a naming difference (`path` vs
+      // `targetPath`) is a FINDING here rather than a false positive to
+      // suppress. Two names for one input across a skill and the Tool that
+      // claims to implement it is itself worth fixing — an agent reading the
+      // contract cannot call the Tool.
+      const required = contractRequires(ROOT, s);
+      if (required === undefined) {
+        // No contract at all is the common case and not a defect. A contract
+        // that exists but will not parse IS one, and is reported separately.
+        if (existsSync(join(ROOT, "schemas", "skills", s, "input.schema.json"))) unreadable.add(s);
+        continue;
+      }
+      const missing = required.filter((r) => !portNames.has(r));
+      if (missing.length > 0) {
+        unmetContracts.push({ tool: t.id, skill: s, missing, has: [...portNames] });
+      }
     }
     for (const p of [...t.io.inputs, ...t.io.outputs]) {
       const name = p.schema.split("#/$defs/")[1];
@@ -102,6 +168,8 @@ export function checkTools(): ToolCheck {
     danglingSatisfies: dangling,
     unknownTypes,
     unsafeArgs,
+    unmetContracts,
+    unreadableContracts: [...unreadable].sort(),
     skillsWithTools: covered.size,
     skillsWithoutTools: skills.size - covered.size,
   };
@@ -133,6 +201,29 @@ if (import.meta.main) {
     console.error(`\n✗ ${r.unknownTypes.length} port(s) referencing an unknown type:`);
     for (const u of r.unknownTypes) console.error(`    ${u.tool}.${u.port} → ${u.ref}`);
   }
+  if (r.unmetContracts.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${r.unmetContracts.length} satisfies edge(s) the skill's own contract contradicts:`);
+    for (const u of r.unmetContracts) {
+      console.error(`    ${u.tool} → ${u.skill}`);
+      console.error(`       contract requires : ${u.missing.join(", ")}`);
+      console.error(`       tool accepts      : ${u.has.length > 0 ? u.has.join(", ") : "(no inputs)"}`);
+    }
+    console.error(
+      "    A `satisfies` edge asserts the Tool is one concrete way to exercise the skill.\n" +
+        "    Either the Tool needs the input, or the edge is wrong and should be dropped.",
+    );
+  }
+  if (r.unreadableContracts.length > 0) {
+    // Never rendered as agreement. A contract that will not parse is a third
+    // state, and a check that treats it as a pass is worse than no check.
+    bad = true;
+    console.error(`\n✗ ${r.unreadableContracts.length} skill contract(s) present but unreadable:`);
+    for (const s of r.unreadableContracts) console.error(`    schemas/skills/${s}/input.schema.json`);
+  }
   if (bad) process.exit(1);
-  console.log("\n✓ every satisfies resolves; every io type is declared; every argv input is injection-safe");
+  console.log(
+    "\n✓ every satisfies resolves and agrees with its skill's contract; " +
+      "every io type is declared; every argv input is injection-safe",
+  );
 }

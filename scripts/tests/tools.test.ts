@@ -10,8 +10,8 @@ import { describe, expect, test } from "bun:test";
 import { tools } from "../../tools/index.js";
 import { ToolDefinitionSchema } from "../../schemas/tool.js";
 import { TOOL_TYPES } from "../../schemas/tool-types.js";
-import { checkTools, knownSkills } from "../check-tools.js";
-import { buildToolTypes, buildToolSchema } from "../harness-schema-export.js";
+import { checkTools, knownSkills, contractRequires } from "../check-tools.js";
+import { buildToolTypes, buildToolSchema, buildSkillIoContracts, skillIoIri, staleSkillIoIds } from "../harness-schema-export.js";
 
 const BASE = "https://example.invalid/fa";
 
@@ -24,6 +24,49 @@ describe("tools", () => {
     // The constraint a schema cannot express: Zod can require `satisfies` to be
     // non-empty, but it does not get to read the tree.
     expect(checkTools().danglingSatisfies).toEqual([]);
+  });
+
+  test("every satisfies edge agrees with its skill's own input contract", () => {
+    // A `satisfies` edge asserts the Tool is one concrete way to exercise the
+    // skill. If the skill's contract requires an input the Tool has no port
+    // for, the Tool cannot exercise it and the edge is false.
+    //
+    // This caught two edges written in #295 and both were wrong:
+    // `translation-validate` claimed `content-validate` (whose contract wants
+    // `targetPath`; validating a .po against a .pot is a different thing), and
+    // `workflow-complete` claimed `dmn-authoring` (whose contract wants
+    // `decisionName`/`inputVariables` — what you supply to WRITE a table, not
+    // to answer one).
+    expect(checkTools().unmetContracts).toEqual([]);
+  });
+
+  test("a contract that is present but unreadable is never counted as agreement", () => {
+    // The third state. `undefined` (no contract) and `[]` (a contract
+    // requiring nothing) are different answers and the checker keeps them
+    // apart; an unreadable file is reported rather than passed.
+    expect(checkTools().unreadableContracts).toEqual([]);
+    expect(contractRequires(process.cwd(), "no-such-skill-exists")).toBeUndefined();
+    const req = contractRequires(process.cwd(), "content-validate");
+    expect(req).toContain("targetPath");
+  });
+
+  test("every skill I/O contract publishes at the address its own $id claims", () => {
+    // All 44 carried `github.com/<owner>/<repo>/schemas/...` — a 403, because
+    // GitHub's browse route needs `/blob/<ref>/`. Born that way on 2026-03-24
+    // and never dereferenced since.
+    const contracts = buildSkillIoContracts({ baseUrl: BASE });
+    expect(contracts.length).toBeGreaterThan(0);
+    for (const c of contracts) {
+      const id = c.schema.$id as string;
+      expect(id).toBe(skillIoIri(BASE, c.skill, c.io));
+      // The published path must be exactly what the IRI's tail says, or the
+      // deploy writes the file somewhere the identity does not name.
+      expect(`${BASE}/kg/${c.published}`).toBe(id);
+    }
+  });
+
+  test("no source $id has drifted from where it publishes", () => {
+    expect(staleSkillIoIds()).toEqual([]);
   });
 
   test("every io port references a type the shared vocabulary declares", () => {
