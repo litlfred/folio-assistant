@@ -90,7 +90,7 @@
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T22:29:53.535Z",
+  "generatedAt": "2026-09-18T22:38:53.086Z",
   "counts": {
     "Skill": 141,
     "Actor": 24,
@@ -4694,8 +4694,14 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_ContentChangeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Review%20Committee",
       "laneName": "Review Committee",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-review"
+      ],
+      "implementsSkillNames": [
+        "content-review",
+        "content-review"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -4714,8 +4720,14 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_ContentChangeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Review%20Committee",
       "laneName": "Review Committee",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/decision-audit"
+      ],
+      "implementsSkillNames": [
+        "decision-audit",
+        "decision-audit"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -6542,8 +6554,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_HumanTranslation",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Human%20Translator",
       "laneName": "Human Translator",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "implementsSkillNames": [
+        "translation-manager",
+        "translation-manager",
+        "translation-manager"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -6584,8 +6604,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_HumanTranslation",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Human%20Translator",
       "laneName": "Human Translator",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "implementsSkillNames": [
+        "translation-manager",
+        "translation-manager",
+        "translation-manager"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -6610,8 +6638,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_HumanTranslation",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Subject-Matter%20Expert%20/%20Reviewer",
       "laneName": "Subject-Matter Expert / Reviewer",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "implementsSkillNames": [
+        "translation-manager",
+        "translation-manager",
+        "translation-manager"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -8780,8 +8816,14 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Translation",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Human%20reviewer%20/%20adjudicator",
       "laneName": "Human reviewer / adjudicator",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "implementsSkillNames": [
+        "translation-manager",
+        "translation-manager"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -9558,8 +9600,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Editing",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/HCI%20validation%20pipeline%20(system)",
       "laneName": "HCI validation pipeline (system)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-validate"
+      ],
+      "implementsSkillNames": [
+        "content-validate",
+        "content-validate",
+        "content-validate"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -9603,8 +9653,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Editing",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Editor%20/%20author%20(person)",
       "laneName": "Editor / author (person)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/decision-audit"
+      ],
+      "implementsSkillNames": [
+        "decision-audit",
+        "decision-audit",
+        "decision-audit"
+      ],
       "touchesWorkPlan": false,
       "relaxable": false,
       "incoming": [
@@ -10453,8 +10511,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_EvidenceRetrieval",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Evidence%20agent%20(system)",
       "laneName": "Evidence agent (system)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-intake"
+      ],
+      "implementsSkillNames": [
+        "document-intake",
+        "document-intake",
+        "document-intake"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -10473,8 +10539,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_EvidenceRetrieval",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Evidence%20agent%20(system)",
       "laneName": "Evidence agent (system)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-intake"
+      ],
+      "implementsSkillNames": [
+        "document-intake",
+        "document-intake",
+        "document-intake"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -10973,8 +11047,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Ingestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Work%20plan%20—%20beans%20(shared%20by%20humans%20and%20agents)",
       "laneName": "Work plan — beans (shared by humans and agents)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/todo-manager"
+      ],
+      "implementsSkillNames": [
+        "todo-manager",
+        "todo-manager",
+        "todo-manager"
+      ],
       "touchesWorkPlan": true,
       "workPlanOp": "claim",
       "relaxable": true,
@@ -11018,8 +11100,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Ingestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
       "laneName": "Corpus — L1 source knowledge graph",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-intake"
+      ],
+      "implementsSkillNames": [
+        "document-intake",
+        "document-intake",
+        "document-intake"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -12405,8 +12495,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
       "laneName": "BA / Feature Requestor",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/crdm-requirements-workflow"
+      ],
+      "implementsSkillNames": [
+        "crdm-requirements-workflow"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -12425,8 +12519,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
       "laneName": "BA / Feature Requestor",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/crdm-requirements-workflow"
+      ],
+      "implementsSkillNames": [
+        "crdm-requirements-workflow"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -12445,8 +12543,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
       "laneName": "BA / Feature Requestor",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/crdm-requirements-workflow"
+      ],
+      "implementsSkillNames": [
+        "crdm-requirements-workflow"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -12465,8 +12567,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
       "laneName": "BA / Feature Requestor",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/decision-audit"
+      ],
+      "implementsSkillNames": [
+        "decision-audit"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -12485,8 +12591,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
       "laneName": "BA / Feature Requestor",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/crdm-requirements-workflow"
+      ],
+      "implementsSkillNames": [
+        "crdm-requirements-workflow"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -12547,8 +12657,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
       "laneName": "BA / Feature Requestor",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/crdm-requirements-workflow"
+      ],
+      "implementsSkillNames": [
+        "crdm-requirements-workflow"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -12567,8 +12681,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
       "laneName": "BA / Feature Requestor",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/crdm-requirements-workflow"
+      ],
+      "implementsSkillNames": [
+        "crdm-requirements-workflow"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -12587,8 +12705,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
       "laneName": "BA / Feature Requestor",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/decision-audit"
+      ],
+      "implementsSkillNames": [
+        "decision-audit"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -13745,8 +13867,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Incremental%20build%20(system)",
       "laneName": "Incremental build (system)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication"
+      ],
+      "implementsSkillNames": [
+        "ig-publication",
+        "ig-publication",
+        "ig-publication"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -13771,8 +13901,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/PR%20reviewer%20/%20QC%20reviewer",
       "laneName": "PR reviewer / QC reviewer",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/quality-control",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/quality-control",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/quality-control"
+      ],
+      "implementsSkillNames": [
+        "quality-control",
+        "quality-control",
+        "quality-control"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -13791,8 +13929,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Incremental%20build%20(system)",
       "laneName": "Incremental build (system)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication"
+      ],
+      "implementsSkillNames": [
+        "ig-publication",
+        "ig-publication",
+        "ig-publication"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -13835,8 +13981,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Publisher%20+%20validator%20services%20(JVM)",
       "laneName": "Publisher + validator services (JVM)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication"
+      ],
+      "implementsSkillNames": [
+        "ig-publication",
+        "ig-publication",
+        "ig-publication"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -13943,8 +14097,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Incremental%20build%20(system)",
       "laneName": "Incremental build (system)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication"
+      ],
+      "implementsSkillNames": [
+        "ig-publication",
+        "ig-publication",
+        "ig-publication"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -13963,8 +14125,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Incremental%20build%20(system)",
       "laneName": "Incremental build (system)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication"
+      ],
+      "implementsSkillNames": [
+        "ig-publication"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -13983,8 +14149,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Incremental%20build%20(system)",
       "laneName": "Incremental build (system)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication"
+      ],
+      "implementsSkillNames": [
+        "ig-publication",
+        "ig-publication",
+        "ig-publication"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -14211,8 +14385,16 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed",
       "laneName": "Publication manager — deploy and seed",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication"
+      ],
+      "implementsSkillNames": [
+        "ig-publication",
+        "ig-publication",
+        "ig-publication"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
