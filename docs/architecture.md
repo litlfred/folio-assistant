@@ -2,6 +2,7 @@
 layout: default
 title: Architecture
 nav_order: 9
+has_children: true
 ---
 
 # Architecture
@@ -35,6 +36,21 @@ flowchart TD
     Tools --> Skills[Skill packages<br/>schemas/skills/*]
     Paper --> Model[Content-object model<br/>schemas/types.ts · constraints.ts · builders.ts]
 ```
+
+## Separation of concerns — current and future state
+
+This repo is today a **Tool repo and a Content repo in one checkout**. Issue
+[#223](https://github.com/litlfred/folio-assistant/issues/223) plans the split
+into five composable folio-assistant instances. Four child pages carry it:
+
+| page | what it answers |
+|---|---|
+| [Repo taxonomy](architecture/repo-taxonomy.html) | What kinds of repository exist — Tool, Test, Content, Consumer — and what each may contain |
+| [Current state](architecture/current-state.html) | What is actually in this repo today, measured, and where the mixture is |
+| [Future state](architecture/future-state.html) | The five target repos and which directory lands in which |
+| [Migration plan](architecture/migration-plan.html) | Phase 0/I/II/III, the gates, and what is still undecided |
+
+The rest of this page describes the architecture **as it is now**.
 
 ## Repository layout
 
