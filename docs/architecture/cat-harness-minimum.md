@@ -452,7 +452,7 @@ Legend — **AH** `cat-harness` · **AHT** `cat-harness-tools` ·
 | `content-lifecycle` | 8 | **C** |
 | `folio-document-adapter` | 4 | **C** |
 | `authoring-who-smart-guidelines` | 1 | **W** |
-| `framework`, `remote-packages`, `authoring-math`, `authoring-document` | 0 `.md` | manifests only — follow their package |
+| `framework`, `remote-packages`, `authoring-math`, `folio-document-adapter` | 0 `.md` | manifests only — follow their package |
 
 ## User todo management — suggestions
 

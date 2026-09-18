@@ -65,7 +65,7 @@ A skill is defined across a few layers — not a single file. For any skill:
 |-------|----------|--------|
 | **Definition** (roles, required capabilities, requirements, routing patterns, lifecycle stages, schema ref) | `.claude/skills/local/<skill>.json` | ✅ all 22 authoring skills — validated in CI by `scripts/validate-skills.ts` |
 | **Typed contract** (input/output JSON Schema) | `schemas/skills/<skill>/` | ✅ all 22 — see [reference](reference/skills/) |
-| **Instruction body** (prose how-to the LLM loads) — browse them in the [Skill instructions](reference/skill-instructions/) reference | `skills/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ lifecycle, agent, platform-bundle and **authoring-document** skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages ship the manifest + JSON definitions) |
+| **Instruction body** (prose how-to the LLM loads) — browse them in the [Skill instructions](reference/skill-instructions/) reference | `skills/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ lifecycle, agent, platform-bundle and **folio-document-adapter** skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages ship the manifest + JSON definitions) |
 | **Package** (Docker/runtime deps) | `skills/<package>/package-manifest.json` | ✅ all four packages |
 
 So *yes, the skills exist* — as structured definitions + typed schemas, with prose
@@ -89,7 +89,7 @@ The lifecycle stages that apply to **every** content type:
 | [`content-feedback`](reference/skills/content-feedback.html) | feedback | Collect & triage feedback |
 | `content-retire` | retire | Deprecate / archive |
 
-### Documents & policy guidance: `authoring-document`
+### Documents & policy guidance: `folio-document-adapter`
 
 | Skill | Purpose |
 |-------|---------|
@@ -135,7 +135,7 @@ package `folio-assistant`):
 > `deployment-auth` now live (generalized) in the **`folio-core`** bundle below —
 > fetch them with `package_name="folio-core"`.
 
-A paper folio wants the `authoring-document` skills too: a paper *is* a
+A paper folio wants the `folio-document-adapter` skills too: a paper *is* a
 document plus Lean-bearing blocks, so `document-structure` and
 `document-publishing` apply to both. The two bundles are halves of one content
 model, not alternatives to choose between.
