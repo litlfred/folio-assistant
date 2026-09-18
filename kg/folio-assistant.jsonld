@@ -106,9 +106,9 @@
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T21:08:37.480Z",
+  "generatedAt": "2026-09-18T21:38:58.698Z",
   "counts": {
-    "Skill": 139,
+    "Skill": 140,
     "Actor": 24,
     "Capability": 23,
     "Role": 62,
@@ -567,7 +567,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/skills-and-tools.md",
-      "lines": 172,
+      "lines": 176,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -650,7 +650,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/mcp-projection.md",
-      "lines": 116,
+      "lines": 132,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -685,6 +685,23 @@
       ],
       "instructions": "skills/folio-core/devils-advocate-watcher.md",
       "lines": 419,
+      "hasInstructions": true,
+      "hasIOContract": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/untrusted-input",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "untrusted-input",
+      "title": "Untrusted input — the value must never become program text",
+      "description": "Keep attacker-controlled values out of program text — in GitHub Actions, in command lines, in anything that is parsed before it runs. Read before interpolating any value into a script, and before giving a Tool a command-line input.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/untrusted-input.md",
+      "lines": 140,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -1149,7 +1166,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/mcp-contract.md",
-      "lines": 87,
+      "lines": 88,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -3475,6 +3492,7 @@
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/todo-review",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/untrusted-input",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/uses-editorial-review",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/watch"
       ],
@@ -14171,17 +14189,26 @@
             "name": "id",
             "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanId",
             "description": "The bean to act on; absent for list/create.",
-            "required": false
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
           },
           {
             "name": "status",
             "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanStatus",
-            "required": false
+            "required": false,
+            "arg": {
+              "flag": "--status"
+            }
           },
           {
             "name": "body",
             "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
-            "required": false
+            "required": false,
+            "arg": {
+              "stdin": true
+            }
           }
         ],
         "outputs": [
@@ -14233,17 +14260,26 @@
           {
             "name": "id",
             "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanId",
-            "required": false
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
           },
           {
             "name": "status",
             "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanStatus",
-            "required": false
+            "required": false,
+            "arg": {
+              "flag": "--status"
+            }
           },
           {
             "name": "body",
             "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
-            "required": false
+            "required": false,
+            "arg": {
+              "stdin": true
+            }
           }
         ],
         "outputs": [
@@ -14293,17 +14329,26 @@
           {
             "name": "branch",
             "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Branch",
-            "required": false
+            "required": false,
+            "arg": {
+              "flag": "--head"
+            }
           },
           {
             "name": "number",
             "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/ChangeProposalNumber",
-            "required": false
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
           },
           {
             "name": "body",
             "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
-            "required": false
+            "required": false,
+            "arg": {
+              "stdin": true
+            }
           }
         ],
         "outputs": [
@@ -14348,13 +14393,19 @@
             "name": "directory",
             "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
             "description": "The built tree to publish.",
-            "required": true
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
           },
           {
             "name": "baseUrl",
             "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Url",
             "description": "Publication base; a preview passes its own.",
-            "required": false
+            "required": false,
+            "arg": {
+              "flag": "--base-url"
+            }
           }
         ],
         "outputs": [

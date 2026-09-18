@@ -25,7 +25,8 @@
     "RepoPath": {
       "type": "string",
       "minLength": 1,
-      "description": "A path relative to the repository root",
+      "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+      "description": "A path relative to the repository root. No `..` segments.",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
     "Url": {
@@ -37,6 +38,7 @@
     "Branch": {
       "type": "string",
       "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
       "description": "A git branch name",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
