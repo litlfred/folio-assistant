@@ -34,13 +34,13 @@
  * would be a verdict with a script's name on it and no content, which is worse
  * than the gap: a reader who sees a green round-trip stops asking.
  *
- * The existing page-level numbers show the shape of that error from the other
- * side. `translations/fr/index.ts` records `roundTripQA: { fail: 21, total: 36,
- * method: "jaccard-word-overlap" }` and its own description explains the
- * failures away as expected "with limited vocabulary back-translator" — a
- * measurement whose author already knows it is about the instrument. That
- * number is not evidence about the translation, and copying it per block would
- * have spread it rather than fixed it.
+ * The page-level numbers that used to sit in `translations/fr/index.ts` showed
+ * the shape of that error from the other side: `roundTripQA: { fail: 21,
+ * total: 36, method: "jaccard-word-overlap" }`, scored against a
+ * back-translation map holding 6 entries for 36 strings — so every string
+ * nobody had back-translated came back at 0 similarity and was published as
+ * drift, and the count was of absences. The field, those numbers and the two
+ * scripts that wrote them are gone; there is nothing left to copy per block.
  *
  * So the criterion appears in the sidecar carrying no witness, and the panel
  * says "no witness recorded — nobody has ruled on it". When an LLM or a human

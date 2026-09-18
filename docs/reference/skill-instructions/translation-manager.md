@@ -54,7 +54,6 @@ const node: TranslationNode = {
   poFile: "translations/fr/index.po",
   status: { locale: "fr", official: false, generatedBy: "agent" },
   coverage: { translated: 37, total: 37, pct: 100 },
-  roundTripQA: { pass: 11, warn: 4, fail: 21, total: 36 },
 };
 export default node;
 ```
@@ -142,9 +141,11 @@ After injection, run round-trip translation QA:
 bun run content/pipeline/translation-qa.ts --locale <locale>
 ```
 
-Or use the `translation_validate` MCP tool. Back-translates and compares
-meaning. Results are stored in the `TranslationNode.roundTripQA` field.
-Routes drift to a human reviewer.
+Or use the `translation_validate` MCP tool for coverage and staleness.
+**Semantic verification is per block and lives in the sidecar**, not in a
+node-level summary field: `TranslationNode.roundTripQA` was removed with the
+numbers it held. See §"Per-block translation QA" below, and route drift to a
+human reviewer.
 
 ### 6. Sign-off
 
@@ -197,12 +198,19 @@ always: a perfect similarity score measuring the lookup table. **Do not fill
 this criterion mechanically.** A green tick nobody should trust is worse than a
 gap that says it is a gap — a reader who sees the tick stops asking.
 
-> The page-level numbers already show that failure from the other side.
-> `translations/fr/index.ts` records
+> This was not hypothetical. `translations/fr/index.ts` carried
 > `roundTripQA: { fail: 21, total: 36, method: "jaccard-word-overlap" }`, and
-> its own `description` explains those failures away as expected "with limited
-> vocabulary back-translator". A measurement whose author has to explain it away
-> is about the instrument, not the translation.
+> its own `description` explained those failures away as expected "with limited
+> vocabulary back-translator" — a measurement whose author has to explain it
+> away is about the instrument, not the translation. The generator's
+> back-translation map held **6 entries for 36 strings**: every string nobody
+> had back-translated scored 0 similarity and was counted as drift, so `fail:
+> 21` was a count of absences. A second script back-translated by applying a
+> 40-pair word-substitution table to the French and wrote the result as a
+> `block-qa/v1` sidecar with an **agent** reviewer.
+>
+> All of it is removed — the numbers, the `roundTripQA` field, the page badge
+> that displayed them, and both scripts.
 
 ### The agentic round trip — a PAIR of agents, and the separation is the measurement
 
@@ -272,7 +280,6 @@ Translation badges are **automatically rendered** on every docs page by
 2. **`docs-ui.js`** reads that block and auto-injects into the page title:
    - **🌐 Language coverage badge** — `0/5 languages` (grey), `1/5` (amber),
      `5/5` (green)
-   - **QA badge** — only on translated pages with `qa_translation_total > 0`
    - **⚠️ Unverified warning** — auto-injected when `translation_status:
      unverified`
 
@@ -290,16 +297,18 @@ lang: fr
 translation_status: unverified     # or "official"
 translation_source: index.md       # source file
 available_locales: ["fr"]
-qa_translation_pass: 11            # round-trip QA results
-qa_translation_warn: 4
-qa_translation_fail: 21
-qa_translation_total: 36
-qa_coverage_pct: 100
 ```
 
-**Do not** manually add `{% include qa-translation-badge.html %}` or
-`{% include translation-warning.html %}` to pages. These are now deprecated
-includes — `docs-ui.js` handles everything automatically.
+The `qa_translation_*` keys are **gone**, along with the badge that read them.
+They were stamped from a node-level round trip whose back-translation map held
+6 entries for 36 strings, so every string nobody had back-translated was
+published as semantic drift. Per-block QA replaces them: the `TR` icon beside
+each block opens `<stem>.<locale>.translation-qa.json`, where a verdict names
+the witness that reached it.
+
+**Do not** manually add `{% include translation-warning.html %}` to pages —
+`docs-ui.js` handles it automatically. (`qa-translation-badge.html` is deleted,
+not deprecated: it rendered the removed numbers.)
 
 ## Official vs unofficial
 
@@ -367,8 +376,14 @@ pipeline (IG Publisher) are complementary and independent.
 ## Do not
 
 - **Do not manually add badge includes.** `docs-ui.js` renders them automatically
-  from front matter. The `{% include qa-translation-badge.html %}` and
-  `{% include translation-warning.html %}` calls are deprecated.
+  from front matter; the `{% include translation-warning.html %}` call is
+  deprecated.
+- **Do not publish a semantic-QA number a script cannot establish.** A
+  back-translation from this repo's own PO map, or from a word-substitution
+  table, scores the table rather than the translation — and a string with no
+  back-translation at all scores 0 and reads as drift. If no independent
+  back-translator has run, the criterion has no verdict, and saying so is the
+  honest output.
 - **Do not put non-PO files in translations/.** Only `.pot`, `.po`, and `.ts`
   manifests belong there. Rendered `.md` goes in `docs/<locale>/`.
 - **Do not vendor smart-base translation scripts.** Load from checkout.

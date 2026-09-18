@@ -61,13 +61,6 @@
   "translationSource": "{{ page.translation_source | default: '' }}",
   "supportedLocales": {{ site.translation_locales | default: '["ar","zh","en","fr","ru","es"]' }},
   "availableLocales": {{ page.available_locales | jsonify | default: '[]' }},
-  "qa": {
-    "pass": {{ page.qa_translation_pass | default: 0 }},
-    "warn": {{ page.qa_translation_warn | default: 0 }},
-    "fail": {{ page.qa_translation_fail | default: 0 }},
-    "total": {{ page.qa_translation_total | default: 0 }},
-    "coveragePct": {{ page.qa_coverage_pct | default: 0 }}
-  },
   "sweep": {
     "run": {% if site.data.translation-qa %}true{% else %}false{% endif %},
     "sweptAt": "{{ site.data.translation-qa.sweptAt | default: '' }}",
