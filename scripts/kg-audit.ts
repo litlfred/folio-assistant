@@ -618,6 +618,22 @@ function auditGraph(
       })),
   );
 
+  const capabilities = new Set<string>();
+  if (existsSync(CAPABILITY_DIR)) {
+    for (const f of readdirSync(CAPABILITY_DIR)) if (f.endsWith(".json")) capabilities.add(f.slice(0, -5));
+  }
+  const badCaps: KgFinding[] = [];
+  for (const a of actors) {
+    for (const c of a.capabilities ?? []) {
+      if (!capabilities.has(c)) {
+        badCaps.push({
+          where: a.id,
+          detail: `${relative(root, a.path)} claims capability "${c}", which the registry does not declare.`,
+        });
+      }
+    }
+  }
+
   const roleish = actors
     .filter((a) => a.looksLikeRole)
     .map((a) => ({ where: a.id, detail: `${relative(root, a.path)} carries \`inherits\` — an actor does not inherit, a role does. Migration debt from before roles were declared.` }));
@@ -647,6 +663,7 @@ function auditGraph(
       "actor-roles-resolve": graph
         ? entry(badActorRoles)
         : { result: "unknown", findings: [{ where: "—", detail: "no role graph to resolve actor roles against." }] },
+      "actor-capabilities-resolve": entry(badCaps),
       "actor-is-not-a-role": entry(roleish),
     },
     auditorHash,

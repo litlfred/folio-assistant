@@ -227,6 +227,21 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "nothing checked: a typo in an actor's `roles[]` is silently ignored rather than reported.",
   },
   {
+    id: "actor-capabilities-resolve",
+    applies: ["graph"],
+    severity: "major",
+    summary:
+      "An actor claims a capability the registry does not declare. `major`, not `critical`, because the " +
+      "finding is an OVERLOADED FIELD rather than a broken link: `capabilities[]` mixes three things and " +
+      "only one of them has a node kind. A declared capability is an ENVIRONMENT PROBE — `docker`, " +
+      "`pandoc`, `java-runtime`, each with `detection: { method: \"command\" }`. Of the 19 undeclared " +
+      "names, ~13 are PERMISSIONS (`approval-authority`, `admin-settings`, `release-authorization`, " +
+      "`review-comments`) which no node kind models yet, and ~6 are SKILLS (`bpmn-authoring`, " +
+      "`terminology-management`, `cql-authoring`). Declaring 19 probe files to silence this would invent " +
+      "content to satisfy a check; splitting the field is the real fix and is somebody's decision, not a " +
+      "sweep's. `fhir-validator` WAS a genuinely missing probe and is now declared.",
+  },
+  {
     id: "actor-is-not-a-role",
     applies: ["graph"],
     severity: "minor",
