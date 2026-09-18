@@ -1,11 +1,11 @@
 ---
 # folio-assistant-r6ly
 title: 'GETTING STARTED: rewrite docs/getting-started.md + answer the two research questions'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T14:49:11Z
-updated_at: 2026-09-18T14:49:11Z
+updated_at: 2026-09-18T15:27:12Z
 ---
 
 ## What

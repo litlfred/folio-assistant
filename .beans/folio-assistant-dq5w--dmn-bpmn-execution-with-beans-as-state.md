@@ -1,11 +1,11 @@
 ---
 # folio-assistant-dq5w
 title: 'DOCS: options for executing DMN/BPMN with beans as state'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T15:01:37Z
-updated_at: 2026-09-18T15:01:37Z
+updated_at: 2026-09-18T15:27:12Z
 ---
 
 ## What

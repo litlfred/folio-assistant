@@ -53,9 +53,86 @@ fi
 BEANS_DIR="$REPO_ROOT/.beans"
 echo "## Work-plan (beans) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo
+# Fire up the beans CLI rather than merely noting its absence. A fresh cloud
+# container ships no `beans`, and the fallback below — parsing `.beans/*.md` by
+# hand — gives a flat list with no priming, no milestone nesting and no
+# `beans check`. That degraded view was what every session in a fresh container
+# actually got, which is not the same as having the work plan.
+#
+# Bounded and quiet: `go install` over a module proxy, one attempt, 180 s. A
+# sandbox with no Go or no egress falls through to the reader below rather
+# than failing the sweep — a session-start hook that exits non-zero takes the
+# whole session's priming with it.
+if ! command -v beans >/dev/null 2>&1 && [ -x "$REPO_ROOT/scripts/install-beans.sh" ]; then
+  timeout 180 "$REPO_ROOT/scripts/install-beans.sh" >/dev/null 2>&1 || true
+  # `go install` lands the binary in a bin dir that may not be on this shell's
+  # PATH yet, so look where it actually goes before giving up on it.
+  for candidate in "${GOBIN:-}" "${GOPATH:+$GOPATH/bin}" "$HOME/go/bin" "$HOME/.local/bin"; do
+    [ -n "$candidate" ] || continue
+    if [ -x "$candidate/beans" ]; then PATH="$candidate:$PATH"; export PATH; break; fi
+  done
+fi
+
 if command -v beans >/dev/null 2>&1; then
   beans prime 2>/dev/null || true
   beans list 2>/dev/null || echo "_(beans list returned nothing)_"
+
+  # The roadmap, not just the list. `beans list` is flat: on this repo it is
+  # 100+ ids in creation order, which is data rather than a plan. `beans roadmap`
+  # renders the milestone/epic structure an agent needs to say what is NEXT and
+  # why — the judgement AGENTS.md asks for in every end-of-turn report.
+  echo
+  echo "### Roadmap (milestones and epics)"
+  echo
+  roadmap="$(timeout 20 beans roadmap 2>/dev/null || true)"
+  if [ -n "$roadmap" ]; then
+    printf '%s\n' "$roadmap"
+  else
+    echo "_(no milestones or epics yet — \`beans create \"…\" -t milestone\` opens one)_"
+  fi
+  echo
+
+  # Commands for the PERSON, not the agent. An agent cannot run an interactive
+  # TUI on someone's behalf, so the only useful thing to do with `beans tui` is
+  # print it where they will see it. Paths follow the author's convention.
+  cat <<'BEANCMDS'
+### Beans — commands you can run yourself
+
+| what you want | command |
+|---|---|
+| the interactive board | `beans tui` |
+| the milestone roadmap | `beans roadmap` |
+| everything open | `beans list -s todo -s in-progress` |
+| one bean in full | `beans show <id>` |
+| claim one | `beans update <id> -s in-progress` |
+| open one | `beans create "title" -t task` |
+| sanity-check the store | `beans check` |
+
+BEANCMDS
+  # Copy-paste line. Both the checkout path and the branch are COMPUTED, never
+  # written in: a literal path or a session's branch name baked into a generic
+  # platform script is the genericity failure this repo has paid for repeatedly
+  # (see AGENTS.md on generate-readme.sh). BEANS_CHECKOUT_ROOT lets an author
+  # whose clones live somewhere predictable get a line they can paste from any
+  # directory; unset, it uses this checkout's real path.
+  _repo_name="$(basename "$REPO_ROOT")"
+  _checkout_dir="$REPO_ROOT"
+  if [ -n "${BEANS_CHECKOUT_ROOT:-}" ]; then
+    _checkout_dir="${BEANS_CHECKOUT_ROOT%/}/$_repo_name"
+  fi
+  _branch="$(git -C "$REPO_ROOT" symbolic-ref --short HEAD 2>/dev/null || true)"
+  echo "Copy-paste, from a fresh shell:"
+  echo
+  echo '```sh'
+  if [ -n "$_branch" ]; then
+    echo "reset; cd $_checkout_dir && git fetch && git switch $_branch && git pull && beans tui"
+  else
+    # Detached HEAD: a `git switch` line here would name a branch that is not
+    # what is checked out, which is worse than omitting it.
+    echo "reset; cd $_checkout_dir && git fetch && git pull && beans tui"
+  fi
+  echo '```'
+  echo
 elif [ -d "$BEANS_DIR" ]; then
   echo "_(beans CLI not on PATH — reading .beans/ directly; run \`scripts/install-beans.sh\` for full priming)_"
   found=0

@@ -367,11 +367,35 @@ memory entry is wrong — fix it.
 
 ## At session start
 
-Surface the work-plan before starting: run `beans prime` (and `beans list`), or
-`scripts/session-start-coord-sweep.sh` for the CLI-independent surface (current
-bean list parsed from `.beans/`, plus how far the default branch has moved and
-recent sibling `claude/*` branch activity). Heavy triage of new commits belongs in
-a background subagent, not the foreground.
+**Get `beans` actually running — do not settle for the degraded reader.**
+`scripts/session-start-coord-sweep.sh` now installs the CLI itself when it is
+missing (bounded: one `go install` over the module proxy, 180 s, quiet) and puts
+the resulting bin dir on `PATH` before priming. A fresh cloud container ships no
+`beans`, and what every such session used to get was the fallback — `.beans/*.md`
+parsed by hand into a flat list, with no priming, no milestone nesting and no
+`beans check`. That is not the work plan; it is a directory listing of it.
+
+The sweep then emits, in order:
+
+1. **Interaction preferences** (`.folio/interaction.json`) — first, because it
+   changes the form of every question that follows. See
+   `skills/folio-core/interaction-modality.md`.
+2. `beans prime` and `beans list`.
+3. **`beans roadmap`** — the milestone/epic structure. `beans list` is flat (100+
+   ids in creation order on this repo), which is data, not a plan; the roadmap is
+   what lets an end-of-turn report say what is *next* and why.
+4. **The commands the human can run themselves**, `beans tui` first. An agent
+   cannot drive an interactive TUI on somebody's behalf, so the only useful thing
+   to do with it is print it where they will see it — together with a
+   copy-pasteable `cd … && git switch … && beans tui` line whose path and branch
+   are **computed**, never written in. Set `BEANS_CHECKOUT_ROOT` if your clones
+   live under one predictable directory.
+5. Default-branch delta, sibling `claude/*` branch activity, CI health.
+
+Heavy triage of new commits belongs in a background subagent, not the foreground.
+
+If you are running the pieces by hand rather than the sweep: `scripts/install-beans.sh`,
+then `beans prime`, `beans list`, `beans roadmap`.
 
 ## Agentic harness — interaction model
 
