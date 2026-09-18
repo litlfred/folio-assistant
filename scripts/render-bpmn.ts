@@ -137,17 +137,26 @@ let stale = 0;
 
 for (const file of sources) {
   const xml = await readFile(join(SRC_DIR, file), "utf8");
-  const { svg, warnings } = await page.evaluate(async (bpmnXml) => {
-    const container = document.getElementById("canvas")!;
-    container.innerHTML = "";
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const Viewer = (window as any).BpmnJS;
-    const viewer = new Viewer({ container });
-    const result = await viewer.importXML(bpmnXml);
-    const { svg } = await viewer.saveSVG({ format: true });
-    viewer.destroy();
-    return { svg, warnings: (result.warnings ?? []).map((w: Error) => w.message) };
-  }, xml);
+  let rendered: { svg: string; warnings: string[] };
+  try {
+    rendered = await page.evaluate(async (bpmnXml) => {
+      const container = document.getElementById("canvas")!;
+      container.innerHTML = "";
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const Viewer = (window as any).BpmnJS;
+      const viewer = new Viewer({ container });
+      const result = await viewer.importXML(bpmnXml);
+      const { svg } = await viewer.saveSVG({ format: true });
+      viewer.destroy();
+      return { svg, warnings: (result.warnings ?? []).map((w: Error) => w.message) };
+    }, xml);
+  } catch (err: any) {
+    console.error(`✗ ${file}: ${err?.message?.split("\n")[0] ?? err}`);
+    process.exitCode = 1;
+    continue;
+  }
+
+  const { svg, warnings } = rendered;
 
   if (warnings.length > 0) {
     console.error(`✗ ${file}: ${warnings.length} import warning(s)`);

@@ -144,4 +144,123 @@ differ, sets stale: true. The translation remains visible with a
 
   </process>
 
+  <bpmndi:BPMNDiagram id="Diagram_Translation">
+    <bpmndi:BPMNPlane id="Plane_Translation" bpmnElement="Process_Translation">
+      <bpmndi:BPMNShape id="Start_ContentAuthored_di" bpmnElement="Start_ContentAuthored">
+        <dc:Bounds x="160" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PotExtract_di" bpmnElement="Task_PotExtract">
+        <dc:Bounds x="250" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Translate_di" bpmnElement="Task_Translate">
+        <dc:Bounds x="450" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PoInject_di" bpmnElement="Task_PoInject">
+        <dc:Bounds x="650" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RoundTripQA_di" bpmnElement="Task_RoundTripQA">
+        <dc:Bounds x="850" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Drift_di" bpmnElement="Gateway_Drift" isMarkerVisible="true">
+        <dc:Bounds x="1050" y="235" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Adjudicate_di" bpmnElement="Task_Adjudicate">
+        <dc:Bounds x="1160" y="80" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_PostQA_di" bpmnElement="Gateway_PostQA" isMarkerVisible="true">
+        <dc:Bounds x="1350" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_WriteUnofficial_di" bpmnElement="Task_WriteUnofficial">
+        <dc:Bounds x="1460" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Signoff_di" bpmnElement="Gateway_Signoff" isMarkerVisible="true">
+        <dc:Bounds x="1660" y="235" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_TranslationComplete_di" bpmnElement="End_TranslationComplete">
+        <dc:Bounds x="1667" y="382" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Signoff_di" bpmnElement="Task_Signoff">
+        <dc:Bounds x="1770" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_WriteOfficial_di" bpmnElement="Task_WriteOfficial">
+        <dc:Bounds x="1970" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_StalenessCheck_di" bpmnElement="Task_StalenessCheck">
+        <dc:Bounds x="2170" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Stale_di" bpmnElement="End_Stale">
+        <dc:Bounds x="2370" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Flow_Start_di" bpmnElement="Flow_Start">
+        <di:waypoint x="196" y="260" />
+        <di:waypoint x="250" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Extract_di" bpmnElement="Flow_Extract">
+        <di:waypoint x="390" y="260" />
+        <di:waypoint x="450" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Translate_di" bpmnElement="Flow_Translate">
+        <di:waypoint x="590" y="260" />
+        <di:waypoint x="650" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Inject_di" bpmnElement="Flow_Inject">
+        <di:waypoint x="790" y="260" />
+        <di:waypoint x="850" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_QA_di" bpmnElement="Flow_QA">
+        <di:waypoint x="990" y="260" />
+        <di:waypoint x="1050" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_DriftYes_di" bpmnElement="Flow_DriftYes">
+        <di:waypoint x="1075" y="235" />
+        <di:waypoint x="1075" y="120" />
+        <di:waypoint x="1160" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_DriftNo_di" bpmnElement="Flow_DriftNo">
+        <di:waypoint x="1100" y="260" />
+        <di:waypoint x="1460" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Adjudicated_di" bpmnElement="Flow_Adjudicated">
+        <di:waypoint x="1300" y="120" />
+        <di:waypoint x="1350" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_PostQA_Redo_di" bpmnElement="Flow_PostQA_Redo">
+        <di:waypoint x="1375" y="95" />
+        <di:waypoint x="1375" y="50" />
+        <di:waypoint x="520" y="50" />
+        <di:waypoint x="520" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_PostQA_Accept_di" bpmnElement="Flow_PostQA_Accept">
+        <di:waypoint x="1400" y="120" />
+        <di:waypoint x="1530" y="120" />
+        <di:waypoint x="1530" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Unofficial_di" bpmnElement="Flow_Unofficial">
+        <di:waypoint x="1600" y="260" />
+        <di:waypoint x="1660" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_SignoffYes_di" bpmnElement="Flow_SignoffYes">
+        <di:waypoint x="1710" y="260" />
+        <di:waypoint x="1770" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_SignoffNo_di" bpmnElement="Flow_SignoffNo">
+        <di:waypoint x="1685" y="285" />
+        <di:waypoint x="1685" y="382" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Signoff_di" bpmnElement="Flow_Signoff">
+        <di:waypoint x="1910" y="260" />
+        <di:waypoint x="1970" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Official_di" bpmnElement="Flow_Official">
+        <di:waypoint x="2110" y="260" />
+        <di:waypoint x="2170" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Stale_di" bpmnElement="Flow_Stale">
+        <di:waypoint x="2310" y="260" />
+        <di:waypoint x="2370" y="260" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
 </definitions>
