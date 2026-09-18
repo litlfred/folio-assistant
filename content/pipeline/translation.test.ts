@@ -12,7 +12,7 @@ import {
   extractFromManifest,
   formatPot,
 } from "./pot-extract";
-import { parsePo, parsePoEntries, injectMarkdown } from "./po-inject";
+import { parsePo, injectMarkdown } from "./po-inject";
 
 // ── cleanMarkdownText ───────────────────────────────────────────
 

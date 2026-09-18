@@ -2,7 +2,7 @@
  * Tests for schemas/folio-config.ts — cross-folio dependency schema and resolution.
  */
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
-import { mkdirSync, writeFileSync, rmSync, existsSync } from "node:fs";
+import { mkdirSync, writeFileSync, rmSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
   FolioAssistantDependencySchema,
@@ -174,7 +174,7 @@ describe("resolveDependencyTree", () => {
     // Create a cycle: dep-b depends on root
     const depB = join(TMP, "dep-b");
     const origConfig = JSON.parse(
-      require("node:fs").readFileSync(join(depB, "folio.config.json"), "utf-8"),
+      readFileSync(join(depB, "folio.config.json"), "utf-8"),
     );
     writeFileSync(join(depB, "folio.config.json"), JSON.stringify({
       ...origConfig,

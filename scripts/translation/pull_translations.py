@@ -37,10 +37,7 @@ from translation_config import (
     DakConfigError,
     derive_project_slug_from_env,
     get_enabled_services,
-    get_language_codes,
-    get_project_slug,
     load_dak_config,
-    discover_components,
 )
 from translation_security import (
     assert_no_secret_in_env,
@@ -238,7 +235,9 @@ def main(argv: Optional[List[str]] = None) -> int:
         try:
             component_filter = sanitize_slug(args.component, "component")
         except ValueError as exc:
-            logger.error("%s", exc)
+            # Echoes a CLI argument verbatim. If a token was passed as
+            # --component or --language by mistake, this is where it lands.
+            logger.error("%s", redact_for_log(exc))
             return 2
 
     language_filter = None
@@ -246,7 +245,9 @@ def main(argv: Optional[List[str]] = None) -> int:
         try:
             language_filter = sanitize_lang_code(args.language)
         except ValueError as exc:
-            logger.error("%s", exc)
+            # Echoes a CLI argument verbatim. If a token was passed as
+            # --component or --language by mistake, this is where it lands.
+            logger.error("%s", redact_for_log(exc))
             return 2
 
     # Security checks
@@ -254,7 +255,9 @@ def main(argv: Optional[List[str]] = None) -> int:
         try:
             assert_no_secret_in_env(token_env)
         except RuntimeError as exc:
-            logger.error("%s", exc)
+            # Echoes a CLI argument verbatim. If a token was passed as
+            # --component or --language by mistake, this is where it lands.
+            logger.error("%s", redact_for_log(exc))
             return 1
 
     return pull_all(

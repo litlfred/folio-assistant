@@ -53,20 +53,32 @@ fi
 BEANS_DIR="$REPO_ROOT/.beans"
 echo "## Work-plan (beans) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo
-# Fire up the beans CLI rather than merely noting its absence. A fresh cloud
-# container ships no `beans`, and the fallback below — parsing `.beans/*.md` by
-# hand — gives a flat list with no priming, no milestone nesting and no
-# `beans check`. That degraded view was what every session in a fresh container
-# actually got, which is not the same as having the work plan.
+# Get the CLI in hand rather than reporting its absence — in two steps, cheap
+# first.
 #
-# Bounded and quiet: `go install` over a module proxy, one attempt, 180 s. A
-# sandbox with no Go or no egress falls through to the reader below rather
-# than failing the sweep — a session-start hook that exits non-zero takes the
-# whole session's priming with it.
+# 1. `install-beans.sh` installs to ~/.local/bin, which a fresh container's PATH
+#    often does not carry, so LOOK THERE before concluding the CLI is absent.
+#    Reporting "not on PATH" when the binary is sitting in the standard install
+#    location is how a session ends up parsing .beans/ by hand all day.
+# 2. Still missing? Install it. A fresh cloud container ships no `beans` at all,
+#    and the fallback below — `.beans/*.md` parsed by hand — is a flat list with
+#    no priming, no milestone nesting and no `beans check`. That degraded view
+#    was what every such session actually got, which is not the same as having
+#    the work plan.
+#
+# Bounded and quiet: one `go install` over the module proxy, 180 s. A sandbox
+# with no Go or no egress falls through to the reader below rather than failing
+# the sweep — a session-start hook that exits non-zero takes the whole session's
+# priming with it.
+if ! command -v beans >/dev/null 2>&1 && [ -x "$HOME/.local/bin/beans" ]; then
+  PATH="$HOME/.local/bin:$PATH"
+  export PATH
+fi
+
 if ! command -v beans >/dev/null 2>&1 && [ -x "$REPO_ROOT/scripts/install-beans.sh" ]; then
   timeout 180 "$REPO_ROOT/scripts/install-beans.sh" >/dev/null 2>&1 || true
-  # `go install` lands the binary in a bin dir that may not be on this shell's
-  # PATH yet, so look where it actually goes before giving up on it.
+  # `go install` picks its bin dir from GOBIN/GOPATH, which may not be on this
+  # shell's PATH, so look where it actually went before giving up on it.
   for candidate in "${GOBIN:-}" "${GOPATH:+$GOPATH/bin}" "$HOME/go/bin" "$HOME/.local/bin"; do
     [ -n "$candidate" ] || continue
     if [ -x "$candidate/beans" ]; then PATH="$candidate:$PATH"; export PATH; break; fi
@@ -134,7 +146,20 @@ BEANCMDS
   echo '```'
   echo
 elif [ -d "$BEANS_DIR" ]; then
-  echo "_(beans CLI not on PATH — reading .beans/ directly; run \`scripts/install-beans.sh\` for full priming)_"
+  # An IMPERATIVE, not a parenthetical. The old wording tucked the remedy
+  # inside an aside, and a session on 2026-09-18 read it, carried on parsing
+  # .beans/ by hand, and did an entire session's durable work unclaimed —
+  # which is the exact failure the work-plan exists to prevent.
+  echo "> 🫘 **BEANS CLI IS NOT INSTALLED. Install it before doing durable work:**"
+  echo ">"
+  echo "> \`\`\`sh"
+  echo "> scripts/install-beans.sh && export PATH=\"\$HOME/.local/bin:\$PATH\""
+  echo "> \`\`\`"
+  echo ">"
+  echo "> Until then the list below is parsed from \`.beans/\` directly: titles and"
+  echo "> statuses only, with no bodies, no priorities and no blocking relations —"
+  echo "> so it cannot tell you what an item actually is or what it waits on."
+  echo
   found=0
   for f in "$BEANS_DIR"/*.md; do
     [ -f "$f" ] || continue
@@ -243,10 +268,15 @@ fi
 cat <<'EOF'
 **Recommended action:**
 
-1. If you'll do durable work, claim a bean (`beans <id> --status in-progress`)
-   or open one (`beans create "<title>"`) — see AGENTS.md and
-   `.claude/skills/local/bean-coordination.md`.
-2. If the default branch moved, dispatch a **background** subagent to triage the
+1. **Install the beans CLI if the section above says it is missing** —
+   `scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"`. Do this
+   FIRST: claiming and creating beans is not possible without it, and a
+   session that skips it does its work unclaimed.
+2. If you'll do durable work, claim a bean
+   (`beans update <id> --status in-progress`) or open one
+   (`beans create "<title>"`, after the exact-title existence check in
+   AGENTS.md) — see also `.claude/skills/local/bean-coordination.md`.
+3. If the default branch moved, dispatch a **background** subagent to triage the
    new landings + sibling activity above — don't do it in the foreground.
    Escalate only if it surfaces something actionable against the work-plan.
 EOF

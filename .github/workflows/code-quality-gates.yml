@@ -202,6 +202,16 @@ jobs:
       - name: workflow policy
         run: bun run check:workflow-policy
 
+      # Every `<folio:skill ref>` in a diagram names a skill that exists.
+      # `corpus-search` and `paper-relevance-triage` were referenced by two
+      # diagrams and resolved to nothing, so `workflow_next` would have handed
+      # an agent the name of something it cannot open. Dangling is a hard
+      # failure; an activity naming NO skill is only reported, because a human
+      # sign-off step has no skill to name and failing on it would force a
+      # fake ref onto a real step.
+      - name: workflow skill refs
+        run: bun run check:workflow-refs
+
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
       # source change. document-intake.md sat 35 lines behind its source and

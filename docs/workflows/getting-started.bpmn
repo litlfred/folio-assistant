@@ -227,6 +227,9 @@ answering?">
     <bpmn:serviceTask id="Task_ReportUrl" name="Hand over the
 live link">
       <bpmn:documentation>Confirmed live. The link is given as a link, and the author is told what is on it.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="getting-started" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_live</bpmn:incoming>
       <bpmn:outgoing>Flow_done1</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -234,6 +237,9 @@ live link">
     <bpmn:serviceTask id="Task_ReportPending" name="Say where it
 will be">
       <bpmn:documentation>A measured 404. The author is told the address and that the first build has not landed there yet — which is useful, and is not the same as being told it is live.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="getting-started" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_notyet</bpmn:incoming>
       <bpmn:outgoing>Flow_done2</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -241,6 +247,9 @@ will be">
     <bpmn:serviceTask id="Task_ReportUnknown" name="Say it could not
 be confirmed">
       <bpmn:documentation>No URL, no probe, or a failed request. Reported as "could not check", never as "not yet" and never as "live".</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="getting-started" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_unknown</bpmn:incoming>
       <bpmn:outgoing>Flow_done3</bpmn:outgoing>
     </bpmn:serviceTask>

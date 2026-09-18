@@ -56,10 +56,28 @@
   };
 
   function getGlobalLocale() {
-    try { return localStorage.getItem("fa-locale") || "en"; } catch (e) { return "en"; }
+    try { return localStorage.getItem("fa-locale") || "en"; } catch (_e) { return "en"; }
   }
   function setGlobalLocale(loc) {
-    try { localStorage.setItem("fa-locale", loc); } catch (e) { /* noop */ }
+    try { localStorage.setItem("fa-locale", loc); } catch (_e) { /* noop */ }
+  }
+
+  /* The remembered language, when it is worth pointing at: a locale the
+     visitor previously chose, that is not the one they are already reading,
+     and that this page actually has.
+
+     `fa-locale` was WRITE-ONLY before this: the sidebar switcher stored the
+     choice on click and nothing ever read it back, so picking French and
+     navigating anywhere landed you in English again with the preference
+     sitting in localStorage unused. This deliberately does NOT redirect --
+     a docs link that silently lands somewhere other than where it points is
+     worse than one extra click -- it just makes the remembered language
+     visibly one click away. */
+  function rememberedLocale(currentLang, available) {
+    var loc = getGlobalLocale();
+    if (!loc || loc === currentLang) return null;
+    if (loc !== "en" && available.indexOf(loc) === -1) return null;
+    return loc;
   }
 
   function localePath(basePath, locale) {
@@ -102,17 +120,20 @@
              "white-space:nowrap;"
     });
 
+    var remembered = rememberedLocale(currentLang, available);
+
     for (var i = 0; i < supported.length; i++) {
       var loc = supported[i];
       var isAvailable = loc === "en" || available.indexOf(loc) !== -1;
       var isCurrent = loc === currentLang;
+      var isRemembered = loc === remembered;
 
       // Available = clickable <a>. Unavailable = disabled <span>.
       var tab = el(isAvailable ? "a" : "span", {
         href: isAvailable ? localePath(basePath, loc) : undefined,
         "data-locale": loc,
         title: isAvailable
-          ? LOCALE_NAMES[loc]
+          ? LOCALE_NAMES[loc] + (isRemembered ? " \u2014 your saved language" : "")
           : LOCALE_NAMES[loc] + " \u2014 not yet translated",
         style: "display:inline-block;padding:4px 8px;border-radius:4px;" +
                "text-decoration:none;font-size:0.8rem;margin:0 1px;" +
@@ -121,7 +142,8 @@
                  ? "background:#3b82f6;color:#fff;font-weight:bold;"
                  : isAvailable
                    ? "color:#93c5fd;cursor:pointer;"
-                   : "color:#475569;cursor:default;opacity:0.5;")
+                   : "color:#475569;cursor:default;opacity:0.5;") +
+               (isRemembered ? "box-shadow:inset 0 0 0 1px #93c5fd;" : "")
       }, loc.toUpperCase());
 
       if (isAvailable && !isCurrent) {
@@ -199,15 +221,18 @@
     }, "\uD83C\uDF10");
     container.appendChild(globe);
 
+    var remembered = rememberedLocale(currentLang, available);
+
     for (var i = 0; i < supported.length; i++) {
       var loc = supported[i];
       var isAvailable = loc === "en" || available.indexOf(loc) !== -1;
       var isCurrent = loc === currentLang;
+      var isRemembered = loc === remembered;
 
       var tab = el(isAvailable ? "a" : "span", {
         href: isAvailable ? localePath(basePath, loc) : undefined,
         title: isAvailable
-          ? LOCALE_NAMES[loc]
+          ? LOCALE_NAMES[loc] + (isRemembered ? " \u2014 your saved language" : "")
           : LOCALE_NAMES[loc] + " \u2014 not yet translated",
         style: "display:inline-block;padding:2px 7px;border-radius:3px;" +
                "text-decoration:none;font-size:0.8rem;" +
@@ -216,14 +241,16 @@
                  ? "background:#3b82f6;color:#fff;font-weight:bold;"
                  : isAvailable
                    ? "color:#3b82f6;cursor:pointer;"
-                   : "color:#94a3b8;cursor:default;opacity:0.4;")
+                   : "color:#94a3b8;cursor:default;opacity:0.4;") +
+               (isRemembered ? "box-shadow:inset 0 0 0 1px #3b82f6;" : "")
       }, loc.toUpperCase());
 
       if (isAvailable && !isCurrent) {
-        (function (link) {
+        (function (locale, link) {
+          link.addEventListener("click", function () { setGlobalLocale(locale); });
           link.addEventListener("mouseenter", function () { link.style.background = "rgba(59,130,246,0.1)"; });
           link.addEventListener("mouseleave", function () { link.style.background = ""; });
-        })(tab);
+        })(loc, tab);
       }
       container.appendChild(tab);
     }
@@ -631,6 +658,63 @@
   // the stylesheet uses it to let the code out of the sidebar's stacking
   // context and pin it. Recomputed from the DOM rather than counted, because a
   // counter drifts the moment a figure is removed or re-mounted.
+  /* ── Automatic full width ────────────────────────────────────────────── */
+
+  /* A workflow diagram is drawn far wider than the text column it lands in, so
+     it arrives shrunk to the point where the label inside a task box is not
+     readable -- and the reader has to notice a toolbar and press a button
+     before the page shows them the thing the page is about.
+
+     So a figure that is genuinely wider than its column now starts expanded.
+     Three conditions, because auto-expanding the wrong figure is worse than
+     not auto-expanding at all:
+
+       - the viewport is wide enough for full width to mean anything (the same
+         50rem the CSS uses -- on a phone the column IS the display);
+       - the drawing's own coordinate width exceeds the column by a clear
+         margin, so a figure that already fits is left alone;
+       - the reader has not turned it off. That last one is the difference
+         between a default and an imposition: press "Full width" to collapse a
+         figure and the choice is remembered, and nothing auto-expands again.
+
+     The stored value is READ, not just written. `fa-locale` was stored by this
+     same file for a week and never read back, which is the bug this deliberately
+     does not repeat. */
+  var FULLWIDTH_PREF = "fa-figure-fullwidth";
+  var AUTO_MIN_VIEWPORT_PX = 800;   /* 50rem at the theme's 16px root */
+  var AUTO_MIN_RATIO = 1.25;        /* drawing must be 25% wider than its column */
+
+  function fullWidthPref() {
+    try { return localStorage.getItem(FULLWIDTH_PREF); } catch (_e) { return null; }
+  }
+  function setFullWidthPref(v) {
+    try { localStorage.setItem(FULLWIDTH_PREF, v); } catch (_e) { /* noop */ }
+  }
+
+  /* The drawing's intrinsic width in its own coordinates, from `viewBox`.
+     `getBoundingClientRect` cannot answer this: it reports the width the
+     figure was SQUEEZED to, which is the column width, so the ratio would be
+     1 for every figure and nothing would ever qualify. */
+  function intrinsicWidth(scope) {
+    var svg = scope.querySelector("svg");
+    if (!svg) return 0;
+    var vb = svg.getAttribute("viewBox");
+    if (!vb) return 0;
+    var parts = vb.split(/[\s,]+/);
+    var w = parseFloat(parts[2]);
+    return isFinite(w) ? w : 0;
+  }
+
+  function shouldAutoExpand(scope) {
+    if (fullWidthPref() === "off") return false;
+    if (window.innerWidth < AUTO_MIN_VIEWPORT_PX) return false;
+    var column = scope.clientWidth;
+    if (!column) return false;
+    var natural = intrinsicWidth(scope);
+    if (!natural) return false;
+    return natural / column >= AUTO_MIN_RATIO;
+  }
+
   function markFullWidthOnRoot() {
     document.documentElement.classList.toggle(
       "fa-has-fullwidth",
@@ -699,6 +783,9 @@
     wide.addEventListener("click", function () {
       var on = scope.classList.toggle("is-fullwidth");
       wide.setAttribute("aria-pressed", on ? "true" : "false");
+      // An explicit press is the reader overriding the default, in either
+      // direction, and it sticks for the next page too.
+      setFullWidthPref(on ? "on" : "off");
       applyFullWidth();
       markFullWidthOnRoot();
     });
@@ -801,6 +888,14 @@
     [out, level, into, reset, wide].forEach(function (n) { tools.appendChild(n); });
     scope.parentNode.insertBefore(tools, scope);
     apply();
+
+    // After insertion, so `clientWidth` is the real column width rather than 0.
+    if (shouldAutoExpand(scope)) {
+      scope.classList.add("is-fullwidth");
+      wide.setAttribute("aria-pressed", "true");
+      applyFullWidth();
+      markFullWidthOnRoot();
+    }
   }
 
   function mountFigures() {

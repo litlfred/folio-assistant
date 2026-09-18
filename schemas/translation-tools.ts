@@ -60,6 +60,13 @@ export const TranslatableFormatSchema = z.object({
   extractModule: z.string().optional(),
   /** TypeScript module that implements injection (relative to repo root). */
   injectModule: z.string().optional(),
+  /**
+   * Notes about translating THIS format specifically, as distinct from
+   * `ContentTypeTranslation.notes`, which describes the content type as a
+   * whole. "Lean 4 terms stay in English" and "the diagram is re-rendered
+   * after injection" are properties of the format, not of the folio.
+   */
+  notes: z.string().optional(),
 });
 
 export type TranslatableFormat = z.infer<typeof TranslatableFormatSchema>;
@@ -191,7 +198,15 @@ export const CONTENT_TYPE_TRANSLATIONS: ContentTypeTranslation[] = [
     ],
     rtlSupported: true,
     bpmnDiagrams: [
-      "docs/workflows/publication-workflow.bpmn",
+      // Was "docs/workflows/publication-workflow.bpmn", which has never
+      // existed — `docs/publication-workflow.md` is a PAGE that embeds three
+      // diagrams, and no .bpmn of that name was ever written. The publication
+      // process itself is draft-to-publication ("From corpus to published
+      // folio"), so that is what this entry meant. A path that does not
+      // resolve makes the re-render silently skip it, which reads exactly
+      // like a diagram that needed no work. `check:workflow-refs` now fails
+      // on it.
+      "docs/workflows/draft-to-publication.bpmn",
       "docs/workflows/translation-workflow.bpmn",
       "docs/workflows/human-translation-workflow.bpmn",
     ],

@@ -367,15 +367,32 @@ memory entry is wrong — fix it.
 
 ## At session start
 
-**Get `beans` actually running — do not settle for the degraded reader.**
-`scripts/session-start-coord-sweep.sh` now installs the CLI itself when it is
-missing (bounded: one `go install` over the module proxy, 180 s, quiet) and puts
-the resulting bin dir on `PATH` before priming. A fresh cloud container ships no
-`beans`, and what every such session used to get was the fallback — `.beans/*.md`
-parsed by hand into a flat list, with no priming, no milestone nesting and no
-`beans check`. That is not the work plan; it is a directory listing of it.
+**Get `beans` in hand first, before any durable work.** A fresh container has no
+`beans` on `PATH`, and the fallback that parses `.beans/` directly gives you
+titles and statuses only — no bodies, no priorities, no blocking relations — so
+it cannot tell you what an item is or what it waits on, and you cannot claim or
+create anything with it.
 
-The sweep then emits, in order:
+```sh
+scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
+```
+
+The sweep now does both halves of that for you: it prepends `~/.local/bin` when
+the binary is already there (so a second session does not re-install), and when
+it genuinely is missing it **runs the installer** — bounded and quiet, one
+`go install` over the module proxy, 180 s, falling through to the degraded
+reader rather than failing the hook. If the sweep still says the CLI is missing
+after that, it could not be installed here.
+
+This is a rule because skipping it is cheap and invisible. On 2026-09-18 a
+session read the sweep's then-parenthetical "run `scripts/install-beans.sh` for
+full priming", carried on reading `.beans/` by hand, and completed two merged
+PRs' worth of durable work **unclaimed** — the exact failure the work plan
+exists to prevent, and one no sibling session could have seen coming. The
+installer call above is the same lesson applied one step earlier: an imperative
+somebody has to act on is weaker than the act itself.
+
+The sweep emits, in order:
 
 1. **Interaction preferences** (`.folio/interaction.json`) — first, because it
    changes the form of every question that follows. See
@@ -394,8 +411,8 @@ The sweep then emits, in order:
 
 Heavy triage of new commits belongs in a background subagent, not the foreground.
 
-If you are running the pieces by hand rather than the sweep: `scripts/install-beans.sh`,
-then `beans prime`, `beans list`, `beans roadmap`.
+Running the pieces by hand instead: `scripts/install-beans.sh`, then
+`beans prime`, `beans list`, `beans roadmap`.
 
 ## Agentic harness — interaction model
 
@@ -414,6 +431,18 @@ rather than implementing directly. Detection signals and session-state handling
 are in [`skills/folio-core/crdm-detect.md`](skills/folio-core/crdm-detect.md);
 the full six-phase process is in
 [`skills/folio-core/crdm-requirements-workflow.md`](skills/folio-core/crdm-requirements-workflow.md).
+
+**The CRDM process is executable — do not hand-roll a phase tracker.**
+`docs/workflows/crdm-requirements.bpmn` loads like every other diagram here,
+so `workflow_start` / `workflow_next` / `workflow_complete` run it, and
+`workflow_complete` refuses a step that is not enabled. Every activity in the
+agent's lane carries `<folio:skill ref>`, so `workflow_next` returns the skill
+to run rather than just a step name; `A_Implement`, `A_CreateBeans` and
+`A_Close` also carry the bean operation the engine performs. `crdm_start` and
+`crdm_status` are documented as **proposed** in older text and should not be
+built: a second set of tools over the same diagram is a second answer to
+"where are we", free to disagree with the first, and workflow state under
+`.folio/workflow/` is committed so a sibling session sees the same position.
 
 Key rules:
 - Feature work must be linked to a GitHub issue (scan before creating; do not

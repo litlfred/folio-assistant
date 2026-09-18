@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+<definitions xmlns:folio="http://folio-assistant.dev/bpmn" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
              xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
              xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
              xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
@@ -23,6 +23,37 @@
 
   <process id="Process_Translation" name="Translation Workflow" isExecutable="false">
 
+    <!-- ── Lanes: who is accountable for each step ─────────────
+         An activity in no lane is a step nobody owns. The split is by
+         actor, not by tooling: `serviceTask` is the platform acting,
+         `userTask` is a person acting, and a gateway is the platform
+         reading state that a person may have produced. Gateway_Signoff
+         therefore sits with the platform even though what it reads is a
+         human decision.  ──────────────────────────────────────── -->
+    <laneSet id="LaneSet_Translation">
+      <lane id="Lane_Author" name="Author (source content)">
+        <flowNodeRef>Start_ContentAuthored</flowNodeRef>
+      </lane>
+      <lane id="Lane_Platform" name="Agent / platform (automated)">
+        <flowNodeRef>Task_PotExtract</flowNodeRef>
+        <flowNodeRef>Task_Translate</flowNodeRef>
+        <flowNodeRef>Task_PoInject</flowNodeRef>
+        <flowNodeRef>Task_RoundTripQA</flowNodeRef>
+        <flowNodeRef>Gateway_Drift</flowNodeRef>
+        <flowNodeRef>Gateway_PostQA</flowNodeRef>
+        <flowNodeRef>Task_WriteUnofficial</flowNodeRef>
+        <flowNodeRef>Gateway_Signoff</flowNodeRef>
+        <flowNodeRef>Task_WriteOfficial</flowNodeRef>
+        <flowNodeRef>Task_StalenessCheck</flowNodeRef>
+        <flowNodeRef>End_TranslationComplete</flowNodeRef>
+        <flowNodeRef>End_Stale</flowNodeRef>
+      </lane>
+      <lane id="Lane_Reviewer" name="Human reviewer / adjudicator">
+        <flowNodeRef>Task_Adjudicate</flowNodeRef>
+        <flowNodeRef>Task_Signoff</flowNodeRef>
+      </lane>
+    </laneSet>
+
     <!-- ── Start ──────────────────────────────────────────────── -->
     <startEvent id="Start_ContentAuthored" name="Content authored&#10;(source locale)">
       <documentation>Source content exists in the folio's defaultLocale.
@@ -31,6 +62,10 @@ A change to source content also triggers this event for staleness re-evaluation.
 
     <!-- ── Extract ────────────────────────────────────────────── -->
     <serviceTask id="Task_PotExtract" name="Extract translatable strings&#10;(POT generation)">
+      <extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </extensionElements>
+
       <documentation>Scans content nodes and extracts translatable strings
 to .pot files. Excludes math, labels, code, and Lean companions.
 Tool: translation_extract MCP tool or bun run content/pipeline/pot-extract.ts</documentation>
@@ -38,6 +73,10 @@ Tool: translation_extract MCP tool or bun run content/pipeline/pot-extract.ts</d
 
     <!-- ── Translate ──────────────────────────────────────────── -->
     <serviceTask id="Task_Translate" name="Produce translation&#10;(PO file)">
+      <extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </extensionElements>
+
       <documentation>Translation of .pot → .po by one of:
 1. Existing PO from smart-base (Weblate/Crowdin/Launchpad)
 2. FHIR/translation-utils po-translate CLI (DeepL/Google, tagged #fuzzy)
@@ -49,6 +88,10 @@ Result: &lt;locale&gt;/block.po with msgid/msgstr pairs.</documentation>
 
     <!-- ── Inject ─────────────────────────────────────────────── -->
     <serviceTask id="Task_PoInject" name="Inject translations&#10;(PO → Markdown)">
+      <extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </extensionElements>
+
       <documentation>Reads .po file and source .md, substitutes msgstr for
 msgid, preserves non-translatable elements, writes translated .md to
 translations/&lt;locale&gt;/block.md.
@@ -57,6 +100,10 @@ Tool: translation_inject MCP tool or bun run content/pipeline/po-inject.ts</docu
 
     <!-- ── Round-trip QA ──────────────────────────────────────── -->
     <serviceTask id="Task_RoundTripQA" name="Round-trip translation QA&#10;(back-translate)">
+      <extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </extensionElements>
+
       <documentation>Bean: folio-assistant-ktt2
 Back-translates the target-language .md into the source language and
 compares meaning with the original. Detects semantic drift and
@@ -84,6 +131,10 @@ right is a human call.</documentation>
 
     <!-- ── Write status (unofficial) ──────────────────────────── -->
     <serviceTask id="Task_WriteUnofficial" name="Write status.json&#10;(unofficial)">
+      <extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </extensionElements>
+
       <documentation>Records the translation as unofficial in
 translations/&lt;locale&gt;/status.json:
 { official: false, generatedBy: "...", generatedAt: "..." }
@@ -95,6 +146,10 @@ The translation is usable but carries a visible warning badge.</documentation>
 
     <!-- ── Official sign-off ──────────────────────────────────── -->
     <userTask id="Task_Signoff" name="Sign off translation&#10;(human adjudicator)">
+      <extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </extensionElements>
+
       <documentation>A human reviewer signs off the translation at the
 chosen hierarchy level (block, section, chapter, or folio).
 Updates status.json:
@@ -104,12 +159,20 @@ Tool: translation_signoff MCP tool</documentation>
 
     <!-- ── Write status (official) ────────────────────────────── -->
     <serviceTask id="Task_WriteOfficial" name="Write status.json&#10;(official)">
+      <extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </extensionElements>
+
       <documentation>Records the sign-off with the SHA-256 of the source
 .md, enabling staleness detection on future source changes.</documentation>
     </serviceTask>
 
     <!-- ── Staleness check ────────────────────────────────────── -->
     <serviceTask id="Task_StalenessCheck" name="Check staleness&#10;(source hash)">
+      <extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </extensionElements>
+
       <documentation>On source content change: computes sha256(source.md)
 and compares to each translation's status.json sourceHash. If they
 differ, sets stale: true. The translation remains visible with a

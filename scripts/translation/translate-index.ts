@@ -7,9 +7,9 @@
  *   4. Write QA sidecar with per-string results
  *   5. Write updated status.json
  */
-import { extractMarkdown, formatPot } from "../../content/pipeline/pot-extract.ts";
+import { extractMarkdown } from "../../content/pipeline/pot-extract.ts";
 import { parsePo, injectMarkdown } from "../../content/pipeline/po-inject.ts";
-import { readFileSync, writeFileSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { createHash } from "crypto";
 
 const SOURCE_PATH = "docs/index.md";

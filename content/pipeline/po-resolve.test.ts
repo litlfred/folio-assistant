@@ -2,7 +2,7 @@
  * Tests for content/pipeline/po-resolve.ts — PO source resolution.
  */
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
-import { mkdirSync, writeFileSync, rmSync, existsSync } from "node:fs";
+import { mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { resolvePoSources, mergePoSources, availableLocales } from "./po-resolve";
 import { parsePo } from "./po-inject";
