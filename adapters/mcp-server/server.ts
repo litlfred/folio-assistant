@@ -30,7 +30,8 @@ import {
 // module is already loaded eagerly for `leanStatusBucket`, so the dynamic
 // import deferred nothing; importing it here is what makes the call site
 // typecheck.
-import { leanStatusBucket, renderBlock } from "../../content/pipeline/render-latex";
+import { renderBlock } from "../../content/pipeline/render-latex";
+import { leanStatusBucket } from "../../schemas/types";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { registerRenderTools } from "./tools/render.js";

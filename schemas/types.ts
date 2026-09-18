@@ -1476,3 +1476,41 @@ export interface ValidationResult {
   valid: boolean;
   issues: ValidationIssue[];
 }
+
+/**
+ * Collapse a block's Lean status into the three buckets the PDF ∀ mark
+ * colour-codes (see `\leanstatusmark` / `\proofstatuslegend` in
+ * latex/preamble.tex):
+ *
+ *   - "compiled"  green  — built sorry-free.
+ *   - "stubbed"   red    — a `: True`/placeholder or vacuous/trivial goal
+ *                          flagged by machine QA (`validation: stub/trivial/
+ *                          error`): NOT a genuine formalisation.
+ *   - "drafted"   purple — a genuine statement stated in Lean that is neither
+ *                          a stub nor yet sorry-free-compiled — including a
+ *                          block whose `.lean` carries a (cited) `sorry`
+ *                          (`validation: not_checked`). A referenced `sorry`
+ *                          is a deliberate deferral, not a vacuous stub.
+ *
+ * `sorryFree` wins outright; otherwise we map the `validation` enum. An
+ * unknown/absent validation on a block that *does* carry a Lean ref defaults
+ * to "drafted" (it is stated, just not yet checked).
+ */
+export function leanStatusBucket(
+  lean: { sorryFree?: boolean; validation?: string } | undefined,
+): "stubbed" | "drafted" | "compiled" {
+  if (!lean) return "stubbed";
+  if (lean.sorryFree === true) return "compiled";
+  switch (lean.validation) {
+    case "leanok":
+    case "validated":
+      return "compiled";
+    case "stub":
+    case "trivial":
+    case "error":
+      return "stubbed";
+    default:
+      // not_checked / external / axioms_only / undefined
+      return "drafted";
+  }
+}
