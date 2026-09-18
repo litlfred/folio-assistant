@@ -15,7 +15,7 @@
   
 
     
-    .site-nav > ul.nav-list:first-child > li:not(:nth-child(12)) > a,
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(13)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li a {
       background-image: none;
     }
@@ -25,12 +25,12 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(12) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(13) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(12) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(13) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(12) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(13) > ul.nav-list {
       display: block;
     }
   </style>
@@ -50,20 +50,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Skills &amp; roles | folio-assistant</title>
+<title>Beans and todos | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Skills &amp; roles" />
-<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Beans and todos" />
+<meta property="og:locale" content="en" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/skills.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/skills.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/beans-and-todos.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/beans-and-todos.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Skills &amp; roles" />
+<meta property="twitter:title" content="Beans and todos" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Skills &amp; roles","url":"https://litlfred.github.io/folio-assistant/skills.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Beans and todos","url":"https://litlfred.github.io/folio-assistant/beans-and-todos.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -301,669 +301,242 @@
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="skills--roles">
+            <h1 class="no_toc" id="beans-and-todos">
   
   
-    <a href="#skills--roles" class="anchor-heading" aria-labelledby="skills--roles"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Skills &amp; roles
+    <a href="#beans-and-todos" class="anchor-heading" aria-labelledby="beans-and-todos"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Beans and todos
   
   
 </h1>
     
 
-<p>This page is the master list of every <strong>skill</strong> and <strong>role</strong> in folio-assistant,
-and explains how they fit together with the LLM. For the typed input/output
-contract of each skill, see the <a href="reference/skills/">Skill schema reference</a>.</p>
-
+<details open="">
+  <summary class="text-delta">On this page</summary>
 <ol id="markdown-toc">
-  <li><a href="#how-it-works-together-with-the-llm" id="markdown-toc-how-it-works-together-with-the-llm">How it works together with the LLM</a></li>
-  <li><a href="#skills" id="markdown-toc-skills">Skills</a>    <ol>
-      <li><a href="#where-skills-live-and-their-status" id="markdown-toc-where-skills-live-and-their-status">Where skills live (and their status)</a></li>
-      <li><a href="#cross-cutting-content-lifecycle" id="markdown-toc-cross-cutting-content-lifecycle">Cross-cutting: <code class="language-plaintext highlighter-rouge">content-lifecycle</code></a></li>
-      <li><a href="#documents--policy-guidance-authoring-document" id="markdown-toc-documents--policy-guidance-authoring-document">Documents &amp; policy guidance: <code class="language-plaintext highlighter-rouge">authoring-document</code></a></li>
-      <li><a href="#papers--books-authoring-math" id="markdown-toc-papers--books-authoring-math">Papers &amp; books: <code class="language-plaintext highlighter-rouge">authoring-math</code></a></li>
-      <li><a href="#who-smart-guidelines-authoring-who-smart-guidelines" id="markdown-toc-who-smart-guidelines-authoring-who-smart-guidelines">WHO SMART Guidelines: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code></a></li>
-      <li><a href="#agentplatform-skills-srcskills" id="markdown-toc-agentplatform-skills-srcskills">Agent/platform skills (<code class="language-plaintext highlighter-rouge">src/skills</code>)</a></li>
-      <li><a href="#local-coordination-skills-claudeskillslocal" id="markdown-toc-local-coordination-skills-claudeskillslocal">Local coordination skills (<code class="language-plaintext highlighter-rouge">.claude/skills/local</code>)</a></li>
-      <li><a href="#platform-skill-bundles-skillsfolio-core-skillsfolio-document-adapter-skillsfolio-paper-adapter" id="markdown-toc-platform-skill-bundles-skillsfolio-core-skillsfolio-document-adapter-skillsfolio-paper-adapter">Platform skill bundles (<code class="language-plaintext highlighter-rouge">skills/folio-core</code>, <code class="language-plaintext highlighter-rouge">skills/folio-document-adapter</code>, <code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter</code>)</a></li>
-    </ol>
-  </li>
-  <li><a href="#roles-actors" id="markdown-toc-roles-actors">Roles (actors)</a>    <ol>
-      <li><a href="#people" id="markdown-toc-people">People</a></li>
-      <li><a href="#system-actors" id="markdown-toc-system-actors">System actors</a></li>
-      <li><a href="#role-assignment" id="markdown-toc-role-assignment">Role assignment</a></li>
-    </ol>
-  </li>
-  <li><a href="#capabilities--requirements" id="markdown-toc-capabilities--requirements">Capabilities &amp; requirements</a></li>
-  <li><a href="#see-also" id="markdown-toc-see-also">See also</a></li>
-</ol><hr />
-<h2 id="how-it-works-together-with-the-llm">
-  
-  
-    <a href="#how-it-works-together-with-the-llm" class="anchor-heading" aria-labelledby="how-it-works-together-with-the-llm"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it works together with the LLM
-  
-  
-</h2>
-    
-
-<p>folio-assistant gives an LLM agent a structured way to do real authoring work.
-Five concepts compose:</p>
-
-<pre><code class="language-mermaid">flowchart TD
-    LLM[LLM agent] --&gt;|skill_list / skill_fetch| Skill[Skill&lt;br/&gt;schema-bounded unit of work]
-    Skill --&gt; Pkg[Skill package&lt;br/&gt;groups skills + Docker deps]
-    Skill --&gt; Schema[JSON Schema&lt;br/&gt;typed input/output]
-    LLM --&gt; Role[Role / actor&lt;br/&gt;who the agent acts as]
-    Role --&gt;|RBAC| Cap[Capabilities&lt;br/&gt;what the environment can do]
-    Role --&gt; Stage[Lifecycle stage&lt;br/&gt;plan→author→…→retire]
-    Cap --&gt; Req[Requirements&lt;br/&gt;gates that must hold]
-</code></pre>
-
-<ol>
-  <li><strong>Skill</strong> — a documented, schema-bounded unit of work (e.g.
-<code class="language-plaintext highlighter-rouge">lean-formalization</code>). The agent discovers skills with the <code class="language-plaintext highlighter-rouge">skill_list</code> MCP
-tool and loads a skill’s instructions with <code class="language-plaintext highlighter-rouge">skill_fetch</code>. Each skill has a
-typed <a href="reference/skills/">input/output contract</a>.</li>
-  <li><strong>Skill package</strong> — a group of related skills that also declares its
-Docker/runtime dependencies (<code class="language-plaintext highlighter-rouge">package-manifest.json</code>).</li>
-  <li><strong>Role (actor)</strong> — <em>who</em> the agent is acting as. The current user maps to a
-role via <code class="language-plaintext highlighter-rouge">role-assignments.json</code>; the role’s <strong>capabilities</strong> bound what the
-agent may do (RBAC, <code class="language-plaintext highlighter-rouge">src/core/rbac.ts</code>).</li>
-  <li><strong>Capability</strong> — a concrete environment ability (e.g. <code class="language-plaintext highlighter-rouge">latex-compiler</code>,
-<code class="language-plaintext highlighter-rouge">lean-toolchain</code>). Skills require capabilities; <code class="language-plaintext highlighter-rouge">check_dependencies</code> probes
-them.</li>
-  <li><strong>Requirement</strong> — a gate that must hold (e.g. <code class="language-plaintext highlighter-rouge">commit-hygiene</code>,
-<code class="language-plaintext highlighter-rouge">lean-verification</code>) before/while a stage proceeds.</li>
+  <li><a href="#two-things-one-word" id="markdown-toc-two-things-one-word">Two things that share a word</a></li>
+  <li><a href="#the-agent-bean-lifecycle" id="markdown-toc-the-agent-bean-lifecycle">The agent bean lifecycle</a></li>
+  <li><a href="#never-delete" id="markdown-toc-never-delete">A bean is never deleted</a></li>
+  <li><a href="#two-layers" id="markdown-toc-two-layers">Engine operations are not CLI calls</a></li>
+  <li><a href="#human-todos" id="markdown-toc-human-todos">Human todos — not built yet</a></li>
 </ol>
 
-<p>The loop, in practice: the agent primes the work-plan (<code class="language-plaintext highlighter-rouge">work_plan_prime</code>),
-checks it has the capabilities it needs (<code class="language-plaintext highlighter-rouge">check_dependencies</code>), lists and loads
-the right skill (<code class="language-plaintext highlighter-rouge">skill_list</code> → <code class="language-plaintext highlighter-rouge">skill_fetch</code>), does the work as the user’s role
-(subject to RBAC), and validates/builds/publishes through the content adapter’s
-tools.</p><hr />
-<h2 id="skills">
-  
-  
-    <a href="#skills" class="anchor-heading" aria-labelledby="skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Skills
-  
-  
-</h2>
-    
-<h3 id="where-skills-live-and-their-status">
-  
-  
-    <a href="#where-skills-live-and-their-status" class="anchor-heading" aria-labelledby="where-skills-live-and-their-status"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where skills live (and their status)
-  
-  
-</h3>
-    
+</details>
 
-<p>A skill is defined across a few layers — not a single file. For any skill:</p>
+<p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/content/docs/beans-and-todos"><code class="language-plaintext highlighter-rouge">content/docs/beans-and-todos/</code></a> — each section below links to its own source.</em></p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Layer</th>
-      <th>Location</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Definition</strong> (roles, required capabilities, requirements, routing patterns, lifecycle stages, schema ref)</td>
-      <td><code class="language-plaintext highlighter-rouge">.claude/skills/local/&lt;skill&gt;.json</code></td>
-      <td>✅ all 22 authoring skills — validated in CI by <code class="language-plaintext highlighter-rouge">scripts/validate-skills.ts</code></td>
-    </tr>
-    <tr>
-      <td><strong>Typed contract</strong> (input/output JSON Schema)</td>
-      <td><code class="language-plaintext highlighter-rouge">schemas/skills/&lt;skill&gt;/</code></td>
-      <td>✅ all 22 — see <a href="reference/skills/">reference</a></td>
-    </tr>
-    <tr>
-      <td><strong>Instruction body</strong> (prose how-to the LLM loads) — browse them in the <a href="reference/skill-instructions/">Skill instructions</a> reference</td>
-      <td><code class="language-plaintext highlighter-rouge">skills/content-lifecycle/*.md</code>, <code class="language-plaintext highlighter-rouge">skills/folio-*-adapter/*.md</code>, <code class="language-plaintext highlighter-rouge">src/skills/*.md</code></td>
-      <td>✅ lifecycle, agent, platform-bundle and <strong>authoring-document</strong> skills; ⏳ <strong>authoring-math / authoring-who-smart-guidelines bodies are TBD</strong> (those packages ship the manifest + JSON definitions)</td>
-    </tr>
-    <tr>
-      <td><strong>Package</strong> (Docker/runtime deps)</td>
-      <td><code class="language-plaintext highlighter-rouge">skills/&lt;package&gt;/package-manifest.json</code></td>
-      <td>✅ all four packages</td>
-    </tr>
-  </tbody>
-</table></div>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/overview.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/overview.md">✎ Edit</a></p>
 
-<p>So <em>yes, the skills exist</em> — as structured definitions + typed schemas, with prose
-bodies shipped for the lifecycle and agent skills. The <code class="language-plaintext highlighter-rouge">skill_fetch</code> MCP tool
-currently serves the <code class="language-plaintext highlighter-rouge">src/skills/*.md</code> bodies; the authoring-skill prose bodies
-are the next thing to fill in (the definitions and contracts they’d attach to
-are already in place).</p>
-<h3 id="cross-cutting-content-lifecycle">
-  
-  
-    <a href="#cross-cutting-content-lifecycle" class="anchor-heading" aria-labelledby="cross-cutting-content-lifecycle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cross-cutting: <code class="language-plaintext highlighter-rouge">content-lifecycle</code>
-  
-  
-</h3>
-    
+<p><strong>Beans are for agents. Todos are for humans.</strong> They share a word in ordinary
+speech and nothing else, and conflating them is how a work plan comes to hold
+two kinds of thing that need different handling.</p>
 
-<p>The lifecycle stages that apply to <strong>every</strong> content type:</p>
+<p>A <strong>bean</strong> is process state an agent keeps while doing work: claimed before
+starting so a sibling session avoids it, kept current as the work proceeds,
+and closed with a record of what changed. The store is <code class="language-plaintext highlighter-rouge">.beans/</code>, committed,
+so it survives a reclaimed container and is visible to every other session.</p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Stage</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="reference/skills/content-plan.html"><code class="language-plaintext highlighter-rouge">content-plan</code></a></td>
-      <td>plan</td>
-      <td>Scope, team, timeline, governance</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
-      <td>author</td>
-      <td>Create structured artifacts</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
-      <td>validate</td>
-      <td>Check schema + constraints</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
-      <td>review</td>
-      <td>Formal review &amp; approval</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a></td>
-      <td>test</td>
-      <td>End-to-end QA / build green</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
-      <td>publish</td>
-      <td>Render &amp; deploy</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a></td>
-      <td>feedback</td>
-      <td>Collect &amp; triage feedback</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-retire</code></td>
-      <td>retire</td>
-      <td>Deprecate / archive</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="documents--policy-guidance-authoring-document">
-  
-  
-    <a href="#documents--policy-guidance-authoring-document" class="anchor-heading" aria-labelledby="documents--policy-guidance-authoring-document"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Documents &amp; policy guidance: <code class="language-plaintext highlighter-rouge">authoring-document</code>
-  
-  
-</h3>
-    
+<p>A <strong>todo</strong> is a person’s own reminder — what they mean to look at next. It is
+theirs to create, reorder and discard on no schedule but their own, and
+nothing about an agent’s process should be deciding when it is done.</p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="reference/skills/document-authoring.html"><code class="language-plaintext highlighter-rouge">document-authoring</code></a></td>
-      <td>Create and revise blocks in a prose folio</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/document-structure.html"><code class="language-plaintext highlighter-rouge">document-structure</code></a></td>
-      <td>Chapters and sections — add, remove, reorder</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a></td>
-      <td>Carry a recommendation, requirement or rule</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/document-publishing.html"><code class="language-plaintext highlighter-rouge">document-publishing</code></a></td>
-      <td>Markdown → HTML / PDF, no TeX</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="papers--books-authoring-math">
+<p>This page describes the first in full. The second is <strong>not built yet</strong> and
+says so.</p>
+<h2 id="two-things-one-word">
   
   
-    <a href="#papers--books-authoring-math" class="anchor-heading" aria-labelledby="papers--books-authoring-math"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Papers &amp; books: <code class="language-plaintext highlighter-rouge">authoring-math</code>
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="reference/skills/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a></td>
-      <td>Formalize statements/proofs in Lean 4</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a></td>
-      <td>Author LaTeX documents</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a></td>
-      <td>Verify proofs, audit <code class="language-plaintext highlighter-rouge">sorry</code>/axioms</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">scientific-visualization</code></td>
-      <td>Figures &amp; diagrams</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">hypothesis-generation</code></td>
-      <td>Propose conjectures / directions</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">scientific-critical-thinking</code></td>
-      <td>Adversarial review of arguments</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="who-smart-guidelines-authoring-who-smart-guidelines">
-  
-  
-    <a href="#who-smart-guidelines-authoring-who-smart-guidelines" class="anchor-heading" aria-labelledby="who-smart-guidelines-authoring-who-smart-guidelines"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WHO SMART Guidelines: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code>
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="reference/skills/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a></td>
-      <td>L2 DAK artifacts (data dictionary, etc.)</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/l3-fhir-authoring.html"><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></a></td>
-      <td>L3 FHIR resources via FSH</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/bpmn-authoring.html"><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></a></td>
-      <td>BPMN 2.0 business processes</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/dmn-authoring.html"><code class="language-plaintext highlighter-rouge">dmn-authoring</code></a></td>
-      <td>DMN decision tables</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/terminology-management.html"><code class="language-plaintext highlighter-rouge">terminology-management</code></a></td>
-      <td>Code systems / value sets</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a></td>
-      <td>Validate against FHIR profiles</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
-      <td>Build &amp; publish the IG</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a></td>
-      <td>QA gates</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="agentplatform-skills-srcskills">
-  
-  
-    <a href="#agentplatform-skills-srcskills" class="anchor-heading" aria-labelledby="agentplatform-skills-srcskills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agent/platform skills (<code class="language-plaintext highlighter-rouge">src/skills</code>)
-  
-  
-</h3>
-    
-
-<p>Skills the LLM uses to work effectively in the repo (loaded via <code class="language-plaintext highlighter-rouge">skill_fetch</code>,
-package <code class="language-plaintext highlighter-rouge">folio-assistant</code>):</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">corpus-grep</code></td>
-      <td>Search across the content corpus</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<blockquote>
-  <p><code class="language-plaintext highlighter-rouge">editor</code>, <code class="language-plaintext highlighter-rouge">readability-editing</code>, <code class="language-plaintext highlighter-rouge">todo-review</code>, <code class="language-plaintext highlighter-rouge">symbiotic-interaction</code>, and
-<code class="language-plaintext highlighter-rouge">deployment-auth</code> now live (generalized) in the <strong><code class="language-plaintext highlighter-rouge">folio-core</code></strong> bundle below —
-fetch them with <code class="language-plaintext highlighter-rouge">package_name="folio-core"</code>.</p>
-</blockquote>
-
-<p>A paper folio wants the <code class="language-plaintext highlighter-rouge">authoring-document</code> skills too: a paper <em>is</em> a
-document plus Lean-bearing blocks, so <code class="language-plaintext highlighter-rouge">document-structure</code> and
-<code class="language-plaintext highlighter-rouge">document-publishing</code> apply to both. The two bundles are halves of one content
-model, not alternatives to choose between.</p>
-<h3 id="local-coordination-skills-claudeskillslocal">
-  
-  
-    <a href="#local-coordination-skills-claudeskillslocal" class="anchor-heading" aria-labelledby="local-coordination-skills-claudeskillslocal"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Local coordination skills (<code class="language-plaintext highlighter-rouge">.claude/skills/local</code>)
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">prepare-merge</code></td>
-      <td>Take a branch to clean/green/mergeable (see also <code class="language-plaintext highlighter-rouge">/watch</code>)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">bean-coordination</code></td>
-      <td>Multi-agent claim/coordination discipline</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">todo-manager</code></td>
-      <td>beans-as-todos discipline</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="platform-skill-bundles-skillsfolio-core-skillsfolio-document-adapter-skillsfolio-paper-adapter">
-  
-  
-    <a href="#platform-skill-bundles-skillsfolio-core-skillsfolio-document-adapter-skillsfolio-paper-adapter" class="anchor-heading" aria-labelledby="platform-skill-bundles-skillsfolio-core-skillsfolio-document-adapter-skillsfolio-paper-adapter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Platform skill bundles (<code class="language-plaintext highlighter-rouge">skills/folio-core</code>, <code class="language-plaintext highlighter-rouge">skills/folio-document-adapter</code>, <code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter</code>)
-  
-  
-</h3>
-    
-
-<p>Larger <strong>platform bundles</strong>, two of them migrated from the qou content repo (see
-<a href="migrations/2026-06-29-platform-skills-migration.html">migration record</a> and
-issue <a href="https://github.com/litlfred/folio-assistant/issues/27">#27</a>). These are
-content-agnostic and meant to be synced into any folio:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Bundle</th>
-      <th style="text-align: right">Skills</th>
-      <th>Scope</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong><code class="language-plaintext highlighter-rouge">folio-core</code></strong></td>
-      <td style="text-align: right">43</td>
-      <td>Agent coordination, the watcher framework, QA / render / bibliography / glossary pipeline, docs, deployment — applies to <em>any</em> content type.</td>
-    </tr>
-    <tr>
-      <td><strong><code class="language-plaintext highlighter-rouge">folio-document-adapter</code></strong></td>
-      <td style="text-align: right">4</td>
-      <td>Prose folios: block authoring, chapter/section structure, normative statements, and the TeX-free publication path. Applies to papers too.</td>
-    </tr>
-    <tr>
-      <td><strong><code class="language-plaintext highlighter-rouge">folio-paper-adapter</code></strong></td>
-      <td style="text-align: right">40</td>
-      <td>Formal-math paper-adapter (any Lean 4 + LaTeX paper): Lean workflow, proof tooling, content-object validation, LaTeX, paper structure, import, simulators.</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>Irreducible QOU physics skills were skipped; QOU-specific examples in the rest
-were generalized. Each bundle ships a <code class="language-plaintext highlighter-rouge">package-manifest.json</code>.</p>
-
-<blockquote>
-  <p>Skill <strong>schemas</strong> (typed input/output for the authoring skills) are generated
-into the <a href="reference/skills/">Skill schema reference</a> — never drift from what
-the framework validates.</p>
-</blockquote><hr />
-<h2 id="roles-actors">
-  
-  
-    <a href="#roles-actors" class="anchor-heading" aria-labelledby="roles-actors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Roles (actors)
+    <a href="#two-things-one-word" class="anchor-heading" aria-labelledby="two-things-one-word"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two things that share a word
   
   
 </h2>
     
 
-<p>Roles answer <em>who the agent is acting as</em>. The current user is mapped to a role
-by <code class="language-plaintext highlighter-rouge">role-assignments.json</code>, and the role’s capabilities bound what the agent may
-do (RBAC). Roles <strong>inherit</strong> (e.g. <code class="language-plaintext highlighter-rouge">author</code> inherits <code class="language-plaintext highlighter-rouge">reviewer</code>).</p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-things-one-word.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/two-things-one-word.md">✎ Edit</a></p>
 
-<blockquote>
-  <p>To see these roles <em>as lanes</em> — who edits, who reviews, who signs off, and
-which steps an agent may take on its own — read
-<a href="publication-workflow.html#who-is-who">Publication workflow → Who is who</a>.</p>
-</blockquote>
-
-<pre><code class="language-mermaid">flowchart LR
-    viewer --&gt; reviewer --&gt; author --&gt; admin
-</code></pre>
-<h3 id="people">
-  
-  
-    <a href="#people" class="anchor-heading" aria-labelledby="people"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> People
-  
-  
-</h3>
-    
+<p>The distinction is not terminology. The two have different owners, different
+lifecycles and different failure modes.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Role</th>
-      <th>What they can do</th>
+      <th> </th>
+      <th><strong>Bean</strong></th>
+      <th><strong>Todo</strong></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">viewer</code></td>
-      <td>Base read-only. View content, no changes.</td>
+      <td>Owner</td>
+      <td>An agent session</td>
+      <td>A person</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">reviewer</code></td>
-      <td>View + review comments; no direct changes.</td>
+      <td>Purpose</td>
+      <td>Process state for work in flight</td>
+      <td>A reminder of intent</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">author</code></td>
-      <td>Create/modify content (inherits reviewer).</td>
+      <td>Store</td>
+      <td><code class="language-plaintext highlighter-rouge">.beans/</code>, committed and shared</td>
+      <td>Not yet defined</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">admin</code></td>
-      <td>Full administrative access — roles, settings, all content.</td>
+      <td>Created by</td>
+      <td>An agent, after an exact-title check</td>
+      <td>The person, whenever they like</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">programme-manager</code></td>
-      <td>Scope, team formation, timeline, stakeholder governance.</td>
+      <td>Closed by</td>
+      <td>The agent that did the work, with a summary</td>
+      <td>The person, on their own judgement</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">technical-officer</code></td>
-      <td>Programme-area coordinator + first-pass reviewer.</td>
+      <td>Visible to</td>
+      <td>Every sibling session</td>
+      <td>The person, primarily</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">business-analyst</code></td>
-      <td>L2 DAK author (BPMN, data dictionaries, decision logic, indicators).</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">clinical-sme</code></td>
-      <td>Clinical validator / ground-truth provider.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">terminologist</code></td>
-      <td>Terminology governance (ICD-11, SNOMED CT, LOINC).</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">fhir-modeller</code></td>
-      <td>L3 FHIR artifacts (FSH, SUSHI, CQL, IG Publisher).</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-reviewer</code></td>
-      <td>Formal approval / phase-transition sign-off.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">qc-reviewer</code></td>
-      <td>Publication-readiness QA across layers.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">publication-manager</code></td>
-      <td>Releases, IG config, builds, versioning, publication.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">translator</code></td>
-      <td>Localization for UN-supported languages.</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="system-actors">
-  
-  
-    <a href="#system-actors" class="anchor-heading" aria-labelledby="system-actors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> System actors
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Actor</th>
-      <th>Provides</th>
-      <th>Cannot</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">authoring-agent</code></td>
-      <td>Drafts and revises a <strong>proposed</strong> change to a content block</td>
-      <td>Commit — its output goes to the editor through the validation gate</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">review-agent</code></td>
-      <td>Non-mechanical validation: accuracy, voice, exposition</td>
-      <td>Approve — it reports findings only</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">lean-mcp</code></td>
-      <td>Lean 4 proof checking &amp; diagnostics via MCP</td>
-      <td>—</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">ig-publisher-service</code></td>
-      <td>FHIR IG Publisher build &amp; QA reporting</td>
-      <td>—</td>
+      <td>Failure mode</td>
+      <td>Duplicated, or closed by the wrong session</td>
+      <td>Forgotten</td>
     </tr>
   </tbody>
 </table></div>
 
-<p>Where each of these sits in the process — and what an agent may and may not
-decide — is modelled in the
-<a href="publication-workflow.html">publication workflow</a> BPMN diagrams.</p>
-<h3 id="role-assignment">
+<p><strong>The failure modes are what make the split worth keeping.</strong> A duplicated bean
+starves the work plan of signal — in one folio an unguarded re-run produced
+14,688 duplicates, 92 % of every open bean in the repository. A forgotten todo
+inconveniences one person. Machinery sized for the first is ceremony on the
+second, and machinery sized for the second is nowhere near enough for the
+first.</p>
+<h2 id="the-agent-bean-lifecycle">
   
   
-    <a href="#role-assignment" class="anchor-heading" aria-labelledby="role-assignment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role assignment
-  
-  
-</h3>
-    
-
-<p><code class="language-plaintext highlighter-rouge">role-assignments.json</code> maps a user identity (from git config / auth) to a role
-by priority. The shipped defaults:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Pattern</th>
-      <th>Source</th>
-      <th>Role</th>
-      <th>Priority</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">litlfred@gmail.com</code></td>
-      <td>git-config</td>
-      <td><code class="language-plaintext highlighter-rouge">admin</code></td>
-      <td>100</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">*@who.int</code></td>
-      <td>git-config</td>
-      <td><code class="language-plaintext highlighter-rouge">author</code></td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">*</code></td>
-      <td>default</td>
-      <td><code class="language-plaintext highlighter-rouge">viewer</code></td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table></div><hr />
-<h2 id="capabilities--requirements">
-  
-  
-    <a href="#capabilities--requirements" class="anchor-heading" aria-labelledby="capabilities--requirements"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Capabilities &amp; requirements
+    <a href="#the-agent-bean-lifecycle" class="anchor-heading" aria-labelledby="the-agent-bean-lifecycle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The agent bean lifecycle
   
   
 </h2>
     
 
-<p><strong>Capabilities</strong> are concrete environment abilities a skill may require; the
-<code class="language-plaintext highlighter-rouge">check_dependencies</code> MCP tool probes them:</p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/bean-lifecycle.bpmn" class="fa-node-edit" title="Edit docs/workflows/bean-lifecycle.bpmn">✎ Edit</a></p>
 
-<p><code class="language-plaintext highlighter-rouge">bun-runtime</code> · <code class="language-plaintext highlighter-rouge">node-runtime</code> · <code class="language-plaintext highlighter-rouge">python3</code> · <code class="language-plaintext highlighter-rouge">git-push</code> · <code class="language-plaintext highlighter-rouge">docker</code> ·
-<code class="language-plaintext highlighter-rouge">latex-compiler</code> · <code class="language-plaintext highlighter-rouge">lean-toolchain</code> · <code class="language-plaintext highlighter-rouge">lean-mcp</code> · <code class="language-plaintext highlighter-rouge">ig-publisher</code> ·
-<code class="language-plaintext highlighter-rouge">sushi-compiler</code> · <code class="language-plaintext highlighter-rouge">java-runtime</code> · <code class="language-plaintext highlighter-rouge">jekyll</code> · <code class="language-plaintext highlighter-rouge">plantuml</code> · <code class="language-plaintext highlighter-rouge">graphviz</code></p>
+<div class="bpmn-figure" id="figure-the-agent-bean-lifecycle">
+  <img src="assets/img/workflows/bean-lifecycle.svg" alt="BPMN swimlane diagram with two lanes. In the agent's lane: durable work is identified, the agent runs an exact-title search before creating anything, then a gateway asks whether the bean already exists. If not, it creates one; if it does, a second gateway asks whose it is. A bean owned by someone else routes to the lower lane — sibling session or human — where the only action is to leave it alone and coordinate, ending there. The agent's own or an unclaimed bean is claimed as in-progress, worked on with the body kept current, and then reaches an outcome gateway with three branches: done goes to complete, not wanted goes to scrap with reasons and never delete, and blocked goes to recording the blocker and handing it back. All three converge on a single end event, state recorded." />
+</div>
 
-<p><strong>Requirements</strong> are gates that must hold during work:</p>
+<p><a href="/folio-assistant/workflows/bean-lifecycle.bpmn" class="btn btn-outline">Open the BPMN source</a></p>
 
-<p><code class="language-plaintext highlighter-rouge">commit-hygiene</code> · <code class="language-plaintext highlighter-rouge">lean-verification</code> · <code class="language-plaintext highlighter-rouge">fhir-validation</code> ·
-<code class="language-plaintext highlighter-rouge">content-lifecycle</code> · <code class="language-plaintext highlighter-rouge">session-start</code></p><hr />
-<h2 id="see-also">
+<p>The diagram above is the whole cycle, and three of its edges are the ones
+worth reading twice.</p>
+
+<p><strong>The first step is a search, not a creation.</strong> <code class="language-plaintext highlighter-rouge">beans create</code> is not
+idempotent: it mints a fresh identifier on every call and de-duplicates on
+nothing, so re-entering a step duplicates the plan rather than doing nothing.
+The exact-title check is what stands between a repeated workflow step and a
+corpus of near-identical beans.</p>
+
+<p><strong>Ownership is a gateway, not a courtesy.</strong> A bean another session claimed is
+not yours to resolve, scrap or delete. Claiming is how two sessions avoid
+picking up the same item; closing someone else’s is how one of them loses work
+it had not finished reporting.</p>
+
+<p><strong>“Blocked” is not “not wanted”.</strong> A blocked bean returns to <code class="language-plaintext highlighter-rouge">todo</code> with its
+blocker recorded and something said about what would clear it. Leaving it
+<code class="language-plaintext highlighter-rouge">in-progress</code> is worse than either: an item nobody is progressing reads, to
+every other session, as active work.</p>
+<h2 id="never-delete">
   
   
-    <a href="#see-also" class="anchor-heading" aria-labelledby="see-also"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> See also
+    <a href="#never-delete" class="anchor-heading" aria-labelledby="never-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A bean is never deleted
   
   
 </h2>
     
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/never-delete.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/never-delete.md">✎ Edit</a></p>
+
+<p><code class="language-plaintext highlighter-rouge">beans delete</code> exists in the CLI. <strong>Do not use it.</strong></p>
+
+<p>Work that turns out not to be wanted is <strong>scrapped</strong> — <code class="language-plaintext highlighter-rouge">status: scrapped</code>,
+with a section saying why. That is what “disable” means here; the CLI has no
+disabled state, and its vocabulary is <code class="language-plaintext highlighter-rouge">draft</code>, <code class="language-plaintext highlighter-rouge">todo</code>, <code class="language-plaintext highlighter-rouge">in-progress</code>,
+<code class="language-plaintext highlighter-rouge">completed</code>, <code class="language-plaintext highlighter-rouge">scrapped</code>.</p>
+
+<p>The reason is not tidiness. A scrapped bean records that something was
+considered and rejected, and on what grounds — which is worth as much to the
+next agent as the record of work that was done, because it is what stops the
+same dead end being re-entered. A deleted bean leaves a sibling session unable
+to tell abandonment from accident, and leaves the next agent free to start
+over on the thing you already ruled out.</p>
+
+<p>The prohibition is written here, and in the diagram’s own documentation,
+precisely because the tool offers the operation. A rule that depends on nobody
+noticing a command is not a rule.</p>
+<h2 id="two-layers">
+  
+  
+    <a href="#two-layers" class="anchor-heading" aria-labelledby="two-layers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Engine operations are not CLI calls
+  
+  
+</h2>
+    
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-layers.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/two-layers.md">✎ Edit</a></p>
+
+<p>Two different things can change a bean, and a step that confuses them will
+announce an effect it does not have.</p>
+
+<p><strong>The workflow engine</strong> performs <code class="language-plaintext highlighter-rouge">claim</code>, <code class="language-plaintext highlighter-rouge">note</code> and <code class="language-plaintext highlighter-rouge">resolve</code> on a process
+instance’s own bean when a step marked <code class="language-plaintext highlighter-rouge">&lt;folio:bean op="…"/&gt;</code> completes.
+<code class="language-plaintext highlighter-rouge">claim</code> sets <code class="language-plaintext highlighter-rouge">in-progress</code> and is idempotent; <code class="language-plaintext highlighter-rouge">note</code> appends; <code class="language-plaintext highlighter-rouge">resolve</code>
+completes the bean <strong>only once the instance itself has completed</strong>, because
+whether work is done is a judgement and a bean is not closed on someone else’s
+say-so.</p>
+
+<p><strong>The agent</strong> does everything else with the <code class="language-plaintext highlighter-rouge">beans</code> CLI: creating, scrapping,
+retitling, setting a blocker. The engine has no operation for any of these.</p>
+
+<p>This is not a hypothetical distinction. An activity in the CRDM diagram
+carried <code class="language-plaintext highlighter-rouge">&lt;folio:bean action="create"/&gt;</code> — <code class="language-plaintext highlighter-rouge">action</code>, where the engine reads
+<code class="language-plaintext highlighter-rouge">op</code> — so it parsed as no operation at all. The step advertised that sign-off
+produced beans, performed nothing, and did so silently until somebody read the
+parser.</p>
+
+<p><strong>When you add a bean-marked step,</strong> use one of the three operations the
+engine implements, and say in the step’s documentation which parts are the
+agent’s own CLI calls. <code class="language-plaintext highlighter-rouge">bun run check:workflow-refs</code> will catch a skill
+reference that does not resolve; it cannot catch a plausible attribute the
+engine never reads.</p>
+<h2 id="human-todos">
+  
+  
+    <a href="#human-todos" class="anchor-heading" aria-labelledby="human-todos"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Human todos — not built yet
+  
+  
+</h2>
+    
+
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/human-todos.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/human-todos.md">✎ Edit</a></p>
+
+<p><strong>Not built yet</strong>, and stated here rather than left as an absence somebody has
+to notice.</p>
+
+<p>A person’s todos need a cycle of their own, and none of it exists:</p>
 
 <ul>
-  <li><a href="publication-workflow.html">Publication workflow</a> — BPMN swimlanes: which skill runs at which step, and who decides</li>
-  <li><a href="reference/skill-instructions/">Skill instructions</a> — the prose how-to bodies the LLM loads</li>
-  <li><a href="reference/skills/">Skill schema reference</a> — typed input/output for each skill</li>
-  <li><a href="content-types.html">Content types</a> — which skills each content type uses</li>
-  <li><a href="architecture.html">Architecture</a> — RBAC, adapters, and the MCP server</li>
-  <li><a href="getting-started.html">Getting started</a> — running your first skill</li>
+  <li><strong>When a todo is shown.</strong> Surfacing every open item on every turn is noise;
+surfacing none is a list nobody reads. Whatever the rule is, it is not the
+same as the work-plan priming an agent gets at session start.</li>
+  <li><strong>When a person may create one</strong>, and through what — chat, a command, the
+session-start surface.</li>
+  <li><strong>How one is retired.</strong> A person abandoning a reminder is ordinary and needs
+no “reasons for scrapping” section; the bean rules do not transfer.</li>
 </ul>
+
+<p>Until that is designed, <strong>do not repurpose beans for it.</strong> A store whose
+entries are claimed by sessions, closed with change summaries and never
+deleted is the wrong shape for a reminder somebody wants to drop without
+ceremony — and mixing the two would put items in the agent work plan that no
+agent should be acting on.</p>
 
           
 
