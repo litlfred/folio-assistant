@@ -257,7 +257,7 @@ export interface SkillValidator {
  * enabling auto-generated documentation to cross-reference skills
  * with their data models.
  */
-import type { LifecycleStage, SkillPackageManifest } from "./types.js";
+import type { LifecycleStage, SkillPackageManifest } from "./skill-package.js";
 
 export interface SkillSchemaRef {
   /** Schema module (e.g., "schemas/types", "schemas/formalization-types"). */

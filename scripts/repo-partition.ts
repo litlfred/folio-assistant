@@ -170,6 +170,12 @@ const RULES: Rule[] = [
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
+      // The skill-framework vocabulary — actors, capabilities, skills,
+      // requirements, the package registry. It was the top 240 lines of
+      // `constraints.ts` and 32 aliases in `types.ts`, which put it under the
+      // core `schemas/` prefix and made four harness modules read as depending
+      // on the content layer. None of it describes a folio's content.
+      "schemas/skill-package.ts",
 
       // `adapters/mcp-server/` was claimed wholesale by the harness prefix
       // rule, but `server.ts` opens "QOU Paper Writing Assistant — MCP
