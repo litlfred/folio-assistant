@@ -145,5 +145,25 @@ if (totalUncovered) {
 
 if (!dangling.length && !totalUncovered) console.log("\nAll refs resolve, every activity covered.");
 
-if (dangling.length) process.exit(1);
+/*
+ * The same failure, one layer over: `schemas/translation-tools.ts` lists
+ * `bpmnDiagrams` per content type — the diagrams whose labels need
+ * re-rendering after translation. One entry named
+ * `docs/workflows/publication-workflow.bpmn`, which has never existed, so the
+ * re-render skipped it silently and a skipped diagram is indistinguishable
+ * from a diagram that needed no work.
+ */
+const { CONTENT_TYPE_TRANSLATIONS } = await import("../schemas/translation-tools.js");
+const missingDeclared: string[] = [];
+for (const ct of CONTENT_TYPE_TRANSLATIONS) {
+  for (const rel of ct.bpmnDiagrams ?? []) {
+    if (!existsSync(join(root, rel))) missingDeclared.push(`${ct.contentType} → ${rel}`);
+  }
+}
+if (missingDeclared.length) {
+  console.log("\nDECLARED BUT ABSENT — translation-tools names a diagram file that is not there:");
+  for (const m of missingDeclared) console.log(`  \u2717 ${m}`);
+}
+
+if (dangling.length || missingDeclared.length) process.exit(1);
 if (strict && totalUncovered) process.exit(1);
