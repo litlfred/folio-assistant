@@ -96,7 +96,83 @@ behaviour`, or `set in the site settings`. An inferred profile is honoured and
 is **labelled as inferred**, so it can be corrected without an argument about
 who decided it.
 
-## 4. Asking a question well — the checklist
+## 4. Asking a question well
+
+Two halves, and the first is the one that gets skipped. §4.1 is what the
+question has to *contain*; §4.2 is what shape it has to *take*. A question can
+pass every item in §4.2 — selectable, four options, recommended default marked —
+and still be unanswerable, because none of those say what the options mean.
+
+### 4.1 Context before the question (STRICT)
+
+**Order matters, and it is: context → options → recommendation → question.**
+Never the question first with the explanation available on request.
+
+The test is one sentence, and it is checkable in a single pass:
+
+> **Can the reader answer without opening anything?**
+
+If answering needs them to open an issue, a file, a diff or a scrollback, the
+question is not ready. A link is where somebody goes for *more*; it is never
+where the terms are defined.
+
+Six parts, in order:
+
+1. **What is being decided**, in plain words — stated as what will *differ*
+   depending on the answer, not as the name of the decision.
+2. **Every identifier expanded on first use.** A bean id, an option name you
+   coined, a field, a Lean declaration, a file path: all opaque without their
+   gloss. An option name you invented three paragraphs ago in another document
+   is the worst case, because it *feels* defined to you.
+3. **The options, each with what it costs** — not each with its name.
+4. **Your recommendation, and why**, stated first and marked. See §4.2.
+5. **What happens if they say nothing.** Then do that.
+6. **The question itself**, last.
+
+**This binds every place a decision is handed to the person**, not only an
+explicit question tool: the end-of-turn "next" line, a bean's `## Done when`, a
+PR body asking the author to choose, a comment on an issue. Those are where it
+is most often broken, because they feel like reporting rather than asking.
+
+#### Worked example — a real failure, 2026-09-18
+
+Ending a turn, this agent wrote:
+
+> **next** `x4mt` — Cross-agent skill install + `fa-` prefix (#247). Unstarted,
+> and I'd want your call on prefix-at-rest vs prefix-at-install before writing
+> anything.
+
+Every content word in the actual question is undefined. "prefix-at-rest" and
+"prefix-at-install" are terms the agent had coined *in the issue*, so answering
+meant opening #247 and reading it — which the author had to do, and which is a
+real cost for somebody who types with difficulty. It also states no cost for
+either option and gives no recommendation, so even after reading the issue there
+is nothing to choose between except two phrases.
+
+The same decision, askable:
+
+> **Next up is #247** — installing this platform's skills into whichever agent
+> is running (Claude Code, Gemini CLI, Cursor), so each one can actually load
+> them. Skills would get an `fa-` prefix so their names cannot collide with the
+> host agent's own commands: `/fa-beans-tui` rather than `/beans-tui`.
+>
+> One decision shapes everything else — **where the prefix gets applied:**
+>
+> 1. **When a skill is installed into an agent** *(recommended)* — files in this
+>    repo keep their plain names, and the prefix is added as they are emitted.
+>    Nothing here has to change, and the collision is solved where collisions
+>    actually happen.
+> 2. **In this repository itself** — rename every skill file. That touches the
+>    package manifests, every `<folio:skill ref>` in the BPMN diagrams, two doc
+>    generators and every cross-reference between skill bodies. It is the kind
+>    of change that is painful to reverse.
+>
+> Say nothing and I will take (1) when I start.
+
+Same information, same length, and the second can be answered by typing one
+character.
+
+### 4.2 Form — the checklist
 
 Before any question, all five:
 
@@ -193,6 +269,12 @@ reader's font choice silently reconfiguring how an agent talks to the author.
 
 ## 8. Anti-patterns
 
+0. **The question first, the context on request.** The single most common
+   shape, and the one §4.1 exists to kill: an agent that has spent an hour
+   inside a problem asks in the private vocabulary it built along the way, and
+   the reader has to reconstruct that vocabulary before they can answer at all.
+   "Happy to explain if useful" does not repair it — it moves the work back onto
+   the person the question is for.
 1. **Asking someone to describe their disability.** Ask about the interface.
 2. **Re-asking what `.folio/interaction.json` records.** That is WCAG 3.3.7
    violated in the least excusable way, since the file is right there.

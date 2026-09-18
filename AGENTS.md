@@ -521,6 +521,45 @@ The exceptions are narrow and none of them is "I am unsure":
 (ALWAYS-PR, and never ask whether to open one). It also carries the stricter
 merge gate above. If you change one, check the other.
 
+## Context before the question — every time you hand over a decision (STRICT)
+
+**Order: context → options → recommendation → question.** Never the question
+first with the explanation available on request. One test, checkable in a single
+pass:
+
+> **Can the reader answer without opening anything?**
+
+If answering needs them to open an issue, a file, a diff or the scrollback, the
+question is not ready. A link is where somebody goes for *more*; it is never
+where the terms are defined.
+
+Six parts: what is being decided (as what will *differ*, not the name of the
+decision); every identifier expanded on first use; the options **with what each
+costs**, not with their names; your recommendation, first and marked; what
+happens if they say nothing; then the question.
+
+**This binds every surface a decision is handed over on** — an explicit question,
+the end-of-turn "next" line, a bean's `## Done when`, a PR body, an issue
+comment. The last four are where it is most often broken, because they feel like
+reporting rather than asking.
+
+**The failure, measured here on 2026-09-18.** A turn ended: *"next `x4mt` —
+Cross-agent skill install + `fa-` prefix (#247). Unstarted, and I'd want your
+call on prefix-at-rest vs prefix-at-install before writing anything."* Both
+option names had been coined by that agent inside issue #247, so answering meant
+opening and reading the issue — and neither option carried its cost, so even
+then there was nothing to choose between but two phrases. The author types with
+difficulty; the question cost them minutes and should have cost one keystroke.
+
+Feature work breaks this more than content work, for a specific reason: the
+agent has just finished the impact analysis, and the vocabulary it built doing
+that *feels* defined. It is not. Full rule and worked before/after:
+[`interaction-modality.md` §4.1](skills/folio-core/interaction-modality.md);
+for the CRDM loop,
+[`crdm-requirements-workflow.md`](skills/folio-core/crdm-requirements-workflow.md);
+for the end-of-turn report,
+[`todo-manager.md`](skills/folio-core/todo-manager.md).
+
 ## Opening a bean or a topic — brief it before you touch anything (STRICT)
 
 **When you begin work on a bean, or on any topic large enough to be one, open
@@ -559,10 +598,11 @@ continue — not reconstruct the predecessor's rabbit hole first.
 advance can be corrected by the author in one line. The same route discovered in
 a finished diff costs a review cycle and, often, a revert.
 
-**It is the same discipline as the `AskUserQuestion` frame, applied to work
-instead of decisions.** That rule exists because a terse question forces the
-author to type follow-ups asking for context the agent already had. A terse
-*start* does the same thing one step earlier.
+**It is the same discipline as the question frame in
+[`skills/folio-core/interaction-modality.md` §4.1](skills/folio-core/interaction-modality.md),
+applied to work instead of decisions.** That rule exists because a terse question
+forces the author to go and find context the agent already had. A terse *start*
+does the same thing one step earlier.
 
 ### Proportionality, so this does not become ceremony
 

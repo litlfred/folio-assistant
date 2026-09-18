@@ -28,6 +28,43 @@ this workflow to gather, validate, and implement requirements collaboratively.
 The full process is diagrammed in
 [`docs/workflows/crdm-requirements.bpmn`](../../docs/workflows/crdm-requirements.bpmn).
 
+## Every question you put to the BA carries its context first (STRICT)
+
+This process is almost entirely questions. Six phases of them — needs, process,
+requirements, impact, sign-off, feedback — and each one is the agent handing a
+decision to a person who was not inside the analysis that produced it.
+
+**So the ordering rule in
+[`interaction-modality.md` §4.1](interaction-modality.md) governs this whole
+workflow, not just its explicit checkpoints: context → options → recommendation
+→ question.** Its test applies unchanged:
+
+> **Can the BA answer without opening anything?**
+
+Feature work breaks this in a way content work does not, and the reason is worth
+naming. The agent has just done impact analysis, read the schemas, traced the
+consumers — and the vocabulary it built doing that is the vocabulary it asks in.
+Terms coined during the analysis feel defined, because to the agent they are.
+Three specific traps:
+
+- **An option name you invented.** "Prefix-at-rest or prefix-at-install?" names
+  two things that exist nowhere outside your own head and your own issue.
+  Describe what each one *does* instead, and put the coined name in parentheses
+  if it earns its place at all.
+- **A question that resolves to "go read the issue".** The issue is where the
+  BA goes for depth. It is never where the question's terms are defined — and
+  posting a question whose answer requires reading it is how a one-character
+  decision becomes a twenty-minute one.
+- **Options without their costs.** "A or B" is not a choice; "A, which changes
+  nothing here, or B, which rewrites every `folio:skill` ref in the diagrams"
+  is. The BA is deciding on the consequences, so the consequences are the
+  question.
+
+This applies to **every** surface this workflow uses: the chat, the summary
+comment posted to the issue after each round, the PR body, and a bean's
+`## Done when`. A question buried in an issue comment with its context two
+comments up is the same defect wearing a different hat.
+
 ## Phase 1 — Needs assessment
 
 **Input:** the feature request (from chat, issue, discussion, or upload)
@@ -152,6 +189,7 @@ When a round of implementation is complete (one or more beans resolved):
 ## Cross-references
 
 - [CRDM methodology page](https://litlfred.github.io/folio-assistant/crdm-methodology.html) — the documentation page for users
+- [`interaction-modality.md`](interaction-modality.md) §4.1 — context before the question; the ordering rule this workflow runs on
 - [`crdm-detect.md`](crdm-detect.md) — feature-request detection skill
 - [`staging-review.md`](staging-review.md) — before/after staging comparison skill
 - [`todo-manager.md`](todo-manager.md) — bean creation protocol

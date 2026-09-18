@@ -190,6 +190,44 @@ You can map out sequence blockers using:
 - When completed: `beans update <id> --status completed`
 - To add notes or discussion: `beans update <id> --body-append "Your note"`
 
+## The "next" line is a question, so it carries its context (STRICT)
+
+AGENTS.md requires every turn to end with the beans touched and what is next.
+The **next** line is where an agent hands the author a decision — which item
+comes next, and often whether some choice inside it should go one way or the
+other. That makes it a question, and
+[`interaction-modality.md` §4.1](interaction-modality.md) governs it: context →
+options → recommendation → question, and the test is whether the author can
+answer **without opening anything**.
+
+A bean id plus a coined term is the specific failure. Measured here on
+2026-09-18:
+
+> **next** `x4mt` — Cross-agent skill install + `fa-` prefix (#247). Unstarted,
+> and I'd want your call on prefix-at-rest vs prefix-at-install before writing
+> anything.
+
+`x4mt` is opaque, `fa-` is undefined, and "prefix-at-rest vs prefix-at-install"
+names two options that exist only inside issue #247 — so the author had to open
+it to find out what was being asked. Within the 50-word budget it could have
+read:
+
+> **next** `x4mt` — Install this platform's skills into whichever agent is
+> running, each name prefixed `fa-` so it cannot collide with the host's own
+> commands. One call needed: add the prefix **when a skill is installed**
+> (nothing in this repo moves — recommended), or **rename the files here** (also
+> the manifests, the BPMN skill refs, two generators).
+
+Same length. Answerable in one character.
+
+Two rules follow, and the second is the one that gets lost:
+
+- **Expand every identifier on first use**, including your own bean ids. "`fwr7`
+  — retarget seven mis-aimed edges" is a synopsis; "`fwr7`" is not.
+- **A deferred decision is stated in full, or not stated at all.** If it will not
+  fit, say the decision exists and that you will put it properly when you reach
+  it — do not post a teaser whose only resolution is a document.
+
 ## Status Display Format
 
 When the user asks "status" or "show beans", run `beans list` and display the hierarchy:
