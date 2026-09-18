@@ -49,7 +49,15 @@ function unbackedClaims(src: string): string[] {
   if (/\bPRs?\b|pull request/i.test(h) && !t.has("pull_request")) out.push("pull_request");
   if (/\bon (each|every) (main )?(commit|push)|push to main|main commit/i.test(h) && !t.has("push"))
     out.push("push");
-  if (/nightly|schedule|cron|daily|weekly|monthly/i.test(h) && !t.has("schedule"))
+  // `schedule` is matched only in its TRIGGER senses ("on a schedule",
+  // "scheduled"), never as a bare noun. `feature-staging.yml`'s header
+  // opens "Author changes the immunization schedule \u2192 agent opens a
+  // feature branch" \u2014 domain language in a worked example, not a claim
+  // about cron. Matching the bare word failed that file for two days and
+  // would fail every WHO guideline workflow that says "immunization
+  // schedule" or "dosing schedule". The other words have no such noun use
+  // in a workflow header.
+  if (/nightly|\bon a schedule\b|\bscheduled\b|cron|daily|weekly|monthly/i.test(h) && !t.has("schedule"))
     out.push("schedule");
   return out;
 }
@@ -76,6 +84,39 @@ describe("workflow triggers match what their headers claim", () => {
       lying.push(`${f} claims ${claims.join("+")} but has ${[...triggers(src)].join(",")}`);
     }
     expect(lying).toEqual([]);
+  });
+
+  test("`schedule` as a noun is not a cron claim, but a real one still is", () => {
+    // Guards the narrowing above in BOTH directions. `feature-staging.yml`
+    // failed for two days on the word "immunization schedule" in a worked
+    // example; narrowing the pattern to fix that must not buy silence on a
+    // header that genuinely advertises cron it does not have.
+    const dispatchOnly = "on:\n  workflow_dispatch:\n";
+    const noun = `# Author changes the immunization schedule -> agent stages it.\n${dispatchOnly}`;
+    const dosing = `# Recomputes the dosing schedule table.\n${dispatchOnly}`;
+    expect(unbackedClaims(noun)).toEqual([]);
+    expect(unbackedClaims(dosing)).toEqual([]);
+
+    for (const lie of [
+      "# Runs on a schedule to sweep the corpus.",
+      "# This workflow is scheduled every morning.",
+      "# Nightly QA sweep.",
+      "# Runs daily.",
+      "# A cron job keeps the index fresh.",
+    ]) {
+      expect({ lie, claims: unbackedClaims(`${lie}\n${dispatchOnly}`) }).toEqual({
+        lie,
+        claims: ["schedule"],
+      });
+    }
+
+    // ...and a real `schedule:` trigger clears even the trigger senses.
+    // `jobs:` is load-bearing in the fixture, not decoration: `triggers()`
+    // ends the `on:` block at the next non-indented line, so a fixture that
+    // stops after the cron parses as NO triggers at all.
+    const scheduled = "# Runs on a schedule.\non:\n  schedule:\n    - cron: '0 0 * * *'\njobs:\n";
+    expect([...triggers(scheduled)]).toEqual(["schedule"]);
+    expect(unbackedClaims(scheduled)).toEqual([]);
   });
 
   test("the note names why, not just that", () => {
