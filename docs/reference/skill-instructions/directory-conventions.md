@@ -197,6 +197,54 @@ the old home so existing importers are untouched.
 does not import `./jsonld` or `./block-kinds`. Reach for that test when adding
 anything else at the harness layer.
 
+## What lives in the `schemas` graph — one authored form, many renderings
+
+The `schemas` directory holds schema definitions, and the convention for every
+one of them is the same: **the Zod schema in `.ts` is authoritative, and every
+other form is generated from it.**
+
+```
+schemas/<thing>.ts                    ← AUTHORED.  Zod + the inferred type.
+  ├─→ schemas/generated/<Thing>.schema.json    JSON Schema  (validators, editors)
+  └─→ a JSON-LD projection                     KG node      (queryable)
+```
+
+The TypeScript type is `z.infer<typeof Schema>`, never declared alongside the
+schema — two declarations of one shape drift, and the drift is invisible until
+something reads the stale one.
+
+Both renderings already have their mechanism, so adding a schema introduces no
+new machinery: `scripts/generate-schemas.ts` walks a map of Zod schemas through
+`zodToJsonSchema` into `schemas/generated/`, and `toJsonLd()` in
+`schemas/agent-harness.ts` is the worked example of the graph projection.
+
+**Generate as many renderings as have a consumer, and no more.** JSON Schema
+because validators and editors speak it; JSON-LD because the KG query path
+does. A third — SHACL, an OpenAPI fragment, Turtle — is added when something
+needs it, not in anticipation: each is another file to regenerate and another
+chance for a stale artefact to be read as current.
+
+**A rendering is never where a fix lands.** If a generated `.schema.json` is
+wrong, the `.ts` is wrong; edit that and regenerate. A `--check` mode in CI —
+the pattern `gen-skill-docs.ts --check` already uses — is what makes that
+enforceable rather than merely asserted.
+
+### Why not author the rendering and validate backwards
+
+The tempting inversion is to hand-author the JSON-LD node, because it is the
+form the KG consumes, and validate it against Zod in CI. That is the same two
+artefacts with the authority pointing the wrong way, and it is worse for one
+reason: **a hand-authored node is unchecked until CI runs.** With Zod
+authoritative the schema *is* the type, so a malformed definition fails at
+`tsc`, in the editor, before it is committed. Validation-after-the-fact catches
+the same error strictly later and only if CI is green — and bean `dzl3` is this
+repository's evidence that a suite can sit non-running for as long as it has
+existed.
+
+Decided 2026-09-18 by the repository owner, for the Tools schema and for
+everything else in the `schemas` graph. Worked through in
+`docs/architecture/agent-harness-minimum.md` §"Carrying it".
+
 ## Adding a graph kind
 
 Decide which layer owns it first — **if it renders, it is not the harness's.**
