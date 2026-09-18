@@ -76,8 +76,15 @@ check does not have.
 
 ## Status
 
-**Not implemented**, like the two skills it sits beside: there is no
-`schemas/tool.ts`, no projector, and so nothing to check. Written now because
-the contract is easiest to state before an implementation exists to be
-described instead.
+**The source side exists now; the served side does not.** `schemas/tool.ts`,
+`schemas/tool-types.ts` and four Tool nodes are real, and `bun run check:tools`
+already does the *satisfaction* check in this table's third row: every
+`satisfies` resolves to a skill that exists.
+
+Schema equivalence and coverage still wait on a projector — there is no served
+`tools/list` to compare against. One thing did become concrete in the meantime:
+because `io` ports reference a shared `$defs` document by absolute IRI rather
+than restating a structure per tool, "these two Tools accept the same input" is
+*identity* rather than a structural comparison. That is what makes the
+equivalence check in row one tractable when it is written.
 {% endraw %}

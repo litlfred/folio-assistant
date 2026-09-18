@@ -224,6 +224,29 @@ Almost empty by construction, and that is the point.
 minimal code; a snippet in a skill is a Tool that has not been declared. That
 is a QA audit criterion, not a style note — see the strawperson below.
 
+## The Tools schema — built, and where the strawperson bent
+
+> **No longer a strawperson.** `schemas/tool.ts` is real, `tools/` holds four
+> nodes, and `bun run check:tools` gates them in CI. The shape below is what
+> shipped; three things changed in contact with the first real Tools, and each
+> is the kind of thing only writing them would have surfaced:
+>
+> - **`invoke.manual`** was added. `beans-manual` — editing a bean's front
+>   matter by hand — is a real mechanism with equal standing to the CLI, and
+>   modelling it as an absent `shell` would have made it indistinguishable from
+>   an unfinished record.
+> - **`install.none`** for the same reason: "nothing to install" and "not filled
+>   in" must not render identically.
+> - **`invoke` is refined to require an arm the harness can run.** A Tool whose
+>   only invocation is `invoke.mcp` is unusable by the layer that defines it and
+>   would make a projector emit a server that proxies itself. Rejected at parse
+>   time.
+>
+> The two fields flagged below as too loose are both tightened: `io.*.schema` is
+> an absolute IRI into a published `$defs` document (`schemas/tool-types.ts`),
+> and `satisfies` must be non-empty — with `check:tools` resolving the names,
+> which a schema cannot do because it does not get to read the tree.
+
 ## Strawperson: the Tools-repo schema
 
 The 16:13 comment asks for a schema for Tools-repo contents plus options with
