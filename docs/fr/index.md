@@ -17,7 +17,6 @@ qa_coverage_pct: 100
 # folio-assistant
 {: .fs-9 }
 
-{% include language-selector.html current="fr" page_base="index" %}
 
 Un cadre de compétences d'agent indépendant du contenu pour la rédaction de
 contenus rigoureux avec un grand modèle de langage — articles scientifiques et

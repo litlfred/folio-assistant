@@ -41,8 +41,7 @@
 
   /* ── Language switcher ────────────────────────────────────────────────── */
 
-  // A globe: meridians and equator in a circle. Same 24x24 box and
-  // currentColor fill as the QR and theme glyphs, so the three sit as a trio.
+  // Globe glyph for the toggle button
   var GLOBE_GLYPH =
     '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
     '<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
@@ -51,26 +50,37 @@
     '<path d="M4.5 7h15M4.5 17h15" fill="none" stroke="currentColor" stroke-width="1"/>' +
     "</svg>";
 
-  // Locale display names — six UN languages + English.
   var LOCALE_NAMES = {
-    "ar": "العربية",
-    "zh": "中文",
-    "en": "English",
-    "fr": "Français",
-    "ru": "Русский",
-    "es": "Español"
+    "ar": "\u0627\u0644\u0639\u0631\u0628\u064A\u0629", "zh": "\u4E2D\u6587", "en": "English",
+    "fr": "Fran\u00E7ais", "ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439", "es": "Espa\u00F1ol"
   };
+
+  function getGlobalLocale() {
+    try { return localStorage.getItem("fa-locale") || "en"; } catch (e) { return "en"; }
+  }
+  function setGlobalLocale(loc) {
+    try { localStorage.setItem("fa-locale", loc); } catch (e) { /* noop */ }
+  }
+
+  function localePath(basePath, locale) {
+    if (locale === "en") return basePath;
+    var parts = basePath.split("/");
+    var filename = parts.pop();
+    return parts.join("/") + "/" + locale + "/" + filename;
+  }
+
+  function deriveBasePath(path, currentLang) {
+    if (currentLang === "en") return path;
+    return path.replace(new RegExp("/" + currentLang + "/"), "/");
+  }
 
   function mountLanguageSwitcher(host, before) {
     var meta = getTranslationMeta();
-    if (!meta) return;
-
-    var currentLang = meta.lang || "en";
-    var supported = meta.supportedLocales || ["ar", "zh", "en", "fr", "ru", "es"];
-    var available = meta.availableLocales || [];
-
-    // Only mount if there is at least one translation available
-    if (available.length === 0 && currentLang === "en") return;
+    var currentLang = (meta && meta.lang) || "en";
+    var available = (meta && meta.availableLocales) || [];
+    var supported = ["ar", "zh", "en", "fr", "ru", "es"];
+    var path = window.location.pathname;
+    var basePath = deriveBasePath(path, currentLang);
 
     var btn = el("button", {
       type: "button",
@@ -80,112 +90,74 @@
     });
     btn.innerHTML = GLOBE_GLYPH;
 
-    // Create dropdown panel
-    var dropdown = el("div", {
-      class: "fa-lang-dropdown",
+    // Horizontal language bar — shows all 6 UN languages
+    var bar = el("div", {
+      class: "fa-lang-bar",
       "data-open": "false",
       style: "display:none;position:absolute;left:0;top:100%;" +
              "background:#1e293b;border:1px solid #475569;border-radius:6px;" +
-             "padding:4px;z-index:100;min-width:120px;box-shadow:0 4px 12px rgba(0,0,0,0.3);"
+             "padding:4px 6px;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,0.3);" +
+             "white-space:nowrap;"
     });
 
-    // Build language links
-    var path = window.location.pathname;
-    // Derive the base path: strip locale prefix if on a translated page
-    var basePath = path;
-    if (currentLang !== "en") {
-      // e.g., /folio-assistant/fr/index.html → /folio-assistant/index.html
-      // e.g., /folio-assistant/guides/fr/agent-onboarding.html → /folio-assistant/guides/agent-onboarding.html
-      basePath = path.replace(new RegExp("/" + currentLang + "/"), "/");
-    }
-
-    // English link (source)
-    var enLink = el("a", {
-      href: basePath,
-      style: "display:block;padding:4px 8px;color:#e2e8f0;text-decoration:none;" +
-             "border-radius:4px;font-size:0.85rem;" +
-             (currentLang === "en" ? "background:#334155;font-weight:bold;" : ""),
-      "data-locale": "en"
-    }, LOCALE_NAMES["en"] || "English");
-    enLink.addEventListener("mouseenter", function () { enLink.style.background = "#334155"; });
-    enLink.addEventListener("mouseleave", function () {
-      if (currentLang !== "en") enLink.style.background = "";
-    });
-    dropdown.appendChild(enLink);
-
-    // Links for each available translated locale
     for (var i = 0; i < supported.length; i++) {
       var loc = supported[i];
-      if (loc === "en") continue;
-      var hasTranslation = available.indexOf(loc) !== -1;
+      var isAvailable = loc === "en" || available.indexOf(loc) !== -1;
+      var isCurrent = loc === currentLang;
 
-      // Build the translated page path
-      // /folio-assistant/index.html → /folio-assistant/fr/index.html
-      // /folio-assistant/guides/agent-onboarding.html → /folio-assistant/guides/fr/agent-onboarding.html
-      var translatedPath = "";
-      if (hasTranslation) {
-        var parts = basePath.split("/");
-        var filename = parts.pop();
-        translatedPath = parts.join("/") + "/" + loc + "/" + filename;
-      }
-
-      var langLink = el("a", {
-        href: hasTranslation ? translatedPath : "#",
-        style: "display:block;padding:4px 8px;text-decoration:none;" +
-               "border-radius:4px;font-size:0.85rem;" +
-               (currentLang === loc ? "background:#334155;font-weight:bold;color:#e2e8f0;" :
-                hasTranslation ? "color:#e2e8f0;" : "color:#64748b;cursor:default;"),
+      // Available = clickable <a>. Unavailable = disabled <span>.
+      var tab = el(isAvailable ? "a" : "span", {
+        href: isAvailable ? localePath(basePath, loc) : undefined,
         "data-locale": loc,
-        title: hasTranslation ? "" : "Not yet translated"
-      }, (LOCALE_NAMES[loc] || loc) + (hasTranslation ? "" : " ·"));
+        title: isAvailable
+          ? LOCALE_NAMES[loc]
+          : LOCALE_NAMES[loc] + " \u2014 not yet translated",
+        style: "display:inline-block;padding:4px 8px;border-radius:4px;" +
+               "text-decoration:none;font-size:0.8rem;margin:0 1px;" +
+               "transition:background 0.15s;" +
+               (isCurrent
+                 ? "background:#3b82f6;color:#fff;font-weight:bold;"
+                 : isAvailable
+                   ? "color:#93c5fd;cursor:pointer;"
+                   : "color:#475569;cursor:default;opacity:0.5;")
+      }, loc.toUpperCase());
 
-      if (!hasTranslation) {
-        langLink.addEventListener("click", function (e) { e.preventDefault(); });
+      if (isAvailable && !isCurrent) {
+        (function (locale, link) {
+          link.addEventListener("click", function () { setGlobalLocale(locale); });
+          link.addEventListener("mouseenter", function () { link.style.background = "#334155"; });
+          link.addEventListener("mouseleave", function () { link.style.background = ""; });
+        })(loc, tab);
       }
-      (function (link, isActive) {
-        link.addEventListener("mouseenter", function () {
-          if (!isActive) link.style.background = "#334155";
-        });
-        link.addEventListener("mouseleave", function () {
-          if (!isActive) link.style.background = "";
-        });
-      })(langLink, currentLang === loc);
-
-      dropdown.appendChild(langLink);
+      bar.appendChild(tab);
     }
 
-    // Toggle dropdown
     btn.addEventListener("click", function () {
-      var isOpen = dropdown.getAttribute("data-open") === "true";
-      dropdown.setAttribute("data-open", isOpen ? "false" : "true");
-      dropdown.style.display = isOpen ? "none" : "block";
+      var isOpen = bar.getAttribute("data-open") === "true";
+      bar.setAttribute("data-open", isOpen ? "false" : "true");
+      bar.style.display = isOpen ? "none" : "block";
       btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
     });
-
-    // Close on click outside
     document.addEventListener("click", function (e) {
-      if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
-        dropdown.setAttribute("data-open", "false");
-        dropdown.style.display = "none";
+      if (!btn.contains(e.target) && !bar.contains(e.target)) {
+        bar.setAttribute("data-open", "false");
+        bar.style.display = "none";
         btn.setAttribute("aria-expanded", "false");
       }
     });
-
-    // Close on Escape
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && dropdown.getAttribute("data-open") === "true") {
-        dropdown.setAttribute("data-open", "false");
-        dropdown.style.display = "none";
+      if (e.key === "Escape" && bar.getAttribute("data-open") === "true") {
+        bar.setAttribute("data-open", "false");
+        bar.style.display = "none";
         btn.setAttribute("aria-expanded", "false");
         btn.focus();
       }
     });
 
-    // Position the button with its dropdown
     var wrap = el("span", { style: "position:relative;display:inline-block;" });
     host.insertBefore(wrap, before);
     wrap.appendChild(btn);
-    wrap.appendChild(dropdown);
+    wrap.appendChild(bar);
     return btn;
   }
 

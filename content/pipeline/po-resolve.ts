@@ -19,6 +19,12 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, basename, dirname } from "node:path";
+import {
+  readFolioConfig,
+  resolveDependencyTree,
+  flattenDependencies,
+  type FolioConfig,
+} from "../../schemas/folio-config";
 
 // ── Types ───────────────────────────────────────────────────────
 
@@ -46,32 +52,7 @@ export interface PoResolveOptions {
   poSources?: string[];
 }
 
-// ── Folio config reading ────────────────────────────────────────
-
-interface FolioDependency {
-  name: string;
-  path?: string;
-  git?: string;
-}
-
-interface FolioConfig {
-  translation?: {
-    translationDir?: string;
-  };
-  dependencies?: {
-    folioAssistant?: FolioDependency[];
-  };
-}
-
-function readFolioConfig(folioRoot: string): FolioConfig | null {
-  const configPath = join(folioRoot, "folio.config.json");
-  if (!existsSync(configPath)) return null;
-  try {
-    return JSON.parse(readFileSync(configPath, "utf-8")) as FolioConfig;
-  } catch {
-    return null;
-  }
-}
+// ── Helpers ─────────────────────────────────────────────────────
 
 function translationDir(folioRoot: string, config?: FolioConfig | null): string {
   const dir = config?.translation?.translationDir ?? "translations";
@@ -129,17 +110,21 @@ export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] 
     results.push({ path: globalPo, resolution: "folio" });
   }
 
-  // Step 4: Dependency walk (depth-first, listed order)
-  const deps = config?.dependencies?.folioAssistant ?? [];
-  for (const dep of deps) {
-    if (!dep.path) continue; // skip git-only deps (need checkout first)
-    const depRoot = dep.path.startsWith("/")
-      ? dep.path
-      : join(folioRoot, dep.path);
-    if (!existsSync(depRoot)) continue;
+  // Step 4: Dependency walk — depth-first, transitive, with cycle detection.
+  // Uses the canonical resolution from schemas/folio-config.ts.
+  const depTree = resolveDependencyTree(folioRoot);
+  const flatDeps = flattenDependencies(depTree);
+  for (const resolved of flatDeps) {
+    // Skip deps that don't provide translations
+    if (
+      resolved.dependency.provides &&
+      !resolved.dependency.provides.includes("translations")
+    ) {
+      continue;
+    }
 
-    const depConfig = readFolioConfig(depRoot);
-    const depTransDir = translationDir(depRoot, depConfig);
+    const depConfig = resolved.config;
+    const depTransDir = translationDir(resolved.rootPath, depConfig);
     const depLocaleDir = join(depTransDir, locale);
 
     // Look for block-level match in the dependency
@@ -148,7 +133,7 @@ export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] 
       results.push({
         path: depBlockPo,
         resolution: "dependency",
-        dependencyName: dep.name,
+        dependencyName: resolved.dependency.name,
       });
     }
 
@@ -158,7 +143,7 @@ export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] 
       results.push({
         path: depGlobalPo,
         resolution: "dependency",
-        dependencyName: dep.name,
+        dependencyName: resolved.dependency.name,
       });
     }
   }
