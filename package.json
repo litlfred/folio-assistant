@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "description": "Content-agnostic assistant platform \u2014 MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
+  "description": "Content-agnostic assistant platform — MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -76,7 +76,8 @@
     "translate-bpmn": "bun run scripts/translate-bpmn.ts",
     "translation:block-qa": "bun run content/pipeline/translation-block-qa.ts",
     "translation:block-qa:check": "bun run content/pipeline/translation-block-qa.ts --check",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "check:workflows": "bun run scripts/check-workflows.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
@@ -106,7 +107,8 @@
     "csl-json": "^0.1.0",
     "eslint": "^10.8.0",
     "fast-xml-parser": "^5.10.1",
-    "typescript-eslint": "^8.66.0"
+    "typescript-eslint": "^8.66.0",
+    "yaml": "^2.9.1"
   },
   "engines": {
     "bun": ">=1.0.0"

@@ -184,11 +184,10 @@ jobs:
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
+          # Raw branch name — the slug is sanitised, the branch is not.
+          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
         # bash explicitly: the loop uses process substitution and ${var//a/b}.
         shell: bash
-        # Raw branch name via env — see the build.yml step above.
-        env:
-          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
         run: |
           SHA="${GITHUB_SHA:0:7}"
           BRANCH="$STAGING_BRANCH"

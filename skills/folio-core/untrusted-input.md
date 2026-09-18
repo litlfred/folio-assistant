@@ -109,6 +109,27 @@ rather than a command-line word. A type that claimed to be safe and was not
 would be worse than one that says it isn't, because the claim is what makes the
 next person skip the check.
 
+## A workflow GitHub cannot parse does not fail loudly
+
+Worth knowing before you edit any workflow, and it is how the fix above nearly
+went wrong.
+
+**A run whose name is a FILE PATH rather than the workflow's `name:` is a parse
+failure.** GitHub had no `name:` to read. `AGENTS.md` records two workflows that
+sat red for a day in 2026-08 this way; adding the `env:` bindings above
+reproduced it, by putting a second `env:` on a step that already had one.
+
+**`yaml.safe_load` accepted the file.** Duplicate keys are invalid YAML, but
+most loaders silently keep the last — so "it parses locally" is not evidence
+that GitHub will take it. `bun run check:workflows` uses a parser that reports
+duplicates (`yaml`'s `parseDocument` with `uniqueKeys`), and is gated in CI.
+
+Two hand-rolled attempts at that duplicate check reported false findings before
+the real parser went in — `types:` under two different triggers, then `run:` in
+two different steps. Both would have produced a wall of noise in a repository
+with no duplicates at all, which is exactly how a check gets switched off. YAML
+scoping is a parser's job.
+
 ## The test to apply
 
 > **Is this value being placed into something that will be parsed?**
