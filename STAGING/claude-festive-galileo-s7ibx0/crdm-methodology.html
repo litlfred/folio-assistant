@@ -153,7 +153,7 @@
 
 </head>
 
-<body><div style="background:#d946ef;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><code>claude/festive-galileo-s7ibx0</code></a> · commit <code>95ef416</code> · built 2026-09-18T14:28:18Z · PR #241 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35356246472" style="color:#fff;text-decoration:underline">build log</a></div>>
+<body><div style="background:#d946ef;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><code>claude/festive-galileo-s7ibx0</code></a> · commit <code>3d3edcb</code> · built 2026-09-18T14:29:40Z · PR #241 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35356358024" style="color:#fff;text-decoration:underline">build log</a></div>>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -333,6 +333,7 @@
   </li>
   <li><a href="#agent-skills-and-tooling" id="markdown-toc-agent-skills-and-tooling">Agent skills and tooling</a>    <ol>
       <li><a href="#existing-capabilities" id="markdown-toc-existing-capabilities">Existing capabilities</a></li>
+      <li><a href="#skills-that-now-exist" id="markdown-toc-skills-that-now-exist">Skills that now exist</a></li>
       <li><a href="#proposed-skills" id="markdown-toc-proposed-skills">Proposed skills</a></li>
       <li><a href="#proposed-tooling" id="markdown-toc-proposed-tooling">Proposed tooling</a></li>
     </ol>
@@ -1153,9 +1154,9 @@ phase. Some exist today; others are proposed.</p>
   </thead>
   <tbody>
     <tr>
-      <td><strong>GitHub issue management</strong> (<code class="language-plaintext highlighter-rouge">gh</code> CLI)</td>
+      <td><strong>GitHub issue management</strong></td>
       <td>All phases</td>
-      <td>Issues are the primary artefact for requirements, impact analysis, and sign-off</td>
+      <td>Issues are the primary artefact for requirements, impact analysis, and sign-off. Agents reach GitHub through the MCP tools, not the <code class="language-plaintext highlighter-rouge">gh</code> CLI, which is not available in every harness</td>
     </tr>
     <tr>
       <td><strong>BPMN workflow authoring</strong> (skill: <code class="language-plaintext highlighter-rouge">bpmn-authoring</code>)</td>
@@ -1194,6 +1195,40 @@ phase. Some exist today; others are proposed.</p>
     </tr>
   </tbody>
 </table></div>
+<h3 id="skills-that-now-exist">
+  
+  
+    <a href="#skills-that-now-exist" class="anchor-heading" aria-labelledby="skills-that-now-exist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Skills that now exist
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Phase</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">crdm-detect</code></strong></td>
+      <td>Trigger</td>
+      <td>Recognise when a request is a feature rather than content. Five categories of detection phrasing, an explicit “not a feature request” list, and the session-state rules</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></strong></td>
+      <td>All phases</td>
+      <td>The six-phase process, the actors table, and the issue-association rules</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Both are guidance, not instrumentation: they tell an agent what to do, and
+nothing checks that it did. See “What is not built yet” for why that
+distinction is kept explicit.</p>
 <h3 id="proposed-skills">
   
   
@@ -1212,11 +1247,6 @@ phase. Some exist today; others are proposed.</p>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><strong><code class="language-plaintext highlighter-rouge">crdm-detect</code></strong></td>
-      <td>Trigger</td>
-      <td>Recognise when a request is a feature rather than content</td>
-    </tr>
     <tr>
       <td><strong><code class="language-plaintext highlighter-rouge">crdm-needs-assessment</code></strong></td>
       <td>Phase 1</td>
@@ -1282,26 +1312,53 @@ phase. Some exist today; others are proposed.</p>
 <p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-not-built-yet.md" class="fa-node-edit" title="Edit content/docs/crdm-methodology/what-is-not-built-yet.md">✎ Edit</a></p>
 
 <p>This page documents the methodology; the skills and tooling that implement it
-are in various stages of development.</p>
+are in various stages of development. What follows is checked against the
+repository rather than against intent — a gap list that goes stale is worse
+than none, because it sends a reader looking for something that is already
+there, or lets them assume something exists because nobody updated the list.</p>
+
+<p><strong>Built since this page was first written:</strong></p>
+
+<ul>
+  <li><strong>CRDM detection skill</strong> — <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/crdm-detect.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/crdm-detect.md</code></a>
+gives the agent five categories of detection phrasing, an explicit “what is
+<em>not</em> a feature request” list, and the session-state rules (new session,
+existing session already in the process, existing session doing content
+work). The judgement is written down; it is not yet <em>measured</em>, so see the
+caveat below.</li>
+  <li><strong>BPMN diagram of the process itself</strong> —
+<a href="https://github.com/litlfred/folio-assistant/blob/main/docs/workflows/crdm-requirements.bpmn"><code class="language-plaintext highlighter-rouge">docs/workflows/crdm-requirements.bpmn</code></a>,
+with lanes for the BA / feature requestor, the agent, and stakeholders.</li>
+  <li><strong>The six-phase workflow as a skill</strong> —
+<a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/crdm-requirements-workflow.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/crdm-requirements-workflow.md</code></a>,
+including the actors table and the issue-association rules.</li>
+</ul>
 
 <p><strong>Not yet implemented:</strong></p>
 
 <ul>
-  <li><strong>CRDM detection skill</strong> — the agent does not yet automatically recognise
-when a request is a feature vs content. Today this is a human judgement.</li>
   <li><strong>Structured requirements templates</strong> — no MCP tool scaffolds the CRDM
-phases into a GitHub issue. The structure described above is manual.</li>
+phases into a GitHub issue. The structure described above is written by
+hand each time.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">crdm_start</code> / <code class="language-plaintext highlighter-rouge">crdm_status</code> MCP tools</strong> — there is no way to ask the
+platform which phase a cycle is in. <code class="language-plaintext highlighter-rouge">grep -ri crdm src/</code> returns nothing:
+the process is documented and skilled, but it is not <em>instrumented</em>, so
+“where are we” is answered by reading the issue.</li>
   <li><strong>Automated impact analysis</strong> — the agent can read the content graph and
-schema files, but there is no dedicated tool that produces an impact report
-for a proposed change.</li>
+the schema files, but no dedicated tool produces an impact report for a
+proposed change.</li>
   <li><strong>Stakeholder mapping</strong> — no automated discovery of affected roles or
-folios from a proposed change description.</li>
-  <li><strong>Review triage tooling</strong> — the ability to ingest a Word document with
-comments and present them for structured triage is tracked in
+folios from a change description.</li>
+  <li><strong>Review triage tooling</strong> — ingesting a Word document with comments and
+presenting them for structured triage is tracked in
 <a href="https://github.com/litlfred/folio-assistant/issues/197">#197</a>.</li>
-  <li><strong>BPMN diagram for the CRDM workflow itself</strong> — this page describes the
-process in prose; a BPMN diagram would make it executable and verifiable.</li>
 </ul>
+
+<p><strong>Built but unverified</strong>, which is a third state and not a milder form of
+“built”: the detection skill has never been measured against real requests.
+Nobody has taken a sample of issues and chat openings and checked how often
+it fires when it should, or fires when it should not. Until that happens the
+honest claim is that the guidance exists, not that detection works.</p>
 
 <p><strong>Tracked in:</strong> <a href="https://github.com/litlfred/folio-assistant/issues/203">#203</a></p>
 
@@ -1318,7 +1375,7 @@ process in prose; a BPMN diagram would make it executable and verifiable.</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35356246472"><code>95ef416</code></a> &middot; 2026-09-18T14:27:53Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35356358024"><code>3d3edcb</code></a> &middot; 2026-09-18T14:29:14Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
