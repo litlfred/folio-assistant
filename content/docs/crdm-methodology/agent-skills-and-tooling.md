@@ -5,7 +5,7 @@ phase. Some exist today; others are proposed.
 
 | Capability | Used in phase | How |
 |---|---|---|
-| **GitHub issue management** (`gh` CLI) | All phases | Issues are the primary artefact for requirements, impact analysis, and sign-off |
+| **GitHub issue management** | All phases | Issues are the primary artefact for requirements, impact analysis, and sign-off. Agents reach GitHub through the MCP tools, not the `gh` CLI, which is not available in every harness |
 | **BPMN workflow authoring** (skill: `bpmn-authoring`) | Phase 2 | Agent can create and modify BPMN 2.0 process diagrams |
 | **Content graph** (`content-graph.ts`) | Phase 4 | Dependency analysis across blocks and chapters |
 | **QA criteria registry** (`qa-criteria-registry.ts`) | Phase 3, 4 | Register and scope new QA checks |
@@ -14,11 +14,21 @@ phase. Some exist today; others are proposed.
 | **Schema types** (`schemas/*.ts`) | Phase 3 | Define new types, constraints, and builders |
 | **Document ingestion** (`uploads/` → `library/` pipeline) | Phase 2 | Ingest source documents for review |
 
+### Skills that now exist
+
+| Skill | Phase | Purpose |
+|---|---|---|
+| **`crdm-detect`** | Trigger | Recognise when a request is a feature rather than content. Five categories of detection phrasing, an explicit "not a feature request" list, and the session-state rules |
+| **`crdm-requirements-workflow`** | All phases | The six-phase process, the actors table, and the issue-association rules |
+
+Both are guidance, not instrumentation: they tell an agent what to do, and
+nothing checks that it did. See "What is not built yet" for why that
+distinction is kept explicit.
+
 ### Proposed skills
 
 | Skill | Phase | Purpose |
 |---|---|---|
-| **`crdm-detect`** | Trigger | Recognise when a request is a feature rather than content |
 | **`crdm-needs-assessment`** | Phase 1 | Guide the user through needs articulation; identify stakeholders |
 | **`crdm-impact-analysis`** | Phase 4 | Automated scan of affected schemas, pipeline scripts, adapters, and folios |
 | **`crdm-requirements-template`** | Phase 3 | Generate structured requirements from conversation |
