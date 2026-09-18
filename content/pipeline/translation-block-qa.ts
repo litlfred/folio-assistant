@@ -281,6 +281,42 @@ export function buildReport(
 }
 
 /**
+ * Fold a fresh sweep into what is already in the sidecar, without destroying
+ * anybody else's ruling.
+ *
+ * This sweep owns exactly what IT wrote: entries whose reviewer is this script.
+ * Those are replaced, because a re-run supersedes its own previous measurement
+ * (bean `oja4` — append-only script entries make a sidecar grow a history of
+ * one checker arguing with itself). Everything else is carried through:
+ *
+ *  - an `agent` or `human` entry on a criterion this sweep also measures;
+ *  - every entry on a criterion this sweep does not produce at all, which is
+ *    how `translation-semantic-roundtrip` keeps the round-trip verdict an
+ *    adjudicating agent recorded. Writing `[]` over it would have deleted the
+ *    only witness the criterion will ever have, on the next unrelated re-run,
+ *    with nothing in the output to say so.
+ *
+ * Order matters and is not incidental: the FIRST entry is the operative verdict
+ * everywhere in this repo. A fresh script measurement leads on the criteria it
+ * owns; on a criterion it does not measure, whatever ruled stays first.
+ */
+export function mergeCriteria(
+  existing: Record<string, TranslationQaEntry[]> | undefined,
+  fresh: Record<string, TranslationQaEntry[]>,
+): Record<string, TranslationQaEntry[]> {
+  const out: Record<string, TranslationQaEntry[]> = {};
+  const mine = (e: TranslationQaEntry) => e.reviewer?.kind === "script" && e.reviewer?.id === SELF;
+  for (const [id, entries] of Object.entries(fresh)) {
+    const kept = (existing?.[id] ?? []).filter((e) => !mine(e));
+    out[id] = [...entries, ...kept];
+  }
+  for (const [id, entries] of Object.entries(existing ?? {})) {
+    if (!(id in out)) out[id] = entries;
+  }
+  return out;
+}
+
+/**
  * Whether a rewritten sidecar differs in SUBSTANCE from the one on disk.
  *
  * Timestamps move on every run, so comparing the whole file would report every
@@ -358,10 +394,11 @@ if (import.meta.main) {
         skipped++;
         continue;
       }
-      const body = JSON.stringify(doc, null, 2) + "\n";
       const current = existsSync(out)
         ? (JSON.parse(readFileSync(out, "utf-8")) as TranslationBlockQaReport)
         : undefined;
+      doc.criteria = mergeCriteria(current?.criteria, doc.criteria);
+      const body = JSON.stringify(doc, null, 2) + "\n";
       if (current && substantive(current) === substantive(doc)) continue;
       if (check) {
         console.error(`  ✗ ${relative(REPO_ROOT, out)} is stale`);

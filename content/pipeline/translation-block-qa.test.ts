@@ -12,7 +12,12 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { buildReport, invariantTokens, measureBlock } from "./translation-block-qa.ts";
+import {
+  buildReport,
+  invariantTokens,
+  measureBlock,
+  mergeCriteria,
+} from "./translation-block-qa.ts";
 
 function inTmp(run: (dir: string) => void): void {
   const dir = mkdtempSync(join(tmpdir(), "trans-qa-"));
@@ -166,5 +171,61 @@ describe("buildReport — absence is absence", () => {
       expect(cov.metrics).toMatchObject({ translated: 1, total: 2, pct: 50 });
       expect(cov.notes).toContain("1 of 2");
     });
+  });
+});
+
+describe("mergeCriteria — a re-run must not delete what it did not write", () => {
+  const SELF = "content/pipeline/translation-block-qa.ts";
+  const scriptEntry = (result: string, id = SELF) =>
+    ({ field_hash: { md: "x" }, result, reviewer: { kind: "script", id }, reviewed_at: "t" }) as never;
+  const agentEntry = (result: string) =>
+    ({ field_hash: { md: "x" }, result, reviewer: { kind: "agent", id: "adjudicator" }, reviewed_at: "t" }) as never;
+
+  test("the sweep replaces its OWN entries rather than stacking them", () => {
+    // Append-only script entries turn a criterion into a log of one checker
+    // arguing with itself — bean `oja4`.
+    const out = mergeCriteria(
+      { "translation-coverage": [scriptEntry("fail")] },
+      { "translation-coverage": [scriptEntry("pass")] },
+    );
+    expect(out["translation-coverage"]).toHaveLength(1);
+    expect(out["translation-coverage"]![0]!.result).toBe("pass");
+  });
+
+  test("an agent verdict on a criterion the sweep does not measure SURVIVES", () => {
+    // The live failure this guards: the sweep writes `translation-semantic-
+    // roundtrip: []` on every run. Clobbering would delete the round trip a
+    // pair of agents produced, on the next unrelated re-run, silently.
+    const out = mergeCriteria(
+      { "translation-semantic-roundtrip": [agentEntry("pass"), agentEntry("n/a")] },
+      { "translation-semantic-roundtrip": [] },
+    );
+    expect(out["translation-semantic-roundtrip"]).toHaveLength(2);
+    expect(out["translation-semantic-roundtrip"]![0]!.result).toBe("pass");
+  });
+
+  test("an agent entry on a criterion the sweep DOES measure is kept, behind the fresh script one", () => {
+    const out = mergeCriteria(
+      { "translation-coverage": [agentEntry("warn")] },
+      { "translation-coverage": [scriptEntry("pass")] },
+    );
+    expect(out["translation-coverage"]).toHaveLength(2);
+    // First entry is the operative verdict everywhere in this repo, and the
+    // fresh mechanical measurement leads on a criterion the script owns.
+    expect(out["translation-coverage"]![0]!.reviewer!.kind).toBe("script");
+    expect(out["translation-coverage"]![1]!.reviewer!.kind).toBe("agent");
+  });
+
+  test("another script's entry is not mistaken for this one's", () => {
+    const out = mergeCriteria(
+      { "translation-coverage": [scriptEntry("fail", "some/other-checker.ts")] },
+      { "translation-coverage": [scriptEntry("pass")] },
+    );
+    expect(out["translation-coverage"]).toHaveLength(2);
+  });
+
+  test("a criterion only the existing sidecar has is carried through untouched", () => {
+    const out = mergeCriteria({ "human-only-axis": [agentEntry("fail")] }, {});
+    expect(out["human-only-axis"]).toHaveLength(1);
   });
 });
