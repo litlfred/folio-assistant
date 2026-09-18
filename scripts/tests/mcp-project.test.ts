@@ -21,7 +21,7 @@ const beanTool = (): ToolDefinition =>
   defineTool({
     id: "bean-demo",
     title: "demo",
-    summary: "demo",
+    description: "demo",
     install: { none: true },
     invoke: { shell: "beans" },
     io: {
@@ -60,7 +60,7 @@ describe("mcp projection", () => {
 
   test("positionals keep their declared order regardless of declaration order", () => {
     const tool = defineTool({
-      id: "ordered", title: "x", summary: "y",
+      id: "ordered", title: "x", description: "y",
       install: { none: true }, invoke: { shell: "cmd" },
       io: {
         inputs: [
@@ -76,7 +76,7 @@ describe("mcp projection", () => {
 
   test("free prose goes on stdin, never into argv", () => {
     const tool = defineTool({
-      id: "prose", title: "x", summary: "y",
+      id: "prose", title: "x", description: "y",
       install: { none: true }, invoke: { shell: "cmd" },
       io: { inputs: [{ name: "body", schema: t("Markdown"), required: true, arg: { stdin: true } }], outputs: [] },
       satisfies: ["todo-manager"],
@@ -116,7 +116,7 @@ describe("mcp projection", () => {
 
   test("an unmet requirement means NOT LISTED, and the omission is reported", () => {
     const netTool = defineTool({
-      id: "needs-net", title: "x", summary: "y",
+      id: "needs-net", title: "x", description: "y",
       install: { none: true }, invoke: { shell: "cmd" },
       io: { inputs: [], outputs: [] }, satisfies: ["todo-manager"],
       requires: { network: true },

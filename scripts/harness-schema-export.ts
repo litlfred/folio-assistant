@@ -4,7 +4,7 @@
  *
  * The other half of a self-describing graph. `<stub>.jsonld` says what this
  * instance contains; this says what a declaration *is*, and lives at the URL
- * its own `$id` names — so a consumer holding an `agent-harness.json` it does
+ * its own `$id` names — so a consumer holding an `cat-harness.json` it does
  * not understand has somewhere to go.
  *
  * ## The trick, from `WorldHealthOrganization/smart-base`
@@ -19,7 +19,7 @@
  * from FHIR StructureDefinitions; ours derive from Zod, because
  * `directory-conventions` §"What lives in the `schemas` graph" settled that
  * the `.ts` is authoritative and every other form is generated. So this is a
- * third rendering of `AgentHarnessDeclarationSchema`, beside the JSON-LD — not
+ * third rendering of `CatHarnessDeclarationSchema`, beside the JSON-LD — not
  * a second authority.
  *
  * ## Why `$id` must be absolute or absent
@@ -37,7 +37,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
-import { AgentHarnessDeclarationSchema, artefactStub, readDeclaration } from "../schemas/agent-harness.js";
+import { CatHarnessDeclarationSchema, artefactStub, readDeclaration } from "../schemas/cat-harness.js";
 import { ToolDefinitionSchema } from "../schemas/tool.js";
 import { TOOL_TYPES } from "../schemas/tool-types.js";
 
@@ -53,8 +53,8 @@ export function buildDeclarationSchema(opts: SchemaExportOptions = {}): Record<s
   const stub = decl ? artefactStub(decl) : (pkg.name ?? "instance");
   const base = (opts.baseUrl ?? decl?.canonicalUrl ?? "").replace(/\/+$/, "");
 
-  const schema = zodToJsonSchema(AgentHarnessDeclarationSchema, {
-    name: "AgentHarnessDeclaration",
+  const schema = zodToJsonSchema(CatHarnessDeclarationSchema, {
+    name: "CatHarnessDeclaration",
     $refStrategy: "none",
   }) as Record<string, unknown>;
 
@@ -62,11 +62,11 @@ export function buildDeclarationSchema(opts: SchemaExportOptions = {}): Record<s
     ...schema,
     // Absolute or absent — never relative. See the module note.
     ...(base ? { $id: `${base}/kg/${stub}.schema.json` } : {}),
-    title: "AgentHarness declaration",
+    title: "CatHarness declaration",
     description:
-      "The root declaration every instance carries as `agent-harness.json`: what it is called, " +
+      "The root declaration every instance carries as `cat-harness.json`: what it is called, " +
       "where it publishes, and which directories it scans for which kind of graph. " +
-      "Generated from `AgentHarnessDeclarationSchema` in schemas/agent-harness.ts, which is authoritative.",
+      "Generated from `CatHarnessDeclarationSchema` in schemas/cat-harness.ts, which is authoritative.",
     ...(base ? { $comment: `Instance graph: ${base}/kg/${stub}.jsonld` } : {}),
   };
 }

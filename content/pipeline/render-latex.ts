@@ -22,21 +22,7 @@ import type { Ast as LatexAstUnion } from "@unified-latex/unified-latex-types";
  *  array; the walkers below take the element type. */
 type LatexNode = Exclude<LatexAstUnion, unknown[]>;
 import { printRaw } from "@unified-latex/unified-latex-util-print-raw";
-import { remark } from "remark";
-import remarkMath from "remark-math";
-import remarkDirective from "remark-directive";
-// Selective GFM: exclude gfm-autolink-literal which causes OOM on
-// dotted Lean identifiers (e.g. "QOU.Archimedean.Foo.bar").
-// Tables and strikethrough are loaded individually from the transitive
-// deps of remark-gfm.
-import { gfmTable } from "micromark-extension-gfm-table";
-import {
-  gfmTableFromMarkdown,
-} from "mdast-util-gfm-table";
-import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough";
-import {
-  gfmStrikethroughFromMarkdown,
-} from "mdast-util-gfm-strikethrough";
+// Markdown parsing moved to ./markdown-ast — see that module for why.
 import type { Root, RootContent, Parent, Table, TableRow, ListItem } from "mdast";
 // Type-only imports for their side effect: each augments mdast's
 // `RootContentMap` with the node types its remark plugin produces —
@@ -46,8 +32,9 @@ import type { Root, RootContent, Parent, Table, TableRow, ListItem } from "mdast
 import type {} from "mdast-util-math";
 import type {} from "mdast-util-directive";
 import type { Block, Chapter, Section, RenderOptions } from "../../schemas/types";
-import { isCrossPaperRef } from "../../schemas/types";
+import { isCrossPaperRef, leanStatusBucket } from "../../schemas/types";
 import { parseLeanRef } from "../../schemas/lean-packages";
+import { parseMdCached } from "./markdown-ast";
 import { extractCitations } from "./citations";
 import {
   renderValue,
@@ -210,43 +197,6 @@ function transliterateForInlineCode(text: string): string {
   return out;
 }
 
-/**
- * Collapse a block's Lean status into the three buckets the PDF ∀ mark
- * colour-codes (see `\leanstatusmark` / `\proofstatuslegend` in
- * latex/preamble.tex):
- *
- *   - "compiled"  green  — built sorry-free.
- *   - "stubbed"   red    — a `: True`/placeholder or vacuous/trivial goal
- *                          flagged by machine QA (`validation: stub/trivial/
- *                          error`): NOT a genuine formalisation.
- *   - "drafted"   purple — a genuine statement stated in Lean that is neither
- *                          a stub nor yet sorry-free-compiled — including a
- *                          block whose `.lean` carries a (cited) `sorry`
- *                          (`validation: not_checked`). A referenced `sorry`
- *                          is a deliberate deferral, not a vacuous stub.
- *
- * `sorryFree` wins outright; otherwise we map the `validation` enum. An
- * unknown/absent validation on a block that *does* carry a Lean ref defaults
- * to "drafted" (it is stated, just not yet checked).
- */
-export function leanStatusBucket(
-  lean: { sorryFree?: boolean; validation?: string } | undefined,
-): "stubbed" | "drafted" | "compiled" {
-  if (!lean) return "stubbed";
-  if (lean.sorryFree === true) return "compiled";
-  switch (lean.validation) {
-    case "leanok":
-    case "validated":
-      return "compiled";
-    case "stub":
-    case "trivial":
-    case "error":
-      return "stubbed";
-    default:
-      // not_checked / external / axioms_only / undefined
-      return "drafted";
-  }
-}
 
 /**
  * Escape special LaTeX characters in titles, captions, etc.,
@@ -354,68 +304,6 @@ function breakableCode(text: string): string {
 /** Shared remark parser instance with math + selective GFM (no autolink).
  *  The full remarkGfm bundle includes gfm-autolink-literal which causes
  *  OOM on dotted Lean identifiers. We load only tables + strikethrough. */
-const mdParser = remark()
-  .data("micromarkExtensions", [gfmTable(), gfmStrikethrough()])
-  .data("fromMarkdownExtensions", [
-    gfmTableFromMarkdown(),
-    gfmStrikethroughFromMarkdown(),
-  ])
-  .use(remarkDirective)
-  .use(remarkMath);
-
-/**
- * Protect bare `|` inside inline `$...$` math from the GFM table parser.
- *
- * micromark's gfm-table is a *flow* construct: it splits table rows on `|`
- * before remark-math tokenises inline math, so a cell like
- * `$|\mathrm{tr}_M(\rho(\beta))|$` or `$\langle a|b\rangle$` spills into
- * extra columns ("Extra alignment tab has been changed to \cr" — a fatal
- * pdflatex error) and the orphaned `$` get escaped to literal text.
- *
- * Replace each bare `|` inside an inline math span with `\vert ` — which is
- * output-identical in math mode — so the table parser sees no spurious
- * delimiters. Real cell separators (`|` outside math) and fenced code
- * blocks are left untouched.
- */
-export function protectPipesInInlineMath(md: string): string {
-  const lines = md.split("\n");
-  let inFence = false;
-  for (let i = 0; i < lines.length; i++) {
-    if (/^\s*(```|~~~)/.test(lines[i])) { inFence = !inFence; continue; }
-    if (inFence) continue;
-    lines[i] = lines[i].replace(/\$[^$\n]+\$/g, (seg) =>
-      seg.replace(/(?<!\\)\|/g, "\\vert "),
-    );
-  }
-  return lines.join("\n");
-}
-
-/**
- * Parse markdown content via remark, caching the resulting AST.
- * Multiple render functions (markdownToLatex, extractMathContent)
- * may be called on the same content within a single build — this
- * avoids redundant parses.  Bounded to 512 entries to cap memory.
- */
-const MD_AST_CACHE_LIMIT = 512;
-const _mdAstCache = new Map<string, Root>();
-export function parseMdCached(md: string): Root {
-  let tree = _mdAstCache.get(md);
-  if (!tree) {
-    tree = mdParser.parse(protectPipesInInlineMath(md));
-    if (_mdAstCache.size >= MD_AST_CACHE_LIMIT) {
-      // Evict oldest entry (first inserted key)
-      const firstKey = _mdAstCache.keys().next().value;
-      if (firstKey !== undefined) _mdAstCache.delete(firstKey);
-    }
-    _mdAstCache.set(md, tree);
-  }
-  return tree;
-}
-
-/** Clear the markdown AST cache (e.g. between builds in watch mode). */
-export function clearMdAstCache(): void {
-  _mdAstCache.clear();
-}
 
 /**
  * Convert markdown content to LaTeX body text via remark AST.
@@ -1547,27 +1435,6 @@ function shouldIncludeBlock(
   );
 }
 
-/**
- * Scan every loaded block for glossary-term references and return the
- * document-wide `term:<slug>` set for {@link RenderOptions.referencedTerms}.
- */
-export function collectReferencedTerms(
-  blocks: Map<string, { block: Block; mdContent: string; sourceDir?: string }>,
-): Set<string> {
-  const refs = new Set<string>();
-  for (const { mdContent } of blocks.values()) {
-    if (!mdContent) continue;
-    for (const m of mdContent.matchAll(
-      /:refterm\[([^\]]*)\](?:\{#([^}]+)\})?/g,
-    )) {
-      refs.add(`term:${m[2] ?? m[1]}`);
-    }
-    for (const m of mdContent.matchAll(/\\refterm\{([^}]+)\}/g)) {
-      refs.add(`term:${m[1]}`);
-    }
-  }
-  return refs;
-}
 
 // ── Chapter rendering ────────────────────────────────────────────
 

@@ -13,8 +13,7 @@
 import { resolve, join } from "path";
 import { existsSync, readFileSync } from "fs";
 import { FolioServer } from "./server.js";
-import { PaperContentAdapter } from "../adapters/paper/index.js";
-import { DocumentContentAdapter } from "../adapters/document/index.js";
+import { resolveBuiltinAdapter } from "./builtin-adapters.js";
 import { GitHelper } from "./core/git.js";
 import { FeedbackStore } from "./core/feedback.js";
 import { log } from "./core/logging.js";
@@ -135,30 +134,31 @@ if (adapterModule) {
     log("init", `Using custom adapter from ${adapterModule} (repo: ${repoRoot})`);
   } catch (e) {
     log("init", `Failed to load adapter from ${adapterModule}: ${e}`);
-    log("init", `Falling back to built-in paper adapter`);
-    adapter = new PaperContentAdapter(repoRoot, gitHelper, feedbackStore);
+    log("init", `Falling back to a built-in adapter`);
+    const r = await resolveBuiltinAdapter(adapterType);
+    if (r.fallbackReason) log("init", r.fallbackReason);
+    adapter = new (r.ctor as new (...a: never[]) => unknown)(
+      repoRoot as never, gitHelper as never, feedbackStore as never,
+    );
   }
 } else {
-  // Built-in adapter selection.
+  // Built-in adapter selection, from the declaration in `builtin-adapters.ts`
+  // rather than a `switch` over imported classes.
   //
   // `document` is the base content type — prose folios with no Lean and no
-  // required TeX — and `paper` is the specialization that adds both. The
-  // default stays `paper` because every folio predating the document type
+  // required TeX — and `paper` is the specialization that adds both. `paper`
+  // remains the fallback because every folio predating the document type
   // declares `contentType: "paper"` or nothing at all, and the paper adapter
-  // is a superset: it registers the document tools too. Defaulting the other
+  // is a superset: it registers the document tools too. Falling back the other
   // way would silently drop `lean_build` from an existing folio whose config
-  // happens to omit `contentType`.
-  switch (adapterType) {
-    case "document":
-      adapter = new DocumentContentAdapter(repoRoot, gitHelper, feedbackStore);
-      log("init", `Using document adapter (repo: ${repoRoot})`);
-      break;
-    case "paper":
-    default:
-      adapter = new PaperContentAdapter(repoRoot, gitHelper, feedbackStore);
-      log("init", `Using paper adapter (repo: ${repoRoot})`);
-      break;
-  }
+  // happens to omit `contentType` — which is why a fallback that DOES go that
+  // way (because the science layer is not installed) says so out loud.
+  const r = await resolveBuiltinAdapter(adapterType);
+  if (r.fallbackReason) log("init", r.fallbackReason);
+  adapter = new (r.ctor as new (...a: never[]) => unknown)(
+    repoRoot as never, gitHelper as never, feedbackStore as never,
+  );
+  log("init", `Using ${r.used.contentType} adapter (repo: ${repoRoot})`);
 }
 
 // ── Start server ─────────────────────────────────────────────────

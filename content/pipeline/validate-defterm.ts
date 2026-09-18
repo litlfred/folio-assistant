@@ -15,7 +15,7 @@ import type { TextDirective } from "mdast-util-directive";
 import type {} from "mdast-util-directive";
 import type {} from "mdast-util-math";
 import type { Block, ValidationIssue } from "../../schemas/types";
-import { parseMdCached } from "./render-latex";
+import { parseMdCached } from "./markdown-ast";
 
 /** Resolve the slug for a defterm/refterm node. */
 function nodeSlug(node: TextDirective): { slug: string; label: string } {

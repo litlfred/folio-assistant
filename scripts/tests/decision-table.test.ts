@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import { drainSubprocess } from "./helpers";
 import { mkdtempSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
@@ -204,7 +205,7 @@ describe("computed gateways in a running process", () => {
     const state = startInstance(model, { id: "d2", subject: "def:x" });
     complete(model, state, "Task_DescribeChange");
     complete(model, state, "Task_ClaimBean");
-    complete(model, state, "CallActivity_Evidence");
+    drainSubprocess(model, state, "CallActivity_Evidence");
     complete(model, state, "Task_DraftEdit");
     const judgement = enabled(model, state).find((e) => e.node === "Gateway_ReviewerKind");
     expect(judgement?.kind === "decision" && judgement.computed).toBeUndefined();

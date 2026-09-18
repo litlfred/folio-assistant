@@ -92,7 +92,7 @@ describe("tools", () => {
     // not usable by the layer that defines it — and projecting it would emit a
     // server that proxies itself. Rejected at parse time, not at review.
     const mcpOnly = {
-      id: "mcp-only", title: "x", summary: "y",
+      id: "mcp-only", title: "x", description: "y",
       install: { none: true as const },
       invoke: { mcp: { tool: "something" } },
       io: { inputs: [], outputs: [] },
@@ -105,7 +105,7 @@ describe("tools", () => {
 
   test("a Tool satisfying nothing is rejected", () => {
     const orphan = {
-      id: "orphan", title: "x", summary: "y",
+      id: "orphan", title: "x", description: "y",
       install: { none: true as const }, invoke: { shell: "x" },
       io: { inputs: [], outputs: [] }, satisfies: [],
     };

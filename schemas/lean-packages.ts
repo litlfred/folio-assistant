@@ -1,7 +1,43 @@
 /**
- * Lean package registry — Dependency injection point.
- * Downstream repositories must inject their LEAN_PACKAGES list
- * by calling `configureLeanPackages(packages)`.
+ * The `lean.ref` grammar and the package registry it resolves against.
+ *
+ * **Mechanism, not content.** This module knows that a block may cite a formal
+ * artefact as `package:Declaration`, how to parse one, and how to look up the
+ * package a folio has declared. It does not know which packages exist — a
+ * folio injects those with {@link configureLeanPackages}.
+ *
+ * ## Why this is core and not the science layer
+ *
+ * `BlockBase` carries an optional `lean` field, in `schemas/types.ts`, and
+ * `schemas/constraints.ts` validates its `ref` against
+ * {@link LEAN_REF_PATTERN}. The field is on shared block kinds by design —
+ * `remark`, `example`, `algorithm` and `simulator` all declare it and the
+ * document profile forbids its use (`content/pipeline/profile-check.ts`). So
+ * the **grammar belongs wherever the field does**, which is core; only the
+ * package list is a property of a particular folio.
+ *
+ * Seven core modules import from here for exactly that reason — the ref
+ * grammar and the lookup, never the list.
+ *
+ * ## Unconfigured is not empty
+ *
+ * The registry starts empty and stays empty until a folio configures it, and
+ * those two states are different facts: **nobody has said** is not **there are
+ * none**. {@link leanPackagesConfigured} is how a caller tells them apart, so
+ * a pipeline can report "not checked" rather than silently skipping every
+ * library-tree `lean.ref` and looking clean while doing so.
+ *
+ * That distinction replaces a hardcoded default. Until 2026-09-18 this module
+ * shipped three qou-family folios — `qou`, `ugb`, `fred2005`, with their
+ * content directories — as `DEFAULT_LEAN_PACKAGES`, applied at import. Its own
+ * comment said the list "is injected by the content repo; keeping it here as a
+ * default unbreaks the pipeline without a config-discovery mechanism". It was
+ * one folio family's data living in the platform, which is the genericity
+ * failure this repository is organised against, and no platform test covered
+ * it: the whole suite passes with the defaults removed, because the platform
+ * carries no corpus to skip.
+ *
+ * @module schemas/lean-packages
  */
 
 export interface LeanPackage {
@@ -19,7 +55,22 @@ let configuredPackages: readonly LeanPackage[] = [];
 let byName = new Map<string, LeanPackage>();
 let byPaperDir = new Map<string, LeanPackage>();
 
+/**
+ * Whether a folio has configured the registry.
+ *
+ * Distinct from `LEAN_PACKAGES.length === 0`, and the distinction is the point:
+ * a folio may legitimately declare no Lean packages, and that is a different
+ * answer from nobody having declared anything. A caller that cannot resolve a
+ * `lean.ref` should say which of the two it is.
+ */
+export function leanPackagesConfigured(): boolean {
+  return configured;
+}
+
+let configured = false;
+
 export function configureLeanPackages(packages: readonly LeanPackage[]) {
+  configured = true;
   configuredPackages = packages;
   byName = new Map(packages.map(p => [p.name, p] as const));
   byPaperDir = new Map(packages.map(p => [p.paperDir, p] as const));
@@ -80,41 +131,3 @@ export function formatLeanRef(parts: { package: string; decl: string }): string 
 
 export const LEAN_REF_PATTERN = /^[a-z][a-z0-9-]*:[^\s:]+$/;
 
-/**
- * Standard folio paper packages, applied at import time so the runtime
- * pipelines (qa-sweep, validate, q-usage, …) that never call
- * `configureLeanPackages()` still resolve library-tree `lean.ref` URIs.
- *
- * Before this default, the DI registry stayed EMPTY at runtime (only the
- * unit test injected it), so `resolveCanonicalLean` returned `undefined`
- * for every library-only block (no sibling `.lean`) and wall-side / voice /
- * q-usage / compute-prop silently skipped them corpus-wide.
- *
- * Downstream repos with a different paper set may override by calling
- * `configureLeanPackages(...)` after import (as the test does). Ideally this
- * list is injected by the content repo; keeping it here as a default unbreaks
- * the pipeline without a config-discovery mechanism. Mirrors AGENTS.md §0 and
- * the qou-side static `schemas/lean-packages.ts`.
- */
-export const DEFAULT_LEAN_PACKAGES: readonly LeanPackage[] = [
-  {
-    name: "qou",
-    paperDir: "quantum-observable-universe",
-    lakeRoot: "content/quantum-observable-universe/lean",
-    lib: "QOU",
-  },
-  {
-    name: "ugb",
-    paperDir: "unital-groebner-bases",
-    lakeRoot: "content/unital-groebner-bases/lean",
-    lib: "UGB",
-  },
-  {
-    name: "fred2005",
-    paperDir: "fred2005-formal-groups",
-    lakeRoot: "content/fred2005-formal-groups/lean",
-    lib: "Fred2005",
-  },
-];
-
-configureLeanPackages(DEFAULT_LEAN_PACKAGES);

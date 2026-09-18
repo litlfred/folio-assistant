@@ -35,8 +35,8 @@
  */
 
 import { existsSync, readFileSync } from "fs";
-import type { CheckerPaths } from "../../schemas/block-qa";
-import type { CheckerResult } from "./qa-checkers-extended";
+import type { CheckerPaths, CheckerResult} from "../../schemas/block-qa";
+
 import { DAK_LABEL_PREFIXES, type DakBlockKind } from "../../schemas/block-kinds";
 
 /**

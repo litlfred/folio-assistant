@@ -18,10 +18,10 @@ import { extractBlockLabel, isCrossPaperRef } from "../../schemas/types";
 import {
   renderChapter,
   validateLatexAst,
-  collectReferencedTerms,
 } from "./render-latex";
 import { generateMainTex } from "./generate-main-tex";
 import { runPreflight } from "./latex-preflight";
+import { collectReferencedTerms } from "./markdown-ast";
 import { resolveLeanFile, leanFileStatus } from "../../scripts/lean-coverage";
 import { findContentRepoRoot, findPapers } from "./repo-root";
 

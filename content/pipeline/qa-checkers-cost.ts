@@ -17,7 +17,8 @@
  */
 
 import { existsSync, readFileSync } from "fs";
-import type { CheckerResult } from "./qa-checkers-extended";
+import type { CheckerResult } from "../../schemas/block-qa";
+
 import { parseLeanRef, refToDecl } from "./content-graph";
 import { loadProfileCache, entryFresh, type ProfileCache } from "./lean-profile-ingest";
 import { findContentRepoRoot } from "./repo-root";

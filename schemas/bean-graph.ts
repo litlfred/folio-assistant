@@ -50,7 +50,7 @@
  * - **Unknown node kind** → rejected, not accepted and ignored. A node whose
  *   kind nothing understands is a store nothing will read.
  *
- * ## It defers to `agent-harness.ts`, and does not restate it
+ * ## It defers to `cat-harness.ts`, and does not restate it
  *
  * A bean-graph entry IS a {@link ContentDirectory}: an id, a path, and the
  * graph kinds found there. Same schema, same open registry, same JSON-LD
@@ -78,7 +78,7 @@ import {
   defaultGraphKinds,
   type ContentDirectory,
   type GraphKindRegistry,
-} from "./agent-harness";
+} from "./cat-harness";
 
 /**
  * The kinds of store a bean-graph node can be.
@@ -98,7 +98,7 @@ import {
  * The graph kinds a bean graph's directories hold.
  *
  * Both are registered in {@link BASE_GRAPH_KINDS}, not defined here — the
- * vocabulary is shared with `agent-harness.json`, so a consumer that knows
+ * vocabulary is shared with `cat-harness.json`, so a consumer that knows
  * one declaration knows the other. This constant is a convenience for callers
  * that want the bean-specific subset, never a second source of truth.
  */

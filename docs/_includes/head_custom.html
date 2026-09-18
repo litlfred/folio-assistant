@@ -73,3 +73,54 @@
 <script src="{{ '/assets/js/vendor/qrcode.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/vendor/qrcode_UTF8.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/docs-ui.js' | relative_url }}" defer></script>
+
+<!--
+  The landing panel — the instance's declared description drawn inside the
+  quiet part of its declared backdrop. Markup: `_includes/landing.html`.
+
+  The region comes in as custom properties (`--fl-x` …) set per instance from
+  `cat-harness.json`, so this stylesheet knows nothing about where any
+  particular picture is quiet. That is the whole design: a downstream folio
+  swaps the art and the numbers and needs no CSS.
+-->
+<style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+  .folio-landing__art { display: block; }
+  .folio-landing__art img {
+    display: block; width: 100%; height: auto; border-radius: 8px;
+  }
+  .folio-landing__text {
+    position: absolute;
+    left: var(--fl-x); top: var(--fl-y);
+    width: var(--fl-w); height: var(--fl-h);
+    display: flex; flex-direction: column; justify-content: center;
+    overflow: hidden;
+    /* The cloud is cream in both colour schemes — it is part of the picture,
+       not of the theme — so the overlay fixes its own ink rather than
+       inheriting a light-on-light body colour under `color_scheme: dark`. */
+    color: #2f4636;
+  }
+  .folio-landing__text > :first-child { margin-top: 0; }
+  .folio-landing__text > :last-child { margin-bottom: 0; }
+  .folio-landing__text p {
+    margin: 0; line-height: 1.35; font-weight: 600;
+    /* Scales with the picture, so the words keep their place in the cloud as
+       the viewport narrows. Bounded at both ends: `vw` alone is unreadable on
+       a phone and absurd on a 4K monitor. */
+    font-size: clamp(0.72rem, 1.7vw, 1.45rem);
+  }
+
+  /* No declared region → the picture stands alone and the words go beneath it.
+     Guessing a position is how text lands on the cat. */
+  .folio-landing--no-region .folio-landing__text,
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--no-region .folio-landing__text { margin-top: 1rem; }
+  .folio-landing--no-region .folio-landing__text p,
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .folio-landing__art img { transition: opacity .2s ease; }
+  }
+</style>

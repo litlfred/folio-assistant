@@ -6,7 +6,8 @@
   they can see it. So the last thing the onboarding process does is publish, and
   the last thing it says is the URL — but only once that URL actually answers.
 
-  Facts the caller supplies, from `bun run scripts/pages-bootstrap.ts --json`:
+  Facts the caller supplies, from the JSON output of
+  `bun run scripts/pages-bootstrap.ts` (its `json` flag):
 
     pagesUrlKnown   the Pages base URL could be derived at all (git remote
                     readable, owner/repo parsed, or harness.config.json

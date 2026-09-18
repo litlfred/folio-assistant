@@ -1,0 +1,169 @@
+/**
+ * The todo graph — what `todos/` is, rather than where it happens to be.
+ *
+ * @module schemas/todo-graph
+ *
+ * Deliberately the same shape as `bean-graph.ts`, reusing
+ * `ContentDirectorySchema` and the same open kind registry. A second spelling
+ * of "a directory and what it holds" is the drift this repository keeps paying
+ * for, so this file carries only what is SPECIFIC to the todo graph.
+ *
+ * ```jsonc
+ *  // todos/todos.json
+ * {
+ *   "name": "my-folio",
+ *   "directories": [
+ *     { "id": "items",    "path": "items",    "graphs": ["todo-items"] },
+ *     { "id": "feedback", "path": "feedback", "graphs": ["todo-feedback"] }
+ *   ]
+ * }
+ * ```
+ *
+ * ## It is content, and the folio owns it
+ *
+ * This is the one real difference from the bean graph, and it decides who may
+ * write here. `beans/` is the AGENT work plan and lives in every instance.
+ * `todos/` records what **people** have outstanding, so it belongs to the
+ * folio — the platform ships the kind and the schema and declares no directory
+ * of its own. This repo carries no folio, and declaring an absent directory is
+ * the bean `dh4f` defect, where a consumer scans nothing and reports a clean
+ * run over it.
+ *
+ * ## Paths resolve against the graph root
+ *
+ * As in the bean graph: a node's `path` is relative to the directory holding
+ * `todos.json`, so the whole graph relocates by moving one folder, and a path
+ * that is absolute or escapes its root is rejected. A store outside the graph
+ * is not a node of it.
+ *
+ * ## Three states
+ *
+ * - **Absent** → `undefined`. A folio with no todos has no graph file; this is
+ *   ordinary, not an error, and not the same as an empty graph.
+ * - **Present but unreadable** → **throws**. A graph nobody can parse leaves
+ *   every consumer guessing.
+ * - **Unknown node kind** → rejected, never accepted and ignored. A node whose
+ *   kind nothing understands is a store nothing will read.
+ */
+
+import { z } from "zod";
+
+import {
+  ContentDirectorySchema,
+  defaultGraphKinds,
+  type ContentDirectory,
+  type GraphKindRegistry,
+} from "./cat-harness";
+
+/**
+ * The graph kinds a todo graph's directories hold.
+ *
+ * Registered in `BASE_GRAPH_KINDS`, not defined here — the vocabulary is
+ * shared with `cat-harness.json`. This is a convenience for callers wanting
+ * the todo-specific subset, never a second source of truth.
+ */
+export const TODO_NODE_KINDS = ["todo-items", "todo-feedback"] as const;
+export type TodoNodeKind = (typeof TODO_NODE_KINDS)[number];
+
+export const TodoGraphNodeSchema = ContentDirectorySchema;
+export type TodoGraphNode = ContentDirectory;
+
+export const TodoGraphSchema = z.object({
+  /** Display name — whose todos these are. */
+  name: z.string().min(1),
+  directories: z.array(TodoGraphNodeSchema).min(1),
+});
+export type TodoGraph = z.infer<typeof TodoGraphSchema>;
+
+/** The graph file's name inside its root directory. */
+export const TODO_GRAPH_FILE = "todos.json";
+
+/** Where the graph root sits, when a folio has not moved it. */
+export const DEFAULT_TODO_GRAPH_ROOT = "todos";
+
+/**
+ * The layout a folio gets from `folio_init`.
+ *
+ * Two nodes rather than one, because the two already exist separately and the
+ * difference is real: an `items` todo is raised about anything, while a
+ * `feedback` todo is raised against a specific block and carries the
+ * submitter's identity. Same split, and the same reasoning, as `bean-defs`
+ * against `workflow-state`.
+ */
+export const DEFAULT_TODO_GRAPH: TodoGraph = {
+  name: "default",
+  directories: [
+    { id: "items", path: "items", graphs: ["todo-items"] },
+    { id: "feedback", path: "feedback", graphs: ["todo-feedback"] },
+  ],
+};
+
+/** A node `path` must stay inside the graph root. */
+function pathEscapesRoot(p: string): boolean {
+  if (p.startsWith("/") || /^[A-Za-z]:/.test(p)) return true;
+  const parts = p.split(/[\\/]+/).filter((s) => s.length > 0 && s !== ".");
+  let depth = 0;
+  for (const seg of parts) {
+    if (seg === "..") depth--;
+    else depth++;
+    if (depth < 0) return true;
+  }
+  return depth <= 0;
+}
+
+/**
+ * Parse a todo graph, rejecting what must not be accepted quietly.
+ *
+ * Kind validation lives here rather than in the Zod shape for the reason
+ * `readDeclaration` gives: the vocabulary is OPEN, so the valid set is
+ * whatever has been registered by the time the graph is read, not what existed
+ * at module load. Reusing `ContentDirectorySchema` brings the shape and not
+ * this check — a gap a test caught on the bean graph, where an unknown kind
+ * was being accepted and ignored.
+ */
+export function parseTodoGraph(
+  raw: unknown,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): TodoGraph {
+  const graph = TodoGraphSchema.parse(raw);
+
+  const seen = new Set<string>();
+  for (const node of graph.directories) {
+    for (const g of node.graphs) {
+      if (!registry.has(g)) {
+        throw new Error(
+          `todo graph: directory "${node.id}" declares unknown graph kind "${g}". ` +
+            `Known kinds: ${registry.names().join(", ")}.`,
+        );
+      }
+    }
+
+    if (seen.has(node.id)) {
+      throw new Error(
+        `todo graph: duplicate node id "${node.id}". Ids are what overrides and ` +
+          `references match on, so two nodes sharing one make the graph ambiguous.`,
+      );
+    }
+    seen.add(node.id);
+
+    if (pathEscapesRoot(node.path)) {
+      throw new Error(
+        `todo graph: node "${node.id}" has path "${node.path}", which is absolute ` +
+          `or escapes the graph root. A store outside the graph is not a node of it.`,
+      );
+    }
+  }
+
+  return graph;
+}
+
+/**
+ * The first node declaring `kind`, or undefined when the graph declares none.
+ *
+ * Unlike the bean graph's `workflow-state`, NEITHER todo kind is constrained
+ * to a single node: a folio may legitimately keep one feedback store per paper,
+ * and there is no shared mutable state for a second store to split.
+ */
+export function nodeOfKind(graph: TodoGraph, kind: TodoNodeKind): TodoGraphNode | undefined {
+  return graph.directories.find((n) => n.graphs.includes(kind));
+}

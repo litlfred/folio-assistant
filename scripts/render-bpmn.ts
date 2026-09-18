@@ -15,9 +15,10 @@
  */
 import { chromium } from "@playwright/test";
 import { readdir, readFile, writeFile, mkdir } from "node:fs/promises";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { chromiumExecutable } from "./bpmn-render";
+import { checkXmlComments } from "./xml-comment-check";
 
 const ROOT = resolve(import.meta.dir, "..");
 const SRC_DIR = join(ROOT, "skills/workflows");
@@ -37,6 +38,20 @@ if (!existsSync(VIEWER)) {
 const sources = (await readdir(SRC_DIR)).filter((f) => f.endsWith(".bpmn")).sort();
 if (sources.length === 0) {
   console.error(`No .bpmn sources found under ${SRC_DIR}`);
+  process.exit(1);
+}
+
+// Well-formedness before rendering, and before the browser launch: a diagram a
+// conformant parser rejects is broken whether or not an SVG comes out of it,
+// and bpmn-js will draw it regardless (that is how seven of these shipped).
+// Reporting it here costs nothing and does not need Chromium.
+const commentFindings = sources.flatMap((f) =>
+  checkXmlComments(readFileSync(join(SRC_DIR, f), "utf8"), `skills/workflows/${f}`),
+);
+if (commentFindings.length > 0) {
+  console.error(`${commentFindings.length} malformed XML comment(s) — refusing to render:\n`);
+  for (const f of commentFindings) console.error(`  ${f.file}:${f.line}  ${f.detail}`);
+  console.error(`\nRun \`bun run check:xml-comments\` for the full report.`);
   process.exit(1);
 }
 
