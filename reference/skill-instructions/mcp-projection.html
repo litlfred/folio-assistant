@@ -407,9 +407,19 @@ than a sign that MCP is trivial.</p>
       <td><code class="language-plaintext highlighter-rouge">{flag}</code>, <code class="language-plaintext highlighter-rouge">{positional}</code> or <code class="language-plaintext highlighter-rouge">{stdin}</code> — explicit per input, never a template</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">io.inputs[].repeated</code></td>
+      <td><code class="language-plaintext highlighter-rouge">"type": "array"</code> in the input schema</td>
+      <td>the flag is emitted once per element; a repeated positional is the trailing words</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">invoke.container</code></td>
       <td>same, in a container</td>
       <td>for a tool with host dependencies</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">invoke.inProcess</code></td>
+      <td>the function the server calls directly</td>
+      <td>the projection <strong>source</strong>, not something to proxy</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">invoke.mcp</code></td>
@@ -429,11 +439,27 @@ than a sign that MCP is trivial.</p>
   </tbody>
 </table></div>
 
-<p>Two rows are the ones that go wrong.</p>
+<p>Three rows are the ones that go wrong.</p>
 
 <p><strong><code class="language-plaintext highlighter-rouge">invoke.mcp</code> is not a source for projection.</strong> A Tool already reachable over
 MCP is not re-wrapped; the projector skips it. A generator that treats every
 arm uniformly will emit a server that proxies itself.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">invoke.inProcess</code> is the opposite case, and looks deceptively similar.</strong> It
+is a function in the instance’s own code, so the server calls it directly rather
+than spawning anything — there is no argv, and asking for one is an error rather
+than a gap in the node. It is what most of a mature instance’s Tools turn out to
+be: of the twenty-four <code class="language-plaintext highlighter-rouge">folio-assistant</code> declares, twenty are in-process and
+only seven have a shell equivalent at all. A projector that handles <code class="language-plaintext highlighter-rouge">shell</code>
+alone will find nothing to project.</p>
+
+<p><strong>A repeated input’s elements are parsed individually, and that is the whole
+safety story.</strong> A list of an injection-safe type cannot contain an element that
+is a payload, because the element type already made one unrepresentable — so
+cardinality needs no new check. What it does need is the projection rule: emit
+the flag once per element, <strong>never comma-joined</strong>. Joining invents a separator
+the tool never agreed to, and makes an element containing that separator
+ambiguous.</p>
 
 <p><strong><code class="language-plaintext highlighter-rouge">requires</code> does not become a tool.</strong> An agent cannot satisfy “needs network”
 by calling something. It is checked when the server starts, and a tool whose
@@ -452,8 +478,8 @@ cannot run makes every plan containing it wrong.</p>
 <p>Same rule as everywhere here, and it is easy to lose in a generator:</p>
 
 <ul>
-  <li><strong>Projected</strong> — the Tool has a <code class="language-plaintext highlighter-rouge">shell</code> or <code class="language-plaintext highlighter-rouge">container</code> arm and a complete <code class="language-plaintext highlighter-rouge">io</code>
-block. It is listed.</li>
+  <li><strong>Projected</strong> — the Tool has a <code class="language-plaintext highlighter-rouge">shell</code>, <code class="language-plaintext highlighter-rouge">container</code> or <code class="language-plaintext highlighter-rouge">inProcess</code> arm and a
+complete <code class="language-plaintext highlighter-rouge">io</code> block. It is listed.</li>
   <li><strong>Deliberately not projected</strong> — <code class="language-plaintext highlighter-rouge">invoke.mcp</code> only, or <code class="language-plaintext highlighter-rouge">requires</code> unmet on
 this host. Omitted, and the omission is <em>reported</em> at startup.</li>
   <li><strong>Could not determine</strong> — the Tool node will not parse, or its <code class="language-plaintext highlighter-rouge">io.*.schema</code>
@@ -545,7 +571,7 @@ the thing being removed. Turning it on is one call, once that migration lands.</
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35403451007"><code>9cd15e9</code></a> &middot; 2026-09-18T22:53:44Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35404152986"><code>508de21</code></a> &middot; 2026-09-18T23:04:12Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

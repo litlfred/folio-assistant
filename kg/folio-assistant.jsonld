@@ -90,7 +90,7 @@
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T22:54:11.501Z",
+  "generatedAt": "2026-09-18T23:04:35.452Z",
   "counts": {
     "Skill": 143,
     "Actor": 24,
@@ -100,7 +100,7 @@
     "Process": 23,
     "SequenceFlow": 391,
     "ProcessNode": 357,
-    "Tool": 4,
+    "Tool": 24,
     "GraphKind": 7,
     "Directory": 4
   },
@@ -765,7 +765,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/skills-and-tools.md",
-      "lines": 201,
+      "lines": 237,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -848,7 +848,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/mcp-projection.md",
-      "lines": 132,
+      "lines": 150,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -15586,6 +15586,1265 @@
       ],
       "satisfiesSkillNames": [
         "kg-export"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/check-dependencies",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "check-dependencies",
+      "title": "Dependency probe",
+      "summary": "Report which of the harness's optional and required dependencies are present on this machine, and what each unmet one blocks.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run src/index.ts --check-deps",
+        "mcp": {
+          "tool": "check_dependencies"
+        },
+        "inProcess": {
+          "module": "src/tools/check-deps.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "required_only",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Flag",
+            "description": "Report only the dependencies without which the harness cannot run.",
+            "required": false,
+            "arg": {
+              "flag": "--required-only"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Per-dependency: present, absent, or could not be determined."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/verify-local-substrate"
+      ],
+      "satisfiesSkillNames": [
+        "verify-local-substrate"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/folio-init",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "folio-init",
+      "title": "Scaffold a folio",
+      "summary": "Create a new folio repository that uses this platform — content/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run init-folio",
+        "mcp": {
+          "tool": "folio_init"
+        },
+        "inProcess": {
+          "module": "src/tools/folio-init.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "title",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Text",
+            "description": "The folio's human title.",
+            "required": true
+          },
+          {
+            "name": "authors",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Text",
+            "description": "One entry per author. Repeated rather than a joined string: a name may contain the separator.",
+            "required": true,
+            "repeated": true
+          },
+          {
+            "name": "content_type",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/ContentType",
+            "required": false,
+            "arg": {
+              "flag": "--content-type"
+            }
+          },
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Slug",
+            "required": false,
+            "arg": {
+              "flag": "--slug"
+            }
+          },
+          {
+            "name": "dir",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/FilesystemPath",
+            "description": "Where to create the folio.",
+            "required": false
+          },
+          {
+            "name": "link",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/LinkMode",
+            "required": false,
+            "arg": {
+              "flag": "--link"
+            }
+          },
+          {
+            "name": "assistant_path",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/FilesystemPath",
+            "description": "Path to the platform checkout, for a sibling link.",
+            "required": false
+          },
+          {
+            "name": "force",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--force"
+            }
+          },
+          {
+            "name": "dry_run",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "What was written, or what would have been under --dry-run."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/repo-conversion",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/getting-started"
+      ],
+      "satisfiesSkillNames": [
+        "repo-conversion",
+        "getting-started"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/paper-preferences",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "paper-preferences",
+      "title": "Rendering preferences",
+      "summary": "Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "paper_preferences"
+        },
+        "inProcess": {
+          "module": "src/tools/preferences.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "action",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/PreferenceAction",
+            "required": false,
+            "arg": {
+              "flag": "--action"
+            }
+          },
+          {
+            "name": "render_format",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RenderFormat",
+            "required": false,
+            "arg": {
+              "flag": "--render-format"
+            }
+          },
+          {
+            "name": "render_scope",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RenderScope",
+            "required": false,
+            "arg": {
+              "flag": "--render-scope"
+            }
+          },
+          {
+            "name": "latex_engine",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/LatexEngine",
+            "required": false,
+            "arg": {
+              "flag": "--latex-engine"
+            }
+          },
+          {
+            "name": "math_renderer",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/MathRenderer",
+            "required": false,
+            "arg": {
+              "flag": "--math-renderer"
+            }
+          },
+          {
+            "name": "auto_preview",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--auto-preview"
+            }
+          },
+          {
+            "name": "formula_dpi",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Dpi",
+            "required": false,
+            "arg": {
+              "flag": "--formula-dpi"
+            }
+          },
+          {
+            "name": "default_chapter",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "required": false,
+            "arg": {
+              "flag": "--default-chapter"
+            }
+          },
+          {
+            "name": "print_mode",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/PrintMode",
+            "required": false,
+            "arg": {
+              "flag": "--print-mode"
+            }
+          },
+          {
+            "name": "compact_inline_refs",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--compact-inline-refs"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "preferences",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "The preferences after the call."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/build-pdf",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/build-docs"
+      ],
+      "satisfiesSkillNames": [
+        "build-pdf",
+        "build-docs"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/paper-preview",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "paper-preview",
+      "title": "Open a render",
+      "summary": "Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "paper_preview"
+        },
+        "inProcess": {
+          "module": "src/tools/preview.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "format",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/PreviewFormat",
+            "required": false,
+            "arg": {
+              "flag": "--format"
+            }
+          },
+          {
+            "name": "list",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--list"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "opened",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "What was opened, or the list of candidates."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/rendering-auditor",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/staging-review"
+      ],
+      "satisfiesSkillNames": [
+        "rendering-auditor",
+        "staging-review"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/readme-audit",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "readme-audit",
+      "title": "Audit README links",
+      "summary": "Verify every Markdown link in a folio's README still resolves — relative paths against the tree, repo refs against a real ls-tree, Pages URLs against the publish ref. Writes nothing.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run readme:audit",
+        "mcp": {
+          "tool": "readme_audit"
+        },
+        "inProcess": {
+          "module": "src/tools/readme-audit.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The file to audit; the README by default.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "fetch",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Flag",
+            "description": "Also dereference external URLs.",
+            "required": false,
+            "arg": {
+              "flag": "--fetch"
+            }
+          },
+          {
+            "name": "dir",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/FilesystemPath",
+            "description": "The folio root, when not the working directory.",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "findings",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Resolved, dead, or NOT CHECKED — the third state is never rendered as either of the other two."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/docs-generation"
+      ],
+      "satisfiesSkillNames": [
+        "docs-generation"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/readme-sync",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "readme-sync",
+      "title": "Sync generated README sections",
+      "summary": "Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run readme:sync",
+        "mcp": {
+          "tool": "readme_sync"
+        },
+        "inProcess": {
+          "module": "src/tools/readme-sync.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if any section is stale; write nothing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          },
+          {
+            "name": "only",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/ReadmeSection",
+            "description": "Restrict to these sections. Repeated: the flag is emitted once per section.",
+            "required": false,
+            "repeated": true,
+            "arg": {
+              "flag": "--only"
+            }
+          },
+          {
+            "name": "link_style",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/LinkStyle",
+            "required": false,
+            "arg": {
+              "flag": "--link-style"
+            }
+          },
+          {
+            "name": "fetch",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--fetch"
+            }
+          },
+          {
+            "name": "dir",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/FilesystemPath",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Per section: written, unchanged, or skipped because it could not be determined."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/docs-generation"
+      ],
+      "satisfiesSkillNames": [
+        "docs-generation"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/skill-fetch",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "skill-fetch",
+      "title": "Fetch a skill",
+      "summary": "Load one skill's instruction body for the agent to follow, from the local packages or an external bundle.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "skill_fetch"
+        },
+        "inProcess": {
+          "module": "src/tools/skill-fetch.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "skill",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/SkillName",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "package_name",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/PackageName",
+            "required": false,
+            "arg": {
+              "flag": "--package"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "instructions",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "The skill's instruction body."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/skills-and-tools"
+      ],
+      "satisfiesSkillNames": [
+        "skills-and-tools"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/skill-list",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "skill-list",
+      "title": "List skills",
+      "summary": "Every skill this instance can resolve, with its one-line summary. The entry point AGENTS.md sends an agent to first.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "skill_list"
+        },
+        "inProcess": {
+          "module": "src/tools/skill-fetch.ts"
+        }
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "skills",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Name and summary per skill."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/skills-and-tools"
+      ],
+      "satisfiesSkillNames": [
+        "skills-and-tools"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/stakeholder-map",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "stakeholder-map",
+      "title": "Stakeholder map",
+      "summary": "Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run stakeholder-map",
+        "mcp": {
+          "tool": "stakeholder_map"
+        },
+        "inProcess": {
+          "module": "src/tools/stakeholder-map.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paths",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The changed paths. A repeated positional, so it is last on the command line.",
+            "required": true,
+            "repeated": true,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "stakeholders",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Skills, roles and the people each role names."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/role-model",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/coordinate"
+      ],
+      "satisfiesSkillNames": [
+        "role-model",
+        "coordinate"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/translation-extract",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "translation-extract",
+      "title": "Extract translatable strings",
+      "summary": "Segment a folio's prose into a GNU gettext .pot template, leaving code, math and identifiers untranslated.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "translation_extract"
+        },
+        "inProcess": {
+          "module": "src/tools/translation.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "path",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A markdown file or a directory of them.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "locale",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Locale",
+            "required": false,
+            "arg": {
+              "flag": "--locale"
+            }
+          },
+          {
+            "name": "project_name",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Text",
+            "description": "Recorded in the .pot header.",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pot",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The template written."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "satisfiesSkillNames": [
+        "translation-manager"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/translation-inject",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "translation-inject",
+      "title": "Inject translations",
+      "summary": "Produce a translated copy of a source markdown file from a .po, using the same segmentation the extractor used.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "translation_inject"
+        },
+        "inProcess": {
+          "module": "src/tools/translation.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "source",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "po_file",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "required": true,
+            "arg": {
+              "positional": 1
+            }
+          },
+          {
+            "name": "locale",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Locale",
+            "required": true,
+            "arg": {
+              "flag": "--locale"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "translated",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The translated copy written."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "satisfiesSkillNames": [
+        "translation-manager"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/translation-status",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "translation-status",
+      "title": "Translation coverage",
+      "summary": "Per-locale translation coverage, computed from the .po files under the translations directory.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "translation_status"
+        },
+        "inProcess": {
+          "module": "src/tools/translation.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "locale",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Locale",
+            "description": "Absent means every locale.",
+            "required": false,
+            "arg": {
+              "flag": "--locale"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "coverage",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Translated, fuzzy and untranslated counts per locale."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "satisfiesSkillNames": [
+        "translation-manager"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/translation-signoff",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "translation-signoff",
+      "title": "Sign off a translation",
+      "summary": "Record a translation as official — who signed off, when, and the hash of the source it was signed against, so a later source edit is detectable.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "translation_signoff"
+        },
+        "inProcess": {
+          "module": "src/tools/translation.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "locale",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Locale",
+            "required": true,
+            "arg": {
+              "flag": "--locale"
+            }
+          },
+          {
+            "name": "source",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "signed_off_by",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Text",
+            "description": "Who is signing off.",
+            "required": true
+          },
+          {
+            "name": "level",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/TranslationLevel",
+            "required": false,
+            "arg": {
+              "flag": "--level"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "record",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "The sign-off recorded, including the source hash."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/decision-audit"
+      ],
+      "satisfiesSkillNames": [
+        "translation-manager",
+        "decision-audit"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/translation-validate",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "translation-validate",
+      "title": "Validate a translation",
+      "summary": "Check a .po against its .pot — every msgid present, none obsolete, placeholders preserved.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "translation_validate"
+        },
+        "inProcess": {
+          "module": "src/tools/translation.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "pot_file",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "po_file",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "required": true,
+            "arg": {
+              "positional": 1
+            }
+          },
+          {
+            "name": "source",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Also check the .pot is current for this source.",
+            "required": false,
+            "arg": {
+              "flag": "--source"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "findings",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Missing, obsolete and malformed entries."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-validate"
+      ],
+      "satisfiesSkillNames": [
+        "translation-manager",
+        "content-validate"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/work-plan-prime",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "work-plan-prime",
+      "title": "Prime the work plan",
+      "summary": "Load the current work plan for this session — the same committed beans store the CLI reads, so a fresh container starts from the plan rather than from nothing.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "beans prime",
+        "mcp": {
+          "tool": "work_plan_prime"
+        },
+        "inProcess": {
+          "module": "src/tools/beans-prime.ts"
+        }
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "priming",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Open items, the roadmap, and what each is waiting on."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/bean-coordination",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/session-intent",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/pending-show"
+      ],
+      "satisfiesSkillNames": [
+        "todo-manager",
+        "bean-coordination",
+        "session-intent",
+        "pending-show"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/workflow-list",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "workflow-list",
+      "title": "List processes",
+      "summary": "The BPMN processes this instance defines, and the instances currently open against them.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "workflow_list"
+        },
+        "inProcess": {
+          "module": "src/tools/workflow.ts"
+        }
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "processes",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Each process, its policy, and its open instances."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/process-state"
+      ],
+      "satisfiesSkillNames": [
+        "process-state"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/workflow-start",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "workflow-start",
+      "title": "Start a process instance",
+      "summary": "Open an instance of a process for a subject. Idempotent: an existing instance for the same subject is returned rather than duplicated.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "workflow_start"
+        },
+        "inProcess": {
+          "module": "src/tools/workflow.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "process",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/ProcessId",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "subject",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Text",
+            "description": "What the instance is about — a block label, a release, a bean.",
+            "required": true
+          },
+          {
+            "name": "bean",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanId",
+            "description": "The work-plan item this instance carries out.",
+            "required": false,
+            "arg": {
+              "flag": "--bean"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/InstanceId",
+            "description": "The instance opened or found."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/bean-coordination"
+      ],
+      "satisfiesSkillNames": [
+        "process-state",
+        "bean-coordination"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/workflow-next",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "workflow-next",
+      "title": "What is enabled now",
+      "summary": "The activities an instance may work right now, each with the lane that owns it and the skill that implements it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "workflow_next"
+        },
+        "inProcess": {
+          "module": "src/tools/workflow.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/InstanceId",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "enabled",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Activity, lane and skill for each enabled step."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/process-state"
+      ],
+      "satisfiesSkillNames": [
+        "process-state"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/workflow-gate",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "workflow-gate",
+      "title": "May this step be performed?",
+      "summary": "Ask before doing work a strict process governs. The content-agnostic processes refuse a step that is not enabled; the per-content-type ones advise.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "workflow_gate"
+        },
+        "inProcess": {
+          "module": "src/tools/workflow.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/InstanceId",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "activity",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/NodeId",
+            "required": true,
+            "arg": {
+              "positional": 1
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "verdict",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Permitted, refused with the reason, or advisory."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/process-state"
+      ],
+      "satisfiesSkillNames": [
+        "process-state"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/workflow-complete",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "workflow-complete",
+      "title": "Complete a step",
+      "summary": "Record an enabled step as done — or supply the facts a decision gateway is computed from — and advance the instance. Refuses a step that is not enabled.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "workflow_complete"
+        },
+        "inProcess": {
+          "module": "src/tools/workflow.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/InstanceId",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "node",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/NodeId",
+            "required": true,
+            "arg": {
+              "positional": 1
+            }
+          },
+          {
+            "name": "outcome",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/NodeId",
+            "description": "Which branch a plain gateway takes. Refused at a gateway backed by a decision table — asserting the answer would defeat the table.",
+            "required": false,
+            "arg": {
+              "flag": "--outcome"
+            }
+          },
+          {
+            "name": "facts",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/DecisionFacts",
+            "description": "Facts a DMN table is evaluated against. Structured, so it is never a command-line word.",
+            "required": false
+          },
+          {
+            "name": "actor",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Text",
+            "description": "Who performed the step, for the audit record.",
+            "required": false
+          },
+          {
+            "name": "note",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "Appended to the instance's bean.",
+            "required": false,
+            "arg": {
+              "stdin": true
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "position",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "description": "The instance's new position, and what is enabled next."
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/dmn-authoring",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/bean-coordination"
+      ],
+      "satisfiesSkillNames": [
+        "process-state",
+        "dmn-authoring",
+        "bean-coordination"
       ]
     },
     {

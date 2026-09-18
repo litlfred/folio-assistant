@@ -58,6 +58,23 @@
               ],
               "additionalProperties": false
             },
+            "inProcess": {
+              "type": "object",
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "register": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "module"
+              ],
+              "additionalProperties": false
+            },
             "manual": {
               "type": "boolean",
               "const": true
@@ -85,6 +102,9 @@
                     "type": "string"
                   },
                   "required": {
+                    "type": "boolean"
+                  },
+                  "repeated": {
                     "type": "boolean"
                   },
                   "arg": {

@@ -536,28 +536,82 @@ between them is judgement and judgement is skill.</li>
 here: the Tool worked, the Tool is absent and here is the fallback, and <em>we
 could not tell</em> — which is never rendered as success.</li>
 </ol>
-<h2 id="where-this-stands--the-schema-is-real-the-migration-is-not">
+<h2 id="where-this-stands--the-schema-is-real-the-migration-is-half-done">
   
   
-    <a href="#where-this-stands--the-schema-is-real-the-migration-is-not" class="anchor-heading" aria-labelledby="where-this-stands--the-schema-is-real-the-migration-is-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where this stands — the schema is real, the migration is not
+    <a href="#where-this-stands--the-schema-is-real-the-migration-is-half-done" class="anchor-heading" aria-labelledby="where-this-stands--the-schema-is-real-the-migration-is-half-done"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where this stands — the schema is real, the migration is half done
   
   
 </h2>
     
 
-<p><strong><code class="language-plaintext highlighter-rouge">schemas/tool.ts</code> exists</strong>, <code class="language-plaintext highlighter-rouge">tools/</code> holds four nodes (<code class="language-plaintext highlighter-rouge">beans-cli</code>,
-<code class="language-plaintext highlighter-rouge">beans-manual</code>, <code class="language-plaintext highlighter-rouge">github</code>, <code class="language-plaintext highlighter-rouge">pages-publish</code>), and <code class="language-plaintext highlighter-rouge">bun run check:tools</code> fails when
-a <code class="language-plaintext highlighter-rouge">satisfies</code> names a skill that does not exist. So a Tool is now something you
-can reach for rather than a shape described in prose.</p>
+<p><strong><code class="language-plaintext highlighter-rouge">schemas/tool.ts</code> exists</strong>, <code class="language-plaintext highlighter-rouge">tools/</code> holds <strong>24</strong> nodes, and
+<code class="language-plaintext highlighter-rouge">bun run check:tools</code> fails when a <code class="language-plaintext highlighter-rouge">satisfies</code> names a skill that does not exist.
+So a Tool is something you can reach for rather than a shape described in prose.</p>
 
-<p><strong>The skills still carry their invocations inline.</strong> Measured when the Tools
-landed: 4 Tools cover <strong>11 of 138</strong> skills. That number is the migration debt
-made visible, and most of the remainder is fine — a great many skills are pure
-judgement (<code class="language-plaintext highlighter-rouge">interaction-modality</code>, <code class="language-plaintext highlighter-rouge">one-voice-style-guide</code>) and have no
-mechanism to name. <code class="language-plaintext highlighter-rouge">check:tools</code> reports the count rather than failing on it,
-for exactly that reason. What it cannot tell you, and what needs a human eye, is
-which of the uncovered skills <em>describe an action</em> — those are the ones whose
-mechanism is still swallowed.</p>
+<p>Four of the 24 were authored by hand (<code class="language-plaintext highlighter-rouge">beans-cli</code>, <code class="language-plaintext highlighter-rouge">beans-manual</code>, <code class="language-plaintext highlighter-rouge">github</code>,
+<code class="language-plaintext highlighter-rouge">pages-publish</code>). The other twenty are the <strong>migration of this instance’s
+existing MCP surface</strong> into <code class="language-plaintext highlighter-rouge">tools/mcp.ts</code> — every <code class="language-plaintext highlighter-rouge">server.tool()</code> registration
+the server serves, now with a declared contract and a declared set of skills it
+satisfies.</p>
+<h3 id="how-that-migration-was-done-because-the-method-matters-more-than-the-result">
+  
+  
+    <a href="#how-that-migration-was-done-because-the-method-matters-more-than-the-result" class="anchor-heading" aria-labelledby="how-that-migration-was-done-because-the-method-matters-more-than-the-result"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How that migration was done, because the method matters more than the result
+  
+  
+</h3>
+    
+
+<p><strong>The contracts were read from the registrars, not from the source text.</strong>
+<code class="language-plaintext highlighter-rouge">bun run mcp:capture</code> mounts each <code class="language-plaintext highlighter-rouge">register*</code> export against a capture object
+and reads the real Zod shapes. The first attempt regex-scanned
+<code class="language-plaintext highlighter-rouge">server.tool("name", "description", {shape}, handler)</code> and produced parameter
+names lifted out of the <em>description prose</em> — <code class="language-plaintext highlighter-rouge">skill_fetch</code> appeared to take
+<code class="language-plaintext highlighter-rouge">Examples</code>, <code class="language-plaintext highlighter-rouge">Local</code> and <code class="language-plaintext highlighter-rouge">Reference</code>, and <code class="language-plaintext highlighter-rouge">paper_preferences</code> an <code class="language-plaintext highlighter-rouge">Action</code>.
+Authoring <code class="language-plaintext highlighter-rouge">io</code> from that would have shipped a contract agreeing with nothing,
+which is worse than no contract because the next check trusts it.</p>
+
+<p>A test compares the two sides on every run: every served tool has a node, every
+node’s ports are served, and the required/optional split agrees. That is what
+keeps the migration true rather than true-on-the-day.</p>
+<h3 id="two-things-the-vocabulary-could-not-express-and-what-was-added">
+  
+  
+    <a href="#two-things-the-vocabulary-could-not-express-and-what-was-added" class="anchor-heading" aria-labelledby="two-things-the-vocabulary-could-not-express-and-what-was-added"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two things the vocabulary could not express, and what was added
+  
+  
+</h3>
+    
+
+<p><strong>Cardinality.</strong> <code class="language-plaintext highlighter-rouge">folio_init.authors</code>, <code class="language-plaintext highlighter-rouge">stakeholder_map.paths</code> and
+<code class="language-plaintext highlighter-rouge">readme_sync.only</code> are lists, so <code class="language-plaintext highlighter-rouge">ToolInput.repeated</code> was added rather than
+minting an <code class="language-plaintext highlighter-rouge">ArrayOfRepoPath</code> beside every scalar type — which would have
+multiplied the <code class="language-plaintext highlighter-rouge">$defs</code> and broken the identity property the shared vocabulary
+exists for.</p>
+
+<p><strong>In-process invocation.</strong> Seventeen of the twenty have no shell equivalent at
+all; they are TypeScript functions. <code class="language-plaintext highlighter-rouge">invoke.inProcess</code> names the module.
+The existing refusal of an mcp-only Tool still stands and does not reach this
+case: an in-process function is runnable by the harness directly, and it is the
+projection <em>source</em> rather than something to proxy.</p>
+<h3 id="the-remaining-debt">
+  
+  
+    <a href="#the-remaining-debt" class="anchor-heading" aria-labelledby="the-remaining-debt"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The remaining debt
+  
+  
+</h3>
+    
+
+<p><strong>Many skills still carry their invocations inline.</strong> Measured after the
+migration: 24 Tools cover <strong>26 of 141</strong> skills, up from 11. Most of the
+remainder is fine — a great many skills are pure judgement
+(<code class="language-plaintext highlighter-rouge">interaction-modality</code>, <code class="language-plaintext highlighter-rouge">one-voice-style-guide</code>) and have no mechanism to name.
+<code class="language-plaintext highlighter-rouge">check:tools</code> reports the count rather than failing on it, for exactly that
+reason. What it cannot tell you, and what needs a human eye, is which of the
+uncovered skills <em>describe an action</em> — those are the ones whose mechanism is
+still swallowed.</p>
 <h3 id="which-uncovered-skills-actually-need-one--bun-run-toolscoverage">
   
   
@@ -616,7 +670,7 @@ that is eventually wrong.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35403451007"><code>9cd15e9</code></a> &middot; 2026-09-18T22:53:44Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35404152986"><code>508de21</code></a> &middot; 2026-09-18T23:04:12Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
