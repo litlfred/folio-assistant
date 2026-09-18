@@ -58,3 +58,24 @@ It restates, for the code, the split the author gave on 2026-09-18:
 
 The `tools/<stub>` / `skills/<stub>` per-instance layout convention
 (separate ask, same session) and the marker-naming decision (`79t3`).
+
+## Done already (2026-09-18, `claude/festive-galileo-s7ibx0`)
+
+Author's follow-up: *"json-ld render should include metadata (timestamp,
+commit sha)."* — done in `73d2c9e4`. `scripts/kg-export.ts` now emits
+`sourceCommit` (`prov:wasDerivedFrom`, the commit's web URL),
+`sourceCommitSha`, `sourceCommitAt`, `sourceTreeDirty` and
+`sourceCommitUnavailable`, all declared in `@context` so they survive
+expansion to RDF. Four states kept distinct: clean, dirty (SHA rides with the
+flag), no-git (reason, never a placeholder), and status-unanswerable
+(`sourceTreeDirty` absent rather than `false`).
+
+Provenance deliberately does NOT go in `problems`, whose contract is "sources
+that could not be read" — a dirty checkout is the normal state of a
+developer's machine, and routing it there would make `problems: []` fail on
+every local run.
+
+**What remains for this bean is unchanged**: the zod modules declaring
+themselves TOOL nodes that maintain the JSON-LD, and rendering JSON-LD being a
+checked conformance requirement of an arbitrary instance rather than a thing
+this repo happens to do.
