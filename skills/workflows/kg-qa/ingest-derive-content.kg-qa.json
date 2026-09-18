@@ -8,7 +8,7 @@
   "source_hash": "sha256:f917503ffbe70b57991cee15faece627d0e94161ef1e84de4297ecf9e44f765d",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:565c0baa00bdb6212732c82e3176d395af13d4f8ce84524cca9a2be5b37203da",
+    "script_hash": "sha256:0f00819b8600f680ebb54e31dd4d2475a4c0905e8a70221bb23c6b0df499d0bf",
     "engine_version": "1"
   },
   "criteria": {
@@ -43,12 +43,16 @@
     "activity-names-skill": {
       "result": "pass",
       "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
     "pass": 7,
     "fail": 0,
-    "n/a": 1,
+    "n/a": 2,
     "unknown": 0
   }
 }

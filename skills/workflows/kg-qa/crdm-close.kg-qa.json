@@ -5,10 +5,10 @@
     "id": "Process_CRDM_Close",
     "path": "skills/workflows/crdm-close.bpmn"
   },
-  "source_hash": "sha256:d10b1b117292ac4fd87653985503e26767a58efc685214062ace2b6f620c6240",
+  "source_hash": "sha256:844ae5b38bef16dc02095b3616d9578d7833e65033adaca0e69a9624fed47bd0",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:565c0baa00bdb6212732c82e3176d395af13d4f8ce84524cca9a2be5b37203da",
+    "script_hash": "sha256:0f00819b8600f680ebb54e31dd4d2475a4c0905e8a70221bb23c6b0df499d0bf",
     "engine_version": "1"
   },
   "criteria": {
@@ -41,23 +41,18 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "S_FeatureSignoff",
-          "detail": "\"Feature sign-off on issue\" names no skill."
-        },
-        {
-          "where": "BA_Confirm",
-          "detail": "\"Confirm all criteria met\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
-    "n/a": 1,
+    "pass": 7,
+    "fail": 0,
+    "n/a": 2,
     "unknown": 0
   }
 }

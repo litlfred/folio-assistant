@@ -184,6 +184,31 @@ export interface RoleDef {
    * somebody switches off.
    */
   actedUpon?: boolean;
+  /**
+   * The role PERFORMS, but by judgement — no instruction body implements its
+   * steps, and naming one would be a lie about what the role does.
+   *
+   * Distinct from `actedUpon`, and the distinction is the point. A corpus is
+   * written to and takes no part; a stakeholder acts, deliberates and is
+   * accountable for the outcome — they simply cannot be handed a procedure
+   * that produces the answer. `stakeholder`'s own summary has said so in
+   * prose since the role graph was written:
+   *
+   *   > Carries no skills deliberately: sign-off is a judgement, not a
+   *   > procedure, and a skill here would suggest an agent could supply it.
+   *
+   * That prose was load-bearing and unreadable by anything. A later pass
+   * measured four `activity-names-skill` findings on the stakeholder lane and
+   * came within one commit of "fixing" them by giving the role a skill —
+   * which would have re-entered exactly the dead end the summary closed. The
+   * flag is that sentence made machine-readable, so the next pass is stopped
+   * by the graph rather than by whether it happened to read a summary.
+   *
+   * Effect: `activity-names-skill` records `n/a` for activities in this
+   * role's lanes, which is what lets the criterion GATE on the undeclared
+   * ones instead of staying advisory for ever.
+   */
+  judgementOnly?: boolean;
 }
 
 /** The declared role graph. */
@@ -215,6 +240,7 @@ export const RoleDefSchema = z.object({
   skills: z.array(z.string()).default([]),
   inherits: z.array(z.string()).optional(),
   actedUpon: z.boolean().optional(),
+  judgementOnly: z.boolean().optional(),
 });
 
 export const RoleGraphSchema = z.object({

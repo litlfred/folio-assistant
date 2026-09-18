@@ -28,7 +28,9 @@
     <bpmn:task id="S_FeatureSignoff" name="Feature sign-off
 on issue"/>
     <bpmn:task id="BA_Confirm" name="Confirm all criteria
-met"/>
+met">
+      <bpmn:extensionElements><folio:skill ref="decision-audit"/></bpmn:extensionElements>
+    </bpmn:task>
     <bpmn:task id="A_Close" name="Close issue ONLY on
 BA authorisation">
       <bpmn:documentation>Reachable only through BA_Confirm, which is the BA

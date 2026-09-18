@@ -75,6 +75,23 @@ export interface ProcessNode {
   roleRef?: string;
   /** `<folio:skill ref="…"/>`, possibly several. */
   skills: string[];
+  /**
+   * `<folio:no-skill reason="…"/>` — this activity names no skill ON PURPOSE,
+   * and this is why.
+   *
+   * A person describing the change they want, in their own words, is not an
+   * unimplemented step: there is nothing for an instruction body to say. But
+   * "no skill because none could exist" and "no skill because nobody wrote
+   * one yet" are indistinguishable from the outside, which is why
+   * `activity-names-skill` could only ever be advisory — it had legitimate
+   * instances it could not tell from real gaps.
+   *
+   * The reason is REQUIRED and a declaration without one does not load, the
+   * same rule `workflow-policy.json` relaxations follow: an exemption whose
+   * justification is "" is an exemption nobody can review, and it would make
+   * silencing the criterion cheaper than satisfying it.
+   */
+  noSkillReason?: string;
   /** True when `<folio:bean/>` marks this step as touching the work plan. */
   touchesWorkPlan: boolean;
   /**
@@ -204,6 +221,30 @@ function readWorkPlanOp(
   return op as WorkPlanOp;
 }
 
+/**
+ * `<folio:no-skill reason="…"/>`, with the reason enforced at LOAD time.
+ *
+ * Throwing here rather than recording a finding is deliberate: a declaration
+ * that silences a check is exactly the thing that must not be able to arrive
+ * half-formed. A reasonless exemption that merely warns is one somebody adds
+ * to get to green and nobody ever reads.
+ */
+function noSkillReasonOf(
+  ext: { $type: string; reason?: string }[],
+  id: string,
+): string | undefined {
+  const decl = ext.find((v) => v.$type === "folio:no-skill");
+  if (!decl) return undefined;
+  const reason = decl.reason?.trim();
+  if (!reason) {
+    throw new Error(
+      `${id}: <folio:no-skill/> carries no reason. An exemption with no stated ` +
+        `justification cannot be reviewed — say why this step has no implementing skill.`,
+    );
+  }
+  return reason;
+}
+
 function kindOf(type: string): NodeKind {
   if (type === "bpmn:StartEvent") return "start";
   if (type === "bpmn:EndEvent") return "end";
@@ -220,7 +261,14 @@ interface ModdleElement {
   name?: string;
   documentation?: { text?: string }[];
   extensionElements?: {
-    values?: { $type: string; ref?: string; op?: string; enforcement?: string; relaxable?: string }[];
+    values?: {
+      $type: string;
+      ref?: string;
+      op?: string;
+      enforcement?: string;
+      relaxable?: string;
+      reason?: string;
+    }[];
   };
   calledElement?: string;
   sourceRef?: { id: string };
@@ -339,6 +387,7 @@ export async function loadProcessModel(
       laneId: laneIdOf.get(el.id),
       roleRef: roleRefOf.get(el.id),
       skills: ext.filter((v) => v.$type === "folio:skill" && v.ref).map((v) => v.ref!),
+      noSkillReason: noSkillReasonOf(ext, el.id),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
       workPlanOp: readWorkPlanOp(el.id, ext),
       relaxable: ext.find((v) => v.$type === "folio:policy")?.relaxable !== "false",
