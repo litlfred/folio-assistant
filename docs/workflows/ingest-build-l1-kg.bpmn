@@ -52,28 +52,48 @@
     </bpmn:startEvent>
     <bpmn:serviceTask id="Task_Dublin" name="Write dublin-core.jsonld
 (the record of truth)">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>One standalone Dublin Core record per folder. dcterms is already this corpus's JSON-LD vocabulary, so this extends a live context rather than introducing one.</bpmn:documentation>
       <bpmn:incoming>Flow_k1</bpmn:incoming>
       <bpmn:outgoing>Flow_k2</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Manifest" name="Write manifest.jsonld
 referencing it">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:incoming>Flow_k2</bpmn:incoming>
       <bpmn:outgoing>Flow_k3</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Assets" name="Record assets[] —
 local path or remote URL">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>kind / role / url-or-path / checksum / retrieved. A SIBLING of library:, never inside it: LibraryRef is regenerated from the tree, so an authored URL placed there is dropped on the next sync.</bpmn:documentation>
       <bpmn:incoming>Flow_k3</bpmn:incoming>
       <bpmn:outgoing>Flow_k4</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Bind" name="Bind the folder name
 to the bibliography slug">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:incoming>Flow_k4</bpmn:incoming>
       <bpmn:outgoing>Flow_k5</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:task id="Task_Link" name="Link L1 nodes into
 the corpus graph">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>Anything in library/ is L1 source content. A knowledge-graph reference from any artefact -- paper, L2, L3 -- resolves to it through library/.</bpmn:documentation>
       <bpmn:incoming>Flow_k5</bpmn:incoming>
       <bpmn:outgoing>Flow_k6</bpmn:outgoing>

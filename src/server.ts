@@ -24,6 +24,7 @@ import { handleRelevanceGet, handleRelevancePost } from "./routes/relevance.js";
 import { registerBeansTools } from "./tools/beans-prime.js";
 import { registerWorkflowTools } from "./tools/workflow.js";
 import { registerTranslationTools } from "./tools/translation.js";
+import { registerStakeholderTools } from "./tools/stakeholder-map.js";
 
 // ── MIME types for static serving ────────────────────────────────
 
@@ -120,6 +121,9 @@ export class FolioServer {
     registerWorkflowTools(this.mcpServer, config.repoRoot);
     // Translation lifecycle: extract, inject, status, signoff, validate.
     registerTranslationTools(this.mcpServer, config.repoRoot);
+    // Who a proposed change reaches — skills, their roles, and the process
+    // lanes accountable for work that uses them (CRDM phase 1).
+    registerStakeholderTools(this.mcpServer, config.repoRoot);
 
     // Register adapter-specific MCP tools
     if (this.adapter.registerMcpTools) {
