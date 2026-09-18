@@ -170,7 +170,13 @@ function buildContext(): Record<string, unknown> {
     outgoing: { "@id": `${FOLIO_NS}outgoing`, ...link },
     from: { "@id": `${FOLIO_NS}from`, ...link },
     to: { "@id": `${FOLIO_NS}to`, ...link },
-    definedIn: { "@id": `${FOLIO_NS}definedIn`, ...link },
+    // The preview → canonical link. `prov:alternateOf`, NOT `owl:sameAs`:
+    // sameAs entails identity, so a reasoner would merge every statement about
+    // both nodes and a changed description in a preview would make the merged
+    // graph assert two conflicting descriptions of one thing. alternateOf says
+    // "same underlying thing, different presentation" and merges nothing.
+    alternateOf: { "@id": `${PROV}alternateOf`, ...link },
+    canonicalDocument: { "@id": `${FOLIO_NS}canonicalDocument`, ...link },
     typeIri: { "@id": `${FOLIO_NS}typeIri`, "@type": "@id" },
   };
 }
@@ -206,8 +212,13 @@ interface Export {
   "@context": Record<string, unknown>;
   /** This document's own IRI — the URL it is served from. */
   "@id": string;
-  /** `prov:Entity`: the document is a provenance-tracked artefact. */
-  "@type": string;
+  /**
+   * `prov:Entity`, plus `folio:PreviewGraph` when this is not the canonical
+   * publication — so "is this the real one?" is answerable from the type.
+   */
+  "@type": string | string[];
+  /** On a preview: the canonical document this one is an alternate of. */
+  canonicalDocument?: string;
   repository: string;
   generatedAt: string;
   /** Node counts by `@type`, so a consumer can spot a truncated graph. */
@@ -478,9 +489,12 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
  * a node saying what that kind holds and whether it renders.
  *
  * Note this imports `folio-graph-kind`, so the export sees the kind
- * `folio-assist-core` registers and not just the harness's four.
+ * `folio-assist-core` registers and not just the harness's four. It takes no
+ * document IRI because these nodes are minted under the NAMESPACE: a graph
+ * kind means the same thing in a preview and in the canonical graph, so its
+ * IRI must not vary with where the document is published.
  */
-function collectGraphKinds(doc: string): Node[] {
+function collectGraphKinds(): Node[] {
   return defaultGraphKinds.names().map((name) => {
     const def = defaultGraphKinds.get(name)!;
     return {
@@ -490,7 +504,6 @@ function collectGraphKinds(doc: string): Node[] {
       typeIri: def.type,
       renderable: def.renderable,
       summary: def.summary,
-      definedIn: makeIri(doc, "graphKindSource", name),
     };
   });
 }
@@ -571,20 +584,29 @@ export interface ExportOptions {
 }
 
 /** Filename stem and document IRI for this instance's published graph. */
-export function exportIdentity(opts: ExportOptions = {}): { stub: string; docIri: string } {
+export function exportIdentity(opts: ExportOptions = {}): {
+  stub: string;
+  docIri: string;
+  /** The canonical document's IRI, when one is declared. */
+  canonicalIri?: string;
+  /** True when this export is published somewhere other than canonical. */
+  isPreview: boolean;
+} {
   const decl = readDeclaration(ROOT);
   const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8")) as { name?: string };
   const stub = decl ? artefactStub(decl) : (pkg.name ?? "instance");
-  const base = (opts.baseUrl ?? decl?.canonicalUrl ?? "").replace(/\/+$/, "");
+  const canonicalBase = (decl?.canonicalUrl ?? "").replace(/\/+$/, "");
+  const base = (opts.baseUrl ?? canonicalBase).replace(/\/+$/, "");
   // No base declared → a document-relative IRI. Deliberately NOT a fabricated
   // absolute one: see makeIri's note on links that look dereferenceable.
   const docIri = base ? `${base}/kg/${stub}.jsonld` : `${stub}.jsonld`;
-  return { stub, docIri };
+  const canonicalIri = canonicalBase ? `${canonicalBase}/kg/${stub}.jsonld` : undefined;
+  return { stub, docIri, canonicalIri, isPreview: canonicalIri !== undefined && docIri !== canonicalIri };
 }
 
 export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   const problems: string[] = [];
-  const { stub, docIri } = exportIdentity(opts);
+  const { stub, docIri, canonicalIri, isPreview } = exportIdentity(opts);
   if (!docIri.startsWith("http")) {
     // Reported, not silently tolerated: a graph whose nodes have no absolute
     // identity cannot be merged with anyone else's, which is most of the point.
@@ -599,9 +621,31 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     ...collectRegistryNodes(docIri, problems),
     ...collectPackages(docIri, problems),
     ...(await collectProcesses(docIri, problems)),
-    ...collectGraphKinds(docIri),
+    ...collectGraphKinds(),
     ...collectDeclaration(docIri, problems),
   ].map(compact);
+
+  // A preview's nodes say, explicitly and per node, which canonical node they
+  // are an alternate presentation of.
+  //
+  // This IS derivable — `makeIri` produces the same fragment whatever the base,
+  // so a consumer could swap one for the other. It is written out anyway, on
+  // the owner's standing instruction that a downstream consumer must never have
+  // to string-manipulate or infer a rule to follow a link. A rule a consumer
+  // has to know is a rule a consumer can get wrong, and the cost here is one
+  // field per node in an artefact that is regenerated on every build.
+  if (isPreview && canonicalIri !== undefined) {
+    for (const n of graph) {
+      const id = String(n["@id"]);
+      // Only nodes that are fragments of THIS document have an alternate.
+      // Vocabulary nodes (graph kinds) are minted under the namespace, not the
+      // document, so they are byte-identical in both graphs — giving them an
+      // `alternateOf` pointing at a canonical fragment that does not exist was
+      // a broken link generated by a blanket loop.
+      if (!id.startsWith(`${docIri}#`)) continue;
+      n.alternateOf = `${canonicalIri}#${id.slice(docIri.length + 1)}`;
+    }
+  }
 
   const counts: Record<string, number> = {};
   for (const n of graph) {
@@ -613,7 +657,13 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     "@context": buildContext(),
     danglingLinks: findDanglingLinks(graph, docIri),
     "@id": docIri,
-    "@type": `${PROV}Entity`,
+    // A preview says so in its TYPE, not only in a side-car field: "is this
+    // the canonical graph?" must be answerable from the document's own type
+    // without reading a convention. This is where the `#STAGING` marker idea
+    // belongs — as a type, not as a fragment on a URL the document is not
+    // served from.
+    "@type": isPreview ? [`${PROV}Entity`, `${FOLIO_NS}PreviewGraph`] : `${PROV}Entity`,
+    ...(isPreview && canonicalIri !== undefined ? { canonicalDocument: canonicalIri } : {}),
     repository: stub,
     generatedAt: new Date().toISOString(),
     counts,

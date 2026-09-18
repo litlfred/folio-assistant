@@ -89,6 +89,44 @@ rendering of `AgentHarnessDeclarationSchema` beside the JSON-LD — **not a
 second authority**; the Zod is authoritative, per
 [`directory-conventions`](directory-conventions.md).
 
+## A preview says what it is, and links back — explicitly
+
+Passing `--base-url` stops the collision: a preview's nodes get preview IRIs,
+so the two graphs cannot contradict each other. That left the opposite problem —
+the graphs became **unrelatable**, and nothing could say "this PR changes skill
+X", which is most of what a preview graph is for.
+
+Three things close it, and all three are stated in the artefact rather than
+left to a convention:
+
+| | |
+|---|---|
+| `@type` | `[prov:Entity, folio:PreviewGraph]` — "am I the real one?" is answerable from the document's own type |
+| `canonicalDocument` | the canonical document's IRI, at document level |
+| `alternateOf` | **per node**, `prov:alternateOf` → that node's canonical IRI |
+
+**`prov:alternateOf`, never `owl:sameAs`.** `sameAs` entails identity, so a
+reasoner merges every statement about both nodes — and if the preview changed a
+skill's description, the merged graph would assert two conflicting descriptions
+of one thing. That is exactly the contradiction distinct IRIs were introduced to
+avoid. `alternateOf` says "same underlying thing, different presentation" and
+merges nothing.
+
+**The per-node links are derivable, and are emitted anyway.** `makeIri` produces
+an identical fragment whatever the base, so a consumer *could* swap one base for
+the other. 968 fields instead of one. That is the deliberate trade, on the
+owner's standing rule: **a downstream consumer must never have to
+string-manipulate or infer a rule to follow a link.** A rule a consumer has to
+know is a rule a consumer can get wrong, and the cost is paid by someone who
+cannot see the code that made the assumption look reasonable. See
+[`crdm-requirements-workflow`](crdm-requirements-workflow.md) §"Consumer burden
+is a requirement".
+
+**Vocabulary nodes get no `alternateOf`.** Graph kinds are minted under the
+namespace, not the document, so they are byte-identical in both graphs. A
+blanket loop gave them one pointing at a canonical fragment that does not
+exist — a generated broken link is still a broken link, and a test now pins it.
+
 ## Naming — artefacts take the repository's name, the config does not
 
 The **stub** (`agent-harness.json` → `stub`, defaulting to `name`) is the

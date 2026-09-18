@@ -29,8 +29,12 @@ import { buildDeclarationSchema } from "../harness-schema-export.js";
 import { readDeclaration, artefactStub } from "../../schemas/agent-harness.js";
 import { FOLIO_NS } from "../../schemas/namespaces.js";
 
-const BASE = "https://example.invalid/fa";
-const EXPORT = await buildExport({ baseUrl: BASE });
+// The repo's own canonicalUrl, so the shared fixture is the CANONICAL export.
+// Using an arbitrary base made it a preview, which (correctly) gave it an
+// array `@type` and 968 alternateOf links — caught by the self-identification
+// test below, which is the test doing its job.
+const BASE = readDeclaration(join(import.meta.dir, "../.."))!.canonicalUrl!;
+const EXPORT = await buildExport();
 const typed = (t: string) => EXPORT["@graph"].filter((n) => n["@type"] === `${FOLIO_NS}${t}`);
 
 describe("kg export", () => {
@@ -156,5 +160,42 @@ describe("kg export", () => {
     // The repo declares a canonicalUrl, so passing "" falls back to it; the
     // assertion that matters is that $id is never relative.
     expect(String(schema.$id ?? "https://x")).toMatch(/^https?:\/\//);
+  });
+
+  test("a preview says so in its type and links every node back to canonical", async () => {
+    // The owner's standing rule: a downstream consumer must never have to
+    // string-manipulate or infer a rule to follow a link. So the preview→
+    // canonical relation is written out per node, not left derivable.
+    const preview = await buildExport({ baseUrl: "https://example.invalid/fa/STAGING/demo" });
+    const canonical = await buildExport();
+
+    expect(Array.isArray(preview["@type"])).toBe(true);
+    expect(preview["@type"]).toContain(`${FOLIO_NS}PreviewGraph`);
+    expect(preview.canonicalDocument).toBe(canonical["@id"]);
+
+    // Canonical must carry neither marker — otherwise "is this the real one?"
+    // is unanswerable from the document.
+    expect(canonical["@type"]).toBe("http://www.w3.org/ns/prov#Entity");
+    expect(canonical.canonicalDocument).toBeUndefined();
+    expect(canonical["@graph"].filter((n) => n.alternateOf !== undefined)).toEqual([]);
+
+    // Every alternateOf must land on a node that actually exists canonically.
+    const canonicalIds = new Set(canonical["@graph"].map((n) => n["@id"] as string));
+    const alts = preview["@graph"]
+      .map((n) => n.alternateOf as string | undefined)
+      .filter((x): x is string => x !== undefined);
+    expect(alts.length).toBeGreaterThan(900);
+    expect(alts.filter((a) => !canonicalIds.has(a))).toEqual([]);
+  });
+
+  test("vocabulary nodes get no alternateOf — they are identical in both graphs", () => {
+    // A blanket loop gave GraphKind nodes an alternateOf pointing at a
+    // canonical fragment that does not exist: they are minted under the
+    // NAMESPACE, not the document, so they are byte-identical in a preview and
+    // in the canonical graph. Marking them as alternates of themselves-by-
+    // another-name was a broken link, and a generated one is still a broken one.
+    const kinds = typed("GraphKind");
+    expect(kinds.length).toBeGreaterThan(0);
+    for (const k of kinds) expect(String(k["@id"]).startsWith(FOLIO_NS)).toBe(true);
   });
 });

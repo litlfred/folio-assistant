@@ -116,8 +116,54 @@ For each requirement:
    - Schema changes (Zod types, block kinds, constraints)
    - Pipeline changes (validators, renderers, scripts)
 3. **Acceptance criteria** — testable conditions
-4. **Cross-references** — link to related documentation pages under
+4. **Consumer burden** — see below. A requirement that shifts work onto the
+   consumer is not done.
+5. **Cross-references** — link to related documentation pages under
    `content/docs/`, existing skills, existing workflows
+
+### Consumer burden is a requirement, not a nicety (STRICT)
+
+**Every requirement states what a downstream consumer must do to use the
+result — and the target is nothing.**
+
+The standing rule, from the repository owner: *a downstream consumer must never
+have to string-manipulate, re-derive, or assume a rule in order to use what we
+publish.* If an artefact makes a consumer parse a name, strip a prefix,
+substitute a base URL, or know a convention that is written down only in prose,
+the requirement is not met.
+
+Ask it in this form, because the failure is always phrased as a saving:
+
+> *"We don't need to emit X — it can be derived from Y."*
+
+That sentence is the smell. It is true and it is the wrong trade. **A rule a
+consumer has to know is a rule a consumer can get wrong**, and the cost of
+being wrong is paid by someone who cannot see the code that made the
+assumption reasonable. Emitting the derivable field costs bytes in an artefact
+that is regenerated on every build; the derivation rule costs correctness in
+every consumer, forever, including ones not written yet.
+
+Worked example, 2026-09-18. A preview knowledge graph's nodes could link back
+to their canonical counterparts by swapping one base URL for another — the
+fragment is identical by construction. The recommendation was to document the
+rule and emit one link at document level: 1 field instead of 968. **Overruled,
+correctly.** The 968 explicit `prov:alternateOf` links shipped, because an
+agent consuming the graph should follow a link, not implement a substitution.
+
+Three checks that catch most of it:
+
+- **Would a consumer in another language need our source to understand this?**
+  If yes, emit the field.
+- **Is the convention stated anywhere a machine can read?** Prose in a skill is
+  not machine-readable. A typed term in a `@context` is.
+- **Does the artefact answer "what am I?" from itself?** A preview that needs
+  an external convention to be told apart from the canonical version fails
+  this. Put it in the type, not in a filename or a path segment.
+
+This is also why the declaration file keeps a fixed name while artefacts are
+stub-named: a consumer must be able to open a repository it has never seen
+without first deriving a filename. See
+[`directory-conventions`](directory-conventions.md) §Naming.
 
 **Post to the issue:** structured requirements with acceptance criteria.
 
@@ -130,8 +176,15 @@ For each requirement:
 3. **Adapter impact** — paper, document, dak? Does it ripple?
 4. **QA impact** — new criteria? Modified criteria? Registry changes?
 5. **Folio impact** — which active folios need migration?
-6. **Test plan** — what tests to add or update?
-7. **Migration plan** — steps, rollback, what breaks without it
+6. **Consumer impact** — what must every downstream consumer change, and what
+   must it now *know*? An impact analysis that lists only our own files has
+   measured half the change. Enumerate: fields added or removed from published
+   artefacts, IRIs or filenames that move, conventions a consumer would have to
+   learn. **A convention added is an impact**, even when no file changed shape.
+7. **Test plan** — what tests to add or update? Include at least one that
+   asserts the consumer-facing contract, not only the internal one — a test
+   over the emitted artefact, not over the function that built it.
+8. **Migration plan** — steps, rollback, what breaks without it
 
 **Post to the issue:** impact assessment and migration plan.
 
