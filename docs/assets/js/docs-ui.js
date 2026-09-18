@@ -810,9 +810,9 @@
     var title = document.querySelector(".main-content h1, #main-content h1");
     if (!title) return;
 
-    // Create badge container
+    // Create badge container — block-level row below the title
     var container = el("span", { class: "fa-translation-badges", style:
-      "display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; vertical-align: middle;"
+      "display: flex; align-items: center; gap: 6px; margin: 0.3em 0 0.6em; flex-wrap: wrap;"
     });
 
     // Language coverage badge — always shown
@@ -919,7 +919,14 @@
       }
     }
 
-    title.appendChild(container);
+    // Place badges AFTER the h1, not inside it. Inside the h1 they were
+    // invisible because kramdown's {: .fs-9 } makes the heading enormous
+    // and the tiny badges got lost in it.
+    if (title.nextSibling) {
+      title.parentNode.insertBefore(container, title.nextSibling);
+    } else {
+      title.parentNode.appendChild(container);
+    }
   }
 
   function init() {
