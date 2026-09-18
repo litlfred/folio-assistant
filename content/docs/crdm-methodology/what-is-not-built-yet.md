@@ -12,6 +12,12 @@ there, or lets them assume something exists because nobody updated the list.
   existing session already in the process, existing session doing content
   work). The judgement is written down; it is not yet *measured*, so see the
   caveat below.
+- **`stakeholder_map`** — reports which skills a change touches, the roles
+  they declare, and the process lanes accountable for work that uses them.
+  Built against skills and BPMN lanes rather than the CODEOWNERS and
+  `folio.config.json` fields it was specified from, because neither exists
+  here. It does not name people, because the process says the agent does not
+  guess.
 - **The process is executable** — `crdm-requirements.bpmn` loads like every
   other diagram here, so `workflow_start` / `workflow_next` /
   `workflow_complete` run it today, and `workflow_complete` refuses a step
@@ -35,8 +41,6 @@ there, or lets them assume something exists because nobody updated the list.
 - **Automated impact analysis** — the agent can read the content graph and
   the schema files, but no dedicated tool produces an impact report for a
   proposed change.
-- **Stakeholder mapping** — no automated discovery of affected roles or
-  folios from a change description.
 - **Review triage tooling** — ingesting a Word document with comments and
   presenting them for structured triage is tracked in
   [#197](https://github.com/litlfred/folio-assistant/issues/197).
