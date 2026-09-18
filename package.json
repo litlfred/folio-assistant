@@ -58,6 +58,8 @@
     "readme:audit": "bun run content/pipeline/readme-links.ts",
     "render:bpmn": "bun run scripts/render-bpmn.ts",
     "render:bpmn:check": "bun run scripts/render-bpmn.ts --check",
+    "bat:sync": "bash scripts/gen-bat-wrappers.sh",
+    "bat:sync:check": "bash scripts/gen-bat-wrappers.sh --check",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {

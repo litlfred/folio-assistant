@@ -31,6 +31,30 @@ runtime and can be installed on demand.
 You do not need all of these — install only what the content types you author
 require. The built-in capability probe tells you what is missing.
 
+### Windows
+
+The platform's shell scripts are bash. On Windows they run under **Git Bash**,
+which [Git for Windows](https://git-scm.com/download/win) installs, so `git`
+is the only extra prerequisite. Every script a user runs by hand or wires into
+a config has a `.bat` beside it — `scripts\install-beans.bat`,
+`scripts\start-folio-assistant.bat`, `scripts\git-hooks\install.bat`,
+`scripts\session-start-coord-sweep.bat` and so on — which finds Git Bash
+(never the WSL launcher in `System32`) and runs the sibling `.sh` with the same
+arguments. Use them from `cmd.exe`, PowerShell, Task Scheduler or an MCP
+config entry:
+
+```bat
+scripts\install-beans.bat
+scripts\upload-to-uploads.bat https://example.org/guideline.pdf
+```
+
+Anything the `.sh` needs — `bun`, `curl`, `gh`, `elan` — must be on the
+Windows `PATH`, since Git Bash inherits it from the caller. Scripts that only
+make sense on a Linux host (`deploy/`, `install-tex.sh`, `setup-sage.sh`,
+`setup-singular.sh`) have no wrapper on purpose. The list lives in
+`scripts/gen-bat-wrappers.sh`; `bun run bat:sync` regenerates the wrappers
+and `bun run bat:sync:check` fails CI if one is missing or stale.
+
 ## Clone and install
 
 ```sh
