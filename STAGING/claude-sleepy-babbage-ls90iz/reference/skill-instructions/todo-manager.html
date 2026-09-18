@@ -156,7 +156,7 @@
 
 </head>
 
-<body><div style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/sleepy-babbage-ls90iz" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/sleepy-babbage-ls90iz</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">3381104</span> · built 2026-09-18T16:56:24Z · PR #251 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35371302276" style="color:#fff;text-decoration:underline">build log</a></div>
+<body><div style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/sleepy-babbage-ls90iz" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/sleepy-babbage-ls90iz</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">bfe4605</span> · built 2026-09-18T17:08:42Z · PR #251 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35372462211" style="color:#fff;text-decoration:underline">build log</a></div>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -507,6 +507,122 @@ non-obvious, because it has just finished finding them out.</p>
 <p><strong>Cheapest correct move when you do not want to spend the words: do not start
 the topic.</strong> A task you cannot brief is one you have not understood well enough
 to begin.</p>
+<h2 id="say-which-bean-you-are-on--every-turn">
+  
+  
+    <a href="#say-which-bean-you-are-on--every-turn" class="anchor-heading" aria-labelledby="say-which-bean-you-are-on--every-turn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Say which bean you are on — every turn
+  
+  
+</h2>
+    
+
+<p>Claiming a bean records the work; <strong>reporting</strong> it is what lets a human steer
+and a sibling session avoid you. Both are required.</p>
+<h3 id="opening-a-turn">
+  
+  
+    <a href="#opening-a-turn" class="anchor-heading" aria-labelledby="opening-a-turn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opening a turn
+  
+  
+</h3>
+    
+
+<p><strong>When you begin work on a bean</strong>, open that turn by naming it and what you are
+attempting — before the first tool call, not after the work lands:</p>
+
+<blockquote>
+  <p><strong>Starting <code class="language-plaintext highlighter-rouge">fwr7</code></strong> — retargeting the seven edges the forward-ref arc left
+alone, because the edge is wrong rather than the block’s position.</p>
+</blockquote>
+<h3 id="closing-a-turn">
+  
+  
+    <a href="#closing-a-turn" class="anchor-heading" aria-labelledby="closing-a-turn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Closing a turn
+  
+  
+</h3>
+    
+
+<p><strong>End every turn</strong> with the beans you touched and what is next.</p>
+
+<blockquote>
+  <p><strong>Beans</strong></p>
+  <ul>
+    <li><strong>worked</strong> <a href=".beans/folio-assistant-fwr8--re-baseline-the-forward-ref-arc.md"><code class="language-plaintext highlighter-rouge">fwr8</code></a> — Re-baseline the forward-ref arc endpoints. Re-ran both with the fixed parser: the arc is 274 → 195, not 274 → 192. This corrects my own earlier claim that the start figure was understated — only the post-mid-arc figures are short, and only by 3.</li>
+    <li><strong>next</strong> <a href=".beans/folio-assistant-fwr7--retarget-seven-mis-aimed-uses-edges.md"><code class="language-plaintext highlighter-rouge">fwr7</code></a> — Retarget seven <code class="language-plaintext highlighter-rouge">uses[]</code> edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.</li>
+  </ul>
+</blockquote>
+<h3 id="the-rules-that-make-a-report-worth-reading">
+  
+  
+    <a href="#the-rules-that-make-a-report-worth-reading" class="anchor-heading" aria-labelledby="the-rules-that-make-a-report-worth-reading"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rules that make a report worth reading
+  
+  
+</h3>
+    
+
+<p><strong>1. Every bean reference carries a one-sentence gloss and a link.</strong>
+<code class="language-plaintext highlighter-rouge">fa/nvbr</code> is an opaque four-character string. A reader cannot tell whether it
+is urgent, adjacent, or already obsolete without opening the store — and asking
+someone to go look things up is the cost this report exists to remove. Link to
+the bean file so one click gets the full body.</p>
+
+<p><strong>2. Asking for review means linking the artefact.</strong> If a turn ends with
+“please look at this”, it must carry the <strong>staging URL</strong>, the PR link, and — if
+the change is a page — the direct path to the page that changed. <code class="language-plaintext highlighter-rouge">AGENTS.md</code>
+already records why (PR #178, 2026-09-16): a human cannot assess a rendered
+artefact from a description, and withholding it makes assessment harder rather
+than safer. Making the reader <em>find</em> the preview is the same failure one step
+down.</p>
+
+<p><strong>3. Say what to review, not just that it is green.</strong> “Green on all three
+workflows” says the PR is not broken. It does not say what the change <strong>does</strong>,
+what to <strong>look at</strong>, or what <strong>judgement</strong> is wanted. A reader should be able to
+act on the report without opening the diff, and then open the diff knowing what
+they are looking for.</p>
+
+<p><strong>4. Length follows content.</strong> There is no word budget. A one-line fix gets a
+line; a design change that needs a decision gets a paragraph. Err long — the
+cost of a sentence the reader skims is far below the cost of a round-trip
+asking what you meant, especially for an author who types with difficulty.</p>
+
+<p><strong>5. “Next” is your judgement, not a fact.</strong> Beans carry no priority order
+beyond what an agent asserts — so say <em>why</em> it is next, and expect to be
+overruled.</p>
+
+<p><strong>6. Prefix across repos</strong> (<code class="language-plaintext highlighter-rouge">qou/fwr7</code>, <code class="language-plaintext highlighter-rouge">fa/fsl7</code>) when a turn spans both.</p>
+
+<p><strong>7. Report unclaimed work as unclaimed.</strong> If you did durable work without a
+bean, say so and open one; that omission is the failure this exists to catch.</p>
+<h3 id="the-worked-failure">
+  
+  
+    <a href="#the-worked-failure" class="anchor-heading" aria-labelledby="the-worked-failure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The worked failure
+  
+  
+</h3>
+    
+
+<p>Measured here, 2026-09-18. A real end-of-turn report, verbatim:</p>
+
+<blockquote>
+  <p><strong>worked</strong> <code class="language-plaintext highlighter-rouge">fa/fsch</code> — Green on all three workflows. Also corrected the PR
+body, which had drifted from the code after your detangle instruction.
+<strong>next</strong> <code class="language-plaintext highlighter-rouge">fa/nvbr</code>, <code class="language-plaintext highlighter-rouge">fa/rnfl</code> — both gated on #251.</p>
+</blockquote>
+
+<p>It breaks the first three rules at once. <code class="language-plaintext highlighter-rouge">fa/nvbr</code> and <code class="language-plaintext highlighter-rouge">fa/rnfl</code> appear with no
+gloss and no link, so the reader cannot tell what either is. The turn asked for
+review and gave no staging link, so the reader had to ask for it. And “green on
+all three workflows” describes CI rather than the change: it never says the PR
+introduces a root declaration schema, never says the conventions doc is the
+thing worth reading, and never says which decision was wanted. The author’s
+reply was <em>“staging link???”</em>, then a request for more context — two
+round-trips that a longer report would have spent nothing to avoid.</p>
+
+<p>The old version of this rule capped entries at “up to 50 words”, which read as a
+budget to spend rather than a floor to clear and rewarded exactly that
+terseness. Rule 4 replaces it.</p>
 <h2 id="check-before-you-create--beans-create-is-not-idempotent-strict">
   
   
@@ -610,7 +726,7 @@ You can map out sequence blockers using:
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35371302276"><code>3381104</code></a> &middot; 2026-09-18T16:56:00Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35372462211"><code>bfe4605</code></a> &middot; 2026-09-18T17:08:18Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
