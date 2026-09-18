@@ -160,6 +160,14 @@ jobs:
       # the default theme. A <span> the theme has no selector for cannot
       # regress that way in either mode.
       - name: Inject staging banner
+        # PR title and body come through `env`, NOT `${{ }}` interpolation.
+        # An expression is substituted into the script TEXT before bash sees
+        # it, so a PR body containing a quote and a semicolon would execute —
+        # a PR body is attacker-controlled on any repo taking outside
+        # contributions. As environment variables they are data.
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
         run: |
           SHA="${GITHUB_SHA:0:7}"
           BRANCH="${{ steps.slug.outputs.branch }}"
@@ -167,8 +175,25 @@ jobs:
           PR="${{ github.event.pull_request.number || 'n/a' }}"
           BRANCH_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/${BRANCH}"
           MAIN_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          PR_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pull/${PR}"
+          # The issue this branch is FOR. A reviewer landing on a staged page
+          # can see the branch, the commit and the PR, but not WHY the work
+          # exists — which is the question a preview most often raises.
+          #
+          # Taken as the first issue reference in the PR title, else the body,
+          # excluding the PR's own number (GitHub numbers issues and PRs from
+          # one sequence, so "#258" in the body of PR 258 is a self-reference,
+          # not an issue). Absent is a normal state, not an error: a branch
+          # need not have an issue, and the banner simply omits the link.
+          ISSUE="$(printf '%s\n%s\n' "$PR_TITLE" "$PR_BODY" \
+            | grep -oE '#[0-9]+' | tr -d '#' \
+            | grep -vx "$PR" | head -1 || true)"
+          ISSUE_FRAGMENT=""
+          if [ -n "$ISSUE" ]; then
+            ISSUE_FRAGMENT=" · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/issues/${ISSUE}\" style=\"color:#fff;text-decoration:underline\">issue #${ISSUE}</a>"
+          fi
           CHIP='font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px'
-          BANNER="<div style=\"background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui\">🔀 <b>FEATURE BRANCH</b> — <a href=\"${BRANCH_URL}\" style=\"color:#fff;text-decoration:underline\"><span style=\"${CHIP}\">${BRANCH}</span></a> · commit <span style=\"${CHIP}\">${SHA}</span> · built ${BUILT} · PR #${PR} · <a href=\"${MAIN_URL}\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a> · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\" style=\"color:#fff;text-decoration:underline\">build log</a></div>"
+          BANNER="<div style=\"background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui\">🔀 <b>FEATURE BRANCH</b> — <a href=\"${BRANCH_URL}\" style=\"color:#fff;text-decoration:underline\"><span style=\"${CHIP}\">${BRANCH}</span></a> · commit <span style=\"${CHIP}\">${SHA}</span> · built ${BUILT} · <a href=\"${PR_URL}\" style=\"color:#fff;text-decoration:underline\">PR #${PR}</a>${ISSUE_FRAGMENT} · <a href=\"${MAIN_URL}\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a> · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\" style=\"color:#fff;text-decoration:underline\">build log</a></div>"
           # Match the WHOLE opening tag, not the literal "<body". Matching
           # "<body" alone re-emitted "<body>" and left the original tag's own
           # ">" behind, so every staged page carried a stray ">" after the
