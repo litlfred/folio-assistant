@@ -1,7 +1,7 @@
 ---
 # folio-assistant-sepc
 title: 'Separation of concerns — current/future architecture + migration plan (issue #223)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T14:25:00Z
@@ -46,3 +46,28 @@ Branch: `claude/sleepy-babbage-ls90iz`.
 Documentation only. The `content/` → `folio/` rename, the `folio` schema and the
 navbar work are Phase I **code** and are deliberately left for a separate bean
 so the plan can be reviewed before 2.4k references move.
+
+---
+
+## Outcome
+
+PR #242. Four pages under `docs/architecture/`, nested beneath the existing
+Architecture page (`has_children: true`):
+
+| page | lines |
+|---|---:|
+| `repo-taxonomy.md` | 145 |
+| `current-state.md` | 201 |
+| `future-state.md` | 219 |
+| `migration-plan.md` | 202 |
+
+**The finding the plan is built on:** the dependency mechanism the split needs
+already exists and is almost entirely unwired — and schemas/MCP tools are ruled
+out from dependency resolution *by design*, which blocks `folio-asst-sci`
+outright. Sequenced as Phase 0.1, a hard blocker ahead of any code movement,
+with three candidate shapes for the maintainer to choose between.
+
+**Left for separate beans** (Phase I code, not this bean): `content/` → `folio/`
+rename (2,408 occurrences / 429 files), the `folio` schema holding zero-or-more
+Content instances, and the LHS navbar section-per-node. Plan recommends schema
+first, rename last.
