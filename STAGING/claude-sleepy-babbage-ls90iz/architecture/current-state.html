@@ -156,7 +156,7 @@
 
 </head>
 
-<body><div style="background:#d946ef;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/sleepy-babbage-ls90iz" style="color:#fff;text-decoration:underline"><code>claude/sleepy-babbage-ls90iz</code></a> · commit <code>9ec592d</code> · built 2026-09-18T15:01:45Z · PR #242 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35359760666" style="color:#fff;text-decoration:underline">build log</a></div>>
+<body><div style="background:#d946ef;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/sleepy-babbage-ls90iz" style="color:#fff;text-decoration:underline"><code>claude/sleepy-babbage-ls90iz</code></a> · commit <code>52d119c</code> · built 2026-09-18T15:06:11Z · PR #242 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35360212754" style="color:#fff;text-decoration:underline">build log</a></div>>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -321,7 +321,11 @@
 <ol id="markdown-toc">
   <li><a href="#the-one-sentence-summary" id="markdown-toc-the-one-sentence-summary">The one-sentence summary</a></li>
   <li><a href="#size-and-shape" id="markdown-toc-size-and-shape">Size and shape</a></li>
-  <li><a href="#where-the-domains-already-separate--and-where-they-do-not" id="markdown-toc-where-the-domains-already-separate--and-where-they-do-not">Where the domains already separate — and where they do not</a></li>
+  <li><a href="#where-the-domains-already-separate--and-where-they-do-not" id="markdown-toc-where-the-domains-already-separate--and-where-they-do-not">Where the domains already separate — and where they do not</a>    <ol>
+      <li><a href="#the-partition" id="markdown-toc-the-partition">The partition</a></li>
+      <li><a href="#the-wrong-direction-edges--phase-is-worklist" id="markdown-toc-the-wrong-direction-edges--phase-is-worklist">The wrong-direction edges — Phase I’s worklist</a></li>
+    </ol>
+  </li>
   <li><a href="#the-mechanism-the-split-already-has" id="markdown-toc-the-mechanism-the-split-already-has">The mechanism the split already has</a>    <ol>
       <li><a href="#what-is-not-wired" id="markdown-toc-what-is-not-wired">What is not wired</a></li>
       <li><a href="#what-the-model-rules-out-and-why-it-matters" id="markdown-toc-what-the-model-rules-out-and-why-it-matters">What the model rules out, and why it matters</a></li>
@@ -452,22 +456,176 @@ thing in the repo to split out.</p>
 </h2>
     
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find src schemas skills content adapters scripts <span class="nt">-type</span> f <span class="se">\</span>
-  <span class="se">\(</span> <span class="nt">-name</span> <span class="s1">'*.ts'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.py'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.sh'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.md'</span> <span class="se">\)</span> | <span class="nb">wc</span> <span class="nt">-l</span>          <span class="c"># 805</span>
-… | <span class="nb">grep</span> <span class="nt">-icE</span> <span class="s1">'(lean|latex|/tex|-tex|tex-|proof|simulator|sage|knot|witness)'</span>          <span class="c"># 101</span>
-… | <span class="nb">grep</span> <span class="nt">-icE</span> <span class="s1">'(who|smart|dak|fhir|fsh|ig-|-ig|ocl|l2-|l3-)'</span>                           <span class="c"># 94</span>
-</code></pre></div></div>
+<p>An early version of this page answered by matching filenames. That is a lower
+bound by construction — it finds <code class="language-plaintext highlighter-rouge">lean-build-bg.sh</code> and misses a Lean special
+case inside a generic validator — so it has been replaced by a real import-graph
+partition, <code class="language-plaintext highlighter-rouge">bun run check:partition</code>
+(<code class="language-plaintext highlighter-rouge">scripts/repo-partition.ts</code>).</p>
 
-<p>Of 805 source files, <strong>101 are scientific-authoring specific</strong> (Lean, LaTeX,
-proofs, simulators, Sage, witnesses) and <strong>94 are WHO/SMART specific</strong> (DAK,
-FHIR, FSH, OCL, L2/L3). Those are the two candidate extractions —
-<code class="language-plaintext highlighter-rouge">folio-asst-sci</code> and the <code class="language-plaintext highlighter-rouge">smart-*</code> family — and at roughly 12 % of files each
-they are large enough to be worth moving and small enough that the remainder is
-still a coherent core.</p>
+<p>The tool walks every <code class="language-plaintext highlighter-rouge">.ts</code> module under <code class="language-plaintext highlighter-rouge">src/</code>, <code class="language-plaintext highlighter-rouge">schemas/</code>, <code class="language-plaintext highlighter-rouge">adapters/</code>,
+<code class="language-plaintext highlighter-rouge">content/</code>, <code class="language-plaintext highlighter-rouge">scripts/</code>, <code class="language-plaintext highlighter-rouge">tests/</code> and <code class="language-plaintext highlighter-rouge">types/</code>, resolves each relative import
+(the codebase writes bare, <code class="language-plaintext highlighter-rouge">.js</code>-for-<code class="language-plaintext highlighter-rouge">.ts</code>, and directory forms, so all three
+are tried), assigns each module to one of the five proposed repositories, and
+reports the edges that cross a boundary <strong>in the wrong direction</strong>.</p>
+<h3 id="the-partition">
+  
+  
+    <a href="#the-partition" class="anchor-heading" aria-labelledby="the-partition"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The partition
+  
+  
+</h3>
+    
 
-<p>The filename heuristic is a <strong>lower bound and nothing more</strong>: it finds
-<code class="language-plaintext highlighter-rouge">lean-build-bg.sh</code> and misses a Lean special case buried in a generic validator.
-Phase I’s first task is to replace it with a real dependency scan.</p>
+<p><strong>331 modules, 655 internal import edges</strong> (2026-09-18):</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>proposed repo</th>
+      <th style="text-align: right">modules</th>
+      <th style="text-align: right">by explicit rule</th>
+      <th style="text-align: right">by keyword</th>
+      <th style="text-align: right">fell through</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">agentic-harness</code></td>
+      <td style="text-align: right">43</td>
+      <td style="text-align: right">43</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assist-core</code></td>
+      <td style="text-align: right"><strong>119</strong></td>
+      <td style="text-align: right">119</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-asst-sci</code></td>
+      <td style="text-align: right">28</td>
+      <td style="text-align: right">8</td>
+      <td style="text-align: right">20</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-kg</code></td>
+      <td style="text-align: right"><strong>0</strong></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-base</code></td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td><em>(test material)</em></td>
+      <td style="text-align: right">110</td>
+      <td style="text-align: right">107</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td><strong>unassigned</strong></td>
+      <td style="text-align: right"><strong>27</strong></td>
+      <td style="text-align: right">—</td>
+      <td style="text-align: right">—</td>
+      <td style="text-align: right">27</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Three things in that table are worth reading carefully.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">smart-kg</code> is zero.</strong> Not small — zero. Nothing in this repo is WHO L1
+material today, which confirms from the code what
+<a href="future-state.html#smart-kg">the future state</a> says from the prose: the L1/L2
+line has to be drawn by someone with the domain context, because there is no
+existing code to infer it from.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">smart-base</code> is four modules.</strong> The WHO material here is overwhelmingly prose,
+BPMN and schemas rather than TypeScript, so a file-count partition understates
+it badly. Do not read 4 as “nearly done”.</p>
+
+<p><strong>27 modules are unassigned, and stay that way.</strong> They are platform
+meta-scripts — <code class="language-plaintext highlighter-rouge">gen-schema-docs</code>, <code class="language-plaintext highlighter-rouge">check-ci-health</code>, <code class="language-plaintext highlighter-rouge">render-bpmn</code>,
+<code class="language-plaintext highlighter-rouge">generate-registry</code>, and so on. Most are probably <code class="language-plaintext highlighter-rouge">agentic-harness</code>, and the
+tool deliberately does not say so: an assignment it guessed would be
+indistinguishable in the report from one it derived. That list is a human’s
+call, and it is 27 items long, which is a tractable afternoon.</p>
+<h3 id="the-wrong-direction-edges--phase-is-worklist">
+  
+  
+    <a href="#the-wrong-direction-edges--phase-is-worklist" class="anchor-heading" aria-labelledby="the-wrong-direction-edges--phase-is-worklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The wrong-direction edges — Phase I’s worklist
+  
+  
+</h3>
+    
+
+<p><strong>41 edges</strong> import across a proposed boundary in a direction the dependency
+DAG forbids:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>importer</th>
+      <th>imports from</th>
+      <th style="text-align: right">edges</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assist-core</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-asst-sci</code></td>
+      <td style="text-align: right"><strong>19</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">agentic-harness</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assist-core</code></td>
+      <td style="text-align: right"><strong>17</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">agentic-harness</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-asst-sci</code></td>
+      <td style="text-align: right">3</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assist-core</code></td>
+      <td><code class="language-plaintext highlighter-rouge">smart-base</code></td>
+      <td style="text-align: right">2</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><code class="language-plaintext highlighter-rouge">bun run check:partition:edges</code> prints all 41 by name. The two large groups have
+different causes and different fixes:</p>
+
+<p><strong>core → sci (19)</strong> is Lean and LaTeX reaching into generic code.
+<code class="language-plaintext highlighter-rouge">content/pipeline/build.ts</code> imports <code class="language-plaintext highlighter-rouge">render-latex</code>, <code class="language-plaintext highlighter-rouge">generate-main-tex</code>,
+<code class="language-plaintext highlighter-rouge">latex-preflight</code> and <code class="language-plaintext highlighter-rouge">lean-coverage</code>; <code class="language-plaintext highlighter-rouge">qa-utils.ts</code> imports <code class="language-plaintext highlighter-rouge">lean-signature</code>;
+<code class="language-plaintext highlighter-rouge">schemas/constraints.ts</code> imports <code class="language-plaintext highlighter-rouge">lean-packages</code>. These are the seven math block
+kinds’ machinery embedded in the document pipeline — the profile split
+<code class="language-plaintext highlighter-rouge">AGENTS.md</code> describes at the <em>schema</em> level, not yet carried through to imports.</p>
+
+<p><strong>harness → core (17)</strong> is the harness knowing about the content model.
+<code class="language-plaintext highlighter-rouge">src/core/feedback.ts</code>, <code class="language-plaintext highlighter-rouge">src/routes/feedback.ts</code>, <code class="language-plaintext highlighter-rouge">src/types.ts</code> and
+<code class="language-plaintext highlighter-rouge">schemas/assistant-types.ts</code> all import <code class="language-plaintext highlighter-rouge">schemas/types.ts</code>. This is the more
+interesting group, because it is the harness’s defining constraint —
+<a href="future-state.html#agentic-harness">it must not “do” anything</a> — failing in
+practice: a harness that imports the content-object model cannot be extracted
+from underneath core.</p>
+
+<p><strong>A caution on the count.</strong> The first run of this tool reported 33 cross-edges
+with 135 modules unassigned; classifying the test material and the standalone
+MCP server raised it to 41. <strong>Classifying more modules finds more violations,
+not fewer</strong> — so 41 is itself a lower bound while 27 modules remain unassigned.
+Treat it as a floor that rises as triage proceeds, never as a burn-down number.</p>
 <h2 id="the-mechanism-the-split-already-has">
   
   
@@ -699,7 +857,7 @@ and needs sorting, whereas the Test repo needs building.</p><hr />
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35359760666"><code>9ec592d</code></a> &middot; 2026-09-18T15:01:19Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35360212754"><code>52d119c</code></a> &middot; 2026-09-18T15:05:44Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
