@@ -1,30 +1,55 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/l3-fhir-authoring/output.schema.json",
+  "$id": "https://litlfred.github.io/folio-assistant/kg/skills/l3-fhir-authoring/output.schema.json",
   "title": "L3 FHIR Authoring Output",
   "description": "Output schema for L3 FHIR IG authoring.",
   "type": "object",
-  "required": ["fshFiles", "sushiResult"],
+  "required": [
+    "fshFiles",
+    "sushiResult"
+  ],
   "properties": {
     "fshFiles": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["path", "resourceType"],
+        "required": [
+          "path",
+          "resourceType"
+        ],
         "properties": {
-          "path": { "type": "string" },
-          "resourceType": { "type": "string" },
-          "resourceId": { "type": "string" }
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resourceId": {
+            "type": "string"
+          }
         }
       }
     },
     "sushiResult": {
       "type": "object",
       "properties": {
-        "status": { "type": "string", "enum": ["success", "warnings", "errors"] },
-        "resourceCount": { "type": "integer" },
-        "errorCount": { "type": "integer" },
-        "warningCount": { "type": "integer" }
+        "status": {
+          "type": "string",
+          "enum": [
+            "success",
+            "warnings",
+            "errors"
+          ]
+        },
+        "resourceCount": {
+          "type": "integer"
+        },
+        "errorCount": {
+          "type": "integer"
+        },
+        "warningCount": {
+          "type": "integer"
+        }
       }
     },
     "generatedResources": {
@@ -32,9 +57,15 @@
       "items": {
         "type": "object",
         "properties": {
-          "path": { "type": "string" },
-          "resourceType": { "type": "string" },
-          "url": { "type": "string" }
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
         }
       }
     }

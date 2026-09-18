@@ -1,0 +1,44 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "formalizer",
+    "path": "skills/folio-paper-adapter/formalizer.md"
+  },
+  "source_hash": "468cafd668a6",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:e458124330d0cfcd93e9ff9c18c0588079e7706ca188ff7f156734967ffef296",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/formalizer.md",
+          "detail": "842 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/formalizer.md",
+          "detail": "842 lines; p90 is 391. At this length it is a document."
+        }
+      ]
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 1,
+    "fail": 2,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "one-voice-integration-watcher",
+    "path": "skills/folio-core/one-voice-integration-watcher.md"
+  },
+  "source_hash": "437650bc67d9",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:e458124330d0cfcd93e9ff9c18c0588079e7706ca188ff7f156734967ffef296",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/one-voice-integration-watcher.md",
+          "detail": "291 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 2,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

@@ -1,19 +1,34 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/terminology-management/input.schema.json",
+  "$id": "https://litlfred.github.io/folio-assistant/kg/skills/terminology-management/input.schema.json",
   "title": "Terminology Management Input",
   "description": "Input schema for terminology management — CodeSystems, ValueSets, ConceptMaps.",
   "type": "object",
-  "required": ["operation"],
+  "required": [
+    "operation"
+  ],
   "properties": {
     "operation": {
       "type": "string",
-      "enum": ["create-codesystem", "create-valueset", "create-conceptmap", "validate-bindings", "map-to-standard"],
+      "enum": [
+        "create-codesystem",
+        "create-valueset",
+        "create-conceptmap",
+        "validate-bindings",
+        "map-to-standard"
+      ],
       "description": "Terminology operation to perform."
     },
     "targetStandard": {
       "type": "string",
-      "enum": ["ICD-11", "SNOMED-CT", "LOINC", "IPS", "WHO-FIC", "WHO-ATC"],
+      "enum": [
+        "ICD-11",
+        "SNOMED-CT",
+        "LOINC",
+        "IPS",
+        "WHO-FIC",
+        "WHO-ATC"
+      ],
       "description": "Target standard terminology for mapping."
     },
     "inputFile": {

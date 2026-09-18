@@ -1,10 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/dmn-authoring/input.schema.json",
+  "$id": "https://litlfred.github.io/folio-assistant/kg/skills/dmn-authoring/input.schema.json",
   "title": "DMN Authoring Input",
   "description": "Input schema for DMN (Decision Model and Notation) decision table authoring.",
   "type": "object",
-  "required": ["decisionName", "inputVariables"],
+  "required": [
+    "decisionName",
+    "inputVariables"
+  ],
   "properties": {
     "decisionName": {
       "type": "string",
@@ -14,10 +17,24 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "type"],
+        "required": [
+          "name",
+          "type"
+        ],
         "properties": {
-          "name": { "type": "string" },
-          "type": { "type": "string", "enum": ["string", "integer", "boolean", "date", "codeable-concept"] }
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "integer",
+              "boolean",
+              "date",
+              "codeable-concept"
+            ]
+          }
         }
       }
     },

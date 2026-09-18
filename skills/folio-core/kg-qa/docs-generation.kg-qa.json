@@ -1,0 +1,39 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "docs-generation",
+    "path": "skills/folio-core/docs-generation.md"
+  },
+  "source_hash": "f79de095e20f",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:e458124330d0cfcd93e9ff9c18c0588079e7706ca188ff7f156734967ffef296",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/docs-generation.md",
+          "detail": "heading \"Running locally\" repeated (also at line 53)"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 2,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

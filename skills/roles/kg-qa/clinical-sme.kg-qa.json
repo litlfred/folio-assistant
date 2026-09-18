@@ -5,10 +5,10 @@
     "id": "clinical-sme",
     "path": "skills/roles/roles.json"
   },
-  "source_hash": "sha256:3dac35ec76a33538080ef71fec0dfe260bb4e473c72527f124b3f6d1bf78ad97",
+  "source_hash": "sha256:040ad22fd79d422b45acd779f7c8659a5342391b25ff6342d794b0dd21b9619b",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:0f00819b8600f680ebb54e31dd4d2475a4c0905e8a70221bb23c6b0df499d0bf",
+    "script_hash": "sha256:e458124330d0cfcd93e9ff9c18c0588079e7706ca188ff7f156734967ffef296",
     "engine_version": "1"
   },
   "criteria": {
@@ -24,13 +24,25 @@
       "result": "pass",
       "findings": []
     },
+    "role-has-persona": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-declares-voice": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-has-use-cases": {
+      "result": "pass",
+      "findings": []
+    },
     "role-has-actor": {
       "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 4,
+    "pass": 7,
     "fail": 0,
     "n/a": 0,
     "unknown": 0

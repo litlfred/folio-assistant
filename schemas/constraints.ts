@@ -199,6 +199,13 @@ export const AuthorNoteSchema = z.object({
  */
 export const BlockBaseSchema = z.object({
   title: z.string().optional(),
+  /**
+   * Role ids from the instance's KG — see `BlockBase.audience` in
+   * `schemas/types.ts`. Declared HERE as well as there because Zod strips
+   * what it does not know: a field TypeScript accepts and Zod drops is
+   * written by an author, type-checks, and vanishes (bean `zdrf`).
+   */
+  audience: z.array(z.string()).optional(),
   uses: z.array(z.string()).optional(),
   foreshadows: z.array(z.string()).optional(),
   cites: z.array(z.string()).optional(),
