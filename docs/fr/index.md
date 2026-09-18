@@ -6,7 +6,7 @@ lang: fr
 translation_status: unverified
 translation_source: index.md
 description: "folio-assistant — un cadre de compétences d'agent indépendant du contenu."
-available_locales: ["fr"]
+available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 qa_translation_pass: 11
 qa_translation_warn: 4
 qa_translation_fail: 21
