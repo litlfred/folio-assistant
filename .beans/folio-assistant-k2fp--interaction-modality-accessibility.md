@@ -1,7 +1,7 @@
 ---
 # folio-assistant-k2fp
 title: 'GETTING STARTED: interaction modality + accessibility preferences'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T14:49:11Z

@@ -1,7 +1,7 @@
 ---
 # folio-assistant-c3xm
 title: 'GETTING STARTED: convert an existing repo + scan it for content'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T14:49:11Z

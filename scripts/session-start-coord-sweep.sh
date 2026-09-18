@@ -28,6 +28,27 @@ lock_id="$(printf '%s' "$REPO_ROOT" | cksum | cut -d' ' -f1)"
 exec 200>"/tmp/folio-coord-sweep-${lock_id}.lock"
 flock 200 2>/dev/null || true
 
+# ── 0. How to talk to the person here ───────────────────────────────────────
+# Printed FIRST and before the work-plan, because it changes the form of every
+# question that follows. A preference re-learned each session is a question
+# asked twice, which is WCAG 2.2 SC 3.3.7 (Redundant Entry) — and for a user
+# who types with difficulty, "just ask again" is not a small cost.
+# See skills/folio-core/interaction-modality.md.
+INTERACTION="$REPO_ROOT/.folio/interaction.json"
+if [ -f "$INTERACTION" ]; then
+  echo "## Interaction preferences"
+  echo
+  if command -v jq >/dev/null 2>&1; then
+    jq -r '
+      (.users // {}) | to_entries[] |
+      "- **\(.key)** — profiles: \(.value.profiles | join(", ") | if . == "" then "(none)" else . end)  \n  \(.value.note // "")  \n  _source: \(.value.source // "unrecorded")_"
+    ' "$INTERACTION" 2>/dev/null || echo "- (could not parse $INTERACTION — read it by hand)"
+  else
+    echo "- jq not installed; read \`.folio/interaction.json\` by hand."
+  fi
+  echo
+fi
+
 # ── 1. Work-plan (beans) ────────────────────────────────────────────────────
 BEANS_DIR="$REPO_ROOT/.beans"
 echo "## Work-plan (beans) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"

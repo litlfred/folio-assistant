@@ -1,7 +1,7 @@
 ---
 # folio-assistant-w9td
 title: 'GETTING STARTED: kick off Pages on init and report the live URL'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T14:49:11Z
