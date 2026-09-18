@@ -16,15 +16,22 @@
  *
  * ## What gets resolved across dependencies
  *
+ * This table states what is WIRED, not what is intended. It was previously
+ * optimistic in both directions — it claimed content blocks resolve (no such
+ * function has ever existed) and that schemas and MCP tools never can (issue
+ * #223 needs them to, and `schemas/contributions.ts` is how). Measured
+ * 2026-09-18; re-measure before quoting it.
+ *
  * | Resource | Resolved? | How |
  * |---|---|---|
- * | Skills | ✅ | `skills/` directory, overlaid depth-first |
- * | Content blocks | ✅ | `content/` directory, overlaid depth-first |
- * | PO translations | ✅ | `translations/<locale>/`, fallback chain step 4 |
+ * | PO translations | ✅ | `translations/<locale>/`, fallback chain step 4 — the only path with a live consumer (`content/pipeline/po-resolve.ts`) |
  * | Kind headings | ✅ | `schemas/translation.ts` KIND_HEADINGS |
- * | QA criteria | ✅ | Criterion definitions from dependency's registry |
- * | Schemas | ❌ | Always from the root folio-assistant |
- * | MCP tools | ❌ | Always from the root folio-assistant |
+ * | Skills | ⚠️ | {@link resolveSkillDirs} exists and returns the overlay order; **no caller yet** |
+ * | Block kinds | ✅ | {@link loadContributions} → `schemas/contributions.ts` |
+ * | Adapters | ✅ | {@link loadContributions}, as a module specifier |
+ * | MCP tools | ✅ | {@link loadContributions}, as registrar callbacks |
+ * | Content blocks | ❌ | no resolver — the directory overlay was never written |
+ * | QA criteria | ❌ | criterion definitions are still root-only |
  *
  * @module schemas/folio-config
  */
@@ -112,6 +119,16 @@ export interface FolioConfig {
   /** Path to the adapter module. */
   adapterModule?: string;
 
+  /**
+   * Module this instance contributes from when it is loaded as a DEPENDENCY.
+   *
+   * Resolved relative to this folio's own root. Its default export is called
+   * with no arguments and returns a {@link FolioContribution} (or a promise of
+   * one). Read only for dependencies — a root folio's own `contributes` is
+   * ignored, because the root already *is* everything it would contribute.
+   */
+  contributes?: string;
+
   /** Translation pipeline configuration. */
   translation?: TranslationConfig;
 
@@ -151,6 +168,7 @@ export const FolioConfigSchema = z.object({
   contentType: z.string().optional(),
   adapter: z.string().optional(),
   adapterModule: z.string().optional(),
+  contributes: z.string().optional(),
   translation: TranslationConfigSchema.optional(),
   dependencies: FolioConfigDependenciesSchema.optional(),
 });
@@ -159,6 +177,7 @@ export const FolioConfigSchema = z.object({
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { ContributionRegistry, type FolioContribution } from "./contributions";
 
 /**
  * Resolved dependency — a dependency that has been located on disk.
@@ -343,4 +362,69 @@ export function resolveTranslationDirs(folioRoot: string): string[] {
   if (existsSync(rootAbs)) dirs.push(rootAbs);
 
   return dirs;
+}
+
+// ── Contribution loading (issue #223, Phase 0.1) ────────────────
+
+/**
+ * Walk the dependency tree and collect every dependency's contributions.
+ *
+ * Load-time registration: each dependency naming a `contributes` module has
+ * that module imported and its default export called, and the result handed
+ * to the registry. Order is depth-first, deepest dependency first — the same
+ * order {@link resolveSkillDirs} overlays in, so a reader only has to learn
+ * one traversal.
+ *
+ * **Order is significant, and collisions still do not resolve by it.** That is
+ * the deliberate shape of this mechanism: registration is cheap and familiar,
+ * but a kind claimed twice throws rather than letting whoever loaded last
+ * win. See `schemas/contributions.ts` for why last-writer-wins was refused.
+ *
+ * A dependency that declares no `contributes` module contributes nothing;
+ * that is the normal case and not an error. A dependency whose `contributes`
+ * module is missing or does not export a callable default **is** an error —
+ * it is a stated intention that silently did nothing, which is the failure
+ * mode `AGENTS.md` records under "move wiring and script together".
+ *
+ * @param folioRoot - Absolute path to the ROOT folio.
+ * @param registry - Optional existing registry to accumulate into.
+ */
+export async function loadContributions(
+  folioRoot: string,
+  registry: ContributionRegistry = new ContributionRegistry(),
+): Promise<ContributionRegistry> {
+  const flat = flattenDependencies(resolveDependencyTree(folioRoot));
+
+  for (const dep of flat) {
+    const spec = dep.config?.contributes;
+    if (!spec) continue;
+
+    const modulePath = resolve(dep.rootPath, spec);
+    if (!existsSync(modulePath)) {
+      throw new Error(
+        `folio dependency "${dep.dependency.name}" declares contributes: ` +
+          `"${spec}", but ${modulePath} does not exist. A declared ` +
+          `contribution that cannot load must fail loudly — silently ` +
+          `contributing nothing is how a dependency appears wired and is not.`,
+      );
+    }
+
+    const mod: unknown = await import(modulePath);
+    const fn = (mod as { default?: unknown }).default;
+    if (typeof fn !== "function") {
+      throw new Error(
+        `folio dependency "${dep.dependency.name}" contributes module ` +
+          `${modulePath} has no callable default export.`,
+      );
+    }
+
+    const contribution = (await (fn as () => FolioContribution | Promise<FolioContribution>)()) ;
+    // The dependency entry's name is authoritative over whatever the module
+    // says about itself: the root declared the name, and a contributor that
+    // could rename itself could impersonate another contributor's namespace
+    // and turn a collision into a silent merge.
+    registry.register({ ...contribution, name: dep.dependency.name });
+  }
+
+  return registry;
 }

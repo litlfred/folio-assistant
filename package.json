@@ -43,6 +43,8 @@
     "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
     "check:workflow-policy": "bun run scripts/check-workflow-policy.ts",
+    "check:partition": "bun run scripts/repo-partition.ts",
+    "check:partition:edges": "bun run scripts/repo-partition.ts --edges",
     "check:workflow-refs": "bun run scripts/check-workflow-refs.ts",
     "eval:crdm-detect": "bun run scripts/eval-crdm-detect.ts",
     "gen:jsonld": "bun run scripts/gen-jsonld-context.ts && bun run content/pipeline/gen-block-jsonld.ts && bun run content/pipeline/gen-library-jsonld.ts",
