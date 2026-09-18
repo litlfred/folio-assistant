@@ -281,7 +281,7 @@ state machine handles:
 9. **Paragraph accumulation** — continuation lines joined, flushed on blank.
 10. **Text cleaning** — inline markdown stripped: HTML comments, images (→ alt
     text), links (→ link text), autolinks, code spans, bold/italic markers,
-    HTML tags, Liquid `{% %}` tags, Liquid `{{ expr }}` → `{lqd_expr}` gettext
+    HTML tags, Liquid {% raw %}`{% %}`{% endraw %} tags, Liquid {% raw %}`{{ expr }}`{% endraw %} → `{lqd_expr}` gettext
     brace variables.
 
 The TypeScript port lives in `content/pipeline/pot-extract.ts`
