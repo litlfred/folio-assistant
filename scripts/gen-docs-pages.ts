@@ -260,7 +260,11 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
       );
     }
   }
-  return out.join("");
+  if (out.length === 0) return "";
+  // One floated CONTAINER, not several floated chips. Floating each icon
+  // separately reverses their visual order (the first float lands rightmost),
+  // so the families would read right-to-left against the order this emits them.
+  return ` <span class="fa-qa-badges">${out.join("").trim()}</span>`;
 }
 
 function emitNode(page: WebPage, node: WebPageNode): string[] {
