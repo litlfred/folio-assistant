@@ -172,6 +172,23 @@ archaeology.
 | I.5 | Group modules into the five target trees | each tree builds with only its declared dependencies on the path |
 | I.6 | Split QA **infrastructure** (harness) from QA **criteria** (downstream) | the criterion registry loads zero criteria without erroring; criteria come from a dependency |
 | I.7 | Reconcile the three `todo-manager.md` copies (`AGENTS.md` records a 188-line divergence and one copy with **no CI guard**) | one canonical copy; every other is generated and checked |
+| I.8 | **Every repo declares `stub` + `canonicalUrl` and publishes `<stub>.jsonld` / `<stub>.schema.json`** | `bun run kg:export` in each repo emits artefacts named after that repo, with absolute `@id`s under its own `canonicalUrl` |
+
+**I.8 is what keeps five repos from becoming five vocabularies.** Each split
+repo publishes its own knowledge graph, and the graphs are only mergeable if
+their node IRIs do not collide. Naming every artefact after its repository and
+minting `@id`s under that repository's `canonicalUrl` guarantees that by
+construction: `agentic-harness.jsonld` and `folio-assist-core.jsonld` cannot
+assert the same node IRI, because the document IRI is part of every node's.
+
+The corollary is the rule the skill states and a test enforces: **artefacts are
+stub-named, the declaration file is not.** `agent-harness.json` keeps that name
+in every repo, so a consumer can open a repository it has never seen without
+first knowing what it is called. Renaming it per-repo fails silently — a
+resolver computing the filename from the directory finds nothing when a repo is
+cloned under a different name, and reports "no config" rather than an error.
+See [`directory-conventions`](../../skills/folio-core/directory-conventions.md)
+§Naming and [`kg-export`](../../skills/folio-core/kg-export.md).
 
 **I.3 is the one to stage carefully.** 2,408 occurrences is a scale at which a
 single sweep is unreviewable. Split it by consumer — pipeline, scripts, docs,

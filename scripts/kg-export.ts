@@ -1,0 +1,748 @@
+#!/usr/bin/env bun
+/**
+ * Dump the instance's knowledge graph to one JSON file, for publication.
+ *
+ * `agentic-harness` has no renderer. `folio` is the only `renderable` graph
+ * kind and it belongs to `folio-assist-core`, so the harness cannot put its own
+ * knowledge graph on a page the way a folio puts a chapter on one. That is the
+ * right boundary and this does not move it: the export is **data**, not a
+ * rendered document. Something else may draw it.
+ *
+ * ## Why not `generate-registry.ts`
+ *
+ * That script exists and writes `.claude/skills/registry.json`. Measured on
+ * `main` 2026-09-18: 69 KB, uncommitted, not gitignored, and published
+ * nowhere — a build artifact with no consumer. It is also **partial in a way
+ * the numbers hide**: `registry.skills` was 23 because it reads only
+ * `.claude/skills/local/*.json`, while the tree holds 126 skill `.md` files.
+ * Package skills appear in it as bare name lists inside `registry.packages`,
+ * so the thing an agent actually reads — the instruction body's front matter —
+ * is absent. BPMN processes, DMN tables, the graph-kind registry and the
+ * directory declaration are absent entirely.
+ *
+ * This exports the graph; the registry stays what it is, a runtime manifest.
+ *
+ * ## The edges are the point
+ *
+ * A list of skills is not a graph. What makes this worth publishing is that
+ * BPMN activities carry `<folio:skill ref="…"/>` and sit in a lane, so the
+ * export can say **which process step is implemented by which skill, performed
+ * by which role** — a relation that exists on disk today and that no tool
+ * surfaces. `check:workflow-refs` already guarantees those refs resolve, so
+ * this does not re-validate them.
+ *
+ * ## Three states
+ *
+ * A source that cannot be read is **reported in `problems[]` and counted**,
+ * never silently dropped. An export that quietly omits half a corpus is worse
+ * than no export: a consumer sees a well-formed graph and cannot tell it is
+ * looking at part of one. Bean `dh4f` is the local precedent.
+ *
+ * @module scripts/kg-export
+ */
+import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
+import { join, dirname, relative } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { FOLIO_NS } from "../schemas/namespaces.js";
+import { artefactStub, defaultGraphKinds, readDeclaration } from "../schemas/agent-harness.js";
+import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
+import { loadProcessModel } from "../src/workflow/process-model.js";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+/**
+ * Directories holding a skill's **instruction body** (`<name>.md`), DISCOVERED
+ * rather than listed.
+ *
+ * Three times now a hardcoded list has been the bug. First this module listed
+ * six directories and missed `schemas/skills/`, reporting 11 BPMN refs as
+ * dangling. Then, with that fixed, the same list still omitted
+ * `skills/authoring-who-smart-guidelines/` and its siblings, so
+ * `smart-base-tools` — a file that plainly exists — came out as a dangling
+ * `declaresSkill` link. `knownSkills()` in `scripts/check-workflow-refs.ts`
+ * carries a fourth, differently-wrong copy of the same list.
+ *
+ * A list of locations is a fact about the tree, and facts about the tree
+ * belong to the tree. So: every subdirectory of `skills/` plus the two
+ * out-of-tree homes. Adding a package now requires changing nothing here,
+ * which is the only version of this that stops being wrong.
+ */
+function skillMdDirs(): string[] {
+  const dirs: string[] = [];
+  const skillsRoot = join(ROOT, "skills");
+  if (existsSync(skillsRoot)) {
+    for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
+      if (d.isDirectory()) dirs.push(`skills/${d.name}`);
+    }
+  }
+  for (const extra of ["src/skills", ".claude/skills/local"]) {
+    if (existsSync(join(ROOT, extra))) dirs.push(extra);
+  }
+  return dirs;
+}
+
+/**
+ * A directory per skill holding its **I/O contract** — `input.schema.json` and
+ * `output.schema.json`.
+ *
+ * This is the other facet of a skill, not another kind of skill: a name may
+ * have an instruction body, an I/O contract, or both. Keying the graph by name
+ * rather than by file is what lets the two meet, and what makes "declared
+ * somewhere, written nowhere" visible.
+ */
+const SKILL_IO_DIR = "schemas/skills";
+
+/** `.claude/skills/<group>/*.json` — the typed nodes beside the skills. */
+const REGISTRY_GROUPS: Record<string, string> = {
+  actors: "Actor",
+  capabilities: "Capability",
+  roles: "Role",
+  requirements: "Requirement",
+};
+
+/**
+ * Directories holding BPMN processes, DISCOVERED.
+ *
+ * This was the literal `docs/workflows`, and a sibling PR moved the diagrams
+ * to `skills/workflows/` while this branch was open. A hardcoded path does not
+ * fail when its target moves — it finds nothing and reports a clean run over
+ * zero processes, which is bean `dh4f` exactly. That is the FOURTH hardcoded
+ * path in this module to be wrong; the pattern is now a rule: this exporter
+ * locates corpora, it does not remember where they were.
+ */
+function findBpmnDirs(): string[] {
+  const out = new Set<string>();
+  const skip = new Set(["node_modules", ".git", "_site", "_kg", ".beans"]);
+  const walk = (rel: string, depth: number): void => {
+    if (depth > 4) return;
+    let entries;
+    try {
+      entries = readdirSync(join(ROOT, rel), { withFileTypes: true });
+    } catch {
+      return;
+    }
+    if (entries.some((e) => e.isFile() && e.name.endsWith(".bpmn"))) out.add(rel);
+    for (const e of entries) {
+      if (e.isDirectory() && !skip.has(e.name) && !e.name.startsWith(".")) {
+        walk(rel === "." ? e.name : `${rel}/${e.name}`, depth + 1);
+      }
+    }
+  };
+  walk(".", 0);
+  return [...out];
+}
+
+
+// ── JSON-LD context ─────────────────────────────────────────────
+
+const PROV = "http://www.w3.org/ns/prov#";
+const RDFS = "http://www.w3.org/2000/01/rdf-schema#";
+const SCHEMA = "https://schema.org/";
+const XSD = "http://www.w3.org/2001/XMLSchema#";
+
+/**
+ * The active context, following `WorldHealthOrganization/smart-base`'s
+ * `generate_jsonld_vocabularies.py`.
+ *
+ * Four things here are load-bearing rather than decorative:
+ *
+ * **`{"@type": "@id"}` is what makes this a graph.** Without it every edge —
+ * `implementedBy`, `performedBy`, `partOf` — is a *string literal* to any
+ * JSON-LD processor, and the document is a list of records that merely looks
+ * linked to a human reading the JSON. Declaring those terms `@id`-typed is the
+ * difference between 500 records and a traversable graph, and it costs one
+ * line each.
+ *
+ * **No `@vocab`.** Every term is declared with its full namespace IRI, so an
+ * undeclared key stays undeclared rather than silently resolving against a
+ * default namespace and minting an IRI nobody chose. smart-base's type-usage
+ * document calls this out explicitly and it is the right call.
+ *
+ * **`id` and `type` are aliased** to `@id` and `@type`, so the published JSON
+ * reads as ordinary records while remaining RDF. A reader who does not know
+ * JSON-LD is not taxed for it.
+ *
+ * **`@version: 1.1`** because aliasing and scoped type-coercion are 1.1
+ * features; a 1.0 processor must fail loudly rather than half-read the file.
+ */
+function buildContext(): Record<string, unknown> {
+  const link = { "@type": "@id" } as const;
+  return {
+    "@version": 1.1,
+    folio: FOLIO_NS,
+    prov: PROV,
+    rdfs: RDFS,
+    schema: SCHEMA,
+    xsd: XSD,
+
+    id: "@id",
+    type: "@type",
+    graph: "@graph",
+
+    name: "rdfs:label",
+    title: "rdfs:label",
+    description: "rdfs:comment",
+    summary: "rdfs:comment",
+    generatedAt: { "@id": `${PROV}generatedAtTime`, "@type": `${XSD}dateTime` },
+
+    // Edges. Each of these is a LINK, not a string — see above.
+    partOf: { "@id": `${FOLIO_NS}partOf`, ...link },
+    implementedBy: { "@id": `${FOLIO_NS}implementedBy`, ...link },
+    performedBy: { "@id": `${FOLIO_NS}performedBy`, ...link },
+    declaresSkill: { "@id": `${FOLIO_NS}declaresSkill`, ...link },
+    inPackage: { "@id": `${FOLIO_NS}inPackage`, ...link },
+    providesCapability: { "@id": `${FOLIO_NS}providesCapability`, ...link },
+    requiresCapability: { "@id": `${FOLIO_NS}requiresCapability`, ...link },
+    holdsGraph: { "@id": `${FOLIO_NS}holdsGraph`, ...link },
+    startNode: { "@id": `${FOLIO_NS}startNode`, ...link },
+    incoming: { "@id": `${FOLIO_NS}incoming`, ...link },
+    outgoing: { "@id": `${FOLIO_NS}outgoing`, ...link },
+    from: { "@id": `${FOLIO_NS}from`, ...link },
+    to: { "@id": `${FOLIO_NS}to`, ...link },
+    // The preview → canonical link. `prov:alternateOf`, NOT `owl:sameAs`:
+    // sameAs entails identity, so a reasoner would merge every statement about
+    // both nodes and a changed description in a preview would make the merged
+    // graph assert two conflicting descriptions of one thing. alternateOf says
+    // "same underlying thing, different presentation" and merges nothing.
+    alternateOf: { "@id": `${PROV}alternateOf`, ...link },
+    canonicalDocument: { "@id": `${FOLIO_NS}canonicalDocument`, ...link },
+    typeIri: { "@id": `${FOLIO_NS}typeIri`, "@type": "@id" },
+  };
+}
+
+/**
+ * How a node's IRI is formed: a **fragment of the published document**.
+ *
+ * `<base>/kg/<stub>.jsonld#skill/todo-manager` — fetching it retrieves this
+ * document and the fragment selects the node, which is true. The tempting
+ * alternative, `<base>/kg/skill/todo-manager`, reads better and is a **lie**:
+ * nothing serves that path. AGENTS.md records the same defect in the README
+ * generator, which composed PDF links by convention and shipped twenty-three
+ * 404s. An `@id` that looks dereferenceable and is not is worse than one that
+ * is obviously local.
+ */
+function makeIri(docIri: string, kind: string, id: string): string {
+  // `/` is legal in a fragment and is the separator this scheme uses, so it is
+  // deliberately NOT escaped — `encodeURIComponent` would turn every process
+  // node into `…#process/P%2Fnode%2FT`, which is both unreadable and a
+  // different IRI from the one a reader would type. Only the characters that
+  // genuinely terminate or re-delimit a fragment are escaped.
+  const safe = id.replace(/[%#?\s]/g, (c) => encodeURIComponent(c));
+  return `${docIri}#${kind}/${safe}`;
+}
+
+interface Node {
+  "@id": string;
+  "@type": string;
+  [k: string]: unknown;
+}
+
+interface Export {
+  "@context": Record<string, unknown>;
+  /** This document's own IRI — the URL it is served from. */
+  "@id": string;
+  /**
+   * `prov:Entity`, plus `folio:PreviewGraph` when this is not the canonical
+   * publication — so "is this the real one?" is answerable from the type.
+   */
+  "@type": string | string[];
+  /** On a preview: the canonical document this one is an alternate of. */
+  canonicalDocument?: string;
+  repository: string;
+  generatedAt: string;
+  /** Node counts by `@type`, so a consumer can spot a truncated graph. */
+  counts: Record<string, number>;
+  /** Sources that could not be read. NEVER empty-by-omission — see module doc. */
+  problems: string[];
+  /**
+   * Internal links whose target node is not in `@graph`.
+   *
+   * Reported in the document rather than thrown, because these are **data**
+   * defects, not export failures: a manifest naming a skill nobody wrote is
+   * bean `nup0`'s subject and predates this tool. Blocking publication on them
+   * would hold the graph hostage to a backlog. Reporting them makes the graph
+   * its own referential-integrity check, which is most of what publishing a
+   * real JSON-LD graph buys over a list of records.
+   */
+  danglingLinks: Array<{ from: string; edge: string; to: string }>;
+  "@graph": Node[];
+}
+
+/** Parse the `name:` and `description:` out of a skill's YAML front matter. */
+function frontMatter(text: string): { name?: string; description?: string } {
+  if (!text.startsWith("---")) return {};
+  const end = text.indexOf("\n---", 3);
+  if (end === -1) return {};
+  const block = text.slice(3, end);
+  const out: { name?: string; description?: string } = {};
+  const name = block.match(/^name:\s*(.+)$/m);
+  if (name) out.name = name[1].trim();
+  // `description: >` folds onto following indented lines.
+  const desc = block.match(/^description:\s*(?:>[-+]?\s*\n((?:[ \t]+.*\n?)+)|(.+))$/m);
+  if (desc) out.description = (desc[1] ?? desc[2] ?? "").split("\n").map((l) => l.trim()).join(" ").trim();
+  return out;
+}
+
+/** First `# heading` — the fallback title when there is no front matter. */
+function firstHeading(text: string): string | undefined {
+  return text.match(/^#\s+(.+)$/m)?.[1].trim();
+}
+
+interface SkillFacts {
+  instructions?: string;
+  title?: string;
+  description?: string;
+  fmName?: string;
+  lines?: number;
+  packages: string[];
+  inputSchema?: string;
+  outputSchema?: string;
+}
+
+function collectSkills(doc: string, problems: string[]): Node[] {
+  const byName = new Map<string, SkillFacts>();
+  const get = (n: string): SkillFacts =>
+    byName.get(n) ?? (byName.set(n, { packages: [] }), byName.get(n)!);
+
+  for (const dir of skillMdDirs()) {
+    const abs = join(ROOT, dir);
+    if (!existsSync(abs)) continue; // A package this instance does not carry.
+    for (const f of readdirSync(abs)) {
+      if (!f.endsWith(".md")) continue;
+      let text: string;
+      try {
+        text = readFileSync(join(abs, f), "utf-8");
+      } catch (e) {
+        problems.push(`unreadable skill ${dir}/${f}: ${e instanceof Error ? e.message : String(e)}`);
+        continue;
+      }
+      const name = f.slice(0, -3);
+      const s = get(name);
+      const fm = frontMatter(text);
+      // A name defined in two packages is recorded, not silently overwritten:
+      // bare name is the identifier a BPMN ref uses, so a duplicate is a real
+      // ambiguity somebody has to resolve.
+      s.packages.push(dir);
+      s.instructions ??= `${dir}/${f}`;
+      s.fmName ??= fm.name;
+      s.description ??= fm.description;
+      s.title ??= firstHeading(text);
+      s.lines ??= text.split("\n").length;
+    }
+  }
+
+  const ioRoot = join(ROOT, SKILL_IO_DIR);
+  if (existsSync(ioRoot)) {
+    for (const e of readdirSync(ioRoot, { withFileTypes: true })) {
+      if (!e.isDirectory()) continue;
+      const s = get(e.name);
+      const inp = join(ioRoot, e.name, "input.schema.json");
+      const out = join(ioRoot, e.name, "output.schema.json");
+      if (existsSync(inp)) s.inputSchema = `${SKILL_IO_DIR}/${e.name}/input.schema.json`;
+      if (existsSync(out)) s.outputSchema = `${SKILL_IO_DIR}/${e.name}/output.schema.json`;
+    }
+  }
+
+  return [...byName.entries()].map(([name, s]) => ({
+    "@id": makeIri(doc, "skill", name),
+    "@type": `${FOLIO_NS}Skill`,
+    name,
+    declaredName: s.fmName !== name ? s.fmName : undefined,
+    title: s.title,
+    description: s.description,
+    // A link per package, not a bare string: the skill's package is an edge.
+    inPackage: s.packages.map((d) => makeIri(doc, "package", d.split("/").pop()!)),
+    packagePaths: s.packages,
+    instructions: s.instructions,
+    lines: s.lines,
+    inputSchema: s.inputSchema,
+    outputSchema: s.outputSchema,
+    // The two facets, stated rather than left to be inferred from absence.
+    hasInstructions: s.instructions !== undefined,
+    hasIOContract: s.inputSchema !== undefined || s.outputSchema !== undefined,
+    ambiguous: s.packages.length > 1 ? s.packages : undefined,
+  }));
+}
+
+function collectRegistryNodes(doc: string, problems: string[]): Node[] {
+  const nodes: Node[] = [];
+  for (const [group, type] of Object.entries(REGISTRY_GROUPS)) {
+    const abs = join(ROOT, ".claude", "skills", group);
+    if (!existsSync(abs)) continue;
+    for (const f of readdirSync(abs)) {
+      if (!f.endsWith(".json")) continue;
+      try {
+        const d = JSON.parse(readFileSync(join(abs, f), "utf-8")) as Record<string, unknown>;
+        const id = String(d.id ?? d.name ?? f.slice(0, -5));
+        nodes.push({ "@id": makeIri(doc, type.toLowerCase(), id), "@type": `${FOLIO_NS}${type}`, ...d });
+      } catch (e) {
+        problems.push(`unparseable ${group}/${f}: ${e instanceof Error ? e.message : String(e)}`);
+      }
+    }
+  }
+  return nodes;
+}
+
+function collectPackages(doc: string, problems: string[]): Node[] {
+  const nodes: Node[] = [];
+  const seen = new Set<string>();
+
+  // Every directory that holds skills is a package node, manifest or not.
+  // `src/skills` and `.claude/skills/local` carry no `package-manifest.json`,
+  // and skipping them left 9 `inPackage` links pointing at nodes that were
+  // never emitted — a dangling link in a published graph, which is the defect
+  // this export exists to make visible rather than to commit.
+  for (const dir of skillMdDirs()) {
+    const leaf = dir.split("/").pop()!;
+    if (!existsSync(join(ROOT, dir)) || seen.has(leaf)) continue;
+    seen.add(leaf);
+    nodes.push({
+      "@id": makeIri(doc, "package", leaf),
+      "@type": `${FOLIO_NS}SkillPackage`,
+      name: leaf,
+      path: dir,
+      hasManifest: existsSync(join(ROOT, dir, "package-manifest.json")),
+    });
+  }
+
+  const skillsRoot = join(ROOT, "skills");
+  if (!existsSync(skillsRoot)) return nodes;
+  for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
+    if (!d.isDirectory()) continue;
+    const mf = join(skillsRoot, d.name, "package-manifest.json");
+    if (!existsSync(mf)) continue;
+    try {
+      const m = JSON.parse(readFileSync(mf, "utf-8")) as Record<string, unknown>;
+      // Replace the stub emitted above with the manifest-backed node.
+      const stubAt = nodes.findIndex((n) => n["@id"] === makeIri(doc, "package", d.name));
+      if (stubAt !== -1) nodes.splice(stubAt, 1);
+      nodes.push({
+        "@id": makeIri(doc, "package", d.name),
+        "@type": `${FOLIO_NS}SkillPackage`,
+        name: m.name ?? d.name,
+        version: m.version,
+        description: m.description,
+        path: `skills/${d.name}`,
+        hasManifest: true,
+        // Links, so a consumer can walk package → skill without string surgery.
+        declaresSkill: ((m.skills as string[]) ?? []).map((n) => makeIri(doc, "skill", n)),
+        providesCapability: ((m.providesCapabilities as string[]) ?? []).map((c) => makeIri(doc, "capability", c)),
+        requiresCapability: ((m.requiresCapabilities as string[]) ?? []).map((c) => makeIri(doc, "capability", c)),
+      });
+    } catch (e) {
+      problems.push(`unparseable manifest skills/${d.name}: ${e instanceof Error ? e.message : String(e)}`);
+    }
+  }
+  return nodes;
+}
+
+async function collectProcesses(doc: string, problems: string[]): Promise<Node[]> {
+  const nodes: Node[] = [];
+  const lanes = new Set<string>();
+  const dirs = findBpmnDirs();
+  if (dirs.length === 0) {
+    // Zero diagrams is a determined empty ONLY if we looked. Say which.
+    problems.push("no directory containing .bpmn files was found under the repository root");
+  }
+  for (const rel of dirs) {
+  const dir = join(ROOT, rel);
+  for (const f of readdirSync(dir)) {
+    if (!f.endsWith(".bpmn")) continue;
+    const path = join(dir, f);
+    try {
+      const m = await loadProcessModel(path);
+      nodes.push({
+        "@id": makeIri(doc, "process", m.id),
+        "@type": `${FOLIO_NS}Process`,
+        name: m.name,
+        enforcement: m.enforcement,
+        source: relative(ROOT, m.source),
+        startNode: m.startNodes.map((n) => makeIri(doc, "process", `${m.id}/node/${n}`)),
+        nodeCount: m.nodes.size,
+        flowCount: m.flows.size,
+      });
+      for (const f of m.flows.values()) {
+        // Sequence flows are nodes too. `incoming`/`outgoing` already pointed
+        // at them, so omitting them left 60-odd links dangling — a link minted
+        // for an element the exporter declined to emit.
+        nodes.push({
+          "@id": makeIri(doc, "process", `${m.id}/flow/${f.id}`),
+          "@type": `${FOLIO_NS}SequenceFlow`,
+          name: f.name,
+          partOf: makeIri(doc, "process", m.id),
+          from: makeIri(doc, "process", `${m.id}/node/${f.from}`),
+          to: makeIri(doc, "process", `${m.id}/node/${f.to}`),
+        });
+      }
+      for (const n of m.nodes.values()) {
+        // A lane IS a role, and `performedBy` points at it. Minting the link
+        // without emitting the node left all 328 of them dangling.
+        if (n.lane !== undefined && !lanes.has(n.lane)) {
+          lanes.add(n.lane);
+          nodes.push({
+            "@id": makeIri(doc, "role", n.lane),
+            "@type": `${FOLIO_NS}Role`,
+            name: n.lane,
+            source: "bpmn-lane",
+          });
+        }
+        nodes.push({
+          "@id": makeIri(doc, "process", `${m.id}/node/${n.id}`),
+          "@type": `${FOLIO_NS}ProcessNode`,
+          name: n.name,
+          kind: n.kind,
+          bpmnType: n.type,
+          partOf: makeIri(doc, "process", m.id),
+          // The edges nothing else surfaces — now genuine links.
+          performedBy: n.lane === undefined ? undefined : makeIri(doc, "role", n.lane),
+          laneName: n.lane,
+          implementedBy: n.skills.map((k) => makeIri(doc, "skill", k)),
+          implementsSkillNames: n.skills,
+          touchesWorkPlan: n.touchesWorkPlan,
+          workPlanOp: n.workPlanOp,
+          relaxable: n.relaxable,
+          decisionRef: n.decisionRef,
+          incoming: n.incoming.map((f) => makeIri(doc, "process", `${m.id}/flow/${f}`)),
+          outgoing: n.outgoing.map((f) => makeIri(doc, "process", `${m.id}/flow/${f}`)),
+        });
+      }
+    } catch (e) {
+      problems.push(`unloadable process ${rel}/${f}: ${e instanceof Error ? e.message : String(e)}`);
+    }
+  }
+  }
+  return nodes;
+}
+
+/**
+ * The graph kinds themselves, as nodes.
+ *
+ * This is the self-describing half. `holdsGraph` on a directory points at a
+ * kind, and without these the vocabulary a reader needs in order to interpret
+ * the document lives only in TypeScript they cannot fetch. With them, the
+ * published graph carries its own terms: follow `holdsGraph` and you arrive at
+ * a node saying what that kind holds and whether it renders.
+ *
+ * Note this imports `folio-graph-kind`, so the export sees the kind
+ * `folio-assist-core` registers and not just the harness's four. It takes no
+ * document IRI because these nodes are minted under the NAMESPACE: a graph
+ * kind means the same thing in a preview and in the canonical graph, so its
+ * IRI must not vary with where the document is published.
+ */
+function collectGraphKinds(): Node[] {
+  return defaultGraphKinds.names().map((name) => {
+    const def = defaultGraphKinds.get(name)!;
+    return {
+      "@id": `${FOLIO_NS}graphKind/${name}`,
+      "@type": `${FOLIO_NS}GraphKind`,
+      name,
+      typeIri: def.type,
+      renderable: def.renderable,
+      summary: def.summary,
+    };
+  });
+}
+
+function collectDeclaration(doc: string, problems: string[]): Node[] {
+  const f = join(ROOT, "agent-harness.json");
+  if (!existsSync(f)) return [];
+  try {
+    const d = JSON.parse(readFileSync(f, "utf-8")) as {
+      directories?: Array<{ id: string; path: string; graphs?: string[]; graph?: string; summary?: string }>;
+    };
+    return (d.directories ?? []).map((x) => {
+      // `graph` became `graphs[]` — a directory may hold more than one graph,
+      // and `schemas/` is the first real use of that. Both spellings are read
+      // so this does not break on a declaration written before the change.
+      const kinds = x.graphs ?? (x.graph !== undefined ? [x.graph] : []);
+      return {
+        "@id": makeIri(doc, "directory", x.id),
+        "@type": `${FOLIO_NS}Directory`,
+        name: x.id,
+        path: x.path,
+        holdsGraph: kinds.map((k) => `${FOLIO_NS}graphKind/${k}`),
+        graphKinds: kinds,
+        summary: x.summary,
+      };
+    });
+  } catch (e) {
+    problems.push(`unparseable agent-harness.json: ${e instanceof Error ? e.message : String(e)}`);
+    return [];
+  }
+}
+
+/** Every term in the context that is declared `{"@type": "@id"}`. */
+const LINK_TERMS = [
+  "partOf", "implementedBy", "performedBy", "declaresSkill", "inPackage",
+  "providesCapability", "requiresCapability", "holdsGraph", "startNode",
+  "incoming", "outgoing", "from", "to",
+] as const;
+
+/**
+ * Links pointing at nodes this document does not contain.
+ *
+ * Only *internal* fragments are checked — a link to another document's IRI is
+ * not this graph's business and reporting it would be noise. `holdsGraph`
+ * points at a graph-kind IRI in the namespace, which is a vocabulary term
+ * rather than a node here, so it is excluded by the same rule.
+ */
+function findDanglingLinks(graph: Node[], docIri: string): Array<{ from: string; edge: string; to: string }> {
+  const ids = new Set(graph.map((n) => String(n["@id"])));
+  const out: Array<{ from: string; edge: string; to: string }> = [];
+  for (const n of graph) {
+    for (const edge of LINK_TERMS) {
+      const v = n[edge];
+      if (v === undefined) continue;
+      for (const to of Array.isArray(v) ? v : [v]) {
+        const t = String(to);
+        // "Internal" means a fragment of THIS document. Testing for a bare `#`
+        // was wrong: FOLIO_NS itself ends in `#`, so every vocabulary IRI read
+        // as a broken node reference.
+        if (!t.startsWith(`${docIri}#`) && !ids.has(t)) continue;
+        if (!ids.has(t)) out.push({ from: String(n["@id"]), edge, to: t });
+      }
+    }
+  }
+  return out;
+}
+
+/** Strip `undefined` so the published JSON has no empty keys. */
+function compact(n: Node): Node {
+  return Object.fromEntries(Object.entries(n).filter(([, v]) => v !== undefined)) as Node;
+}
+
+/**
+ * Where the export is published, and therefore what its `@id`s are.
+ *
+ * `baseUrl` overrides the declaration's `canonicalUrl` — CI passes the staging
+ * base so a branch preview's graph identifies itself as the preview rather
+ * than claiming to be the canonical one. Without that override every staged
+ * export would mint `@id`s pointing at `main`'s published document, and two
+ * different graphs would assert the same IRIs.
+ */
+export interface ExportOptions {
+  baseUrl?: string;
+}
+
+/** Filename stem and document IRI for this instance's published graph. */
+export function exportIdentity(opts: ExportOptions = {}): {
+  stub: string;
+  docIri: string;
+  /** The canonical document's IRI, when one is declared. */
+  canonicalIri?: string;
+  /** True when this export is published somewhere other than canonical. */
+  isPreview: boolean;
+} {
+  const decl = readDeclaration(ROOT);
+  const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8")) as { name?: string };
+  const stub = decl ? artefactStub(decl) : (pkg.name ?? "instance");
+  const canonicalBase = (decl?.canonicalUrl ?? "").replace(/\/+$/, "");
+  const base = (opts.baseUrl ?? canonicalBase).replace(/\/+$/, "");
+  // No base declared → a document-relative IRI. Deliberately NOT a fabricated
+  // absolute one: see makeIri's note on links that look dereferenceable.
+  const docIri = base ? `${base}/kg/${stub}.jsonld` : `${stub}.jsonld`;
+  const canonicalIri = canonicalBase ? `${canonicalBase}/kg/${stub}.jsonld` : undefined;
+  return { stub, docIri, canonicalIri, isPreview: canonicalIri !== undefined && docIri !== canonicalIri };
+}
+
+export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
+  const problems: string[] = [];
+  const { stub, docIri, canonicalIri, isPreview } = exportIdentity(opts);
+  if (!docIri.startsWith("http")) {
+    // Reported, not silently tolerated: a graph whose nodes have no absolute
+    // identity cannot be merged with anyone else's, which is most of the point.
+    problems.push(
+      "no canonicalUrl in agent-harness.json and no --base-url given: " +
+        "@id values are document-relative and will not dereference",
+    );
+  }
+
+  const graph = [
+    ...collectSkills(docIri, problems),
+    ...collectRegistryNodes(docIri, problems),
+    ...collectPackages(docIri, problems),
+    ...(await collectProcesses(docIri, problems)),
+    ...collectGraphKinds(),
+    ...collectDeclaration(docIri, problems),
+  ].map(compact);
+
+  // A preview's nodes say, explicitly and per node, which canonical node they
+  // are an alternate presentation of.
+  //
+  // This IS derivable — `makeIri` produces the same fragment whatever the base,
+  // so a consumer could swap one for the other. It is written out anyway, on
+  // the owner's standing instruction that a downstream consumer must never have
+  // to string-manipulate or infer a rule to follow a link. A rule a consumer
+  // has to know is a rule a consumer can get wrong, and the cost here is one
+  // field per node in an artefact that is regenerated on every build.
+  if (isPreview && canonicalIri !== undefined) {
+    for (const n of graph) {
+      const id = String(n["@id"]);
+      // Only nodes that are fragments of THIS document have an alternate.
+      // Vocabulary nodes (graph kinds) are minted under the namespace, not the
+      // document, so they are byte-identical in both graphs — giving them an
+      // `alternateOf` pointing at a canonical fragment that does not exist was
+      // a broken link generated by a blanket loop.
+      if (!id.startsWith(`${docIri}#`)) continue;
+      n.alternateOf = `${canonicalIri}#${id.slice(docIri.length + 1)}`;
+    }
+  }
+
+  const counts: Record<string, number> = {};
+  for (const n of graph) {
+    const t = String(n["@type"]).replace(FOLIO_NS, "");
+    counts[t] = (counts[t] ?? 0) + 1;
+  }
+
+  return {
+    "@context": buildContext(),
+    danglingLinks: findDanglingLinks(graph, docIri),
+    "@id": docIri,
+    // A preview says so in its TYPE, not only in a side-car field: "is this
+    // the canonical graph?" must be answerable from the document's own type
+    // without reading a convention. This is where the `#STAGING` marker idea
+    // belongs — as a type, not as a fragment on a URL the document is not
+    // served from.
+    "@type": isPreview ? [`${PROV}Entity`, `${FOLIO_NS}PreviewGraph`] : `${PROV}Entity`,
+    ...(isPreview && canonicalIri !== undefined ? { canonicalDocument: canonicalIri } : {}),
+    repository: stub,
+    generatedAt: new Date().toISOString(),
+    counts,
+    problems,
+    "@graph": graph,
+  };
+}
+
+if (import.meta.main) {
+  const arg = (flag: string): string | undefined => {
+    const i = process.argv.indexOf(flag);
+    return i !== -1 ? process.argv[i + 1] : undefined;
+  };
+  const baseUrl = arg("--base-url") ?? process.env.KG_BASE_URL;
+  const { stub } = exportIdentity({ baseUrl });
+  // Named after the repository, per the stub convention — `<stub>.jsonld`,
+  // never a generic `kg.json`. `.jsonld` because it IS JSON-LD; the extension
+  // is what tells a fetcher to treat it as one.
+  const out = arg("--out") ?? join(ROOT, "_kg", `${stub}.jsonld`);
+  const data = await buildExport({ baseUrl });
+
+  mkdirSync(dirname(out), { recursive: true });
+  writeFileSync(out, JSON.stringify(data, null, 2) + "\n");
+
+  console.log(`KG export → ${relative(ROOT, out)}\n  @id  ${data["@id"]}`);
+  for (const [t, n] of Object.entries(data.counts).sort()) console.log(`  ${String(n).padStart(5)}  ${t}`);
+  console.log(`  ${String(data["@graph"].length).padStart(5)}  total`);
+
+  if (data.danglingLinks.length > 0) {
+    console.warn(`\n${data.danglingLinks.length} dangling internal link(s) — reported, not fatal:`);
+    for (const d of data.danglingLinks) console.warn(`  · ${d.edge} → ${d.to.split("#")[1]}`);
+  }
+
+  if (data.problems.length > 0) {
+    console.error(`\n${data.problems.length} source(s) could not be read:`);
+    for (const p of data.problems) console.error(`  ✗ ${p}`);
+    // Reported, and non-zero: a partial graph must not pass for a whole one.
+    process.exit(1);
+  }
+}

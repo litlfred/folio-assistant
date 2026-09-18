@@ -71,7 +71,9 @@
     "test": "bun test",
     "test:e2e": "playwright test",
     "translate-bpmn": "bun run scripts/translate-bpmn.ts",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "kg:export": "bun run scripts/kg-export.ts",
+    "kg:schema": "bun run scripts/harness-schema-export.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
