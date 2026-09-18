@@ -163,6 +163,31 @@ for exactly that reason. What it cannot tell you, and what needs a human eye, is
 which of the uncovered skills *describe an action* — those are the ones whose
 mechanism is still swallowed.
 
+### Which uncovered skills actually need one — `bun run tools:coverage`
+
+The count alone does not say which. A grep for shell blocks over-reports badly:
+52 of the 118 uncovered skills contain one, because a skill may legitimately
+QUOTE a command while stating its capability generically.
+
+The corpus carries a better signal — **BPMN task type**. A process step is a
+`serviceTask` (runs without a person) or a `userTask` (performed by one), and
+the diagrams already say which. Triaged on that, plus an I/O contract under
+`schemas/skills/`: **16** skills have strong automation evidence, **3** are
+userTask-only, **52** are genuinely ambiguous, **47** show nothing. The read
+shrinks from 118 files to 52.
+
+**The reframing matters more than the numbers.** `interaction-modality` was the
+standing example of a pure-judgement skill, and two activities name it: a
+`serviceTask` that reads the preferences file — a mechanism — and a `userTask`
+about how to frame a question — judgement. Ten of the sixteen strongest
+candidates are both.
+
+> **The question is not "is this skill a Tool?" but "which PART of it is."**
+
+A skill with both halves is not mis-modelled. Migrating it is a **split**: the
+mechanical half becomes a Tool, the judgement half stays as prose. Expecting a
+clean move is what makes the migration look bigger than it is.
+
 So when you write or edit a skill: follow the checklist above and reference a
 Tool. When you read one that inlines `gh pr create` or `beans update`, that is
 the debt, not the pattern — do not propagate it.

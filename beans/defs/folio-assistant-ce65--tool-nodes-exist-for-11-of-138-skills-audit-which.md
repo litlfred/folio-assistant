@@ -64,3 +64,59 @@ references BETWEEN documents were wrong.**
 Rule now stated in the module and pinned by a test that was verified to bite:
 anything that mints an IRI takes its base from the same source as the document
 it will be published beside.
+
+---
+
+## Triaged 2026-09-18 — `bun run tools:coverage`
+
+The bean said distinguishing judgement from inlined-mechanism "needs a human
+read rather than a heuristic". That was half right: a **grep** is the wrong
+instrument, but the corpus already carries a much better signal.
+
+**BPMN task TYPE.** A process step is not merely "implemented by" a skill — it
+is a `serviceTask` (runs without a person) or a `userTask` (performed by one),
+and every diagram already says which.
+
+| tier | evidence | count |
+|---|---|---|
+| **A** | a `serviceTask` names it, or it has an I/O contract under `schemas/skills/` | **16** |
+| **B** | a `userTask` only — judgement inside a process | 3 |
+| **C** | a shell block, no process edge — **ambiguous, needs a read** | 52 |
+| **D** | nothing | 47 |
+
+**The read shrinks from 118 files to 52.** Tier A is a list to act on; tier D is
+a list to dismiss.
+
+### What the triage overturned
+
+`interaction-modality` was this bean's standing example of a pure-judgement
+skill. It is in tier A. **Two** activities name it:
+
+- `Task_DetectModality` — a `serviceTask` that reads `.harness/interaction.json`.
+  That is a mechanism and could be a Tool.
+- `Task_AskIntent` — a `userTask` about how to frame a question. That is
+  judgement and never will be.
+
+**So the question is not "is this skill a Tool?" but "which PART of it is."**
+Ten of the sixteen in tier A are `serviceTask` AND `userTask`. A skill with both
+is not mis-modelled — it has a mechanical half that should move to a Tool and a
+judgement half that stays. That reframing is the useful output here, and it
+changes what "migrate a skill" means: it is a split, not a move.
+
+### Tier A, the list to act on
+
+content-author, content-feedback, content-plan, content-publish, content-review,
+content-test, content-validate, document-authoring, document-intake,
+document-publishing, document-structure, getting-started, interaction-modality,
+normative-statements, repo-conversion, translation-manager.
+
+Note how many are `content-*` lifecycle skills with I/O contracts already
+declared — those are the cheapest, because the contract that a Tool's `io` needs
+is written.
+
+### Why a grep would have failed
+
+52 uncovered skills contain a fenced shell block — 44 % of them. A skill may
+legitimately quote a command as an example while stating its capability
+generically. That is tier C, and it is precisely the set where no mechanical
+signal decides it.
