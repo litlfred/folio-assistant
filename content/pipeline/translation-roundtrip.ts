@@ -77,6 +77,18 @@ export interface RoundTripAgent {
   session?: string;
   /** Model identifier, when the operator chooses to record one. */
   model?: string;
+  /**
+   * How the `model` above was established — recorded WITH it, never instead.
+   *
+   * A subagent's serving model is not directly observable from the session
+   * that dispatched it: it inherits the parent unless the harness overrides,
+   * and nothing in the hand-back reports which model actually served the turn.
+   * So a bare model string on an agent witness is an inference presented as a
+   * fact, which is the defect this whole family of sidecars exists to stop.
+   * Recording the basis alongside keeps the claim as strong as its evidence
+   * and no stronger.
+   */
+  modelSource?: string;
   /** ISO-8601; defaults to now. */
   date?: string;
 }
@@ -96,6 +108,20 @@ export interface RoundTripPayload {
   reasoning?: string;
   /** Anything the back-translator flagged as ambiguous. */
   uncertainties?: string[];
+  /**
+   * When the review ran, and the repo HEAD it ran against, if it is being
+   * re-recorded.
+   *
+   * Both default to now / current HEAD. Passing them matters when provenance
+   * is added to a verdict that already exists: the review happened when it
+   * happened, against the tree as it then stood. Re-stamping either to record
+   * a model identifier falsifies the two fields a reader uses to place the
+   * verdict in time — and `reviewed_sha` fails loudly, naming a commit that
+   * did not exist when the agents ruled. Caught exactly that way: a re-record
+   * put the merge commit of a later PR on a 20:32 review.
+   */
+  reviewedAt?: string;
+  reviewedSha?: string;
 }
 
 function agentFields(a: RoundTripAgent) {
@@ -107,13 +133,30 @@ function agentFields(a: RoundTripAgent) {
   };
 }
 
+/**
+ * Metrics an entry carries about HOW it was produced.
+ *
+ * `model_source` rides here rather than in `notes`, which hold the
+ * adjudicator's reasoning in its own voice; the panel renders metrics as
+ * labelled rows, so the basis shows up next to the model rather than buried in
+ * a paragraph.
+ */
+function provenanceMetrics(
+  a: RoundTripAgent,
+  extra: Record<string, string> = {},
+): Record<string, string> | undefined {
+  const m: Record<string, string> = { ...extra };
+  if (a.modelSource) m.model_source = a.modelSource;
+  return Object.keys(m).length > 0 ? m : undefined;
+}
+
 /** Build the two entries a round trip contributes, adjudicator first. */
 export function roundTripEntries(
   payload: RoundTripPayload,
   fieldHash: TranslationFieldHash,
 ): TranslationQaEntry[] {
-  const at = new Date().toISOString();
-  const sha = gitHeadSha(REPO_ROOT);
+  const at = payload.reviewedAt ?? new Date().toISOString();
+  const sha = payload.reviewedSha ?? gitHeadSha(REPO_ROOT);
   const findings = payload.findings?.filter((f) => f.trim() && f.trim().toLowerCase() !== "none");
 
   const verdict: TranslationQaEntry = {
@@ -124,6 +167,7 @@ export function roundTripEntries(
     reviewer: { kind: "agent", id: payload.adjudicator.id, ...agentFields(payload.adjudicator) },
     reviewed_at: at,
     reviewed_sha: sha,
+    metrics: provenanceMetrics(payload.adjudicator),
     notes: payload.reasoning,
   };
 
@@ -135,7 +179,9 @@ export function roundTripEntries(
     reviewer: { kind: "agent", id: payload.backTranslator.id, ...agentFields(payload.backTranslator) },
     reviewed_at: at,
     reviewed_sha: sha,
-    metrics: { method: "independent agentic back-translation" },
+    metrics: provenanceMetrics(payload.backTranslator, {
+      method: "independent agentic back-translation",
+    }),
     notes:
       `Back-translation: ${payload.backTranslation}` +
       (payload.uncertainties && payload.uncertainties.length > 0
