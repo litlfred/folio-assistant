@@ -8,7 +8,7 @@
 
   The <folio:skill> extension on an activity names the folio-assistant skill
   that implements it; <folio:bean> marks a step that reads or writes the shared
-  work plan in .beans/.
+  work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
@@ -30,7 +30,7 @@
       by `bun run render:bpmn` — never hand-edit the SVG.
       The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
       that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
-      work plan in .beans/.
+      work plan in beans/.
     </bpmn:documentation>
     <bpmn:extensionElements>
       <folio:policy enforcement="advisory" />
@@ -77,7 +77,7 @@
       <bpmn:documentation>The plan becomes beans, so a resumed session or a sibling agent can pick it up.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" op="claim" />
+        <folio:bean store="beans/" op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>A02</bpmn:incoming>
       <bpmn:outgoing>A03</bpmn:outgoing>

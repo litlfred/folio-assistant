@@ -367,7 +367,7 @@ export function describe(model: ProcessModel, state: InstanceState): string {
         lines.push(
           `    • ${e.name}  [${e.node}]${e.lane ? `  — ${e.lane}` : ""}`,
           ...(e.skills.length ? [`        skill: ${e.skills.join(", ")}`] : []),
-          ...(e.touchesWorkPlan ? [`        touches the work plan (.beans/)`] : []),
+          ...(e.touchesWorkPlan ? [`        touches the work plan (beans/)`] : []),
           ...(e.calledElement ? [`        expands into: ${e.calledElement}`] : []),
         );
       }

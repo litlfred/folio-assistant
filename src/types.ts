@@ -299,7 +299,7 @@ export interface ContentAdapter {
 
 // ── Server config ────────────────────────────────────────────────
 
-export interface FolioConfig {
+export interface HarnessConfig {
   subscriptions: Array<{
     repo: string;
     type: string;

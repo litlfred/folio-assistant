@@ -209,14 +209,14 @@ When multiple axes are requested:
 3. Between axes, allow the user to insert other work via a pause:
    AskUserQuestion "Axis X complete. Continue to next, or pause?".
 
-## Persistence — `.beans/integration-backlog-ledger.md`
+## Persistence — `beans/integration-backlog-ledger.md`
 
 Per `integration-watcher §0a` (work-plan policy) and `coordinate §0a`
 (ledger discipline), every batch decision and merge outcome is appended
 to:
 
 ```
-.beans/integration-backlog-ledger.md
+beans/integration-backlog-ledger.md
 ```
 
 Entry format:

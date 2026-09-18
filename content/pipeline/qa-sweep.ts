@@ -67,7 +67,7 @@ const REPO_ROOT = resolve(dirname(__filename), "..", "..");
  * Root of the CONTENT repo that owns the swept blocks, discovered by
  * walking up from the sweep target until a directory containing `.git`
  * (a dir in a normal checkout, a file in a git worktree) or
- * `folio.config.json` is found.
+ * `harness.config.json` is found.
  *
  * Sidecar `paths` must be anchored HERE, not at `REPO_ROOT` (this
  * platform checkout): anchoring at REPO_ROOT bakes the content
@@ -89,7 +89,7 @@ function findContentRepoRoot(startAbs: string): string {
     ? startAbs
     : dirname(startAbs);
   while (true) {
-    if (existsSync(join(dir, ".git")) || existsSync(join(dir, "folio.config.json"))) {
+    if (existsSync(join(dir, ".git")) || resolveHarnessConfigPath(dir)) {
       return dir;
     }
     const parent = dirname(dir);
@@ -144,6 +144,7 @@ import {
 } from "../../schemas/block-qa";
 import { adapterForKind } from "../../schemas/block-kinds";
 import { readDeclaredFolioProfile } from "./profile-check";
+import { resolveHarnessConfigPath } from "../../schemas/harness-config";
 
 
 // ── CLI parsing ─────────────────────────────────────────────────
@@ -518,7 +519,7 @@ function run(): void {
       // gate only fires for the handful that opt out by naming `profiles`.
       //
       // "Could not determine" is a third state and it falls through to
-      // RUNNING the criterion. A folio with no `folio.config.json`, or one
+      // RUNNING the criterion. A folio with no `harness.config.json`, or one
       // whose config will not parse, must not quietly lose QA coverage on the
       // strength of a guess: `profileForContentType` resolves the unknown
       // case to `paper` for a validator, but here the answer to an unreadable

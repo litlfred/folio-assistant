@@ -62,7 +62,7 @@ review and release that follow, as BPMN swimlane diagrams.
 2. [Connect your LLM harness](../installation.html#connecting-an-llm-harness)
    (Claude Code, Antigravity, …) so the agent has the MCP tools.
 3. Create an (empty) content repository for your paper and add a
-   `folio.config.json` with `"contentType": "paper"`.
+   `harness.config.json` with `"contentType": "paper"`.
 
 ---
 
@@ -147,7 +147,7 @@ anchored form is what keeps it committable.
 
 Two deliberate exclusions:
 
-- **`.beans/` stays tracked.** It is the durable, cross-session work plan; a
+- **`beans/` stays tracked.** It is the durable, cross-session work plan; a
   sibling agent has to be able to read it. Bean *duplication* is prevented by
   the create-guard in
   [`skills/folio-core/todo-manager.md`](../../skills/folio-core/todo-manager.md),

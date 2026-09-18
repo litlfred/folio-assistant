@@ -159,7 +159,7 @@ describe("simulators section", () => {
     // which exists only once the platform submodule is checked out. A clone
     // without it replaced a correct nine-row table with "no simulators".
     const root = folio({
-      "folio.config.json": JSON.stringify({ simulators: { dir: "not-checked-out" } }),
+      "harness.config.json": JSON.stringify({ simulators: { dir: "not-checked-out" } }),
       "README.md": `# F\n\n<!-- folio:simulators:begin -->\n\n| Simulator | File |\n|---|---|\n| Kept | \`x.html\` |\n\n<!-- folio:simulators:end -->\n`,
     });
     const out = SECTIONS.find((s) => s.marker === "folio:simulators")!.render(ctx(root));
@@ -173,7 +173,7 @@ describe("simulators section", () => {
   });
 
   test("a directory that exists but holds nothing is a determined empty", () => {
-    const root = folio({ "folio.config.json": JSON.stringify({ simulators: { dir: "sims" } }) });
+    const root = folio({ "harness.config.json": JSON.stringify({ simulators: { dir: "sims" } }) });
     mkdirSync(join(root, "sims"), { recursive: true });
     const out = SECTIONS.find((s) => s.marker === "folio:simulators")!.render(ctx(root));
 
@@ -181,9 +181,9 @@ describe("simulators section", () => {
     expect(out.markdown).toContain("_No simulators");
   });
 
-  test("the directory comes from folio.config.json, not a fixed path", () => {
+  test("the directory comes from harness.config.json, not a fixed path", () => {
     const root = folio({
-      "folio.config.json": JSON.stringify({ simulators: { dir: "sims" } }),
+      "harness.config.json": JSON.stringify({ simulators: { dir: "sims" } }),
       "sims/bring_surface.html": "<html></html>",
     });
     const md = SECTIONS.find((s) => s.marker === "folio:simulators")!.render(ctx(root)).markdown;

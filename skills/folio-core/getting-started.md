@@ -36,7 +36,7 @@ Three facts, and nothing else. Gather them by looking, not by asking:
 
 ```sh
 # isFolio — is the working directory already a folio?
-test -f folio.config.json && echo isFolio=true || echo isFolio=false
+test -f harness.config.json && echo isFolio=true || echo isFolio=false
 
 # repoHasContent — does the tree hold somebody's project, as opposed to being bare?
 #   Ignore VCS bookkeeping and editor droppings; count anything else.

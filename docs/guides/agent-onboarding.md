@@ -114,7 +114,7 @@ Auditing whether `uses[]` is well used is its own skill:
 ## 6. Track work in beans, not in your head
 
 `beans` is the **single** todo mechanism — session-local *and*
-cross-agent. `.beans/` is committed, so a plan survives a resume in a
+cross-agent. `beans/` is committed, so a plan survives a resume in a
 fresh container.
 
 ```sh
@@ -155,7 +155,7 @@ can actually affect.
 registered only when the folio opts in:
 
 ```json
-// folio.config.json
+// harness.config.json
 { "qaAxes": ["q-usage"] }
 ```
 

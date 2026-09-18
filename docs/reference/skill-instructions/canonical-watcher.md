@@ -17,8 +17,8 @@ the shared mechanics; this file fills the nine domain-specific slots
 A–I for **derivation discipline**.
 
 **Setup:** use `NAME=canonical-watcher` everywhere the parent's §1
-references `${NAME}`. Files at `.beans/canonical-watcher-queue.json` and
-`.beans/canonical-watcher-ledger.md`.
+references `${NAME}`. Files at `beans/canonical-watcher-queue.json` and
+`beans/canonical-watcher-ledger.md`.
 
 **Authoritative reference:** the project's calibration/derivation
 discipline is fixed by the project's stated discipline document(s). Read

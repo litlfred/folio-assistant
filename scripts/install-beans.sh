@@ -2,7 +2,7 @@
 # Install the `beans` issue-tracker CLI (https://github.com/hmans/beans).
 #
 # `beans` is the session work-plan + cross-agent coordination tracker used by
-# this repo (data lives in `.beans/`, see `.claude/skills/local/todo-manager.md`).
+# this repo (data lives in `beans/`, see `.claude/skills/local/todo-manager.md`).
 # It is a Go binary distributed via GitHub releases; fresh cloud sandboxes do
 # NOT ship it, so this script reinstalls it on demand.
 #

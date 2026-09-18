@@ -3,7 +3,7 @@
  *
  * A folio-assistant instance can depend on other instances for content,
  * skills, and translation resolution. Dependencies are declared in
- * `folio.config.json` under `dependencies.folioAssistant` and walked
+ * `harness.config.json` under `dependencies.folioAssistant` and walked
  * depth-first in listed order.
  *
  * ## The dependency model
@@ -79,9 +79,9 @@ export interface FolioAssistantDependency {
 }
 
 /**
- * The `dependencies` section of `folio.config.json`.
+ * The `dependencies` section of `harness.config.json`.
  */
-export interface FolioConfigDependencies {
+export interface HarnessConfigDependencies {
   /**
    * Other folio-assistant instances this folio depends on. Walked
    * depth-first in listed order, overlaying content and skills.
@@ -90,7 +90,7 @@ export interface FolioConfigDependencies {
 }
 
 /**
- * Translation configuration in `folio.config.json`.
+ * Translation configuration in `harness.config.json`.
  */
 export interface TranslationConfig {
   /** Source language of the folio's content (BCP 47). Default: "en". */
@@ -104,14 +104,14 @@ export interface TranslationConfig {
 }
 
 /**
- * The full `folio.config.json` shape.
+ * The full `harness.config.json` shape.
  *
  * Not all fields are covered here — only the ones that have TypeScript
  * consumers. The JSON file may carry additional fields (e.g. `adapter`,
  * `adapterModule`, `viewer`, `simulators`) that are consumed by other
  * parts of the system.
  */
-export interface FolioConfig {
+export interface HarnessConfig {
   /** Content type — "document" or "paper". */
   contentType?: string;
   /** Adapter name — "document", "paper", or "dak". */
@@ -133,7 +133,7 @@ export interface FolioConfig {
   translation?: TranslationConfig;
 
   /** Cross-folio dependencies. */
-  dependencies?: FolioConfigDependencies;
+  dependencies?: HarnessConfigDependencies;
 }
 
 // ── Zod schemas ─────────────────────────────────────────────────
@@ -151,7 +151,7 @@ export const FolioAssistantDependencySchema = z.object({
   { message: "Dependency must have at least one of 'path' or 'git'" },
 );
 
-export const FolioConfigDependenciesSchema = z.object({
+export const HarnessConfigDependenciesSchema = z.object({
   folioAssistant: z.array(FolioAssistantDependencySchema).optional(),
 });
 
@@ -164,13 +164,49 @@ export const TranslationConfigSchema = z.object({
   officialOnly: z.boolean().default(false),
 });
 
-export const FolioConfigSchema = z.object({
+/**
+ * Where the agent harness keeps the two stores a person actually needs to find.
+ *
+ * `workPlan` is the bean store: WHAT is being worked on. `workflowState` is one
+ * JSON file per running BPMN instance: WHERE IT GOT TO. They answer the two
+ * halves of one question, so they live adjacent — `beans/` and `beans/workflow/`
+ * — and at top level rather than behind a dot.
+ *
+ * ## Why they are declared rather than assumed
+ *
+ * Both paths were previously hard-coded in three places that could disagree:
+ * `.beans.yml` (which the `beans` CLI reads), `WORKFLOW_DIR` in
+ * `workflow/store.ts`, and every skill and diagram that named a path in prose.
+ * Declaring them here makes the config the one place a folio states the answer,
+ * and gives a tool something to read instead of a convention to re-derive.
+ *
+ * ## `.beans.yml` is still the CLI's own config, and still authoritative for it
+ *
+ * The `beans` binary does not read `harness.config.json` and never will — it is a
+ * third-party tool. So `workPlan` here must MATCH `beans.path` in `.beans.yml`,
+ * and `bun run check:harness-dirs` fails when they disagree. Two configs that
+ * can drift is exactly the defect this repo keeps paying for; the check is what
+ * makes the duplication safe rather than merely documented.
+ */
+export const HarnessDirsSchema = z.object({
+  /** Bean store. Must equal `beans.path` in `.beans.yml`. */
+  workPlan: z.string().default("beans"),
+  /** One JSON file per running BPMN process instance. */
+  workflowState: z.string().default("beans/workflow"),
+  /** Per-user interaction preferences, read at session start. */
+  interaction: z.string().default(".harness/interaction.json"),
+});
+
+export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;
+
+export const HarnessConfigSchema = z.object({
   contentType: z.string().optional(),
   adapter: z.string().optional(),
   adapterModule: z.string().optional(),
   contributes: z.string().optional(),
+  harness: HarnessDirsSchema.optional(),
   translation: TranslationConfigSchema.optional(),
-  dependencies: FolioConfigDependenciesSchema.optional(),
+  dependencies: HarnessConfigDependenciesSchema.optional(),
 });
 
 // ── Dependency resolution ───────────────────────────────────────
@@ -187,18 +223,55 @@ export interface ResolvedDependency {
   dependency: FolioAssistantDependency;
   /** Absolute path to the dependency root. */
   rootPath: string;
-  /** The dependency's own folio.config.json (if present). */
-  config: FolioConfig | null;
+  /** The dependency's own harness config (if present). */
+  config: HarnessConfig | null;
   /** Transitive dependencies (resolved recursively). */
   transitive: ResolvedDependency[];
 }
 
 /**
- * Read and parse a folio.config.json from a directory.
+ * The harness config file, and the name it used to have.
+ *
+ * Renamed from `harness.config.json` on 2026-09-18: the file configures the
+ * HARNESS — adapter selection, the skills directory, the viewer, simulators,
+ * translation, and the two work-plan stores — not the folio's content. The old
+ * name described the wrong thing and invited people to look for content
+ * settings in it.
  */
-export function readFolioConfig(dir: string): FolioConfig | null {
-  const configPath = join(dir, "folio.config.json");
-  if (!existsSync(configPath)) return null;
+export const HARNESS_CONFIG = "harness.config.json";
+
+/**
+ * Find the harness config in `dir`.
+ *
+ * **Every reader goes through this.** The path was previously built
+ * independently at eleven sites — `src/index.ts`, four `content/pipeline`
+ * modules, three scripts, the document adapter, `folio_init` and `qa-sweep`.
+ * Eleven hardcoded literals is eleven places to miss when the name changes,
+ * and the one that is missed is the one where a folio silently stops being
+ * configured.
+ *
+ * Returns `undefined` when the file is absent — a legitimate state, not an
+ * error: the platform itself has no harness config, and a bare repo has none
+ * until `folio_init` writes one.
+ *
+ * ## `folio.config.json` is not read
+ *
+ * That was this file's name before 2026-09-18. It is **not** a fallback: a
+ * folio still carrying the old name is not configured, rather than quietly
+ * half-configured by a path nothing else agrees about. Rename the file.
+ */
+export function resolveHarnessConfigPath(dir: string): { path: string } | undefined {
+  const p = join(dir, HARNESS_CONFIG);
+  return existsSync(p) ? { path: p } : undefined;
+}
+
+/**
+ * Read and parse the harness config from a directory.
+ */
+export function readHarnessConfig(dir: string): HarnessConfig | null {
+  const found = resolveHarnessConfigPath(dir);
+  if (!found) return null;
+  const configPath = found.path;
   try {
     const raw = JSON.parse(readFileSync(configPath, "utf-8"));
     // Strip _comment fields before parsing
@@ -207,11 +280,11 @@ export function readFolioConfig(dir: string): FolioConfig | null {
         key === "_comment" ? undefined : value
       ),
     );
-    return FolioConfigSchema.parse(cleaned);
+    return HarnessConfigSchema.parse(cleaned);
   } catch {
     // If parsing fails, return the raw JSON as a partial config
     try {
-      return JSON.parse(readFileSync(configPath, "utf-8")) as FolioConfig;
+      return JSON.parse(readFileSync(configPath, "utf-8")) as HarnessConfig;
     } catch {
       return null;
     }
@@ -247,7 +320,7 @@ export function resolveDependencyPath(
 /**
  * Resolve the full dependency tree depth-first.
  *
- * Walks `folio.config.json` dependencies in listed order, resolving
+ * Walks `harness.config.json` dependencies in listed order, resolving
  * each to a path and recursing into its own dependencies. Cycle
  * detection prevents infinite loops.
  *
@@ -263,7 +336,7 @@ export function resolveDependencyTree(
   if (seen.has(absRoot)) return []; // cycle
   seen.add(absRoot);
 
-  const config = readFolioConfig(absRoot);
+  const config = readHarnessConfig(absRoot);
   const deps = config?.dependencies?.folioAssistant ?? [];
   const resolved: ResolvedDependency[] = [];
 
@@ -271,7 +344,7 @@ export function resolveDependencyTree(
     const rootPath = resolveDependencyPath(absRoot, dep);
     if (!rootPath) continue;
 
-    const depConfig = readFolioConfig(rootPath);
+    const depConfig = readHarnessConfig(rootPath);
     const transitive = resolveDependencyTree(rootPath, seen);
 
     resolved.push({
@@ -356,7 +429,7 @@ export function resolveTranslationDirs(folioRoot: string): string[] {
   }
 
   // Root's translations last (highest priority)
-  const rootConfig = readFolioConfig(folioRoot);
+  const rootConfig = readHarnessConfig(folioRoot);
   const rootTransDir = rootConfig?.translation?.translationDir ?? "translations";
   const rootAbs = join(folioRoot, rootTransDir);
   if (existsSync(rootAbs)) dirs.push(rootAbs);

@@ -123,7 +123,7 @@ resolves PO files by convention:
 1. **Block-level:** `translations/<locale>/<block-stem>.po`
 2. **Chapter-level:** `translations/<locale>/<chapter-slug>.po`
 3. **Folio-level:** `translations/<locale>/global.po`
-4. **Dependency walk:** walk `folio.config.json` dependencies depth-first,
+4. **Dependency walk:** walk `harness.config.json` dependencies depth-first,
    looking for matching PO files in each dependency's `translations/<locale>/`
 
 When `poSources` **is declared**, only the listed files are consulted (no
@@ -439,7 +439,7 @@ dependencies but upstream from them.
 
 ### Declaration
 
-In `folio.config.json`:
+In `harness.config.json`:
 
 ```json
 {
@@ -477,7 +477,7 @@ For translation specifically:
 
 ## Configuration
 
-### `folio.config.json` additions
+### `harness.config.json` additions
 
 ```json
 {
@@ -652,7 +652,7 @@ See the beans created for this work and the
 |---|---|---|---|
 | 1. Documentation | (this document) | Consolidated translation reference | ✅ Done |
 | 2. Schema changes | — | Add `lang` to `BlockBase`, `TranslationStatus` schema | Todo |
-| 3. Config support | — | Add `translation` section to `folio.config.json` | Todo |
+| 3. Config support | — | Add `translation` section to `harness.config.json` | Todo |
 | 4. POT extraction | — | `content/pipeline/pot-extract.ts` | Todo |
 | 5. PO injection | — | `content/pipeline/po-inject.ts` | Todo |
 | 6. MCP tools | — | Register 5 translation tools | Todo |
@@ -668,10 +668,10 @@ See the beans created for this work and the
 
 ## Related beans
 
-- [`folio-assistant-ktt2`](.beans/folio-assistant-ktt2--ingest-round-trip-translation-qa-back-translate-to.md) — Round-trip translation QA
-- [`folio-assistant-1r0p`](.beans/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md) — Audio transcription + translation
-- [`folio-assistant-d5f1`](.beans/folio-assistant-d5f1--ingest-narrative-description-per-image-localized-i.md) — Localized image descriptions
-- [`folio-assistant-p2en`](.beans/folio-assistant-p2en--formal-rag-document-ingestion-layer-options-assess.md) — FRBR model for multilingual content
+- [`folio-assistant-ktt2`](beans/folio-assistant-ktt2--ingest-round-trip-translation-qa-back-translate-to.md) — Round-trip translation QA
+- [`folio-assistant-1r0p`](beans/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md) — Audio transcription + translation
+- [`folio-assistant-d5f1`](beans/folio-assistant-d5f1--ingest-narrative-description-per-image-localized-i.md) — Localized image descriptions
+- [`folio-assistant-p2en`](beans/folio-assistant-p2en--formal-rag-document-ingestion-layer-options-assess.md) — FRBR model for multilingual content
 
 ---
 

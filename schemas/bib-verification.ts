@@ -132,7 +132,7 @@ export function verifierLabel(v: Verifier): string {
 // | source document ↔ reference join       | this ledger (`source` + `id`)      |
 // | was the source checked                 | this ledger (`status`)             |
 // | is it relevant, what to do about it    | this ledger (`relevance`)          |
-// | the resulting work items               | `.beans/`                          |
+// | the resulting work items               | `beans/`                          |
 //
 // A ledger entry therefore carries NO bibliographic metadata — no `title`,
 // no `authors`, no `year`.  It points at a reference by `id` and the

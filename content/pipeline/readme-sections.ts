@@ -51,6 +51,7 @@ import {
 } from "./readme-toc";
 import { findContentRepoRoot } from "./repo-root";
 import { computeStats } from "../../scripts/lean-coverage";
+import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
 
 // ── Section contract ────────────────────────────────────────────────────────
 
@@ -257,7 +258,7 @@ const simulatorsSection: ReadmeSection = {
     // `folio-assistant/simulators` literally, which is only where a folio that
     // embeds the platform under that name puts them.
     let dir = "folio-assistant/simulators";
-    const configPath = join(root, "folio.config.json");
+    const configPath = resolveHarnessConfigPath(root)?.path ?? join(root, HARNESS_CONFIG);
     if (existsSync(configPath)) {
       try {
         const parsed = JSON.parse(readFileSync(configPath, "utf-8")) as {

@@ -15,7 +15,7 @@ substrate for coordinating across sessions.
 
 1. **Prime** — at session start, read the current work-plan
    (`beans prime` + `beans list`, or the CLI-independent fallback that parses
-   `.beans/` directly). Know what is open and what siblings are touching.
+   `beans/` directly). Know what is open and what siblings are touching.
 2. **Declare intent + claim** — before starting work, set the bean
    `in-progress`. The claim is durable and visible to siblings, so two sessions
    don't pick the same probe. Add a short note naming your branch.

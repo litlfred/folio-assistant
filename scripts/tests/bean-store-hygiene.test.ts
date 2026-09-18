@@ -15,7 +15,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const BEANS = join(import.meta.dir, "../../.beans");
+const BEANS = join(import.meta.dir, "../../beans");
 
 /** Exactly what `beans update --status` accepts. */
 const VALID = new Set(["draft", "todo", "in-progress", "completed", "scrapped"]);

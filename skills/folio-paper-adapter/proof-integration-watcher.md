@@ -29,8 +29,8 @@ domain-specific slots A-I.
 
 **Setup:** use `NAME=proof-integration-watcher` everywhere the
 parent's §1 references `${NAME}`. Files land at
-`.beans/proof-integration-watcher-queue.json` and
-`.beans/proof-integration-watcher-ledger.md`.
+`beans/proof-integration-watcher-queue.json` and
+`beans/proof-integration-watcher-ledger.md`.
 
 ## Slot A — Goal statement
 

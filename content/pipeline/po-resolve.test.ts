@@ -61,12 +61,12 @@ beforeAll(() => {
   // Dependency
   const depRoot = join(TMP, "dep-folio");
   mkpo(join(depRoot, "translations", "fr"), "my-block.po", DEP_PO);
-  writeFileSync(join(depRoot, "folio.config.json"), JSON.stringify({
+  writeFileSync(join(depRoot, "harness.config.json"), JSON.stringify({
     translation: { translationDir: "translations" },
   }), "utf-8");
 
   // Folio config with dependency
-  writeFileSync(join(TMP, "folio.config.json"), JSON.stringify({
+  writeFileSync(join(TMP, "harness.config.json"), JSON.stringify({
     translation: { translationDir: "translations" },
     dependencies: {
       folioAssistant: [

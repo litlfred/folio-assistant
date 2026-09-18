@@ -70,7 +70,7 @@ Content blocks can declare explicit PO sources via `poSources[]` on
 1. **Block-level:** `translations/<locale>/<block-stem>.po`
 2. **Chapter-level:** `translations/<locale>/<chapter-slug>.po`
 3. **Folio-level:** `translations/<locale>/global.po`
-4. **Dependency walk:** walk `folio.config.json` dependencies depth-first
+4. **Dependency walk:** walk `harness.config.json` dependencies depth-first
 
 When `poSources` is declared, only the listed files are consulted (no
 fallback). Later entries override earlier for the same msgid.
@@ -217,7 +217,7 @@ includes — `docs-ui.js` handles everything automatically.
 
 ## Six UN languages
 
-The default `supportedLocales` in `folio.config.json`:
+The default `supportedLocales` in `harness.config.json`:
 
 | Code | Language | Native |
 |---|---|---|

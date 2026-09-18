@@ -7,7 +7,7 @@
  * 1. **Block-level:** `translations/<locale>/<block-stem>.po`
  * 2. **Chapter-level:** `translations/<locale>/<chapter-slug>.po`
  * 3. **Folio-level:** `translations/<locale>/global.po`
- * 4. **Dependency walk:** walk `folio.config.json` dependencies depth-first,
+ * 4. **Dependency walk:** walk `harness.config.json` dependencies depth-first,
  *    looking for matching PO files in each dependency's `translations/<locale>/`
  *
  * When `poSources[]` IS declared, only the listed files are consulted
@@ -20,11 +20,11 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import {
-  readFolioConfig,
+  readHarnessConfig,
   resolveDependencyTree,
   flattenDependencies,
-  type FolioConfig,
-} from "../../schemas/folio-config";
+  type HarnessConfig,
+} from "../../schemas/harness-config";
 
 // ── Types ───────────────────────────────────────────────────────
 
@@ -54,7 +54,7 @@ export interface PoResolveOptions {
 
 // ── Helpers ─────────────────────────────────────────────────────
 
-function translationDir(folioRoot: string, config?: FolioConfig | null): string {
+function translationDir(folioRoot: string, config?: HarnessConfig | null): string {
   const dir = config?.translation?.translationDir ?? "translations";
   return join(folioRoot, dir);
 }
@@ -86,7 +86,7 @@ export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] 
 
   // ── Fallback chain ──
   const results: ResolvedPoSource[] = [];
-  const config = readFolioConfig(folioRoot);
+  const config = readHarnessConfig(folioRoot);
   const transDir = translationDir(folioRoot, config);
   const localeDir = join(transDir, locale);
 
@@ -111,7 +111,7 @@ export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] 
   }
 
   // Step 4: Dependency walk — depth-first, transitive, with cycle detection.
-  // Uses the canonical resolution from schemas/folio-config.ts.
+  // Uses the canonical resolution from schemas/harness-config.ts.
   const depTree = resolveDependencyTree(folioRoot);
   const flatDeps = flattenDependencies(depTree);
   for (const resolved of flatDeps) {
@@ -199,7 +199,7 @@ export function availableLocales(
   folioRoot: string,
   sourceStem: string,
 ): string[] {
-  const config = readFolioConfig(folioRoot);
+  const config = readHarnessConfig(folioRoot);
   const transDir = translationDir(folioRoot, config);
   const locales: string[] = [];
 

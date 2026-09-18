@@ -62,7 +62,7 @@ export function findContentRepoRoot(): string {
  *
  * Exists so pipeline code stops hardcoding a paper directory. A folio
  * may hold several papers, and the platform must not privilege one of
- * them — see `.beans/` and `docs/proposals/` for the portability work.
+ * them — see `beans/` and `docs/proposals/` for the portability work.
  *
  * Returns directory names (not paths), sorted, so callers can join them
  * onto their own root.

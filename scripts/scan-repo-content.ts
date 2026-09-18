@@ -107,7 +107,7 @@ const CONTENT_DIRS = new Set([
 
 /** Paths that are neither the author's material nor a question — just noise. */
 const SKIP_DIRS = new Set([
-  ".git", ".github", ".vscode", ".idea", ".beans", ".folio", ".claude",
+  ".git", ".github", ".vscode", ".idea", "beans", ".harness", ".claude",
   "node_modules", ".venv", "venv", "__pycache__", "dist", "build", "target",
   ".next", ".cache", "coverage", ".lake", ".pytest_cache", "vendor",
 ]);
@@ -125,7 +125,7 @@ const SKIP_FILES = new Set([
  * scaffolding it wrote last time.
  */
 const FOLIO_FILES = new Set([
-  "folio.config.json", "agents.md", "claude.md", "gemini.md", ".mcp.json",
+  "harness.config.json", "agents.md", "claude.md", "gemini.md", ".mcp.json",
 ]);
 
 function isSkipped(rel: string): boolean {

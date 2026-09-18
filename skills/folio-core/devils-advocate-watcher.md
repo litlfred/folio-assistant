@@ -32,8 +32,8 @@ does not check style or wiring, it tries to *break* each block — to
 surface the objection a referee will make before the referee does.
 
 **Setup:** use `NAME=devils-advocate-watcher` everywhere the parent's §1
-references `${NAME}`. Files at `.beans/devils-advocate-watcher-queue.json`
-and `.beans/devils-advocate-watcher-ledger.md`.
+references `${NAME}`. Files at `beans/devils-advocate-watcher-queue.json`
+and `beans/devils-advocate-watcher-ledger.md`.
 
 **Standing authority.** This watcher is the operational arm of the
 **Critical-distance license** (AGENTS.md §"Critical-distance license"):

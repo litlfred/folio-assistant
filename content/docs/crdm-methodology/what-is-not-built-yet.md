@@ -15,7 +15,7 @@ there, or lets them assume something exists because nobody updated the list.
 - **`stakeholder_map`** — reports which skills a change touches, the roles
   they declare, and the process lanes accountable for work that uses them.
   Built against skills and BPMN lanes rather than the CODEOWNERS and
-  `folio.config.json` fields it was specified from, because neither exists
+  `harness.config.json` fields it was specified from, because neither exists
   here. It does not name people, because the process says the agent does not
   guess.
 - **The process is executable** — `crdm-requirements.bpmn` loads like every

@@ -10,7 +10,7 @@
  *
  * It sits beside `check_dependencies` and `skill_fetch` rather than in a
  * content adapter, because it runs *before* the folio has a content type. A
- * bare repo has no `folio.config.json`, so adapter selection falls back to
+ * bare repo has no `harness.config.json`, so adapter selection falls back to
  * `paper` — and a tool that only the document adapter registered would be
  * unreachable in exactly the situation it exists for.
  *
@@ -19,7 +19,7 @@
 
 import { z } from "zod";
 import { existsSync, readdirSync } from "node:fs";
-import { resolve } from "node:path";
+import { resolve, basename } from "node:path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 import {
@@ -29,6 +29,7 @@ import {
   slugify,
   type InitFolioOptions,
 } from "../../scripts/init-folio.js";
+import { resolveHarnessConfigPath } from "../../schemas/harness-config";
 
 /**
  * Is this directory already a folio?
@@ -40,7 +41,8 @@ import {
  * a list of seventeen "already present" lines to interpret.
  */
 function existingFolio(root: string): string | undefined {
-  if (existsSync(resolve(root, "folio.config.json"))) return "folio.config.json";
+  const cfg = resolveHarnessConfigPath(root);
+  if (cfg) return basename(cfg.path);
   const contentDir = resolve(root, "content");
   if (existsSync(contentDir)) {
     const docs = readdirSync(contentDir, { withFileTypes: true })
@@ -56,7 +58,7 @@ export function registerFolioInitTools(server: McpServer): void {
     "folio_init",
     "Scaffold a new folio (content repository) that uses folio-assistant: " +
     "content/, uploads/, library/, the document + chapter + first block " +
-    "manifests, folio.config.json, the builder shim, AGENTS.md with CLAUDE.md " +
+    "manifests, harness.config.json, the builder shim, AGENTS.md with CLAUDE.md " +
     "and GEMINI.md stubs, .mcp.json, and the beans work plan. Run this in an " +
     "empty repo before authoring anything. Pass content_type 'paper' for a " +
     "folio with Lean-backed mathematics, 'document' for prose (policy " +
@@ -119,7 +121,7 @@ export function registerFolioInitTools(server: McpServer): void {
               `folio_init scaffolds a new one and will not modify what is here. If you ` +
               `meant to add a document to this folio, add a directory under content/ and ` +
               `a manifest named after it; if you meant to re-scaffold, pass force (it ` +
-              `overwrites AGENTS.md, folio.config.json and the starter block). ` +
+              `overwrites AGENTS.md, harness.config.json and the starter block). ` +
               `Pass dry_run to see exactly what would change.`,
           }],
         };

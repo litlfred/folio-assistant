@@ -42,7 +42,7 @@ are thin stubs pointing here.
 > [`skills/folio-core/directory-conventions.md`](skills/folio-core/directory-conventions.md).
 >
 > **Known gap, so you are not surprised:** `resolveSkillDirs` in
-> `schemas/folio-config.ts` computes the cross-instance skill overlay and has
+> `schemas/harness-config.ts` computes the cross-instance skill overlay and has
 > **no caller** — so today skill discovery is root-only in practice, and a
 > dependency's skills are not yet reachable. Wiring it is outstanding Phase 0.1
 > work.
@@ -93,7 +93,7 @@ only rules, it is a profile plus a subclass, not an adapter.
 Enforcement is `content/pipeline/profile-check.ts`, run on every
 `content_validate`. It catches what schema validation structurally cannot: a
 `theorem` is a valid `theorem` whatever folio it sits in, and `constraints.ts`
-cannot read `folio.config.json`. Two rules — kind within profile, and (document
+cannot read `harness.config.json`. Two rules — kind within profile, and (document
 only) no `lean` field and no `.lean` sibling, because `remark`, `example`,
 `algorithm` and `simulator` all *declare* an optional `lean` that the type
 permits and the profile forbids.
@@ -119,7 +119,7 @@ folio, where `definition`'s `lean` field is required.
 
 `bun run init-folio --help`, or the `folio_init` MCP tool. It writes `content/`,
 `uploads/`, `library/`, the document + chapter + first block manifests,
-`folio.config.json`, the `content/schema/` builder shim, `AGENTS.md` with
+`harness.config.json`, the `content/schema/` builder shim, `AGENTS.md` with
 `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the session-start hook and the beans
 store — and links the platform as a submodule or a sibling checkout.
 
@@ -146,6 +146,36 @@ bun run readme:sync:check           # ...and fail if any is stale (for CI)
 bun run readme:sections             # list the sections a README can opt into
 bun run readme:audit                # verify the README's links still resolve
 ```
+
+## Where the harness keeps its state
+
+Two stores, adjacent and at top level:
+
+| directory | holds | committed |
+|---|---|---|
+| `beans/` | the work plan — WHAT is being worked on | yes |
+| `beans/workflow/` | one JSON file per running BPMN instance — WHERE IT GOT TO | yes |
+
+They were `.beans/` and `.harness/workflow/`. A dot-prefixed directory is absent
+from a plain `ls`, from most file browsers and from GitHub's web tree, so the two
+artefacts a person looks for first were the two hardest to find. Moved 2026-09-18.
+
+Both are **declared** in `harness.config.json` under `harness`
+(`HarnessDirsSchema` in `schemas/harness-config.ts`) rather than assumed. The
+`beans` binary is third-party and does not read that file — it reads
+`.beans.yml` — so the same path is necessarily written twice, and
+`bun run check:harness-dirs` fails when the declaration, `.beans.yml` and
+`workflow/store.ts` disagree. The duplication is unavoidable; an unchecked one
+is not.
+
+`.harness/` still exists and still holds `interaction.json` and `issue-comments/`;
+only the workflow state moved.
+
+This is **Option A** from
+[`docs/proposals/workflow-state-in-beans.md`](docs/proposals/workflow-state-in-beans.md),
+chosen 2026-09-18 — two stores with one link, now co-located. The criticism A
+carried there ("two places to look") was never about two stores; it was about two
+*hidden* ones.
 
 ## Work-plan & todos — use `beans`
 
@@ -175,9 +205,9 @@ beans <id> --status in-progress          # claim an item (durable, visible to si
 > real beans, and corrupted a later agent's own corpus-grep.
 
 - **Session todos:** track anything you want to persist as beans, not in your
-  agent's ephemeral in-memory todo list — `.beans/` is committed, so the plan
+  agent's ephemeral in-memory todo list — `beans/` is committed, so the plan
   survives a resume in a fresh container.
-- **Cross-session / cross-agent todos:** the same committed `.beans/` store is the
+- **Cross-session / cross-agent todos:** the same committed `beans/` store is the
   shared work-plan. **Claim before you work** (set `in-progress` + note your
   branch) so two sessions don't pick the same item; never resolve a sibling's
   bean, and **never delete ANY bean, including your own**. Work that turns out
@@ -243,7 +273,7 @@ namespace is worse than none, because it is what a reader pastes into an
 `import`); workflow descriptions came from a hardcoded map of twelve `qou`
 filenames consulted *before* the workflow's own `name:` (now always the
 `name:`); and the simulator directory was the literal
-`folio-assistant/simulators` (now `folio.config.json`).
+`folio-assistant/simulators` (now `harness.config.json`).
 
 **"Could not determine" is a third state, everywhere.** A section returns
 `skip` and the region is left exactly as it was. That is not decoration: qou
@@ -282,7 +312,7 @@ without a token, and a browser session cookie does not authenticate it. The
 default is `blob` — `github.com/<owner>/<repo>/blob/<ref>/<path>` — which
 follows the viewer's GitHub session, works whether the repo is public or
 private, and renders PDFs inline. `pages` and `raw` remain available in
-`folio.config.json` under `readme.linkStyle`, and each prints a note under
+`harness.config.json` under `readme.linkStyle`, and each prints a note under
 the table saying who can follow its links.
 
 **Adding a section** is one entry in `SECTIONS`: a marker, a one-line summary
@@ -402,7 +432,7 @@ memory entry is wrong — fix it.
 ## At session start
 
 **Get `beans` in hand first, before any durable work.** A fresh container has no
-`beans` on `PATH`, and the fallback that parses `.beans/` directly gives you
+`beans` on `PATH`, and the fallback that parses `beans/` directly gives you
 titles and statuses only — no bodies, no priorities, no blocking relations — so
 it cannot tell you what an item is or what it waits on, and you cannot claim or
 create anything with it.
@@ -410,6 +440,24 @@ create anything with it.
 ```sh
 scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
 ```
+
+**If it will not install, you are still not read-only.**
+`scripts/beans-fallback.ts` writes the same store in the same layout — same
+files, same front matter, same ids — so the CLI reads everything it writes once
+it is available again. There is no import step and no second store.
+
+```sh
+bun run beans:fallback list --status todo
+bun run beans:fallback claim <id>
+bun run beans:fallback create "<title>" --status in-progress
+bun run beans:fallback note <id> "<what you found>"
+```
+
+That exists because a read-only fallback is not a fallback for an agent: it
+lets you *see* the plan and touch nothing, which is how the 2026-09-18 session
+below did its work unclaimed. `create` there refuses an exact duplicate title
+and names the bean to claim instead — the CLI's own `create` does not, and that
+is the mechanism behind the 14,688 duplicates.
 
 The sweep now does both halves of that for you: it prepends `~/.local/bin` when
 the binary is already there (so a second session does not re-install), and when
@@ -420,7 +468,7 @@ after that, it could not be installed here.
 
 This is a rule because skipping it is cheap and invisible. On 2026-09-18 a
 session read the sweep's then-parenthetical "run `scripts/install-beans.sh` for
-full priming", carried on reading `.beans/` by hand, and completed two merged
+full priming", carried on reading `beans/` by hand, and completed two merged
 PRs' worth of durable work **unclaimed** — the exact failure the work plan
 exists to prevent, and one no sibling session could have seen coming. The
 installer call above is the same lesson applied one step earlier: an imperative
@@ -428,7 +476,7 @@ somebody has to act on is weaker than the act itself.
 
 The sweep emits, in order:
 
-1. **Interaction preferences** (`.folio/interaction.json`) — first, because it
+1. **Interaction preferences** (`.harness/interaction.json`) — first, because it
    changes the form of every question that follows. See
    `skills/folio-core/interaction-modality.md`.
 2. `beans prime` and `beans list`.
@@ -476,7 +524,7 @@ to run rather than just a step name; `A_Implement`, `A_CreateBeans` and
 `crdm_status` are documented as **proposed** in older text and should not be
 built: a second set of tools over the same diagram is a second answer to
 "where are we", free to disagree with the first, and workflow state under
-`.folio/workflow/` is committed so a sibling session sees the same position.
+`beans/workflow/` is committed so a sibling session sees the same position.
 
 Key rules:
 - Feature work must be linked to a GitHub issue (scan before creating; do not
@@ -528,7 +576,7 @@ single edge from `BA_Signoff` into Phase 6 — the three loops back into
 
 **Re-check the issue for new and edited comments while you work.** Checking once
 at session start is not checking. Track what you have already read in
-`.folio/issue-comments/<owner>-<repo>-<number>.json`
+`.harness/issue-comments/<owner>-<repo>-<number>.json`
 (`src/issue-watch/seen-comments.ts`): a comment-id high-water mark plus the
 newest edit timestamp, because an edited comment keeps its id and an edited
 requirement is a changed requirement. With no stored mark everything counts as
@@ -801,7 +849,7 @@ Full protocol, with the worked example:
   generated — run `bun run render:bpmn` after editing one, and
   `bun run render:bpmn:check` fails if an SVG is stale. Each activity carries a
   `<folio:skill ref="…"/>` extension naming the skill that implements it, and
-  `<folio:bean store=".beans/"/>` where it touches the work plan — add both when
+  `<folio:bean store="beans/"/>` where it touches the work plan — add both when
   you add an activity.
   **Adding a diagram:** if it has actors, activities and a control flow, it is a
   process — author it as BPMN under `docs/workflows/`, not as a Mermaid fence.
@@ -813,7 +861,7 @@ Full protocol, with the worked example:
   `docs/workflows/*.bpmn`. `workflow_next` tells you what is enabled **now**,
   which lane owns it and which skill implements it; `workflow_complete` refuses
   a step that is not enabled, so work cannot be claimed out of order. State is
-  committed under `.folio/workflow/`, like beans, so a sibling session sees it.
+  committed under `beans/workflow/`, like beans, so a sibling session sees it.
   **The base processes are STRICT.** `editing-hci-validation`,
   `draft-to-publication` and `content-lifecycle` carry
   `<folio:policy enforcement="strict"/>`: `workflow_gate` refuses a step that is

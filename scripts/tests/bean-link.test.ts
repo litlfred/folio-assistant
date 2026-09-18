@@ -6,18 +6,18 @@ import { applyWorkPlanOp, findBean, listBeans } from "../../src/workflow/bean-li
 import { loadProcessModel, UnsupportedBpmn } from "../../src/workflow/process-model";
 
 /**
- * `.beans/` says what is being worked on; an instance says where it got to.
+ * `beans/` says what is being worked on; an instance says where it got to.
  * Kept apart they diverge. These tests are about the operations that keep them
  * one record — and about the one that deliberately refuses to fire.
  *
- * They write to a temp repo, never the real `.beans/`.
+ * They write to a temp repo, never the real `beans/`.
  */
 
 let repo: string;
 
 const bean = (id: string, title: string, status: string, body = "Original body.\n"): void => {
   writeFileSync(
-    join(repo, ".beans", `${id}--${title.toLowerCase().replace(/\W+/g, "-")}.md`),
+    join(repo, "beans", `${id}--${title.toLowerCase().replace(/\W+/g, "-")}.md`),
     `---\n# ${id}\ntitle: ${title}\nstatus: ${status}\ntype: task\n` +
       `created_at: 2026-01-01T00:00:00Z\nupdated_at: 2026-01-01T00:00:00Z\n---\n\n${body}`,
   );
@@ -25,7 +25,7 @@ const bean = (id: string, title: string, status: string, body = "Original body.\
 
 beforeEach(() => {
   repo = mkdtempSync(join(tmpdir(), "bean-link-"));
-  mkdirSync(join(repo, ".beans"), { recursive: true });
+  mkdirSync(join(repo, "beans"), { recursive: true });
 });
 afterEach(() => rmSync(repo, { recursive: true, force: true }));
 
@@ -106,7 +106,7 @@ describe("an instance with no bean", () => {
   });
 
   test("a bean id that is not in the store is reported, not invented", () => {
-    expect(applyWorkPlanOp(repo, "zzzz", "claim").summary).toContain("not in .beans/");
+    expect(applyWorkPlanOp(repo, "zzzz", "claim").summary).toContain("not in beans/");
   });
 });
 
@@ -150,7 +150,7 @@ describe("the diagrams declare which operation each step performs", () => {
   <bpmn:process id="Process_Bad" name="Bad" isExecutable="false">
     <bpmn:startEvent id="S"><bpmn:outgoing>F1</bpmn:outgoing></bpmn:startEvent>
     <bpmn:task id="T" name="Do">
-      <bpmn:extensionElements><folio:bean store=".beans/" op="obliterate" /></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:bean store="beans/" op="obliterate" /></bpmn:extensionElements>
       <bpmn:incoming>F1</bpmn:incoming><bpmn:outgoing>F2</bpmn:outgoing>
     </bpmn:task>
     <bpmn:endEvent id="E"><bpmn:incoming>F2</bpmn:incoming></bpmn:endEvent>
