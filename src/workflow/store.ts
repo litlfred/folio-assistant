@@ -15,7 +15,7 @@
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import type { InstanceState } from "./instance.js";
+import { INSTANCE_SCHEMA, type InstanceState } from "./instance.js";
 
 /**
  * The `workflow-state` node of the bean graph — `beans/workflows/`.
@@ -62,7 +62,12 @@ export function saveInstance(repoRoot: string, state: InstanceState): string {
   const dir = join(repoRoot, WORKFLOW_DIR);
   mkdirSync(dir, { recursive: true });
   const p = pathFor(repoRoot, state.id);
-  writeFileSync(p, `${JSON.stringify(state, null, 2)}\n`, "utf-8");
+  // `$schema` FIRST, and written on every save rather than only on create, so
+  // a file from before the tag existed gains it the next time it is touched.
+  // The bean graph says a directory holds `workflow-state` and leaves
+  // recognising one to the file — this is the file holding up its end.
+  const tagged: InstanceState = { $schema: INSTANCE_SCHEMA, ...state };
+  writeFileSync(p, `${JSON.stringify(tagged, null, 2)}\n`, "utf-8");
   return p;
 }
 

@@ -158,9 +158,22 @@ holds markdown. `beans/beans.json` declares it; the schema is
 | `defs` | `beans/defs/` | the work plan — WHAT is being worked on | yes |
 | `workflows` | `beans/workflows/` | one JSON file per running BPMN instance — WHERE IT GOT TO | yes |
 
-Node paths are relative to `graph.json`'s own directory, so the whole graph
+Node paths are relative to `beans.json`'s own directory, so the whole graph
 relocates by moving one folder. A path that is absolute or escapes its root is
 **rejected**: a store outside the graph is not a node of it.
+
+**`kinds` is an array, and it does not say how to tell the contents apart —
+the files declare what they are.** A bean carries its id, `title`, `status`
+and `type` in front matter; a workflow instance carries
+`"$schema": "folio-workflow-instance/v1"`, following the `qa-script/v1`
+convention the QA sidecars use. A consumer reads a file and the file answers,
+so a node states what to EXPECT rather than how to discriminate.
+
+That is what makes a multi-kind directory safe here. Before the `$schema`
+tag, instance state was identifiable only by SHAPE — duck-typed on
+`processId` and `tokens` — which is exactly the "distinguishable by extension
+… a coincidence of the current layout, not a contract" problem #263 named.
+Extension is a coincidence; a declaration inside the file is the contract.
 
 They were `.beans/` and `.harness/workflow/`. A dot-prefixed directory is absent
 from a plain `ls`, from most file browsers and from GitHub's web tree, so the two

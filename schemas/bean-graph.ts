@@ -9,8 +9,8 @@
  * {
  *   "name": "folio-assistant",
  *   "nodes": [
- *     { "id": "defs",      "path": "defs",      "kind": "bean-defs" },
- *     { "id": "workflows", "path": "workflows", "kind": "workflow-state" }
+ *     { "id": "defs",      "path": "defs",      "kinds": ["bean-defs"] },
+ *     { "id": "workflows", "path": "workflows", "kinds": ["workflow-state"] }
  *   ]
  * }
  * ```
@@ -77,8 +77,27 @@ export const BeanGraphNodeSchema = z.object({
   id: z.string().min(1),
   /** Directory, relative to the graph root. Never absolute, never escaping the root. */
   path: z.string().min(1),
-  /** What this node holds. */
-  kind: z.enum(BEAN_NODE_KINDS),
+  /**
+   * What this node holds — an ARRAY, because a directory may hold more than
+   * one kind of thing.
+   *
+   * It does NOT have to say how to tell them apart, and that is the point:
+   * **the files declare what they are.** A bean carries its id, `title`,
+   * `status` and `type` in front matter; a workflow instance carries
+   * `$schema: "folio-workflow-instance/v1"`. A consumer reads a file and the
+   * file answers, so the node states what to EXPECT rather than how to
+   * discriminate.
+   *
+   * That is what makes the array safe here and unsafe in `agent-harness.json`,
+   * where #263 declared `beans/` and `beans/workflow/` as nested directories
+   * and its own comment conceded the two were "distinguishable by extension …
+   * a coincidence of the current layout, not a contract." Extension is a
+   * coincidence; a declaration inside the file is the contract.
+   *
+   * Empty is rejected: a node holding nothing is a directory nobody should
+   * scan, and declaring it is worse than omitting it.
+   */
+  kinds: z.array(z.enum(BEAN_NODE_KINDS)).min(1),
 });
 
 export type BeanGraphNode = z.infer<typeof BeanGraphNodeSchema>;
@@ -106,8 +125,8 @@ export const DEFAULT_BEAN_GRAPH_ROOT = "beans";
 export const DEFAULT_BEAN_GRAPH: BeanGraph = {
   name: "default",
   nodes: [
-    { id: "defs", path: "defs", kind: "bean-defs" },
-    { id: "workflows", path: "workflows", kind: "workflow-state" },
+    { id: "defs", path: "defs", kinds: ["bean-defs"] },
+    { id: "workflows", path: "workflows", kinds: ["workflow-state"] },
   ],
 };
 
@@ -159,7 +178,7 @@ export function parseBeanGraph(raw: unknown): BeanGraph {
   // Not a uniqueness rule in general — a graph may one day hold several
   // definition stores — but exactly one workflow-state node is what every
   // consumer today assumes, and an unnoticed second would split the state.
-  const stateNodes = graph.nodes.filter((n) => n.kind === "workflow-state");
+  const stateNodes = graph.nodes.filter((n) => n.kinds.includes("workflow-state"));
   if (stateNodes.length > 1) {
     throw new Error(
       `bean graph: ${stateNodes.length} workflow-state nodes ` +
@@ -171,7 +190,14 @@ export function parseBeanGraph(raw: unknown): BeanGraph {
   return graph;
 }
 
-/** The single node of `kind`, or undefined when the graph declares none. */
+/**
+ * The first node declaring `kind`, or undefined when the graph declares none.
+ *
+ * "First" rather than "the": a kind may appear on several nodes now that
+ * `kinds` is an array. Only `workflow-state` is constrained to one node (see
+ * {@link parseBeanGraph}), because splitting process state is a correctness
+ * problem rather than a layout choice.
+ */
 export function nodeOfKind(graph: BeanGraph, kind: BeanNodeKind): BeanGraphNode | undefined {
-  return graph.nodes.find((n) => n.kind === kind);
+  return graph.nodes.find((n) => n.kinds.includes(kind));
 }
