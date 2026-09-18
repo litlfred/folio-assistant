@@ -8,11 +8,15 @@
   "source_hash": "sha256:01641751fa52c6d5cec71757e7a1576f05da100a74f8149650d677bae730a0a9",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
+    "script_hash": "sha256:d87c333183d306fa319cd85b47fa4de74bfe21452ef04d2816ce49740f05d518",
     "engine_version": "1"
   },
   "criteria": {
     "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
       "result": "pass",
       "findings": []
     },
@@ -59,7 +63,7 @@
     }
   },
   "totals": {
-    "pass": 5,
+    "pass": 6,
     "fail": 1,
     "n/a": 1,
     "unknown": 0

@@ -123,6 +123,14 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "An activity names a skill its lane's role does not carry — the task demands something the performer was never given.",
   },
   {
+    id: "skill-servable",
+    applies: ["process"],
+    severity: "major",
+    summary:
+      "An activity names a skill that exists on disk but that `skill_fetch` cannot serve — its directory is " +
+      "in no local package. `workflow_next` hands the agent a name, and fetching it returns \"package not found\".",
+  },
+  {
     id: "activity-names-skill",
     applies: ["process"],
     severity: "minor",
@@ -163,10 +171,22 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["graph"],
     severity: "minor",
     summary:
-      "A skill exists on disk but nothing reaches it — no package manifest lists it, no role carries it, " +
-      "no activity names it. Reachability is a union of the three deliberately: most skills are invoked " +
-      "directly by name and never appear in a diagram, so requiring a role or an activity would report " +
-      "most of the corpus as orphaned, and a wall of false findings is how a check gets switched off.",
+      "A skill exists on disk but nothing reaches it — `skill_fetch` cannot serve it, no package manifest " +
+      "lists it, no role carries it, no activity names it. Reachability is a union deliberately: most " +
+      "skills are invoked directly by name and never appear in a diagram, so requiring a role or an " +
+      "activity would report most of the corpus as orphaned, and a wall of false findings is how a check " +
+      "gets switched off. The SERVING registry is the load-bearing member — a skill nothing can fetch is " +
+      "unreachable however many manifests name it.",
+  },
+  {
+    id: "manifest-skill-exists",
+    applies: ["graph"],
+    severity: "critical",
+    summary:
+      "A `package-manifest.json` entry names a skill the instance cannot resolve anywhere. Checked against " +
+      "the INSTANCE, never against the package's own directory listing: three manifests here are bundle " +
+      "definitions whose bodies live elsewhere, and measuring them against their own folder reported 19 " +
+      "false dangling entries (bean `nup0`).",
   },
   {
     id: "actor-roles-resolve",

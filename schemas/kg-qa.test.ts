@@ -134,3 +134,34 @@ describe("the sidecars committed in this repository", () => {
     expect(bad).toEqual([]);
   });
 });
+
+describe("reachability reads the serving registry, not just manifests", () => {
+  test("`skill-servable` is major — a body nobody can fetch is a real gap, not a broken link", () => {
+    expect(KG_CRITERIA_BY_ID["skill-servable"]!.severity).toBe("major");
+    expect(KG_CRITERIA_BY_ID["skill-servable"]!.applies).toEqual(["process"]);
+  });
+
+  test("`manifest-skill-exists` is critical and scoped to the graph roll-up", () => {
+    expect(KG_CRITERIA_BY_ID["manifest-skill-exists"]!.severity).toBe("critical");
+    expect(KG_CRITERIA_BY_ID["manifest-skill-exists"]!.applies).toEqual(["graph"]);
+  });
+
+  test("every skill_fetch local package points at a directory that exists", async () => {
+    // The defect this whole change came from: `skills/content-lifecycle` was
+    // absent from LOCAL_PACKAGES while 52 activities named its skills. A
+    // package pointing at a missing directory is the same failure one step on.
+    const { LOCAL_PACKAGES } = await import("../src/tools/skill-fetch.js");
+    const { existsSync } = await import("node:fs");
+    const missing = Object.entries(LOCAL_PACKAGES).filter(([, dir]) => !existsSync(dir));
+    expect(missing).toEqual([]);
+  });
+
+  test("every directory holding `<skill>.md` that a diagram can name is served", async () => {
+    const { LOCAL_PACKAGES } = await import("../src/tools/skill-fetch.js");
+    const served = new Set(Object.keys(LOCAL_PACKAGES));
+    // `content-lifecycle` is the one this change added; pin it so a future
+    // edit to the table cannot silently drop it again.
+    expect(served.has("content-lifecycle")).toBe(true);
+    expect(served.has("folio-core")).toBe(true);
+  });
+});

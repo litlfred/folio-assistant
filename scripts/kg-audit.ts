@@ -70,6 +70,7 @@ import {
 import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
 import { knownSkills } from "./known-skills.js";
+import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 
 const ENGINE_VERSION = "1";
 
@@ -228,8 +229,23 @@ async function auditProcess(
     }
   }
 
+  const servable = servableSkills();
+  const unservable: KgFinding[] = [];
+  for (const n of activities) {
+    for (const ref of n.skills) {
+      if (!skills.has(ref)) continue; // a dangling ref is a different finding
+      if (!servable.has(ref)) {
+        unservable.push({
+          where: n.id,
+          detail: `names skill "${ref}", which exists but no local package serves — skill_fetch would answer "package not found".`,
+        });
+      }
+    }
+  }
+
   const criteria: Record<string, KgCriterionEntry> = {
     "skill-ref-resolves": entry(danglingSkill),
+    "skill-servable": entry(unservable),
     "decision-ref-resolves": entry(danglingDecision, decisionRefs.length > 0),
     "role-ref-resolves": entry(danglingRoleRef, Boolean(graph)),
     "activity-in-lane": entry(noLane, m.lanes.length > 0),
@@ -383,6 +399,92 @@ function manifestSkills(): Set<string> {
   return out;
 }
 
+/**
+ * Every skill `skill_fetch` can actually hand to an agent.
+ *
+ * Read from `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` rather than from a
+ * list here, because a second copy of "which directories are served" is a
+ * second answer free to disagree with the first — and the whole defect this
+ * criterion exists for was a directory missing from that one table.
+ */
+function servableSkills(): Set<string> {
+  const out = new Set<string>();
+  for (const dir of Object.values(LOCAL_PACKAGES)) {
+    if (!existsSync(dir)) continue;
+    for (const f of readdirSync(dir)) if (f.endsWith(".md")) out.add(f.slice(0, -3));
+  }
+  return out;
+}
+
+/**
+ * Skills the Claude Code harness loads directly from `.claude/skills/local/`.
+ *
+ * Reachable without any manifest or package: the harness reads the directory.
+ * `scripts/generate-registry.ts` treats this same directory, and only this one
+ * under `.claude/skills/`, as `SkillDefinition`.
+ */
+function localHarnessSkills(): Set<string> {
+  const out = new Set<string>();
+  const dir = join(root, ".claude", "skills", "local");
+  if (!existsSync(dir)) return out;
+  for (const f of readdirSync(dir)) {
+    if (f.endsWith(".md")) out.add(f.slice(0, -3));
+    else if (f.endsWith(".json")) out.add(f.slice(0, -5));
+  }
+  return out;
+}
+
+/**
+ * Skills a REMOTE package declares it provides.
+ *
+ * `skills/remote-packages/*.json` name an external repo and, under
+ * `wrapper.skills`, the skills it supplies — `claude-scientific-skills`
+ * provides `scientific-visualization`, `hypothesis-generation` and
+ * `scientific-critical-thinking`. Their bodies are not in this checkout until
+ * the package is synced, so they are correctly ABSENT from `knownSkills()`:
+ * nothing here can serve one.
+ *
+ * But a local manifest naming one is not lying — it is naming a skill that
+ * comes from a dependency. Counting them only for `manifest-skill-exists` is
+ * the distinction: *can this instance serve it* and *is this entry a real
+ * skill somewhere* are different questions, and collapsing them would have had
+ * this criterion demand the deletion of three correct manifest entries the
+ * first time it ran. That very nearly happened.
+ */
+function remotePackageSkills(): Set<string> {
+  const out = new Set<string>();
+  const dir = join(root, "skills", "remote-packages");
+  if (!existsSync(dir)) return out;
+  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
+    try {
+      const p = JSON.parse(readFileSync(join(dir, f), "utf-8")) as { wrapper?: { skills?: string[] } };
+      for (const s of p.wrapper?.skills ?? []) out.add(s);
+    } catch {
+      // A remote-package file that will not parse is validate-skills.ts's finding.
+    }
+  }
+  return out;
+}
+
+/** Manifest entries, with the package each came from, for the reverse check. */
+function manifestEntries(): { pkg: string; skill: string }[] {
+  const out: { pkg: string; skill: string }[] = [];
+  const skillsRoot = join(root, "skills");
+  if (!existsSync(skillsRoot)) return out;
+  for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
+    if (!d.isDirectory()) continue;
+    const mp = join(skillsRoot, d.name, "package-manifest.json");
+    if (!existsSync(mp)) continue;
+    try {
+      const m = JSON.parse(readFileSync(mp, "utf-8")) as { skills?: string[] };
+      for (const s of m.skills ?? []) out.push({ pkg: d.name, skill: s });
+    } catch {
+      // `validate-skills.ts`'s finding, not this one's.
+    }
+  }
+  return out;
+}
+
 function auditGraph(
   graph: RoleGraph | undefined,
   processes: LoadedProcess[],
@@ -391,6 +493,8 @@ function auditGraph(
   auditorHash: string,
 ): KgQaReport {
   const reachable = manifestSkills();
+  for (const s of servableSkills()) reachable.add(s);
+  for (const s of localHarnessSkills()) reachable.add(s);
   for (const r of graph?.roles ?? []) for (const s of r.skills) reachable.add(s);
   for (const p of processes) {
     for (const n of p.model?.nodes.values() ?? []) for (const s of n.skills) reachable.add(s);
@@ -421,6 +525,19 @@ function auditGraph(
     null,
     {
       "skill-reachable": entry(orphans),
+      "manifest-skill-exists": (() => {
+        const remote = remotePackageSkills();
+        return entry(
+          manifestEntries()
+            .filter((e) => !skills.has(e.skill) && !remote.has(e.skill))
+            .map((e) => ({
+              where: `${e.pkg}/${e.skill}`,
+              detail:
+                `skills/${e.pkg}/package-manifest.json names "${e.skill}", which resolves to no skill here ` +
+                `and is declared by no remote package.`,
+            })),
+        );
+      })(),
       // Without a role graph there is nothing to resolve against, and reporting
       // every actor's roles as dangling would be a wall of false findings.
       "actor-roles-resolve": graph

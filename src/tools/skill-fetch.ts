@@ -38,6 +38,9 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 // the directory holding its `<skill>.md` instruction bodies. The skill lists are
 // read from disk so they stay in sync with the files — no hardcoded names.
 //   - folio-assistant        : the agent skills under src/skills/
+//   - content-lifecycle      : plan → author → validate → review → test →
+//                              publish → feedback, the skills every BPMN
+//                              content process names
 //   - folio-core             : content-agnostic platform bundle (skills/folio-core)
 //   - folio-document-adapter : prose-folio bundle, no Lean and no required TeX
 //   - folio-paper-adapter    : formal-math paper-adapter bundle (skills/folio-paper-adapter)
@@ -47,8 +50,24 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 // because a paper is a document whose blocks may additionally carry Lean. A
 // document folio wants the first only — the paper bundle's skills assume a
 // toolchain it does not have.
-const LOCAL_PACKAGES: Record<string, string> = {
+//
+// `content-lifecycle` was MISSING from this table until 2026-09-18, and the
+// consequence was not subtle: its eight skills — `content-author`,
+// `content-validate`, `content-review`, `content-publish`, `content-plan`,
+// `content-test`, `content-feedback`, `content-retire` — are named by **52**
+// `<folio:skill ref>` activities across the twenty diagrams in
+// `skills/workflows/`. So `workflow_next` handed an agent `content-validate`,
+// the agent called `skill_fetch`, and got "package not found". Every step of
+// every content-lifecycle process. `kg:audit`'s `skill-servable` criterion
+// exists to keep that closed.
+//
+// EXPORTED because reachability is not a property of a manifest: a skill is
+// reachable when something can SERVE it. `scripts/kg-audit.ts` reads this table
+// rather than keeping its own copy, so a package added here cannot be reported
+// as unreachable, and one removed here cannot pass.
+export const LOCAL_PACKAGES: Record<string, string> = {
   "folio-assistant": resolve(__dirname, "..", "skills"),
+  "content-lifecycle": resolve(__dirname, "..", "..", "skills", "content-lifecycle"),
   "folio-core": resolve(__dirname, "..", "..", "skills", "folio-core"),
   "folio-document-adapter": resolve(__dirname, "..", "..", "skills", "folio-document-adapter"),
   "folio-paper-adapter": resolve(__dirname, "..", "..", "skills", "folio-paper-adapter"),
@@ -66,7 +85,9 @@ export function registerSkillFetchTools(server: McpServer): void {
   server.tool(
     "skill_fetch",
     "Fetch a skill's instruction body for the agent to follow. Serves the local " +
-    "platform bundles (package_name 'folio-assistant' = agent skills, 'folio-core' = " +
+    "platform bundles (package_name 'folio-assistant' = agent skills, 'content-lifecycle' = " +
+    "the plan/author/validate/review/test/publish/feedback skills every BPMN content " +
+    "process names, 'folio-core' = " +
     "content-agnostic platform skills, 'folio-document-adapter' = prose-folio skills " +
     "(no Lean, no required TeX), 'folio-paper-adapter' = formal-math paper skills) " +
     "and external reference packages (Tier 2 escalation: academic-paper-reviewer, " +
@@ -75,11 +96,12 @@ export function registerSkillFetchTools(server: McpServer): void {
       skill: z.string().describe(
         "Skill identifier. Examples: 'lean-generation' (package_name 'folio-paper-adapter'), " +
         "'bean-coordination' (package_name 'folio-core'), 'corpus-grep' (package_name 'folio-assistant'), " +
+        "'content-validate' (package_name 'content-lifecycle'), " +
         "'academic-paper-reviewer' (package_name 'academic-research-skills')"
       ),
       package_name: z.string().default("folio-core").describe(
-        "Package name. Local: 'folio-assistant' | 'folio-core' | 'folio-document-adapter' | " +
-        "'folio-paper-adapter'. " +
+        "Package name. Local: 'folio-assistant' | 'content-lifecycle' | 'folio-core' | " +
+        "'folio-document-adapter' | 'folio-paper-adapter'. " +
         "Reference: 'academic-research-skills'."
       ),
     },
