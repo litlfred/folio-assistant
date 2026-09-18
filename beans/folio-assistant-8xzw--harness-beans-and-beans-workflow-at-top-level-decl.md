@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8xzw
 title: 'HARNESS: beans/ and beans/workflow/ at top level, declared, with a writable no-CLI fallback'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T17:04:30Z
-updated_at: 2026-09-18T17:04:30Z
+updated_at: 2026-09-18T17:22:26Z
 ---
 ## What
 
