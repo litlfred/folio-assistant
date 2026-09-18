@@ -2,6 +2,7 @@
 layout: default
 title: Agentic harness
 nav_order: 5
+lang: en
 ---
 
 # Agentic harness

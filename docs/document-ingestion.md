@@ -2,6 +2,7 @@
 layout: default
 title: Document ingestion
 nav_order: 7
+lang: en
 ---
 
 # Document ingestion

@@ -2,6 +2,7 @@
 layout: default
 title: CRDM methodology
 nav_order: 5
+lang: en
 ---
 
 # CRDM methodology

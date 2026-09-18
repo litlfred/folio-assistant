@@ -2,6 +2,7 @@
 layout: default
 title: Publication workflow
 nav_order: 6
+lang: en
 ---
 
 # Publication workflow
