@@ -168,7 +168,7 @@ async function auditProcess(
   const noSkill: KgFinding[] = [];
   const noLane: KgFinding[] = [];
   const skillNotCarried: KgFinding[] = [];
-  const danglingCall: KgFinding[] = [];
+  const unresolvedCall: KgFinding[] = [];
   const calls = activities.filter((n) => n.calledElement !== undefined);
   for (const n of activities) {
     for (const ref of n.skills) {
@@ -184,9 +184,11 @@ async function auditProcess(
       noSkill.push({ where: n.id, detail: `"${n.name}" names no skill.` });
     }
     if (n.calledElement !== undefined && !processIds.has(n.calledElement)) {
-      danglingCall.push({
+      unresolvedCall.push({
         where: n.id,
-        detail: `calls "${n.calledElement}", which is the id of no process this instance can load.`,
+        detail:
+          `calls "${n.calledElement}", which is the id of no process this instance can load. That is either a typo ` +
+          `or a process hosted elsewhere, and this audit cannot tell which — so it is recorded as unknown.`,
       });
     }
     if (!n.lane) noLane.push({ where: n.id, detail: `"${n.name}" sits in no lane, so no role — and therefore no actor — performs it.` });
@@ -270,7 +272,15 @@ async function auditProcess(
     "lane-binds-role": entry(unboundLane, Boolean(graph) && m.lanes.length > 0),
     "role-carries-activity-skill": entry(skillNotCarried, Boolean(graph) && m.lanes.length > 0),
     "activity-names-skill": entry(noSkill),
-    "call-activity-resolves": entry(danglingCall, calls.length > 0),
+    // Three states, not two. A resolved target passes; a process with no call
+    // activity is `n/a`; a target this instance cannot load is `unknown`,
+    // because it may be hosted elsewhere — see the note on the criterion.
+    "call-activity-resolves":
+      calls.length === 0
+        ? { result: "n/a" as KgResult, findings: [] }
+        : unresolvedCall.length
+          ? { result: "unknown" as KgResult, findings: unresolvedCall }
+          : { result: "pass" as KgResult, findings: [] },
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.

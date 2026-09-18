@@ -141,11 +141,20 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "call-activity-resolves",
     applies: ["process"],
-    severity: "critical",
+    severity: "major",
+    // `major`, and an unresolved target records `unknown` rather than `fail`,
+    // because this audit **cannot tell a typo from a legitimate outward call.**
+    // PR #282 states the rule from the interpreter's side: a call activity
+    // naming a process no file declares stays opaque, since a folio may call
+    // out to a process it does not host. Rendering that as a `critical` failure
+    // would break the build of the first downstream instance that does so —
+    // the same mistake `readme-links.ts` avoids by reporting an external host
+    // as NOT CHECKED rather than as dead.
     summary:
       "A call activity's `calledElement` names a process this instance can load. It is the join that makes a call " +
       "activity's skill exemption safe — without it, a typo in `calledElement` would satisfy both criteria and " +
-      "implement the step with nothing at all.",
+      "implement the step with nothing at all. A target this instance cannot load is `unknown`, not `fail`: it may " +
+      "be hosted elsewhere, and an audit that cannot tell must not claim it can.",
   },
   {
     id: "role-skills-resolve",
