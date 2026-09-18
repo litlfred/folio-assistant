@@ -1,0 +1,26 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "decision",
+    "id": "lean-build-gate",
+    "path": "docs/workflows/decisions/lean-build-gate.dmn"
+  },
+  "source_hash": "sha256:575d16b7540b09930564db6b67085d1ff570fb084abe58437d9ae5000a868718",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:9db63d141f69d769de5dbdd1a0cbd15a358227aae7f0921d9655fe94ed75d970",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "decision-outcomes-used": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 1,
+    "fail": 0,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

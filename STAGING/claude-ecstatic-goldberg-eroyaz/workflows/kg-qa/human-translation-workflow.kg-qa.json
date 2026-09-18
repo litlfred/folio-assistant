@@ -1,0 +1,67 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_HumanTranslation",
+    "path": "docs/workflows/human-translation-workflow.bpmn"
+  },
+  "source_hash": "sha256:01641751fa52c6d5cec71757e7a1576f05da100a74f8149650d677bae730a0a9",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:9db63d141f69d769de5dbdd1a0cbd15a358227aae7f0921d9655fe94ed75d970",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_ReceiveAssignment",
+          "detail": "\"Receive assignment and materials\" names no skill."
+        },
+        {
+          "where": "Task_TranslateInTool",
+          "detail": "\"Translate strings in preferred tool\" names no skill."
+        },
+        {
+          "where": "Task_SubmitPO",
+          "detail": "\"Submit completed .po file\" names no skill."
+        },
+        {
+          "where": "Task_SMEReview",
+          "detail": "\"Review translation for accuracy\" names no skill."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 0
+  }
+}
