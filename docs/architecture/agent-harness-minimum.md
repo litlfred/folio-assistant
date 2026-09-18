@@ -172,7 +172,7 @@ Prose an agent reads, not pages a reader browses:
 - how Tools are made available in shell/CLI and optionally as MCP, and how a
   Task's I/O corresponds to a Tool's inputs and outputs (16:28).
 
-### Tools — three nodes, and no MCP
+### Tools — four nodes, and no MCP
 
 Per 16:28 the harness holds **beans and nothing else** as a *dependency*. That
 is still true, and it is about what must be installed — not about how many Tool
@@ -184,6 +184,7 @@ to need two nodes rather than one:
 | `beans-cli` | the six work-plan skills | `shell` — installed by `scripts/install-beans.sh` |
 | `beans-manual` | the same six | `shell` — `scripts/beans-fallback.ts`, or a hand edit of the front matter |
 | `github` | the four PR-choreography skills | `shell` — `gh`, or the REST call it wraps |
+| `pages-publish` | `kg-export` | `shell` — push a directory to the `gh-pages` branch |
 
 **Two beans nodes, not one.** The CLI is absent from a fresh container, and an
 agent that knows only the CLI reads the plan and touches nothing — the
@@ -191,7 +192,16 @@ agent that knows only the CLI reads the plan and touches nothing — the
 work unclaimed. The fallback is a Tool of equal standing, not a footnote, and
 modelling it as one is what forces the skill to say *when* to reach for it.
 
-**No MCP.** None of the three needs a tool server: `ToolDefinition.invoke`
+**`pages-publish` is where the harness's visibility problem is solved.** The
+harness has no renderer — `folio` is the only `renderable` kind and it belongs
+to core — so its knowledge graph is published as **data**, not as a page:
+`kg-export` serializes it to one JSON document and this Tool puts the document
+somewhere. That does not make the harness self-documenting; it makes it
+inspectable, which is the property that was actually missing. A GitLab Pages or
+object-store node satisfies the same skill later, which is the forge decision
+above applied a second time.
+
+**No MCP.** None of these needs a tool server: `ToolDefinition.invoke`
 carries `mcp` as one optional arm beside `shell` and `container`, and the
 harness relies on `shell`. A Tool whose only invocation is an MCP call is not
 usable by the harness that defines it. MCP is acknowledged as a transport a

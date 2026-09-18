@@ -121,6 +121,14 @@ jobs:
 
       # Serve the prebuilt static output as-is (just-the-docs is already rendered;
       # /api is TypeDoc HTML).
+      # The harness has no renderer of its own — `folio` is the only renderable
+      # graph kind and it belongs to folio-assist-core — so its knowledge graph
+      # is published as DATA rather than as a page. Something else may draw it.
+      # A non-zero exit means a source could not be read, and a partial graph
+      # must not be published as a whole one.
+      - name: Export the knowledge graph
+        run: bun run scripts/kg-export.ts --out ./_site/kg/kg.json
+
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
 

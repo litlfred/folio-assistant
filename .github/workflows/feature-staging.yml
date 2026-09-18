@@ -218,6 +218,24 @@ jobs:
           find ./_site -name "*.html" -exec sed -i "s|<body\([^>]*\)>|<body\1>${BANNER}|" {} + 2>/dev/null || true
           echo "Injected staging banner into $(find ./_site -name '*.html' | wc -l) HTML files"
 
+      # The branch's KG, published beside the branch's site, so the graph a
+      # reviewer inspects is the one this PR produces rather than main's. The
+      # export is data, not a page, so the banner injection above does not
+      # touch it — which is why the `branch`/`sha` fields below matter: they
+      # are the only thing saying which commit a JSON file came from.
+      - name: Export the knowledge graph
+        env:
+          KG_BRANCH: ${{ steps.slug.outputs.branch }}
+        run: |
+          bun run scripts/kg-export.ts --out ./_site/kg/kg.json
+          bun -e '
+            const f = "./_site/kg/kg.json";
+            const d = JSON.parse(await Bun.file(f).text());
+            d.staging = { branch: process.env.KG_BRANCH, sha: process.env.GITHUB_SHA,
+                          pr: process.env.GITHUB_REF_NAME, run: process.env.GITHUB_RUN_ID };
+            await Bun.write(f, JSON.stringify(d, null, 2) + "\n");
+          '
+
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
 
