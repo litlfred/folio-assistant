@@ -18,7 +18,7 @@
  * @module content/pipeline/translation-qa-sweep
  */
 
-import { existsSync, readFileSync, writeFileSync, readdirSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, mkdirSync } from "node:fs";
 import { join, relative, basename } from "node:path";
 import { availableLocales } from "./po-resolve";
 

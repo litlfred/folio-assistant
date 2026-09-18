@@ -582,7 +582,7 @@ phase. Some exist today; others are proposed.
 
 | Capability | Used in phase | How |
 |---|---|---|
-| **GitHub issue management** (`gh` CLI) | All phases | Issues are the primary artefact for requirements, impact analysis, and sign-off |
+| **GitHub issue management** | All phases | Issues are the primary artefact for requirements, impact analysis, and sign-off. Agents reach GitHub through the MCP tools, not the `gh` CLI, which is not available in every harness |
 | **BPMN workflow authoring** (skill: `bpmn-authoring`) | Phase 2 | Agent can create and modify BPMN 2.0 process diagrams |
 | **Content graph** (`content-graph.ts`) | Phase 4 | Dependency analysis across blocks and chapters |
 | **QA criteria registry** (`qa-criteria-registry.ts`) | Phase 3, 4 | Register and scope new QA checks |
@@ -591,22 +591,68 @@ phase. Some exist today; others are proposed.
 | **Schema types** (`schemas/*.ts`) | Phase 3 | Define new types, constraints, and builders |
 | **Document ingestion** (`uploads/` → `library/` pipeline) | Phase 2 | Ingest source documents for review |
 
+### Skills that now exist
+
+| Skill | Phase | Purpose |
+|---|---|---|
+| **`crdm-detect`** | Trigger | Recognise when a request is a feature rather than content. Five categories of detection phrasing, an explicit "not a feature request" list, and the session-state rules |
+| **`crdm-requirements-workflow`** | All phases | The six-phase process, the actors table, and the issue-association rules |
+
+Both are guidance, not instrumentation: they tell an agent what to do, and
+nothing checks that it did. See "What is not built yet" for why that
+distinction is kept explicit.
+
 ### Proposed skills
 
 | Skill | Phase | Purpose |
 |---|---|---|
-| **`crdm-detect`** | Trigger | Recognise when a request is a feature rather than content |
 | **`crdm-needs-assessment`** | Phase 1 | Guide the user through needs articulation; identify stakeholders |
 | **`crdm-impact-analysis`** | Phase 4 | Automated scan of affected schemas, pipeline scripts, adapters, and folios |
 | **`crdm-requirements-template`** | Phase 3 | Generate structured requirements from conversation |
 | **`review-triage`** | Phase 6 | Triage review comments from ingested documents (e.g. public consultation feedback) |
 
-### Proposed tooling
+### Running the process — it is already executable
+
+**`crdm_start` and `crdm_status` were proposed here and should not be built.**
+The generic workflow tools already run this process, because
+`docs/workflows/crdm-requirements.bpmn` is a loadable BPMN process like every
+other diagram in this repository:
+
+| Instead of | Use |
+|---|---|
+| `crdm_start` | `workflow_start` with `crdm-requirements` and the bean the work hangs on |
+| `crdm_status` | `workflow_next` — what is enabled now, which lane owns it, which skill implements it |
+| a phase checklist | `workflow_complete`, which **refuses a step that is not enabled**, so phases cannot be claimed out of order |
+
+A second set of tools over the same diagram would be a second answer to
+"where are we", free to disagree with the first. State lives under
+`.folio/workflow/` and is committed, so a sibling session sees the same
+position — which is the property a chat-local phase tracker could never have.
+
+Every activity in the agent's lane carries the skill that implements it, so
+`workflow_next` returns something actionable rather than a step name:
+
+| Step | Skill |
+|---|---|
+| Detect feature request | `crdm-detect` |
+| Scan / link / ask about the issue | `crdm-requirements-workflow` |
+| Phase 1 — stakeholders, synthesise needs | `crdm-requirements-workflow` |
+| Phase 2 — map the current workflow | `bpmn-authoring` |
+| Phases 3–4 — requirements and impact | `crdm-requirements-workflow` + `content-graph` |
+| Phase 5 — create beans | `todo-manager` |
+| Phase 6 — implement | `prepare-merge` |
+| Post the round summary | `delivery-summary` |
+| Close the issue | `crdm-requirements-workflow` |
+
+Three steps also carry a work-plan effect the engine performs: implementing
+claims the bean, creating beans notes it, and closing resolves it — and
+resolve only lands once the instance itself has completed, because whether
+work is done is a judgement.
+
+### Still proposed
 
 | Tool | Purpose |
 |---|---|
-| **`crdm_start` MCP tool** | Enter CRDM mode for a given issue; scaffold the phases in the issue body |
-| **`crdm_status` MCP tool** | Report which phase the current CRDM cycle is in and what deliverables are pending |
 | **`stakeholder_map` MCP tool** | Given a proposed change, identify affected roles from `folio.config.json` and CODEOWNERS |
 
 ## What is not built yet
@@ -615,23 +661,52 @@ phase. Some exist today; others are proposed.
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-not-built-yet.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/what-is-not-built-yet.md" }
 
 This page documents the methodology; the skills and tooling that implement it
-are in various stages of development.
+are in various stages of development. What follows is checked against the
+repository rather than against intent — a gap list that goes stale is worse
+than none, because it sends a reader looking for something that is already
+there, or lets them assume something exists because nobody updated the list.
+
+**Built since this page was first written:**
+
+- **CRDM detection skill** — [`skills/folio-core/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/crdm-detect.md)
+  gives the agent five categories of detection phrasing, an explicit "what is
+  *not* a feature request" list, and the session-state rules (new session,
+  existing session already in the process, existing session doing content
+  work). The judgement is written down; it is not yet *measured*, so see the
+  caveat below.
+- **The process is executable** — `crdm-requirements.bpmn` loads like every
+  other diagram here, so `workflow_start` / `workflow_next` /
+  `workflow_complete` run it today, and `workflow_complete` refuses a step
+  that is not enabled. Every activity in the agent's lane names the skill
+  that implements it, and three carry the bean operation the engine performs.
+  **This is why `crdm_start` and `crdm_status` are not on the list below** —
+  they would be a second answer to "where are we", free to disagree with the
+  first.
+- **BPMN diagram of the process itself** —
+  [`docs/workflows/crdm-requirements.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/docs/workflows/crdm-requirements.bpmn),
+  with lanes for the BA / feature requestor, the agent, and stakeholders.
+- **The six-phase workflow as a skill** —
+  [`skills/folio-core/crdm-requirements-workflow.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/crdm-requirements-workflow.md),
+  including the actors table and the issue-association rules.
 
 **Not yet implemented:**
 
-- **CRDM detection skill** — the agent does not yet automatically recognise
-  when a request is a feature vs content. Today this is a human judgement.
 - **Structured requirements templates** — no MCP tool scaffolds the CRDM
-  phases into a GitHub issue. The structure described above is manual.
+  phases into a GitHub issue. The structure described above is written by
+  hand each time.
 - **Automated impact analysis** — the agent can read the content graph and
-  schema files, but there is no dedicated tool that produces an impact report
-  for a proposed change.
+  the schema files, but no dedicated tool produces an impact report for a
+  proposed change.
 - **Stakeholder mapping** — no automated discovery of affected roles or
-  folios from a proposed change description.
-- **Review triage tooling** — the ability to ingest a Word document with
-  comments and present them for structured triage is tracked in
+  folios from a change description.
+- **Review triage tooling** — ingesting a Word document with comments and
+  presenting them for structured triage is tracked in
   [#197](https://github.com/litlfred/folio-assistant/issues/197).
-- **BPMN diagram for the CRDM workflow itself** — this page describes the
-  process in prose; a BPMN diagram would make it executable and verifiable.
+
+**Built but unverified**, which is a third state and not a milder form of
+"built": the detection skill has never been measured against real requests.
+Nobody has taken a sample of issues and chat openings and checked how often
+it fires when it should, or fires when it should not. Until that happens the
+honest claim is that the guidance exists, not that detection works.
 
 **Tracked in:** [#203](https://github.com/litlfred/folio-assistant/issues/203)

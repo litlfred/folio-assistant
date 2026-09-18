@@ -391,6 +391,18 @@ are in [`skills/folio-core/crdm-detect.md`](skills/folio-core/crdm-detect.md);
 the full six-phase process is in
 [`skills/folio-core/crdm-requirements-workflow.md`](skills/folio-core/crdm-requirements-workflow.md).
 
+**The CRDM process is executable — do not hand-roll a phase tracker.**
+`docs/workflows/crdm-requirements.bpmn` loads like every other diagram here,
+so `workflow_start` / `workflow_next` / `workflow_complete` run it, and
+`workflow_complete` refuses a step that is not enabled. Every activity in the
+agent's lane carries `<folio:skill ref>`, so `workflow_next` returns the skill
+to run rather than just a step name; `A_Implement`, `A_CreateBeans` and
+`A_Close` also carry the bean operation the engine performs. `crdm_start` and
+`crdm_status` are documented as **proposed** in older text and should not be
+built: a second set of tools over the same diagram is a second answer to
+"where are we", free to disagree with the first, and workflow state under
+`.folio/workflow/` is committed so a sibling session sees the same position.
+
 Key rules:
 - Feature work must be linked to a GitHub issue (scan before creating; do not
   create without user permission)

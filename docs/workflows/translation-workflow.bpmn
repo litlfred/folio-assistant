@@ -23,6 +23,37 @@
 
   <process id="Process_Translation" name="Translation Workflow" isExecutable="false">
 
+    <!-- ── Lanes: who is accountable for each step ─────────────
+         An activity in no lane is a step nobody owns. The split is by
+         actor, not by tooling: `serviceTask` is the platform acting,
+         `userTask` is a person acting, and a gateway is the platform
+         reading state that a person may have produced. Gateway_Signoff
+         therefore sits with the platform even though what it reads is a
+         human decision.  ──────────────────────────────────────── -->
+    <laneSet id="LaneSet_Translation">
+      <lane id="Lane_Author" name="Author (source content)">
+        <flowNodeRef>Start_ContentAuthored</flowNodeRef>
+      </lane>
+      <lane id="Lane_Platform" name="Agent / platform (automated)">
+        <flowNodeRef>Task_PotExtract</flowNodeRef>
+        <flowNodeRef>Task_Translate</flowNodeRef>
+        <flowNodeRef>Task_PoInject</flowNodeRef>
+        <flowNodeRef>Task_RoundTripQA</flowNodeRef>
+        <flowNodeRef>Gateway_Drift</flowNodeRef>
+        <flowNodeRef>Gateway_PostQA</flowNodeRef>
+        <flowNodeRef>Task_WriteUnofficial</flowNodeRef>
+        <flowNodeRef>Gateway_Signoff</flowNodeRef>
+        <flowNodeRef>Task_WriteOfficial</flowNodeRef>
+        <flowNodeRef>Task_StalenessCheck</flowNodeRef>
+        <flowNodeRef>End_TranslationComplete</flowNodeRef>
+        <flowNodeRef>End_Stale</flowNodeRef>
+      </lane>
+      <lane id="Lane_Reviewer" name="Human reviewer / adjudicator">
+        <flowNodeRef>Task_Adjudicate</flowNodeRef>
+        <flowNodeRef>Task_Signoff</flowNodeRef>
+      </lane>
+    </laneSet>
+
     <!-- ── Start ──────────────────────────────────────────────── -->
     <startEvent id="Start_ContentAuthored" name="Content authored&#10;(source locale)">
       <documentation>Source content exists in the folio's defaultLocale.

@@ -18,7 +18,7 @@ import argparse
 import logging
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Optional
 from urllib.parse import urlparse
 
 # Add parent directory to path for sibling imports
@@ -27,7 +27,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from translation_config import (
     DakConfig,
     DakConfigError,
-    LanguageEntry,
     TranslationComponent,
     discover_components,
     get_languages,

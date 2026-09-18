@@ -17,8 +17,8 @@
  * @module content/pipeline/po-resolve
  */
 
-import { existsSync, readFileSync } from "node:fs";
-import { join, basename, dirname } from "node:path";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import {
   readFolioConfig,
   resolveDependencyTree,
@@ -76,10 +76,10 @@ export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] 
   // ── Explicit poSources (no fallback) ──
   if (poSources && poSources.length > 0) {
     return poSources
-      .map((src) => {
+      .map((src): ResolvedPoSource | null => {
         const abs = src.startsWith("/") ? src : join(folioRoot, src);
         if (!existsSync(abs)) return null;
-        return { path: abs, resolution: "explicit" as const };
+        return { path: abs, resolution: "explicit" };
       })
       .filter((s): s is ResolvedPoSource => s !== null);
   }
@@ -207,7 +207,6 @@ export function availableLocales(
 
   // Scan locale subdirectories
   try {
-    const { readdirSync } = require("node:fs");
     const entries = readdirSync(transDir, { withFileTypes: true });
     for (const entry of entries) {
       if (!entry.isDirectory()) continue;
