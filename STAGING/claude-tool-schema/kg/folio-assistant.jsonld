@@ -115,7 +115,7 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T20:14:22.820Z",
+  "generatedAt": "2026-09-18T20:18:34.894Z",
   "counts": {
     "Skill": 138,
     "Actor": 24,
@@ -15375,25 +15375,25 @@
         "inputs": [
           {
             "name": "id",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanId",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/BeanId",
             "description": "The bean to act on; absent for list/create.",
             "required": false
           },
           {
             "name": "status",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanStatus",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/BeanStatus",
             "required": false
           },
           {
             "name": "body",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/Markdown",
             "required": false
           }
         ],
         "outputs": [
           {
             "name": "bean",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanId",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/BeanId",
             "description": "The bean created or updated."
           }
         ]
@@ -15439,24 +15439,24 @@
         "inputs": [
           {
             "name": "id",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanId",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/BeanId",
             "required": false
           },
           {
             "name": "status",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanStatus",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/BeanStatus",
             "required": false
           },
           {
             "name": "body",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/Markdown",
             "required": false
           }
         ],
         "outputs": [
           {
             "name": "bean",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanId"
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/BeanId"
           }
         ]
       },
@@ -15500,24 +15500,24 @@
         "inputs": [
           {
             "name": "branch",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/Branch",
             "required": false
           },
           {
             "name": "number",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/ChangeProposalNumber",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/ChangeProposalNumber",
             "required": false
           },
           {
             "name": "body",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/Markdown",
             "required": false
           }
         ],
         "outputs": [
           {
             "name": "url",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/Url",
             "description": "The change proposal or comment created."
           }
         ]
@@ -15555,13 +15555,13 @@
         "inputs": [
           {
             "name": "directory",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/RepoPath",
             "description": "The built tree to publish.",
             "required": true
           },
           {
             "name": "baseUrl",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/Url",
             "description": "Publication base; a preview passes its own.",
             "required": false
           }
@@ -15569,7 +15569,7 @@
         "outputs": [
           {
             "name": "url",
-            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-tool-schema/kg/tool-types.schema.json#/$defs/Url",
             "description": "Where the tree is served."
           }
         ]
@@ -15702,8 +15702,8 @@
   ],
   "staging": {
     "branch": "claude/tool-schema",
-    "sha": "1de3e58061b7164db0b1175bcb8f99528526c6bd",
+    "sha": "83bbe8dbb1823964a01de1577f56e351d4b747a1",
     "pr": "279/merge",
-    "run": "35390217868"
+    "run": "35390597673"
   }
 }
