@@ -84,11 +84,6 @@
   },
   "danglingLinks": [
     {
-      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/authoring-who-smart-guidelines",
-      "edge": "providesCapability",
-      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/fhir-validator"
-    },
-    {
       "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/authoring-math",
       "edge": "declaresSkill",
       "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/scientific-visualization"
@@ -107,14 +102,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T19:45:21.641Z",
+  "generatedAt": "2026-09-18T20:12:26.230Z",
   "counts": {
     "Skill": 138,
     "Actor": 24,
-    "Capability": 22,
+    "Capability": 23,
     "Role": 62,
-    "Requirement": 5,
-    "SkillPackage": 13,
+    "SkillPackage": 14,
     "Process": 20,
     "SequenceFlow": 362,
     "ProcessNode": 328,
@@ -752,7 +746,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/directory-conventions.md",
-      "lines": 309,
+      "lines": 311,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -769,7 +763,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/role-model.md",
-      "lines": 226,
+      "lines": 264,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -3035,6 +3029,20 @@
       }
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/fhir-validator",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
+      "id": "fhir-validator",
+      "name": "HL7 FHIR Validator",
+      "description": "HL7's standalone FHIR resource validator. Distinct from ig-publisher, which builds a whole IG: this validates individual resources and profiles against a package, and is what an L3 authoring loop runs between builds.",
+      "detection": {
+        "method": "command",
+        "command": "java -jar ${FHIR_VALIDATOR_JAR:-/opt/fhir-validator/validator_cli.jar} -version"
+      },
+      "requires": [
+        "java-runtime"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/pandoc",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
       "id": "pandoc",
@@ -3179,329 +3187,17 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#requirement/req:fhir-validation",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#Requirement",
-      "id": "req:fhir-validation",
-      "title": "FHIR Validation Requirements",
-      "description": "FHIR Implementation Guide content must pass SUSHI compilation, IG Publisher QA, and conformance validation.",
-      "derivedFrom": [
-        "req:content-lifecycle"
-      ],
-      "actors": [
-        "fhir-modeller",
-        "qc-reviewer"
-      ],
-      "statements": [
-        {
-          "key": "sushi-compile",
-          "label": "SUSHI compilation succeeds",
-          "conformance": "SHALL",
-          "requirement": "All FSH files SHALL compile successfully with SUSHI before IG Publisher build.",
-          "satisfiedBy": [
-            {
-              "kind": "capability",
-              "ref": "sushi-compiler"
-            }
-          ]
-        },
-        {
-          "key": "ig-publisher-qa",
-          "label": "IG Publisher QA passes",
-          "conformance": "SHALL",
-          "requirement": "The IG Publisher build SHALL complete with no errors in qa.html.",
-          "dependsOn": [
-            "sushi-compile"
-          ],
-          "satisfiedBy": [
-            {
-              "kind": "capability",
-              "ref": "ig-publisher"
-            }
-          ]
-        },
-        {
-          "key": "crmi-conformance",
-          "label": "CRMI profile conformance",
-          "conformance": "SHOULD",
-          "requirement": "Resources SHOULD conform to CRMI profiles (Shareable, Publishable, Computable, Executable) as applicable."
-        },
-        {
-          "key": "terminology-bindings",
-          "label": "Terminology bindings valid",
-          "conformance": "SHALL",
-          "requirement": "All terminology bindings SHALL reference valid ValueSets with resolvable codes.",
-          "actors": [
-            "terminologist"
-          ]
-        }
-      ],
-      "tags": [
-        "smart-guidelines",
-        "fhir"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#requirement/req:commit-hygiene",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#Requirement",
-      "id": "req:commit-hygiene",
-      "title": "Commit Hygiene",
-      "description": "All commits must be clean: no build artifacts, no secrets, pinned dependencies.",
-      "derivedFrom": [
-        "req:agent-workflow"
-      ],
-      "actors": [
-        "author",
-        "admin"
-      ],
-      "statements": [
-        {
-          "key": "no-build-artifacts",
-          "label": "No build artifacts in commits",
-          "conformance": "SHALL",
-          "requirement": "Commits SHALL NOT include generated build artifacts (dist/, node_modules/, *.class, etc.)."
-        },
-        {
-          "key": "no-secrets",
-          "label": "No secrets in commits",
-          "conformance": "SHALL",
-          "requirement": "Commits SHALL NOT include secrets, API keys, tokens, or credentials."
-        },
-        {
-          "key": "pin-dependencies",
-          "label": "Pin dependency versions",
-          "conformance": "SHALL",
-          "requirement": "All dependency versions SHALL be pinned or locked (package-lock.json, requirements.txt with versions)."
-        }
-      ],
-      "tags": [
-        "common",
-        "git"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#requirement/req:lean-verification",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#Requirement",
-      "id": "req:lean-verification",
-      "title": "Lean Proof Verification Requirements",
-      "description": "Formal mathematics content must have verified Lean 4 proofs with proper sorry tracking.",
-      "derivedFrom": [
-        "req:content-lifecycle"
-      ],
-      "actors": [
-        "author"
-      ],
-      "statements": [
-        {
-          "key": "lean-compiles",
-          "label": "Lean project compiles",
-          "conformance": "SHALL",
-          "requirement": "The Lean 4 project SHALL compile with `lake build` without errors.",
-          "satisfiedBy": [
-            {
-              "kind": "capability",
-              "ref": "lean-toolchain"
-            }
-          ]
-        },
-        {
-          "key": "sorry-tracking",
-          "label": "Sorry annotations tracked",
-          "conformance": "SHALL",
-          "requirement": "All `sorry` placeholders SHALL be annotated with reference to the corresponding proof obligation."
-        },
-        {
-          "key": "citation-match",
-          "label": "Citations match bibliography",
-          "conformance": "SHALL",
-          "requirement": "All citations in LaTeX documents SHALL have corresponding bibliography entries."
-        }
-      ],
-      "tags": [
-        "math",
-        "lean"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#requirement/req:session-start",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#Requirement",
-      "id": "req:session-start",
-      "title": "Session Start Protocol",
-      "description": "Every agent session must detect the user role and check environment capabilities before proceeding.",
-      "derivedFrom": [
-        "req:agent-workflow"
-      ],
-      "actors": [
-        "viewer",
-        "reviewer",
-        "author",
-        "admin"
-      ],
-      "statements": [
-        {
-          "key": "detect-role",
-          "label": "Detect user role",
-          "conformance": "SHALL",
-          "requirement": "The agent MUST determine the user's role at session start by checking identity sources against the role assignment table.",
-          "satisfiedBy": [
-            {
-              "kind": "capability",
-              "ref": "role-detection"
-            }
-          ]
-        },
-        {
-          "key": "check-capabilities",
-          "label": "Check environment capabilities",
-          "conformance": "SHALL",
-          "requirement": "The agent MUST probe for all capabilities referenced by skills the user's role can access.",
-          "dependsOn": [
-            "detect-role"
-          ]
-        },
-        {
-          "key": "check-todos",
-          "label": "Check open todos",
-          "conformance": "SHOULD",
-          "requirement": "The agent SHOULD check for open todos and present a summary to the user.",
-          "dependsOn": [
-            "detect-role"
-          ]
-        }
-      ],
-      "tags": [
-        "common",
-        "session"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#requirement/req:content-lifecycle",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#Requirement",
-      "id": "req:content-lifecycle",
-      "title": "Content Development Lifecycle",
-      "description": "Content must follow the plan → author → validate → review → test → publish → feedback lifecycle with appropriate phase gates.",
-      "derivedFrom": [
-        "req:agent-workflow"
-      ],
-      "actors": [
-        "author",
-        "reviewer",
-        "content-reviewer",
-        "qc-reviewer",
-        "publication-manager",
-        "programme-manager"
-      ],
-      "statements": [
-        {
-          "key": "plan-before-author",
-          "label": "Planning precedes authoring",
-          "conformance": "SHALL",
-          "requirement": "Content authoring MUST NOT begin until a project plan with defined scope and team is established.",
-          "actors": [
-            "programme-manager"
-          ],
-          "satisfiedBy": [
-            {
-              "kind": "skill",
-              "ref": "content-plan"
-            }
-          ]
-        },
-        {
-          "key": "validate-before-review",
-          "label": "Validation precedes review",
-          "conformance": "SHALL",
-          "requirement": "Content MUST pass automated validation (schema, FHIR, Lean) before entering formal review.",
-          "dependsOn": [
-            "plan-before-author"
-          ],
-          "satisfiedBy": [
-            {
-              "kind": "skill",
-              "ref": "content-validate"
-            }
-          ]
-        },
-        {
-          "key": "review-before-test",
-          "label": "Review precedes testing",
-          "conformance": "SHALL",
-          "requirement": "Content MUST receive formal review approval before integration testing.",
-          "dependsOn": [
-            "validate-before-review"
-          ],
-          "actors": [
-            "content-reviewer"
-          ],
-          "satisfiedBy": [
-            {
-              "kind": "skill",
-              "ref": "content-review"
-            }
-          ]
-        },
-        {
-          "key": "test-before-publish",
-          "label": "Testing precedes publication",
-          "conformance": "SHALL",
-          "requirement": "Content MUST pass all tests before publication.",
-          "dependsOn": [
-            "review-before-test"
-          ],
-          "actors": [
-            "qc-reviewer"
-          ],
-          "satisfiedBy": [
-            {
-              "kind": "skill",
-              "ref": "content-test"
-            }
-          ]
-        },
-        {
-          "key": "publish-authorized",
-          "label": "Publication requires authorization",
-          "conformance": "SHALL",
-          "requirement": "Publication MUST be authorized by the Programme Manager or designated authority.",
-          "dependsOn": [
-            "test-before-publish"
-          ],
-          "actors": [
-            "programme-manager",
-            "publication-manager"
-          ],
-          "satisfiedBy": [
-            {
-              "kind": "skill",
-              "ref": "content-publish"
-            }
-          ]
-        },
-        {
-          "key": "feedback-collected",
-          "label": "Feedback collected post-publication",
-          "conformance": "SHOULD",
-          "requirement": "Feedback SHOULD be collected from implementers and users after publication and triaged for the next iteration.",
-          "dependsOn": [
-            "publish-authorized"
-          ],
-          "satisfiedBy": [
-            {
-              "kind": "skill",
-              "ref": "content-feedback"
-            }
-          ]
-        }
-      ],
-      "tags": [
-        "common",
-        "lifecycle"
-      ]
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/workflows",
       "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
       "name": "workflows",
       "path": "skills/workflows",
+      "hasManifest": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/requirements",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
+      "name": "requirements",
+      "path": "skills/requirements",
       "hasManifest": false
     },
     {
@@ -14458,7 +14154,7 @@
       "graphKinds": [
         "kg"
       ],
-      "summary": "Skill packages. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not."
+      "summary": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), and the `kg-qa/` audit sidecars beside each. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#directory/beans",

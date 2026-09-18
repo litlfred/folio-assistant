@@ -362,6 +362,11 @@
       <td>BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table.</td>
       <td><code class="language-plaintext highlighter-rouge">skills/workflows/*.bpmn</code>, <code class="language-plaintext highlighter-rouge">skills/workflows/decisions/*.dmn</code></td>
     </tr>
+    <tr>
+      <td><strong>Requirement</strong></td>
+      <td>a conformance obligation that <strong>points at</strong> the others: <code class="language-plaintext highlighter-rouge">satisfiedBy</code> names the skill or capability discharging it, <code class="language-plaintext highlighter-rouge">actors</code> who is bound, <code class="language-plaintext highlighter-rouge">derivedFrom</code> the broader requirement it specialises.</td>
+      <td><code class="language-plaintext highlighter-rouge">skills/requirements/*.json</code></td>
+    </tr>
   </tbody>
 </table></div>
 
@@ -417,6 +422,48 @@ corpus is touched. Nobody takes them on, so they carry <code class="language-pla
 fill the corpus” is a finding nobody can act on, and a check that produces
 those is a check somebody switches off.</p>
 </blockquote>
+<h2 id="requirements-are-the-fifth-node-kind-and-they-only-point">
+  
+  
+    <a href="#requirements-are-the-fifth-node-kind-and-they-only-point" class="anchor-heading" aria-labelledby="requirements-are-the-fifth-node-kind-and-they-only-point"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Requirements are the fifth node kind, and they only point
+  
+  
+</h2>
+    
+
+<p>A requirement is not a skill and not a role. It is an obligation <em>about</em> them:</p>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"req:commit-hygiene"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"derivedFrom"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"req:agent-workflow"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"actors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"author"</span><span class="p">,</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"statements"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no-secrets"</span><span class="p">,</span><span class="w"> </span><span class="nl">"conformance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SHALL"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"requirement"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Commits SHALL NOT include secrets, API keys, tokens…"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"satisfiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"skill"</span><span class="p">,</span><span class="w"> </span><span class="nl">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"content-plan"</span><span class="w"> </span><span class="p">}]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Three reference types, all audited: <code class="language-plaintext highlighter-rouge">requirement-satisfied-by-resolves</code>,
+<code class="language-plaintext highlighter-rouge">requirement-actors-resolve</code> and <code class="language-plaintext highlighter-rouge">requirement-derived-from-resolves</code> are all
+<code class="language-plaintext highlighter-rouge">critical</code>, because a reader following a broken one gets nothing — the same test
+as a dangling <code class="language-plaintext highlighter-rouge">&lt;folio:skill ref&gt;</code>. <code class="language-plaintext highlighter-rouge">requirement-statements-graded</code> is <code class="language-plaintext highlighter-rouge">major</code>: an
+ungraded statement is readable, it just cannot be conformance-tested, and
+SHALL-vs-SHOULD is the whole reason to write a requirement rather than a note.</p>
+
+<p><strong>Do not fold a requirement into the skill that satisfies it.</strong> The grading, the
+<code class="language-plaintext highlighter-rouge">derivedFrom</code> lattice, the actor binding and the many-to-many <code class="language-plaintext highlighter-rouge">satisfiedBy</code> are
+the only machine-checkable things about it, and prose in a skill doc carries
+none of them. <code class="language-plaintext highlighter-rouge">satisfiedBy</code> is many-to-many in both directions — one skill
+discharges statements in several requirements — so inlining duplicates rather
+than relocates.</p>
+
+<p><strong>They were in <code class="language-plaintext highlighter-rouge">.claude/skills/requirements/</code> until 2026-09-18</strong>, which is a
+Claude-Code-only directory that Gemini, Cursor and Copilot never read, and their
+joins were unchecked the whole time. Moving them into the <code class="language-plaintext highlighter-rouge">kg</code> graph found four
+broken references on the first run: <code class="language-plaintext highlighter-rouge">req:agent-workflow</code> did not exist although
+three requirements declared <code class="language-plaintext highlighter-rouge">derivedFrom</code> it, and <code class="language-plaintext highlighter-rouge">capability:role-detection</code>
+did not exist either — capabilities here are environment probes
+(<code class="language-plaintext highlighter-rouge">detection: { method: "command" }</code>), and role detection is the actor registry
+read against the session identity, which is a skill.</p>
 <h2 id="two-compositions-and-they-are-not-the-same">
   
   
@@ -654,7 +701,7 @@ either a lane name has drifted, or the role is dead.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35387584689"><code>4e537fa</code></a> &middot; 2026-09-18T19:44:55Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35390064842"><code>e25e10f</code></a> &middot; 2026-09-18T20:11:57Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

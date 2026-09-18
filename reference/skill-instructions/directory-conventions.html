@@ -636,11 +636,13 @@ is the whole reason overrides match on <code class="language-plaintext highlight
 <p>The <code class="language-plaintext highlighter-rouge">kg</code> graph is not only skills. It holds the whole
 actor → role → skill → task model:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>skills/                       ← this instance's `kg`
-  roles/roles.json            the ROLE GRAPH — a role is a BPMN swimlane
-  roles/kg-qa/*.kg-qa.json    its audit sidecars
-  folio-core/*.md             skills
-  &lt;pkg&gt;/package-manifest.json which skills a package publishes
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>skills/                         ← this instance's `kg`
+  roles/roles.json              the ROLE GRAPH — a role is a BPMN swimlane
+  workflows/*.bpmn, *.dmn       the processes those roles act in
+  requirements/*.json           conformance obligations pointing at the rest
+  &lt;area&gt;/kg-qa/*.kg-qa.json     audit sidecars, beside what they audit
+  folio-core/*.md               skills
+  &lt;pkg&gt;/package-manifest.json   which skills a package publishes
 </code></pre></div></div>
 
 <p>and the processes those roles act in — <code class="language-plaintext highlighter-rouge">skills/workflows/*.bpmn</code> and
@@ -785,7 +787,7 @@ rendering pipeline depends on.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35387584689"><code>4e537fa</code></a> &middot; 2026-09-18T19:44:55Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35390064842"><code>e25e10f</code></a> &middot; 2026-09-18T20:11:57Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
