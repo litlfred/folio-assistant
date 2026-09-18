@@ -100,7 +100,7 @@ the pipeline that serves them.
 | `content/pipeline/render-markdown.ts` + `document_render_{md,html,pdf}` | `folio-assist-core` |
 | ingestion (`docs/document-ingestion.md` and its pipeline) | `folio-assist-core` |
 | `content/pipeline/readme-sections.ts`, `readme-links.ts`, `src/tools/readme-*.ts` | `folio-assist-core` |
-| `skills/{folio-core,folio-document-adapter,authoring-document,content-lifecycle}/` | `folio-assist-core` |
+| `skills/{folio-core,folio-document-adapter,content-lifecycle}/` | `folio-assist-core` |
 | `translations/`, `schemas/translation.ts`, `src/tools/translation.ts` | `folio-assist-core` |
 | `ui/`, `viewer/`, `blueprint/` | `folio-assist-core` (**judgement call** — see below) |
 

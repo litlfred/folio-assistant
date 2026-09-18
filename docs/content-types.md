@@ -75,7 +75,7 @@ assembled draft. Both expand into their own diagrams on the
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/authoring-a-document.bpmn){: .fa-node-edit title="Edit skills/workflows/authoring-a-document.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/content-types/documents-policy-guidance.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
-**Skill package:** `authoring-document` ·
+**Skill package:** `folio-document-adapter` ·
 **Adapter:** `document` ·
 **Guide:** [Writing a document](guides/writing-a-document.html)
 

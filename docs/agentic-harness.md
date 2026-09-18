@@ -310,7 +310,7 @@ back to its authoritative sources.
 | Feature-request detection | `crdm-detect.md` | [`skills/folio-core/crdm-detect.md`](../../skills/folio-core/crdm-detect.md) |
 | CRDM requirements workflow | `crdm-requirements-workflow.md` | [`skills/folio-core/crdm-requirements-workflow.md`](../../skills/folio-core/crdm-requirements-workflow.md) |
 | Content authoring (paper) | authoring-math skills | [`skills/authoring-math/`](../../skills/authoring-math/) |
-| Content authoring (document) | authoring-document skills | [`skills/authoring-document/`](../../skills/authoring-document/) |
+| Content authoring (document) | folio-document-adapter skills | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
 | Content lifecycle | content-lifecycle skills | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
 | Document ingestion | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../../skills/folio-core/docs-generation.md) |
 | Dispatch and coordination | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
