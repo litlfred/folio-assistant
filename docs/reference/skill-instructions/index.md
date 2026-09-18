@@ -52,6 +52,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/coordinate](coordinate.html) | `coordinate` | — | When several Claude branches are converging on the same long-term goal |
 | [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | — | Detect when a user request is a **feature request** (platform capability change) |
 | [CRDM requirements workflow](crdm-requirements-workflow.html) | `crdm-requirements-workflow` | — | Once a feature request is detected (see `crdm-detect.md`), the agent follows |
+| [A decision is not a finding, and neither is a substitute for the other](decision-audit.html) | `decision-audit` | — | A **finding** is an observation — a checker, an agent or a person saw something. |
 | [Delivery Summary](delivery-summary.html) | `delivery-summary` | — | After completing a feature or edit (i.e., after pushing changes), provide: |
 | [Deployment & Auth](deployment-auth.html) | `deployment-auth` | — |  |
 | [/detangler-integration-watcher](detangler-integration-watcher.html) | `detangler-integration-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |

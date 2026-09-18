@@ -146,6 +146,7 @@ describe("the HCI validation gate holds", () => {
       step("Task_CollateFindings");
       step("Task_LogFindings");
       step("Task_ReviewFindings");
+      step("Task_RecordDecision");
       step("Gateway_EditorDecision", decision);
       return { model, state };
     };
@@ -178,6 +179,7 @@ describe("the HCI validation gate holds", () => {
     step("Task_CollateFindings");
     step("Task_LogFindings");
     step("Task_ReviewFindings");
+    step("Task_RecordDecision");
     step("Gateway_EditorDecision", "revise");
 
     expect(names(model, enabled(model, state).map((e) => e.node))).toEqual([

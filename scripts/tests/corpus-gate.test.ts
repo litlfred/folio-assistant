@@ -54,6 +54,8 @@ const authorise = async (label: string, decision = "accept"): Promise<void> => {
   complete(model, state, "Task_CollateFindings");
   complete(model, state, "Task_LogFindings");
   complete(model, state, "Task_ReviewFindings");
+  // The decision and its audit note are recorded before the gateway routes on them.
+  complete(model, state, "Task_RecordDecision");
   complete(model, state, "Gateway_EditorDecision", { outcome: decision });
   saveInstance(repo, state);
 };
