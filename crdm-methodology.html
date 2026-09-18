@@ -336,7 +336,7 @@
       <li><a href="#skills-that-now-exist" id="markdown-toc-skills-that-now-exist">Skills that now exist</a></li>
       <li><a href="#proposed-skills" id="markdown-toc-proposed-skills">Proposed skills</a></li>
       <li><a href="#running-the-process--it-is-already-executable" id="markdown-toc-running-the-process--it-is-already-executable">Running the process — it is already executable</a></li>
-      <li><a href="#still-proposed" id="markdown-toc-still-proposed">Still proposed</a></li>
+      <li><a href="#stakeholder_map--built-but-not-from-the-sources-proposed" id="markdown-toc-stakeholder_map--built-but-not-from-the-sources-proposed"><code class="language-plaintext highlighter-rouge">stakeholder_map</code> — built, but not from the sources proposed</a></li>
     </ol>
   </li>
   <li><a href="#what-is-not-built-yet" id="markdown-toc-what-is-not-built-yet">What is not built yet</a></li>
@@ -1366,29 +1366,47 @@ position — which is the property a chat-local phase tracker could never have.<
 claims the bean, creating beans notes it, and closing resolves it — and
 resolve only lands once the instance itself has completed, because whether
 work is done is a judgement.</p>
-<h3 id="still-proposed">
+<h3 id="stakeholder_map--built-but-not-from-the-sources-proposed">
   
   
-    <a href="#still-proposed" class="anchor-heading" aria-labelledby="still-proposed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Still proposed
+    <a href="#stakeholder_map--built-but-not-from-the-sources-proposed" class="anchor-heading" aria-labelledby="stakeholder_map--built-but-not-from-the-sources-proposed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">stakeholder_map</code> — built, but not from the sources proposed
   
   
 </h3>
     
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Tool</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong><code class="language-plaintext highlighter-rouge">stakeholder_map</code> MCP tool</strong></td>
-      <td>Given a proposed change, identify affected roles from <code class="language-plaintext highlighter-rouge">folio.config.json</code> and CODEOWNERS</td>
-    </tr>
-  </tbody>
-</table></div>
+<p>It was specified here as reading “affected roles from <code class="language-plaintext highlighter-rouge">folio.config.json</code> and
+CODEOWNERS”. <strong>Neither exists.</strong> This repository has no CODEOWNERS file, and
+<code class="language-plaintext highlighter-rouge">schemas/folio-config.ts</code> declares no role, owner, maintainer or contact
+field. Built as written, the tool would have reported no stakeholders for
+every change, forever, and looked like it worked.</p>
+
+<p>It reads what the repository actually has:</p>
+
+<ol>
+  <li><strong>Skills declare <code class="language-plaintext highlighter-rouge">roles:</code></strong> in their front matter — reader, collaborator,
+owner, auditor. Change a skill and you affect whoever holds its roles.</li>
+  <li><strong>BPMN lanes name the accountable actor</strong>, and each activity names the
+skill that implements it. So a changed skill reaches a set of lanes across
+the whole process corpus — editors, the publication manager, clinical SMEs.</li>
+</ol>
+
+<p>That second hop is the one CODEOWNERS could never have given: changing
+<code class="language-plaintext highlighter-rouge">todo-manager.md</code> reaches the work-plan lane in six separate processes,
+which is a far better prompt for “who should hear about this?” than a list
+of file owners.</p>
+
+<p><strong>It does not name people, deliberately.</strong> <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> documents
+its own stakeholder step as <em>“The agent asks the BA who is affected by this
+change. The BA knows the domain — the agent does not guess.”</em> The tool
+respects that: it enumerates roles, lanes and processes so the BA is asked a
+sharper question, and it never outputs a list of humans as “the
+stakeholders”. Every report ends with a <strong>NOT DETERMINED</strong> section naming the
+people half, any changed path that maps to no skill (unknown impact, not
+absent impact), and any skill whose <code class="language-plaintext highlighter-rouge">roles:</code> are undeclared.</p>
+
+<p><code class="language-plaintext highlighter-rouge">bun run stakeholder-map &lt;path&gt;...</code> or <code class="language-plaintext highlighter-rouge">--since &lt;ref&gt;</code>; <code class="language-plaintext highlighter-rouge">stakeholder_map</code> as
+an MCP tool.</p>
 <h2 id="what-is-not-built-yet">
   
   
@@ -1415,6 +1433,12 @@ gives the agent five categories of detection phrasing, an explicit “what is
 existing session already in the process, existing session doing content
 work). The judgement is written down; it is not yet <em>measured</em>, so see the
 caveat below.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">stakeholder_map</code></strong> — reports which skills a change touches, the roles
+they declare, and the process lanes accountable for work that uses them.
+Built against skills and BPMN lanes rather than the CODEOWNERS and
+<code class="language-plaintext highlighter-rouge">folio.config.json</code> fields it was specified from, because neither exists
+here. It does not name people, because the process says the agent does not
+guess.</li>
   <li><strong>The process is executable</strong> — <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> loads like every
 other diagram here, so <code class="language-plaintext highlighter-rouge">workflow_start</code> / <code class="language-plaintext highlighter-rouge">workflow_next</code> /
 <code class="language-plaintext highlighter-rouge">workflow_complete</code> run it today, and <code class="language-plaintext highlighter-rouge">workflow_complete</code> refuses a step
@@ -1440,18 +1464,58 @@ hand each time.</li>
   <li><strong>Automated impact analysis</strong> — the agent can read the content graph and
 the schema files, but no dedicated tool produces an impact report for a
 proposed change.</li>
-  <li><strong>Stakeholder mapping</strong> — no automated discovery of affected roles or
-folios from a change description.</li>
   <li><strong>Review triage tooling</strong> — ingesting a Word document with comments and
 presenting them for structured triage is tracked in
 <a href="https://github.com/litlfred/folio-assistant/issues/197">#197</a>.</li>
 </ul>
 
-<p><strong>Built but unverified</strong>, which is a third state and not a milder form of
-“built”: the detection skill has never been measured against real requests.
-Nobody has taken a sample of issues and chat openings and checked how often
-it fires when it should, or fires when it should not. Until that happens the
-honest claim is that the guidance exists, not that detection works.</p>
+<p><strong>Built and now measured, with a known weakness.</strong> The detection skill used
+to sit in a third state — “built but unverified”, which is not a milder form
+of built. It has since been run against every issue in this repository (27,
+the whole population, not a sample) via <code class="language-plaintext highlighter-rouge">bun run eval:crdm-detect</code>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>fired</th>
+      <th>did not</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>is a feature request</strong></td>
+      <td>12</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td><strong>is not</strong></td>
+      <td>5</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>precision 71% · recall 63% · F1 67%</strong> — measured 2026-09-18 on <code class="language-plaintext highlighter-rouge">main</code>.</p>
+
+<p>Two things that number is not. It runs the skill’s <strong>phrase list</strong> only, so
+it is a <em>lower bound</em> on an agent that also applies judgement. And the ground
+truth is <strong>one annotator’s, unblinded</strong> — the same agent wrote the labels and
+the scorer. Fix that before quoting these as a property of the skill rather
+than of this corpus.</p>
+
+<p>The failure <em>pattern</em> is more useful than the score. The seven misses include
+<a href="https://github.com/litlfred/folio-assistant/issues/203">#203</a> itself — the
+issue that asked for this capability — and
+<a href="https://github.com/litlfred/folio-assistant/issues/1">#1</a>, the framework
+design. The five false alarms are two migration <strong>records</strong> of work already
+done, two asks to <strong>document</strong> an existing pipeline, and one bug report.</p>
+
+<p>That points at a specific gap: the skill’s “what is NOT a feature request”
+list excludes <em>content</em> tasks — writing a section, fixing a typo, reviewing a
+chapter — but says nothing about <strong>records of completed work</strong> or
+<strong>documentation about a feature</strong>, which are what it actually confuses here.
+Those two exclusions are the cheapest available improvement.</p>
 
 <p><strong>Tracked in:</strong> <a href="https://github.com/litlfred/folio-assistant/issues/203">#203</a></p>
 
@@ -1468,7 +1532,7 @@ honest claim is that the guidance exists, not that detection works.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35358390257"><code>c110cfb</code></a> &middot; 2026-09-18T14:48:19Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35361235201"><code>15cae5c</code></a> &middot; 2026-09-18T15:15:42Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
