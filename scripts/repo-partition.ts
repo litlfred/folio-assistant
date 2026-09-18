@@ -145,6 +145,18 @@ const RULES: Rule[] = [
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
       "scripts/stakeholder-map.ts",          // CRDM phase 1 CLI
       "src/tools/stakeholder-map.ts",        // ...as an MCP tool
+
+      // Reported `unassigned` on 2026-09-18 and read one at a time, same
+      // question as the rest of this list: does it act on PLATFORM or on
+      // CONTENT? All six act on harness-level graphs — Tools, the knowledge
+      // graph, the instance declaration, the CI workflows — so none of them
+      // needs a folio to have anything to do.
+      "src/mcp/project.ts",                  // Tool node → MCP declaration + argv
+      "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
+      "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
+      "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
+      "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
+      "scripts/check-workflows.ts",          // YAML GitHub will actually parse
     ],
     prefixes: ["src/impact/"],               // who a change affects: skills, roles, BPMN lanes
   },
