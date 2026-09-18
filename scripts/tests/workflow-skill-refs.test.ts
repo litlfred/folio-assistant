@@ -64,6 +64,21 @@ describe("declared diagram paths resolve", () => {
     }
     expect(missing).toEqual([]);
   });
+
+  test("every declared extractModule / injectModule exists", async () => {
+    // `bpmn` declared NEITHER while its note described a working re-render,
+    // so the capability read as built and was not.
+    const { CONTENT_TYPE_TRANSLATIONS } = await import("../../schemas/translation-tools.ts");
+    const missing: string[] = [];
+    for (const ct of CONTENT_TYPE_TRANSLATIONS) {
+      for (const f of ct.formats) {
+        for (const rel of [f.extractModule, f.injectModule]) {
+          if (rel && !existsSync(join(ROOT, rel))) missing.push(`${ct.contentType}/${f.id} → ${rel}`);
+        }
+      }
+    }
+    expect(missing).toEqual([]);
+  });
 });
 
 describe("workflow skill refs resolve", () => {

@@ -127,6 +127,58 @@ export function gitHeadSha(repoRoot?: string): string {
  * tooling-cwd-dependent. Pinning cwd via `-C` makes the call
  * robust regardless of where the qa-sweep process is invoked from.
  */
+/**
+ * Is this checkout truncated? Cached PER REPOSITORY — `gitFileCommitSha` is
+ * called once per criterion, so the probe is worth caching, but keying it on
+ * nothing is a bug: one process can legitimately ask about two repositories
+ * (a test fixture, a folio plus the platform), and a shared boolean answers
+ * the second question with the first one's answer. Caught by the test that
+ * builds a full clone and a shallow clone in the same run.
+ */
+const shallowCache = new Map<string, boolean>();
+function isShallowRepo(repoRoot: string): boolean {
+  const hit = shallowCache.get(repoRoot);
+  if (hit !== undefined) return hit;
+  let value: boolean;
+  try {
+    value =
+      execFileSync("git", ["-C", repoRoot, "rev-parse", "--is-shallow-repository"], {
+        stdio: ["ignore", "pipe", "ignore"],
+      })
+        .toString()
+        .trim() === "true";
+  } catch {
+    // Cannot tell ⇒ assume truncated. The safe direction is to decline to
+    // answer, never to answer wrongly.
+    value = true;
+  }
+  shallowCache.set(repoRoot, value);
+  return value;
+}
+
+/** The commits at a shallow clone's graft boundary, where history stops. */
+const boundaryCache = new Map<string, Set<string>>();
+function graftBoundary(repoRoot: string): Set<string> {
+  const hit = boundaryCache.get(repoRoot);
+  if (hit) return hit;
+  let value: Set<string>;
+  try {
+    value = new Set(
+      execFileSync("git", ["-C", repoRoot, "rev-list", "--max-parents=0", "HEAD"], {
+        stdio: ["ignore", "pipe", "ignore"],
+      })
+        .toString()
+        .trim()
+        .split("\n")
+        .filter(Boolean),
+    );
+  } catch {
+    value = new Set();
+  }
+  boundaryCache.set(repoRoot, value);
+  return value;
+}
+
 export function gitFileCommitSha(relPath: string, repoRoot: string): string {
   try {
     const out = execFileSync(
@@ -136,7 +188,30 @@ export function gitFileCommitSha(relPath: string, repoRoot: string): string {
     )
       .toString()
       .trim();
-    return out || GIT_SHA_UNKNOWN;
+    if (!out) return GIT_SHA_UNKNOWN;
+
+    // A SHALLOW CLONE CANNOT ANSWER THIS QUESTION, and answers anyway.
+    //
+    // `git log -1 -- <file>` reports the newest commit IN THE FETCHED WINDOW
+    // that touched the file. For a file untouched inside that window it
+    // reports the GRAFT BOUNDARY — the commit where history stops and every
+    // file looks newly added — which is indistinguishable, to the caller,
+    // from a real answer.
+    //
+    // Measured 2026-09-18 in a 102-commit shallow checkout: a sweep rewrote
+    // 77 of 78 script sidecars to the single boundary sha, destroying real
+    // provenance that carried NINE distinct commits. The corruption is
+    // silent and looks like a tidy-up; it took reading `.git/shallow` to
+    // see it. Same wall ci-health.yml avoids by checking out with
+    // `fetch-depth: 0`.
+    //
+    // So: boundary commit in a shallow repo ⇒ "unknown", not that commit.
+    // Callers preserve the stored value on "unknown" rather than overwrite,
+    // which keeps a truthful record instead of a confident wrong one.
+    if (isShallowRepo(repoRoot) && graftBoundary(repoRoot).has(out)) {
+      return GIT_SHA_UNKNOWN;
+    }
+    return out;
   } catch {
     return GIT_SHA_UNKNOWN;
   }

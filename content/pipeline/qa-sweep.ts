@@ -115,6 +115,8 @@ import {
   missingCompanionNote,
   computeCriterionScriptHashes,
   saveQaScriptSidecar,
+  loadQaScriptSidecar,
+  GIT_SHA_UNKNOWN,
   type CriterionScriptHashes,
 } from "./qa-utils";
 import {
@@ -602,12 +604,26 @@ function run(): void {
   if (!args.dryRun) {
     for (const [id, hashes] of Object.entries(scriptHashesByCriterion)) {
       if (!hashes.script_hash) continue; // source file absent — skip
+      // KEEP THE STORED PROVENANCE WHEN THIS CHECKOUT CANNOT ESTABLISH IT.
+      //
+      // `gitFileCommitSha` returns "unknown" rather than guessing in a
+      // shallow clone, where `git log -1 -- <file>` reports the graft
+      // boundary for anything untouched inside the fetched window. Writing
+      // that through would replace a true commit with a confident wrong
+      // one — measured 2026-09-18, a sweep in a 102-commit checkout
+      // flattened 77 of 78 sidecars from nine distinct shas to the single
+      // boundary sha. An older true answer beats a fresh false one.
+      const previous = loadQaScriptSidecar(id, REPO_ROOT);
+      const commitSha =
+        hashes.script_commit_sha === GIT_SHA_UNKNOWN && previous?.script_commit_sha
+          ? previous.script_commit_sha
+          : hashes.script_commit_sha;
       const sidecar: QaScriptSidecar = {
         $schema: "qa-script/v1",
         criterion_id: id,
         source_file: hashes.source_file,
         script_hash: hashes.script_hash,
-        script_commit_sha: hashes.script_commit_sha,
+        script_commit_sha: commitSha,
         extra_inputs:
           hashes.extra_inputs.length > 0 ? hashes.extra_inputs : undefined,
         deps_hash: hashes.deps_hash,
