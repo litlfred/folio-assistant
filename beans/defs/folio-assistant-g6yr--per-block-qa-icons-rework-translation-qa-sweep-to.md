@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g6yr
 title: 'Per-block QA icons: rework translation-qa-sweep to per-node granularity'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
-updated_at: 2026-09-18T19:20:59Z
+updated_at: 2026-09-18T19:28:39Z
 ---
 
 Asked for directly on #203: "where are the QA icons next to each content block
@@ -180,3 +180,48 @@ coverage. `bun test` 1563 pass / 0 fail · `eslint` 0 · `tsc` 0 ·
 Not done, deliberately: the UI half (per-node `translation-qa-sweep.ts`,
 `gen-docs-pages.ts` anchors, `docs-ui.js` icons); no `.qa.json` sidecar was
 committed or deleted; `AGENTS.md` not edited.
+
+---
+
+## Summary of Changes
+
+Shipped in #274, merged to `main` as `52ee58ee`. Verified on the deployed
+`gh-pages` artefact, not only locally.
+
+**Two thirds already existed.** The bean's chain was: rework the sweep to
+per-node granularity, emit anchors, then render. Checking first — the
+falsification step — `emitNode` already pinned a per-node anchor (`{: #id }`)
+and already rendered an Edit link with a glyph and a class. Only the data was
+missing, and the sidecar already sat beside the block's `.md` in the directory
+`readBlock` resolves. The sweep rework was never needed.
+
+**Four states, and the fourth is the point.** ● fail, ◐ warn, ○ pass,
+· unswept. `unswept` is shown rather than omitted: a missing icon and a clean
+one look identical to a reader and only one is true. A sidecar where every
+criterion came back `n/a` checked NOTHING about that block, so it is
+`unswept`, not `pass`.
+
+Measured on `main` after merge: **1 fail, 13 pass, 99 unswept**. The fail is
+`what-is-not-built-yet`, the known real finding (bean `b7yo`). The 99 are
+blocks on pages never swept.
+
+**Verified on the real artefact.** `github.io` is blocked by egress policy,
+but staged HTML lands on `gh-pages` and git can read it:
+`crdm-methodology.html` carries 1 `fa-qa-fail` with its real counts and 13
+`fa-qa-pass`; `agentic-harness.html` carries 10 `fa-qa-unswept`;
+`assets/css/docs-ui.css` carries the 7 `fa-qa-*` rules. All three states
+render, and the stylesheet shipped with them.
+
+**Two defects found in my own work.** A tautological test (asserting
+array-index ordering, which cannot fail) — fixed by making `readQaSummary`
+take a directory so the tests reach the real function. And importing the
+module regenerated the whole site, so `bun test` was silently rewriting 11
+pages — fixed with an `import.meta.main` guard.
+
+## Left open
+
+**How it looks is unverified and needs a human.** Whether ● at 0.75rem reads
+as a status or as punctuation, and whether 99 faint `·` across the site is
+informative or noise. If the dots read as noise the fix is NOT to hide
+`unswept` — that reintroduces the defect — but to sweep the rest of the
+corpus so "not checked" becomes rare rather than typical.
