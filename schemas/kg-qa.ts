@@ -152,6 +152,40 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     severity: "minor",
     summary: "No declared actor is eligible for this role. Advisory: the actor registry is not a permission system.",
   },
+  // ── Is this role WRITABLE FOR? ────────────────────────────────
+  //
+  // A lane is the audience: a block sits in a lane, the lane is a role, and
+  // the role is who the prose is for. That only works if the role says enough
+  // to write for and to review against. `summary` says what the role DOES,
+  // which is enough to draw a swimlane and not enough to author against.
+  //
+  // All three are `n/a` for an `actedUpon` role — the corpus and the work plan
+  // are lanes because tasks act ON them, and asking what voice to address the
+  // corpus in is not a question.
+  {
+    id: "role-has-persona",
+    applies: ["role"],
+    severity: "major",
+    summary:
+      "A role an author writes for carries no `persona` — nothing says what this reader already knows, " +
+      "what they came to find out, or what would make the page useless to them.",
+  },
+  {
+    id: "role-declares-voice",
+    applies: ["role"],
+    severity: "minor",
+    summary:
+      "A role carries no `voice`. Without it the authoring agent picks a register by taste and the QA " +
+      "agent judges it by a different one, so a voice finding is an opinion rather than a check.",
+  },
+  {
+    id: "role-has-use-cases",
+    applies: ["role"],
+    severity: "minor",
+    summary:
+      "A role declares no `useCases` — what this reader is trying to do. 'Is this well written' is " +
+      "unanswerable; 'does this let them do the thing they came for' is not.",
+  },
   {
     id: "decision-outcomes-used",
     applies: ["decision"],

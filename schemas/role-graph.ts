@@ -159,6 +159,43 @@ export interface RoleDef {
    * `<folio:role ref>` and need not add a name here.
    */
   lanes: string[];
+  /**
+   * Who this reader IS, in prose — the persona an author writes for and a QA
+   * reviewer checks against.
+   *
+   * `summary` says what the role DOES. That is enough to draw a swimlane and
+   * not enough to write for: it does not say what they already know, what they
+   * came to find out, or what would make the page useless to them. An author
+   * given only "Writes and revises folio content" will write for nobody in
+   * particular, and a QA criterion about jargon or assumed background has no
+   * standard to judge against.
+   *
+   * This is the audience. It is NOT restated per block: a block sits in a
+   * lane, the lane is the role, the role carries the persona. Copying it onto
+   * every block would invite the two to disagree, and a per-block audience
+   * that contradicts its lane is worse than none — it looks authoritative.
+   */
+  persona?: string;
+  /**
+   * The voice to address this reader in.
+   *
+   * Named here rather than inferred, because it does not follow from the
+   * persona: the same reader is addressed differently in a normative standard
+   * and in a tutorial. The authoring agent picks the voice from here; the QA
+   * agent judges against the same string rather than against its own taste,
+   * which is what makes a voice finding reviewable instead of an opinion.
+   */
+  voice?: string;
+  /**
+   * What this reader is actually trying to do — the cases the content has to
+   * serve.
+   *
+   * Guides both agents in the direction a persona alone cannot: an author
+   * knows which questions to answer, and a QA reviewer can ask whether the
+   * page answers them. "Is this well written" is unanswerable; "does this let
+   * a reviewer find what changed since they last looked" is not.
+   */
+  useCases?: string[];
   /** Skills available to an actor in this role, before inheritance. */
   skills: string[];
   /** Roles this one IS-A. Skills are unioned transitively; cycles rejected. */
@@ -194,6 +231,12 @@ export const ActorDefSchema = z.object({
 });
 
 export const RoleDefSchema = z.object({
+  // Declared in the Zod shape as well as the interface: a field TypeScript
+  // accepts and Zod strips is written by an author, type-checks, and vanishes
+  // (bean `zdrf`).
+  persona: z.string().optional(),
+  voice: z.string().optional(),
+  useCases: z.array(z.string()).optional(),
   id: z.string().min(1),
   name: z.string().min(1),
   summary: z.string().min(1),
@@ -436,4 +479,34 @@ export function toJsonLd(graph: RoleGraph): Record<string, unknown> {
       ...(r.inherits?.length ? { inherits: r.inherits.map((i) => ({ "@id": `#${i}` })) } : {}),
     })),
   };
+}
+
+// ── Audience ────────────────────────────────────────────────────
+
+/**
+ * Why a role id cannot be an audience, or undefined when it can.
+ *
+ * Two rejections, and the second is the one that is easy to miss:
+ *
+ * - **unknown** — not a role in this instance's KG. A mistyped audience
+ *   scopes QA to nobody, which reads as "no findings" rather than as an error.
+ * - **acted upon** — `Work plan — beans`, `Corpus (versioned store)` and
+ *   `Publish — GitHub Pages` are lanes because tasks act ON them, not because
+ *   anybody performs them. Nothing reads prose written for the corpus. An
+ *   audience must be a role an ACTOR can take on.
+ */
+export function audienceProblem(graph: RoleGraph, id: string): string | undefined {
+  const role = findRole(graph, id);
+  if (!role) {
+    return `"${id}" is not a role in this instance's KG. Known roles: ${graph.roles.map((r) => r.id).join(", ")}`;
+  }
+  if (role.actedUpon) {
+    return `"${id}" is acted upon, not performed — nothing reads prose written for it`;
+  }
+  return undefined;
+}
+
+/** Role ids that may be declared as an audience. */
+export function audienceRoles(graph: RoleGraph): RoleDef[] {
+  return graph.roles.filter((r) => !r.actedUpon);
 }

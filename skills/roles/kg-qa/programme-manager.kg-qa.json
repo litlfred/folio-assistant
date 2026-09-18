@@ -5,10 +5,10 @@
     "id": "programme-manager",
     "path": "skills/roles/roles.json"
   },
-  "source_hash": "sha256:cfc1d4c35c77f464312242edd3e5af6f3de8b540b9ae231034c063e8b19bcc7a",
+  "source_hash": "sha256:3c9ac5a35afb8012ba26a28c7dc56c9f3c93aca10a6aad45e784e1e099d5e9c5",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
+    "script_hash": "sha256:26eb3a8cd4f3263885177f20a482fda44fbefb59d6c9e5171ac87c993478abe4",
     "engine_version": "1"
   },
   "criteria": {
@@ -24,6 +24,33 @@
       "result": "pass",
       "findings": []
     },
+    "role-has-persona": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "programme-manager",
+          "detail": "role \"programme-manager\" has no persona — an author has nobody to write for."
+        }
+      ]
+    },
+    "role-declares-voice": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "programme-manager",
+          "detail": "role \"programme-manager\" declares no voice — authoring and QA would each pick their own."
+        }
+      ]
+    },
+    "role-has-use-cases": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "programme-manager",
+          "detail": "role \"programme-manager\" declares no use cases — nothing says what this reader came to do."
+        }
+      ]
+    },
     "role-has-actor": {
       "result": "pass",
       "findings": []
@@ -31,7 +58,7 @@
   },
   "totals": {
     "pass": 3,
-    "fail": 0,
+    "fail": 3,
     "n/a": 1,
     "unknown": 0
   }

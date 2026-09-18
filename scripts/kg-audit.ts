@@ -73,6 +73,23 @@ import { knownSkills } from "./known-skills.js";
 
 const ENGINE_VERSION = "1";
 
+/**
+ * Does anybody in this role read prose?
+ *
+ * Only a reader needs a persona, a voice and use cases. Three kinds do not:
+ * an `actedUpon` lane is a store that tasks act ON (the corpus, the work
+ * plan); a `system` is a pipeline that consumes files, not pages; an
+ * `external` participant is outside this instance entirely.
+ *
+ * Scoping this way rather than asking every role is what keeps the finding
+ * actionable. "The IG publisher service has no persona" is a finding nobody
+ * can act on, and a check that produces those is a check somebody switches
+ * off — the same argument `role-has-actor` already makes for `actedUpon`.
+ */
+function readsProse(r: { actedUpon?: boolean; actorKind: string }): boolean {
+  return !r.actedUpon && (r.actorKind === "person" || r.actorKind === "agent");
+}
+
 const root = resolve(import.meta.dir, "..");
 const WORKFLOW_DIR = join(root, "skills", "workflows");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
@@ -334,6 +351,28 @@ function auditRoles(
       "role-skills-resolve": entry(badSkills),
       "role-inherits-resolves": entry(badParents, (r.inherits ?? []).length > 0),
       "role-binds-a-lane": entry(laneFindings),
+      // The lane is the audience, so a role that READS has to be writable-for.
+      "role-has-persona": !readsProse(r)
+        ? entry([], false)
+        : entry(
+            r.persona && r.persona.trim().length > 0
+              ? []
+              : [{ where: r.id, detail: `role "${r.id}" has no persona — an author has nobody to write for.` }],
+          ),
+      "role-declares-voice": !readsProse(r)
+        ? entry([], false)
+        : entry(
+            r.voice && r.voice.trim().length > 0
+              ? []
+              : [{ where: r.id, detail: `role "${r.id}" declares no voice — authoring and QA would each pick their own.` }],
+          ),
+      "role-has-use-cases": !readsProse(r)
+        ? entry([], false)
+        : entry(
+            (r.useCases ?? []).length > 0
+              ? []
+              : [{ where: r.id, detail: `role "${r.id}" declares no use cases — nothing says what this reader came to do.` }],
+          ),
       // `actedUpon` lanes are stores, not participants — the work plan, the
       // corpus, the publish target. Asking which actor fills the corpus is not
       // a question, so it is `n/a` rather than a failure nobody can act on.

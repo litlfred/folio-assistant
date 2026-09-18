@@ -520,6 +520,29 @@ export interface BlockBase {
   /** Optional display title. */
   title?: string;
   /**
+   * Who this block is written FOR — Role ids from the instance's KG
+   * (`skills/roles/roles.json`, {@link RoleGraph}).
+   *
+   * Narrative content has an intended reader, and prose that does not know
+   * who it is addressing drifts: it explains what that reader already knows
+   * and assumes what they do not. Declaring the audience makes that
+   * checkable instead of a matter of taste.
+   *
+   * **Role ids, not free text.** An open string cannot be scoped on — is
+   * `implementers` the same audience as `implementer`? — so QA would degrade
+   * to a grep and a typo would become an invisible new audience. The roles
+   * already exist and already name the people in this system.
+   *
+   * Used twice: the AUTHOR writes to it, and QA reads it. A criterion whose
+   * finding depends on the reader (jargon density, assumed background, how
+   * much is explained) is a category error without it.
+   *
+   * Several are allowed — a block may genuinely address an author and an
+   * editor at once. An unknown id is REFUSED by `content_validate`, not
+   * accepted quietly: a mistyped audience silently scopes QA to nobody.
+   */
+  audience?: string[];
+  /**
    * Labels of **immediate EDITORIAL dependencies** — the blocks a
    * reader must already have in hand to follow this one. Rendered as
    * `\uses{}` in the LaTeX blueprint.
