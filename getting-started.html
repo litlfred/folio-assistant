@@ -143,6 +143,57 @@
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/assets/js/docs-ui.js" defer></script>
 
+<!--
+  The landing panel — the instance's declared description drawn inside the
+  quiet part of its declared backdrop. Markup: `_includes/landing.html`.
+
+  The region comes in as custom properties (`--fl-x` …) set per instance from
+  `cat-harness.json`, so this stylesheet knows nothing about where any
+  particular picture is quiet. That is the whole design: a downstream folio
+  swaps the art and the numbers and needs no CSS.
+-->
+<style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+  .folio-landing__art { display: block; }
+  .folio-landing__art img {
+    display: block; width: 100%; height: auto; border-radius: 8px;
+  }
+  .folio-landing__text {
+    position: absolute;
+    left: var(--fl-x); top: var(--fl-y);
+    width: var(--fl-w); height: var(--fl-h);
+    display: flex; flex-direction: column; justify-content: center;
+    overflow: hidden;
+    /* The cloud is cream in both colour schemes — it is part of the picture,
+       not of the theme — so the overlay fixes its own ink rather than
+       inheriting a light-on-light body colour under `color_scheme: dark`. */
+    color: #2f4636;
+  }
+  .folio-landing__text > :first-child { margin-top: 0; }
+  .folio-landing__text > :last-child { margin-bottom: 0; }
+  .folio-landing__text p {
+    margin: 0; line-height: 1.35; font-weight: 600;
+    /* Scales with the picture, so the words keep their place in the cloud as
+       the viewport narrows. Bounded at both ends: `vw` alone is unreadable on
+       a phone and absurd on a 4K monitor. */
+    font-size: clamp(0.72rem, 1.7vw, 1.45rem);
+  }
+
+  /* No declared region → the picture stands alone and the words go beneath it.
+     Guessing a position is how text lands on the cat. */
+  .folio-landing--no-region .folio-landing__text,
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--no-region .folio-landing__text { margin-top: 1rem; }
+  .folio-landing--no-region .folio-landing__text p,
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .folio-landing__art img { transition: opacity .2s ease; }
+  }
+</style>
+
 
 </head>
 
@@ -215,9 +266,8 @@
   
     <header class="side-bar">
   <div class="site-header">
-    <a href="/folio-assistant/" class="site-title lh-tight">
-  folio-assistant
-
+    <a href="/folio-assistant/" class="site-title lh-tight"><img src="/folio-assistant/assets/img/icons/cat-mark-small.svg" alt="" aria-hidden="true"
+       class="fa-site-mark" width="24" height="24" /><span class="fa-site-title">c@t-harness</span>
 </a>
     <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
       <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
@@ -235,7 +285,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
       </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/fr/agent-onboarding.html" class="nav-list-link">Intégration de l'agent (FR)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/ar/agent-onboarding.html" class="nav-list-link">تأهيل الوكيل (AR)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/zh/agent-onboarding.html" class="nav-list-link">代理入门 (ZH)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/ru/agent-onboarding.html" class="nav-list-link">Введение для агента (RU)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/es/agent-onboarding.html" class="nav-list-link">Incorporación del agente (ES)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-document.html" class="nav-list-link">Writing a document</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Architecture submenu" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/architecture/repo-taxonomy.html" class="nav-list-link">Repo taxonomy</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/current-state.html" class="nav-list-link">Current state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/future-state.html" class="nav-list-link">Future state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/migration-plan.html" class="nav-list-link">Migration plan</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/agent-harness-minimum.html" class="nav-list-link">Minimum agent-harness</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/accessibility.html" class="nav-list-link">Accessibility</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Proposals submenu" aria-expanded="false">
+      </button><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/architecture/repo-taxonomy.html" class="nav-list-link">Repo taxonomy</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/current-state.html" class="nav-list-link">Current state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/future-state.html" class="nav-list-link">Future state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/migration-plan.html" class="nav-list-link">Migration plan</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/cat-harness-minimum.html" class="nav-list-link">Minimum cat-harness</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/accessibility.html" class="nav-list-link">Accessibility</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Proposals submenu" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
       </button><a href="/folio-assistant/proposals/" class="nav-list-link">Proposals</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-state-in-beans.html" class="nav-list-link">Workflow state in beans</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/translation-support.html" class="nav-list-link">Translation support</a></li><li class="nav-list-item"><a href="/folio-assistant/swarm-management.html" class="nav-list-link">Swarm management</a></li></ul>
   
@@ -322,7 +372,13 @@ have a folio and want the toolchain set up, skip to
   <li><a href="#5-connect-your-llm-harness" id="markdown-toc-5-connect-your-llm-harness">5. Connect your LLM harness</a></li>
   <li><a href="#6-converting-a-repository-you-already-have" id="markdown-toc-6-converting-a-repository-you-already-have">6. Converting a repository you already have</a></li>
   <li><a href="#7-seeing-it-published" id="markdown-toc-7-seeing-it-published">7. Seeing it published</a></li>
-  <li><a href="#8-track-the-work-with-beans" id="markdown-toc-8-track-the-work-with-beans">8. Track the work with <code class="language-plaintext highlighter-rouge">beans</code></a></li>
+  <li><a href="#8-make-the-landing-page-yours" id="markdown-toc-8-make-the-landing-page-yours">8. Make the landing page yours</a>    <ol>
+      <li><a href="#the-markdown-node-you-edit" id="markdown-toc-the-markdown-node-you-edit">The markdown node you edit</a></li>
+      <li><a href="#your-own-backdrop" id="markdown-toc-your-own-backdrop">Your own backdrop</a></li>
+      <li><a href="#three-things-it-will-not-do" id="markdown-toc-three-things-it-will-not-do">Three things it will not do</a></li>
+    </ol>
+  </li>
+  <li><a href="#9-track-the-work-with-beans" id="markdown-toc-9-track-the-work-with-beans">9. Track the work with <code class="language-plaintext highlighter-rouge">beans</code></a></li>
   <li><a href="#next-steps" id="markdown-toc-next-steps">Next steps</a></li>
 </ol><hr />
 <h2 id="1-create-a-folio-is-five-different-requests">
@@ -765,10 +821,124 @@ one goes looking for a site that was never going to appear.</p>
 <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/decisions/pages-live-gate.dmn"><code class="language-plaintext highlighter-rouge">decisions/pages-live-gate.dmn</code></a> —
 and <code class="language-plaintext highlighter-rouge">scripts/pages-bootstrap.ts</code> is tested to agree with it exactly, so the
 script and the table cannot drift.</p>
-<h2 id="8-track-the-work-with-beans">
+<h2 id="8-make-the-landing-page-yours">
   
   
-    <a href="#8-track-the-work-with-beans" class="anchor-heading" aria-labelledby="8-track-the-work-with-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Track the work with <code class="language-plaintext highlighter-rouge">beans</code>
+    <a href="#8-make-the-landing-page-yours" class="anchor-heading" aria-labelledby="8-make-the-landing-page-yours"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Make the landing page yours
+  
+  
+</h2>
+    
+
+<p>Your site’s home page opens with your instance’s <strong>own</strong> description, drawn
+inside your <strong>own</strong> backdrop. Both come from one file — <code class="language-plaintext highlighter-rouge">cat-harness.json</code> at
+the repository root — and nothing about the platform’s grumpy cat is written
+into the template. Change the file; the page follows.</p>
+<h3 id="the-markdown-node-you-edit">
+  
+  
+    <a href="#the-markdown-node-you-edit" class="anchor-heading" aria-labelledby="the-markdown-node-you-edit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The markdown node you edit
+  
+  
+</h3>
+    
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// cat-harness.json</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Folio"</span><span class="p">,</span><span class="w">              </span><span class="c1">// the left sidebar's heading</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One line.</span><span class="se">\n</span><span class="s2">Another line."</span><span class="p">,</span><span class="w">   </span><span class="c1">// ← the landing markdown</span><span class="w">
+  </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark-small"</span><span class="p">,</span><span class="w">             </span><span class="c1">// which image is the browser tab's</span><span class="w">
+  </span><span class="nl">"images"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="c">/* … */</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">description</code> is <strong>markdown</strong>, rendered as-is. It is the node the landing page
+draws; there is no separate page to keep in step with it, which is the point —
+a description that appears in two places is a description that will disagree
+with itself.</p>
+<h3 id="your-own-backdrop">
+  
+  
+    <a href="#your-own-backdrop" class="anchor-heading" aria-labelledby="your-own-backdrop"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Your own backdrop
+  
+  
+</h3>
+    
+
+<p>An image becomes the landing backdrop by declaring <code class="language-plaintext highlighter-rouge">role: "landing"</code> and which
+viewport it is cut for:</p>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"landing-laptop"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"docs/assets/img/my-backdrop.webp"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"landing"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"layout"</span><span class="p">:</span><span class="w"> </span><span class="s2">"laptop"</span><span class="p">,</span><span class="w">               </span><span class="c1">// also: "mobile", "card"</span><span class="w">
+  </span><span class="nl">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">1671</span><span class="p">,</span><span class="w"> </span><span class="nl">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">941</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"textRegion"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"x"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.205</span><span class="p">,</span><span class="w"> </span><span class="nl">"y"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.285</span><span class="p">,</span><span class="w"> </span><span class="nl">"w"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.625</span><span class="p">,</span><span class="w"> </span><span class="nl">"h"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.235</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">textRegion</code> is where the words may safely go, as fractions of the image. <strong>It
+is authored, not computed</strong>, because it states where the picture is <em>quiet</em> —
+a judgement about composition that no pixel analysis substitutes for. The
+platform’s own laptop backdrop has a thought-cloud with a clear lower interior,
+a mark occupying its top third and a cat’s ear rising into its lower left; the
+box that avoids all three was found by rendering candidates and looking at them.
+Do the same for yours.</p>
+
+<p>Declare one variant per viewport. Each carries its <strong>own</strong> region, because the
+same composition sits differently in a portrait crop.</p>
+
+<p>Then:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run docs:harness         <span class="c"># push the declaration into docs/_data/</span>
+bun run docs:harness <span class="nt">--</span> <span class="nt">--check</span>   <span class="c"># ...and fail if stale (for CI)</span>
+</code></pre></div></div>
+<h3 id="three-things-it-will-not-do">
+  
+  
+    <a href="#three-things-it-will-not-do" class="anchor-heading" aria-labelledby="three-things-it-will-not-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three things it will not do
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>you declare</th>
+      <th>the page does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>a backdrop <strong>with</strong> a region</td>
+      <td>draws your description inside it</td>
+    </tr>
+    <tr>
+      <td>a backdrop with <strong>no</strong> region</td>
+      <td>shows the picture, puts the words <strong>below</strong> it</td>
+    </tr>
+    <tr>
+      <td><strong>no</strong> backdrop</td>
+      <td>shows the words alone</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The middle row is deliberate. Text positioned by guesswork lands on the cat, so
+an undeclared region means “do not overlay”, never “anywhere is fine”. And a
+folio with no art is ordinary, not broken.</p>
+
+<p>If you declare a <code class="language-plaintext highlighter-rouge">mobile</code> variant and a phone arrives, it gets that file — and
+if you have not, it gets the widest one you do have. That fallback is a real
+degradation, because the wide crop’s region is wrong for a narrow screen; it is
+reported rather than hidden, so a renderer can decline to overlay instead of
+placing text somewhere nobody chose.</p>
+<h2 id="9-track-the-work-with-beans">
+  
+  
+    <a href="#9-track-the-work-with-beans" class="anchor-heading" aria-labelledby="9-track-the-work-with-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Track the work with <code class="language-plaintext highlighter-rouge">beans</code>
   
   
 </h2>
@@ -827,7 +997,7 @@ control on this site</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35404152986"><code>508de21</code></a> &middot; 2026-09-18T23:04:12Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35405350696"><code>87dc3a6</code></a> &middot; 2026-09-18T23:22:54Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

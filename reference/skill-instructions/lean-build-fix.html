@@ -146,6 +146,57 @@
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/assets/js/docs-ui.js" defer></script>
 
+<!--
+  The landing panel — the instance's declared description drawn inside the
+  quiet part of its declared backdrop. Markup: `_includes/landing.html`.
+
+  The region comes in as custom properties (`--fl-x` …) set per instance from
+  `cat-harness.json`, so this stylesheet knows nothing about where any
+  particular picture is quiet. That is the whole design: a downstream folio
+  swaps the art and the numbers and needs no CSS.
+-->
+<style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+  .folio-landing__art { display: block; }
+  .folio-landing__art img {
+    display: block; width: 100%; height: auto; border-radius: 8px;
+  }
+  .folio-landing__text {
+    position: absolute;
+    left: var(--fl-x); top: var(--fl-y);
+    width: var(--fl-w); height: var(--fl-h);
+    display: flex; flex-direction: column; justify-content: center;
+    overflow: hidden;
+    /* The cloud is cream in both colour schemes — it is part of the picture,
+       not of the theme — so the overlay fixes its own ink rather than
+       inheriting a light-on-light body colour under `color_scheme: dark`. */
+    color: #2f4636;
+  }
+  .folio-landing__text > :first-child { margin-top: 0; }
+  .folio-landing__text > :last-child { margin-bottom: 0; }
+  .folio-landing__text p {
+    margin: 0; line-height: 1.35; font-weight: 600;
+    /* Scales with the picture, so the words keep their place in the cloud as
+       the viewport narrows. Bounded at both ends: `vw` alone is unreadable on
+       a phone and absurd on a 4K monitor. */
+    font-size: clamp(0.72rem, 1.7vw, 1.45rem);
+  }
+
+  /* No declared region → the picture stands alone and the words go beneath it.
+     Guessing a position is how text lands on the cat. */
+  .folio-landing--no-region .folio-landing__text,
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--no-region .folio-landing__text { margin-top: 1rem; }
+  .folio-landing--no-region .folio-landing__text p,
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .folio-landing__art img { transition: opacity .2s ease; }
+  }
+</style>
+
 
 </head>
 
@@ -218,9 +269,8 @@
   
     <header class="side-bar">
   <div class="site-header">
-    <a href="/folio-assistant/" class="site-title lh-tight">
-  folio-assistant
-
+    <a href="/folio-assistant/" class="site-title lh-tight"><img src="/folio-assistant/assets/img/icons/cat-mark-small.svg" alt="" aria-hidden="true"
+       class="fa-site-mark" width="24" height="24" /><span class="fa-site-title">c@t-harness</span>
 </a>
     <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
       <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
@@ -238,7 +288,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
       </button><a href="/folio-assistant/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/fr/agent-onboarding.html" class="nav-list-link">Intégration de l'agent (FR)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/ar/agent-onboarding.html" class="nav-list-link">تأهيل الوكيل (AR)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/zh/agent-onboarding.html" class="nav-list-link">代理入门 (ZH)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/ru/agent-onboarding.html" class="nav-list-link">Введение для агента (RU)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/es/agent-onboarding.html" class="nav-list-link">Incorporación del agente (ES)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/writing-a-document.html" class="nav-list-link">Writing a document</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Architecture submenu" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
-      </button><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/architecture/repo-taxonomy.html" class="nav-list-link">Repo taxonomy</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/current-state.html" class="nav-list-link">Current state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/future-state.html" class="nav-list-link">Future state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/migration-plan.html" class="nav-list-link">Migration plan</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/agent-harness-minimum.html" class="nav-list-link">Minimum agent-harness</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/accessibility.html" class="nav-list-link">Accessibility</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Proposals submenu" aria-expanded="false">
+      </button><a href="/folio-assistant/architecture.html" class="nav-list-link">Architecture</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/architecture/repo-taxonomy.html" class="nav-list-link">Repo taxonomy</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/current-state.html" class="nav-list-link">Current state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/future-state.html" class="nav-list-link">Future state</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/migration-plan.html" class="nav-list-link">Migration plan</a></li><li class="nav-list-item"><a href="/folio-assistant/architecture/cat-harness-minimum.html" class="nav-list-link">Minimum cat-harness</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/accessibility.html" class="nav-list-link">Accessibility</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Proposals submenu" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
       </button><a href="/folio-assistant/proposals/" class="nav-list-link">Proposals</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/proposals/workflow-state-in-beans.html" class="nav-list-link">Workflow state in beans</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/translation-support.html" class="nav-list-link">Translation support</a></li><li class="nav-list-item"><a href="/folio-assistant/swarm-management.html" class="nav-list-link">Swarm management</a></li></ul>
   
@@ -948,7 +998,7 @@ explaining what was broken and why</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35404152986"><code>508de21</code></a> &middot; 2026-09-18T23:04:12Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35405350696"><code>87dc3a6</code></a> &middot; 2026-09-18T23:22:54Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

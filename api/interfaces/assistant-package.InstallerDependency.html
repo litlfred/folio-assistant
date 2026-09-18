@@ -16,13 +16,13 @@
 </div>
 <div class="tsd-comment tsd-typography">
 <div class="tsd-tag-example">
-<h4 class="tsd-anchor-link" id="example">Example<a href="#example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-0">{</span><br/><span class="hl-0">  </span><span class="hl-3">name</span><span class="hl-0">: </span><span class="hl-2">&quot;bun&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-3">installCommand</span><span class="hl-0">: </span><span class="hl-2">&quot;curl -fsSL https://bun.sh/install | bash&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-3">binary</span><span class="hl-0">: </span><span class="hl-2">&quot;bun&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-3">reason</span><span class="hl-0">: </span><span class="hl-2">&quot;MCP server runtime&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">}</span>
+<h4 class="tsd-anchor-link" id="example">Example<a href="#example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-7">name</span><span class="hl-1">: </span><span class="hl-5">&quot;bun&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-7">installCommand</span><span class="hl-1">: </span><span class="hl-5">&quot;curl -fsSL https://bun.sh/install | bash&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-7">binary</span><span class="hl-1">: </span><span class="hl-5">&quot;bun&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-7">reason</span><span class="hl-1">: </span><span class="hl-5">&quot;MCP server runtime&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">}</span>
 </code><button type="button">Copy</button></pre>
 
 </div></div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">InstallerDependency</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#binary">binary</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#installcommand">installCommand</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#name">name</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#reason">reason</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#version">version</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/508de213e7fa18b0b14acd905582ba05160d65c7/schemas/assistant-package.ts#L61">assistant-package.ts:61</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/87dc3a671666a1aa0c9ec46aa5bbff11293c27cf/schemas/assistant-package.ts#L61">assistant-package.ts:61</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -45,35 +45,35 @@
 <div class="tsd-comment tsd-typography"><p>Expected binary on PATH after install.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/508de213e7fa18b0b14acd905582ba05160d65c7/schemas/assistant-package.ts#L67">assistant-package.ts:67</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/87dc3a671666a1aa0c9ec46aa5bbff11293c27cf/schemas/assistant-package.ts#L67">assistant-package.ts:67</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="installcommand"><span>install<wbr/>Command</span><a href="#installcommand" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">installCommand</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Shell command to install the tool.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/508de213e7fa18b0b14acd905582ba05160d65c7/schemas/assistant-package.ts#L65">assistant-package.ts:65</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/87dc3a671666a1aa0c9ec46aa5bbff11293c27cf/schemas/assistant-package.ts#L65">assistant-package.ts:65</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="name"><span>name</span><a href="#name" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Tool identifier.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/508de213e7fa18b0b14acd905582ba05160d65c7/schemas/assistant-package.ts#L63">assistant-package.ts:63</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/87dc3a671666a1aa0c9ec46aa5bbff11293c27cf/schemas/assistant-package.ts#L63">assistant-package.ts:63</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="reason"><code class="tsd-tag">Optional</code><span>reason</span><a href="#reason" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">reason</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Why this tool is needed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/508de213e7fa18b0b14acd905582ba05160d65c7/schemas/assistant-package.ts#L71">assistant-package.ts:71</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/87dc3a671666a1aa0c9ec46aa5bbff11293c27cf/schemas/assistant-package.ts#L71">assistant-package.ts:71</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="version"><code class="tsd-tag">Optional</code><span>version</span><a href="#version" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">version</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Pin to a specific version (empty = latest).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/508de213e7fa18b0b14acd905582ba05160d65c7/schemas/assistant-package.ts#L69">assistant-package.ts:69</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/87dc3a671666a1aa0c9ec46aa5bbff11293c27cf/schemas/assistant-package.ts#L69">assistant-package.ts:69</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
