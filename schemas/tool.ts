@@ -62,9 +62,35 @@ export const ToolPortSchema = z.object({
   description: z.string().optional(),
 });
 
+/**
+ * How one input appears on the command line.
+ *
+ * **Explicit, per input — never a template and never a convention.** The
+ * alternatives were an argv template with `{name}` placeholders, and a rule that
+ * every input becomes `--name value`. The template needs substitution, which is
+ * the string manipulation this project keeps removing and which fails silently
+ * when an optional input is absent (a literal brace in argv). The convention
+ * needs a rule every author and reader must know, cannot express a positional,
+ * and breaks the moment a flag differs from its input name.
+ *
+ * This way a reader of the Tool node can see the invocation without running it.
+ */
+export const ToolArgSchema = z.union([
+  z.object({ flag: z.string().regex(/^--?[A-Za-z0-9][A-Za-z0-9-]*$/, "a flag looks like --name or -n") }),
+  z.object({ positional: z.number().int().nonnegative() }),
+  /** Passed on stdin rather than as a word. The only home for free prose. */
+  z.object({ stdin: z.literal(true) }),
+]);
+
 export const ToolInputSchema = ToolPortSchema.extend({
   /** Whether a caller must supply it. Explicit, never inferred from a default. */
   required: z.boolean(),
+  /**
+   * Where this input goes when the tool is invoked. Absent means the input is
+   * part of the contract but not passed on the command line — a Tool invoked
+   * `manual`ly has no command line at all.
+   */
+  arg: ToolArgSchema.optional(),
 });
 
 /**

@@ -26,6 +26,7 @@ Three artefacts that must agree, and they fail in different directions:
 | **schema equivalence** | `ToolDefinition.io` | the served `inputSchema` / `outputSchema` |
 | **coverage** | the instance's Tool nodes | what `tools/list` actually returns |
 | **satisfaction** | `ToolDefinition.satisfies` | the skills that claim the capability |
+| **authority** | `ToolInvocation.by` | the role graph — was this actor, in this lane, allowed to run it |
 
 **Schema equivalence is not string equality.** JSON Schema has several
 spellings of one constraint, and a generator may legitimately change spelling
