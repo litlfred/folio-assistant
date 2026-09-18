@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
-updated_at: 2026-09-18T15:15:52Z
+updated_at: 2026-09-18T15:20:19Z
 ---
 
 The "next" recorded on bean `t8g3`. Re-render BPMN diagrams so translated
@@ -20,3 +20,26 @@ work. Corrected to `draft-to-publication.bpmn` and gated by
 `bun run check:workflow-refs` (PR #245).
 
 The `draft-to-publication` reading is an inference, flagged for the author.
+
+
+
+---
+
+**2026-09-18 — extract/inject half done, PR #246.**
+
+The `bpmn` format entry declared NO extractModule, NO injectModule and had no
+code. Built `content/pipeline/bpmn-translate.ts`: `extractBpmn` /
+`injectBpmn`, never touching ids, refs, folio: extensions or DI bounds.
+
+**Overflow measured before building** (it was the go/no-go, and I expected the
+opposite): a French set ~18% longer with every authored `&#10;` break dropped
+re-wrapped to the SAME 3 lines, 42px of an 80px task box. bpmn-js re-wraps
+regardless — the authored breaks are not load-bearing, re-render is enough.
+
+End-to-end on translation-workflow: 35 msgids, 15 nodes both sides, activity
+ids and skill refs identical, 9/9 names translated, rendered SVG carries them.
+
+**REMAINING on this bean:** the per-locale orchestration. Nothing writes
+`translations/<locale>/*.bpmn` or a locale SVG, and the docs site does not
+serve one. The modules are proven; putting a French diagram on a French page
+is still to do.
