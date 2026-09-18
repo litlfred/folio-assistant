@@ -33,7 +33,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/index.js";
-import { TOOL_TYPES } from "../schemas/tool-types.js";
+import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -63,6 +63,8 @@ export function knownSkills(): Set<string> {
 export interface ToolCheck {
   danglingSatisfies: Array<{ tool: string; skill: string }>;
   unknownTypes: Array<{ tool: string; port: string; ref: string }>;
+  /** Command-line inputs whose type can express a shell payload. */
+  unsafeArgs: Array<{ tool: string; port: string; type: string }>;
   skillsWithTools: number;
   skillsWithoutTools: number;
 }
@@ -72,6 +74,7 @@ export function checkTools(): ToolCheck {
   const typeNames = new Set(Object.keys(TOOL_TYPES));
   const dangling: Array<{ tool: string; skill: string }> = [];
   const unknownTypes: Array<{ tool: string; port: string; ref: string }> = [];
+  const unsafeArgs: Array<{ tool: string; port: string; type: string }> = [];
   const covered = new Set<string>();
 
   for (const t of tools()) {
@@ -85,11 +88,20 @@ export function checkTools(): ToolCheck {
         unknownTypes.push({ tool: t.id, port: p.name, ref: p.schema });
       }
     }
+    // The injection rule, enforced rather than documented: a value that reaches
+    // argv must be of a type that cannot express a shell payload. Free prose
+    // goes on stdin, where it is data instead of program text.
+    for (const i of t.io.inputs) {
+      if (i.arg === undefined || "stdin" in i.arg) continue;
+      const name = i.schema.split("#/$defs/")[1] ?? "";
+      if (!isInjectionSafe(name)) unsafeArgs.push({ tool: t.id, port: i.name, type: name });
+    }
   }
 
   return {
     danglingSatisfies: dangling,
     unknownTypes,
+    unsafeArgs,
     skillsWithTools: covered.size,
     skillsWithoutTools: skills.size - covered.size,
   };
@@ -111,11 +123,16 @@ if (import.meta.main) {
     console.error(`\n✗ ${r.danglingSatisfies.length} satisfies naming no skill:`);
     for (const d of r.danglingSatisfies) console.error(`    ${d.tool} → ${d.skill}`);
   }
+  if (r.unsafeArgs.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${r.unsafeArgs.length} command-line input(s) of a type that can express a shell payload:`);
+    for (const u of r.unsafeArgs) console.error(`    ${u.tool}.${u.port} : ${u.type} — put free text on stdin`);
+  }
   if (r.unknownTypes.length > 0) {
     bad = true;
     console.error(`\n✗ ${r.unknownTypes.length} port(s) referencing an unknown type:`);
     for (const u of r.unknownTypes) console.error(`    ${u.tool}.${u.port} → ${u.ref}`);
   }
   if (bad) process.exit(1);
-  console.log("\n✓ every satisfies resolves; every io type is declared");
+  console.log("\n✓ every satisfies resolves; every io type is declared; every argv input is injection-safe");
 }

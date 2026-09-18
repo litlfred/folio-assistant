@@ -1,4 +1,4 @@
-**Skill package:** `authoring-document` ·
+**Skill package:** `folio-document-adapter` ·
 **Adapter:** `document` ·
 **Guide:** [Writing a document](guides/writing-a-document.html)
 

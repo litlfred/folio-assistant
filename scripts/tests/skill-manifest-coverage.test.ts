@@ -20,29 +20,56 @@
  *
  * Direction matters, and the two directions are not in the same state.
  *
- * A file with no manifest entry is unreachable; that check is hard, and as of
- * this commit `skills/` is clean under it.
+ * A file with no manifest entry is unreachable; that check is hard.
  *
- * A manifest entry with no file is a dangling reference the registry will
- * publish, and 19 of those already exist, in three packages that predate this
- * test. They are not typos. `authoring-document` lists four skills of which
- * two — `document-authoring`, `normative-statements` — exist under
- * `folio-document-adapter/`, a directory carrying no manifest at all; so that
- * pair is a package rename left half-finished, not a missing file.
- * `authoring-math` lists six that exist nowhere in the tree. Resolving them
- * means deciding, per package, whether the skill was renamed, moved, or never
- * written — which is editorial work on someone else's packages, not a fix.
+ * A manifest entry with no skill behind it is a dangling reference the registry
+ * will publish. **19 when this test was written, then 8, now 0**, and the two
+ * steps down had different causes worth keeping apart.
  *
- * So that direction is a ratchet rather than a gate: the known set is pinned
- * below and may only shrink. A new dangling entry fails; an existing one is
- * carried with its provenance recorded. Bean `fa/nup0`.
+ * Bean `x180` wrote the eleven missing instruction bodies. Bean `nup0` resolved
+ * the remaining eight — and found that the check itself had been asking the
+ * wrong question. *
+ * **"A skill exists" was two different questions.** This file asked whether
+ * `<package>/<name>.md` was present. `scripts/known-skills.ts` — extracted
+ * precisely so checkers could not disagree about this — also counts
+ * `schemas/skills/<name>/`, a directory of input/output JSON schemas with no
+ * instruction body. Eleven of the nineteen "dangling" entries were skills that
+ * exist by the shared definition and not by this file's narrower one, and
+ * `docs/skills.md` documents them as deliberate: those packages "ship the
+ * manifest + JSON definitions" with bodies TBD.
  *
- * The baseline is asserted exactly, not as a count. A count permits a swap —
- * fix one, introduce another — and reports the ledger balanced.
+ * So this now uses `knownSkills()`. Two definitions of existence in one
+ * repository is the defect; the checker that disagreed with the shared one was
+ * this file.
+ *
+ * What remained were eight entries, all FIXED rather than pinned: four were a
+ * completed rename whose manifest never moved, one claimed another package's
+ * skill, and three named skills that `git log --diff-filter=A` shows were never
+ * added in any commit.
+ *
+ * ## One reading was overturned, and the evidence is worth recording
+ *
+ * The 8-entry version of this list called `authoring-document` a deliberate
+ * **bundle manifest** — a package that legitimately lists skills held
+ * elsewhere — and treated resolving it as a modelling question.
+ *
+ * It is not a pattern this repository has. Measured across all six packages:
+ * every other one lists **exactly** what it holds, `folio-document-adapter`
+ * held the four bodies with **no manifest of its own**, and both
+ * `known-skills.ts` and `gen-skill-docs.ts` list `folio-document-adapter` as a
+ * live package while neither mentions `authoring-document`. "Bundle manifest"
+ * appears nowhere in the codebase outside that note.
+ *
+ * So it was a rename whose manifest never moved, and consolidating it makes the
+ * corpus uniform: after `nup0`, **no package claims a skill it does not hold**.
+ * If bundling is wanted as a real concept, it needs a field that says so rather
+ * than an empty directory that looks like one.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+
+import { knownSkills } from "../known-skills.js";
 
 const SKILLS = join(import.meta.dir, "../../skills");
 
@@ -68,32 +95,12 @@ function packages(): Array<{ name: string; dir: string; listed: string[] }> {
 }
 
 /**
- * Manifest entries with no file behind them, measured on this branch
- * 2026-09-18. This list may only shrink — see the note above. Removing an
- * entry here without fixing the underlying package turns the other test red.
+ * Manifest entries with nothing behind them. **Empty, and it should stay that
+ * way** — bean `nup0` cleared all nineteen. Kept as a list rather than deleted
+ * so a future entry is added here consciously, with the reason, instead of the
+ * check being loosened.
  */
-const KNOWN_DANGLING: readonly string[] = [
-  "authoring-document/document-authoring",
-  "authoring-document/document-publishing",
-  "authoring-document/document-structure",
-  "authoring-document/normative-statements",
-  "authoring-math/hypothesis-generation",
-  "authoring-math/latex-authoring",
-  "authoring-math/lean-formalization",
-  "authoring-math/proof-verification",
-  "authoring-math/scientific-critical-thinking",
-  "authoring-math/scientific-visualization",
-  "authoring-who-smart-guidelines/bpmn-authoring",
-  "authoring-who-smart-guidelines/content-review",
-  "authoring-who-smart-guidelines/dmn-authoring",
-  "authoring-who-smart-guidelines/fhir-validation",
-  "authoring-who-smart-guidelines/ig-publication",
-  "authoring-who-smart-guidelines/l2-dak-authoring",
-  "authoring-who-smart-guidelines/l3-fhir-authoring",
-  "authoring-who-smart-guidelines/quality-control",
-  "authoring-who-smart-guidelines/terminology-management",
-];
-
+const KNOWN_DANGLING: readonly string[] = [];
 describe("skill package manifests cover the package", () => {
   test("there are packages to check — otherwise this suite proves nothing", () => {
     // Without this, a rename of `skills/` turns every assertion below into a
@@ -115,10 +122,13 @@ describe("skill package manifests cover the package", () => {
 
   test("no NEW manifest entry is missing its skill file", () => {
     const dangling: string[] = [];
+    const known = knownSkills(join(import.meta.dir, "../.."));
     for (const p of packages()) {
-      const onDisk = new Set(skillFilesIn(p.dir));
+      // The shared definition — `<name>.md` in a skill directory OR an
+      // input/output contract under `schemas/skills/<name>/`. Asking only the
+      // first question is what produced eleven false "dangling" entries.
       for (const s of p.listed) {
-        if (!onDisk.has(s)) dangling.push(`${p.name}/${s}`);
+        if (!known.has(s)) dangling.push(`${p.name}/${s}`);
       }
     }
     expect(dangling.sort()).toEqual([...KNOWN_DANGLING].sort());
@@ -128,9 +138,9 @@ describe("skill package manifests cover the package", () => {
     // The ratchet's other half. Without it, fixing one of the 19 turns the
     // test above red and the cheapest way out is to re-add the broken entry.
     const live = new Set<string>();
+    const known = knownSkills(join(import.meta.dir, "../.."));
     for (const p of packages()) {
-      const onDisk = new Set(skillFilesIn(p.dir));
-      for (const s of p.listed) if (!onDisk.has(s)) live.add(`${p.name}/${s}`);
+      for (const s of p.listed) if (!known.has(s)) live.add(`${p.name}/${s}`);
     }
     const stale = [...KNOWN_DANGLING].filter((k) => !live.has(k));
     expect(stale).toEqual([]);

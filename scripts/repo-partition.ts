@@ -259,7 +259,7 @@ const RULES: Rule[] = [
   // ── folio-assist-core: the generic document model and its pipeline
   {
     repo: "core",
-    prefixes: ["adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
+    prefixes: ["adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
     exact: ["src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/translation.ts", "src/tools/preview.ts", "src/qa-agent-write.ts"],
   },
 ];

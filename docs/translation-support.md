@@ -86,7 +86,6 @@ const node: TranslationNode = {
   poFile: "translations/fr/index.po",
   status: { locale: "fr", official: false, generatedBy: "agent" },
   coverage: { translated: 37, total: 37, pct: 100 },
-  roundTripQA: { pass: 11, warn: 4, fail: 21, total: 36 },
 };
 export default node;
 ```
@@ -348,10 +347,9 @@ The `po-inject` tool takes a completed `.po` file and produces a translated
 
 ### Round-trip QA (bean `ktt2`)
 
-After injection, the round-trip translation QA back-translates the result into
-the source language and compares meaning. Drift or bad terminology is routed to
-a human reviewer. See bean `folio-assistant-ktt2` and the BPMN diagram
-`skills/workflows/ingest-l1-completeness-gate.bpmn` (`Task_RoundTrip`).
+Semantic verification is per BLOCK, not per page, and it is not a script's to assert: `content/pipeline/translation-block-qa.ts` writes what a script can establish (coverage, preserved terms, untranslated echoes) and leaves
+`translation-semantic-roundtrip` with no verdict. A real round trip needs a back-translator that has not seen the original — a pair of agents, recorded by `content/pipeline/translation-roundtrip.ts`. See
+`skills/folio-core/translation-manager.md`.
 
 ---
 

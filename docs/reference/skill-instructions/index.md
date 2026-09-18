@@ -86,6 +86,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/pending-show](pending-show.html) | `pending-show` | — | Quick status display. Read-only. Run any time to answer "where am I?" |
 | [Pickup](pickup.html) | `pickup` | — | Continue work on existing open PRs with minimal wasted tokens. This skill |
 | [/prepare-merge-auto](prepare-merge-auto.html) | `prepare-merge-auto` | — | Runs the full `/prepare-merge` workflow PLUS: |
+| [Prepare-merge](prepare-merge.html) | `prepare-merge` | — | Canonical, repo-agnostic skill for taking a `claude/*` (or any feature) branch |
 | [Process state](process-state.html) | `process-state` | — | An agent working a BPMN process holds **nested state**: a *task*, inside a |
 | [Production vs exploratory vs numerology](production-vs-exploratory-discipline.html) | `production-vs-exploratory-discipline` | — | N_TRUNCATION = 5 |
 | [Readability Editing](readability-editing.html) | `readability-editing` | — |  |
@@ -101,7 +102,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Capability: `translation` · Package: |
+| [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
 | [`uses[]` Editorial Review](uses-editorial-review.html) | `uses-editorial-review` | — |  |
+| [Voice editorial review](voice-editorial-review.html) | `voice-editorial-review` | — |  |
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 
 ## Document adapter (folio-document-adapter)

@@ -17,17 +17,8 @@
       "findings": []
     },
     "skill-servable": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_PublicationQa",
-          "detail": "names skill \"quality-control\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_PublishRelease",
-          "detail": "names skill \"ig-publication\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "pass",
@@ -55,8 +46,8 @@
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 1,
+    "pass": 8,
+    "fail": 0,
     "n/a": 0,
     "unknown": 0
   }
