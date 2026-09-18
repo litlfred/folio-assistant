@@ -249,8 +249,18 @@ verdict and leads the criterion (the first entry is the operative one
 everywhere in this repo); the back-translator's sits behind it with
 `result: "n/a"` and the back-translation itself in `notes`, because a reader
 asking "on what basis?" needs the intermediate text and a reader asking "who
-did this?" needs both names. `agent_model` is optional — absent renders as
-"not recorded" in the panel rather than as a blank.
+did this?" needs both names.
+
+**Record `model` with `modelSource`, or not at all.** A subagent's serving
+model is not directly observable from the session that dispatched it: it
+inherits the parent unless the harness overrides, and the hand-back does not
+say which model served the turn. A bare model string on an agent witness is
+therefore an inference printed as a fact — the same move as the round-trip
+numbers this skill tells you not to write. `modelSource` states how the
+identifier was established (for example: read from `get_session` at record
+time, subagent inheritance assumed, not independently observed), and the panel
+renders it beside the model. Absent both, the panel prints "not recorded",
+which is a true statement and an acceptable one.
 
 ### Two traps this process has already sprung
 
