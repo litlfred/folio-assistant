@@ -207,24 +207,28 @@ Content blocks have no function at all. **Fixing that table — or the code unde
 it — is Phase I work, not a documentation nit**, because every later phase
 assumes a dependency can contribute skills and content.
 
-### What the model rules out, and why it matters
+### What the model used to rule out — resolved 2026-09-18
 
-The same docstring is explicit that two things are **never** resolved from a
-dependency:
+The docstring was, until this change, explicit that two things are **never**
+resolved from a dependency: schemas, and MCP tools — "always from the root
+folio-assistant". For a single-platform world that was a reasonable
+simplification. For the proposed split it was a blocker: `folio-asst-sci` exists
+to own the math block kinds, the paper adapter and `lean_build`, and a
+dependency able to contribute none of them can only ship prose.
 
-| Resource | Resolved? |
-|---|---|
-| Schemas | ❌ always from the root folio-assistant |
-| MCP tools | ❌ always from the root folio-assistant |
+That is now [Phase 0.1](migration-plan.html#01--make-the-dependency-model-able-to-carry-the-split--decided-and-built),
+decided and built: `schemas/contributions.ts` plus `loadContributions()`. A
+dependency declares `"contributes": "./contributions.ts"` and adds block kinds,
+an adapter and MCP tools at load time. Collisions throw rather than resolving by
+load order; a diamond dependency graph is explicitly not a collision.
 
-For the current one-platform world that is a reasonable simplification. For the
-proposed future state it is a **blocker**: `folio-asst-sci` exists precisely to
-own the Lean/LaTeX/simulator *content types*, which means contributing block
-kinds (schemas) and `lean_build` / `paper_render_pdf` (MCP tools). A dependency
-that cannot contribute either can only ship prose.
-
-This is the single largest unresolved design question in the migration, and it
-is called out as such in [the plan](migration-plan.html#01--make-the-dependency-model-able-to-carry-the-split--blocker).
+**The same docstring was also optimistic in the other direction**, and that
+half is not fixed, only correctly reported. It claimed content blocks resolve
+across dependencies (✅) when no such function has ever existed, and that skills
+resolve when `resolveSkillDirs` has no caller. The table now distinguishes
+wired (✅), written-but-uncalled (⚠️) and absent (❌), so it states what the code
+does rather than what it intends. **Two resolution paths remain genuinely
+unbuilt** — content-directory overlay, and QA criteria from a dependency.
 
 ## The failure mode this repo has already paid for
 

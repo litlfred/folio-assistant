@@ -3,6 +3,8 @@
   "contentType": "document",
   "adapter": "document",
   "adapterModule": "./folio-assistant/adapters/document/index.ts",
+  "_contributes_comment": "Optional. The module this instance contributes from when ANOTHER folio lists it under dependencies.folioAssistant. Its default export is called at load time and returns the block kinds, adapter and MCP tools this instance adds. Read only when this folio is a DEPENDENCY — a root folio's own `contributes` is ignored, because the root already is everything it would contribute. Collisions do not resolve by load order: a kind or adapter claimed by two contributors throws naming both, and a dependency may never redefine one the platform already owns. Re-registering identical content from the same contributor is a no-op, so a diamond dependency graph (base -> kg -> core and sci -> core) loads cleanly. A declared module that is missing is a hard error, not a silent zero contribution.",
+  "contributes": "",
   "feedbackDir": ".folio-feedback",
   "skills": ".claude/skills/local",
   "viewer": {

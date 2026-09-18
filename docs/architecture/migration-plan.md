@@ -40,42 +40,72 @@ Phase I is described in the issue as "move code around to prepare for change".
 Three things have to be true first, and none of them is a move. Skipping them
 means discovering in Phase II that the target shape is unreachable.
 
-### 0.1 — Make the dependency model able to carry the split · **blocker**
+### 0.1 — Make the dependency model able to carry the split · **decided and built**
 
-The five-repo future state composes through `dependencies.folioAssistant`. Today
-that mechanism resolves **translations only**:
+**Decision (2026-09-18, maintainer): load-time registration.**
 
-| resolver | external callers | needed by |
-|---|---:|---|
-| `resolveTranslationDirs` | 0 (the `po-resolve.ts` path is inline) | core |
-| `resolveSkillDirs` | **0** | every downstream repo |
-| `resolveContentDirs` | *does not exist* | every downstream repo |
-| schemas from a dependency | **ruled out** by design | `folio-asst-sci`, `smart-base` |
-| MCP tools from a dependency | **ruled out** by design | `folio-asst-sci`, `smart-base` |
+A dependency names a module in its `folio.config.json`:
 
-The first three are finishing work. The last two are a **design decision that
-has not been taken**: `folio-asst-sci` exists to own block kinds and
-`lean_build`, and a dependency that can contribute neither can only ship prose.
+```jsonc
+{ "contributes": "./contributions.ts" }
+```
 
-*Open question for the maintainer, and the highest-value thing to settle first:*
-should a dependency be able to contribute (a) block kinds, (b) an adapter, and
-(c) MCP tools — and if so, how is a kind collision resolved, given
-`adapterForKind` must stay
-[total and unambiguous](https://github.com/litlfred/folio-assistant/blob/main/AGENTS.md)? Three shapes are worth considering:
+Its default export is called as the root walks the dependency tree, and returns
+the block kinds, adapter and MCP tools it adds. `schemas/contributions.ts` holds
+the registry; `loadContributions()` in `schemas/folio-config.ts` walks and loads.
 
-1. **Registration at load** — a dependency exports a registration function the
-   root calls. Simple; makes load order semantically significant.
-2. **Manifest-declared contributions** — a dependency's `folio.config.json`
-   declares the kinds and tools it adds; the root validates for collisions
-   before loading anything. Fails loudly and early; more to build.
-3. **Adapters stay root-only** — downstream repos ship schemas and skills, and
-   any repo needing its own adapter is itself a platform. Cheapest; it makes
-   `folio-asst-sci` a fork rather than a dependency, which the issue's
-   "depending only on folio-asst" appears to rule out.
+**Gate met.** A synthetic two-repo fixture in which the dependency contributes
+one block kind, one adapter and one MCP tool, and the root resolves all three —
+plus a test that a kind claimed by a second contributor is **refused**.
+13 tests, `schemas/contributions.test.ts`.
 
-**Gate:** a synthetic two-repo fixture where the dependency contributes one
-block kind, one skill and one MCP tool, and the root resolves all three — with a
-test asserting a *kind collision is refused*, not silently overlaid.
+#### What the shape costs, and what was done about it
+
+Load-time registration was chosen over a manifest validated before loading. It
+is cheaper and more familiar, and it makes **load order semantically
+significant** — the same five repos in a different listed order are a different
+program. Two mitigations are built in, and neither changes the chosen shape:
+
+**Collisions do not resolve by order.** A kind claimed by two contributors
+throws, naming both. Last-writer-wins would make `adapterForKind` ambiguous —
+the one property `schemas/block-kinds.ts` states it must keep — *and* would make
+that ambiguity depend on listing order, which is the hardest kind of bug to
+reproduce from a report. A dependency also may not redefine a kind or adapter
+the platform already owns: shadowing `theorem` from a config file two repos away
+would change what every existing folio validates against.
+
+**A diamond is not a collision.** The proposed graph *is* a diamond —
+`smart-base → smart-kg → core` and `folio-asst-sci → core` — so a depth-first
+walk reaches `core` twice. Re-registering identical content from the same
+contributor is a no-op. Without that rule every realistic dependency tree throws
+a false collision on first load, and the obvious fix (dropping the collision
+check) is precisely the one that must not be made.
+
+**The dependency entry's name is authoritative** over whatever the contributed
+module says about itself. A contributor able to rename itself could claim
+another's namespace and turn a collision into a silent merge.
+
+**A declared-but-missing `contributes` module is a hard error**, not a silent
+zero contribution — the `AGENTS.md` "move wiring and script together" failure
+mode, caught at the point it occurs.
+
+#### Where it lives, and why that mattered
+
+`schemas/contributions.ts`, not `src/core/`. The registry is about the content
+model — which kinds exist, which adapter owns them — so it belongs with the
+model, and putting it under `src/` would have added another
+`agentic-harness → folio-assist-core` import, already the largest
+wrong-direction group. A mechanism built to enable the split must not deepen
+what the split has to undo. Verified: `check:partition` reports 45 edges before
+and after. MCP tool contributions are carried as opaque registrar callbacks for
+the same reason, so the MCP SDK type never reaches the content model.
+
+#### Still open under 0.1
+
+`resolveSkillDirs` still has no caller, and there is no content-directory
+resolver at all. The docstring table in `schemas/folio-config.ts` has been
+corrected to say so rather than claiming both work. Wiring them is finishing
+work, not a design question, and does not block Phase I.
 
 ### 0.2 — Replace the filename heuristic with a real dependency scan · **done**
 

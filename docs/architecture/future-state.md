@@ -130,12 +130,14 @@ scientific-authoring skills. Per the issue, it depends **only** on
 
 **This repo is the acid test for the dependency model**, because it needs to
 contribute all three of: a **block kind** (a schema), an **adapter** (code), and
-**MCP tools** (`lean_build`). Today the dependency model resolves
-[none of the three](current-state.html#what-the-model-rules-out-and-why-it-matters).
-`folio-asst-sci` cannot be built until that changes — which is why settling it
-is [Phase 0.1](migration-plan.html#01--make-the-dependency-model-able-to-carry-the-split--blocker),
-a hard blocker sequenced before anything moves, even though the repo it unblocks
-is an extraction rather than a foundation.
+**MCP tools** (`lean_build`). Until 2026-09-18 the dependency model resolved
+[none of the three](current-state.html#what-the-model-used-to-rule-out--resolved-2026-09-18),
+which made `folio-asst-sci` unbuildable outright.
+[Phase 0.1](migration-plan.html#01--make-the-dependency-model-able-to-carry-the-split--decided-and-built)
+has since been decided and built — load-time registration, with collisions
+refused rather than resolved by order — so the blocker is cleared. The acid
+test still stands: if a future change makes any of the three unreachable from a
+dependency again, this repo is the one that stops being buildable first.
 
 ### `smart-kg`
 
