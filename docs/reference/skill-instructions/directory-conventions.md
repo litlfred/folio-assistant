@@ -47,8 +47,18 @@ The vocabulary is **open**, and split across two layers.
 | `tools` | **harness** | Tool definitions, themselves nodes in the KG | no |
 | `kg` | **harness** | skills, workflows, roles — the instance's own knowledge graph | no |
 | `schemas` | **harness** | schema definitions, self-declared in the smart-base manner | no |
-| `beans` | **harness** | the work plan, and where each running BPMN instance got to (`beans/`) | no |
+| `beans` | **harness** | the work plan as a whole (`beans/`); its inner nodes are declared by `beans/beans.json` | no |
+| `bean-defs` | **harness** | work items — one Markdown file each, in the layout the `beans` CLI reads. Authored by people and agents. | no |
+| `workflow-state` | **harness** | running BPMN instances — one JSON each, `"$schema": "folio-workflow-instance/v1"`. Owned by the interpreter, never hand-edited. | no |
 | `folio` | **`folio-assist-core`** | authored content | **yes** — just-the-docs renders it to a website |
+
+> **`bean-defs` and `workflow-state` are the distinction `beans` swallowed.**
+> Collapsing `workplan` + `process-state` into one `beans` kind was right about
+> the *mechanism* — one directory, one declaration — but the underlying
+> difference is real and came back as nodes: WHAT IS BEING WORKED ON carries
+> judgement and is edited by hand; WHERE A RUNNING PROCESS GOT TO is a token the
+> interpreter owns. A consumer asking for the work plan must still not be handed
+> BPMN instance state.
 
 **Why the work plan is the harness's and not core's.** The test is whether the
 harness *has* one, and it does: an instance has work whether or not it has
