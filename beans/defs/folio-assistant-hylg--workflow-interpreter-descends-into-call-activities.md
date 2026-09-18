@@ -4,7 +4,7 @@ title: Workflow interpreter descends into call activities — subprocesses give 
 status: in-progress
 type: task
 created_at: 2026-09-18T20:26:42Z
-updated_at: 2026-09-18T20:26:42Z
+updated_at: 2026-09-18T23:17:17Z
 ---
 
 
@@ -34,3 +34,5 @@ activity naming a process no file declares stays opaque.
 Decompose the flat diagrams, now that decomposition costs nothing in gating:
 `crdm-requirements` (25 activities, 0 call activities), `content-change-review`
 (20), `ig-incremental-build` (18), `human-translation-workflow` (16).
+
+_2026-09-18T23:17:17Z_ — Conflict with origin/main resolved by a sibling session at the owner's request; head ac6ef29b5, merged never rebased. main's `A_CodeAudit` (callActivity -> `Process_Review`) and `A_DeployStaging` (`feature-staging`) moved into `crdm-deliver.bpmn`, since the monolith main added them to had already been decomposed on this branch — which makes `A_CodeAudit` a call activity INSIDE a called process, exercising this PR's nesting rather than the one-level case. The eight BA-lane `folio:skill` refs the decomposition dropped were restored from main's monolith (`kg:audit`: 8 major -> 0). Two renames a textual merge could not see: `roles.json` `name`/`summary` -> `title`/`description` carrying main's two new roles, and `ToolDefinitionSchema.summary` -> `description` in main's new `tools/mcp.ts` (20 Tool nodes, clean merge then 20 tsc errors). Bean deliberately NOT resolved — that is this branch's own session's call.
