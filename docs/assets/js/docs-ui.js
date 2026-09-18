@@ -825,6 +825,36 @@
       container.appendChild(qaBadge);
     }
 
+    // QA sweep completeness badge — indicates whether sidecars have been run
+    var sweep = meta.sweep || {};
+    var sweepBg, sweepBorder, sweepIcon, sweepLabel, sweepTitle;
+    if (!sweep.run) {
+      sweepBg = "#1e293b"; sweepBorder = "#475569"; sweepIcon = "\u2B58";
+      sweepLabel = "QA: not run";
+      sweepTitle = "Translation QA sweep has not been run. " +
+                   "Run: bun run content/pipeline/translation-qa-sweep.ts";
+    } else if (sweep.complete && sweep.pagesWithTranslations > 0) {
+      var ratio = sweep.pagesWithTranslations + "/" + sweep.totalPages;
+      sweepBg = "#14532d"; sweepBorder = "#22c55e"; sweepIcon = "\u2705";
+      sweepLabel = "Swept " + ratio;
+      sweepTitle = "QA sweep complete. " + sweep.pagesWithTranslations + " of " +
+                   sweep.totalPages + " pages have translations. Last run: " + sweep.sweptAt;
+    } else {
+      sweepBg = "#78350f"; sweepBorder = "#d97706"; sweepIcon = "\u26A0\uFE0F";
+      sweepLabel = "Swept 0/" + sweep.totalPages;
+      sweepTitle = "QA sweep complete but no pages have translations yet. " +
+                   "Last run: " + sweep.sweptAt;
+    }
+
+    var sweepBadge = el("span", {
+      class: "fa-sweep-badge",
+      style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
+             "background:" + sweepBg + ";border:1px solid " + sweepBorder + ";" +
+             "border-radius:4px;font-size:0.75rem;color:#e2e8f0;cursor:default;",
+      title: sweepTitle
+    }, sweepIcon + " " + sweepLabel);
+    container.appendChild(sweepBadge);
+
     // Unverified translation warning — auto-injected on translated pages
     if (meta.translationStatus === "unverified" && !document.querySelector(".fa-translation-warning")) {
       var warning = el("div", {

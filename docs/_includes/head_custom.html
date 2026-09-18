@@ -67,6 +67,13 @@
     "fail": {{ page.qa_translation_fail | default: 0 }},
     "total": {{ page.qa_translation_total | default: 0 }},
     "coveragePct": {{ page.qa_coverage_pct | default: 0 }}
+  },
+  "sweep": {
+    "run": {% if site.data.translation-qa %}true{% else %}false{% endif %},
+    "sweptAt": "{{ site.data.translation-qa.sweptAt | default: '' }}",
+    "totalPages": {{ site.data.translation-qa.totalPages | default: 0 }},
+    "pagesWithTranslations": {{ site.data.translation-qa.pagesWithTranslations | default: 0 }},
+    "complete": {% if site.data.translation-qa.complete %}true{% else %}false{% endif %}
   }
 }</script>
 <link rel="stylesheet" href="{{ '/assets/css/docs-ui.css' | relative_url }}">

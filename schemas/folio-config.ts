@@ -1,0 +1,346 @@
+/**
+ * Cross-folio dependency schema for folio-assistant instances.
+ *
+ * A folio-assistant instance can depend on other instances for content,
+ * skills, and translation resolution. Dependencies are declared in
+ * `folio.config.json` under `dependencies.folioAssistant` and walked
+ * depth-first in listed order.
+ *
+ * ## The dependency model
+ *
+ * When loading skills and content, the folio-assistant agent starts with
+ * the root folio and walks the dependency tree depth-first, in the order
+ * dependencies are listed, overlaying content and skills on top. This
+ * is the same methodology as FHIR/SUSHI dependencies — declared
+ * upstream, walked deterministically, later overlays earlier.
+ *
+ * ## What gets resolved across dependencies
+ *
+ * | Resource | Resolved? | How |
+ * |---|---|---|
+ * | Skills | ✅ | `skills/` directory, overlaid depth-first |
+ * | Content blocks | ✅ | `content/` directory, overlaid depth-first |
+ * | PO translations | ✅ | `translations/<locale>/`, fallback chain step 4 |
+ * | Kind headings | ✅ | `schemas/translation.ts` KIND_HEADINGS |
+ * | QA criteria | ✅ | Criterion definitions from dependency's registry |
+ * | Schemas | ❌ | Always from the root folio-assistant |
+ * | MCP tools | ❌ | Always from the root folio-assistant |
+ *
+ * @module schemas/folio-config
+ */
+
+import { z } from "zod";
+
+// ── Dependency types ────────────────────────────────────────────
+
+/**
+ * A single folio-assistant dependency.
+ *
+ * Dependencies can be specified by local path (for development or
+ * when using git submodules) or by git URL (for CI and remote
+ * resolution).
+ */
+export interface FolioAssistantDependency {
+  /** Display name of the dependency (e.g. "smart-base", "qou-platform"). */
+  name: string;
+
+  /**
+   * Local filesystem path to the dependency root. May be absolute or
+   * relative to the folio root. Checked first — if present and the
+   * directory exists, the git URL is not consulted.
+   */
+  path?: string;
+
+  /**
+   * Git clone URL for the dependency. Used when `path` is absent or
+   * the directory does not exist. The agent should clone to a
+   * deterministic location (e.g. `.deps/<name>/`).
+   */
+  git?: string;
+
+  /**
+   * Git ref to checkout after cloning (branch, tag, or commit SHA).
+   * Defaults to the repository's default branch.
+   */
+  ref?: string;
+
+  /**
+   * What this dependency provides. Controls which resolution chains
+   * consult it. Defaults to all three when absent.
+   */
+  provides?: Array<"skills" | "content" | "translations">;
+}
+
+/**
+ * The `dependencies` section of `folio.config.json`.
+ */
+export interface FolioConfigDependencies {
+  /**
+   * Other folio-assistant instances this folio depends on. Walked
+   * depth-first in listed order, overlaying content and skills.
+   */
+  folioAssistant?: FolioAssistantDependency[];
+}
+
+/**
+ * Translation configuration in `folio.config.json`.
+ */
+export interface TranslationConfig {
+  /** Source language of the folio's content (BCP 47). Default: "en". */
+  defaultLocale?: string;
+  /** Target languages. Default: six UN languages. */
+  supportedLocales?: string[];
+  /** Directory for .pot/.po files. Default: "translations". */
+  translationDir?: string;
+  /** When true, only signed-off translations are rendered. Default: false. */
+  officialOnly?: boolean;
+}
+
+/**
+ * The full `folio.config.json` shape.
+ *
+ * Not all fields are covered here — only the ones that have TypeScript
+ * consumers. The JSON file may carry additional fields (e.g. `adapter`,
+ * `adapterModule`, `viewer`, `simulators`) that are consumed by other
+ * parts of the system.
+ */
+export interface FolioConfig {
+  /** Content type — "document" or "paper". */
+  contentType?: string;
+  /** Adapter name — "document", "paper", or "dak". */
+  adapter?: string;
+  /** Path to the adapter module. */
+  adapterModule?: string;
+
+  /** Translation pipeline configuration. */
+  translation?: TranslationConfig;
+
+  /** Cross-folio dependencies. */
+  dependencies?: FolioConfigDependencies;
+}
+
+// ── Zod schemas ─────────────────────────────────────────────────
+
+export const FolioAssistantDependencySchema = z.object({
+  name: z.string().min(1),
+  path: z.string().optional(),
+  git: z.string().url().optional(),
+  ref: z.string().optional(),
+  provides: z
+    .array(z.enum(["skills", "content", "translations"]))
+    .optional(),
+}).refine(
+  (dep) => dep.path !== undefined || dep.git !== undefined,
+  { message: "Dependency must have at least one of 'path' or 'git'" },
+);
+
+export const FolioConfigDependenciesSchema = z.object({
+  folioAssistant: z.array(FolioAssistantDependencySchema).optional(),
+});
+
+export const TranslationConfigSchema = z.object({
+  defaultLocale: z.string().default("en"),
+  supportedLocales: z
+    .array(z.string())
+    .default(["ar", "zh", "en", "fr", "ru", "es"]),
+  translationDir: z.string().default("translations"),
+  officialOnly: z.boolean().default(false),
+});
+
+export const FolioConfigSchema = z.object({
+  contentType: z.string().optional(),
+  adapter: z.string().optional(),
+  adapterModule: z.string().optional(),
+  translation: TranslationConfigSchema.optional(),
+  dependencies: FolioConfigDependenciesSchema.optional(),
+});
+
+// ── Dependency resolution ───────────────────────────────────────
+
+import { existsSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+
+/**
+ * Resolved dependency — a dependency that has been located on disk.
+ */
+export interface ResolvedDependency {
+  /** The original dependency declaration. */
+  dependency: FolioAssistantDependency;
+  /** Absolute path to the dependency root. */
+  rootPath: string;
+  /** The dependency's own folio.config.json (if present). */
+  config: FolioConfig | null;
+  /** Transitive dependencies (resolved recursively). */
+  transitive: ResolvedDependency[];
+}
+
+/**
+ * Read and parse a folio.config.json from a directory.
+ */
+export function readFolioConfig(dir: string): FolioConfig | null {
+  const configPath = join(dir, "folio.config.json");
+  if (!existsSync(configPath)) return null;
+  try {
+    const raw = JSON.parse(readFileSync(configPath, "utf-8"));
+    // Strip _comment fields before parsing
+    const cleaned = JSON.parse(
+      JSON.stringify(raw, (key, value) =>
+        key === "_comment" ? undefined : value
+      ),
+    );
+    return FolioConfigSchema.parse(cleaned);
+  } catch {
+    // If parsing fails, return the raw JSON as a partial config
+    try {
+      return JSON.parse(readFileSync(configPath, "utf-8")) as FolioConfig;
+    } catch {
+      return null;
+    }
+  }
+}
+
+/**
+ * Resolve a single dependency to an absolute path.
+ *
+ * Tries `path` first (relative to folioRoot), then falls back to
+ * checking `.deps/<name>/` for a previous clone. Does NOT clone —
+ * that is the caller's responsibility.
+ */
+export function resolveDependencyPath(
+  folioRoot: string,
+  dep: FolioAssistantDependency,
+): string | null {
+  // Try explicit path
+  if (dep.path) {
+    const abs = dep.path.startsWith("/")
+      ? dep.path
+      : resolve(folioRoot, dep.path);
+    if (existsSync(abs)) return abs;
+  }
+
+  // Try .deps/<name>/
+  const depsDir = join(folioRoot, ".deps", dep.name);
+  if (existsSync(depsDir)) return depsDir;
+
+  return null;
+}
+
+/**
+ * Resolve the full dependency tree depth-first.
+ *
+ * Walks `folio.config.json` dependencies in listed order, resolving
+ * each to a path and recursing into its own dependencies. Cycle
+ * detection prevents infinite loops.
+ *
+ * @param folioRoot - Absolute path to the folio root.
+ * @param seen - Set of already-visited roots (for cycle detection).
+ * @returns Array of resolved dependencies in depth-first order.
+ */
+export function resolveDependencyTree(
+  folioRoot: string,
+  seen: Set<string> = new Set(),
+): ResolvedDependency[] {
+  const absRoot = resolve(folioRoot);
+  if (seen.has(absRoot)) return []; // cycle
+  seen.add(absRoot);
+
+  const config = readFolioConfig(absRoot);
+  const deps = config?.dependencies?.folioAssistant ?? [];
+  const resolved: ResolvedDependency[] = [];
+
+  for (const dep of deps) {
+    const rootPath = resolveDependencyPath(absRoot, dep);
+    if (!rootPath) continue;
+
+    const depConfig = readFolioConfig(rootPath);
+    const transitive = resolveDependencyTree(rootPath, seen);
+
+    resolved.push({
+      dependency: dep,
+      rootPath,
+      config: depConfig,
+      transitive,
+    });
+  }
+
+  return resolved;
+}
+
+/**
+ * Flatten the dependency tree into a depth-first ordered list.
+ *
+ * Transitive dependencies appear before the dependency that declared
+ * them, so the overlay order is: deepest first, root last — meaning
+ * the root's files override everything, which is the desired behavior
+ * for skills and content overlay.
+ */
+export function flattenDependencies(
+  tree: ResolvedDependency[],
+): ResolvedDependency[] {
+  const flat: ResolvedDependency[] = [];
+  for (const dep of tree) {
+    flat.push(...flattenDependencies(dep.transitive));
+    flat.push(dep);
+  }
+  return flat;
+}
+
+/**
+ * Get the combined skill directories in overlay order.
+ *
+ * Returns absolute paths to skills/ directories, deepest dependency
+ * first, root last. The agent should load skills from each in order,
+ * with later entries overriding earlier for the same skill name.
+ */
+export function resolveSkillDirs(folioRoot: string): string[] {
+  const tree = resolveDependencyTree(folioRoot);
+  const flat = flattenDependencies(tree);
+  const dirs: string[] = [];
+
+  for (const dep of flat) {
+    if (dep.dependency.provides && !dep.dependency.provides.includes("skills")) {
+      continue;
+    }
+    const skillsDir = join(dep.rootPath, "skills");
+    if (existsSync(skillsDir)) dirs.push(skillsDir);
+  }
+
+  // Root's skills last (highest priority)
+  const rootSkills = join(folioRoot, "skills");
+  if (existsSync(rootSkills)) dirs.push(rootSkills);
+
+  return dirs;
+}
+
+/**
+ * Get the combined translation directories in overlay order.
+ *
+ * Returns absolute paths to translations/ directories, deepest
+ * dependency first, root last.
+ */
+export function resolveTranslationDirs(folioRoot: string): string[] {
+  const tree = resolveDependencyTree(folioRoot);
+  const flat = flattenDependencies(tree);
+  const dirs: string[] = [];
+
+  for (const dep of flat) {
+    if (
+      dep.dependency.provides &&
+      !dep.dependency.provides.includes("translations")
+    ) {
+      continue;
+    }
+    const depConfig = dep.config;
+    const transDir = depConfig?.translation?.translationDir ?? "translations";
+    const abs = join(dep.rootPath, transDir);
+    if (existsSync(abs)) dirs.push(abs);
+  }
+
+  // Root's translations last (highest priority)
+  const rootConfig = readFolioConfig(folioRoot);
+  const rootTransDir = rootConfig?.translation?.translationDir ?? "translations";
+  const rootAbs = join(folioRoot, rootTransDir);
+  if (existsSync(rootAbs)) dirs.push(rootAbs);
+
+  return dirs;
+}
