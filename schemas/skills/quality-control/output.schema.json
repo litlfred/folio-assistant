@@ -1,26 +1,51 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/quality-control/output.schema.json",
+  "$id": "https://litlfred.github.io/folio-assistant/kg/skills/quality-control/output.schema.json",
   "title": "Quality Control Output",
   "description": "Output schema for quality control results.",
   "type": "object",
-  "required": ["overallResult"],
+  "required": [
+    "overallResult"
+  ],
   "properties": {
     "overallResult": {
       "type": "string",
-      "enum": ["pass", "pass-with-warnings", "fail"]
+      "enum": [
+        "pass",
+        "pass-with-warnings",
+        "fail"
+      ]
     },
     "findings": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["severity", "category", "message"],
+        "required": [
+          "severity",
+          "category",
+          "message"
+        ],
         "properties": {
-          "severity": { "type": "string", "enum": ["error", "warning", "info"] },
-          "category": { "type": "string" },
-          "message": { "type": "string" },
-          "location": { "type": "string" },
-          "remediation": { "type": "string" }
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "category": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "remediation": {
+            "type": "string"
+          }
         }
       }
     },
@@ -28,7 +53,11 @@
       "type": "object",
       "additionalProperties": {
         "type": "string",
-        "enum": ["pass", "fail", "not-applicable"]
+        "enum": [
+          "pass",
+          "fail",
+          "not-applicable"
+        ]
       }
     }
   }

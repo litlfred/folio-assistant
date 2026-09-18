@@ -5,10 +5,10 @@
     "id": "build-pipeline",
     "path": "skills/roles/roles.json"
   },
-  "source_hash": "sha256:3dac35ec76a33538080ef71fec0dfe260bb4e473c72527f124b3f6d1bf78ad97",
+  "source_hash": "sha256:040ad22fd79d422b45acd779f7c8659a5342391b25ff6342d794b0dd21b9619b",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:1a0252bb5dc50c47d2cc45bdcbc798727dabe09a1f88b8d2196063258063557f",
+    "script_hash": "sha256:c574597722ec5ee67674687382c9b00e84a9dee868a0efd86c6134c3d4fa3506",
     "engine_version": "1"
   },
   "criteria": {
@@ -24,6 +24,18 @@
       "result": "pass",
       "findings": []
     },
+    "role-has-persona": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-declares-voice": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-has-use-cases": {
+      "result": "n/a",
+      "findings": []
+    },
     "role-has-actor": {
       "result": "pass",
       "findings": []
@@ -32,7 +44,7 @@
   "totals": {
     "pass": 3,
     "fail": 0,
-    "n/a": 1,
+    "n/a": 4,
     "unknown": 0
   }
 }

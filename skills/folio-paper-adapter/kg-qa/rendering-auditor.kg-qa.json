@@ -1,0 +1,69 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "rendering-auditor",
+    "path": "skills/folio-paper-adapter/rendering-auditor.md"
+  },
+  "source_hash": "d4cf375efd57",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:c574597722ec5ee67674687382c9b00e84a9dee868a0efd86c6134c3d4fa3506",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "419 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "419 lines; p90 is 391. At this length it is a document."
+        }
+      ]
+    },
+    "skill-no-repeated-heading": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Checks\" repeated (also at line 50)"
+        },
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Checks\" repeated (also at line 50)"
+        },
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Purpose\" repeated (also at line 140)"
+        },
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Checks\" repeated (also at line 50)"
+        },
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Purpose\" repeated (also at line 140)"
+        },
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Checks\" repeated (also at line 50)"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 0,
+    "fail": 3,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

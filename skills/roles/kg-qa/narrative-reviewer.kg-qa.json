@@ -5,10 +5,10 @@
     "id": "narrative-reviewer",
     "path": "skills/roles/roles.json"
   },
-  "source_hash": "sha256:3dac35ec76a33538080ef71fec0dfe260bb4e473c72527f124b3f6d1bf78ad97",
+  "source_hash": "sha256:040ad22fd79d422b45acd779f7c8659a5342391b25ff6342d794b0dd21b9619b",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:1a0252bb5dc50c47d2cc45bdcbc798727dabe09a1f88b8d2196063258063557f",
+    "script_hash": "sha256:c574597722ec5ee67674687382c9b00e84a9dee868a0efd86c6134c3d4fa3506",
     "engine_version": "1"
   },
   "criteria": {
@@ -24,6 +24,33 @@
       "result": "pass",
       "findings": []
     },
+    "role-has-persona": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "narrative-reviewer",
+          "detail": "role \"narrative-reviewer\" has no persona — an author has nobody to write for."
+        }
+      ]
+    },
+    "role-declares-voice": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "narrative-reviewer",
+          "detail": "role \"narrative-reviewer\" declares no voice — authoring and QA would each pick their own."
+        }
+      ]
+    },
+    "role-has-use-cases": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "narrative-reviewer",
+          "detail": "role \"narrative-reviewer\" declares no use cases — nothing says what this reader came to do."
+        }
+      ]
+    },
     "role-has-actor": {
       "result": "pass",
       "findings": []
@@ -31,7 +58,7 @@
   },
   "totals": {
     "pass": 3,
-    "fail": 0,
+    "fail": 3,
     "n/a": 1,
     "unknown": 0
   }

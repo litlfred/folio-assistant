@@ -469,8 +469,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build, audit, docs]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # `gh-pages-push`, not `gh-pages-deploy`. This job already carried the
+    # right idea under a different NAME, which meant it serialised against
+    # nothing: `feature-staging` and the rest name `gh-pages-push`, and a
+    # concurrency group matches on the literal string. Two names for one
+    # contended resource is two queues that never meet — the same defect as
+    # having no group at all, wearing the clothes of a fix.
     concurrency:
-      group: gh-pages-deploy
+      group: gh-pages-push
       cancel-in-progress: false
 
     steps:

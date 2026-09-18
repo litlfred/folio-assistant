@@ -246,6 +246,16 @@ jobs:
       # Not `--strict`: `major` findings are missing joins rather than broken
       # ones, and gating on them today would fail the build on debt this gate
       # was added to make visible.
+      # A skill's I/O contract must publish at the address its own `$id`
+      # claims. All 44 once carried a github.com URL that returns 403 -- born
+      # that way on 2026-03-24 and never dereferenced, so nothing noticed for
+      # six months. This is what makes that non-repeatable.
+      #
+      # Runs WITHOUT --base-url: a committed `$id` is always canonical, and a
+      # preview overrides the base at export time only.
+      - name: skill I/O schema addresses
+        run: bun run kg:schema:check
+
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 

@@ -1,0 +1,39 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "q-usage-watcher",
+    "path": "skills/folio-paper-adapter/q-usage-watcher.md"
+  },
+  "source_hash": "89ad5700963e",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:c574597722ec5ee67674687382c9b00e84a9dee868a0efd86c6134c3d4fa3506",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/q-usage-watcher.md",
+          "detail": "335 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 2,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

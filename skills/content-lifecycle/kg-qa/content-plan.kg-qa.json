@@ -1,0 +1,34 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "content-plan",
+    "path": "skills/content-lifecycle/content-plan.md"
+  },
+  "source_hash": "50e2ed3d0fd3",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:c574597722ec5ee67674687382c9b00e84a9dee868a0efd86c6134c3d4fa3506",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 0,
+    "n/a": 0,
+    "unknown": 0
+  }
+}
