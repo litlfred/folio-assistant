@@ -169,6 +169,7 @@ async function auditProcess(
   p: LoadedProcess,
   graph: RoleGraph | undefined,
   skills: Set<string>,
+  processIds: Set<string>,
   auditorHash: string,
 ): Promise<KgQaReport> {
   const rel = relative(root, join(WORKFLOW_DIR, p.file));
@@ -184,13 +185,74 @@ async function auditProcess(
   const noSkill: KgFinding[] = [];
   const noLane: KgFinding[] = [];
   const skillNotCarried: KgFinding[] = [];
+  const unresolvedCall: KgFinding[] = [];
+  const calls = activities.filter((n) => n.calledElement !== undefined);
+
+  // Lane ids whose role is declared `actedUpon` — a store or an external
+  // system that is written to rather than a participant that acts.
+  const actedUponLanes = new Set(
+    graph
+      ? m.lanes.filter((l) => roleForLane(graph, l.name, l.roleRef)?.actedUpon === true).map((l) => l.id)
+      : [],
+  );
+  const actedUponNode = (n: { laneId?: string }): boolean =>
+    n.laneId !== undefined && actedUponLanes.has(n.laneId);
+
+  // Lane ids whose role PERFORMS but by judgement — a stakeholder signing off.
+  // Unlike `actedUpon`, somebody really does the step; no instruction body can
+  // produce the answer for them.
+  const judgementLanes = new Set(
+    graph
+      ? m.lanes.filter((l) => roleForLane(graph, l.name, l.roleRef)?.judgementOnly === true).map((l) => l.id)
+      : [],
+  );
+  const judgementNode = (n: { laneId?: string }): boolean =>
+    n.laneId !== undefined && judgementLanes.has(n.laneId);
   for (const n of activities) {
     for (const ref of n.skills) {
       if (!skills.has(ref)) {
         danglingSkill.push({ where: n.id, detail: `names skill "${ref}", which resolves to no skill in this instance.` });
       }
     }
-    if (n.skills.length === 0) noSkill.push({ where: n.id, detail: `"${n.name}" names no skill.` });
+    // A call activity is implemented by the process it calls, not by a skill.
+    // Demanding a `<folio:skill ref>` of it asks the diagram to name a second,
+    // redundant implementation — and the one that matters is checked by
+    // `call-activity-resolves` below, so the exemption leaves no gap.
+    //
+    // An `actedUpon` lane is the same category error one level up: the corpus
+    // and an external registry are WRITTEN TO, not participants that act, and
+    // the role graph already says so — `role-has-actor` is `n/a` for them for
+    // exactly this reason. Asking what skill the corpus uses to be committed
+    // into has no answer to give.
+    //
+    // Three declared exemptions, and each one is READ from a declaration
+    // rather than inferred: an `actedUpon` lane (nothing performs it), a
+    // `judgementOnly` lane (somebody performs it, but no procedure yields the
+    // answer), and `<folio:no-skill reason>` on the activity itself. Because
+    // every legitimate case now SAYS SO, what is left is a real gap — which is
+    // what lets this criterion gate instead of staying advisory.
+    if (
+      n.skills.length === 0 &&
+      n.calledElement === undefined &&
+      !actedUponNode(n) &&
+      !judgementNode(n) &&
+      n.noSkillReason === undefined
+    ) {
+      noSkill.push({
+        where: n.id,
+        detail:
+          `"${n.name}" names no skill. Give it <folio:skill ref="…"/>, or, if none could exist, ` +
+          `declare <folio:no-skill reason="…"/> saying why.`,
+      });
+    }
+    if (n.calledElement !== undefined && !processIds.has(n.calledElement)) {
+      unresolvedCall.push({
+        where: n.id,
+        detail:
+          `calls "${n.calledElement}", which is the id of no process this instance can load. That is either a typo ` +
+          `or a process hosted elsewhere, and this audit cannot tell which — so it is recorded as unknown.`,
+      });
+    }
     if (!n.lane) noLane.push({ where: n.id, detail: `"${n.name}" sits in no lane, so no role — and therefore no actor — performs it.` });
   }
 
@@ -272,6 +334,15 @@ async function auditProcess(
     "lane-binds-role": entry(unboundLane, Boolean(graph) && m.lanes.length > 0),
     "role-carries-activity-skill": entry(skillNotCarried, Boolean(graph) && m.lanes.length > 0),
     "activity-names-skill": entry(noSkill),
+    // Three states, not two. A resolved target passes; a process with no call
+    // activity is `n/a`; a target this instance cannot load is `unknown`,
+    // because it may be hosted elsewhere — see the note on the criterion.
+    "call-activity-resolves":
+      calls.length === 0
+        ? { result: "n/a" as KgResult, findings: [] }
+        : unresolvedCall.length
+          ? { result: "unknown" as KgResult, findings: unresolvedCall }
+          : { result: "pass" as KgResult, findings: [] },
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
@@ -865,7 +936,8 @@ if (graphError) {
 
 const processes = await loadProcesses();
 const reports: KgQaReport[] = [];
-for (const p of processes) reports.push(await auditProcess(p, graph, skills, auditorHash));
+const processIds = new Set(processes.flatMap((p) => (p.model ? [p.model.id] : [])));
+for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, auditorHash));
 reports.push(...(await auditDecisions(processes, auditorHash)));
 if (graph) {
   reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills, auditorHash));

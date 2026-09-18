@@ -1,0 +1,65 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "role",
+    "id": "narrative-reviewer",
+    "path": "skills/roles/roles.json"
+  },
+  "source_hash": "sha256:040ad22fd79d422b45acd779f7c8659a5342391b25ff6342d794b0dd21b9619b",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:e458124330d0cfcd93e9ff9c18c0588079e7706ca188ff7f156734967ffef296",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "role-skills-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-inherits-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-binds-a-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-has-persona": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "narrative-reviewer",
+          "detail": "role \"narrative-reviewer\" has no persona — an author has nobody to write for."
+        }
+      ]
+    },
+    "role-declares-voice": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "narrative-reviewer",
+          "detail": "role \"narrative-reviewer\" declares no voice — authoring and QA would each pick their own."
+        }
+      ]
+    },
+    "role-has-use-cases": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "narrative-reviewer",
+          "detail": "role \"narrative-reviewer\" declares no use cases — nothing says what this reader came to do."
+        }
+      ]
+    },
+    "role-has-actor": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 3,
+    "n/a": 1,
+    "unknown": 0
+  }
+}

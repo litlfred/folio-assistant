@@ -16,7 +16,7 @@ import type {
   ActorDefinition, CapabilityDefinition, HookCommand, Requirement, RoleAssignment,
   SessionHook, SkillDefinition, SkillRegistry,
 } from "../schemas/assistant-types.ts";
-import type { SkillPackageManifest } from "../schemas/types.ts";
+import type { SkillPackageManifest } from "../schemas/skill-package.ts";
 
 // `.claude/skills/` and `skills/` are PLATFORM directories, so rooting at this
 // file's own location is right here — unlike the content pipeline, which must

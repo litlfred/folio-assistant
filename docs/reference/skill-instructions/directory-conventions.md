@@ -12,10 +12,10 @@ parent: Skill instructions
 {% raw %}
 # Directory conventions — what an instance declares it scans
 
-Every instance carries an **`agent-harness.json`** at its repository root. It declares the directories the instance scans for content,
+Every instance carries an **`cat-harness.json`** at its repository root. It declares the directories the instance scans for content,
 and what **kind of graph** each one holds.
 
-Schema and resolution: `schemas/agent-harness.ts`.
+Schema and resolution: `schemas/cat-harness.ts`.
 
 **It is the *harness's* schema, not folio-assistant's.** `agentic-harness` is
 the layer that defines Roles, Skills, Tools and these conventions, and every
@@ -50,7 +50,51 @@ The vocabulary is **open**, and split across two layers.
 | `beans` | **harness** | the work plan as a whole (`beans/`); its inner nodes are declared by `beans/beans.json` | no |
 | `bean-defs` | **harness** | work items — one Markdown file each, in the layout the `beans` CLI reads. Authored by people and agents. | no |
 | `workflow-state` | **harness** | running BPMN instances — one JSON each, `"$schema": "folio-workflow-instance/v1"`. Owned by the interpreter, never hand-edited. | no |
+| `todos` | **harness** | human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json` | no |
+| `todo-items` | **harness** | todo nodes — one file each, `"$schema": "folio-todo/v1"`. Authored by people, and by agents on their behalf. | no |
+| `todo-feedback` | **harness** | feedback items — todos raised against a specific block, carrying the submitter's identity. Read by `todo-review`. | no |
 | `folio` | **`folio-assist-core`** | authored content | **yes** — just-the-docs renders it to a website |
+
+> **`todos` is not a second work plan, and the distinction is the one
+> `AGENTS.md` already draws.** `beans/` is the AGENT work plan and no second
+> store may be stood up beside it. `todos/` is the other thing that document
+> carves out — *"the content-review feedback workflow … a separate domain
+> feature, not the agent work-plan"* — and it is **content**: a todo records
+> that a **person** has something outstanding, and it is owned and authored by
+> the folio.
+>
+> **A todo carries the four coordinates of the role model**, because they are
+> already declared and inventing a fifth vocabulary for them would be the drift
+> this file exists to prevent. `AGENTS.md`: *an actor performs a task in a
+> process as a role.* A todo is that sentence left unfinished, so it is tagged
+> by `roles`, `processes`, `tasks` and `identities` (`schemas/todo.ts`).
+>
+> Two things about those tags are load-bearing rather than incidental:
+>
+> - **A task reference carries its process.** A BPMN activity id is unique only
+>   *within* its process, so a task tag is the pair `{ process, task }` and never
+>   a bare string. Same lesson as the subprocess interpreter: a step id without
+>   its phase is not an address.
+> - **An identity is provider-qualified, and its link to an actor is optional.**
+>   `litlfred` is not an identity; `github:litlfred` is. The link to a declared
+>   actor is absent whenever the person is not in `.claude/skills/actors/` — and
+>   somebody who comments on a pull request is a real person with a real
+>   outstanding item whether or not the registry has heard of them. Absent means
+>   **not linked**, a third state; never anonymous, and never defaulted.
+>
+> `resolveTodoTags` reports each tag as `resolved`, `dangling` or
+> **`not-checked`**, and the third is the one that matters: a checkout with no
+> `skills/` must report every role tag as unchecked, never as dangling. A wall
+> of false findings is how a check gets switched off.
+>
+> **`todos/` was previously a machine-queue directory, and that is retired, not
+> revived.** Four audit scripts defaulted their bulk JSON into `todos/*.json`
+> (bean `bfyw`); all four now write under `build/`, and
+> `scripts/tests/audit-output-paths.test.ts` pins that none of them regresses.
+> That guard forbids machine output landing there. It does not forbid the
+> declared content graph described here, and the two must not be confused:
+> bulk machine-generated queues stay bulk JSON under `build/`, exactly as
+> before.
 
 > **`bean-defs` and `workflow-state` are the distinction `beans` swallowed.**
 > Collapsing `workplan` + `process-state` into one `beans` kind was right about
@@ -98,7 +142,7 @@ a file extension.
 
 ```
 agentic-harness/          folio-assist-core/
-  agent-harness.json        agent-harness.json
+  cat-harness.json        cat-harness.json
   tools/     → tools        folio/     → folio
   kg/        → kg           (inherits tools/, kg/, schemas/)
   schemas/   → schemas
@@ -129,7 +173,7 @@ moving to the end — a relocation should not reshuffle what is scanned first.
 
 ## Three states, as everywhere else here
 
-- **No `agent-harness.json`** → `readDeclaration` returns `undefined`. An
+- **No `cat-harness.json`** → `readDeclaration` returns `undefined`. An
   instance not yet migrated is ordinary, and callers fall back to today's
   conventions. Not an error.
 - **Present but unreadable** → **throws.** A declaration nobody can parse
@@ -172,7 +216,7 @@ word.
   `<stub>.schema.json`. Never a generic `kg.json`. Compute it with
   `artefactStub()`, never by re-deriving it, so two exporters cannot disagree
   about what this instance is called.
-- **The declaration file is `agent-harness.json` and is NOT stub-named.**
+- **The declaration file is `cat-harness.json` and is NOT stub-named.**
 
 That second half is the one that looks inconsistent, so here is why. A consumer
 bootstrapping into a repository it knows nothing about needs **one fixed
@@ -262,7 +306,7 @@ asserting the two stayed equal. That works and is worse: **a drift guard is an
 admission that there are two definitions.** Extract instead, and re-export from
 the old home so existing importers are untouched.
 
-`agent-harness.test.ts` pins the property structurally — it asserts the module
+`cat-harness.test.ts` pins the property structurally — it asserts the module
 does not import `./jsonld` or `./block-kinds`. Reach for that test when adding
 anything else at the harness layer.
 
@@ -285,7 +329,7 @@ something reads the stale one.
 Both renderings already have their mechanism, so adding a schema introduces no
 new machinery: `scripts/generate-schemas.ts` walks a map of Zod schemas through
 `zodToJsonSchema` into `schemas/generated/`, and `toJsonLd()` in
-`schemas/agent-harness.ts` is the worked example of the graph projection.
+`schemas/cat-harness.ts` is the worked example of the graph projection.
 
 **Generate as many renderings as have a consumer, and no more.** JSON Schema
 because validators and editors speak it; JSON-LD because the KG query path
@@ -312,13 +356,13 @@ existed.
 
 Decided 2026-09-18 by the repository owner, for the Tools schema and for
 everything else in the `schemas` graph. Worked through in
-`docs/architecture/agent-harness-minimum.md` §"Carrying it".
+`docs/architecture/cat-harness-minimum.md` §"Carrying it".
 
 ## Adding a graph kind
 
 Decide which layer owns it first — **if it renders, it is not the harness's.**
 
-- A harness kind: one entry in `BASE_GRAPH_KINDS` (`schemas/agent-harness.ts`).
+- A harness kind: one entry in `BASE_GRAPH_KINDS` (`schemas/cat-harness.ts`).
 - A kind belonging to a layer above: a module like
   `schemas/folio-graph-kind.ts` that calls `registry.register(name, def)` at
   import, so the harness never learns the name until that layer is loaded.

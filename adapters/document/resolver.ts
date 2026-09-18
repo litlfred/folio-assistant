@@ -24,11 +24,12 @@ import type {
 } from "../../src/types.js";
 import { leanPackageByName } from "../../schemas/lean-packages.js";
 import type { Block, Chapter, Folio, Paper, Section } from "../../schemas/types.js";
+import { leanStatusBucket } from "../../schemas/types.js";
 import {
   blockCaption, blockExamples, blockLean, blockProofs, blockTex,
   isSectionRef, sectionBlockNames, tryParseLeanRef,
 } from "../manifest-entries.js";
-import { leanStatusBucket } from "../../content/pipeline/render-latex.js";
+
 
 export class PaperResolver {
   private outlineCache = new TtlCache<ContentOutline>();

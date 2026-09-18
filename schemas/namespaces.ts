@@ -9,7 +9,7 @@
  * `folio-assist-core`, and it imports `./block-kinds` to build its projection
  * tables.
  *
- * But `schemas/agent-harness.ts` — the root declaration every instance
+ * But `schemas/cat-harness.ts` — the root declaration every instance
  * carries, including a Tool repo or a Test repo that holds no content at all —
  * also needs the platform namespace, to mint the `@type` IRIs for its graph
  * kinds. Importing it from `jsonld.ts` would have made `agentic-harness`

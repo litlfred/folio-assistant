@@ -77,9 +77,26 @@ These run alongside the content processes rather than inside them:
 
 | Diagram | Answers |
 |---------|---------|
-| `crdm-requirements.bpmn` | A feature request arrived. How is it turned into agreed requirements, and who signs off? See [CRDM methodology](crdm-methodology.html) |
+| `crdm-requirements.bpmn` | A feature request arrived. How is it turned into agreed requirements, and who signs off? The outer process; its six phases are the call activities below. See [CRDM methodology](crdm-methodology.html) |
+| `crdm-issue-linking.bpmn` | Scan for a matching issue, then link or ask — an issue is never created without the BA's permission |
+| `crdm-needs.bpmn` | Phase 1: identify stakeholders, synthesise the needs statement, loop until it is recognised |
+| `crdm-requirements-definition.bpmn` | Phases 2–4: map the current workflow, define requirements and their impact, loop until approved |
+| `crdm-signoff.bpmn` | Phase 5: requirements become beans, the BA signs off, the branch is announced on the issue |
+| `crdm-deliver.bpmn` | Phase 6: implement, review the increment, share the MVP, take stakeholder findings. One phase, because all three loops route back into implementation |
+| `crdm-close.bpmn` | Stakeholder sign-off, BA confirmation, and only then the close — an agent never assumes completion |
 | `bean-lifecycle.bpmn` | When does an agent create, edit or scrap a bean — and why is one never deleted? See [Beans and todos](beans-and-todos.html) |
 | `content-change-review.bpmn` | One author's change, from description through staging to review-committee approval |
+
+**Review** — the generic entry and the two specialisms it descends into. They
+are separate processes rather than extra skills on the reviewer, because the
+subprocess stack is SCOPED: an actor takes on the inner lane's role for that
+call path only, where `inherits` would carry both specialisms everywhere.
+
+| Diagram | Answers |
+|---------|---------|
+| `review-task.bpmn` | What kind of thing changed, and which review does it descend into? |
+| `review-narrative.bpmn` | Prose: register and voice, the editorial dependencies a reader needs, translation |
+| `review-code.bpmn` | The graph's code nodes: Tool definitions and schema definition nodes — does the node declare what it is, do its references resolve, is the mechanism it advertises the one that runs? |
 
 **Ingestion** — turning an uploaded source document into corpus. The first is
 the outer process; the rest are its call activities:
@@ -205,7 +222,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 ## Editing and the HCI validation gate
 {: #editing-and-the-hci-validation-gate }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/editing-hci-validation.bpmn){: .fa-node-edit title="Edit skills/workflows/editing-hci-validation.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-fail fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/publication-workflow/editing-and-the-hci-validation-gate.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 1 fail, 0 warn, 6 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 1 fail, 0 warn, 6 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✕</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/editing-hci-validation.bpmn){: .fa-node-edit title="Edit skills/workflows/editing-hci-validation.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/publication-workflow/editing-and-the-hci-validation-gate.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
 This is the diagram that matters most day to day: **one proposed change to one
 content block**.
@@ -286,7 +303,7 @@ content type:
 ## From corpus to published folio
 {: #from-corpus-to-published-folio }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/draft-to-publication.bpmn){: .fa-node-edit title="Edit skills/workflows/draft-to-publication.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/from-corpus-to-published-folio.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/publication-workflow/from-corpus-to-published-folio.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 0 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 0 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/draft-to-publication.bpmn){: .fa-node-edit title="Edit skills/workflows/draft-to-publication.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/from-corpus-to-published-folio.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/publication-workflow/from-corpus-to-published-folio.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 9 pass, 0 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 9 pass, 0 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
 The corpus is not the publication. A **draft** is built from it, reviewed as a
 whole by the review team, and only then released.
@@ -337,7 +354,7 @@ This diagram implements the `req:content-lifecycle` phase gates —
 ## Content lifecycle overview
 {: #content-lifecycle-overview }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/content-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/content-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/content-lifecycle-overview.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/publication-workflow/content-lifecycle-overview.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/content-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/content-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/content-lifecycle-overview.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/publication-workflow/content-lifecycle-overview.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
 One cycle of a folio, plan to retire. Both diagrams above appear here as call
 activities.

@@ -5,10 +5,10 @@
     "id": "Process_CRDM",
     "path": "skills/workflows/crdm-requirements.bpmn"
   },
-  "source_hash": "sha256:aacb53470a46b2c1fc095f7c468b7638390b6dd79c7533fe7686447b8116098f",
+  "source_hash": "sha256:d2855a2fba345520d77e54dcffa402faff3a38eb1444b5469c5fad78f8cf17bb",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:6b817ff23334adb569779b4c620b0ebf98ad7bf63499f1eec596662b9bf02e9d",
+    "script_hash": "sha256:e458124330d0cfcd93e9ff9c18c0588079e7706ca188ff7f156734967ffef296",
     "engine_version": "1"
   },
   "criteria": {
@@ -41,62 +41,17 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "BA_Submit",
-          "detail": "\"Describe the need (chat, issue, discussion)\" names no skill."
-        },
-        {
-          "where": "BA_ReviewNeeds",
-          "detail": "\"Review synthesised needs statement\" names no skill."
-        },
-        {
-          "where": "BA_ReviewReqs",
-          "detail": "\"Review requirements and impact analysis\" names no skill."
-        },
-        {
-          "where": "BA_Signoff",
-          "detail": "\"Sign off on requirements\" names no skill."
-        },
-        {
-          "where": "BA_ReviewIncrement",
-          "detail": "\"Review increment (test behaviour)\" names no skill."
-        },
-        {
-          "where": "BA_ShareMVP",
-          "detail": "\"Share MVP with stakeholders\" names no skill."
-        },
-        {
-          "where": "BA_TranslateFeedback",
-          "detail": "\"Translate feedback into agent direction\" names no skill."
-        },
-        {
-          "where": "BA_Confirm",
-          "detail": "\"Confirm all criteria met\" names no skill."
-        },
-        {
-          "where": "S_ConfirmNeeds",
-          "detail": "\"Confirm needs statement\" names no skill."
-        },
-        {
-          "where": "S_ApproveReqs",
-          "detail": "\"Approve requirements\" names no skill."
-        },
-        {
-          "where": "S_TestMVP",
-          "detail": "\"Test MVP in own context\" names no skill."
-        },
-        {
-          "where": "S_FeatureSignoff",
-          "detail": "\"Feature sign-off on issue\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 8,
+    "fail": 0,
     "n/a": 1,
     "unknown": 0
   }

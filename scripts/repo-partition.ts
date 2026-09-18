@@ -145,6 +145,50 @@ const RULES: Rule[] = [
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
       "scripts/stakeholder-map.ts",          // CRDM phase 1 CLI
       "src/tools/stakeholder-map.ts",        // ...as an MCP tool
+
+      // Reported `unassigned` on 2026-09-18 and read one at a time, same
+      // question as the rest of this list: does it act on PLATFORM or on
+      // CONTENT? All six act on harness-level graphs — Tools, the knowledge
+      // graph, the instance declaration, the CI workflows — so none of them
+      // needs a folio to have anything to do.
+      "src/mcp/project.ts",                  // Tool node → MCP declaration + argv
+      "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
+      "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
+      "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
+      "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
+      "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
+      "scripts/check-workflows.ts",          // YAML GitHub will actually parse
+
+      // `schemas/` is claimed wholesale by a core prefix rule, but the
+      // directory holds schemas from all three layers. These four are the
+      // harness's own, and classifying them core produced NINE
+      // wrong-direction edges out of the harness — the harness importing
+      // definitions it owns. Same defect as `lean-packages.ts`, at scale, and
+      // the reason a `<graph>/<stub>/` layout would carry the answer in the
+      // path instead of in this list.
+      "schemas/tool.ts",                     // what a Tool IS — `tools` is a harness graph kind
+      "schemas/tool-types.ts",               // the Tool I/O type vocabulary
+      "schemas/kg-node.ts",                  // the labels every KG node carries
+      "schemas/harness-config.ts",           // cross-instance dependency resolution
+      // The skill-framework vocabulary — actors, capabilities, skills,
+      // requirements, the package registry. It was the top 240 lines of
+      // `constraints.ts` and 32 aliases in `types.ts`, which put it under the
+      // core `schemas/` prefix and made four harness modules read as depending
+      // on the content layer. None of it describes a folio's content.
+      "schemas/skill-package.ts",
+      // The composition root's own inventory of which content adapters this
+      // instance ships. `src/` is claimed by subdirectory, so a new file at
+      // its top level falls through — reported `unassigned`, which is the
+      // tool working: it declined to guess rather than defaulting.
+      "src/builtin-adapters.ts",
+
+      // `adapters/mcp-server/` was claimed wholesale by the harness prefix
+      // rule, but `server.ts` opens "QOU Paper Writing Assistant — MCP
+      // Server" and offers PDF rendering, content validation, a Lean LSP
+      // proxy and a content viewer. That is a CONTENT server, so the
+      // directory is core (below) and only the genuinely harness-level
+      // pieces stay here.
+      "adapters/mcp-server/tools/check-deps.ts",  // what is installed on this machine
     ],
     prefixes: ["src/impact/"],               // who a change affects: skills, roles, BPMN lanes
   },
@@ -198,11 +242,11 @@ const RULES: Rule[] = [
       "schemas/assistant-package.ts",
       "schemas/assistant-types.ts",
       "schemas/assistant-workflow.ts",
-      // The AgentHarness root declaration is harness-layer by concept even
+      // The CatHarness root declaration is harness-layer by concept even
       // though it sits in schemas/. It declares its own HARNESS_NS rather than
       // importing the content vocabulary, so classifying it here adds no
-      // wrong-direction edge — see schemas/agent-harness.ts.
-      "schemas/agent-harness.ts",
+      // wrong-direction edge — see schemas/cat-harness.ts.
+      "schemas/cat-harness.ts",
       // Roles, actors and the KG audit sidecar are harness-layer for the same
       // reason and on the same terms: `role-graph.ts` imports only
       // `namespaces.ts`, `kg-qa.ts` imports only zod. Neither touches the
@@ -231,14 +275,90 @@ const RULES: Rule[] = [
       // it was extracted to remove.
       "schemas/namespaces.ts",
     ],
-    prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "src/issue-watch/", "adapters/mcp-server/", "skills/framework/", "skills/remote-packages/"],
+    prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "src/issue-watch/", "skills/framework/", "skills/remote-packages/"],
+  },
+
+  // ── Mechanism that carries a domain keyword. Hand-triaged, and placed
+  //    BEFORE the domain rules because first match wins: the `lean` keyword
+  //    would otherwise claim a module the generic content model depends on.
+  //
+  //    The test applied is not "does the name mention Lean" but "would core
+  //    compile and function without the science layer installed". For
+  //    `lean-packages.ts` it would not: `BlockBase` carries an optional `lean`
+  //    field in `schemas/types.ts`, `schemas/constraints.ts` validates its
+  //    `ref` against `LEAN_REF_PATTERN`, and the field is on shared block
+  //    kinds by design — the document profile forbids its USE rather than its
+  //    existence. So the grammar belongs wherever the field does. Only the
+  //    package list is a property of a folio, and that is injected.
+  {
+    repo: "core",
+    triaged: true,
+    exact: [
+      "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
+      // Statement-level hashing for `.lean` files, by the same test: the
+      // `lean_granularity: "statement"` field is on `QaCriterionDefinition` in
+      // core, and `qa-utils` consults it on every freshness check. The
+      // grammar belongs wherever the field does.
+      "content/pipeline/lean-signature.ts",
+      // The Lean LEXER — comment stripping and declaration splitting — which
+      // `lean-signature.ts` is built on. Same test again: finding a
+      // declaration in a file is grammar; what you then DO with it (Atlas
+      // ingestion, triviality probing, coverage tables) is the science layer.
+      "content/pipeline/lean-lexer.ts",
+    ],
+  },
+
+  // ── The MCP server's paper-only tools. Triaged, and BEFORE the core
+  //    prefix that claims the rest of `adapters/mcp-server/`: these three
+  //    need a TeX installation or a Lean toolchain, which is the line
+  //    `adapters/paper/index.ts` already draws for the paper adapter.
+  {
+    repo: "sci",
+    triaged: true,
+    exact: [
+      "adapters/mcp-server/tools/render.ts",   // PDF, HTML, formula preview — LaTeX
+      "adapters/mcp-server/tools/lean.ts",     // Lean LSP proxy
+      "adapters/mcp-server/tools/preview.ts",  // opens rendered LaTeX output
+      // The refactoring-strategy DATABASE loader: version-gated candidate
+      // rewrites for `proof-simplifier`, keyed by Lean version. Its schema is
+      // already `sci` (`schemas/refactor-strategy.ts`) and the two were split
+      // across the boundary by directory alone. Nothing in the pipeline
+      // imports it; its only other consumer is its own test.
+      "content/pipeline/refactor-strategy.ts",
+    ],
+  },
+
+  // ── The LaTeX build path. Triaged, and BEFORE the `content/pipeline/`
+  //    core prefix that would otherwise claim it by directory.
+  //
+  //    The test is purpose, not location. `build.ts`'s own module doc reads
+  //    "content objects → LaTeX chapters": it renders to TeX, generates
+  //    `main.tex`, runs a LaTeX preflight and resolves Lean files for the
+  //    coverage table. A document folio never reaches any of it — its render
+  //    path is `render-markdown.ts` → pandoc, which `AGENTS.md` records as
+  //    deliberately never falling back to `latexmk`. So these modules are the
+  //    science layer's sitting in the pipeline directory, and classifying
+  //    them by directory produced five wrong-direction edges out of one
+  //    misreading.
+  //
+  //    Nothing IMPORTS `build.ts` except `generate-main-tex.ts`, which moves
+  //    with it; every other caller spawns it as a subprocess, which is not an
+  //    import edge and does not move.
+  {
+    repo: "sci",
+    triaged: true,
+    exact: [
+      "content/pipeline/build.ts",              // content objects → LaTeX chapters
+      "content/pipeline/generate-main-tex.ts",  // assembles main.tex
+      "content/pipeline/latex-preflight.ts",    // checks the TeX toolchain
+    ],
   },
 
   // ── folio-asst-sci: Lean, LaTeX, simulators, proofs
   {
     repo: "sci",
     prefixes: ["adapters/paper/", "skills/authoring-math/", "skills/folio-paper-adapter/", "simulators/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
-    exact: ["schemas/formalization-types.ts", "schemas/lean-packages.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
+    exact: ["schemas/formalization-types.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
   },
   {
     repo: "sci",
@@ -259,7 +379,7 @@ const RULES: Rule[] = [
   // ── folio-assist-core: the generic document model and its pipeline
   {
     repo: "core",
-    prefixes: ["adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
+    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
     exact: ["src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/translation.ts", "src/tools/preview.ts", "src/qa-agent-write.ts"],
   },
 ];

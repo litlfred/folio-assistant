@@ -22,11 +22,12 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
+import { spawnSync } from "node:child_process";
 
 import { buildExport, exportIdentity } from "../kg-export.js";
 import { buildDeclarationSchema } from "../harness-schema-export.js";
-import { readDeclaration, artefactStub } from "../../schemas/agent-harness.js";
+import { readDeclaration, artefactStub } from "../../schemas/cat-harness.js";
 import { FOLIO_NS } from "../../schemas/namespaces.js";
 
 // The repo's own canonicalUrl, so the shared fixture is the CANONICAL export.
@@ -156,7 +157,7 @@ describe("kg export", () => {
     expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/kg/${stub}.schema.json`);
 
     // The declaration is read from a fixed filename, whatever the stub is.
-    expect(existsSync(join(import.meta.dir, "../..", "agent-harness.json"))).toBe(true);
+    expect(existsSync(join(import.meta.dir, "../..", "cat-harness.json"))).toBe(true);
     expect(existsSync(join(import.meta.dir, "../..", `${stub}.json`))).toBe(false);
   });
 
@@ -205,5 +206,72 @@ describe("kg export", () => {
     const kinds = typed("GraphKind");
     expect(kinds.length).toBeGreaterThan(0);
     for (const k of kinds) expect(String(k["@id"]).startsWith(FOLIO_NS)).toBe(true);
+  });
+});
+
+describe("source provenance — what the graph was generated FROM", () => {
+  // `generatedAt` says WHEN the export ran, which does not identify what it
+  // ran over: two graphs differing in content are indistinguishable from two
+  // runs of the same content, and a consumer holding a published .jsonld has
+  // no way back to the tree that produced it.
+
+  test("the commit SHA is carried, unabbreviated", async () => {
+    const d = await buildExport();
+    expect(d.sourceCommitSha).toMatch(/^[0-9a-f]{40}$/);
+  });
+
+  test("it is the commit this checkout is actually on", async () => {
+    const head = spawnSync("git", ["rev-parse", "HEAD"], {
+      cwd: resolve(import.meta.dir, "../.."),
+      encoding: "utf-8",
+    }).stdout.trim();
+    const d = await buildExport();
+    expect(d.sourceCommitSha).toBe(head);
+  });
+
+  test("the commit is a dereferenceable IRI, typed prov:wasDerivedFrom", async () => {
+    const d = await buildExport();
+    expect(d.sourceCommit).toContain(d.sourceCommitSha);
+    expect(d.sourceCommit).toMatch(/^https:\/\/(github|gitlab)\.com\/.+\/commit\//);
+    const ctx = d["@context"] as Record<string, { "@id"?: string; "@type"?: string }>;
+    expect(ctx.sourceCommit?.["@id"]).toMatch(/wasDerivedFrom$/);
+    expect(ctx.sourceCommit?.["@type"]).toBe("@id");
+  });
+
+  test("the commit's own time is distinct from the export's", async () => {
+    const d = await buildExport();
+    expect(d.sourceCommitAt).toBeDefined();
+    expect(d.sourceCommitAt).not.toBe(d.generatedAt);
+  });
+
+  test("a dirty tree is a typed flag, NOT a `problems` entry", async () => {
+    // A SHA reported from a tree with uncommitted changes names a commit that
+    // does not contain what was exported, so the flag rides beside the SHA
+    // rather than suppressing it. It stays out of `problems`, whose contract
+    // is "sources that could not be read": a dirty checkout is the normal
+    // state of a developer's machine, and putting it there would make
+    // `problems: []` fail on every local run and train the reader to ignore
+    // the field that reports real failures.
+    const d = await buildExport();
+    expect(typeof d.sourceTreeDirty).toBe("boolean");
+    expect(d.problems.some((p) => /uncommitted|dirty/i.test(p))).toBe(false);
+  });
+
+  test("an absent SHA carries its own reason, not a placeholder", async () => {
+    const d = await buildExport();
+    // Exactly one of the two is present — a consumer never has to infer why a
+    // field is missing, and never parses a placeholder as a commit.
+    expect(Boolean(d.sourceCommitSha) !== Boolean(d.sourceCommitUnavailable)).toBe(true);
+  });
+
+  test("every provenance term is declared in @context", async () => {
+    // An undeclared term is dropped on expansion, so a field present in the
+    // JSON would be absent from the RDF — the graph would silently lose its
+    // own provenance.
+    const d = await buildExport();
+    const ctx = d["@context"] as Record<string, unknown>;
+    for (const k of ["sourceCommit", "sourceCommitSha", "sourceCommitAt", "sourceTreeDirty"]) {
+      expect(ctx[k]).toBeDefined();
+    }
   });
 });

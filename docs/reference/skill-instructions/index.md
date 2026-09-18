@@ -27,6 +27,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Content Review](content-review.html) | `content-review` | [schema](../skills/content-review.html) | Formal review and approval of validated content before publication. |
 | [Content Testing](content-test.html) | `content-test` | [schema](../skills/content-test.html) | End-to-end testing of content artifacts in realistic scenarios. |
 | [Content Validation](content-validate.html) | `content-validate` | [schema](../skills/content-validate.html) | Validate authored content against schemas, standards, and clinical accuracy. |
+| [Evidence Appraisal](evidence-appraisal.html) | `evidence-appraisal` | — | Appraise and grade a **body of evidence** against the grading system the folio |
 
 ## Agent skills
 
@@ -46,6 +47,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Block Density](block-density.html) | `block-density` | — |  |
 | [/canonical-watcher](canonical-watcher.html) | `canonical-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [Chapter Complexity Review](chapter-complexity-review.html) | `chapter-complexity-review` | — |  |
+| [Code node review](code-node-review.html) | `code-node-review` | — |  |
 | [Compute Integration Watcher](compute-integration-watcher.html) | `compute-integration-watcher` | — |  |
 | [Content Graph](content-graph.html) | `content-graph` | — | cd content && python3 pipeline/content-graph-analysis.py |
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
@@ -58,7 +60,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/detangler-integration-watcher](detangler-integration-watcher.html) | `detangler-integration-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [/devils-advocate-watcher](devils-advocate-watcher.html) | `devils-advocate-watcher` | — | A concrete instance of [`integration-watcher`](integration-watcher.md). |
 | [Diff](diff.html) | `diff` | — | Show what changed at the content-block level, with viewer links and |
-| [Directory conventions](directory-conventions.html) | `directory-conventions` | — | Every instance carries an **`agent-harness.json`** at its repository root. It declares the directori |
+| [Directory conventions](directory-conventions.html) | `directory-conventions` | — | Every instance carries an **`cat-harness.json`** at its repository root. It declares the directories |
 | [/dispatch-agent](dispatch-agent.html) | `dispatch-agent` | — | The expensive failure mode of multi-agent dispatch is **going dark**: you |
 | [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
 | [Editor](editor.html) | `editor` | — |  |

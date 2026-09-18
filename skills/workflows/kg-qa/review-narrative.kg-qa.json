@@ -1,0 +1,58 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_NarrativeReview",
+    "path": "skills/workflows/review-narrative.bpmn"
+  },
+  "source_hash": "sha256:30f67e83371bf702f077225d385b52d8ec3275e7888b4d58b79981fef031fc2c",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:e458124330d0cfcd93e9ff9c18c0588079e7706ca188ff7f156734967ffef296",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 7,
+    "fail": 0,
+    "n/a": 2,
+    "unknown": 0
+  }
+}

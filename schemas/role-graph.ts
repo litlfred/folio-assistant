@@ -93,6 +93,7 @@
  */
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { kgNodeLabelShape } from "./kg-node";
 import { join } from "node:path";
 import { z } from "zod";
 
@@ -125,7 +126,8 @@ export type ActorKind = (typeof ACTOR_KINDS)[number];
  */
 export interface ActorDef {
   id: string;
-  name: string;
+  /** Display text. See `schemas/kg-node.ts` — `title`/`description` everywhere. */
+  title: string;
   kind: ActorKind;
   description?: string;
   /**
@@ -142,9 +144,16 @@ export interface ActorDef {
 export interface RoleDef {
   /** Stable id. Referenced by `<folio:role ref>` and by `inherits`. */
   id: string;
-  /** Human label. Not used for matching — {@link RoleDef.lanes} is. */
-  name: string;
-  summary: string;
+  /**
+   * Display text. Not used for matching — {@link RoleDef.lanes} is.
+   *
+   * `title` and `description` rather than `name` and `summary`: they are the
+   * two labels EVERY knowledge-graph node carries (`schemas/kg-node.ts`), and a
+   * role spelling them differently from a directory or a Tool meant a consumer
+   * had to know which kind of node it held before it could print one.
+   */
+  title: string;
+  description: string;
   /**
    * What kind of actor takes this role on. `external` marks a participant
    * outside the instance's control (a registry, a third-party service).
@@ -212,6 +221,31 @@ export interface RoleDef {
    * somebody switches off.
    */
   actedUpon?: boolean;
+  /**
+   * The role PERFORMS, but by judgement — no instruction body implements its
+   * steps, and naming one would be a lie about what the role does.
+   *
+   * Distinct from `actedUpon`, and the distinction is the point. A corpus is
+   * written to and takes no part; a stakeholder acts, deliberates and is
+   * accountable for the outcome — they simply cannot be handed a procedure
+   * that produces the answer. `stakeholder`'s own summary has said so in
+   * prose since the role graph was written:
+   *
+   *   > Carries no skills deliberately: sign-off is a judgement, not a
+   *   > procedure, and a skill here would suggest an agent could supply it.
+   *
+   * That prose was load-bearing and unreadable by anything. A later pass
+   * measured four `activity-names-skill` findings on the stakeholder lane and
+   * came within one commit of "fixing" them by giving the role a skill —
+   * which would have re-entered exactly the dead end the summary closed. The
+   * flag is that sentence made machine-readable, so the next pass is stopped
+   * by the graph rather than by whether it happened to read a summary.
+   *
+   * Effect: `activity-names-skill` records `n/a` for activities in this
+   * role's lanes, which is what lets the criterion GATE on the undeclared
+   * ones instead of staying advisory for ever.
+   */
+  judgementOnly?: boolean;
 }
 
 /** The declared role graph. */
@@ -224,7 +258,7 @@ export interface RoleGraph {
 
 export const ActorDefSchema = z.object({
   id: z.string().min(1),
-  name: z.string().min(1),
+  title: z.string().min(1),
   kind: z.enum(ACTOR_KINDS),
   description: z.string().optional(),
   roles: z.array(z.string()).optional(),
@@ -238,13 +272,18 @@ export const RoleDefSchema = z.object({
   voice: z.string().optional(),
   useCases: z.array(z.string()).optional(),
   id: z.string().min(1),
-  name: z.string().min(1),
-  summary: z.string().min(1),
+  // Required here, though `kgNodeLabelShape` makes both optional in general: a
+  // role nobody can name or describe is a lane nobody can fill, and `kg-audit`
+  // reports exactly that.
+  ...kgNodeLabelShape,
+  title: z.string().min(1),
+  description: z.string().min(1),
   actorKind: z.enum(ACTOR_KINDS),
   lanes: z.array(z.string()).default([]),
   skills: z.array(z.string()).default([]),
   inherits: z.array(z.string()).optional(),
   actedUpon: z.boolean().optional(),
+  judgementOnly: z.boolean().optional(),
 });
 
 export const RoleGraphSchema = z.object({
@@ -344,7 +383,7 @@ export function readActors(actorsDir: string): LoadedActor[] {
     const type = typeof raw.type === "string" ? raw.type : "agent";
     out.push({
       id: String(raw.id ?? f.slice(0, -5)),
-      name: String(raw.name ?? raw.id ?? f.slice(0, -5)),
+      title: String(raw.title ?? raw.id ?? f.slice(0, -5)),
       kind: type === "person" ? "person" : type === "system" ? "system" : "agent",
       description: typeof raw.description === "string" ? raw.description : undefined,
       roles: Array.isArray(raw.roles) ? (raw.roles as string[]) : undefined,
@@ -464,7 +503,7 @@ export function boundLaneNames(graph: RoleGraph): Set<string> {
 // ── Graph projection ────────────────────────────────────────────
 
 /**
- * JSON-LD projection, matching {@link module:schemas/agent-harness}'s: the
+ * JSON-LD projection, matching {@link module:schemas/cat-harness}'s: the
  * authored shape is stored, the graph form is derived, and there is one truth.
  */
 export function toJsonLd(graph: RoleGraph): Record<string, unknown> {
@@ -481,8 +520,8 @@ export function toJsonLd(graph: RoleGraph): Record<string, unknown> {
     roles: graph.roles.map((r) => ({
       "@id": `#${r.id}`,
       "@type": `${FOLIO_NS}Role`,
-      name: r.name,
-      summary: r.summary,
+      title: r.title,
+      description: r.description,
       actorKind: r.actorKind,
       lanes: r.lanes,
       skills: r.skills,
@@ -550,8 +589,9 @@ export const PERMISSION_FILENAME = "permissions.json";
  */
 export interface PermissionDef {
   id: string;
-  name: string;
-  summary: string;
+  /** Display text and the sentence under it — `schemas/kg-node.ts`, like every node. */
+  title: string;
+  description: string;
 }
 
 export interface PermissionVocabulary {
@@ -561,8 +601,8 @@ export interface PermissionVocabulary {
 
 export const PermissionDefSchema = z.object({
   id: z.string().min(1),
-  name: z.string().min(1),
-  summary: z.string().min(1),
+  title: z.string().min(1),
+  description: z.string().min(1),
 });
 
 export const PermissionVocabularySchema = z.object({

@@ -3,9 +3,9 @@
  *
  * A `folio` graph is authored content that the just-the-docs pipeline renders
  * to a website. It is the only **renderable** kind, and that is precisely why
- * it does not live in `schemas/agent-harness.ts`:
+ * it does not live in `schemas/cat-harness.ts`:
  *
- * > `agent-harness` is **not** self-documenting; `folio-assist-core` is.
+ * > `cat-harness` is **not** self-documenting; `folio-assist-core` is.
  * > Everything that depends on the just-the-docs rendering pipeline belongs to
  * > core.
  *
@@ -26,7 +26,7 @@
  * @module schemas/folio-graph-kind
  */
 
-import { defaultGraphKinds, type GraphKindDef, type GraphKindRegistry } from "./agent-harness";
+import { defaultGraphKinds, type GraphKindDef, type GraphKindRegistry } from "./cat-harness";
 // Straight from the namespace leaf, not via the harness: the IRI is the
 // platform's, not the harness's to re-export.
 import { FOLIO_NS } from "./namespaces";

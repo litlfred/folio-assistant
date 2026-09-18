@@ -45,9 +45,26 @@ These run alongside the content processes rather than inside them:
 
 | Diagram | Answers |
 |---------|---------|
-| `crdm-requirements.bpmn` | A feature request arrived. How is it turned into agreed requirements, and who signs off? See [CRDM methodology](crdm-methodology.html) |
+| `crdm-requirements.bpmn` | A feature request arrived. How is it turned into agreed requirements, and who signs off? The outer process; its six phases are the call activities below. See [CRDM methodology](crdm-methodology.html) |
+| `crdm-issue-linking.bpmn` | Scan for a matching issue, then link or ask — an issue is never created without the BA's permission |
+| `crdm-needs.bpmn` | Phase 1: identify stakeholders, synthesise the needs statement, loop until it is recognised |
+| `crdm-requirements-definition.bpmn` | Phases 2–4: map the current workflow, define requirements and their impact, loop until approved |
+| `crdm-signoff.bpmn` | Phase 5: requirements become beans, the BA signs off, the branch is announced on the issue |
+| `crdm-deliver.bpmn` | Phase 6: implement, review the increment, share the MVP, take stakeholder findings. One phase, because all three loops route back into implementation |
+| `crdm-close.bpmn` | Stakeholder sign-off, BA confirmation, and only then the close — an agent never assumes completion |
 | `bean-lifecycle.bpmn` | When does an agent create, edit or scrap a bean — and why is one never deleted? See [Beans and todos](beans-and-todos.html) |
 | `content-change-review.bpmn` | One author's change, from description through staging to review-committee approval |
+
+**Review** — the generic entry and the two specialisms it descends into. They
+are separate processes rather than extra skills on the reviewer, because the
+subprocess stack is SCOPED: an actor takes on the inner lane's role for that
+call path only, where `inherits` would carry both specialisms everywhere.
+
+| Diagram | Answers |
+|---------|---------|
+| `review-task.bpmn` | What kind of thing changed, and which review does it descend into? |
+| `review-narrative.bpmn` | Prose: register and voice, the editorial dependencies a reader needs, translation |
+| `review-code.bpmn` | The graph's code nodes: Tool definitions and schema definition nodes — does the node declare what it is, do its references resolve, is the mechanism it advertises the one that runs? |
 
 **Ingestion** — turning an uploaded source document into corpus. The first is
 the outer process; the rest are its call activities:

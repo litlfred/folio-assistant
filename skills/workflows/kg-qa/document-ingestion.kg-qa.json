@@ -5,10 +5,10 @@
     "id": "Process_Ingestion",
     "path": "skills/workflows/document-ingestion.bpmn"
   },
-  "source_hash": "sha256:314cab783932459ad30029b152b8cda0ab8a12b58b0ff39e4adbddbd92c3593c",
+  "source_hash": "sha256:8bece1953eeca33ee69f84734a1e4afdf61473e957b996467f406b4876c8d2bf",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:6b817ff23334adb569779b4c620b0ebf98ad7bf63499f1eec596662b9bf02e9d",
+    "script_hash": "sha256:e458124330d0cfcd93e9ff9c18c0588079e7706ca188ff7f156734967ffef296",
     "engine_version": "1"
   },
   "criteria": {
@@ -41,26 +41,17 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "CallActivity_Gate",
-          "detail": "\"L1 completeness gate\" names no skill."
-        },
-        {
-          "where": "Task_OpenBean",
-          "detail": "\"Record the gap as a bean\" names no skill."
-        },
-        {
-          "where": "Task_Citeable",
-          "detail": "\"Available to cite as an L1 source\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 8,
+    "fail": 0,
     "n/a": 1,
     "unknown": 0
   }

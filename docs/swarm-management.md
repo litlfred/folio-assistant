@@ -76,7 +76,7 @@ stating plainly rather than leaving a reader to discover it:
   which is exactly when they need it — so the ask is qualitative today.
 - **No sub-bean hierarchy.** `TodoItem` has `related[]` but no `parent`, so the
   roll-up this page assumes is done by convention. See the
-  [minimum agent-harness analysis](architecture/agent-harness-minimum.html)
+  [minimum cat-harness analysis](architecture/cat-harness-minimum.html)
   §"User todo management".
 
 Closing those is what would turn this from guidance into a guardrail.

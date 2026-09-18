@@ -23,12 +23,13 @@ import { fileURLToPath } from "node:url";
 
 import { defineTool, type ToolDefinition } from "../schemas/tool.js";
 import { toolTypeIri } from "../schemas/tool-types.js";
+import { mcpTools } from "./mcp.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 /** The declared publication base, or a local placeholder when none is set. */
 function base(): string {
-  const p = join(ROOT, "agent-harness.json");
+  const p = join(ROOT, "cat-harness.json");
   if (!existsSync(p)) return "";
   try {
     const d = JSON.parse(readFileSync(p, "utf-8")) as { canonicalUrl?: string };
@@ -46,7 +47,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     defineTool({
       id: "beans-cli",
       title: "beans CLI",
-      summary:
+      description:
         "Read and write the work plan with the `beans` binary. The normal mechanism when it is installed.",
       install: { cli: "scripts/install-beans.sh" },
       invoke: { shell: "beans" },
@@ -68,7 +69,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     defineTool({
       id: "beans-manual",
       title: "beans, by hand",
-      summary:
+      description:
         "Read and write the same work plan without the CLI — `scripts/beans-fallback.ts`, or editing a bean's front matter directly. Equal standing to the CLI, not a degraded mode.",
       // Nothing to install: the store is files in the repository. Stated
       // explicitly so "no install step" is distinguishable from "unfinished
@@ -97,7 +98,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     defineTool({
       id: "github",
       title: "GitHub",
-      summary:
+      description:
         "Open and drive change proposals on GitHub — branches, pull requests, reviews, checks. One forge among possible others; the skills it satisfies name none.",
       install: { cli: "gh" },
       invoke: {
@@ -123,7 +124,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     defineTool({
       id: "pages-publish",
       title: "GitHub Pages publish",
-      summary:
+      description:
         "Push a built directory to the `gh-pages` branch, where it is served. How the knowledge graph and its schema reach a URL.",
       install: { none: true },
       invoke: { shell: ".github/workflows/docs-site.yml" },
@@ -137,5 +138,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       satisfies: ["kg-export"],
       requires: { network: true },
     }),
+
+    // The twenty tools this instance already serves over MCP. Kept in a sibling
+    // module because they are a MIGRATION of an existing surface rather than
+    // hand-authored nodes: they are regenerable from `bun run mcp:capture`, and
+    // mixing them in here would blur which of the two a reader is looking at.
+    ...mcpTools(t),
   ];
 }

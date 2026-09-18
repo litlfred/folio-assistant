@@ -1,5 +1,5 @@
 /**
- * The `AgentHarness` declaration — what an instance IS, at its root.
+ * The `CatHarness` declaration — what an instance IS, at its root.
  *
  * Named for the **harness**, not for folio-assistant, and the distinction is
  * the point: `agentic-harness` is the layer that defines Roles, Skills, Tools
@@ -10,7 +10,7 @@
  * not: a Tool repo or a Test repo carries the same declaration.
  *
  * Issue #223, Phase 0.3. Every folio-assistant instance carries one of these
- * at its repository root (`agent-harness.json`). It declares the directories
+ * at its repository root (`cat-harness.json`). It declares the directories
  * the instance scans for content, and what **kind of graph** each one holds.
  *
  * ## Why a directory declaration rather than a content-type field
@@ -52,17 +52,18 @@
  * else in the knowledge graph, rather than being configuration that only this
  * module understands.
  *
- * @module schemas/agent-harness
+ * @module schemas/cat-harness
  */
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { z } from "zod";
 
+import { KgImageSchema, kgNodeLabelShape, type KgImage, type KgNodeLabels } from "./kg-node";
 import { FOLIO_NS } from "./namespaces";
 
 /** Root-relative filename carrying an instance's declaration. */
-export const DECLARATION_FILENAME = "agent-harness.json";
+export const DECLARATION_FILENAME = "cat-harness.json";
 
 // ── Graph kinds ─────────────────────────────────────────────────
 
@@ -180,6 +181,34 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Running BPMN instances — one JSON file each, carrying " +
       "`\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
   },
+  // The todo graph. NOT a second work plan: `beans` is the agent work plan and
+  // `AGENTS.md` forbids standing up another. This is the thing that document
+  // already carves out beside it — "the content-review feedback workflow … a
+  // separate domain feature, not the agent work-plan" — and it is CONTENT,
+  // owned by the folio. A todo records a PERSON's outstanding work, tagged by
+  // the four coordinates of the role model: who, as which role, in which
+  // process, on which task.
+  todos: {
+    type: `${FOLIO_NS}TodoGraph`,
+    renderable: false,
+    summary:
+      "Human actors' outstanding work — content, owned by the folio, tagged by role, " +
+      "process, task and identity. Its inner directories are declared by `todos/todos.json`.",
+  },
+  "todo-items": {
+    type: `${FOLIO_NS}TodoItemsGraph`,
+    renderable: false,
+    summary:
+      "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
+      "Authored by people and by agents on their behalf.",
+  },
+  "todo-feedback": {
+    type: `${FOLIO_NS}TodoFeedbackGraph`,
+    renderable: false,
+    summary:
+      "Feedback items — todos raised against a specific block, carrying the submitter's " +
+      "identity. Read by the `todo-review` skill.",
+  },
 };
 
 /** A graph kind name. Open, not a closed union — downstream layers add kinds. */
@@ -255,7 +284,7 @@ export function isRenderable(kind: string, registry: GraphKindRegistry = default
 // ── The declaration ─────────────────────────────────────────────
 
 /** One declared content directory. */
-export interface ContentDirectory {
+export interface ContentDirectory extends KgNodeLabels {
   /**
    * Stable identifier, unique within an instance. Inheritance overrides match
    * on THIS, never on `path` — see the module note on relocation.
@@ -281,12 +310,26 @@ export interface ContentDirectory {
    * concept.
    */
   graphs: GraphKind[];
-  /** Optional one-line description for `--list` style output. */
-  summary?: string;
 }
 
 /** An instance's root declaration. */
-export interface AgentHarnessDeclaration {
+export interface CatHarnessDeclaration extends KgNodeLabels {
+  /**
+   * Images this instance names — its marks, in the graph rather than beside it.
+   *
+   * See {@link KgImage}: the docs site, the README and the browser tab all want
+   * the same picture, and a node is what stops each of them hardcoding its own
+   * path to it.
+   */
+  images?: KgImage[];
+  /**
+   * The id of the {@link images} entry to use as the browser icon.
+   *
+   * An id and not a path, so moving the file is one edit in one place. A
+   * dangling reference is reported by `readDeclaration` rather than silently
+   * rendering no icon — a missing favicon looks exactly like a slow one.
+   */
+  icon?: string;
   /** The instance's name, e.g. `"agentic-harness"`. */
   name: string;
   /**
@@ -301,7 +344,7 @@ export interface AgentHarnessDeclaration {
    * the repository, so a reader who knows the repo knows the filename.
    *
    * Note the declaration file itself is **not** stub-named — it stays
-   * `agent-harness.json`, exactly as `smart-base`'s config stays `dak.json`. A
+   * `cat-harness.json`, exactly as `smart-base`'s config stays `dak.json`. A
    * consumer must be able to find the config without already knowing the
    * repository's name; the artefacts it *describes* are free to be named.
    */
@@ -330,11 +373,14 @@ export const ContentDirectorySchema = z.object({
   // has registered `folio` — so the enum would reject the one kind the whole
   // rendering pipeline depends on.
   graphs: z.array(z.string().min(1)).min(1),
-  summary: z.string().optional(),
+  ...kgNodeLabelShape,
 });
 
-export const AgentHarnessDeclarationSchema = z.object({
+export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
+  ...kgNodeLabelShape,
+  images: z.array(KgImageSchema).optional(),
+  icon: z.string().min(1).optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   previewUrl: z.string().url().optional(),
@@ -349,7 +395,7 @@ export const AgentHarnessDeclarationSchema = z.object({
  * cannot disagree about what this instance is called — the naming convention
  * is only worth having if it is computed in one place.
  */
-export function artefactStub(d: Pick<AgentHarnessDeclaration, "name" | "stub">): string {
+export function artefactStub(d: Pick<CatHarnessDeclaration, "name" | "stub">): string {
   return d.stub ?? d.name;
 }
 
@@ -367,7 +413,7 @@ export function artefactStub(d: Pick<AgentHarnessDeclaration, "name" | "stub">):
 export function readDeclaration(
   instanceRoot: string,
   registry: GraphKindRegistry = defaultGraphKinds,
-): AgentHarnessDeclaration | undefined {
+): CatHarnessDeclaration | undefined {
   const p = join(instanceRoot, DECLARATION_FILENAME);
   if (!existsSync(p)) return undefined;
   let raw: unknown;
@@ -376,9 +422,9 @@ export function readDeclaration(
   } catch (e) {
     throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
   }
-  const parsed = AgentHarnessDeclarationSchema.safeParse(stripJsonLd(raw, registry));
+  const parsed = CatHarnessDeclarationSchema.safeParse(stripJsonLd(raw, registry));
   if (!parsed.success) {
-    throw new Error(`${p} is not a valid AgentHarness declaration: ${parsed.error.message}`);
+    throw new Error(`${p} is not a valid CatHarness declaration: ${parsed.error.message}`);
   }
   // Kind validation is here rather than in the Zod schema because the
   // vocabulary is open: the set of valid kinds is whatever has been registered
@@ -394,6 +440,23 @@ export function readDeclaration(
         );
       }
     }
+  }
+  // Same reasoning one level down: an `icon` naming an image the declaration
+  // does not carry renders nothing, and a missing favicon looks exactly like a
+  // slow one — so it is reported rather than left to be noticed.
+  if (parsed.data.icon) {
+    const ids = (parsed.data.images ?? []).map((i) => i.id);
+    if (!ids.includes(parsed.data.icon)) {
+      throw new Error(
+        `${p}: icon "${parsed.data.icon}" names no declared image. ` +
+          (ids.length ? `Declared: ${ids.join(", ")}.` : `No images are declared.`),
+      );
+    }
+  }
+  const seen = new Set<string>();
+  for (const i of parsed.data.images ?? []) {
+    if (seen.has(i.id)) throw new Error(`${p}: image "${i.id}" is declared twice.`);
+    seen.add(i.id);
   }
   return parsed.data;
 }
@@ -503,13 +566,28 @@ export function renderableDirectories(
  * shape and one derived shape, not two truths.
  */
 export function toJsonLd(
-  decl: AgentHarnessDeclaration,
+  decl: CatHarnessDeclaration,
   registry: GraphKindRegistry = defaultGraphKinds,
 ): Record<string, unknown> {
   return {
     "@context": { fa: FOLIO_NS, path: `${FOLIO_NS}path`, directories: `${FOLIO_NS}scans` },
-    "@type": `${FOLIO_NS}AgentHarness`,
+    "@type": `${FOLIO_NS}CatHarness`,
     name: decl.name,
+    ...(decl.title ? { title: decl.title } : {}),
+    ...(decl.description ? { description: decl.description } : {}),
+    ...(decl.icon ? { icon: { "@id": `#${decl.icon}` } } : {}),
+    ...(decl.images?.length
+      ? {
+          images: decl.images.map((i) => ({
+            "@id": `#${i.id}`,
+            "@type": `${FOLIO_NS}Image`,
+            src: i.src,
+            ...(i.role ? { role: i.role } : {}),
+            ...(i.title ? { title: i.title } : {}),
+            ...(i.description ? { description: i.description } : {}),
+          })),
+        }
+      : {}),
     directories: decl.directories.map((d) => {
       const types = d.graphs.map((g) => registry.get(g)?.type ?? `${FOLIO_NS}UnknownGraph`);
       return {
@@ -519,7 +597,8 @@ export function toJsonLd(
         // make every existing published form look changed.
         "@type": types.length === 1 ? types[0] : types,
         path: d.path,
-        ...(d.summary ? { summary: d.summary } : {}),
+        ...(d.title ? { title: d.title } : {}),
+        ...(d.description ? { description: d.description } : {}),
       };
     }),
   };

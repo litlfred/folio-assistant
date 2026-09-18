@@ -10,6 +10,8 @@ import { join, relative, resolve } from "path";
 import { execSync } from "child_process";
 import { findContentRepoRoot, findPapers } from "../../content/pipeline/repo-root";
 import { LEAN_PACKAGES } from "../../schemas/lean-packages";
+import { complete, enabled, type InstanceState } from "../../src/workflow/instance";
+import type { ProcessModel } from "../../src/workflow/process-model";
 
 // ── Paths ───────────────────────────────────────────────────────
 
@@ -289,5 +291,40 @@ export function getCommitSha(): string {
     return execSync("git rev-parse HEAD", { cwd: REPO_ROOT, encoding: "utf-8" }).trim();
   } catch {
     return "unknown";
+  }
+}
+
+// ── Workflow interpreter ────────────────────────────────────────
+
+/**
+ * Walk a subprocess to its end, so the parent's call activity completes.
+ *
+ * A call activity IS the process it names — the parent's token sits on it until
+ * the child finishes — so a test whose subject is the PARENT has to get through
+ * the child somehow. Completing whatever is enabled is the right shape for that:
+ * the test is not specifying the child's path, and spelling one out would make
+ * it fail every time the child diagram changed for reasons the test does not
+ * care about.
+ *
+ * `choose` names the outcome for a gateway the test DOES care about. Anything
+ * unnamed takes the first branch — arbitrary, and deliberately so: a test that
+ * relies on which branch is first should be naming it.
+ */
+export function drainSubprocess(
+  model: ProcessModel,
+  state: InstanceState,
+  callNode: string,
+  choose: Record<string, string> = {},
+): void {
+  for (let guard = 0; state.tokens.includes(callNode); guard++) {
+    if (guard > 100) throw new Error(`subprocess under ${callNode} did not finish in 100 steps`);
+    const step = enabled(model, state)[0];
+    if (!step) throw new Error(`subprocess under ${callNode} is stuck with nothing enabled`);
+    complete(
+      model,
+      state,
+      step.node,
+      step.kind === "decision" ? { outcome: choose[step.node] ?? step.outcomes[0] } : {},
+    );
   }
 }

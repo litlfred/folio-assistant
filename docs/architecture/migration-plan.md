@@ -182,7 +182,7 @@ construction: `agentic-harness.jsonld` and `folio-assist-core.jsonld` cannot
 assert the same node IRI, because the document IRI is part of every node's.
 
 The corollary is the rule the skill states and a test enforces: **artefacts are
-stub-named, the declaration file is not.** `agent-harness.json` keeps that name
+stub-named, the declaration file is not.** `cat-harness.json` keeps that name
 in every repo, so a consumer can open a repository it has never seen without
 first knowing what it is called. Renaming it per-repo fails silently — a
 resolver computing the filename from the directory finds nothing when a repo is

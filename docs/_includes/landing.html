@@ -1,0 +1,59 @@
+{%- comment -%}
+  The instance's own landing panel: its declared description, drawn inside the
+  quiet part of its declared backdrop.
+
+  Everything here comes from `cat-harness.json` via `_data/harness.json`
+  (written by `scripts/sync-docs-harness.ts`). NOTHING about this repo is
+  written in — an instance overrides the picture and the words by editing its
+  own declaration, which is the point: a downstream folio should not inherit
+  a grumpy cat it did not choose.
+
+  Three states, and the third is why this is a template rather than a div:
+
+    1. A backdrop for this viewport, with a declared text region → overlay.
+    2. A backdrop whose region is NOT declared → show the picture, put the
+       words BELOW it. Text positioned by guesswork lands on the cat.
+    3. No backdrop at all → the words alone. An instance with no art is
+       ordinary, not broken.
+
+  The variants are chosen in CSS, not here: a `<picture>` with media queries
+  swaps the file at the breakpoint, so a phone never downloads the wide crop.
+  Each variant carries its OWN region, because the same cloud sits in a
+  different place in a portrait crop — so the regions are emitted as custom
+  properties per breakpoint rather than assumed to be shared.
+{%- endcomment -%}
+
+{%- assign h = site.data.harness -%}
+{%- assign laptop = h.landing.laptop -%}
+{%- assign mobile = h.landing.mobile -%}
+{%- assign card = h.landing.card -%}
+{%- assign backdrop = laptop | default: mobile | default: card -%}
+
+{%- if backdrop -%}
+<div class="folio-landing{% unless backdrop.region %} folio-landing--no-region{% endunless %}">
+  <picture class="folio-landing__art">
+    {%- if mobile %}<source media="(max-width: 48rem)" srcset="{{ mobile.src }}">{% endif -%}
+    {%- if card %}<source media="(max-width: 30rem)" srcset="{{ card.src }}">{% endif -%}
+    {%- comment -%}
+      `alt=""` deliberately. The backdrop is decorative: every word it carries
+      is in the overlay below, as real text. Announcing the image's
+      `description` here would read a paragraph about composition to somebody
+      who has already been given the content — the mistake `title.html` shipped
+      once and this file must not repeat.
+    {%- endcomment -%}
+    <img src="{{ backdrop.src }}" alt="" aria-hidden="true"
+         {% if backdrop.width %}width="{{ backdrop.width }}"{% endif %}
+         {% if backdrop.height %}height="{{ backdrop.height }}"{% endif %}
+         decoding="async">
+  </picture>
+
+  <div class="folio-landing__text"
+       {%- if backdrop.region %} style="--fl-x:{{ backdrop.region.x }}%;--fl-y:{{ backdrop.region.y }}%;--fl-w:{{ backdrop.region.w }}%;--fl-h:{{ backdrop.region.h }}%"{% endif %}>
+    {{ h.description | markdownify }}
+  </div>
+</div>
+{%- else -%}
+<div class="folio-landing folio-landing--plain">
+  {{ h.description | markdownify }}
+</div>
+{%- endif -%}

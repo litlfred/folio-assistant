@@ -1,0 +1,20 @@
+{%- comment -%}
+  The sidebar title, overriding just-the-docs' own `title.html`.
+
+  Reads `docs/_data/harness.json`, which `scripts/sync-docs-harness.ts` copies
+  from the instance's `cat-harness.json`. The declaration is the source of
+  truth for what this instance is called; `site.title` is the fallback for a
+  checkout where the sync has not run.
+
+  The mark carries `alt=""` ON PURPOSE. It sits immediately before the title
+  text, so the link already has an accessible name and a screen reader would
+  otherwise announce the site twice. It is decorative HERE — the same image is
+  not decorative elsewhere, which is why the emptiness lives in this template
+  rather than in the node.
+{%- endcomment -%}
+{%- assign h = site.data.harness -%}
+{%- if h.icon.src -%}
+  <img src="{{ h.icon.src | relative_url }}" alt="" aria-hidden="true"
+       class="fa-site-mark" width="24" height="24" />
+{%- endif -%}
+<span class="fa-site-title">{{ h.title | default: site.title }}</span>
