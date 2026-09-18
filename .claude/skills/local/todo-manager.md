@@ -170,13 +170,34 @@ is urgent, adjacent, or already obsolete without opening the store — and askin
 someone to go look things up is the cost this report exists to remove. Link to
 the bean file so one click gets the full body.
 
-**2. Asking for review means linking the artefact.** If a turn ends with
-"please look at this", it must carry the **staging URL**, the PR link, and — if
-the change is a page — the direct path to the page that changed. `AGENTS.md`
-already records why (PR #178, 2026-09-16): a human cannot assess a rendered
-artefact from a description, and withholding it makes assessment harder rather
-than safer. Making the reader *find* the preview is the same failure one step
-down.
+**2. Asking for review means linking the artefact — deep, not the root.** If a
+turn ends with "please look at this", it must carry the **PR link** and a
+**direct link to every page that changed**, not the staging root.
+
+> ✗ `https://…/STAGING/claude-my-branch/`
+>
+> ✓ **Staging:**
+> - [Swarm management](https://…/STAGING/claude-my-branch/swarm-management.html) — new page
+> - [process-state](https://…/STAGING/claude-my-branch/reference/skill-instructions/process-state.html) — new skill
+> - [Architecture](https://…/STAGING/claude-my-branch/architecture.html) — nav entry added
+
+Handing over the root makes the reader navigate a site to find what you
+changed. You already know which pages those are — you wrote them — so the
+lookup is yours to do, not theirs. Say what each link *is*, too: a bare URL
+does not tell a reader whether it is new, changed, or just context.
+
+`AGENTS.md` records the underlying rule (PR #178, 2026-09-16): a human cannot
+assess a rendered artefact from a description, and withholding it makes
+assessment harder rather than safer. **A root-only link is a partial
+withholding** — the artefact is technically reachable and practically hidden.
+
+**Where to get the links.** The staging workflow deploys to
+`…/STAGING/<branch-slug>/`, and Jekyll rewrites `baseurl` so paths mirror
+`docs/`. A page at `docs/architecture/foo.md` is at
+`…/STAGING/<slug>/architecture/foo.html`; a skill at
+`skills/<pkg>/bar.md` is at
+`…/STAGING/<slug>/reference/skill-instructions/bar.html`. Derive one per
+changed file rather than guessing which the reader wants.
 
 **3. Say what to review, not just that it is green.** "Green on all three
 workflows" says the PR is not broken. It does not say what the change **does**,
