@@ -3,6 +3,7 @@ layout: default
 title: Writing a document
 parent: Authoring guides
 nav_order: 2
+lang: en
 ---
 
 # Writing a document with folio-assistant

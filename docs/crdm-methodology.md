@@ -64,6 +64,86 @@ a feature request at the surface level.
 > - [PATH — Collaborative Requirements Development Methodology](https://www.path.org/our-impact/resources/collaborative-requirements-development-methodology-participatory-process-end-users-define-software-requirements-improves-system-design-implementation/) — the PATH adaptation for global health informatics
 > - Issue [#203](https://github.com/litlfred/folio-assistant/issues/203) — the request that initiated this integration
 
+## Roles — who does what
+{: #roles }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/roles.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/roles.md" }
+
+Three distinct roles participate in a CRDM cycle. The boundaries between
+them matter — collapsing the first two into one person loses the quality
+gate that makes the process work.
+
+### Feature Requestor / Business Analyst (BA)
+
+The person who identifies a need and initiates the CRDM cycle. In
+folio-assistant this is typically a content author, editor, or programme
+lead who encounters a gap in the platform while doing their work.
+
+The BA is also the **coordinator** of the CRDM process:
+
+- **Initiates** — describes the need in a GitHub issue or chat session.
+- **Interacts with the agent** — the BA is the agent's primary
+  counterpart. They refine needs, review synthesised requirements,
+  negotiate scope, and decide what constitutes a viable MVP.
+- **Coordinates with stakeholders** — the BA understands the broader
+  context: who else is affected, what workflows will change, whose
+  sign-off is needed. They bring stakeholders in at the right moments
+  (review, testing, approval) rather than expecting them to participate in
+  every iteration.
+- **Accepts or rejects iterations** — during Phase 6, the BA reviews
+  each increment the agent delivers, decides whether it meets the
+  requirement, and either accepts it or requests changes.
+
+The BA does not need technical expertise. They need domain expertise — they
+know what the feature should *do*, not how it should be *built*. The agent
+handles the technical design and implementation.
+
+### Stakeholders
+
+The people affected by the feature who must review and approve it, but who
+are **not** in the day-to-day development loop with the agent. Examples:
+
+- A **review committee** that must approve changes to a guideline's
+  normative content.
+- **Country programme managers** who will use the localisation feature in
+  their context.
+- **IT teams** who must deploy and maintain the result.
+- **End users** who will interact with the new capability.
+
+Stakeholders participate at defined checkpoints, not continuously:
+
+| Checkpoint | What stakeholders do |
+|---|---|
+| **Needs review** (Phase 1) | Confirm the BA's needs statement reflects their reality |
+| **Requirements sign-off** (Phase 5) | Approve that the requirements are correct and complete |
+| **MVP testing** (Phase 6) | Test the delivered feature in their context, report findings |
+| **Feature sign-off** (Phase 6) | Confirm the feature meets their needs; close the issue |
+
+The BA **bridges** the gap: stakeholders should never need to read a PR,
+understand a bean, or interact with the agent directly.
+
+### Agent
+
+The AI assistant that implements the CRDM process and builds the feature.
+The agent:
+
+- **Facilitates** — guides the BA through the CRDM phases, synthesises
+  inputs, proposes requirements, identifies impacts.
+- **Implements** — writes code, creates tests, opens PRs, posts summaries.
+- **Iterates** — responds to BA feedback, adjusts implementation, re-runs
+  validation.
+- **Documents** — maintains the GitHub issue as the single source of truth
+  for stakeholders, posts implementation summaries, updates documentation.
+
+The agent interacts with the **BA only**, not with stakeholders directly.
+If stakeholders have feedback, it flows through the BA who translates it
+into actionable direction for the agent.
+
+```
+Stakeholders ──review/approve──▶ BA ──directs──▶ Agent
+                                  ◀──delivers────┘
+```
+
 ## Why CRDM for folio-assistant
 {: #why-crdm-for-folio-assistant }
 
@@ -147,7 +227,7 @@ When the agent detects a CRDM trigger, it should:
 
 <div class="bpmn-figure" id="figure-the-process">
   <img src="assets/img/workflows/crdm-requirements.svg"
-       alt="BPMN swimlane diagram: three lanes — Requestor/stakeholder, Agent, and Platform. The requestor submits a request; the agent detects whether it is a feature, scans for matching issues, identifies stakeholders, synthesises needs (Phase 1), maps the current workflow (Phase 2), defines requirements and impact analysis (Phases 3–4), creates beans after sign-off (Phase 5), implements on feature branches with PR review loops (Phase 6), posts summaries to the issue, and closes on feature sign-off.">
+       alt="BPMN swimlane diagram: three lanes — BA/Feature Requestor, Agent, and Stakeholders. The BA submits a request; the agent detects whether it is a feature, scans for issues, and runs through the six CRDM phases. The BA reviews and coordinates with stakeholders at each phase. In Phase 6, two loops: an inner loop where the BA and agent iterate rapidly on increments, and an outer loop where the BA shares accumulated MVPs with stakeholders for testing. Stakeholders provide findings, the BA translates them into agent direction, and the cycle repeats until feature sign-off.">
 </div>
 
 [Open the BPMN source](workflows/crdm-requirements.bpmn){: .btn .btn-outline }
@@ -155,31 +235,37 @@ When the agent detects a CRDM trigger, it should:
 The diagram above shows the full CRDM workflow as a BPMN 2.0 collaboration
 with three swim lanes:
 
-- **Requestor / stakeholder** — submits the request, reviews the synthesised
-  needs and requirements, signs off, reviews PRs, and does final feature
-  sign-off on the issue.
+- **BA / Feature Requestor** — initiates the request, reviews needs and
+  requirements, signs off, reviews each increment the agent delivers,
+  decides when to share an MVP with stakeholders, translates stakeholder
+  feedback into agent-actionable direction, and confirms final delivery.
 
 - **Agent** — detects the feature request, scans for matching issues, runs
-  through the six CRDM phases, creates beans, implements on feature branches,
-  posts summaries to the issue.
+  through the six CRDM phases, creates beans, implements on feature
+  branches, posts summaries to the issue.
 
-- **Platform** — automated CI gates (`content_validate`, `qa_sweep`,
-  code-quality gates) that verify each PR.
+- **Stakeholders** — confirm needs, approve requirements, test the MVP in
+  their own context, and do final feature sign-off on the issue.
 
-Two feedback loops are visible:
+Three feedback loops are visible:
 
-1. **Needs loop** (Phases 1–2) — the agent synthesises needs and the
-   requestor reviews; if revisions are needed, the agent re-synthesises.
+1. **Needs loop** (Phase 1) — the agent synthesises needs, the BA reviews,
+   stakeholders confirm. If revisions are needed, the agent re-synthesises.
 
 2. **Requirements loop** (Phases 3–4) — the agent defines requirements and
-   impact analysis; the requestor reviews; iterate until approved.
+   impact analysis; the BA reviews, stakeholders approve; iterate until
+   approved.
 
-3. **Implementation loop** (Phase 6) — the agent implements, posts a summary
-   to the issue, the requestor reviews the PR; iterate until all beans are
-   resolved.
+3. **Dual development loop** (Phase 6):
+   - **Inner loop** (BA ↔ Agent) — the agent implements an increment, the
+     BA tests it against acceptance criteria. Fast — multiple iterations
+     per session.
+   - **Outer loop** (BA → Stakeholders) — when the BA judges enough
+     increments constitute a testable MVP, stakeholders test it. Findings
+     flow back through the BA to the agent. Slower — stakeholder cadence.
 
-Each loop's review happens **on the GitHub issue**, making the process
-transparent, persistent, and accessible to stakeholders who join later.
+The BA is the **bridge**: they keep the agent productive in the inner loop
+while waiting for stakeholder availability in the outer loop.
 
 See the [agentic harness](../agentic-harness.html) page for how this
 workflow fits into the broader agent–user interaction model.
@@ -378,49 +464,111 @@ requirements and implementation.
 
 **Deliverable:** a sign-off comment on the issue, plus beans for each work item.
 
-## Phase 6 — Iterative development and review
+## Phase 6 — Iterative MVP development and stakeholder review
 {: #phase-6-iterative-development }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-6-iterative-development.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-6-iterative-development.md" }
 
-Once the requirements are signed off and beans are created, the agent enters
-the normal development cycle — but with the CRDM artefacts as guardrails.
+Once requirements are signed off and beans are created, the agent and BA
+enter the **iterative MVP development cycle**. This is where the feature
+gets built, tested, and refined until stakeholders accept it.
 
-**How the development cycle uses CRDM artefacts:**
+### The inner loop: BA ↔ Agent
 
-1. **Bean-driven work** — each bean references the parent issue and its
-   specific requirement. The agent claims a bean, implements it, opens a PR,
-   and links both.
+The BA and agent work together in tight iterations:
 
-2. **PR review against requirements** — reviewers check not just "does the code
-   work?" but "does it satisfy the requirement stated in the issue?" The
-   acceptance criteria from Phase 3 are the review checklist.
+```
+                ┌──────────────────────────────────────────┐
+                │              INNER LOOP                  │
+                │                                          │
+                │   Agent                        BA        │
+                │   ┌─────────┐    PR + demo    ┌──────┐  │
+                │   │Implement├───────────────►│Review │  │
+                │   │ (bean)  │                │ + test│  │
+                │   │         │◄───────────────┤       │  │
+                │   └─────────┘   feedback      └──────┘  │
+                │                                          │
+                └──────────────────────────────────────────┘
+```
 
-3. **Testing against the workflow** — the redesigned workflow from Phase 2
-   should be testable after implementation. Does the ingestion pipeline now
-   handle Word documents? Can a reviewer triage 200 comments through the new
-   tool?
+1. **Agent claims a bean** — implements the requirement on a feature
+   branch, opens a PR, posts a summary to the issue.
+2. **BA reviews** — tests the feature, compares it against the requirement
+   and acceptance criteria from Phase 3. The BA does not need to read code;
+   they test the *behaviour*.
+3. **Feedback or accept** — the BA either requests changes (the agent
+   iterates) or accepts the increment.
+4. **Repeat** until the bean is resolved.
 
-4. **Feedback loops** — after initial testing, users provide feedback. If the
-   feedback reveals new requirements or missed cases, a new iteration of the
-   CRDM phases is triggered — but scoped: only the affected requirement is
-   re-assessed, not the entire feature.
+Each bean produces a **minimum viable increment** — not the whole feature,
+but one requirement satisfied. The BA decides when enough increments have
+accumulated to show stakeholders.
 
-5. **Documentation update** — when the feature lands, the documentation pages
-   (these structured `.ts`/`.md` pages under `content/docs/`) are updated to
-   reflect the new capability. Workflow BPMN diagrams are updated if the
-   pipeline changed.
+### The outer loop: BA → Stakeholders
 
-6. **Close the loop** — when all beans for the feature are resolved, the agent
-   closes the parent issue with a summary of what was delivered and any
-   deferred items. Deferred items become new issues for future CRDM cycles.
+When the BA judges that the delivered increments constitute an **MVP worth
+testing**, they bring stakeholders in:
 
-This is the process that the discussion around issue
-[#197](https://github.com/litlfred/folio-assistant/issues/197) proposed to
-generalise: create MVP tooling → test → refine → deploy. CRDM gives that
-process a name and a structure so it can be repeated for any feature request —
-whether it is Word document import, Harvard document engine workflows, HRH
-handbook adaptation, or country-level review SOPs.
+```
+   ┌──────────────────────────────────────────────────────────────┐
+   │                      OUTER LOOP                              │
+   │                                                              │
+   │   BA                          Stakeholders                   │
+   │   ┌──────────┐   MVP demo   ┌────────────────┐              │
+   │   │Accumulate├─────────────►│Test in context │              │
+   │   │increments│              │(their workflow)│              │
+   │   │          │◄─────────────┤                │              │
+   │   └──────────┘   findings   └────────────────┘              │
+   │        │                                                     │
+   │        ▼                                                     │
+   │   Translate findings into                                    │
+   │   agent-actionable feedback                                  │
+   │   (new beans or bean updates)                                │
+   │        │                                                     │
+   │        ▼                                                     │
+   │   Re-enter inner loop                                        │
+   └──────────────────────────────────────────────────────────────┘
+```
+
+1. **BA shares the MVP** — the staging URL, a demo, or a walkthrough. The
+   BA frames it: "here is what we built, here is what it does, here is
+   what we need you to test."
+2. **Stakeholders test** — in their own context, with their own data,
+   against their own workflows. They report what works and what does not.
+3. **BA translates findings** — stakeholder feedback is domain language
+   ("the table doesn't show the right columns"). The BA translates it
+   into actionable direction for the agent ("the `review-triage` view
+   needs columns X, Y, Z from the feedback spreadsheet").
+4. **Agent iterates** — new beans or updates to existing beans. The inner
+   loop resumes.
+5. **Repeat** until stakeholders are satisfied.
+
+### The exit: feature sign-off
+
+When all beans for the feature are resolved and stakeholders confirm the
+MVP meets their needs:
+
+1. **BA confirms** — all acceptance criteria from Phase 3 are met.
+2. **Stakeholders sign off** — on the GitHub issue, not the PR.
+3. **Agent closes the issue** — with a delivery summary listing what was
+   built, what was deferred, and any new issues opened for future work.
+4. **Documentation updated** — the agent updates the docs pages and BPMN
+   diagrams to reflect the new capability.
+
+### Why two loops, not one
+
+The inner loop is **fast** — the BA and agent can iterate multiple times
+per session. The outer loop is **slow** — stakeholders have other work,
+need time to test, and may only be available weekly.
+
+Collapsing them into one loop would either:
+- Slow the agent down to the stakeholder cadence (wasting agent time), or
+- Rush stakeholders through testing (producing shallow feedback).
+
+The BA absorbs the impedance mismatch. They keep the agent productive in
+the inner loop while waiting for stakeholder availability in the outer
+loop. Between outer-loop checkpoints, the agent works on other beans or
+other features.
 
 ## Agent skills and tooling
 {: #agent-skills-and-tooling }

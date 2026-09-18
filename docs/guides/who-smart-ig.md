@@ -3,6 +3,7 @@ layout: default
 title: Authoring a WHO SMART IG (L3)
 parent: Authoring guides
 nav_order: 3
+lang: en
 ---
 
 # Authoring a WHO SMART IG (L3)

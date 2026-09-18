@@ -3,6 +3,7 @@ layout: default
 title: Writing a paper with folio-assistant
 parent: Authoring guides
 nav_order: 1
+lang: en
 ---
 
 # Tutorial — writing a paper with folio-assistant

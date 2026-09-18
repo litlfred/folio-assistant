@@ -3,6 +3,7 @@ layout: default
 title: Authoring a WHO SMART DAK (L2)
 parent: Authoring guides
 nav_order: 2
+lang: en
 ---
 
 # Authoring a WHO SMART DAK (L2)

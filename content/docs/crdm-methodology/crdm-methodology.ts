@@ -15,6 +15,11 @@ export default webpage({
       block: "what-is-crdm",
     },
     {
+      id: "roles",
+      title: "Roles — who does what",
+      block: "roles",
+    },
+    {
       id: "why-crdm-for-folio-assistant",
       title: "Why CRDM for folio-assistant",
       block: "why-crdm-for-folio-assistant",
@@ -31,7 +36,7 @@ export default webpage({
         kind: "bpmn",
         source: "docs/workflows/crdm-requirements.bpmn",
         rendered: "assets/img/workflows/crdm-requirements.svg",
-        alt: "BPMN swimlane diagram: three lanes — Requestor/stakeholder, Agent, and Platform. The requestor submits a request; the agent detects whether it is a feature, scans for matching issues, identifies stakeholders, synthesises needs (Phase 1), maps the current workflow (Phase 2), defines requirements and impact analysis (Phases 3–4), creates beans after sign-off (Phase 5), implements on feature branches with PR review loops (Phase 6), posts summaries to the issue, and closes on feature sign-off.",
+        alt: "BPMN swimlane diagram: three lanes — BA/Feature Requestor, Agent, and Stakeholders. The BA submits a request; the agent detects whether it is a feature, scans for issues, and runs through the six CRDM phases. The BA reviews and coordinates with stakeholders at each phase. In Phase 6, two loops: an inner loop where the BA and agent iterate rapidly on increments, and an outer loop where the BA shares accumulated MVPs with stakeholders for testing. Stakeholders provide findings, the BA translates them into agent direction, and the cycle repeats until feature sign-off.",
         sourceLinks: [
           { text: "Open the BPMN source", href: "workflows/crdm-requirements.bpmn" },
         ],
@@ -66,7 +71,7 @@ export default webpage({
     },
     {
       id: "phase-6-iterative-development",
-      title: "Phase 6 — Iterative development and review",
+      title: "Phase 6 — Iterative MVP development and stakeholder review",
       block: "phase-6-iterative-development",
     },
     {
