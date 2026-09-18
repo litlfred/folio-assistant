@@ -116,7 +116,25 @@ export interface ActorDefinition {
    * never appears in a swimlane.
    */
   roles?: string[];
-  /** Capability IDs directly granted to this actor. */
+  /**
+   * PERMISSION ids — what this actor is allowed to do, independent of process.
+   *
+   * Split out of {@link ActorDefinition.capabilities} in 2026-09 (bean `ind9`),
+   * which had been carrying three different things at once. A permission
+   * travels with the PARTICIPANT and cross-cuts roles: `content-authoring` is
+   * held by actors taking on five different roles, and `admin` holds
+   * `admin-settings` in every lane it acts in. Declared in
+   * `skills/permissions/permissions.json`.
+   */
+  permissions?: string[];
+  /**
+   * Capability IDs directly granted to this actor.
+   *
+   * ENVIRONMENT PROBES only — each has `detection: { method: … }` and answers
+   * "is this available on the machine". Not permissions (see above) and not
+   * skills: a skill is what the performer needs to KNOW and belongs to the
+   * lane's role.
+   */
   capabilities: string[];
   /** Arbitrary metadata (e.g., MCP endpoint, config path). */
   meta?: Record<string, unknown>;

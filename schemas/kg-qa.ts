@@ -229,17 +229,20 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "actor-capabilities-resolve",
     applies: ["graph"],
-    severity: "major",
+    severity: "critical",
     summary:
-      "An actor claims a capability the registry does not declare. `major`, not `critical`, because the " +
-      "finding is an OVERLOADED FIELD rather than a broken link: `capabilities[]` mixes three things and " +
-      "only one of them has a node kind. A declared capability is an ENVIRONMENT PROBE — `docker`, " +
-      "`pandoc`, `java-runtime`, each with `detection: { method: \"command\" }`. Of the 19 undeclared " +
-      "names, ~13 are PERMISSIONS (`approval-authority`, `admin-settings`, `release-authorization`, " +
-      "`review-comments`) which no node kind models yet, and ~6 are SKILLS (`bpmn-authoring`, " +
-      "`terminology-management`, `cql-authoring`). Declaring 19 probe files to silence this would invent " +
-      "content to satisfy a check; splitting the field is the real fix and is somebody's decision, not a " +
-      "sweep's. `fhir-validator` WAS a genuinely missing probe and is now declared.",
+      "An actor claims an environment capability the registry does not declare. `critical` since 2026-09: " +
+      "it was `major` only while `capabilities[]` was overloaded, carrying permissions and skills that no " +
+      "vocabulary could ever resolve. Bean `ind9` split the field, so every remaining entry is a genuine " +
+      "probe and a dangling one is a real broken reference.",
+  },
+  {
+    id: "actor-permissions-resolve",
+    applies: ["graph"],
+    severity: "critical",
+    summary:
+      "An actor claims a permission `skills/permissions/permissions.json` does not declare. A permission " +
+      "cross-cuts roles and travels with the participant, so it cannot be checked against the role graph.",
   },
   {
     id: "actor-is-not-a-role",
