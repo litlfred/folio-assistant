@@ -134,8 +134,14 @@ beans <id> --status in-progress          # claim an item (durable, visible to si
   survives a resume in a fresh container.
 - **Cross-session / cross-agent todos:** the same committed `.beans/` store is the
   shared work-plan. **Claim before you work** (set `in-progress` + note your
-  branch) so two sessions don't pick the same item; never resolve or delete a
-  sibling's bean.
+  branch) so two sessions don't pick the same item; never resolve a sibling's
+  bean, and **never delete ANY bean, including your own**. Work that turns out
+  not to be wanted is `scrapped`, with its reasons — a scrapped bean records
+  that something was considered and rejected, which is what stops the next
+  agent re-entering the same dead end; a deleted one leaves a sibling unable
+  to tell abandonment from accident. `beans delete` exists in the CLI, which
+  is why this is written down rather than assumed. Full cycle:
+  [Beans and todos](https://litlfred.github.io/folio-assistant/beans-and-todos.html).
 - **`beans ≠ sidecars`:** never `beans create` bulk machine-generated queues (QA
   `*.qa.json`, witness `*.witness.json`, watcher queues) — keep those as bulk JSON.
 - **Move wiring and script together:** when relocating a hook-backed script or a

@@ -46,7 +46,7 @@ because `.beans/` is committed, the plan survives a resume in a fresh container.
 **Cross-session / cross-agent coordinated todos.** The same committed `.beans/`
 store is the shared work-plan across sibling sessions and across different agent
 CLIs. Claim before you work (set `in-progress` + note your branch) so two
-sessions don't pick the same item; never resolve or delete a sibling's bean. See
+sessions don't pick the same item; never resolve a sibling's bean, and never delete ANY bean — scrap with reasons instead. See
 `bean-coordination.md` for the full claim/handoff lifecycle.
 
 **What beans is *not* for:**
