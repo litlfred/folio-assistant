@@ -138,15 +138,26 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     summary: "Schema definitions, self-declared in the smart-base manner.",
   },
-  workplan: {
-    type: `${FOLIO_NS}WorkPlanGraph`,
+  // ONE kind for the whole work plan, not one per store.
+  //
+  // #263 declared two directories here — `workplan` at `beans/` and
+  // `process-state` at `beans/workflow/` — and its own comment flagged the
+  // problem that creates: the second sits INSIDE the first, so a consumer
+  // scanning a declared directory cannot assume it owns what is beneath it,
+  // and the two were told apart only by file extension, "a coincidence of the
+  // current layout, not a contract".
+  //
+  // `beans/` is now a graph with named nodes (`beans/beans.json`,
+  // schemas/bean-graph.ts), so that distinction lives INSIDE the graph where it
+  // is declared rather than out here where it has to be inferred. The harness
+  // says which directories exist and what kind of graph each holds; the bean
+  // graph says what its own nodes are. One fact, one place, at each level.
+  beans: {
+    type: `${FOLIO_NS}BeanGraph`,
     renderable: false,
-    summary: "Work items — what is being worked on. Authored and edited by people and agents.",
-  },
-  "process-state": {
-    type: `${FOLIO_NS}ProcessStateGraph`,
-    renderable: false,
-    summary: "Running BPMN instances — where each one got to. Owned by the interpreter, not hand-edited.",
+    summary:
+      "The work plan — what is being worked on, and where each running BPMN instance got to. " +
+      "Its `defs` and `workflows` nodes are declared by `beans/beans.json`.",
   },
 };
 

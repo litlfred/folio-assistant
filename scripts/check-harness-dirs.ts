@@ -1,34 +1,33 @@
 #!/usr/bin/env bun
 /**
- * The work-plan directories are declared in one place. This is what keeps the
- * `beans` CLI agreeing with it.
+ * The harness's two stores are declared in two files. This is what keeps them
+ * from disagreeing.
  *
- * `agent-harness.json` is where an instance declares the directories it scans
- * and the KIND of graph each holds — `workplan` for `beans/`, `process-state` for
- * `beans/workflow/`. That is the single declaration, beside `schemas/` and
- * `skills/`, and it is what a consumer reads.
+ * `harness.config.json`'s `harness` block is where a folio STATES where its work
+ * plan and workflow state live. `.beans.yml` is what the `beans` binary
+ * actually READS — it is a third-party tool and does not know
+ * `harness.config.json` exists. So the same path is written twice by necessity,
+ * and two configs that can drift is precisely the defect this repository has
+ * paid for repeatedly.
  *
- * But `beans` is a third-party binary. It does not know `agent-harness.json`
- * exists; it reads `.beans.yml`. So the work-plan path is necessarily written
- * twice, and two configs that can drift is exactly the defect this repository
- * keeps paying for. The duplication is not the problem; an *unchecked*
- * duplication is.
+ * The duplication is not the problem; an *unchecked* duplication is. This makes
+ * a disagreement a build failure on the day it is introduced rather than on the
+ * day somebody's beans silently go to a second store.
  *
  * ## What it checks
  *
- * 1. The `workplan` directory in `agent-harness.json` equals `beans.path` in
- *    `.beans.yml`.
- * 2. The `process-state` directory equals what `workflow/store.ts` compiled in.
- * 3. Neither path is dot-prefixed at its first segment — the whole point of
- *    moving them was that a person can see them.
+ * 1. `harness.workPlan` equals `beans.path` in `.beans.yml`.
+ * 2. `harness.workflowState` is what `workflow/store.ts` compiled in.
+ * 3. Neither path is dot-prefixed at its first segment — the whole point of the
+ *    move is that a person can see them.
  * 4. The declared work-plan directory exists and holds beans.
  *
  * ## Third state
  *
- * An instance with no `agent-harness.json`, or one declaring neither kind, is
- * **not** a failure: it has not been migrated, and that is reported as
- * `not configured` rather than as wrong. Exit 2 is "could not check" and is
- * never rendered as a pass — same rule as `check-ci-health.ts`.
+ * A folio with no `harness.config.json`, or with no `harness` block, is **not** a
+ * failure: the schema defaults are the answer, and a folio that has not opted in
+ * is reported as `not configured` rather than as wrong. Exit 2 is "could not
+ * check" and is never rendered as a pass — same rule as `check-ci-health.ts`.
  *
  * Usage:
  *   bun run check:harness-dirs
@@ -42,13 +41,18 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import {
+  BEAN_GRAPH_FILE,
+  DEFAULT_BEAN_GRAPH_ROOT,
+  nodeOfKind,
+  parseBeanGraph,
+} from "../schemas/bean-graph";
 import { WORKFLOW_DIR } from "../src/workflow/store.js";
-import { DECLARATION_FILENAME, readDeclaration } from "../schemas/agent-harness.js";
 
 export interface HarnessDirsReport {
-  /** `harness` block present in harness.config.json. */
+  /** A parseable `beans/beans.json` was found. */
   configured: boolean;
-  /** From harness.config.json, or the schema default when absent. */
+  /** The `bean-defs` node, or the documented default when no graph is present. */
   declaredWorkPlan: string;
   declaredWorkflowState: string;
   /** From `.beans.yml`, which is what the CLI reads. `undefined` if absent. */
@@ -82,31 +86,30 @@ export function checkHarnessDirs(root: string): HarnessDirsReport {
   const notes: string[] = [];
 
   let configured = false;
-  let declaredWorkPlan = "beans";
-  let declaredWorkflowState = "beans/workflow";
+  let declaredWorkPlan = join(DEFAULT_BEAN_GRAPH_ROOT, "defs");
+  let declaredWorkflowState = join(DEFAULT_BEAN_GRAPH_ROOT, "workflows");
 
-  // `readDeclaration` throws on a malformed file rather than returning
-  // undefined — a declaration nobody can read is worse than an absent one,
-  // because every consumer then scans the wrong directories silently.
-  let decl;
-  try {
-    decl = readDeclaration(root);
-  } catch (e) {
-    problems.push(`${DECLARATION_FILENAME} will not load: ${e instanceof Error ? e.message : e}`);
-  }
-
-  if (decl) {
-    const byKind = (kind: string): string | undefined =>
-      decl!.directories.find((d) => d.graph === kind)?.path.replace(/\/+$/, "");
-    const wp = byKind("workplan");
-    const ps = byKind("process-state");
-    if (wp || ps) configured = true;
-    declaredWorkPlan = wp ?? declaredWorkPlan;
-    declaredWorkflowState = ps ?? declaredWorkflowState;
-    if (!wp) notes.push(`${DECLARATION_FILENAME} declares no \`workplan\` directory — using the default.`);
-    if (!ps) notes.push(`${DECLARATION_FILENAME} declares no \`process-state\` directory — using the default.`);
-  } else if (!problems.length) {
-    notes.push(`No ${DECLARATION_FILENAME} — this instance has not been migrated; using defaults.`);
+  // The bean graph is the DECLARATION. It used to be `harness.config.json`'s
+  // `harness` block; moving it here removed one of the three places the same
+  // path was written, rather than adding a fourth. See schemas/bean-graph.ts.
+  const graphPath = join(root, DEFAULT_BEAN_GRAPH_ROOT, BEAN_GRAPH_FILE);
+  if (existsSync(graphPath)) {
+    try {
+      const graph = parseBeanGraph(JSON.parse(readFileSync(graphPath, "utf-8")));
+      configured = true;
+      const defs = nodeOfKind(graph, "bean-defs");
+      const state = nodeOfKind(graph, "workflow-state");
+      if (defs) declaredWorkPlan = join(DEFAULT_BEAN_GRAPH_ROOT, defs.path);
+      else problems.push("bean graph declares no `bean-defs` node — nothing says where beans live.");
+      if (state) declaredWorkflowState = join(DEFAULT_BEAN_GRAPH_ROOT, state.path);
+      else notes.push("bean graph declares no `workflow-state` node — no process state is kept.");
+    } catch (e) {
+      // Present-but-unreadable is a failure, never a silent fall back to the
+      // defaults: a graph nobody can parse leaves every consumer guessing.
+      problems.push(`beans/${BEAN_GRAPH_FILE} will not parse: ${e instanceof Error ? e.message : e}`);
+    }
+  } else {
+    notes.push(`No beans/${BEAN_GRAPH_FILE} — using the documented default layout.`);
   }
 
   const ymlPath = beansYmlPath(root);
@@ -114,7 +117,7 @@ export function checkHarnessDirs(root: string): HarnessDirsReport {
     notes.push("No `.beans.yml`, or no `path:` in it — the CLI's view could not be read.");
   } else if (ymlPath !== declaredWorkPlan) {
     problems.push(
-      `Work-plan path disagrees: ${DECLARATION_FILENAME} declares "${declaredWorkPlan}", ` +
+      `Work-plan path disagrees: the bean graph says "${declaredWorkPlan}", ` +
         `.beans.yml says "${ymlPath}". The CLI follows .beans.yml, so beans would ` +
         `be written to a store nothing else reads.`,
     );
@@ -122,18 +125,23 @@ export function checkHarnessDirs(root: string): HarnessDirsReport {
 
   if (WORKFLOW_DIR !== declaredWorkflowState) {
     problems.push(
-      `Workflow-state path disagrees: ${DECLARATION_FILENAME} declares "${declaredWorkflowState}", ` +
+      `Workflow-state path disagrees: the bean graph says "${declaredWorkflowState}", ` +
         `workflow/store.ts compiled in "${WORKFLOW_DIR}".`,
     );
   }
 
   for (const [label, p] of [
-    ["workPlan", declaredWorkPlan],
-    ["workflowState", declaredWorkflowState],
+    ["bean-defs", declaredWorkPlan],
+    ["workflow-state", declaredWorkflowState],
   ] as const) {
-    if (p.split("/")[0]!.startsWith(".")) {
+    // ANY segment, not just the first. The graph root is `beans/` and a node
+    // path cannot escape it, so the first segment is always visible — but a
+    // node declared as `.defs` would resolve to `beans/.defs` and be just as
+    // invisible in an `ls` as the dot-prefixed stores this move existed to
+    // fix. Checking only the head would have made this guard unfireable.
+    if (p.split(/[\\/]/).some((seg) => seg.startsWith("."))) {
       problems.push(
-        `The ${label} directory is "${p}", which is hidden behind a dot. These two stores ` +
+        `The ${label} node resolves to "${p}", which is hidden behind a dot. These two stores ` +
           `are what a person looks for first; keep them visible.`,
       );
     }
@@ -147,7 +155,7 @@ export function checkHarnessDirs(root: string): HarnessDirsReport {
       notes.push(`${declaredWorkPlan}/ exists but holds no beans — an empty plan, not a broken one.`);
     }
   } else {
-    problems.push(`The declared work plan is "${declaredWorkPlan}", which does not exist.`);
+    problems.push(`harness.workPlan names "${declaredWorkPlan}", which does not exist.`);
   }
 
   return {

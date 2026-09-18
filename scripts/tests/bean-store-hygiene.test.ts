@@ -15,7 +15,9 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const BEANS = join(import.meta.dir, "../../beans");
+// The `bean-defs` node of the bean graph (schemas/bean-graph.ts), not the
+// graph root — `beans/` itself holds only `graph.json`.
+const BEANS = join(import.meta.dir, "../../beans/defs");
 
 /** Exactly what `beans update --status` accepts. */
 const VALID = new Set(["draft", "todo", "in-progress", "completed", "scrapped"]);

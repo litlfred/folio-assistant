@@ -164,25 +164,45 @@ export const TranslationConfigSchema = z.object({
   officialOnly: z.boolean().default(false),
 });
 
-/*
- * The work-plan directories are NOT declared here.
+/**
+ * Harness paths that are NOT part of the bean graph.
  *
- * They were, briefly. They belong in `agent-harness.json`'s `directories[]`,
- * where every other directory an instance scans is declared with the KIND of
- * graph it holds — see `schemas/agent-harness.ts` and
- * `skills/folio-core/directory-conventions.md`. Two declarations of the same
- * fact is the drift this repo keeps paying for, so there is one.
+ * ## What used to be here, and why it left
  *
- * This file stays the RUNTIME config: which adapter, which skills directory,
- * the viewer, simulators, translation, dependencies. `agent-harness.json` is
- * the DECLARATION: what this instance is and what it scans.
+ * This schema carried `workPlan` and `workflowState` — the bean store and the
+ * workflow-instance store. They are gone. `beans/beans.json` declares them now
+ * (see {@link file://../schemas/bean-graph.ts}), because it is the thing they
+ * are nodes OF.
+ *
+ * That is a removal, not a relocation of the problem. The previous design had
+ * the same path written in two places that could disagree — here and
+ * `.beans.yml` — and `check:harness-dirs` existed to catch the drift. Declaring
+ * the layout in the graph leaves ONE fewer place, not one more.
+ *
+ * `.beans.yml` still carries the defs path and still needs that check: the
+ * `beans` binary is third-party and will never read our schema, so its config
+ * must say where its store is. That duplication is unavoidable; leaving it
+ * unchecked would not be.
+ *
+ * ## What stays
+ *
+ * `interaction` — the per-user preference file the session-start sweep reads
+ * first. It is not bean content and is not a node of any graph: it describes
+ * how to talk to the person at this machine, not what is being worked on.
  */
+export const HarnessDirsSchema = z.object({
+  /** Per-user interaction preferences, read at session start. */
+  interaction: z.string().default(".harness/interaction.json"),
+});
+
+export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;
 
 export const HarnessConfigSchema = z.object({
   contentType: z.string().optional(),
   adapter: z.string().optional(),
   adapterModule: z.string().optional(),
   contributes: z.string().optional(),
+  harness: HarnessDirsSchema.optional(),
   translation: TranslationConfigSchema.optional(),
   dependencies: HarnessConfigDependenciesSchema.optional(),
 });

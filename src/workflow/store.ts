@@ -1,7 +1,7 @@
 /**
  * Where a running process instance lives.
  *
- * `beans/workflow/<id>.json`, in the repo, committed — for the same reason
+ * `beans/workflows/<id>.json`, in the repo, committed — for the same reason
  * `beans/` is committed rather than held in a session: the container is
  * ephemeral, and a work-plan only one agent can see is not a work-plan. A
  * sibling session on another branch, and a human reading the diff, both get the
@@ -18,15 +18,21 @@ import { join } from "node:path";
 import type { InstanceState } from "./instance.js";
 
 /**
- * `beans/workflow/`, beside `beans/` rather than hidden under a dotfile.
+ * The `workflow-state` node of the bean graph — `beans/workflows/`.
  *
- * The two stores answer the two halves of one question — `beans/` says WHAT is
- * being worked on, `beans/workflow/` says WHERE IT GOT TO — so they are kept
- * adjacent and visible. A dot-prefixed directory is absent from a plain `ls`,
- * from most file browsers and from GitHub's web tree, which made the two
- * artefacts a person most needs the two hardest to find.
+ * The two nodes answer the two halves of one question: `beans/defs/` says WHAT
+ * is being worked on, `beans/workflows/` says WHERE IT GOT TO. They are
+ * siblings under `beans/` and visible, because a dot-prefixed directory is
+ * absent from a plain `ls`, from most file browsers and from GitHub's web tree
+ * — which made the two artefacts a person most needs the two hardest to find.
+ *
+ * **This constant is the compiled-in default, not the declaration.**
+ * `beans/beans.json` is where the layout is stated; `bun run check:harness-dirs`
+ * fails when this and the graph disagree. It stays a constant because the store
+ * is on the hot path of every workflow call and re-reading a JSON file per call
+ * to learn its own directory would be worse than a checked duplicate.
  */
-export const WORKFLOW_DIR = join("beans", "workflow");
+export const WORKFLOW_DIR = join("beans", "workflows");
 
 const pathFor = (repoRoot: string, id: string): string =>
   join(repoRoot, WORKFLOW_DIR, `${id}.json`);
