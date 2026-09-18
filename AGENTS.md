@@ -367,8 +367,8 @@ memory entry is wrong — fix it.
 
 ## At session start
 
-**Install the beans CLI first, before any durable work.** A fresh container has
-no `beans` on `PATH`, and the fallback that parses `.beans/` directly gives you
+**Get `beans` in hand first, before any durable work.** A fresh container has no
+`beans` on `PATH`, and the fallback that parses `.beans/` directly gives you
 titles and statuses only — no bodies, no priorities, no blocking relations — so
 it cannot tell you what an item is or what it waits on, and you cannot claim or
 create anything with it.
@@ -377,22 +377,42 @@ create anything with it.
 scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
 ```
 
-`install-beans.sh` writes to `~/.local/bin`, which is frequently not on a fresh
-container's `PATH`. The session-start sweep now prepends it when the binary is
-there, so a second session does not re-install; if the sweep says the CLI is
-missing, it genuinely is.
+The sweep now does both halves of that for you: it prepends `~/.local/bin` when
+the binary is already there (so a second session does not re-install), and when
+it genuinely is missing it **runs the installer** — bounded and quiet, one
+`go install` over the module proxy, 180 s, falling through to the degraded
+reader rather than failing the hook. If the sweep still says the CLI is missing
+after that, it could not be installed here.
 
 This is a rule because skipping it is cheap and invisible. On 2026-09-18 a
 session read the sweep's then-parenthetical "run `scripts/install-beans.sh` for
 full priming", carried on reading `.beans/` by hand, and completed two merged
 PRs' worth of durable work **unclaimed** — the exact failure the work plan
-exists to prevent, and one no sibling session could have seen coming.
+exists to prevent, and one no sibling session could have seen coming. The
+installer call above is the same lesson applied one step earlier: an imperative
+somebody has to act on is weaker than the act itself.
 
-Then surface the work-plan: `beans prime` (and `beans list`), or
-`scripts/session-start-coord-sweep.sh` for the full surface (bean list, how far
-the default branch has moved, recent sibling `claude/*` branch activity, and CI
-health). Heavy triage of new commits belongs in a background subagent, not the
-foreground.
+The sweep emits, in order:
+
+1. **Interaction preferences** (`.folio/interaction.json`) — first, because it
+   changes the form of every question that follows. See
+   `skills/folio-core/interaction-modality.md`.
+2. `beans prime` and `beans list`.
+3. **`beans roadmap`** — the milestone/epic structure. `beans list` is flat (100+
+   ids in creation order on this repo), which is data, not a plan; the roadmap is
+   what lets an end-of-turn report say what is *next* and why.
+4. **The commands the human can run themselves**, `beans tui` first. An agent
+   cannot drive an interactive TUI on somebody's behalf, so the only useful thing
+   to do with it is print it where they will see it — together with a
+   copy-pasteable `cd … && git switch … && beans tui` line whose path and branch
+   are **computed**, never written in. Set `BEANS_CHECKOUT_ROOT` if your clones
+   live under one predictable directory.
+5. Default-branch delta, sibling `claude/*` branch activity, CI health.
+
+Heavy triage of new commits belongs in a background subagent, not the foreground.
+
+Running the pieces by hand instead: `scripts/install-beans.sh`, then
+`beans prime`, `beans list`, `beans roadmap`.
 
 ## Agentic harness — interaction model
 

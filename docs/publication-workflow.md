@@ -30,12 +30,26 @@ validation gate, the skills, and the shared work plan all named.
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/every-workflow-in-the-repo.md){: .fa-node-edit title="Edit content/docs/publication-workflow/every-workflow-in-the-repo.md" }
 
-Six BPMN 2.0 files, all under
-[`docs/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/docs/workflows).
+Nineteen BPMN 2.0 files, all under
+[`docs/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/docs/workflows)
+(counted on `main`, 2026-09-18 — this line said "six" for long enough that it is
+worth saying where the number came from).
 Each is a real BPMN 2.0 document with diagram interchange — open it in
 [bpmn.io](https://demo.bpmn.io/), Camunda Modeler, or any BPMN tool. The SVGs
 throughout the docs are generated from these files by `bun run render:bpmn`;
 never hand-edit an SVG.
+
+**Before any of the rest** — the process a person meets first, and the only one
+that runs when there is no folio yet:
+
+| Diagram | Answers |
+|---------|---------|
+| `getting-started.bpmn` | Somebody said "create a folio". Which of the five things did they mean, and what has to be true before anything is written? |
+
+Its intent gateway is *computed*, not chosen: `decisions/folio-intent.dmn`
+returns the branch, and `ask` is one of the outcomes it can return — which is
+what makes the question obligatory rather than a courtesy. See
+[Getting started](getting-started.html).
 
 **Content-agnostic** — these three apply to every folio, and the outer ones
 reference the inner ones as **call activities**, so each process is described
