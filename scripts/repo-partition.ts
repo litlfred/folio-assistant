@@ -22,6 +22,11 @@
  * Every assignment carries its provenance:
  *
  *   - `rule`    — an explicit path rule. Trustworthy.
+ *   - `triage`  — a per-file judgement someone made by hand, by the bean
+ *                 `dh4f` question: does this read or write PLATFORM, or
+ *                 CONTENT? Recorded separately from `rule` so a decision
+ *                 stays visible as a decision, and can be revisited without
+ *                 first working out which entries were judgements.
  *   - `keyword` — a domain keyword in the path. Probable, worth a human look.
  *   - `default` — fell through to core because nothing else claimed it.
  *                 This is the weakest signal in the report and is counted
@@ -81,10 +86,12 @@ const ALLOWED: Record<Repo, Repo[]> = {
 
 // ── Assignment rules, in priority order ─────────────────────────
 
-type Provenance = "rule" | "keyword" | "default";
+type Provenance = "rule" | "triage" | "keyword" | "default";
 
 interface Rule {
   repo: Repo;
+  /** Marks this rule's assignments as hand-triaged rather than structural. */
+  triaged?: boolean;
   /** Path prefixes (repo-relative, forward slashes). */
   prefixes?: string[];
   /** Exact repo-relative paths. */
@@ -108,6 +115,62 @@ const RULES: Rule[] = [
   {
     repo: "test",
     keyword: /\.(test|spec)\.ts$/i,
+  },
+
+  // ── Hand-triaged platform meta-scripts (2026-09-18).
+  //
+  //    These 27 were reported `unassigned` by the structural rules: they are
+  //    `gen-*`, `check-*`, `render-*` scripts that operate on the platform's
+  //    own docs, schemas, skills and workflows. Each was read and assigned by
+  //    the bean `dh4f` question — does it read or write PLATFORM or CONTENT?
+  //    Kept as an explicit list rather than a prefix rule because the answer
+  //    genuinely differs per file: `gen-skill-docs` is harness (Skills are a
+  //    harness concept) while `gen-schema-docs` is core (the content-object
+  //    model is core's), and no path pattern separates them.
+  {
+    repo: "harness",
+    triaged: true,
+    exact: [
+      "scripts/check-ci-health.ts",          // workflow state on the default branch
+      "scripts/check-corpus-gate.ts",        // editing-process authorisation gate
+      "scripts/check-workflow-policy.ts",    // BPMN relaxation legality
+      "scripts/bpmn-render.ts",              // BPMN → SVG
+      "scripts/render-bpmn.ts",              // BPMN → SVG (the docs/workflows one)
+      "scripts/generate-registry.ts",        // scans skills/ → SkillRegistry
+      "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
+      "scripts/validate-skills.ts",          // skill package manifests
+      "scripts/init-folio.ts",               // runs BEFORE a content type exists
+      "scripts/repo-partition.ts",           // this tool; platform meta
+    ],
+  },
+  {
+    repo: "sci",
+    triaged: true,
+    exact: [
+      "scripts/audit-wiring.ts",             // Python .witness.json buckets
+      "scripts/audit-wiring-migrate.ts",     // stamps auditOnly on witness JSON
+      "scripts/check-duplicate-decls.ts",    // one Lake tree, two declarations
+      "scripts/check-mirror-drift.ts",       // .lean sibling vs library decl
+      "scripts/check-self-discharging-instances.ts", // free class hypotheses
+      "scripts/migrate-computation-paths.ts",// computations/ codemod
+      "scripts/refresh-authors-note.ts",     // rewrites a note with Lean coverage
+      "scripts/render-changed-blocks.ts",    // per-block LaTeX PDFs
+    ],
+  },
+  {
+    repo: "core",
+    triaged: true,
+    exact: [
+      "adapters/manifest-entries.ts",        // reads author-written manifests
+      "scripts/gen-docs-pages.ts",           // webpage manifest → docs/<slug>.md
+      "scripts/gen-jsonld-context.ts",       // from schemas/jsonld.ts
+      "scripts/gen-schema-docs.ts",          // content-object model → reference
+      "scripts/generate-docs.ts",            // schema documentation
+      "scripts/generate-schemas.ts",         // Zod → JSON Schema
+      "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
+      "scripts/headless-render-qc.ts",       // viewer/HTML render QC
+      "scripts/section-story-audit.ts",      // section + chapter narrative
+    ],
   },
 
   // ── agentic-harness: Roles, Skills, Tools, BPMN, RBAC, the server itself
@@ -196,8 +259,9 @@ export interface Assignment {
 
 export function classify(relPath: string): Assignment {
   for (const rule of RULES) {
-    if (rule.exact?.includes(relPath)) return { repo: rule.repo, provenance: "rule" };
-    if (rule.prefixes?.some((p) => relPath.startsWith(p))) return { repo: rule.repo, provenance: "rule" };
+    const explicit: Provenance = rule.triaged ? "triage" : "rule";
+    if (rule.exact?.includes(relPath)) return { repo: rule.repo, provenance: explicit };
+    if (rule.prefixes?.some((p) => relPath.startsWith(p))) return { repo: rule.repo, provenance: explicit };
     if (rule.keyword?.test(relPath)) return { repo: rule.repo, provenance: "keyword" };
   }
   // Nothing claimed it. `scripts/` and stray `src/` modules land here; they
@@ -331,21 +395,21 @@ function main(): void {
   }
 
   const H = markdown ? "## " : "";
-  const counts = new Map<string, { rule: number; keyword: number; default: number }>();
+  const counts = new Map<string, Record<Provenance, number>>();
   for (const [, a] of modules) {
     const key = a.repo;
-    const c = counts.get(key) ?? { rule: 0, keyword: 0, default: 0 };
+    const c = counts.get(key) ?? { rule: 0, triage: 0, keyword: 0, default: 0 };
     c[a.provenance]++;
     counts.set(key, c);
   }
 
   console.log(`${H}Partition — ${modules.size} modules, ${totalEdges} internal import edges\n`);
-  if (markdown) console.log("| repo | modules | by rule | by keyword | fell through |\n|---|---:|---:|---:|---:|");
+  if (markdown) console.log("| repo | modules | by rule | hand-triaged | by keyword | fell through |\n|---|---:|---:|---:|---:|---:|");
   for (const id of [...REPOS.map((r) => r.id), "unassigned" as const]) {
-    const c = counts.get(id) ?? { rule: 0, keyword: 0, default: 0 };
-    const total = c.rule + c.keyword + c.default;
-    if (markdown) console.log(`| \`${repoName(id)}\` | ${total} | ${c.rule} | ${c.keyword} | ${c.default} |`);
-    else console.log(`  ${repoName(id).padEnd(20)} ${String(total).padStart(4)}  (rule ${c.rule}, keyword ${c.keyword}, unclaimed ${c.default})`);
+    const c = counts.get(id) ?? { rule: 0, triage: 0, keyword: 0, default: 0 };
+    const total = c.rule + c.triage + c.keyword + c.default;
+    if (markdown) console.log(`| \`${repoName(id)}\` | ${total} | ${c.rule} | ${c.triage} | ${c.keyword} | ${c.default} |`);
+    else console.log(`  ${repoName(id).padEnd(20)} ${String(total).padStart(4)}  (rule ${c.rule}, triage ${c.triage}, keyword ${c.keyword}, unclaimed ${c.default})`);
   }
 
   console.log(`\n${H}Wrong-direction edges: ${crossEdges.length}\n`);

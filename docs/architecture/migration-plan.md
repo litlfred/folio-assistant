@@ -81,9 +81,10 @@ test asserting a *kind collision is refused*, not silently overlaid.
 
 `bun run check:partition` (`scripts/repo-partition.ts`) builds the import graph,
 partitions it across the five proposed repos, and reports the edges crossing a
-boundary in the wrong direction. Gate met: 331 modules, 655 edges, **41
-wrong-direction edges** named, and **27 modules it declines to classify** rather
-than guessing. Full results in
+boundary in the wrong direction. Gate met: 332 modules, 656 edges, **45
+wrong-direction edges** named, **0 modules unassigned** (the 27 platform
+meta-scripts were triaged by hand, and are reported with their own provenance so
+a judgement stays visible as a judgement). Full results in
 [current state](current-state.html#the-wrong-direction-edges--phase-is-worklist).
 
 Two results change the plan below rather than merely confirming it:
@@ -91,16 +92,15 @@ Two results change the plan below rather than merely confirming it:
 - **`smart-kg` partitions to zero modules.** There is no L1 code to move, so
   that repo is new construction like the Test repos, not an extraction. It is
   re-sequenced accordingly.
-- **17 of the 41 edges are `agentic-harness` → `folio-assist-core`** — the
+- **20 of the 45 edges are `agentic-harness` → `folio-assist-core`** — the
   harness importing the content-object model, which is its defining constraint
   failing in practice. Extracting the harness is therefore *harder* than
   extracting sci, not easier, and Phase II's order reflects that.
 
-**Remaining under 0.2:** triage the 27 unassigned platform meta-scripts
-(`gen-*`, `check-*`, `render-*`). Most are probably harness; the tool does not
-say so because a guessed assignment would be indistinguishable in the report
-from a derived one. **41 is a floor that rises as those 27 are classified** —
-classifying the test material and the MCP server already took it from 33 to 41.
+The count moved 33 → 41 → 45 as classification improved, and stopped only when
+the unassigned column reached zero. **When re-running this, read the unassigned
+column before the edge count** — a low edge count over an unclassified corpus is
+the same false comfort as a green check over an empty one.
 
 ### 0.3 — Decide what `folio` is
 

@@ -76,72 +76,81 @@ reports the edges that cross a boundary **in the wrong direction**.
 
 ### The partition
 
-**331 modules, 655 internal import edges** (2026-09-18):
+**332 modules, 656 internal import edges** (2026-09-18):
 
-| proposed repo | modules | by explicit rule | by keyword | fell through |
-|---|---:|---:|---:|---:|
-| `agentic-harness` | 43 | 43 | 0 | 0 |
-| `folio-assist-core` | **119** | 119 | 0 | 0 |
-| `folio-asst-sci` | 28 | 8 | 20 | 0 |
-| `smart-kg` | **0** | 0 | 0 | 0 |
-| `smart-base` | 4 | 1 | 3 | 0 |
-| *(test material)* | 110 | 107 | 3 | 0 |
-| **unassigned** | **27** | — | — | 27 |
+| proposed repo | modules | by rule | hand-triaged | by keyword | fell through |
+|---|---:|---:|---:|---:|---:|
+| `agentic-harness` | 53 | 43 | 10 | 0 | 0 |
+| `folio-assist-core` | **128** | 119 | 9 | 0 | 0 |
+| `folio-asst-sci` | 36 | 8 | 8 | 20 | 0 |
+| `smart-kg` | **0** | 0 | 0 | 0 | 0 |
+| `smart-base` | 4 | 1 | 0 | 3 | 0 |
+| *(test material)* | 111 | 108 | 0 | 3 | 0 |
+| **unassigned** | **0** | — | — | — | 0 |
 
-Three things in that table are worth reading carefully.
+`hand-triaged` is its own column on purpose. Twenty-seven platform
+meta-scripts — `gen-*`, `check-*`, `render-*` — were reported unassigned by the
+structural rules and then read one at a time, by the bean `dh4f` question:
+*does this read or write **platform**, or **content**?* The answer genuinely
+differs per file and no path pattern separates them —
+`scripts/gen-skill-docs.ts` is harness because Skills are a harness concept,
+while `scripts/gen-schema-docs.ts` is core because the content-object model is
+core's. Recording those as `triage` rather than folding them into `rule` keeps a
+decision visible as a decision, so it can be revisited without first working out
+which entries were judgements.
+
+Two things in that table are worth reading carefully.
 
 **`smart-kg` is zero.** Not small — zero. Nothing in this repo is WHO L1
 material today, which confirms from the code what
 [the future state](future-state.html#smart-kg) says from the prose: the L1/L2
 line has to be drawn by someone with the domain context, because there is no
-existing code to infer it from.
+existing code to infer it from. It makes `smart-kg` **new construction, like the
+Test repos** — not an extraction.
 
 **`smart-base` is four modules.** The WHO material here is overwhelmingly prose,
-BPMN and schemas rather than TypeScript, so a file-count partition understates
+BPMN and schemas rather than TypeScript, so a module-count partition understates
 it badly. Do not read 4 as "nearly done".
-
-**27 modules are unassigned, and stay that way.** They are platform
-meta-scripts — `gen-schema-docs`, `check-ci-health`, `render-bpmn`,
-`generate-registry`, and so on. Most are probably `agentic-harness`, and the
-tool deliberately does not say so: an assignment it guessed would be
-indistinguishable in the report from one it derived. That list is a human's
-call, and it is 27 items long, which is a tractable afternoon.
 
 ### The wrong-direction edges — Phase I's worklist
 
-**41 edges** import across a proposed boundary in a direction the dependency
-DAG forbids:
+**45 edges** import across a proposed boundary in a direction the dependency
+DAG forbids. Every module is now classified, so this is a complete count rather
+than a floor:
 
 | importer | imports from | edges |
 |---|---|---:|
-| `folio-assist-core` | `folio-asst-sci` | **19** |
-| `agentic-harness` | `folio-assist-core` | **17** |
+| `agentic-harness` | `folio-assist-core` | **20** |
+| `folio-assist-core` | `folio-asst-sci` | **20** |
 | `agentic-harness` | `folio-asst-sci` | 3 |
 | `folio-assist-core` | `smart-base` | 2 |
 
-`bun run check:partition:edges` prints all 41 by name. The two large groups have
-different causes and different fixes:
+`bun run check:partition:edges` prints all 45 by name. The two large groups have
+different causes and different fixes.
 
-**core → sci (19)** is Lean and LaTeX reaching into generic code.
+**core → sci (20)** is Lean and LaTeX reaching into generic code.
 `content/pipeline/build.ts` imports `render-latex`, `generate-main-tex`,
 `latex-preflight` and `lean-coverage`; `qa-utils.ts` imports `lean-signature`;
-`schemas/constraints.ts` imports `lean-packages`. These are the seven math block
+`schemas/constraints.ts` imports `lean-packages`. This is the seven math block
 kinds' machinery embedded in the document pipeline — the profile split
 `AGENTS.md` describes at the *schema* level, not yet carried through to imports.
+It is the expected shape of the problem, and the most mechanical to fix.
 
-**harness → core (17)** is the harness knowing about the content model.
-`src/core/feedback.ts`, `src/routes/feedback.ts`, `src/types.ts` and
-`schemas/assistant-types.ts` all import `schemas/types.ts`. This is the more
-interesting group, because it is the harness's defining constraint —
-[it must not "do" anything](future-state.html#agentic-harness) — failing in
-practice: a harness that imports the content-object model cannot be extracted
-from underneath core.
+**harness → core (20)** is the more serious one. `src/core/feedback.ts`,
+`src/routes/feedback.ts`, `src/types.ts` and `schemas/assistant-types.ts` all
+import `schemas/types.ts` — the content-object model. That is the harness's
+defining constraint, [that it does not "do" anything](future-state.html#agentic-harness),
+failing in practice: **a harness that imports the content model cannot be
+extracted from underneath core.** It makes `agentic-harness` harder to extract
+than `folio-asst-sci`, not easier, which is the opposite of the intuition that
+the most-depended-upon repo comes out first.
 
-**A caution on the count.** The first run of this tool reported 33 cross-edges
-with 135 modules unassigned; classifying the test material and the standalone
-MCP server raised it to 41. **Classifying more modules finds more violations,
-not fewer** — so 41 is itself a lower bound while 27 modules remain unassigned.
-Treat it as a floor that rises as triage proceeds, never as a burn-down number.
+**On the count's history.** The first run reported 33 cross-edges with 135
+modules unassigned; classifying the test material and the standalone MCP server
+took it to 41; triaging the last 27 took it to 45. **Classifying more modules
+finds more violations, not fewer.** The number only stopped moving because the
+unassigned column reached zero — which is why that column, not the edge count,
+is the one to check first when re-running this.
 
 ## The mechanism the split already has
 
