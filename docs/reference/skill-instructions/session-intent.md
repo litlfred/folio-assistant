@@ -29,7 +29,7 @@ where the previous one left off.
 |---|---|
 | [`STATUS.md`](../../../STATUS.md) | Always-current root dashboard: goals → master ledgers → active PRs |
 | `docs/coordination/<goal>.md` | Per-goal **master ledger**: status table, open tasks, flip-flop history, session log |
-| `.beans/` (via `beans` CLI) | Machine-readable **queue** of tasks, managed as hierarchical issues (Beans). |
+| `beans/` (via `beans` CLI) | Machine-readable **queue** of tasks, managed as hierarchical issues (Beans). |
 | Per-PR body | Session intent at branch-open; EOS results appended |
 
 ## Session-start protocol (5 steps)

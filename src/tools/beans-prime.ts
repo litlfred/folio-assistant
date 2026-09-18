@@ -7,7 +7,7 @@
  * session-start shell hook can still pull live priming by calling this tool.
  *
  * Tools:
- *   work_plan_prime — emit `beans prime` + `beans list`, or a .beans/ fallback.
+ *   work_plan_prime — emit `beans prime` + `beans list`, or a beans/ fallback.
  *
  * @module folio-assistant/tools/beans-prime
  */
@@ -32,16 +32,16 @@ function hasBeans(cwd: string): boolean {
   return run("command -v beans", cwd) !== "";
 }
 
-/** CLI-independent fallback: read .beans/*.md and list titles + status. */
+/** CLI-independent fallback: read beans/*.md and list titles + status. */
 function primeFromDir(beansDir: string): string {
   if (!existsSync(beansDir)) {
-    return "_(no .beans/ store and no beans CLI — nothing to prime; see AGENTS.md)_";
+    return "_(no beans/ store and no beans CLI — nothing to prime; see AGENTS.md)_";
   }
   const files = readdirSync(beansDir).filter((f) => f.endsWith(".md"));
-  if (files.length === 0) return "_(no beans found in .beans/)_";
+  if (files.length === 0) return "_(no beans found in beans/)_";
 
   const lines: string[] = [
-    "_(beans CLI not on PATH — reading .beans/ directly; run `scripts/install-beans.sh` for full priming)_",
+    "_(beans CLI not on PATH — reading beans/ directly; run `scripts/install-beans.sh` for full priming)_",
   ];
   for (const f of files.sort()) {
     let title = f.replace(/\.md$/, "");
@@ -106,7 +106,7 @@ export function registerBeansTools(server: McpServer, repoRoot: string): void {
     "work_plan_prime",
     "Prime yourself with the current beans work-plan (session + cross-session/" +
       "cross-agent todos). Runs `beans prime` + `beans list`; if the beans CLI is " +
-      "not installed, falls back to reading the committed .beans/ store directly. " +
+      "not installed, falls back to reading the committed beans/ store directly. " +
       "Use at the start of a task to see open items and claim before working.",
     {},
     async () => {
@@ -116,7 +116,7 @@ export function registerBeansTools(server: McpServer, repoRoot: string): void {
         const list = run("beans list", repoRoot);
         text = [prime, list].filter(Boolean).join("\n\n") || "_(beans returned nothing)_";
       } else {
-        text = primeFromDir(join(repoRoot, ".beans"));
+        text = primeFromDir(join(repoRoot, "beans"));
       }
       return {
         content: [

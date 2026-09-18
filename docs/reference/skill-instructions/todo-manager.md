@@ -14,7 +14,7 @@ parent: Skill instructions
 
 > **Disambiguation:**
 > - `beans` (`todo-manager`, this file) = the agent's **session work-plan**.
->   Managed entirely via the `beans` CLI issue tracker (data stored in `.beans/`).
+>   Managed entirely via the `beans` CLI issue tracker (data stored in `beans/`).
 > - `sidecars` (`*.qa.json` and `*.witness.json` files) = **content state tracking**.
 >   Beans and sidecars are NOT synonymous! Do NOT convert bulk QA queue items into
 >   beans. They are completely separate workflow systems.
@@ -27,7 +27,7 @@ Instead of an in-memory list or markdown checklists, we manage session work and 
 ## Installing beans (fresh sandbox / cloud container)
 
 `beans` is the [`hmans/beans`](https://github.com/hmans/beans) Go binary — a
-flat-file issue tracker storing issues as markdown under `.beans/`. Cloud
+flat-file issue tracker storing issues as markdown under `beans/`. Cloud
 sandboxes do **not** ship it, so reinstall on demand (Go ships in the sandbox):
 
 ```bash
@@ -153,8 +153,8 @@ attempting — before the first tool call, not after the work lands:
 **End every turn** with the beans you touched and what is next.
 
 > **Beans**
-> - **worked** [`fwr8`](.beans/folio-assistant-fwr8--re-baseline-the-forward-ref-arc.md) — Re-baseline the forward-ref arc endpoints. Re-ran both with the fixed parser: the arc is 274 → 195, not 274 → 192. This corrects my own earlier claim that the start figure was understated — only the post-mid-arc figures are short, and only by 3.
-> - **next** [`fwr7`](.beans/folio-assistant-fwr7--retarget-seven-mis-aimed-uses-edges.md) — Retarget seven `uses[]` edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.
+> - **worked** [`fwr8`](beans/folio-assistant-fwr8--re-baseline-the-forward-ref-arc.md) — Re-baseline the forward-ref arc endpoints. Re-ran both with the fixed parser: the arc is 274 → 195, not 274 → 192. This corrects my own earlier claim that the start figure was understated — only the post-mid-arc figures are short, and only by 3.
+> - **next** [`fwr7`](beans/folio-assistant-fwr7--retarget-seven-mis-aimed-uses-edges.md) — Retarget seven `uses[]` edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.
 
 ### The rules that make a report worth reading
 
@@ -277,12 +277,37 @@ just clutter:
 - ~980 copies of an already-proved item sat at `todo`;
 - the duplicates **collided with the IDs of 15 real beans**, making
   `beans update <id>` ambiguous for those;
-- they corrupted a later agent's own corpus-grep — 4,928 `.beans` files matched
+- they corrupted a later agent's own corpus-grep — 4,928 `beans` files matched
   one search term across just 36 titles, inflating 14 real source files into an
   apparent 54 and nearly landing a false correction in a PR body.
 
 The runaway loop is not something a doc can prevent; an unguarded `create` is.
 This rule is platform-level so every folio inherits it.
+
+## When the `beans` CLI is not there — you are still not read-only
+
+`scripts/beans-fallback.ts` writes the same store in the same layout: same
+files, same front matter, same id shape, read from `.beans.yml`. The CLI reads
+everything it writes once installed. There is no import step and no second
+store.
+
+```sh
+bun run beans:fallback list --status todo
+bun run beans:fallback show <id>
+bun run beans:fallback claim <id>
+bun run beans:fallback create "<title>" --status in-progress
+bun run beans:fallback note <id> "<what you found>"
+```
+
+A read-only fallback is not a fallback for an agent — it lets you see the plan
+and touch nothing, and a session that can see its plan but not claim it does its
+work unclaimed. That is not hypothetical: it is what happened on 2026-09-18
+across two merged PRs.
+
+Its `create` **refuses an exact duplicate title** and names the bean to claim
+instead. The CLI's `create` does not, and that is the mechanism behind the
+14,688 duplicates in `qou`. `--force` exists for a genuinely intended duplicate
+and has to be typed.
 
 ## Working with Beans
 

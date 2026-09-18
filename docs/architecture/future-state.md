@@ -73,7 +73,7 @@ skill, how to add an MCP service. It is a Tool repo whose content is its manual.
 | `src/workflow/`, `src/tools/workflow.ts`, `docs/workflows/*.bpmn` (the three content-agnostic ones) | `agentic-harness` |
 | `schemas/assistant-{package,types,workflow}.ts` | `agentic-harness` |
 | `src/tools/{check-deps,capabilities,skill-fetch,preferences,beans-prime}.ts` | `agentic-harness` |
-| `scripts/install-beans.sh`, `scripts/session-start-coord-sweep.sh`, `.beans/` discipline | `agentic-harness` |
+| `scripts/install-beans.sh`, `scripts/session-start-coord-sweep.sh`, `beans/` discipline | `agentic-harness` |
 | `deploy/`, `Dockerfile`, `skills/framework/`, `skills/remote-packages/` | `agentic-harness` |
 | QA **sidecar infrastructure** (the `*.qa.json` mechanism, axes, criterion registry *shape*) | `agentic-harness` |
 | QA **criteria** (what a good theorem or a good DAK looks like) | downstream, not here |

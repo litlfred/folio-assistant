@@ -147,7 +147,7 @@ anchored form is what keeps it committable.
 
 Two deliberate exclusions:
 
-- **`.beans/` stays tracked.** It is the durable, cross-session work plan; a
+- **`beans/` stays tracked.** It is the durable, cross-session work plan; a
   sibling agent has to be able to read it. Bean *duplication* is prevented by
   the create-guard in
   [`skills/folio-core/todo-manager.md`](../../skills/folio-core/todo-manager.md),

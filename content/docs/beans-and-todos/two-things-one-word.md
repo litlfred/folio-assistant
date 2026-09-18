@@ -5,7 +5,7 @@ lifecycles and different failure modes.
 |---|---|---|
 | Owner | An agent session | A person |
 | Purpose | Process state for work in flight | A reminder of intent |
-| Store | `.beans/`, committed and shared | Not yet defined |
+| Store | `beans/`, committed and shared | Not yet defined |
 | Created by | An agent, after an exact-title check | The person, whenever they like |
 | Closed by | The agent that did the work, with a summary | The person, on their own judgement |
 | Visible to | Every sibling session | The person, primarily |

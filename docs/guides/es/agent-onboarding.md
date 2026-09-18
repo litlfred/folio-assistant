@@ -116,7 +116,7 @@ Auditar si `uses[]` está bien utilizado es una habilidad en sí misma:
 ## 6. Realice un seguimiento del trabajo en beans, no en su cabeza
 
 `beans` es el **único** mecanismo de tareas pendientes — local de la sesión *y*
-entre agentes. `.beans/` está en el repositorio (committed), por lo que un plan sobrevive a la reanudación en un
+entre agentes. `beans/` está en el repositorio (committed), por lo que un plan sobrevive a la reanudación en un
 contenedor nuevo.
 
 ```sh

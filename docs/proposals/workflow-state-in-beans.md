@@ -14,13 +14,40 @@ bearing directly on [#203](https://github.com/litlfred/folio-assistant/issues/20
 process — exactly the case where "where did that get to?" is expensive to answer
 wrongly.
 
-This is a **proposal**: it sets out four options and what each costs. Option A is
-what is built today. Nothing here is a commitment to change it.
+It sets out four options and what each costs. **§0 records the decision**: Option
+A, with both stores moved out from behind dotfiles. Options B–D are kept because
+they remain the honest alternatives if the question is reopened, and because the
+reasoning for rejecting them is the part that goes missing otherwise.
 
 1. TOC
 {:toc}
 
 ---
+
+## 0. Decided — Option A, co-located (2026-09-18)
+
+The author chose **Option A**: two stores, one link. What changed is not the
+architecture but the *address* — both stores are now at top level and adjacent:
+
+| | was | is |
+|---|---|---|
+| work plan | `.beans/` | **`beans/`** |
+| workflow state | `.folio/workflow/` | **`beans/workflow/`** |
+
+The reasoning that made A right survives the move intact: the interpreter keeps
+a file no human is invited to hand-edit, one file per instance means no write
+contention, and the process engine still runs in a repo with no beans CLI
+installed. What A was *criticised* for below — "two places to look" — was never
+really about two stores. It was about two **hidden** stores. Putting them side
+by side under one visible directory answers that without giving machine state to
+a human-editable file.
+
+Both paths are now declared in `folio.config.json` under `harness`
+(`HarnessDirsSchema`), and `bun run check:harness-dirs` fails if that
+declaration, `.beans.yml` and `workflow/store.ts` ever disagree.
+
+The rest of this page is kept as written, because options B–D remain the honest
+alternatives if the question is reopened — in particular for CRDM, per §5.
 
 ## 1. What exists today
 
@@ -28,8 +55,8 @@ Two stores, joined at one point.
 
 | store | holds | committed |
 |---|---|---|
-| `.beans/<id>--<slug>.md` | **what is being worked on** — title, status, type, body | yes |
-| `.folio/workflow/<id>.json` | **where it got to** — token marking, arrivals at joins, history | yes |
+| `beans/<id>--<slug>.md` | **what is being worked on** — title, status, type, body | yes |
+| `beans/workflow/<id>.json` | **where it got to** — token marking, arrivals at joins, history | yes |
 
 `src/workflow/store.ts` keeps one file per instance, deliberately, so two agents
 advancing two instances do not collide on one file. Instance ids are derived
@@ -57,7 +84,7 @@ Four reasons, and they are not equally good.
    sessions avoid each other. If position were bean state, claiming a step and
    claiming the work would be the same act.
 3. **Beans have a UI.** `beans tui`, `beans roadmap`, `beans show`, and a
-   GraphQL endpoint. `.folio/workflow/*.json` has none of that and would have to
+   GraphQL endpoint. `beans/workflow/*.json` has none of that and would have to
    grow one.
 4. **Fewer things to keep in sync.** Today a divergence between the two stores is
    possible in principle; with one store it is not expressible.
@@ -84,7 +111,7 @@ engine runs in a repo with no beans CLI installed.
 ### Option B — bean per instance, position in front matter
 
 The instance's token marking moves into the bean's YAML front matter
-(`workflow_process`, `workflow_tokens`, `workflow_history`); `.folio/workflow/`
+(`workflow_process`, `workflow_tokens`, `workflow_history`); `beans/workflow/`
 disappears.
 
 **Costs:** the front matter becomes machine-owned, and `beans update` is not

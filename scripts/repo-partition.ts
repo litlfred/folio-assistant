@@ -248,7 +248,7 @@ const ROOT = resolve(import.meta.dir, "..");
 /** Directories scanned for TypeScript modules. */
 const SCAN_ROOTS = ["src", "schemas", "adapters", "content", "scripts", "tests", "types"];
 
-const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", ".beans", "docs"]);
+const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", "beans", "docs"]);
 
 function walkTs(dir: string, out: string[] = []): string[] {
   if (!existsSync(dir)) return out;

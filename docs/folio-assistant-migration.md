@@ -19,7 +19,7 @@ generic agent infrastructure (beans work-plan, MCP server, session-start harness
 ## §1 What beans are
 
 [`hmans/beans`](https://github.com/hmans/beans) is a Go flat-file issue tracker
-storing issues as markdown under `.beans/`. It backs the agent session work-plan
+storing issues as markdown under `beans/`. It backs the agent session work-plan
 and supersedes `TodoWrite` / `todos/*.json`. Discipline: **`beans ≠ sidecars`** —
 never `beans create` a QA/witness/watcher queue; those stay as bulk JSON read by
 their own `.ts` tooling. See `.claude/skills/local/todo-manager.md`.
@@ -43,7 +43,7 @@ that a generalization pass must address:
 - `scripts/session-start-coord-sweep.sh` — references `STATUS.md`, `docs/coordination/<goal>.md`, `todos/<goal>-queue.json`, and a `.claude/settings.json` SessionStart hook **that does not exist in this repo**.
 - `scripts/install-beans.sh` — generic; provisions the `beans` CLI via `go install`.
 
-Notably **absent** here: any `.claude/settings.json`; a `.beans/` store; a
+Notably **absent** here: any `.claude/settings.json`; a `beans/` store; a
 `bean-coordination` skill. The active session-start hook here is
 `.claude/skills/hooks/session-start.sh` (a capability prober), **not** a
 settings.json hook set.
@@ -79,7 +79,7 @@ settings.json hook set.
   toolchain; `command -v beans` gates the build.
 - **§5.5 (SessionStart priming):** `.claude/skills/hooks/session-start.sh` now
   emits a beans work-plan surface — `beans prime` + `beans list` when the CLI is
-  present, with a CLI-independent fallback that parses `.beans/*.md` directly so
+  present, with a CLI-independent fallback that parses `beans/*.md` directly so
   a fresh container is still primed.
 - **Hook-parse bug fix (blocker for §5.5):** that same hook did not parse at all
   on `main` — an inline `[[ "$cmd" =~ [;\|\&\$\`\(] ]]` made bash's conditional
@@ -108,7 +108,7 @@ Handoff item **A** is qou-only (no `settings.json` exists here).
   writable PATH dir); it is the one source of truth, qou vendors/mirrors it.
 - **5.3 Provision the `beans` CLI in the MCP Docker image** — ✅ **done.** See §4.
   *Acceptance:* `beans list`/`command -v beans` works inside the built image.
-- **5.4 Repoint remaining `todos/` → `.beans/` runtime readers** — ✅ **resolved:
+- **5.4 Repoint remaining `todos/` → `beans/` runtime readers** — ✅ **resolved:
   won't build (Q1 decided).** A separate todos platform (MCP `/api/todos` route,
   `/todos` dashboard, `content-todos.ts` store) is **intentionally not ported** —
   beans *is* the todo mechanism for both session and cross-session/cross-agent
@@ -119,7 +119,7 @@ Handoff item **A** is qou-only (no `settings.json` exists here).
   qou-side disposition (§6 / §7).
 - **5.5 Own the permanent SessionStart surface (`beans prime`)** — ✅ **done** for
   the priming surface: `session-start.sh` runs `beans prime` + `beans list` with
-  a CLI-independent `.beans/` fallback (and the hook now parses at all — see §4).
+  a CLI-independent `beans/` fallback (and the hook now parses at all — see §4).
   *Residual:* if a `.claude/settings.json` harness is adopted (5.6), decide
   whether the richer `session-status.sh` dashboard folds in or is retired.
 - **5.6 Own the generic session-start harness** — ✅ **landed for Claude
@@ -282,7 +282,7 @@ session that already has the settings.json hook.
 Claude (`.claude/settings.json` SessionStart → generalized shared primer); the
 Gemini/Antigravity hook configs reuse the same script and remain to be added.
 Layer 3 landed: `work_plan_prime` MCP tool (`src/tools/beans-prime.ts`, wired in
-`src/server.ts`) exposes `beans prime` + `beans list` (with a `.beans/` fallback)
+`src/server.ts`) exposes `beans prime` + `beans list` (with a `beans/` fallback)
 to any MCP-connected agent. Sources: agents.md
 (openai/agents.md, Linux Foundation AAIF); Claude Code
 hooks/memory docs; Gemini CLI hooks reference + GEMINI.md docs; Antigravity SDK /

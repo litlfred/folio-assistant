@@ -1,12 +1,12 @@
 /**
- * Machine-generated audit output must not land in `.beans/` or `todos/`.
+ * Machine-generated audit output must not land in `beans/` or `todos/`.
  *
  * `AGENTS.md` is explicit about both:
  *
  * - *"Do not stand up a separate todo store (no API route, dashboard, or
  *   `todos/*.json` work-plan); beans is it."*
  * - *"`beans ≠ sidecars`: never `beans create` bulk machine-generated queues
- *   … keep those as bulk JSON."* — `.beans/` holds the work plan, not bulk
+ *   … keep those as bulk JSON."* — `beans/` holds the work plan, not bulk
  *   output.
  *
  * Four pipeline scripts defaulted into those two directories anyway. Nothing
@@ -36,11 +36,11 @@ describe("audit output paths", () => {
   for (const file of WRITERS) {
     const src = readFileSync(join(PIPELINE, file), "utf-8");
 
-    test(`${file} does not default into .beans/ or todos/`, () => {
+    test(`${file} does not default into beans/ or todos/`, () => {
       // String literals only — a path assembled at runtime would slip past
       // this, but all four spell theirs out, which is what made the drift
       // invisible and is also what makes it checkable.
-      expect(src).not.toMatch(/"\.beans\/[\w-]+\.json"/);
+      expect(src).not.toMatch(/"\beans\/[\w-]+\.json"/);
       expect(src).not.toMatch(/"todos\/[\w-]+\.json"/);
     });
 

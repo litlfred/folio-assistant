@@ -9,7 +9,7 @@
 # not the `beans` CLI is on PATH.
 #
 # What it surfaces:
-#   1. The beans work-plan (`beans prime` + `beans list`, or a .beans/ fallback).
+#   1. The beans work-plan (`beans prime` + `beans list`, or a beans/ fallback).
 #   2. How far the default branch has moved since this branch diverged.
 #   3. Recent sibling agent branches.
 #   4. A generic recommended action.
@@ -50,7 +50,7 @@ if [ -f "$INTERACTION" ]; then
 fi
 
 # ── 1. Work-plan (beans) ────────────────────────────────────────────────────
-BEANS_DIR="$REPO_ROOT/.beans"
+BEANS_DIR="$REPO_ROOT/beans"
 echo "## Work-plan (beans) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo
 # Get the CLI in hand rather than reporting its absence — in two steps, cheap
@@ -59,9 +59,9 @@ echo
 # 1. `install-beans.sh` installs to ~/.local/bin, which a fresh container's PATH
 #    often does not carry, so LOOK THERE before concluding the CLI is absent.
 #    Reporting "not on PATH" when the binary is sitting in the standard install
-#    location is how a session ends up parsing .beans/ by hand all day.
+#    location is how a session ends up parsing beans/ by hand all day.
 # 2. Still missing? Install it. A fresh cloud container ships no `beans` at all,
-#    and the fallback below — `.beans/*.md` parsed by hand — is a flat list with
+#    and the fallback below — `beans/*.md` parsed by hand — is a flat list with
 #    no priming, no milestone nesting and no `beans check`. That degraded view
 #    was what every such session actually got, which is not the same as having
 #    the work plan.
@@ -148,7 +148,7 @@ BEANCMDS
 elif [ -d "$BEANS_DIR" ]; then
   # An IMPERATIVE, not a parenthetical. The old wording tucked the remedy
   # inside an aside, and a session on 2026-09-18 read it, carried on parsing
-  # .beans/ by hand, and did an entire session's durable work unclaimed —
+  # beans/ by hand, and did an entire session's durable work unclaimed —
   # which is the exact failure the work-plan exists to prevent.
   echo "> 🫘 **BEANS CLI IS NOT INSTALLED. Install it before doing durable work:**"
   echo ">"
@@ -156,9 +156,22 @@ elif [ -d "$BEANS_DIR" ]; then
   echo "> scripts/install-beans.sh && export PATH=\"\$HOME/.local/bin:\$PATH\""
   echo "> \`\`\`"
   echo ">"
-  echo "> Until then the list below is parsed from \`.beans/\` directly: titles and"
+  echo "> Until then the list below is parsed from \`beans/\` directly: titles and"
   echo "> statuses only, with no bodies, no priorities and no blocking relations —"
   echo "> so it cannot tell you what an item actually is or what it waits on."
+  echo ">"
+  echo "> **But you are NOT read-only.** \`scripts/beans-fallback.ts\` writes the same"
+  echo "> store in the same layout, so work done here is claimed, not unclaimed:"
+  echo ">"
+  echo "> \`\`\`sh"
+  echo "> bun run beans:fallback list --status todo"
+  echo "> bun run beans:fallback show <id>"
+  echo "> bun run beans:fallback claim <id>"
+  echo "> bun run beans:fallback create \"<title>\" --status in-progress"
+  echo "> bun run beans:fallback note <id> \"<what you found>\""
+  echo "> \`\`\`"
+  echo ">"
+  echo "> There is no excuse for unclaimed durable work when the CLI is missing."
   echo
   found=0
   for f in "$BEANS_DIR"/*.md; do
@@ -168,9 +181,9 @@ elif [ -d "$BEANS_DIR" ]; then
     status=$(grep -m1 -iE '^(status|state):' "$f" 2>/dev/null | sed 's/^[^:]*:[[:space:]]*//')
     printf -- '- %s%s\n' "${title:-$(basename "$f" .md)}" "${status:+ [$status]}"
   done
-  if [ "$found" -eq 0 ]; then echo "_(no beans found in .beans/)_"; fi
+  if [ "$found" -eq 0 ]; then echo "_(no beans found in beans/)_"; fi
 else
-  echo "_(no .beans/ store and no beans CLI — nothing to prime; see AGENTS.md)_"
+  echo "_(no beans/ store and no beans CLI — nothing to prime; see AGENTS.md)_"
 fi
 echo
 

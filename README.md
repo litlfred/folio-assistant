@@ -167,7 +167,7 @@ AGENTS.md                            agent guidance, tailored to your content ty
 CLAUDE.md · GEMINI.md                thin stubs pointing at AGENTS.md
 .mcp.json                            wires folio-assistant as an MCP server
 .claude/settings.json                SessionStart hook → work-plan priming
-.beans.yml · .beans/                 the work plan
+.beans.yml · beans/                 the work plan
 ```
 
 Nothing there is subject matter. The starter block explains what a block *is*

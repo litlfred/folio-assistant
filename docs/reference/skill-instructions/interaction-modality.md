@@ -78,7 +78,7 @@ to take. The profile is about the interface, not about them.
 
 ## 3. Where the preference lives
 
-`.folio/interaction.json`, committed, beside `.folio/workflow/` and for the same
+`.folio/interaction.json`, committed, beside `beans/workflow/` and for the same
 reason: a preference that lives in one agent's context is re-learned by every
 sibling session, and re-learning it means asking again.
 

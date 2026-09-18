@@ -626,7 +626,7 @@ other diagram in this repository:
 
 A second set of tools over the same diagram would be a second answer to
 "where are we", free to disagree with the first. State lives under
-`.folio/workflow/` and is committed, so a sibling session sees the same
+`beans/workflow/` and is committed, so a sibling session sees the same
 position — which is the property a chat-local phase tracker could never have.
 
 Every activity in the agent's lane carries the skill that implements it, so

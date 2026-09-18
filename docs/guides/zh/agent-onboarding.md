@@ -94,7 +94,7 @@ bun run content/pipeline/content-graph.ts content/<paper>
 
 ## 6. 在 beans 中跟踪工作，不要凭记忆跟踪
 
-`beans` 是**唯一**的待办事项机制 — 既作用于会话本地，*也*跨代理共享。`.beans/` 目录已纳入提交，因此工作计划可以在全新容器中恢复会话时留存下来。
+`beans` 是**唯一**的待办事项机制 — 既作用于会话本地，*也*跨代理共享。`beans/` 目录已纳入提交，因此工作计划可以在全新容器中恢复会话时留存下来。
 
 ```sh
 beans list

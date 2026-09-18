@@ -25,7 +25,7 @@ two kinds of thing that need different handling.
 
 A **bean** is process state an agent keeps while doing work: claimed before
 starting so a sibling session avoids it, kept current as the work proceeds,
-and closed with a record of what changed. The store is `.beans/`, committed,
+and closed with a record of what changed. The store is `beans/`, committed,
 so it survives a reclaimed container and is visible to every other session.
 
 A **todo** is a person's own reminder — what they mean to look at next. It is
@@ -47,7 +47,7 @@ lifecycles and different failure modes.
 |---|---|---|
 | Owner | An agent session | A person |
 | Purpose | Process state for work in flight | A reminder of intent |
-| Store | `.beans/`, committed and shared | Not yet defined |
+| Store | `beans/`, committed and shared | Not yet defined |
 | Created by | An agent, after an exact-title check | The person, whenever they like |
 | Closed by | The agent that did the work, with a summary | The person, on their own judgement |
 | Visible to | Every sibling session | The person, primarily |

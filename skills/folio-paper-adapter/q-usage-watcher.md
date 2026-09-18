@@ -38,8 +38,8 @@ The parent encodes the shared mechanics; this file fills the nine
 domain-specific slots A–I and documents the q-regime taxonomy.
 
 **Setup:** use `NAME=q-usage-watcher` everywhere the parent's §1
-references `${NAME}`. Files at `.beans/q-usage-watcher-queue.json`
-and `.beans/q-usage-watcher-ledger.md`.
+references `${NAME}`. Files at `beans/q-usage-watcher-queue.json`
+and `beans/q-usage-watcher-ledger.md`.
 
 **Authoritative references**:
 

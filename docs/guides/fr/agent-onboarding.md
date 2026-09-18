@@ -115,7 +115,7 @@ partir duquel chaque métrique d'ordonnancement est calculée.
 ## 6. Suivez le travail dans beans, pas dans votre tête
 
 `beans` est le **seul** mécanisme de tâches — local à la session *et*
-multi-agents. `.beans/` est commité, donc un plan survit à une reprise
+multi-agents. `beans/` est commité, donc un plan survit à une reprise
 dans un nouveau conteneur.
 
 ```sh

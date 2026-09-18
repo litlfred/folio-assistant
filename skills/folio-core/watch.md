@@ -240,7 +240,7 @@ For each new skill file:
    >    on future main-refreshes.
 
 4. **Record the decision** in the watcher's ledger
-   (`.beans/<watcher-name>-ledger.md` for integration-watcher
+   (`beans/<watcher-name>-ledger.md` for integration-watcher
    children, or chat-only for the bare `/watch` flow) so subsequent
    main-refreshes don't re-prompt for the same skill.
 

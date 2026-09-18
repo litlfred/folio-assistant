@@ -119,8 +119,8 @@ For each resolved child watcher:
 
 When multiple watchers are dispatched in parallel:
 - Each gets its OWN Monitor task (so timeouts/restarts are independent).
-- Each maintains its OWN `.beans/<name>-queue.json` and
-  `.beans/<name>-ledger.md`.
+- Each maintains its OWN `beans/<name>-queue.json` and
+  `beans/<name>-ledger.md`.
 - PR subscriptions are deduped across watchers (a sibling PR active in
   the last 7 days is subscribed only once per session).
 - Resume suggestions are surfaced one watcher at a time (not bundled),
