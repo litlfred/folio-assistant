@@ -45,10 +45,35 @@ there, or lets them assume something exists because nobody updated the list.
   presenting them for structured triage is tracked in
   [#197](https://github.com/litlfred/folio-assistant/issues/197).
 
-**Built but unverified**, which is a third state and not a milder form of
-"built": the detection skill has never been measured against real requests.
-Nobody has taken a sample of issues and chat openings and checked how often
-it fires when it should, or fires when it should not. Until that happens the
-honest claim is that the guidance exists, not that detection works.
+**Built and now measured, with a known weakness.** The detection skill used
+to sit in a third state — "built but unverified", which is not a milder form
+of built. It has since been run against every issue in this repository (27,
+the whole population, not a sample) via `bun run eval:crdm-detect`:
+
+| | fired | did not |
+|---|---|---|
+| **is a feature request** | 12 | 7 |
+| **is not** | 5 | 3 |
+
+**precision 71% · recall 63% · F1 67%** — measured 2026-09-18 on `main`.
+
+Two things that number is not. It runs the skill's **phrase list** only, so
+it is a *lower bound* on an agent that also applies judgement. And the ground
+truth is **one annotator's, unblinded** — the same agent wrote the labels and
+the scorer. Fix that before quoting these as a property of the skill rather
+than of this corpus.
+
+The failure *pattern* is more useful than the score. The seven misses include
+[#203](https://github.com/litlfred/folio-assistant/issues/203) itself — the
+issue that asked for this capability — and
+[#1](https://github.com/litlfred/folio-assistant/issues/1), the framework
+design. The five false alarms are two migration **records** of work already
+done, two asks to **document** an existing pipeline, and one bug report.
+
+That points at a specific gap: the skill's "what is NOT a feature request"
+list excludes *content* tasks — writing a section, fixing a typo, reviewing a
+chapter — but says nothing about **records of completed work** or
+**documentation about a feature**, which are what it actually confuses here.
+Those two exclusions are the cheapest available improvement.
 
 **Tracked in:** [#203](https://github.com/litlfred/folio-assistant/issues/203)
