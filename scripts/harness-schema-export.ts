@@ -32,7 +32,7 @@
  *
  * @module scripts/harness-schema-export
  */
-import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
+import { writeFileSync, mkdirSync, readFileSync, readdirSync, existsSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zodToJsonSchema } from "zod-to-json-schema";
@@ -117,6 +117,102 @@ export function buildToolSchema(opts: SchemaExportOptions = {}): Record<string, 
   };
 }
 
+/**
+ * Where a skill's I/O contract is published, and therefore what its `$id` is.
+ *
+ * **One function, so an `$id` is never hand-written.** Measured on `main` at
+ * 2026-09-18: all 44 files under `schemas/skills/` carried
+ * `https://github.com/litlfred/folio-assistant/schemas/skills/<skill>/<io>.schema.json`,
+ * which **does not resolve** — a fetch returns 403, because GitHub's browse
+ * route needs `/blob/<ref>/` and that segment was never there. Nor were the
+ * files served from anywhere else: `_kg/` held only the three documents this
+ * script already emitted.
+ *
+ * That is the same defect `AGENTS.md` records for the README's chapter table —
+ * a link COMPOSED by convention and checked against nothing — repeated one
+ * layer down, and it matters more here. `schemas/tool.ts` requires a Tool's
+ * `io.*.schema` to be an absolute IRI precisely so "the types it names have to
+ * exist somewhere fetchable"; a Tool node pointing at a 403 would satisfy the
+ * schema and mean nothing. So the contracts had to become fetchable before a
+ * single Tool could be written against one.
+ *
+ * `gen-schema-docs.ts` was already emitting a CORRECT `/blob/main/` link for
+ * the same file, which is why nobody noticed: the documentation link worked
+ * while the identity did not, and nothing had ever dereferenced an `$id`.
+ */
+export function skillIoIri(base: string, skill: string, io: string): string {
+  return `${base.replace(/\/+$/, "")}/kg/skills/${skill}/${io}.schema.json`;
+}
+
+/** One skill I/O contract, as found on disk. */
+export interface SkillIoContract {
+  skill: string;
+  /** `input` or `output` — the file stem before `.schema.json`. */
+  io: string;
+  /** Repo-relative source path. */
+  source: string;
+  /** Published path under the output directory. */
+  published: string;
+  schema: Record<string, unknown>;
+}
+
+/**
+ * Every `schemas/skills/<skill>/<io>.schema.json`, with `$id` minted.
+ *
+ * The source files are authoritative for their *content*; the `$id` is
+ * **computed** from the declared `canonicalUrl` and overwritten here rather
+ * than trusted from the file. A hand-written identity is a string nothing
+ * checks, which is exactly how 44 of them came to be dead at once.
+ */
+export function buildSkillIoContracts(opts: SchemaExportOptions = {}): SkillIoContract[] {
+  const decl = readDeclaration(ROOT);
+  const base = (opts.baseUrl ?? decl?.canonicalUrl ?? "").replace(/\/+$/, "");
+  const dir = join(ROOT, "schemas", "skills");
+  if (!existsSync(dir)) return [];
+
+  const out: SkillIoContract[] = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (!e.isDirectory()) continue;
+    for (const f of readdirSync(join(dir, e.name))) {
+      if (!f.endsWith(".schema.json")) continue;
+      const io = f.slice(0, -".schema.json".length);
+      const source = join("schemas", "skills", e.name, f);
+      const schema = JSON.parse(readFileSync(join(ROOT, source), "utf-8")) as Record<string, unknown>;
+      out.push({
+        skill: e.name,
+        io,
+        source,
+        published: join("skills", e.name, f),
+        schema: {
+          ...schema,
+          // Absolute or absent, never relative and never composed by hand.
+          // Same rule the three documents above follow.
+          ...(base ? { $id: skillIoIri(base, e.name, io) } : {}),
+        },
+      });
+    }
+  }
+  return out.sort((a, b) => a.source.localeCompare(b.source));
+}
+
+/**
+ * Source files whose stored `$id` disagrees with where they are published.
+ *
+ * Reported rather than silently corrected on export, because a mismatch means
+ * somebody hand-edited an identity — and a generator that quietly papers over
+ * that is how the next 44 go bad without anyone seeing it.
+ */
+export function staleSkillIoIds(opts: SchemaExportOptions = {}): Array<{ source: string; stored: string; expected: string }> {
+  const bad: Array<{ source: string; stored: string; expected: string }> = [];
+  for (const c of buildSkillIoContracts(opts)) {
+    const expected = c.schema.$id as string | undefined;
+    if (expected === undefined) continue; // No canonicalUrl declared — nothing to check against.
+    const stored = JSON.parse(readFileSync(join(ROOT, c.source), "utf-8")).$id as string | undefined;
+    if (stored !== expected) bad.push({ source: c.source, stored: stored ?? "(none)", expected });
+  }
+  return bad;
+}
+
 if (import.meta.main) {
   const arg = (f: string): string | undefined => {
     const i = process.argv.indexOf(f);
@@ -142,5 +238,31 @@ if (import.meta.main) {
     writeFileSync(out, JSON.stringify(schema, null, 2) + "\n");
     console.log(`${relative(ROOT, out)}`);
     console.log(`  $id  ${schema.$id ?? "(none — no canonicalUrl declared)"}`);
+  }
+
+  // The per-skill I/O contracts, published at the `$id` each one claims.
+  const contracts = buildSkillIoContracts({ baseUrl });
+  for (const c of contracts) {
+    const out = join(outDir, c.published);
+    mkdirSync(dirname(out), { recursive: true });
+    writeFileSync(out, JSON.stringify(c.schema, null, 2) + "\n");
+  }
+  if (contracts.length > 0) {
+    console.log(`_kg/skills/  (${contracts.length} contract(s) across ${new Set(contracts.map((c) => c.skill)).size} skill(s))`);
+    console.log(`  $id  ${contracts[0].schema.$id ?? "(none — no canonicalUrl declared)"}  …`);
+  }
+
+  // `--check`: the source `$id`s agree with where they are published. Run in
+  // CI so a hand-edited identity is caught at the commit that introduces it,
+  // rather than at the fetch that finds a 403 months later.
+  if (process.argv.includes("--check")) {
+    const stale = staleSkillIoIds({ baseUrl });
+    if (stale.length > 0) {
+      console.error(`\n${stale.length} skill I/O schema(s) carry an $id that is not where they are published:`);
+      for (const b of stale) console.error(`  ✗ ${b.source}\n      stored   ${b.stored}\n      expected ${b.expected}`);
+      console.error("\nRun `bun run kg:schema` to rewrite them.");
+      process.exit(1);
+    }
+    console.log("\n✓ every skill I/O $id matches its published location");
   }
 }

@@ -1,14 +1,22 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/content-review/input.schema.json",
+  "$id": "https://litlfred.github.io/folio-assistant/kg/skills/content-review/input.schema.json",
   "title": "Content Review Input",
   "description": "Input schema for formal content review and approval workflow.",
   "type": "object",
-  "required": ["reviewType", "contentRef"],
+  "required": [
+    "reviewType",
+    "contentRef"
+  ],
   "properties": {
     "reviewType": {
       "type": "string",
-      "enum": ["l2-to-l3-gate", "l3-to-publish-gate", "change-assessment", "final-signoff"],
+      "enum": [
+        "l2-to-l3-gate",
+        "l3-to-publish-gate",
+        "change-assessment",
+        "final-signoff"
+      ],
       "description": "Type of review phase gate."
     },
     "contentRef": {

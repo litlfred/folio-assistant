@@ -1,10 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/latex-authoring/output.schema.json",
+  "$id": "https://litlfred.github.io/folio-assistant/kg/skills/latex-authoring/output.schema.json",
   "title": "LaTeX Authoring Output",
   "description": "Output schema for the latex-authoring skill.",
   "type": "object",
-  "required": ["outputFile", "buildStatus"],
+  "required": [
+    "outputFile",
+    "buildStatus"
+  ],
   "properties": {
     "outputFile": {
       "type": "string",
@@ -12,11 +15,17 @@
     },
     "buildStatus": {
       "type": "string",
-      "enum": ["success", "warnings", "errors"]
+      "enum": [
+        "success",
+        "warnings",
+        "errors"
+      ]
     },
     "warnings": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": {
+        "type": "string"
+      }
     },
     "pageCount": {
       "type": "integer",
