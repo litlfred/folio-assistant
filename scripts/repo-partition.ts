@@ -203,6 +203,28 @@ const RULES: Rule[] = [
       // importing the content vocabulary, so classifying it here adds no
       // wrong-direction edge — see schemas/agent-harness.ts.
       "schemas/agent-harness.ts",
+      // Roles, actors and the KG audit sidecar are harness-layer for the same
+      // reason and on the same terms: `role-graph.ts` imports only
+      // `namespaces.ts`, `kg-qa.ts` imports only zod. Neither touches the
+      // content vocabulary, so classifying them here adds no wrong-direction
+      // edge — and leaving them unclassified would have made `src/workflow/`
+      // and `src/tools/workflow.ts` read as harness → core.
+      "schemas/role-graph.ts",
+      "schemas/kg-qa.ts",
+      // The bean graph declares the harness's own work-plan store and imports
+      // only zod. It was already harness-layer by concept; classifying the
+      // scripts below is what made the edge to it visible, and the edge was
+      // never core's to own.
+      "schemas/bean-graph.ts",
+      // The scripts that read those graphs. All four were `unassigned`, which
+      // the tool's own report says not to read as clean: they are the work
+      // plan's fallback writer, the `.beans.yml` cross-check, the KG audit and
+      // the skill registry the audit and `check-workflow-refs` share. Every one
+      // is harness machinery, and none imports the content vocabulary.
+      "scripts/beans-fallback.ts",
+      "scripts/check-harness-dirs.ts",
+      "scripts/kg-audit.ts",
+      "scripts/known-skills.ts",
       // The platform namespace leaf. It must sit at or below the harness:
       // core may import the harness, the harness may not import core, so a
       // constant BOTH need cannot live in core without reintroducing the edge

@@ -41,6 +41,7 @@ import { complete, describe, startInstance } from "../workflow/instance.js";
 import { instanceId, listInstances, loadInstance, saveInstance } from "../workflow/store.js";
 import { applyWorkPlanOp } from "../workflow/bean-link.js";
 import { checkGate, loadRelaxations, validateRelaxations } from "../workflow/gate.js";
+import { readRoleGraph, type RoleGraph } from "../../schemas/role-graph.js";
 
 const WORKFLOW_SRC = join("docs", "workflows");
 
@@ -70,6 +71,27 @@ async function resolveModel(repoRoot: string, ref: string): Promise<ProcessModel
 
 export function registerWorkflowTools(server: McpServer, repoRoot: string): void {
   const root = resolve(repoRoot);
+
+  /**
+   * The role graph, so every step can say what the agent is acting AS.
+   *
+   * Read lazily and cached, and a read failure is swallowed to `undefined`
+   * rather than taking the tools down: an instance that declares no role graph
+   * is unmigrated, not broken, and the workflow interpreter predates roles.
+   * A graph that is present but malformed is `kg:audit`'s finding — it fails
+   * loudly there, which is where somebody can act on it.
+   */
+  let rolesCache: { graph: RoleGraph | undefined } | undefined;
+  const roles = (): RoleGraph | undefined => {
+    if (!rolesCache) {
+      try {
+        rolesCache = { graph: readRoleGraph(join(root, "skills")) };
+      } catch {
+        rolesCache = { graph: undefined };
+      }
+    }
+    return rolesCache.graph;
+  };
 
   server.tool(
     "workflow_list",
@@ -121,12 +143,12 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       if (existing) {
         return text(
           `An instance already exists for this subject — continuing it rather than ` +
-            `starting a second.\n\n${describe(model, existing)}`,
+            `starting a second.\n\n${describe(model, existing, roles())}`,
         );
       }
       const state = startInstance(model, { id, subject, bean });
       const path = saveInstance(root, state);
-      return text(`Started. State in \`${path.replace(`${root}/`, "")}\`.\n\n${describe(model, state)}`);
+      return text(`Started. State in \`${path.replace(`${root}/`, "")}\`.\n\n${describe(model, state, roles())}`);
     },
   );
 
@@ -141,7 +163,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       const state = loadInstance(root, instance);
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
       const model = await loadProcessModel(join(root, state.source.replace(`${root}/`, "")));
-      return text(describe(model, state));
+      return text(describe(model, state, roles()));
     },
   );
 
@@ -214,7 +236,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
         : undefined;
 
       return text(
-        describe(model, next) + (plan ? `\n\n  work plan: ${plan.summary}` : ""),
+        describe(model, next, roles()) + (plan ? `\n\n  work plan: ${plan.summary}` : ""),
       );
     },
   );
