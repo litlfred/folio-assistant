@@ -30,11 +30,17 @@
  *   bun run scripts/gen-docs-pages.ts --check    # fail if any page is stale
  */
 
-import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
 import { availableLocales } from "../content/pipeline/po-resolve.ts";
+import {
+  QA_FAMILY_LABEL,
+  readWitnessDoc,
+  type QaFamily,
+  type QaWitnessDoc,
+} from "../content/pipeline/qa-witness.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Platform documentation lives under `content/docs/`. It is NOT folio content
@@ -75,11 +81,27 @@ export interface QaSummary {
   na: number;
 }
 
+/**
+ * The state mark, and it has to say GOOD or BAD without a legend.
+ *
+ * `● ◐ ○ ·` shipped in #274 and was reported unreadable by the first person to
+ * use it: filled-vs-open circles encode a scale, but nothing in them says which
+ * end is the good one, and at 0.75rem `●` and `·` differ only in size.
+ *
+ * `✓ ! ✕` carry their meaning on their own, survive monochrome, and keep colour
+ * as reinforcement rather than as the message.
+ *
+ * **`unswept` has no mark at all — the icon is simply dulled.** Any glyph there
+ * is a claim about a check nobody ran, and the previous `·` read as a very
+ * small "pass". Absence of a mark, at reduced opacity, is the one rendering
+ * that cannot be mistaken for a verdict. The icon is still PRESENT, because a
+ * missing icon and a clean one look identical and only one of them is true.
+ */
 const QA_GLYPH: Record<QaState, string> = {
-  fail: "●",
-  warn: "◐",
-  pass: "○",
-  unswept: "·",
+  fail: "✕",
+  warn: "!",
+  pass: "✓",
+  unswept: "",
 };
 
 /**
@@ -94,33 +116,27 @@ const QA_GLYPH: Record<QaState, string> = {
  * honestly the same answer to the reader as "nobody has checked".
  */
 export function readQaSummary(blockDir: string, block: string): QaSummary | undefined {
-  const p = join(blockDir, `${block}.qa.json`);
-  if (!existsSync(p)) return undefined;
-  let doc: { criteria?: Record<string, Array<{ result?: string; severity?: string }>> };
-  try {
-    doc = JSON.parse(readFileSync(p, "utf-8"));
-  } catch {
-    return undefined;
-  }
-  const sum: QaSummary = { state: "pass", fail: 0, warn: 0, pass: 0, na: 0 };
-  for (const entries of Object.values(doc.criteria ?? {})) {
-    // The FIRST entry per criterion is the operative one — later entries are
-    // superseded reviews, and counting them all would double-report a verdict
-    // that was revised.
-    const e = entries?.[0];
-    if (!e) continue;
-    if (e.result === "fail") sum.fail++;
-    else if (e.result === "warn") sum.warn++;
-    else if (e.result === "pass") sum.pass++;
-    else sum.na++;
-  }
-  sum.state = sum.fail > 0 ? "fail" : sum.warn > 0 ? "warn" : sum.pass > 0 ? "pass" : "unswept";
-  return sum;
+  // Delegates to the family-generic reader so the badge and the panel it opens
+  // cannot disagree about a verdict. The badge predates the panel and keeps its
+  // four states: the panel's fifth outcome — a criterion the sidecar holds with
+  // no verdict recorded against it — counts here as `na`, which leaves every
+  // state this function has ever returned unchanged (a sidecar of nothing but
+  // `n/a` and `unknown` was `unswept` before and still is).
+  const doc = readWitnessDoc("block", join(blockDir, `${block}.md`), REPO_ROOT);
+  if (!doc) return undefined;
+  return {
+    state: doc.state,
+    fail: doc.counts.fail,
+    warn: doc.counts.warn,
+    pass: doc.counts.pass,
+    na: doc.counts.na + doc.counts.unknown,
+  };
 }
 
 const check = process.argv.includes("--check");
 let stale = 0;
 let written = 0;
+let qaWritten = 0;
 
 /**
  * Repo-root-relative path of the file a node is edited through.
@@ -148,20 +164,127 @@ function readBlock(page: WebPage, nodeId: string, block: string): string {
 }
 
 /**
- * The QA icon markup for a block, or "" when the node carries no block.
+ * Where a subject's published witness JSON lands, and the set actually written.
  *
- * A `<span>` rather than a link: there is nowhere useful to send a reader yet
- * (the sidecar is JSON), and a link that goes nowhere is worse than none. The
- * counts live in `title` so the state is readable without one.
+ * The sidecars themselves are not published: 14 of them are 392 KB, most of it
+ * evidence and hashes a reader never opens. What ships is the projection in
+ * `qa-witness.ts`, one file per (subject, family), fetched only when somebody
+ * clicks the icon.
  */
-function qaBadge(page: WebPage, block: string): string {
-  const q = readQaSummary(join(SRC_DIR, page.slug.replace(/\//g, "-")), block);
-  const state: QaState = q?.state ?? "unswept";
-  const title =
-    q === undefined
-      ? "QA: not swept — no sidecar for this block"
-      : `QA: ${q.fail} fail, ${q.warn} warn, ${q.pass} pass, ${q.na} n/a`;
-  return ` <span class="fa-qa-badge fa-qa-${state}" title="${title}">${QA_GLYPH[state]}</span>`;
+const QA_ASSET_DIR = join(OUT_DIR, "assets", "qa");
+const emittedQa = new Set<string>();
+
+/** Every published witness JSON currently on disk, for orphan detection. */
+function listQaAssets(dir: string = QA_ASSET_DIR): string[] {
+  if (!existsSync(dir)) return [];
+  const out: string[] = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) out.push(...listQaAssets(p));
+    else if (e.name.endsWith(".json")) out.push(p);
+  }
+  return out.sort();
+}
+
+/**
+ * Which QA families can apply to a subject, decided by what the subject IS.
+ *
+ * This is applicability, not availability — a `.bpmn` with no `kg-qa/` sidecar
+ * still gets a `KG ·` icon saying nobody has audited it, while a node holding
+ * only a rendered SVG gets no KG icon at all because a KG audit was never
+ * possible there. Collapsing those two into "no icon" is the false pass bean
+ * `g6yr` argued about, one level up: silence about a missing audit reads as
+ * "nothing to audit".
+ */
+function familiesFor(subjectPath: string): QaFamily[] {
+  if (subjectPath.endsWith(".md")) return ["block", "translation"];
+  if (/\.(bpmn|dmn)$/.test(subjectPath)) return ["kg"];
+  if (/\.(ts|py|rs)$/.test(subjectPath)) return ["script"];
+  return [];
+}
+
+/** What a subject is called in a "nobody has swept this" message. */
+function subjectNoun(subjectPath: string): string {
+  if (subjectPath.endsWith(".md")) return "block";
+  if (/\.(bpmn|dmn)$/.test(subjectPath)) return "diagram";
+  return "script";
+}
+
+function pageDir(page: WebPage): string {
+  return join(SRC_DIR, page.slug.replace(/\//g, "-"));
+}
+
+/**
+ * The counts line shared by the icon's tooltip and its accessible name.
+ *
+ * `n/a` and `unknown` are reported, never folded into the others: a criterion
+ * that did not apply and one the sidecar holds no verdict for are different
+ * facts, and both are the reader's business.
+ */
+function qaTitle(label: string, doc: QaWitnessDoc | undefined, noun: string): string {
+  if (!doc) return `${label}: not swept — no sidecar for this ${noun}`;
+  const c = doc.counts;
+  const parts = [`${c.fail} fail`, `${c.warn} warn`, `${c.pass} pass`, `${c.na} n/a`];
+  if (c.unknown > 0) parts.push(`${c.unknown} no verdict`);
+  return `${label}: ${parts.join(", ")} — open for witnesses`;
+}
+
+/**
+ * Icons for every family applicable to this node's subjects.
+ *
+ * A family with a sidecar is a `<button>` carrying the URL of its published
+ * projection; the panel is built in the browser from that JSON. A family
+ * without one is a `<span>`: there is nothing to open, and a control that does
+ * nothing when pressed is worse than a plain mark — the same argument the
+ * single-state icon shipped with, now that the others DO open.
+ */
+function qaIcons(page: WebPage, node: WebPageNode): string {
+  const subjects: string[] = [];
+  if (node.block) subjects.push(join(pageDir(page), `${node.block}.md`));
+  if (node.asset) subjects.push(join(REPO_ROOT, node.asset.source));
+
+  const out: string[] = [];
+  for (const subject of subjects) {
+    for (const family of familiesFor(subject)) {
+      const { tag, label } = QA_FAMILY_LABEL[family];
+      const doc = readWitnessDoc(family, subject, REPO_ROOT);
+      const state: QaState = doc?.state ?? "unswept";
+      const title = qaTitle(label, doc, subjectNoun(subject));
+      const glyph = QA_GLYPH[state];
+      const mark =
+        `<span class="fa-qa-tag">${tag}</span>` +
+        (glyph === "" ? "" : `<span class="fa-qa-glyph" aria-hidden="true">${glyph}</span>`);
+      if (!doc) {
+        out.push(
+          ` <span class="fa-qa-badge fa-qa-${state} fa-qa-fam-${family}" ` +
+            `title="${title}" aria-label="${title}">${mark}</span>`,
+        );
+        continue;
+      }
+      const rel = join(page.slug.replace(/\//g, "-"), `${node.id}.${family}.json`);
+      const abs = join(QA_ASSET_DIR, rel);
+      mkdirSync(dirname(abs), { recursive: true });
+      // Minified: these are fetched by the browser, never read as a diff, and
+      // the corpus sweep took the set from 35 files to 134. Indentation was 32%
+      // of 2.9 MB — a third of what every reader of the site would download for
+      // whitespace nobody looks at.
+      emit(abs, JSON.stringify(doc) + "\n", "qa");
+      emittedQa.add(abs);
+      // `relative_url` so the path survives the site's baseurl — `/folio-assistant`
+      // here, something else on a staging deploy. A hardcoded absolute path
+      // 404s on every deploy but one.
+      out.push(
+        ` <button type="button" class="fa-qa-badge fa-qa-${state} fa-qa-fam-${family}" ` +
+          `data-qa-family="${family}" data-qa-src="{{ '/assets/qa/${rel}' | relative_url }}" ` +
+          `aria-expanded="false" title="${title}" aria-label="${title}">${mark}</button>`,
+      );
+    }
+  }
+  if (out.length === 0) return "";
+  // One floated CONTAINER, not several floated chips. Floating each icon
+  // separately reverses their visual order (the first float lands rightmost),
+  // so the families would read right-to-left against the order this emits them.
+  return ` <span class="fa-qa-badges">${out.join("").trim()}</span>`;
 }
 
 function emitNode(page: WebPage, node: WebPageNode): string[] {
@@ -178,9 +301,9 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
 
   const target = editTarget(page, node);
   if (target) {
-    // The QA icon rides the same line as Edit: both are per-block affordances
-    // about THIS block, and a second row would separate them for no reason.
-    const qa = node.block ? qaBadge(page, node.block) : "";
+    // The QA icons ride the same line as Edit: both are per-node affordances
+    // about THIS node, and a second row would separate them for no reason.
+    const qa = qaIcons(page, node);
     out.push(
       `[${EDIT_GLYPH} Edit](${EDIT_BASE}/${target}){: .fa-node-edit title="Edit ${target}" }${qa}`,
     );
@@ -269,7 +392,7 @@ function renderPage(page: WebPage): string {
   return lines.join("\n").replace(/\n{3,}/g, "\n\n").trimEnd() + "\n";
 }
 
-function emit(path: string, content: string): void {
+function emit(path: string, content: string, kind: "page" | "qa" = "page"): void {
   if (check) {
     const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
     if (current !== content) {
@@ -279,7 +402,8 @@ function emit(path: string, content: string): void {
     return;
   }
   writeFileSync(path, content);
-  written++;
+  if (kind === "qa") qaWritten++;
+  else written++;
 }
 
 if (!existsSync(SRC_DIR)) {
@@ -320,9 +444,28 @@ for (const slug of slugs) {
   console.log(`  ${check ? "·" : "✓"} ${slug}.md (${page.nodes.length} nodes)`);
 }
 
+// A subject that loses its sidecar — or a page that loses a node — must lose its
+// published projection too. Left behind, the file keeps serving verdicts for
+// something that no longer exists, and nothing else would ever notice: the icon
+// is gone, so nobody clicks it and nobody sees it is wrong.
+for (const orphan of listQaAssets()) {
+  if (emittedQa.has(orphan)) continue;
+  if (check) {
+    console.error(`  ✗ ${orphan} is orphaned`);
+    stale++;
+  } else {
+    unlinkSync(orphan);
+    console.log(`  - removed orphaned ${orphan}`);
+  }
+}
+
 if (check && stale > 0) {
   console.error(`\n${stale} page(s) stale — run: bun run scripts/gen-docs-pages.ts`);
   process.exit(1);
 }
-console.log(check ? "\ngenerated pages are up to date" : `\nWrote ${written} page(s) to ${OUT_DIR}`);
+console.log(
+  check
+    ? "\ngenerated pages are up to date"
+    : `\nWrote ${written} page(s) to ${OUT_DIR} and ${qaWritten} QA witness file(s) to ${QA_ASSET_DIR}`,
+);
 }

@@ -860,27 +860,94 @@
  * look past, while a failing QA verdict is the one thing on the row a reader
  * might want to notice.
  *
- * Colour is not the only channel. Each state has its own glyph — ● fail,
- * ◐ warn, ○ pass, · unswept — so the badge survives monochrome, a colour-vision
- * deficiency, and the theme's dark mode, and the `title` carries the counts in
- * words. That is deliberate rather than defensive: a status icon whose only
- * difference is hue is unreadable to a sizable fraction of readers.
+ * Colour is not the only channel. Each state carries its own mark — ✕ fail,
+ * ! warn, ✓ pass, and nothing at all for unswept — so the badge survives
+ * monochrome, a colour-vision deficiency, and the theme's dark mode, and the
+ * `title` carries the counts in words. That is deliberate rather than
+ * defensive: a status icon whose only difference is hue is unreadable to a
+ * sizable fraction of readers.
+ *
+ * The marks replace `● ◐ ○ ·`, which shipped in #274 and was reported
+ * unreadable: filled-vs-open circles encode a scale without saying which end is
+ * good, and at this size `●` and `·` differ only in size.
  *
  * `unswept` is a real state, shown rather than omitted. A missing icon and a
  * clean one look identical, and only one of them is true. */
+/* The row stays IN FLOW, directly under the heading, while `.fa-node-edit`
+ * floats up beside it.
+ *
+ * Floating this too was tried and collides: both are floated right with the
+ * same -2.2rem pull, but a row of chips is taller than a one-line link, so the
+ * boxes overlap and the second family's icon lands under the word "Edit" —
+ * visible in the first screenshot of this panel. In flow it cannot collide with
+ * anything, it needs no breakpoint override, and it is in the same place on a
+ * phone as on a desktop.
+ *
+ * One container, not a float per chip: floated chips reverse their visual order
+ * (the first float lands rightmost), so `QA TR KG` would read backwards against
+ * the order the generator emits them in. */
+.fa-qa-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  margin: 0.1em 0 0.2em;
+}
+
 .fa-qa-badge {
-  float: right;
-  margin: -2.2rem 0.35em 0 0;
-  padding: 0.05em 0.4em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  /* 2.2em is a deliberate floor, not a look: these are the smallest targets on
+   * the page and the reader this was built for types with difficulty. */
+  min-height: 2.2em;
+  padding: 0.1em 0.45em;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: none;
+  font-family: inherit;
   font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
-  cursor: help;
+  line-height: 1.2;
+  color: inherit;
 }
+
+/* A span cannot be opened; a button can. `help` on something clickable is a
+ * lie about what pressing it does. */
+span.fa-qa-badge { cursor: help; }
+button.fa-qa-badge { cursor: pointer; }
+
+button.fa-qa-badge:hover,
+button.fa-qa-badge:focus-visible {
+  border-color: currentcolor;
+  background: rgba(128, 128, 128, 0.14);
+}
+
+button.fa-qa-badge[aria-expanded="true"] {
+  border-color: currentcolor;
+  background: rgba(128, 128, 128, 0.22);
+}
+
+button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
+
+/* The family tag rides INSIDE the icon. Four unlabelled glyphs are a legend
+ * nobody has, and an icon distinguished only by hue fails the same readers the
+ * state glyphs exist for. */
+.fa-qa-tag {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+.fa-qa-glyph { font-size: 0.8rem; }
 
 .fa-qa-fail { color: #b3261e; opacity: 1; }
 .fa-qa-warn { color: #8a6100; opacity: 1; }
 .fa-qa-pass { color: #1b5e20; opacity: 0.55; }
-.fa-qa-unswept { color: currentcolor; opacity: 0.3; }
+ /* No mark, just a dulled tag. A glyph here is a claim about a check nobody
+  * ran, and the `·` it replaces read as a very small "pass". */
+.fa-qa-unswept { color: currentcolor; opacity: 0.38; }
+.fa-qa-unswept .fa-qa-tag { font-weight: 600; }
 
 /* Dark mode: the light-mode reds and greens sit too dark on a dark surface to
  * meet contrast. Guarded the same way the rest of this file guards its dark
@@ -895,8 +962,209 @@
 :root[data-theme="dark"] .fa-qa-warn { color: #ffcc66; }
 :root[data-theme="dark"] .fa-qa-pass { color: #a5d6a7; }
 
-/* Same breakpoint rule as the edit link: below the theme's md breakpoint the
- * heading wraps and a floated badge lands on the text. */
+
+
+/* ── QA witness panel ──────────────────────────────────────────────────────
+ *
+ * What opens under an icon: the sidecar's criteria worst-first, each expanding
+ * to every witness that ruled on it. Inline and in the page flow rather than a
+ * drawer or a modal — full-width rows are the largest targets available, and
+ * nothing here can be closed by a mis-click outside it.
+ *
+ * Three things the colours must NOT be the only carrier of, because they are
+ * the whole content of the panel: the verdict (carried as a word — `fail`,
+ * `no verdict`), the witness kind (`script` / `agent` / `human`), and
+ * freshness (`current` / `STALE` / `currency unknown`). Every chip is
+ * labelled; hue only reinforces. */
+.fa-qa-panel {
+  clear: both;
+  margin: 0.6em 0 1.4em;
+  padding: 0.8em 1em;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-left: 4px solid rgba(128, 128, 128, 0.55);
+  border-radius: 6px;
+  background: rgba(128, 128, 128, 0.06);
+  font-size: 0.82rem;
+}
+
+.fa-qa-panel:focus-visible { outline: 2px solid currentcolor; outline-offset: 2px; }
+
+.fa-qa-panel-fail { border-left-color: #b3261e; }
+.fa-qa-panel-warn { border-left-color: #8a6100; }
+.fa-qa-panel-pass { border-left-color: #1b5e20; }
+.fa-qa-panel-error { border-left-color: #b3261e; }
+
+.fa-qa-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.6em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.fa-qa-subject { font-family: var(--fa-mono, ui-monospace, monospace); font-size: 0.78rem; }
+.fa-qa-counts { opacity: 0.75; font-variant-numeric: tabular-nums; }
+.fa-qa-sidecar-link { font-size: 0.72rem; font-family: var(--fa-mono, ui-monospace, monospace); }
+.fa-qa-close { margin-left: auto; min-height: 2.2em; padding: 0.1em 0.6em; cursor: pointer; }
+
+.fa-qa-crit-list { margin: 0; padding: 0; list-style: none; }
+.fa-qa-crit-item { border-bottom: 1px solid rgba(128, 128, 128, 0.2); }
+
+/* The whole row is the target, not the caret. */
+.fa-qa-crit,
+.fa-qa-more {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  width: 100%;
+  min-height: 2.6em;
+  padding: 0.3em 0.2em;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fa-qa-crit:hover,
+.fa-qa-crit:focus-visible,
+.fa-qa-more:hover,
+.fa-qa-more:focus-visible { background: rgba(128, 128, 128, 0.14); }
+
+.fa-qa-more { margin-top: 0.4em; opacity: 0.85; }
+.fa-qa-caret { width: 1em; flex: none; opacity: 0.7; }
+.fa-qa-crit-id { flex: 1 1 auto; font-size: 0.76rem; word-break: break-word; }
+.fa-qa-wcount { flex: none; opacity: 0.7; font-size: 0.72rem; }
+
+.fa-qa-chip {
+  flex: none;
+  padding: 0.1em 0.45em;
+  border: 1px solid currentcolor;
+  border-radius: 3px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.fa-qa-res-fail { color: #b3261e; }
+.fa-qa-res-warn { color: #8a6100; }
+.fa-qa-res-pass { color: #1b5e20; opacity: 0.8; }
+.fa-qa-res-unknown { color: #6b21a8; }
+.fa-qa-res-n\/a { opacity: 0.55; }
+.fa-qa-sev-critical { color: #b3261e; }
+.fa-qa-sev-major { color: #8a6100; }
+.fa-qa-sev-minor { opacity: 0.7; }
+.fa-qa-locale { opacity: 0.85; }
+
+.fa-qa-crit-body { padding: 0.2em 0 0.8em 1.45em; }
+
+.fa-qa-witness {
+  margin: 0.5em 0;
+  padding: 0.5em 0.7em;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 5px;
+  background: rgba(128, 128, 128, 0.05);
+}
+
+.fa-qa-witness-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45em;
+  margin-bottom: 0.4em;
+}
+
+.fa-qa-witness-id { font-size: 0.74rem; word-break: break-all; }
+.fa-qa-witness-ver { opacity: 0.7; font-size: 0.72rem; }
+
+/* A human ruling outranks an agent's, which outranks a script's; the border
+ * weight says so at a glance while the chip says so in words. */
+.fa-qa-kind-human { border-left: 3px solid #1b5e20; }
+.fa-qa-kind-agent { border-left: 3px solid #6b21a8; }
+.fa-qa-kind-script { border-left: 3px solid rgba(128, 128, 128, 0.6); }
+
+.fa-qa-fresh-fresh { color: #1b5e20; }
+/* Verified on every file, with a derived input left unchecked. Neither green
+ * nor alarming: it is a true statement about how much was established. */
+.fa-qa-fresh-partial { color: #4a5568; }
+/* `stale` and `unknown` are BOTH marked. A verdict whose currency could not be
+ * established is not reported as current — that is the whole freshness rule. */
+.fa-qa-fresh-stale { color: #b3261e; }
+.fa-qa-fresh-unknown { color: #8a6100; }
+
+.fa-qa-field-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 0.15em 1em;
+}
+
+.fa-qa-field { display: flex; gap: 0.4em; align-items: baseline; }
+.fa-qa-field-label {
+  flex: none;
+  min-width: 9.5rem;
+  opacity: 0.7;
+  font-size: 0.7rem;
+  text-transform: lowercase;
+}
+.fa-qa-field-value { word-break: break-word; }
+.fa-qa-mono { font-family: var(--fa-mono, ui-monospace, monospace); font-size: 0.74rem; }
+
+/* An absent value is PRINTED as "not recorded". A blank cell reads as a value
+ * the reader failed to notice; this reads as a fact about the sidecar. */
+.fa-qa-absent { opacity: 0.65; font-style: italic; }
+
+.fa-qa-changed { margin: 0.3em 0; }
+.fa-qa-changed ul { margin: 0.1em 0 0 1.2em; padding: 0; }
+.fa-qa-changed li { font-size: 0.75rem; }
+
+.fa-qa-evidence { margin: 0.3em 0 0.6em; }
+.fa-qa-evidence pre {
+  margin: 0.2em 0;
+  padding: 0.4em 0.6em;
+  overflow-x: auto;
+  border-radius: 4px;
+  background: rgba(128, 128, 128, 0.12);
+  font-size: 0.72rem;
+  white-space: pre-wrap;
+}
+
+.fa-qa-notes { margin: 0.4em 0 0; font-size: 0.76rem; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .fa-qa-res-fail,
+  :root:not([data-theme="light"]) .fa-qa-sev-critical,
+  :root:not([data-theme="light"]) .fa-qa-fresh-stale { color: #ff8a80; }
+  :root:not([data-theme="light"]) .fa-qa-res-warn,
+  :root:not([data-theme="light"]) .fa-qa-sev-major,
+  :root:not([data-theme="light"]) .fa-qa-fresh-unknown { color: #ffcc66; }
+  :root:not([data-theme="light"]) .fa-qa-res-pass,
+  :root:not([data-theme="light"]) .fa-qa-fresh-fresh { color: #a5d6a7; }
+  :root:not([data-theme="light"]) .fa-qa-fresh-partial { color: #b8c2cc; }
+  :root:not([data-theme="light"]) .fa-qa-res-unknown { color: #d8b4fe; }
+  :root:not([data-theme="light"]) .fa-qa-kind-agent { border-left-color: #d8b4fe; }
+  :root:not([data-theme="light"]) .fa-qa-kind-human { border-left-color: #a5d6a7; }
+}
+
+:root[data-theme="dark"] .fa-qa-res-fail,
+:root[data-theme="dark"] .fa-qa-sev-critical,
+:root[data-theme="dark"] .fa-qa-fresh-stale { color: #ff8a80; }
+:root[data-theme="dark"] .fa-qa-res-warn,
+:root[data-theme="dark"] .fa-qa-sev-major,
+:root[data-theme="dark"] .fa-qa-fresh-unknown { color: #ffcc66; }
+:root[data-theme="dark"] .fa-qa-res-pass,
+:root[data-theme="dark"] .fa-qa-fresh-fresh { color: #a5d6a7; }
+:root[data-theme="dark"] .fa-qa-fresh-partial { color: #b8c2cc; }
+:root[data-theme="dark"] .fa-qa-res-unknown { color: #d8b4fe; }
+:root[data-theme="dark"] .fa-qa-kind-agent { border-left-color: #d8b4fe; }
+:root[data-theme="dark"] .fa-qa-kind-human { border-left-color: #a5d6a7; }
+
+/* Below the theme's md breakpoint the field grid collapses to one column so a
+ * label and its value stay on one line. */
 @media (max-width: 43.99rem) {
-  .fa-qa-badge { float: none; margin: 0 0 0 0.35em; }
+  .fa-qa-field-grid { grid-template-columns: 1fr; }
+  .fa-qa-field-label { min-width: 8rem; }
 }

@@ -163,6 +163,102 @@ On every content change, the pipeline checks whether any official translation's
 `sourceHash` no longer matches the source `.md`. Stale translations are flagged
 in the viewer and in `translation_status` output.
 
+## Per-block translation QA, and the agentic round trip
+
+Two sweeps, two subjects, and confusing them is how a site reports a
+translation nobody measured.
+
+- **`translation-qa-sweep.ts`** measures the docs **site**: how much of each
+  page exists in each language. It writes `docs/_data/translation-qa.json` and
+  feeds the badge under a page title.
+- **`translation-block-qa.ts`** measures a **block**, one sidecar per
+  `(block, locale)`: `<stem>.<locale>.translation-qa.json`, in the
+  `block-qa/v1` entry shape, which is what the per-block `TR` icon opens.
+
+```sh
+bun run translation:block-qa          # write the sidecars
+bun run translation:block-qa:check    # fail if any is stale
+```
+
+### What a script may claim, and what it may not
+
+Three criteria are deterministic and carry a `script` witness:
+`translation-coverage`, `translation-terms-preserved` (acronyms, numbers and
+URLs that must survive translation and did not — the class a fluent
+mistranslation passes) and `translation-not-echo` (a "translation" identical to
+its source; a *warn*, because that is right for a proper noun and wrong for a
+sentence).
+
+`translation-semantic-roundtrip` is written **with no entry**. A round trip
+asks whether the MEANING survived, and that needs a translator that has not
+seen the original. The only back-translation available to a script here is the
+PO's own `msgid→msgstr` map read backwards, which returns the source exactly,
+always: a perfect similarity score measuring the lookup table. **Do not fill
+this criterion mechanically.** A green tick nobody should trust is worse than a
+gap that says it is a gap — a reader who sees the tick stops asking.
+
+> The page-level numbers already show that failure from the other side.
+> `translations/fr/index.ts` records
+> `roundTripQA: { fail: 21, total: 36, method: "jaccard-word-overlap" }`, and
+> its own `description` explains those failures away as expected "with limited
+> vocabulary back-translator". A measurement whose author has to explain it away
+> is about the instrument, not the translation.
+
+### The agentic round trip — a PAIR of agents, and the separation is the measurement
+
+| agent | is given | produces |
+|---|---|---|
+| **back-translator** | the target-language text, and nothing else | an independent rendering back into the source language |
+| **adjudicator** | the original and the back-translation, never the target text | `pass` / `warn` / `fail`, with each drift named |
+
+Three rules make it a measurement rather than a ritual:
+
+1. **Neither agent sees what would let it shortcut.** A back-translator shown
+   the English writes the English back and the check passes vacuously. An
+   adjudicator shown the French can talk itself into any reading of the
+   back-translation.
+2. **The back-translator must use no tools, and must say so.** The source is in
+   the repository; an agent with filesystem access can find it, and then the
+   verdict measures its search. Ask for a `TOOLS_USED` line and record the
+   answer.
+3. **One agent doing both halves is not this check.** It compares a text with
+   its own paraphrase of itself.
+
+Tell the adjudicator explicitly what is *not* drift — synonyms, articles,
+re-ordering — and what is: a claim added, dropped, weakened, strengthened or
+reversed; a term of art swapped for something that means a different thing; a
+named entity or a quantifier moved. Without that, a round trip degenerates into
+a style review, and every translation "fails".
+
+Record the result with:
+
+```sh
+bun run content/pipeline/translation-roundtrip.ts --payload <file.json>
+```
+
+It writes **both** agents as witnesses. The adjudicator's entry carries the
+verdict and leads the criterion (the first entry is the operative one
+everywhere in this repo); the back-translator's sits behind it with
+`result: "n/a"` and the back-translation itself in `notes`, because a reader
+asking "on what basis?" needs the intermediate text and a reader asking "who
+did this?" needs both names. `agent_model` is optional — absent renders as
+"not recorded" in the panel rather than as a blank.
+
+### Two traps this process has already sprung
+
+**A script sweep must not clobber an agent's verdict.** `translation-block-qa`
+writes `translation-semantic-roundtrip: []` on every run. Before
+`mergeCriteria`, the next unrelated re-run deleted the round trip a pair of
+agents had produced, silently and with nothing in the output to say so. The
+rule: **a sweep replaces only entries whose reviewer is itself**, and carries
+everything else through.
+
+**The verdict is hashed to the text it was about.** The entries hash the `.md`,
+the `.ts` and the `.po`, so editing the source stales every locale's round trip
+and editing a translation stales that locale's. This matters more for an agent
+ruling than a script one: nobody can cheaply re-run it, so an agent verdict is
+exactly the kind that quietly outlives its subject.
+
 ## Automatic badge rendering
 
 Translation badges are **automatically rendered** on every docs page by
