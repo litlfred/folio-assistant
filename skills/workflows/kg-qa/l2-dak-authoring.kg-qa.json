@@ -17,33 +17,8 @@
       "findings": []
     },
     "skill-servable": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Personas",
-          "detail": "names skill \"l2-dak-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Bpmn",
-          "detail": "names skill \"bpmn-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Dmn",
-          "detail": "names skill \"dmn-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_DataDict",
-          "detail": "names skill \"l2-dak-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Indicators",
-          "detail": "names skill \"l2-dak-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Terminology",
-          "detail": "names skill \"terminology-management\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -71,8 +46,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 7,
+    "fail": 0,
     "n/a": 1,
     "unknown": 0
   }

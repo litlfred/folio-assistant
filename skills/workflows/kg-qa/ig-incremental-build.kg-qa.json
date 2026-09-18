@@ -17,37 +17,8 @@
       "findings": []
     },
     "skill-servable": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Restore",
-          "detail": "names skill \"ig-publication\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_FullBuild",
-          "detail": "names skill \"ig-publication\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Sushi",
-          "detail": "names skill \"l3-fhir-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Validate",
-          "detail": "names skill \"fhir-validation\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Site",
-          "detail": "names skill \"ig-publication\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Qa",
-          "detail": "names skill \"quality-control\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Deploy",
-          "detail": "names skill \"ig-publication\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -108,8 +79,8 @@
     }
   },
   "totals": {
-    "pass": 5,
-    "fail": 2,
+    "pass": 6,
+    "fail": 1,
     "n/a": 1,
     "unknown": 0
   }

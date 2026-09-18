@@ -23,9 +23,12 @@
  * A file with no manifest entry is unreachable; that check is hard.
  *
  * A manifest entry with no skill behind it is a dangling reference the registry
- * will publish. That direction was a ratchet over 19 pinned entries. Bean
- * `nup0` resolved them, and the resolution changed what the check MEANS:
+ * will publish. **19 when this test was written, then 8, now 0**, and the two
+ * steps down had different causes worth keeping apart.
  *
+ * Bean `x180` wrote the eleven missing instruction bodies. Bean `nup0` resolved
+ * the remaining eight — and found that the check itself had been asking the
+ * wrong question. *
  * **"A skill exists" was two different questions.** This file asked whether
  * `<package>/<name>.md` was present. `scripts/known-skills.ts` — extracted
  * precisely so checkers could not disagree about this — also counts
@@ -39,10 +42,28 @@
  * repository is the defect; the checker that disagreed with the shared one was
  * this file.
  *
- * What remained after that were eight real entries, all fixed rather than
- * pinned: four were a completed rename whose manifest never moved, one claimed
- * another package's skill, and three named skills that `git log` shows were
- * never added in any commit.
+ * What remained were eight entries, all FIXED rather than pinned: four were a
+ * completed rename whose manifest never moved, one claimed another package's
+ * skill, and three named skills that `git log --diff-filter=A` shows were never
+ * added in any commit.
+ *
+ * ## One reading was overturned, and the evidence is worth recording
+ *
+ * The 8-entry version of this list called `authoring-document` a deliberate
+ * **bundle manifest** — a package that legitimately lists skills held
+ * elsewhere — and treated resolving it as a modelling question.
+ *
+ * It is not a pattern this repository has. Measured across all six packages:
+ * every other one lists **exactly** what it holds, `folio-document-adapter`
+ * held the four bodies with **no manifest of its own**, and both
+ * `known-skills.ts` and `gen-skill-docs.ts` list `folio-document-adapter` as a
+ * live package while neither mentions `authoring-document`. "Bundle manifest"
+ * appears nowhere in the codebase outside that note.
+ *
+ * So it was a rename whose manifest never moved, and consolidating it makes the
+ * corpus uniform: after `nup0`, **no package claims a skill it does not hold**.
+ * If bundling is wanted as a real concept, it needs a field that says so rather
+ * than an empty directory that looks like one.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
@@ -80,7 +101,6 @@ function packages(): Array<{ name: string; dir: string; listed: string[] }> {
  * check being loosened.
  */
 const KNOWN_DANGLING: readonly string[] = [];
-
 describe("skill package manifests cover the package", () => {
   test("there are packages to check — otherwise this suite proves nothing", () => {
     // Without this, a rename of `skills/` turns every assertion below into a

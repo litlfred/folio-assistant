@@ -170,7 +170,7 @@ the FULL autonomous merge pipeline:
   `merge_method: "rebase"` per AGENTS.md §Branch + PR workflow rule 7
 - **Phase 5**: Post-merge sibling notification
 
-See [`.claude/skills/local/prepare-merge-auto.md`](prepare-merge-auto.md)
+See [`skills/folio-core/prepare-merge-auto.md`](prepare-merge-auto.md)
 for the full workflow specification.
 
 **Note**: the previous §4 + §5 logic (manual review-comment triage +
