@@ -59,6 +59,22 @@ jobs:
   stage:
     if: github.event.action != 'closed'
     runs-on: ubuntu-latest
+    # Serialise on the CONTENDED RESOURCE, not on the branch.
+    #
+    # The workflow-level group above is `staging-<branch>`, which serialises
+    # runs WITHIN one branch. But every branch's run pushes to the SAME
+    # `gh-pages` ref, so runs from different branches were unserialised and
+    # raced. Measured 2026-09-18: three staging runs inside one minute
+    # (`festive-galileo`, `nup0-manifests`, `ecstatic-goldberg`); the third lost
+    # its push with `! [rejected] gh-pages -> gh-pages (fetch first)` after
+    # building the whole site. Bean `folio-assistant-eoix`.
+    #
+    # `cancel-in-progress: false` is load-bearing. Making the WORKFLOW-level
+    # group a constant instead would cancel other branches' in-flight staging,
+    # trading a rare lost push for routinely missing previews. Here we queue.
+    concurrency:
+      group: gh-pages-push
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -326,7 +342,18 @@ jobs:
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
 
+      # The queue above covers staging-vs-staging. It does NOT cover the five
+      # OTHER workflows that push to `gh-pages` — blueprint, discoverability-docs,
+      # docs-site, lean_ci and publish — because a concurrency group only
+      # serialises the jobs that name it, and none of them do. So the push is
+      # also retried once: the action re-fetches `gh-pages` on the second run,
+      # which is exactly what the rejection asked for.
+      #
+      # `continue-on-error` on the first attempt only. If the retry fails too,
+      # it fails the job — a lost staging deploy must stay visible.
       - name: Deploy to gh-pages/STAGING/<slug>
+        id: deploy
+        continue-on-error: true
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -335,6 +362,17 @@ jobs:
           publish_branch: gh-pages
           keep_files: true
           commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }}'
+
+      - name: Retry deploy (another workflow pushed to gh-pages first)
+        if: steps.deploy.outcome == 'failure'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          destination_dir: STAGING/${{ steps.slug.outputs.slug }}
+          publish_branch: gh-pages
+          keep_files: true
+          commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }} (retry)'
 
       - name: Comment staging URL on PR
         if: github.event_name == 'pull_request'
@@ -380,6 +418,11 @@ jobs:
   cleanup:
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
+    # Same shared ref, so the same queue — a cleanup racing a stage is the
+    # identical defect, and this job pushes to `gh-pages` too.
+    concurrency:
+      group: gh-pages-push
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -423,7 +466,24 @@ jobs:
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add -A "STAGING/$SLUG"
             git commit -m "staging(cleanup): remove STAGING/$SLUG (PR #${{ github.event.pull_request.number }} closed)" || true
-            git push origin gh-pages
+            # Same race as the deploy above, and the same reason a queue is not
+            # enough: five other workflows push to `gh-pages` without joining
+            # it. Rebase and retry rather than losing the cleanup — our commit
+            # only removes one STAGING/ directory, so it rebases onto whatever
+            # landed first without touching it.
+            for attempt in 1 2 3; do
+              if git push origin gh-pages; then
+                echo "pushed on attempt $attempt"
+                break
+              fi
+              if [ "$attempt" = 3 ]; then
+                echo "::error::could not push cleanup after 3 attempts"
+                exit 1
+              fi
+              echo "push rejected; rebasing onto origin/gh-pages and retrying"
+              git pull --rebase origin gh-pages
+              sleep $((attempt * 5))
+            done
             echo "Cleaned up STAGING/$SLUG"
           else
             echo "No staging directory found for $SLUG (already cleaned up)"

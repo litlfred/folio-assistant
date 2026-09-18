@@ -1,10 +1,11 @@
 ---
 # folio-assistant-eoix
 title: 'feature-staging races on gh-pages: concurrency group keyed on branch, not the shared ref'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-18T22:33:31Z
-updated_at: 2026-09-18T22:33:31Z
+updated_at: 2026-09-18T23:11:23Z
 ---
 
 
@@ -55,3 +56,31 @@ cancels superseded runs of the same branch.
 
 Check the same defect in the `cleanup` job, which also runs a bare
 `git push origin gh-pages` (feature-staging.yml:426) and is equally unguarded.
+
+## Summary of Changes
+
+**The bean under-counted the contention: SIX workflows push to `gh-pages`,
+not one** — `blueprint`, `discoverability-docs`, `docs-site`, `feature-staging`,
+`lean_ci` and `publish`. That changes what a fix can claim, because a GitHub
+concurrency group only serialises the jobs that *name* it. Adding the group to
+`feature-staging` alone cannot serialise the ref.
+
+So both halves, and each covers what the other cannot:
+
+1. **Job-level `concurrency: {group: gh-pages-push, cancel-in-progress: false}`**
+   on `stage` and `cleanup`. This fixes the *observed* failure, which was
+   staging-vs-staging: three runs of this one workflow inside a minute.
+   `cancel-in-progress: false` is load-bearing — making the workflow-level
+   group a constant instead would cancel sibling branches' in-flight staging,
+   trading a rare lost push for routinely missing previews.
+2. **One retry on the push.** This is what covers the other five workflows,
+   which will not be in the queue. The deploy step takes `id` +
+   `continue-on-error`, and a second step re-runs it on failure — the action
+   re-fetches `gh-pages`, which is what the rejection asked for. A retry
+   failure still fails the job: a lost staging deploy must stay visible. The
+   `cleanup` job's bare `git push` gets a 3-attempt rebase loop, safe because
+   its commit only removes one `STAGING/` directory.
+
+**Not done, and it is the user's call:** bringing the other five workflows into
+the same group would serialise the ref completely. It touches five CI files
+that this bean never measured, so it is recorded rather than done.
