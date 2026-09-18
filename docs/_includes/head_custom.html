@@ -60,7 +60,7 @@
   "translationStatus": "{{ page.translation_status | default: '' }}",
   "translationSource": "{{ page.translation_source | default: '' }}",
   "supportedLocales": {{ site.translation_locales | default: '["ar","zh","en","fr","ru","es"]' }},
-  "availableLocales": {{ page.available_locales | default: '[]' }},
+  "availableLocales": {{ page.available_locales | jsonify | default: '[]' }},
   "qa": {
     "pass": {{ page.qa_translation_pass | default: 0 }},
     "warn": {{ page.qa_translation_warn | default: 0 }},

@@ -91,12 +91,14 @@
     btn.innerHTML = GLOBE_GLYPH;
 
     // Horizontal language bar — shows all 6 UN languages
+    // z-index 9999 to sit above the search box. Opens upward (bottom:100%)
+    // to avoid being clipped by the sidebar's constrained height.
     var bar = el("div", {
       class: "fa-lang-bar",
       "data-open": "false",
-      style: "display:none;position:absolute;left:0;top:100%;" +
+      style: "display:none;position:absolute;left:0;bottom:100%;margin-bottom:4px;" +
              "background:#1e293b;border:1px solid #475569;border-radius:6px;" +
-             "padding:4px 6px;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,0.3);" +
+             "padding:4px 6px;z-index:9999;box-shadow:0 -4px 12px rgba(0,0,0,0.3);" +
              "white-space:nowrap;"
     });
 
@@ -159,6 +161,74 @@
     wrap.appendChild(btn);
     wrap.appendChild(bar);
     return btn;
+  }
+
+  /**
+   * Per-page language bar — always visible inline in the main content area.
+   * Shows all 6 UN languages as horizontal tabs. Available translations are
+   * clickable links; unavailable are greyed-out disabled spans.
+   * Does NOT change the global locale (that's the sidebar globe's job).
+   */
+  function mountPageLanguageBar() {
+    var meta = getTranslationMeta();
+    var currentLang = (meta && meta.lang) || "en";
+    var available = (meta && meta.availableLocales) || [];
+    var supported = ["ar", "zh", "en", "fr", "ru", "es"];
+    var path = window.location.pathname;
+    var basePath = deriveBasePath(path, currentLang);
+
+    var mainContent = document.querySelector(".main-content, #main-content");
+    if (!mainContent) return;
+
+    // Find the first h1 to place the bar after it
+    var h1 = mainContent.querySelector("h1");
+    var insertTarget = h1 ? h1.nextSibling : mainContent.firstChild;
+
+    var container = el("div", {
+      class: "fa-page-lang-bar",
+      style: "display:inline-flex;align-items:center;gap:4px;" +
+             "margin:0.3em 0 0.8em;padding:5px 10px;" +
+             "background:rgba(128,128,128,0.12);border-radius:6px;" +
+             "font-size:0.82rem;"
+    });
+
+    // Globe emoji
+    var globe = el("span", {
+      style: "font-size:1.1em;margin-right:2px;",
+      title: "Available translations for this page"
+    }, "\uD83C\uDF10");
+    container.appendChild(globe);
+
+    for (var i = 0; i < supported.length; i++) {
+      var loc = supported[i];
+      var isAvailable = loc === "en" || available.indexOf(loc) !== -1;
+      var isCurrent = loc === currentLang;
+
+      var tab = el(isAvailable ? "a" : "span", {
+        href: isAvailable ? localePath(basePath, loc) : undefined,
+        title: isAvailable
+          ? LOCALE_NAMES[loc]
+          : LOCALE_NAMES[loc] + " \u2014 not yet translated",
+        style: "display:inline-block;padding:2px 7px;border-radius:3px;" +
+               "text-decoration:none;font-size:0.8rem;" +
+               "transition:background 0.15s;" +
+               (isCurrent
+                 ? "background:#3b82f6;color:#fff;font-weight:bold;"
+                 : isAvailable
+                   ? "color:#3b82f6;cursor:pointer;"
+                   : "color:#94a3b8;cursor:default;opacity:0.4;")
+      }, loc.toUpperCase());
+
+      if (isAvailable && !isCurrent) {
+        (function (link) {
+          link.addEventListener("mouseenter", function () { link.style.background = "rgba(59,130,246,0.1)"; });
+          link.addEventListener("mouseleave", function () { link.style.background = ""; });
+        })(tab);
+      }
+      container.appendChild(tab);
+    }
+
+    mainContent.insertBefore(container, insertTarget);
   }
 
   /* ── Colour scheme ───────────────────────────────────────────────────── */
@@ -865,6 +935,7 @@
 
     mountQr();
     mountTranslationBadges();
+    mountPageLanguageBar();
     // Figures are mounted only after the inlining settles, so the scan sees the
     // real <svg> rather than the <img> it replaces and does not wrap both.
     inlineDiagrams(mountFigures);
