@@ -61,30 +61,50 @@
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Task_Archive" name="Archive → greppable
 contents manifest">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Tar/zip is opaque to every grep in the corpus until its contents are listed as data.</bpmn:documentation>
       <bpmn:incoming>Flow_d2</bpmn:incoming>
       <bpmn:outgoing>Flow_d7</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_TechMeta" name="File info, sizes, hashes,
 timestamps, mimetype">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Mechanical and cheap; the checksum is what makes a remote asset verifiable.</bpmn:documentation>
       <bpmn:incoming>Flow_d3</bpmn:incoming>
       <bpmn:outgoing>Flow_d8</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Image" name="Narrative description
 per image, localized">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Applies equally to an image EXTRACTED FROM A PDF, not only to an uploaded one.</bpmn:documentation>
       <bpmn:incoming>Flow_d4</bpmn:incoming>
       <bpmn:outgoing>Flow_d9</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Audio" name="Transcribe and
 translate audio">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md.</bpmn:documentation>
       <bpmn:incoming>Flow_d5</bpmn:incoming>
       <bpmn:outgoing>Flow_d10</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Tabular" name="Sheet names, headers,
 shape, narrative">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. CSV and spreadsheet: tabs, column and row headers, sizes, and what the dataset is about.</bpmn:documentation>
       <bpmn:incoming>Flow_d6</bpmn:incoming>
       <bpmn:outgoing>Flow_d11</bpmn:outgoing>
@@ -99,6 +119,10 @@ shape, narrative">
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Task_Provenance" name="Cite the author of
 every narrative">
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>A generated description is a claim by someone. Record whether a human or an agent wrote it, and for an agent the model version. An uncited narrative is indistinguishable from a transcription of the source.</bpmn:documentation>
       <bpmn:incoming>Flow_d12</bpmn:incoming>
       <bpmn:outgoing>Flow_d13</bpmn:outgoing>

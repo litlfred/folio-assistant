@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+<bpmn:definitions xmlns:folio="http://folio-assistant.dev/bpmn" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
@@ -65,6 +65,10 @@ nodes that require human translation into a target locale.</bpmn:documentation>
     </bpmn:startEvent>
 
     <bpmn:userTask id="Task_IdentifyContent" name="Identify content&#10;and target locale">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>The coordinator selects:
 - Which content nodes need translation (block, section, chapter, or folio)
 - The target locale (one of the supportedLocales in folio.config.json)
@@ -72,6 +76,10 @@ nodes that require human translation into a target locale.</bpmn:documentation>
     </bpmn:userTask>
 
     <bpmn:userTask id="Task_AssignTranslator" name="Assign to qualified&#10;human translator">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>The coordinator assigns the translation to a qualified
 translator, ideally a domain SME for the content area. For WHO content,
 the translator should be familiar with WHO SMART Guidelines terminology.
@@ -84,6 +92,10 @@ The assignment includes:
     </bpmn:userTask>
 
     <bpmn:userTask id="Task_CheckCompleteness" name="Check translation&#10;completeness">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>Verify that all msgid entries have msgstr translations.
 Partial translations are acceptable for initial submissions but must be
 flagged for follow-up. The coordinator checks:
@@ -95,6 +107,10 @@ flagged for follow-up. The coordinator checks:
     <bpmn:exclusiveGateway id="Gateway_Complete" name="Complete enough?" />
 
     <bpmn:userTask id="Task_RequestMoreWork" name="Request completion&#10;of remaining strings">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>Return to the translator with a list of untranslated
 or fuzzy strings that need attention.</bpmn:documentation>
     </bpmn:userTask>
@@ -146,6 +162,10 @@ force in the target language.</bpmn:documentation>
     <bpmn:exclusiveGateway id="Gateway_Accurate" name="Translation accurate?" />
 
     <bpmn:userTask id="Task_ReturnForCorrection" name="Return for correction&#10;with annotations">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>The reviewer annotates specific passages that need
 correction and returns to the translator with detailed feedback.
 Each annotation includes:
@@ -155,6 +175,10 @@ Each annotation includes:
     </bpmn:userTask>
 
     <bpmn:userTask id="Task_Signoff" name="Sign off translation&#10;as official">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>The reviewer signs off the translation, making it
 official. This records:
 - signedOffBy: the reviewer's identity
@@ -170,6 +194,10 @@ Tool: translation_signoff MCP tool</bpmn:documentation>
     <!-- ══════ PIPELINE LANE ══════════════════════════════════ -->
 
     <bpmn:serviceTask id="Task_ExtractPOT" name="Extract POT&#10;(translatable strings)">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>Pre-processes source markdown:
 1. Segments prose by paragraph
 2. Shields non-translatable content (math, code, labels) as placeholders
@@ -180,6 +208,10 @@ Tool: translation_extract MCP tool</bpmn:documentation>
     </bpmn:serviceTask>
 
     <bpmn:serviceTask id="Task_PrepareGlossary" name="Prepare domain&#10;glossary">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>Generates or retrieves the domain glossary for the
 target locale. Sources:
 1. Root folio's translations/ glossary
@@ -189,6 +221,10 @@ target locale. Sources:
     </bpmn:serviceTask>
 
     <bpmn:serviceTask id="Task_InjectPO" name="Inject PO →&#10;translated Markdown">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>Post-processes the completed .po file:
 1. Substitutes msgstr for msgid in source markdown
 2. Unshields placeholder tokens back to original content
@@ -199,6 +235,10 @@ Tool: translation_inject MCP tool</bpmn:documentation>
     </bpmn:serviceTask>
 
     <bpmn:serviceTask id="Task_RoundTripQA" name="Round-trip&#10;translation QA">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>Bean: folio-assistant-ktt2
 Back-translates target-language .md to source language and compares
 meaning. Distinguishes semantic drift from terminology misses.
@@ -208,6 +248,10 @@ Tool: translation_validate MCP tool</bpmn:documentation>
     <bpmn:exclusiveGateway id="Gateway_Drift" name="Drift detected?" />
 
     <bpmn:serviceTask id="Task_AppendDisclaimer" name="Append WHO&#10;disclaimer (if DAK)">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>For WHO SMART Guidelines content, automatically appends
 the WHO legal disclaimer:
 - Translation not created by WHO
@@ -218,6 +262,10 @@ Only applies when folio contentType includes WHO/DAK content.</bpmn:documentatio
     </bpmn:serviceTask>
 
     <bpmn:serviceTask id="Task_WriteStatus" name="Write status.json&#10;(official)">
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>Writes translations/&lt;locale&gt;/status.json with the
 official sign-off metadata and source hash for staleness detection.</bpmn:documentation>
     </bpmn:serviceTask>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+<bpmn:definitions xmlns:folio="http://folio-assistant.dev/bpmn" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
@@ -69,6 +69,10 @@
     </bpmn:task>
 
     <bpmn:task id="Task_ReviewStaging" name="Review staged rendering">
+      <bpmn:extensionElements>
+        <folio:skill ref="staging-review"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         Author reviews the rendered feature branch at
         &lt;pages-url&gt;/STAGING/&lt;branch-slug&gt;/ and compares
@@ -114,6 +118,10 @@
     </bpmn:startEvent>
 
     <bpmn:task id="Task_DetectScope" name="Detect change scope &amp; impact">
+      <bpmn:extensionElements>
+        <folio:skill ref="semantic-review-scoping"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         Agent analyses the requested change:
         - Which content blocks are affected?
@@ -126,6 +134,10 @@
     </bpmn:task>
 
     <bpmn:task id="Task_CreateBranch" name="Create feature branch">
+      <bpmn:extensionElements>
+        <folio:skill ref="feature-staging"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         Agent creates a feature branch from main.
         Branch naming: feature/&lt;short-description&gt;
@@ -136,6 +148,10 @@
     </bpmn:task>
 
     <bpmn:task id="Task_EditContent" name="Edit narrative content blocks">
+      <bpmn:extensionElements>
+        <folio:skill ref="content-author"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         Agent modifies the relevant content blocks (.md files, block manifests).
         Validates each edit against the schema (content_validate).
@@ -146,6 +162,10 @@
     </bpmn:task>
 
     <bpmn:task id="Task_EditLogic" name="Edit deterministic logic (if needed)">
+      <bpmn:extensionElements>
+        <folio:skill ref="content-author"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         If the content change affects decision logic, indicators, or workflows:
         - Update CQL expressions
@@ -158,6 +178,10 @@
     </bpmn:task>
 
     <bpmn:task id="Task_AssessImpact" name="Assess downstream impact">
+      <bpmn:extensionElements>
+        <folio:skill ref="content-graph"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         Agent reviews downstream implications:
         - Will indicators need adjustment?
@@ -171,6 +195,10 @@
     </bpmn:task>
 
     <bpmn:task id="Task_CommitPush" name="Commit, push, update PR">
+      <bpmn:extensionElements>
+        <folio:skill ref="prepare-merge-auto"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         Agent commits all changes to the feature branch and pushes.
         The feature-staging.yml workflow automatically deploys to
@@ -181,6 +209,10 @@
     </bpmn:task>
 
     <bpmn:task id="Task_Iterate" name="Iterate on author feedback">
+      <bpmn:extensionElements>
+        <folio:skill ref="content-author"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         Agent receives revision requests from the author and applies changes.
         Each push triggers a new staging deployment with updated SHA stamp.
@@ -202,6 +234,10 @@
     </bpmn:startEvent>
 
     <bpmn:task id="Task_CompareBeforeAfter" name="Compare main vs staging">
+      <bpmn:extensionElements>
+        <folio:skill ref="staging-review"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         Review committee opens both URLs side by side:
         - Main site: &lt;pages-url&gt;/ (current published state)
@@ -214,6 +250,10 @@
     </bpmn:task>
 
     <bpmn:task id="Task_ReviewImpact" name="Review impact assessment">
+      <bpmn:extensionElements>
+        <folio:skill ref="content-review"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         Committee reviews the agent's impact assessment:
         - Were all downstream effects identified?
@@ -263,6 +303,10 @@
     </bpmn:startEvent>
 
     <bpmn:task id="Task_BuildStaging" name="Build staging site">
+      <bpmn:extensionElements>
+        <folio:skill ref="feature-staging"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         feature-staging.yml triggers:
         1. Regenerate docs (schema, skills, content-backed pages)
@@ -276,6 +320,10 @@
     </bpmn:task>
 
     <bpmn:task id="Task_DeployStaging" name="Deploy to STAGING/&lt;slug&gt;/">
+      <bpmn:extensionElements>
+        <folio:skill ref="feature-staging"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         peaceiris/actions-gh-pages deploys to gh-pages branch
         under STAGING/&lt;branch-slug&gt;/ with keep_files: true
@@ -286,6 +334,10 @@
     </bpmn:task>
 
     <bpmn:task id="Task_CommentPR" name="Comment staging URL on PR">
+      <bpmn:extensionElements>
+        <folio:skill ref="feature-staging"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         Bot comments or updates the staging URL on the PR.
         Includes commit SHA, branch name, and build log link.
@@ -301,6 +353,10 @@
     </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_CleanupStaging" name="Remove STAGING/&lt;slug&gt;/">
+      <bpmn:extensionElements>
+        <folio:skill ref="feature-staging"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         When the PR is merged or closed, the cleanup job
         removes the STAGING/&lt;slug&gt;/ directory from gh-pages
@@ -311,6 +367,10 @@
     </bpmn:task>
 
     <bpmn:task id="Task_RebuildMain" name="Rebuild main site">
+      <bpmn:extensionElements>
+        <folio:skill ref="content-publish"/>
+      </bpmn:extensionElements>
+
       <bpmn:documentation>
         docs-site.yml triggers on the merge commit to main,
         rebuilding the root of gh-pages with the accepted changes.
