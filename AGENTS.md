@@ -457,6 +457,59 @@ Key rules:
 - After each round of implementation, post a summary comment on the issue:
   what was accomplished, what remains, links to updated content for review
 
+## Say which process you are in — every turn
+
+The bean rule above says *what* you are working on. This says *where in the
+process* you are working, which is the question a reader cannot answer from a
+bean id.
+
+**Name the process, the lane and the task**, and say when you switch:
+
+> **Process:** `crdm-requirements`, Agent lane · **Phase 6 — implement**.
+> Completed `A_Implement`; next is `A_Summary`.
+
+The machinery already answers this and was going unused in chat: `workflow_next`
+reports the enabled step, the lane that owns it and the skill that implements
+it, and every activity in the CRDM agent lane now carries `<folio:skill ref>`,
+so the answer is something to act on rather than a bare step name. What was
+missing was only the habit of saying it.
+
+**Switching processes is the case that matters.** Moving from
+`editing-hci-validation` to `crdm-requirements` changes who is accountable for
+the next step and which gates apply; a reader who does not know you switched
+will assume the old lane's rules still hold.
+
+## Working an issue — announce, then re-check
+
+Two rules, both about the gap between an agent's view of an issue and everyone
+else's.
+
+**Announce the branch when you create it, not when you finish.** Comment on the
+issue with the branch name, the process and phase, and the beans claimed. Round
+summaries after the work lands are not a substitute: until the first one
+appears, a sibling session and a human both see an issue with nobody visibly on
+it. In the CRDM process this is `A_AnnounceBranch`, deliberately placed on the
+single edge from `BA_Signoff` into Phase 6 — the three loops back into
+`A_Implement` re-enter on the same branch, and re-announcing each time is noise.
+
+**Re-check the issue for new and edited comments while you work.** Checking once
+at session start is not checking. Track what you have already read in
+`.folio/issue-comments/<owner>-<repo>-<number>.json`
+(`src/issue-watch/seen-comments.ts`): a comment-id high-water mark plus the
+newest edit timestamp, because an edited comment keeps its id and an edited
+requirement is a changed requirement. With no stored mark everything counts as
+unseen — a fresh container has read nothing, and defaulting the other way is
+precisely how the comments that change direction get skipped.
+
+**When the new material is a large chunk of work, stop.** Do not fold it into
+the current run: say that this is a good stopping point for STAGING review, and
+confirm priorities before continuing.
+
+Measured, 2026-09-18: a session on #203 missed **five** owner comments between
+14:31 and 15:55 — including the one asking for this rule — while working, and
+found them only when the author typed "new comments". Every one of the five
+changed direction or added scope.
+
 ## Commit early, commit often, always PR (STRICT)
 
 Three rules, and the third is the one agents get wrong.

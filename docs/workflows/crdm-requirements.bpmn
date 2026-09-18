@@ -60,6 +60,7 @@
         <bpmn:flowNodeRef>A_DefineReqs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Reqs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_CreateBeans</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_AnnounceBranch</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Implement</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Summary</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Close</bpmn:flowNodeRef>
@@ -159,6 +160,21 @@ what this step records here is a note that the plan now exists.</bpmn:documentat
         <folio:bean op="note"/>
       </bpmn:extensionElements>
     </bpmn:task>
+    <bpmn:task id="A_AnnounceBranch" name="Announce the branch&#10;on the issue">
+      <bpmn:documentation>On CREATING the feature branch, comment on the issue:
+the branch name, the process and phase, and the beans claimed. Visibility is
+the whole point — without it a sibling session or a human cannot tell that work
+has begun, only that it has finished.
+
+Deliberately on this edge and not inside Phase 6. The three loops back into
+A_Implement (increment rejected, MVP not ready, feedback translated) re-enter
+implementation on the SAME branch, and re-announcing on each would be noise.
+Announce once, when the branch is created.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="crdm-requirements-workflow"/>
+        <folio:bean op="claim"/>
+      </bpmn:extensionElements>
+    </bpmn:task>
     <bpmn:task id="A_Implement" name="Phase 6: Implement&#10;(feature branch + PR)">
       <bpmn:documentation>Inner loop: agent claims a bean, implements on
 feature branch, opens PR, posts summary to the issue.</bpmn:documentation>
@@ -224,7 +240,8 @@ workflow, with their own data. They report what works and what does not.</bpmn:d
 
     <!-- ═══ Flows: Phase 5 — Sign-off ═══ -->
     <bpmn:sequenceFlow id="SF_23" sourceRef="A_CreateBeans" targetRef="BA_Signoff"/>
-    <bpmn:sequenceFlow id="SF_24" sourceRef="BA_Signoff" targetRef="A_Implement"/>
+    <bpmn:sequenceFlow id="SF_24" sourceRef="BA_Signoff" targetRef="A_AnnounceBranch"/>
+    <bpmn:sequenceFlow id="SF_24b" sourceRef="A_AnnounceBranch" targetRef="A_Implement"/>
 
     <!-- ═══ Flows: Phase 6 — Inner loop (BA ↔ Agent) ═══ -->
     <bpmn:sequenceFlow id="SF_25" sourceRef="A_Implement" targetRef="A_Summary"/>
@@ -295,6 +312,7 @@ workflow, with their own data. They report what works and what does not.</bpmn:d
       <bpmndi:BPMNShape id="A_DefineReqs_di" bpmnElement="A_DefineReqs"><dc:Bounds x="1430" y="350" width="160" height="80"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="GW_Reqs_di" bpmnElement="GW_Reqs" isMarkerVisible="true"><dc:Bounds x="1615" y="365" width="50" height="50"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_CreateBeans_di" bpmnElement="A_CreateBeans"><dc:Bounds x="1700" y="350" width="140" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_AnnounceBranch_di" bpmnElement="A_AnnounceBranch"><dc:Bounds x="1880" y="240" width="150" height="70"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Implement_di" bpmnElement="A_Implement"><dc:Bounds x="1880" y="350" width="150" height="80"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Summary_di" bpmnElement="A_Summary"><dc:Bounds x="2060" y="350" width="130" height="80"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Close_di" bpmnElement="A_Close"><dc:Bounds x="2920" y="350" width="140" height="80"/></bpmndi:BPMNShape>
@@ -337,7 +355,8 @@ workflow, with their own data. They report what works and what does not.</bpmn:d
 
       <!-- Edges: Phase 5 sign-off -->
       <bpmndi:BPMNEdge id="SF_23_di" bpmnElement="SF_23"><di:waypoint x="1770" y="350"/><di:waypoint x="1770" y="200"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_24_di" bpmnElement="SF_24"><di:waypoint x="1830" y="160"/><di:waypoint x="1955" y="160"/><di:waypoint x="1955" y="350"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_24_di" bpmnElement="SF_24"><di:waypoint x="1830" y="160"/><di:waypoint x="1955" y="160"/><di:waypoint x="1955" y="240"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_24b_di" bpmnElement="SF_24b"><di:waypoint x="1955" y="310"/><di:waypoint x="1955" y="350"/></bpmndi:BPMNEdge>
 
       <!-- Edges: Phase 6 inner loop (Agent → BA → Agent) -->
       <bpmndi:BPMNEdge id="SF_25_di" bpmnElement="SF_25"><di:waypoint x="2030" y="390"/><di:waypoint x="2060" y="390"/></bpmndi:BPMNEdge>
