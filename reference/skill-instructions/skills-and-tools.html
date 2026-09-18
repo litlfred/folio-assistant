@@ -565,6 +565,39 @@ mechanism to name. <code class="language-plaintext highlighter-rouge">check:tool
 for exactly that reason. What it cannot tell you, and what needs a human eye, is
 which of the uncovered skills <em>describe an action</em> — those are the ones whose
 mechanism is still swallowed.</p>
+<h3 id="which-uncovered-skills-actually-need-one--bun-run-toolscoverage">
+  
+  
+    <a href="#which-uncovered-skills-actually-need-one--bun-run-toolscoverage" class="anchor-heading" aria-labelledby="which-uncovered-skills-actually-need-one--bun-run-toolscoverage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which uncovered skills actually need one — <code class="language-plaintext highlighter-rouge">bun run tools:coverage</code>
+  
+  
+</h3>
+    
+
+<p>The count alone does not say which. A grep for shell blocks over-reports badly:
+52 of the 118 uncovered skills contain one, because a skill may legitimately
+QUOTE a command while stating its capability generically.</p>
+
+<p>The corpus carries a better signal — <strong>BPMN task type</strong>. A process step is a
+<code class="language-plaintext highlighter-rouge">serviceTask</code> (runs without a person) or a <code class="language-plaintext highlighter-rouge">userTask</code> (performed by one), and
+the diagrams already say which. Triaged on that, plus an I/O contract under
+<code class="language-plaintext highlighter-rouge">schemas/skills/</code>: <strong>16</strong> skills have strong automation evidence, <strong>3</strong> are
+userTask-only, <strong>52</strong> are genuinely ambiguous, <strong>47</strong> show nothing. The read
+shrinks from 118 files to 52.</p>
+
+<p><strong>The reframing matters more than the numbers.</strong> <code class="language-plaintext highlighter-rouge">interaction-modality</code> was the
+standing example of a pure-judgement skill, and two activities name it: a
+<code class="language-plaintext highlighter-rouge">serviceTask</code> that reads the preferences file — a mechanism — and a <code class="language-plaintext highlighter-rouge">userTask</code>
+about how to frame a question — judgement. Ten of the sixteen strongest
+candidates are both.</p>
+
+<blockquote>
+  <p><strong>The question is not “is this skill a Tool?” but “which PART of it is.”</strong></p>
+</blockquote>
+
+<p>A skill with both halves is not mis-modelled. Migrating it is a <strong>split</strong>: the
+mechanical half becomes a Tool, the judgement half stays as prose. Expecting a
+clean move is what makes the migration look bigger than it is.</p>
 
 <p>So when you write or edit a skill: follow the checklist above and reference a
 Tool. When you read one that inlines <code class="language-plaintext highlighter-rouge">gh pr create</code> or <code class="language-plaintext highlighter-rouge">beans update</code>, that is
@@ -590,7 +623,7 @@ that is eventually wrong.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35397730169"><code>33d3dc5</code></a> &middot; 2026-09-18T21:38:37Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35399253270"><code>f4b0c8b</code></a> &middot; 2026-09-18T21:57:35Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
