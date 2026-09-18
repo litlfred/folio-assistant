@@ -28,22 +28,123 @@ lock_id="$(printf '%s' "$REPO_ROOT" | cksum | cut -d' ' -f1)"
 exec 200>"/tmp/folio-coord-sweep-${lock_id}.lock"
 flock 200 2>/dev/null || true
 
+# ── 0. How to talk to the person here ───────────────────────────────────────
+# Printed FIRST and before the work-plan, because it changes the form of every
+# question that follows. A preference re-learned each session is a question
+# asked twice, which is WCAG 2.2 SC 3.3.7 (Redundant Entry) — and for a user
+# who types with difficulty, "just ask again" is not a small cost.
+# See skills/folio-core/interaction-modality.md.
+INTERACTION="$REPO_ROOT/.folio/interaction.json"
+if [ -f "$INTERACTION" ]; then
+  echo "## Interaction preferences"
+  echo
+  if command -v jq >/dev/null 2>&1; then
+    jq -r '
+      (.users // {}) | to_entries[] |
+      "- **\(.key)** — profiles: \(.value.profiles | join(", ") | if . == "" then "(none)" else . end)  \n  \(.value.note // "")  \n  _source: \(.value.source // "unrecorded")_"
+    ' "$INTERACTION" 2>/dev/null || echo "- (could not parse $INTERACTION — read it by hand)"
+  else
+    echo "- jq not installed; read \`.folio/interaction.json\` by hand."
+  fi
+  echo
+fi
+
 # ── 1. Work-plan (beans) ────────────────────────────────────────────────────
 BEANS_DIR="$REPO_ROOT/.beans"
 echo "## Work-plan (beans) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo
-# `install-beans.sh` installs to ~/.local/bin, which a fresh container's PATH
-# often does not carry — so LOOK THERE before concluding the CLI is absent.
-# Reporting "not on PATH" when the binary is sitting in the standard install
-# location is how a session ends up parsing .beans/ by hand all day.
+# Get the CLI in hand rather than reporting its absence — in two steps, cheap
+# first.
+#
+# 1. `install-beans.sh` installs to ~/.local/bin, which a fresh container's PATH
+#    often does not carry, so LOOK THERE before concluding the CLI is absent.
+#    Reporting "not on PATH" when the binary is sitting in the standard install
+#    location is how a session ends up parsing .beans/ by hand all day.
+# 2. Still missing? Install it. A fresh cloud container ships no `beans` at all,
+#    and the fallback below — `.beans/*.md` parsed by hand — is a flat list with
+#    no priming, no milestone nesting and no `beans check`. That degraded view
+#    was what every such session actually got, which is not the same as having
+#    the work plan.
+#
+# Bounded and quiet: one `go install` over the module proxy, 180 s. A sandbox
+# with no Go or no egress falls through to the reader below rather than failing
+# the sweep — a session-start hook that exits non-zero takes the whole session's
+# priming with it.
 if ! command -v beans >/dev/null 2>&1 && [ -x "$HOME/.local/bin/beans" ]; then
   PATH="$HOME/.local/bin:$PATH"
   export PATH
 fi
 
+if ! command -v beans >/dev/null 2>&1 && [ -x "$REPO_ROOT/scripts/install-beans.sh" ]; then
+  timeout 180 "$REPO_ROOT/scripts/install-beans.sh" >/dev/null 2>&1 || true
+  # `go install` picks its bin dir from GOBIN/GOPATH, which may not be on this
+  # shell's PATH, so look where it actually went before giving up on it.
+  for candidate in "${GOBIN:-}" "${GOPATH:+$GOPATH/bin}" "$HOME/go/bin" "$HOME/.local/bin"; do
+    [ -n "$candidate" ] || continue
+    if [ -x "$candidate/beans" ]; then PATH="$candidate:$PATH"; export PATH; break; fi
+  done
+fi
+
 if command -v beans >/dev/null 2>&1; then
   beans prime 2>/dev/null || true
   beans list 2>/dev/null || echo "_(beans list returned nothing)_"
+
+  # The roadmap, not just the list. `beans list` is flat: on this repo it is
+  # 100+ ids in creation order, which is data rather than a plan. `beans roadmap`
+  # renders the milestone/epic structure an agent needs to say what is NEXT and
+  # why — the judgement AGENTS.md asks for in every end-of-turn report.
+  echo
+  echo "### Roadmap (milestones and epics)"
+  echo
+  roadmap="$(timeout 20 beans roadmap 2>/dev/null || true)"
+  if [ -n "$roadmap" ]; then
+    printf '%s\n' "$roadmap"
+  else
+    echo "_(no milestones or epics yet — \`beans create \"…\" -t milestone\` opens one)_"
+  fi
+  echo
+
+  # Commands for the PERSON, not the agent. An agent cannot run an interactive
+  # TUI on someone's behalf, so the only useful thing to do with `beans tui` is
+  # print it where they will see it. Paths follow the author's convention.
+  cat <<'BEANCMDS'
+### Beans — commands you can run yourself
+
+| what you want | command |
+|---|---|
+| the interactive board | `beans tui` |
+| the milestone roadmap | `beans roadmap` |
+| everything open | `beans list -s todo -s in-progress` |
+| one bean in full | `beans show <id>` |
+| claim one | `beans update <id> -s in-progress` |
+| open one | `beans create "title" -t task` |
+| sanity-check the store | `beans check` |
+
+BEANCMDS
+  # Copy-paste line. Both the checkout path and the branch are COMPUTED, never
+  # written in: a literal path or a session's branch name baked into a generic
+  # platform script is the genericity failure this repo has paid for repeatedly
+  # (see AGENTS.md on generate-readme.sh). BEANS_CHECKOUT_ROOT lets an author
+  # whose clones live somewhere predictable get a line they can paste from any
+  # directory; unset, it uses this checkout's real path.
+  _repo_name="$(basename "$REPO_ROOT")"
+  _checkout_dir="$REPO_ROOT"
+  if [ -n "${BEANS_CHECKOUT_ROOT:-}" ]; then
+    _checkout_dir="${BEANS_CHECKOUT_ROOT%/}/$_repo_name"
+  fi
+  _branch="$(git -C "$REPO_ROOT" symbolic-ref --short HEAD 2>/dev/null || true)"
+  echo "Copy-paste, from a fresh shell:"
+  echo
+  echo '```sh'
+  if [ -n "$_branch" ]; then
+    echo "reset; cd $_checkout_dir && git fetch && git switch $_branch && git pull && beans tui"
+  else
+    # Detached HEAD: a `git switch` line here would name a branch that is not
+    # what is checked out, which is worse than omitting it.
+    echo "reset; cd $_checkout_dir && git fetch && git pull && beans tui"
+  fi
+  echo '```'
+  echo
 elif [ -d "$BEANS_DIR" ]; then
   # An IMPERATIVE, not a parenthetical. The old wording tucked the remedy
   # inside an aside, and a session on 2026-09-18 read it, carried on parsing

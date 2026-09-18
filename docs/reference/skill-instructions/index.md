@@ -61,6 +61,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Editor](editor.html) | `editor` | — |  |
 | [/exposition-swarm-drain](exposition-swarm-drain.html) | `exposition-swarm-drain` | — | Bring every narrative block up to the **Milnor exposition standard** |
 | [Feature-branch staging](feature-staging.html) | `feature-staging` | — |  |
+| [/getting-started](getting-started.html) | `getting-started` | — | Process: [`docs/workflows/getting-started.bpmn`](../../docs/workflows/getting-started.bpmn). |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises the AGENTS.md §"5-minute idle trigger" / "Work the queue while idle" |
@@ -68,6 +69,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/integration-backlog](integration-backlog.html) | `integration-backlog` | — | A workflow skill that turns each integration-watcher's open findings |
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
 | [integration-watcher (abstract parent)](integration-watcher.html) | `integration-watcher` | — | A concrete watcher (this skill's child) **watches incoming activity** |
+| [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`docs/workflows/getting-started.bpmn`](../../docs/workflows/getting-started.bpmn), |
 | [Markdown Render Check](markdown-render-check.html) | `markdown-render-check` | — | git diff HEAD~1 HEAD --name-only -- '*.md' |
 | [Markdown Authoring Conventions](md-authoring.html) | `md-authoring` | — |  |
 | [One-Voice Audit](one-voice-audit.html) | `one-voice-audit` | — | grep -rEn "[✅❌⚠⏳🔧🚧☑☒]\|✓\|✗\|★" "$CONTENT" --include="*.md" |
@@ -79,6 +81,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/prepare-merge-auto](prepare-merge-auto.html) | `prepare-merge-auto` | — | Runs the full `/prepare-merge` workflow PLUS: |
 | [Production vs exploratory vs numerology](production-vs-exploratory-discipline.html) | `production-vs-exploratory-discipline` | — | N_TRUNCATION = 5 |
 | [Readability Editing](readability-editing.html) | `readability-editing` | — |  |
+| [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`docs/workflows/getting-started.bpmn`](../../docs/workflows/getting-started.bpmn), |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Capability: `review` · Package: `folio-core` |
