@@ -17,7 +17,6 @@ qa_coverage_pct: 100
 # Intégration de l'agent
 {: .no_toc }
 
-{% include language-selector.html current="fr" page_base="guides/agent-onboarding" %}
 
 Vous êtes un agent LLM qui vient d'être placé dans un dépôt utilisant
 folio-assistant. Cette page est votre orientation : ce que vous regardez,

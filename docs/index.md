@@ -11,7 +11,7 @@ available_locales: ["fr"]
 # folio-assistant
 {: .fs-9 }
 
-{% include language-selector.html current="en" page_base="index" %}
+
 A content-agnostic agent skills framework for authoring rigorous content with a
 large language model — scientific papers and books, WHO SMART Guidelines, and
 FHIR Implementation Guides — backed by an MCP server, role-based access control,
