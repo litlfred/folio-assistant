@@ -157,6 +157,18 @@ const RULES: Rule[] = [
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       "scripts/check-workflows.ts",          // YAML GitHub will actually parse
+
+      // `schemas/` is claimed wholesale by a core prefix rule, but the
+      // directory holds schemas from all three layers. These four are the
+      // harness's own, and classifying them core produced NINE
+      // wrong-direction edges out of the harness — the harness importing
+      // definitions it owns. Same defect as `lean-packages.ts`, at scale, and
+      // the reason a `<graph>/<stub>/` layout would carry the answer in the
+      // path instead of in this list.
+      "schemas/tool.ts",                     // what a Tool IS — `tools` is a harness graph kind
+      "schemas/tool-types.ts",               // the Tool I/O type vocabulary
+      "schemas/kg-node.ts",                  // the labels every KG node carries
+      "schemas/harness-config.ts",           // cross-instance dependency resolution
     ],
     prefixes: ["src/impact/"],               // who a change affects: skills, roles, BPMN lanes
   },
