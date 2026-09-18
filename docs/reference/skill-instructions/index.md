@@ -47,6 +47,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Block Density](block-density.html) | `block-density` | — |  |
 | [/canonical-watcher](canonical-watcher.html) | `canonical-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [Chapter Complexity Review](chapter-complexity-review.html) | `chapter-complexity-review` | — |  |
+| [Code node review](code-node-review.html) | `code-node-review` | — |  |
 | [Compute Integration Watcher](compute-integration-watcher.html) | `compute-integration-watcher` | — |  |
 | [Content Graph](content-graph.html) | `content-graph` | — | cd content && python3 pipeline/content-graph-analysis.py |
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |

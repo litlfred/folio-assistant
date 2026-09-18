@@ -62,6 +62,8 @@
         <bpmn:flowNodeRef>A_CreateBeans</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_AnnounceBranch</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Implement</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_CodeAudit</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_DeployStaging</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Summary</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Close</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_A</bpmn:flowNodeRef>
@@ -209,6 +211,28 @@ feature branch, opens PR, posts summary to the issue.</bpmn:documentation>
         <folio:bean op="claim"/>
       </bpmn:extensionElements>
     </bpmn:task>
+    <bpmn:callActivity id="A_CodeAudit" name="Audit the code nodes&#10;the increment adds" calledElement="Process_Review">
+      <bpmn:documentation>Descend into the review task for what this increment
+CHANGED IN THE GRAPH — Tool definitions in `tools/` and schema definition nodes
+under `schemas/`. It runs before the summary, and therefore before an MVP can
+be shared: a Tool or schema node shipped in an MVP is the version stakeholders
+start building expectations on, and a node that names a skill nobody wrote is
+cheaper to catch here than after sign-off.
+
+Called, not inherited: the agent keeps its implementing role and takes on the
+`code-reviewer` lane inside Process_CodeReview for that call path only.</bpmn:documentation>
+    </bpmn:callActivity>
+    <bpmn:task id="A_DeployStaging" name="Deploy the MVP&#10;to staging">
+      <bpmn:documentation>An MVP is shared AS A STAGING DEPLOY, not as a
+description of one. `feature-staging.yml` publishes the branch under
+`STAGING/&lt;branch-slug&gt;/` on gh-pages and comments the URL on the PR, so the
+stakeholder who tests it is looking at the built artefact rather than at a
+screenshot — the same argument the merge discipline makes about rendered work.
+
+Measured in this repo on 2026-09-16: holding a rendered change back for
+assessment made assessment harder, not safer.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="feature-staging"/></bpmn:extensionElements>
+    </bpmn:task>
     <bpmn:task id="A_Summary" name="Post summary&#10;to issue">
       <bpmn:documentation>What was accomplished, what remains, and links to
 the updated content for review.</bpmn:documentation>
@@ -270,7 +294,8 @@ workflow, with their own data. They report what works and what does not.</bpmn:d
     <bpmn:sequenceFlow id="SF_24b" sourceRef="A_AnnounceBranch" targetRef="A_Implement"/>
 
     <!-- ═══ Flows: Phase 6 — Inner loop (BA ↔ Agent) ═══ -->
-    <bpmn:sequenceFlow id="SF_25" sourceRef="A_Implement" targetRef="A_Summary"/>
+    <bpmn:sequenceFlow id="SF_25" sourceRef="A_Implement" targetRef="A_CodeAudit"/>
+    <bpmn:sequenceFlow id="SF_25b" sourceRef="A_CodeAudit" targetRef="A_Summary"/>
     <bpmn:sequenceFlow id="SF_26" sourceRef="A_Summary" targetRef="BA_ReviewIncrement"/>
     <bpmn:sequenceFlow id="SF_27" sourceRef="BA_ReviewIncrement" targetRef="GW_IncrementOK"/>
     <bpmn:sequenceFlow id="SF_28" name="no" sourceRef="GW_IncrementOK" targetRef="A_Implement"/>
@@ -278,7 +303,8 @@ workflow, with their own data. They report what works and what does not.</bpmn:d
 
     <!-- ═══ Flows: Phase 6 — Outer loop (BA → Stakeholders) ═══ -->
     <bpmn:sequenceFlow id="SF_30" name="not yet" sourceRef="GW_MVPReady" targetRef="A_Implement"/>
-    <bpmn:sequenceFlow id="SF_31" name="yes" sourceRef="GW_MVPReady" targetRef="BA_ShareMVP"/>
+    <bpmn:sequenceFlow id="SF_31" name="yes" sourceRef="GW_MVPReady" targetRef="A_DeployStaging"/>
+    <bpmn:sequenceFlow id="SF_31b" sourceRef="A_DeployStaging" targetRef="BA_ShareMVP"/>
     <bpmn:sequenceFlow id="SF_32" sourceRef="BA_ShareMVP" targetRef="S_TestMVP"/>
     <bpmn:sequenceFlow id="SF_33" sourceRef="S_TestMVP" targetRef="GW_StakeholderOK"/>
     <bpmn:sequenceFlow id="SF_34" name="findings" sourceRef="GW_StakeholderOK" targetRef="BA_TranslateFeedback"/>
@@ -340,6 +366,8 @@ workflow, with their own data. They report what works and what does not.</bpmn:d
       <bpmndi:BPMNShape id="A_CreateBeans_di" bpmnElement="A_CreateBeans"><dc:Bounds x="1700" y="350" width="140" height="80"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_AnnounceBranch_di" bpmnElement="A_AnnounceBranch"><dc:Bounds x="1880" y="240" width="150" height="70"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Implement_di" bpmnElement="A_Implement"><dc:Bounds x="1880" y="350" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_CodeAudit_di" bpmnElement="A_CodeAudit"><dc:Bounds x="1880" y="435" width="150" height="70"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_DeployStaging_di" bpmnElement="A_DeployStaging"><dc:Bounds x="2240" y="350" width="150" height="80"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Summary_di" bpmnElement="A_Summary"><dc:Bounds x="2060" y="350" width="130" height="80"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Close_di" bpmnElement="A_Close"><dc:Bounds x="2920" y="350" width="140" height="80"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_A_di" bpmnElement="End_A"><dc:Bounds x="3102" y="372" width="36" height="36"/></bpmndi:BPMNShape>
@@ -352,6 +380,8 @@ workflow, with their own data. They report what works and what does not.</bpmn:d
       <bpmndi:BPMNShape id="S_FeatureSignoff_di" bpmnElement="S_FeatureSignoff"><dc:Bounds x="2820" y="580" width="140" height="80"/></bpmndi:BPMNShape>
 
       <!-- Edges: Detection + Issue linking -->
+      <bpmndi:BPMNEdge id="SF_25b_di" bpmnElement="SF_25b"><di:waypoint x="2030" y="470"/><di:waypoint x="2125" y="470"/><di:waypoint x="2125" y="430"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_31b_di" bpmnElement="SF_31b"><di:waypoint x="2390" y="390"/><di:waypoint x="2480" y="390"/><di:waypoint x="2480" y="200"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SF_1_di" bpmnElement="SF_1"><di:waypoint x="228" y="160"/><di:waypoint x="270" y="160"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SF_2_di" bpmnElement="SF_2"><di:waypoint x="340" y="200"/><di:waypoint x="340" y="350"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SF_3_di" bpmnElement="SF_3"><di:waypoint x="410" y="390"/><di:waypoint x="445" y="390"/></bpmndi:BPMNEdge>
@@ -385,7 +415,7 @@ workflow, with their own data. They report what works and what does not.</bpmn:d
       <bpmndi:BPMNEdge id="SF_24b_di" bpmnElement="SF_24b"><di:waypoint x="1955" y="310"/><di:waypoint x="1955" y="350"/></bpmndi:BPMNEdge>
 
       <!-- Edges: Phase 6 inner loop (Agent → BA → Agent) -->
-      <bpmndi:BPMNEdge id="SF_25_di" bpmnElement="SF_25"><di:waypoint x="2030" y="390"/><di:waypoint x="2060" y="390"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_25_di" bpmnElement="SF_25"><di:waypoint x="1955" y="430"/><di:waypoint x="1955" y="435"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SF_26_di" bpmnElement="SF_26"><di:waypoint x="2125" y="350"/><di:waypoint x="2125" y="200"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SF_27_di" bpmnElement="SF_27"><di:waypoint x="2190" y="160"/><di:waypoint x="2225" y="160"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SF_28_di" bpmnElement="SF_28"><di:waypoint x="2250" y="185"/><di:waypoint x="2250" y="230"/><di:waypoint x="1955" y="230"/><di:waypoint x="1955" y="350"/></bpmndi:BPMNEdge>
@@ -393,7 +423,7 @@ workflow, with their own data. They report what works and what does not.</bpmn:d
 
       <!-- Edges: Phase 6 outer loop (BA → Stakeholders → BA → Agent) -->
       <bpmndi:BPMNEdge id="SF_30_di" bpmnElement="SF_30"><di:waypoint x="2340" y="185"/><di:waypoint x="2340" y="230"/><di:waypoint x="1955" y="230"/><di:waypoint x="1955" y="350"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_31_di" bpmnElement="SF_31"><di:waypoint x="2365" y="160"/><di:waypoint x="2410" y="160"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SF_31_di" bpmnElement="SF_31"><di:waypoint x="2340" y="185"/><di:waypoint x="2340" y="350"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SF_32_di" bpmnElement="SF_32"><di:waypoint x="2480" y="200"/><di:waypoint x="2480" y="540"/><di:waypoint x="2570" y="540"/><di:waypoint x="2570" y="580"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SF_33_di" bpmnElement="SF_33"><di:waypoint x="2640" y="620"/><di:waypoint x="2680" y="620"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SF_34_di" bpmnElement="SF_34"><di:waypoint x="2705" y="595"/><di:waypoint x="2705" y="540"/><di:waypoint x="2795" y="540"/><di:waypoint x="2795" y="200"/></bpmndi:BPMNEdge>

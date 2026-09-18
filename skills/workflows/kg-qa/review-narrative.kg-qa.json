@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_CRDM",
-    "path": "skills/workflows/crdm-requirements.bpmn"
+    "id": "Process_NarrativeReview",
+    "path": "skills/workflows/review-narrative.bpmn"
   },
-  "source_hash": "sha256:f64c533131b84fd6c532851099ce0c1c204eadd1061c522cadd99f4f1762fe6e",
+  "source_hash": "sha256:30f67e83371bf702f077225d385b52d8ec3275e7888b4d58b79981fef031fc2c",
   "auditor": {
     "script": "scripts/kg-audit.ts",
     "script_hash": "sha256:0f00819b8600f680ebb54e31dd4d2475a4c0905e8a70221bb23c6b0df499d0bf",
@@ -45,14 +45,14 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 7,
     "fail": 0,
-    "n/a": 1,
+    "n/a": 2,
     "unknown": 0
   }
 }
