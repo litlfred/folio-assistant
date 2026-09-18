@@ -106,10 +106,26 @@ For each bean:
 1. **Create feature branch** — always, no exceptions
 2. **Implement** — following the accepted requirements
 3. **Open PR** — link to the bean and the parent issue
-4. **Post summary to issue** — what the PR accomplishes
-5. **Iterate on PR feedback** — code review is on the PR
-6. **Ask user for explicit confirmation before merging to main**
-7. **Update documentation** — content/docs/ pages, workflow BPMNs
+4. **Deploy staging preview** — the `feature-staging.yml` workflow
+   auto-deploys to `STAGING/<branch-slug>/` on `gh-pages`. The magenta
+   "FEATURE BRANCH" banner at the top of every page links to the source
+   branch and provides a "compare with main" link.
+5. **Post before/after comparison to issue** — use the `staging-review`
+   skill. Every changed page gets a before (main) and after (staging)
+   URL pair in a Markdown table. See `schemas/staging.ts` for the
+   `StagingComparison` schema:
+   ```
+   | Page | Before (main) | After (staging) | What changed |
+   |---|---|---|---|
+   | Landing | [main](…) | [staging](…) | Added badge |
+   ```
+6. **Iterate on PR feedback** — code review is on the PR; visual review
+   uses the staging preview URLs
+7. **Ask user for explicit confirmation before merging to main**
+8. **Update documentation** — content/docs/ pages, workflow BPMNs
+9. **Staging cleanup** — staging previews are retained by default. To
+   remove, the user must add the `staging:cleanup` label to the PR.
+   **Do not remove staging without this label.**
 
 When all beans are resolved:
 1. Post a delivery summary comment on the issue
@@ -119,8 +135,10 @@ When all beans are resolved:
 
 - [CRDM methodology page](https://litlfred.github.io/folio-assistant/crdm-methodology.html) — the documentation page for users
 - [`crdm-detect.md`](crdm-detect.md) — feature-request detection skill
+- [`staging-review.md`](staging-review.md) — before/after staging comparison skill
 - [`todo-manager.md`](todo-manager.md) — bean creation protocol
 - [`bean-coordination.md`](bean-coordination.md) — cross-session bean coordination
 - [`coordinate.md`](coordinate.md) — session coordination
 - [Publication workflow](https://litlfred.github.io/folio-assistant/publication-workflow.html) — the content lifecycle this fits within
 - Issue [#203](https://github.com/litlfred/folio-assistant/issues/203)
+

@@ -143,14 +143,17 @@ jobs:
             schemas/lean-packages.ts 2>&1 | tail -10
 
       # Add a staging banner to every HTML page so a reviewer never
-      # mistakes staged content for the published site.
+      # mistakes staged content for the published site. Bright magenta
+      # with a link to the source branch on GitHub.
       - name: Inject staging banner
         run: |
           SHA="${GITHUB_SHA:0:7}"
           BRANCH="${{ steps.slug.outputs.branch }}"
           BUILT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           PR="${{ github.event.pull_request.number || 'n/a' }}"
-          BANNER="<div style=\"background:#fbbf24;color:#1e1e1e;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999\">⚠️ <b>STAGING</b> — branch <code>${BRANCH}</code> · commit <code>${SHA}</code> · built ${BUILT} · PR #${PR} · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\">build log</a></div>"
+          BRANCH_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/${BRANCH}"
+          MAIN_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          BANNER="<div style=\"background:#d946ef;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui\">🔀 <b>FEATURE BRANCH</b> — <a href=\"${BRANCH_URL}\" style=\"color:#fff;text-decoration:underline\"><code>${BRANCH}</code></a> · commit <code>${SHA}</code> · built ${BUILT} · PR #${PR} · <a href=\"${MAIN_URL}\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a> · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\" style=\"color:#fff;text-decoration:underline\">build log</a></div>"
           find ./_site -name "*.html" -exec sed -i "s|<body|<body>${BANNER}|" {} + 2>/dev/null || true
           echo "Injected staging banner into $(find ./_site -name '*.html' | wc -l) HTML files"
 
@@ -206,6 +209,8 @@ jobs:
             }
 
   # ── Cleanup: remove STAGING/<slug>/ when PR is closed ─────────
+  # REQUIRES explicit user confirmation via the 'staging:cleanup' label.
+  # Without that label, staging persists so reviewers can still compare.
   cleanup:
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
@@ -221,7 +226,19 @@ jobs:
           SLUG=$(echo "$BRANCH" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
 
-      - name: Remove staging directory
+      - name: Check for cleanup confirmation
+        id: check
+        run: |
+          # Only remove staging if the PR has the 'staging:cleanup' label
+          LABELS='${{ toJSON(github.event.pull_request.labels.*.name) }}'
+          if echo "$LABELS" | grep -q 'staging:cleanup'; then
+            echo "confirmed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "confirmed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Remove staging directory (confirmed)
+        if: steps.check.outputs.confirmed == 'true'
         run: |
           SLUG="${{ steps.slug.outputs.slug }}"
           if [ -d "STAGING/$SLUG" ]; then
@@ -235,3 +252,28 @@ jobs:
           else
             echo "No staging directory found for $SLUG (already cleaned up)"
           fi
+
+      - name: Post retention notice (not confirmed)
+        if: steps.check.outputs.confirmed == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const slug = '${{ steps.slug.outputs.slug }}';
+            const pagesUrl = `https://${owner}.github.io/${repo}/STAGING/${slug}/`;
+            const body = [
+              '### 📌 Staging preview retained',
+              '',
+              `The staging preview at [${pagesUrl}](${pagesUrl}) has **not** been removed.`,
+              '',
+              'To remove it, add the \`staging:cleanup\` label to this PR and re-run',
+              'this workflow, or manually delete the `STAGING/' + slug + '/` directory',
+              'from the `gh-pages` branch.',
+              '',
+              '_Staging previews require explicit human confirmation to remove,_',
+              '_so reviewers can continue comparing before/after._',
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner, repo, issue_number: context.issue.number, body,
+            });
+
