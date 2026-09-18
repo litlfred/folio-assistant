@@ -14,9 +14,10 @@
   <style id="jtd-nav-activation">
   
 
+    .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li:not(:nth-child(21)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li a {
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(83)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
@@ -25,12 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(21) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(83) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(21) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(83) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(21) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(83) > ul.nav-list {
       display: block;
     }
   </style>
@@ -50,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Contributing | folio-assistant</title>
+<title>Prepare-merge | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Contributing" />
+<meta property="og:title" content="Prepare-merge" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/contributing.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/contributing.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/prepare-merge.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/prepare-merge.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Contributing" />
+<meta property="twitter:title" content="Prepare-merge" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Contributing","url":"https://litlfred.github.io/folio-assistant/contributing.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Prepare-merge","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/prepare-merge.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -297,128 +300,209 @@
 </div>
 
     <div class="main-content-wrap">
-      
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Prepare-merge</span></li>
+  </ol>
+</nav>
+
+
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="contributing">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/prepare-merge.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/prepare-merge.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/prepare-merge.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="prepare-merge--get-a-feature-branch-ready-to-land">
   
   
-    <a href="#contributing" class="anchor-heading" aria-labelledby="contributing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Contributing
+    <a href="#prepare-merge--get-a-feature-branch-ready-to-land" class="anchor-heading" aria-labelledby="prepare-merge--get-a-feature-branch-ready-to-land"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Prepare-merge — get a feature branch ready to land
   
   
 </h1>
     
 
-<ol id="markdown-toc">
-  <li><a href="#development-setup" id="markdown-toc-development-setup">Development setup</a></li>
-  <li><a href="#work-plan-with-beans" id="markdown-toc-work-plan-with-beans">Work-plan with <code class="language-plaintext highlighter-rouge">beans</code></a></li>
-  <li><a href="#agent-guidance" id="markdown-toc-agent-guidance">Agent guidance</a></li>
-  <li><a href="#documentation" id="markdown-toc-documentation">Documentation</a></li>
-  <li><a href="#shipping-a-change" id="markdown-toc-shipping-a-change">Shipping a change</a></li>
-</ol><hr />
-<h2 id="development-setup">
+<p>Canonical, repo-agnostic skill for taking a <code class="language-plaintext highlighter-rouge">claude/*</code> (or any feature) branch
+to a <strong>clean, conflict-free, green, pushed</strong> state so it can be merged with no
+surprises. This is the <strong>generic source of truth</strong>; downstream repos (e.g. qou)
+vendor or sync it rather than hand-maintaining their own copy.</p>
+
+<p><strong>“Prepare-merge” ≠ “merge”.</strong> It makes the branch <em>mergeable</em> and stops. It
+does <strong>not</strong> push to the default branch and does <strong>not</strong> merge a PR. Both are
+outward-facing, hard-to-reverse actions — do them only on an explicit request.</p>
+<h2 id="the-problem-this-solves">
   
   
-    <a href="#development-setup" class="anchor-heading" aria-labelledby="development-setup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Development setup
+    <a href="#the-problem-this-solves" class="anchor-heading" aria-labelledby="the-problem-this-solves"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The problem this solves
   
   
 </h2>
     
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/litlfred/folio-assistant.git
-<span class="nb">cd </span>folio-assistant
-bun <span class="nb">install
-</span>bun <span class="nb">test</span>          <span class="c"># unit tests</span>
-bun run lint      <span class="c"># eslint</span>
-bunx playwright <span class="nb">test</span>   <span class="c"># e2e (test:e2e)</span>
+<p>“prepare-merge” / “make it mergeable” / “ship it” is a plain-English ask, not a
+built-in command. Without a codified recipe each agent re-derives the steps and
+may do them inconsistently or unsafely (force-push over a sibling, push straight
+to <code class="language-plaintext highlighter-rouge">main</code>, declare green while sitting on pre-existing failures). This skill is
+the one recipe.</p>
+<h2 id="recipe">
+  
+  
+    <a href="#recipe" class="anchor-heading" aria-labelledby="recipe"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Recipe
+  
+  
+</h2>
+    
+
+<ol>
+  <li><strong>Clean + committed.</strong> <code class="language-plaintext highlighter-rouge">git status --short</code> must be empty. Commit outstanding
+work first (the container is ephemeral — uncommitted work is lost on resume).</li>
+  <li><strong>Fetch the base + your branch</strong> (retry on network error, backoff 2/4/8/16s):
+<code class="language-plaintext highlighter-rouge">git fetch origin &lt;base&gt; &lt;branch&gt;</code>.</li>
+  <li><strong>Integrate if the base moved.</strong> Compare <code class="language-plaintext highlighter-rouge">git merge-base HEAD origin/&lt;base&gt;</code>
+to <code class="language-plaintext highlighter-rouge">git rev-parse origin/&lt;base&gt;</code>:
+    <ul>
+      <li><strong>Equal</strong> → base hasn’t moved; nothing to do (your branch is a clean
+fast-forward).</li>
+      <li><strong>Different</strong> → rebase onto the base: <code class="language-plaintext highlighter-rouge">git rebase origin/&lt;base&gt;</code> (preferred
+for a linear history) or merge it in. Resolve conflicts, then re-run the
+green check. A rebase needs a force-push <strong>with lease</strong>:
+<code class="language-plaintext highlighter-rouge">git push --force-with-lease</code> — never a bare <code class="language-plaintext highlighter-rouge">--force</code> (it clobbers sibling
+pushes).</li>
+    </ul>
+  </li>
+  <li><strong>Prove it merges cleanly</strong> (no assumptions):
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">git merge-base --is-ancestor origin/&lt;base&gt; HEAD</code> → success means a clean
+fast-forward: git fast-forwards without running a merge, so conflicts are
+impossible. This alone is sufficient.</li>
+      <li>Otherwise (base moved, not yet rebased) dry-run with the modern form and
+trust its <strong>exit code</strong>: <code class="language-plaintext highlighter-rouge">git merge-tree --write-tree origin/&lt;base&gt; HEAD</code>
+(exit 0 = clean; non-zero = conflicts; add <code class="language-plaintext highlighter-rouge">--name-only</code> to list the
+conflicted paths). Do <strong>not</strong> grep the old three-arg output for
+<code class="language-plaintext highlighter-rouge">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> / “changed in both” — that false-positives on files which
+legitimately contain those literals (docs about merge conflicts, test
+fixtures — this very skill tripped that check when it was first run).</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Green check.</strong> Run the project’s tests/build (here: <code class="language-plaintext highlighter-rouge">bun test</code>, plus
+<code class="language-plaintext highlighter-rouge">bun build &lt;file&gt; --target=bun</code> for type-checking touched files). Report
+<strong>honestly</strong>: distinguish failures you caused from pre-existing ones (diff the
+counts against a baseline run on the merge-base). Do not call a branch green
+by silently inheriting red.</p>
+
+    <p><strong>Know what the target covered.</strong> Green is a claim about the files the build
+compiled, which is usually fewer than the files on disk — build targets
+default to a root plus its transitive imports. Confirm the files <em>you
+touched</em> were in it (artifact count vs. source count, or build the module by
+name), and scope any corpus-wide number you quote to what actually ran. In
+qou, <code class="language-plaintext highlighter-rouge">lake build</code> reaches 853 of 1618 Lean modules, so a touched file can be
+green purely by never having been compiled.</p>
+
+    <p>For <code class="language-plaintext highlighter-rouge">contentType: paper</code> branches that touch content blocks, also run the
+<strong><code class="language-plaintext highlighter-rouge">block_pdf_render</code></strong> gate:</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/render-changed-blocks.ts [--upload-drive]
+</code></pre></div>    </div>
+    <p>This compiles a standalone PDF for every changed block and scrapes the
+LaTeX log; <code class="language-plaintext highlighter-rouge">--upload-drive</code> additionally pushes clean PDFs to Google Drive
+when it is configured. Exits 1 on LaTeX errors (fix required); exits 0 with warnings
+only (advisory); exits 2 on setup problems — including <strong>no local
+<code class="language-plaintext highlighter-rouge">latexmk</code></strong>, which is the common case in a container. Exit 2 means the gate
+did <strong>not run</strong>; report it that way rather than folding it into a green,
+per the same honesty rule as the build above.</p>
+  </li>
+  <li><strong>Push</strong> the feature branch (retry/backoff as in step 2):
+<code class="language-plaintext highlighter-rouge">git push -u origin &lt;branch&gt;</code>.</li>
+  <li>
+    <p><strong>Dispatch the repo’s CI on the pushed branch, and fold the result into the
+PR.</strong> Local green is not CI green — CI runs on a cold cache, its own
+toolchain, and without whatever build flags you set locally. So after the
+push, trigger the relevant workflow against your branch
+(<code class="language-plaintext highlighter-rouge">gh workflow run &lt;wf&gt;.yml --ref &lt;branch&gt;</code>, or the <code class="language-plaintext highlighter-rouge">actions_run_trigger</code>
+MCP tool), wait for it, and put the <strong>run URL and conclusion</strong> in the PR
+body. Red → fix and re-dispatch. Do not open a PR citing a workflow nobody
+ran.</p>
+
+    <p>If you lack <code class="language-plaintext highlighter-rouge">actions: write</code> and dispatch returns 403, do <strong>not</strong> quietly
+skip it: state in the PR that CI was not run, and give the exact command a
+maintainer should run.</p>
+
+    <p><strong>Find the workflow by reading <code class="language-plaintext highlighter-rouge">.github/workflows/</code>, not by name.</strong> The
+example this step used to give — qou’s <code class="language-plaintext highlighter-rouge">lean_ci.yml</code> — was deleted in that
+repo’s workflows migration, and an agent following the old text went
+looking for it, found nothing, and guessed <code class="language-plaintext highlighter-rouge">build.yml</code>, which is a
+<em>publish</em> workflow. Guessing a workflow name is how this gate gets skipped
+while appearing to run.</p>
+
+    <p>In qou today the Lean-adjacent gates are <code class="language-plaintext highlighter-rouge">lean-orphan-gate.yml</code>,
+<code class="language-plaintext highlighter-rouge">lean-content-siblings.yml</code> and <code class="language-plaintext highlighter-rouge">probe-float64-gate.yml</code>. <strong>All of them,
+and every other workflow in that repo, are <code class="language-plaintext highlighter-rouge">workflow_dispatch</code>-only</strong> — an
+owner directive of 2026-06-30 disabled auto-triggers over Actions billing.
+So nothing runs on push or PR, and “CI is green” is never true by default;
+it is only ever true because someone dispatched it.</p>
+
+    <p>Several of those files document a <strong>local equivalent in their own header</strong>
+— e.g. <code class="language-plaintext highlighter-rouge">bun run content/pipeline/lean-orphan-audit.ts --diff &lt;changed .lean&gt;</code>
+and <code class="language-plaintext highlighter-rouge">python3 scripts/probe-float64-guard.py --diff &lt;changed .py&gt;</code>. Run
+those; they are the same check without the dispatch. Read the workflow
+before assuming there is no local path.</p>
+
+    <p><em>Why this is a step and not advice:</em> qou’s Lean CI last ran 2026-04-25 and
+failed on <code class="language-plaintext highlighter-rouge">main</code>. Nothing dispatched it for four months, and 37 modules
+silently stopped compiling — several with plain parse errors, i.e. files
+that had never compiled at all. The regression was invisible precisely
+because a workflow existed and no one ran it. Check when CI last ran
+(<code class="language-plaintext highlighter-rouge">actions_list</code> → <code class="language-plaintext highlighter-rouge">list_workflow_runs</code>) as part of this step; “there is a
+workflow” is not evidence anything is being checked, and in a
+dispatch-only repo it is evidence of the opposite.</p>
+  </li>
+  <li><strong>Stop here</strong> unless a PR / merge was explicitly requested. If a PR <em>was</em>
+requested, see below.</li>
+</ol>
+<h2 id="opening-the-pr-only-when-asked">
+  
+  
+    <a href="#opening-the-pr-only-when-asked" class="anchor-heading" aria-labelledby="opening-the-pr-only-when-asked"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opening the PR (only when asked)
+  
+  
+</h2>
+    
+
+<p>GitHub access here is via the <strong>GitHub MCP server</strong>, whose tools are
+<strong>deferred</strong> (lazy-loaded). At session start they appear as names only — you
+cannot call them until you load the schema:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ToolSearch  "select:mcp__github__create_pull_request"
 </code></pre></div></div>
-<h2 id="work-plan-with-beans">
-  
-  
-    <a href="#work-plan-with-beans" class="anchor-heading" aria-labelledby="work-plan-with-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Work-plan with <code class="language-plaintext highlighter-rouge">beans</code>
-  
-  
-</h2>
-    
 
-<p>This project uses <a href="https://github.com/hmans/beans"><code class="language-plaintext highlighter-rouge">beans</code></a> as the single
-todo/work-plan mechanism (see <code class="language-plaintext highlighter-rouge">AGENTS.md</code>). Do <strong>not</strong> stand up a separate todo
-store.</p>
+<p>Then call <code class="language-plaintext highlighter-rouge">mcp__github__create_pull_request</code> with <code class="language-plaintext highlighter-rouge">owner</code>, <code class="language-plaintext highlighter-rouge">repo</code>, <code class="language-plaintext highlighter-rouge">head</code>
+(the feature branch), <code class="language-plaintext highlighter-rouge">base</code>. This “load-then-call” round-trip is by design —
+not a failure — and is needed once per deferred tool per session. The same
+applies to every <code class="language-plaintext highlighter-rouge">mcp__github__*</code> tool (review, comment, merge, CI status).</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts/install-beans.sh
-beans list
-beans create <span class="s2">"&lt;title&gt;"</span>
-beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>   <span class="c"># claim before you work</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">beans ≠ sidecars</code>: never <code class="language-plaintext highlighter-rouge">beans create</code> bulk machine-generated queues (QA,
-witness, watcher) — those stay as bulk JSON.</p>
-<h2 id="agent-guidance">
+<p>PR body convention: end with the Claude Code footer + session link (see the
+harness git instructions). Do not include the model identifier in the PR.</p>
+<h2 id="guardrails">
   
   
-    <a href="#agent-guidance" class="anchor-heading" aria-labelledby="agent-guidance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agent guidance
-  
-  
-</h2>
-    
-
-<p><code class="language-plaintext highlighter-rouge">AGENTS.md</code> is the agent-generic source of truth (read natively by Claude Code,
-Gemini CLI, Antigravity, Cursor, Copilot). <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> / <code class="language-plaintext highlighter-rouge">GEMINI.md</code> are thin
-stubs that point to it. Update <code class="language-plaintext highlighter-rouge">AGENTS.md</code> rather than a tool-specific file when
-changing agent guidance.</p>
-<h2 id="documentation">
-  
-  
-    <a href="#documentation" class="anchor-heading" aria-labelledby="documentation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Documentation
+    <a href="#guardrails" class="anchor-heading" aria-labelledby="guardrails"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Guardrails
   
   
 </h2>
     
 
 <ul>
-  <li>Prose docs live under <code class="language-plaintext highlighter-rouge">docs/</code> (this Jekyll site).</li>
-  <li>
-    <p><strong>Skill schema reference</strong> is generated — never hand-edit
-<code class="language-plaintext highlighter-rouge">docs/reference/skills/*.md</code>. Edit the JSON Schemas under
-<code class="language-plaintext highlighter-rouge">schemas/skills/&lt;skill&gt;/</code> and regenerate:</p>
-
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/gen-schema-docs.ts
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p><strong>Skill instructions</strong> (<code class="language-plaintext highlighter-rouge">docs/reference/skill-instructions/*.md</code>) are also
-generated — never hand-edit them. Edit the skill bodies under
-<code class="language-plaintext highlighter-rouge">skills/content-lifecycle/*.md</code> or <code class="language-plaintext highlighter-rouge">src/skills/*.md</code> and regenerate:</p>
-
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/gen-skill-docs.ts
-</code></pre></div>    </div>
-  </li>
-  <li>The <strong>TypeScript API reference</strong> (<code class="language-plaintext highlighter-rouge">/api/</code>) is generated by TypeDoc in CI.</li>
-  <li>The site is built and deployed to GitHub Pages by
-<code class="language-plaintext highlighter-rouge">.github/workflows/docs-site.yml</code> on every push to <code class="language-plaintext highlighter-rouge">main</code> that touches docs,
-schemas, or the source.</li>
+  <li><strong>Never push to the default branch</strong> and <strong>never merge a PR</strong> without an
+explicit ask. Prepare-merge leaves the decision to the human.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">--force-with-lease</code>, never bare <code class="language-plaintext highlighter-rouge">--force</code></strong> when a rebase rewrote history.</li>
+  <li><strong>Honest green.</strong> Pre-existing red is reported as pre-existing, with evidence;
+your-change red blocks the “ready” claim.</li>
+  <li><strong>One branch.</strong> Develop on the assigned <code class="language-plaintext highlighter-rouge">claude/*</code> branch; moving work to a
+different branch needs explicit permission.</li>
 </ul>
-
-<p>Preview locally:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>docs
-bundle <span class="nb">install
-</span>bundle <span class="nb">exec </span>jekyll serve
-</code></pre></div></div>
-<h2 id="shipping-a-change">
-  
-  
-    <a href="#shipping-a-change" class="anchor-heading" aria-labelledby="shipping-a-change"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Shipping a change
-  
-  
-</h2>
-    
-
-<p>Verify → confirm mergeable → push → (only if asked) open a PR. See
-<code class="language-plaintext highlighter-rouge">skills/folio-core/prepare-merge.md</code>. Keep the <strong>formalism of the framework
-separate from content</strong> — content belongs in its own repository, and any content
-in these docs is illustrative only.</p>
 
           
 
