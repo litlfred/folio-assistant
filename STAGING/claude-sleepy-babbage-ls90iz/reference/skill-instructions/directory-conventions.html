@@ -156,7 +156,7 @@
 
 </head>
 
-<body><div style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/sleepy-babbage-ls90iz" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/sleepy-babbage-ls90iz</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">bfe4605</span> · built 2026-09-18T17:08:42Z · PR #251 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35372462211" style="color:#fff;text-decoration:underline">build log</a></div>
+<body><div style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/sleepy-babbage-ls90iz" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/sleepy-babbage-ls90iz</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">dad5b86</span> · built 2026-09-18T17:10:13Z · PR #251 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35372517155" style="color:#fff;text-decoration:underline">build log</a></div>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -500,6 +500,28 @@ not two. <code class="language-plaintext highlighter-rouge">readDeclaration</cod
 the projection emits <code class="language-plaintext highlighter-rouge">@type</code> <em>instead of</em> <code class="language-plaintext highlighter-rouge">graph</code>, so reading the published
 form back without the reverse lookup silently loses the one field that says
 what a directory holds.</p>
+<h2 id="skills-are-kg-content">
+  
+  
+    <a href="#skills-are-kg-content" class="anchor-heading" aria-labelledby="skills-are-kg-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Skills are KG content
+  
+  
+</h2>
+    
+
+<p>The <code class="language-plaintext highlighter-rouge">kg</code> graph is where skills live, and that is why they are addressed through
+the declaration rather than by path. An agent asks <code class="language-plaintext highlighter-rouge">skill_list</code> / <code class="language-plaintext highlighter-rouge">skill_fetch</code>
+for a skill; it does not open <code class="language-plaintext highlighter-rouge">skills/&lt;something&gt;.md</code> from memory. An instance
+may site its <code class="language-plaintext highlighter-rouge">kg</code> anywhere — this repo’s <code class="language-plaintext highlighter-rouge">kg</code> id points at <code class="language-plaintext highlighter-rouge">skills/</code> — and a
+downstream instance inherits its dependencies’ skills through the same
+inheritance rules above. A hardcoded path breaks on the first relocation, which
+is the whole reason overrides match on <code class="language-plaintext highlighter-rouge">id</code>.</p>
+
+<p><strong>Not yet true end to end.</strong> <code class="language-plaintext highlighter-rouge">resolveSkillDirs</code> (<code class="language-plaintext highlighter-rouge">schemas/folio-config.ts</code>)
+computes the cross-instance overlay and has <strong>no caller</strong>, so skill discovery is
+root-only in practice today and a dependency’s skills are not reachable. Stated
+here rather than implied, because an agent that assumes inheritance works will
+silently miss half its instructions.</p>
 <h2 id="layering--a-harness-module-must-not-import-the-content-vocabulary">
   
   
@@ -557,7 +579,7 @@ compile.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35372462211"><code>bfe4605</code></a> &middot; 2026-09-18T17:08:18Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35372517155"><code>dad5b86</code></a> &middot; 2026-09-18T17:09:46Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
