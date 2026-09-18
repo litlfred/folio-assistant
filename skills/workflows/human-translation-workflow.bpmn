@@ -139,6 +139,9 @@ msgstr translations. They:
 - Preserve placeholder tokens ({1}, {2}) in position
 - Mark uncertain translations as #fuzzy
 - Note any source ambiguities for the coordinator</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager" />
+      </bpmn:extensionElements>
     </bpmn:userTask>
 
     <bpmn:userTask id="Task_SubmitPO" name="Submit completed&#10;.po file">

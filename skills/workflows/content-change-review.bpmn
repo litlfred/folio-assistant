@@ -64,6 +64,9 @@
         Author describes the content change in natural language.
         Example: "Update the immunization schedule to add a booster at 18 months."
       </bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:no-skill reason="The author states, in their own words, the change they want. There is no procedure that produces somebody's intent for them." />
+      </bpmn:extensionElements>
       <bpmn:incoming>f1</bpmn:incoming>
       <bpmn:outgoing>f2</bpmn:outgoing>
     </bpmn:task>
@@ -93,6 +96,9 @@
         Author provides feedback on what needs adjustment.
         Agent iterates on the feature branch.
       </bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="staging-review" />
+      </bpmn:extensionElements>
       <bpmn:incoming>f4</bpmn:incoming>
       <bpmn:outgoing>f5</bpmn:outgoing>
     </bpmn:task>
@@ -102,6 +108,9 @@
         Author submits the PR for formal review by the guidance review committee.
         The STAGING URL is the review surface.
       </bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="staging-review" />
+      </bpmn:extensionElements>
       <bpmn:incoming>f6</bpmn:incoming>
       <bpmn:outgoing>f7</bpmn:outgoing>
       <bpmn:outgoing>flow_submit_to_reviewer</bpmn:outgoing>

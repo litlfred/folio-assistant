@@ -81,6 +81,9 @@
     </bpmn:startEvent>
     <bpmn:userTask id="Task_DescribeChange" name="Describe the intended change">
       <bpmn:documentation>The editor states the change in natural language; no content has moved yet.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:no-skill reason="The editor states the change they intend. Origination of intent, not execution of a method — nothing for an instruction body to say." />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_01</bpmn:incoming>
       <bpmn:outgoing>Flow_02</bpmn:outgoing>
     </bpmn:userTask>

@@ -52,7 +52,7 @@ skipped there rather than satisfied vacuously.
 ## The subprocess
 {: #the-subprocess }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/evidence-retrieval.bpmn){: .fa-node-edit title="Edit skills/workflows/evidence-retrieval.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-fail fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/evidence/the-subprocess.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 1 fail, 0 warn, 6 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 1 fail, 0 warn, 6 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✕</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/evidence-retrieval.bpmn){: .fa-node-edit title="Edit skills/workflows/evidence-retrieval.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/evidence/the-subprocess.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
 Four lanes, because four different kinds of actor are involved and conflating
 them is how accountability gets lost:

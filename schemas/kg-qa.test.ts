@@ -32,9 +32,13 @@ describe("the criteria registry", () => {
     }
   });
 
-  test("a broken reference is critical and a coverage gap is not", () => {
+  test("a broken reference is critical and an absent one is not", () => {
     expect(KG_CRITERIA_BY_ID["skill-ref-resolves"]!.severity).toBe("critical");
-    expect(KG_CRITERIA_BY_ID["activity-names-skill"]!.severity).toBe("minor");
+    // `activity-names-skill` was `minor` while it could not tell a legitimate
+    // human step from a real gap. Now that every legitimate case is declared
+    // — `actedUpon`, `judgementOnly`, `<folio:no-skill reason>` — what is left
+    // is a missing join. Still not `critical`: nothing dangles.
+    expect(KG_CRITERIA_BY_ID["activity-names-skill"]!.severity).toBe("major");
   });
 
   test("`call-activity-resolves` is not critical — an outward call is not a defect", () => {
@@ -76,7 +80,12 @@ describe("tally and worstSeverity", () => {
   });
 
   test("`unknown` is NOT promoted past its criterion's own severity", () => {
-    expect(worstSeverity(mk({ "activity-names-skill": { result: "unknown", findings: [] } }))).toBe("minor");
+    // This used `activity-names-skill`, which was the only `minor` criterion
+    // applying to a process. Once its exemptions became declarations it earned
+    // `major`, and NO process criterion is `minor` any more — so the example
+    // has to come from another subject kind. `role-binds-a-lane` is `minor`:
+    // a role nothing enters is a real gap with legitimate instances.
+    expect(worstSeverity(mk({ "role-binds-a-lane": { result: "unknown", findings: [] } }))).toBe("minor");
   });
 
   test("the worst severity wins, not the most frequent", () => {

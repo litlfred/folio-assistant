@@ -5,10 +5,10 @@
     "id": "Process_EvidenceRetrieval",
     "path": "skills/workflows/evidence-retrieval.bpmn"
   },
-  "source_hash": "sha256:4b07fdedb23350d5a4847463bd80ea336c2ad863fa33848b5bf8af4c29ebc8a4",
+  "source_hash": "sha256:681cf9ec843e447e6401e9bc385caed05a738961fe267662aeca75737315025e",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:fd86e120ed4c0f1fe08c22354b901ce1400683e45baedeec0dcb0e4d1f4c43fe",
+    "script_hash": "sha256:0f00819b8600f680ebb54e31dd4d2475a4c0905e8a70221bb23c6b0df499d0bf",
     "engine_version": "1"
   },
   "criteria": {
@@ -41,17 +41,8 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_VerifyAuthority",
-          "detail": "\"Verify authority against the observatory / registry API\" names no skill."
-        },
-        {
-          "where": "Task_AppraiseGrade",
-          "detail": "\"Appraise and grade the body of evidence\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "call-activity-resolves": {
       "result": "n/a",
@@ -59,8 +50,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 7,
+    "fail": 0,
     "n/a": 2,
     "unknown": 0
   }

@@ -5,10 +5,10 @@
     "id": "Process_Editing",
     "path": "skills/workflows/editing-hci-validation.bpmn"
   },
-  "source_hash": "sha256:36aa106859487c8c54da5b47511d5271de1769ece2cb61e1c6fc5c684f9dc1cb",
+  "source_hash": "sha256:b359ef0496a8c0874a2f1fc5c53e642537d88c1d434f61b4f31e356b1e49dc59",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:fd86e120ed4c0f1fe08c22354b901ce1400683e45baedeec0dcb0e4d1f4c43fe",
+    "script_hash": "sha256:0f00819b8600f680ebb54e31dd4d2475a4c0905e8a70221bb23c6b0df499d0bf",
     "engine_version": "1"
   },
   "criteria": {
@@ -41,17 +41,8 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_DescribeChange",
-          "detail": "\"Describe the intended change\" names no skill."
-        },
-        {
-          "where": "Task_Commit",
-          "detail": "\"Commit into the corpus\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "call-activity-resolves": {
       "result": "pass",
@@ -59,8 +50,8 @@
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 1,
+    "pass": 8,
+    "fail": 0,
     "n/a": 1,
     "unknown": 0
   }

@@ -216,7 +216,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 ## Editing and the HCI validation gate
 {: #editing-and-the-hci-validation-gate }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/editing-hci-validation.bpmn){: .fa-node-edit title="Edit skills/workflows/editing-hci-validation.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-fail fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/publication-workflow/editing-and-the-hci-validation-gate.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 1 fail, 0 warn, 7 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 1 fail, 0 warn, 7 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✕</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/editing-hci-validation.bpmn){: .fa-node-edit title="Edit skills/workflows/editing-hci-validation.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/publication-workflow/editing-and-the-hci-validation-gate.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
 This is the diagram that matters most day to day: **one proposed change to one
 content block**.
