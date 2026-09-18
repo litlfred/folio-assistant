@@ -159,7 +159,26 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     summary:
       "The work plan — what is being worked on, and where each running BPMN instance got to. " +
-      "Its `defs` and `workflows` nodes are declared by `beans/beans.json`.",
+      "Its inner directories are declared by `beans/beans.json`.",
+  },
+  // The two parts of the bean graph. They are BASE kinds rather than
+  // something `bean-graph.ts` registers separately, because a directory and
+  // what it holds is one concept and this is where it lives — `bean-graph.ts`
+  // had grown a parallel closed vocabulary (`BEAN_NODE_KINDS`) saying the same
+  // thing in different words.
+  "bean-defs": {
+    type: `${FOLIO_NS}BeanDefsGraph`,
+    renderable: false,
+    summary:
+      "Work items — one Markdown file each, in the layout the `beans` CLI reads. " +
+      "Authored and edited by people and agents.",
+  },
+  "workflow-state": {
+    type: `${FOLIO_NS}WorkflowStateGraph`,
+    renderable: false,
+    summary:
+      "Running BPMN instances — one JSON file each, carrying " +
+      "`\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
   },
 };
 
@@ -245,7 +264,23 @@ export interface ContentDirectory {
   /** Repo-relative directory, with or without a trailing slash. */
   path: string;
   /** What kind of graph lives there. */
-  graph: GraphKind;
+  /**
+   * Which parts of the knowledge graph this directory holds — an ARRAY,
+   * because a directory is a PLACE TO LOOK and may hold more than one.
+   *
+   * It does not say how to tell the contents apart, and that is deliberate:
+   * **the files declare what they are.** A bean carries its id, `title`,
+   * `status` and `type` in front matter; a workflow instance carries
+   * `"$schema": "folio-workflow-instance/v1"`. A consumer reads a file and
+   * the file answers, so a declaration states what to EXPECT rather than how
+   * to discriminate.
+   *
+   * Was singular `graph`. Made an array 2026-09-18 so that this schema and
+   * the bean graph state the same fact the same way — they had diverged into
+   * `graph: "kg"` here and `kinds: ["bean-defs"]` there, two spellings of one
+   * concept.
+   */
+  graphs: GraphKind[];
   /** Optional one-line description for `--list` style output. */
   summary?: string;
 }
@@ -265,7 +300,7 @@ export const ContentDirectorySchema = z.object({
   // A closed enum would have to be built at module load, which is before core
   // has registered `folio` — so the enum would reject the one kind the whole
   // rendering pipeline depends on.
-  graph: z.string().min(1),
+  graphs: z.array(z.string().min(1)).min(1),
   summary: z.string().optional(),
 });
 
@@ -305,13 +340,15 @@ export function readDeclaration(
   // vocabulary is open: the set of valid kinds is whatever has been registered
   // by the time the declaration is read, not what existed at module load.
   for (const dir of parsed.data.directories) {
-    if (!registry.has(dir.graph)) {
-      throw new Error(
-        `${p}: directory "${dir.id}" declares unknown graph kind "${dir.graph}". ` +
-          `Known kinds: ${registry.names().join(", ")}. ` +
-          `A kind contributed by a dependency must be registered before the ` +
-          `declaration is read.`,
-      );
+    for (const g of dir.graphs) {
+      if (!registry.has(g)) {
+        throw new Error(
+          `${p}: directory "${dir.id}" declares unknown graph kind "${g}". ` +
+            `Known kinds: ${registry.names().join(", ")}. ` +
+            `A kind contributed by a dependency must be registered before the ` +
+            `declaration is read.`,
+        );
+      }
     }
   }
   return parsed.data;
@@ -321,7 +358,7 @@ export function readDeclaration(
  * Drop JSON-LD keywords before Zod sees the object.
  *
  * The published form carries `@context` and per-node `@id` / `@type`, which
- * are projections of `id` and `graph` rather than extra data. Keeping them out
+ * are projections of `id` and `graphs` rather than extra data. Keeping them out
  * of the validated shape means the schema describes the authored object and
  * the graph projection stays derivable — the same split as
  * `schemas/jsonld.ts` draws for blocks.
@@ -336,9 +373,17 @@ function stripJsonLd(raw: unknown, registry: GraphKindRegistry): unknown {
     o.directories = o.directories.map((d) => {
       if (typeof d !== "object" || d === null) return d;
       const e = { ...(d as Record<string, unknown>) };
-      if (typeof e["@type"] === "string" && e.graph === undefined) {
-        const kind = registry.forType(e["@type"] as string);
-        if (kind) e.graph = kind;
+      // `@type` recovers `graphs`, and handles both projected forms: a single
+      // type stays a string, several become a list. A type the registry does
+      // not know is DROPPED rather than guessed — recovering the wrong kind is
+      // worse than recovering none, because the reader has no way to tell.
+      if (e.graphs === undefined && e["@type"] !== undefined) {
+        const types = Array.isArray(e["@type"]) ? e["@type"] : [e["@type"]];
+        const kinds = types
+          .filter((t): t is string => typeof t === "string")
+          .map((t) => registry.forType(t))
+          .filter((k): k is string => k !== undefined);
+        if (kinds.length > 0) e.graphs = kinds;
       }
       delete e["@type"];
       if (typeof e["@id"] === "string" && e.id === undefined) e.id = (e["@id"] as string).replace(/^#/, "");
@@ -399,7 +444,9 @@ export function renderableDirectories(
   dirs: ResolvedDirectory[],
   registry: GraphKindRegistry = defaultGraphKinds,
 ): ResolvedDirectory[] {
-  return dirs.filter((d) => isRenderable(d.graph, registry));
+  // Renderable if ANY declared graph is: a directory holding a folio plus
+  // something else still renders.
+  return dirs.filter((d) => d.graphs.some((g) => isRenderable(g, registry)));
 }
 
 // ── Graph projection ────────────────────────────────────────────
@@ -419,11 +466,17 @@ export function toJsonLd(
     "@context": { fa: FOLIO_NS, path: `${FOLIO_NS}path`, directories: `${FOLIO_NS}scans` },
     "@type": `${FOLIO_NS}AgentHarness`,
     name: decl.name,
-    directories: decl.directories.map((d) => ({
-      "@id": `#${d.id}`,
-      "@type": registry.get(d.graph)?.type ?? `${FOLIO_NS}UnknownGraph`,
-      path: d.path,
-      ...(d.summary ? { summary: d.summary } : {}),
-    })),
+    directories: decl.directories.map((d) => {
+      const types = d.graphs.map((g) => registry.get(g)?.type ?? `${FOLIO_NS}UnknownGraph`);
+      return {
+        "@id": `#${d.id}`,
+        // One type stays a string, several become a list — JSON-LD permits
+        // both, and emitting a one-element array for the common case would
+        // make every existing published form look changed.
+        "@type": types.length === 1 ? types[0] : types,
+        path: d.path,
+        ...(d.summary ? { summary: d.summary } : {}),
+      };
+    }),
   };
 }

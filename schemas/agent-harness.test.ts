@@ -36,9 +36,9 @@ beforeAll(() => {
     JSON.stringify({
       name: "agentic-harness",
       directories: [
-        { id: "tools", path: "tools/", graph: "tools" },
-        { id: "kg", path: "kg/", graph: "kg" },
-        { id: "schemas", path: "schemas/", graph: "schemas" },
+        { id: "tools", path: "tools/", graphs: ["tools"] },
+        { id: "kg", path: "kg/", graphs: ["kg"] },
+        { id: "schemas", path: "schemas/", graphs: ["schemas"] },
       ],
     }),
     "utf-8",
@@ -48,7 +48,7 @@ beforeAll(() => {
   mkdirSync(CORE, { recursive: true });
   writeFileSync(
     join(CORE, DECLARATION_FILENAME),
-    JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", graph: "folio" }] }),
+    JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", graphs: ["folio"] }] }),
     "utf-8",
   );
 
@@ -56,7 +56,7 @@ beforeAll(() => {
   mkdirSync(RELOCATED, { recursive: true });
   writeFileSync(
     join(RELOCATED, DECLARATION_FILENAME),
-    JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", graph: "kg" }] }),
+    JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", graphs: ["kg"] }] }),
     "utf-8",
   );
 
@@ -89,7 +89,7 @@ describe("reading a declaration", () => {
     mkdirSync(bad, { recursive: true });
     writeFileSync(
       join(bad, DECLARATION_FILENAME),
-      JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", graph: "wishful" }] }),
+      JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", graphs: ["wishful"] }] }),
       "utf-8",
     );
     // The message must name the offending kind AND what is known, so the
@@ -112,7 +112,7 @@ describe("reading a declaration", () => {
     writeFileSync(join(ld, DECLARATION_FILENAME), JSON.stringify(toJsonLd(readDeclaration(HARNESS)!)), "utf-8");
     const back = readDeclaration(ld)!;
     expect(back.directories.map((d) => d.id).sort()).toEqual(["kg", "schemas", "tools"]);
-    expect(back.directories.find((d) => d.id === "kg")!.graph).toBe("kg");
+    expect(back.directories.find((d) => d.id === "kg")!.graphs).toEqual(["kg"]);
   });
 });
 
@@ -183,15 +183,17 @@ describe("layering", () => {
   });
 });
 
-describe("graph kinds — the harness declares four, core adds folio", () => {
+describe("graph kinds — the harness declares six, core adds folio", () => {
   it("the harness's own vocabulary contains no renderable kind", () => {
     // The whole point of the re-siting: agent-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
     expect(Object.keys(BASE_GRAPH_KINDS).sort()).toEqual([
+      "bean-defs",
       "beans",
       "kg",
       "schemas",
       "tools",
+      "workflow-state",
     ]);
     for (const def of Object.values(BASE_GRAPH_KINDS)) {
       expect(def.renderable).toBe(false);
@@ -203,7 +205,7 @@ describe("graph kinds — the harness declares four, core adds folio", () => {
     // naming it against a bare registry is refused.
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
-    expect(bare.names().sort()).toEqual(["beans", "kg", "schemas", "tools"]);
+    expect(bare.names().sort()).toEqual(["bean-defs", "beans", "kg", "schemas", "tools", "workflow-state"]);
   });
 
   it("core's registration adds it, and it is the renderable one", () => {
@@ -211,7 +213,7 @@ describe("graph kinds — the harness declares four, core adds folio", () => {
     registerFolioGraphKind(reg);
     expect(reg.has("folio")).toBe(true);
     expect(isRenderable("folio", reg)).toBe(true);
-    for (const k of ["tools", "kg", "schemas", "beans"]) {
+    for (const k of ["tools", "kg", "schemas", "beans", "bean-defs", "workflow-state"]) {
       expect(isRenderable(k, reg)).toBe(false);
     }
   });

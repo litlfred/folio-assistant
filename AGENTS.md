@@ -151,16 +151,45 @@ bun run readme:audit                # verify the README's links still resolve
 
 `beans/` is a **graph** with named nodes, not a directory that incidentally
 holds markdown. `beans/beans.json` declares it; the schema is
-`schemas/bean-graph.ts`.
+`schemas/bean-graph.ts`, which reuses `ContentDirectorySchema` from
+`schemas/agent-harness.ts` rather than restating it.
 
-| node | path | holds | committed |
+| directory | path | graphs | committed |
 |---|---|---|---|
-| `defs` | `beans/defs/` | the work plan — WHAT is being worked on | yes |
-| `workflows` | `beans/workflows/` | one JSON file per running BPMN instance — WHERE IT GOT TO | yes |
+| `defs` | `beans/defs/` | `bean-defs` — the work plan, WHAT is being worked on | yes |
+| `workflows` | `beans/workflows/` | `workflow-state` — one JSON per running BPMN instance, WHERE IT GOT TO | yes |
 
-Node paths are relative to `graph.json`'s own directory, so the whole graph
+**It is the same schema as `agent-harness.json`, not a parallel one.** A
+bean-graph entry IS a `ContentDirectory`: an id, a path, and `graphs` — the
+kinds found there. Same shape, same open registry, same JSON-LD projection.
+`bean-defs` and `workflow-state` are registered in `BASE_GRAPH_KINDS`
+alongside `kg`, `schemas`, `tools` and `beans`, so there is one vocabulary.
+
+This file briefly declared `nodes` with `kinds: BeanNodeKind[]`, a closed
+enum, which said exactly what `directories` with `graphs: GraphKind[]` already
+said in different words. Two spellings of one concept is the drift this repo
+keeps paying for. What stays specific to the bean graph is only what is not
+true of declarations generally: paths resolve against `beans.json`'s own
+directory rather than the instance root, and at most one directory may hold
+`workflow-state`.
+
+Node paths are relative to `beans.json`'s own directory, so the whole graph
 relocates by moving one folder. A path that is absolute or escapes its root is
 **rejected**: a store outside the graph is not a node of it.
+
+**`graphs` is an array, and it does not say how to tell the contents apart —
+the files declare what they are.** A directory is a PLACE TO LOOK and may hold
+more than one part of the graph. A bean carries its id, `title`, `status`
+and `type` in front matter; a workflow instance carries
+`"$schema": "folio-workflow-instance/v1"`, following the `qa-script/v1`
+convention the QA sidecars use. A consumer reads a file and the file answers,
+so a node states what to EXPECT rather than how to discriminate.
+
+That is what makes a multi-kind directory safe here. Before the `$schema`
+tag, instance state was identifiable only by SHAPE — duck-typed on
+`processId` and `tokens` — which is exactly the "distinguishable by extension
+… a coincidence of the current layout, not a contract" problem #263 named.
+Extension is a coincidence; a declaration inside the file is the contract.
 
 They were `.beans/` and `.harness/workflow/`. A dot-prefixed directory is absent
 from a plain `ls`, from most file browsers and from GitHub's web tree, so the two
@@ -199,6 +228,26 @@ told apart only by file extension, "a coincidence of the current layout, not a
 contract". Named nodes are that contract. The graph kinds `workplan` and
 `process-state` are replaced by the single `beans` kind for the same reason.
 See [`directory-conventions`](skills/folio-core/directory-conventions.md).
+
+**`schemas/` declares TWO graphs — the first real use of the array.**
+`graphs: ["schemas", "kg"]`: the schema definitions themselves, and `kg`
+because a schema **is** a knowledge-graph node rather than a separate island
+beside one. A directory is a place to look, and may hold more than one part
+of the graph.
+
+**Not every declared graph's files declare themselves yet.** `kg`
+(skill front matter), `bean-defs` (bean front matter) and `workflow-state`
+(`$schema`) do. `schemas/*.ts` does not: `@module` names the path rather than
+the node type, four files carry none at all, and three `.test.ts` files sit in
+the declared directory without being schema nodes — told apart only by
+filename, which is the coincidence-not-contract problem again. Bean `xxxb`.
+
+
+**Not every declared graph's files declare themselves yet.** `kg`,
+`bean-defs` and `workflow-state` do; `schemas/*.ts` does not — `@module`
+names the path rather than the node type, four files carry none, and three
+`.test.ts` files sit in the declared directory without being schema nodes.
+Bean `xxxb`.
 
 
 `.harness/` still exists and still holds `interaction.json` and `issue-comments/`;

@@ -43,7 +43,25 @@ export interface HistoryEntry {
   note?: string;
 }
 
+/**
+ * Schema tag every instance file carries.
+ *
+ * A bean-graph node says a directory holds `workflow-state`, and deliberately
+ * does NOT say how to recognise one — the files declare what they are. A bean
+ * does that already (id, `title`, `status`, `type` in front matter); this is
+ * the same for instance state, following the `"$schema": "qa-script/v1"`
+ * convention the QA script sidecars use.
+ *
+ * Without it an instance file was identifiable only by SHAPE — duck-typed on
+ * `processId` and `tokens` — which is exactly the "distinguishable by
+ * extension, a coincidence of the current layout, not a contract" problem
+ * #263 named. A declaration in the file is the contract.
+ */
+export const INSTANCE_SCHEMA = "folio-workflow-instance/v1";
+
 export interface InstanceState {
+  /** Always {@link INSTANCE_SCHEMA}. Optional on read so pre-tag files load. */
+  $schema?: string;
   id: string;
   processId: string;
   /** Path of the `.bpmn` this was started from. */
