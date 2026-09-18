@@ -275,6 +275,10 @@
         Committee provides feedback. PR stays open.
         Author and agent iterate further.
       </bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-review" />
+        <folio:skill ref="content-review" />
+      </bpmn:extensionElements>
       <bpmn:incoming>r4</bpmn:incoming>
       <bpmn:outgoing>r5</bpmn:outgoing>
     </bpmn:task>
@@ -286,6 +290,10 @@
         2. feature-staging.yml cleanup job removes STAGING/&lt;slug&gt;/
         3. The rendered content on main now carries the merged commit SHA
       </bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="decision-audit" />
+        <folio:skill ref="decision-audit" />
+      </bpmn:extensionElements>
       <bpmn:incoming>r6</bpmn:incoming>
       <bpmn:outgoing>r7</bpmn:outgoing>
       <bpmn:outgoing>flow_approve_to_pipeline</bpmn:outgoing>

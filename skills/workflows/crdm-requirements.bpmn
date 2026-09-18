@@ -80,31 +80,57 @@
     <bpmn:task id="BA_Submit" name="Describe the need&#10;(chat, issue, discussion)">
       <bpmn:documentation>The BA describes the capability gap in their own words.
 They do not need to know it is called CRDM.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="crdm-requirements-workflow" />
+      </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="BA_ReviewNeeds" name="Review synthesised&#10;needs statement">
       <bpmn:documentation>The BA reviews what the agent synthesised and
 checks it against what they actually need.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="crdm-requirements-workflow" />
+      </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="BA_ReviewReqs" name="Review requirements&#10;and impact analysis">
       <bpmn:documentation>The BA reviews the formal requirements and the
 impact analysis the agent produced.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="crdm-requirements-workflow" />
+      </bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:task id="BA_Signoff" name="Sign off on&#10;requirements"/>
+    <bpmn:task id="BA_Signoff" name="Sign off on&#10;requirements">
+      <bpmn:extensionElements>
+        <folio:skill ref="decision-audit" />
+      </bpmn:extensionElements>
+    </bpmn:task>
     <bpmn:task id="BA_ReviewIncrement" name="Review increment&#10;(test behaviour)">
       <bpmn:documentation>Inner loop: the BA tests each delivered increment
 against the acceptance criteria. They do not review code — they test behaviour.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="crdm-requirements-workflow" />
+      </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_IncrementOK" name="Meets criteria?"/>
     <bpmn:exclusiveGateway id="GW_MVPReady" name="MVP ready&#10;for stakeholders?"/>
     <bpmn:task id="BA_ShareMVP" name="Share MVP with&#10;stakeholders">
       <bpmn:documentation>Outer loop: the BA presents the accumulated increments
 to stakeholders as a testable MVP. Staging URL, demo, or walkthrough.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="crdm-requirements-workflow" />
+      </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="BA_TranslateFeedback" name="Translate feedback&#10;into agent direction">
       <bpmn:documentation>The BA translates stakeholder findings into
 actionable direction: new beans or bean updates for the agent.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="crdm-requirements-workflow" />
+      </bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:task id="BA_Confirm" name="Confirm all criteria&#10;met"/>
+    <bpmn:task id="BA_Confirm" name="Confirm all criteria&#10;met">
+      <bpmn:extensionElements>
+        <folio:skill ref="decision-audit" />
+      </bpmn:extensionElements>
+    </bpmn:task>
     <bpmn:endEvent id="End_BA" name="Feature delivered"/>
 
     <!-- ═══ Agent lane ═══ -->

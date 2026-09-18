@@ -5,10 +5,10 @@
     "id": "Process_ContentChangeReview",
     "path": "skills/workflows/content-change-review.bpmn"
   },
-  "source_hash": "sha256:4b0ded71cb277ef096a2278cbad673aa236d07a7b4c3b682460fe1909fdac281",
+  "source_hash": "sha256:cd591870ec11df0a5b7acb47195f20cbfda079805d4a389b7b97f2d66acdba66",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:565c0baa00bdb6212732c82e3176d395af13d4f8ce84524cca9a2be5b37203da",
+    "script_hash": "sha256:fd86e120ed4c0f1fe08c22354b901ce1400683e45baedeec0dcb0e4d1f4c43fe",
     "engine_version": "1"
   },
   "criteria": {
@@ -54,22 +54,18 @@
         {
           "where": "Task_SubmitForReview",
           "detail": "\"Submit to review committee\" names no skill."
-        },
-        {
-          "where": "Task_RequestChanges",
-          "detail": "\"Request changes\" names no skill."
-        },
-        {
-          "where": "Task_Approve",
-          "detail": "\"Approve and merge\" names no skill."
         }
       ]
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
     "pass": 6,
     "fail": 1,
-    "n/a": 1,
+    "n/a": 2,
     "unknown": 0
   }
 }

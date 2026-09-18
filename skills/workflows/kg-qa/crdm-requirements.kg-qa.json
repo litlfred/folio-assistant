@@ -5,10 +5,10 @@
     "id": "Process_CRDM",
     "path": "skills/workflows/crdm-requirements.bpmn"
   },
-  "source_hash": "sha256:aacb53470a46b2c1fc095f7c468b7638390b6dd79c7533fe7686447b8116098f",
+  "source_hash": "sha256:f7227283379cb2293ea9b8f374d4fb4cc35058495d66537a84a1034b251e7f89",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:565c0baa00bdb6212732c82e3176d395af13d4f8ce84524cca9a2be5b37203da",
+    "script_hash": "sha256:fd86e120ed4c0f1fe08c22354b901ce1400683e45baedeec0dcb0e4d1f4c43fe",
     "engine_version": "1"
   },
   "criteria": {
@@ -44,38 +44,6 @@
       "result": "fail",
       "findings": [
         {
-          "where": "BA_Submit",
-          "detail": "\"Describe the need (chat, issue, discussion)\" names no skill."
-        },
-        {
-          "where": "BA_ReviewNeeds",
-          "detail": "\"Review synthesised needs statement\" names no skill."
-        },
-        {
-          "where": "BA_ReviewReqs",
-          "detail": "\"Review requirements and impact analysis\" names no skill."
-        },
-        {
-          "where": "BA_Signoff",
-          "detail": "\"Sign off on requirements\" names no skill."
-        },
-        {
-          "where": "BA_ReviewIncrement",
-          "detail": "\"Review increment (test behaviour)\" names no skill."
-        },
-        {
-          "where": "BA_ShareMVP",
-          "detail": "\"Share MVP with stakeholders\" names no skill."
-        },
-        {
-          "where": "BA_TranslateFeedback",
-          "detail": "\"Translate feedback into agent direction\" names no skill."
-        },
-        {
-          "where": "BA_Confirm",
-          "detail": "\"Confirm all criteria met\" names no skill."
-        },
-        {
           "where": "S_ConfirmNeeds",
           "detail": "\"Confirm needs statement\" names no skill."
         },
@@ -92,12 +60,16 @@
           "detail": "\"Feature sign-off on issue\" names no skill."
         }
       ]
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
     "pass": 6,
     "fail": 1,
-    "n/a": 1,
+    "n/a": 2,
     "unknown": 0
   }
 }
