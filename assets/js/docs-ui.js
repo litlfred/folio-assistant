@@ -381,6 +381,140 @@
   var HEADER_SELECTORS = [".site-header", ".site-header-container", ".side-bar header",
                           ".side-bar"];
 
+
+  /* ── Reading preferences ─────────────────────────────────────────────── */
+
+  /*
+   * Four reader-facing affordances behind one gear, all WCAG 2.2 AA criteria a
+   * static site can actually satisfy:
+   *
+   *   large-type   1.4.4 Resize text. The criterion is 200 % without loss of
+   *                content; the step here is a modest one a reader can take
+   *                twice on top of browser zoom, not a replacement for it.
+   *   contrast     1.4.3 Contrast (Minimum) and 2.4.7 Focus Visible.
+   *   underline    1.4.1 Use of Colour. A link distinguished only by hue is
+   *                invisible to a reader with a colour-vision deficiency, and
+   *                just-the-docs styles links exactly that way.
+   *   motion       2.3.3 Animation from Interactions. Defaults ON when the OS
+   *                already says `prefers-reduced-motion`, because a user who
+   *                has set that should not have to set it again.
+   *
+   * THIS IS NOT `.folio/interaction.json`, and conflating the two would be a
+   * real bug. This is per-viewer and per-browser, in localStorage, and it never
+   * reaches an agent — a reader who is not the author picking large type must
+   * not silently reconfigure how an agent talks to the author. The agent-facing
+   * record is the committed file; see skills/folio-core/interaction-modality.md.
+   *
+   * Every read and write is wrapped: localStorage throws in a private window
+   * with site data blocked, and the panel must still work when it does.
+   */
+
+  var A11Y_KEY = "fa-reading-prefs";
+
+  var A11Y_OPTIONS = [
+    { id: "large-type", label: "Larger text", hint: "Bigger body text and wider line spacing" },
+    { id: "contrast", label: "Higher contrast", hint: "Stronger text and a thicker focus ring" },
+    { id: "underline", label: "Underline links", hint: "Never colour alone (WCAG 1.4.1)" },
+    { id: "reduce-motion", label: "Reduce motion", hint: "Turn off transitions and animation" }
+  ];
+
+  var GEAR_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/>' +
+    '<path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6' +
+    'M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6L17 17M7 7L5.4 5.4" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
+    "</svg>";
+
+  function storedPrefs() {
+    try {
+      var raw = localStorage.getItem(A11Y_KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      return parsed && typeof parsed === "object" ? parsed : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function defaultPrefs() {
+    var prefs = {};
+    // The OS has already been asked. Asking again is WCAG 3.3.7 (Redundant
+    // Entry) applied to a setting rather than to a form field.
+    var reduced = false;
+    try {
+      reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch { /* matchMedia absent: the default stays off. */ }
+    prefs["reduce-motion"] = Boolean(reduced);
+    return prefs;
+  }
+
+  function applyPrefs(prefs) {
+    A11Y_OPTIONS.forEach(function (opt) {
+      document.documentElement.toggleAttribute("data-fa-" + opt.id, Boolean(prefs[opt.id]));
+    });
+  }
+
+  function mountReadingPrefs(host, before) {
+    var prefs = storedPrefs() || defaultPrefs();
+    applyPrefs(prefs);
+
+    var btn = el("button", {
+      type: "button",
+      class: "fa-qr-toggle fa-a11y-toggle",
+      "aria-label": "Reading preferences",
+      "aria-expanded": "false"
+    });
+    btn.innerHTML = GEAR_GLYPH; // static markup above, no input involved
+
+    var panel = el("div", { class: "fa-a11y-panel", hidden: "hidden", role: "group",
+                            "aria-label": "Reading preferences" });
+
+    A11Y_OPTIONS.forEach(function (opt) {
+      var row = el("label", { class: "fa-a11y-row" });
+      var box = el("input", { type: "checkbox" });
+      box.checked = Boolean(prefs[opt.id]);
+      box.addEventListener("change", function () {
+        prefs[opt.id] = box.checked;
+        applyPrefs(prefs);
+        try {
+          localStorage.setItem(A11Y_KEY, JSON.stringify(prefs));
+        } catch {
+          // Blocked storage: the setting still applies for this page view.
+          // Saying nothing would be worse than a console note nobody reads,
+          // because the reader will wonder why it did not stick.
+          console.warn("docs-ui: reading preferences could not be saved (storage blocked); " +
+                       "the change applies to this page view only.");
+        }
+      });
+      var text = el("span", { class: "fa-a11y-text" });
+      text.appendChild(el("span", { class: "fa-a11y-label" }, opt.label));
+      text.appendChild(el("span", { class: "fa-a11y-hint" }, opt.hint));
+      row.appendChild(box);
+      row.appendChild(text);
+      panel.appendChild(row);
+    });
+
+    var note = el("p", { class: "fa-a11y-note" },
+      "Saved in this browser only. It is not sent anywhere.");
+    panel.appendChild(note);
+
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      if (open) panel.setAttribute("hidden", "hidden");
+      else panel.removeAttribute("hidden");
+    });
+
+    if (before && before.parentNode === host) host.insertBefore(btn, before);
+    else host.appendChild(btn);
+    // The panel is a sibling of the header for the same reason the QR panel is:
+    // just-the-docs hard-caps `.site-header` height at the desktop breakpoint,
+    // so anything placed inside it is clipped rather than making it taller.
+    if (host.parentNode) host.parentNode.insertBefore(panel, host.nextSibling);
+    else host.appendChild(panel);
+  }
+
   function firstMatch(selectors) {
     for (var i = 0; i < selectors.length; i++) {
       var found = document.querySelector(selectors[i]);
@@ -430,6 +564,7 @@
     // the language switch, then the scheme switch, then the code. Inserted
     // before `toggle` rather than appended, so they stay left of it.
     mountThemeToggle(host, toggle);
+    mountReadingPrefs(host, toggle);
     mountLanguageSwitcher(host, toggle);
 
     var panel = el("button", {

@@ -691,3 +691,107 @@
   margin: -1.8em 0 0 0;
 }
 
+
+/* ── Reading preferences ───────────────────────────────────────────────────
+ *
+ * The gear in the sidebar header, its panel, and the four affordances the
+ * panel switches on. Each is a WCAG 2.2 AA criterion this site can actually
+ * satisfy; docs/assets/js/docs-ui.js names which.
+ *
+ * The switches are attributes on <html> (`data-fa-large-type` and friends), so
+ * everything below is a plain attribute selector and nothing here depends on
+ * the just-the-docs class names staying put.
+ *
+ * `!important` appears only where just-the-docs' own rule is more specific
+ * than an attribute selector on the root can be. That is a real constraint of
+ * overriding a compiled Sass theme from outside it, not laziness: the theme
+ * sets link colour on `.main-content a` and text size on `body`, and a reader
+ * who asked for larger text must get it.
+ */
+
+.fa-a11y-panel {
+  margin: 0.25rem 0.75rem 0.5rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.35));
+  border-radius: 6px;
+  background: var(--sidebar-color, rgba(128, 128, 128, 0.08));
+  font-size: 0.75rem;
+}
+
+.fa-a11y-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  /* WCAG 2.5.8 Target Size (Minimum) is 24x24 CSS px. The row is the target,
+     not the checkbox, so the whole label is clickable at comfortable size. */
+  min-height: 24px;
+  padding: 0.3rem 0;
+  cursor: pointer;
+}
+
+.fa-a11y-row input { margin-top: 0.15rem; width: 16px; height: 16px; flex: none; }
+.fa-a11y-text { display: flex; flex-direction: column; line-height: 1.3; }
+.fa-a11y-label { font-weight: 600; }
+.fa-a11y-hint { opacity: 0.75; font-size: 0.7rem; }
+
+.fa-a11y-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.68rem;
+  opacity: 0.7;
+}
+
+/* 1 — Larger text (WCAG 1.4.4 Resize text).
+   One step a reader can take on top of browser zoom, not instead of it. */
+:root[data-fa-large-type] .main-content,
+:root[data-fa-large-type] .site-nav {
+  font-size: 1.15em !important;
+  line-height: 1.7 !important;
+}
+:root[data-fa-large-type] .main-content p,
+:root[data-fa-large-type] .main-content li {
+  max-width: 68ch;
+}
+
+/* 2 — Higher contrast (WCAG 1.4.3) and a focus ring that is actually visible
+   (2.4.7). The focus rule is deliberately not gated on the toggle: an
+   invisible focus indicator is a defect for everybody, not a preference. */
+:root[data-fa-contrast] .main-content {
+  color: #111;
+}
+:root[data-fa-contrast][data-fa-scheme="dark"] .main-content,
+:root[data-fa-contrast] .main-content code {
+  color: #fff;
+}
+:root[data-fa-contrast] .main-content a { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* 3 — Underline links (WCAG 1.4.1 Use of Colour). just-the-docs distinguishes
+   a link by hue alone, which is invisible to a reader with a colour-vision
+   deficiency. */
+:root[data-fa-underline] .main-content a {
+  text-decoration: underline !important;
+  text-underline-offset: 0.15em;
+}
+
+/* 4 — Reduce motion (WCAG 2.3.3). Defaults on when the OS already says so;
+   the media query below covers the reader who never opens the panel. */
+:root[data-fa-reduce-motion] *,
+:root[data-fa-reduce-motion] *::before,
+:root[data-fa-reduce-motion] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
