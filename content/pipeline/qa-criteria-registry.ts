@@ -610,7 +610,24 @@ const PROOF: QaCriterionDefinition[] = [
       "while formalisation is pending.",
     default_severity: "critical",
     depends_on: ["lean"],
-    automated: true,
+    // `automated: false` because THE CHECKER WAS NEVER WRITTEN — corrected
+    // 2026-09-18 (bean fg6z). There is no entry in any dispatch table and no
+    // `check*` function anywhere in the repo for this id.
+    //
+    // It was declared `automated: true`, and `qa-sweep` resolves a checker
+    // with `AUTOMATED_CHECKERS[id] ?? DAK_AUTOMATED_CHECKERS[id]` and then
+    // falls through to `needs-agent` when that is undefined. So the criterion
+    // was silently queueing an AGENT ADJUDICATION on every applicable block —
+    // billing a model call for a check nobody had implemented, and arriving
+    // downstream indistinguishable from a criterion legitimately marked
+    // non-automated.
+    //
+    // This edit changes NO runtime behaviour: the sweep already treated it as
+    // needs-agent. It makes the registry say what the code does. Writing the
+    // checker (a grep for the stub marker) is tracked separately; note the
+    // description's `QOU...` is one folio's literal in platform code and
+    // should not survive into it.
+    automated: false,
     applies_to: [
       "theorem",
       "lemma",
@@ -926,6 +943,7 @@ const PROOF: QaCriterionDefinition[] = [
       "Routes to `lean-proof-vacuity-audit`.",
     default_severity: "critical",
     depends_on: ["lean"],
+    source_file: "content/pipeline/qa-checkers-vacuity.ts",
     automated: true,
     applies_to: ["definition", "theorem", "lemma", "proposition", "corollary"],
   },
@@ -972,6 +990,7 @@ const PROOF: QaCriterionDefinition[] = [
       "Routes to `lean-proof-vacuity-audit`.",
     default_severity: "critical",
     depends_on: ["lean"],
+    source_file: "content/pipeline/qa-checkers-vacuity.ts",
     automated: true,
     applies_to: ["definition", "theorem", "lemma", "proposition", "corollary"],
   },
@@ -988,6 +1007,7 @@ const PROOF: QaCriterionDefinition[] = [
       "AST-checked, no agent turn. Routes to `lean-proof-vacuity-audit`.",
     default_severity: "major",
     depends_on: ["lean"],
+    source_file: "content/pipeline/qa-checkers-vacuity.ts",
     automated: true,
     applies_to: ["definition", "theorem", "lemma", "proposition", "corollary"],
   },

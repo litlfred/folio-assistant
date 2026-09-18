@@ -1,34 +1,54 @@
 /**
  * A criterion's declared `source_file` must be the file that actually
- * dispatches it.
+ * contains its checker.
  *
  * ## Why this test exists
  *
- * `getCriterionSourceFile()` resolves the path that `script_hash` is
- * computed over. That hash is the ONLY thing that makes a cached sidecar
- * verdict go stale when checker logic changes
- * (`schemas/block-qa.ts` → `QaReviewer.script_hash`).
+ * `getCriterionSourceFile()` resolves the path that `script_hash` is computed
+ * over. That hash is the ONLY thing that makes a cached sidecar verdict go
+ * stale when checker logic changes (`schemas/block-qa.ts` →
+ * `QaReviewer.script_hash`).
  *
  * So a criterion pointed at a file that does not contain its checker never
  * invalidates. Its verdicts stay "fresh" indefinitely, and editing the real
- * checker changes nothing — the sweep keeps serving the answer it cached
- * before the fix. There is no error, no warning, and no symptom except a
- * number that will not move.
+ * checker changes nothing — the sweep keeps serving the answer it cached.
+ * There is no error, no warning, and no symptom except a number that will
+ * not move. A wrong `pass` is believed; a verdict that CANNOT GO STALE is
+ * worse, because nothing about it ever looks wrong.
  *
- * Measured on `main`, 2026-09-18: **11 of 59** automated criteria were in
- * that state — six voice/cite criteria and all five `dak-*`. The resolver
- * falls through to `EXTENDED_CHECKER_FILE` for anything it does not
- * recognise, so every checker added to a NEW file silently joined them.
+ * Measured on `main`, 2026-09-18 (bean `b7yo`): 11 of 59 automated criteria
+ * were in that state. Found by accident — a fix to `checkAuthorNotesPollution`
+ * did not change its verdict, because the sidecar was hashing a file the fix
+ * never touched.
  *
- * It was found by accident: a fix to `checkAuthorNotesPollution` (which
- * lives in `qa-checkers-voice.ts`) did not change its verdict, because the
- * sidecar was hashing `qa-checkers-extended.ts`. Without this test the next
- * one is found the same way, or not at all.
+ * ## Why the candidate list is globbed, not written down
+ *
+ * The first version of this test hard-coded seven checker files. There are
+ * TEN. `qa-checkers-render.ts`, `qa-checkers-q-usage.ts` and
+ * `qa-checkers-vacuity.ts` were absent, so every criterion in them read as
+ * "dispatcher not found" and was waved through — and that silence hid THREE
+ * REAL MISMATCHES (`lean-no-vacuous-instance-data`,
+ * `lean-no-definitional-laundering`, `lean-docstring-honesty`, all
+ * dispatching from `qa-checkers-vacuity.ts` while declaring
+ * `qa-checkers-extended.ts`).
+ *
+ * That is the same defect the test was written to catch — an allow-list that
+ * falls through silently — reproduced in the guard itself. Hence the glob: a
+ * checker file added tomorrow is covered without anyone remembering to add
+ * it. Bean `fg6z`.
+ *
+ * ## Two dispatch styles, both covered
+ *
+ * 1. a dispatch-table entry keyed `"<criterion-id>":` (the voice / DAK / uses
+ *    checkers); and
+ * 2. an exported `check<PascalCaseId>` function called by name — how the ten
+ *    `script-quality` Python criteria work. Probing only for (1) reported all
+ *    ten as unlocatable when their `source_file` was in fact correct.
  *
  * Run via `bun test`.
  */
 import { describe, test, expect } from "bun:test";
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, readdirSync, existsSync } from "fs";
 import { resolve } from "path";
 
 import {
@@ -37,42 +57,54 @@ import {
 } from "../../content/pipeline/qa-criteria-registry.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
+const CHECKER_DIR = "content/pipeline";
 
-/** Every file that could host a checker dispatch table. */
-const CANDIDATES = [
-  "content/pipeline/qa-checkers-voice.ts",
-  "content/pipeline/qa-checkers-extended.ts",
-  "content/pipeline/qa-checkers-uses.ts",
-  "content/pipeline/qa-checkers-python.ts",
-  "content/pipeline/qa-checkers-dak.ts",
-  "content/pipeline/qa-checkers-cost.ts",
-  "content/pipeline/qa-checkers-triviality.ts",
-];
+/** Every `qa-checkers-*.ts`, discovered rather than listed. */
+function checkerFiles(): string[] {
+  const dir = resolve(ROOT, CHECKER_DIR);
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => /^qa-checkers-.*\.ts$/.test(f))
+    .map((f) => `${CHECKER_DIR}/${f}`)
+    .sort();
+}
 
-const sources = new Map<string, string>();
-for (const f of CANDIDATES) {
-  const p = resolve(ROOT, f);
-  if (existsSync(p)) sources.set(f, readFileSync(p, "utf-8"));
+const sources = new Map<string, string>(
+  checkerFiles().map((f) => [f, readFileSync(resolve(ROOT, f), "utf-8")]),
+);
+
+/** `does_not_default_to_float` / `lean-docstring-honesty` → `checkDoesNotDefaultToFloat`. */
+function checkerFnName(id: string): string {
+  const pascal = id
+    .split(/[-_]/)
+    .filter(Boolean)
+    .map((w) => w[0].toUpperCase() + w.slice(1))
+    .join("");
+  return `check${pascal}`;
 }
 
 /**
- * Which candidate files dispatch `id`, keyed on the `"<id>":` entry every
- * dispatch table uses. Returns [] when none does — a real third state,
- * reported rather than treated as agreement.
+ * Files that contain `id`'s checker, by either dispatch style. Returns []
+ * when none does — a real third state, reported rather than treated as
+ * agreement.
  */
-function dispatchFiles(id: string): string[] {
+function hostFiles(id: string): string[] {
+  const fn = checkerFnName(id);
   const out: string[] = [];
-  for (const [f, s] of sources) if (s.includes(`"${id}":`)) out.push(f);
+  for (const [f, s] of sources) {
+    if (s.includes(`"${id}":`) || s.includes(`export function ${fn}(`)) out.push(f);
+  }
   return out;
 }
 
 const automated = QA_CRITERIA_REGISTRY.filter((d) => d.automated);
 
-describe("getCriterionSourceFile — declared source must host the dispatcher", () => {
-  test("the candidate list itself resolves to real files", () => {
-    // Guards the guard: a renamed checker file would otherwise make every
-    // criterion "undetermined" and this suite would pass on an empty set.
-    expect(sources.size).toBeGreaterThanOrEqual(5);
+describe("getCriterionSourceFile — declared source must host the checker", () => {
+  test("the glob finds the checker files", () => {
+    // Guards the guard. A renamed directory would otherwise leave every
+    // criterion "undetermined" and let this suite pass on an empty set —
+    // exactly how the hard-coded list hid three mismatches.
+    expect(sources.size).toBeGreaterThanOrEqual(10);
   });
 
   test("there are automated criteria to check", () => {
@@ -83,24 +115,25 @@ describe("getCriterionSourceFile — declared source must host the dispatcher", 
     const mismatched: string[] = [];
     for (const def of automated) {
       const declared = getCriterionSourceFile(def.id);
-      const actual = dispatchFiles(def.id);
-      if (actual.length === 0) continue; // reported separately below
-      if (!actual.includes(declared)) {
-        mismatched.push(`${def.id}: declared ${declared}, dispatched from ${actual.join(", ")}`);
+      const hosts = hostFiles(def.id);
+      if (hosts.length === 0) continue; // reported separately below
+      if (!hosts.includes(declared)) {
+        mismatched.push(`${def.id}: declared ${declared}, found in ${hosts.join(", ")}`);
       }
     }
-    // Named in the failure so the fix does not need a re-run to find them.
+    // Named in the failure so a fix does not need a re-run to find them.
     expect(mismatched).toEqual([]);
   });
 
-  test("a criterion whose dispatcher cannot be located is NOT silently accepted", () => {
-    // These are criteria the string probe cannot resolve — dispatched
-    // dynamically, or through a table this test does not know about. They
-    // are not failures, but the count is pinned: if it grows, a new
-    // dispatch mechanism appeared and this test stopped covering it.
+  test("an automated criterion with NO checker anywhere is a defect, not a pass", () => {
+    // `qa-sweep` resolves `AUTOMATED_CHECKERS[id] ?? DAK_AUTOMATED_CHECKERS[id]`
+    // and falls through to `needs-agent` when undefined. So `automated: true`
+    // with no checker silently bills an agent adjudication for a check nobody
+    // wrote, and is indistinguishable downstream from `automated: false`.
     //
-    // Baseline measured 2026-09-18 on the command `bun test`.
-    const unlocatable = automated.filter((d) => dispatchFiles(d.id).length === 0);
-    expect(unlocatable.length).toBeLessThanOrEqual(18);
+    // `proof-no-placeholder-stub` was in exactly that state and is now
+    // declared `automated: false`, which is what the runtime already did.
+    const orphans = automated.filter((d) => hostFiles(d.id).length === 0);
+    expect(orphans.map((d) => d.id)).toEqual([]);
   });
 });

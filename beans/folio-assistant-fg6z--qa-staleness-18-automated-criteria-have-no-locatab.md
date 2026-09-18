@@ -1,10 +1,11 @@
 ---
 # folio-assistant-fg6z
 title: 'QA staleness: 18 automated criteria have no locatable dispatcher'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-18T17:36:22Z
-updated_at: 2026-09-18T17:36:22Z
+updated_at: 2026-09-18T17:43:01Z
 ---
 
 ## What
