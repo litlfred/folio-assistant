@@ -21,6 +21,9 @@
  *   the script TEXT before the shell parses it. Trusted contexts are allowed;
  *   anything attacker-controlled is an error. See
  *   `skills/folio-core/untrusted-input.md`.
+ * - **A job that pushes `gh-pages` without the shared concurrency group.**
+ *   Every such job must declare `concurrency.group: gh-pages-push`, because
+ *   they all contend for one ref.
  *
  * @module scripts/check-workflows
  */
@@ -54,7 +57,7 @@ const ATTACKER_CONTROLLED = [
 export interface WorkflowFinding {
   file: string;
   line: number;
-  kind: "duplicate-key" | "unparseable" | "interpolated-untrusted";
+  kind: "duplicate-key" | "unparseable" | "interpolated-untrusted" | "gh-pages-ungrouped";
   detail: string;
 }
 
@@ -139,12 +142,89 @@ function interpolatedUntrusted(text: string, file: string): WorkflowFinding[] {
   return out;
 }
 
+/** The one group name every `gh-pages`-pushing job must share. */
+export const GH_PAGES_GROUP = "gh-pages-push";
+
+/**
+ * A job that writes `gh-pages` must name the shared concurrency group.
+ *
+ * ## Why this needs a check and not just a convention
+ *
+ * The group has now been incomplete twice, in two different ways, and both
+ * looked like a fix from inside the file that had it.
+ *
+ * **First: partial coverage.** Bean `eoix` gave the group to
+ * `feature-staging`'s two jobs. A concurrency group serialises only the jobs
+ * that NAME it, so the other six push sites were still free to race — and on
+ * 2026-09-18 PR #297's staging deploy lost its push to a run from another
+ * workflow after building the whole site.
+ *
+ * **Second, and harder to see: two names.** `blueprint` and `lean_ci` already
+ * declared a job-level group for exactly this reason, called
+ * `gh-pages-deploy`. A group matches on the literal string, so those two
+ * queued against each other and against nobody else. A second name for one
+ * contended resource is indistinguishable, in effect, from having no group —
+ * while reading, in the file, like a solved problem.
+ *
+ * ## What counts as pushing
+ *
+ * Both mechanisms in this repo: the `peaceiris/actions-gh-pages` action, and a
+ * bare `git push ... gh-pages` in a `run:` body (which is how
+ * `feature-staging`'s `cleanup` removes a staging directory). Checking only
+ * the action would have missed `cleanup`, which contends for the same ref.
+ *
+ * Scanned line-wise rather than through the parsed document because job keys,
+ * `concurrency` blocks and `run:` bodies are all easy to locate by indent here,
+ * and the parse is already validated above. A finding names the job, so a
+ * false positive would be obvious rather than mysterious.
+ */
+function ghPagesUngrouped(text: string, file: string): WorkflowFinding[] {
+  const lines = text.split("\n");
+  type Job = { name: string; line: number; group?: string; pushes: number };
+  const jobs: Job[] = [];
+  let cur: Job | undefined;
+
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
+    const job = /^ {2}([A-Za-z0-9_-]+):\s*$/.exec(l);
+    if (job !== null) {
+      cur = { name: job[1], line: i + 1, pushes: 0 };
+      jobs.push(cur);
+      continue;
+    }
+    if (cur === undefined) continue;
+    const g = /^ {6}group:\s*(\S+)/.exec(l);
+    if (g !== null && !g[1].startsWith("${{")) cur.group = g[1];
+    // A comment mentioning the action is not a use of it.
+    const bare = l.trimStart().startsWith("#");
+    if (!bare && /peaceiris\/actions-gh-pages@/.test(l)) cur.pushes++;
+    if (!bare && /git push\b[^\n]*\bgh-pages\b/.test(l)) cur.pushes++;
+  }
+
+  return jobs
+    .filter((j) => j.pushes > 0 && j.group !== GH_PAGES_GROUP)
+    .map((j) => ({
+      file,
+      line: j.line,
+      kind: "gh-pages-ungrouped" as const,
+      detail:
+        `job \`${j.name}\` pushes gh-pages but its concurrency group is ` +
+        `${j.group === undefined ? "absent" : `\`${j.group}\``}, not \`${GH_PAGES_GROUP}\`. ` +
+        "Every job contending for that ref must share one group, or it serialises against nothing.",
+    }));
+}
+
 export function checkWorkflows(): WorkflowFinding[] {
   const out: WorkflowFinding[] = [];
   for (const f of readdirSync(DIR)) {
     if (!f.endsWith(".yml") && !f.endsWith(".yaml")) continue;
     const text = readFileSync(join(DIR, f), "utf-8");
-    out.push(...duplicateKeys(text, f), ...unparseable(text, f), ...interpolatedUntrusted(text, f));
+    out.push(
+      ...duplicateKeys(text, f),
+      ...unparseable(text, f),
+      ...interpolatedUntrusted(text, f),
+      ...ghPagesUngrouped(text, f),
+    );
   }
   return out;
 }
@@ -154,7 +234,10 @@ if (import.meta.main) {
   const files = readdirSync(DIR).filter((f) => f.endsWith(".yml") || f.endsWith(".yaml"));
   console.log(`Workflows: ${files.length}\n`);
   if (findings.length === 0) {
-    console.log("✓ all parse; no duplicate keys; no attacker-controlled expression in a run body");
+    console.log(
+      "✓ all parse; no duplicate keys; no attacker-controlled expression in a run body; " +
+        `every gh-pages push is in the \`${GH_PAGES_GROUP}\` group`,
+    );
   } else {
     for (const f of findings) console.error(`  ✗ ${f.file}:${f.line}  [${f.kind}] ${f.detail}`);
     process.exit(1);
