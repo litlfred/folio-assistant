@@ -28,4 +28,4 @@ archive entry is not a different kind of thing.
 `library/<slug>/contents.jsonld` exists for every archive, is referenced from
 `manifest.jsonld`, and a grep for a filename inside an archive finds it.
 
-Diagram: `docs/workflows/ingest-derive-content.bpmn`, `Task_Archive`.
+Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Archive`.

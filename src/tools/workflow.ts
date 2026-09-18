@@ -1,5 +1,5 @@
 /**
- * MCP tools for running a process from `docs/workflows/*.bpmn`.
+ * MCP tools for running a process from `skills/workflows/*.bpmn`.
  *
  * Four tools, all content-agnostic, registered next to `work_plan_prime`:
  *
@@ -43,7 +43,7 @@ import { applyWorkPlanOp } from "../workflow/bean-link.js";
 import { checkGate, loadRelaxations, validateRelaxations } from "../workflow/gate.js";
 import { readRoleGraph, type RoleGraph } from "../../schemas/role-graph.js";
 
-const WORKFLOW_SRC = join("docs", "workflows");
+const WORKFLOW_SRC = join("skills", "workflows");
 
 const text = (s: string) => ({ content: [{ type: "text" as const, text: s }] });
 
@@ -95,7 +95,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
 
   server.tool(
     "workflow_list",
-    "List the BPMN processes this folio defines (docs/workflows/*.bpmn) and any " +
+    "List the BPMN processes this folio defines (skills/workflows/*.bpmn) and any " +
       "instances currently open. Use before workflow_start to see what exists.",
     {},
     async () => {

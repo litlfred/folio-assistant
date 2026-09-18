@@ -1,5 +1,5 @@
 Nineteen BPMN 2.0 files, all under
-[`docs/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/docs/workflows)
+[`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
 (counted on `main`, 2026-09-18 — this line said "six" for long enough that it is
 worth saying where the number came from).
 Each is a real BPMN 2.0 document with diagram interchange — open it in
@@ -69,7 +69,7 @@ the outer process; the rest are its call activities:
 | `evidence-retrieval.bpmn` | Framing a question, searching trusted sources, appraising what comes back |
 
 > **This list is checked, not maintained by hand.** `bun run check:workflow-refs`
-> fails when a `.bpmn` under `docs/workflows/` is absent from this page. It was
+> fails when a `.bpmn` under `skills/workflows/` is absent from this page. It was
 > added because the page opened by counting nineteen files and then listed
 > eight — the eleven above were present in the repository and invisible here,
 > which is the same defect as a table of contents that stops halfway.

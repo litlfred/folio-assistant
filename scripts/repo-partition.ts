@@ -135,7 +135,7 @@ const RULES: Rule[] = [
       "scripts/check-corpus-gate.ts",        // editing-process authorisation gate
       "scripts/check-workflow-policy.ts",    // BPMN relaxation legality
       "scripts/bpmn-render.ts",              // BPMN → SVG
-      "scripts/render-bpmn.ts",              // BPMN → SVG (the docs/workflows one)
+      "scripts/render-bpmn.ts",              // BPMN → SVG (the skills/workflows one)
       "scripts/generate-registry.ts",        // scans skills/ → SkillRegistry
       "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
       "scripts/validate-skills.ts",          // skill package manifests

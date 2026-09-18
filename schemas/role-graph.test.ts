@@ -208,3 +208,32 @@ describe("this repository's own role graph", () => {
     expect(ld.roles[0]!["@id"]).toBe("#user");
   });
 });
+
+describe("this repository's actor registry, after the roles[] migration", () => {
+  const actors = readActors(join(import.meta.dir, "..", ".claude", "skills", "actors"));
+  const g = readRoleGraph(join(import.meta.dir, "..", "skills"))!;
+
+  test("no entry still carries the deprecated `inherits`", () => {
+    expect(actors.filter((a) => a.looksLikeRole).map((a) => a.id)).toEqual([]);
+  });
+
+  test("every role an actor lists is declared", () => {
+    const declared = new Set(g.roles.map((r) => r.id));
+    const bad = actors.flatMap((a) => (a.roles ?? []).filter((r) => !declared.has(r)).map((r) => `${a.id}→${r}`));
+    expect(bad).toEqual([]);
+  });
+
+  test("every role that is performed has at least one actor who can take it on", () => {
+    const covered = new Set(actors.flatMap((a) => a.roles ?? []));
+    const uncovered = g.roles.filter((r) => !r.actedUpon && !covered.has(r.id)).map((r) => r.id);
+    expect(uncovered).toEqual([]);
+  });
+
+  test("`roles: []` is kept distinct from an absent `roles`", () => {
+    // `viewer` is the read-only identity that never appears in a swimlane. It
+    // must say so with an empty list, not by omitting the field — omitting it
+    // asserts nothing, which is a different claim.
+    const viewer = actors.find((a) => a.id === "viewer");
+    expect(viewer?.roles).toEqual([]);
+  });
+});

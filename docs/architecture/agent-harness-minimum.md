@@ -358,7 +358,7 @@ Legend — **AH** `agent-harness` · **AHT** `agent-harness-tools` ·
 | `who-smart-dak.md` | 97 | **W** | L2. |
 | `who-smart-ig.md` | 144 | **W** | L3. |
 
-### BPMN processes (`docs/workflows/`) — 20 files
+### BPMN processes (`skills/workflows/`) — 20 files
 
 | process | → | reasoning |
 |---|---|---|

@@ -74,7 +74,7 @@ import { knownSkills } from "./known-skills.js";
 const ENGINE_VERSION = "1";
 
 const root = resolve(import.meta.dir, "..");
-const WORKFLOW_DIR = join(root, "docs", "workflows");
+const WORKFLOW_DIR = join(root, "skills", "workflows");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
 const ACTOR_DIR = join(root, ".claude", "skills", "actors");
@@ -276,7 +276,7 @@ async function auditDecisions(
     for (const id of ids) {
       const ref = `${f}#${id}`;
       if (!referenced.has(ref)) {
-        findings.push({ where: id, detail: `decision "${ref}" is referenced by no gateway in docs/workflows/. Either wire it with <folio:decision ref="decisions/${ref}"/> or delete it.` });
+        findings.push({ where: id, detail: `decision "${ref}" is referenced by no gateway in skills/workflows/. Either wire it with <folio:decision ref="decisions/${ref}"/> or delete it.` });
         continue;
       }
       try {
@@ -334,7 +334,12 @@ function auditRoles(
       "role-skills-resolve": entry(badSkills),
       "role-inherits-resolves": entry(badParents, (r.inherits ?? []).length > 0),
       "role-binds-a-lane": entry(laneFindings),
-      "role-has-actor": anyActorDeclaresRoles
+      // `actedUpon` lanes are stores, not participants — the work plan, the
+      // corpus, the publish target. Asking which actor fills the corpus is not
+      // a question, so it is `n/a` rather than a failure nobody can act on.
+      "role-has-actor": r.actedUpon
+        ? entry([], false)
+        : anyActorDeclaresRoles
         ? entry(
             actors.some((a) => (a.roles ?? []).includes(r.id))
               ? []
@@ -395,6 +400,16 @@ function auditGraph(
     .sort()
     .map((s) => ({ where: s, detail: `skill "${s}" is listed by no package manifest, carried by no role and named by no activity.` }));
 
+  const declaredRoles = new Set((graph?.roles ?? []).map((r) => r.id));
+  const badActorRoles = actors.flatMap((a) =>
+    (a.roles ?? [])
+      .filter((r) => !declaredRoles.has(r))
+      .map((r) => ({
+        where: a.id,
+        detail: `${relative(root, a.path)} lists role "${r}", which the role graph does not declare.`,
+      })),
+  );
+
   const roleish = actors
     .filter((a) => a.looksLikeRole)
     .map((a) => ({ where: a.id, detail: `${relative(root, a.path)} carries \`inherits\` — an actor does not inherit, a role does. Migration debt from before roles were declared.` }));
@@ -404,7 +419,15 @@ function auditGraph(
     "kg",
     null,
     null,
-    { "skill-reachable": entry(orphans), "actor-is-not-a-role": entry(roleish) },
+    {
+      "skill-reachable": entry(orphans),
+      // Without a role graph there is nothing to resolve against, and reporting
+      // every actor's roles as dangling would be a wall of false findings.
+      "actor-roles-resolve": graph
+        ? entry(badActorRoles)
+        : { result: "unknown", findings: [{ where: "—", detail: "no role graph to resolve actor roles against." }] },
+      "actor-is-not-a-role": entry(roleish),
+    },
     auditorHash,
   );
 }

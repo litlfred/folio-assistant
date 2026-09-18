@@ -1,5 +1,5 @@
 {
-  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane — a persona an actor takes on because of the lane it is acting in — and it carries the skills needed to perform that lane's tasks. Actors (who) are in .claude/skills/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. `lanes` lists the EXACT lane names this role binds across docs/workflows/*.bpmn. It is a list because the corpus spells one position several ways — sixty distinct lane strings for roughly two dozen positions, measured 2026-09-18 — and declaring the synonyms resolves the existing diagrams without editing twenty BPMN files. A NEW diagram should bind explicitly with <folio:role ref=\"...\"/> on the lane and need not add a name here. `bun run kg:audit` reports any lane no role binds, any role no lane uses, and any activity whose skill its lane's role does not carry.",
+  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane — a persona an actor takes on because of the lane it is acting in — and it carries the skills needed to perform that lane's tasks. Actors (who) are in .claude/skills/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. `lanes` lists the EXACT lane names this role binds across skills/workflows/*.bpmn. It is a list because the corpus spells one position several ways — sixty distinct lane strings for roughly two dozen positions, measured 2026-09-18 — and declaring the synonyms resolves the existing diagrams without editing twenty BPMN files. A NEW diagram should bind explicitly with <folio:role ref=\"...\"/> on the lane and need not add a name here. `bun run kg:audit` reports any lane no role binds, any role no lane uses, and any activity whose skill its lane's role does not carry.",
   "name": "folio-assistant",
   "roles": [
     {
@@ -254,6 +254,7 @@
       "name": "Publish target",
       "summary": "GitHub Pages, or wherever the folio is served from. Reached, probed and reported on — never assumed live.",
       "actorKind": "system",
+      "actedUpon": true,
       "lanes": ["Publish — GitHub Pages"],
       "skills": ["getting-started"]
     },
@@ -278,6 +279,7 @@
       "name": "Work plan (beans)",
       "summary": "The shared store, modelled as a lane because tasks act ON it and a reader needs to see where the plan is touched. No actor takes this role on; it is acted upon.",
       "actorKind": "system",
+      "actedUpon": true,
       "lanes": [
         "Work plan — beans (shared by humans and agents)",
         "Work plan — beans (shared)",
@@ -290,6 +292,7 @@
       "name": "Corpus",
       "summary": "The versioned content store and the L1 source knowledge graph. Like the work plan, a lane that is written to rather than a participant that acts.",
       "actorKind": "system",
+      "actedUpon": true,
       "lanes": ["Corpus — L1 source knowledge graph", "Corpus (versioned store)"],
       "skills": ["document-intake"]
     },
@@ -298,6 +301,7 @@
       "name": "External registry",
       "summary": "Trusted registries and observatories outside this instance's control. Carries no skills because nothing here instructs it.",
       "actorKind": "external",
+      "actedUpon": true,
       "lanes": ["Trusted registries and observatories (external)"],
       "skills": []
     }

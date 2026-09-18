@@ -33,14 +33,14 @@ LLM workflow** are.
 ## The end-to-end workflow
 {: #the-end-to-end-workflow }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/authoring-a-paper.bpmn){: .fa-node-edit title="Edit docs/../workflows/authoring-a-paper.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/authoring-a-paper.bpmn){: .fa-node-edit title="Edit skills/workflows/authoring-a-paper.bpmn" }
 
 <div class="bpmn-figure" id="figure-the-end-to-end-workflow">
   <img src="../assets/img/workflows/authoring-a-paper.svg"
        alt="BPMN swimlane diagram: the author plans, the plan is seeded as beans, the authoring agent scaffolds the repo and drafts blocks, Lean formalisation loops until the build is green with no sorries, the build pipeline validates and renders, a reviewer either sends it back to authoring or approves it for publication.">
 </div>
 
-[BPMN 2.0 source](../workflows/authoring-a-paper.bpmn) · [full-size SVG](../assets/img/workflows/authoring-a-paper.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/authoring-a-paper.bpmn) · [full-size SVG](../assets/img/workflows/authoring-a-paper.svg)
 {: .bpmn-source }
 
 Every step is something the LLM does *for you* by calling folio-assistant's MCP

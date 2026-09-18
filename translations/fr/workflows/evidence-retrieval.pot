@@ -14,182 +14,182 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: docs/workflows/evidence-retrieval.bpmn:58
+#: skills/workflows/evidence-retrieval.bpmn:58
 #. Diagram label
 msgid "A recommendation is in play"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:92
+#: skills/workflows/evidence-retrieval.bpmn:92
 #. Diagram element documentation
 msgid "Already-adjudicated guidance: WHO SMART DAKs at L2 and FHIR Implementation Guides at L3. A recommendation adopted in a published DAK is evidence of a different kind from a primary study -- it is a prior decision, with its own provenance, and must be cited as that rather than laundered into primary evidence. NOT YET SKILL-BACKED. This step named `corpus-search`, which has never existed. It is not `corpus-grep`, whose job is the pre-declaration check that something really is an open gap — searching adjudicated L2/L3 content for evidence is a different task, so pointing the ref there would have been a plausible-looking wrong answer. Left uncovered until the skill is written."
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:127
+#: skills/workflows/evidence-retrieval.bpmn:127
 #. Diagram element documentation
 msgid "An unresolvable citation is not dropped and not silently kept. It becomes a tracked item, so the gap is visible in the work plan rather than surviving as a footnote nobody re-checks."
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:135
+#: skills/workflows/evidence-retrieval.bpmn:135
 #. Diagram label
 msgid "Appraise and grade the body of evidence"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:155
+#: skills/workflows/evidence-retrieval.bpmn:155
 #. Diagram label
 msgid "Attach the evidence to the recommendation [content-author]"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:32
+#: skills/workflows/evidence-retrieval.bpmn:32
 #. Diagram label
 msgid "Author / guideline developer (person)"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:121
+#: skills/workflows/evidence-retrieval.bpmn:121
 #. Diagram label
 msgid "Authority confirmed?"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:107
+#: skills/workflows/evidence-retrieval.bpmn:107
 #. Diagram label
 msgid "Candidates assembled"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:136
+#: skills/workflows/evidence-retrieval.bpmn:136
 #. Diagram element documentation
 msgid "Certainty of evidence per the grading system the folio declares. The grade attaches to the BODY of evidence for one PICO question, not to an individual citation -- which is why this step is after the join and not inside the fan-out."
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:114
+#: skills/workflows/evidence-retrieval.bpmn:114
 #. Diagram element documentation
 msgid "Each candidate is resolved against the standard API of the body that publishes it, so that &#x27;authoritative&#x27; is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the folio:policy note."
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:27
+#: skills/workflows/evidence-retrieval.bpmn:27
 #. Diagram label
 msgid "Editing subprocess — evidence for a recommendation"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:41
+#: skills/workflows/evidence-retrieval.bpmn:41
 #. Diagram label
 msgid "Evidence agent (system)"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:29
+#: skills/workflows/evidence-retrieval.bpmn:29
 #. Diagram label
 msgid "Evidence for a recommendation"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:69
+#: skills/workflows/evidence-retrieval.bpmn:69
 #. Diagram label
 msgid "Frame the question as PICO [content-author]"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:166
+#: skills/workflows/evidence-retrieval.bpmn:166
 #. Diagram label
 msgid "Gap recorded, no recommendation"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:103
+#: skills/workflows/evidence-retrieval.bpmn:103
 #. Diagram element documentation
 msgid "Indicator and microdata sources. Distinct from the two above because the unit of evidence is a MEASUREMENT with a population, a period and a method, not a claim in prose."
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:84
+#: skills/workflows/evidence-retrieval.bpmn:84
 #. Diagram element documentation
 msgid "Ingested primary literature under library/: the sections/*.md tree and, where a document was scanned, ocr/page-NNN.txt. NOTE the known blind spot — a document OCR&#x27;d but never re-run through pdf-structure.py has only a stub in sections/, so a sections-only search misses it."
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:147
+#: skills/workflows/evidence-retrieval.bpmn:147
 #. Diagram element documentation
 msgid "Insufficient evidence is a RESULT. It is recorded as such -- an honest gap the guideline can state -- rather than being closed by weakening the recommendation until the available evidence supports it."
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:180
+#: skills/workflows/evidence-retrieval.bpmn:180
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:126
+#: skills/workflows/evidence-retrieval.bpmn:126
 #. Diagram label
 msgid "Open a bean for the unverified citation [todo-manager]"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:70
+#: skills/workflows/evidence-retrieval.bpmn:70
 #. Diagram element documentation
 msgid "Population, Intervention, Comparator, Outcome. The PICO is what makes the search reproducible and the evidence auditable: without it, &#x27;we looked for evidence&#x27; is not a claim anyone can check. WHO guideline development states the question this way before any retrieval."
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:102
+#: skills/workflows/evidence-retrieval.bpmn:102
 #. Diagram label
 msgid "Query data repositories and statistical datasets"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:163
+#: skills/workflows/evidence-retrieval.bpmn:163
 #. Diagram label
 msgid "Recommendation is evidence-backed"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:146
+#: skills/workflows/evidence-retrieval.bpmn:146
 #. Diagram label
 msgid "Record the evidence gap [todo-manager]"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:77
+#: skills/workflows/evidence-retrieval.bpmn:77
 #. Diagram label
 msgid "Retrieve across evidence classes"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:61
+#: skills/workflows/evidence-retrieval.bpmn:61
 #. Diagram label
 msgid "Review the guidance already in this content [content-review]"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:91
+#: skills/workflows/evidence-retrieval.bpmn:91
 #. Diagram label
 msgid "Search trusted CONTENT — L2 DAKs, L3 IGs"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:83
+#: skills/workflows/evidence-retrieval.bpmn:83
 #. Diagram label
 msgid "Search trusted SOURCES — L1 [document-intake]"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:141
+#: skills/workflows/evidence-retrieval.bpmn:141
 #. Diagram label
 msgid "Sufficient for a recommendation?"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:62
+#: skills/workflows/evidence-retrieval.bpmn:62
 #. Diagram element documentation
 msgid "The author reads what the document, DAK or IG ALREADY says on this question, before looking outward. A recommendation that contradicts a sibling recommendation in the same artefact is a defect no external evidence will reveal."
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:30
+#: skills/workflows/evidence-retrieval.bpmn:30
 #. Diagram element documentation
 msgid "The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each candidate's authority against the publishing body's own API, grades the body of evidence, and either attaches it to the recommendation or records the gap. STRAWPERSON: registries, grading system and API bindings are not fixed here."
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:156
+#: skills/workflows/evidence-retrieval.bpmn:156
 #. Diagram element documentation
 msgid "The PICO, the graded body of evidence, each verified citation and its resolved authority record are written onto the recommendation block, so a reader can retrace the whole chain from the sentence back to the source."
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:48
+#: skills/workflows/evidence-retrieval.bpmn:48
 #. Diagram label
 msgid "Trusted registries and observatories (external)"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:113
+#: skills/workflows/evidence-retrieval.bpmn:113
 #. Diagram label
 msgid "Verify authority against the observatory / registry API"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:52
+#: skills/workflows/evidence-retrieval.bpmn:52
 #. Diagram label
 msgid "Work plan — beans (shared)"
 msgstr ""
 
-#: docs/workflows/evidence-retrieval.bpmn:181
+#: skills/workflows/evidence-retrieval.bpmn:181
 #. Diagram label
 msgid "yes"
 msgstr ""

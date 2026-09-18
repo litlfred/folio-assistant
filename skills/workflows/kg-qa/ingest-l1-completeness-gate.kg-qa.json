@@ -1,0 +1,50 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_L1Gate",
+    "path": "skills/workflows/ingest-l1-completeness-gate.bpmn"
+  },
+  "source_hash": "sha256:a429ea0d286ddd69b6ae762c36b23fec914b068879c7534002a88d30468af695",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 6,
+    "fail": 0,
+    "n/a": 1,
+    "unknown": 0
+  }
+}

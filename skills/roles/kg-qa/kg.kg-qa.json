@@ -8,7 +8,7 @@
   "source_hash": null,
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:9db63d141f69d769de5dbdd1a0cbd15a358227aae7f0921d9655fe94ed75d970",
+    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
     "engine_version": "1"
   },
   "criteria": {
@@ -41,67 +41,18 @@
         }
       ]
     },
+    "actor-roles-resolve": {
+      "result": "pass",
+      "findings": []
+    },
     "actor-is-not-a-role": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "admin",
-          "detail": ".claude/skills/actors/admin.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "author",
-          "detail": ".claude/skills/actors/author.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "business-analyst",
-          "detail": ".claude/skills/actors/business-analyst.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "clinical-sme",
-          "detail": ".claude/skills/actors/clinical-sme.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "content-reviewer",
-          "detail": ".claude/skills/actors/content-reviewer.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "fhir-modeller",
-          "detail": ".claude/skills/actors/fhir-modeller.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "programme-manager",
-          "detail": ".claude/skills/actors/programme-manager.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "publication-manager",
-          "detail": ".claude/skills/actors/publication-manager.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "qc-reviewer",
-          "detail": ".claude/skills/actors/qc-reviewer.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "reviewer",
-          "detail": ".claude/skills/actors/reviewer.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "technical-officer",
-          "detail": ".claude/skills/actors/technical-officer.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "terminologist",
-          "detail": ".claude/skills/actors/terminologist.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        },
-        {
-          "where": "translator",
-          "detail": ".claude/skills/actors/translator.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 0,
-    "fail": 2,
+    "pass": 2,
+    "fail": 1,
     "n/a": 0,
     "unknown": 0
   }

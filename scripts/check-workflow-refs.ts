@@ -38,7 +38,7 @@ const root = resolve(import.meta.dir, "..");
 const strict = process.argv.includes("--strict");
 
 const skills = knownSkills(root);
-const dir = join(root, "docs", "workflows");
+const dir = join(root, "skills", "workflows");
 const files = readdirSync(dir).filter((f) => f.endsWith(".bpmn")).sort();
 
 interface Dangling { file: string; node: string; ref: string }
@@ -101,7 +101,7 @@ if (!dangling.length && !totalUncovered) console.log("\nAll refs resolve, every 
  * The same failure, one layer over: `schemas/translation-tools.ts` lists
  * `bpmnDiagrams` per content type — the diagrams whose labels need
  * re-rendering after translation. One entry named
- * `docs/workflows/publication-workflow.bpmn`, which has never existed, so the
+ * `skills/workflows/publication-workflow.bpmn`, which has never existed, so the
  * re-render skipped it silently and a skipped diagram is indistinguishable
  * from a diagram that needed no work.
  */

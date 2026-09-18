@@ -83,8 +83,8 @@ describe("tally and worstSeverity", () => {
 
 describe("the sidecars committed in this repository", () => {
   const roots = [
-    join(import.meta.dir, "..", "docs", "workflows", "kg-qa"),
-    join(import.meta.dir, "..", "docs", "workflows", "decisions", "kg-qa"),
+    join(import.meta.dir, "..", "skills", "workflows", "kg-qa"),
+    join(import.meta.dir, "..", "skills", "workflows", "decisions", "kg-qa"),
     join(import.meta.dir, "..", "skills", "roles", "kg-qa"),
   ].filter(existsSync);
 

@@ -27,13 +27,22 @@
  * where its beans are explicitly *not its own to close*. The skills differ
  * because the **lane** differs, not because the actor did.
  *
- * The prior modelling had this backwards. `.claude/skills/actors/*.json` holds
+ * The prior modelling had this backwards. `.claude/skills/actors/*.json` held
  * eighteen entries with an `inherits` chain — `author` inherits `reviewer`
- * inherits `viewer` — which is a **role** lattice wearing an actor's name. The
- * things it describes (can review, can push) are capabilities of a position,
- * not properties of a person. Those files are kept and read as actors, and
- * {@link readActors} reports the ones that are really roles rather than
- * silently reinterpreting them; migrating them is bean work, not a rename.
+ * inherits `viewer` — which is a **role** lattice wearing an actor's name: the
+ * things it described (can review, can push) are properties of a position, not
+ * of a person. Those entries now carry `roles[]` instead, naming the roles each
+ * actor may take on, and the lattice lives in the role graph where `inherits`
+ * means what it says.
+ *
+ * {@link readActors} still reports an entry carrying `inherits` via
+ * {@link LoadedActor.looksLikeRole}, and the `actor-is-not-a-role` criterion
+ * still fails on one. The migration is done here; the check stays, because the
+ * next registry to be written by hand will reach for `inherits` again.
+ *
+ * `roles: []` and an absent `roles` are **different**: `[]` says the actor
+ * takes on no role, which is the honest value for a read-only identity that
+ * never appears in a swimlane, while absent says nothing has been asserted.
  *
  * ## Hierarchy: roles compose down a subprocess chain
  *
@@ -57,7 +66,7 @@
  *
  * ## Lanes are free text, and that is the defect this module addresses
  *
- * Measured on 2026-09-18 across the twenty diagrams in `docs/workflows/`:
+ * Measured on 2026-09-18 across the twenty diagrams in `skills/workflows/`:
  * **60 distinct lane names for roughly two dozen actual roles.** "Reviewer /
  * SME", "Reviewer / subject-matter expert", "Reviewer (SME or editor)" and
  * "Review Committee" are four spellings of one position; "Work plan — beans
@@ -154,6 +163,18 @@ export interface RoleDef {
   skills: string[];
   /** Roles this one IS-A. Skills are unioned transitively; cycles rejected. */
   inherits?: string[];
+  /**
+   * This lane is **acted upon**, not performed by anybody.
+   *
+   * `Work plan — beans`, `Corpus (versioned store)` and `Publish — GitHub
+   * Pages` are drawn as lanes because tasks act ON them and a reader needs to
+   * see where the plan or the corpus is touched. No actor takes them on. The
+   * flag exists so the audit can record `role-has-actor` as **n/a** for them
+   * rather than as a failure: reporting "no actor can fill the corpus" would
+   * be a finding nobody can act on, and a check that produces those is a check
+   * somebody switches off.
+   */
+  actedUpon?: boolean;
 }
 
 /** The declared role graph. */
@@ -180,6 +201,7 @@ export const RoleDefSchema = z.object({
   lanes: z.array(z.string()).default([]),
   skills: z.array(z.string()).default([]),
   inherits: z.array(z.string()).optional(),
+  actedUpon: z.boolean().optional(),
 });
 
 export const RoleGraphSchema = z.object({
@@ -243,13 +265,12 @@ function detectCycle(graph: RoleGraph, id: string, path: string[]): void {
 /**
  * Read the actor registry.
  *
- * Reads `.claude/skills/actors/*.json`, whose entries predate this module and
- * carry `type` rather than `kind` plus an `inherits` chain that is really a
- * role lattice. They are mapped, not rewritten: `type: "person"` → `person`,
- * `"system"` → `system`, anything else → `agent`. An entry carrying `inherits`
- * is returned with {@link LoadedActor.looksLikeRole} set, so a caller can
- * report the migration debt instead of either ignoring it or acting on a
- * field that means something else here.
+ * Reads `.claude/skills/actors/*.json`, whose entries carry `type` rather than
+ * `kind`. That is mapped, not rewritten: `type: "person"` → `person`,
+ * `"system"` → `system`, anything else → `agent`, so an older registry still
+ * loads. An entry carrying the deprecated `inherits` is returned with
+ * {@link LoadedActor.looksLikeRole} set, so a caller can report it instead of
+ * either ignoring it or acting on a field that means something else here.
  */
 export interface LoadedActor extends ActorDef {
   /** The file it came from, so a finding can name it. */

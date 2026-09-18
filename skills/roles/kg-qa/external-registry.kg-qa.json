@@ -5,10 +5,10 @@
     "id": "external-registry",
     "path": "skills/roles/roles.json"
   },
-  "source_hash": "sha256:41f64692488ee208f3d6d5cb8acc7759b22c8c7690e1ee9754ce1a630dfd3a52",
+  "source_hash": "sha256:cfc1d4c35c77f464312242edd3e5af6f3de8b540b9ae231034c063e8b19bcc7a",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:9db63d141f69d769de5dbdd1a0cbd15a358227aae7f0921d9655fe94ed75d970",
+    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
     "engine_version": "1"
   },
   "criteria": {
@@ -25,19 +25,14 @@
       "findings": []
     },
     "role-has-actor": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "external-registry",
-          "detail": "the actor registry declares no `roles` on any entry, so actor-to-role eligibility could not be evaluated. This is a gap in the registry, not a pass."
-        }
-      ]
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
     "pass": 2,
     "fail": 0,
-    "n/a": 1,
-    "unknown": 1
+    "n/a": 2,
+    "unknown": 0
   }
 }

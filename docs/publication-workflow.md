@@ -31,7 +31,7 @@ validation gate, the skills, and the shared work plan all named.
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/every-workflow-in-the-repo.md){: .fa-node-edit title="Edit content/docs/publication-workflow/every-workflow-in-the-repo.md" }
 
 Nineteen BPMN 2.0 files, all under
-[`docs/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/docs/workflows)
+[`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
 (counted on `main`, 2026-09-18 — this line said "six" for long enough that it is
 worth saying where the number came from).
 Each is a real BPMN 2.0 document with diagram interchange — open it in
@@ -101,7 +101,7 @@ the outer process; the rest are its call activities:
 | `evidence-retrieval.bpmn` | Framing a question, searching trusted sources, appraising what comes back |
 
 > **This list is checked, not maintained by hand.** `bun run check:workflow-refs`
-> fails when a `.bpmn` under `docs/workflows/` is absent from this page. It was
+> fails when a `.bpmn` under `skills/workflows/` is absent from this page. It was
 > added because the page opened by counting nineteen files and then listed
 > eight — the eleven above were present in the repository and invisible here,
 > which is the same defect as a table of contents that stops halfway.
@@ -134,7 +134,7 @@ same kind of question. `Accept, revise or discard?` is the editor's call.
 
 A gateway carrying `<folio:decision ref="decisions/x.dmn#Decision_Id"/>` has its
 outcome computed from a **DMN decision table** under
-[`docs/workflows/decisions/`](https://github.com/litlfred/folio-assistant/tree/main/docs/workflows/decisions).
+[`skills/workflows/decisions/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows/decisions).
 The agent supplies facts — `{ failCritical: 0, failMajor: 2 }` — and the table
 returns the branch; `workflow_complete` refuses a hand-supplied outcome there,
 and records which rule fired.
@@ -205,7 +205,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 ## Editing and the HCI validation gate
 {: #editing-and-the-hci-validation-gate }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/editing-hci-validation.bpmn){: .fa-node-edit title="Edit docs/workflows/editing-hci-validation.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/editing-hci-validation.bpmn){: .fa-node-edit title="Edit skills/workflows/editing-hci-validation.bpmn" }
 
 This is the diagram that matters most day to day: **one proposed change to one
 content block**.
@@ -215,7 +215,7 @@ content block**.
        alt="BPMN swimlane diagram: an editor describes a change, an authoring agent drafts it, the proposed change fans out through mechanical and non-mechanical validation, the findings are shown to the editor, and only an accepted change is committed to the corpus.">
 </div>
 
-[Open the BPMN source](workflows/editing-hci-validation.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/editing-hci-validation.bpmn){: .btn .btn-outline }
 
 ### The one rule this diagram exists to state
 {: #the-one-rule-this-diagram-exists-to-state }
@@ -286,7 +286,7 @@ content type:
 ## From corpus to published folio
 {: #from-corpus-to-published-folio }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/draft-to-publication.bpmn){: .fa-node-edit title="Edit docs/workflows/draft-to-publication.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/draft-to-publication.bpmn){: .fa-node-edit title="Edit skills/workflows/draft-to-publication.bpmn" }
 
 The corpus is not the publication. A **draft** is built from it, reviewed as a
 whole by the review team, and only then released.
@@ -296,7 +296,7 @@ whole by the review team, and only then released.
        alt="BPMN swimlane diagram: the corpus is built into a draft publication, QA gates run, the publication manager circulates it, the review team and SMEs review in parallel, change requests become beans that re-enter editing, and an approved draft is authorised by the programme manager and published.">
 </div>
 
-[Open the BPMN source](workflows/draft-to-publication.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/draft-to-publication.bpmn){: .btn .btn-outline }
 
 Three things to note:
 
@@ -337,7 +337,7 @@ This diagram implements the `req:content-lifecycle` phase gates —
 ## Content lifecycle overview
 {: #content-lifecycle-overview }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/content-lifecycle.bpmn){: .fa-node-edit title="Edit docs/workflows/content-lifecycle.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/content-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/content-lifecycle.bpmn" }
 
 One cycle of a folio, plan to retire. Both diagrams above appear here as call
 activities.
@@ -347,7 +347,7 @@ activities.
        alt="BPMN swimlane diagram: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs, integration test and QA sweep, draft-review-publish, feedback is triaged and filed as beans, then either another cycle or retirement.">
 </div>
 
-[Open the BPMN source](workflows/content-lifecycle.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/content-lifecycle.bpmn){: .btn .btn-outline }
 
 This is the same lifecycle as the linear
 [plan → author → validate → review → test → publish → feedback → retire](content-types.html#the-content-lifecycle)
@@ -453,7 +453,7 @@ see [Skills & roles](skills.html#roles-actors).
 The `.bpmn` files are the source of truth.
 
 ```sh
-# 1. edit docs/workflows/<diagram>.bpmn — in a modeler, or by hand
+# 1. edit skills/workflows/<diagram>.bpmn — in a modeler, or by hand
 # 2. regenerate the SVGs
 bun run render:bpmn
 # 3. or, in CI, just check they are not stale
@@ -490,7 +490,7 @@ implies actors performing activities over time, which none of these have:
 | [Writing a paper](guides/writing-a-paper.html) — the Lean session | Mermaid `sequenceDiagram` | An interaction transcript between you, the assistant and the MCP server. BPMN's equivalent — a collaboration with message flows — would add ceremony without adding meaning |
 
 If you add a diagram that *does* have actors, activities and a control flow,
-it belongs in `docs/workflows/` as BPMN, not in a Mermaid fence.
+it belongs in `skills/workflows/` as BPMN, not in a Mermaid fence.
 
 ---
 

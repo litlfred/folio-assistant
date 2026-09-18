@@ -25,4 +25,4 @@ with a checksum is verifiable, and can be re-fetched and compared later.
 Every asset in `manifest.jsonld` carries these fields, and they are produced by
 the ingest path rather than backfilled.
 
-Diagram: `docs/workflows/ingest-derive-content.bpmn`, `Task_TechMeta`.
+Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_TechMeta`.

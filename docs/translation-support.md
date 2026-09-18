@@ -351,7 +351,7 @@ The `po-inject` tool takes a completed `.po` file and produces a translated
 After injection, the round-trip translation QA back-translates the result into
 the source language and compares meaning. Drift or bad terminology is routed to
 a human reviewer. See bean `folio-assistant-ktt2` and the BPMN diagram
-`docs/workflows/ingest-l1-completeness-gate.bpmn` (`Task_RoundTrip`).
+`skills/workflows/ingest-l1-completeness-gate.bpmn` (`Task_RoundTrip`).
 
 ---
 
@@ -359,7 +359,7 @@ a human reviewer. See bean `folio-assistant-ktt2` and the BPMN diagram
 
 The human translator workflow is a dedicated path for professional translation,
 distinct from the agentic/machine path. See BPMN:
-`docs/workflows/human-translation-workflow.bpmn`.
+`skills/workflows/human-translation-workflow.bpmn`.
 
 ### Steps
 
@@ -599,7 +599,7 @@ all content types — documents, papers, and DAK folios alike.
 The translation workflow integrates with the existing content lifecycle:
 
 ```
-See: docs/workflows/translation-workflow.bpmn
+See: skills/workflows/translation-workflow.bpmn
 ```
 
 ### Stages
@@ -646,7 +646,7 @@ code, labels) uniformly.
 ## Work plan
 
 See the beans created for this work and the
-[BPMN workflow diagram](workflows/translation-workflow.bpmn).
+[BPMN workflow diagram](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/translation-workflow.bpmn).
 
 | Phase | Bean | Description | Status |
 |---|---|---|---|

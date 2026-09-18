@@ -169,6 +169,14 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "most of the corpus as orphaned, and a wall of false findings is how a check gets switched off.",
   },
   {
+    id: "actor-roles-resolve",
+    applies: ["graph"],
+    severity: "critical",
+    summary:
+      "An actor lists a role that is not declared — the reverse of role-has-actor, and the direction " +
+      "nothing checked: a typo in an actor's `roles[]` is silently ignored rather than reported.",
+  },
+  {
     id: "actor-is-not-a-role",
     applies: ["graph"],
     severity: "minor",

@@ -49,14 +49,14 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 ## The L3 pipeline
 {: #the-l3-pipeline }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit docs/../workflows/l3-fhir-pipeline.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit skills/workflows/l3-fhir-pipeline.bpmn" }
 
 <div class="bpmn-figure" id="figure-the-l3-pipeline">
   <img src="../assets/img/workflows/l3-fhir-pipeline.svg"
        alt="BPMN swimlane diagram: the FHIR modeller maps L2 to L3 and authors FSH, the build pipeline compiles with SUSHI and validates against profiles, a failed validation returns to FSH authoring, the QC reviewer's gates file findings as beans when they fail, and a clean run goes through the IG Publisher to a published IG site.">
 </div>
 
-[BPMN 2.0 source](../workflows/l3-fhir-pipeline.bpmn) · [full-size SVG](../assets/img/workflows/l3-fhir-pipeline.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/l3-fhir-pipeline.bpmn) · [full-size SVG](../assets/img/workflows/l3-fhir-pipeline.svg)
 {: .bpmn-source }
 
 | Step | Skill |
@@ -83,14 +83,14 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 ## Making the build incremental
 {: #making-the-build-incremental }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/ig-incremental-build.bpmn){: .fa-node-edit title="Edit docs/workflows/ig-incremental-build.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ig-incremental-build.bpmn){: .fa-node-edit title="Edit skills/workflows/ig-incremental-build.bpmn" }
 
 <div class="bpmn-figure" id="figure-making-the-build-incremental">
   <img src="../assets/img/workflows/ig-incremental-build.svg"
        alt="BPMN swimlane diagram: a source change restores the derived state; if the cache is usable the build computes the change's dependency cone, posts the cone report for the reviewer, checks out and compiles only the cone, validates it against the warm validator service, re-renders the cone's records, merges them with the restored ones, rebuilds the meta-index and assembles the site; a cache miss or a moved toolchain falls back to a full publisher build; QC gates run on the aggregate QA and file findings as beans; a PR branch deploys a preview and never seeds, while main or a release deploys the site and seeds the cache from the green build.">
 </div>
 
-[BPMN 2.0 source](../workflows/ig-incremental-build.bpmn) · [full-size SVG](../assets/img/workflows/ig-incremental-build.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/ig-incremental-build.bpmn) · [full-size SVG](../assets/img/workflows/ig-incremental-build.svg)
 {: .bpmn-source }
 
 Every trigger in a DAK repository — a push to a PR branch, `/validate`, `/deploy`, a

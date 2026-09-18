@@ -22,7 +22,7 @@ Four objects, each with a home:
 | **Actor** | a concrete participant. Human or agentic. Persists across every process. | `.claude/skills/actors/*.json` |
 | **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
 | **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
-| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `docs/workflows/*.bpmn`, `docs/workflows/decisions/*.dmn` |
+| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `skills/workflows/*.bpmn`, `skills/workflows/decisions/*.dmn` |
 
 Schema: [`schemas/role-graph.ts`](../../schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](../../scripts/kg-audit.ts), sidecar schema
@@ -42,13 +42,30 @@ not because the actor did.
 So nothing is "a reviewer". Somebody **acts as** reviewer, inside a process,
 for the duration of a lane.
 
-> **The actor registry predates this and has not caught up.**
-> `.claude/skills/actors/*.json` holds eighteen entries with an `inherits`
+> **The actor registry used to model this backwards, and now does not.**
+> `.claude/skills/actors/*.json` held eighteen entries with an `inherits`
 > chain — `author` inherits `reviewer` inherits `viewer`. That is a **role**
 > lattice wearing an actor's name: "can review", "can push" are properties of a
-> position, not of a person. Thirteen of them are reported by the
-> `actor-is-not-a-role` criterion as migration debt. They are read as actors and
-> not silently reinterpreted; migrating them is bean work, not a rename.
+> position, not of a person. Those entries now carry **`roles[]`** — the roles
+> each actor may take on — and the lattice lives in the role graph, where
+> `inherits` means what it says. Six actors were added for participants that
+> had none: the end user, a stakeholder, the onboarding / ingestion / evidence
+> agents, and the CI pipeline.
+>
+> `roles: []` and an **absent** `roles` mean different things. `[]` says the
+> actor takes on no role, which is the honest value for a read-only identity
+> that never appears in a swimlane; absent says nothing has been asserted.
+>
+> The `actor-is-not-a-role` criterion stays even though it now passes, because
+> the next registry written by hand will reach for `inherits` again.
+
+> **Some lanes are acted upon, not performed.** `Work plan — beans`, `Corpus`,
+> `Publish — GitHub Pages` and the external registries are drawn as lanes
+> because tasks act ON them, and a reader needs to see where the plan or the
+> corpus is touched. Nobody takes them on, so they carry `actedUpon: true` and
+> `role-has-actor` records **n/a** rather than failing. Reporting "no actor can
+> fill the corpus" is a finding nobody can act on, and a check that produces
+> those is a check somebody switches off.
 
 ## Two compositions, and they are not the same
 

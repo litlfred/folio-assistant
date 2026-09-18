@@ -1,0 +1,15 @@
+{
+  "id": "onboarding-agent",
+  "name": "Onboarding agent",
+  "type": "system",
+  "description": "The authoring agent acting before there is a folio: clarifying what \"create a folio\" means here, scanning an existing repo, scaffolding, and reporting the published URL only once it answers.",
+  "roles": [
+    "onboarding-agent"
+  ],
+  "capabilities": [
+    "content-authoring"
+  ],
+  "meta": {
+    "workflow": "skills/workflows/getting-started.bpmn#Lane_Agent"
+  }
+}

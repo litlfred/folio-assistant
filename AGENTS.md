@@ -426,7 +426,7 @@ One sentence, and every word in it is a distinct declared object:
 | **Actor** | a concrete participant — human or agentic. Persists across processes. | `.claude/skills/actors/*.json` |
 | **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
 | **Skill** | the instruction body the actor needs to perform the task. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
-| **Process / Decision** | BPMN + DMN. Lanes bind roles, activities name skills, gateways may compute a branch. | `docs/workflows/` |
+| **Process / Decision** | BPMN + DMN. Lanes bind roles, activities name skills, gateways may compute a branch. | `skills/workflows/` |
 
 All four live in the **`kg` graph** the instance declares in `agent-harness.json`
 — in this repo that id maps to `skills/`. BPMN and DMN are **not standalone
@@ -453,8 +453,8 @@ resolution rules, how to bind a lane, the severity scale, and how to add a role.
 ### The audit — `bun run kg:audit`
 
 Fourteen criteria, one per join above, written as **committed QA sidecars** under
-`kg-qa/` beside whatever they audit: `docs/workflows/kg-qa/`,
-`docs/workflows/decisions/kg-qa/`, `skills/roles/kg-qa/`. Schema:
+`kg-qa/` beside whatever they audit: `skills/workflows/kg-qa/`,
+`skills/workflows/decisions/kg-qa/`, `skills/roles/kg-qa/`. Schema:
 `schemas/kg-qa.ts`. This is the **third** QA subject kind, after the block sweep's
 `*.qa.json` and the script sweep's `*.script-qa.json`, and it shares their shape.
 
@@ -477,12 +477,20 @@ must not gate — forcing a fake ref onto a real step is worse than the gap.
 at its own criterion's severity, so a diagram that will not load still fails on its
 `critical` rows while an unevaluable `minor` does not gate the build.
 
-**What it found at baseline, and none of it was noise:** 60 distinct lane names
-for roughly two dozen positions, now all bound; 42 activities naming no skill; 6
-skills nothing reaches; 13 actor entries carrying `inherits` — a role lattice
-wearing an actor's name, the migration debt this model names rather than inherits
-silently. And `role-has-actor` is `unknown` for all 28 roles because no actor
-entry declares `roles` at all: a gap in the registry, reported as one.
+**What it found, and none of it was noise.** First run: 60 distinct lane names
+for roughly two dozen positions, bound to nothing; 42 activities naming no skill;
+6 skills nothing reaches; 13 actor entries carrying `inherits` — a role lattice
+wearing an actor's name; and `role-has-actor` `unknown` for all 28 roles, because
+no actor entry said which roles it could take on.
+
+**After fixing what it found:** every lane bound, the registry rewritten to carry
+`roles[]`, six missing participants added (the end user, a stakeholder, the
+onboarding / ingestion / evidence agents, the CI pipeline), and the four lanes
+that are *acted upon* rather than performed — the work plan, the corpus, the
+publish target, the external registries — marked `actedUpon` so their
+`role-has-actor` is `n/a` rather than a failure nobody can act on. **Zero
+`unknown` rows.** What remains is 42 activities naming no skill and 6 unreachable
+skills, both `minor`, both real.
 
 **What counts as a skill is one answer, in `scripts/known-skills.ts`,** shared by
 `kg-audit` and `check-workflow-refs` so they cannot disagree. `.claude/skills/` is
@@ -616,7 +624,7 @@ the full six-phase process is in
 [`skills/folio-core/crdm-requirements-workflow.md`](skills/folio-core/crdm-requirements-workflow.md).
 
 **The CRDM process is executable — do not hand-roll a phase tracker.**
-`docs/workflows/crdm-requirements.bpmn` loads like every other diagram here,
+`skills/workflows/crdm-requirements.bpmn` loads like every other diagram here,
 so `workflow_start` / `workflow_next` / `workflow_complete` run it, and
 `workflow_complete` refuses a step that is not enabled. Every activity in the
 agent's lane carries `<folio:skill ref>`, so `workflow_next` returns the skill
@@ -939,7 +947,7 @@ Full protocol, with the worked example:
   LeanDojo) — where each earns a place and how it wires into existing skills:
   `docs/proposals/llm-authoring-tool-integration.md`.
 - **Every process in this repo is BPMN** — six `.bpmn` files under
-  `docs/workflows/`, indexed by `docs/publication-workflow.md`. Read that page
+  `skills/workflows/`, indexed by `docs/publication-workflow.md`. Read that page
   before changing how a proposed edit is validated, who approves what, or where
   beans are claimed: it is the normative picture of the HCI validation gate
   (mechanical + non-mechanical), the draft-review-publish path, and the work-plan
@@ -953,13 +961,13 @@ Full protocol, with the worked example:
   `<folio:bean store="beans/"/>` where it touches the work plan — add both when
   you add an activity.
   **Adding a diagram:** if it has actors, activities and a control flow, it is a
-  process — author it as BPMN under `docs/workflows/`, not as a Mermaid fence.
+  process — author it as BPMN under `skills/workflows/`, not as a Mermaid fence.
   Mermaid stays for the things that are *not* processes (component maps, the
   role-inheritance lattice, the docs navigation graph); the audit of which is
   which is in `docs/publication-workflow.md`.
 - **The diagrams are executable** — `workflow_list` / `workflow_start` /
   `workflow_next` / `workflow_complete` (MCP) run a process from
-  `docs/workflows/*.bpmn`. `workflow_next` tells you what is enabled **now**,
+  `skills/workflows/*.bpmn`. `workflow_next` tells you what is enabled **now**,
   which lane owns it and which skill implements it; `workflow_complete` refuses
   a step that is not enabled, so work cannot be claimed out of order. State is
   committed under `beans/workflows/`, like beans, so a sibling session sees it.
@@ -982,7 +990,7 @@ Full protocol, with the worked example:
   as a manifest but will not import is refused rather than waved through.
   `.qa.json` is excluded (the sweep writes it). Use `--warn` to adopt gradually.
   **Some gateways are computed, not chosen.** One carrying `<folio:decision/>`
-  is backed by a DMN table in `docs/workflows/decisions/`: pass `facts` (e.g.
+  is backed by a DMN table in `skills/workflows/decisions/`: pass `facts` (e.g.
   `{ failCritical: 0, failMajor: 2 }` from `qa_sweep` totals) and the table
   returns the branch. `workflow_complete` refuses a hand-supplied `outcome`
   there — asserting the answer would defeat the point. Adding one means adding

@@ -2,7 +2,18 @@
   "id": "admin",
   "name": "Administrator",
   "type": "person",
-  "description": "Full administrative access. Can manage roles, settings, and all content operations.",
-  "inherits": ["programme-manager", "publication-manager"],
-  "capabilities": ["git-push", "admin-settings", "role-management", "release-authorization"]
+  "description": "Full administrative access. May act in every governance lane; `capabilities` is what the environment grants, `roles` is what it may act as.",
+  "roles": [
+    "programme-manager",
+    "publication-manager",
+    "editor",
+    "author",
+    "reviewer"
+  ],
+  "capabilities": [
+    "git-push",
+    "admin-settings",
+    "role-management",
+    "release-authorization"
+  ]
 }

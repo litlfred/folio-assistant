@@ -117,7 +117,7 @@ export class FolioServer {
 
     // Core, adapter-independent MCP tools (agent-generic work-plan priming).
     registerBeansTools(this.mcpServer, config.repoRoot);
-    // Process state from docs/workflows/*.bpmn — what is enabled now, and why.
+    // Process state from skills/workflows/*.bpmn — what is enabled now, and why.
     registerWorkflowTools(this.mcpServer, config.repoRoot);
     // Translation lifecycle: extract, inject, status, signoff, validate.
     registerTranslationTools(this.mcpServer, config.repoRoot);

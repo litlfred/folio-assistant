@@ -26,7 +26,7 @@ import {
  * name the gate itself.
  */
 
-const WF = resolve(import.meta.dir, "../../docs/workflows");
+const WF = resolve(import.meta.dir, "../../skills/workflows");
 const REPO = resolve(import.meta.dir, "../..");
 const editing = () => loadProcessModel(join(WF, "editing-hci-validation.bpmn"));
 
