@@ -212,6 +212,15 @@ jobs:
       - name: workflow skill refs
         run: bun run check:workflow-refs
 
+      # Every Tool's `satisfies` names a skill that exists, and every io port
+      # references a type the shared vocabulary declares. The schema can require
+      # `satisfies` to be non-empty; it cannot know whether the names resolve,
+      # because a schema does not get to read the tree. A skill with NO Tool is
+      # reported and not failed — many skills are pure judgement and have no
+      # mechanism to name.
+      - name: tool definitions
+        run: bun run check:tools
+
       # The rest of the actor -> role -> skill -> task joins, and the committed
       # sidecars that record them. A `critical` finding is a broken reference:
       # a lane binding a role that is not declared, a role carrying a skill

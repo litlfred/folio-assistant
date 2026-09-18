@@ -62,6 +62,7 @@ import {
 import {
   readRoleGraph,
   readActors,
+  readPermissions,
   resolveRoleSkills,
   roleForLane,
   type RoleGraph,
@@ -70,6 +71,7 @@ import {
 import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
 import { knownSkills } from "./known-skills.js";
+import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 
 const ENGINE_VERSION = "1";
 
@@ -95,6 +97,8 @@ const WORKFLOW_DIR = join(root, "skills", "workflows");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
 const ACTOR_DIR = join(root, ".claude", "skills", "actors");
+const CAPABILITY_DIR = join(root, ".claude", "skills", "capabilities");
+const REQUIREMENT_DIR = join(KG_ROOT, "requirements");
 
 const sha256 = (s: string) => `sha256:${createHash("sha256").update(s).digest("hex")}`;
 
@@ -245,8 +249,23 @@ async function auditProcess(
     }
   }
 
+  const servable = servableSkills();
+  const unservable: KgFinding[] = [];
+  for (const n of activities) {
+    for (const ref of n.skills) {
+      if (!skills.has(ref)) continue; // a dangling ref is a different finding
+      if (!servable.has(ref)) {
+        unservable.push({
+          where: n.id,
+          detail: `names skill "${ref}", which exists but no local package serves — skill_fetch would answer "package not found".`,
+        });
+      }
+    }
+  }
+
   const criteria: Record<string, KgCriterionEntry> = {
     "skill-ref-resolves": entry(danglingSkill),
+    "skill-servable": entry(unservable),
     "decision-ref-resolves": entry(danglingDecision, decisionRefs.length > 0),
     "role-ref-resolves": entry(danglingRoleRef, Boolean(graph)),
     "activity-in-lane": entry(noLane, m.lanes.length > 0),
@@ -485,6 +504,108 @@ function auditRoles(
   });
 }
 
+// ── Per-requirement criteria ────────────────────────────────────
+
+/**
+ * Requirements are the fifth KG node kind, and the last one whose joins went
+ * unchecked.
+ *
+ * A requirement is not a skill and not a role: it is a conformance obligation
+ * that POINTS AT them. `satisfiedBy` names the skill or capability that
+ * discharges a statement, `actors` names who is bound by it, and `derivedFrom`
+ * names the broader requirement it specialises. Three reference types, and
+ * until now nothing resolved any of them — measured on 2026-09-18, one
+ * `satisfiedBy` and three `derivedFrom` refs pointed at nothing.
+ *
+ * They are `critical` rather than `major` for the same reason a dangling
+ * `<folio:skill ref>` is: a reader following the reference gets nothing. The
+ * grading check is `major` — an ungraded statement is still readable, it just
+ * cannot be conformance-tested.
+ */
+interface LoadedRequirement {
+  id: string;
+  file: string;
+  path: string;
+  raw: {
+    id?: string;
+    derivedFrom?: string[];
+    actors?: string[];
+    statements?: { key?: string; conformance?: string; actors?: string[]; satisfiedBy?: { kind?: string; ref?: string }[] }[];
+  };
+}
+
+function readRequirements(): LoadedRequirement[] {
+  if (!existsSync(REQUIREMENT_DIR)) return [];
+  const out: LoadedRequirement[] = [];
+  for (const f of readdirSync(REQUIREMENT_DIR).filter((f) => f.endsWith(".json")).sort()) {
+    const p = join(REQUIREMENT_DIR, f);
+    try {
+      const raw = JSON.parse(readFileSync(p, "utf-8")) as LoadedRequirement["raw"];
+      out.push({ id: raw.id ?? f.slice(0, -5), file: f, path: p, raw });
+    } catch (e) {
+      throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : e}`);
+    }
+  }
+  return out;
+}
+
+function auditRequirements(
+  reqs: LoadedRequirement[],
+  skills: Set<string>,
+  actors: LoadedActor[],
+  auditorHash: string,
+): KgQaReport[] {
+  const capabilities = new Set<string>();
+  if (existsSync(CAPABILITY_DIR)) {
+    for (const f of readdirSync(CAPABILITY_DIR)) {
+      if (f.endsWith(".json")) capabilities.add(f.slice(0, -5));
+    }
+  }
+  const actorIds = new Set(actors.map((a) => a.id));
+  const reqIds = new Set(reqs.map((r) => r.id));
+
+  return reqs.map((r) => {
+    const hash = sha256(readFileSync(r.path, "utf-8"));
+    const satisfied: KgFinding[] = [];
+    const badActors: KgFinding[] = [];
+    const ungraded: KgFinding[] = [];
+
+    for (const a of r.raw.actors ?? []) {
+      if (!actorIds.has(a)) badActors.push({ where: r.id, detail: `binds actor "${a}", which the registry does not declare.` });
+    }
+    for (const st of r.raw.statements ?? []) {
+      const key = st.key ?? "(unkeyed)";
+      if (!st.conformance) {
+        ungraded.push({ where: key, detail: `statement "${key}" carries no \`conformance\` grade — it cannot be conformance-tested.` });
+      }
+      for (const a of st.actors ?? []) {
+        if (!actorIds.has(a)) badActors.push({ where: `${r.id}/${key}`, detail: `binds actor "${a}", which the registry does not declare.` });
+      }
+      for (const sb of st.satisfiedBy ?? []) {
+        const ref = sb.ref ?? "";
+        const ok = sb.kind === "skill" ? skills.has(ref) : sb.kind === "capability" ? capabilities.has(ref) : true;
+        if (!ok) {
+          satisfied.push({
+            where: `${r.id}/${key}`,
+            detail: `is satisfiedBy ${sb.kind} "${ref}", which does not exist — the thing claimed to discharge this statement cannot be opened.`,
+          });
+        }
+      }
+    }
+    const badParents = (r.raw.derivedFrom ?? [])
+      .filter((d) => !reqIds.has(d))
+      .map((d) => ({ where: r.id, detail: `derives from "${d}", which is not a declared requirement.` }));
+
+    const criteria: Record<string, KgCriterionEntry> = {
+      "requirement-satisfied-by-resolves": entry(satisfied),
+      "requirement-actors-resolve": entry(badActors),
+      "requirement-derived-from-resolves": entry(badParents, (r.raw.derivedFrom ?? []).length > 0),
+      "requirement-statements-graded": entry(ungraded, (r.raw.statements ?? []).length > 0),
+    };
+    return report("requirement", r.id, relative(root, r.path), hash, criteria, auditorHash);
+  });
+}
+
 // ── Graph roll-up ───────────────────────────────────────────────
 
 function manifestSkills(): Set<string> {
@@ -507,6 +628,92 @@ function manifestSkills(): Set<string> {
   return out;
 }
 
+/**
+ * Every skill `skill_fetch` can actually hand to an agent.
+ *
+ * Read from `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` rather than from a
+ * list here, because a second copy of "which directories are served" is a
+ * second answer free to disagree with the first — and the whole defect this
+ * criterion exists for was a directory missing from that one table.
+ */
+function servableSkills(): Set<string> {
+  const out = new Set<string>();
+  for (const dir of Object.values(LOCAL_PACKAGES)) {
+    if (!existsSync(dir)) continue;
+    for (const f of readdirSync(dir)) if (f.endsWith(".md")) out.add(f.slice(0, -3));
+  }
+  return out;
+}
+
+/**
+ * Skills the Claude Code harness loads directly from `.claude/skills/local/`.
+ *
+ * Reachable without any manifest or package: the harness reads the directory.
+ * `scripts/generate-registry.ts` treats this same directory, and only this one
+ * under `.claude/skills/`, as `SkillDefinition`.
+ */
+function localHarnessSkills(): Set<string> {
+  const out = new Set<string>();
+  const dir = join(root, ".claude", "skills", "local");
+  if (!existsSync(dir)) return out;
+  for (const f of readdirSync(dir)) {
+    if (f.endsWith(".md")) out.add(f.slice(0, -3));
+    else if (f.endsWith(".json")) out.add(f.slice(0, -5));
+  }
+  return out;
+}
+
+/**
+ * Skills a REMOTE package declares it provides.
+ *
+ * `skills/remote-packages/*.json` name an external repo and, under
+ * `wrapper.skills`, the skills it supplies — `claude-scientific-skills`
+ * provides `scientific-visualization`, `hypothesis-generation` and
+ * `scientific-critical-thinking`. Their bodies are not in this checkout until
+ * the package is synced, so they are correctly ABSENT from `knownSkills()`:
+ * nothing here can serve one.
+ *
+ * But a local manifest naming one is not lying — it is naming a skill that
+ * comes from a dependency. Counting them only for `manifest-skill-exists` is
+ * the distinction: *can this instance serve it* and *is this entry a real
+ * skill somewhere* are different questions, and collapsing them would have had
+ * this criterion demand the deletion of three correct manifest entries the
+ * first time it ran. That very nearly happened.
+ */
+function remotePackageSkills(): Set<string> {
+  const out = new Set<string>();
+  const dir = join(root, "skills", "remote-packages");
+  if (!existsSync(dir)) return out;
+  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
+    try {
+      const p = JSON.parse(readFileSync(join(dir, f), "utf-8")) as { wrapper?: { skills?: string[] } };
+      for (const s of p.wrapper?.skills ?? []) out.add(s);
+    } catch {
+      // A remote-package file that will not parse is validate-skills.ts's finding.
+    }
+  }
+  return out;
+}
+
+/** Manifest entries, with the package each came from, for the reverse check. */
+function manifestEntries(): { pkg: string; skill: string }[] {
+  const out: { pkg: string; skill: string }[] = [];
+  const skillsRoot = join(root, "skills");
+  if (!existsSync(skillsRoot)) return out;
+  for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
+    if (!d.isDirectory()) continue;
+    const mp = join(skillsRoot, d.name, "package-manifest.json");
+    if (!existsSync(mp)) continue;
+    try {
+      const m = JSON.parse(readFileSync(mp, "utf-8")) as { skills?: string[] };
+      for (const s of m.skills ?? []) out.push({ pkg: d.name, skill: s });
+    } catch {
+      // `validate-skills.ts`'s finding, not this one's.
+    }
+  }
+  return out;
+}
+
 function auditGraph(
   graph: RoleGraph | undefined,
   processes: LoadedProcess[],
@@ -515,6 +722,8 @@ function auditGraph(
   auditorHash: string,
 ): KgQaReport {
   const reachable = manifestSkills();
+  for (const s of servableSkills()) reachable.add(s);
+  for (const s of localHarnessSkills()) reachable.add(s);
   for (const r of graph?.roles ?? []) for (const s of r.skills) reachable.add(s);
   for (const p of processes) {
     for (const n of p.model?.nodes.values() ?? []) for (const s of n.skills) reachable.add(s);
@@ -534,6 +743,35 @@ function auditGraph(
       })),
   );
 
+  const capabilities = new Set<string>();
+  if (existsSync(CAPABILITY_DIR)) {
+    for (const f of readdirSync(CAPABILITY_DIR)) if (f.endsWith(".json")) capabilities.add(f.slice(0, -5));
+  }
+  const badCaps: KgFinding[] = [];
+  for (const a of actors) {
+    for (const c of a.capabilities ?? []) {
+      if (!capabilities.has(c)) {
+        badCaps.push({
+          where: a.id,
+          detail: `${relative(root, a.path)} claims capability "${c}", which the registry does not declare.`,
+        });
+      }
+    }
+  }
+
+  const declaredPerms = new Set((readPermissions(KG_ROOT)?.permissions ?? []).map((p) => p.id));
+  const badPerms: KgFinding[] = [];
+  for (const a of actors) {
+    for (const perm of a.permissions ?? []) {
+      if (!declaredPerms.has(perm)) {
+        badPerms.push({
+          where: a.id,
+          detail: `${relative(root, a.path)} claims permission "${perm}", which skills/permissions/permissions.json does not declare.`,
+        });
+      }
+    }
+  }
+
   const roleish = actors
     .filter((a) => a.looksLikeRole)
     .map((a) => ({ where: a.id, detail: `${relative(root, a.path)} carries \`inherits\` — an actor does not inherit, a role does. Migration debt from before roles were declared.` }));
@@ -545,11 +783,26 @@ function auditGraph(
     null,
     {
       "skill-reachable": entry(orphans),
+      "manifest-skill-exists": (() => {
+        const remote = remotePackageSkills();
+        return entry(
+          manifestEntries()
+            .filter((e) => !skills.has(e.skill) && !remote.has(e.skill))
+            .map((e) => ({
+              where: `${e.pkg}/${e.skill}`,
+              detail:
+                `skills/${e.pkg}/package-manifest.json names "${e.skill}", which resolves to no skill here ` +
+                `and is declared by no remote package.`,
+            })),
+        );
+      })(),
       // Without a role graph there is nothing to resolve against, and reporting
       // every actor's roles as dangling would be a wall of false findings.
       "actor-roles-resolve": graph
         ? entry(badActorRoles)
         : { result: "unknown", findings: [{ where: "—", detail: "no role graph to resolve actor roles against." }] },
+      "actor-capabilities-resolve": entry(badCaps),
+      "actor-permissions-resolve": entry(badPerms),
       "actor-is-not-a-role": entry(roleish),
     },
     auditorHash,
@@ -570,11 +823,15 @@ function sidecarPath(r: KgQaReport): string {
     process: join(WORKFLOW_DIR, KG_QA_DIRNAME),
     decision: join(DECISION_DIR, KG_QA_DIRNAME),
     role: join(KG_ROOT, "roles", KG_QA_DIRNAME),
+    requirement: join(KG_ROOT, "requirements", KG_QA_DIRNAME),
+    // Fallback only: a skill's sidecar sits beside the skill itself, resolved
+    // above, because one shared directory would collide two packages' skills
+    // of the same name.
     skill: join(KG_ROOT, KG_QA_DIRNAME),
     graph: join(KG_ROOT, "roles", KG_QA_DIRNAME),
   };
   const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json)$/, "") : r.subject.id;
-  const name = r.subject.kind === "role" ? r.subject.id : stem;
+  const name = r.subject.kind === "role" || r.subject.kind === "requirement" ? r.subject.id : stem;
   return join(dirFor[r.subject.kind], `${name}.kg-qa.json`);
 }
 
@@ -613,6 +870,7 @@ reports.push(...(await auditDecisions(processes, auditorHash)));
 if (graph) {
   reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills, auditorHash));
 }
+reports.push(...auditRequirements(readRequirements(), skills, actors, auditorHash));
 reports.push(...auditSkills(auditorHash));
 reports.push(auditGraph(graph, processes, actors, skills, auditorHash));
 

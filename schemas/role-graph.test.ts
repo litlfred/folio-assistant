@@ -15,6 +15,7 @@ import {
   resolveRoleStack,
   roleForLane,
   boundLaneNames,
+  readPermissions,
   findRole,
   toJsonLd,
   ROLE_GRAPH_DIR,
@@ -235,5 +236,56 @@ describe("this repository's actor registry, after the roles[] migration", () => 
     // asserts nothing, which is a different claim.
     const viewer = actors.find((a) => a.id === "viewer");
     expect(viewer?.roles).toEqual([]);
+  });
+});
+
+describe("permissions are an actor property, not a role property", () => {
+  const kg = join(import.meta.dir, "..", "skills");
+  const actorsDir = join(import.meta.dir, "..", ".claude", "skills", "actors");
+
+  test("the vocabulary is declared and every id is unique", () => {
+    const v = readPermissions(kg);
+    expect(v).toBeDefined();
+    expect(new Set(v!.permissions.map((p) => p.id)).size).toBe(v!.permissions.length);
+  });
+
+  test("every permission an actor claims is declared", () => {
+    const declared = new Set((readPermissions(kg)?.permissions ?? []).map((p) => p.id));
+    const bad = readActors(actorsDir).flatMap((a) =>
+      (a.permissions ?? []).filter((p) => !declared.has(p)).map((p) => `${a.id}→${p}`),
+    );
+    expect(bad).toEqual([]);
+  });
+
+  test("`capabilities[]` now holds probes only — no permission and no skill leaked back in", async () => {
+    const { readdirSync } = await import("node:fs");
+    const probes = new Set(
+      readdirSync(join(import.meta.dir, "..", ".claude", "skills", "capabilities")).map((f: string) =>
+        f.replace(/\.json$/, ""),
+      ),
+    );
+    const bad = readActors(actorsDir).flatMap((a) =>
+      (a.capabilities ?? []).filter((c) => !probes.has(c)).map((c) => `${a.id}→${c}`),
+    );
+    expect(bad).toEqual([]);
+  });
+
+  test("a permission genuinely cross-cuts roles — which is why it cannot live on Role", () => {
+    // This is the measurement that falsified the obvious design. If a future
+    // change makes every permission role-uniform, revisit the model; until
+    // then, moving them to Role reintroduces the 36 conflicts.
+    const actors = readActors(actorsDir);
+    const rolesOf = (perm: string) =>
+      new Set(actors.filter((a) => (a.permissions ?? []).includes(perm)).flatMap((a) => a.roles ?? []));
+    expect(rolesOf("content-authoring").size).toBeGreaterThan(1);
+    expect(rolesOf("qa-reporting").size).toBeGreaterThan(1);
+  });
+
+  test("an unparseable vocabulary throws rather than reading as empty", () => {
+    const root = mkdtempSync(join(tmpdir(), "perms-"));
+    mkdirSync(join(root, "permissions"), { recursive: true });
+    writeFileSync(join(root, "permissions", "permissions.json"), "{ not json");
+    expect(() => readPermissions(root)).toThrow(/not valid JSON/);
+    rmSync(root, { recursive: true, force: true });
   });
 });

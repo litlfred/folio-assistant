@@ -24,6 +24,8 @@ Four objects, each with a home:
 | **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
 | **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
 | **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `skills/workflows/*.bpmn`, `skills/workflows/decisions/*.dmn` |
+| **Requirement** | a conformance obligation that **points at** the others: `satisfiedBy` names the skill or capability discharging it, `actors` who is bound, `derivedFrom` the broader requirement it specialises. | `skills/requirements/*.json` |
+| **Permission** | what an actor is **allowed to do**, in any lane. Cross-cuts roles. | `skills/permissions/permissions.json` |
 
 Schema: [`schemas/role-graph.ts`](../../schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](../../scripts/kg-audit.ts), sidecar schema
@@ -67,6 +69,85 @@ for the duration of a lane.
 > `role-has-actor` records **n/a** rather than failing. Reporting "no actor can
 > fill the corpus" is a finding nobody can act on, and a check that produces
 > those is a check somebody switches off.
+
+## An actor has three lists, and they answer three different questions
+
+```jsonc
+{ "id": "admin",
+  "roles":        ["programme-manager", "publication-manager", "editor", "author", "reviewer"],
+  "permissions":  ["admin-settings", "role-management", "release-authorization"],
+  "capabilities": ["git-push"] }
+```
+
+| field | question | scope |
+|---|---|---|
+| `roles` | what may it act **AS**? | per lane |
+| `permissions` | what may it **DO**? | every lane |
+| `capabilities` | what does its **machine have**? | the environment |
+
+**These were one field until 2026-09** (bean `ind9`), and the conflation meant
+nothing could resolve any of them: 27 claims across 19 names pointed at a
+capability registry that only ever held environment probes.
+
+**The obvious fix was wrong, and testing it is what found the real one.** "Can
+review" and "can push" are properties of a position — that is exactly the
+reasoning that moved `inherits` off actors — so permissions look like they
+belong on Role. They do not survive the data. A permission **cross-cuts**:
+`content-authoring` is held by actors taking on five different roles;
+`qa-reporting` by three, one a build pipeline and one a human QC reviewer;
+`admin` holds `admin-settings` in all five lanes it enters. Placing them on Role
+produced **36** conflicts where a permission was held by some but not all actors
+sharing a role.
+
+The line that does hold: **a skill answers what the performer of this task needs
+to KNOW, and belongs to the lane. A permission answers what this participant may
+DO, and travels with the participant through every lane it enters.**
+
+Both are audited and both are `critical` — `actor-permissions-resolve` and
+`actor-capabilities-resolve`. The latter was `major` only while the field was
+overloaded, carrying entries no vocabulary could ever resolve.
+
+**Three names were neither**: `cql-authoring`, `data-dictionary-authoring` and
+`lean-diagnostics` are skills with no body anywhere. Dropped rather than
+relocated — claiming an unmodelled thing is worse than not claiming it, and
+putting them on a role would fail `role-skills-resolve`. Bean `dtod`.
+
+## Requirements are the fifth node kind, and they only point
+
+A requirement is not a skill and not a role. It is an obligation *about* them:
+
+```jsonc
+{ "id": "req:commit-hygiene",
+  "derivedFrom": ["req:agent-workflow"],
+  "actors": ["author", "admin"],
+  "statements": [
+    { "key": "no-secrets", "conformance": "SHALL",
+      "requirement": "Commits SHALL NOT include secrets, API keys, tokens…",
+      "satisfiedBy": [{ "kind": "skill", "ref": "content-plan" }] } ] }
+```
+
+Three reference types, all audited: `requirement-satisfied-by-resolves`,
+`requirement-actors-resolve` and `requirement-derived-from-resolves` are all
+`critical`, because a reader following a broken one gets nothing — the same test
+as a dangling `<folio:skill ref>`. `requirement-statements-graded` is `major`: an
+ungraded statement is readable, it just cannot be conformance-tested, and
+SHALL-vs-SHOULD is the whole reason to write a requirement rather than a note.
+
+**Do not fold a requirement into the skill that satisfies it.** The grading, the
+`derivedFrom` lattice, the actor binding and the many-to-many `satisfiedBy` are
+the only machine-checkable things about it, and prose in a skill doc carries
+none of them. `satisfiedBy` is many-to-many in both directions — one skill
+discharges statements in several requirements — so inlining duplicates rather
+than relocates.
+
+**They were in `.claude/skills/requirements/` until 2026-09-18**, which is a
+Claude-Code-only directory that Gemini, Cursor and Copilot never read, and their
+joins were unchecked the whole time. Moving them into the `kg` graph found four
+broken references on the first run: `req:agent-workflow` did not exist although
+three requirements declared `derivedFrom` it, and `capability:role-detection`
+did not exist either — capabilities here are environment probes
+(`detection: { method: "command" }`), and role detection is the actor registry
+read against the session identity, which is a skill.
 
 ## Two compositions, and they are not the same
 

@@ -1190,6 +1190,396 @@
     }
   }
 
+  /* ── QA witness panels ───────────────────────────────────────────────── */
+
+  // The icons beside each node's Edit link carry a state; this opens what is
+  // UNDER the state. Two levels, both asked for directly: a criterion list for
+  // the sidecar, and under each criterion every witness that has ruled on it --
+  // which script, model, agent or person, when, at which SHA, and whether the
+  // verdict still applies to the files as they stand.
+  //
+  // The data is the `qa-witness/v1` projection written by gen-docs-pages.ts,
+  // fetched on first click and cached for the life of the page. The sidecars
+  // themselves are not published: 14 of them are 392 KB and a reader opens one
+  // criterion, not forty-eight.
+  //
+  // Nothing here interpolates fetched text into markup. Every value from the
+  // JSON goes in through textContent, because a sidecar carries verbatim
+  // evidence quoted out of the content -- which is exactly the string that
+  // would close a tag if it were concatenated into HTML.
+
+  var QA_CACHE = {};
+  var QA_SEQ = 0;
+
+  var QA_RESULT_LABEL = {
+    fail: "fail", warn: "warn", pass: "pass", "n/a": "n/a", unknown: "no verdict"
+  };
+
+  // A criterion the sidecar holds with no verdict recorded is shown as loudly
+  // as a failure, not filed with the passes: it is the case a reader cannot
+  // otherwise tell from a clean one.
+  var QA_LOUD = { fail: 1, warn: 1, unknown: 1 };
+
+  var QA_KIND_LABEL = {
+    script: "script", agent: "agent", human: "human"
+  };
+
+  var QA_FRESH_LABEL = {
+    fresh: "current",
+    partial: "current on files",
+    stale: "STALE",
+    unknown: "currency unknown"
+  };
+
+  var REPO_BLOB = "https://github.com/litlfred/folio-assistant/blob/main/";
+
+  /** Short SHA for display; the full value stays in the title attribute. */
+  function shortSha(s) {
+    if (!s) return null;
+    var bare = s.indexOf(":") === -1 ? s : s.slice(s.indexOf(":") + 1);
+    return bare.length > 12 ? bare.slice(0, 12) : bare;
+  }
+
+  /**
+   * A timestamp as the reader's own locale renders it, plus how long ago.
+   *
+   * An absent timestamp returns null and the caller prints "not recorded" --
+   * kg-audit.ts records none, and inventing one would make an undated witness
+   * indistinguishable from a dated one.
+   */
+  function qaWhen(iso) {
+    if (!iso) return null;
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return { text: iso, title: iso };
+    var days = Math.floor((Date.now() - d.getTime()) / 86400000);
+    var ago = days <= 0 ? "today" : days === 1 ? "yesterday" : days + " days ago";
+    // `YYYY-MM-DD HH:MM`, not the locale's long form: it is one short line in a
+    // grid cell, it sorts by eye, and the exact instant is in the title.
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    var stamp = d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) +
+      " " + pad(d.getHours()) + ":" + pad(d.getMinutes());
+    return { text: stamp + " (" + ago + ")", title: iso };
+  }
+
+  /** One labelled field of a witness. Absent values are STATED, not dropped. */
+  function qaField(label, value, opts) {
+    var row = el("div", { class: "fa-qa-field" });
+    row.appendChild(el("span", { class: "fa-qa-field-label" }, label));
+    var v = el("span", { class: "fa-qa-field-value" }, value == null ? "not recorded" : value);
+    if (value == null) v.className += " fa-qa-absent";
+    if (opts && opts.title) v.setAttribute("title", opts.title);
+    if (opts && opts.mono) v.className += " fa-qa-mono";
+    row.appendChild(v);
+    return row;
+  }
+
+  function qaWitnessCard(w) {
+    var card = el("div", { class: "fa-qa-witness fa-qa-kind-" + (w.kind || "script") });
+
+    var head = el("div", { class: "fa-qa-witness-head" });
+    head.appendChild(el("span", { class: "fa-qa-chip fa-qa-chip-kind" },
+      QA_KIND_LABEL[w.kind] || w.kind || "unrecorded"));
+    head.appendChild(el("code", { class: "fa-qa-witness-id" }, w.id || "unrecorded"));
+    if (w.version) head.appendChild(el("span", { class: "fa-qa-witness-ver" }, w.version));
+    var fresh = w.freshness || "unknown";
+    head.appendChild(el("span", {
+      class: "fa-qa-chip fa-qa-fresh-" + fresh,
+      title: fresh === "stale"
+        ? "The files this verdict was measured against have changed since."
+        : fresh === "unknown"
+          ? "This verdict's currency could not be established -- it is not reported as current."
+          : fresh === "partial"
+            ? "Every file this verdict was measured against still matches. A derived input -- one computed rather than read off disk -- was not re-checked here."
+            : "Measured against the files as they stand."
+    }, QA_FRESH_LABEL[fresh] || fresh));
+    card.appendChild(head);
+
+    var why = null;
+    if (fresh !== "fresh" && w.changed && w.changed.length) {
+      why = el("div", { class: "fa-qa-changed" });
+      why.appendChild(el("span", { class: "fa-qa-field-label" },
+        fresh === "stale" ? "changed since review" : "could not compare"));
+      var ul = el("ul");
+      w.changed.forEach(function (c) { ul.appendChild(el("li", null, c)); });
+      why.appendChild(ul);
+      card.appendChild(why);
+    }
+    // Named, not implied: "current on files" is only readable next to WHICH
+    // input went unchecked.
+    if (w.notCompared && w.notCompared.length) {
+      var nc = el("div", { class: "fa-qa-changed" });
+      nc.appendChild(el("span", { class: "fa-qa-field-label" }, "not re-checked"));
+      var ncl = el("ul");
+      w.notCompared.forEach(function (c) { ncl.appendChild(el("li", null, c)); });
+      nc.appendChild(ncl);
+      card.appendChild(nc);
+    }
+
+    var when = qaWhen(w.at);
+    var grid = el("div", { class: "fa-qa-field-grid" });
+    grid.appendChild(qaField("when", when && when.text, { title: when && when.title }));
+    grid.appendChild(qaField("repo SHA at review", shortSha(w.sha),
+      { mono: true, title: w.sha || undefined }));
+    if (w.kind === "script" || w.scriptHash) {
+      grid.appendChild(qaField("checker source hash", shortSha(w.scriptHash),
+        { mono: true, title: w.scriptHash || undefined }));
+      grid.appendChild(qaField("checker last commit", shortSha(w.scriptCommitSha),
+        { mono: true, title: w.scriptCommitSha || undefined }));
+    }
+    if (w.depsHash) {
+      grid.appendChild(qaField("extra-input hash", shortSha(w.depsHash), { mono: true }));
+    }
+    if (w.kind === "agent") {
+      grid.appendChild(qaField("model", w.model, { mono: true }));
+      grid.appendChild(qaField("session", w.session, { mono: true }));
+      grid.appendChild(qaField("skill", w.skill, { mono: true }));
+    }
+    if (w.method) grid.appendChild(qaField("method", w.method));
+    card.appendChild(grid);
+
+    if (w.notes) {
+      card.appendChild(el("p", { class: "fa-qa-notes" }, w.notes));
+    }
+    return card;
+  }
+
+  function qaCriterionRow(c, idx, panelId) {
+    var li = el("li", { class: "fa-qa-crit-item" });
+    var bodyId = panelId + "-c" + idx;
+
+    var btn = el("button", {
+      type: "button",
+      class: "fa-qa-crit",
+      "aria-expanded": "false",
+      "aria-controls": bodyId
+    });
+    btn.appendChild(el("span", { class: "fa-qa-caret", "aria-hidden": "true" }, "▸"));
+    btn.appendChild(el("span", { class: "fa-qa-chip fa-qa-res-" + (c.result || "unknown") },
+      QA_RESULT_LABEL[c.result] || c.result || "no verdict"));
+    if (c.severity) {
+      btn.appendChild(el("span", { class: "fa-qa-chip fa-qa-sev-" + c.severity }, c.severity));
+    }
+    if (c.locale) {
+      btn.appendChild(el("span", { class: "fa-qa-chip fa-qa-locale" }, c.locale));
+    }
+    btn.appendChild(el("code", { class: "fa-qa-crit-id" }, c.id));
+    var n = (c.witnesses || []).length;
+    btn.appendChild(el("span", { class: "fa-qa-wcount" },
+      n === 0 ? "no witness" : n === 1 ? "1 witness" : n + " witnesses"));
+
+    var body = el("div", { class: "fa-qa-crit-body", id: bodyId, hidden: "hidden" });
+
+    if (c.evidence && c.evidence.length) {
+      var ev = el("div", { class: "fa-qa-evidence" });
+      ev.appendChild(el("div", { class: "fa-qa-field-label" }, "evidence"));
+      c.evidence.forEach(function (line) {
+        ev.appendChild(el("pre", null, line));
+      });
+      body.appendChild(ev);
+    }
+    if (c.metrics) {
+      var keys = Object.keys(c.metrics);
+      if (keys.length) {
+        var mg = el("div", { class: "fa-qa-field-grid" });
+        keys.sort().forEach(function (k) {
+          mg.appendChild(qaField(k, String(c.metrics[k])));
+        });
+        body.appendChild(mg);
+      }
+    }
+    if (c.score) {
+      body.appendChild(qaField("score", c.score.value + " / " + c.score.max));
+    }
+
+    if (n === 0) {
+      // Not a blank space: a criterion carried with nothing behind it is a gap
+      // in the audit, and saying so is the only way a reader learns of it.
+      body.appendChild(el("p", { class: "fa-qa-absent" },
+        "No witness recorded for this criterion — nobody has ruled on it."));
+    } else {
+      c.witnesses.forEach(function (w) { body.appendChild(qaWitnessCard(w)); });
+    }
+
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      if (open) body.setAttribute("hidden", "hidden");
+      else body.removeAttribute("hidden");
+      btn.firstChild.textContent = open ? "▸" : "▾";
+    });
+
+    li.appendChild(btn);
+    li.appendChild(body);
+    return li;
+  }
+
+  function qaCountsLine(doc) {
+    var c = doc.counts || {};
+    var parts = [];
+    ["fail", "warn", "pass", "na", "unknown"].forEach(function (k) {
+      var v = c[k] || 0;
+      if (k === "unknown" && v === 0) return;
+      parts.push(v + " " + (k === "na" ? "n/a" : k === "unknown" ? "no verdict" : k));
+    });
+    return parts.join(" · ");
+  }
+
+  function qaBuildPanel(doc, panelId, badge) {
+    var panel = el("div", {
+      class: "fa-qa-panel fa-qa-panel-" + (doc.state || "unswept"),
+      id: panelId,
+      role: "region",
+      "aria-label": "QA detail for " + (doc.subject || "this node"),
+      tabindex: "-1"
+    });
+
+    var head = el("div", { class: "fa-qa-panel-head" });
+    head.appendChild(el("strong", null, (badge.getAttribute("aria-label") || "").split(":")[0]));
+    head.appendChild(el("span", { class: "fa-qa-subject" }, doc.subject || ""));
+    head.appendChild(el("span", { class: "fa-qa-counts" }, qaCountsLine(doc)));
+
+    (doc.sidecars || []).forEach(function (p) {
+      var a = el("a", { class: "fa-qa-sidecar-link", href: REPO_BLOB + p, rel: "noopener" }, p);
+      head.appendChild(a);
+    });
+
+    var close = el("button", { type: "button", class: "fa-qa-close", title: "Close this panel" },
+      "✕ Close");
+    close.addEventListener("click", function () { qaToggle(badge); });
+    head.appendChild(close);
+    panel.appendChild(head);
+
+    var loud = [];
+    var quiet = [];
+    (doc.criteria || []).forEach(function (c) {
+      (QA_LOUD[c.result] ? loud : quiet).push(c);
+    });
+
+    var list = el("ul", { class: "fa-qa-crit-list" });
+    var i = 0;
+    loud.forEach(function (c) { list.appendChild(qaCriterionRow(c, i++, panelId)); });
+    panel.appendChild(list);
+
+    if (quiet.length) {
+      // 48 criteria per block, 46 of them pass or n/a. Folding those behind one
+      // control keeps the two that need reading at the top -- and the fold is
+      // labelled with its count, so a clean sweep still says how much it checked.
+      var more = el("button", {
+        type: "button",
+        class: "fa-qa-more",
+        "aria-expanded": loud.length === 0 ? "true" : "false"
+      }, (loud.length === 0 ? "▾ " : "▸ ") + "show " + quiet.length +
+         " passing / not-applicable criteria");
+      var quietList = el("ul", { class: "fa-qa-crit-list" });
+      quiet.forEach(function (c) { quietList.appendChild(qaCriterionRow(c, i++, panelId)); });
+      if (loud.length !== 0) quietList.setAttribute("hidden", "hidden");
+      more.addEventListener("click", function () {
+        var open = more.getAttribute("aria-expanded") === "true";
+        more.setAttribute("aria-expanded", open ? "false" : "true");
+        if (open) quietList.setAttribute("hidden", "hidden");
+        else quietList.removeAttribute("hidden");
+        more.textContent = (open ? "▸ show " : "▾ ") + quiet.length +
+          (open ? " passing / not-applicable criteria" : " passing / not-applicable criteria");
+      });
+      panel.appendChild(more);
+      panel.appendChild(quietList);
+    }
+
+    if (!doc.criteria || doc.criteria.length === 0) {
+      panel.appendChild(el("p", { class: "fa-qa-absent" },
+        "The sidecar holds no criteria — nothing about this subject has been checked."));
+    }
+    return panel;
+  }
+
+  /** Where a panel goes: after the block-level line holding the icon. */
+  function qaAnchorFor(badge) {
+    var p = badge.parentNode;
+    while (p && p.parentNode && p.tagName !== "P" && p.tagName !== "LI" &&
+           p.className !== "main-content" && p.id !== "main-content") {
+      p = p.parentNode;
+    }
+    return p || badge;
+  }
+
+  function qaFail(badge, panelId, src, msg) {
+    var panel = el("div", { class: "fa-qa-panel fa-qa-panel-error", id: panelId, role: "region" });
+    // Loud, and specific about which file could not be read: a panel that opens
+    // empty is indistinguishable from a subject with nothing to report.
+    panel.appendChild(el("strong", null, "Could not load the QA detail"));
+    panel.appendChild(el("p", null, msg));
+    panel.appendChild(el("code", null, src));
+    var close = el("button", { type: "button", class: "fa-qa-close" }, "✕ Close");
+    close.addEventListener("click", function () { qaToggle(badge); });
+    panel.appendChild(close);
+    return panel;
+  }
+
+  function qaToggle(badge) {
+    var panelId = badge.getAttribute("aria-controls");
+    if (panelId) {
+      var open = document.getElementById(panelId);
+      if (open) {
+        open.parentNode.removeChild(open);
+        badge.setAttribute("aria-expanded", "false");
+        badge.focus();
+        return;
+      }
+    } else {
+      panelId = "fa-qa-panel-" + (++QA_SEQ);
+      badge.setAttribute("aria-controls", panelId);
+    }
+
+    var src = badge.getAttribute("data-qa-src");
+    if (!src) return;
+    badge.setAttribute("aria-expanded", "true");
+    badge.setAttribute("aria-busy", "true");
+
+    var anchor = qaAnchorFor(badge);
+    function mount(node) {
+      badge.removeAttribute("aria-busy");
+      if (anchor.nextSibling) anchor.parentNode.insertBefore(node, anchor.nextSibling);
+      else anchor.parentNode.appendChild(node);
+      node.focus();
+    }
+
+    if (QA_CACHE[src]) { mount(qaBuildPanel(QA_CACHE[src], panelId, badge)); return; }
+
+    fetch(src, { credentials: "same-origin" })
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (doc) {
+        QA_CACHE[src] = doc;
+        mount(qaBuildPanel(doc, panelId, badge));
+      })
+      .catch(function (e) {
+        mount(qaFail(badge, panelId, src, e.message));
+      });
+  }
+
+  function mountQaPanels() {
+    // Delegated, so icons added later (or by a future client-side render) work
+    // without re-binding, and one listener serves a page with fifty of them.
+    document.addEventListener("click", function (ev) {
+      var badge = ev.target && ev.target.closest
+        ? ev.target.closest(".fa-qa-badge[data-qa-src]")
+        : null;
+      if (!badge) return;
+      ev.preventDefault();
+      qaToggle(badge);
+    });
+
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Escape") return;
+      var panel = ev.target && ev.target.closest ? ev.target.closest(".fa-qa-panel") : null;
+      if (!panel) return;
+      var badge = document.querySelector('.fa-qa-badge[aria-controls="' + panel.id + '"]');
+      if (badge) qaToggle(badge);
+    });
+  }
+
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
@@ -1203,6 +1593,7 @@
 
     mountQr();
     mountTranslationBadges();
+    mountQaPanels();
     mountPageLanguageBar();
     // Figures are mounted only after the inlining settles, so the scan sees the
     // real <svg> rather than the <img> it replaces and does not wrap both.

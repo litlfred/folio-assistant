@@ -1,0 +1,71 @@
+{
+  "_comment": "The PERMISSION vocabulary — what an actor is allowed to do, independent of any process. Split out of `actors[].capabilities` on 2026-09-18 (bean ind9), which had been carrying three different things: environment probes, permissions, and skills. Schema: schemas/role-graph.ts. WHY THESE ARE ACTOR PROPERTIES AND NOT ROLE PROPERTIES, which was tested rather than assumed: a permission CROSS-CUTS roles. `content-authoring` is held by actors taking on five different roles (author, authoring-agent, evidence-agent, ingestion-agent, onboarding-agent); `qa-reporting` by three (build-pipeline, ig-publisher-service, qc-reviewer); and `admin` holds `admin-settings` in every one of the five lanes it acts in. Moving them onto Role produced 36 conflicts where a permission was held by some but not all actors sharing a role. A skill answers WHAT THE PERFORMER NEEDS TO KNOW and belongs to the lane; a permission answers WHAT THIS PARTICIPANT MAY DO and travels with the participant.",
+  "name": "folio-assistant",
+  "permissions": [
+    {
+      "id": "content-authoring",
+      "name": "Author content",
+      "summary": "May create and modify content blocks. Held by every actor that writes, human or agentic."
+    },
+    {
+      "id": "review-comments",
+      "name": "Leave review comments",
+      "summary": "May record findings on a change. Deliberately distinct from accepting one — see `approval-authority`."
+    },
+    {
+      "id": "approval-authority",
+      "name": "Approve and sign off",
+      "summary": "May formally accept a change and gate a phase transition. The separation from `review-comments` is the point: reviewing is advice, approving is a decision."
+    },
+    {
+      "id": "first-pass-review",
+      "name": "First-pass review",
+      "summary": "May perform the triage review that decides whether a change reaches an SME at all."
+    },
+    {
+      "id": "sme-coordination",
+      "name": "Coordinate SMEs",
+      "summary": "May route work to subject-matter experts and hold them to a schedule."
+    },
+    {
+      "id": "clinical-validation",
+      "name": "Validate clinically",
+      "summary": "May rule on whether content is clinically accurate and complete. Not a review of the artefact — a judgement about the subject matter."
+    },
+    {
+      "id": "translation",
+      "name": "Translate content",
+      "summary": "May produce target-language text for a source block."
+    },
+    {
+      "id": "qa-reporting",
+      "name": "Emit QA reports",
+      "summary": "May produce the QA findings a gate reads. Cross-cutting by design: a human QC reviewer and a build pipeline both hold it."
+    },
+    {
+      "id": "project-governance",
+      "name": "Govern the programme",
+      "summary": "May set scope, form the team, allocate resources and hold the timeline."
+    },
+    {
+      "id": "release-authorization",
+      "name": "Authorise a release",
+      "summary": "May authorise publication. One of the steps `folio:policy relaxable=\"false\"` marks non-negotiable; no workflow policy may relax it."
+    },
+    {
+      "id": "release-management",
+      "name": "Manage a release",
+      "summary": "May configure, build, version and deploy a release once it has been authorised. Distinct from authorising it."
+    },
+    {
+      "id": "admin-settings",
+      "name": "Change instance settings",
+      "summary": "May change the instance's own configuration."
+    },
+    {
+      "id": "role-management",
+      "name": "Manage role assignments",
+      "summary": "May change which actors exist and which roles they may take on — the assignment table itself."
+    }
+  ]
+}

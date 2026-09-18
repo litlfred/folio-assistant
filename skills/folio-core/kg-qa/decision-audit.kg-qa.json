@@ -1,0 +1,34 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "decision-audit",
+    "path": "skills/folio-core/decision-audit.md"
+  },
+  "source_hash": "6380ff951092",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:6b817ff23334adb569779b4c620b0ebf98ad7bf63499f1eec596662b9bf02e9d",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 0,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

@@ -8,7 +8,7 @@
  *   3. SkillDefinition instances (.claude/skills/local/*.json) with schemaRef links
  *   4. ActorDefinition instances (.claude/skills/actors/*.json)
  *   5. CapabilityDefinition instances (.claude/skills/capabilities/*.json)
- *   6. Requirement instances (.claude/skills/requirements/*.json)
+ *   6. Requirement instances (skills/requirements/*.json)
  *   7. Skill package manifests (skills/<pkg>/package-manifest.json) with Docker deps
  *
  * Produces:
@@ -166,7 +166,7 @@ function getTransitiveRoles(actorId: string): Set<string> {
 
 const actors = loadJsonDir<ActorDefinition>(join(rootDir, ".claude", "skills", "actors"));
 const capabilities = loadJsonDir<CapabilityDefinition>(join(rootDir, ".claude", "skills", "capabilities"));
-const requirements = loadJsonDir<Requirement>(join(rootDir, ".claude", "skills", "requirements"));
+const requirements = loadJsonDir<Requirement>(join(rootDir, "skills", "requirements"));
 const skills = loadJsonDir<SkillDefinition>(join(rootDir, ".claude", "skills", "local"));
 const remotePackages = loadJsonDir<RemotePackageRef>(join(rootDir, "skills", "remote-packages"));
 const skillSchemaDirs = existsSync(join(rootDir, "schemas", "skills"))

@@ -3,6 +3,7 @@ layout: default
 title: CRDM methodology
 nav_order: 5
 lang: en
+available_locales: ["fr"]
 ---
 
 # CRDM methodology
@@ -17,7 +18,7 @@ lang: en
 
 _This page is generated from [`content/docs/crdm-methodology/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/crdm-methodology) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/overview.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/overview.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/overview.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/overview.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/overview.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-translation" data-qa-family="translation" data-qa-src="{{ '/assets/qa/crdm-methodology/overview.translation.json' | relative_url }}" aria-expanded="false" title="Translation QA: 0 fail, 0 warn, 4 pass, 0 n/a — open for witnesses" aria-label="Translation QA: 0 fail, 0 warn, 4 pass, 0 n/a — open for witnesses"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
 How folio-assistant uses the **Collaborative Requirements Development
 Methodology** (CRDM) — a structured, participatory framework from the
@@ -32,7 +33,7 @@ agent enters a CRDM-guided workflow rather than improvising a solution.
 ## What is CRDM?
 {: #what-is-crdm }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-crdm.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/what-is-crdm.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-crdm.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/what-is-crdm.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/what-is-crdm.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 The **Collaborative Requirements Development Methodology** (CRDM)™ is a
 structured, facilitated approach developed by the
@@ -67,7 +68,7 @@ a feature request at the surface level.
 ## Roles — who does what
 {: #roles }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/roles.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/roles.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/roles.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/roles.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/roles.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 Three distinct roles participate in a CRDM cycle. The boundaries between
 them matter — collapsing the first two into one person loses the quality
@@ -147,7 +148,7 @@ Stakeholders ──review/approve──▶ BA ──directs──▶ Agent
 ## Why CRDM for folio-assistant
 {: #why-crdm-for-folio-assistant }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/why-crdm-for-folio-assistant.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/why-crdm-for-folio-assistant.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/why-crdm-for-folio-assistant.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/why-crdm-for-folio-assistant.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/why-crdm-for-folio-assistant.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 folio-assistant is a **platform**, not an application with a fixed feature set.
 Authors, editors, and reviewers working in folio repositories regularly discover
@@ -182,7 +183,7 @@ mode rather than jumping straight to implementation.
 ## When the CRDM workflow activates
 {: #when-crdm-activates }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/when-crdm-activates.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/when-crdm-activates.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/when-crdm-activates.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/when-crdm-activates.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/when-crdm-activates.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 An agent enters the CRDM workflow when it recognises that a request is about
 **platform capability** rather than **folio content**. The triggers are:
@@ -223,7 +224,7 @@ When the agent detects a CRDM trigger, it should:
 ## The process
 {: #the-process }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/crdm-requirements.bpmn){: .fa-node-edit title="Edit skills/workflows/crdm-requirements.bpmn" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/crdm-requirements.bpmn){: .fa-node-edit title="Edit skills/workflows/crdm-requirements.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/the-process.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-fail fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/crdm-methodology/the-process.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 2 fail, 0 warn, 5 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 2 fail, 0 warn, 5 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✕</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-process">
   <img src="assets/img/workflows/crdm-requirements.svg"
@@ -273,7 +274,7 @@ workflow fits into the broader agent–user interaction model.
 ## Phase 1 — Needs assessment
 {: #phase-1-needs-assessment }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-1-needs-assessment.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-1-needs-assessment.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-1-needs-assessment.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-1-needs-assessment.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/phase-1-needs-assessment.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 The agent helps the user articulate **what they need and why**, before anyone
 discusses how to build it. This is where most ad-hoc requests go wrong — the
@@ -310,7 +311,7 @@ solution is specified before the problem is understood.
 ## Phase 2 — Business process analysis
 {: #phase-2-business-process-analysis }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-2-business-process-analysis.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-2-business-process-analysis.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-2-business-process-analysis.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-2-business-process-analysis.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/phase-2-business-process-analysis.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 Before changing the platform, understand **how the work is done today**. The
 agent maps the current workflow — manually if needed — and identifies where the
@@ -345,7 +346,7 @@ identifying exactly where the capability gap sits.
 ## Phase 3 — Requirements definition
 {: #phase-3-requirements-definition }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-3-requirements-definition.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-3-requirements-definition.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-3-requirements-definition.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-3-requirements-definition.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/phase-3-requirements-definition.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 Translate the understood need into **specific, actionable requirements** with
 proposed tooling descriptions. All requirements should be developed fully, with
@@ -385,7 +386,7 @@ links back to the need (Phase 1) and the workflow gap (Phase 2) it addresses.
 ## Phase 4 — Impact analysis and migration planning
 {: #phase-4-impact-analysis }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-4-impact-analysis.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-4-impact-analysis.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-4-impact-analysis.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-4-impact-analysis.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/phase-4-impact-analysis.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 Before implementation begins, assess **what the proposed changes affect** across
 the platform and any active folios.
@@ -425,7 +426,7 @@ affected file, folio, and workflow, with a migration plan if applicable.
 ## Phase 5 — Sign-off and bean creation
 {: #phase-5-sign-off-and-beans }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-5-sign-off-and-beans.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-5-sign-off-and-beans.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-5-sign-off-and-beans.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-5-sign-off-and-beans.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/phase-5-sign-off-and-beans.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 The requirements and impact analysis are presented to the user (and any
 identified stakeholders) for review and sign-off. This is the gate between
@@ -467,7 +468,7 @@ requirements and implementation.
 ## Phase 6 — Iterative MVP development and stakeholder review
 {: #phase-6-iterative-development }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-6-iterative-development.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-6-iterative-development.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-6-iterative-development.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-6-iterative-development.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/phase-6-iterative-development.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 Once requirements are signed off and beans are created, the agent and BA
 enter the **iterative MVP development cycle**. This is where the feature
@@ -573,7 +574,7 @@ other features.
 ## Agent skills and tooling
 {: #agent-skills-and-tooling }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/agent-skills-and-tooling.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/agent-skills-and-tooling.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/agent-skills-and-tooling.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/agent-skills-and-tooling.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/agent-skills-and-tooling.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 The CRDM workflow is supported by skills and tools that the agent uses at each
 phase. Some exist today; others are proposed.
@@ -685,7 +686,7 @@ an MCP tool.
 ## What is not built yet
 {: #what-is-not-built-yet }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-not-built-yet.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/what-is-not-built-yet.md" } <span class="fa-qa-badge fa-qa-fail" title="QA: 1 fail, 0 warn, 22 pass, 25 n/a">●</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-not-built-yet.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/what-is-not-built-yet.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-fail fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/what-is-not-built-yet.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 1 fail, 0 warn, 22 pass, 25 n/a — open for witnesses" aria-label="Content QA: 1 fail, 0 warn, 22 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✕</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 This page documents the methodology; the skills and tooling that implement it
 are in various stages of development. What follows is checked against the

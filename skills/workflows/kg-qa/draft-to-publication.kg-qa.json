@@ -8,13 +8,26 @@
   "source_hash": "sha256:5b5dcea2e15e2de1514c0f2d41d994408305e42208e4747a01de1e4b76b49d77",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:94a2c9526927c4b50baf499fdcb9001569ab28d97b93df7680b752596c28da07",
+    "script_hash": "sha256:6b817ff23334adb569779b4c620b0ebf98ad7bf63499f1eec596662b9bf02e9d",
     "engine_version": "1"
   },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
       "findings": []
+    },
+    "skill-servable": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_PublicationQa",
+          "detail": "names skill \"quality-control\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_PublishRelease",
+          "detail": "names skill \"ig-publication\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "pass",
@@ -43,7 +56,7 @@
   },
   "totals": {
     "pass": 7,
-    "fail": 0,
+    "fail": 1,
     "n/a": 0,
     "unknown": 0
   }

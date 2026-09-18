@@ -1,0 +1,38 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:lean-verification",
+    "path": "skills/requirements/lean-verification.json"
+  },
+  "source_hash": "sha256:1f0cfb35e4328d7e6a70277e54df6ab199a068e2a24f0dc622cb1c6e5b6bd33f",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:6b817ff23334adb569779b4c620b0ebf98ad7bf63499f1eec596662b9bf02e9d",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "requirement-satisfied-by-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 0,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

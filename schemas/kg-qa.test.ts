@@ -134,3 +134,87 @@ describe("the sidecars committed in this repository", () => {
     expect(bad).toEqual([]);
   });
 });
+
+describe("reachability reads the serving registry, not just manifests", () => {
+  test("`skill-servable` is major — a body nobody can fetch is a real gap, not a broken link", () => {
+    expect(KG_CRITERIA_BY_ID["skill-servable"]!.severity).toBe("major");
+    expect(KG_CRITERIA_BY_ID["skill-servable"]!.applies).toEqual(["process"]);
+  });
+
+  test("`manifest-skill-exists` is critical and scoped to the graph roll-up", () => {
+    expect(KG_CRITERIA_BY_ID["manifest-skill-exists"]!.severity).toBe("critical");
+    expect(KG_CRITERIA_BY_ID["manifest-skill-exists"]!.applies).toEqual(["graph"]);
+  });
+
+  test("every skill_fetch local package points at a directory that exists", async () => {
+    // The defect this whole change came from: `skills/content-lifecycle` was
+    // absent from LOCAL_PACKAGES while 52 activities named its skills. A
+    // package pointing at a missing directory is the same failure one step on.
+    const { LOCAL_PACKAGES } = await import("../src/tools/skill-fetch.js");
+    const { existsSync } = await import("node:fs");
+    const missing = Object.entries(LOCAL_PACKAGES).filter(([, dir]) => !existsSync(dir));
+    expect(missing).toEqual([]);
+  });
+
+  test("every directory holding `<skill>.md` that a diagram can name is served", async () => {
+    const { LOCAL_PACKAGES } = await import("../src/tools/skill-fetch.js");
+    const served = new Set(Object.keys(LOCAL_PACKAGES));
+    // `content-lifecycle` is the one this change added; pin it so a future
+    // edit to the table cannot silently drop it again.
+    expect(served.has("content-lifecycle")).toBe(true);
+    expect(served.has("folio-core")).toBe(true);
+  });
+});
+
+describe("requirements are the fifth node kind and only point", () => {
+  test("`requirement` is a subject kind with criteria of its own", () => {
+    expect(criteriaFor("requirement").length).toBeGreaterThan(0);
+  });
+
+  test("a broken reference out of a requirement is critical, like any other", () => {
+    for (const id of [
+      "requirement-satisfied-by-resolves",
+      "requirement-actors-resolve",
+      "requirement-derived-from-resolves",
+    ]) {
+      expect(KG_CRITERIA_BY_ID[id]!.severity, id).toBe("critical");
+    }
+  });
+
+  test("an ungraded statement is major, not critical — readable, just not testable", () => {
+    expect(KG_CRITERIA_BY_ID["requirement-statements-graded"]!.severity).toBe("major");
+  });
+
+  test("every committed requirement resolves every reference it makes", async () => {
+    const { readdirSync, readFileSync, existsSync } = await import("node:fs");
+    const { join } = await import("node:path");
+    const root = join(import.meta.dir, "..");
+    const dir = join(root, "skills", "requirements");
+    expect(existsSync(dir)).toBe(true);
+
+    const files = readdirSync(dir).filter((f) => f.endsWith(".json"));
+    const reqs = files.map((f) => JSON.parse(readFileSync(join(dir, f), "utf-8")));
+    const ids = new Set(reqs.map((r) => r.id));
+    const actors = new Set(
+      readdirSync(join(root, ".claude", "skills", "actors")).map((f: string) => f.replace(/\.json$/, "")),
+    );
+
+    const bad: string[] = [];
+    for (const r of reqs) {
+      for (const d of r.derivedFrom ?? []) if (!ids.has(d)) bad.push(`${r.id} derivedFrom ${d}`);
+      for (const a of r.actors ?? []) if (!actors.has(a)) bad.push(`${r.id} actor ${a}`);
+      for (const st of r.statements ?? []) {
+        // The grade is the reason a requirement is a requirement.
+        expect(st.conformance, `${r.id}/${st.key} has no conformance grade`).toBeDefined();
+        for (const a of st.actors ?? []) if (!actors.has(a)) bad.push(`${r.id}/${st.key} actor ${a}`);
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+
+  test("`req:agent-workflow` exists — three requirements derive from it", async () => {
+    const { existsSync } = await import("node:fs");
+    const { join } = await import("node:path");
+    expect(existsSync(join(import.meta.dir, "..", "skills", "requirements", "agent-workflow.json"))).toBe(true);
+  });
+});

@@ -47,6 +47,7 @@ import { fileURLToPath } from "node:url";
 import { FOLIO_NS } from "../schemas/namespaces.js";
 import { artefactStub, defaultGraphKinds, readDeclaration } from "../schemas/agent-harness.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
+import { tools } from "../tools/index.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -194,6 +195,7 @@ function buildContext(): Record<string, unknown> {
     inPackage: { "@id": `${FOLIO_NS}inPackage`, ...link },
     providesCapability: { "@id": `${FOLIO_NS}providesCapability`, ...link },
     requiresCapability: { "@id": `${FOLIO_NS}requiresCapability`, ...link },
+    satisfies: { "@id": `${FOLIO_NS}satisfies`, ...link },
     holdsGraph: { "@id": `${FOLIO_NS}holdsGraph`, ...link },
     startNode: { "@id": `${FOLIO_NS}startNode`, ...link },
     incoming: { "@id": `${FOLIO_NS}incoming`, ...link },
@@ -530,6 +532,38 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
  * kind means the same thing in a preview and in the canonical graph, so its
  * IRI must not vary with where the document is published.
  */
+/**
+ * Tool nodes — the `tools` graph.
+ *
+ * `satisfies` is emitted as LINKS to skill nodes, which is the edge the whole
+ * skill/Tool separation exists to express: a reader can now walk from "claim
+ * the item before you work" to the two mechanisms that do it, without knowing
+ * that a bare string was meant to be a skill name.
+ */
+function collectTools(doc: string, base: string, problems: string[]): Node[] {
+  let defs;
+  try {
+    // The SAME base the document is published against — see tools/index.ts.
+    defs = tools(base);
+  } catch (e) {
+    problems.push(`tools/ did not load: ${e instanceof Error ? e.message : String(e)}`);
+    return [];
+  }
+  return defs.map((t) => ({
+    "@id": makeIri(doc, "tool", t.id),
+    "@type": `${FOLIO_NS}Tool`,
+    name: t.id,
+    title: t.title,
+    summary: t.summary,
+    install: t.install,
+    invoke: t.invoke,
+    io: t.io,
+    requires: t.requires,
+    satisfies: t.satisfies.map((k) => makeIri(doc, "skill", k)),
+    satisfiesSkillNames: t.satisfies,
+  }));
+}
+
 function collectGraphKinds(): Node[] {
   return defaultGraphKinds.names().map((name) => {
     const def = defaultGraphKinds.get(name)!;
@@ -576,7 +610,7 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
 const LINK_TERMS = [
   "partOf", "implementedBy", "performedBy", "declaresSkill", "inPackage",
   "providesCapability", "requiresCapability", "holdsGraph", "startNode",
-  "incoming", "outgoing", "from", "to",
+  "incoming", "outgoing", "from", "to", "satisfies",
 ] as const;
 
 /**
@@ -663,6 +697,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     ...collectRegistryNodes(docIri, problems),
     ...collectPackages(docIri, problems),
     ...(await collectProcesses(docIri, problems)),
+    ...collectTools(docIri, docIri.replace(/\/kg\/[^/]+$/, ""), problems),
     ...collectGraphKinds(),
     ...collectDeclaration(docIri, problems),
   ].map(compact);
