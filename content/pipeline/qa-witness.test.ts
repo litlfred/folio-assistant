@@ -255,6 +255,47 @@ describe("readWitnessDoc — kg family keeps one auditor, and says what it does 
   });
 });
 
+describe("readWitnessDoc — script family", () => {
+  // No `*.script-qa.json` exists anywhere in this repo yet, so this family has
+  // no live data to check the reader against. That is a reason to test it, not
+  // to skip it: the first sidecar a script sweep writes must render, and the
+  // only thing standing between here and there is that nobody has looked.
+  test("a script sidecar reads, hashing the script itself", () => {
+    inTmp((dir) => {
+      mkdirSync(join(dir, "script-qa"), { recursive: true });
+      writeFileSync(join(dir, "s.ts"), "export const x = 1;\n");
+      writeFileSync(
+        join(dir, "script-qa", "s.script-qa.json"),
+        JSON.stringify({
+          $schema: "script-qa/v1",
+          script_path: "s.ts",
+          language: "typescript",
+          source_hash: "nothashed",
+          updated_at: "2026-09-18T00:00:00.000Z",
+          criteria: {
+            does_not_default_to_float: [
+              {
+                field_hash: { script: "nothashed" },
+                result: "warn",
+                severity: "minor",
+                reviewer: { kind: "script", id: "content/pipeline/script-sweep.ts" },
+                reviewed_at: "2026-09-18T00:00:00.000Z",
+              },
+            ],
+          },
+        }),
+      );
+      const doc = readWitnessDoc("script", join(dir, "s.ts"), dir)!;
+      expect(doc.subject).toBe("s.ts");
+      expect(doc.state).toBe("warn");
+      // The recorded hash is not the file's, so the verdict is stale — the same
+      // rule as every other family, measured against the tree.
+      expect(doc.criteria[0]!.witnesses[0]!.freshness).toBe("stale");
+      expect(doc.criteria[0]!.witnesses[0]!.changed).toEqual(["script"]);
+    });
+  });
+});
+
 describe("sidecarPaths — translation is per locale, collected per block", () => {
   test("every locale's sidecar is found, in a stable order", () => {
     inTmp((dir) => {
