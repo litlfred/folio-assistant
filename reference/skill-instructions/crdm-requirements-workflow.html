@@ -373,6 +373,53 @@ this workflow to gather, validate, and implement requirements collaboratively.</
 
 <p>The full process is diagrammed in
 <a href="../../docs/workflows/crdm-requirements.bpmn"><code class="language-plaintext highlighter-rouge">docs/workflows/crdm-requirements.bpmn</code></a>.</p>
+<h2 id="every-question-you-put-to-the-ba-carries-its-context-first-strict">
+  
+  
+    <a href="#every-question-you-put-to-the-ba-carries-its-context-first-strict" class="anchor-heading" aria-labelledby="every-question-you-put-to-the-ba-carries-its-context-first-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Every question you put to the BA carries its context first (STRICT)
+  
+  
+</h2>
+    
+
+<p>This process is almost entirely questions. Six phases of them — needs, process,
+requirements, impact, sign-off, feedback — and each one is the agent handing a
+decision to a person who was not inside the analysis that produced it.</p>
+
+<p><strong>So the ordering rule in
+<a href="/folio-assistant/reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality.md</code> §4.1</a> governs this whole
+workflow, not just its explicit checkpoints: context → options → recommendation
+→ question.</strong> Its test applies unchanged:</p>
+
+<blockquote>
+  <p><strong>Can the BA answer without opening anything?</strong></p>
+</blockquote>
+
+<p>Feature work breaks this in a way content work does not, and the reason is worth
+naming. The agent has just done impact analysis, read the schemas, traced the
+consumers — and the vocabulary it built doing that is the vocabulary it asks in.
+Terms coined during the analysis feel defined, because to the agent they are.
+Three specific traps:</p>
+
+<ul>
+  <li><strong>An option name you invented.</strong> “Prefix-at-rest or prefix-at-install?” names
+two things that exist nowhere outside your own head and your own issue.
+Describe what each one <em>does</em> instead, and put the coined name in parentheses
+if it earns its place at all.</li>
+  <li><strong>A question that resolves to “go read the issue”.</strong> The issue is where the
+BA goes for depth. It is never where the question’s terms are defined — and
+posting a question whose answer requires reading it is how a one-character
+decision becomes a twenty-minute one.</li>
+  <li><strong>Options without their costs.</strong> “A or B” is not a choice; “A, which changes
+nothing here, or B, which rewrites every <code class="language-plaintext highlighter-rouge">folio:skill</code> ref in the diagrams”
+is. The BA is deciding on the consequences, so the consequences are the
+question.</li>
+</ul>
+
+<p>This applies to <strong>every</strong> surface this workflow uses: the chat, the summary
+comment posted to the issue after each round, the PR body, and a bean’s
+<code class="language-plaintext highlighter-rouge">## Done when</code>. A question buried in an issue comment with its context two
+comments up is the same defect wearing a different hat.</p>
 <h2 id="phase-1--needs-assessment">
   
   
@@ -570,6 +617,7 @@ explicitly says to. An agent must never assume completion.</li>
 
 <ul>
   <li><a href="https://litlfred.github.io/folio-assistant/crdm-methodology.html">CRDM methodology page</a> — the documentation page for users</li>
+  <li><a href="/folio-assistant/reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality.md</code></a> §4.1 — context before the question; the ordering rule this workflow runs on</li>
   <li><a href="/folio-assistant/reference/skill-instructions/crdm-detect.html"><code class="language-plaintext highlighter-rouge">crdm-detect.md</code></a> — feature-request detection skill</li>
   <li><a href="/folio-assistant/reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review.md</code></a> — before/after staging comparison skill</li>
   <li><a href="/folio-assistant/reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager.md</code></a> — bean creation protocol</li>
@@ -592,7 +640,7 @@ explicitly says to. An agent must never assume completion.</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35373500867"><code>de6d646</code></a> &middot; 2026-09-18T17:18:58Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35373762849"><code>13d62e4</code></a> &middot; 2026-09-18T17:21:27Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

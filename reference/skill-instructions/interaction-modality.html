@@ -470,13 +470,117 @@ sibling session, and re-learning it means asking again.</p>
 behaviour</code>, or <code class="language-plaintext highlighter-rouge">set in the site settings</code>. An inferred profile is honoured and
 is <strong>labelled as inferred</strong>, so it can be corrected without an argument about
 who decided it.</p>
-<h2 id="4-asking-a-question-well--the-checklist">
+<h2 id="4-asking-a-question-well">
   
   
-    <a href="#4-asking-a-question-well--the-checklist" class="anchor-heading" aria-labelledby="4-asking-a-question-well--the-checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Asking a question well — the checklist
+    <a href="#4-asking-a-question-well" class="anchor-heading" aria-labelledby="4-asking-a-question-well"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Asking a question well
   
   
 </h2>
+    
+
+<p>Two halves, and the first is the one that gets skipped. §4.1 is what the
+question has to <em>contain</em>; §4.2 is what shape it has to <em>take</em>. A question can
+pass every item in §4.2 — selectable, four options, recommended default marked —
+and still be unanswerable, because none of those say what the options mean.</p>
+<h3 id="41-context-before-the-question-strict">
+  
+  
+    <a href="#41-context-before-the-question-strict" class="anchor-heading" aria-labelledby="41-context-before-the-question-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.1 Context before the question (STRICT)
+  
+  
+</h3>
+    
+
+<p><strong>Order matters, and it is: context → options → recommendation → question.</strong>
+Never the question first with the explanation available on request.</p>
+
+<p>The test is one sentence, and it is checkable in a single pass:</p>
+
+<blockquote>
+  <p><strong>Can the reader answer without opening anything?</strong></p>
+</blockquote>
+
+<p>If answering needs them to open an issue, a file, a diff or a scrollback, the
+question is not ready. A link is where somebody goes for <em>more</em>; it is never
+where the terms are defined.</p>
+
+<p>Six parts, in order:</p>
+
+<ol>
+  <li><strong>What is being decided</strong>, in plain words — stated as what will <em>differ</em>
+depending on the answer, not as the name of the decision.</li>
+  <li><strong>Every identifier expanded on first use.</strong> A bean id, an option name you
+coined, a field, a Lean declaration, a file path: all opaque without their
+gloss. An option name you invented three paragraphs ago in another document
+is the worst case, because it <em>feels</em> defined to you.</li>
+  <li><strong>The options, each with what it costs</strong> — not each with its name.</li>
+  <li><strong>Your recommendation, and why</strong>, stated first and marked. See §4.2.</li>
+  <li><strong>What happens if they say nothing.</strong> Then do that.</li>
+  <li><strong>The question itself</strong>, last.</li>
+</ol>
+
+<p><strong>This binds every place a decision is handed to the person</strong>, not only an
+explicit question tool: the end-of-turn “next” line, a bean’s <code class="language-plaintext highlighter-rouge">## Done when</code>, a
+PR body asking the author to choose, a comment on an issue. Those are where it
+is most often broken, because they feel like reporting rather than asking.</p>
+<h4 id="worked-example--a-real-failure-2026-09-18">
+  
+  
+    <a href="#worked-example--a-real-failure-2026-09-18" class="anchor-heading" aria-labelledby="worked-example--a-real-failure-2026-09-18"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Worked example — a real failure, 2026-09-18
+  
+  
+</h4>
+    
+
+<p>Ending a turn, this agent wrote:</p>
+
+<blockquote>
+  <p><strong>next</strong> <code class="language-plaintext highlighter-rouge">x4mt</code> — Cross-agent skill install + <code class="language-plaintext highlighter-rouge">fa-</code> prefix (#247). Unstarted,
+and I’d want your call on prefix-at-rest vs prefix-at-install before writing
+anything.</p>
+</blockquote>
+
+<p>Every content word in the actual question is undefined. “prefix-at-rest” and
+“prefix-at-install” are terms the agent had coined <em>in the issue</em>, so answering
+meant opening #247 and reading it — which the author had to do, and which is a
+real cost for somebody who types with difficulty. It also states no cost for
+either option and gives no recommendation, so even after reading the issue there
+is nothing to choose between except two phrases.</p>
+
+<p>The same decision, askable:</p>
+
+<blockquote>
+  <p><strong>Next up is #247</strong> — installing this platform’s skills into whichever agent
+is running (Claude Code, Gemini CLI, Cursor), so each one can actually load
+them. Skills would get an <code class="language-plaintext highlighter-rouge">fa-</code> prefix so their names cannot collide with the
+host agent’s own commands: <code class="language-plaintext highlighter-rouge">/fa-beans-tui</code> rather than <code class="language-plaintext highlighter-rouge">/beans-tui</code>.</p>
+
+  <p>One decision shapes everything else — <strong>where the prefix gets applied:</strong></p>
+
+  <ol>
+    <li><strong>When a skill is installed into an agent</strong> <em>(recommended)</em> — files in this
+repo keep their plain names, and the prefix is added as they are emitted.
+Nothing here has to change, and the collision is solved where collisions
+actually happen.</li>
+    <li><strong>In this repository itself</strong> — rename every skill file. That touches the
+package manifests, every <code class="language-plaintext highlighter-rouge">&lt;folio:skill ref&gt;</code> in the BPMN diagrams, two doc
+generators and every cross-reference between skill bodies. It is the kind
+of change that is painful to reverse.</li>
+  </ol>
+
+  <p>Say nothing and I will take (1) when I start.</p>
+</blockquote>
+
+<p>Same information, same length, and the second can be answered by typing one
+character.</p>
+<h3 id="42-form--the-checklist">
+  
+  
+    <a href="#42-form--the-checklist" class="anchor-heading" aria-labelledby="42-form--the-checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.2 Form — the checklist
+  
+  
+</h3>
     
 
 <p>Before any question, all five:</p>
@@ -604,6 +708,12 @@ reader’s font choice silently reconfiguring how an agent talks to the author.<
     
 
 <ol>
+  <li><strong>The question first, the context on request.</strong> The single most common
+shape, and the one §4.1 exists to kill: an agent that has spent an hour
+inside a problem asks in the private vocabulary it built along the way, and
+the reader has to reconstruct that vocabulary before they can answer at all.
+“Happy to explain if useful” does not repair it — it moves the work back onto
+the person the question is for.</li>
   <li><strong>Asking someone to describe their disability.</strong> Ask about the interface.</li>
   <li><strong>Re-asking what <code class="language-plaintext highlighter-rouge">.folio/interaction.json</code> records.</strong> That is WCAG 3.3.7
 violated in the least excusable way, since the file is right there.</li>
@@ -630,7 +740,7 @@ rule — not asking at all — and no stylesheet delivers it.</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35373500867"><code>de6d646</code></a> &middot; 2026-09-18T17:18:58Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35373762849"><code>13d62e4</code></a> &middot; 2026-09-18T17:21:27Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
