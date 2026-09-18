@@ -16,9 +16,7 @@
     "pyodideCache": true
   },
   "harness": {
-    "_comment": "Where the agent harness keeps the two stores a person needs to find. `workPlan` is the bean store (WHAT is being worked on); `workflowState` holds one JSON file per running BPMN instance (WHERE IT GOT TO). They sit adjacent and at top level rather than behind a dot, because a dot-prefixed directory is absent from a plain `ls`, from most file browsers and from GitHub's web tree. NOTE: the `beans` binary is third-party and does not read this file — it reads `.beans.yml`. So `workPlan` must MATCH `beans.path` there, and `bun run check:harness-dirs` fails when they disagree. `interaction` is the per-user preference file the session-start sweep reads first.",
-    "workPlan": "beans",
-    "workflowState": "beans/workflow",
+    "_comment": "Harness paths that are NOT part of the bean graph. `workPlan` and `workflowState` USED TO BE HERE and are gone: `beans/graph.json` declares them now, because it is the graph they are nodes of. That removed one of the places the same path was written rather than adding another — see schemas/bean-graph.ts. `interaction` stays because it is not bean content: it describes how to talk to the person at this machine, not what is being worked on.",
     "interaction": ".harness/interaction.json"
   },
   "readme": {

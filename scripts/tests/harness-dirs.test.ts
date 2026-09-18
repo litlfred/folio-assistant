@@ -5,9 +5,12 @@
  * Three claims are worth a test here, and they are the three that would fail
  * silently:
  *
- *   1. `harness.config.json`, `.beans.yml` and `workflow/store.ts` agree. They are
- *      three files naming the same two paths, and nothing but a check stops them
- *      drifting — at which point beans go to a store nothing else reads.
+ *   1. `beans/graph.json`, `.beans.yml` and `workflow/store.ts` agree. The graph
+ *      is the DECLARATION (it used to be `harness.config.json`'s `harness`
+ *      block, which is why these tests moved); the other two are copies that
+ *      exist for reasons that cannot be removed — a third-party binary, and a
+ *      hot path. Nothing but a check stops them drifting, at which point beans
+ *      go to a store nothing else reads.
  *   2. The fallback writes what the CLI reads. If the layouts diverge, the
  *      fallback becomes a shadow store and the divergence is discovered by
  *      whoever loses work to it.
@@ -39,10 +42,19 @@ function scratchStore(): string {
   const root = mkdtempSync(join(tmpdir(), "beans-fallback-"));
   writeFileSync(
     join(root, ".beans.yml"),
-    "beans:\n    path: beans\n    prefix: test-\n    id_length: 4\n    default_status: todo\n    default_type: task\n",
+    "beans:\n    path: beans/defs\n    prefix: test-\n    id_length: 4\n    default_status: todo\n    default_type: task\n",
   );
-  mkdirSync(join(root, "beans"), { recursive: true });
+  mkdirSync(join(root, "beans", "defs"), { recursive: true });
   return root;
+}
+
+/** Write a bean graph under `root/beans/`. */
+function writeGraph(root: string, nodes: Array<{ id: string; path: string; kind: string }>): void {
+  mkdirSync(join(root, "beans"), { recursive: true });
+  writeFileSync(
+    join(root, "beans", "graph.json"),
+    JSON.stringify({ name: "test", nodes }, null, 2),
+  );
 }
 
 describe("the two stores are visible and agreed upon", () => {
@@ -57,12 +69,12 @@ describe("the two stores are visible and agreed upon", () => {
     const r = checkHarnessDirs(REPO_ROOT);
     expect(r.declaredWorkPlan.startsWith(".")).toBe(false);
     expect(r.declaredWorkflowState.startsWith(".")).toBe(false);
-    expect(WORKFLOW_DIR).toBe(join("beans", "workflow"));
+    expect(WORKFLOW_DIR).toBe(join("beans", "workflows"));
   });
 
   test("the work plan is where it says it is, and is not empty", () => {
     const r = checkHarnessDirs(REPO_ROOT);
-    expect(r.declaredWorkPlan).toBe("beans");
+    expect(r.declaredWorkPlan).toBe(join("beans", "defs"));
     expect(r.beanCount).toBeGreaterThan(0);
   });
 
@@ -70,7 +82,7 @@ describe("the two stores are visible and agreed upon", () => {
     const root = scratchStore();
     try {
       // The folio declares one path; the CLI is pointed at another.
-      writeFileSync(join(root, "harness.config.json"), JSON.stringify({ harness: { workPlan: "beans" } }));
+      writeGraph(root, [{ id: "defs", path: "defs", kind: "bean-defs" }]);
       writeFileSync(join(root, ".beans.yml"), "beans:\n    path: somewhere-else\n");
       const r = checkHarnessDirs(root);
       expect(r.problems.some((p) => p.includes("Work-plan path disagrees"))).toBe(true);
@@ -82,12 +94,11 @@ describe("the two stores are visible and agreed upon", () => {
   test("a dot-prefixed declaration is refused", () => {
     const root = scratchStore();
     try {
-      writeFileSync(
-        join(root, "harness.config.json"),
-        JSON.stringify({ harness: { workPlan: ".beans", workflowState: "beans/workflow" } }),
-      );
-      writeFileSync(join(root, ".beans.yml"), "beans:\n    path: .beans\n");
-      mkdirSync(join(root, ".beans"), { recursive: true });
+      // `beans/.defs` — visible root, hidden node. A path cannot escape the
+      // graph root, so this is the shape the guard has to catch.
+      writeGraph(root, [{ id: "defs", path: ".defs", kind: "bean-defs" }]);
+      writeFileSync(join(root, ".beans.yml"), "beans:\n    path: beans/.defs\n");
+      mkdirSync(join(root, "beans", ".defs"), { recursive: true });
       const r = checkHarnessDirs(root);
       expect(r.problems.some((p) => p.includes("hidden behind a dot"))).toBe(true);
     } finally {
@@ -101,14 +112,14 @@ describe("the two stores are visible and agreed upon", () => {
       const r = checkHarnessDirs(root);
       expect(r.configured).toBe(false);
       expect(r.problems).toEqual([]);
-      expect(r.notes.join(" ")).toContain("defaults");
+      expect(r.notes.join(" ")).toContain("default");
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
   });
 
   test("beansYmlPath reads the key, and reports absence rather than guessing", () => {
-    expect(beansYmlPath(REPO_ROOT)).toBe("beans");
+    expect(beansYmlPath(REPO_ROOT)).toBe(join("beans", "defs"));
     expect(beansYmlPath(tmpdir())).toBeUndefined();
   });
 });
@@ -118,7 +129,7 @@ describe("the fallback can work the plan, not just read it", () => {
     const root = scratchStore();
     try {
       const cfg = readStoreConfig(root);
-      expect(cfg.dir).toBe("beans");
+      expect(cfg.dir).toBe(join("beans", "defs"));
       expect(cfg.prefix).toBe("test-");
       const { bean } = createBean(root, { title: "First item" });
       expect(bean.id.startsWith("test-")).toBe(true);
@@ -245,33 +256,51 @@ describe("the config name — harness.config.json, and only that", () => {
     }
   });
 
-  test("check:harness-dirs reads the harness block from the new name", () => {
+  test("the bean graph, not the harness config, is what declares the stores", () => {
+    // `harness.workPlan` / `harness.workflowState` were REMOVED from the schema
+    // (bean x89g). A folio that still carries them is not misconfigured — the
+    // fields are simply ignored, and the graph answers instead.
     const root = scratchStore();
     try {
+      writeGraph(root, [
+        { id: "defs", path: "defs", kind: "bean-defs" },
+        { id: "workflows", path: "workflows", kind: "workflow-state" },
+      ]);
       writeFileSync(
         join(root, "harness.config.json"),
-        JSON.stringify({ harness: { workPlan: "beans", workflowState: "beans/workflow" } }),
+        JSON.stringify({ harness: { workPlan: "ignored", workflowState: "also-ignored" } }),
       );
       const r = checkHarnessDirs(root);
       expect(r.configured).toBe(true);
+      expect(r.declaredWorkPlan).toBe(join("beans", "defs"));
       expect(r.problems).toEqual([]);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
   });
 
-  test("a folio still on the old name reads as NOT configured, not as misconfigured", () => {
+  test("no graph is 'not configured' and uses the documented default", () => {
     const root = scratchStore();
     try {
-      writeFileSync(
-        join(root, "folio.config.json"),
-        JSON.stringify({ harness: { workPlan: "somewhere-else" } }),
-      );
       const r = checkHarnessDirs(root);
       expect(r.configured).toBe(false);
-      // Schema defaults apply, and they agree with .beans.yml — so no false alarm.
+      // The default agrees with .beans.yml, so absence is not a false alarm.
       expect(r.problems).toEqual([]);
-      expect(r.notes.join(" ")).toContain("defaults");
+      expect(r.notes.join(" ")).toContain("default");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a graph that will not parse FAILS — it never falls back to defaults", () => {
+    // Present-but-unreadable is the third state that must not be silent: a
+    // graph nobody can parse leaves every consumer guessing where beans live.
+    const root = scratchStore();
+    try {
+      mkdirSync(join(root, "beans"), { recursive: true });
+      writeFileSync(join(root, "beans", "graph.json"), "{ not json");
+      const r = checkHarnessDirs(root);
+      expect(r.problems.some((p) => p.includes("will not parse"))).toBe(true);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }

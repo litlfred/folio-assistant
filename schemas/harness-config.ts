@@ -165,34 +165,32 @@ export const TranslationConfigSchema = z.object({
 });
 
 /**
- * Where the agent harness keeps the two stores a person actually needs to find.
+ * Harness paths that are NOT part of the bean graph.
  *
- * `workPlan` is the bean store: WHAT is being worked on. `workflowState` is one
- * JSON file per running BPMN instance: WHERE IT GOT TO. They answer the two
- * halves of one question, so they live adjacent — `beans/` and `beans/workflow/`
- * — and at top level rather than behind a dot.
+ * ## What used to be here, and why it left
  *
- * ## Why they are declared rather than assumed
+ * This schema carried `workPlan` and `workflowState` — the bean store and the
+ * workflow-instance store. They are gone. `beans/graph.json` declares them now
+ * (see {@link file://../schemas/bean-graph.ts}), because it is the thing they
+ * are nodes OF.
  *
- * Both paths were previously hard-coded in three places that could disagree:
- * `.beans.yml` (which the `beans` CLI reads), `WORKFLOW_DIR` in
- * `workflow/store.ts`, and every skill and diagram that named a path in prose.
- * Declaring them here makes the config the one place a folio states the answer,
- * and gives a tool something to read instead of a convention to re-derive.
+ * That is a removal, not a relocation of the problem. The previous design had
+ * the same path written in two places that could disagree — here and
+ * `.beans.yml` — and `check:harness-dirs` existed to catch the drift. Declaring
+ * the layout in the graph leaves ONE fewer place, not one more.
  *
- * ## `.beans.yml` is still the CLI's own config, and still authoritative for it
+ * `.beans.yml` still carries the defs path and still needs that check: the
+ * `beans` binary is third-party and will never read our schema, so its config
+ * must say where its store is. That duplication is unavoidable; leaving it
+ * unchecked would not be.
  *
- * The `beans` binary does not read `harness.config.json` and never will — it is a
- * third-party tool. So `workPlan` here must MATCH `beans.path` in `.beans.yml`,
- * and `bun run check:harness-dirs` fails when they disagree. Two configs that
- * can drift is exactly the defect this repo keeps paying for; the check is what
- * makes the duplication safe rather than merely documented.
+ * ## What stays
+ *
+ * `interaction` — the per-user preference file the session-start sweep reads
+ * first. It is not bean content and is not a node of any graph: it describes
+ * how to talk to the person at this machine, not what is being worked on.
  */
 export const HarnessDirsSchema = z.object({
-  /** Bean store. Must equal `beans.path` in `.beans.yml`. */
-  workPlan: z.string().default("beans"),
-  /** One JSON file per running BPMN process instance. */
-  workflowState: z.string().default("beans/workflow"),
   /** Per-user interaction preferences, read at session start. */
   interaction: z.string().default(".harness/interaction.json"),
 });

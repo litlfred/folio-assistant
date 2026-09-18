@@ -1,0 +1,16 @@
+{
+  "_comment": "The bean graph. `beans/` is a graph with named nodes, not a directory that incidentally holds markdown. THIS FILE IS THE SINGLE DECLARATION of where the work plan and workflow state live — harness.config.json deliberately does NOT restate it. Node paths are relative to this file's directory, so the whole graph relocates by moving one folder. Schema + rationale: schemas/bean-graph.ts. NOTE: `.beans.yml` still carries the defs path because the `beans` binary is third-party and cannot read this file; `bun run check:harness-dirs` fails when the two disagree.",
+  "name": "folio-assistant",
+  "nodes": [
+    {
+      "id": "defs",
+      "path": "defs",
+      "kind": "bean-defs"
+    },
+    {
+      "id": "workflows",
+      "path": "workflows",
+      "kind": "workflow-state"
+    }
+  ]
+}

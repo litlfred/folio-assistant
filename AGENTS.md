@@ -147,26 +147,42 @@ bun run readme:sections             # list the sections a README can opt into
 bun run readme:audit                # verify the README's links still resolve
 ```
 
-## Where the harness keeps its state
+## Where the harness keeps its state — `beans/` is a graph
 
-Two stores, adjacent and at top level:
+`beans/` is a **graph** with named nodes, not a directory that incidentally
+holds markdown. `beans/graph.json` declares it; the schema is
+`schemas/bean-graph.ts`.
 
-| directory | holds | committed |
-|---|---|---|
-| `beans/` | the work plan — WHAT is being worked on | yes |
-| `beans/workflow/` | one JSON file per running BPMN instance — WHERE IT GOT TO | yes |
+| node | path | holds | committed |
+|---|---|---|---|
+| `defs` | `beans/defs/` | the work plan — WHAT is being worked on | yes |
+| `workflows` | `beans/workflows/` | one JSON file per running BPMN instance — WHERE IT GOT TO | yes |
+
+Node paths are relative to `graph.json`'s own directory, so the whole graph
+relocates by moving one folder. A path that is absolute or escapes its root is
+**rejected**: a store outside the graph is not a node of it.
 
 They were `.beans/` and `.harness/workflow/`. A dot-prefixed directory is absent
 from a plain `ls`, from most file browsers and from GitHub's web tree, so the two
-artefacts a person looks for first were the two hardest to find. Moved 2026-09-18.
+artefacts a person looks for first were the two hardest to find. Moved 2026-09-18
+(bean `8xzw`), restructured into the graph the same day (bean `x89g`).
 
-Both are **declared** in `harness.config.json` under `harness`
-(`HarnessDirsSchema` in `schemas/harness-config.ts`) rather than assumed. The
-`beans` binary is third-party and does not read that file — it reads
-`.beans.yml` — so the same path is necessarily written twice, and
-`bun run check:harness-dirs` fails when the declaration, `.beans.yml` and
-`workflow/store.ts` disagree. The duplication is unavoidable; an unchecked one
-is not.
+**The graph is the single declaration — `harness.config.json` deliberately does
+not restate it.** `harness.workPlan` and `harness.workflowState` existed and were
+removed: the layout was written in three places that could disagree, and moving
+it to the graph left one fewer, not one more.
+
+Two copies remain and both are checked by `bun run check:harness-dirs`, because
+neither can be removed: `.beans.yml` because the `beans` binary is third-party
+and will never read our schema, and `WORKFLOW_DIR` in `workflow/store.ts`
+because it is on the hot path of every workflow call and re-reading a JSON file
+to learn its own directory would be worse than a checked duplicate. The
+duplication is unavoidable; an unchecked one is not.
+
+The dot-prefix guard tests **every** segment of a resolved path, not just the
+first. A node declared `.defs` resolves to `beans/.defs` and is exactly as
+invisible as the stores this move existed to fix; checking only the head would
+have made the guard unfireable.
 
 `.harness/` still exists and still holds `interaction.json` and `issue-comments/`;
 only the workflow state moved.
@@ -524,7 +540,7 @@ to run rather than just a step name; `A_Implement`, `A_CreateBeans` and
 `crdm_status` are documented as **proposed** in older text and should not be
 built: a second set of tools over the same diagram is a second answer to
 "where are we", free to disagree with the first, and workflow state under
-`beans/workflow/` is committed so a sibling session sees the same position.
+`beans/workflows/` is committed so a sibling session sees the same position.
 
 Key rules:
 - Feature work must be linked to a GitHub issue (scan before creating; do not
@@ -861,7 +877,7 @@ Full protocol, with the worked example:
   `docs/workflows/*.bpmn`. `workflow_next` tells you what is enabled **now**,
   which lane owns it and which skill implements it; `workflow_complete` refuses
   a step that is not enabled, so work cannot be claimed out of order. State is
-  committed under `beans/workflow/`, like beans, so a sibling session sees it.
+  committed under `beans/workflows/`, like beans, so a sibling session sees it.
   **The base processes are STRICT.** `editing-hci-validation`,
   `draft-to-publication` and `content-lifecycle` carry
   `<folio:policy enforcement="strict"/>`: `workflow_gate` refuses a step that is
