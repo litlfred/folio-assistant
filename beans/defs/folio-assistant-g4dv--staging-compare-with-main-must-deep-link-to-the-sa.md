@@ -1,10 +1,11 @@
 ---
 # folio-assistant-g4dv
 title: 'STAGING: ''compare with main'' must deep-link to the same page, not the site root (issue #248)'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-18T17:04:31Z
-updated_at: 2026-09-18T17:04:31Z
+updated_at: 2026-09-18T18:29:31Z
 ---
 
 ## The ask
