@@ -153,6 +153,7 @@ const RULES: Rule[] = [
       // needs a folio to have anything to do.
       "src/mcp/project.ts",                  // Tool node → MCP declaration + argv
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
+      "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
@@ -169,6 +170,14 @@ const RULES: Rule[] = [
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
+
+      // `adapters/mcp-server/` was claimed wholesale by the harness prefix
+      // rule, but `server.ts` opens "QOU Paper Writing Assistant — MCP
+      // Server" and offers PDF rendering, content validation, a Lean LSP
+      // proxy and a content viewer. That is a CONTENT server, so the
+      // directory is core (below) and only the genuinely harness-level
+      // pieces stay here.
+      "adapters/mcp-server/tools/check-deps.ts",  // what is installed on this machine
     ],
     prefixes: ["src/impact/"],               // who a change affects: skills, roles, BPMN lanes
   },
@@ -255,7 +264,7 @@ const RULES: Rule[] = [
       // it was extracted to remove.
       "schemas/namespaces.ts",
     ],
-    prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "src/issue-watch/", "adapters/mcp-server/", "skills/framework/", "skills/remote-packages/"],
+    prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "src/issue-watch/", "skills/framework/", "skills/remote-packages/"],
   },
 
   // ── Mechanism that carries a domain keyword. Hand-triaged, and placed
@@ -275,6 +284,20 @@ const RULES: Rule[] = [
     triaged: true,
     exact: [
       "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
+    ],
+  },
+
+  // ── The MCP server's paper-only tools. Triaged, and BEFORE the core
+  //    prefix that claims the rest of `adapters/mcp-server/`: these three
+  //    need a TeX installation or a Lean toolchain, which is the line
+  //    `adapters/paper/index.ts` already draws for the paper adapter.
+  {
+    repo: "sci",
+    triaged: true,
+    exact: [
+      "adapters/mcp-server/tools/render.ts",   // PDF, HTML, formula preview — LaTeX
+      "adapters/mcp-server/tools/lean.ts",     // Lean LSP proxy
+      "adapters/mcp-server/tools/preview.ts",  // opens rendered LaTeX output
     ],
   },
 
@@ -303,7 +326,7 @@ const RULES: Rule[] = [
   // ── folio-assist-core: the generic document model and its pipeline
   {
     repo: "core",
-    prefixes: ["adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
+    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
     exact: ["src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/translation.ts", "src/tools/preview.ts", "src/qa-agent-write.ts"],
   },
 ];
