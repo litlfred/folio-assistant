@@ -137,8 +137,13 @@ import type {
   QaScriptSidecar,
   CompanionRole,
 } from "../../schemas/block-qa";
-import { criterionAdapters } from "../../schemas/block-qa";
+import {
+  criterionAdapters,
+  criterionProfiles,
+  profileExcludesCriterion,
+} from "../../schemas/block-qa";
 import { adapterForKind } from "../../schemas/block-kinds";
+import { readDeclaredFolioProfile } from "./profile-check";
 
 
 // ── CLI parsing ─────────────────────────────────────────────────
@@ -207,6 +212,12 @@ interface BlockSweepResult {
       | "needs-agent"
       | `n/a-no-${CompanionRole}`
       | "n/a-wrong-adapter"
+      // Deliberately NOT folded into `n/a-wrong-adapter`. Adapter and profile
+      // are orthogonal axes and a reader of this report has to be able to
+      // tell which one excluded the criterion: "this criterion belongs to
+      // another vocabulary" and "this folio is a document and that criterion
+      // needs LaTeX" call for entirely different follow-up.
+      | "n/a-wrong-profile"
       | CheckerResult["result"];
     severity?: "critical" | "major" | "minor";
     hits?: number;
@@ -220,6 +231,11 @@ function run(): void {
   // Anchor for recorded block paths: the content repo that owns the
   // swept blocks (NOT this platform checkout — see findContentRepoRoot).
   const contentRepoRoot = findContentRepoRoot(rootAbs);
+  // The folio's declared content profile, read ONCE per run from the same
+  // repo root the block paths are anchored to. `profile` is `undefined` when
+  // the folio does not say — see the profile gate below for what that means
+  // and why it is not the same as "paper".
+  const declaredProfile = readDeclaredFolioProfile(contentRepoRoot);
   // Single-block targets: accept a sibling file path (`<block>.ts`,
   // `.md`, `.lean`, `.qa.json`) or an extension-less block-path prefix
   // in addition to a chapter/paper directory. The walk then starts at
@@ -481,6 +497,58 @@ function run(): void {
         sweepResult.details.push({
           criterion: criterionId,
           outcome: "n/a-wrong-adapter",
+        });
+        continue;
+      }
+
+      // Profile gate, BESIDE the adapter gate rather than instead of it. The
+      // two answer different questions and both have to be asked: the adapter
+      // asks whose vocabulary the block's kind is from, the profile asks
+      // which restriction of that vocabulary this folio declared. A document
+      // folio's `prose` block is a paper-adapter kind — `adapterForKind` is
+      // total and unambiguous on all of them — so the adapter gate passes it
+      // through, and without this second gate it inherited every LaTeX- and
+      // Lean-shaped criterion in the registry. Measured on
+      // `content/docs/crdm-methodology` (2026-09-18): 5 of 8 failures were
+      // `voice-unicode-crash` firing on characters whose only stated defect
+      // is that they crash pdflatex, in a folio whose render path takes no
+      // TeX at all.
+      //
+      // Criteria default to EVERY profile (see `criterionProfiles`), so the
+      // gate only fires for the handful that opt out by naming `profiles`.
+      //
+      // "Could not determine" is a third state and it falls through to
+      // RUNNING the criterion. A folio with no `folio.config.json`, or one
+      // whose config will not parse, must not quietly lose QA coverage on the
+      // strength of a guess: `profileForContentType` resolves the unknown
+      // case to `paper` for a validator, but here the answer to an unreadable
+      // config is "check everything and let the findings be visible", not
+      // "skip whatever the guess excludes".
+      const folioProfile = declaredProfile.profile;
+      const profileScope = criterionProfiles(def);
+      if (profileExcludesCriterion(def, folioProfile)) {
+        const naEntry: QaCriterionEntry = {
+          field_hash: fieldHash,
+          result: "n/a",
+          reviewer: { ...scriptReviewer },
+          reviewed_at: nowIso,
+          reviewed_sha: headSha,
+          // `folioProfile` is necessarily defined here: the undetermined
+          // case returns `false` from `profileExcludesCriterion`.
+          notes:
+            `criterion applies to the ${profileScope.join("/")} profile; ` +
+            `this folio is ${folioProfile!} (${declaredProfile.declaredBy})`,
+        };
+        const priorNa = existing.find((e) => e?.reviewer?.kind === "script");
+        report.criteria[criterionId] = [
+          ...nonScriptExisting,
+          sameScriptVerdict(priorNa, naEntry)
+            ? priorNa!
+            : ((verdictChanged = true), naEntry),
+        ];
+        sweepResult.details.push({
+          criterion: criterionId,
+          outcome: "n/a-wrong-profile",
         });
         continue;
       }
