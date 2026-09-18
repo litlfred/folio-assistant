@@ -84,11 +84,6 @@
   },
   "danglingLinks": [
     {
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/authoring-who-smart-guidelines",
-      "edge": "providesCapability",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#capability/fhir-validator"
-    },
-    {
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/authoring-math",
       "edge": "declaresSkill",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/scientific-visualization"
@@ -111,11 +106,11 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T20:07:05.106Z",
+  "generatedAt": "2026-09-18T20:09:47.649Z",
   "counts": {
     "Skill": 138,
     "Actor": 24,
-    "Capability": 22,
+    "Capability": 23,
     "Role": 62,
     "SkillPackage": 14,
     "Process": 20,
@@ -3210,6 +3205,21 @@
         "command": "lean --version"
       },
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/lean-toolchain"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#capability/fhir-validator",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
+      "id": "fhir-validator",
+      "name": "HL7 FHIR Validator",
+      "description": "HL7's standalone FHIR resource validator. Distinct from ig-publisher, which builds a whole IG: this validates individual resources and profiles against a package, and is what an L3 authoring loop runs between builds.",
+      "detection": {
+        "method": "command",
+        "command": "java -jar ${FHIR_VALIDATOR_JAR:-/opt/fhir-validator/validator_cli.jar} -version"
+      },
+      "requires": [
+        "java-runtime"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/fhir-validator"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#capability/pandoc",
@@ -15140,8 +15150,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "44988f6e765f86d4d5127aac3c7615c1eb811044",
+    "sha": "f2d37952d9062598c7befebc97c887a9485c7a96",
     "pr": "277/merge",
-    "run": "35389562034"
+    "run": "35389800046"
   }
 }
