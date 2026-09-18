@@ -97,10 +97,30 @@ export interface GraphKindDef {
 /**
  * The graph kinds the **harness itself** defines.
  *
- * Deliberately three, and deliberately none of them renderable. Everything
- * here is a graph a tool reads: how work is done (`tools`), what an actor
- * knows and which process governs it (`kg`), and the shapes both are typed
- * against (`schemas`).
+ * Five, and deliberately none of them renderable. Everything here is a graph a
+ * tool reads: how work is done (`tools`), what an actor knows and which process
+ * governs it (`kg`), the shapes both are typed against (`schemas`), what is
+ * being worked on (`workplan`), and where each running process got to
+ * (`process-state`).
+ *
+ * ## Why the work plan is the harness's and not core's
+ *
+ * `folio` is registered by `folio-assist-core` because only core can render.
+ * The work plan has no such constraint in either direction: an instance has
+ * work whether or not it has content, and `agentic-harness` itself carries a
+ * `beans/` store for its own. A Tool repo and a Test repo have work plans too.
+ * So it is declared here — the test for "does this belong to the harness" is
+ * whether the harness has one, and it does.
+ *
+ * ## Why `workplan` and `process-state` are two kinds and not one
+ *
+ * They sit in nested directories and are easy to conflate, which is exactly
+ * why they are separated. `workplan` is WHAT IS BEING WORKED ON — human- and
+ * agent-authored items, edited by hand, carrying judgement. `process-state` is WHERE
+ * A RUNNING PROCESS GOT TO — a token marking the interpreter owns, that no
+ * human is invited to edit. A consumer asking for the work plan must not be
+ * handed BPMN instance state, and collapsing them into one kind is how it
+ * would be.
  */
 export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   tools: {
@@ -117,6 +137,27 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     type: `${FOLIO_NS}SchemaGraph`,
     renderable: false,
     summary: "Schema definitions, self-declared in the smart-base manner.",
+  },
+  // ONE kind for the whole work plan, not one per store.
+  //
+  // #263 declared two directories here — `workplan` at `beans/` and
+  // `process-state` at `beans/workflow/` — and its own comment flagged the
+  // problem that creates: the second sits INSIDE the first, so a consumer
+  // scanning a declared directory cannot assume it owns what is beneath it,
+  // and the two were told apart only by file extension, "a coincidence of the
+  // current layout, not a contract".
+  //
+  // `beans/` is now a graph with named nodes (`beans/beans.json`,
+  // schemas/bean-graph.ts), so that distinction lives INSIDE the graph where it
+  // is declared rather than out here where it has to be inferred. The harness
+  // says which directories exist and what kind of graph each holds; the bean
+  // graph says what its own nodes are. One fact, one place, at each level.
+  beans: {
+    type: `${FOLIO_NS}BeanGraph`,
+    renderable: false,
+    summary:
+      "The work plan — what is being worked on, and where each running BPMN instance got to. " +
+      "Its `defs` and `workflows` nodes are declared by `beans/beans.json`.",
   },
 };
 

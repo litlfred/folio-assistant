@@ -183,11 +183,16 @@ describe("layering", () => {
   });
 });
 
-describe("graph kinds — the harness declares three, core adds folio", () => {
+describe("graph kinds — the harness declares four, core adds folio", () => {
   it("the harness's own vocabulary contains no renderable kind", () => {
     // The whole point of the re-siting: agent-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
-    expect(Object.keys(BASE_GRAPH_KINDS).sort()).toEqual(["kg", "schemas", "tools"]);
+    expect(Object.keys(BASE_GRAPH_KINDS).sort()).toEqual([
+      "beans",
+      "kg",
+      "schemas",
+      "tools",
+    ]);
     for (const def of Object.values(BASE_GRAPH_KINDS)) {
       expect(def.renderable).toBe(false);
     }
@@ -198,7 +203,7 @@ describe("graph kinds — the harness declares three, core adds folio", () => {
     // naming it against a bare registry is refused.
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
-    expect(bare.names().sort()).toEqual(["kg", "schemas", "tools"]);
+    expect(bare.names().sort()).toEqual(["beans", "kg", "schemas", "tools"]);
   });
 
   it("core's registration adds it, and it is the renderable one", () => {
@@ -206,7 +211,9 @@ describe("graph kinds — the harness declares three, core adds folio", () => {
     registerFolioGraphKind(reg);
     expect(reg.has("folio")).toBe(true);
     expect(isRenderable("folio", reg)).toBe(true);
-    for (const k of ["tools", "kg", "schemas"]) expect(isRenderable(k, reg)).toBe(false);
+    for (const k of ["tools", "kg", "schemas", "beans"]) {
+      expect(isRenderable(k, reg)).toBe(false);
+    }
   });
 
   it("importing core registers folio into the shared registry", () => {

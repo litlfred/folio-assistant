@@ -170,7 +170,7 @@ export const TranslationConfigSchema = z.object({
  * ## What used to be here, and why it left
  *
  * This schema carried `workPlan` and `workflowState` — the bean store and the
- * workflow-instance store. They are gone. `beans/graph.json` declares them now
+ * workflow-instance store. They are gone. `beans/beans.json` declares them now
  * (see {@link file://../schemas/bean-graph.ts}), because it is the thing they
  * are nodes OF.
  *

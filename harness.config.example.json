@@ -16,7 +16,7 @@
     "pyodideCache": true
   },
   "harness": {
-    "_comment": "Harness paths that are NOT part of the bean graph. `workPlan` and `workflowState` USED TO BE HERE and are gone: `beans/graph.json` declares them now, because it is the graph they are nodes of. That removed one of the places the same path was written rather than adding another — see schemas/bean-graph.ts. `interaction` stays because it is not bean content: it describes how to talk to the person at this machine, not what is being worked on.",
+    "_comment": "Harness paths that are NOT part of the bean graph. `workPlan` and `workflowState` USED TO BE HERE and are gone: `beans/beans.json` declares them now, because it is the graph they are nodes of. That removed one of the places the same path was written rather than adding another — see schemas/bean-graph.ts. `interaction` stays because it is not bean content: it describes how to talk to the person at this machine, not what is being worked on.",
     "interaction": ".harness/interaction.json"
   },
   "readme": {

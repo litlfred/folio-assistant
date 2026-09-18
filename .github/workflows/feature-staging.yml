@@ -192,8 +192,23 @@ jobs:
           if [ -n "$ISSUE" ]; then
             ISSUE_FRAGMENT=" · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/issues/${ISSUE}\" style=\"color:#fff;text-decoration:underline\">issue #${ISSUE}</a>"
           fi
+          # The banner must PUSH THE FIXED SIDEBAR DOWN, not sit on top of it.
+          #
+          # just-the-docs makes `.side-bar` `position: fixed; top: 0`. A
+          # `position: sticky` banner is in normal flow and moves nothing that
+          # is out of it, so the banner covered the top of the sidebar: the
+          # site title, and part of the toolbar row holding the theme, reading
+          # preferences, language and QR controls. A reader reported the
+          # language selector "still not visible" — it was under the banner.
+          #
+          # A fixed offset would be wrong: the banner wraps to two or three
+          # lines on a narrow viewport, and its height is not knowable here.
+          # So measure it and publish the value as a custom property, on load
+          # and on resize.
+          OFFSET_STYLE="<style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style>"
+          OFFSET_SCRIPT="<script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>"
           CHIP='font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px'
-          BANNER="<div style=\"background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui\">🔀 <b>FEATURE BRANCH</b> — <a href=\"${BRANCH_URL}\" style=\"color:#fff;text-decoration:underline\"><span style=\"${CHIP}\">${BRANCH}</span></a> · commit <span style=\"${CHIP}\">${SHA}</span> · built ${BUILT} · <a href=\"${PR_URL}\" style=\"color:#fff;text-decoration:underline\">PR #${PR}</a>${ISSUE_FRAGMENT} · <a href=\"${MAIN_URL}\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a> · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\" style=\"color:#fff;text-decoration:underline\">build log</a></div>"
+          BANNER="<div data-fa-staging-banner style=\"background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui\">🔀 <b>FEATURE BRANCH</b> — <a href=\"${BRANCH_URL}\" style=\"color:#fff;text-decoration:underline\"><span style=\"${CHIP}\">${BRANCH}</span></a> · commit <span style=\"${CHIP}\">${SHA}</span> · built ${BUILT} · <a href=\"${PR_URL}\" style=\"color:#fff;text-decoration:underline\">PR #${PR}</a>${ISSUE_FRAGMENT} · <a href=\"${MAIN_URL}\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a> · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\" style=\"color:#fff;text-decoration:underline\">build log</a></div>${OFFSET_STYLE}${OFFSET_SCRIPT}"
           # Match the WHOLE opening tag, not the literal "<body". Matching
           # "<body" alone re-emitted "<body>" and left the original tag's own
           # ">" behind, so every staged page carried a stray ">" after the

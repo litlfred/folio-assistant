@@ -50,7 +50,7 @@ import {
 import { WORKFLOW_DIR } from "../src/workflow/store.js";
 
 export interface HarnessDirsReport {
-  /** A parseable `beans/graph.json` was found. */
+  /** A parseable `beans/beans.json` was found. */
   configured: boolean;
   /** The `bean-defs` node, or the documented default when no graph is present. */
   declaredWorkPlan: string;

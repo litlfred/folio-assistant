@@ -35,7 +35,29 @@ The vocabulary is **open**, and split across two layers.
 | `tools` | **harness** | Tool definitions, themselves nodes in the KG | no |
 | `kg` | **harness** | skills, workflows, roles — the instance's own knowledge graph | no |
 | `schemas` | **harness** | schema definitions, self-declared in the smart-base manner | no |
+| `workplan` | **harness** | work items — what is being worked on (`beans/`) | no |
+| `process-state` | **harness** | running BPMN instances — where each got to (`beans/workflow/`) | no |
 | `folio` | **`folio-assist-core`** | authored content | **yes** — just-the-docs renders it to a website |
+
+**Why the work plan is the harness's and not core's.** The test is whether the
+harness *has* one, and it does: an instance has work whether or not it has
+content, and `agentic-harness` carries a `beans/` store for its own. A Tool repo
+and a Test repo have work plans too. That is a different test from the one that
+sent `folio` to core, which is about capability — only core can render.
+
+**Why `workplan` and `process-state` are two kinds.** They sit in nested directories
+and are easy to conflate, which is exactly why they are separated. `workplan` is
+WHAT IS BEING WORKED ON — authored by people and agents, carrying judgement.
+`process-state` is WHERE A RUNNING PROCESS GOT TO — a token marking the interpreter
+owns, that no human is invited to edit. A consumer asking for the work plan must
+not be handed BPMN instance state.
+
+> **Nesting is not inheritance.** `beans/workflow/` sits inside `beans/` and
+> holds a *different* graph. A consumer scanning a declared directory must not
+> assume it owns everything beneath it — check whether a deeper path is itself
+> declared. Today the two happen to be distinguishable by extension (`.md`
+> beans, `.json` instance state), but that is a coincidence of the current
+> layout, not a contract.
 
 `renderable` is the **only** behavioural distinction, and it is why `folio` is
 not the harness's to declare: **`agent-harness` is not self-documenting.** It

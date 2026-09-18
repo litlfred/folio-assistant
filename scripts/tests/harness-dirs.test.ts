@@ -5,7 +5,7 @@
  * Three claims are worth a test here, and they are the three that would fail
  * silently:
  *
- *   1. `beans/graph.json`, `.beans.yml` and `workflow/store.ts` agree. The graph
+ *   1. `beans/beans.json`, `.beans.yml` and `workflow/store.ts` agree. The graph
  *      is the DECLARATION (it used to be `harness.config.json`'s `harness`
  *      block, which is why these tests moved); the other two are copies that
  *      exist for reasons that cannot be removed — a third-party binary, and a
@@ -52,7 +52,7 @@ function scratchStore(): string {
 function writeGraph(root: string, nodes: Array<{ id: string; path: string; kind: string }>): void {
   mkdirSync(join(root, "beans"), { recursive: true });
   writeFileSync(
-    join(root, "beans", "graph.json"),
+    join(root, "beans", "beans.json"),
     JSON.stringify({ name: "test", nodes }, null, 2),
   );
 }
@@ -298,7 +298,7 @@ describe("the config name — harness.config.json, and only that", () => {
     const root = scratchStore();
     try {
       mkdirSync(join(root, "beans"), { recursive: true });
-      writeFileSync(join(root, "beans", "graph.json"), "{ not json");
+      writeFileSync(join(root, "beans", "beans.json"), "{ not json");
       const r = checkHarnessDirs(root);
       expect(r.problems.some((p) => p.includes("will not parse"))).toBe(true);
     } finally {

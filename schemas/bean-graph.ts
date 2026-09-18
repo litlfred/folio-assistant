@@ -5,7 +5,7 @@
  * **graph** with named nodes, each node a store with its own kind and path:
  *
  * ```jsonc
- * // beans/graph.json
+ *  // beans/beans.json
  * {
  *   "name": "folio-assistant",
  *   "nodes": [
@@ -33,7 +33,7 @@
  *
  * ## Paths are relative to the graph root, deliberately
  *
- * A node's `path` is resolved against the directory holding `graph.json`, not
+ * A node's `path` is resolved against the directory holding `beans.json`, not
  * against the repo root. So the graph is **relocatable**: moving `beans/` to
  * `work/` requires editing nothing inside it. A path escaping its own root
  * (`..`, or absolute) is rejected — a store outside the graph it belongs to is
@@ -92,7 +92,7 @@ export const BeanGraphSchema = z.object({
 export type BeanGraph = z.infer<typeof BeanGraphSchema>;
 
 /** The graph file's name inside its root directory. */
-export const BEAN_GRAPH_FILE = "graph.json";
+export const BEAN_GRAPH_FILE = "beans.json";
 
 /** Where the graph root sits, when a repo has not moved it. */
 export const DEFAULT_BEAN_GRAPH_ROOT = "beans";

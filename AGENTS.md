@@ -150,7 +150,7 @@ bun run readme:audit                # verify the README's links still resolve
 ## Where the harness keeps its state — `beans/` is a graph
 
 `beans/` is a **graph** with named nodes, not a directory that incidentally
-holds markdown. `beans/graph.json` declares it; the schema is
+holds markdown. `beans/beans.json` declares it; the schema is
 `schemas/bean-graph.ts`.
 
 | node | path | holds | committed |
@@ -183,6 +183,16 @@ The dot-prefix guard tests **every** segment of a resolved path, not just the
 first. A node declared `.defs` resolves to `beans/.defs` and is exactly as
 invisible as the stores this move existed to fix; checking only the head would
 have made the guard unfireable.
+
+`agent-harness.json` declares this instance's other graphs (`schemas/`,
+`skills/`) and deliberately declares **no** work-plan directory. #263 added
+`workplan` and `process-state` entries there; they are reverted, because two
+files answering "where is the work plan" is the drift both changes set out to
+remove. The trade-off is real and was taken knowingly: a consumer reading only
+`agent-harness.json` will not learn that `beans/` exists, and must read
+`beans/beans.json` for the work plan. See
+[`directory-conventions`](skills/folio-core/directory-conventions.md).
+
 
 `.harness/` still exists and still holds `interaction.json` and `issue-comments/`;
 only the workflow state moved.

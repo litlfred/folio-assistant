@@ -27,7 +27,7 @@ import type { InstanceState } from "./instance.js";
  * — which made the two artefacts a person most needs the two hardest to find.
  *
  * **This constant is the compiled-in default, not the declaration.**
- * `beans/graph.json` is where the layout is stated; `bun run check:harness-dirs`
+ * `beans/beans.json` is where the layout is stated; `bun run check:harness-dirs`
  * fails when this and the graph disagree. It stays a constant because the store
  * is on the hot path of every workflow call and re-reading a JSON file per call
  * to learn its own directory would be worse than a checked duplicate.
