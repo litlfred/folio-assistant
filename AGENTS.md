@@ -151,19 +151,35 @@ bun run readme:audit                # verify the README's links still resolve
 
 `beans/` is a **graph** with named nodes, not a directory that incidentally
 holds markdown. `beans/beans.json` declares it; the schema is
-`schemas/bean-graph.ts`.
+`schemas/bean-graph.ts`, which reuses `ContentDirectorySchema` from
+`schemas/agent-harness.ts` rather than restating it.
 
-| node | path | holds | committed |
+| directory | path | graphs | committed |
 |---|---|---|---|
-| `defs` | `beans/defs/` | the work plan — WHAT is being worked on | yes |
-| `workflows` | `beans/workflows/` | one JSON file per running BPMN instance — WHERE IT GOT TO | yes |
+| `defs` | `beans/defs/` | `bean-defs` — the work plan, WHAT is being worked on | yes |
+| `workflows` | `beans/workflows/` | `workflow-state` — one JSON per running BPMN instance, WHERE IT GOT TO | yes |
+
+**It is the same schema as `agent-harness.json`, not a parallel one.** A
+bean-graph entry IS a `ContentDirectory`: an id, a path, and `graphs` — the
+kinds found there. Same shape, same open registry, same JSON-LD projection.
+`bean-defs` and `workflow-state` are registered in `BASE_GRAPH_KINDS`
+alongside `kg`, `schemas`, `tools` and `beans`, so there is one vocabulary.
+
+This file briefly declared `nodes` with `kinds: BeanNodeKind[]`, a closed
+enum, which said exactly what `directories` with `graphs: GraphKind[]` already
+said in different words. Two spellings of one concept is the drift this repo
+keeps paying for. What stays specific to the bean graph is only what is not
+true of declarations generally: paths resolve against `beans.json`'s own
+directory rather than the instance root, and at most one directory may hold
+`workflow-state`.
 
 Node paths are relative to `beans.json`'s own directory, so the whole graph
 relocates by moving one folder. A path that is absolute or escapes its root is
 **rejected**: a store outside the graph is not a node of it.
 
-**`kinds` is an array, and it does not say how to tell the contents apart —
-the files declare what they are.** A bean carries its id, `title`, `status`
+**`graphs` is an array, and it does not say how to tell the contents apart —
+the files declare what they are.** A directory is a PLACE TO LOOK and may hold
+more than one part of the graph. A bean carries its id, `title`, `status`
 and `type` in front matter; a workflow instance carries
 `"$schema": "folio-workflow-instance/v1"`, following the `qa-script/v1`
 convention the QA sidecars use. A consumer reads a file and the file answers,
@@ -197,14 +213,19 @@ first. A node declared `.defs` resolves to `beans/.defs` and is exactly as
 invisible as the stores this move existed to fix; checking only the head would
 have made the guard unfireable.
 
-`agent-harness.json` declares this instance's other graphs (`schemas/`,
-`skills/`) and deliberately declares **no** work-plan directory. #263 added
-`workplan` and `process-state` entries there; they are reverted, because two
-files answering "where is the work plan" is the drift both changes set out to
-remove. The trade-off is real and was taken knowingly: a consumer reading only
-`agent-harness.json` will not learn that `beans/` exists, and must read
-`beans/beans.json` for the work plan. See
+`agent-harness.json` declares `beans/` **once**, as a `beans` graph, beside
+`schemas/` and `kg/` — the same pattern as any other directory. Its internal
+split is declared by `beans/beans.json`, not restated there. #263 declared the
+two halves as separate sibling directories with one nested inside the other,
+and its own comment conceded a consumer could not then tell which owned what
+beneath it; named directories inside the graph are that contract. See
 [`directory-conventions`](skills/folio-core/directory-conventions.md).
+
+**Not every declared graph's files declare themselves yet.** `kg`,
+`bean-defs` and `workflow-state` do; `schemas/*.ts` does not — `@module`
+names the path rather than the node type, four files carry none, and three
+`.test.ts` files sit in the declared directory without being schema nodes.
+Bean `xxxb`.
 
 
 `.harness/` still exists and still holds `interaction.json` and `issue-comments/`;
