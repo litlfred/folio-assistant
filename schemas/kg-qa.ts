@@ -58,7 +58,7 @@ export const KG_QA_SCHEMA = "kg-qa/v1";
 export const KG_QA_DIRNAME = "kg-qa";
 
 /** What kind of node a sidecar audits. */
-export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "graph"] as const;
+export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "skill", "graph"] as const;
 export type KgSubjectKind = (typeof KG_SUBJECT_KINDS)[number];
 
 /** Outcome of one criterion. `unknown` is never a pass. */
@@ -223,11 +223,83 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "A statement carries no `conformance` grade. SHALL and SHOULD are the whole point of writing a " +
       "requirement rather than a note; an ungraded statement cannot be conformance-tested.",
   },
+  // ── Is this role WRITABLE FOR? ────────────────────────────────
+  //
+  // A lane is the audience: a block sits in a lane, the lane is a role, and
+  // the role is who the prose is for. That only works if the role says enough
+  // to write for and to review against. `summary` says what the role DOES,
+  // which is enough to draw a swimlane and not enough to author against.
+  //
+  // All three are `n/a` for an `actedUpon` role — the corpus and the work plan
+  // are lanes because tasks act ON them, and asking what voice to address the
+  // corpus in is not a question.
+  {
+    id: "role-has-persona",
+    applies: ["role"],
+    severity: "major",
+    summary:
+      "A role an author writes for carries no `persona` — nothing says what this reader already knows, " +
+      "what they came to find out, or what would make the page useless to them.",
+  },
+  {
+    id: "role-declares-voice",
+    applies: ["role"],
+    severity: "minor",
+    summary:
+      "A role carries no `voice`. Without it the authoring agent picks a register by taste and the QA " +
+      "agent judges it by a different one, so a voice finding is an opinion rather than a check.",
+  },
+  {
+    id: "role-has-use-cases",
+    applies: ["role"],
+    severity: "minor",
+    summary:
+      "A role declares no `useCases` — what this reader is trying to do. 'Is this well written' is " +
+      "unanswerable; 'does this let them do the thing they came for' is not.",
+  },
   {
     id: "decision-outcomes-used",
     applies: ["decision"],
     severity: "major",
     summary: "A decision table is referenced by no gateway, or returns an outcome no branch is named for.",
+  },
+  // ── Is this skill short enough to be READ? ────────────────────
+  //
+  // A skill is read before acting, every time, by an agent with a finite
+  // context. Length is a cost paid on every invocation, so it is a property of
+  // the artefact and belongs in a sidecar — not an exhortation in the skill
+  // files themselves, which is advice nothing measures and nothing enforces.
+  //
+  // Thresholds are MEASURED, not chosen. Across 123 skill files on
+  // 2026-09-18 (`find skills -name "*.md" -not -path "*/kg-qa/*" -exec wc -l`):
+  // 26,532 lines total, median 178, p75 279, p90 391, max 1280.
+  //
+  // `major` at 400 is roughly p90 — the tenth of files that are documents
+  // rather than instructions. `minor` at 280 is roughly p75. Neither is a
+  // style opinion; both say "this is longer than three quarters of its peers".
+  {
+    id: "skill-is-brief",
+    applies: ["skill"],
+    severity: "minor",
+    summary:
+      "A skill is longer than 280 lines (p75 of the corpus) — an agent reads it before acting, " +
+      "every time, and length is a cost paid on every invocation.",
+  },
+  {
+    id: "skill-not-a-document",
+    applies: ["skill"],
+    severity: "major",
+    summary:
+      "A skill is longer than 400 lines (p90) — at that length it is a document, and an agent that " +
+      "skims it follows the part it happened to read.",
+  },
+  {
+    id: "skill-no-repeated-heading",
+    applies: ["skill"],
+    severity: "minor",
+    summary:
+      "A skill repeats a heading. The same section said twice is the redundancy that makes a long " +
+      "skill long, and it leaves an agent no way to tell which copy governs.",
   },
   {
     id: "skill-reachable",
