@@ -554,7 +554,7 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
     "@type": `${FOLIO_NS}Tool`,
     name: t.id,
     title: t.title,
-    summary: t.summary,
+    description: t.description,
     install: t.install,
     invoke: t.invoke,
     io: t.io,
@@ -583,13 +583,21 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
   if (!existsSync(f)) return [];
   try {
     const d = JSON.parse(readFileSync(f, "utf-8")) as {
-      directories?: Array<{ id: string; path: string; graphs?: string[]; graph?: string; summary?: string }>;
+      title?: string;
+      description?: string;
+      directories?: Array<{
+        id: string;
+        path: string;
+        graphs?: string[];
+        title?: string;
+        description?: string;
+      }>;
     };
     return (d.directories ?? []).map((x) => {
       // `graph` became `graphs[]` — a directory may hold more than one graph,
       // and `schemas/` is the first real use of that. Both spellings are read
       // so this does not break on a declaration written before the change.
-      const kinds = x.graphs ?? (x.graph !== undefined ? [x.graph] : []);
+      const kinds = x.graphs ?? [];
       return {
         "@id": makeIri(doc, "directory", x.id),
         "@type": `${FOLIO_NS}Directory`,
@@ -597,7 +605,8 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
         path: x.path,
         holdsGraph: kinds.map((k) => `${FOLIO_NS}graphKind/${k}`),
         graphKinds: kinds,
-        summary: x.summary,
+        title: x.title,
+        description: x.description,
       };
     });
   } catch (e) {

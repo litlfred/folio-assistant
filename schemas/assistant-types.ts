@@ -91,8 +91,8 @@ export type Conformance = "SHALL" | "SHOULD" | "MAY" | "SHALL NOT";
 export interface ActorDefinition {
   /** Unique identifier (used as reference key). */
   id: string;
-  /** Human-readable name. */
-  name: string;
+  /** Display text. `title`/`description`, like every KG node — see `schemas/kg-node.ts`. */
+  title: string;
   /** Person or system actor. */
   type: ActorType;
   /** What this actor can do. */

@@ -59,6 +59,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { z } from "zod";
 
+import { kgNodeLabelShape, type KgNodeLabels } from "./kg-node";
 import { FOLIO_NS } from "./namespaces";
 
 /** Root-relative filename carrying an instance's declaration. */
@@ -255,7 +256,7 @@ export function isRenderable(kind: string, registry: GraphKindRegistry = default
 // ── The declaration ─────────────────────────────────────────────
 
 /** One declared content directory. */
-export interface ContentDirectory {
+export interface ContentDirectory extends KgNodeLabels {
   /**
    * Stable identifier, unique within an instance. Inheritance overrides match
    * on THIS, never on `path` — see the module note on relocation.
@@ -281,12 +282,10 @@ export interface ContentDirectory {
    * concept.
    */
   graphs: GraphKind[];
-  /** Optional one-line description for `--list` style output. */
-  summary?: string;
 }
 
 /** An instance's root declaration. */
-export interface AgentHarnessDeclaration {
+export interface AgentHarnessDeclaration extends KgNodeLabels {
   /** The instance's name, e.g. `"agentic-harness"`. */
   name: string;
   /**
@@ -330,11 +329,12 @@ export const ContentDirectorySchema = z.object({
   // has registered `folio` — so the enum would reject the one kind the whole
   // rendering pipeline depends on.
   graphs: z.array(z.string().min(1)).min(1),
-  summary: z.string().optional(),
+  ...kgNodeLabelShape,
 });
 
 export const AgentHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
+  ...kgNodeLabelShape,
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   previewUrl: z.string().url().optional(),
@@ -510,6 +510,8 @@ export function toJsonLd(
     "@context": { fa: FOLIO_NS, path: `${FOLIO_NS}path`, directories: `${FOLIO_NS}scans` },
     "@type": `${FOLIO_NS}AgentHarness`,
     name: decl.name,
+    ...(decl.title ? { title: decl.title } : {}),
+    ...(decl.description ? { description: decl.description } : {}),
     directories: decl.directories.map((d) => {
       const types = d.graphs.map((g) => registry.get(g)?.type ?? `${FOLIO_NS}UnknownGraph`);
       return {
@@ -519,7 +521,8 @@ export function toJsonLd(
         // make every existing published form look changed.
         "@type": types.length === 1 ? types[0] : types,
         path: d.path,
-        ...(d.summary ? { summary: d.summary } : {}),
+        ...(d.title ? { title: d.title } : {}),
+        ...(d.description ? { description: d.description } : {}),
       };
     }),
   };

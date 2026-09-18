@@ -46,7 +46,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     defineTool({
       id: "beans-cli",
       title: "beans CLI",
-      summary:
+      description:
         "Read and write the work plan with the `beans` binary. The normal mechanism when it is installed.",
       install: { cli: "scripts/install-beans.sh" },
       invoke: { shell: "beans" },
@@ -68,7 +68,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     defineTool({
       id: "beans-manual",
       title: "beans, by hand",
-      summary:
+      description:
         "Read and write the same work plan without the CLI — `scripts/beans-fallback.ts`, or editing a bean's front matter directly. Equal standing to the CLI, not a degraded mode.",
       // Nothing to install: the store is files in the repository. Stated
       // explicitly so "no install step" is distinguishable from "unfinished
@@ -97,7 +97,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     defineTool({
       id: "github",
       title: "GitHub",
-      summary:
+      description:
         "Open and drive change proposals on GitHub — branches, pull requests, reviews, checks. One forge among possible others; the skills it satisfies name none.",
       install: { cli: "gh" },
       invoke: {
@@ -121,7 +121,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     defineTool({
       id: "pages-publish",
       title: "GitHub Pages publish",
-      summary:
+      description:
         "Push a built directory to the `gh-pages` branch, where it is served. How the knowledge graph and its schema reach a URL.",
       install: { none: true },
       invoke: { shell: ".github/workflows/docs-site.yml" },

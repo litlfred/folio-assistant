@@ -49,7 +49,7 @@ export const CapabilityDetectionSchema = z.discriminatedUnion("method", [
 
 export const ActorDefinitionSchema = z.object({
   id: z.string().min(1),
-  name: z.string().min(1),
+  title: z.string().min(1),
   type: ActorTypeSchema,
   description: z.string(),
   // DEPRECATED. An actor does not inherit — a ROLE does, and the lattice that

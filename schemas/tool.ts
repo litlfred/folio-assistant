@@ -109,7 +109,7 @@ export const ToolDefinitionSchema = z
   .object({
     id: ToolId,
     title: z.string().min(1),
-    summary: z.string().min(1),
+    description: z.string().min(1),
     install: ToolInstallSchema,
     invoke: ToolInvokeSchema,
     io: z.object({
