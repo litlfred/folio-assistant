@@ -121,23 +121,20 @@
   .folio-landing__text > :last-child { margin-bottom: 0; }
   .folio-landing__text p {
     margin: 0; line-height: 1.35; font-weight: 600;
-    /* 3.6% of the box's width, ceiling 1.35rem. Derived rather than picked:
-       the lead line is 47 characters, a bold sans runs about 0.52em per
-       character, and 47 x 0.52 x F must stay under the box width — so
-       F <= 0.0387 of it. 4.2% was the first try and it wrapped that line on
-       the laptop crop, pushing a rung down onto the cat's ear. Bounded at both
-       ends because the box is not the only constraint: below about 11px nobody
-       can read it however roomy the cloud, and on a 4K monitor an unbounded
-       ratio is absurd. The first declaration is the fallback for browsers
-       without container queries — viewport-relative, rather than a default
-       16px that overflows the cloud.
+    /* The LEAD size. 6% of the box's width — deliberately large enough that
+       the claim wraps to two lines rather than being sized down to fit one:
+       it is the headline, and a headline that fits on one line only because
+       it was shrunk is not a headline. The rungs below are sized to leave
+       room for that wrap.
 
        It lives HERE, on the children, and not on `.folio-landing__text`: an
        element that declares `container-type` is not its own query container,
        so `cqw` in a rule on the box resolves against an ancestor and every
-       layout came out the same size. */
-    font-size: clamp(0.7rem, 1.6vw, 1.35rem);
-    font-size: clamp(0.7rem, 3.6cqw, 1.35rem);
+       layout came out the same size. The first declaration is the fallback
+       for browsers without container queries — viewport-relative, rather than
+       a default 16px that overflows the cloud. */
+    font-size: clamp(0.95rem, 2.5vw, 1.85rem);
+    font-size: clamp(0.95rem, 5.6cqw, 1.85rem);
     /* 3.6% of the box's width, ceiling 1.35rem. Derived rather than picked:
        the longest line here is 47 characters, a bold sans runs about 0.52em
        per character, and 47 x 0.52 x F must stay under the box width — which
@@ -164,17 +161,18 @@
        where `c@t-harness` comes from — so it stays legible on a cream cloud.
        0.72 is about as far as it goes before thin strokes start dropping out
        at phone sizes. */
-    /* Two thirds of the lead, stated in the same units rather than as `em`:
-       `em` on a sibling resolves against the CONTAINER's inherited 16px, not
-       against the lead, and came out a constant 10.56px at every viewport. Its
-       own floor is higher than two thirds of the lead's, because on the square
-       crop the lead is already at ITS floor and two thirds of that is 7px —
-       small enough that the ladder stops being readable, which defeats the
-       point of showing it at all. */
-    font-size: clamp(0.62rem, 1.06vw, 0.9rem);
-    font-size: clamp(0.62rem, 2.38cqw, 0.9rem);
-    opacity: 0.72;
-    margin-top: 0.15em;
+    /* SUBTITLE size — about a third of the lead, stated in the same units
+       rather than as `em`: `em` on a sibling resolves against the CONTAINER's
+       inherited 16px, not against the lead, and came out a constant 10.56px at
+       every viewport. Its own floor is proportionally higher than the lead's,
+       because on the square crop the lead is already at ITS floor and a third
+       of that is 4px — small enough that the ladder stops being readable,
+       which defeats the point of showing it at all. */
+    font-size: clamp(0.6rem, 0.95vw, 0.82rem);
+    font-size: clamp(0.6rem, 2.1cqw, 0.82rem);
+    font-weight: 500;
+    opacity: 0.66;
+    margin-top: 0.45em;
     /* The rungs align on their leading characters, so they must not be
        re-flowed and their leading whitespace must not be collapsed. */
     white-space: pre-wrap;

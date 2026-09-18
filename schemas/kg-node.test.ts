@@ -107,6 +107,10 @@ describe("this instance's own declaration", () => {
     const decl = readDeclaration(new URL("..", import.meta.url).pathname);
     const p = pickLayout(decl?.images, "landing", "laptop");
     expect(p.image?.src).toContain("landing-laptop");
-    expect(p.image?.textRegion).toEqual({ x: 0.205, y: 0.285, w: 0.625, h: 0.235 });
+    // Moved right and up when the lead line grew to two wrapped lines: the
+    // taller block no longer cleared the cat's ear at x = 0.205, and the cloud
+    // is deeper further right. Pinned so a later re-crop cannot silently keep
+    // a region measured against the old image.
+    expect(p.image?.textRegion).toEqual({ x: 0.33, y: 0.25, w: 0.53, h: 0.28 });
   });
 });
