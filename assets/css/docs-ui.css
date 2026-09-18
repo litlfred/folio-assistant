@@ -795,3 +795,59 @@
     transition-duration: 0.001ms !important;
   }
 }
+
+
+/* ── Disclosure panels in the sidebar column ──────────────────────────────
+   
+   The QR, reading-preferences and language panels all mount as siblings of
+   `.site-header` inside `.side-bar` (see `mountPanelInSidebarColumn`). There
+   they are in the sidebar's flex column in NORMAL FLOW — they push the nav
+   down rather than covering it, and nothing can clip them.
+   
+   Stated as one rule because all three had the same bug and two of them had
+   two different broken workarounds: the reading-preferences panel sat inside
+   the header and was cut off by its height cap, and the language bar was
+   `position: absolute; bottom: 100%`, opening upward to dodge that cap and
+   running off the top of the column instead — under the staging banner, which
+   is where a reader reported it invisible.
+   
+   `position: static` is the load-bearing declaration. Anything positioned
+   escapes the flex column and the clipping comes straight back. */
+.fa-panel-in-sidebar {
+  position: static;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/* The language bar keeps its own card look; only its POSITIONING changed. */
+.fa-lang-bar.fa-panel-in-sidebar {
+  background: var(--sidebar-color, #1e293b);
+  border: 1px solid var(--border-color, #475569);
+  border-radius: 6px;
+  padding: 4px 6px;
+  /* Wrap rather than `white-space: nowrap`: six locale tabs do not fit the
+     16.5rem sidebar on one line, and an overflowing row is the clipping this
+     whole block exists to remove. */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+.fa-lang-bar.fa-panel-in-sidebar[data-open="false"] { display: none; }
+
+/* Fallback — no `.side-bar` of the expected shape. The panel stays anchored
+   to the host, so it needs its own card and a stacking position. Opens
+   DOWNWARD: upward was the workaround that failed. */
+.fa-lang-bar:not(.fa-panel-in-sidebar) {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 4px;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  padding: 4px 6px;
+  z-index: 10000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+}
