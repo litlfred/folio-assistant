@@ -76,19 +76,19 @@ reports the edges that cross a boundary **in the wrong direction**.
 
 ### The partition
 
-**332 modules, 656 internal import edges** (2026-09-18):
+**341 modules, 670 internal import edges** (2026-09-18):
 
 | proposed repo | modules | by rule | hand-triaged | by keyword | fell through |
 |---|---:|---:|---:|---:|---:|
-| `agentic-harness` | 53 | 43 | 10 | 0 | 0 |
-| `folio-assist-core` | **128** | 119 | 9 | 0 | 0 |
+| `agentic-harness` | 58 | 43 | 15 | 0 | 0 |
+| `folio-assist-core` | **129** | 120 | 9 | 0 | 0 |
 | `folio-asst-sci` | 36 | 8 | 8 | 20 | 0 |
 | `smart-kg` | **0** | 0 | 0 | 0 | 0 |
 | `smart-base` | 4 | 1 | 0 | 3 | 0 |
-| *(test material)* | 111 | 108 | 0 | 3 | 0 |
+| *(test material)* | 114 | 110 | 0 | 4 | 0 |
 | **unassigned** | **0** | — | — | — | 0 |
 
-`hand-triaged` is its own column on purpose. Twenty-seven platform
+`hand-triaged` is its own column on purpose. Thirty-two platform
 meta-scripts — `gen-*`, `check-*`, `render-*` — were reported unassigned by the
 structural rules and then read one at a time, by the bean `dh4f` question:
 *does this read or write **platform**, or **content**?* The answer genuinely
@@ -114,18 +114,18 @@ it badly. Do not read 4 as "nearly done".
 
 ### The wrong-direction edges — Phase I's worklist
 
-**45 edges** import across a proposed boundary in a direction the dependency
-DAG forbids. Every module is now classified, so this is a complete count rather
+**46 edges** import across a proposed boundary in a direction the dependency
+DAG forbids. Every module is classified, so this is a complete count rather
 than a floor:
 
 | importer | imports from | edges |
 |---|---|---:|
-| `agentic-harness` | `folio-assist-core` | **20** |
+| `agentic-harness` | `folio-assist-core` | **21** |
 | `folio-assist-core` | `folio-asst-sci` | **20** |
 | `agentic-harness` | `folio-asst-sci` | 3 |
 | `folio-assist-core` | `smart-base` | 2 |
 
-`bun run check:partition:edges` prints all 45 by name. The two large groups have
+`bun run check:partition:edges` prints all 46 by name. The two large groups have
 different causes and different fixes.
 
 **core → sci (20)** is Lean and LaTeX reaching into generic code.
@@ -136,7 +136,7 @@ kinds' machinery embedded in the document pipeline — the profile split
 `AGENTS.md` describes at the *schema* level, not yet carried through to imports.
 It is the expected shape of the problem, and the most mechanical to fix.
 
-**harness → core (20)** is the more serious one. `src/core/feedback.ts`,
+**harness → core (21)** is the more serious one. `src/core/feedback.ts`,
 `src/routes/feedback.ts`, `src/types.ts` and `schemas/assistant-types.ts` all
 import `schemas/types.ts` — the content-object model. That is the harness's
 defining constraint, [that it does not "do" anything](future-state.html#agentic-harness),
@@ -151,6 +151,15 @@ took it to 41; triaging the last 27 took it to 45. **Classifying more modules
 finds more violations, not fewer.** The number only stopped moving because the
 unassigned column reached zero — which is why that column, not the edge count,
 is the one to check first when re-running this.
+
+**It then went to 46 without anyone touching a boundary.** Merging ten commits
+from `main` brought five new modules — the CRDM stakeholder-map tooling and the
+BPMN reference check, all harness — and one of them imports the content model.
+So the harness → core violation is not a fixed debt being paid down; **it grows
+as ordinary work lands**, because nothing today stops a new harness module
+importing `schemas/types.ts`. That is an argument for a CI gate
+(`check:partition --strict`) once the count is driven down, not for treating 46
+as a number that will sit still.
 
 ## The mechanism the split already has
 

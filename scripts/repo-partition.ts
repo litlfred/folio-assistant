@@ -141,7 +141,12 @@ const RULES: Rule[] = [
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
+      "scripts/check-workflow-refs.ts",      // every BPMN folio:skill ref resolves
+      "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
+      "scripts/stakeholder-map.ts",          // CRDM phase 1 CLI
+      "src/tools/stakeholder-map.ts",        // ...as an MCP tool
     ],
+    prefixes: ["src/impact/"],               // who a change affects: skills, roles, BPMN lanes
   },
   {
     repo: "sci",

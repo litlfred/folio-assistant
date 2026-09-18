@@ -111,7 +111,7 @@ work, not a design question, and does not block Phase I.
 
 `bun run check:partition` (`scripts/repo-partition.ts`) builds the import graph,
 partitions it across the five proposed repos, and reports the edges crossing a
-boundary in the wrong direction. Gate met: 332 modules, 656 edges, **45
+boundary in the wrong direction. Gate met: 341 modules, 670 edges, **46
 wrong-direction edges** named, **0 modules unassigned** (the 27 platform
 meta-scripts were triaged by hand, and are reported with their own provenance so
 a judgement stays visible as a judgement). Full results in
@@ -122,7 +122,7 @@ Two results change the plan below rather than merely confirming it:
 - **`smart-kg` partitions to zero modules.** There is no L1 code to move, so
   that repo is new construction like the Test repos, not an extraction. It is
   re-sequenced accordingly.
-- **20 of the 45 edges are `agentic-harness` → `folio-assist-core`** — the
+- **21 of the 46 edges are `agentic-harness` → `folio-assist-core`** — the
   harness importing the content-object model, which is its defining constraint
   failing in practice. Extracting the harness is therefore *harder* than
   extracting sci, not easier, and Phase II's order reflects that.
@@ -131,6 +131,12 @@ The count moved 33 → 41 → 45 as classification improved, and stopped only wh
 the unassigned column reached zero. **When re-running this, read the unassigned
 column before the edge count** — a low edge count over an unclassified corpus is
 the same false comfort as a green check over an empty one.
+
+It then reached 46 when ten commits from `main` merged in: five new harness
+modules, one of which imports the content model. **The harness → core violation
+grows as ordinary work lands**, because nothing stops a new `src/` module
+importing `schemas/types.ts`. Add `check:partition --strict` as a CI gate once
+the count is driven down — the flag exists for it.
 
 ### 0.3 — Decide what `folio` is
 
@@ -159,6 +165,7 @@ archaeology.
 | # | work | gate |
 |---|---|---|
 | I.1 | Resolve each wrong-direction cross-edge from 0.2 — invert the dependency, move the module, or record why it is legitimate | the cross-edge list is empty or every survivor has a written reason |
+| I.1b | Gate the result: `bun run check:partition --strict` in CI | a new wrong-direction edge fails the PR that introduces it, rather than being found at extraction time |
 | I.2 | Introduce the `folio` schema (0.3); a folio holds 0..n content instances | `content_validate` passes on a zero-instance folio **and** a two-instance folio |
 | I.3 | Rename `content/` → `folio/` | no `content/` path literal survives outside intentional content-instance paths; full test suite green **and** a synthetic-folio run proves each moved tool still reads its corpus |
 | I.4 | LHS navbar renders a section per node in the folio instance | a two-instance folio shows two sections; a zero-instance folio renders without error |
