@@ -683,7 +683,7 @@ see <a href="#who-is-who">Who is who</a>.</li>
 implements it. The same reference is carried machine-readably as a
 <code class="language-plaintext highlighter-rouge">&lt;folio:skill ref="…"/&gt;</code> extension element on the BPMN activity.</li>
   <li><strong>The “Work plan — beans” lane</strong> is the shared to-do store. Steps in that
-lane read and write <code class="language-plaintext highlighter-rouge">.beans/</code>, and are marked <code class="language-plaintext highlighter-rouge">&lt;folio:bean store=".beans/"/&gt;</code>
+lane read and write <code class="language-plaintext highlighter-rouge">beans/</code>, and are marked <code class="language-plaintext highlighter-rouge">&lt;folio:bean store="beans/"/&gt;</code>
 in the source.</li>
   <li><strong>A thick-bordered box is a call activity</strong> — it expands into another diagram
 on this page.</li>
@@ -999,7 +999,7 @@ cycle — the linear strip flattens that.</p><hr />
 
 <p>Every diagram has a <strong>Work plan</strong> lane, and it is not decoration. Editing work
 is tracked as <strong>beans</strong> (<a href="https://github.com/hmans/beans">hmans/beans</a>) in a
-committed <code class="language-plaintext highlighter-rouge">.beans/</code> directory, which makes it the one place where a human and
+committed <code class="language-plaintext highlighter-rouge">beans/</code> directory, which makes it the one place where a human and
 an agent see the same answer to <em>what is done, and what is next</em>.</p>
 
 <div class="table-wrapper"><table>
@@ -1040,7 +1040,7 @@ an agent see the same answer to <em>what is done, and what is next</em>.</p>
 <p>Why it is modelled as a lane rather than a note:</p>
 
 <ul>
-  <li><strong>It is shared state, not session state.</strong> <code class="language-plaintext highlighter-rouge">.beans/</code> is committed, so the plan
+  <li><strong>It is shared state, not session state.</strong> <code class="language-plaintext highlighter-rouge">beans/</code> is committed, so the plan
 survives a resumed session and is visible to sibling agents working other
 branches. An agent’s ephemeral in-memory to-do list is not.</li>
   <li><strong>Claiming is how two workers avoid the same item.</strong> Claim before you work,
@@ -1214,7 +1214,7 @@ the sandbox ships a Chromium that does not match the pinned Playwright build,
 point at it with <code class="language-plaintext highlighter-rouge">CHROMIUM_PATH=/path/to/chrome</code>.</p>
 
 <p>When you add an activity, add its <code class="language-plaintext highlighter-rouge">&lt;folio:skill ref="…"/&gt;</code> extension (and
-<code class="language-plaintext highlighter-rouge">&lt;folio:bean store=".beans/"/&gt;</code> if it touches the work plan) and the matching
+<code class="language-plaintext highlighter-rouge">&lt;folio:bean store="beans/"/&gt;</code> if it touches the work plan) and the matching
 row in the tables above — the diagram and the skill list drifting apart is the
 failure this page exists to prevent.</p>
 <h3 id="which-diagrams-are-bpmn-and-which-are-not">
@@ -1312,7 +1312,7 @@ it belongs in <code class="language-plaintext highlighter-rouge">docs/workflows/
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376117215"><code>80d5b84</code></a> &middot; 2026-09-18T17:45:22Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376377221"><code>e13743c</code></a> &middot; 2026-09-18T17:48:00Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

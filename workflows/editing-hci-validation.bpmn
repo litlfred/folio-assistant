@@ -8,7 +8,7 @@
 
   The <folio:skill> extension on an activity names the folio-assistant skill
   that implements it; <folio:bean> marks a step that reads or writes the shared
-  work plan in .beans/.
+  work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
@@ -30,7 +30,7 @@
       by `bun run render:bpmn` — never hand-edit the SVG.
       The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
       that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
-      work plan in .beans/.
+      work plan in beans/.
     </bpmn:documentation>
     <bpmn:extensionElements>
       <folio:policy enforcement="strict" />
@@ -84,10 +84,10 @@
       <bpmn:outgoing>Flow_02</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:task id="Task_ClaimBean" name="Claim or open the bean&#10;[todo-manager]">
-      <bpmn:documentation>Every edit is tracked as a bean in .beans/. Check for an existing bean by exact title first; claim it (status in-progress) rather than minting a duplicate.</bpmn:documentation>
+      <bpmn:documentation>Every edit is tracked as a bean in beans/. Check for an existing bean by exact title first; claim it (status in-progress) rather than minting a duplicate.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" op="claim" />
+        <folio:bean store="beans/" op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_02</bpmn:incoming>
       <bpmn:outgoing>Flow_03</bpmn:outgoing>
@@ -188,7 +188,7 @@ This step has nothing to do for content that carries no recommendations -- a mat
       <bpmn:documentation>Findings are appended to the bean, so the next agent or human sees what is outstanding.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" op="note" />
+        <folio:bean store="beans/" op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_19</bpmn:incoming>
       <bpmn:outgoing>Flow_20</bpmn:outgoing>
@@ -232,7 +232,7 @@ This step has nothing to do for content that carries no recommendations -- a mat
       <bpmn:documentation>Resolved when the change landed clean; left open with the residue when it did not.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
-        <folio:bean store=".beans/" op="resolve" />
+        <folio:bean store="beans/" op="resolve" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_26</bpmn:incoming>
       <bpmn:outgoing>Flow_27</bpmn:outgoing>

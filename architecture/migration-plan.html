@@ -391,14 +391,14 @@ means discovering in Phase II that the target shape is unreachable.</p>
 
 <p><strong>Decision (2026-09-18, maintainer): load-time registration.</strong></p>
 
-<p>A dependency names a module in its <code class="language-plaintext highlighter-rouge">folio.config.json</code>:</p>
+<p>A dependency names a module in its <code class="language-plaintext highlighter-rouge">harness.config.json</code>:</p>
 
 <div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"contributes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./contributions.ts"</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
 <p>Its default export is called as the root walks the dependency tree, and returns
 the block kinds, adapter and MCP tools it adds. <code class="language-plaintext highlighter-rouge">schemas/contributions.ts</code> holds
-the registry; <code class="language-plaintext highlighter-rouge">loadContributions()</code> in <code class="language-plaintext highlighter-rouge">schemas/folio-config.ts</code> walks and loads.</p>
+the registry; <code class="language-plaintext highlighter-rouge">loadContributions()</code> in <code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code> walks and loads.</p>
 
 <p><strong>Gate met.</strong> A synthetic two-repo fixture in which the dependency contributes
 one block kind, one adapter and one MCP tool, and the root resolves all three —
@@ -467,7 +467,7 @@ the same reason, so the MCP SDK type never reaches the content model.</p>
     
 
 <p><code class="language-plaintext highlighter-rouge">resolveSkillDirs</code> still has no caller, and there is no content-directory
-resolver at all. The docstring table in <code class="language-plaintext highlighter-rouge">schemas/folio-config.ts</code> has been
+resolver at all. The docstring table in <code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code> has been
 corrected to say so rather than claiming both work. Wiring them is finishing
 work, not a design question, and does not block Phase I.</p>
 <h3 id="02--replace-the-filename-heuristic-with-a-real-dependency-scan--done">
@@ -525,7 +525,7 @@ section per node in the folio instance.</p>
 
 <p>The rename is mechanical and wide — <strong>2,408 literal <code class="language-plaintext highlighter-rouge">content/</code> occurrences
 across 429 files</strong>. The schema is not mechanical and is the part that matters:
-today <code class="language-plaintext highlighter-rouge">folio.config.json</code> has a single <code class="language-plaintext highlighter-rouge">contentType</code> and a single adapter, so
+today <code class="language-plaintext highlighter-rouge">harness.config.json</code> has a single <code class="language-plaintext highlighter-rouge">contentType</code> and a single adapter, so
 “a folio” and “a content instance” are the same object. Making a folio a
 container of zero-or-more instances is a model change that touches
 <code class="language-plaintext highlighter-rouge">adapterForKind</code>, the profile check, the render path and the viewer.</p>
@@ -543,7 +543,7 @@ model; a settled model does not land cleanly on a corpus mid-rename.</p>
 
 <p>Everything here happens <strong>inside</strong> <code class="language-plaintext highlighter-rouge">litlfred/folio-assistant</code>. Nothing is
 extracted. The output is a repo whose directory structure is the future state,
-so Phase II can be <code class="language-plaintext highlighter-rouge">git filter-repo</code> plus a <code class="language-plaintext highlighter-rouge">folio.config.json</code> rather than
+so Phase II can be <code class="language-plaintext highlighter-rouge">git filter-repo</code> plus a <code class="language-plaintext highlighter-rouge">harness.config.json</code> rather than
 archaeology.</p>
 
 <div class="table-wrapper"><table>
@@ -785,7 +785,7 @@ also needs harness surface that core does not re-export.</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376117215"><code>80d5b84</code></a> &middot; 2026-09-18T17:45:22Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376377221"><code>e13743c</code></a> &middot; 2026-09-18T17:48:00Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

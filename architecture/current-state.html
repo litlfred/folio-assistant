@@ -665,7 +665,7 @@ as a number that will sit still.</p>
 
 <p>This is the most important finding on the page, and it cuts both ways.</p>
 
-<p><code class="language-plaintext highlighter-rouge">folio.config.json</code> already declares cross-instance dependencies:</p>
+<p><code class="language-plaintext highlighter-rouge">harness.config.json</code> already declares cross-instance dependencies:</p>
 
 <div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
   </span><span class="nl">"folioAssistant"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -675,10 +675,10 @@ as a number that will sit still.</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">schemas/folio-config.ts</code> implements a <strong>depth-first, listed-order, later-
+<p><code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code> implements a <strong>depth-first, listed-order, later-
 overlays-earlier</strong> resolution with cycle detection — explicitly the FHIR/SUSHI
 dependency methodology, applied upstream of it. <code class="language-plaintext highlighter-rouge">resolveDependencyTree</code>
-(<code class="language-plaintext highlighter-rouge">schemas/folio-config.ts:239</code>) and <code class="language-plaintext highlighter-rouge">flattenDependencies</code> are real, tested code.</p>
+(<code class="language-plaintext highlighter-rouge">schemas/harness-config.ts:239</code>) and <code class="language-plaintext highlighter-rouge">flattenDependencies</code> are real, tested code.</p>
 
 <p><strong>That is exactly the mechanism a five-repo future state needs.</strong> The split does
 not require inventing composition; it requires finishing it.</p>
@@ -693,7 +693,7 @@ not require inventing composition; it requires finishing it.</p>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>f <span class="k">in </span>resolveSkillDirs resolveTranslationDirs resolveContentDirs<span class="p">;</span> <span class="k">do
   </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$f</span><span class="s2">: </span><span class="si">$(</span><span class="nb">grep</span> <span class="nt">-rn</span> <span class="s2">"</span><span class="nv">$f</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s1">'*.ts'</span> <span class="nb">.</span> <span class="nt">--exclude-dir</span><span class="o">=</span>node_modules <span class="se">\</span>
-    | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'schemas/folio-config'</span> | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span><span class="s2"> external refs"</span>
+    | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'schemas/harness-config'</span> | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span><span class="s2"> external refs"</span>
 <span class="k">done</span>
 </code></pre></div></div>
 
@@ -875,7 +875,7 @@ and needs sorting, whereas the Test repo needs building.</p><hr />
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376117215"><code>80d5b84</code></a> &middot; 2026-09-18T17:45:22Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376377221"><code>e13743c</code></a> &middot; 2026-09-18T17:48:00Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

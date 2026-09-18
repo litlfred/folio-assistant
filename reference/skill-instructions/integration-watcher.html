@@ -612,7 +612,7 @@ review-comment threads on the branch’s PR (via
 <code class="language-plaintext highlighter-rouge">mcp__github__pull_request_read get_review_comments</code> and <code class="language-plaintext highlighter-rouge">get</code> for
 the body).</li>
   <li><strong>Integration-watcher queue items</strong> — this watcher’s own
-<code class="language-plaintext highlighter-rouge">.beans/&lt;name&gt;-queue.json</code> first, then sibling watchers’. Prefer
+<code class="language-plaintext highlighter-rouge">beans/&lt;name&gt;-queue.json</code> first, then sibling watchers’. Prefer
 items whose <code class="language-plaintext highlighter-rouge">block_or_script</code> overlaps the current PR’s scope.</li>
   <li>
     <p><strong>Refresh stale sidecars + witnesses.</strong> The QA pipeline depends on
@@ -709,13 +709,13 @@ forever”.</p>
 <span class="nv">OWNER</span><span class="o">=</span>&lt;repo-owner&gt;
 <span class="nv">REPO</span><span class="o">=</span>&lt;repo-name&gt;
 
-<span class="c"># Bootstrap the queue + ledger under .beans/ (queue tracked as a bulk-JSON</span>
+<span class="c"># Bootstrap the queue + ledger under beans/ (queue tracked as a bulk-JSON</span>
 <span class="c"># coordination queue; ledger gitignored — both survive branch switches)</span>
-<span class="nb">mkdir</span> <span class="nt">-p</span> .beans
+<span class="nb">mkdir</span> <span class="nt">-p</span> beans
 <span class="nv">NAME</span><span class="o">=</span><span class="s2">"&lt;your-watcher-name&gt;"</span>
-<span class="o">[</span> <span class="nt">-f</span> <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-queue.json"</span> <span class="o">]</span> <span class="o">||</span> <span class="se">\</span>
-  <span class="nb">echo</span> <span class="s1">'{"items":[],"audited":{},"reviewed_up_to":{}}'</span> <span class="o">&gt;</span> <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-queue.json"</span>
-<span class="o">[</span> <span class="nt">-f</span> <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span> <span class="o">]</span> <span class="o">||</span> <span class="nb">cat</span> <span class="o">&gt;</span> <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh">
+<span class="o">[</span> <span class="nt">-f</span> <span class="s2">"beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-queue.json"</span> <span class="o">]</span> <span class="o">||</span> <span class="se">\</span>
+  <span class="nb">echo</span> <span class="s1">'{"items":[],"audited":{},"reviewed_up_to":{}}'</span> <span class="o">&gt;</span> <span class="s2">"beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-queue.json"</span>
+<span class="o">[</span> <span class="nt">-f</span> <span class="s2">"beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span> <span class="o">]</span> <span class="o">||</span> <span class="nb">cat</span> <span class="o">&gt;</span> <span class="s2">"beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh">
 # </span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="sh"> — session ledger
 
 | ts (UTC) | event | scope | findings | action |
@@ -1289,10 +1289,10 @@ block the queue on a single unanswered ask.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ts</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> <span class="nt">-u</span> +%Y-%m-%dT%H:%M:%SZ<span class="si">)</span>
 <span class="nb">echo</span> <span class="s2">"| </span><span class="nv">$ts</span><span class="s2"> | &lt;event&gt; | &lt;scope&gt; | &lt;N critical / N major / N minor&gt; | &lt;N auto / N asked / N deferred&gt; |"</span> <span class="se">\</span>
-  <span class="o">&gt;&gt;</span> <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span>
+  <span class="o">&gt;&gt;</span> <span class="s2">"beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span>
 </code></pre></div></div>
 
-<p>Update <code class="language-plaintext highlighter-rouge">.beans/${NAME}-queue.json</code> with new items + status changes via
+<p>Update <code class="language-plaintext highlighter-rouge">beans/${NAME}-queue.json</code> with new items + status changes via
 <code class="language-plaintext highlighter-rouge">Edit</code>.</p>
 <h3 id="4g-refresh-spawned-prs-against-main-superseded-by-2c">
   
@@ -1380,7 +1380,7 @@ independent; items sharing state serialise.</p>
   <li>No incoming event has arrived during this TICK window</li>
   <li>The count of items currently in <code class="language-plaintext highlighter-rouge">status: in-progress</code> is below the
 parallelism cap (per §5m, default 4)</li>
-  <li><code class="language-plaintext highlighter-rouge">.beans/${NAME}-queue.json</code> contains at least one item with <code class="language-plaintext highlighter-rouge">status:
+  <li><code class="language-plaintext highlighter-rouge">beans/${NAME}-queue.json</code> contains at least one item with <code class="language-plaintext highlighter-rouge">status:
 queued</code> (or <code class="language-plaintext highlighter-rouge">status: needs-author</code> whose author ask has been
 outstanding ≥ 7 days — the §5e re-ask cadence)</li>
 </ol>
@@ -1591,7 +1591,7 @@ git fetch origin
 <span class="c"># Extract branches under the "### Watching" subsection. The closing</span>
 <span class="c"># pattern is `^## ` (next top-level header), NOT `^### `.</span>
 <span class="nv">pr_branches</span><span class="o">=</span><span class="si">$(</span><span class="nb">awk</span> <span class="s1">'/^### Watching/,/^## /'</span> <span class="se">\</span>
-    <span class="s2">".beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span> <span class="se">\</span>
+    <span class="s2">"beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span> <span class="se">\</span>
     | <span class="nb">grep</span> <span class="nt">-oE</span> <span class="s1">'claude/iw-[a-z0-9-]+'</span> | <span class="nb">sort</span> <span class="nt">-u</span><span class="si">)</span>
 
 <span class="k">for </span>pr_branch <span class="k">in</span> <span class="nv">$pr_branches</span><span class="p">;</span> <span class="k">do
@@ -1847,7 +1847,7 @@ surface a structured suggestion to the user.</p>
 
 <ol>
   <li>
-    <p><strong>Load persisted state.</strong> If <code class="language-plaintext highlighter-rouge">.beans/${NAME}-queue.json</code> exists,
+    <p><strong>Load persisted state.</strong> If <code class="language-plaintext highlighter-rouge">beans/${NAME}-queue.json</code> exists,
 parse it. Read <code class="language-plaintext highlighter-rouge">reviewed_up_to[&lt;criterion&gt;]</code>, <code class="language-plaintext highlighter-rouge">items[]</code> with <code class="language-plaintext highlighter-rouge">status
 ∈ {queued, in-progress, needs-author}</code>, and <code class="language-plaintext highlighter-rouge">audited[]</code>.</p>
   </li>
@@ -1958,7 +1958,7 @@ ok”); subsequent rounds need fresh consent.</p>
 <p><strong>Anti-parallel cases</strong> (always sequential even with consent):</p>
 
 <ul>
-  <li>Anything touching the same <code class="language-plaintext highlighter-rouge">.beans/${NAME}-queue.json</code> write (race).</li>
+  <li>Anything touching the same <code class="language-plaintext highlighter-rouge">beans/${NAME}-queue.json</code> write (race).</li>
   <li>Anything touching the same exclusive build lock.</li>
   <li>Anything that depends on a prior step’s output (rebase → validate,
 format → lint).</li>
@@ -2028,8 +2028,8 @@ own-branch commit; failure blocks the commit, queues the violation as
   <li><strong>Built on</strong>: <code class="language-plaintext highlighter-rouge">local/watch</code> (Monitor scaffolding), <code class="language-plaintext highlighter-rouge">local/coordinate</code>
 (PR triage helpers).</li>
   <li><strong>Dispatches</strong>: see each child’s Slot C.</li>
-  <li><strong>Produces</strong>: <code class="language-plaintext highlighter-rouge">.beans/${NAME}-queue.json</code> (live state) +
-<code class="language-plaintext highlighter-rouge">.beans/${NAME}-ledger.md</code> (event log).</li>
+  <li><strong>Produces</strong>: <code class="language-plaintext highlighter-rouge">beans/${NAME}-queue.json</code> (live state) +
+<code class="language-plaintext highlighter-rouge">beans/${NAME}-ledger.md</code> (event log).</li>
   <li><strong>Complements</strong> other watchers — each owns one axis. Coordinate via
 <code class="language-plaintext highlighter-rouge">/coordinate</code> if the user is running more than one.</li>
 </ul>
@@ -2086,7 +2086,7 @@ existing specialists / scripts.</li>
     
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Queue + ledger initialised under <code class="language-plaintext highlighter-rouge">.beans/</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Queue + ledger initialised under <code class="language-plaintext highlighter-rouge">beans/</code></li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Main baseline SHA stashed</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Monitor armed on <code class="language-plaintext highlighter-rouge">origin/main</code> with TICK heartbeat</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Subscribed to own PR + every sibling PR active in 7 days</li>
@@ -2116,7 +2116,7 @@ existing specialists / scripts.</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376117215"><code>80d5b84</code></a> &middot; 2026-09-18T17:45:22Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376377221"><code>e13743c</code></a> &middot; 2026-09-18T17:48:00Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

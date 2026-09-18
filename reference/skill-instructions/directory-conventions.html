@@ -449,7 +449,7 @@ claiming one name is.</p>
     
 
 <p>An instance inherits its dependencies’ directories, walked depth-first through
-<code class="language-plaintext highlighter-rouge">dependencies.folioAssistant</code> — the same order <code class="language-plaintext highlighter-rouge">schemas/folio-config.ts</code> uses
+<code class="language-plaintext highlighter-rouge">dependencies.folioAssistant</code> — the same order <code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code> uses
 for skills and translations. Deepest dependency first, root last, so the root
 wins.</p>
 
@@ -537,7 +537,7 @@ downstream instance inherits its dependencies’ skills through the same
 inheritance rules above. A hardcoded path breaks on the first relocation, which
 is the whole reason overrides match on <code class="language-plaintext highlighter-rouge">id</code>.</p>
 
-<p><strong>Not yet true end to end.</strong> <code class="language-plaintext highlighter-rouge">resolveSkillDirs</code> (<code class="language-plaintext highlighter-rouge">schemas/folio-config.ts</code>)
+<p><strong>Not yet true end to end.</strong> <code class="language-plaintext highlighter-rouge">resolveSkillDirs</code> (<code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code>)
 computes the cross-instance overlay and has <strong>no caller</strong>, so skill discovery is
 root-only in practice today and a dependency’s skills are not reachable. Stated
 here rather than implied, because an agent that assumes inheritance works will
@@ -611,7 +611,7 @@ rendering pipeline depends on.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376117215"><code>80d5b84</code></a> &middot; 2026-09-18T17:45:22Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376377221"><code>e13743c</code></a> &middot; 2026-09-18T17:48:00Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

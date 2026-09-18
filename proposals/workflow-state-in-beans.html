@@ -326,10 +326,13 @@ bearing directly on <a href="https://github.com/litlfred/folio-assistant/issues/
 process — exactly the case where “where did that get to?” is expensive to answer
 wrongly.</p>
 
-<p>This is a <strong>proposal</strong>: it sets out four options and what each costs. Option A is
-what is built today. Nothing here is a commitment to change it.</p>
+<p>It sets out four options and what each costs. <strong>§0 records the decision</strong>: Option
+A, with both stores moved out from behind dotfiles. Options B–D are kept because
+they remain the honest alternatives if the question is reopened, and because the
+reasoning for rejecting them is the part that goes missing otherwise.</p>
 
 <ol id="markdown-toc">
+  <li><a href="#0-decided--option-a-co-located-2026-09-18" id="markdown-toc-0-decided--option-a-co-located-2026-09-18">0. Decided — Option A, co-located (2026-09-18)</a></li>
   <li><a href="#1-what-exists-today" id="markdown-toc-1-what-exists-today">1. What exists today</a></li>
   <li><a href="#2-why-anyone-would-want-it-there" id="markdown-toc-2-why-anyone-would-want-it-there">2. Why anyone would want it there</a></li>
   <li><a href="#3-the-options" id="markdown-toc-3-the-options">3. The options</a>    <ol>
@@ -344,6 +347,54 @@ what is built today. Nothing here is a commitment to change it.</p>
   <li><a href="#6-what-would-decide-it" id="markdown-toc-6-what-would-decide-it">6. What would decide it</a></li>
   <li><a href="#see-also" id="markdown-toc-see-also">See also</a></li>
 </ol><hr />
+<h2 id="0-decided--option-a-co-located-2026-09-18">
+  
+  
+    <a href="#0-decided--option-a-co-located-2026-09-18" class="anchor-heading" aria-labelledby="0-decided--option-a-co-located-2026-09-18"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. Decided — Option A, co-located (2026-09-18)
+  
+  
+</h2>
+    
+
+<p>The author chose <strong>Option A</strong>: two stores, one link. What changed is not the
+architecture but the <em>address</em> — both stores are now at top level and adjacent:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>was</th>
+      <th>is</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>work plan</td>
+      <td><code class="language-plaintext highlighter-rouge">.beans/</code></td>
+      <td><strong><code class="language-plaintext highlighter-rouge">beans/</code></strong></td>
+    </tr>
+    <tr>
+      <td>workflow state</td>
+      <td><code class="language-plaintext highlighter-rouge">.harness/workflow/</code></td>
+      <td><strong><code class="language-plaintext highlighter-rouge">beans/workflow/</code></strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The reasoning that made A right survives the move intact: the interpreter keeps
+a file no human is invited to hand-edit, one file per instance means no write
+contention, and the process engine still runs in a repo with no beans CLI
+installed. What A was <em>criticised</em> for below — “two places to look” — was never
+really about two stores. It was about two <strong>hidden</strong> stores. Putting them side
+by side under one visible directory answers that without giving machine state to
+a human-editable file.</p>
+
+<p>Both paths are now declared in <code class="language-plaintext highlighter-rouge">harness.config.json</code> under <code class="language-plaintext highlighter-rouge">harness</code>
+(<code class="language-plaintext highlighter-rouge">HarnessDirsSchema</code>), and <code class="language-plaintext highlighter-rouge">bun run check:harness-dirs</code> fails if that
+declaration, <code class="language-plaintext highlighter-rouge">.beans.yml</code> and <code class="language-plaintext highlighter-rouge">workflow/store.ts</code> ever disagree.</p>
+
+<p>The rest of this page is kept as written, because options B–D remain the honest
+alternatives if the question is reopened — in particular for CRDM, per §5.</p>
 <h2 id="1-what-exists-today">
   
   
@@ -365,12 +416,12 @@ what is built today. Nothing here is a commitment to change it.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">.beans/&lt;id&gt;--&lt;slug&gt;.md</code></td>
+      <td><code class="language-plaintext highlighter-rouge">beans/&lt;id&gt;--&lt;slug&gt;.md</code></td>
       <td><strong>what is being worked on</strong> — title, status, type, body</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">.folio/workflow/&lt;id&gt;.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">beans/workflow/&lt;id&gt;.json</code></td>
       <td><strong>where it got to</strong> — token marking, arrivals at joins, history</td>
       <td>yes</td>
     </tr>
@@ -410,7 +461,7 @@ to “what is happening” is one too many.</li>
 sessions avoid each other. If position were bean state, claiming a step and
 claiming the work would be the same act.</li>
   <li><strong>Beans have a UI.</strong> <code class="language-plaintext highlighter-rouge">beans tui</code>, <code class="language-plaintext highlighter-rouge">beans roadmap</code>, <code class="language-plaintext highlighter-rouge">beans show</code>, and a
-GraphQL endpoint. <code class="language-plaintext highlighter-rouge">.folio/workflow/*.json</code> has none of that and would have to
+GraphQL endpoint. <code class="language-plaintext highlighter-rouge">beans/workflow/*.json</code> has none of that and would have to
 grow one.</li>
   <li><strong>Fewer things to keep in sync.</strong> Today a divergence between the two stores is
 possible in principle; with one store it is not expressible.</li>
@@ -456,7 +507,7 @@ engine runs in a repo with no beans CLI installed.</p>
     
 
 <p>The instance’s token marking moves into the bean’s YAML front matter
-(<code class="language-plaintext highlighter-rouge">workflow_process</code>, <code class="language-plaintext highlighter-rouge">workflow_tokens</code>, <code class="language-plaintext highlighter-rouge">workflow_history</code>); <code class="language-plaintext highlighter-rouge">.folio/workflow/</code>
+(<code class="language-plaintext highlighter-rouge">workflow_process</code>, <code class="language-plaintext highlighter-rouge">workflow_tokens</code>, <code class="language-plaintext highlighter-rouge">workflow_history</code>); <code class="language-plaintext highlighter-rouge">beans/workflow/</code>
 disappears.</p>
 
 <p><strong>Costs:</strong> the front matter becomes machine-owned, and <code class="language-plaintext highlighter-rouge">beans update</code> is not
@@ -678,7 +729,7 @@ machinery pointed at an interview</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376117215"><code>80d5b84</code></a> &middot; 2026-09-18T17:45:22Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376377221"><code>e13743c</code></a> &middot; 2026-09-18T17:48:00Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

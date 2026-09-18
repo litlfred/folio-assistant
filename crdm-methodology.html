@@ -575,7 +575,7 @@ folio-assistant already has the primitives it needs:</p>
   <tbody>
     <tr>
       <td>Stakeholder identification</td>
-      <td><code class="language-plaintext highlighter-rouge">folio.config.json</code> roles, GitHub CODEOWNERS</td>
+      <td><code class="language-plaintext highlighter-rouge">harness.config.json</code> roles, GitHub CODEOWNERS</td>
     </tr>
     <tr>
       <td>Business process documentation</td>
@@ -1313,7 +1313,7 @@ other diagram in this repository:</p>
 
 <p>A second set of tools over the same diagram would be a second answer to
 “where are we”, free to disagree with the first. State lives under
-<code class="language-plaintext highlighter-rouge">.folio/workflow/</code> and is committed, so a sibling session sees the same
+<code class="language-plaintext highlighter-rouge">beans/workflow/</code> and is committed, so a sibling session sees the same
 position — which is the property a chat-local phase tracker could never have.</p>
 
 <p>Every activity in the agent’s lane carries the skill that implements it, so
@@ -1379,9 +1379,9 @@ work is done is a judgement.</p>
 </h3>
     
 
-<p>It was specified here as reading “affected roles from <code class="language-plaintext highlighter-rouge">folio.config.json</code> and
+<p>It was specified here as reading “affected roles from <code class="language-plaintext highlighter-rouge">harness.config.json</code> and
 CODEOWNERS”. <strong>Neither exists.</strong> This repository has no CODEOWNERS file, and
-<code class="language-plaintext highlighter-rouge">schemas/folio-config.ts</code> declares no role, owner, maintainer or contact
+<code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code> declares no role, owner, maintainer or contact
 field. Built as written, the tool would have reported no stakeholders for
 every change, forever, and looked like it worked.</p>
 
@@ -1440,7 +1440,7 @@ caveat below.</li>
   <li><strong><code class="language-plaintext highlighter-rouge">stakeholder_map</code></strong> — reports which skills a change touches, the roles
 they declare, and the process lanes accountable for work that uses them.
 Built against skills and BPMN lanes rather than the CODEOWNERS and
-<code class="language-plaintext highlighter-rouge">folio.config.json</code> fields it was specified from, because neither exists
+<code class="language-plaintext highlighter-rouge">harness.config.json</code> fields it was specified from, because neither exists
 here. It does not name people, because the process says the agent does not
 guess.</li>
   <li><strong>The process is executable</strong> — <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> loads like every
@@ -1536,7 +1536,7 @@ Those two exclusions are the cheapest available improvement.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376117215"><code>80d5b84</code></a> &middot; 2026-09-18T17:45:22Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376377221"><code>e13743c</code></a> &middot; 2026-09-18T17:48:00Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
