@@ -2,9 +2,9 @@
 name: translation-manager
 description: >-
   Translation lifecycle management for folio content. Covers gettext PO/POT
-  extraction and injection, official vs unofficial translations, staleness
-  tracking, sign-off workflow, and integration with WHO smart-base's
-  translation subsystem and FHIR IG Publisher's i18n support.
+  extraction and injection, TranslationNode manifests as KG nodes,
+  official vs unofficial translations, staleness tracking, sign-off workflow,
+  automatic badge rendering, and the poSources fallback resolution chain.
 capability: translation
 package: folio-core
 ---
@@ -16,7 +16,8 @@ package: folio-core
 
 Manage the translation lifecycle for folio content. This skill covers the full
 round trip from source content to translated content, including extraction,
-translation, injection, quality assurance, and sign-off.
+translation, injection, quality assurance, sign-off, and automatic badge
+rendering.
 
 ## Reference
 
@@ -34,7 +35,44 @@ A content node varies along two axes:
 2. **Language** — BCP 47 locale tags (`en`, `fr`, `es`, `ar`, `zh`, `ru`).
 
 The format axis is handled by companions. The language axis is handled by the
-`translations/<locale>/` subdirectory convention.
+PO/POT pipeline with `TranslationNode` manifests in `translations/<locale>/`.
+
+## TranslationNode — .po/.pot files as KG nodes
+
+Each `.po`/`.pot` pair is wrapped by a `.ts` manifest that makes it a
+**first-class node in the knowledge graph**:
+
+```typescript
+import type { TranslationNode } from "../../schemas/translation";
+
+const node: TranslationNode = {
+  label: "trans:fr/index",
+  locale: "fr",
+  sourceFile: "docs/index.md",
+  potFile: "translations/fr/index.pot",
+  poFile: "translations/fr/index.po",
+  status: { locale: "fr", official: false, generatedBy: "agent" },
+  coverage: { translated: 37, total: 37, pct: 100 },
+  roundTripQA: { pass: 11, warn: 4, fail: 21, total: 36 },
+};
+export default node;
+```
+
+The manifest carries the status, coverage, and QA results inline — no
+separate `status.json` or `.qa.json` files.
+
+## PO source resolution (fallback behavior)
+
+Content blocks can declare explicit PO sources via `poSources[]` on
+`BlockBase`. When not declared, the pipeline resolves by convention:
+
+1. **Block-level:** `translations/<locale>/<block-stem>.po`
+2. **Chapter-level:** `translations/<locale>/<chapter-slug>.po`
+3. **Folio-level:** `translations/<locale>/global.po`
+4. **Dependency walk:** walk `folio.config.json` dependencies depth-first
+
+When `poSources` is declared, only the listed files are consulted (no
+fallback). Later entries override earlier for the same msgid.
 
 ## What is translatable
 
@@ -80,9 +118,22 @@ bun run content/pipeline/po-inject.ts --locale <locale> [--chapter <dir>]
 ```
 
 Or use the `translation_inject` MCP tool. Reads `.po` files and produces
-translated `.md` in `translations/<locale>/`.
+translated `.md` in `docs/<locale>/` for docs pages, or in the content
+directory for content blocks.
 
-### 4. Round-trip QA (bean `ktt2`)
+### 4. Create TranslationNode manifest
+
+After injection, create or update the `.ts` manifest:
+
+```sh
+# The pipeline does this automatically, or create manually:
+translations/<locale>/<stem>.ts
+```
+
+The manifest carries status, coverage, and round-trip QA results inline.
+Validate with `TranslationNodeSchema` from `schemas/translation.ts`.
+
+### 5. Round-trip QA
 
 After injection, run round-trip translation QA:
 
@@ -91,9 +142,10 @@ bun run content/pipeline/translation-qa.ts --locale <locale>
 ```
 
 Or use the `translation_validate` MCP tool. Back-translates and compares
-meaning. Routes drift to a human reviewer.
+meaning. Results are stored in the `TranslationNode.roundTripQA` field.
+Routes drift to a human reviewer.
 
-### 5. Sign-off
+### 6. Sign-off
 
 A human reviewer signs off at the desired level:
 
@@ -101,14 +153,56 @@ A human reviewer signs off at the desired level:
 bun run content/pipeline/translation-signoff.ts --locale <locale> --level <block|section|chapter|folio> [--path <content-path>]
 ```
 
-Or use the `translation_signoff` MCP tool. Updates `status.json` with the
-sign-off metadata and source hash.
+Or use the `translation_signoff` MCP tool. Updates the `TranslationNode`
+manifest with sign-off metadata and source hash.
 
-### 6. Staleness watch
+### 7. Staleness watch
 
 On every content change, the pipeline checks whether any official translation's
 `sourceHash` no longer matches the source `.md`. Stale translations are flagged
 in the viewer and in `translation_status` output.
+
+## Automatic badge rendering
+
+Translation badges are **automatically rendered** on every docs page by
+`docs-ui.js`. There is no need to manually add badge includes or front matter.
+
+### How it works
+
+1. **`head_custom.html`** publishes a `<script type="application/json"
+   id="fa-translation-meta">` block on every page, reading from page front
+   matter
+2. **`docs-ui.js`** reads that block and auto-injects into the page title:
+   - **🌐 Language coverage badge** — `0/5 languages` (grey), `1/5` (amber),
+     `5/5` (green)
+   - **QA badge** — only on translated pages with `qa_translation_total > 0`
+   - **⚠️ Unverified warning** — auto-injected when `translation_status:
+     unverified`
+
+### Front matter for the translation pipeline to stamp
+
+The translation pipeline stamps this front matter on generated pages:
+
+```yaml
+# Source pages (English):
+lang: en
+available_locales: ["fr"]          # locales with translations
+
+# Translated pages:
+lang: fr
+translation_status: unverified     # or "official"
+translation_source: index.md       # source file
+available_locales: ["fr"]
+qa_translation_pass: 11            # round-trip QA results
+qa_translation_warn: 4
+qa_translation_fail: 21
+qa_translation_total: 36
+qa_coverage_pct: 100
+```
+
+**Do not** manually add `{% include qa-translation-badge.html %}` or
+`{% include translation-warning.html %}` to pages. These are now deprecated
+includes — `docs-ui.js` handles everything automatically.
 
 ## Official vs unofficial
 
@@ -134,6 +228,18 @@ The default `supportedLocales` in `folio.config.json`:
 | `es` | Spanish | Español |
 
 Folios may add or remove locales. The viewer reads the list from config.
+
+## translations/ directory rules
+
+The `translations/` directory contains **only** three file types:
+
+1. `.pot` — POT templates (extractable strings)
+2. `.po` — PO translated strings
+3. `.ts` — TranslationNode manifests (KG nodes)
+
+**Do not** put `.md`, `.qa.json`, or `status.json` files in `translations/`.
+Rendered output lives in `docs/<locale>/`; QA and status are properties of
+the TranslationNode manifest.
 
 ## WHO smart-base integration
 
@@ -163,6 +269,11 @@ pipeline (IG Publisher) are complementary and independent.
 
 ## Do not
 
+- **Do not manually add badge includes.** `docs-ui.js` renders them automatically
+  from front matter. The `{% include qa-translation-badge.html %}` and
+  `{% include translation-warning.html %}` calls are deprecated.
+- **Do not put non-PO files in translations/.** Only `.pot`, `.po`, and `.ts`
+  manifests belong there. Rendered `.md` goes in `docs/<locale>/`.
 - **Do not vendor smart-base translation scripts.** Load from checkout.
 - **Do not translate math, labels, or code.** Exclude in extraction.
 - **Do not auto-sign-off.** Official status requires a human.

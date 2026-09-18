@@ -50,6 +50,25 @@
   config is the one way that does not go stale when the config changes.
 -->
 <script type="application/json" id="fa-site-scheme">{"scheme": "{{ site.color_scheme | default: 'light' }}"}</script>
+<!--
+  Translation metadata for this page, consumed by docs-ui.js to auto-render
+  language coverage and QA badges. The translation pipeline stamps front matter;
+  this block publishes it to the client. No manual editing needed.
+-->
+<script type="application/json" id="fa-translation-meta">{
+  "lang": "{{ page.lang | default: 'en' }}",
+  "translationStatus": "{{ page.translation_status | default: '' }}",
+  "translationSource": "{{ page.translation_source | default: '' }}",
+  "supportedLocales": {{ site.translation_locales | default: '["ar","zh","en","fr","ru","es"]' }},
+  "availableLocales": {{ page.available_locales | default: '[]' }},
+  "qa": {
+    "pass": {{ page.qa_translation_pass | default: 0 }},
+    "warn": {{ page.qa_translation_warn | default: 0 }},
+    "fail": {{ page.qa_translation_fail | default: 0 }},
+    "total": {{ page.qa_translation_total | default: 0 }},
+    "coveragePct": {{ page.qa_coverage_pct | default: 0 }}
+  }
+}</script>
 <link rel="stylesheet" href="{{ '/assets/css/docs-ui.css' | relative_url }}">
 <script src="{{ '/assets/js/vendor/qrcode.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/vendor/qrcode_UTF8.js' | relative_url }}" defer></script>

@@ -6,6 +6,7 @@ lang: fr
 translation_status: unverified
 translation_source: index.md
 description: "folio-assistant — un cadre de compétences d'agent indépendant du contenu."
+available_locales: ["fr"]
 qa_translation_pass: 11
 qa_translation_warn: 4
 qa_translation_fail: 21
@@ -13,13 +14,10 @@ qa_translation_total: 36
 qa_coverage_pct: 100
 ---
 
-{% include translation-warning.html %}
-
 # folio-assistant
 {: .fs-9 }
 
 {% include language-selector.html current="fr" page_base="index" %}
-{% include qa-translation-badge.html %}
 
 Un cadre de compétences d'agent indépendant du contenu pour la rédaction de
 contenus rigoureux avec un grand modèle de langage — articles scientifiques et

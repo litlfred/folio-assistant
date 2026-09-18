@@ -572,8 +572,136 @@
     });
   }
 
+  /* ── Translation badges ──────────────────────────────────────────────── */
+
+  // Auto-injects language coverage badges and QA indicators on every page.
+  // Reads from the fa-translation-meta JSON block in <head>, which is
+  // stamped by the translation pipeline into page front matter and published
+  // by head_custom.html. Nothing needs manual editing — the pipeline writes
+  // the data, Jekyll publishes it, and this renders it.
+
+  function getTranslationMeta() {
+    var node = document.getElementById("fa-translation-meta");
+    if (!node) return null;
+    try { return JSON.parse(node.textContent); } catch (_e) { return null; }
+  }
+
+  function mountTranslationBadges() {
+    var meta = getTranslationMeta();
+    if (!meta) return;
+
+    var supported = meta.supportedLocales || ["ar", "zh", "en", "fr", "ru", "es"];
+    var available = meta.availableLocales || [];
+    var totalLangs = supported.length;
+    var availLangs = available.length;
+
+    // Auto-detect available locales from the page's own language links if
+    // the pipeline hasn't stamped availableLocales yet. Scan the
+    // language-selector include (if present) for which links resolve.
+    if (availLangs === 0) {
+      var langLinks = document.querySelectorAll(".fa-lang-tab, [data-locale]");
+      var found = [];
+      langLinks.forEach(function (link) {
+        var loc = link.getAttribute("data-locale") || link.textContent.trim().toLowerCase();
+        if (loc && loc !== meta.lang && found.indexOf(loc) === -1) found.push(loc);
+      });
+      // The page itself counts as one available locale if it's not English-source
+      // or if it has translations
+      if (found.length > 0) {
+        availLangs = found.length;
+        available = found;
+      }
+    }
+
+    // Find the page title (first h1 in main content)
+    var title = document.querySelector(".main-content h1, #main-content h1");
+    if (!title) return;
+
+    // Create badge container
+    var container = el("span", { class: "fa-translation-badges", style:
+      "display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; vertical-align: middle;"
+    });
+
+    // Language coverage badge — always shown
+    var langBg, langBorder;
+    if (availLangs >= totalLangs - 1) {
+      langBg = "#14532d"; langBorder = "#22c55e";
+    } else if (availLangs > 0) {
+      langBg = "#78350f"; langBorder = "#d97706";
+    } else {
+      langBg = "#1e293b"; langBorder = "#475569";
+    }
+
+    var langBadge = el("span", {
+      class: "fa-lang-coverage-badge",
+      style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
+             "background:" + langBg + ";border:1px solid " + langBorder + ";" +
+             "border-radius:4px;font-size:0.75rem;color:#e2e8f0;cursor:default;",
+      title: availLangs > 0
+        ? "Available translations: " + available.join(", ")
+        : "No translations available for this page"
+    }, "\uD83C\uDF10 " + availLangs + "/" + (totalLangs - 1) + " languages");
+    container.appendChild(langBadge);
+
+    // QA badge — only on translated pages (has QA data)
+    var qa = meta.qa || {};
+    if (qa.total > 0) {
+      var qaBg, qaBorder, qaIcon, qaLabel;
+      if (qa.fail > 0) {
+        qaBg = "#991b1b"; qaBorder = "#ef4444"; qaIcon = "\u274C";
+        qaLabel = "QA: " + qa.fail + " drift";
+      } else if (qa.warn > 0) {
+        qaBg = "#78350f"; qaBorder = "#d97706"; qaIcon = "\u26A0\uFE0F";
+        qaLabel = "QA: " + qa.warn + " warn";
+      } else {
+        qaBg = "#14532d"; qaBorder = "#22c55e"; qaIcon = "\u2705";
+        qaLabel = "QA: all pass";
+      }
+
+      var qaBadge = el("span", {
+        class: "fa-qa-badge",
+        style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
+               "background:" + qaBg + ";border:1px solid " + qaBorder + ";" +
+               "border-radius:4px;font-size:0.75rem;color:#fef3c7;cursor:default;",
+        title: "Round-trip semantic verification: " + qa.pass + "/" + qa.total +
+               " pass, " + qa.warn + " warn, " + qa.fail + " fail. Coverage: " + qa.coveragePct + "%"
+      });
+      qaBadge.textContent = qaIcon + " " + qaLabel;
+      var qaDetail = el("span", {
+        style: "opacity:0.7;font-size:0.7rem;"
+      }, "(" + qa.pass + "/" + qa.total + ")");
+      qaBadge.appendChild(qaDetail);
+      container.appendChild(qaBadge);
+    }
+
+    // Unverified translation warning — auto-injected on translated pages
+    if (meta.translationStatus === "unverified" && !document.querySelector(".fa-translation-warning")) {
+      var warning = el("div", {
+        class: "fa-translation-warning",
+        style: "background:#78350f;border:1px solid #d97706;border-radius:6px;" +
+               "padding:12px 16px;margin:1em 0;color:#fef3c7;font-size:0.9rem;",
+        role: "alert"
+      });
+      warning.innerHTML =
+        "\u26A0\uFE0F <strong>Unverified translation</strong> \u2014 " +
+        "This page has been translated automatically and has <strong>not been reviewed</strong> by a subject-matter expert." +
+        (meta.translationSource
+          ? "<br><strong>Source:</strong> " + meta.translationSource + " (English)"
+          : "") +
+        "<br><strong>How to verify:</strong> Run <code>translation_signoff</code> after SME review, " +
+        "or use <code>translation_validate</code> to check for staleness and coverage.";
+      var mainContent = document.querySelector(".main-content, #main-content");
+      if (mainContent && mainContent.firstChild) {
+        mainContent.insertBefore(warning, mainContent.firstChild);
+      }
+    }
+
+    title.appendChild(container);
+  }
+
   function init() {
     mountQr();
+    mountTranslationBadges();
     // Figures are mounted only after the inlining settles, so the scan sees the
     // real <svg> rather than the <img> it replaces and does not wrap both.
     inlineDiagrams(mountFigures);
