@@ -21,9 +21,8 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { createHash } from "crypto";
 
-import { extractMarkdown, extractFromManifest, formatPot, type PotEntry } from "../../content/pipeline/pot-extract.js";
+import { extractMarkdown, formatPot, type PotEntry } from "../../content/pipeline/pot-extract.js";
 import { parsePo, injectMarkdown } from "../../content/pipeline/po-inject.js";
-import { UN_LOCALES } from "../../schemas/translation.js";
 
 export function registerTranslationTools(server: McpServer, repoRoot: string): void {
 

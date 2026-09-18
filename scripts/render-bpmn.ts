@@ -150,8 +150,9 @@ for (const file of sources) {
       viewer.destroy();
       return { svg, warnings: (result.warnings ?? []).map((w: Error) => w.message) };
     }, xml);
-  } catch (err: any) {
-    console.error(`✗ ${file}: ${err?.message?.split("\n")[0] ?? err}`);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error(`✗ ${file}: ${msg.split("\n")[0]}`);
     process.exitCode = 1;
     continue;
   }
