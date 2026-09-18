@@ -180,53 +180,139 @@ is a QA audit criterion, not a style note — see the strawperson below.
 ## Strawperson: the Tools-repo schema
 
 The 16:13 comment asks for a schema for Tools-repo contents plus options with
-pros and cons. Here is the shape, then three ways to carry it.
+pros and cons. Here is the shape, written in the carrier the section below
+settles on — **Zod is the authoritative form**, and the TypeScript type is
+inferred from it rather than declared alongside it, so there is one definition
+and not two that can drift.
 
 ```ts
-interface ToolDefinition {
-  id: string;                    // stable KG node id
-  title: string;
-  summary: string;
+// schemas/tool.ts
+export const ToolDefinitionSchema = z.object({
+  id: z.string(),                                   // stable KG node id
+  title: z.string(),
+  summary: z.string(),
+
   /** How to obtain it. */
-  install: { cli?: string; container?: string; service?: string };
+  install: z.object({
+    cli:       z.string().optional(),
+    container: z.string().optional(),
+    service:   z.string().optional(),
+  }),
+
   /** How to run it, per environment. */
-  invoke: { shell?: string; mcp?: { tool: string }; container?: string };
+  invoke: z.object({
+    shell:     z.string().optional(),
+    mcp:       z.object({ tool: z.string() }).optional(),
+    container: z.string().optional(),
+  }),
+
   /** The contract a Task binds against — the 16:28 requirement. */
-  io: {
-    inputs:  Array<{ name: string; schema: string; required: boolean }>;
-    outputs: Array<{ name: string; schema: string }>;
-  };
+  io: z.object({
+    inputs:  z.array(z.object({
+      name: z.string(), schema: z.string(), required: z.boolean(),
+    })),
+    outputs: z.array(z.object({
+      name: z.string(), schema: z.string(),
+    })),
+  }),
+
   /** Skills this tool can satisfy. One skill may have several tools. */
-  satisfies: string[];
-  requires?: { os?: string[]; runtime?: string[]; network?: boolean };
-}
+  satisfies: z.array(z.string()),
+
+  requires: z.object({
+    os:      z.array(z.string()).optional(),
+    runtime: z.array(z.string()).optional(),
+    network: z.boolean().optional(),
+  }).optional(),
+});
+
+export type ToolDefinition = z.infer<typeof ToolDefinitionSchema>;
 ```
 
 The `io` block is the part that earns its keep: it is what lets a Task's inputs
 and outputs be checked against the Tool that will execute it, rather than
 hoping they line up.
 
-### Three ways to carry it — pros and cons
+Two fields are deliberately loose at this stage and should be tightened before
+anything is built on them. `io.*.schema` is a `string` — presumably an IRI into
+the schema graph, but nothing yet says which, and an unresolvable reference is
+the failure mode the `io` block exists to prevent. `satisfies` is a bare array
+of skill ids with no check that the skills exist; that is the same
+declared-but-absent defect `dh4f` found in the pipeline scripts, where a
+consumer scans nothing and reports a clean run.
+### Carrying it — authored once in Zod, rendered downstream
 
-| | **A. JSON-LD nodes in `kg/`** | **B. TypeScript modules** | **C. Front-matter in the skill** |
-|---|---|---|---|
-| **shape** | one `.jsonld` per tool | one `.ts` per tool, Zod-validated | YAML block in the skill `.md` |
-| **pro** | native KG node; queryable with everything else; no toolchain to read | author-time type checking; same builder pattern as content blocks | zero new files; tool and its skill never drift apart |
-| **pro** | language-agnostic — a Python or shell consumer reads it | refactorable; IDE support | simplest possible migration |
-| **con** | no author-time checking; a typo is a runtime discovery | needs a TS toolchain to read, which a shell-only consumer may not have | **contradicts "code in tools, not skills"**; unqueryable without parsing Markdown |
-| **con** | two files per tool if you also want prose | not a KG node without a projection step | one tool per skill only — kills "several Tools for one Skill" |
-| **verdict** | **recommended** | good second | **do not** |
+**Decided (2026-09-18, by the repository owner): the `.ts` Zod schema is
+authoritative, and as many downstream renderings are generated from it as make
+sense — JSON-LD and JSON Schema to begin with.** That is how every other schema
+in this repository is defined, and the Tools schema gets no exception.
 
-**Recommendation: A, with B's checking bolted on.** Author the Tool node as
-JSON-LD so it is a first-class KG citizen readable without a toolchain, and
-validate it in CI against a Zod schema that lives in the harness. That is
-exactly the split the `AgentHarness` declaration already uses — authored form
-stored, graph form derived, schema validating both — so it introduces no new
-pattern.
+```
+schemas/tool.ts            ← AUTHORITATIVE.  Zod + the inferred TS type.
+  │
+  ├─→ schemas/generated/Tool.schema.json      JSON Schema  (validation, editors)
+  └─→ kg/tools/<id>.jsonld                    JSON-LD      (KG node, queryable)
+```
 
-**C is worth rejecting explicitly** because it is the tempting one: it is the
-least work today and it directly contradicts the 16:13 instruction that code
-snippets belong in tools rather than skills.
+The generation direction is the whole decision. `scripts/generate-schemas.ts`
+already walks a map of Zod schemas through `zodToJsonSchema` into
+`schemas/generated/*.schema.json`; adding `Tool` is one entry in that map, not a
+new mechanism. The JSON-LD side has its precedent too — `toJsonLd()` in
+`schemas/agent-harness.ts` projects a Zod-validated declaration into the folio
+namespace. Both renderings are derived artefacts: regenerate, never hand-edit,
+exactly as `docs/reference/skills/` and `docs/reference/skill-instructions/` are
+already treated.
+
+#### Why not the other three, including the one I first recommended
+
+| | **Zod `.ts`, rendered down** | **JSON-LD authored** | **TS, no renderings** | **Skill front-matter** |
+|---|---|---|---|---|
+| **shape** | one Zod schema; per-tool instances validated against it | one hand-written `.jsonld` per tool | one `.ts` per tool, and nothing else | YAML block in the skill `.md` |
+| **author-time checking** | yes | **no** — a typo is a runtime discovery | yes | no |
+| **KG node** | yes, generated | yes, natively | **no** — needs a projection nobody wrote | no — unqueryable without parsing Markdown |
+| **readable without a TS toolchain** | yes, via the renderings | yes | **no** | no |
+| **number of truths** | **one** | one | one | one |
+| **verdict** | **decided** | superseded | insufficient | **do not** |
+
+An earlier draft of this page recommended authoring the JSON-LD directly, with
+Zod validating it in CI. **That is the same two artefacts with the authority
+pointing the wrong way**, and the difference is not cosmetic:
+
+- **A hand-authored JSON-LD node is unchecked until CI runs.** Under the decided
+  direction the Zod schema *is* the type, so a malformed tool definition fails
+  at `tsc`, in the editor, before it is committed. Validation-after-the-fact
+  catches the same error strictly later and only if CI is green — and this
+  repository has just spent a bean (`dzl3`) on a suite that was not running at
+  all, so "CI will catch it" is a claim with a poor local record.
+- **It would have been a fourth pattern in a repo that already has one.** Zod →
+  JSON Schema is `generate-schemas.ts`; Zod → docs is `generate-docs.ts`; Zod →
+  JSON-LD is `toJsonLd`. Authoring the rendering and validating backwards is the
+  only shape here that would have run against all three.
+- **"Language-agnostic" was never the trade it looked like.** A shell or Python
+  consumer reads the *generated* JSON-LD and JSON Schema under the decided
+  direction just as well as it reads a hand-authored one. Nothing is lost by
+  generating them; what is gained is that they cannot disagree with the type.
+
+**C — front-matter in the skill — is still worth rejecting explicitly**, and for
+unchanged reasons: it is the least work today, it directly contradicts the
+instruction that code snippets belong in tools rather than skills, and it caps
+the model at one tool per skill, which kills "several Tools may satisfy one
+Skill" before it is built.
+
+#### What "as many renderings as make sense" means in practice
+
+Two now, and a test for any third. A rendering earns its place when a real
+consumer cannot read the ones that exist: JSON Schema because editors and
+validators speak it, JSON-LD because the KG query path does. A third — SHACL, an
+OpenAPI fragment, a Turtle serialisation — is added when something needs it, not
+in anticipation. Each one is another file to regenerate and another chance for a
+stale artefact to be read as current, so the bar is a consumer, not a
+possibility.
+
+The corresponding rule: **a rendering is never the place a fix lands.** If a
+generated `Tool.schema.json` is wrong, `schemas/tool.ts` is wrong; edit that and
+regenerate. A `--check` mode in CI (the pattern `gen-skill-docs.ts --check`
+already uses) is what makes that enforceable rather than merely stated.
 
 ## The documentation move-table
 
