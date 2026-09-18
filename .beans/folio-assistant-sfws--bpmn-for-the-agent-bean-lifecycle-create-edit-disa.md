@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sfws
 title: BPMN for the agent bean lifecycle — create, edit, disable, never delete
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T16:15:27Z
-updated_at: 2026-09-18T16:16:02Z
+updated_at: 2026-09-18T16:42:24Z
 ---
 
 From #203 comment 5731501752 (2026-09-18 14:31).

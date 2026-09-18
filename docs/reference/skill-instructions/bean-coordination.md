@@ -16,6 +16,28 @@ The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/b
 CLI, a flat-file issue tracker storing issues as markdown under `.beans/` — is
 how every session tracks its work-plan and how agents hand off across sessions.
 
+## A bean is never deleted
+
+`beans delete` exists in the CLI. **Do not use it — not on a sibling's bean,
+and not on your own.**
+
+Work that turns out not to be wanted is **scrapped**: `status: scrapped`, with
+a section saying why. That is also what "disable" means here; the CLI's status
+vocabulary is `draft`, `todo`, `in-progress`, `completed`, `scrapped`, and
+there is no disabled state.
+
+The reason is not tidiness. A scrapped bean records that something was
+considered and rejected, and on what grounds — which is what stops the next
+agent re-entering the same dead end. A deleted bean leaves a sibling session
+unable to tell abandonment from accident.
+
+**Claiming and closing are separately scoped.** Claim before you work, so two
+sessions do not pick the same item. Never *resolve* a bean another session or
+a human owns — closing someone else's is how one of them loses work it had not
+finished reporting.
+
+Full cycle, as a diagram: [Beans and todos](https://litlfred.github.io/folio-assistant/beans-and-todos.html).
+
 **Operational spec (read these):**
 
 - [`todo-manager.md`](todo-manager.md) — bean lifecycle: `beans create` /

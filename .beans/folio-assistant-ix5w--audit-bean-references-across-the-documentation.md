@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ix5w
 title: Audit bean references across the documentation
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T16:15:27Z
-updated_at: 2026-09-18T16:16:02Z
+updated_at: 2026-09-18T16:44:13Z
 ---
 
 From #203 comment 5731501752 (2026-09-18 14:31).

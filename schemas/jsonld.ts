@@ -63,8 +63,17 @@ import {
 
 // ── Namespaces ───────────────────────────────────────────────────
 
-/** Folio's own terms — the relations no published vocabulary models. */
-export const FOLIO_NS = "https://litlfred.github.io/folio-assistant/ns#";
+/**
+ * Folio's own terms — the relations no published vocabulary models.
+ *
+ * Defined in `./namespaces` and re-exported here so existing importers are
+ * unaffected. It moved because `schemas/agent-harness.ts` needs it too, and a
+ * harness-layer module must not import the content vocabulary — see that
+ * module's note.
+ */
+import { FOLIO_NS } from "./namespaces";
+
+export { FOLIO_NS };
 /** SPAR Document Components Ontology — structural document parts. */
 export const DOCO_NS = "http://purl.org/spar/doco/";
 /** SPAR Discourse Elements Ontology — rhetorical roles. */

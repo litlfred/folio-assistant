@@ -135,6 +135,115 @@ non-obvious, because it has just finished finding them out.
 the topic.** A task you cannot brief is one you have not understood well enough
 to begin.
 
+## Say which bean you are on — every turn
+
+Claiming a bean records the work; **reporting** it is what lets a human steer
+and a sibling session avoid you. Both are required.
+
+### Opening a turn
+
+**When you begin work on a bean**, open that turn by naming it and what you are
+attempting — before the first tool call, not after the work lands:
+
+> **Starting `fwr7`** — retargeting the seven edges the forward-ref arc left
+> alone, because the edge is wrong rather than the block's position.
+
+### Closing a turn
+
+**End every turn** with the beans you touched and what is next.
+
+> **Beans**
+> - **worked** [`fwr8`](.beans/folio-assistant-fwr8--re-baseline-the-forward-ref-arc.md) — Re-baseline the forward-ref arc endpoints. Re-ran both with the fixed parser: the arc is 274 → 195, not 274 → 192. This corrects my own earlier claim that the start figure was understated — only the post-mid-arc figures are short, and only by 3.
+> - **next** [`fwr7`](.beans/folio-assistant-fwr7--retarget-seven-mis-aimed-uses-edges.md) — Retarget seven `uses[]` edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.
+
+### The rules that make a report worth reading
+
+**1. Every bean reference carries a one-sentence gloss and a link.**
+`fa/nvbr` is an opaque four-character string. A reader cannot tell whether it
+is urgent, adjacent, or already obsolete without opening the store — and asking
+someone to go look things up is the cost this report exists to remove. Link to
+the bean file so one click gets the full body.
+
+**2. Asking for review means linking the artefact.** If a turn ends with
+"please look at this", it must carry the **staging URL**, the PR link, and — if
+the change is a page — the direct path to the page that changed. `AGENTS.md`
+already records why (PR #178, 2026-09-16): a human cannot assess a rendered
+artefact from a description, and withholding it makes assessment harder rather
+than safer. Making the reader *find* the preview is the same failure one step
+down.
+
+**3. Say what to review, not just that it is green.** "Green on all three
+workflows" says the PR is not broken. It does not say what the change **does**,
+what to **look at**, or what **judgement** is wanted. A reader should be able to
+act on the report without opening the diff, and then open the diff knowing what
+they are looking for.
+
+**4. Length follows content.** There is no word budget. A one-line fix gets a
+line; a design change that needs a decision gets a paragraph. Err long — the
+cost of a sentence the reader skims is far below the cost of a round-trip
+asking what you meant, especially for an author who types with difficulty.
+
+**5. "Next" is your judgement, not a fact.** Beans carry no priority order
+beyond what an agent asserts — so say *why* it is next, and expect to be
+overruled.
+
+**6. Prefix across repos** (`qou/fwr7`, `fa/fsl7`) when a turn spans both.
+
+**7. Report unclaimed work as unclaimed.** If you did durable work without a
+bean, say so and open one; that omission is the failure this exists to catch.
+
+### The worked failure
+
+Measured here, 2026-09-18. A real end-of-turn report, verbatim:
+
+> **worked** `fa/fsch` — Green on all three workflows. Also corrected the PR
+> body, which had drifted from the code after your detangle instruction.
+> **next** `fa/nvbr`, `fa/rnfl` — both gated on #251.
+
+It breaks the first three rules at once. `fa/nvbr` and `fa/rnfl` appear with no
+gloss and no link, so the reader cannot tell what either is. The turn asked for
+review and gave no staging link, so the reader had to ask for it. And "green on
+all three workflows" describes CI rather than the change: it never says the PR
+introduces a root declaration schema, never says the conventions doc is the
+thing worth reading, and never says which decision was wanted. The author's
+reply was *"staging link???"*, then a request for more context — two
+round-trips that a longer report would have spent nothing to avoid.
+
+The old version of this rule capped entries at "up to 50 words", which read as a
+budget to spend rather than a floor to clear and rewarded exactly that
+terseness. Rule 4 replaces it.
+
+### The "next" line is a question, so it carries its context (STRICT)
+
+Rules 1 and 5 above say the next item needs a gloss and a reason. This is the
+stronger form for the case where **next** also hands over a *decision*:
+[`interaction-modality.md` §4.1](interaction-modality.md)
+governs it — context → options → recommendation → question — and the test is
+whether the author can answer **without opening anything**.
+
+A bean id plus a term you coined is the specific failure. Measured here on
+2026-09-18:
+
+> **next** `x4mt` — Cross-agent skill install + `fa-` prefix (#247). Unstarted,
+> and I'd want your call on prefix-at-rest vs prefix-at-install before writing
+> anything.
+
+`x4mt` is opaque, `fa-` is undefined, and "prefix-at-rest vs prefix-at-install"
+names two options that exist only inside issue #247 — so the author had to open
+it to find out what was being asked. It could have read:
+
+> **next** `x4mt` — Install this platform's skills into whichever agent is
+> running, each name prefixed `fa-` so it cannot collide with the host's own
+> commands. One call needed: add the prefix **when a skill is installed**
+> (nothing in this repo moves — recommended), or **rename the files here**,
+> which also drags the manifests, the BPMN skill refs and two generators.
+
+Barely longer, and answerable in one character.
+
+**A deferred decision is stated in full, or not stated at all.** If it genuinely
+will not fit, say the decision exists and that you will put it properly when you
+reach it — never post a teaser whose only resolution is a document.
+
 ## Check before you create — `beans create` is not idempotent (STRICT)
 
 `beans create` mints a **fresh random ID on every call** and dedupes on
@@ -189,44 +298,6 @@ You can map out sequence blockers using:
 - When starting work: `beans update <id> --status in-progress`
 - When completed: `beans update <id> --status completed`
 - To add notes or discussion: `beans update <id> --body-append "Your note"`
-
-## The "next" line is a question, so it carries its context (STRICT)
-
-AGENTS.md requires every turn to end with the beans touched and what is next.
-The **next** line is where an agent hands the author a decision — which item
-comes next, and often whether some choice inside it should go one way or the
-other. That makes it a question, and
-[`interaction-modality.md` §4.1](interaction-modality.md) governs it: context →
-options → recommendation → question, and the test is whether the author can
-answer **without opening anything**.
-
-A bean id plus a coined term is the specific failure. Measured here on
-2026-09-18:
-
-> **next** `x4mt` — Cross-agent skill install + `fa-` prefix (#247). Unstarted,
-> and I'd want your call on prefix-at-rest vs prefix-at-install before writing
-> anything.
-
-`x4mt` is opaque, `fa-` is undefined, and "prefix-at-rest vs prefix-at-install"
-names two options that exist only inside issue #247 — so the author had to open
-it to find out what was being asked. Within the 50-word budget it could have
-read:
-
-> **next** `x4mt` — Install this platform's skills into whichever agent is
-> running, each name prefixed `fa-` so it cannot collide with the host's own
-> commands. One call needed: add the prefix **when a skill is installed**
-> (nothing in this repo moves — recommended), or **rename the files here** (also
-> the manifests, the BPMN skill refs, two generators).
-
-Same length. Answerable in one character.
-
-Two rules follow, and the second is the one that gets lost:
-
-- **Expand every identifier on first use**, including your own bean ids. "`fwr7`
-  — retarget seven mis-aimed edges" is a synopsis; "`fwr7`" is not.
-- **A deferred decision is stated in full, or not stated at all.** If it will not
-  fit, say the decision exists and that you will put it properly when you reach
-  it — do not post a teaser whose only resolution is a document.
 
 ## Status Display Format
 

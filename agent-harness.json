@@ -1,0 +1,18 @@
+{
+  "_comment": "The AgentHarness declaration for THIS instance — what directories it scans and what kind of graph each holds. See skills/folio-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/`, `kg/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it.",
+  "name": "folio-assistant",
+  "directories": [
+    {
+      "id": "schemas",
+      "path": "schemas/",
+      "graph": "schemas",
+      "summary": "The content-object model and the per-skill JSON Schemas."
+    },
+    {
+      "id": "kg",
+      "path": "skills/",
+      "graph": "kg",
+      "summary": "Skill packages. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not."
+    }
+  ]
+}
