@@ -133,6 +133,84 @@ non-obvious, because it has just finished finding them out.
 the topic.** A task you cannot brief is one you have not understood well enough
 to begin.
 
+## Say which bean you are on — every turn
+
+Claiming a bean records the work; **reporting** it is what lets a human steer
+and a sibling session avoid you. Both are required.
+
+### Opening a turn
+
+**When you begin work on a bean**, open that turn by naming it and what you are
+attempting — before the first tool call, not after the work lands:
+
+> **Starting `fwr7`** — retargeting the seven edges the forward-ref arc left
+> alone, because the edge is wrong rather than the block's position.
+
+### Closing a turn
+
+**End every turn** with the beans you touched and what is next.
+
+> **Beans**
+> - **worked** [`fwr8`](.beans/folio-assistant-fwr8--re-baseline-the-forward-ref-arc.md) — Re-baseline the forward-ref arc endpoints. Re-ran both with the fixed parser: the arc is 274 → 195, not 274 → 192. This corrects my own earlier claim that the start figure was understated — only the post-mid-arc figures are short, and only by 3.
+> - **next** [`fwr7`](.beans/folio-assistant-fwr7--retarget-seven-mis-aimed-uses-edges.md) — Retarget seven `uses[]` edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.
+
+### The rules that make a report worth reading
+
+**1. Every bean reference carries a one-sentence gloss and a link.**
+`fa/nvbr` is an opaque four-character string. A reader cannot tell whether it
+is urgent, adjacent, or already obsolete without opening the store — and asking
+someone to go look things up is the cost this report exists to remove. Link to
+the bean file so one click gets the full body.
+
+**2. Asking for review means linking the artefact.** If a turn ends with
+"please look at this", it must carry the **staging URL**, the PR link, and — if
+the change is a page — the direct path to the page that changed. `AGENTS.md`
+already records why (PR #178, 2026-09-16): a human cannot assess a rendered
+artefact from a description, and withholding it makes assessment harder rather
+than safer. Making the reader *find* the preview is the same failure one step
+down.
+
+**3. Say what to review, not just that it is green.** "Green on all three
+workflows" says the PR is not broken. It does not say what the change **does**,
+what to **look at**, or what **judgement** is wanted. A reader should be able to
+act on the report without opening the diff, and then open the diff knowing what
+they are looking for.
+
+**4. Length follows content.** There is no word budget. A one-line fix gets a
+line; a design change that needs a decision gets a paragraph. Err long — the
+cost of a sentence the reader skims is far below the cost of a round-trip
+asking what you meant, especially for an author who types with difficulty.
+
+**5. "Next" is your judgement, not a fact.** Beans carry no priority order
+beyond what an agent asserts — so say *why* it is next, and expect to be
+overruled.
+
+**6. Prefix across repos** (`qou/fwr7`, `fa/fsl7`) when a turn spans both.
+
+**7. Report unclaimed work as unclaimed.** If you did durable work without a
+bean, say so and open one; that omission is the failure this exists to catch.
+
+### The worked failure
+
+Measured here, 2026-09-18. A real end-of-turn report, verbatim:
+
+> **worked** `fa/fsch` — Green on all three workflows. Also corrected the PR
+> body, which had drifted from the code after your detangle instruction.
+> **next** `fa/nvbr`, `fa/rnfl` — both gated on #251.
+
+It breaks the first three rules at once. `fa/nvbr` and `fa/rnfl` appear with no
+gloss and no link, so the reader cannot tell what either is. The turn asked for
+review and gave no staging link, so the reader had to ask for it. And "green on
+all three workflows" describes CI rather than the change: it never says the PR
+introduces a root declaration schema, never says the conventions doc is the
+thing worth reading, and never says which decision was wanted. The author's
+reply was *"staging link???"*, then a request for more context — two
+round-trips that a longer report would have spent nothing to avoid.
+
+The old version of this rule capped entries at "up to 50 words", which read as a
+budget to spend rather than a floor to clear and rewarded exactly that
+terseness. Rule 4 replaces it.
+
 ## Check before you create — `beans create` is not idempotent (STRICT)
 
 `beans create` mints a **fresh random ID on every call** and dedupes on

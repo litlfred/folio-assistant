@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fsch
-title: 'Phase 0.3 — `folio` as its own schema holding 0..n Content instances (#223)'
-status: todo
+title: Phase 0.3 — `folio` as its own schema holding 0..n Content instances (#223)
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-09-18T15:00:27Z
+updated_at: 2026-09-18T16:34:01Z
 ---
 
 From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913).

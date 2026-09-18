@@ -175,6 +175,8 @@ const RULES: Rule[] = [
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
+      "scripts/pages-bootstrap.ts",          // where a folio publishes, and whether it is there
+      "scripts/scan-repo-content.ts",        // scans a repo for material a folio could take over
     ],
   },
 
@@ -195,6 +197,16 @@ const RULES: Rule[] = [
       "schemas/assistant-package.ts",
       "schemas/assistant-types.ts",
       "schemas/assistant-workflow.ts",
+      // The AgentHarness root declaration is harness-layer by concept even
+      // though it sits in schemas/. It declares its own HARNESS_NS rather than
+      // importing the content vocabulary, so classifying it here adds no
+      // wrong-direction edge — see schemas/agent-harness.ts.
+      "schemas/agent-harness.ts",
+      // The platform namespace leaf. It must sit at or below the harness:
+      // core may import the harness, the harness may not import core, so a
+      // constant BOTH need cannot live in core without reintroducing the edge
+      // it was extracted to remove.
+      "schemas/namespaces.ts",
     ],
     prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "adapters/mcp-server/", "skills/framework/", "skills/remote-packages/"],
   },
