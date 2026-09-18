@@ -17,7 +17,7 @@ lang: en
 
 _This page is generated from [`content/docs/beans-and-todos/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/beans-and-todos) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/overview.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/overview.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/overview.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 **Beans are for agents. Todos are for humans.** They share a word in ordinary
 speech and nothing else, and conflating them is how a work plan comes to hold
@@ -38,7 +38,7 @@ says so.
 ## Two things that share a word
 {: #two-things-one-word }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-things-one-word.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/two-things-one-word.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-things-one-word.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/two-things-one-word.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 The distinction is not terminology. The two have different owners, different
 lifecycles and different failure modes.
@@ -63,7 +63,7 @@ first.
 ## The agent bean lifecycle
 {: #the-agent-bean-lifecycle }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/bean-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/bean-lifecycle.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/bean-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/bean-lifecycle.bpmn" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 <div class="bpmn-figure" id="figure-the-agent-bean-lifecycle">
   <img src="assets/img/workflows/bean-lifecycle.svg"
@@ -94,7 +94,7 @@ every other session, as active work.
 ## A bean is never deleted
 {: #never-delete }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/never-delete.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/never-delete.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/never-delete.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/never-delete.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 `beans delete` exists in the CLI. **Do not use it.**
 
@@ -117,7 +117,7 @@ noticing a command is not a rule.
 ## Engine operations are not CLI calls
 {: #two-layers }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-layers.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/two-layers.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-layers.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/two-layers.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Two different things can change a bean, and a step that confuses them will
 announce an effect it does not have.
@@ -147,7 +147,7 @@ engine never reads.
 ## Human todos — not built yet
 {: #human-todos }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/human-todos.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/human-todos.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/human-todos.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/human-todos.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 **Not built yet**, and stated here rather than left as an absence somebody has
 to notice.
