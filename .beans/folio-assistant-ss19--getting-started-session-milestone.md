@@ -1,7 +1,7 @@
 ---
 # folio-assistant-ss19
 title: 'SESSION: getting started — intent triage, conversion, pages, accessibility (#232)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T14:49:11Z

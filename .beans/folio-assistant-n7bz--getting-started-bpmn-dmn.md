@@ -1,7 +1,7 @@
 ---
 # folio-assistant-n7bz
 title: 'GETTING STARTED: getting-started.bpmn + folio-intent.dmn'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T14:49:11Z
