@@ -71,7 +71,7 @@ agentic-harness/          folio-assist-core/
 ## Inheritance
 
 An instance inherits its dependencies' directories, walked depth-first through
-`dependencies.folioAssistant` — the same order `schemas/folio-config.ts` uses
+`dependencies.folioAssistant` — the same order `schemas/harness-config.ts` uses
 for skills and translations. Deepest dependency first, root last, so the root
 wins.
 
@@ -134,7 +134,7 @@ downstream instance inherits its dependencies' skills through the same
 inheritance rules above. A hardcoded path breaks on the first relocation, which
 is the whole reason overrides match on `id`.
 
-**Not yet true end to end.** `resolveSkillDirs` (`schemas/folio-config.ts`)
+**Not yet true end to end.** `resolveSkillDirs` (`schemas/harness-config.ts`)
 computes the cross-instance overlay and has **no caller**, so skill discovery is
 root-only in practice today and a dependency's skills are not reachable. Stated
 here rather than implied, because an agent that assumes inheritance works will

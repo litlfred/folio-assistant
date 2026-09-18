@@ -49,7 +49,7 @@ other diagram in this repository:
 
 A second set of tools over the same diagram would be a second answer to
 "where are we", free to disagree with the first. State lives under
-`.folio/workflow/` and is committed, so a sibling session sees the same
+`beans/workflow/` and is committed, so a sibling session sees the same
 position — which is the property a chat-local phase tracker could never have.
 
 Every activity in the agent's lane carries the skill that implements it, so
@@ -74,9 +74,9 @@ work is done is a judgement.
 
 ### `stakeholder_map` — built, but not from the sources proposed
 
-It was specified here as reading "affected roles from `folio.config.json` and
+It was specified here as reading "affected roles from `harness.config.json` and
 CODEOWNERS". **Neither exists.** This repository has no CODEOWNERS file, and
-`schemas/folio-config.ts` declares no role, owner, maintainer or contact
+`schemas/harness-config.ts` declares no role, owner, maintainer or contact
 field. Built as written, the tool would have reported no stakeholders for
 every change, forever, and looked like it worked.
 

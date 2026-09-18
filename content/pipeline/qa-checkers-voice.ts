@@ -1220,7 +1220,7 @@ export function checkAuthorNotesPollution(mdPath: string): CheckerResult {
 // keyword: `## Status`, `### Status (2026-…)`, `## Formalization status`,
 // `## TODO`, `## Pending`, `## Roadmap`, `## Next steps`, `## Work
 // remaining`. Status / roadmap content migrates to the `.ts` `authorNotes`
-// field (CLAUDE.md §4d); todos move to `.beans/` (owner directive
+// field (CLAUDE.md §4d); todos move to `beans/` (owner directive
 // 2026-06-13) — never the paper. Complements voice-status-leak (inline
 // markers) and voice-author-notes-pollution (banners / PR# / dates).
 // Legitimate scholarly sections ("Open problems", "Discussion",

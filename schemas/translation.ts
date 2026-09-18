@@ -35,7 +35,7 @@
  * 1. **Block-level:** `translations/<locale>/<block-stem>.po`
  * 2. **Chapter-level:** `translations/<locale>/<chapter-slug>.po`
  * 3. **Folio-level:** `translations/<locale>/global.po`
- * 4. **Dependency walk:** `folio.config.json` dependencies, depth-first
+ * 4. **Dependency walk:** `harness.config.json` dependencies, depth-first
  *
  * When `poSources[]` IS declared on BlockBase, only the listed files are
  * consulted (no fallback). Later entries override earlier for the same msgid.
@@ -74,7 +74,7 @@ import { z } from "zod";
 /**
  * The six UN official languages, as BCP 47 primary language subtags.
  *
- * These are the default `supportedLocales` in `folio.config.json`. A folio
+ * These are the default `supportedLocales` in `harness.config.json`. A folio
  * may add or remove locales; this list is the platform default, not a
  * constraint.
  */
@@ -357,9 +357,9 @@ export const TranslationNodeSchema = z.object({
   description: z.string().optional(),
 });
 
-// ── Translation config (folio.config.json section) ───────────────
+// ── Translation config (harness.config.json section) ───────────────
 
-/** The `translation` section of `folio.config.json`. */
+/** The `translation` section of `harness.config.json`. */
 export interface TranslationConfig {
   /** BCP 47 tag for the source language. Default: "en". */
   defaultLocale: string;

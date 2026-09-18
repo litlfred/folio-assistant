@@ -32,7 +32,7 @@
 #   Option C — gcloud Application Default Credentials:
 #     gcloud auth application-default login
 #
-# Configure the target Drive folder via folio.config.json:
+# Configure the target Drive folder via harness.config.json:
 #   { "googleDrive": { "folderPath": "MyProject/folio-pdfs" } }
 # or via environment variable:
 #   export GDRIVE_FOLDER_PATH="MyProject/folio-pdfs"
@@ -51,9 +51,9 @@ if [[ -z "$PY" ]]; then
   exit 1
 fi
 
-# Read GDRIVE_FOLDER_PATH from folio.config.json if not already set
+# Read GDRIVE_FOLDER_PATH from harness.config.json if not already set
 if [[ -z "${GDRIVE_FOLDER_PATH:-}" ]]; then
-  CONFIG="$REPO_ROOT/folio.config.json"
+  CONFIG="$REPO_ROOT/harness.config.json"
   if [[ -f "$CONFIG" ]]; then
     GDRIVE_FOLDER_PATH="$(
       python3 -c "

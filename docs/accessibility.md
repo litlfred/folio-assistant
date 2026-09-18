@@ -118,12 +118,12 @@ of making the editor accessible substitutes for them.
 
 | | where |
 |---|---|
-| Agent-facing preferences, committed, read at session start | `.folio/interaction.json`, surfaced by `scripts/session-start-coord-sweep.sh` |
+| Agent-facing preferences, committed, read at session start | `.harness/interaction.json`, surfaced by `scripts/session-start-coord-sweep.sh` |
 | The rules an agent follows when asking | [`interaction-modality`](reference/skill-instructions/interaction-modality.html) |
 | Reader-facing controls on this site | the gear in the sidebar header — larger text, higher contrast, underlined links, reduced motion |
 | Reduced motion honoured without being asked | `prefers-reduced-motion` media query, and it seeds the panel's default |
 
-**The two preference stores are deliberately separate.** `.folio/interaction.json`
+**The two preference stores are deliberately separate.** `.harness/interaction.json`
 is committed, agent-facing, and about the conversation. The site control is
 per-viewer `localStorage`, never leaves the browser, and is about reading. A
 reader who is not the author choosing large type must not silently reconfigure

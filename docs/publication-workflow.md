@@ -195,7 +195,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
   implements it. The same reference is carried machine-readably as a
   `<folio:skill ref="…"/>` extension element on the BPMN activity.
 - **The "Work plan — beans" lane** is the shared to-do store. Steps in that
-  lane read and write `.beans/`, and are marked `<folio:bean store=".beans/"/>`
+  lane read and write `beans/`, and are marked `<folio:bean store="beans/"/>`
   in the source.
 - **A thick-bordered box is a call activity** — it expands into another diagram
   on this page.
@@ -364,7 +364,7 @@ cycle — the linear strip flattens that.
 
 Every diagram has a **Work plan** lane, and it is not decoration. Editing work
 is tracked as **beans** ([hmans/beans](https://github.com/hmans/beans)) in a
-committed `.beans/` directory, which makes it the one place where a human and
+committed `beans/` directory, which makes it the one place where a human and
 an agent see the same answer to *what is done, and what is next*.
 
 | Where in the workflow | What happens to the work plan |
@@ -378,7 +378,7 @@ an agent see the same answer to *what is done, and what is next*.
 
 Why it is modelled as a lane rather than a note:
 
-- **It is shared state, not session state.** `.beans/` is committed, so the plan
+- **It is shared state, not session state.** `beans/` is committed, so the plan
   survives a resumed session and is visible to sibling agents working other
   branches. An agent's ephemeral in-memory to-do list is not.
 - **Claiming is how two workers avoid the same item.** Claim before you work,
@@ -466,7 +466,7 @@ the sandbox ships a Chromium that does not match the pinned Playwright build,
 point at it with `CHROMIUM_PATH=/path/to/chrome`.
 
 When you add an activity, add its `<folio:skill ref="…"/>` extension (and
-`<folio:bean store=".beans/"/>` if it touches the work plan) and the matching
+`<folio:bean store="beans/"/>` if it touches the work plan) and the matching
 row in the tables above — the diagram and the skill list drifting apart is the
 failure this page exists to prevent.
 

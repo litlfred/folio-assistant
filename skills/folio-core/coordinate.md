@@ -607,7 +607,7 @@ overlays this skill:
 - **Master ledger per goal** — `docs/coordination/<goal>.md` holds
   the durable narrative: current canonical status, open tasks,
   flip-flop history, sessions log.
-- **Per-goal queue** — the `beans` queue (`.beans/`); each
+- **Per-goal queue** — the `beans` queue (`beans/`); each
   open task is one entry.
 
 When `/coordinate` runs, it now ALSO:

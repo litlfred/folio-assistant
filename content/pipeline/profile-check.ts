@@ -6,7 +6,7 @@
  * `content_validate` checks each block against its own Zod schema and the
  * constraint table. Both are profile-blind by construction: a `theorem` is a
  * valid `theorem` whatever kind of folio it sits in, and `constraints.ts`
- * has no way to know that this repo's `folio.config.json` says `document`.
+ * has no way to know that this repo's `harness.config.json` says `document`.
  *
  * So a document folio can accumulate math blocks — most easily by an agent
  * reaching for `theorem` out of habit, or by a paper folio being re-declared
@@ -36,6 +36,7 @@ import {
   type ContentProfile,
 } from "../../schemas/block-kinds";
 import { walkBlocks } from "./qa-utils";
+import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
 
 export interface ProfileViolation {
   label: string;
@@ -60,7 +61,7 @@ export interface ProfileCheckResult {
  * from "declared `paper`".
  *
  * `profile` is `undefined` when the folio does not say: no
- * `folio.config.json`, no `contentType` in it, or a file that will not parse.
+ * `harness.config.json`, no `contentType` in it, or a file that will not parse.
  * Those three are genuinely different from a folio that declares
  * `contentType: "paper"`, and the difference matters to any consumer whose
  * response to "the folio says document" is to *stop doing something* —
@@ -77,25 +78,25 @@ export function readDeclaredFolioProfile(repoRoot: string): {
   profile?: ContentProfile;
   declaredBy: string;
 } {
-  const configPath = join(repoRoot, "folio.config.json");
+  const configPath = resolveHarnessConfigPath(repoRoot)?.path ?? join(repoRoot, HARNESS_CONFIG);
   if (!existsSync(configPath)) {
-    return { declaredBy: "undetermined (no folio.config.json)" };
+    return { declaredBy: "undetermined (no harness.config.json)" };
   }
   try {
     const config = JSON.parse(readFileSync(configPath, "utf-8")) as { contentType?: string };
     if (!config.contentType) {
-      return { declaredBy: "undetermined (folio.config.json declares no contentType)" };
+      return { declaredBy: "undetermined (harness.config.json declares no contentType)" };
     }
     return {
       profile: profileForContentType(config.contentType),
-      declaredBy: `folio.config.json contentType: "${config.contentType}"`,
+      declaredBy: `harness.config.json contentType: "${config.contentType}"`,
     };
   } catch (e) {
     // A config that will not parse is reported, not silently defaulted: the
     // folio's whole configuration is unread in that state and every other
     // tool reading it is equally in the dark.
     return {
-      declaredBy: `undetermined (folio.config.json unreadable: ${e instanceof Error ? e.message : String(e)})`,
+      declaredBy: `undetermined (harness.config.json unreadable: ${e instanceof Error ? e.message : String(e)})`,
     };
   }
 }
@@ -138,7 +139,7 @@ function declaresLean(tsPath: string, root: string): string | undefined {
 /**
  * Check every block under `contentRoot` against `repoRoot`'s declared profile.
  *
- * @param repoRoot - Folio repo root, holding `folio.config.json`.
+ * @param repoRoot - Folio repo root, holding `harness.config.json`.
  * @param contentRoot - Directory to walk. Defaults to `<repoRoot>/content`.
  */
 export function checkFolioProfile(repoRoot: string, contentRoot?: string): ProfileCheckResult {

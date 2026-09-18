@@ -33,8 +33,8 @@ domain-specific slots A-I.
 
 **Setup:** use `NAME=one-voice-integration-watcher` everywhere the
 parent's §1 references `${NAME}`. Files land at
-`.beans/one-voice-integration-watcher-queue.json` and
-`.beans/one-voice-integration-watcher-ledger.md`.
+`beans/one-voice-integration-watcher-queue.json` and
+`beans/one-voice-integration-watcher-ledger.md`.
 
 **Persistent operation (binding).** Per the repo owner's standing
 preference, this watcher **never stops** in foreground sessions.

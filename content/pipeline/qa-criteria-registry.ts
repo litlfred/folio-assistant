@@ -45,6 +45,7 @@ import { findContentRepoRoot } from "./repo-root";
  */
 
 import type { QaCriterionDefinition } from "../../schemas/block-qa";
+import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
 
 // ── Domain: voice ───────────────────────────────────────────────
 
@@ -266,7 +267,7 @@ const VOICE: QaCriterionDefinition[] = [
       "`## Status`, `### Status (2026-…)`, `## Formalization status`, " +
       "`## TODO`, `## Pending`, `## Roadmap`, `## Next steps`, " +
       "`## Work remaining`. Status / roadmap content migrates to the .ts " +
-      "`authorNotes` field (CLAUDE.md §4d); todos move to `.beans/` " +
+      "`authorNotes` field (CLAUDE.md §4d); todos move to `beans/` " +
       "(owner directive 2026-06-13). Complements voice-status-leak " +
       "(inline markers) and voice-author-notes-pollution (banners / PR# / " +
       "dates). Legitimate scholarly sections (Open problems, Discussion, " +
@@ -2061,7 +2062,7 @@ const EXPO: QaCriterionDefinition[] = [
 // permanently-inapplicable criteria into every other folio's sweep and
 // backlog, so a folio opts in explicitly:
 //
-//   // folio.config.json
+//   // harness.config.json
 //   { "qaAxes": ["q-usage"] }
 //
 // Absent config ⇒ no optional axes. That default is deliberate: a folio
@@ -2078,7 +2079,7 @@ export function folioOptionalAxes(): string[] {
   const axes: string[] = [];
   _optionalAxes = axes;
   try {
-    const cfgPath = join(findContentRepoRoot(), "folio.config.json");
+    const cfgPath = resolveHarnessConfigPath(findContentRepoRoot())?.path ?? join(findContentRepoRoot(), HARNESS_CONFIG);
     if (existsSync(cfgPath)) {
       const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));
       if (Array.isArray(cfg.qaAxes)) {

@@ -203,7 +203,7 @@ export function criterionProfiles(def: {
  * `folioProfile`?
  *
  * `folioProfile` is `undefined` for a folio that does not say — no
- * `folio.config.json`, no `contentType` in it, or a config that will not
+ * `harness.config.json`, no `contentType` in it, or a config that will not
  * parse. That third state returns **`false`**: the criterion runs.
  *
  * That is the whole reason this is a named function rather than an inline

@@ -2,7 +2,7 @@
  * The stakeholder map reports what it can derive, and says what it cannot.
  *
  * The proposed version of this tool read "affected roles from
- * `folio.config.json` and CODEOWNERS" — neither of which exists in this
+ * `harness.config.json` and CODEOWNERS" — neither of which exists in this
  * repository, so it would have reported no stakeholders for every change
  * while looking like it worked. These tests pin the two properties that
  * failure mode would have violated: something is actually derived, and the

@@ -17,7 +17,7 @@ parent: Skill instructions
 >   under `feedback/<paper>/` (paper-scope; persistent across
 >   sessions; surfaced via `/todos` dashboard).
 > - `todo-manager` = the agent's **session work-plan** via beans
->   (durable, committed under `.beans/`).
+>   (durable, committed under `beans/`).
 >
 > Both can be active in one session: the agent's work-plan
 > (`todo-manager`) may include "process N feedback items via

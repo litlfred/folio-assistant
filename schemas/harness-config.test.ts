@@ -1,19 +1,19 @@
 /**
- * Tests for schemas/folio-config.ts — cross-folio dependency schema and resolution.
+ * Tests for schemas/harness-config.ts — cross-folio dependency schema and resolution.
  */
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { mkdirSync, writeFileSync, rmSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
   FolioAssistantDependencySchema,
-  FolioConfigSchema,
-  readFolioConfig,
+  HarnessConfigSchema,
+  readHarnessConfig,
   resolveDependencyPath,
   resolveDependencyTree,
   flattenDependencies,
   resolveSkillDirs,
   resolveTranslationDirs,
-} from "./folio-config";
+} from "./harness-config";
 
 const TMP = join(import.meta.dir, "__test_folio_config__");
 
@@ -29,19 +29,19 @@ beforeAll(() => {
   const depA = join(TMP, "dep-a");
   mkdirSync(join(depA, "skills"), { recursive: true });
   mkdirSync(join(depA, "translations", "fr"), { recursive: true });
-  writeFileSync(join(depA, "folio.config.json"), JSON.stringify({
+  writeFileSync(join(depA, "harness.config.json"), JSON.stringify({
     translation: { translationDir: "translations" },
   }), "utf-8");
 
   // Dependency B (transitive dep of A)
   const depB = join(TMP, "dep-b");
   mkdirSync(join(depB, "skills"), { recursive: true });
-  writeFileSync(join(depB, "folio.config.json"), JSON.stringify({
+  writeFileSync(join(depB, "harness.config.json"), JSON.stringify({
     translation: { translationDir: "translations" },
   }), "utf-8");
 
   // A depends on B
-  writeFileSync(join(depA, "folio.config.json"), JSON.stringify({
+  writeFileSync(join(depA, "harness.config.json"), JSON.stringify({
     translation: { translationDir: "translations" },
     dependencies: {
       folioAssistant: [
@@ -51,7 +51,7 @@ beforeAll(() => {
   }), "utf-8");
 
   // Root config
-  writeFileSync(join(TMP, "folio.config.json"), JSON.stringify({
+  writeFileSync(join(TMP, "harness.config.json"), JSON.stringify({
     contentType: "document",
     translation: {
       defaultLocale: "en",
@@ -104,14 +104,14 @@ describe("FolioAssistantDependencySchema", () => {
   });
 });
 
-describe("FolioConfigSchema", () => {
+describe("HarnessConfigSchema", () => {
   it("parses minimal config", () => {
-    const result = FolioConfigSchema.safeParse({});
+    const result = HarnessConfigSchema.safeParse({});
     expect(result.success).toBe(true);
   });
 
   it("parses full config", () => {
-    const result = FolioConfigSchema.safeParse({
+    const result = HarnessConfigSchema.safeParse({
       contentType: "document",
       adapter: "document",
       translation: {
@@ -128,15 +128,15 @@ describe("FolioConfigSchema", () => {
   });
 });
 
-describe("readFolioConfig", () => {
+describe("readHarnessConfig", () => {
   it("reads a valid config", () => {
-    const config = readFolioConfig(TMP);
+    const config = readHarnessConfig(TMP);
     expect(config).not.toBeNull();
     expect(config!.contentType).toBe("document");
   });
 
   it("returns null for missing directory", () => {
-    const config = readFolioConfig("/nonexistent/path");
+    const config = readHarnessConfig("/nonexistent/path");
     expect(config).toBeNull();
   });
 });
@@ -174,9 +174,9 @@ describe("resolveDependencyTree", () => {
     // Create a cycle: dep-b depends on root
     const depB = join(TMP, "dep-b");
     const origConfig = JSON.parse(
-      readFileSync(join(depB, "folio.config.json"), "utf-8"),
+      readFileSync(join(depB, "harness.config.json"), "utf-8"),
     );
-    writeFileSync(join(depB, "folio.config.json"), JSON.stringify({
+    writeFileSync(join(depB, "harness.config.json"), JSON.stringify({
       ...origConfig,
       dependencies: {
         folioAssistant: [{ name: "root", path: TMP }],
@@ -188,7 +188,7 @@ describe("resolveDependencyTree", () => {
     expect(tree).toHaveLength(1);
 
     // Restore original
-    writeFileSync(join(depB, "folio.config.json"), JSON.stringify(origConfig), "utf-8");
+    writeFileSync(join(depB, "harness.config.json"), JSON.stringify(origConfig), "utf-8");
   });
 });
 

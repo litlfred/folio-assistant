@@ -3,7 +3,7 @@
  *
  * This is the check that catches what schema validation structurally cannot:
  * a `theorem` is a valid `theorem` whatever folio it sits in, and
- * `constraints.ts` has no way to read `folio.config.json`. Without this, a
+ * `constraints.ts` has no way to read `harness.config.json`. Without this, a
  * document folio accumulates math blocks and fails at *publication*, in a
  * renderer whose error mentions a missing `.lean` file and says nothing about
  * profiles.
@@ -22,7 +22,7 @@ function folio(contentType?: string): string {
   dirs.push(d);
   mkdirSync(join(d, "content", "doc", "ch"), { recursive: true });
   if (contentType !== undefined) {
-    writeFileSync(join(d, "folio.config.json"), JSON.stringify({ contentType }), "utf-8");
+    writeFileSync(join(d, "harness.config.json"), JSON.stringify({ contentType }), "utf-8");
   }
   return d;
 }
@@ -53,10 +53,10 @@ describe("readFolioProfile", () => {
   });
 
   test("an unparseable config is reported, not silently defaulted", () => {
-    // Every other tool reading folio.config.json is equally in the dark here;
+    // Every other tool reading harness.config.json is equally in the dark here;
     // a report that says "paper" with no explanation hides that.
     const d = folio("document");
-    writeFileSync(join(d, "folio.config.json"), "{ not json", "utf-8");
+    writeFileSync(join(d, "harness.config.json"), "{ not json", "utf-8");
     const r = readFolioProfile(d);
     expect(r.profile).toBe("paper");
     expect(r.declaredBy).toContain("unreadable");
@@ -152,7 +152,7 @@ describe("an absent corpus", () => {
   test("no content/ is zero blocks, not an error", () => {
     const d = mkdtempSync(join(tmpdir(), "folio-empty-"));
     dirs.push(d);
-    writeFileSync(join(d, "folio.config.json"), JSON.stringify({ contentType: "document" }), "utf-8");
+    writeFileSync(join(d, "harness.config.json"), JSON.stringify({ contentType: "document" }), "utf-8");
     const r = checkFolioProfile(d);
     expect(r.blocksChecked).toBe(0);
     expect(r.violations).toEqual([]);

@@ -59,7 +59,7 @@ rather than asking:
 
 | fact | how it is obtained |
 |---|---|
-| `isFolio` | is there a `folio.config.json` in this directory? |
+| `isFolio` | is there a `harness.config.json` in this directory? |
 | `repoHasContent` | does the working tree hold files that are somebody's project, as opposed to being bare? |
 | `statedIntent` | what you actually **said** — one of the five, or `unstated` |
 
@@ -116,7 +116,7 @@ two cannot drift apart. Nothing in `src/` needs to change.
 
 **The form of the question comes before its content.** The agent establishes how
 you would like to be asked — selectable options, ordinary chat, read aloud,
-large type — and records it in `.folio/interaction.json` so no future session
+large type — and records it in `.harness/interaction.json` so no future session
 asks you again. See [Accessibility](accessibility.html).
 
 Then, when the answer is genuinely ambiguous:
@@ -217,7 +217,7 @@ bun run pages:bootstrap            # derive the address, report, no probe
 bun run pages:bootstrap -- --wait  # probe until the site answers (bounded)
 ```
 
-It derives the address from `folio.config.json` or the `origin` remote, finds
+It derives the address from `harness.config.json` or the `origin` remote, finds
 publish workflows by what they *do* rather than what they are named, and reports
 one of three things:
 

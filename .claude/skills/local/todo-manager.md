@@ -2,7 +2,7 @@
 
 The session work-plan and cross-agent coordination tracker for this repo is
 [`beans`](https://github.com/hmans/beans): a small Go flat-file issue tracker
-that stores issues as markdown under `.beans/`. It is installed on demand by
+that stores issues as markdown under `beans/`. It is installed on demand by
 [`scripts/install-beans.sh`](../../../scripts/install-beans.sh) (fresh cloud
 sandboxes do not ship it).
 
@@ -15,7 +15,7 @@ container reclamation and is visible to sibling agent sessions.
 - **Beans are the work-plan.** Goals, probes, and the tasks an agent claims and
   drives to completion live as beans. They are durable and cross-session.
 - **Beans are not sidecars.** Bulk machine-generated queues — QA audits, witness
-  queues, watcher drain queues — stay as bulk JSON under `todos/` / `.beans/*.json`
+  queues, watcher drain queues — stay as bulk JSON under `todos/` / `beans/*.json`
   and are read by their own `.ts` tooling. **Never** `beans create` a QA/witness
   queue entry. The discipline is: `beans ≠ sidecars`.
 
@@ -24,7 +24,7 @@ container reclamation and is visible to sibling agent sessions.
 ```sh
 scripts/install-beans.sh      # install the CLI if missing (--force to reinstall)
 beans list                    # show the current work-plan
-beans check                   # health-check the .beans/ store
+beans check                   # health-check the beans/ store
 beans create "<title>"        # open a new work-plan item
 beans show <id>               # read an item
 beans <id> --status in-progress   # claim an item (durable, visible to siblings)
@@ -41,9 +41,9 @@ persist as beans, not in your agent's ephemeral in-memory todo tool (e.g.
 Claude's `TodoWrite`, or equivalents). The in-memory list is fine for
 throwaway intra-turn scratch, but it evaporates when the container is reclaimed.
 Open a bean per task, mark it `in-progress` as you start, close it when done —
-because `.beans/` is committed, the plan survives a resume in a fresh container.
+because `beans/` is committed, the plan survives a resume in a fresh container.
 
-**Cross-session / cross-agent coordinated todos.** The same committed `.beans/`
+**Cross-session / cross-agent coordinated todos.** The same committed `beans/`
 store is the shared work-plan across sibling sessions and across different agent
 CLIs. Claim before you work (set `in-progress` + note your branch) so two
 sessions don't pick the same item; never resolve a sibling's bean, and never delete ANY bean — scrap with reasons instead. See
@@ -159,8 +159,8 @@ attempting — before the first tool call, not after the work lands:
 **End every turn** with the beans you touched and what is next.
 
 > **Beans**
-> - **worked** [`fwr8`](.beans/folio-assistant-fwr8--re-baseline-the-forward-ref-arc.md) — Re-baseline the forward-ref arc endpoints. Re-ran both with the fixed parser: the arc is 274 → 195, not 274 → 192. This corrects my own earlier claim that the start figure was understated — only the post-mid-arc figures are short, and only by 3.
-> - **next** [`fwr7`](.beans/folio-assistant-fwr7--retarget-seven-mis-aimed-uses-edges.md) — Retarget seven `uses[]` edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.
+> - **worked** [`fwr8`](beans/folio-assistant-fwr8--re-baseline-the-forward-ref-arc.md) — Re-baseline the forward-ref arc endpoints. Re-ran both with the fixed parser: the arc is 274 → 195, not 274 → 192. This corrects my own earlier claim that the start figure was understated — only the post-mid-arc figures are short, and only by 3.
+> - **next** [`fwr7`](beans/folio-assistant-fwr7--retarget-seven-mis-aimed-uses-edges.md) — Retarget seven `uses[]` edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.
 
 ### The rules that make a report worth reading
 
@@ -271,6 +271,31 @@ Barely longer, and answerable in one character.
 will not fit, say the decision exists and that you will put it properly when you
 reach it — never post a teaser whose only resolution is a document.
 
+
+## When the `beans` CLI is not there — you are still not read-only
+
+`scripts/beans-fallback.ts` writes the same store in the same layout: same
+files, same front matter, same id shape, read from `.beans.yml`. The CLI reads
+everything it writes once installed. There is no import step and no second
+store.
+
+```sh
+bun run beans:fallback list --status todo
+bun run beans:fallback show <id>
+bun run beans:fallback claim <id>
+bun run beans:fallback create "<title>" --status in-progress
+bun run beans:fallback note <id> "<what you found>"
+```
+
+A read-only fallback is not a fallback for an agent — it lets you see the plan
+and touch nothing, and a session that can see its plan but not claim it does its
+work unclaimed. That is not hypothetical: it is what happened on 2026-09-18
+across two merged PRs.
+
+Its `create` **refuses an exact duplicate title** and names the bean to claim
+instead. The CLI's `create` does not, and that is the mechanism behind the
+14,688 duplicates in `qou`. `--force` exists for a genuinely intended duplicate
+and has to be typed.
 
 ## Coordination discipline
 

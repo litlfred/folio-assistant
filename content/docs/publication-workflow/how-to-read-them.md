@@ -5,7 +5,7 @@
   implements it. The same reference is carried machine-readably as a
   `<folio:skill ref="…"/>` extension element on the BPMN activity.
 - **The "Work plan — beans" lane** is the shared to-do store. Steps in that
-  lane read and write `.beans/`, and are marked `<folio:bean store=".beans/"/>`
+  lane read and write `beans/`, and are marked `<folio:bean store="beans/"/>`
   in the source.
 - **A thick-bordered box is a call activity** — it expands into another diagram
   on this page.

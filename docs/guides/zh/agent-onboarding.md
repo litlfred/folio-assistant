@@ -94,7 +94,7 @@ bun run content/pipeline/content-graph.ts content/<paper>
 
 ## 6. 在 beans 中跟踪工作，不要凭记忆跟踪
 
-`beans` 是**唯一**的待办事项机制 — 既作用于会话本地，*也*跨代理共享。`.beans/` 目录已纳入提交，因此工作计划可以在全新容器中恢复会话时留存下来。
+`beans` 是**唯一**的待办事项机制 — 既作用于会话本地，*也*跨代理共享。`beans/` 目录已纳入提交，因此工作计划可以在全新容器中恢复会话时留存下来。
 
 ```sh
 beans list
@@ -122,7 +122,7 @@ bun run content/pipeline/qa-staleness.ts content/<paper>
 **作品集可选维度轴。** 编码某个作品集特定主题的维度轴仅在作品集明确选择启用时才会注册：
 
 ```json
-// folio.config.json
+// harness.config.json
 { "qaAxes": ["q-usage"] }
 ```
 

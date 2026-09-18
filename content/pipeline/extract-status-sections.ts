@@ -1,7 +1,7 @@
 /**
  * Extract work-tracking Status / TODO / Pending sections OUT of paper
  * content blocks (owner directive 2026-06-13: not in paper, not in
- * compute, not in lean; todos → `.beans/`).
+ * compute, not in lean; todos → `beans/`).
  *
  * This is the `--write` companion to `audit-status-sections.ts` (the
  * report-only auditor). For each `voice-status-section`-flagged `.md`:

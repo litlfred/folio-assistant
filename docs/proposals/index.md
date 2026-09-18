@@ -18,4 +18,4 @@ wearing a heading.
 
 | proposal | question |
 |---|---|
-| [Workflow state in beans](workflow-state-in-beans.html) | Should a running BPMN process keep its position in `.beans/` rather than in `.folio/workflow/`? Four options, and why the answer differs per process |
+| [Workflow state in beans](workflow-state-in-beans.html) | Should a running BPMN process keep its position in the bean itself, or in its own store? Four options with what each costs. **Decided 2026-09-18:** Option A — two stores, one link — with both moved out from behind dotfiles to `beans/` and `beans/workflow/` |

@@ -15,7 +15,7 @@ import {
   composedKindOwner,
   type FolioContribution,
 } from "./contributions";
-import { loadContributions } from "./folio-config";
+import { loadContributions } from "./harness-config";
 import { adapterForKind } from "./block-kinds";
 
 const TMP = join(import.meta.dir, "__test_contributions__");
@@ -39,11 +39,11 @@ beforeAll(() => {
      }`,
     "utf-8",
   );
-  writeFileSync(join(dep, "folio.config.json"), JSON.stringify({ contributes: "./contributions.ts" }), "utf-8");
+  writeFileSync(join(dep, "harness.config.json"), JSON.stringify({ contributes: "./contributions.ts" }), "utf-8");
 
   mkdirSync(join(TMP, "skills"), { recursive: true });
   writeFileSync(
-    join(TMP, "folio.config.json"),
+    join(TMP, "harness.config.json"),
     JSON.stringify({ contentType: "document", dependencies: { folioAssistant: [{ name: "dep-sci", path: dep }] } }),
     "utf-8",
   );
@@ -51,11 +51,11 @@ beforeAll(() => {
   // ── A dependency that declares a contributes module which is not there.
   const broken = join(TMP, "dep-broken");
   mkdirSync(broken, { recursive: true });
-  writeFileSync(join(broken, "folio.config.json"), JSON.stringify({ contributes: "./nope.ts" }), "utf-8");
+  writeFileSync(join(broken, "harness.config.json"), JSON.stringify({ contributes: "./nope.ts" }), "utf-8");
   const brokenRoot = join(TMP, "root-broken");
   mkdirSync(brokenRoot, { recursive: true });
   writeFileSync(
-    join(brokenRoot, "folio.config.json"),
+    join(brokenRoot, "harness.config.json"),
     JSON.stringify({ dependencies: { folioAssistant: [{ name: "dep-broken", path: broken }] } }),
     "utf-8",
   );
@@ -173,7 +173,7 @@ describe("loadContributions — the Phase 0.1 gate", () => {
   it("a folio with no dependencies loads an empty registry, not an error", async () => {
     const bare = join(TMP, "bare");
     mkdirSync(bare, { recursive: true });
-    writeFileSync(join(bare, "folio.config.json"), JSON.stringify({ contentType: "document" }), "utf-8");
+    writeFileSync(join(bare, "harness.config.json"), JSON.stringify({ contentType: "document" }), "utf-8");
     const r = await loadContributions(bare);
     expect(r.contributedKinds()).toEqual([]);
   });

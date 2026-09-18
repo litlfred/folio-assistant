@@ -40,6 +40,7 @@ import {
 import { join, resolve, relative, basename } from "path";
 import { spawnSync } from "child_process";
 import type { Paper } from "../schemas/types";
+import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../schemas/harness-config";
 
 // ── Repo layout ──────────────────────────────────────────────────────────────
 
@@ -73,8 +74,8 @@ const EXPLICIT_FILES = args.filter(a => !a.startsWith("--") && (a.endsWith(".ts"
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function resolveConfigDriveFolder(): string | undefined {
-  // Read folio.config.json if present.
-  const cfgPath = join(REPO_ROOT, "folio.config.json");
+  // Read harness.config.json if present.
+  const cfgPath = resolveHarnessConfigPath(REPO_ROOT)?.path ?? join(REPO_ROOT, HARNESS_CONFIG);
   if (!existsSync(cfgPath)) return undefined;
   try {
     const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));

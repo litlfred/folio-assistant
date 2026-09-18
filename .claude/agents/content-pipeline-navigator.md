@@ -26,7 +26,7 @@ that lives in the other repo.
    QA criteria — rather than half-doing it.
 4. **Read the profile rules**, not just the schema. A `theorem` is a valid
    `theorem` whatever folio it sits in; `constraints.ts` cannot see
-   `folio.config.json`, so `content/pipeline/profile-check.ts` is what
+   `harness.config.json`, so `content/pipeline/profile-check.ts` is what
    catches a math block in a document folio.
 
 ## Memory discipline

@@ -71,7 +71,7 @@ Different **code** → adapter. Different **rules** → profile plus a subclass.
 ## TRAP — the schema cannot catch a profile violation
 
 A `theorem` is a valid `theorem` whatever folio it sits in, and
-`constraints.ts` cannot read `folio.config.json`. `profile-check.ts` runs on
+`constraints.ts` cannot read `harness.config.json`. `profile-check.ts` runs on
 every `content_validate` and enforces two rules the schema structurally
 cannot: kind-within-profile, and (document only) **no `lean` field and no
 `.lean` sibling** — because `remark`, `example`, `algorithm` and `simulator`

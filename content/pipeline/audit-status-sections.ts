@@ -1,24 +1,24 @@
 /**
  * Audit + extract work-tracking Status / TODO / Pending sections out of
- * paper content blocks into a `.beans/` review queue.
+ * paper content blocks into a `beans/` review queue.
  *
  * Owner directive (2026-06-13): paper content blocks must not carry
  * `## Status` / `### Status` / TODO / Pending SECTION HEADERS; todos
- * belong in `.beans/`, status/formalization notes belong in the block
+ * belong in `beans/`, status/formalization notes belong in the block
  * `.ts` `authorNotes` field (CLAUDE.md §4d).
  *
  * This is the review/extract companion to the `voice-status-section`
  * QA criterion (detection lives in
  * `content/pipeline/qa-checkers-voice.ts`). It walks every content
  * `.md`, captures each flagged section's body, classifies the
- * extraction target, and writes a `.beans/` work-queue (same JSON
+ * extraction target, and writes a `beans/` work-queue (same JSON
  * shape as `build/qa-agent-drain-queue.json`) so the cleanup can be
  * drained in reviewable batches.
  *
  * Classification (a hint for the reviewer — adjudicate, don't trust
  * blindly):
  *   - `todo`        — body has TODO / FIXME / pending / remaining-work
- *                     phrasing → extract to `.beans/`.
+ *                     phrasing → extract to `beans/`.
  *   - `substantive` — body carries real math (a bold Theorem/Open-gate
  *                     claim, a refuted-ansätze table, a conjecture) →
  *                     keep the content, re-head to a scholarly title.

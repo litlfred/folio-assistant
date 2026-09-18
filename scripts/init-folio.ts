@@ -8,9 +8,9 @@
  * Standing one up by hand means knowing six conventions that were only ever
  * written down implicitly: where the document manifest lives and that it must
  * be named after its own directory, that block manifests import builders
- * through a `content/schema/` shim, that `folio.config.json` selects the
+ * through a `content/schema/` shim, that `harness.config.json` selects the
  * adapter, that `AGENTS.md` is the agent-generic entry point with `CLAUDE.md`
- * and `GEMINI.md` as stubs, that `.beans/` is the work plan, and that the
+ * and `GEMINI.md` as stubs, that `beans/` is the work plan, and that the
  * folio-assistant checkout has to be reachable from the shim's relative path.
  *
  * Getting any one of them wrong produces a repo that looks right and renders
@@ -93,7 +93,7 @@ const RESERVED_SLUGS = new Set(["schema", "pipeline", "node_modules", "build"]);
 
 // ── Templates ────────────────────────────────────────────────────
 
-function folioConfig(o: InitFolioOptions, assistant: string): string {
+function harnessConfig(o: InitFolioOptions, assistant: string): string {
   return JSON.stringify(
     {
       contentType: o.contentType,
@@ -294,7 +294,7 @@ content/schema/            re-export shim for the platform's builders
 library/                   ingested source documents (read-only reference)
 uploads/                   source PDFs, for offline citation verification
 ${assistant}/              the platform
-.beans/                    the work plan
+beans/                    the work plan
 \`\`\`
 
 ## Commands
@@ -306,7 +306,7 @@ bun run ${assistant}/src/index.ts --check-deps       # what's installed
 
 ## Work plan — use \`beans\`
 
-\`.beans/\` is committed, so the plan survives a fresh container and a sibling
+\`beans/\` is committed, so the plan survives a fresh container and a sibling
 session sees it. Claim before you work; never resolve a sibling's bean.
 
 \`\`\`sh
@@ -391,7 +391,7 @@ ${o.contentType === "paper" ? "\n# Lean build artifacts\n.lake/\n*.olean\n" : ""
 
 function beansYml(slug: string): string {
   return `beans:
-    path: .beans
+    path: beans
     prefix: ${slug}-
     id_length: 4
     default_status: todo
@@ -518,12 +518,12 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   if (!o.dryRun) mkdirSync(root, { recursive: true });
 
   // 1. Configuration and the platform link.
-  write("folio.config.json", folioConfig(o, assistant));
+  write("harness.config.json", harnessConfig(o, assistant));
   write(".mcp.json", mcpJson(assistant));
   write(".claude/settings.json", claudeSettings(assistant));
   write(".gitignore", gitignore(o));
   write(".beans.yml", beansYml(o.slug));
-  write(".beans/.gitkeep", "");
+  write("beans/.gitkeep", "");
 
   // 2. The builder shim — the one place the platform path is written down.
   write("content/schema/builders.ts", builderShim(assistant));
@@ -572,7 +572,7 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
 }
 
 /**
- * Put the platform where `folio.config.json` says it is.
+ * Put the platform where `harness.config.json` says it is.
  *
  * Failure here is a **note, not an error**: every file this scaffolder writes
  * is already correct, and the remedy is one command the caller can run. Dying

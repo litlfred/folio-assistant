@@ -56,7 +56,7 @@ describe("seen-comments", () => {
     const back = loadSeen(root, "o", "r", 203);
     expect(back?.lastCommentId).toBe(99);
     expect(back?.note).toBe("branch x");
-    expect(seenPath(root, "o", "r", 203)).toContain(".folio/issue-comments/o-r-203.json");
+    expect(seenPath(root, "o", "r", 203)).toContain(".harness/issue-comments/o-r-203.json");
   });
 
   test("a CORRUPT mark reads as absent, not as everything-seen", () => {

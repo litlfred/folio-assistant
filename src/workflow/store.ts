@@ -1,8 +1,8 @@
 /**
  * Where a running process instance lives.
  *
- * `.folio/workflow/<id>.json`, in the repo, committed — for the same reason
- * `.beans/` is committed rather than held in a session: the container is
+ * `beans/workflow/<id>.json`, in the repo, committed — for the same reason
+ * `beans/` is committed rather than held in a session: the container is
  * ephemeral, and a work-plan only one agent can see is not a work-plan. A
  * sibling session on another branch, and a human reading the diff, both get the
  * same answer to "where did that change get to".
@@ -17,7 +17,16 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { join } from "node:path";
 import type { InstanceState } from "./instance.js";
 
-export const WORKFLOW_DIR = join(".folio", "workflow");
+/**
+ * `beans/workflow/`, beside `beans/` rather than hidden under a dotfile.
+ *
+ * The two stores answer the two halves of one question — `beans/` says WHAT is
+ * being worked on, `beans/workflow/` says WHERE IT GOT TO — so they are kept
+ * adjacent and visible. A dot-prefixed directory is absent from a plain `ls`,
+ * from most file browsers and from GitHub's web tree, which made the two
+ * artefacts a person most needs the two hardest to find.
+ */
+export const WORKFLOW_DIR = join("beans", "workflow");
 
 const pathFor = (repoRoot: string, id: string): string =>
   join(repoRoot, WORKFLOW_DIR, `${id}.json`);

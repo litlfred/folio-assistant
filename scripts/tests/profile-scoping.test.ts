@@ -24,7 +24,7 @@
  *    argued with; a wrong `pass` gets believed.
  *
  * 3. And "could not determine" is a third state that RUNS the criterion. A
- *    folio with no readable `folio.config.json` must not lose coverage
+ *    folio with no readable `harness.config.json` must not lose coverage
  *    because a tool could not read its configuration.
  */
 import { describe, test, expect, afterEach } from "bun:test";
@@ -145,7 +145,7 @@ describe("readDeclaredFolioProfile — undetermined is not `paper`", () => {
   function folio(config?: string): string {
     const d = mkdtempSync(join(tmpdir(), "profile-scope-"));
     dirs.push(d);
-    if (config !== undefined) writeFileSync(join(d, "folio.config.json"), config, "utf-8");
+    if (config !== undefined) writeFileSync(join(d, "harness.config.json"), config, "utf-8");
     return d;
   }
 
@@ -257,7 +257,7 @@ describe("the sweep's profile gate, end to end", () => {
     // up to — and a test that changed two things at once would not show which
     // one the gate reacted to.
     const { root, blockRoot } = scaffoldFolio("document");
-    const configPath = join(root, "folio.config.json");
+    const configPath = join(root, "harness.config.json");
     expect(readFileSync(configPath, "utf-8")).toContain("document");
     appendFileSync(configPath, "\n{ truncated", "utf-8");
     expect(readDeclaredFolioProfile(root).profile).toBeUndefined();

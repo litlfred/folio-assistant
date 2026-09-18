@@ -3,10 +3,10 @@
  *
  * CRDM phase 1 asks the agent to identify stakeholders, and the CRDM page
  * proposed a `stakeholder_map` tool reading "affected roles from
- * `folio.config.json` and CODEOWNERS".
+ * `harness.config.json` and CODEOWNERS".
  *
  * NEITHER SOURCE EXISTS. This repository has no CODEOWNERS file, and
- * `schemas/folio-config.ts` declares no role, owner, maintainer or contact
+ * `schemas/harness-config.ts` declares no role, owner, maintainer or contact
  * field. A tool built on those two would have reported "no stakeholders" for
  * every change, forever, and looked like it worked.
  *

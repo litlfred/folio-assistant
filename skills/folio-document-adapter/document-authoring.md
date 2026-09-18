@@ -39,7 +39,7 @@ If you find yourself wanting a `theorem`, you want one of two things:
   `normative-statements` for how to carry one in this profile, and read it
   before reaching for a math kind.
 - an actual theorem — in which case this folio is a paper. Change
-  `folio.config.json` to `"contentType": "paper"` deliberately, and know that
+  `harness.config.json` to `"contentType": "paper"` deliberately, and know that
   you are taking on Lean and TeX as dependencies.
 
 ## Adding a block

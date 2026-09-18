@@ -17,7 +17,7 @@ folio-assistant already has the primitives it needs:
 
 | CRDM concept | folio-assistant primitive |
 |---|---|
-| Stakeholder identification | `folio.config.json` roles, GitHub CODEOWNERS |
+| Stakeholder identification | `harness.config.json` roles, GitHub CODEOWNERS |
 | Business process documentation | BPMN workflow diagrams under `docs/workflows/` |
 | Requirements artefact | GitHub issue with structured fields |
 | Work-plan items | `beans` — the single todo mechanism |

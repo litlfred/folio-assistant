@@ -1,10 +1,10 @@
 /**
  * The one place where a workflow instance and its bean become the same answer.
  *
- * `.beans/` says *what is being worked on*; an instance says *where it got to*.
+ * `beans/` says *what is being worked on*; an instance says *where it got to*.
  * Kept apart they diverge, and a work plan that disagrees with itself is worse
  * than one that is merely coarse. Eleven activities across the six diagrams
- * carry `<folio:bean store=".beans/" op="…"/>` — completing one is not a step
+ * carry `<folio:bean store="beans/" op="…"/>` — completing one is not a step
  * *about* the work plan, it **is** the work-plan operation, so doing one does
  * the other.
  *
@@ -44,7 +44,7 @@ export interface BeanRef {
   path: string;
 }
 
-const BEANS_DIR = ".beans";
+const BEANS_DIR = "beans";
 
 /** Run the beans CLI; `undefined` when it is not installed or the call fails. */
 function cli(repoRoot: string, args: string[]): string | undefined {
@@ -96,7 +96,7 @@ export function listBeans(repoRoot: string): BeanRef[] {
  *
  * The fallback for when the CLI is absent — which is not hypothetical: this
  * repo's own session-start hook reports "beans CLI not on PATH" and reads
- * `.beans/` directly. A work-plan integration that only worked with the CLI
+ * `beans/` directly. A work-plan integration that only worked with the CLI
  * installed would be off exactly when someone is picking up a fresh container.
  */
 function setStatusInFile(bean: BeanRef, status: string): void {
@@ -135,11 +135,11 @@ export function applyWorkPlanOp(
   opts: { note?: string; instanceCompleted?: boolean } = {},
 ): WorkPlanResult {
   if (!beanId) {
-    return { summary: `no bean on this instance, so the ${op} step recorded nothing in .beans/` };
+    return { summary: `no bean on this instance, so the ${op} step recorded nothing in beans/` };
   }
   const bean = findBean(repoRoot, beanId);
   if (!bean) {
-    return { summary: `bean ${beanId} is not in .beans/ — nothing recorded` };
+    return { summary: `bean ${beanId} is not in beans/ — nothing recorded` };
   }
 
   const note = opts.note?.trim();

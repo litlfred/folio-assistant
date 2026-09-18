@@ -156,7 +156,7 @@ to prompt. Walk the priority order:
    `mcp__github__pull_request_read get_review_comments` and `get` for
    the body).
 3. **Integration-watcher queue items** — this watcher's own
-   `.beans/<name>-queue.json` first, then sibling watchers'. Prefer
+   `beans/<name>-queue.json` first, then sibling watchers'. Prefer
    items whose `block_or_script` overlaps the current PR's scope.
 4. **Refresh stale sidecars + witnesses.** The QA pipeline depends on
    `*.qa.json` sidecars and `*.witness.json` files staying in sync
@@ -239,13 +239,13 @@ forever".
 OWNER=<repo-owner>
 REPO=<repo-name>
 
-# Bootstrap the queue + ledger under .beans/ (queue tracked as a bulk-JSON
+# Bootstrap the queue + ledger under beans/ (queue tracked as a bulk-JSON
 # coordination queue; ledger gitignored — both survive branch switches)
-mkdir -p .beans
+mkdir -p beans
 NAME="<your-watcher-name>"
-[ -f ".beans/${NAME}-queue.json" ] || \
-  echo '{"items":[],"audited":{},"reviewed_up_to":{}}' > ".beans/${NAME}-queue.json"
-[ -f ".beans/${NAME}-ledger.md" ] || cat > ".beans/${NAME}-ledger.md" <<EOF
+[ -f "beans/${NAME}-queue.json" ] || \
+  echo '{"items":[],"audited":{},"reviewed_up_to":{}}' > "beans/${NAME}-queue.json"
+[ -f "beans/${NAME}-ledger.md" ] || cat > "beans/${NAME}-ledger.md" <<EOF
 # ${NAME} — session ledger
 
 | ts (UTC) | event | scope | findings | action |
@@ -668,10 +668,10 @@ After each event:
 ```bash
 ts=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 echo "| $ts | <event> | <scope> | <N critical / N major / N minor> | <N auto / N asked / N deferred> |" \
-  >> ".beans/${NAME}-ledger.md"
+  >> "beans/${NAME}-ledger.md"
 ```
 
-Update `.beans/${NAME}-queue.json` with new items + status changes via
+Update `beans/${NAME}-queue.json` with new items + status changes via
 `Edit`.
 
 ### 4g. Refresh spawned PRs against main *(superseded by §2c)*
@@ -720,7 +720,7 @@ independent; items sharing state serialise.
 1. No incoming event has arrived during this TICK window
 2. The count of items currently in `status: in-progress` is below the
    parallelism cap (per §5m, default 4)
-3. `.beans/${NAME}-queue.json` contains at least one item with `status:
+3. `beans/${NAME}-queue.json` contains at least one item with `status:
    queued` (or `status: needs-author` whose author ask has been
    outstanding ≥ 7 days — the §5e re-ask cadence)
 
@@ -888,7 +888,7 @@ Per prepared PR:
    # Extract branches under the "### Watching" subsection. The closing
    # pattern is `^## ` (next top-level header), NOT `^### `.
    pr_branches=$(awk '/^### Watching/,/^## /' \
-       ".beans/${NAME}-ledger.md" \
+       "beans/${NAME}-ledger.md" \
        | grep -oE 'claude/iw-[a-z0-9-]+' | sort -u)
 
    for pr_branch in $pr_branches; do
@@ -1086,7 +1086,7 @@ surface a structured suggestion to the user.
 
 **Procedure:**
 
-1. **Load persisted state.** If `.beans/${NAME}-queue.json` exists,
+1. **Load persisted state.** If `beans/${NAME}-queue.json` exists,
    parse it. Read `reviewed_up_to[<criterion>]`, `items[]` with `status
    ∈ {queued, in-progress, needs-author}`, and `audited[]`.
 
@@ -1184,7 +1184,7 @@ ok"); subsequent rounds need fresh consent.
 
 **Anti-parallel cases** (always sequential even with consent):
 
-- Anything touching the same `.beans/${NAME}-queue.json` write (race).
+- Anything touching the same `beans/${NAME}-queue.json` write (race).
 - Anything touching the same exclusive build lock.
 - Anything that depends on a prior step's output (rebase → validate,
   format → lint).
@@ -1229,8 +1229,8 @@ own-branch commit; failure blocks the commit, queues the violation as
 - **Built on**: `local/watch` (Monitor scaffolding), `local/coordinate`
   (PR triage helpers).
 - **Dispatches**: see each child's Slot C.
-- **Produces**: `.beans/${NAME}-queue.json` (live state) +
-  `.beans/${NAME}-ledger.md` (event log).
+- **Produces**: `beans/${NAME}-queue.json` (live state) +
+  `beans/${NAME}-ledger.md` (event log).
 - **Complements** other watchers — each owns one axis. Coordinate via
   `/coordinate` if the user is running more than one.
 
@@ -1260,7 +1260,7 @@ Children add their own domain-specific anti-patterns.
 
 ## Checklist (shared across all children)
 
-- [ ] Queue + ledger initialised under `.beans/`
+- [ ] Queue + ledger initialised under `beans/`
 - [ ] Main baseline SHA stashed
 - [ ] Monitor armed on `origin/main` with TICK heartbeat
 - [ ] Subscribed to own PR + every sibling PR active in 7 days
