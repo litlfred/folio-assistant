@@ -49,6 +49,7 @@ than a sign that MCP is trivial.
 | `io.inputs` | `tools[].inputSchema` | object schema; `required: true` → the `required` array |
 | `io.outputs` | `tools[].outputSchema` | omit entirely when the tool returns unstructured text |
 | `invoke.shell` | what the server runs on `tools/call` | the harness's arm |
+| `io.inputs[].arg` | position in argv, or stdin | `{flag}`, `{positional}` or `{stdin}` — explicit per input, never a template |
 | `invoke.container` | same, in a container | for a tool with host dependencies |
 | `invoke.mcp` | **nothing** | already MCP; projecting it would be circular |
 | `requires` | not expressible | becomes a startup precondition, not a tool field |
@@ -87,7 +88,16 @@ Same rule as everywhere here, and it is easy to lose in a generator:
 - **Do not shell-interpolate arguments.** Model-supplied values reach the
   process as an argv array, never spliced into a string a shell parses. This is
   the whole attack surface of the projection, and the one place a bug is a
-  vulnerability rather than a defect.
+  vulnerability rather than a defect. `src/mcp/project.ts` has **no code path
+  that produces a command string**, which is the point: a caller cannot hand one
+  to a shell because it never has one.
+- **Do not project a Tool whose argv input is unconstrained.** The argv array is
+  the *second* line of defence — it is a property of the caller, and a caller is
+  one refactor away from a template literal. The first line is that the value
+  cannot be a payload: `BeanStatus` is an enum, `BeanId` is `^[a-z0-9-]+$`. A
+  Tool with a free-text argv input is **omitted with a reason**, and free prose
+  goes on stdin. Full rule, and the GitHub Actions form of the same defect:
+  [`untrusted-input`](untrusted-input.md).
 - **Do not let the projection become the source of truth.** The generated
   server is a rendering, like the JSON Schema and the JSON-LD. A fix lands in
   `schemas/tool.ts` or the Tool node, never in the emitted server — see
@@ -105,11 +115,17 @@ swallowed a Tool.
 
 ## Status
 
-**Half built.** `schemas/tool.ts` and four Tool nodes now exist, so the *source*
-of a projection is real and its shape is fixed. **There is still no projector.**
+**Built, as a library.** `src/mcp/project.ts` implements this mapping:
+`project()` returns declarations plus the omissions and their reasons,
+`buildArgv()` produces argv (always an array) with every value parsed by its
+declared type first, and `recordInvocation()` writes the audit record.
 
-That is the useful state to be in: the mapping table above can now be checked
-against something rather than imagined. Two of its rows are already load-bearing
-in the schema itself — `ToolDefinitionSchema` refuses a Tool whose only
-invocation is `invoke.mcp`, which is the "never a projection source" rule
-enforced at parse time rather than left to the projector to remember.
+**It is deliberately not registered on a running server.** The harness is meant
+to carry no tools of its own, and the twelve hand-written MCP tools in
+`src/tools/` are content to be migrated OUT — wiring this to them would build on
+the thing being removed. Turning it on is one call, once that migration lands.
+
+Three of the rules above are enforced rather than remembered:
+`ToolDefinitionSchema` refuses a Tool whose only invocation is `invoke.mcp`;
+`project()` omits a Tool with an unconstrained argv input and says why; and
+`check:tools` fails CI on one.
