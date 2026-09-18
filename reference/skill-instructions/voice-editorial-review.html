@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(102)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(113)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(102) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(113) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(102) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(113) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(102) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(113) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Session Task Manager (beans) | folio-assistant</title>
+<title>Voice editorial review | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Session Task Manager (beans)" />
+<meta property="og:title" content="Voice editorial review" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/todo-manager.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/todo-manager.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/voice-editorial-review.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/voice-editorial-review.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Session Task Manager (beans)" />
+<meta property="twitter:title" content="Voice editorial review" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Session Task Manager (beans)","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/todo-manager.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Voice editorial review","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/voice-editorial-review.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -296,7 +296,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Session Task Manager (`beans`)</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Voice editorial review</span></li>
   </ol>
 </nav>
 
@@ -305,502 +305,195 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/todo-manager.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/todo-manager.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/voice-editorial-review.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/voice-editorial-review.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/todo-manager.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/voice-editorial-review.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="session-task-manager-beans">
+<h1 id="voice-editorial-review">
   
   
-    <a href="#session-task-manager-beans" class="anchor-heading" aria-labelledby="session-task-manager-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Session Task Manager (<code class="language-plaintext highlighter-rouge">beans</code>)
+    <a href="#voice-editorial-review" class="anchor-heading" aria-labelledby="voice-editorial-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Voice editorial review
   
   
 </h1>
     
-
-<blockquote>
-  <p><strong>Disambiguation:</strong></p>
-  <ul>
-    <li><code class="language-plaintext highlighter-rouge">beans</code> (<code class="language-plaintext highlighter-rouge">todo-manager</code>, this file) = the agent’s <strong>session work-plan</strong>.
-Managed entirely via the <code class="language-plaintext highlighter-rouge">beans</code> CLI issue tracker (data stored in <code class="language-plaintext highlighter-rouge">beans/</code>).</li>
-    <li><code class="language-plaintext highlighter-rouge">sidecars</code> (<code class="language-plaintext highlighter-rouge">*.qa.json</code> and <code class="language-plaintext highlighter-rouge">*.witness.json</code> files) = <strong>content state tracking</strong>.
-Beans and sidecars are NOT synonymous! Do NOT convert bulk QA queue items into
-beans. They are completely separate workflow systems.</li>
-    <li><code class="language-plaintext highlighter-rouge">todo-review</code> = triage of <strong>content feedback</strong> stored under
-<code class="language-plaintext highlighter-rouge">feedback/&lt;paper&gt;/</code> and surfaced via the MCP <code class="language-plaintext highlighter-rouge">/todos</code>
-dashboard. That is paper-content scope, not session scope.</li>
-  </ul>
-</blockquote>
-
-<p>Instead of an in-memory list or markdown checklists, we manage session work and cross-agent coordination using the <code class="language-plaintext highlighter-rouge">beans</code> CLI issue tracker.</p>
-<h2 id="installing-beans-fresh-sandbox--cloud-container">
+<h2 id="the-axis-you-are-adjudicating">
   
   
-    <a href="#installing-beans-fresh-sandbox--cloud-container" class="anchor-heading" aria-labelledby="installing-beans-fresh-sandbox--cloud-container"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Installing beans (fresh sandbox / cloud container)
+    <a href="#the-axis-you-are-adjudicating" class="anchor-heading" aria-labelledby="the-axis-you-are-adjudicating"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The axis you are adjudicating
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">beans</code> is the <a href="https://github.com/hmans/beans"><code class="language-plaintext highlighter-rouge">hmans/beans</code></a> Go binary — a
-flat-file issue tracker storing issues as markdown under <code class="language-plaintext highlighter-rouge">beans/</code>. Cloud
-sandboxes do <strong>not</strong> ship it, so reinstall on demand (Go ships in the sandbox):</p>
+<p>Six criteria in <code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code> describe one house
+voice:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts/install-beans.sh          <span class="c"># idempotent; installs into a PATH dir</span>
-<span class="c"># equivalently, the one-liner it runs:</span>
-<span class="nv">GOBIN</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.local/bin"</span> go <span class="nb">install </span>github.com/hmans/beans@latest
-</code></pre></div></div>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>criterion</th>
+      <th>what it matches</th>
+      <th>severity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">voice-status-leak</code></td>
+      <td>status markers and derivation-status speech in body prose</td>
+      <td>critical</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">voice-scholarly-default</code></td>
+      <td>second-person address, lecturer-cadence openers, paper-past-tense narration</td>
+      <td>major</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">voice-author-notes-pollution</code></td>
+      <td>status banners, PR/commit refs, agent names, ISO dates</td>
+      <td>major</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">voice-emoji-content</code></td>
+      <td>emoji as content outside tables</td>
+      <td>major</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">voice-first-person-work</code></td>
+      <td>first-person work tone — “we’ll add”, “let me”, “needs more work”</td>
+      <td>major</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">voice-editorializing</code></td>
+      <td>“surprisingly”, “it is worth noting that”, “rather than merely …”</td>
+      <td>minor</td>
+    </tr>
+  </tbody>
+</table></div>
 
-<p>Note: the npm package named <code class="language-plaintext highlighter-rouge">beans</code> is an unrelated abandoned tool — do <strong>not</strong>
-<code class="language-plaintext highlighter-rouge">npm install beans</code>. Verify with <code class="language-plaintext highlighter-rouge">beans list &amp;&amp; beans check</code>.</p>
-<h2 id="core-directives-for-sessions">
+<p>They are <strong>heuristics over phrase lists</strong>. A match is a question, not a
+verdict, which is why every one of them can be confirmed or overruled by a
+reviewer entry on the same sidecar.</p>
+<h2 id="the-scoping-question-comes-first-and-it-is-usually-the-answer">
   
   
-    <a href="#core-directives-for-sessions" class="anchor-heading" aria-labelledby="core-directives-for-sessions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Core Directives for Sessions
+    <a href="#the-scoping-question-comes-first-and-it-is-usually-the-answer" class="anchor-heading" aria-labelledby="the-scoping-question-comes-first-and-it-is-usually-the-answer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The scoping question comes first, and it is usually the answer
+  
+  
+</h2>
+    
+
+<p>Every criterion above was written for a <strong>paper</strong>: a scholarly artefact in
+third person, where a status marker really is a leak of the work tracker into
+the published text.</p>
+
+<p>None of them carries <code class="language-plaintext highlighter-rouge">profiles</code> scoping today. So they also run over
+<code class="language-plaintext highlighter-rouge">content/docs/</code> — documentation, where the genre’s whole register is to address
+the reader: <em>“you need <code class="language-plaintext highlighter-rouge">bun</code>, <code class="language-plaintext highlighter-rouge">latexmk</code> and Lean”</em> is a correct sentence in a
+prerequisites page and a <code class="language-plaintext highlighter-rouge">voice-scholarly-default</code> match at the same time.</p>
+
+<p><strong>Ask which is true before touching the prose:</strong></p>
+
+<ol>
+  <li><strong>The register is wrong for this genre.</strong> Fix the passage.</li>
+  <li><strong>The criterion does not belong in this genre.</strong> Add <code class="language-plaintext highlighter-rouge">profiles: ["paper"]</code>
+to it in the registry. One edit clears the finding for every document folio,
+now and in future, instead of one block at a time — and, unlike editing the
+prose, it leaves a record of <em>why</em> nobody should see it again.</li>
+  <li><strong>The criterion belongs and this block is an exception.</strong> Record a reviewer
+entry on the sidecar saying why. It leads the criterion, so the block reads
+<code class="language-plaintext highlighter-rouge">pass</code> with the reasoning attached, and nothing is silently rewritten.</li>
+</ol>
+
+<p>Option 2 is not a way of dodging a finding. Ten instances of one criterion
+across ten guide pages is evidence about the criterion’s scope, not about ten
+authors.</p>
+<h2 id="what-the-criterion-cannot-know">
+  
+  
+    <a href="#what-the-criterion-cannot-know" class="anchor-heading" aria-labelledby="what-the-criterion-cannot-know"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the criterion cannot know
+  
+  
+</h2>
+    
+
+<p>The checkers match text. They do not know what the page is <em>about</em>, and the
+three highest-severity false positives in this repo all come from that:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">voice-status-leak</code> on <code class="language-plaintext highlighter-rouge">what-is-not-built-yet.md:36</code> — <code class="language-plaintext highlighter-rouge">**Not yet
+implemented:**</code>. The page is a deliberate inventory of gaps; the phrase is
+its subject, not a leak.</li>
+  <li><code class="language-plaintext highlighter-rouge">voice-status-leak</code> on <code class="language-plaintext highlighter-rouge">how-to-read-them.md</code> and
+<code class="language-plaintext highlighter-rouge">the-work-plan-tasks-as-beans.md</code> — both describe the <em>work-plan lane of a
+BPMN diagram</em>. Prose about a to-do store contains the words of a to-do store.</li>
+  <li><code class="language-plaintext highlighter-rouge">voice-emoji-content</code> in <code class="language-plaintext highlighter-rouge">a-mock-session.md</code> and <code class="language-plaintext highlighter-rouge">step-4-formalize-in-lean.md</code>
+— the emoji sit inside a transcript of an agent session, quoted as data.</li>
+</ul>
+
+<p>None of these is a writing defect. Each is a criterion reading a quotation as
+an assertion, and the reviewer entry should say so in those words.</p>
+<h2 id="adjudicating-one-finding">
+  
+  
+    <a href="#adjudicating-one-finding" class="anchor-heading" aria-labelledby="adjudicating-one-finding"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adjudicating one finding
   
   
 </h2>
     
 
 <ol>
-  <li><strong>Every session is a Bean:</strong> At the start of your session, you MUST create a parent bean (<code class="language-plaintext highlighter-rouge">--type milestone</code> or <code class="language-plaintext highlighter-rouge">--epic</code>) that represents the session and its goals.
-<code class="language-plaintext highlighter-rouge">beans create "Session: &lt;Branch/Goal&gt;" --type milestone</code></li>
-  <li><strong>Every todo is a Child Bean:</strong> All tasks, probes, and action items planned for the session MUST be created as child beans (<code class="language-plaintext highlighter-rouge">--type task</code>) and linked to the session bean.
-<code class="language-plaintext highlighter-rouge">beans create "&lt;Task Title&gt;" --type task</code>
-<code class="language-plaintext highlighter-rouge">beans update &lt;child-id&gt; --parent &lt;session-id&gt;</code></li>
-  <li><strong>No manual <code class="language-plaintext highlighter-rouge">.md</code> checklists:</strong> Never use <code class="language-plaintext highlighter-rouge">session-beans.md</code> or raw Markdown <code class="language-plaintext highlighter-rouge">- [ ]</code> checklists to track global tasks. Always use the <code class="language-plaintext highlighter-rouge">beans</code> CLI to prevent namespace pollution and maintain the official project tracking.</li>
-  <li><strong>Check before you create:</strong> <code class="language-plaintext highlighter-rouge">beans create</code> is <strong>not</strong> idempotent. Run the existence check below before every <code class="language-plaintext highlighter-rouge">beans create</code> — no exceptions, including the session milestone.</li>
-  <li><strong>Brief before you work:</strong> claiming a bean records <em>which</em> item is taken; the opening brief records what it is taken <strong>for</strong>. Write it before the first tool call, in the chat. See §”Opening brief” below.</li>
+  <li><strong>Open the block, not just the evidence line.</strong> The sidecar quotes one line;
+the register is a property of the passage around it.</li>
+  <li><strong>Name the genre.</strong> Paper, guide, reference, transcript. That decides which
+of the three outcomes applies before you read another word.</li>
+  <li><strong>Record the outcome where the next reader will find it</strong> — a prose edit, a
+registry edit with <code class="language-plaintext highlighter-rouge">profiles</code>, or a reviewer entry. A finding that is simply
+left open teaches nobody anything, and it comes back on the next sweep.</li>
+  <li><strong>Re-run the sweep</strong> — <code class="language-plaintext highlighter-rouge">bun run content/pipeline/qa-sweep.ts --root
+content/docs</code> — so the sidecar, the icon and the panel agree with what you
+decided.</li>
 </ol>
-<h2 id="opening-brief">
+<h2 id="where-the-open-findings-are">
   
   
-    <a href="#opening-brief" class="anchor-heading" aria-labelledby="opening-brief"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opening brief
-  
-  
-</h2>
-    
-
-<p><strong>Claiming a bean records the work. Briefing it is what makes the work
-resumable.</strong> Both are required, and the brief comes first — before the first
-tool call, in the chat, not in the commit.</p>
-
-<p>AGENTS.md §”Opening a bean or a topic” states the rule and when it applies.
-This is the shape.</p>
-<h3 id="the-four-parts">
-  
-  
-    <a href="#the-four-parts" class="anchor-heading" aria-labelledby="the-four-parts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The four parts
-  
-  
-</h3>
-    
-
-<p><strong>1. The problem, stated for someone who was not here.</strong> Expand every
-identifier on first use. Not “fixing <code class="language-plaintext highlighter-rouge">qou-93hu</code>” but “bean <code class="language-plaintext highlighter-rouge">qou-93hu</code> — the
-<code class="language-plaintext highlighter-rouge">CriticalExponent</code> conjecture carrier, whose only field is <code class="language-plaintext highlighter-rouge">(3 * 4 : ℕ) = 12</code>, a
-closed numeral identity with no exponent variable in it, so the class constrains
-nothing.”</p>
-
-<p><strong>2. What you know, and how you know it.</strong> Every number with its provenance:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>provenance</th>
-      <th>how to say it</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>measured this session</td>
-      <td>“measured just now: 22 of 22 seeded, 0 missed”</td>
-    </tr>
-    <tr>
-      <td>carried from a prior session</td>
-      <td>“recorded 2026-08-24 as 43 drifted; not re-measured”</td>
-    </tr>
-    <tr>
-      <td>asserted by a bean or a doc</td>
-      <td>“bean <code class="language-plaintext highlighter-rouge">qou-q7lf</code> says X — <strong>unverified</strong>”</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>That third row is the one that bites. A sibling’s bean is not a primary source,
-and neither is a source file’s <code class="language-plaintext highlighter-rouge">## Status</code> note; both go stale, and a specific,
-recent, confidently-worded bean is exactly the kind that gets believed.</p>
-
-<p><strong>3. The route and the gate.</strong> How you plan to do it, what you will verify
-against, and <strong>what would falsify the approach</strong>. A plan with no failure mode is
-not a plan; it is an intention. If the gate is a script, name it and its
-expected output.</p>
-
-<p><strong>4. What you are NOT doing.</strong> The adjacent defect you are leaving, the scope
-you decline to widen into, the thing you will flag rather than fix. Stating it
-up front is what stops it becoming either silent scope creep or a silent
-omission — and it puts the scope call where it can still be argued with, which
-is before the diff.</p>
-<h3 id="worked-example">
-  
-  
-    <a href="#worked-example" class="anchor-heading" aria-labelledby="worked-example"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Worked example
-  
-  
-</h3>
-    
-
-<blockquote>
-  <p><strong>Starting <code class="language-plaintext highlighter-rouge">qou-93hu</code></strong> — the <code class="language-plaintext highlighter-rouge">CriticalExponent</code> §3b-cond hypothesis class in
-<code class="language-plaintext highlighter-rouge">lean/QOU/AlgebraicSubstrate/ConditionalClasses.lean</code>.</p>
-
-  <p><strong>The problem.</strong> Its single field is <code class="language-plaintext highlighter-rouge">alpha_three_eq_four : (3 * 4 : ℕ) = 12</code>
-— a closed numeral identity with the values already substituted in, so no
-exponent variable occurs in it and <code class="language-plaintext highlighter-rouge">rfl</code> proves it whatever the physics. Four
-sibling carriers in the same file are vacuous too, but they are at least the
-right <em>shape</em> (parameter-quantified inequalities); this one has no quantifier
-and no free variable at all.</p>
-
-  <p><strong>What I know.</strong> Measured this session: bound as <code class="language-plaintext highlighter-rouge">[C]</code> in 5 files; the probe
-baseline records it <code class="language-plaintext highlighter-rouge">proved-vacuous</code>; the class’s own docstring already claims
-“α = 4/3”, so the target value is not something I need to invent. Not
-measured: whether any downstream proof depends on the field’s <em>current</em> type.</p>
-
-  <p><strong>Route.</strong> Make α a class parameter — <code class="language-plaintext highlighter-rouge">class CriticalExponent (α : ℝ) : Prop
-where alpha_eq : α = 4/3</code>. A <code class="language-plaintext highlighter-rouge">Prop</code> class cannot carry data, so α must be a
-parameter, not a field. Gate: lean-direct exit 0 on all three affected
-modules, plus a content probe proving <code class="language-plaintext highlighter-rouge">¬ CriticalExponent 2</code> — because
-inhabitability at 4/3 alone would not show the class constrains anything.
-<strong>Falsifier:</strong> if <code class="language-plaintext highlighter-rouge">¬ CriticalExponent 2</code> will not go through, the encoding is
-not doing what I claim and I stop.</p>
-
-  <p><strong>Not doing.</strong> The other four carriers need analytic setup their docstrings
-only gesture at — the author’s mathematics, not a cleanup. Also leaving the
-separate <code class="language-plaintext highlighter-rouge">CriticalExponent</code> in <code class="language-plaintext highlighter-rouge">core-levi-form.lean</code>, a different carrier in a
-different namespace.</p>
-</blockquote>
-
-<p>~200 words, and it would have let a reader stop the work, redirect it, or pick
-it up cold.</p>
-<h3 id="the-failure-this-prevents">
-  
-  
-    <a href="#the-failure-this-prevents" class="anchor-heading" aria-labelledby="the-failure-this-prevents"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The failure this prevents
-  
-  
-</h3>
-    
-
-<p>An agent that has spent an hour inside a problem writes in the private
-vocabulary it built along the way, and a reader — the author, or the next agent
-— has to reconstruct that vocabulary before evaluating anything. The brief is
-written at the one moment when the agent still knows which parts are
-non-obvious, because it has just finished finding them out.</p>
-
-<p><strong>Cheapest correct move when you do not want to spend the words: do not start
-the topic.</strong> A task you cannot brief is one you have not understood well enough
-to begin.</p>
-<h2 id="say-which-bean-you-are-on--every-turn">
-  
-  
-    <a href="#say-which-bean-you-are-on--every-turn" class="anchor-heading" aria-labelledby="say-which-bean-you-are-on--every-turn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Say which bean you are on — every turn
+    <a href="#where-the-open-findings-are" class="anchor-heading" aria-labelledby="where-the-open-findings-are"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the open findings are
   
   
 </h2>
     
 
-<p>Claiming a bean records the work; <strong>reporting</strong> it is what lets a human steer
-and a sibling session avoid you. Both are required.</p>
-<h3 id="opening-a-turn">
-  
-  
-    <a href="#opening-a-turn" class="anchor-heading" aria-labelledby="opening-a-turn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opening a turn
-  
-  
-</h3>
-    
+<p>Tracked in the work plan, one bean per criterion, each carrying its blocks with
+file, line and the matched text:</p>
 
-<p><strong>When you begin work on a bean</strong>, open that turn by naming it and what you are
-attempting — before the first tool call, not after the work lands:</p>
-
-<blockquote>
-  <p><strong>Starting <code class="language-plaintext highlighter-rouge">fwr7</code></strong> — retargeting the seven edges the forward-ref arc left
-alone, because the edge is wrong rather than the block’s position.</p>
-</blockquote>
-<h3 id="closing-a-turn">
-  
-  
-    <a href="#closing-a-turn" class="anchor-heading" aria-labelledby="closing-a-turn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Closing a turn
-  
-  
-</h3>
-    
-
-<p><strong>End every turn</strong> with the beans you touched and what is next.</p>
-
-<blockquote>
-  <p><strong>Beans</strong></p>
-  <ul>
-    <li><strong>worked</strong> <a href="beans/folio-assistant-fwr8--re-baseline-the-forward-ref-arc.md"><code class="language-plaintext highlighter-rouge">fwr8</code></a> — Re-baseline the forward-ref arc endpoints. Re-ran both with the fixed parser: the arc is 274 → 195, not 274 → 192. This corrects my own earlier claim that the start figure was understated — only the post-mid-arc figures are short, and only by 3.</li>
-    <li><strong>next</strong> <a href="beans/folio-assistant-fwr7--retarget-seven-mis-aimed-uses-edges.md"><code class="language-plaintext highlighter-rouge">fwr7</code></a> — Retarget seven <code class="language-plaintext highlighter-rouge">uses[]</code> edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.</li>
-  </ul>
-</blockquote>
-<h3 id="the-rules-that-make-a-report-worth-reading">
-  
-  
-    <a href="#the-rules-that-make-a-report-worth-reading" class="anchor-heading" aria-labelledby="the-rules-that-make-a-report-worth-reading"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rules that make a report worth reading
-  
-  
-</h3>
-    
-
-<p><strong>1. Every bean reference carries a one-sentence gloss and a link.</strong>
-<code class="language-plaintext highlighter-rouge">fa/nvbr</code> is an opaque four-character string. A reader cannot tell whether it
-is urgent, adjacent, or already obsolete without opening the store — and asking
-someone to go look things up is the cost this report exists to remove. Link to
-the bean file so one click gets the full body.</p>
-
-<p><strong>2. Asking for review means linking the artefact — deep, not the root.</strong> If a
-turn ends with “please look at this”, it must carry the <strong>PR link</strong> and a
-<strong>direct link to every page that changed</strong>, not the staging root.</p>
-
-<blockquote>
-  <p>✗ <code class="language-plaintext highlighter-rouge">https://…/STAGING/claude-my-branch/</code></p>
-
-  <p>✓ <strong>Staging:</strong></p>
-  <ul>
-    <li><a href="https://…/STAGING/claude-my-branch/swarm-management.html">Swarm management</a> — new page</li>
-    <li><a href="https://…/STAGING/claude-my-branch/reference/skill-instructions/process-state.html">process-state</a> — new skill</li>
-    <li><a href="https://…/STAGING/claude-my-branch/architecture.html">Architecture</a> — nav entry added</li>
-  </ul>
-</blockquote>
-
-<p>Handing over the root makes the reader navigate a site to find what you
-changed. You already know which pages those are — you wrote them — so the
-lookup is yours to do, not theirs. Say what each link <em>is</em>, too: a bare URL
-does not tell a reader whether it is new, changed, or just context.</p>
-
-<p><code class="language-plaintext highlighter-rouge">AGENTS.md</code> records the underlying rule (PR #178, 2026-09-16): a human cannot
-assess a rendered artefact from a description, and withholding it makes
-assessment harder rather than safer. <strong>A root-only link is a partial
-withholding</strong> — the artefact is technically reachable and practically hidden.</p>
-
-<p><strong>Where to get the links.</strong> The staging workflow deploys to
-<code class="language-plaintext highlighter-rouge">…/STAGING/&lt;branch-slug&gt;/</code>, and Jekyll rewrites <code class="language-plaintext highlighter-rouge">baseurl</code> so paths mirror
-<code class="language-plaintext highlighter-rouge">docs/</code>. A page at <code class="language-plaintext highlighter-rouge">docs/architecture/foo.md</code> is at
-<code class="language-plaintext highlighter-rouge">…/STAGING/&lt;slug&gt;/architecture/foo.html</code>; a skill at
-<code class="language-plaintext highlighter-rouge">skills/&lt;pkg&gt;/bar.md</code> is at
-<code class="language-plaintext highlighter-rouge">…/STAGING/&lt;slug&gt;/reference/skill-instructions/bar.html</code>. Derive one per
-changed file rather than guessing which the reader wants.</p>
-
-<p><strong>3. Say what to review, not just that it is green.</strong> “Green on all three
-workflows” says the PR is not broken. It does not say what the change <strong>does</strong>,
-what to <strong>look at</strong>, or what <strong>judgement</strong> is wanted. A reader should be able to
-act on the report without opening the diff, and then open the diff knowing what
-they are looking for.</p>
-
-<p><strong>4. Length follows content.</strong> There is no word budget. A one-line fix gets a
-line; a design change that needs a decision gets a paragraph. Err long — the
-cost of a sentence the reader skims is far below the cost of a round-trip
-asking what you meant, especially for an author who types with difficulty.</p>
-
-<p><strong>5. “Next” is your judgement, not a fact.</strong> Beans carry no priority order
-beyond what an agent asserts — so say <em>why</em> it is next, and expect to be
-overruled.</p>
-
-<p><strong>6. Prefix across repos</strong> (<code class="language-plaintext highlighter-rouge">qou/fwr7</code>, <code class="language-plaintext highlighter-rouge">fa/fsl7</code>) when a turn spans both.</p>
-
-<p><strong>7. Report unclaimed work as unclaimed.</strong> If you did durable work without a
-bean, say so and open one; that omission is the failure this exists to catch.</p>
-<h3 id="the-worked-failure">
-  
-  
-    <a href="#the-worked-failure" class="anchor-heading" aria-labelledby="the-worked-failure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The worked failure
-  
-  
-</h3>
-    
-
-<p>Measured here, 2026-09-18. A real end-of-turn report, verbatim:</p>
-
-<blockquote>
-  <p><strong>worked</strong> <code class="language-plaintext highlighter-rouge">fa/fsch</code> — Green on all three workflows. Also corrected the PR
-body, which had drifted from the code after your detangle instruction.
-<strong>next</strong> <code class="language-plaintext highlighter-rouge">fa/nvbr</code>, <code class="language-plaintext highlighter-rouge">fa/rnfl</code> — both gated on #251.</p>
-</blockquote>
-
-<p>It breaks the first three rules at once. <code class="language-plaintext highlighter-rouge">fa/nvbr</code> and <code class="language-plaintext highlighter-rouge">fa/rnfl</code> appear with no
-gloss and no link, so the reader cannot tell what either is. The turn asked for
-review and gave no staging link, so the reader had to ask for it. And “green on
-all three workflows” describes CI rather than the change: it never says the PR
-introduces a root declaration schema, never says the conventions doc is the
-thing worth reading, and never says which decision was wanted. The author’s
-reply was <em>“staging link???”</em>, then a request for more context — two
-round-trips that a longer report would have spent nothing to avoid.</p>
-
-<p>The old version of this rule capped entries at “up to 50 words”, which read as a
-budget to spend rather than a floor to clear and rewarded exactly that
-terseness. Rule 4 replaces it.</p>
-<h3 id="the-next-line-is-a-question-so-it-carries-its-context-strict">
-  
-  
-    <a href="#the-next-line-is-a-question-so-it-carries-its-context-strict" class="anchor-heading" aria-labelledby="the-next-line-is-a-question-so-it-carries-its-context-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The “next” line is a question, so it carries its context (STRICT)
-  
-  
-</h3>
-    
-
-<p>Rules 1 and 5 above say the next item needs a gloss and a reason. This is the
-stronger form for the case where <strong>next</strong> also hands over a <em>decision</em>:
-<a href="/folio-assistant/reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality.md</code> §4.1</a>
-governs it — context → options → recommendation → question — and the test is
-whether the author can answer <strong>without opening anything</strong>.</p>
-
-<p>A bean id plus a term you coined is the specific failure. Measured here on
-2026-09-18:</p>
-
-<blockquote>
-  <p><strong>next</strong> <code class="language-plaintext highlighter-rouge">x4mt</code> — Cross-agent skill install + <code class="language-plaintext highlighter-rouge">fa-</code> prefix (#247). Unstarted,
-and I’d want your call on prefix-at-rest vs prefix-at-install before writing
-anything.</p>
-</blockquote>
-
-<p><code class="language-plaintext highlighter-rouge">x4mt</code> is opaque, <code class="language-plaintext highlighter-rouge">fa-</code> is undefined, and “prefix-at-rest vs prefix-at-install”
-names two options that exist only inside issue #247 — so the author had to open
-it to find out what was being asked. It could have read:</p>
-
-<blockquote>
-  <p><strong>next</strong> <code class="language-plaintext highlighter-rouge">x4mt</code> — Install this platform’s skills into whichever agent is
-running, each name prefixed <code class="language-plaintext highlighter-rouge">fa-</code> so it cannot collide with the host’s own
-commands. One call needed: add the prefix <strong>when a skill is installed</strong>
-(nothing in this repo moves — recommended), or <strong>rename the files here</strong>,
-which also drags the manifests, the BPMN skill refs and two generators.</p>
-</blockquote>
-
-<p>Barely longer, and answerable in one character.</p>
-
-<p><strong>A deferred decision is stated in full, or not stated at all.</strong> If it genuinely
-will not fit, say the decision exists and that you will put it properly when you
-reach it — never post a teaser whose only resolution is a document.</p>
-<h2 id="check-before-you-create--beans-create-is-not-idempotent-strict">
-  
-  
-    <a href="#check-before-you-create--beans-create-is-not-idempotent-strict" class="anchor-heading" aria-labelledby="check-before-you-create--beans-create-is-not-idempotent-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Check before you create — <code class="language-plaintext highlighter-rouge">beans create</code> is not idempotent (STRICT)
-  
-  
-</h2>
-    
-
-<p><code class="language-plaintext highlighter-rouge">beans create</code> mints a <strong>fresh random ID on every call</strong> and dedupes on
-nothing. Re-running a work-plan step is therefore <em>not</em> a no-op — it creates a
-second bean. <strong>Before every <code class="language-plaintext highlighter-rouge">beans create</code>, check whether the bean exists:</strong></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">T</span><span class="o">=</span><span class="s2">"Prove Foo.bar"</span>
-beans list <span class="nt">--json</span> <span class="nt">--search</span> <span class="s2">"title:</span><span class="se">\"</span><span class="nv">$T</span><span class="se">\"</span><span class="s2">"</span> | python3 <span class="nt">-c</span> <span class="s1">'
-import json, sys
-t = sys.argv[1]
-m = [b for b in json.load(sys.stdin) if b["title"] == t]
-print(f"{len(m)} exact match(es)")
-[print(" ", b["id"], b["status"]) for b in m]'</span> <span class="s2">"</span><span class="nv">$T</span><span class="s2">"</span>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans list | <span class="nb">grep</span> <span class="s2">"Voice axis"</span>
 </code></pre></div></div>
 
-<ul>
-  <li><strong>≥ 1 match</strong> → do <strong>not</strong> create. Claim the existing bean instead:
-<code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --status in-progress --body-append "Claimed by &lt;branch&gt;"</code></li>
-  <li><strong>0 matches</strong> → <code class="language-plaintext highlighter-rouge">beans create "$T" --type task</code></li>
-</ul>
-
-<p><code class="language-plaintext highlighter-rouge">--search</code> is a fuzzy Bleve query, so the exact-title comparison inside the
-pipe is load-bearing — do not drop it and trust <code class="language-plaintext highlighter-rouge">--search</code> alone.</p>
-
-<p><strong>Why this is STRICT.</strong> In the <code class="language-plaintext highlighter-rouge">qou</code> folio on 2026-08-04, one agent context
-re-ran its 15-bean session work-plan ~980 times back-to-back (median 19 s per
-cycle, ~16 h wall). Because <code class="language-plaintext highlighter-rouge">create</code> is unconditional, that produced <strong>14,688
-duplicate beans</strong> — 92 % of every open bean in that repo. The damage was not
-just clutter:</p>
-
-<ul>
-  <li>the session-start sweep and the idle-backlog policy were reading mostly noise;</li>
-  <li>~980 copies of an already-proved item sat at <code class="language-plaintext highlighter-rouge">todo</code>;</li>
-  <li>the duplicates <strong>collided with the IDs of 15 real beans</strong>, making
-<code class="language-plaintext highlighter-rouge">beans update &lt;id&gt;</code> ambiguous for those;</li>
-  <li>they corrupted a later agent’s own corpus-grep — 4,928 <code class="language-plaintext highlighter-rouge">beans</code> files matched
-one search term across just 36 titles, inflating 14 real source files into an
-apparent 54 and nearly landing a false correction in a PR body.</li>
-</ul>
-
-<p>The runaway loop is not something a doc can prevent; an unguarded <code class="language-plaintext highlighter-rouge">create</code> is.
-This rule is platform-level so every folio inherits it.</p>
-<h2 id="when-the-beans-cli-is-not-there--you-are-still-not-read-only">
+<p>The evidence itself lives in <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> beside each block, and is
+published per block on the docs site: the <code class="language-plaintext highlighter-rouge">QA</code> icon opens the criterion, and
+the criterion opens the witness that ruled on it — which checker, at which
+<code class="language-plaintext highlighter-rouge">script_hash</code>, and whether the verdict still matches the file on disk.</p>
+<h2 id="do-not">
   
   
-    <a href="#when-the-beans-cli-is-not-there--you-are-still-not-read-only" class="anchor-heading" aria-labelledby="when-the-beans-cli-is-not-there--you-are-still-not-read-only"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When the <code class="language-plaintext highlighter-rouge">beans</code> CLI is not there — you are still not read-only
+    <a href="#do-not" class="anchor-heading" aria-labelledby="do-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do not
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">scripts/beans-fallback.ts</code> writes the same store in the same layout: same
-files, same front matter, same id shape, read from <code class="language-plaintext highlighter-rouge">.beans.yml</code>. The CLI reads
-everything it writes once installed. There is no import step and no second
-store.</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run beans:fallback list <span class="nt">--status</span> todo
-bun run beans:fallback show &lt;<span class="nb">id</span><span class="o">&gt;</span>
-bun run beans:fallback claim &lt;<span class="nb">id</span><span class="o">&gt;</span>
-bun run beans:fallback create <span class="s2">"&lt;title&gt;"</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>
-bun run beans:fallback note &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="s2">"&lt;what you found&gt;"</span>
-</code></pre></div></div>
-
-<p>A read-only fallback is not a fallback for an agent — it lets you see the plan
-and touch nothing, and a session that can see its plan but not claim it does its
-work unclaimed. That is not hypothetical: it is what happened on 2026-09-18
-across two merged PRs.</p>
-
-<p>Its <code class="language-plaintext highlighter-rouge">create</code> <strong>refuses an exact duplicate title</strong> and names the bean to claim
-instead. The CLI’s <code class="language-plaintext highlighter-rouge">create</code> does not, and that is the mechanism behind the
-14,688 duplicates in <code class="language-plaintext highlighter-rouge">qou</code>. <code class="language-plaintext highlighter-rouge">--force</code> exists for a genuinely intended duplicate
-and has to be typed.</p>
-<h2 id="working-with-beans">
-  
-  
-    <a href="#working-with-beans" class="anchor-heading" aria-labelledby="working-with-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Working with Beans
-  
-  
-</h2>
-    
-
-<p><strong>1. Finding Tasks</strong>
-Use <code class="language-plaintext highlighter-rouge">beans list</code> to find beans you should work on. Look for <code class="language-plaintext highlighter-rouge">todo</code> or <code class="language-plaintext highlighter-rouge">in-progress</code> beans that match your current scope/branch.</p>
-
-<p><strong>2. Setting Dependencies</strong>
-You can map out sequence blockers using:
-<code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --blocked-by &lt;blocker-id&gt;</code>
-<code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --blocking &lt;blocked-id&gt;</code></p>
-
-<p><strong>3. Updating Status &amp; Adding Comments</strong></p>
 <ul>
-  <li>When starting work: <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --status in-progress</code></li>
-  <li>When completed: <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --status completed</code></li>
-  <li>To add notes or discussion: <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --body-append "Your note"</code></li>
+  <li><strong>Do not edit prose to silence a criterion you believe is out of scope.</strong>
+That hides the scoping defect and costs the next folio the same argument.</li>
+  <li><strong>Do not mass-apply one finding’s resolution across its siblings</strong> without
+reading them. <code class="language-plaintext highlighter-rouge">voice-scholarly-default</code> fires ten times here on at least two
+different causes.</li>
+  <li><strong>Do not treat <code class="language-plaintext highlighter-rouge">critical</code> as “fix first”.</strong> Severity ranks the criterion’s
+authors’ concern, not the confidence of this match; three of the four
+criticals in <code class="language-plaintext highlighter-rouge">content/docs/</code> are quotations.</li>
+  <li><strong>Do not delete a finding from a sidecar.</strong> The sweep rewrites its own
+entries; a hand-removed one comes back with no record that anyone looked.</li>
 </ul>
-<h2 id="status-display-format">
-  
-  
-    <a href="#status-display-format" class="anchor-heading" aria-labelledby="status-display-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Status Display Format
-  
-  
-</h2>
-    
-
-<p>When the user asks “status” or “show beans”, run <code class="language-plaintext highlighter-rouge">beans list</code> and display the hierarchy:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Session Beans
-- [epic-123] Session: &lt;branch-name&gt; (in-progress)
-  - [task-124] Task A (completed)
-  - [task-125] Task B (in-progress)
-  - [task-126] Task C (todo)
-</code></pre></div></div>
 
           
 

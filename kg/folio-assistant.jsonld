@@ -86,33 +86,17 @@
       "@type": "@id"
     }
   },
-  "danglingLinks": [
-    {
-      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/authoring-math",
-      "edge": "declaresSkill",
-      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/scientific-visualization"
-    },
-    {
-      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/authoring-math",
-      "edge": "declaresSkill",
-      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/hypothesis-generation"
-    },
-    {
-      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/authoring-math",
-      "edge": "declaresSkill",
-      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/scientific-critical-thinking"
-    }
-  ],
+  "danglingLinks": [],
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T22:22:39.808Z",
+  "generatedAt": "2026-09-18T22:29:53.535Z",
   "counts": {
-    "Skill": 140,
+    "Skill": 141,
     "Actor": 24,
     "Capability": 23,
     "Role": 62,
-    "SkillPackage": 15,
+    "SkillPackage": 14,
     "Process": 20,
     "SequenceFlow": 363,
     "ProcessNode": 329,
@@ -934,6 +918,23 @@
       ],
       "instructions": "skills/folio-core/continual-progress.md",
       "lines": 82,
+      "hasInstructions": true,
+      "hasIOContract": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/voice-editorial-review",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "voice-editorial-review",
+      "title": "Voice editorial review",
+      "description": "Adjudicate a `voice-*` finding — read the flagged passage as a reader of THAT genre would and decide whether the register is wrong, the criterion is out of scope, or the block is a stated exception. The human/agent half of the voice QA axis; the mechanical half runs in `qa-checkers-voice.ts`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/voice-editorial-review.md",
+      "lines": 114,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -3344,13 +3345,6 @@
       "hasManifest": false
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/folio-document-adapter",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
-      "name": "folio-document-adapter",
-      "path": "skills/folio-document-adapter",
-      "hasManifest": false
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/roles",
       "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
       "name": "roles",
@@ -3402,7 +3396,6 @@
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/fhir-validation",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/quality-control",
-        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-review",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/smart-base-tools"
       ],
       "providesCapability": [
@@ -3456,10 +3449,7 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/lean-formalization",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/latex-authoring",
-        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/proof-verification",
-        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/scientific-visualization",
-        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/hypothesis-generation",
-        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/scientific-critical-thinking"
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/proof-verification"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/lean-toolchain",
@@ -3473,12 +3463,12 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/authoring-document",
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/folio-document-adapter",
       "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
-      "name": "authoring-document",
+      "name": "folio-document-adapter",
       "version": "0.1.0",
       "description": "Authoring skills for structured prose folios — policy guidance, standards, reports, books — with no Lean formalization and no required LaTeX toolchain",
-      "path": "skills/authoring-document",
+      "path": "skills/folio-document-adapter",
       "hasManifest": true,
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-authoring",
@@ -3572,6 +3562,7 @@
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/untrusted-input",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/uses-editorial-review",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/voice-editorial-review",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/watch"
       ],
       "providesCapability": [
