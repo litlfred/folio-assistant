@@ -156,7 +156,7 @@
 
 </head>
 
-<body><div style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">1518b8d</span> · built 2026-09-18T16:43:42Z · PR #249 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35370060011" style="color:#fff;text-decoration:underline">build log</a></div>
+<body><div style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">dbf361c</span> · built 2026-09-18T16:45:52Z · PR #249 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35370242677" style="color:#fff;text-decoration:underline">build log</a></div>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -328,6 +328,34 @@
 <p>The <strong>bean-based work-plan system</strong> — the <a href="https://github.com/hmans/beans"><code class="language-plaintext highlighter-rouge">beans</code></a>
 CLI, a flat-file issue tracker storing issues as markdown under <code class="language-plaintext highlighter-rouge">.beans/</code> — is
 how every session tracks its work-plan and how agents hand off across sessions.</p>
+<h2 id="a-bean-is-never-deleted">
+  
+  
+    <a href="#a-bean-is-never-deleted" class="anchor-heading" aria-labelledby="a-bean-is-never-deleted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A bean is never deleted
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">beans delete</code> exists in the CLI. <strong>Do not use it — not on a sibling’s bean,
+and not on your own.</strong></p>
+
+<p>Work that turns out not to be wanted is <strong>scrapped</strong>: <code class="language-plaintext highlighter-rouge">status: scrapped</code>, with
+a section saying why. That is also what “disable” means here; the CLI’s status
+vocabulary is <code class="language-plaintext highlighter-rouge">draft</code>, <code class="language-plaintext highlighter-rouge">todo</code>, <code class="language-plaintext highlighter-rouge">in-progress</code>, <code class="language-plaintext highlighter-rouge">completed</code>, <code class="language-plaintext highlighter-rouge">scrapped</code>, and
+there is no disabled state.</p>
+
+<p>The reason is not tidiness. A scrapped bean records that something was
+considered and rejected, and on what grounds — which is what stops the next
+agent re-entering the same dead end. A deleted bean leaves a sibling session
+unable to tell abandonment from accident.</p>
+
+<p><strong>Claiming and closing are separately scoped.</strong> Claim before you work, so two
+sessions do not pick the same item. Never <em>resolve</em> a bean another session or
+a human owns — closing someone else’s is how one of them loses work it had not
+finished reporting.</p>
+
+<p>Full cycle, as a diagram: <a href="https://litlfred.github.io/folio-assistant/beans-and-todos.html">Beans and todos</a>.</p>
 
 <p><strong>Operational spec (read these):</strong></p>
 
@@ -380,7 +408,7 @@ beans (see todo-manager.md disambiguation block).</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35370060011"><code>1518b8d</code></a> &middot; 2026-09-18T16:43:15Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35370242677"><code>dbf361c</code></a> &middot; 2026-09-18T16:45:23Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
