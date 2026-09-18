@@ -3,7 +3,7 @@ import type { TranslationNode } from "../../schemas/translation";
 /**
  * French translation of the landing page (docs/index.md).
  *
- * Extracted, translated, and round-trip QA'd by the translation pipeline.
+ * Extracted, translated, and injected by the translation pipeline.
  * Coverage: 37/37 strings (100%).
  */
 const node: TranslationNode = {
@@ -19,21 +19,14 @@ const node: TranslationNode = {
     generatedBy: "agent",
     generatedAt: "2026-09-17T22:41:45.100Z",
     generator: "folio-assistant translation pipeline",
-    flaggedForReview: true,
-    flagReason: "21 segments showed semantic drift in round-trip QA",
   },
   coverage: { translated: 37, total: 37, pct: 100 },
-  roundTripQA: {
-    pass: 11,
-    warn: 4,
-    fail: 21,
-    total: 36,
-    method: "jaccard-word-overlap",
-  },
   title: "Accueil — folio-assistant",
   description:
     "French translation of the docs site landing page. All 37 strings " +
-    "translated. Round-trip QA ran with simulated back-translation; " +
-    "high fail rate expected with limited vocabulary back-translator.",
+    "translated, and unofficial: no human has adjudicated it for this source " +
+    "version. Semantic verification is per block, in the " +
+    "`<stem>.fr.translation-qa.json` sidecars, where a verdict names the " +
+    "agent or person who reached it.",
 };
 export default node;
