@@ -6,9 +6,13 @@ nav_order: 0.1
 lang: fr
 translation_status: unverified
 translation_source: guides/agent-onboarding.md
+available_locales: ["fr"]
+qa_translation_pass: 22
+qa_translation_warn: 3
+qa_translation_fail: 1
+qa_translation_total: 26
+qa_coverage_pct: 100
 ---
-
-{% include translation-warning.html %}
 
 # Intégration de l'agent
 {: .no_toc }

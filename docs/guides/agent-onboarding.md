@@ -4,6 +4,7 @@ title: Agent onboarding
 parent: Authoring guides
 nav_order: 0
 lang: en
+available_locales: ["fr"]
 ---
 
 # Agent onboarding
