@@ -4,7 +4,7 @@
  * `beans` CLI agreeing with it.
  *
  * `agent-harness.json` is where an instance declares the directories it scans
- * and the KIND of graph each holds — `workplan` for `beans/`, `process` for
+ * and the KIND of graph each holds — `workplan` for `beans/`, `process-state` for
  * `beans/workflow/`. That is the single declaration, beside `schemas/` and
  * `skills/`, and it is what a consumer reads.
  *
@@ -18,7 +18,7 @@
  *
  * 1. The `workplan` directory in `agent-harness.json` equals `beans.path` in
  *    `.beans.yml`.
- * 2. The `process` directory equals what `workflow/store.ts` compiled in.
+ * 2. The `process-state` directory equals what `workflow/store.ts` compiled in.
  * 3. Neither path is dot-prefixed at its first segment — the whole point of
  *    moving them was that a person can see them.
  * 4. The declared work-plan directory exists and holds beans.
@@ -99,12 +99,12 @@ export function checkHarnessDirs(root: string): HarnessDirsReport {
     const byKind = (kind: string): string | undefined =>
       decl!.directories.find((d) => d.graph === kind)?.path.replace(/\/+$/, "");
     const wp = byKind("workplan");
-    const ps = byKind("process");
+    const ps = byKind("process-state");
     if (wp || ps) configured = true;
     declaredWorkPlan = wp ?? declaredWorkPlan;
     declaredWorkflowState = ps ?? declaredWorkflowState;
     if (!wp) notes.push(`${DECLARATION_FILENAME} declares no \`workplan\` directory — using the default.`);
-    if (!ps) notes.push(`${DECLARATION_FILENAME} declares no \`process\` directory — using the default.`);
+    if (!ps) notes.push(`${DECLARATION_FILENAME} declares no \`process-state\` directory — using the default.`);
   } else if (!problems.length) {
     notes.push(`No ${DECLARATION_FILENAME} — this instance has not been migrated; using defaults.`);
   }

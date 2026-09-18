@@ -101,7 +101,7 @@ export interface GraphKindDef {
  * tool reads: how work is done (`tools`), what an actor knows and which process
  * governs it (`kg`), the shapes both are typed against (`schemas`), what is
  * being worked on (`workplan`), and where each running process got to
- * (`process`).
+ * (`process-state`).
  *
  * ## Why the work plan is the harness's and not core's
  *
@@ -112,11 +112,11 @@ export interface GraphKindDef {
  * So it is declared here — the test for "does this belong to the harness" is
  * whether the harness has one, and it does.
  *
- * ## Why `workplan` and `process` are two kinds and not one
+ * ## Why `workplan` and `process-state` are two kinds and not one
  *
  * They sit in nested directories and are easy to conflate, which is exactly
  * why they are separated. `workplan` is WHAT IS BEING WORKED ON — human- and
- * agent-authored items, edited by hand, carrying judgement. `process` is WHERE
+ * agent-authored items, edited by hand, carrying judgement. `process-state` is WHERE
  * A RUNNING PROCESS GOT TO — a token marking the interpreter owns, that no
  * human is invited to edit. A consumer asking for the work plan must not be
  * handed BPMN instance state, and collapsing them into one kind is how it
@@ -143,7 +143,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     summary: "Work items — what is being worked on. Authored and edited by people and agents.",
   },
-  process: {
+  "process-state": {
     type: `${FOLIO_NS}ProcessStateGraph`,
     renderable: false,
     summary: "Running BPMN instances — where each one got to. Owned by the interpreter, not hand-edited.",
