@@ -399,6 +399,10 @@ Key rules:
 - Post implementation summaries to the issue, not just the PR
 - Issues are for stakeholder sign-off; PRs are for code review; beans are for
   work-plan tracking — they are not synonymous
+- Never close an issue without explicit authorization from the BA or
+  stakeholder — an agent must never assume completion
+- After each round of implementation, post a summary comment on the issue:
+  what was accomplished, what remains, links to updated content for review
 
 ## Commit early, commit often, always PR (STRICT)
 

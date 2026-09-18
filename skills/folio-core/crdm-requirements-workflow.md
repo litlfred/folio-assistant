@@ -126,9 +126,16 @@ For each bean:
    remove, the user must add the `staging:cleanup` label to the PR.
    **Do not remove staging without this label.**
 
-When all beans are resolved:
-1. Post a delivery summary comment on the issue
-2. Close the issue (or leave for requestor to close)
+When a round of implementation is complete (one or more beans resolved):
+1. **Post a round summary comment on the issue** — addressed to the BA and
+   stakeholders, containing:
+   - What was accomplished in this round
+   - What remains to be accomplished (open beans)
+   - Links to updated content for review (staging URLs, docs pages)
+   - Before/after comparison table for changed pages
+2. **Never close the issue without explicit authorization** — the BA or
+   stakeholder closes it, or the agent closes it only when the BA
+   explicitly says to. An agent must never assume completion.
 
 ## Cross-references
 

@@ -25,12 +25,19 @@ two are related but not synonymous.
    This is stricter than the general `AGENTS.md` rule for content work,
    because feature changes affect the platform.
 
-4. **Post summaries to the issue.** After a PR is merged (or when significant
-   progress is made), post a summary comment on the linked issue. PRs are for
-   code review; issues are for stakeholder communication.
+4. **Post round summaries to the issue.** After each round of implementation
+   (one or more beans resolved), post a comment on the linked issue containing:
+   - What was accomplished in this round
+   - What remains to be accomplished (open beans)
+   - Links to updated content for review (staging URLs, docs pages)
+   - Before/after comparison table for changed pages
 
-5. **Requirements may span multiple issues.** The agent should link to all
+5. **Never close an issue without explicit authorization.** The BA or
+   stakeholder closes it. The agent closes it only when the BA explicitly
+   says to. An agent must never assume completion.
+
+6. **Requirements may span multiple issues.** The agent should link to all
    relevant issues and note the relationships.
 
-6. **Beans are not issues.** `beans create` is for work-plan items. Issues are
+7. **Beans are not issues.** `beans create` is for work-plan items. Issues are
    for stakeholder-facing requirements. Do not conflate them.
