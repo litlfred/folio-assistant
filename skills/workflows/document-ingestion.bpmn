@@ -127,6 +127,9 @@ uncovered until the skill is written.</bpmn:documentation>
 as a bean">
       <bpmn:documentation>A missing derived artefact is a tracked gap, not a silent omission. The document stays in uploads/ until the gap closes.</bpmn:documentation>
       <bpmn:extensionElements>
+        <folio:skill ref="todo-manager" />
+        <folio:skill ref="todo-manager" />
+        <folio:skill ref="todo-manager" />
         <folio:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i7</bpmn:incoming>
@@ -144,6 +147,11 @@ library/&lt;bib-slug&gt;/">
     <bpmn:task id="Task_Citeable" name="Available to cite
 as an L1 source">
       <bpmn:documentation>Every knowledge-graph reference to this source now resolves through library/. Authoring and review consume it from here -- see authoring-a-document.bpmn.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake" />
+        <folio:skill ref="document-intake" />
+        <folio:skill ref="document-intake" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_i10</bpmn:incoming>
       <bpmn:outgoing>Flow_i11</bpmn:outgoing>
     </bpmn:task>

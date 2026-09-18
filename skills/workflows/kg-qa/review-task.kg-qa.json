@@ -8,7 +8,7 @@
   "source_hash": "sha256:5d37def2b7379235c283625e0e354a2a84fc7fd3643a8d80c7542b8a7ee823ec",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:565c0baa00bdb6212732c82e3176d395af13d4f8ce84524cca9a2be5b37203da",
+    "script_hash": "sha256:fd86e120ed4c0f1fe08c22354b901ce1400683e45baedeec0dcb0e4d1f4c43fe",
     "engine_version": "1"
   },
   "criteria": {
@@ -41,22 +41,17 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Call_NarrativeReview",
-          "detail": "\"Narrative review\" names no skill."
-        },
-        {
-          "where": "Call_CodeReview",
-          "detail": "\"Code node review\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 8,
+    "fail": 0,
     "n/a": 1,
     "unknown": 0
   }

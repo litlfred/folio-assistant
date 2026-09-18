@@ -36,6 +36,16 @@ describe("the criteria registry", () => {
     expect(KG_CRITERIA_BY_ID["skill-ref-resolves"]!.severity).toBe("critical");
     expect(KG_CRITERIA_BY_ID["activity-names-skill"]!.severity).toBe("minor");
   });
+
+  test("`call-activity-resolves` is not critical — an outward call is not a defect", () => {
+    // It was written `critical`, which would have broken the build of the first
+    // downstream instance calling a process it does not host. PR #282 states
+    // the interpreter's side of the same rule: such a call activity stays
+    // opaque rather than failing. The audit cannot tell that case from a typo,
+    // so it records `unknown` at `major` — visible under `--strict`, and not a
+    // gate. Raising this back to `critical` re-introduces that breakage.
+    expect(KG_CRITERIA_BY_ID["call-activity-resolves"]!.severity).toBe("major");
+  });
 });
 
 describe("tally and worstSeverity", () => {

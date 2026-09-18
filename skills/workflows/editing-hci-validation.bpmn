@@ -182,6 +182,11 @@ This step has nothing to do for content that carries no recommendations -- a mat
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Task_CollateFindings" name="Collate findings into a report">
       <bpmn:documentation>Mechanical results and review findings are merged into one report against the proposed change.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="content-validate" />
+        <folio:skill ref="content-validate" />
+        <folio:skill ref="content-validate" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_18</bpmn:incoming>
       <bpmn:outgoing>Flow_19</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -197,6 +202,9 @@ This step has nothing to do for content that carries no recommendations -- a mat
     <bpmn:userTask id="Task_ReviewFindings" name="Review the findings">
       <bpmn:documentation>THE GATE: the editor sees every finding BEFORE anything reaches the corpus.</bpmn:documentation>
       <bpmn:extensionElements>
+        <folio:skill ref="decision-audit" />
+        <folio:skill ref="decision-audit" />
+        <folio:skill ref="decision-audit" />
         <folio:policy relaxable="false" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_20</bpmn:incoming>

@@ -111,16 +111,31 @@
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Cone" name="Compute the cone of the change&#10;(fsh-cone --changed)">
       <bpmn:documentation>content/pipeline/fsh-cone.ts over the changed files: the forward cone is what to rebuild, the backward cone is what to check out.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+      </bpmn:extensionElements>
       <bpmn:incoming>F03</bpmn:incoming>
       <bpmn:outgoing>F05</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:task id="Task_ConeReport" name="Post the cone report on the PR">
       <bpmn:documentation>Review path: the reviewer sees what this change rebuilds — how many artefacts, and whether a hub (a shared RuleSet, CQL library or value set) is touched — before the build finishes. On main it is a log line.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="quality-control" />
+        <folio:skill ref="quality-control" />
+        <folio:skill ref="quality-control" />
+      </bpmn:extensionElements>
       <bpmn:incoming>F05</bpmn:incoming>
       <bpmn:outgoing>F06</bpmn:outgoing>
     </bpmn:task>
     <bpmn:serviceTask id="Task_Checkout" name="Restricted checkout&#10;of the backward cone">
       <bpmn:documentation>git sparse-checkout of the cone's files plus sushi-config.yaml, ig.ini and the alias files — a median of three files, p90 eleven, on smart-immunizations.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+      </bpmn:extensionElements>
       <bpmn:incoming>F06</bpmn:incoming>
       <bpmn:outgoing>F07</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -133,6 +148,11 @@
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_ContextLoad" name="Load or reuse the warm context&#10;(fhir_context_load)">
       <bpmn:documentation>The validator's server mode holds the loaded dependency packages, snapshots and expansions in its session cache. Cold start loads the restored derived FHIR rather than regenerating it.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+      </bpmn:extensionElements>
       <bpmn:incoming>F08</bpmn:incoming>
       <bpmn:outgoing>F09</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -161,15 +181,28 @@
     </bpmn:endEvent>
     <bpmn:serviceTask id="Task_Render" name="Re-render the cone's records&#10;(fhir_narrative · skip lists)">
       <bpmn:documentation>Narrative and fragments for the cone only: the publisher's -no-validate / -no-narrative complements today, Rapido's differential build once its tracker is persisted.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+      </bpmn:extensionElements>
       <bpmn:incoming>F13</bpmn:incoming>
       <bpmn:outgoing>F14</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Merge" name="Merge restored and&#10;rebuilt records">
+      <bpmn:extensionElements>
+        <folio:skill ref="ig-publication" />
+      </bpmn:extensionElements>
       <bpmn:incoming>F14</bpmn:incoming>
       <bpmn:outgoing>F15</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Index" name="Rebuild the meta-index&#10;(ig_metaindex_rebuild)">
       <bpmn:documentation>The whole-IG aggregates only — artifacts, TOC, canonicals, expansions, package, QA aggregate. Never re-derives an artefact: a missing record is a miss (exit 1), not a silent rebuild.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+      </bpmn:extensionElements>
       <bpmn:incoming>F15</bpmn:incoming>
       <bpmn:outgoing>F16</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -231,6 +264,11 @@
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Seed" name="Seed the cache from the green build&#10;(ig-cache seed · verify · promote)">
       <bpmn:documentation>Only a green build of main or a release seeds. Seed writes to the -test branch, verifies a restore from a clean clone, then promotes.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+        <folio:skill ref="ig-publication" />
+      </bpmn:extensionElements>
       <bpmn:incoming>F26</bpmn:incoming>
       <bpmn:outgoing>F27</bpmn:outgoing>
     </bpmn:serviceTask>
