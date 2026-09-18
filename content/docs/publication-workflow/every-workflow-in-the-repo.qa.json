@@ -236,6 +236,25 @@
           "md": "6cbdcf38dd3d",
           "ts": "78a681ebd551"
         },
+        "result": "pass",
+        "reviewer": {
+          "kind": "agent",
+          "id": "voice-editorial-review",
+          "version": "claude-opus-5",
+          "agent_model": "claude-opus-5",
+          "agent_date": "2026-09-19",
+          "agent_skill": "folio-core/voice-editorial-review",
+          "agent_session": "https://claude.ai/code/session_01AJcLBkPxvPZYaUeQUFEYTD"
+        },
+        "reviewed_at": "2026-09-18T23:52:40.659Z",
+        "reviewed_sha": "339c01a7b8fb032ec02f807456a076bb4dceec78",
+        "notes": "P4 (ISO date) fired on '(counted on `main`, 2026-09-18 — this line said \"six\" for long enough that it is worth saying where the number came from)'. Two rules in this repo are in tension here and the other one wins: a measured number must carry the command and date that produced it (AGENTS.md, BASELINE; `.claude/agents/*/MEMORY.md` labels every such entry that way, and 'never quoted as a current answer'). The date is not authoring residue — it is what stops 'nineteen' becoming the next stale 'six'. P4 cannot distinguish a provenance stamp from a changelog entry."
+      },
+      {
+        "field_hash": {
+          "md": "6cbdcf38dd3d",
+          "ts": "78a681ebd551"
+        },
         "result": "fail",
         "reviewer": {
           "kind": "script",
@@ -919,5 +938,5 @@
       }
     ]
   },
-  "updated_at": "2026-09-18T23:48:21.996Z"
+  "updated_at": "2026-09-18T23:52:40.659Z"
 }

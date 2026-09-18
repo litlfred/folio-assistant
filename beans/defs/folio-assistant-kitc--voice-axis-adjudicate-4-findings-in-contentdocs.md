@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kitc
 title: 'Voice axis: adjudicate 4 voice-emoji-content findings in content/docs'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T22:23:37Z
-updated_at: 2026-09-18T23:38:02Z
+updated_at: 2026-09-18T23:55:14Z
 ---
 
 The QA sweep over `content/docs/` flags 4 blocks on `voice-emoji-content`
@@ -46,3 +46,7 @@ human/agent half of this axis; the mechanical half is `qa-checkers-voice.ts`.
 Every box above is either fixed in prose, covered by a criterion-scoping
 change, or carries a reviewer entry on its sidecar explaining the exception —
 and `bun run content/pipeline/qa-sweep.ts --root content/docs` reflects it.
+
+_2026-09-18T23:55:14Z_ — ## Summary of Changes
+
+Split 3–1, which is why the skill forbids mass-applying. Three are `>` blockquote transcripts quoting tool output (`✓`, `✅`) — agent `pass`, quoted as data. The fourth, `⚠` in `evidence/three-classes.md:7`, was NOT a transcript: measured, it was the ONLY glyph in all 122 blocks and every other callout in the corpus opens with a bold label and no glyph. No house convention, so the criterion was right — prose fixed, glyph removed.

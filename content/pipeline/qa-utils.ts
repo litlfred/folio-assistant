@@ -1376,6 +1376,40 @@ export function entryIsFresh(
  * script: delete every `kind:"script"` reviewer entry; sweep re-runs" /
  * "Human: always preserved").
  */
+/**
+ * Place a new agent / human adjudication so that it LEADS its criterion.
+ *
+ * Order is the verdict. `projectEntryArrays` in `qa-witness.ts` reads
+ * `list[0]` as a criterion's effective result, and `qa-sweep` writes
+ * `[...preserveNonScriptEntries(existing), scriptEntry]`, so the invariant
+ * across the pipeline is: non-script entries lead, the script entry trails
+ * (`scripts/tests/qa-sweep-merge.test.ts` §5.4 states it as
+ * `[script_stale, agent] -> [agent, script_fresh]`).
+ *
+ * `qa-merge-findings` appended instead, which broke the invariant in exactly
+ * the case it matters: an adjudication merged onto a block whose script
+ * verdict is FRESH. The sweep then short-circuits and never reorders, so the
+ * script `fail` keeps leading and the reviewer's `pass` is recorded but not in
+ * force. Measured 2026-09-19 on eleven voice adjudications over
+ * `content/docs`: all eleven merged, all eleven still read `fail`.
+ *
+ * The script entry is KEPT, below — nothing is silently rewritten, and the
+ * disagreement between the checker and the reviewer stays legible.
+ */
+export function insertAdjudication(
+  existing: QaCriterionEntry[],
+  entry: QaCriterionEntry,
+): QaCriterionEntry[] {
+  const firstScript = existing.findIndex((e) => e?.reviewer?.kind === "script");
+  return firstScript === -1
+    ? [...existing, entry]
+    : [
+        ...existing.slice(0, firstScript),
+        entry,
+        ...existing.slice(firstScript),
+      ];
+}
+
 export function preserveNonScriptEntries(
   existing: QaCriterionEntry[],
 ): QaCriterionEntry[] {

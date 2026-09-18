@@ -89,6 +89,25 @@
           "md": "346b2f0a2aac",
           "ts": "5d2d170831a9"
         },
+        "result": "pass",
+        "reviewer": {
+          "kind": "agent",
+          "id": "voice-editorial-review",
+          "version": "claude-opus-5",
+          "agent_model": "claude-opus-5",
+          "agent_date": "2026-09-19",
+          "agent_skill": "folio-core/voice-editorial-review",
+          "agent_session": "https://claude.ai/code/session_01AJcLBkPxvPZYaUeQUFEYTD"
+        },
+        "reviewed_at": "2026-09-18T23:52:40.659Z",
+        "reviewed_sha": "339c01a7b8fb032ec02f807456a076bb4dceec78",
+        "notes": "Quoted as data. The glyphs sit inside a `>` blockquote transcript of an agent session — 'QA: broken links 0, profile conformance ✓, terminology bindings resolved ✓' is the assistant's reported output, reproduced. Editing them would falsify a transcript. NOTE the contrast that made this worth checking rather than assuming: the fourth voice-emoji-content finding, the `⚠` in evidence/three-classes.md, was NOT a transcript, was the only glyph in all 122 blocks, and was fixed in the prose instead."
+      },
+      {
+        "field_hash": {
+          "md": "346b2f0a2aac",
+          "ts": "5d2d170831a9"
+        },
         "result": "fail",
         "reviewer": {
           "kind": "script",
@@ -913,5 +932,5 @@
       }
     ]
   },
-  "updated_at": "2026-09-18T23:47:36.239Z"
+  "updated_at": "2026-09-18T23:52:40.659Z"
 }

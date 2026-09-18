@@ -26,7 +26,10 @@
  *     cd scripts/tests && bun test qa-sweep-merge.test.ts
  */
 import { describe, test, expect } from "bun:test";
-import { preserveNonScriptEntries } from "../../content/pipeline/qa-utils.ts";
+import {
+  preserveNonScriptEntries,
+  insertAdjudication,
+} from "../../content/pipeline/qa-utils.ts";
 import type {
   QaCriterionEntry,
   QaReviewerKind,
@@ -163,5 +166,65 @@ describe("qa-sweep script-entry REPLACE (task §5)", () => {
     // Repeated sweeps never grow the agent count or the script count.
     const after2 = sweepWrite(after, entry("script", { tag: "fresher" }));
     expect(after2.length).toBe(after.length);
+  });
+});
+
+/**
+ * The merge side of the same invariant. §5.4 above fixes the order a SWEEP
+ * writes; this fixes the order an ADJUDICATION is written in, which is what
+ * decides the verdict when the script entry is fresh and the sweep never
+ * re-runs.
+ */
+describe("insertAdjudication — an adjudication leads its criterion", () => {
+  test("[script] + agent → [agent, script]", () => {
+    const out = insertAdjudication(
+      [entry("script", { result: "fail", tag: "s" })],
+      entry("agent", { result: "pass", tag: "a" }),
+    );
+    expect(out.map((e) => e.reviewer.kind)).toEqual(["agent", "script"]);
+    // `list[0]` is what `qa-witness.projectEntryArrays` reads.
+    expect(out[0]!.result).toBe("pass");
+  });
+
+  test("the script entry is KEPT — a disagreement stays legible", () => {
+    const out = insertAdjudication(
+      [entry("script", { result: "fail" })],
+      entry("agent", { result: "pass" }),
+    );
+    expect(out).toHaveLength(2);
+    expect(out[1]!.result).toBe("fail");
+  });
+
+  test("with no script entry it appends, preserving reviewer history order", () => {
+    const out = insertAdjudication(
+      [entry("agent", { tag: "first" })],
+      entry("agent", { tag: "second" }),
+    );
+    // `tag` lands in `field_hash.md` in this fixture, which is what
+    // distinguishes the two agent entries.
+    expect(out.map((e) => e.field_hash.md)).toEqual(["first", "second"]);
+  });
+
+  test("an existing agent entry still precedes the new one, both before script", () => {
+    const out = insertAdjudication(
+      [entry("agent", { tag: "old" }), entry("script", { result: "fail" })],
+      entry("human", { result: "pass", tag: "new" }),
+    );
+    expect(out.map((e) => e.reviewer.kind)).toEqual(["agent", "human", "script"]);
+  });
+
+  test("a sweep after a merge is order-stable — the two writers agree", () => {
+    // The composition that was broken: merge an adjudication, then sweep.
+    // Both steps must leave the adjudication leading.
+    const merged = insertAdjudication(
+      [entry("script", { result: "fail" })],
+      entry("agent", { result: "pass" }),
+    );
+    const swept = [
+      ...preserveNonScriptEntries(merged),
+      entry("script", { result: "fail", tag: "fresh" }),
+    ];
+    expect(swept.map((e) => e.reviewer.kind)).toEqual(["agent", "script"]);
+    expect(swept[0]!.result).toBe("pass");
   });
 });
