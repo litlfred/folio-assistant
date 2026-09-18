@@ -156,7 +156,7 @@
 
 </head>
 
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">ff4a16e</span> · built 2026-09-18T22:03:28Z · <a href="https://github.com/litlfred/folio-assistant/pull/282" style="color:#fff;text-decoration:underline">PR #282</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/directory-conventions.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35399691984" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">edeff36</span> · built 2026-09-18T22:05:27Z · <a href="https://github.com/litlfred/folio-assistant/pull/282" style="color:#fff;text-decoration:underline">PR #282</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/directory-conventions.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35399844883" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -397,7 +397,19 @@ graph</strong>. <code class="language-plaintext highlighter-rouge">folio</code> 
     <tr>
       <td><code class="language-plaintext highlighter-rouge">beans</code></td>
       <td><strong>harness</strong></td>
-      <td>the work plan, and where each running BPMN instance got to (<code class="language-plaintext highlighter-rouge">beans/</code>)</td>
+      <td>the work plan as a whole (<code class="language-plaintext highlighter-rouge">beans/</code>); its inner nodes are declared by <code class="language-plaintext highlighter-rouge">beans/beans.json</code></td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bean-defs</code></td>
+      <td><strong>harness</strong></td>
+      <td>work items — one Markdown file each, in the layout the <code class="language-plaintext highlighter-rouge">beans</code> CLI reads. Authored by people and agents.</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">workflow-state</code></td>
+      <td><strong>harness</strong></td>
+      <td>running BPMN instances — one JSON each, <code class="language-plaintext highlighter-rouge">"$schema": "folio-workflow-instance/v1"</code>. Owned by the interpreter, never hand-edited.</td>
       <td>no</td>
     </tr>
     <tr>
@@ -408,6 +420,16 @@ graph</strong>. <code class="language-plaintext highlighter-rouge">folio</code> 
     </tr>
   </tbody>
 </table></div>
+
+<blockquote>
+  <p><strong><code class="language-plaintext highlighter-rouge">bean-defs</code> and <code class="language-plaintext highlighter-rouge">workflow-state</code> are the distinction <code class="language-plaintext highlighter-rouge">beans</code> swallowed.</strong>
+Collapsing <code class="language-plaintext highlighter-rouge">workplan</code> + <code class="language-plaintext highlighter-rouge">process-state</code> into one <code class="language-plaintext highlighter-rouge">beans</code> kind was right about
+the <em>mechanism</em> — one directory, one declaration — but the underlying
+difference is real and came back as nodes: WHAT IS BEING WORKED ON carries
+judgement and is edited by hand; WHERE A RUNNING PROCESS GOT TO is a token the
+interpreter owns. A consumer asking for the work plan must still not be handed
+BPMN instance state.</p>
+</blockquote>
 
 <p><strong>Why the work plan is the harness’s and not core’s.</strong> The test is whether the
 harness <em>has</em> one, and it does: an instance has work whether or not it has
@@ -787,7 +809,7 @@ rendering pipeline depends on.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35399691984"><code>ff4a16e</code></a> &middot; 2026-09-18T22:03:00Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35399844883"><code>edeff36</code></a> &middot; 2026-09-18T22:05:02Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
