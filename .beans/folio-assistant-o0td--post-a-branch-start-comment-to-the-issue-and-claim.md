@@ -1,11 +1,11 @@
 ---
 # folio-assistant-o0td
 title: Post a branch-start comment to the issue and claim beans
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T16:15:27Z
-updated_at: 2026-09-18T16:33:53Z
+updated_at: 2026-09-18T16:37:29Z
 ---
 
 From #203 comment 5731572165 (2026-09-18 14:36).

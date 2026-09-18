@@ -39,3 +39,37 @@ sit *inside* level 3's `Draft the block edit`, and live with their guides:
 | `l2-dak-authoring.bpmn` | WHO SMART Guidelines DAK (L2) | [Authoring a WHO SMART DAK](guides/who-smart-dak.html#the-l2-artifacts) |
 | `l3-fhir-pipeline.bpmn` | WHO SMART Implementation Guide (L3) | [Authoring a WHO SMART IG](guides/who-smart-ig.html#the-l3-pipeline) |
 | `ig-incremental-build.bpmn` | WHO SMART IG (L3) — the build lane, incremental by dependency cone (proposed) | [Making the build incremental](guides/who-smart-ig.html#making-the-build-incremental) · [the overview](proposals/ig-incremental-build-overview.html) |
+
+**Agent process** — how an agent works, rather than how content is authored.
+These run alongside the content processes rather than inside them:
+
+| Diagram | Answers |
+|---------|---------|
+| `crdm-requirements.bpmn` | A feature request arrived. How is it turned into agreed requirements, and who signs off? See [CRDM methodology](crdm-methodology.html) |
+| `bean-lifecycle.bpmn` | When does an agent create, edit or scrap a bean — and why is one never deleted? See [Beans and todos](beans-and-todos.html) |
+| `content-change-review.bpmn` | One author's change, from description through staging to review-committee approval |
+
+**Ingestion** — turning an uploaded source document into corpus. The first is
+the outer process; the rest are its call activities:
+
+| Diagram | Answers |
+|---------|---------|
+| `document-ingestion.bpmn` | The whole path from `uploads/` to a citeable L1 knowledge graph |
+| `ingest-extract-structure.bpmn` | Text layer, OCR, sections, structure, claim candidates |
+| `ingest-derive-content.bpmn` | Archive, technical metadata, images, audio, tabular data, provenance |
+| `ingest-build-l1-kg.bpmn` | Dublin Core, manifest, assets, binding, linking |
+| `ingest-l1-completeness-gate.bpmn` | Is the derived content complete enough to promote, and who says so? |
+
+**Translation and evidence**:
+
+| Diagram | Answers |
+|---------|---------|
+| `translation-workflow.bpmn` | POT extraction → translation → PO injection → round-trip QA → sign-off → staleness watch |
+| `human-translation-workflow.bpmn` | The same cycle when a human translator and an SME reviewer are in it |
+| `evidence-retrieval.bpmn` | Framing a question, searching trusted sources, appraising what comes back |
+
+> **This list is checked, not maintained by hand.** `bun run check:workflow-refs`
+> fails when a `.bpmn` under `docs/workflows/` is absent from this page. It was
+> added because the page opened by counting nineteen files and then listed
+> eight — the eleven above were present in the repository and invisible here,
+> which is the same defect as a table of contents that stops halfway.
