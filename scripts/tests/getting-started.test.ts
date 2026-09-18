@@ -22,7 +22,7 @@ import { join, resolve } from "node:path";
 import { evaluate, loadDecisionTable, possibleOutcomes } from "../../src/workflow/decision-table.js";
 import { loadProcessModel } from "../../src/workflow/process-model.js";
 import { classify, scanRepo } from "../scan-repo-content.js";
-import { derivePagesUrl, outcomeFor, parseRemote } from "../pages-bootstrap.js";
+import { derivePagesUrl, outcomeFor, parseRemote, type PagesOutcome } from "../pages-bootstrap.js";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 const WORKFLOWS = join(REPO_ROOT, "docs", "workflows");
@@ -99,8 +99,12 @@ describe("pages-live-gate.dmn — 'could not check' is not 'not yet'", () => {
     const t = await load();
     for (const pagesUrlKnown of [true, false]) {
       for (const probe of ["ok", "not-found", "error", "unchecked"] as const) {
+        // The table's outcome is typed `unknown` by the evaluator, which knows
+        // nothing about this particular table's range. Narrowing it to
+        // PagesOutcome is the assertion: if the DMN ever returns a fourth
+        // value, this line is where it surfaces.
         expect(outcomeFor({ pagesUrlKnown, probe })).toBe(
-          evaluate(t, { pagesUrlKnown, probe }).outcome as string,
+          evaluate(t, { pagesUrlKnown, probe }).outcome as PagesOutcome,
         );
       }
     }
