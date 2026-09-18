@@ -1,31 +1,37 @@
 The diagram above shows the full CRDM workflow as a BPMN 2.0 collaboration
 with three swim lanes:
 
-- **Requestor / stakeholder** — submits the request, reviews the synthesised
-  needs and requirements, signs off, reviews PRs, and does final feature
-  sign-off on the issue.
+- **BA / Feature Requestor** — initiates the request, reviews needs and
+  requirements, signs off, reviews each increment the agent delivers,
+  decides when to share an MVP with stakeholders, translates stakeholder
+  feedback into agent-actionable direction, and confirms final delivery.
 
 - **Agent** — detects the feature request, scans for matching issues, runs
-  through the six CRDM phases, creates beans, implements on feature branches,
-  posts summaries to the issue.
+  through the six CRDM phases, creates beans, implements on feature
+  branches, posts summaries to the issue.
 
-- **Platform** — automated CI gates (`content_validate`, `qa_sweep`,
-  code-quality gates) that verify each PR.
+- **Stakeholders** — confirm needs, approve requirements, test the MVP in
+  their own context, and do final feature sign-off on the issue.
 
-Two feedback loops are visible:
+Three feedback loops are visible:
 
-1. **Needs loop** (Phases 1–2) — the agent synthesises needs and the
-   requestor reviews; if revisions are needed, the agent re-synthesises.
+1. **Needs loop** (Phase 1) — the agent synthesises needs, the BA reviews,
+   stakeholders confirm. If revisions are needed, the agent re-synthesises.
 
 2. **Requirements loop** (Phases 3–4) — the agent defines requirements and
-   impact analysis; the requestor reviews; iterate until approved.
+   impact analysis; the BA reviews, stakeholders approve; iterate until
+   approved.
 
-3. **Implementation loop** (Phase 6) — the agent implements, posts a summary
-   to the issue, the requestor reviews the PR; iterate until all beans are
-   resolved.
+3. **Dual development loop** (Phase 6):
+   - **Inner loop** (BA ↔ Agent) — the agent implements an increment, the
+     BA tests it against acceptance criteria. Fast — multiple iterations
+     per session.
+   - **Outer loop** (BA → Stakeholders) — when the BA judges enough
+     increments constitute a testable MVP, stakeholders test it. Findings
+     flow back through the BA to the agent. Slower — stakeholder cadence.
 
-Each loop's review happens **on the GitHub issue**, making the process
-transparent, persistent, and accessible to stakeholders who join later.
+The BA is the **bridge**: they keep the agent productive in the inner loop
+while waiting for stakeholder availability in the outer loop.
 
 See the [agentic harness](../agentic-harness.html) page for how this
 workflow fits into the broader agent–user interaction model.

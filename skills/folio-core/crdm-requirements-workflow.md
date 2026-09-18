@@ -7,10 +7,9 @@ this workflow to gather, validate, and implement requirements collaboratively.
 
 | Actor | Role | Swim lane |
 |---|---|---|
-| **Requestor** | The person who identified the need. May be an author, editor, reviewer, or external stakeholder. | Requestor / stakeholder |
-| **Agent** | The LLM agent running in the folio-assistant harness. Facilitates the process, synthesises inputs, implements. | Agent |
-| **Stakeholders** | Others affected by the change — identified in Phase 1. Participate in review and sign-off. | Requestor / stakeholder |
-| **Platform** | Automated systems — CI, content_validate, qa_sweep. Provides verification. | Platform |
+| **BA / Feature Requestor** | The person who identified the need and coordinates the CRDM process. Acts as Business Analyst: interacts with the agent, reviews increments, translates stakeholder feedback into agent-actionable direction. May be an author, editor, programme lead, or reviewer. | BA / Feature Requestor |
+| **Agent** | The LLM agent running in the folio-assistant harness. Facilitates the process, synthesises inputs, implements on feature branches, posts summaries to the issue. Interacts with the **BA only**, not with stakeholders directly. | Agent |
+| **Stakeholders** | The people affected by the feature who must review and approve it. They participate at defined checkpoints (needs confirmation, requirements approval, MVP testing, feature sign-off) — not in the day-to-day development loop. Examples: review committee, country programme managers, IT teams, end users. | Stakeholders |
 
 ## BPMN reference
 
