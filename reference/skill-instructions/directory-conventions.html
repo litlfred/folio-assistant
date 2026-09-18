@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(91)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(51)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(91) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(51) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(91) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(51) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(91) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(51) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Semantic Ontologist (Ambiguity Detection &amp; Glossary) | folio-assistant</title>
+<title>Directory conventions | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Semantic Ontologist (Ambiguity Detection &amp; Glossary)" />
+<meta property="og:title" content="Directory conventions" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/ontologist.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/ontologist.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/directory-conventions.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/directory-conventions.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Semantic Ontologist (Ambiguity Detection &amp; Glossary)" />
+<meta property="twitter:title" content="Directory conventions" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Semantic Ontologist (Ambiguity Detection &amp; Glossary)","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/ontologist.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Directory conventions","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/directory-conventions.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -303,7 +303,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Semantic Ontologist (Ambiguity Detection & Glossary)</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Directory conventions</span></li>
   </ol>
 </nav>
 
@@ -312,255 +312,54 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/ontologist.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/ontologist.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/directory-conventions.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/directory-conventions.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/ontologist.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/directory-conventions.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="semantic-ontologist-ambiguity-detection--glossary">
+<h1 id="directory-conventions--what-an-instance-declares-it-scans">
   
   
-    <a href="#semantic-ontologist-ambiguity-detection--glossary" class="anchor-heading" aria-labelledby="semantic-ontologist-ambiguity-detection--glossary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Semantic Ontologist (Ambiguity Detection &amp; Glossary)
+    <a href="#directory-conventions--what-an-instance-declares-it-scans" class="anchor-heading" aria-labelledby="directory-conventions--what-an-instance-declares-it-scans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Directory conventions — what an instance declares it scans
   
   
 </h1>
     
-<h2 id="overview">
+
+<p>Every instance carries an <strong><code class="language-plaintext highlighter-rouge">agent-harness.json</code></strong> at its repository root. It declares the directories the instance scans for content,
+and what <strong>kind of graph</strong> each one holds.</p>
+
+<p>Schema and resolution: <code class="language-plaintext highlighter-rouge">schemas/agent-harness.ts</code>.</p>
+
+<p><strong>It is the <em>harness’s</em> schema, not folio-assistant’s.</strong> <code class="language-plaintext highlighter-rouge">agentic-harness</code> is
+the layer that defines Roles, Skills, Tools and these conventions, and every
+other instance inherits from it — so an instance need not be a folio-assistant
+to carry one. A Tool repo or a Test repo carries the same declaration. Issue
+<a href="https://github.com/litlfred/folio-assistant/issues/223">#223</a>, Phase 0.3.</p>
+<h2 id="why-directories-rather-than-a-content-type">
   
   
-    <a href="#overview" class="anchor-heading" aria-labelledby="overview"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Overview
+    <a href="#why-directories-rather-than-a-content-type" class="anchor-heading" aria-labelledby="why-directories-rather-than-a-content-type"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why directories rather than a content type
   
   
 </h2>
     
 
-<p>This skill acts as the <strong>Gatekeeper</strong> for definitions. Before any
-narrative-to-formal translation can proceed, every term must have a
-unique identity (and, where the project has a formal layer, a unique
-type assignment). The Ontologist detects ambiguities, maintains the
-formal glossary, and produces the machine-readable mapping.</p>
-<h2 id="formal-layer-tooling-when-available">
-  
-  
-    <a href="#formal-layer-tooling-when-available" class="anchor-heading" aria-labelledby="formal-layer-tooling-when-available"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Formal-layer tooling (when available)
-  
-  
-</h2>
-    
+<p>The obvious reading of “an instance holds zero or more content instances” is a
+list of instances under one <code class="language-plaintext highlighter-rouge">contentType</code>. That shape does not survive the
+five-repo split, for a reason worth stating once:</p>
 
-<p>When the project has a formal-proof layer with language-server / MCP
-tooling, <strong>prefer those tools for type checking</strong> over re-building:</p>
+<p><strong>The things <code class="language-plaintext highlighter-rouge">agentic-harness</code> holds are not folios.</strong> They are Tool
+definitions, a knowledge graph of skills and workflows, and a schema graph.
+None renders as a document and none has a <code class="language-plaintext highlighter-rouge">contentType</code> in the
+<code class="language-plaintext highlighter-rouge">document | paper</code> sense. A model that gives every instance a content type
+forces the harness to claim one it does not have.</p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Goal</th>
-      <th>Prefer</th>
-      <th>Why better</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Find type mismatches</td>
-      <td>structured diagnostics tool</td>
-      <td>per-file error messages</td>
-    </tr>
-    <tr>
-      <td>Resolve a symbol’s type</td>
-      <td>hover-info tool</td>
-      <td>see the resolved type in place</td>
-    </tr>
-    <tr>
-      <td>Find an existing definition</td>
-      <td>local search tool</td>
-      <td>search project + stdlib</td>
-    </tr>
-    <tr>
-      <td>Check whether a type exists in the stdlib</td>
-      <td>symbol/type search tool</td>
-      <td>locate the exact declaration</td>
-    </tr>
-    <tr>
-      <td>Find where a type is declared</td>
-      <td>declaration-file tool</td>
-      <td>jump to source</td>
-    </tr>
-    <tr>
-      <td>Guess an import path</td>
-      <td>completion tool</td>
-      <td>auto-complete import paths</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="consistency-loop">
+<p>So the general object is <strong>an instance with directories, each holding a
+graph</strong>. <code class="language-plaintext highlighter-rouge">folio</code> is one graph kind among several.</p>
+<h2 id="the-graph-kinds">
   
   
-    <a href="#consistency-loop" class="anchor-heading" aria-labelledby="consistency-loop"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Consistency loop
-  
-  
-</h3>
-    
-
-<p>When the diagnostics tool reports a type mismatch:</p>
-
-<ol>
-  <li>Hover the mismatched symbol → see expected vs actual type.</li>
-  <li>Search for the intended type → find the correct import.</li>
-  <li>Read the actual definition to understand the mismatch.</li>
-  <li>Update the glossary with the corrected assignment.</li>
-  <li>Regenerate the formal glossary and re-check diagnostics.</li>
-</ol>
-<h2 id="when-to-use-this-skill">
-  
-  
-    <a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use This Skill
-  
-  
-</h2>
-    
-
-<ul>
-  <li>New terms or definitions are added to chapter files.</li>
-  <li>The formal build fails due to type mismatches (consistency loop).</li>
-  <li>The formalizer reports an unresolved term.</li>
-  <li>Reviewing changes that introduce new notation.</li>
-  <li>Before running the formalizer on any chapter.</li>
-</ul>
-<h2 id="workflow">
-  
-  
-    <a href="#workflow" class="anchor-heading" aria-labelledby="workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow
-  
-  
-</h2>
-    
-<h3 id="1-scan-narrative-text-for-terms">
-  
-  
-    <a href="#1-scan-narrative-text-for-terms" class="anchor-heading" aria-labelledby="1-scan-narrative-text-for-terms"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Scan narrative text for terms
-  
-  
-</h3>
-    
-
-<p>Run the project’s ontologist scanner over the source chapters. It
-parses for definitions, symbols, and terms and outputs candidates to the
-glossary.</p>
-<h3 id="2-detect-ambiguities">
-  
-  
-    <a href="#2-detect-ambiguities" class="anchor-heading" aria-labelledby="2-detect-ambiguities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Detect ambiguities
-  
-  
-</h3>
-    
-
-<p>The scanner flags terms that lack a unique assignment. <strong>Trigger
-phrases</strong> (require disambiguation) are bare nouns used without their
-distinguishing structure — “the mapping” without domain/codomain, “the
-space” without which kind of space, “the group” without which kind of
-group, and bare single-letter symbols without an annotation.</p>
-
-<p><strong>Action</strong>: interrupt the pipeline and request a <strong>Type/Identity
-Assignment</strong>.</p>
-<h3 id="3-generate-the-formal-glossary">
-  
-  
-    <a href="#3-generate-the-formal-glossary" class="anchor-heading" aria-labelledby="3-generate-the-formal-glossary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Generate the formal glossary
-  
-  
-</h3>
-    
-
-<p>Run the generator. It produces a formal-glossary file with each term as
-a declaration, docstrings containing the original narrative definition,
-and any required annotations.</p>
-<h3 id="4-generate-the-mapping">
-  
-  
-    <a href="#4-generate-the-mapping" class="anchor-heading" aria-labelledby="4-generate-the-mapping"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Generate the mapping
-  
-  
-</h3>
-    
-
-<p>Run the mapping generator. It produces a file linking narrative strings
-to formal identifiers.</p>
-<h2 id="glossary-entry-structure">
-  
-  
-    <a href="#glossary-entry-structure" class="anchor-heading" aria-labelledby="glossary-entry-structure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Glossary entry structure
-  
-  
-</h2>
-    
-
-<p>Each glossary entry follows this pattern: a docstring with the
-human-readable definition, the source location of the narrative
-definition, and (when relevant) the stdlib reference the term maps to,
-followed by the declaration itself.</p>
-<h3 id="bibliographic-reference-requirement">
-  
-  
-    <a href="#bibliographic-reference-requirement" class="anchor-heading" aria-labelledby="bibliographic-reference-requirement"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Bibliographic reference requirement
-  
-  
-</h3>
-    
-
-<p>Every unproved gap (<code class="language-plaintext highlighter-rouge">sorry</code>-style stub) in the formal glossary <strong>must</strong>
-be preceded by a reference comment linking to the foundational source,
-whose key matches a citation key in the project’s reference registry
-exactly. (Auto-generated bibliography files are derived from the
-registry — never edit them directly.)</p>
-<h2 id="ambiguity-resolution-format">
-  
-  
-    <a href="#ambiguity-resolution-format" class="anchor-heading" aria-labelledby="ambiguity-resolution-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Ambiguity Resolution Format
-  
-  
-</h2>
-    
-<h3 id="standing-disambiguation-rulings">
-  
-  
-    <a href="#standing-disambiguation-rulings" class="anchor-heading" aria-labelledby="standing-disambiguation-rulings"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Standing disambiguation rulings
-  
-  
-</h3>
-    
-
-<p>The project maintains a table of author-resolved terms. Agents MUST
-apply these rulings when scanning narrative text. A ruling fixes the
-canonical term, any banned synonyms or notations, and a note on when a
-qualifier is required. Maintain this table in the project’s notation /
-terminology register; treat banned notations and “always qualify”
-entries as hard rules.</p>
-
-<p>When an ambiguity is detected, the Ontologist outputs a record naming
-the narrative term, a message describing the ambiguity, the candidate
-resolutions, and a <code class="language-plaintext highlighter-rouge">resolved_to</code> field that is null until the author
-fills it. The pipeline <strong>halts</strong> until <code class="language-plaintext highlighter-rouge">resolved_to</code> is filled.</p>
-<h2 id="consistency-loop-1">
-  
-  
-    <a href="#consistency-loop-1" class="anchor-heading" aria-labelledby="consistency-loop-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Consistency Loop
-  
-  
-</h2>
-    
-
-<p>If the formal build fails:</p>
-
-<ol>
-  <li>Parse the error log for type-mismatch messages.</li>
-  <li>Identify which glossary entries are involved.</li>
-  <li>Flag those entries as ambiguous in the glossary.</li>
-  <li>Re-run the scan with the error context.</li>
-</ol>
-<h2 id="output-files">
-  
-  
-    <a href="#output-files" class="anchor-heading" aria-labelledby="output-files"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Output Files
+    <a href="#the-graph-kinds" class="anchor-heading" aria-labelledby="the-graph-kinds"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The graph kinds
   
   
 </h2>
@@ -569,222 +368,203 @@ fills it. The pipeline <strong>halts</strong> until <code class="language-plaint
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>File</th>
-      <th>Purpose</th>
+      <th>kind</th>
+      <th>holds</th>
+      <th>renderable</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>glossary (machine-readable)</td>
-      <td>glossary with ambiguity flags</td>
+      <td><code class="language-plaintext highlighter-rouge">folio</code></td>
+      <td>authored content</td>
+      <td><strong>yes</strong> — the just-the-docs pipeline renders it to a website</td>
     </tr>
     <tr>
-      <td>formal glossary</td>
-      <td>formal file with definitions</td>
+      <td><code class="language-plaintext highlighter-rouge">tools</code></td>
+      <td>Tool definitions, themselves nodes in the KG</td>
+      <td>no</td>
     </tr>
     <tr>
-      <td>mapping</td>
-      <td>narrative-to-formal identifier mapping</td>
+      <td><code class="language-plaintext highlighter-rouge">kg</code></td>
+      <td>skills, workflows, roles — the instance’s own knowledge graph</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">schemas</code></td>
+      <td>schema definitions, self-declared in the smart-base manner</td>
+      <td>no</td>
     </tr>
   </tbody>
 </table></div>
-<h2 id="blueprint-integration">
+
+<p><code class="language-plaintext highlighter-rouge">renderable</code> is the <strong>only</strong> behavioural distinction in the table, and it is
+what makes <code class="language-plaintext highlighter-rouge">folio</code> special. The others are graphs that tools read. Nothing
+stops a consumer treating them uniformly — that is the point of making them all
+graphs — but only a renderable one is wired to the site build.</p>
+<h2 id="the-conventional-layout">
   
   
-    <a href="#blueprint-integration" class="anchor-heading" aria-labelledby="blueprint-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Blueprint Integration
+    <a href="#the-conventional-layout" class="anchor-heading" aria-labelledby="the-conventional-layout"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The conventional layout
   
   
 </h2>
     
 
-<p>Every glossary entry that has a label in a chapter file must also appear
-in the project’s blueprint with the matching formal-declaration macro.
-The Ontologist ensures:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>agentic-harness/          folio-assist-core/
+  agent-harness.json        agent-harness.json
+  tools/     → tools        folio/     → folio
+  kg/        → kg           (inherits tools/, kg/, schemas/)
+  schemas/   → schemas
+</code></pre></div></div>
 
-<ol>
-  <li><strong>Label consistency</strong> between chapters and blueprint.</li>
-  <li><strong>Declaration consistency</strong> between blueprint macros and the formal
-glossary.</li>
-  <li><strong>Dependency edges</strong> in the blueprint reference only labels that
-exist and whose glossary entries are resolved.</li>
-  <li><strong>Bibliography references</strong>: every reference comment in the formal
-glossary matches a citation key in the reference registry; new terms
-get a foundational reference added to the registry.</li>
-</ol>
-<h2 id="content-object-integration">
+<p><code class="language-plaintext highlighter-rouge">agentic-harness</code> declares <code class="language-plaintext highlighter-rouge">tools/</code>, <code class="language-plaintext highlighter-rouge">kg/</code> and <code class="language-plaintext highlighter-rouge">schemas/</code>.
+<code class="language-plaintext highlighter-rouge">folio-assist-core</code> declares <strong>only</strong> <code class="language-plaintext highlighter-rouge">folio/</code> and inherits the other three.</p>
+<h2 id="inheritance">
   
   
-    <a href="#content-object-integration" class="anchor-heading" aria-labelledby="content-object-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content Object Integration
+    <a href="#inheritance" class="anchor-heading" aria-labelledby="inheritance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inheritance
   
   
 </h2>
     
 
-<p>Glossary terms should link to <strong>content-object labels</strong>. Each definition
-block has a <code class="language-plaintext highlighter-rouge">.ts</code> manifest with a <code class="language-plaintext highlighter-rouge">label</code> and a <code class="language-plaintext highlighter-rouge">.md</code> narrative.</p>
+<p>An instance inherits its dependencies’ directories, walked depth-first through
+<code class="language-plaintext highlighter-rouge">dependencies.folioAssistant</code> — the same order <code class="language-plaintext highlighter-rouge">schemas/folio-config.ts</code> uses
+for skills and translations. Deepest dependency first, root last, so the root
+wins.</p>
 
-<ul>
-  <li>Definitions in <code class="language-plaintext highlighter-rouge">.md</code> blocks reference glossary entries by their formal
-name and cross-ref by label.</li>
-  <li>New glossary entries record the content-object <code class="language-plaintext highlighter-rouge">label</code> they originate
-from for bidirectional traceability.</li>
-  <li>The formal-reference URI in a definition’s <code class="language-plaintext highlighter-rouge">.ts</code> manifest matches the
-corresponding formal-glossary declaration name.</li>
-  <li>Before creating a glossary entry for a term detected in a <code class="language-plaintext highlighter-rouge">.md</code> file,
-check whether a content object already exists, to avoid duplication.</li>
-</ul>
-<h2 id="glossary-block-policy">
+<p><strong>Overrides match on the directory’s <code class="language-plaintext highlighter-rouge">id</code>, never on its <code class="language-plaintext highlighter-rouge">path</code>.</strong> An instance
+that wants its knowledge graph somewhere other than <code class="language-plaintext highlighter-rouge">kg/</code> redeclares the <code class="language-plaintext highlighter-rouge">kg</code>
+id with a different path:</p>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kg"</span><span class="p">,</span><span class="w"> </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"graph/knowledge/"</span><span class="p">,</span><span class="w"> </span><span class="nl">"graph"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kg"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Matching on path instead would make two knowledge graphs out of one
+relocation, and every consumer would scan a directory that is not there. An
+override also <strong>keeps the inherited position</strong> in the scan order rather than
+moving to the end — a relocation should not reshuffle what is scanned first.</p>
+<h2 id="three-states-as-everywhere-else-here">
   
   
-    <a href="#glossary-block-policy" class="anchor-heading" aria-labelledby="glossary-block-policy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Glossary Block Policy
+    <a href="#three-states-as-everywhere-else-here" class="anchor-heading" aria-labelledby="three-states-as-everywhere-else-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three states, as everywhere else here
   
   
 </h2>
-    
-
-<p>A dedicated glossary chapter can contain <strong>glossary blocks</strong> — <code class="language-plaintext highlighter-rouge">remark</code>
-blocks tagged <code class="language-plaintext highlighter-rouge">"glossary"</code> — that map project terminology to canonical
-stdlib declarations. These are the content-object counterpart of
-glossary entries.</p>
-<h3 id="when-to-use-a-glossary-block-vs-a-definition-block">
-  
-  
-    <a href="#when-to-use-a-glossary-block-vs-a-definition-block" class="anchor-heading" aria-labelledby="when-to-use-a-glossary-block-vs-a-definition-block"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to use a glossary block vs. a definition block
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Criterion</th>
-      <th>Glossary block (<code class="language-plaintext highlighter-rouge">remark</code>)</th>
-      <th>Definition block</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Novelty</td>
-      <td>none — the term is a synonym/light wrapper for a stdlib type</td>
-      <td>the project introduces genuinely new material</td>
-    </tr>
-    <tr>
-      <td>Formal file</td>
-      <td>not required</td>
-      <td><strong>required</strong></td>
-    </tr>
-    <tr>
-      <td>Label prefix</td>
-      <td><code class="language-plaintext highlighter-rouge">rem:glossary-&lt;term&gt;</code></td>
-      <td><code class="language-plaintext highlighter-rouge">def:&lt;term&gt;</code></td>
-    </tr>
-    <tr>
-      <td>Chapter</td>
-      <td>glossary chapter</td>
-      <td>relevant content chapter</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="decision-tree-for-new-terms">
-  
-  
-    <a href="#decision-tree-for-new-terms" class="anchor-heading" aria-labelledby="decision-tree-for-new-terms"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Decision tree for new terms
-  
-  
-</h3>
-    
-
-<ol>
-  <li>Does the term exist in the stdlib under a different name? →
-glossary block mapping project name to stdlib name.</li>
-  <li>Is it a lightweight restriction/specialization of a stdlib type? →
-glossary block with a note about the restriction.</li>
-  <li>Does the project add new axioms, fields, or structure? →
-definition block in the relevant chapter.</li>
-  <li>Ambiguous? → ask the author.</li>
-</ol>
-<h3 id="glossary-block-structure">
-  
-  
-    <a href="#glossary-block-structure" class="anchor-heading" aria-labelledby="glossary-block-structure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Glossary block structure
-  
-  
-</h3>
-    
-
-<p>Each glossary block is a <code class="language-plaintext highlighter-rouge">.ts</code> + <code class="language-plaintext highlighter-rouge">.md</code> pair: the <code class="language-plaintext highlighter-rouge">.ts</code> declares a
-<code class="language-plaintext highlighter-rouge">remark</code> with the <code class="language-plaintext highlighter-rouge">glossary</code> tag and a <code class="language-plaintext highlighter-rouge">rem:glossary-&lt;term&gt;</code> label; the
-<code class="language-plaintext highlighter-rouge">.md</code> gives a 1–3 sentence definition as used in the project plus the
-stdlib reference (fully-qualified name, kind, and import path).</p>
-<h3 id="snippet-validation-mandatory-after-creating-md">
-  
-  
-    <a href="#snippet-validation-mandatory-after-creating-md" class="anchor-heading" aria-labelledby="snippet-validation-mandatory-after-creating-md"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Snippet validation (mandatory after creating .md)
-  
-  
-</h3>
-    
-
-<p>After creating any glossary <code class="language-plaintext highlighter-rouge">.md</code>, validate its embedded
-math/markup snippets with the project’s snippet validator before
-committing, and fix any errors.</p>
-<h3 id="maintaining-consistency">
-  
-  
-    <a href="#maintaining-consistency" class="anchor-heading" aria-labelledby="maintaining-consistency"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Maintaining consistency
-  
-  
-</h3>
     
 
 <ul>
-  <li>When a new stdlib-equivalent term appears in any chapter <code class="language-plaintext highlighter-rouge">.md</code>, check
-the glossary chapter for an existing entry before creating a
-definition.</li>
-  <li>When the glossary is regenerated, cross-check against the glossary
-chapter’s entries.</li>
-  <li>The chapter-analysis skill’s glossary-gap analysis should include the
-glossary-chapter blocks in its coverage check.</li>
+  <li><strong>No <code class="language-plaintext highlighter-rouge">agent-harness.json</code></strong> → <code class="language-plaintext highlighter-rouge">readDeclaration</code> returns <code class="language-plaintext highlighter-rouge">undefined</code>. An
+instance not yet migrated is ordinary, and callers fall back to today’s
+conventions. Not an error.</li>
+  <li><strong>Present but unreadable</strong> → <strong>throws.</strong> A declaration nobody can parse
+leaves every consumer scanning the wrong directories, which is strictly worse
+than not having one.</li>
+  <li><strong>An unknown graph kind</strong> → rejected, not accepted and ignored.</li>
 </ul>
-<h3 id="wrap-every-occurrence">
+<h2 id="declare-what-exists">
   
   
-    <a href="#wrap-every-occurrence" class="anchor-heading" aria-labelledby="wrap-every-occurrence"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Wrap-every-occurrence
-  
-  
-</h3>
-    
-
-<p>Every term registered in a block’s <code class="language-plaintext highlighter-rouge">defines: [...]</code> must appear wrapped
-at every mention — the canonical-definition directive once at the
-canonical site, the reference directive everywhere else. The ontologist
-owns the choice of canonical site: pick the block whose <code class="language-plaintext highlighter-rouge">.md</code> carries
-the most authoritative definition (stdlib synonym → glossary block; new
-material → the relevant <code class="language-plaintext highlighter-rouge">def:</code> block), add the slug to its <code class="language-plaintext highlighter-rouge">defines</code>,
-and rewrite the canonical mention. Backfilling reference mentions across
-the project is the codemod’s job.</p>
-<h2 id="checklist">
-  
-  
-    <a href="#checklist" class="anchor-heading" aria-labelledby="checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist
+    <a href="#declare-what-exists" class="anchor-heading" aria-labelledby="declare-what-exists"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Declare what exists
   
   
 </h2>
     
 
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Every definition in the source chapters has a glossary entry</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No unresolved ambiguities in the glossary</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />The formal glossary compiles (gap warnings OK)</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />The mapping covers all formal-declaration macros</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Type/identity assignments have correct annotations</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Docstrings in the formal glossary match narrative definitions</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Every gap in the formal glossary has a reference comment</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All reference keys exist in the reference registry</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />The blueprint has entries for all glossary definitions</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Dependency edges in the blueprint are bidirectionally valid</li>
-</ul>
+<p>A directory that is declared but absent is worse than one that is missing:
+every consumer scans nothing and reports a clean run over it — the same defect
+bean <code class="language-plaintext highlighter-rouge">dh4f</code> found in thirty pipeline scripts, where three were passing over a
+corpus they could not read.</p>
+
+<p>This repository’s own declaration is the worked example. It is <strong>pre-split</strong>,
+so it declares <code class="language-plaintext highlighter-rouge">schemas/</code> and <code class="language-plaintext highlighter-rouge">skills/</code> — which exist — and deliberately does
+<strong>not</strong> declare <code class="language-plaintext highlighter-rouge">tools/</code>, <code class="language-plaintext highlighter-rouge">kg/</code> or <code class="language-plaintext highlighter-rouge">folio/</code>, which do not exist here yet. Note
+also that its <code class="language-plaintext highlighter-rouge">kg</code> id points at <code class="language-plaintext highlighter-rouge">skills/</code>: ids are stable across a relocation,
+paths are not.</p>
+<h2 id="the-declaration-is-itself-a-graph">
+  
+  
+    <a href="#the-declaration-is-itself-a-graph" class="anchor-heading" aria-labelledby="the-declaration-is-itself-a-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The declaration is itself a graph
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">toJsonLd()</code> projects a declaration into the folio namespace: each directory is
+a node with an <code class="language-plaintext highlighter-rouge">@id</code> and an <code class="language-plaintext highlighter-rouge">@type</code>. The set of directories an instance scans
+is then queryable by the same machinery as anything else in the knowledge
+graph, rather than being configuration only one module understands.</p>
+
+<p>The authored form is the stored one and the graph form is derived — one truth,
+not two. <code class="language-plaintext highlighter-rouge">readDeclaration</code> accepts <strong>either</strong>, and a round-trip test pins that:
+the projection emits <code class="language-plaintext highlighter-rouge">@type</code> <em>instead of</em> <code class="language-plaintext highlighter-rouge">graph</code>, so reading the published
+form back without the reverse lookup silently loses the one field that says
+what a directory holds.</p>
+<h2 id="skills-are-kg-content">
+  
+  
+    <a href="#skills-are-kg-content" class="anchor-heading" aria-labelledby="skills-are-kg-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Skills are KG content
+  
+  
+</h2>
+    
+
+<p>The <code class="language-plaintext highlighter-rouge">kg</code> graph is where skills live, and that is why they are addressed through
+the declaration rather than by path. An agent asks <code class="language-plaintext highlighter-rouge">skill_list</code> / <code class="language-plaintext highlighter-rouge">skill_fetch</code>
+for a skill; it does not open <code class="language-plaintext highlighter-rouge">skills/&lt;something&gt;.md</code> from memory. An instance
+may site its <code class="language-plaintext highlighter-rouge">kg</code> anywhere — this repo’s <code class="language-plaintext highlighter-rouge">kg</code> id points at <code class="language-plaintext highlighter-rouge">skills/</code> — and a
+downstream instance inherits its dependencies’ skills through the same
+inheritance rules above. A hardcoded path breaks on the first relocation, which
+is the whole reason overrides match on <code class="language-plaintext highlighter-rouge">id</code>.</p>
+
+<p><strong>Not yet true end to end.</strong> <code class="language-plaintext highlighter-rouge">resolveSkillDirs</code> (<code class="language-plaintext highlighter-rouge">schemas/folio-config.ts</code>)
+computes the cross-instance overlay and has <strong>no caller</strong>, so skill discovery is
+root-only in practice today and a dependency’s skills are not reachable. Stated
+here rather than implied, because an agent that assumes inheritance works will
+silently miss half its instructions.</p>
+<h2 id="layering--a-harness-module-must-not-import-the-content-vocabulary">
+  
+  
+    <a href="#layering--a-harness-module-must-not-import-the-content-vocabulary" class="anchor-heading" aria-labelledby="layering--a-harness-module-must-not-import-the-content-vocabulary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Layering — a harness module must not import the content vocabulary
+  
+  
+</h2>
+    
+
+<p>The declaration schema needs the platform’s IRI namespace to mint <code class="language-plaintext highlighter-rouge">@type</code>
+values. That namespace used to live in <code class="language-plaintext highlighter-rouge">schemas/jsonld.ts</code>, which is
+<code class="language-plaintext highlighter-rouge">folio-assist-core</code>’s <strong>content</strong> vocabulary — block kinds, DoCO structural
+types, SPAR citation terms. Importing it would have made <code class="language-plaintext highlighter-rouge">agentic-harness</code>
+depend on the content model for its own type IRIs: a <code class="language-plaintext highlighter-rouge">harness → core</code> edge,
+already the largest wrong-direction group <code class="language-plaintext highlighter-rouge">bun run check:partition</code> reports.</p>
+
+<p>It is now <code class="language-plaintext highlighter-rouge">schemas/namespaces.ts</code>, a leaf that imports nothing, classified to
+the harness. The direction only works one way round — <strong>core may import the
+harness; the harness may not import core</strong> — so a constant both layers need has
+to live at or below the harness. Putting it in core reintroduces the edge.</p>
+
+<p>The first attempt was a duplicated constant in the harness module with a test
+asserting the two stayed equal. That works and is worse: <strong>a drift guard is an
+admission that there are two definitions.</strong> Extract instead, and re-export from
+the old home so existing importers are untouched.</p>
+
+<p><code class="language-plaintext highlighter-rouge">agent-harness.test.ts</code> pins the property structurally — it asserts the module
+does not import <code class="language-plaintext highlighter-rouge">./jsonld</code> or <code class="language-plaintext highlighter-rouge">./block-kinds</code>. Reach for that test when adding
+anything else at the harness layer.</p>
+<h2 id="adding-a-graph-kind">
+  
+  
+    <a href="#adding-a-graph-kind" class="anchor-heading" aria-labelledby="adding-a-graph-kind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a graph kind
+  
+  
+</h2>
+    
+
+<p>One entry in <code class="language-plaintext highlighter-rouge">GRAPH_KINDS</code> (<code class="language-plaintext highlighter-rouge">schemas/agent-harness.ts</code>): its <code class="language-plaintext highlighter-rouge">@type</code> IRI, its
+<code class="language-plaintext highlighter-rouge">renderable</code> flag, and a one-line summary. The Zod enum, the JSON-LD projection
+and the reverse lookup all derive from that object, so nothing else needs
+touching — and a kind that is added without deciding <code class="language-plaintext highlighter-rouge">renderable</code> will not
+compile.</p>
 
           
 
