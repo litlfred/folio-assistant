@@ -32,7 +32,7 @@ Two facts the gate should have carried and did not:
   cannot dispatch (403 without `actions: write`, which is what I hit) can still
   run the check.
 
-Fixed in both `.claude/skills/local/prepare-merge.md` and
+Fixed in both `skills/folio-core/prepare-merge.md` and
 `.claude/commands/prepare-merge.md`: find the workflow by reading
 `.github/workflows/`, never by name; the real names as of today; the
 dispatch-only fact; and the local equivalents.

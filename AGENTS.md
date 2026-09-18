@@ -1108,7 +1108,7 @@ Full protocol, with the worked example:
   folio's **content-type-specific** gates (paper → content_validate / qa_sweep /
   proof_status / latex_preflight / lean_build; WHO IG → fhir-validation / QC),
   then pushes. It does not merge. Command: `.claude/commands/prepare-merge.md`;
-  full discipline: `.claude/skills/local/prepare-merge.md`.
+  full discipline: `skills/folio-core/prepare-merge.md`.
 - Watching a sibling PR — `/watch <pr|branch>` subscribes to a PR's CI / review /
   comment activity and follows through until it's merged or closed:
   `.claude/commands/watch.md`.

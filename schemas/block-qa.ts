@@ -426,6 +426,11 @@ export interface BlockQaReport {
  * Definition of a single QA criterion — registered ahead of time
  * by the watcher's criterion catalog.
  */
+/**
+ * What a criterion audits. See {@link QaCriterionDefinition.subject}.
+ */
+export type QaCriterionSubject = "block" | "script";
+
 export interface QaCriterionDefinition {
   /** Stable identifier (e.g. `voice-status-leak`). */
   id: string;
@@ -544,6 +549,30 @@ export interface QaCriterionDefinition {
    * it requires agent / human adjudication (false).
    */
   automated: boolean;
+  /**
+   * What the criterion is evaluated **against** — and therefore what shape
+   * its checker takes.
+   *
+   * - omitted / `"block"` — a content block. The checker takes
+   *   {@link CheckerPaths}. This is every criterion on the block sweep.
+   * - `"script"` — a source script. The checker takes its path as a string,
+   *   and the criterion belongs to `script-sweep`, not `qa-sweep`.
+   *
+   * **This exists so discovery does not have to guess from the domain name.**
+   * The two subjects were told apart by `domain === "script-quality"`, which
+   * is a bucket label rather than a contract: a second script axis under any
+   * other name would have been handed to the block sweep, where its checker
+   * would receive a `CheckerPaths` object as its `scriptPath` and read
+   * `[object Object]` off disk. `content/pipeline/qa-checker-discovery.ts`
+   * partitions on this field, so the mismatch is impossible rather than
+   * merely unlikely.
+   *
+   * Absent means `"block"` because every criterion predating the field was
+   * one, and a wrong default here is a checker invoked with the wrong
+   * argument type — which fails loudly, unlike the silent misfires the
+   * `adapters` / `profiles` defaults above are guarding.
+   */
+  subject?: QaCriterionSubject;
   /**
    * How finely this criterion depends on its `.lean` file.
    *

@@ -231,7 +231,6 @@ export const TranslationStatusSchema = z.object({
  *   poFile: "translations/fr/index.po",
  *   status: { locale: "fr", official: false, generatedBy: "agent" },
  *   coverage: { translated: 37, total: 37, pct: 100 },
- *   roundTripQA: { pass: 11, warn: 4, fail: 21, total: 36 },
  * };
  * export default node;
  * ```
@@ -298,25 +297,25 @@ export interface TranslationNode {
   };
 
   /**
-   * Round-trip semantic QA results.
+   * There is deliberately no `roundTripQA` here any more.
    *
-   * Recorded by the translation pipeline when it back-translates each
-   * string and measures semantic similarity. Stored here (not in a
-   * separate .qa.json) so the QA results are part of the node and
-   * travel with it.
+   * It held `{ pass, warn, fail, total, method }` for the whole node, written
+   * by `simulate-translation.ts` — whose `BACK_TRANSLATIONS` map had **6
+   * entries against 36 msgids**. Every string with no back-translation scored
+   * a similarity of 0 and was recorded as drift, so `fail: 21` on the French
+   * landing page counted strings that were never back-translated at all.
+   * Absence was being published as a measurement.
+   *
+   * Semantic verification now lives per block, in
+   * `<stem>.<locale>.translation-qa.json` (`translation-qa/v1`), where a
+   * verdict carries the witness that reached it — a script, an agent or a
+   * person, with a timestamp and the hashes it was measured against. A
+   * node-level summary field with no producer is an invitation to fill it
+   * with a plausible number again.
+   *
+   * @see content/pipeline/translation-block-qa.ts
+   * @see content/pipeline/translation-roundtrip.ts
    */
-  roundTripQA?: {
-    /** Strings that passed round-trip verification (similarity ≥ threshold). */
-    pass: number;
-    /** Strings with possible semantic drift (similarity between warn and pass thresholds). */
-    warn: number;
-    /** Strings with detected semantic drift (similarity below warn threshold). */
-    fail: number;
-    /** Total strings verified. */
-    total: number;
-    /** Method used (e.g. "jaccard-word-overlap", "llm-cosine-similarity"). */
-    method?: string;
-  };
 
   /** Optional title for display in the viewer / docs. */
   title?: string;
@@ -342,15 +341,6 @@ export const TranslationNodeSchema = z.object({
       translated: z.number().int().min(0),
       total: z.number().int().min(0),
       pct: z.number().min(0).max(100),
-    })
-    .optional(),
-  roundTripQA: z
-    .object({
-      pass: z.number().int().min(0),
-      warn: z.number().int().min(0),
-      fail: z.number().int().min(0),
-      total: z.number().int().min(0),
-      method: z.string().optional(),
     })
     .optional(),
   title: z.string().optional(),

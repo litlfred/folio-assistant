@@ -6,7 +6,14 @@
  *   1. Extract translatable strings from a markdown page → POT
  *   2. Simulate agentic French translation → PO
  *   3. Inject translations → translated markdown
- *   4. Round-trip verification: back-translate French → English, compare semantics
+ *
+ * It stops at step 3. A round trip needs a back-translator that has not seen
+ * the original, which this script cannot be: its `BACK_TRANSLATIONS` map held
+ * 6 entries against 36 strings, so every string nobody had back-translated
+ * scored 0 similarity and was published as semantic drift. `fail: 21` on the
+ * French landing page counted absence. The real round trip is a pair of
+ * agents — see `content/pipeline/translation-roundtrip.ts` and
+ * `skills/folio-core/translation-manager.md`.
  *
  * Usage:
  *   bun run scripts/translation/simulate-translation.ts [path-to-md]
@@ -16,7 +23,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join, basename } from "path";
-import { extractMarkdown, formatPot, type PotEntry } from "../../content/pipeline/pot-extract";
+import { extractMarkdown, formatPot } from "../../content/pipeline/pot-extract";
 import { parsePo, injectMarkdown } from "../../content/pipeline/po-inject";
 
 // ── Configuration ───────────────────────────────────────────────
@@ -73,96 +80,7 @@ const FRENCH_TRANSLATIONS: Record<string, string> = {
   "change what is being authored": "modifier ce qui est rédigé",
 };
 
-/**
- * Simulated back-translations (French → English) for round-trip verification.
- * In production this would be a separate LLM call translating back.
- */
-const BACK_TRANSLATIONS: Record<string, string> = {
-  "Intégration de l'agent": "Agent integration",
-  "1. Déterminez dans quel dépôt vous vous trouvez": "1. Determine which repository you are in",
-  "Vous êtes un agent LLM qui vient d'être placé dans un dépôt utilisant folio-assistant. Cette page est votre orientation : ce que vous regardez, ce qu'il faut faire en premier, et où chercher les informations.":
-    "You are an LLM agent that has just been placed in a repository using folio-assistant. This page is your orientation: what you are looking at, what to do first, and where to find information.",
-  "Il en existe deux types, et les confondre est l'erreur la plus fréquente au début.":
-    "There are two kinds, and confusing them is the most frequent mistake at the beginning.",
-  "folio-assistant ne contient aucun contenu. Si vous vous apprêtez à y écrire de la matière — un chapitre, une constante, une liste de mots-clés de chapitre — vous êtes dans le mauvais dépôt, ou ce que vous écrivez devrait être des données fournies par le folio. Voir §7.":
-    "folio-assistant contains no content. If you are about to write subject matter into it — a chapter, a constant, a chapter keyword list — you are in the wrong repository, or what you are writing should be data provided by the folio. See §7.",
-  "Les compétences sont l'unité de travail ici. Avant de créer une procédure à la main, vérifiez si une existe déjà.":
-    "Skills are the unit of work here. Before creating a procedure by hand, check if one already exists.",
-};
-
 // ── Semantic comparison (round-trip QA) ─────────────────────────
-
-interface QAResult {
-  original: string;
-  backTranslated: string;
-  similarity: number; // 0-1
-  status: "pass" | "drift" | "missing";
-  note?: string;
-}
-
-/**
- * Simple semantic similarity using word overlap (Jaccard index).
- * In production, this would use an LLM or embedding model.
- */
-function wordOverlap(a: string, b: string): number {
-  const normalize = (s: string) =>
-    s.toLowerCase().replace(/[^\w\s]/g, "").split(/\s+/).filter(Boolean);
-  const wordsA = new Set(normalize(a));
-  const wordsB = new Set(normalize(b));
-  const intersection = new Set([...wordsA].filter((w) => wordsB.has(w)));
-  const union = new Set([...wordsA, ...wordsB]);
-  return union.size > 0 ? intersection.size / union.size : 0;
-}
-
-function roundTripQA(
-  originalEntries: PotEntry[],
-  frenchTranslations: Record<string, string>,
-  backTranslations: Record<string, string>,
-): QAResult[] {
-  const results: QAResult[] = [];
-
-  for (const entry of originalEntries) {
-    const french = frenchTranslations[entry.msgid];
-    if (!french) {
-      results.push({
-        original: entry.msgid,
-        backTranslated: "",
-        similarity: 0,
-        status: "missing",
-        note: "No French translation available",
-      });
-      continue;
-    }
-
-    const backEn = backTranslations[french];
-    if (!backEn) {
-      results.push({
-        original: entry.msgid,
-        backTranslated: "",
-        similarity: 0,
-        status: "missing",
-        note: "No back-translation available (would be LLM-generated in production)",
-      });
-      continue;
-    }
-
-    const similarity = wordOverlap(entry.msgid, backEn);
-    const status = similarity >= 0.5 ? "pass" : "drift";
-
-    results.push({
-      original: entry.msgid,
-      backTranslated: backEn,
-      similarity,
-      status,
-      note:
-        status === "drift"
-          ? `Semantic drift detected: ${Math.round((1 - similarity) * 100)}% divergence`
-          : undefined,
-    });
-  }
-
-  return results;
-}
 
 // ── Main simulation ─────────────────────────────────────────────
 
@@ -263,50 +181,13 @@ function main() {
   }
   console.log("  │ ...\n");
 
-  // ── Step 4: Round-trip QA ────────────────────────────────────
-
-  console.log("━━━ STEP 4: Round-trip semantic verification ━━━\n");
-  console.log("  Back-translating French → English and comparing...\n");
-
-  const qaResults = roundTripQA(entries, FRENCH_TRANSLATIONS, BACK_TRANSLATIONS);
-
-  let passCount = 0;
-  let driftCount = 0;
-  let missingCount = 0;
-
-  for (const qa of qaResults) {
-    if (qa.status === "pass") {
-      passCount++;
-    } else if (qa.status === "drift") {
-      driftCount++;
-      const orig = qa.original.length > 50 ? qa.original.slice(0, 50) + "..." : qa.original;
-      const back = qa.backTranslated.length > 50 ? qa.backTranslated.slice(0, 50) + "..." : qa.backTranslated;
-      console.log(`  ⚠️  DRIFT (${Math.round(qa.similarity * 100)}% match):`);
-      console.log(`     Original: "${orig}"`);
-      console.log(`     Back:     "${back}"`);
-      console.log(``);
-    } else {
-      missingCount++;
-    }
-  }
-
-  console.log(`  ── QA Summary ──`);
-  console.log(`  ✅ Pass (≥50% semantic overlap): ${passCount}`);
-  console.log(`  ⚠️  Drift (<50% overlap):         ${driftCount}`);
-  console.log(`  ❓ Missing back-translation:      ${missingCount}`);
-  console.log(`  Total checked:                    ${qaResults.length}`);
-  console.log(``);
-
-  // Show pass examples
-  const passes = qaResults.filter((q) => q.status === "pass");
-  if (passes.length > 0) {
-    console.log("  ── Pass examples ──");
-    for (const qa of passes.slice(0, 3)) {
-      const orig = qa.original.length > 60 ? qa.original.slice(0, 60) + "..." : qa.original;
-      console.log(`  ✅ (${Math.round(qa.similarity * 100)}%) "${orig}"`);
-    }
-    console.log(``);
-  }
+  // Step 4 was a round-trip QA pass and is deliberately gone. It scored the
+  // source against a hand-written back-translation map of 6 entries covering
+  // 36 strings: every string nobody had back-translated came back at 0
+  // similarity and was counted as drift, so the `fail: 21` it wrote into
+  // `translations/fr/index.ts` was a count of absences. A back-translator that
+  // has not seen the original is what the check needs, and that is a pair of
+  // agents rather than a table — `content/pipeline/translation-roundtrip.ts`.
 
   // ── Write status.json ────────────────────────────────────────
 
@@ -318,18 +199,17 @@ function main() {
     generatedBy: "agent",
     generatedAt: new Date().toISOString(),
     generator: "folio-assistant translation simulation",
-    flaggedForReview: driftCount > 0,
-    flagReason: driftCount > 0
-      ? `${driftCount} segments showed semantic drift in round-trip QA`
-      : undefined,
+    // Unofficial is the honest flag and it is set above: no human has
+    // adjudicated this for this source version. `flaggedForReview` used to be
+    // driven by the drift count this script invented, so it said "reviewed and
+    // found wanting" about a measurement that never happened.
   };
 
   const statusPath = join(OUTPUT_DIR, "status.json");
   writeFileSync(statusPath, JSON.stringify(status, null, 2));
   console.log(`  ✅ Status written: ${statusPath}`);
   console.log(`  Official: ${status.official}`);
-  console.log(`  Flagged for review: ${status.flaggedForReview}`);
-  if (status.flagReason) console.log(`  Reason: ${status.flagReason}`);
+  console.log(`  Semantic verification: per block, via translation-block-qa.ts`);
   console.log(``);
 
   // ── Summary ──────────────────────────────────────────────────
@@ -344,7 +224,9 @@ function main() {
   console.log(`    French markdown:  ${frMdPath}`);
   console.log(`    Status:           ${statusPath}`);
   console.log(``);
-  console.log(`  Pipeline: Extract(${entries.length}) → Translate(${translatedCount}) → Inject(${result.stats.translatedSpans}) → QA(${passCount}✅ ${driftCount}⚠️ ${missingCount}❓)`);
+  console.log(`  Pipeline: Extract(${entries.length}) → Translate(${translatedCount}) → Inject(${result.stats.translatedSpans})`);
+  console.log(`  Semantic QA is NOT part of this script — run translation-block-qa.ts,`);
+  console.log(`  then translation-roundtrip.ts with a pair of agents.`);
   console.log(``);
 }
 

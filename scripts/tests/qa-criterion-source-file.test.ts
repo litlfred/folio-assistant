@@ -55,6 +55,7 @@ import {
   QA_CRITERIA_REGISTRY,
   getCriterionSourceFile,
 } from "../../content/pipeline/qa-criteria-registry.ts";
+import { checkerFunctionName } from "../../content/pipeline/qa-checker-discovery.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const CHECKER_DIR = "content/pipeline";
@@ -73,15 +74,10 @@ const sources = new Map<string, string>(
   checkerFiles().map((f) => [f, readFileSync(resolve(ROOT, f), "utf-8")]),
 );
 
-/** `does_not_default_to_float` / `lean-docstring-honesty` → `checkDoesNotDefaultToFloat`. */
-function checkerFnName(id: string): string {
-  const pascal = id
-    .split(/[-_]/)
-    .filter(Boolean)
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join("");
-  return `check${pascal}`;
-}
+// The name convention is `qa-checker-discovery`'s, not this test's: discovery
+// RESOLVES checkers by it at runtime, so a second copy here could drift and
+// the drift would read as a passing test over a sweep that finds nothing.
+const checkerFnName = checkerFunctionName;
 
 /**
  * Files that contain `id`'s checker, by either dispatch style. Returns []

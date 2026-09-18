@@ -10,7 +10,7 @@ A **generalized** branch-shipping recipe that ends with content-type-specific
 verification. "Prepare-merge" ≠ "merge": it makes the branch *mergeable* and
 stops — it does **not** push to the default branch and does **not** open or
 merge a PR (those are explicit, separate asks). Full discipline:
-`.claude/skills/local/prepare-merge.md`.
+`skills/folio-core/prepare-merge.md`.
 
 Base branch: `$ARGUMENTS` if given, else the repo default (auto-detect:
 `git remote show origin | sed -n 's/.*HEAD branch: //p'`, fallback `main`).

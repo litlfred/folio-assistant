@@ -126,8 +126,7 @@ import {
   getCriterionSourceFile,
   getCriterionExtraInputs,
 } from "./qa-criteria-registry";
-import { AUTOMATED_CHECKERS } from "./qa-checkers-voice";
-import { DAK_AUTOMATED_CHECKERS } from "./qa-checkers-dak";
+import { discoverBlockCheckers } from "./qa-checker-discovery";
 import { usesGraphHash } from "./uses-graph-hash";
 
 
@@ -221,8 +220,14 @@ interface BlockSweepResult {
   }>;
 }
 
-function run(): void {
+async function run(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
+  // Resolved ONCE, from the registry rather than from an import list: every
+  // automated criterion declares the module its checker lives in, so an
+  // adapter's checkers are reached because its criteria name them and not
+  // because this file knows the adapter exists. See qa-checker-discovery.
+  const discovery = await discoverBlockCheckers();
+  const checkers = discovery.checkers;
   const rootAbs = resolve(args.root);
   // Anchor for recorded block paths: the content repo that owns the
   // swept blocks (NOT this platform checkout — see findContentRepoRoot).
@@ -436,7 +441,7 @@ function run(): void {
       }
 
       // If non-automated, mark as needing agent and continue.
-      const checker = AUTOMATED_CHECKERS[criterionId] ?? DAK_AUTOMATED_CHECKERS[criterionId];
+      const checker = checkers.get(criterionId);
       if (!def.automated || !checker) {
         sweepResult.criteria_needs_agent++;
         totalNeedsAgent++;
@@ -739,6 +744,22 @@ function run(): void {
     );
     console.log("");
 
+    // Discovery's two disagreements between the registry and the code, on
+    // stderr so they never pollute a parsed run. Neither is a block finding
+    // and neither may be folded into `needs-agent`: that bucket means "a
+    // person must judge this", and these mean "the registry and the checker
+    // files do not agree about what is automated".
+    for (const u of discovery.unimplemented) {
+      console.error(
+        `  \u26a0 ${u.criterion} is declared automated but ${u.sourceFile} ${u.reason}`,
+      );
+    }
+    for (const o of discovery.orphaned) {
+      console.error(
+        `  \u26a0 ${o.sourceFile} implements ${o.criterion}, which the registry declares automated: false \u2014 that checker never runs`,
+      );
+    }
+
     // Per-block summary, only show blocks with findings or needs-agent.
     for (const r of results) {
       if (
@@ -771,4 +792,4 @@ function run(): void {
   }
 }
 
-run();
+await run();
