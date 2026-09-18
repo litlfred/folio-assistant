@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "skill",
-    "id": "integration-backlog",
-    "path": "skills/folio-core/integration-backlog.md"
+    "id": "lean-formalization",
+    "path": "skills/authoring-math/lean-formalization.md"
   },
-  "source_hash": "d9101b56ee2e",
+  "source_hash": "a9ee9a6c557c",
   "auditor": {
     "script": "scripts/kg-audit.ts",
     "script_hash": "sha256:6b817ff23334adb569779b4c620b0ebf98ad7bf63499f1eec596662b9bf02e9d",
@@ -13,13 +13,8 @@
   },
   "criteria": {
     "skill-is-brief": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "skills/folio-core/integration-backlog.md",
-          "detail": "309 lines; p75 of the skill corpus is 279."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "skill-not-a-document": {
       "result": "pass",
@@ -31,8 +26,8 @@
     }
   },
   "totals": {
-    "pass": 2,
-    "fail": 1,
+    "pass": 3,
+    "fail": 0,
     "n/a": 0,
     "unknown": 0
   }
