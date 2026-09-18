@@ -482,6 +482,7 @@ One sentence, and every word in it is a distinct declared object:
 | **Actor** | a concrete participant — human or agentic. Persists across processes. | `.claude/skills/actors/*.json` |
 | **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
 | **Skill** | the instruction body the actor needs to perform the task. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
+| **Permission** | what an actor may **do**, in any lane — as opposed to what its lane's role knows. Cross-cuts roles, so it lives on the actor. | `skills/permissions/permissions.json` |
 | **Process / Decision** | BPMN + DMN. Lanes bind roles, activities name skills, gateways may compute a branch. | `skills/workflows/` |
 
 All four live in the **`kg` graph** the instance declares in `cat-harness.json`
@@ -494,6 +495,16 @@ the duration of a lane, and the same actor is a different role in another
 diagram — the session agent is `Lane_Agent` in `crdm-requirements.bpmn` and the
 *sibling session* in `bean-lifecycle.bpmn`, whose whole point is marking what is
 not yours to close.
+
+**An actor has three lists and they answer three questions:** `roles` — what may
+it act AS (per lane); `permissions` — what may it DO (every lane);
+`capabilities` — what does its machine have (the environment). They were one
+field until 2026-09, and the conflation meant nothing resolved any of them.
+Moving permissions onto Role looks right and is wrong: a permission cross-cuts,
+so that placement produced 36 conflicts where a permission was held by some but
+not all actors sharing a role. **A skill is what the performer needs to KNOW and
+belongs to the lane; a permission is what the participant may DO and travels
+with them.**
 
 **Roles compose two ways and they are not the same thing.** `inherits` is IS-A
 and static (`qc-reviewer` has `reviewer`'s skills everywhere, always). The

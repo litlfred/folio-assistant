@@ -200,6 +200,7 @@ skills/                         ← this instance's `kg`
   roles/roles.json              the ROLE GRAPH — a role is a BPMN swimlane
   workflows/*.bpmn, *.dmn       the processes those roles act in
   requirements/*.json           conformance obligations pointing at the rest
+  permissions/permissions.json  what an actor may DO, in any lane
   <area>/kg-qa/*.kg-qa.json     audit sidecars, beside what they audit
   folio-core/*.md               skills
   <pkg>/package-manifest.json   which skills a package publishes

@@ -2,7 +2,7 @@
   "id": "admin",
   "title": "Administrator",
   "type": "person",
-  "description": "Full administrative access. May act in every governance lane; `capabilities` is what the environment grants, `roles` is what it may act as.",
+  "description": "Full administrative access. The three fields say three different things: `roles` is what it may act AS, `permissions` what it may DO in any lane, `capabilities` what its machine has.",
   "roles": [
     "programme-manager",
     "publication-manager",
@@ -10,10 +10,12 @@
     "author",
     "reviewer"
   ],
-  "capabilities": [
-    "git-push",
+  "permissions": [
     "admin-settings",
     "role-management",
     "release-authorization"
+  ],
+  "capabilities": [
+    "git-push"
   ]
 }

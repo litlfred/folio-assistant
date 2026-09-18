@@ -2,13 +2,14 @@
   "id": "review-agent",
   "title": "Review Agent",
   "type": "system",
-  "description": "LLM agent performing NON-MECHANICAL validation \u2014 accuracy, voice, exposition, whether a change says what the editor meant. Judgement calls escalate to a human reviewer or SME.",
+  "description": "LLM agent performing NON-MECHANICAL validation — accuracy, voice, exposition, whether a change says what the editor meant. Judgement calls escalate to a human reviewer or SME.",
   "roles": [
     "reviewer"
   ],
-  "capabilities": [
+  "permissions": [
     "review-comments"
   ],
+  "capabilities": [],
   "meta": {
     "lifecycle": [
       "validate",

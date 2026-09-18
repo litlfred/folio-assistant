@@ -292,6 +292,8 @@ export interface LoadedActor extends ActorDef {
    * claimed by three actors and declared nowhere.
    */
   capabilities?: string[];
+  /** Permission ids — what it may do. See {@link readPermissions}. */
+  permissions?: string[];
   /** The file it came from, so a finding can name it. */
   path: string;
   /** Carries `inherits` — i.e. it is modelling a role, not an actor. */
@@ -317,6 +319,7 @@ export function readActors(actorsDir: string): LoadedActor[] {
       description: typeof raw.description === "string" ? raw.description : undefined,
       roles: Array.isArray(raw.roles) ? (raw.roles as string[]) : undefined,
       capabilities: Array.isArray(raw.capabilities) ? (raw.capabilities as string[]) : undefined,
+      permissions: Array.isArray(raw.permissions) ? (raw.permissions as string[]) : undefined,
       path: p,
       looksLikeRole: Array.isArray(raw.inherits) && raw.inherits.length > 0,
     });
@@ -456,4 +459,79 @@ export function toJsonLd(graph: RoleGraph): Record<string, unknown> {
       ...(r.inherits?.length ? { inherits: r.inherits.map((i) => ({ "@id": `#${i}` })) } : {}),
     })),
   };
+}
+
+// ── Permissions ─────────────────────────────────────────────────
+
+/** Directory, relative to the `kg` root, holding the permission vocabulary. */
+export const PERMISSION_DIR = "permissions";
+export const PERMISSION_FILENAME = "permissions.json";
+
+/**
+ * What an actor is ALLOWED to do, as opposed to what it knows or what its
+ * machine has.
+ *
+ * ## Why this is an actor property and not a role property
+ *
+ * It was tested, not assumed, and the obvious answer was wrong. "Can review"
+ * and "can push" are properties of a position, which is what moved `inherits`
+ * off actors in 2026-09 — so the natural next step was to move permissions onto
+ * Role too. That does not survive contact with the data: a permission
+ * **cross-cuts** roles. `content-authoring` is held by actors taking on five
+ * different roles; `qa-reporting` by three, one of them a build pipeline and
+ * one a human QC reviewer; and `admin` holds `admin-settings` in every one of
+ * the five lanes it acts in. Placing them on Role produced **36** conflicts
+ * where a permission was held by some but not all actors sharing a role.
+ *
+ * The distinction that does hold: a **skill** answers *what does the performer
+ * of this task need to know*, and belongs to the lane. A **permission** answers
+ * *what is this participant allowed to do*, and travels with the participant
+ * through every lane it enters.
+ */
+export interface PermissionDef {
+  id: string;
+  /** Display text and the sentence under it — `schemas/kg-node.ts`, like every node. */
+  title: string;
+  description: string;
+}
+
+export interface PermissionVocabulary {
+  name: string;
+  permissions: PermissionDef[];
+}
+
+export const PermissionDefSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(1),
+  description: z.string().min(1),
+});
+
+export const PermissionVocabularySchema = z.object({
+  name: z.string().min(1),
+  permissions: z.array(PermissionDefSchema).default([]),
+});
+
+/**
+ * Read the permission vocabulary. Absent → `undefined` (an unmigrated instance
+ * simply declares none); present but unparseable → throws, on the same rule as
+ * every other declaration here.
+ */
+export function readPermissions(kgRoot: string): PermissionVocabulary | undefined {
+  const p = join(kgRoot, PERMISSION_DIR, PERMISSION_FILENAME);
+  if (!existsSync(p)) return undefined;
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(p, "utf-8"));
+  } catch (e) {
+    throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
+  }
+  if (typeof raw === "object" && raw !== null) delete (raw as Record<string, unknown>)._comment;
+  const parsed = PermissionVocabularySchema.safeParse(raw);
+  if (!parsed.success) throw new Error(`${p} is not a valid permission vocabulary: ${parsed.error.message}`);
+  const ids = new Set<string>();
+  for (const perm of parsed.data.permissions) {
+    if (ids.has(perm.id)) throw new Error(`${p}: permission id "${perm.id}" is declared twice.`);
+    ids.add(perm.id);
+  }
+  return parsed.data;
 }

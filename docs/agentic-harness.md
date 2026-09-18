@@ -17,7 +17,7 @@ lang: en
 
 _This page is generated from [`content/docs/agentic-harness/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/agentic-harness) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/overview.md){: .fa-node-edit title="Edit content/docs/agentic-harness/overview.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/overview.md){: .fa-node-edit title="Edit content/docs/agentic-harness/overview.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/agentic-harness/overview.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 The **agentic harness** is the interaction model that folio-assistant runs on —
 the rules, states, and workflows that govern how an agent and a user collaborate
@@ -36,7 +36,7 @@ enters for each class, and what the user should expect at each stage.
 ## Interaction states
 {: #interaction-states }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/interaction-states.md){: .fa-node-edit title="Edit content/docs/agentic-harness/interaction-states.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/interaction-states.md){: .fa-node-edit title="Edit content/docs/agentic-harness/interaction-states.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/agentic-harness/interaction-states.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 A user–agent interaction is always in exactly one of two states:
 
@@ -75,7 +75,7 @@ not, it is in the idle state, and the next request starts a new workflow.
 ## Session lifecycle
 {: #session-lifecycle }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/session-lifecycle.md){: .fa-node-edit title="Edit content/docs/agentic-harness/session-lifecycle.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/session-lifecycle.md){: .fa-node-edit title="Edit content/docs/agentic-harness/session-lifecycle.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/agentic-harness/session-lifecycle.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 Every agent session follows the same lifecycle:
 
@@ -104,7 +104,7 @@ Every agent session follows the same lifecycle:
 ## Request classification
 {: #request-classification }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/request-classification.md){: .fa-node-edit title="Edit content/docs/agentic-harness/request-classification.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/request-classification.md){: .fa-node-edit title="Edit content/docs/agentic-harness/request-classification.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/agentic-harness/request-classification.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 Every user request is classified into one of these categories. The
 classification determines which workflow the agent enters.
@@ -138,7 +138,7 @@ content model?"
 ## Content workflows
 {: #content-workflows }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/content-workflows.md){: .fa-node-edit title="Edit content/docs/agentic-harness/content-workflows.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/content-workflows.md){: .fa-node-edit title="Edit content/docs/agentic-harness/content-workflows.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/agentic-harness/content-workflows.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 When a request is classified as content work (authoring, review, ingestion),
 the agent follows the corresponding BPMN workflow. The existing documentation
@@ -167,7 +167,7 @@ switches context.
 ## Feature-request workflow (CRDM)
 {: #feature-request-workflow }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/feature-request-workflow.md){: .fa-node-edit title="Edit content/docs/agentic-harness/feature-request-workflow.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/feature-request-workflow.md){: .fa-node-edit title="Edit content/docs/agentic-harness/feature-request-workflow.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-fail fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/agentic-harness/feature-request-workflow.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 2 fail, 0 warn, 21 pass, 25 n/a — open for witnesses" aria-label="Content QA: 2 fail, 0 warn, 21 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✕</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 When a request is classified as a feature request, the agent enters the
 **CRDM requirements workflow**
@@ -216,7 +216,7 @@ On exit, if a content workflow was suspended, the agent resumes it.
 ## User-provided content and sources
 {: #user-provided-content }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/user-provided-content.md){: .fa-node-edit title="Edit content/docs/agentic-harness/user-provided-content.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/user-provided-content.md){: .fa-node-edit title="Edit content/docs/agentic-harness/user-provided-content.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/agentic-harness/user-provided-content.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 Users provide content and source material through multiple channels. The agent
 should accept all of them and route them into the appropriate pipeline:
@@ -247,7 +247,7 @@ and synthesises them into requirements for the review triage tool.
 ## Issue and bean discipline
 {: #issue-and-bean-discipline }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/issue-and-bean-discipline.md){: .fa-node-edit title="Edit content/docs/agentic-harness/issue-and-bean-discipline.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/issue-and-bean-discipline.md){: .fa-node-edit title="Edit content/docs/agentic-harness/issue-and-bean-discipline.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/agentic-harness/issue-and-bean-discipline.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 Feature work must be linked to a GitHub issue. Content work uses beans. The
 two are related but not synonymous.
@@ -296,7 +296,7 @@ two are related but not synonymous.
 ## Consolidated skill references
 {: #consolidated-skill-references }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/consolidated-skill-references.md){: .fa-node-edit title="Edit content/docs/agentic-harness/consolidated-skill-references.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/consolidated-skill-references.md){: .fa-node-edit title="Edit content/docs/agentic-harness/consolidated-skill-references.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-fail fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/agentic-harness/consolidated-skill-references.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 1 fail, 0 warn, 22 pass, 25 n/a — open for witnesses" aria-label="Content QA: 1 fail, 0 warn, 22 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✕</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 The behaviour described on this page draws from skills and guidance documents
 scattered across the repository. This section maps the consolidated behaviour
@@ -323,7 +323,7 @@ consolidation, not a new authority. If you find a discrepancy, fix this page.
 ## What is not built yet
 {: #what-is-not-built-yet }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/what-is-not-built-yet.md){: .fa-node-edit title="Edit content/docs/agentic-harness/what-is-not-built-yet.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/what-is-not-built-yet.md){: .fa-node-edit title="Edit content/docs/agentic-harness/what-is-not-built-yet.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/agentic-harness/what-is-not-built-yet.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 - **Workflow state persistence** — the harness describes workflow suspension
   and resumption, but there is no mechanism to persist the agent's workflow

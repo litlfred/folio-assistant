@@ -59,6 +59,8 @@ export const ActorDefinitionSchema = z.object({
   inherits: z.array(z.string()).optional().default([]),
   /** Roles (BPMN swimlanes) this actor may take on. */
   roles: z.array(z.string()).optional(),
+  /** Permission ids — what it may do, regardless of lane. See `skills/permissions/`. */
+  permissions: z.array(z.string()).optional(),
   capabilities: z.array(z.string()),
   meta: z.record(z.unknown()).optional(),
 });

@@ -62,6 +62,7 @@ import {
 import {
   readRoleGraph,
   readActors,
+  readPermissions,
   resolveRoleSkills,
   roleForLane,
   type RoleGraph,
@@ -634,6 +635,19 @@ function auditGraph(
     }
   }
 
+  const declaredPerms = new Set((readPermissions(KG_ROOT)?.permissions ?? []).map((p) => p.id));
+  const badPerms: KgFinding[] = [];
+  for (const a of actors) {
+    for (const perm of a.permissions ?? []) {
+      if (!declaredPerms.has(perm)) {
+        badPerms.push({
+          where: a.id,
+          detail: `${relative(root, a.path)} claims permission "${perm}", which skills/permissions/permissions.json does not declare.`,
+        });
+      }
+    }
+  }
+
   const roleish = actors
     .filter((a) => a.looksLikeRole)
     .map((a) => ({ where: a.id, detail: `${relative(root, a.path)} carries \`inherits\` — an actor does not inherit, a role does. Migration debt from before roles were declared.` }));
@@ -664,6 +678,7 @@ function auditGraph(
         ? entry(badActorRoles)
         : { result: "unknown", findings: [{ where: "—", detail: "no role graph to resolve actor roles against." }] },
       "actor-capabilities-resolve": entry(badCaps),
+      "actor-permissions-resolve": entry(badPerms),
       "actor-is-not-a-role": entry(roleish),
     },
     auditorHash,
