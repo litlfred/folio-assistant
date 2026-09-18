@@ -164,47 +164,25 @@ export const TranslationConfigSchema = z.object({
   officialOnly: z.boolean().default(false),
 });
 
-/**
- * Where the agent harness keeps the two stores a person actually needs to find.
+/*
+ * The work-plan directories are NOT declared here.
  *
- * `workPlan` is the bean store: WHAT is being worked on. `workflowState` is one
- * JSON file per running BPMN instance: WHERE IT GOT TO. They answer the two
- * halves of one question, so they live adjacent — `beans/` and `beans/workflow/`
- * — and at top level rather than behind a dot.
+ * They were, briefly. They belong in `agent-harness.json`'s `directories[]`,
+ * where every other directory an instance scans is declared with the KIND of
+ * graph it holds — see `schemas/agent-harness.ts` and
+ * `skills/folio-core/directory-conventions.md`. Two declarations of the same
+ * fact is the drift this repo keeps paying for, so there is one.
  *
- * ## Why they are declared rather than assumed
- *
- * Both paths were previously hard-coded in three places that could disagree:
- * `.beans.yml` (which the `beans` CLI reads), `WORKFLOW_DIR` in
- * `workflow/store.ts`, and every skill and diagram that named a path in prose.
- * Declaring them here makes the config the one place a folio states the answer,
- * and gives a tool something to read instead of a convention to re-derive.
- *
- * ## `.beans.yml` is still the CLI's own config, and still authoritative for it
- *
- * The `beans` binary does not read `harness.config.json` and never will — it is a
- * third-party tool. So `workPlan` here must MATCH `beans.path` in `.beans.yml`,
- * and `bun run check:harness-dirs` fails when they disagree. Two configs that
- * can drift is exactly the defect this repo keeps paying for; the check is what
- * makes the duplication safe rather than merely documented.
+ * This file stays the RUNTIME config: which adapter, which skills directory,
+ * the viewer, simulators, translation, dependencies. `agent-harness.json` is
+ * the DECLARATION: what this instance is and what it scans.
  */
-export const HarnessDirsSchema = z.object({
-  /** Bean store. Must equal `beans.path` in `.beans.yml`. */
-  workPlan: z.string().default("beans"),
-  /** One JSON file per running BPMN process instance. */
-  workflowState: z.string().default("beans/workflow"),
-  /** Per-user interaction preferences, read at session start. */
-  interaction: z.string().default(".harness/interaction.json"),
-});
-
-export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;
 
 export const HarnessConfigSchema = z.object({
   contentType: z.string().optional(),
   adapter: z.string().optional(),
   adapterModule: z.string().optional(),
   contributes: z.string().optional(),
-  harness: HarnessDirsSchema.optional(),
   translation: TranslationConfigSchema.optional(),
   dependencies: HarnessConfigDependenciesSchema.optional(),
 });
