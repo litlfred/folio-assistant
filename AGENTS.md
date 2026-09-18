@@ -161,7 +161,7 @@ from a plain `ls`, from most file browsers and from GitHub's web tree, so the tw
 artefacts a person looks for first were the two hardest to find. Moved 2026-09-18.
 
 Both are **declared** in `agent-harness.json`, beside `schemas/` and `skills/`,
-each naming the KIND of graph it holds — `workplan` for `beans/`, `process` for
+each naming the KIND of graph it holds — `workplan` for `beans/`, `process-state` for
 `beans/workflow/`. That file is the one declaration of what this instance scans;
 `harness.config.json` stays the runtime config (adapter, skills dir, viewer,
 simulators, translation, dependencies) and declares no directories. See

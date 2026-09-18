@@ -54,7 +54,7 @@ function writeDeclaration(root: string, workPlan: string, processState: string):
       name: "scratch",
       directories: [
         { id: "workplan", path: workPlan, graph: "workplan" },
-        { id: "process-state", path: processState, graph: "process" },
+        { id: "process-state", path: processState, graph: "process-state" },
       ],
     }),
   );
@@ -280,7 +280,7 @@ describe("the directories are declared in agent-harness.json", () => {
   test("this repo declares both kinds, and they are the ones that moved", () => {
     const decl = readDeclaration(REPO_ROOT)!;
     const wp = decl.directories.find((d) => d.graph === "workplan");
-    const ps = decl.directories.find((d) => d.graph === "process");
+    const ps = decl.directories.find((d) => d.graph === "process-state");
     expect(wp?.path).toBe("beans/");
     expect(ps?.path).toBe("beans/workflow/");
   });
@@ -289,14 +289,14 @@ describe("the directories are declared in agent-harness.json", () => {
     // The work plan is the harness's because the harness HAS one — unlike
     // `folio`, which only core can render.
     expect(BASE_GRAPH_KINDS.workplan).toBeDefined();
-    expect(BASE_GRAPH_KINDS.process).toBeDefined();
+    expect(BASE_GRAPH_KINDS["process-state"]).toBeDefined();
     expect(BASE_GRAPH_KINDS.workplan!.renderable).toBe(false);
-    expect(BASE_GRAPH_KINDS.process!.renderable).toBe(false);
+    expect(BASE_GRAPH_KINDS["process-state"]!.renderable).toBe(false);
     expect(BASE_GRAPH_KINDS.folio).toBeUndefined();
   });
 
   test("they are two kinds, so a consumer asking for work cannot be handed process state", () => {
-    expect(BASE_GRAPH_KINDS.workplan!.type).not.toBe(BASE_GRAPH_KINDS.process!.type);
+    expect(BASE_GRAPH_KINDS.workplan!.type).not.toBe(BASE_GRAPH_KINDS["process-state"]!.type);
   });
 
   test("an unmigrated instance is `not configured`, never a failure", () => {

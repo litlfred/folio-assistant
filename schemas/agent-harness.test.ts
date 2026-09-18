@@ -189,7 +189,7 @@ describe("graph kinds — the harness declares five, core adds folio", () => {
     // so a layer that cannot render must not own the renderable kind.
     expect(Object.keys(BASE_GRAPH_KINDS).sort()).toEqual([
       "kg",
-      "process",
+      "process-state",
       "schemas",
       "tools",
       "workplan",
@@ -204,7 +204,7 @@ describe("graph kinds — the harness declares five, core adds folio", () => {
     // naming it against a bare registry is refused.
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
-    expect(bare.names().sort()).toEqual(["kg", "process", "schemas", "tools", "workplan"]);
+    expect(bare.names().sort()).toEqual(["kg", "process-state", "schemas", "tools", "workplan"]);
   });
 
   it("core's registration adds it, and it is the renderable one", () => {
@@ -212,7 +212,7 @@ describe("graph kinds — the harness declares five, core adds folio", () => {
     registerFolioGraphKind(reg);
     expect(reg.has("folio")).toBe(true);
     expect(isRenderable("folio", reg)).toBe(true);
-    for (const k of ["tools", "kg", "schemas", "workplan", "process"]) {
+    for (const k of ["tools", "kg", "schemas", "workplan", "process-state"]) {
       expect(isRenderable(k, reg)).toBe(false);
     }
   });
