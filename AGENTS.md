@@ -847,6 +847,19 @@ Full protocol, with the worked example:
   because whether work is done is a judgement and `AGENTS.md` says a bean is not
   closed on someone else's say-so. `work_plan_prime` reports every instance's
   position next to its bean, so the plan and the process are one answer.
+- **Process state, blocking, and swarms are skills, not rules here.** An agent
+  holds nested state — a task, inside a process instance, under a role that owns
+  a swimlane — and the five detectors for "you are out of process", plus the
+  recovery that **confirms with the user before re-entering**, are in
+  [`skills/folio-core/process-state.md`](skills/folio-core/process-state.md).
+  Bean status defaults to **non-blocking**; a real block carries what it waits
+  on, since, an **expiry** and a handoff, because a block with no expiry cannot
+  be told from abandoned work —
+  [`skills/folio-core/bean-blocking.md`](skills/folio-core/bean-blocking.md).
+  A swarm is **asked for every time**, per swarm, with agent count, model level
+  and rough cost —
+  [`skills/folio-core/swarm-management.md`](skills/folio-core/swarm-management.md)
+  and the [reader-facing page](docs/swarm-management.md).
 - **An instance declares the directories it scans — `agent-harness.json` at
   the repo root.** Each entry names a directory and the **kind of graph** it
   holds: `folio` (authored content, rendered to a website by just-the-docs),
