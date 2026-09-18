@@ -2,7 +2,7 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "role",
-    "id": "editor",
+    "id": "code-reviewer",
     "path": "skills/roles/roles.json"
   },
   "source_hash": "sha256:e9c1d21f004d7b26e4ec155058d341524a13d41f86f624532658fa2c3f486bc3",
@@ -17,7 +17,7 @@
       "findings": []
     },
     "role-inherits-resolves": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "role-binds-a-lane": {
@@ -30,9 +30,9 @@
     }
   },
   "totals": {
-    "pass": 4,
+    "pass": 3,
     "fail": 0,
-    "n/a": 0,
+    "n/a": 1,
     "unknown": 0
   }
 }

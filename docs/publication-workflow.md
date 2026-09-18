@@ -81,6 +81,17 @@ These run alongside the content processes rather than inside them:
 | `bean-lifecycle.bpmn` | When does an agent create, edit or scrap a bean — and why is one never deleted? See [Beans and todos](beans-and-todos.html) |
 | `content-change-review.bpmn` | One author's change, from description through staging to review-committee approval |
 
+**Review** — the generic entry and the two specialisms it descends into. They
+are separate processes rather than extra skills on the reviewer, because the
+subprocess stack is SCOPED: an actor takes on the inner lane's role for that
+call path only, where `inherits` would carry both specialisms everywhere.
+
+| Diagram | Answers |
+|---------|---------|
+| `review-task.bpmn` | What kind of thing changed, and which review does it descend into? |
+| `review-narrative.bpmn` | Prose: register and voice, the editorial dependencies a reader needs, translation |
+| `review-code.bpmn` | The graph's code nodes: Tool definitions and schema definition nodes — does the node declare what it is, do its references resolve, is the mechanism it advertises the one that runs? |
+
 **Ingestion** — turning an uploaded source document into corpus. The first is
 the outer process; the rest are its call activities:
 

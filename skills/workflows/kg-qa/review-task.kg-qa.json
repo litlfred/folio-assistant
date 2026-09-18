@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_CRDM",
-    "path": "skills/workflows/crdm-requirements.bpmn"
+    "id": "Process_Review",
+    "path": "skills/workflows/review-task.bpmn"
   },
-  "source_hash": "sha256:f64c533131b84fd6c532851099ce0c1c204eadd1061c522cadd99f4f1762fe6e",
+  "source_hash": "sha256:5d37def2b7379235c283625e0e354a2a84fc7fd3643a8d80c7542b8a7ee823ec",
   "auditor": {
     "script": "scripts/kg-audit.ts",
     "script_hash": "sha256:fd86e120ed4c0f1fe08c22354b901ce1400683e45baedeec0dcb0e4d1f4c43fe",
@@ -41,25 +41,8 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "S_ConfirmNeeds",
-          "detail": "\"Confirm needs statement\" names no skill."
-        },
-        {
-          "where": "S_ApproveReqs",
-          "detail": "\"Approve requirements\" names no skill."
-        },
-        {
-          "where": "S_TestMVP",
-          "detail": "\"Test MVP in own context\" names no skill."
-        },
-        {
-          "where": "S_FeatureSignoff",
-          "detail": "\"Feature sign-off on issue\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "call-activity-resolves": {
       "result": "pass",
@@ -67,8 +50,8 @@
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 1,
+    "pass": 8,
+    "fail": 0,
     "n/a": 1,
     "unknown": 0
   }
