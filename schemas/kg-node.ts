@@ -101,11 +101,135 @@ export interface KgImage extends KgNodeLabels {
    * not met.
    */
   role?: string;
+  /**
+   * Which viewport this variant is cut for.
+   *
+   * One logical image — the landing backdrop, say — is several files: a wide
+   * one for a laptop, a tall one for a phone, a square-ish one for a card. All
+   * share a `role`; `layout` is what tells them apart, so a consumer picks by
+   * the pair rather than by parsing a filename.
+   *
+   * Open string, and **absent means layout-independent** — an SVG mark is the
+   * same file everywhere and should not have to claim a viewport.
+   */
+  layout?: string;
+  /** Intrinsic width in pixels, so a renderer can reserve space. */
+  width?: number;
+  /** Intrinsic height in pixels. */
+  height?: number;
+  /**
+   * Where text may safely be drawn ON this image, as fractions of its size.
+   *
+   * **This is authored data, not a derived property**, and it has to be: it
+   * says where the picture is *quiet*, which is a judgement about the
+   * composition. The laptop backdrop here has a thought-cloud whose lower
+   * interior is clear, an @ mark occupying its top third, and a cat's ear
+   * rising into its lower left — a box that avoids all three was found by
+   * rendering candidates and looking at them, and no amount of pixel analysis
+   * substitutes for that.
+   *
+   * It differs per {@link layout} by necessity: the same cloud sits in a
+   * different place in a portrait crop.
+   *
+   * **Absent means no region is declared**, which a renderer must treat as "do
+   * not overlay text" rather than as "anywhere is fine". Text placed by
+   * guesswork lands on the cat.
+   */
+  textRegion?: ImageRegion;
 }
+
+/**
+ * A rectangle on an image, in fractions of its width and height.
+ *
+ * Fractions rather than pixels so the declaration survives the image being
+ * re-exported at another size — which is exactly what happens when a variant
+ * is regenerated.
+ */
+export interface ImageRegion {
+  /** Left edge, 0–1. */
+  x: number;
+  /** Top edge, 0–1. */
+  y: number;
+  /** Width, 0–1. */
+  w: number;
+  /** Height, 0–1. */
+  h: number;
+}
+
+export const ImageRegionSchema = z
+  .object({
+    x: z.number().min(0).max(1),
+    y: z.number().min(0).max(1),
+    w: z.number().gt(0).max(1),
+    h: z.number().gt(0).max(1),
+  })
+  // A region running off the edge is rejected rather than clamped: clamping
+  // silently moves the text somewhere nobody chose, which is the failure this
+  // field exists to prevent.
+  .refine((r) => r.x + r.w <= 1 && r.y + r.h <= 1, {
+    message: "textRegion extends past the edge of the image",
+  });
 
 export const KgImageSchema = z.object({
   id: z.string().min(1),
   src: z.string().min(1),
   role: z.string().min(1).optional(),
+  layout: z.string().min(1).optional(),
+  width: z.number().int().positive().optional(),
+  height: z.number().int().positive().optional(),
+  textRegion: ImageRegionSchema.optional(),
   ...kgNodeLabelShape,
 });
+
+/**
+ * The variants of one role, by layout.
+ *
+ * Returns a map rather than a list so a caller asks for the layout it is
+ * rendering. A layout with no variant is **absent from the map**, never
+ * substituted — see {@link pickLayout} for the one place a fallback is
+ * chosen, and said out loud.
+ */
+export function imagesForRole(
+  images: readonly KgImage[] | undefined,
+  role: string,
+): Map<string, KgImage> {
+  const out = new Map<string, KgImage>();
+  for (const i of images ?? []) {
+    if (i.role === role && i.layout !== undefined) out.set(i.layout, i);
+  }
+  return out;
+}
+
+/** What {@link pickLayout} did, so a caller can report a substitution. */
+export interface LayoutPick {
+  image?: KgImage;
+  /** The layout actually used, when it is not the one asked for. */
+  substituted?: string;
+}
+
+/**
+ * The variant for a layout, falling back along a declared order.
+ *
+ * The fallback is **reported**, not silent. A phone served the laptop crop is
+ * a real degradation — the text region is wrong for it, so the overlay lands
+ * somewhere nobody chose — and a renderer that cannot tell it happened will
+ * ship that. `substituted` is what lets it say so, or decline to overlay.
+ *
+ * An empty result means no variant of this role exists at all, which is a
+ * third state and not the same as a substitution.
+ */
+export function pickLayout(
+  images: readonly KgImage[] | undefined,
+  role: string,
+  wanted: string,
+  order: readonly string[] = ["laptop", "mobile", "card"],
+): LayoutPick {
+  const byLayout = imagesForRole(images, role);
+  const exact = byLayout.get(wanted);
+  if (exact) return { image: exact };
+  for (const l of order) {
+    const alt = byLayout.get(l);
+    if (alt) return { image: alt, substituted: l };
+  }
+  return {};
+}

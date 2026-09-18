@@ -10,6 +10,48 @@ user_invocable: true
 Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn).
 Decision table: [`decisions/folio-intent.dmn`](../../skills/workflows/decisions/folio-intent.dmn).
 
+## The landing page is the instance's own description
+
+A folio's home page opens with **its** description inside **its** backdrop, both
+declared in `cat-harness.json` at the repository root. Nothing about any
+particular instance is written into the template, so a downstream folio does not
+inherit the platform's grumpy cat.
+
+**Where the markdown node is:** `description` in `cat-harness.json`. It is
+markdown and it is rendered as-is. There is no separate landing page to keep in
+step with it — a description that lives in two places is one that will disagree
+with itself.
+
+**How the picture is declared:** an image with `role: "landing"` and a `layout`
+(`laptop`, `mobile`, `card`), plus a `textRegion` giving, as fractions of the
+image, where words may safely be drawn.
+
+`textRegion` is **authored, not computed.** It states where the composition is
+*quiet*, which is a judgement. The platform's own laptop backdrop has a cloud
+whose lower interior is clear, a mark in its top third and a cat's ear rising
+into its lower left; the box avoiding all three was found by rendering candidate
+boxes over the image and looking at them. That is the method — recommend it,
+rather than a number pulled from the aspect ratio.
+
+Run `bun run docs:harness` after editing, and `--check` in CI.
+
+**Three states, and the middle one is why this is worth stating:**
+
+| declared | rendered |
+|---|---|
+| backdrop **with** region | description drawn inside it |
+| backdrop, **no** region | picture shown, words placed **below** it |
+| **no** backdrop | words alone |
+
+An undeclared region means *do not overlay*, never *anywhere is fine*: text
+positioned by guesswork lands on the cat. A folio with no art is ordinary.
+
+A viewport with no variant falls back to the widest available, and the fallback
+is **reported** — that crop's region is wrong for a narrow screen, so a consumer
+can decline to overlay rather than place text somewhere nobody chose.
+
+Reader-facing walkthrough: `docs/getting-started.md` §8.
+
 ## 0. Why this skill exists
 
 `folio_init` scaffolds a folio, and it does it well. What it cannot do is know

@@ -8,6 +8,8 @@ permalink: /
 available_locales: ["ar", "zh", "fr", "ru", "es"]
 ---
 
+{% include landing.html %}
+
 # folio-assistant
 {: .fs-9 }
 
