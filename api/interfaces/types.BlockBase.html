@@ -16,7 +16,7 @@
 <code>dak-blocks.ts</code> extend the same base — one set of editorial fields across
 both adapters is what lets one graph loader and one QA sweep serve both.</p>
 </div></section>
-<div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">BlockBase</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#authornotes">authorNotes</a><span class="tsd-signature-symbol">?:</span> <a href="types.AuthorNote.html" class="tsd-signature-type tsd-kind-interface">AuthorNote</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#cites">cites</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#companions">companions</a><span class="tsd-signature-symbol">?:</span> <a href="types.Companions.html" class="tsd-signature-type tsd-kind-interface">Companions</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#computation">computation</a><span class="tsd-signature-symbol">?:</span> <a href="types.Computation.html" class="tsd-signature-type tsd-kind-interface">Computation</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#defines">defines</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#foreshadows">foreshadows</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#label">label</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#meta">meta</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#rendered">rendered</a><span class="tsd-signature-symbol">?:</span> <a href="types.RenderedAsset.html" class="tsd-signature-type tsd-kind-interface">RenderedAsset</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#simulator">simulator</a><span class="tsd-signature-symbol">?:</span> <a href="types.SimulatorRef.html" class="tsd-signature-type tsd-kind-interface">SimulatorRef</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#tags">tags</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#title">title</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#uses">uses</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div>
+<div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">BlockBase</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#authornotes">authorNotes</a><span class="tsd-signature-symbol">?:</span> <a href="types.AuthorNote.html" class="tsd-signature-type tsd-kind-interface">AuthorNote</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#cites">cites</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#companions">companions</a><span class="tsd-signature-symbol">?:</span> <a href="types.Companions.html" class="tsd-signature-type tsd-kind-interface">Companions</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#computation">computation</a><span class="tsd-signature-symbol">?:</span> <a href="types.Computation.html" class="tsd-signature-type tsd-kind-interface">Computation</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#defines">defines</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#foreshadows">foreshadows</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#label">label</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#lang">lang</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#meta">meta</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#posources">poSources</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#rendered">rendered</a><span class="tsd-signature-symbol">?:</span> <a href="types.RenderedAsset.html" class="tsd-signature-type tsd-kind-interface">RenderedAsset</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#simulator">simulator</a><span class="tsd-signature-symbol">?:</span> <a href="types.SimulatorRef.html" class="tsd-signature-type tsd-kind-interface">SimulatorRef</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#tags">tags</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#title">title</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#uses">uses</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div>
 <section class="tsd-panel tsd-hierarchy" data-refl="89">
 <h4>Hierarchy (<a href="../hierarchy.html#types.BlockBase">View Summary</a>)</h4>
 <ul class="tsd-hierarchy">
@@ -29,7 +29,7 @@ both adapters is what lets one graph loader and one QA sweep serve both.</p>
 <li class="tsd-hierarchy-item"><a href="types.ProofBlock.html" class="tsd-signature-type tsd-kind-interface">ProofBlock</a></li>
 <li class="tsd-hierarchy-item"><a href="types.SimulatorBlock.html" class="tsd-signature-type tsd-kind-interface">SimulatorBlock</a></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L517">types.ts:517</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L517">types.ts:517</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -44,7 +44,9 @@ both adapters is what lets one graph loader and one QA sweep serve both.</p>
 <a href="#defines" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>defines?</span></a>
 <a href="#foreshadows" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>foreshadows?</span></a>
 <a href="#label" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>label</span></a>
+<a href="#lang" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>lang?</span></a>
 <a href="#meta" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>meta?</span></a>
+<a href="#posources" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>po<wbr/>Sources?</span></a>
 <a href="#rendered" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>rendered?</span></a>
 <a href="#simulator" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>simulator?</span></a>
 <a href="#tags" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>tags?</span></a>
@@ -84,7 +86,7 @@ by <a href="http://CLAUDE.md">CLAUDE.md</a> §3b-cond are STRUCTURAL parts of th
 statement, NOT author notes. They stay in the <code>.md</code> prose.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L691">types.ts:691</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L691">types.ts:691</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="cites"><code class="tsd-tag">Optional</code><span>cites</span><a href="#cites" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">cites</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
@@ -94,14 +96,14 @@ The build pipeline auto-extracts from \cite{} in .md files,
 but explicit values here take precedence.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L650">types.ts:650</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L650">types.ts:650</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="companions"><code class="tsd-tag">Optional</code><span>companions</span><a href="#companions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">companions</span><span class="tsd-signature-symbol">?:</span> <a href="types.Companions.html" class="tsd-signature-type tsd-kind-interface">Companions</a></div>
 <div class="tsd-comment tsd-typography"><p>Override companion file resolution (normally by root-name convention).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L657">types.ts:657</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L657">types.ts:657</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="computation"><code class="tsd-tag">Optional</code><span>computation</span><a href="#computation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">computation</span><span class="tsd-signature-symbol">?:</span> <a href="types.Computation.html" class="tsd-signature-type tsd-kind-interface">Computation</a></div>
@@ -114,7 +116,7 @@ construction or empirically supports the claim.  See the
 helper that emits matching <code>*.witness.json</code> files.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L720">types.ts:720</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L720">types.ts:720</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="defines"><code class="tsd-tag">Optional</code><span>defines</span><a href="#defines" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">defines</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
@@ -131,7 +133,7 @@ directive's bracket text and may differ from the slug only via the
 long-form <code>:refterm[Visible]{#slug}</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L709">types.ts:709</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L709">types.ts:709</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="foreshadows"><code class="tsd-tag">Optional</code><span>foreshadows</span><a href="#foreshadows" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">foreshadows</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
@@ -186,35 +188,78 @@ transitively pruned: pointers are individually chosen editorial gestures,
 not a reachability relation.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L642">types.ts:642</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L642">types.ts:642</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="label"><span>label</span><a href="#label" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">label</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Label following project convention (e.g. &quot;def:quantum-universe&quot;).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L519">types.ts:519</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L519">types.ts:519</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="lang"><code class="tsd-tag">Optional</code><span>lang</span><a href="#lang" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">lang</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>BCP 47 language tag of this block's <strong>source</strong> content.</p>
+<p>Defaults to the folio's <code>translation.defaultLocale</code> (itself defaulting
+to <code>&quot;en&quot;</code>) when absent. Explicitly set only when a block is authored in
+a language other than the folio default — the common case is omission.</p>
+<p>This is the <em>source</em> language, not a translation. Translations of this
+block live in <code>translations/&lt;locale&gt;/</code> as <code>.po</code> files alongside their
+<code>.ts</code> manifests (TranslationNode). See <code>schemas/translation.ts</code> for
+the schema and <code>docs/translation-support.md</code> for the architecture.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L733">types.ts:733</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="meta"><code class="tsd-tag">Optional</code><span>meta</span><a href="#meta" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">meta</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></div>
 <div class="tsd-comment tsd-typography"><p>Freeform metadata (chapter assignment, tags, etc.).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L661">types.ts:661</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L661">types.ts:661</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="posources"><code class="tsd-tag">Optional</code><span>po<wbr/>Sources</span><a href="#posources" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">poSources</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>One or more PO file sources that carry translations for this block.</p>
+<p>Each entry is a path relative to the folio root, pointing to a <code>.po</code>
+file or to a <code>TranslationNode</code> <code>.ts</code> manifest (which itself references
+the <code>.po</code>). Multiple entries enable compositional translation — e.g. a
+block that draws terminology from a shared glossary PO and has its own
+block-level PO on top.</p>
+<h2 id="resolution-order-fallback-behavior" class="tsd-anchor-link">Resolution order (fallback behavior)<a href="#resolution-order-fallback-behavior" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>When <code>poSources</code> is <strong>not declared</strong> (the common case), the pipeline
+resolves PO files by convention:</p>
+<ol>
+<li><strong>Block-level:</strong> <code>translations/&lt;locale&gt;/&lt;block-stem&gt;.po</code></li>
+<li><strong>Chapter-level:</strong> <code>translations/&lt;locale&gt;/&lt;chapter-slug&gt;.po</code></li>
+<li><strong>Folio-level:</strong> <code>translations/&lt;locale&gt;/global.po</code></li>
+<li><strong>Dependency walk:</strong> walk <code>folio.config.json</code> dependencies
+depth-first, looking for matching PO files in each dependency's
+<code>translations/&lt;locale&gt;/</code> directory</li>
+</ol>
+<p>When <code>poSources</code> <strong>is declared</strong>, only the listed files are consulted
+(no fallback). This is useful when a block needs translations from a
+specific non-standard location, or when the automatic resolution
+would pick the wrong file.</p>
+<p>Each PO source is loaded in array order; later entries override earlier
+ones for the same msgid, so the most specific source should be last.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L763">types.ts:763</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="rendered"><code class="tsd-tag">Optional</code><span>rendered</span><a href="#rendered" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">rendered</span><span class="tsd-signature-symbol">?:</span> <a href="types.RenderedAsset.html" class="tsd-signature-type tsd-kind-interface">RenderedAsset</a><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Pre-rendered assets for ```tex blocks that can't be rendered client-side.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L659">types.ts:659</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L659">types.ts:659</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="simulator"><code class="tsd-tag">Optional</code><span>simulator</span><a href="#simulator" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">simulator</span><span class="tsd-signature-symbol">?:</span> <a href="types.SimulatorRef.html" class="tsd-signature-type tsd-kind-interface">SimulatorRef</a></div>
 <div class="tsd-comment tsd-typography"><p>Reference to an interactive simulator (opens overlay with [simulate] button).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L693">types.ts:693</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L693">types.ts:693</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="tags"><code class="tsd-tag">Optional</code><span>tags</span><a href="#tags" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">tags</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
@@ -222,14 +267,14 @@ not a reachability relation.</p>
 Examples: &quot;archimedean&quot;, &quot;complex&quot;, &quot;p-adic&quot;, &quot;su2&quot;, &quot;representation-theory&quot;</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L655">types.ts:655</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L655">types.ts:655</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="title"><code class="tsd-tag">Optional</code><span>title</span><a href="#title" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">title</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Optional display title.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L521">types.ts:521</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L521">types.ts:521</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="uses"><code class="tsd-tag">Optional</code><span>uses</span><a href="#uses" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">uses</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
@@ -281,7 +326,7 @@ Cross-folio (external): full URL
 (e.g. &quot;<a href="https://folio.example.org/papers/foo#def:bar">https://folio.example.org/papers/foo#def:bar</a>&quot;).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3b8b6cabe3a88f5608d4178c2ae3b223a2871714/schemas/types.ts#L578">types.ts:578</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f1c41b01712c84090a29b2c1c0aa995a89c49b10/schemas/types.ts#L578">types.ts:578</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -305,7 +350,11 @@ Cross-folio (external): full URL
 <li><a href="#independent-of-changed-2026-08-10"><span>Independent of  (changed 2026-<wbr/>08-<wbr/>10)</span></a></li>
 <li><a href="#zero-cost-in-both-cases"><span>Zero cost, in both cases</span></a></li>
 <li><a href="#choosing-between-the-two-fields"><span>Choosing between the two fields</span></a></li>
-<li><a href="#form"><span>Form</span></a></li></ul></li></ul><a href="#label"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>label</span></a><a href="#meta"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>meta</span></a><a href="#rendered"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>rendered</span></a><a href="#simulator"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>simulator</span></a><a href="#tags"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>tags</span></a><a href="#title"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>title</span></a><a href="#uses"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>uses</span></a>
+<li><a href="#form"><span>Form</span></a></li></ul></li></ul><a href="#label"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>label</span></a><a href="#lang"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>lang</span></a><a href="#meta"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>meta</span></a><a href="#posources"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>po<wbr/>Sources</span></a>
+<ul>
+<li>
+<ul>
+<li><a href="#resolution-order-fallback-behavior"><span>Resolution order (fallback behavior)</span></a></li></ul></li></ul><a href="#rendered"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>rendered</span></a><a href="#simulator"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>simulator</span></a><a href="#tags"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>tags</span></a><a href="#title"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>title</span></a><a href="#uses"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>uses</span></a>
 <ul>
 <li><a href="#this-is-the-editorial-relation-not-the-formal-one"><span>This is the editorial relation, not the formal one</span></a></li>
 <li><a href="#form-1"><span>Form</span></a></li></ul></div></details></div></details></div>

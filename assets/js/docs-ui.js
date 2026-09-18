@@ -39,6 +39,156 @@
     return node;
   }
 
+  /* ── Language switcher ────────────────────────────────────────────────── */
+
+  // A globe: meridians and equator in a circle. Same 24x24 box and
+  // currentColor fill as the QR and theme glyphs, so the three sit as a trio.
+  var GLOBE_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+    '<ellipse cx="12" cy="12" rx="4" ry="10" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+    '<line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.5"/>' +
+    '<path d="M4.5 7h15M4.5 17h15" fill="none" stroke="currentColor" stroke-width="1"/>' +
+    "</svg>";
+
+  // Locale display names — six UN languages + English.
+  var LOCALE_NAMES = {
+    "ar": "العربية",
+    "zh": "中文",
+    "en": "English",
+    "fr": "Français",
+    "ru": "Русский",
+    "es": "Español"
+  };
+
+  function mountLanguageSwitcher(host, before) {
+    var meta = getTranslationMeta();
+    if (!meta) return;
+
+    var currentLang = meta.lang || "en";
+    var supported = meta.supportedLocales || ["ar", "zh", "en", "fr", "ru", "es"];
+    var available = meta.availableLocales || [];
+
+    // Only mount if there is at least one translation available
+    if (available.length === 0 && currentLang === "en") return;
+
+    var btn = el("button", {
+      type: "button",
+      class: "fa-qr-toggle fa-lang-toggle",
+      "aria-label": "Switch language",
+      "aria-expanded": "false",
+    });
+    btn.innerHTML = GLOBE_GLYPH;
+
+    // Create dropdown panel
+    var dropdown = el("div", {
+      class: "fa-lang-dropdown",
+      "data-open": "false",
+      style: "display:none;position:absolute;left:0;top:100%;" +
+             "background:#1e293b;border:1px solid #475569;border-radius:6px;" +
+             "padding:4px;z-index:100;min-width:120px;box-shadow:0 4px 12px rgba(0,0,0,0.3);"
+    });
+
+    // Build language links
+    var path = window.location.pathname;
+    // Derive the base path: strip locale prefix if on a translated page
+    var basePath = path;
+    if (currentLang !== "en") {
+      // e.g., /folio-assistant/fr/index.html → /folio-assistant/index.html
+      // e.g., /folio-assistant/guides/fr/agent-onboarding.html → /folio-assistant/guides/agent-onboarding.html
+      basePath = path.replace(new RegExp("/" + currentLang + "/"), "/");
+    }
+
+    // English link (source)
+    var enLink = el("a", {
+      href: basePath,
+      style: "display:block;padding:4px 8px;color:#e2e8f0;text-decoration:none;" +
+             "border-radius:4px;font-size:0.85rem;" +
+             (currentLang === "en" ? "background:#334155;font-weight:bold;" : ""),
+      "data-locale": "en"
+    }, LOCALE_NAMES["en"] || "English");
+    enLink.addEventListener("mouseenter", function () { enLink.style.background = "#334155"; });
+    enLink.addEventListener("mouseleave", function () {
+      if (currentLang !== "en") enLink.style.background = "";
+    });
+    dropdown.appendChild(enLink);
+
+    // Links for each available translated locale
+    for (var i = 0; i < supported.length; i++) {
+      var loc = supported[i];
+      if (loc === "en") continue;
+      var hasTranslation = available.indexOf(loc) !== -1;
+
+      // Build the translated page path
+      // /folio-assistant/index.html → /folio-assistant/fr/index.html
+      // /folio-assistant/guides/agent-onboarding.html → /folio-assistant/guides/fr/agent-onboarding.html
+      var translatedPath = "";
+      if (hasTranslation) {
+        var parts = basePath.split("/");
+        var filename = parts.pop();
+        translatedPath = parts.join("/") + "/" + loc + "/" + filename;
+      }
+
+      var langLink = el("a", {
+        href: hasTranslation ? translatedPath : "#",
+        style: "display:block;padding:4px 8px;text-decoration:none;" +
+               "border-radius:4px;font-size:0.85rem;" +
+               (currentLang === loc ? "background:#334155;font-weight:bold;color:#e2e8f0;" :
+                hasTranslation ? "color:#e2e8f0;" : "color:#64748b;cursor:default;"),
+        "data-locale": loc,
+        title: hasTranslation ? "" : "Not yet translated"
+      }, (LOCALE_NAMES[loc] || loc) + (hasTranslation ? "" : " ·"));
+
+      if (!hasTranslation) {
+        langLink.addEventListener("click", function (e) { e.preventDefault(); });
+      }
+      (function (link, isActive) {
+        link.addEventListener("mouseenter", function () {
+          if (!isActive) link.style.background = "#334155";
+        });
+        link.addEventListener("mouseleave", function () {
+          if (!isActive) link.style.background = "";
+        });
+      })(langLink, currentLang === loc);
+
+      dropdown.appendChild(langLink);
+    }
+
+    // Toggle dropdown
+    btn.addEventListener("click", function () {
+      var isOpen = dropdown.getAttribute("data-open") === "true";
+      dropdown.setAttribute("data-open", isOpen ? "false" : "true");
+      dropdown.style.display = isOpen ? "none" : "block";
+      btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+    });
+
+    // Close on click outside
+    document.addEventListener("click", function (e) {
+      if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.setAttribute("data-open", "false");
+        dropdown.style.display = "none";
+        btn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && dropdown.getAttribute("data-open") === "true") {
+        dropdown.setAttribute("data-open", "false");
+        dropdown.style.display = "none";
+        btn.setAttribute("aria-expanded", "false");
+        btn.focus();
+      }
+    });
+
+    // Position the button with its dropdown
+    var wrap = el("span", { style: "position:relative;display:inline-block;" });
+    host.insertBefore(wrap, before);
+    wrap.appendChild(btn);
+    wrap.appendChild(dropdown);
+    return btn;
+  }
+
   /* ── Colour scheme ───────────────────────────────────────────────────── */
 
   // A lightbulb: glass, filament, and the screw base. Same 24x24 box and the
@@ -208,9 +358,10 @@
     host.appendChild(toggle);
 
     // Left of the QR icon, per the header's reading order: the title, then
-    // the scheme switch, then the code. Inserted before `toggle` rather than
-    // appended, so it stays left of it if more controls are added later.
+    // the language switch, then the scheme switch, then the code. Inserted
+    // before `toggle` rather than appended, so they stay left of it.
     mountThemeToggle(host, toggle);
+    mountLanguageSwitcher(host, toggle);
 
     var panel = el("button", {
       type: "button",
@@ -572,8 +723,166 @@
     });
   }
 
+  /* ── Translation badges ──────────────────────────────────────────────── */
+
+  // Auto-injects language coverage badges and QA indicators on every page.
+  // Reads from the fa-translation-meta JSON block in <head>, which is
+  // stamped by the translation pipeline into page front matter and published
+  // by head_custom.html. Nothing needs manual editing — the pipeline writes
+  // the data, Jekyll publishes it, and this renders it.
+
+  function getTranslationMeta() {
+    var node = document.getElementById("fa-translation-meta");
+    if (!node) return null;
+    try { return JSON.parse(node.textContent); } catch (_e) { return null; }
+  }
+
+  function mountTranslationBadges() {
+    var meta = getTranslationMeta();
+    if (!meta) return;
+
+    var supported = meta.supportedLocales || ["ar", "zh", "en", "fr", "ru", "es"];
+    var available = meta.availableLocales || [];
+    var totalLangs = supported.length;
+    var availLangs = available.length;
+
+    // Auto-detect available locales from the page's own language links if
+    // the pipeline hasn't stamped availableLocales yet. Scan the
+    // language-selector include (if present) for which links resolve.
+    if (availLangs === 0) {
+      var langLinks = document.querySelectorAll(".fa-lang-tab, [data-locale]");
+      var found = [];
+      langLinks.forEach(function (link) {
+        var loc = link.getAttribute("data-locale") || link.textContent.trim().toLowerCase();
+        if (loc && loc !== meta.lang && found.indexOf(loc) === -1) found.push(loc);
+      });
+      // The page itself counts as one available locale if it's not English-source
+      // or if it has translations
+      if (found.length > 0) {
+        availLangs = found.length;
+        available = found;
+      }
+    }
+
+    // Find the page title (first h1 in main content)
+    var title = document.querySelector(".main-content h1, #main-content h1");
+    if (!title) return;
+
+    // Create badge container
+    var container = el("span", { class: "fa-translation-badges", style:
+      "display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; vertical-align: middle;"
+    });
+
+    // Language coverage badge — always shown
+    var langBg, langBorder;
+    if (availLangs >= totalLangs - 1) {
+      langBg = "#14532d"; langBorder = "#22c55e";
+    } else if (availLangs > 0) {
+      langBg = "#78350f"; langBorder = "#d97706";
+    } else {
+      langBg = "#1e293b"; langBorder = "#475569";
+    }
+
+    var langBadge = el("span", {
+      class: "fa-lang-coverage-badge",
+      style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
+             "background:" + langBg + ";border:1px solid " + langBorder + ";" +
+             "border-radius:4px;font-size:0.75rem;color:#e2e8f0;cursor:default;",
+      title: availLangs > 0
+        ? "Available translations: " + available.join(", ")
+        : "No translations available for this page"
+    }, "\uD83C\uDF10 " + availLangs + "/" + (totalLangs - 1) + " languages");
+    container.appendChild(langBadge);
+
+    // QA badge — only on translated pages (has QA data)
+    var qa = meta.qa || {};
+    if (qa.total > 0) {
+      var qaBg, qaBorder, qaIcon, qaLabel;
+      if (qa.fail > 0) {
+        qaBg = "#991b1b"; qaBorder = "#ef4444"; qaIcon = "\u274C";
+        qaLabel = "QA: " + qa.fail + " drift";
+      } else if (qa.warn > 0) {
+        qaBg = "#78350f"; qaBorder = "#d97706"; qaIcon = "\u26A0\uFE0F";
+        qaLabel = "QA: " + qa.warn + " warn";
+      } else {
+        qaBg = "#14532d"; qaBorder = "#22c55e"; qaIcon = "\u2705";
+        qaLabel = "QA: all pass";
+      }
+
+      var qaBadge = el("span", {
+        class: "fa-qa-badge",
+        style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
+               "background:" + qaBg + ";border:1px solid " + qaBorder + ";" +
+               "border-radius:4px;font-size:0.75rem;color:#fef3c7;cursor:default;",
+        title: "Round-trip semantic verification: " + qa.pass + "/" + qa.total +
+               " pass, " + qa.warn + " warn, " + qa.fail + " fail. Coverage: " + qa.coveragePct + "%"
+      });
+      qaBadge.textContent = qaIcon + " " + qaLabel;
+      var qaDetail = el("span", {
+        style: "opacity:0.7;font-size:0.7rem;"
+      }, "(" + qa.pass + "/" + qa.total + ")");
+      qaBadge.appendChild(qaDetail);
+      container.appendChild(qaBadge);
+    }
+
+    // QA sweep completeness badge — indicates whether sidecars have been run
+    var sweep = meta.sweep || {};
+    var sweepBg, sweepBorder, sweepIcon, sweepLabel, sweepTitle;
+    if (!sweep.run) {
+      sweepBg = "#1e293b"; sweepBorder = "#475569"; sweepIcon = "\u2B58";
+      sweepLabel = "QA: not run";
+      sweepTitle = "Translation QA sweep has not been run. " +
+                   "Run: bun run content/pipeline/translation-qa-sweep.ts";
+    } else if (sweep.complete && sweep.pagesWithTranslations > 0) {
+      var ratio = sweep.pagesWithTranslations + "/" + sweep.totalPages;
+      sweepBg = "#14532d"; sweepBorder = "#22c55e"; sweepIcon = "\u2705";
+      sweepLabel = "Swept " + ratio;
+      sweepTitle = "QA sweep complete. " + sweep.pagesWithTranslations + " of " +
+                   sweep.totalPages + " pages have translations. Last run: " + sweep.sweptAt;
+    } else {
+      sweepBg = "#78350f"; sweepBorder = "#d97706"; sweepIcon = "\u26A0\uFE0F";
+      sweepLabel = "Swept 0/" + sweep.totalPages;
+      sweepTitle = "QA sweep complete but no pages have translations yet. " +
+                   "Last run: " + sweep.sweptAt;
+    }
+
+    var sweepBadge = el("span", {
+      class: "fa-sweep-badge",
+      style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
+             "background:" + sweepBg + ";border:1px solid " + sweepBorder + ";" +
+             "border-radius:4px;font-size:0.75rem;color:#e2e8f0;cursor:default;",
+      title: sweepTitle
+    }, sweepIcon + " " + sweepLabel);
+    container.appendChild(sweepBadge);
+
+    // Unverified translation warning — auto-injected on translated pages
+    if (meta.translationStatus === "unverified" && !document.querySelector(".fa-translation-warning")) {
+      var warning = el("div", {
+        class: "fa-translation-warning",
+        style: "background:#78350f;border:1px solid #d97706;border-radius:6px;" +
+               "padding:12px 16px;margin:1em 0;color:#fef3c7;font-size:0.9rem;",
+        role: "alert"
+      });
+      warning.innerHTML =
+        "\u26A0\uFE0F <strong>Unverified translation</strong> \u2014 " +
+        "This page has been translated automatically and has <strong>not been reviewed</strong> by a subject-matter expert." +
+        (meta.translationSource
+          ? "<br><strong>Source:</strong> " + meta.translationSource + " (English)"
+          : "") +
+        "<br><strong>How to verify:</strong> Run <code>translation_signoff</code> after SME review, " +
+        "or use <code>translation_validate</code> to check for staleness and coverage.";
+      var mainContent = document.querySelector(".main-content, #main-content");
+      if (mainContent && mainContent.firstChild) {
+        mainContent.insertBefore(warning, mainContent.firstChild);
+      }
+    }
+
+    title.appendChild(container);
+  }
+
   function init() {
     mountQr();
+    mountTranslationBadges();
     // Figures are mounted only after the inlining settles, so the scan sees the
     // real <svg> rather than the <img> it replaces and does not wrap both.
     inlineDiagrams(mountFigures);
