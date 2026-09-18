@@ -156,7 +156,7 @@
 
 </head>
 
-<body><div style="background:#d946ef;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/sleepy-babbage-ls90iz" style="color:#fff;text-decoration:underline"><code>claude/sleepy-babbage-ls90iz</code></a> · commit <code>52d119c</code> · built 2026-09-18T15:06:11Z · PR #242 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35360212754" style="color:#fff;text-decoration:underline">build log</a></div>>
+<body><div style="background:#d946ef;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/sleepy-babbage-ls90iz" style="color:#fff;text-decoration:underline"><code>claude/sleepy-babbage-ls90iz</code></a> · commit <code>1ec0c85</code> · built 2026-09-18T15:11:30Z · PR #242 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35360759984" style="color:#fff;text-decoration:underline">build log</a></div>>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -458,9 +458,10 @@ test asserting a <em>kind collision is refused</em>, not silently overlaid.</p>
 
 <p><code class="language-plaintext highlighter-rouge">bun run check:partition</code> (<code class="language-plaintext highlighter-rouge">scripts/repo-partition.ts</code>) builds the import graph,
 partitions it across the five proposed repos, and reports the edges crossing a
-boundary in the wrong direction. Gate met: 331 modules, 655 edges, <strong>41
-wrong-direction edges</strong> named, and <strong>27 modules it declines to classify</strong> rather
-than guessing. Full results in
+boundary in the wrong direction. Gate met: 332 modules, 656 edges, <strong>45
+wrong-direction edges</strong> named, <strong>0 modules unassigned</strong> (the 27 platform
+meta-scripts were triaged by hand, and are reported with their own provenance so
+a judgement stays visible as a judgement). Full results in
 <a href="current-state.html#the-wrong-direction-edges--phase-is-worklist">current state</a>.</p>
 
 <p>Two results change the plan below rather than merely confirming it:</p>
@@ -469,17 +470,16 @@ than guessing. Full results in
   <li><strong><code class="language-plaintext highlighter-rouge">smart-kg</code> partitions to zero modules.</strong> There is no L1 code to move, so
 that repo is new construction like the Test repos, not an extraction. It is
 re-sequenced accordingly.</li>
-  <li><strong>17 of the 41 edges are <code class="language-plaintext highlighter-rouge">agentic-harness</code> → <code class="language-plaintext highlighter-rouge">folio-assist-core</code></strong> — the
+  <li><strong>20 of the 45 edges are <code class="language-plaintext highlighter-rouge">agentic-harness</code> → <code class="language-plaintext highlighter-rouge">folio-assist-core</code></strong> — the
 harness importing the content-object model, which is its defining constraint
 failing in practice. Extracting the harness is therefore <em>harder</em> than
 extracting sci, not easier, and Phase II’s order reflects that.</li>
 </ul>
 
-<p><strong>Remaining under 0.2:</strong> triage the 27 unassigned platform meta-scripts
-(<code class="language-plaintext highlighter-rouge">gen-*</code>, <code class="language-plaintext highlighter-rouge">check-*</code>, <code class="language-plaintext highlighter-rouge">render-*</code>). Most are probably harness; the tool does not
-say so because a guessed assignment would be indistinguishable in the report
-from a derived one. <strong>41 is a floor that rises as those 27 are classified</strong> —
-classifying the test material and the MCP server already took it from 33 to 41.</p>
+<p>The count moved 33 → 41 → 45 as classification improved, and stopped only when
+the unassigned column reached zero. <strong>When re-running this, read the unassigned
+column before the edge count</strong> — a low edge count over an unclassified corpus is
+the same false comfort as a green check over an empty one.</p>
 <h3 id="03--decide-what-folio-is">
   
   
@@ -751,7 +751,7 @@ also needs harness surface that core does not re-export.</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35360212754"><code>52d119c</code></a> &middot; 2026-09-18T15:05:44Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35360759984"><code>1ec0c85</code></a> &middot; 2026-09-18T15:11:03Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
