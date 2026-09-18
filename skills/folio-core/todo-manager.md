@@ -211,6 +211,37 @@ The old version of this rule capped entries at "up to 50 words", which read as a
 budget to spend rather than a floor to clear and rewarded exactly that
 terseness. Rule 4 replaces it.
 
+### The "next" line is a question, so it carries its context (STRICT)
+
+Rules 1 and 5 above say the next item needs a gloss and a reason. This is the
+stronger form for the case where **next** also hands over a *decision*:
+[`interaction-modality.md` §4.1](interaction-modality.md)
+governs it — context → options → recommendation → question — and the test is
+whether the author can answer **without opening anything**.
+
+A bean id plus a term you coined is the specific failure. Measured here on
+2026-09-18:
+
+> **next** `x4mt` — Cross-agent skill install + `fa-` prefix (#247). Unstarted,
+> and I'd want your call on prefix-at-rest vs prefix-at-install before writing
+> anything.
+
+`x4mt` is opaque, `fa-` is undefined, and "prefix-at-rest vs prefix-at-install"
+names two options that exist only inside issue #247 — so the author had to open
+it to find out what was being asked. It could have read:
+
+> **next** `x4mt` — Install this platform's skills into whichever agent is
+> running, each name prefixed `fa-` so it cannot collide with the host's own
+> commands. One call needed: add the prefix **when a skill is installed**
+> (nothing in this repo moves — recommended), or **rename the files here**,
+> which also drags the manifests, the BPMN skill refs and two generators.
+
+Barely longer, and answerable in one character.
+
+**A deferred decision is stated in full, or not stated at all.** If it genuinely
+will not fit, say the decision exists and that you will put it properly when you
+reach it — never post a teaser whose only resolution is a document.
+
 ## Check before you create — `beans create` is not idempotent (STRICT)
 
 `beans create` mints a **fresh random ID on every call** and dedupes on
