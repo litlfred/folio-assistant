@@ -160,8 +160,21 @@ for (const ct of CONTENT_TYPE_TRANSLATIONS) {
     if (!existsSync(join(root, rel))) missingDeclared.push(`${ct.contentType} → ${rel}`);
   }
 }
+// Same class again: a format may declare the modules that implement its
+// extract and inject. `bpmn` declared NEITHER while its note described a
+// working re-render, so the capability read as built and was not.
+for (const ct of CONTENT_TYPE_TRANSLATIONS) {
+  for (const f of ct.formats) {
+    for (const rel of [f.extractModule, f.injectModule]) {
+      if (rel && !existsSync(join(root, rel))) {
+        missingDeclared.push(`${ct.contentType}/${f.id} → ${rel}`);
+      }
+    }
+  }
+}
+
 if (missingDeclared.length) {
-  console.log("\nDECLARED BUT ABSENT — translation-tools names a diagram file that is not there:");
+  console.log("\nDECLARED BUT ABSENT — translation-tools names a file that is not there:");
   for (const m of missingDeclared) console.log(`  \u2717 ${m}`);
 }
 

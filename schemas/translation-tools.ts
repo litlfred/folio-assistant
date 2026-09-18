@@ -192,8 +192,19 @@ export const CONTENT_TYPE_TRANSLATIONS: ContentTypeTranslation[] = [
         id: "bpmn",
         name: "BPMN process diagrams",
         extensions: [".bpmn"],
-        notes: "BPMN label translation. Diagram is re-rendered after " +
-               "text injection to handle text overflow in translated labels.",
+        extractModule: "content/pipeline/bpmn-translate.ts",
+        injectModule: "content/pipeline/bpmn-translate.ts",
+        notes: "Element names and <documentation>. Ids, sourceRef/targetRef, " +
+               "calledElement and the folio: extensions are NEVER offered for " +
+               "translation — a translated id disconnects the graph and a " +
+               "translated skill ref is exactly the dangling reference " +
+               "check:workflow-refs exists to catch. Re-render with " +
+               "`bun run render:bpmn` after injection. On overflow: measured " +
+               "2026-09-18, a French set ~18% longer with every authored " +
+               "&#10; break dropped re-wrapped to the same 3 lines, 42px of " +
+               "an 80px task box, because bpmn-js re-wraps regardless. The " +
+               "authored breaks are not load-bearing; if a diagram does " +
+               "overflow, the fix is its shape bounds, not the string.",
       },
     ],
     rtlSupported: true,

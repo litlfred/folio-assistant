@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8xx6
 title: BPMN re-render for translated labels
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
-updated_at: 2026-09-18T15:07:53Z
+updated_at: 2026-09-18T15:15:52Z
 ---
 
 The "next" recorded on bean `t8g3`. Re-render BPMN diagrams so translated
