@@ -67,3 +67,39 @@ export const kgNodeLabelShape = {
 export function displayTitle(node: { id?: string; name?: string; title?: string }): string {
   return node.title || node.name || node.id || "";
 }
+
+// ── Images ──────────────────────────────────────────────────────
+
+/**
+ * An image the graph names.
+ *
+ * A mark is not decoration bolted onto a config file — it is a node, with an
+ * id other nodes reference, a translatable {@link KgNodeLabels.title} and
+ * alt text in {@link KgNodeLabels.description}. That matters for the obvious
+ * reason (a screen reader needs the alt text, and alt text is prose, so it is
+ * translatable) and for a less obvious one: the docs site, the README and the
+ * browser tab all want the same picture, and a node is what stops three
+ * consumers each hardcoding a different path to it.
+ */
+export interface KgImage extends KgNodeLabels {
+  /** Stable id, referenced by {@link KgNodeLabels} carriers such as `icon`. */
+  id: string;
+  /** Repo-relative path to the file. */
+  src: string;
+  /**
+   * What this image is FOR.
+   *
+   * `browser-icon` is the one with a hard constraint — it has to survive
+   * 16&nbsp;px — so it is named rather than left to a consumer to guess from
+   * the filename. Open string: an instance may have marks this vocabulary has
+   * not met.
+   */
+  role?: string;
+}
+
+export const KgImageSchema = z.object({
+  id: z.string().min(1),
+  src: z.string().min(1),
+  role: z.string().min(1).optional(),
+  ...kgNodeLabelShape,
+});

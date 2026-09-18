@@ -900,3 +900,20 @@
 @media (max-width: 43.99rem) {
   .fa-qa-badge { float: none; margin: 0 0 0 0.35em; }
 }
+
+/* ── The sidebar mark and title ───────────────────────────────────
+   just-the-docs draws `site.title` at the top left; `_includes/title.html`
+   overrides it to read the instance's own declaration instead (see
+   scripts/sync-docs-harness.ts). The mark uses `currentColor` for its ring
+   and inner `a`, so it follows the sidebar's text colour in either scheme;
+   only its ears carry a fixed sage. */
+.fa-site-mark {
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: -0.32em;
+  margin-right: 0.4rem;
+  flex: none;
+}
+.fa-site-title {
+  vertical-align: baseline;
+}

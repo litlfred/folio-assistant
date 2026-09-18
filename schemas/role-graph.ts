@@ -431,7 +431,7 @@ export function boundLaneNames(graph: RoleGraph): Set<string> {
 // ── Graph projection ────────────────────────────────────────────
 
 /**
- * JSON-LD projection, matching {@link module:schemas/agent-harness}'s: the
+ * JSON-LD projection, matching {@link module:schemas/cat-harness}'s: the
  * authored shape is stored, the graph form is derived, and there is one truth.
  */
 export function toJsonLd(graph: RoleGraph): Record<string, unknown> {

@@ -1,5 +1,5 @@
 /**
- * Tests for the AgentHarness root declaration — issue #223, Phase 0.3.
+ * Tests for the CatHarness root declaration — issue #223, Phase 0.3.
  *
  * The shape under test: an instance declares the directories it scans and the
  * graph kind each holds, and a downstream instance INHERITS its dependencies'
@@ -21,7 +21,7 @@ import {
   renderableDirectories,
   resolveDirectories,
   toJsonLd,
-} from "./agent-harness";
+} from "./cat-harness";
 
 const TMP = join(import.meta.dir, "__test_agent_harness__");
 const HARNESS = join(TMP, "agentic-harness");
@@ -176,7 +176,7 @@ describe("layering", () => {
     // its own type IRIs — a harness -> core edge, already the largest
     // wrong-direction group, and the coupling the split exists to undo.
     // The namespace comes from the leaf `./namespaces` instead.
-    const src = readFileSync(join(import.meta.dir, "agent-harness.ts"), "utf-8");
+    const src = readFileSync(join(import.meta.dir, "cat-harness.ts"), "utf-8");
     expect(src).not.toMatch(/from "\.\/jsonld"/);
     expect(src).not.toMatch(/from "\.\/block-kinds"/);
     expect(src).toMatch(/from "\.\/namespaces"/);
@@ -185,7 +185,7 @@ describe("layering", () => {
 
 describe("graph kinds — the harness declares six, core adds folio", () => {
   it("the harness's own vocabulary contains no renderable kind", () => {
-    // The whole point of the re-siting: agent-harness is NOT self-documenting,
+    // The whole point of the re-siting: cat-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
     expect(Object.keys(BASE_GRAPH_KINDS).sort()).toEqual([
       "bean-defs",

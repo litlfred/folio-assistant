@@ -28,7 +28,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 /** The declared publication base, or a local placeholder when none is set. */
 function base(): string {
-  const p = join(ROOT, "agent-harness.json");
+  const p = join(ROOT, "cat-harness.json");
   if (!existsSync(p)) return "";
   try {
     const d = JSON.parse(readFileSync(p, "utf-8")) as { canonicalUrl?: string };

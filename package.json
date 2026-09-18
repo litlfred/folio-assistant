@@ -44,6 +44,8 @@
     "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
     "check:harness-dirs": "bun run scripts/check-harness-dirs.ts",
+    "docs:harness": "bun run scripts/sync-docs-harness.ts",
+    "docs:harness:check": "bun run scripts/sync-docs-harness.ts --check",
     "check:partition": "bun run scripts/repo-partition.ts",
     "check:partition:edges": "bun run scripts/repo-partition.ts --edges",
     "check:workflow-policy": "bun run scripts/check-workflow-policy.ts",

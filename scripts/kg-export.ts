@@ -45,7 +45,7 @@ import { join, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { FOLIO_NS } from "../schemas/namespaces.js";
-import { artefactStub, defaultGraphKinds, readDeclaration } from "../schemas/agent-harness.js";
+import { artefactStub, defaultGraphKinds, readDeclaration } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
@@ -579,7 +579,7 @@ function collectGraphKinds(): Node[] {
 }
 
 function collectDeclaration(doc: string, problems: string[]): Node[] {
-  const f = join(ROOT, "agent-harness.json");
+  const f = join(ROOT, "cat-harness.json");
   if (!existsSync(f)) return [];
   try {
     const d = JSON.parse(readFileSync(f, "utf-8")) as {
@@ -610,7 +610,7 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
       };
     });
   } catch (e) {
-    problems.push(`unparseable agent-harness.json: ${e instanceof Error ? e.message : String(e)}`);
+    problems.push(`unparseable cat-harness.json: ${e instanceof Error ? e.message : String(e)}`);
     return [];
   }
 }
@@ -696,7 +696,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     // Reported, not silently tolerated: a graph whose nodes have no absolute
     // identity cannot be merged with anyone else's, which is most of the point.
     problems.push(
-      "no canonicalUrl in agent-harness.json and no --base-url given: " +
+      "no canonicalUrl in cat-harness.json and no --base-url given: " +
         "@id values are document-relative and will not dereference",
     );
   }

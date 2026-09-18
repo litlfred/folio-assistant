@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Minimum agent-harness
+title: Minimum cat-harness
 parent: Architecture
 nav_order: 5
 ---
 
-# The minimum `agent-harness` — and what moves where
+# The minimum `cat-harness` — and what moves where
 {: .no_toc }
 
 1. TOC
@@ -28,8 +28,8 @@ harness, and each layer gains a Tools sibling:
 
 ```mermaid
 flowchart TD
-    AH["<b>agent-harness</b><br/>workflow state · guardrails<br/><i>not self-documenting</i><br/>one tool: beans"]
-    AHT["<b>agent-harness-tools</b><br/>beans CLI Tool node"]
+    AH["<b>cat-harness</b><br/>workflow state · guardrails<br/><i>not self-documenting</i><br/>one tool: beans"]
+    AHT["<b>cat-harness-tools</b><br/>beans CLI Tool node"]
     C["<b>folio-assist-core</b><br/>justthedocs pipeline · webpage<br/><i>self-documenting</i>"]
     CT["<b>folio-assist-core-tools</b><br/>BPMN/DMN/Todo renderers"]
     FA["<b>folio-assistant</b><br/>(what remains today)"]
@@ -73,13 +73,13 @@ definitions, and skills that tell an agent how to behave.**
 
 ### The falsifier, stated up front
 
-If `agent-harness` ends up with dozens of skills and no crisp line against
+If `cat-harness` ends up with dozens of skills and no crisp line against
 core, "not self-documenting" has not constrained anything and the split is
 still notional. **Measured below: 17 of 55 `folio-core` skills.** That is a
 real constraint — it excludes 38 — but it is more than "a handful", and §"What
 I would cut further" says where I would push if you want it smaller.
 
-## `agent-harness` — the minimum
+## `cat-harness` — the minimum
 
 ### Schemas (`.ts`, minimal)
 
@@ -94,7 +94,7 @@ The harness owns the vocabulary of *work*, not of *content*.
 | `Process` (BPMN) / `Decision` (DMN) | the deterministic workflow itself |
 | **`Todo`** | user/agent workflow state (16:28, explicit). **Already exists** — `TodoItem`, `schemas/types.ts:1330`. It moves; it does not need writing. |
 | **`Bean`** | ditto, and **this one is genuinely missing**. `BeanRef` (`src/workflow/bean-link.ts:40`) is a *reference* to a bean, not a schema for one. |
-| `AgentHarness` declaration | which directories an instance scans, and each one's graph kind — already built, `schemas/agent-harness.ts` |
+| `CatHarness` declaration | which directories an instance scans, and each one's graph kind — already built, `schemas/cat-harness.ts` |
 | `Content` (abstract) | the *base* only: identity, label, provenance. No block kinds, no profiles. |
 
 **Of the two, only `Bean` is the gap** — I checked rather than assuming, and
@@ -211,7 +211,7 @@ downstream instance may offer, and assumed nowhere.
 bootstrappable: it can describe its own tools in its own vocabulary, with no
 renderer and no server.
 
-## `agent-harness-tools` — the minimum
+## `cat-harness-tools` — the minimum
 
 Almost empty by construction, and that is the point.
 
@@ -328,7 +328,7 @@ The generation direction is the whole decision. `scripts/generate-schemas.ts`
 already walks a map of Zod schemas through `zodToJsonSchema` into
 `schemas/generated/*.schema.json`; adding `Tool` is one entry in that map, not a
 new mechanism. The JSON-LD side has its precedent too — `toJsonLd()` in
-`schemas/agent-harness.ts` projects a Zod-validated declaration into the folio
+`schemas/cat-harness.ts` projects a Zod-validated declaration into the folio
 namespace. Both renderings are derived artefacts: regenerate, never hand-edit,
 exactly as `docs/reference/skills/` and `docs/reference/skill-instructions/` are
 already treated.
@@ -389,7 +389,7 @@ already uses) is what makes that enforceable rather than merely stated.
 Measured on `main` at `d8632b6`: **18 top-level pages, 8 guides, 20 BPMN
 processes, 115 skills across 9 packages.**
 
-Legend — **AH** `agent-harness` · **AHT** `agent-harness-tools` ·
+Legend — **AH** `cat-harness` · **AHT** `cat-harness-tools` ·
 **C** `folio-assist-core` · **CT** `folio-assist-core-tools` ·
 **S** `folio-asst-sci` · **W** `smart-base`/`smart-kg` · **FA** stays put
 
@@ -436,7 +436,7 @@ Legend — **AH** `agent-harness` · **AHT** `agent-harness-tools` ·
 | `bean-lifecycle` | **AH** | Workflow state. |
 | `getting-started` | **AH** | Bootstrap. |
 | `editing-hci-validation` | **AH** | The validation gate is a guardrail. |
-| `content-lifecycle`, `draft-to-publication`, `content-change-review` | **AH** *(definition)* + **CT** *(rendering)* | The process is a guardrail; the diagram a reader looks at is core-tools. Per 16:28: *skills on how they are guardrails stay in agent-harness*. |
+| `content-lifecycle`, `draft-to-publication`, `content-change-review` | **AH** *(definition)* + **CT** *(rendering)* | The process is a guardrail; the diagram a reader looks at is core-tools. Per 16:28: *skills on how they are guardrails stay in cat-harness*. |
 | `authoring-a-document` | **C** | Per content type. |
 | `authoring-a-paper` | **S** | |
 | `l2-dak-authoring`, `l3-fhir-pipeline`, `ig-incremental-build` | **W** | |
@@ -495,7 +495,7 @@ Settled 2026-09-18 by the repository owner. **All 17 skills stay in
 
 The proposal was to split the four PR-choreography skills —
 `prepare-merge-auto`, `pickup`, `watch`, `coordinate` — into an
-`agent-harness-github` sibling, so the harness could run on GitLab or on
+`cat-harness-github` sibling, so the harness could run on GitLab or on
 sovereign compute with no forge at all. The goal was right and the mechanism
 was wrong, which the measurement makes plain.
 
@@ -532,7 +532,7 @@ find-the-right-one problem that motivated it.
 ### No MCP in the harness — but the harness knows how to emit one
 
 **`agentic-harness` assumes no MCP server.** Everything it needs is files in
-declared directories, readable with a filesystem and `agent-harness.json`
+declared directories, readable with a filesystem and `cat-harness.json`
 alone. `ToolDefinition.invoke` carries `mcp` as **one optional arm** beside
 `shell` and `container`, and the harness relies on `shell`; a Tool whose only
 invocation is an MCP call is not usable by the harness that defines it.
@@ -604,7 +604,7 @@ id points at `skills/`, flat. The layout above is the target for
 ## What is deliberately not here
 
 - **No implementation.** Nothing in this page creates a repo or moves a file.
-- **The `folio` graph kind is currently mis-sited.** `schemas/agent-harness.ts`
+- **The `folio` graph kind is currently mis-sited.** `schemas/cat-harness.ts`
   lists `folio` among the harness's graph kinds, which contradicts 16:28 —
   a renderable kind belongs to core. Tracked separately; it is a small
   correction, not a rewrite.

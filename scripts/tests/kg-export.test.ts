@@ -26,7 +26,7 @@ import { join } from "node:path";
 
 import { buildExport, exportIdentity } from "../kg-export.js";
 import { buildDeclarationSchema } from "../harness-schema-export.js";
-import { readDeclaration, artefactStub } from "../../schemas/agent-harness.js";
+import { readDeclaration, artefactStub } from "../../schemas/cat-harness.js";
 import { FOLIO_NS } from "../../schemas/namespaces.js";
 
 // The repo's own canonicalUrl, so the shared fixture is the CANONICAL export.
@@ -156,7 +156,7 @@ describe("kg export", () => {
     expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/kg/${stub}.schema.json`);
 
     // The declaration is read from a fixed filename, whatever the stub is.
-    expect(existsSync(join(import.meta.dir, "../..", "agent-harness.json"))).toBe(true);
+    expect(existsSync(join(import.meta.dir, "../..", "cat-harness.json"))).toBe(true);
     expect(existsSync(join(import.meta.dir, "../..", `${stub}.json`))).toBe(false);
   });
 

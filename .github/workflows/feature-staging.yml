@@ -293,7 +293,7 @@ jobs:
           SLUG: ${{ steps.slug.outputs.slug }}
         run: |
           BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/agent-harness.ts");console.log(artefactStub(readDeclaration(".")))')
+          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
           bun run scripts/kg-export.ts             --base-url "$BASE" --out "./_site/kg/${STUB}.jsonld"
           bun run scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site/kg
           STUB="$STUB" bun -e '

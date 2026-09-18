@@ -198,11 +198,11 @@ const RULES: Rule[] = [
       "schemas/assistant-package.ts",
       "schemas/assistant-types.ts",
       "schemas/assistant-workflow.ts",
-      // The AgentHarness root declaration is harness-layer by concept even
+      // The CatHarness root declaration is harness-layer by concept even
       // though it sits in schemas/. It declares its own HARNESS_NS rather than
       // importing the content vocabulary, so classifying it here adds no
-      // wrong-direction edge — see schemas/agent-harness.ts.
-      "schemas/agent-harness.ts",
+      // wrong-direction edge — see schemas/cat-harness.ts.
+      "schemas/cat-harness.ts",
       // Roles, actors and the KG audit sidecar are harness-layer for the same
       // reason and on the same terms: `role-graph.ts` imports only
       // `namespaces.ts`, `kg-qa.ts` imports only zod. Neither touches the
