@@ -308,3 +308,69 @@ describe("checkScholarlyDefault — a wrap continuation is not a sentence start"
   });
 });
 
+
+// ── b7yo: the two false positives that survived the profile axis ────
+//
+// Both were found by running the real sweep over `content/docs/`
+// (a document-profile corpus) after PR #256 made the profile gate fire.
+// Neither is a scoping problem, so no gate change clears them — the
+// criteria themselves over-match.
+
+import {
+  checkStatusLeak,
+  checkAuthorNotesPollution,
+} from "../../content/pipeline/qa-checkers-voice.ts";
+
+const leak = (line: string) => checkStatusLeak(tmp("leak.md", line)).result;
+const notes = (line: string) => checkAuthorNotesPollution(tmp("notes.md", line)).result;
+
+describe("checkAuthorNotesPollution — a measurement's date is provenance, not pollution", () => {
+  test("the AGENTS.md-mandated form passes", () => {
+    // AGENTS.md: "a number without its date and command is a claim, not
+    // evidence". P4 was firing on the house style it must coexist with.
+    expect(notes("**precision 71%** — measured 2026-09-18 on main.")).toBe("pass");
+    expect(notes("Re-measured 2026-09-18: the arc is 274 to 195.")).toBe("pass");
+  });
+
+  test("a bare status date still FAILS", () => {
+    // The exemption is bound to `measured`, not to dates generally.
+    expect(notes("As of 2026-05-28 this remains open.")).toBe("fail");
+    expect(notes("Blocked since 2026-05-28.")).toBe("fail");
+  });
+
+  test("the exemption cannot reach across a sentence boundary", () => {
+    // Bounded by [^.\n] so a nearby `measured` cannot launder an
+    // unrelated date in the next sentence.
+    expect(notes("We measured throughput. As of 2026-05-28 it is unfixed.")).toBe("fail");
+  });
+
+  test("other author-notes patterns on a measured line are unaffected", () => {
+    // The strip must not hide a second, genuine hit on the same line.
+    expect(notes("Measured 2026-09-18 by Claude on main.")).toBe("fail");
+  });
+});
+
+describe("checkStatusLeak — a definition table's label cell names a term", () => {
+  test("a checkpoint name in a label cell passes", () => {
+    // `roles.md:46` — a row in a table OF CHECKPOINT NAMES.
+    expect(
+      leak("| **Needs review** (Phase 1) | Confirm the BA's needs statement |"),
+    ).toBe("pass");
+  });
+
+  test("a status marker in the DEFINITION half still FAILS", () => {
+    // Only the first cell is masked.
+    expect(leak("| **Phase 1** | (TODO) write the needs statement |")).toBe("fail");
+  });
+
+  test("a label cell that is not purely a label still FAILS", () => {
+    // The cell must be a bolded term plus an optional parenthetical.
+    // Prose in a table is still prose.
+    expect(leak("| **Pending.** the proof is stalled | see below |")).toBe("fail");
+  });
+
+  test("the same text outside a table still FAILS", () => {
+    // The exemption is about table structure, not about the phrase.
+    expect(leak("**Needs review** before we ship.")).toBe("fail");
+  });
+});

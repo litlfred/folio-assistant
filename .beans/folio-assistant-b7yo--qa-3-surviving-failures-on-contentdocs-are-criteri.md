@@ -1,10 +1,11 @@
 ---
 # folio-assistant-b7yo
 title: 'QA: 3 surviving failures on content/docs/ are criterion-vs-house-rule conflicts, not scoping'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-18T17:23:54Z
-updated_at: 2026-09-18T17:23:54Z
+updated_at: 2026-09-18T17:36:22Z
 ---
 
 ## What these are
