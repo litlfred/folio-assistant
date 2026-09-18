@@ -106,13 +106,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T20:49:06.806Z",
+  "generatedAt": "2026-09-18T20:54:23.686Z",
   "counts": {
     "Skill": 139,
     "Actor": 24,
     "Capability": 23,
     "Role": 62,
-    "SkillPackage": 14,
+    "SkillPackage": 15,
     "Process": 20,
     "SequenceFlow": 363,
     "ProcessNode": 329,
@@ -751,7 +751,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/directory-conventions.md",
-      "lines": 311,
+      "lines": 312,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -768,7 +768,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/role-model.md",
-      "lines": 264,
+      "lines": 307,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -2432,9 +2432,10 @@
       "roles": [
         "reviewer"
       ],
-      "capabilities": [
+      "permissions": [
         "review-comments"
       ],
+      "capabilities": [],
       "meta": {
         "lifecycle": [
           "validate",
@@ -2455,10 +2456,12 @@
         "programme-manager",
         "translation-coordinator"
       ],
-      "capabilities": [
-        "git-push",
+      "permissions": [
         "first-pass-review",
         "sme-coordination"
+      ],
+      "capabilities": [
+        "git-push"
       ],
       "meta": {
         "smartBaseAnalog": "SGAuthoring.Persona.TechnicalOfficer",
@@ -2479,8 +2482,7 @@
         "lean-toolchain"
       ],
       "capabilities": [
-        "lean-toolchain",
-        "lean-diagnostics"
+        "lean-toolchain"
       ],
       "meta": {
         "provider": "mcp",
@@ -2497,9 +2499,10 @@
       "roles": [
         "reviewer"
       ],
-      "capabilities": [
+      "permissions": [
         "review-comments"
-      ]
+      ],
+      "capabilities": []
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/translator",
@@ -2511,9 +2514,11 @@
       "roles": [
         "translator"
       ],
-      "capabilities": [
-        "git-push",
+      "permissions": [
         "translation"
+      ],
+      "capabilities": [
+        "git-push"
       ],
       "meta": {
         "smartBaseAnalog": "SGAuthoring.Persona.Translator",
@@ -2533,9 +2538,11 @@
         "build-pipeline",
         "validation-pipeline"
       ],
-      "capabilities": [
-        "jekyll",
+      "permissions": [
         "qa-reporting"
+      ],
+      "capabilities": [
+        "jekyll"
       ]
     },
     {
@@ -2548,10 +2555,12 @@
       "roles": [
         "ig-publisher-service"
       ],
+      "permissions": [
+        "qa-reporting"
+      ],
       "capabilities": [
         "ig-publisher",
-        "fhir-validator",
-        "qa-reporting"
+        "fhir-validator"
       ],
       "meta": {
         "provider": "docker",
@@ -2570,9 +2579,10 @@
         "editor",
         "sibling-session"
       ],
-      "capabilities": [
+      "permissions": [
         "content-authoring"
       ],
+      "capabilities": [],
       "meta": {
         "lifecycle": [
           "author"
@@ -2595,8 +2605,7 @@
         "git-push",
         "sushi-compiler",
         "ig-publisher",
-        "fhir-validator",
-        "cql-authoring"
+        "fhir-validator"
       ],
       "meta": {
         "smartBaseAnalog": "SGAuthoring.Persona.FHIRModeller",
@@ -2617,9 +2626,10 @@
       "roles": [
         "evidence-agent"
       ],
-      "capabilities": [
+      "permissions": [
         "content-authoring"
       ],
+      "capabilities": [],
       "meta": {
         "workflow": "skills/workflows/evidence-retrieval.bpmn#Lane_Agent"
       }
@@ -2636,10 +2646,12 @@
         "reviewer",
         "translation-coordinator"
       ],
-      "capabilities": [
-        "git-push",
+      "permissions": [
         "project-governance",
         "release-authorization"
+      ],
+      "capabilities": [
+        "git-push"
       ],
       "meta": {
         "smartBaseAnalog": "SGAuthoring.Persona.ProgrammeManager",
@@ -2662,9 +2674,10 @@
         "reviewer",
         "translation-adjudicator"
       ],
-      "capabilities": [
+      "permissions": [
         "approval-authority"
       ],
+      "capabilities": [],
       "meta": {
         "smartBaseAnalog": "SGAuthoring.Persona.ContentReviewer",
         "lifecycle": [
@@ -2683,11 +2696,13 @@
         "publication-manager",
         "author"
       ],
+      "permissions": [
+        "release-management"
+      ],
       "capabilities": [
         "git-push",
         "ig-publisher",
-        "jekyll",
-        "release-management"
+        "jekyll"
       ],
       "meta": {
         "smartBaseAnalog": "SGAuthoring.Persona.PublicationManager",
@@ -2730,9 +2745,10 @@
       "roles": [
         "ingestion-agent"
       ],
-      "capabilities": [
+      "permissions": [
         "content-authoring"
       ],
+      "capabilities": [],
       "meta": {
         "workflow": "skills/workflows/document-ingestion.bpmn#Lane_1"
       }
@@ -2747,9 +2763,10 @@
       "roles": [
         "onboarding-agent"
       ],
-      "capabilities": [
+      "permissions": [
         "content-authoring"
       ],
+      "capabilities": [],
       "meta": {
         "workflow": "skills/workflows/getting-started.bpmn#Lane_Agent"
       }
@@ -2766,8 +2783,7 @@
         "author"
       ],
       "capabilities": [
-        "git-push",
-        "terminology-management"
+        "git-push"
       ],
       "meta": {
         "smartBaseAnalog": "SGAuthoring.Persona.Terminologist",
@@ -2788,9 +2804,11 @@
         "author",
         "editor"
       ],
-      "capabilities": [
-        "git-push",
+      "permissions": [
         "content-authoring"
+      ],
+      "capabilities": [
+        "git-push"
       ]
     },
     {
@@ -2805,10 +2823,7 @@
         "author"
       ],
       "capabilities": [
-        "git-push",
-        "bpmn-authoring",
-        "dmn-authoring",
-        "data-dictionary-authoring"
+        "git-push"
       ],
       "meta": {
         "smartBaseAnalog": "SGAuthoring.Persona.BusinessAnalyst",
@@ -2825,7 +2840,7 @@
       "id": "admin",
       "name": "Administrator",
       "type": "person",
-      "description": "Full administrative access. May act in every governance lane; `capabilities` is what the environment grants, `roles` is what it may act as.",
+      "description": "Full administrative access. The three fields say three different things: `roles` is what it may act AS, `permissions` what it may DO in any lane, `capabilities` what its machine has.",
       "roles": [
         "programme-manager",
         "publication-manager",
@@ -2833,11 +2848,13 @@
         "author",
         "reviewer"
       ],
-      "capabilities": [
-        "git-push",
+      "permissions": [
         "admin-settings",
         "role-management",
         "release-authorization"
+      ],
+      "capabilities": [
+        "git-push"
       ]
     },
     {
@@ -2850,10 +2867,12 @@
       "roles": [
         "qc-reviewer"
       ],
+      "permissions": [
+        "qa-reporting"
+      ],
       "capabilities": [
         "ig-publisher",
-        "fhir-validator",
-        "qa-reporting"
+        "fhir-validator"
       ],
       "meta": {
         "smartBaseAnalog": "SGAuthoring.Persona.QCReviewer",
@@ -2883,9 +2902,10 @@
       "roles": [
         "clinical-sme"
       ],
-      "capabilities": [
+      "permissions": [
         "clinical-validation"
       ],
+      "capabilities": [],
       "meta": {
         "smartBaseAnalog": "SGAuthoring.Persona.ClinicalSME",
         "lifecycle": [
@@ -3207,6 +3227,13 @@
           "priority": 0
         }
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/permissions",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
+      "name": "permissions",
+      "path": "skills/permissions",
+      "hasManifest": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/workflows",
@@ -14443,7 +14470,7 @@
       "graphKinds": [
         "kg"
       ],
-      "summary": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), and the `kg-qa/` audit sidecars beside each. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not."
+      "summary": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), and the `kg-qa/` audit sidecars beside each. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#directory/beans",

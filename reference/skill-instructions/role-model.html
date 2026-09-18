@@ -367,6 +367,11 @@
       <td>a conformance obligation that <strong>points at</strong> the others: <code class="language-plaintext highlighter-rouge">satisfiedBy</code> names the skill or capability discharging it, <code class="language-plaintext highlighter-rouge">actors</code> who is bound, <code class="language-plaintext highlighter-rouge">derivedFrom</code> the broader requirement it specialises.</td>
       <td><code class="language-plaintext highlighter-rouge">skills/requirements/*.json</code></td>
     </tr>
+    <tr>
+      <td><strong>Permission</strong></td>
+      <td>what an actor is <strong>allowed to do</strong>, in any lane. Cross-cuts roles.</td>
+      <td><code class="language-plaintext highlighter-rouge">skills/permissions/permissions.json</code></td>
+    </tr>
   </tbody>
 </table></div>
 
@@ -422,6 +427,74 @@ corpus is touched. Nobody takes them on, so they carry <code class="language-pla
 fill the corpus” is a finding nobody can act on, and a check that produces
 those is a check somebody switches off.</p>
 </blockquote>
+<h2 id="an-actor-has-three-lists-and-they-answer-three-different-questions">
+  
+  
+    <a href="#an-actor-has-three-lists-and-they-answer-three-different-questions" class="anchor-heading" aria-labelledby="an-actor-has-three-lists-and-they-answer-three-different-questions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An actor has three lists, and they answer three different questions
+  
+  
+</h2>
+    
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"roles"</span><span class="p">:</span><span class="w">        </span><span class="p">[</span><span class="s2">"programme-manager"</span><span class="p">,</span><span class="w"> </span><span class="s2">"publication-manager"</span><span class="p">,</span><span class="w"> </span><span class="s2">"editor"</span><span class="p">,</span><span class="w"> </span><span class="s2">"author"</span><span class="p">,</span><span class="w"> </span><span class="s2">"reviewer"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"permissions"</span><span class="p">:</span><span class="w">  </span><span class="p">[</span><span class="s2">"admin-settings"</span><span class="p">,</span><span class="w"> </span><span class="s2">"role-management"</span><span class="p">,</span><span class="w"> </span><span class="s2">"release-authorization"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"capabilities"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"git-push"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>field</th>
+      <th>question</th>
+      <th>scope</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">roles</code></td>
+      <td>what may it act <strong>AS</strong>?</td>
+      <td>per lane</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">permissions</code></td>
+      <td>what may it <strong>DO</strong>?</td>
+      <td>every lane</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">capabilities</code></td>
+      <td>what does its <strong>machine have</strong>?</td>
+      <td>the environment</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>These were one field until 2026-09</strong> (bean <code class="language-plaintext highlighter-rouge">ind9</code>), and the conflation meant
+nothing could resolve any of them: 27 claims across 19 names pointed at a
+capability registry that only ever held environment probes.</p>
+
+<p><strong>The obvious fix was wrong, and testing it is what found the real one.</strong> “Can
+review” and “can push” are properties of a position — that is exactly the
+reasoning that moved <code class="language-plaintext highlighter-rouge">inherits</code> off actors — so permissions look like they
+belong on Role. They do not survive the data. A permission <strong>cross-cuts</strong>:
+<code class="language-plaintext highlighter-rouge">content-authoring</code> is held by actors taking on five different roles;
+<code class="language-plaintext highlighter-rouge">qa-reporting</code> by three, one a build pipeline and one a human QC reviewer;
+<code class="language-plaintext highlighter-rouge">admin</code> holds <code class="language-plaintext highlighter-rouge">admin-settings</code> in all five lanes it enters. Placing them on Role
+produced <strong>36</strong> conflicts where a permission was held by some but not all actors
+sharing a role.</p>
+
+<p>The line that does hold: <strong>a skill answers what the performer of this task needs
+to KNOW, and belongs to the lane. A permission answers what this participant may
+DO, and travels with the participant through every lane it enters.</strong></p>
+
+<p>Both are audited and both are <code class="language-plaintext highlighter-rouge">critical</code> — <code class="language-plaintext highlighter-rouge">actor-permissions-resolve</code> and
+<code class="language-plaintext highlighter-rouge">actor-capabilities-resolve</code>. The latter was <code class="language-plaintext highlighter-rouge">major</code> only while the field was
+overloaded, carrying entries no vocabulary could ever resolve.</p>
+
+<p><strong>Three names were neither</strong>: <code class="language-plaintext highlighter-rouge">cql-authoring</code>, <code class="language-plaintext highlighter-rouge">data-dictionary-authoring</code> and
+<code class="language-plaintext highlighter-rouge">lean-diagnostics</code> are skills with no body anywhere. Dropped rather than
+relocated — claiming an unmodelled thing is worse than not claiming it, and
+putting them on a role would fail <code class="language-plaintext highlighter-rouge">role-skills-resolve</code>. Bean <code class="language-plaintext highlighter-rouge">dtod</code>.</p>
 <h2 id="requirements-are-the-fifth-node-kind-and-they-only-point">
   
   
@@ -701,7 +774,7 @@ either a lane name has drifted, or the role is dead.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35393395775"><code>aa3b5e6</code></a> &middot; 2026-09-18T20:48:42Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35393862083"><code>cda3f16</code></a> &middot; 2026-09-18T20:53:56Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
