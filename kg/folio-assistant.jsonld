@@ -98,16 +98,24 @@
     "typeIri": {
       "@id": "https://litlfred.github.io/folio-assistant/ns#typeIri",
       "@type": "@id"
+    },
+    "inputSchema": {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#inputSchema",
+      "@type": "@id"
+    },
+    "outputSchema": {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#outputSchema",
+      "@type": "@id"
     }
   },
   "danglingLinks": [],
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T23:23:23.658Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/87dc3a671666a1aa0c9ec46aa5bbff11293c27cf",
-  "sourceCommitSha": "87dc3a671666a1aa0c9ec46aa5bbff11293c27cf",
-  "sourceCommitAt": "2026-09-19T01:21:10+02:00",
+  "generatedAt": "2026-09-18T23:53:33.002Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5f8c80a015f3a3479b8ef3d34580d3077e013c69",
+  "sourceCommitSha": "5f8c80a015f3a3479b8ef3d34580d3077e013c69",
+  "sourceCommitAt": "2026-09-19T01:51:53+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 143,
@@ -137,8 +145,8 @@
       ],
       "instructions": "skills/authoring-who-smart-guidelines/quality-control.md",
       "lines": 65,
-      "inputSchema": "schemas/skills/quality-control/input.schema.json",
-      "outputSchema": "schemas/skills/quality-control/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/quality-control/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/quality-control/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -155,8 +163,8 @@
       ],
       "instructions": "skills/authoring-who-smart-guidelines/terminology-management.md",
       "lines": 58,
-      "inputSchema": "schemas/skills/terminology-management/input.schema.json",
-      "outputSchema": "schemas/skills/terminology-management/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/terminology-management/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/terminology-management/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -173,8 +181,8 @@
       ],
       "instructions": "skills/authoring-who-smart-guidelines/ig-publication.md",
       "lines": 78,
-      "inputSchema": "schemas/skills/ig-publication/input.schema.json",
-      "outputSchema": "schemas/skills/ig-publication/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/ig-publication/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/ig-publication/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -191,8 +199,8 @@
       ],
       "instructions": "skills/authoring-who-smart-guidelines/bpmn-authoring.md",
       "lines": 66,
-      "inputSchema": "schemas/skills/bpmn-authoring/input.schema.json",
-      "outputSchema": "schemas/skills/bpmn-authoring/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/bpmn-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/bpmn-authoring/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -225,8 +233,8 @@
       ],
       "instructions": "skills/authoring-who-smart-guidelines/fhir-validation.md",
       "lines": 67,
-      "inputSchema": "schemas/skills/fhir-validation/input.schema.json",
-      "outputSchema": "schemas/skills/fhir-validation/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/fhir-validation/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/fhir-validation/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -243,8 +251,8 @@
       ],
       "instructions": "skills/authoring-who-smart-guidelines/dmn-authoring.md",
       "lines": 65,
-      "inputSchema": "schemas/skills/dmn-authoring/input.schema.json",
-      "outputSchema": "schemas/skills/dmn-authoring/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/dmn-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/dmn-authoring/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -261,8 +269,8 @@
       ],
       "instructions": "skills/authoring-who-smart-guidelines/l2-dak-authoring.md",
       "lines": 67,
-      "inputSchema": "schemas/skills/l2-dak-authoring/input.schema.json",
-      "outputSchema": "schemas/skills/l2-dak-authoring/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/l2-dak-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/l2-dak-authoring/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -279,8 +287,8 @@
       ],
       "instructions": "skills/authoring-who-smart-guidelines/l3-fhir-authoring.md",
       "lines": 68,
-      "inputSchema": "schemas/skills/l3-fhir-authoring/input.schema.json",
-      "outputSchema": "schemas/skills/l3-fhir-authoring/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/l3-fhir-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/l3-fhir-authoring/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -297,8 +305,8 @@
       ],
       "instructions": "skills/content-lifecycle/content-author.md",
       "lines": 46,
-      "inputSchema": "schemas/skills/content-author/input.schema.json",
-      "outputSchema": "schemas/skills/content-author/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-author/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-author/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -315,8 +323,8 @@
       ],
       "instructions": "skills/content-lifecycle/content-validate.md",
       "lines": 28,
-      "inputSchema": "schemas/skills/content-validate/input.schema.json",
-      "outputSchema": "schemas/skills/content-validate/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-validate/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-validate/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -333,8 +341,8 @@
       ],
       "instructions": "skills/content-lifecycle/content-plan.md",
       "lines": 27,
-      "inputSchema": "schemas/skills/content-plan/input.schema.json",
-      "outputSchema": "schemas/skills/content-plan/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-plan/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-plan/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -351,8 +359,8 @@
       ],
       "instructions": "skills/content-lifecycle/content-feedback.md",
       "lines": 29,
-      "inputSchema": "schemas/skills/content-feedback/input.schema.json",
-      "outputSchema": "schemas/skills/content-feedback/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-feedback/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-feedback/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -369,8 +377,8 @@
       ],
       "instructions": "skills/content-lifecycle/content-publish.md",
       "lines": 28,
-      "inputSchema": "schemas/skills/content-publish/input.schema.json",
-      "outputSchema": "schemas/skills/content-publish/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-publish/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-publish/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -387,8 +395,8 @@
       ],
       "instructions": "skills/content-lifecycle/content-test.md",
       "lines": 77,
-      "inputSchema": "schemas/skills/content-test/input.schema.json",
-      "outputSchema": "schemas/skills/content-test/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-test/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-test/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -405,8 +413,8 @@
       ],
       "instructions": "skills/content-lifecycle/content-review.md",
       "lines": 38,
-      "inputSchema": "schemas/skills/content-review/input.schema.json",
-      "outputSchema": "schemas/skills/content-review/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-review/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/content-review/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -455,8 +463,8 @@
       ],
       "instructions": "skills/authoring-math/proof-verification.md",
       "lines": 64,
-      "inputSchema": "schemas/skills/proof-verification/input.schema.json",
-      "outputSchema": "schemas/skills/proof-verification/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/proof-verification/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/proof-verification/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -473,8 +481,8 @@
       ],
       "instructions": "skills/authoring-math/lean-formalization.md",
       "lines": 72,
-      "inputSchema": "schemas/skills/lean-formalization/input.schema.json",
-      "outputSchema": "schemas/skills/lean-formalization/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/lean-formalization/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/lean-formalization/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -491,8 +499,8 @@
       ],
       "instructions": "skills/authoring-math/latex-authoring.md",
       "lines": 59,
-      "inputSchema": "schemas/skills/latex-authoring/input.schema.json",
-      "outputSchema": "schemas/skills/latex-authoring/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/latex-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/latex-authoring/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -509,8 +517,8 @@
       ],
       "instructions": "skills/folio-document-adapter/document-authoring.md",
       "lines": 87,
-      "inputSchema": "schemas/skills/document-authoring/input.schema.json",
-      "outputSchema": "schemas/skills/document-authoring/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/document-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/document-authoring/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -527,8 +535,8 @@
       ],
       "instructions": "skills/folio-document-adapter/normative-statements.md",
       "lines": 80,
-      "inputSchema": "schemas/skills/normative-statements/input.schema.json",
-      "outputSchema": "schemas/skills/normative-statements/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/normative-statements/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/normative-statements/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -545,8 +553,8 @@
       ],
       "instructions": "skills/folio-document-adapter/document-structure.md",
       "lines": 59,
-      "inputSchema": "schemas/skills/document-structure/input.schema.json",
-      "outputSchema": "schemas/skills/document-structure/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/document-structure/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/document-structure/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -563,8 +571,8 @@
       ],
       "instructions": "skills/folio-document-adapter/document-publishing.md",
       "lines": 77,
-      "inputSchema": "schemas/skills/document-publishing/input.schema.json",
-      "outputSchema": "schemas/skills/document-publishing/output.schema.json",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/document-publishing/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/kg/skills/document-publishing/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true
     },
@@ -749,7 +757,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/one-voice-style-guide.md",
-      "lines": 173,
+      "lines": 204,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -783,7 +791,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/skills-and-tools.md",
-      "lines": 237,
+      "lines": 271,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -1224,7 +1232,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/one-voice-audit.md",
-      "lines": 277,
+      "lines": 308,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -17015,12 +17023,10 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager",
-        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-validate"
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager"
       ],
       "satisfiesSkillNames": [
-        "translation-manager",
-        "content-validate"
+        "translation-manager"
       ]
     },
     {
@@ -17346,12 +17352,10 @@
       },
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/process-state",
-        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/dmn-authoring",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/bean-coordination"
       ],
       "satisfiesSkillNames": [
         "process-state",
-        "dmn-authoring",
         "bean-coordination"
       ]
     },

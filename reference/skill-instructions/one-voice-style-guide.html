@@ -359,6 +359,42 @@
 
   <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/one-voice-style-guide.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
+<h2 id="the-voice-comes-from-the-role-not-from-this-file">
+  
+  
+    <a href="#the-voice-comes-from-the-role-not-from-this-file" class="anchor-heading" aria-labelledby="the-voice-comes-from-the-role-not-from-this-file"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The voice comes from the ROLE, not from this file
+  
+  
+</h2>
+    
+
+<p>Before writing or auditing a block, resolve its audience and read that role’s
+<code class="language-plaintext highlighter-rouge">persona</code>, <code class="language-plaintext highlighter-rouge">voice</code> and <code class="language-plaintext highlighter-rouge">useCases</code> in <code class="language-plaintext highlighter-rouge">skills/roles/roles.json</code>.</p>
+
+<p><strong>A block sits in a lane; the lane is a role; the role is who the prose is
+for.</strong> The audience is not restated per block — copying it onto every block
+invites the two to disagree, and a per-block audience contradicting its lane
+is worse than none because it looks authoritative.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">readRoleGraph</span><span class="p">,</span> <span class="nx">roleForLane</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./schemas/role-graph</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">role</span> <span class="o">=</span> <span class="nx">roleForLane</span><span class="p">(</span><span class="nx">readRoleGraph</span><span class="p">(</span><span class="dl">"</span><span class="s2">skills</span><span class="dl">"</span><span class="p">)</span><span class="o">!</span><span class="p">,</span> <span class="nx">laneName</span><span class="p">,</span> <span class="nx">explicitRef</span><span class="p">);</span>
+<span class="nx">role</span><span class="p">?.</span><span class="nx">persona</span>   <span class="c1">// who this reader is</span>
+<span class="nx">role</span><span class="p">?.</span><span class="nx">voice</span>     <span class="c1">// the register to address them in</span>
+<span class="nx">role</span><span class="p">?.</span><span class="nx">useCases</span>  <span class="c1">// what they came to do</span>
+</code></pre></div></div>
+
+<p><strong>This file is the default, not the answer.</strong> Where a role declares a <code class="language-plaintext highlighter-rouge">voice</code>,
+that wins. The guidance here applies when no role has been resolved.</p>
+
+<p><strong>Why the role carries the voice rather than this file inferring it.</strong> Voice
+does not follow from persona: the same reader is addressed differently in a
+normative standard and in a tutorial. Naming it on the role is what lets the
+authoring agent and the QA agent judge against the <em>same</em> string — otherwise a
+voice finding is one agent’s taste against another’s, which is unreviewable.</p>
+
+<p><code class="language-plaintext highlighter-rouge">bun run kg:audit</code> reports a reader role missing any of the three
+(<code class="language-plaintext highlighter-rouge">role-has-persona</code>, <code class="language-plaintext highlighter-rouge">role-declares-voice</code>, <code class="language-plaintext highlighter-rouge">role-has-use-cases</code>). System,
+external and acted-upon roles are <code class="language-plaintext highlighter-rouge">n/a</code>: nothing in them reads prose.</p>
 <h1 id="one-voice-style-guide--author-voice-profile">
   
   
@@ -661,7 +697,7 @@ is — <strong>ask the author</strong> using AskUserQuestion before making chang
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35405350696"><code>87dc3a6</code></a> &middot; 2026-09-18T23:22:54Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35407309214"><code>5f8c80a</code></a> &middot; 2026-09-18T23:53:04Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
