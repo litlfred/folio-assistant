@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(28)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(92)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(28) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(92) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(28) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(92) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(28) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(92) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Blocking is a claim about the work, not a mood | folio-assistant</title>
+<title>Roles are swimlanes | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Blocking is a claim about the work, not a mood" />
+<meta property="og:title" content="Roles are swimlanes" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/reference/skill-instructions/bean-blocking.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/reference/skill-instructions/bean-blocking.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/reference/skill-instructions/role-model.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/reference/skill-instructions/role-model.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Blocking is a claim about the work, not a mood" />
+<meta property="twitter:title" content="Roles are swimlanes" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Blocking is a claim about the work, not a mood","url":"https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/reference/skill-instructions/bean-blocking.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Roles are swimlanes","url":"https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/reference/skill-instructions/role-model.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -303,7 +303,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Blocking is a claim about the work, not a mood</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Roles are swimlanes</span></li>
   </ol>
 </nav>
 
@@ -312,128 +312,315 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/bean-blocking.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/bean-blocking.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/role-model.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/role-model.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/bean-blocking.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/role-model.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="blocking-is-a-claim-about-the-work-not-a-mood">
+<h1 id="roles-are-swimlanes">
   
   
-    <a href="#blocking-is-a-claim-about-the-work-not-a-mood" class="anchor-heading" aria-labelledby="blocking-is-a-claim-about-the-work-not-a-mood"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Blocking is a claim about the work, not a mood
+    <a href="#roles-are-swimlanes" class="anchor-heading" aria-labelledby="roles-are-swimlanes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Roles are swimlanes
   
   
 </h1>
     
 
-<p><code class="language-plaintext highlighter-rouge">blocked</code> is the most expensive status a bean can carry, because a blocked bean
-<strong>stops being work anyone can pick up</strong> — and unlike a failure, nothing ever
-tells you it went stale.</p>
-<h2 id="default-to-non-blocking">
-  
-  
-    <a href="#default-to-non-blocking" class="anchor-heading" aria-labelledby="default-to-non-blocking"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Default to non-blocking
-  
-  
-</h2>
-    
+<p>One sentence carries the whole model:</p>
 
-<p>Before setting <code class="language-plaintext highlighter-rouge">blocked</code>, ask whether the work is genuinely stopped or merely
-<em>awkward</em>. These are <strong>not</strong> blocking:</p>
+<blockquote>
+  <p><strong>An actor performs a task in a process as a role, using that role’s skills.</strong></p>
+</blockquote>
 
-<ul>
-  <li><strong>Waiting on CI.</strong> End the turn; the result wakes you.</li>
-  <li><strong>Waiting on review.</strong> The PR is the artefact; other work continues.</li>
-  <li><strong>Waiting on a decision you have not yet asked for.</strong> Ask, then continue on
-the parts that do not depend on the answer.</li>
-  <li><strong>Part of the task is unclear.</strong> Do everything that does not depend on the
-unclear part, and state the assumption for the rest.</li>
-  <li><strong>You would rather do something else first.</strong> That is ordering, not blocking.</li>
-</ul>
-
-<p>The test: <strong>is there any remaining work on this bean that could proceed right
-now?</strong> If yes, it is not blocked — it is in progress with a question attached.</p>
-<h2 id="when-it-really-is-blocked-say-four-things">
-  
-  
-    <a href="#when-it-really-is-blocked-say-four-things" class="anchor-heading" aria-labelledby="when-it-really-is-blocked-say-four-things"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When it really is blocked, say four things
-  
-  
-</h2>
-    
-
-<p>A bare <code class="language-plaintext highlighter-rouge">blocked</code> tells the next agent nothing except not to bother. Carry:</p>
+<p>Four objects, each with a home:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>field</th>
-      <th>why</th>
+      <th>object</th>
+      <th>what it is</th>
+      <th>declared in</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>what it waits on</strong></td>
-      <td>so a reader can tell whether the thing has since happened</td>
+      <td><strong>Actor</strong></td>
+      <td>a concrete participant. Human or agentic. Persists across every process.</td>
+      <td><code class="language-plaintext highlighter-rouge">.claude/skills/actors/*.json</code></td>
     </tr>
     <tr>
-      <td><strong>since</strong></td>
-      <td>so staleness is visible</td>
+      <td><strong>Role</strong></td>
+      <td><strong>the swimlane</strong> — a persona an actor <em>takes on</em> because of the lane it is acting in. Carries a collection of Skills.</td>
+      <td><code class="language-plaintext highlighter-rouge">skills/roles/roles.json</code></td>
     </tr>
     <tr>
-      <td><strong>expires</strong></td>
-      <td>a timeout, after which the block is presumed stale</td>
+      <td><strong>Skill</strong></td>
+      <td>an instruction body: what the actor needs to know to perform the task it was handed.</td>
+      <td><code class="language-plaintext highlighter-rouge">skills/&lt;pkg&gt;/*.md</code>, <code class="language-plaintext highlighter-rouge">src/skills/</code>, <code class="language-plaintext highlighter-rouge">schemas/skills/&lt;name&gt;/</code>, <code class="language-plaintext highlighter-rouge">.claude/skills/local/</code></td>
     </tr>
     <tr>
-      <td><strong>handoff</strong></td>
-      <td>what a <em>different</em> agent should do on picking it up</td>
+      <td><strong>Process / Decision</strong></td>
+      <td>BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table.</td>
+      <td><code class="language-plaintext highlighter-rouge">docs/workflows/*.bpmn</code>, <code class="language-plaintext highlighter-rouge">docs/workflows/decisions/*.dmn</code></td>
     </tr>
   </tbody>
 </table></div>
 
+<p>Schema: <a href="../../schemas/role-graph.ts"><code class="language-plaintext highlighter-rouge">schemas/role-graph.ts</code></a>. Audit:
+<a href="../../scripts/kg-audit.ts"><code class="language-plaintext highlighter-rouge">scripts/kg-audit.ts</code></a>, sidecar schema
+<a href="../../schemas/kg-qa.ts"><code class="language-plaintext highlighter-rouge">schemas/kg-qa.ts</code></a>.</p>
+<h2 id="why-a-role-is-the-lane-and-not-the-person">
+  
+  
+    <a href="#why-a-role-is-the-lane-and-not-the-person" class="anchor-heading" aria-labelledby="why-a-role-is-the-lane-and-not-the-person"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why a role is the lane and not the person
+  
+  
+</h2>
+    
+
+<p>Because the same actor is a different thing in two diagrams, and two different
+actors are the same thing in one.</p>
+
+<p>In <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> the session agent acts in <code class="language-plaintext highlighter-rouge">Lane_Agent</code>. In
+<code class="language-plaintext highlighter-rouge">bean-lifecycle.bpmn</code> that very same session agent is, from the other diagram’s
+point of view, the <strong>sibling session</strong> — the lane that exists precisely to mark
+what is <em>not yours to close</em>. The skills differ because the <strong>lane</strong> differs,
+not because the actor did.</p>
+
+<p>So nothing is “a reviewer”. Somebody <strong>acts as</strong> reviewer, inside a process,
+for the duration of a lane.</p>
+
 <blockquote>
-  <p><code class="language-plaintext highlighter-rouge">status: blocked</code> · waits on: the Tools-schema carrier decision (#223) ·
-since: 2026-09-18T17:20Z · expires: +48h · handoff: if no answer by then,
-proceed with the JSON-LD carrier as recommended and note the assumption in
-the PR body.</p>
+  <p><strong>The actor registry predates this and has not caught up.</strong>
+<code class="language-plaintext highlighter-rouge">.claude/skills/actors/*.json</code> holds eighteen entries with an <code class="language-plaintext highlighter-rouge">inherits</code>
+chain — <code class="language-plaintext highlighter-rouge">author</code> inherits <code class="language-plaintext highlighter-rouge">reviewer</code> inherits <code class="language-plaintext highlighter-rouge">viewer</code>. That is a <strong>role</strong>
+lattice wearing an actor’s name: “can review”, “can push” are properties of a
+position, not of a person. Thirteen of them are reported by the
+<code class="language-plaintext highlighter-rouge">actor-is-not-a-role</code> criterion as migration debt. They are read as actors and
+not silently reinterpreted; migrating them is bean work, not a rename.</p>
 </blockquote>
-
-<p><strong>The expiry is the part that matters.</strong> A block with no expiry is
-indistinguishable from abandoned work, and the agent that finds it has no way
-to tell whether to wait or take over. An expired block is a <em>signal</em> — it means
-“take this over” — rather than a bean quietly sitting forever.</p>
-<h2 id="prefer-sub-beans-to-blocking">
+<h2 id="two-compositions-and-they-are-not-the-same">
   
   
-    <a href="#prefer-sub-beans-to-blocking" class="anchor-heading" aria-labelledby="prefer-sub-beans-to-blocking"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Prefer sub-beans to blocking
+    <a href="#two-compositions-and-they-are-not-the-same" class="anchor-heading" aria-labelledby="two-compositions-and-they-are-not-the-same"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two compositions, and they are not the same
   
   
 </h2>
     
 
-<p>Most blocks are really “one part of this is stuck”. Split it: the stuck part
-becomes a child bean carrying the block, and the parent stays in progress.
-That keeps the work pickup-able and makes the actual dependency legible instead
-of hiding it inside a status.</p>
+<p><strong><code class="language-plaintext highlighter-rouge">inherits</code> — a role IS-A role.</strong> <code class="language-plaintext highlighter-rouge">qc-reviewer</code> inherits <code class="language-plaintext highlighter-rouge">reviewer</code> and gets
+its skills everywhere, in every process, forever. Static. <code class="language-plaintext highlighter-rouge">resolveRoleSkills</code>
+closes over it breadth-first, so a skill’s reported <code class="language-plaintext highlighter-rouge">via</code> is the <em>nearest</em>
+ancestor that supplies it.</p>
 
-<p>Sub-beans are also what make parallel work possible without a swarm — see
-<code class="language-plaintext highlighter-rouge">swarm-management.md</code> before deciding you need one.</p>
-<h2 id="never">
+<p><strong>The subprocess stack — a role acting INSIDE another role’s task.</strong> A process
+calls a subprocess and the actor keeps acting: it does not stop being the outer
+role, it <em>additionally</em> takes on the inner lane’s role. The skills available at
+that task are the union along the whole call path. <code class="language-plaintext highlighter-rouge">resolveRoleStack</code> takes the
+path outermost-first and keeps each skill’s provenance, because a reader needs
+to know not only that a skill was available but which level supplied it.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resolveRoleSkills</span><span class="p">(</span><span class="nx">graph</span><span class="p">,</span> <span class="dl">"</span><span class="s2">qc-reviewer</span><span class="dl">"</span><span class="p">)</span>       <span class="c1">// static: + everything reviewer has</span>
+<span class="nx">resolveRoleStack</span><span class="p">(</span><span class="nx">graph</span><span class="p">,</span> <span class="p">[</span><span class="dl">"</span><span class="s2">editor</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">viewer</span><span class="dl">"</span><span class="p">])</span> <span class="c1">// scoped: the union for this call only</span>
+</code></pre></div></div>
+
+<p><strong>Do not merge them.</strong> A flat union would make <code class="language-plaintext highlighter-rouge">reviewer</code> permanently hold every
+skill any caller ever had, and a closure that broad cannot fail an audit, which
+is the same as not having one.</p>
+<h2 id="lanes-are-free-text--which-is-the-problem-the-role-graph-solves">
   
   
-    <a href="#never" class="anchor-heading" aria-labelledby="never"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Never
+    <a href="#lanes-are-free-text--which-is-the-problem-the-role-graph-solves" class="anchor-heading" aria-labelledby="lanes-are-free-text--which-is-the-problem-the-role-graph-solves"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lanes are free text — which is the problem the role graph solves
   
   
 </h2>
     
 
-<ul>
-  <li><strong>Never mark a bean blocked to end a turn tidily.</strong> If you are stopping for
-the day, the bean is still in progress; say so in the report.</li>
-  <li><strong>Never leave a block without an expiry.</strong> If you cannot say when it goes
-stale, you have not established that it is a block.</li>
-  <li><strong>Never block on something you have not actually asked for.</strong> Asking is the
-work; waiting to be asked is not a dependency.</li>
-</ul>
+<p>Measured across the twenty diagrams on 2026-09-18: <strong>60 distinct lane names for
+roughly two dozen actual positions.</strong> Four spellings of <em>reviewer</em>
+(“Reviewer / SME”, “Reviewer / subject-matter expert”, “Reviewer (SME or
+editor)”, “Review Committee”); three of <em>the work plan</em>. Nothing joined any of
+them to anything, so “which skills does this task’s performer have” had no
+answer and an undefined lane was a silence rather than a finding.</p>
+
+<p>A role therefore declares the lane names it <strong>binds</strong>:</p>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"reviewer"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Reviewer / SME"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Reads a change and judges it. Cannot accept it — that is the editor's lane."</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"actorKind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"person"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"lanes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Reviewer / SME"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Reviewer (SME or editor)"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Review Committee"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"skills"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"content-review"</span><span class="p">,</span><span class="w"> </span><span class="s2">"content-feedback"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"inherits"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"viewer"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>That resolved the whole existing corpus without editing a single <code class="language-plaintext highlighter-rouge">.bpmn</code>.</p>
+
+<p><strong>A new diagram should not add a name here.</strong> Bind the lane explicitly:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;bpmn:lane</span> <span class="na">id=</span><span class="s">"Lane_Reviewer"</span> <span class="na">name=</span><span class="s">"Reviewer"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;bpmn:extensionElements&gt;</span>
+    <span class="nt">&lt;folio:role</span> <span class="na">ref=</span><span class="s">"reviewer"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/bpmn:extensionElements&gt;</span>
+  ...
+<span class="nt">&lt;/bpmn:lane&gt;</span>
+</code></pre></div></div>
+
+<p>An explicit <code class="language-plaintext highlighter-rouge">&lt;folio:role ref&gt;</code> <strong>wins</strong> over name matching: a diagram that has
+said which role it means must not be second-guessed by a string table. A ref
+naming no declared role is a <code class="language-plaintext highlighter-rouge">critical</code> finding — it is <em>not</em> quietly
+name-matched instead.</p>
+<h2 id="the-audit--bun-run-kgaudit">
+  
+  
+    <a href="#the-audit--bun-run-kgaudit" class="anchor-heading" aria-labelledby="the-audit--bun-run-kgaudit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The audit — <code class="language-plaintext highlighter-rouge">bun run kg:audit</code>
+  
+  
+</h2>
+    
+
+<p>Fourteen criteria, one per join in the sentence at the top:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>activity ──names────▶ skill      skill-ref-resolves             critical
+gateway  ──computes─▶ decision   decision-ref-resolves          critical
+lane     ──is───────▶ role       role-ref-resolves              critical
+activity ──sits in──▶ lane       activity-in-lane               major
+lane     ──is───────▶ role       lane-binds-role                major
+role     ──carries──▶ skill      role-carries-activity-skill    major
+decision ──is used──▶ gateway    decision-outcomes-used         major
+role     ──carries──▶ skill      role-skills-resolve            critical
+role     ──is-a─────▶ role       role-inherits-resolves         critical
+activity ──names────▶ skill      activity-names-skill           minor
+role     ──is used──▶ lane       role-binds-a-lane              minor
+actor    ──takes on─▶ role       role-has-actor                 minor
+skill    ──reachable▶ anything   skill-reachable                minor
+actor    ──is not a─▶ role       actor-is-not-a-role            minor
+</code></pre></div></div>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>command</th>
+      <th>does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bun run kg:audit</code></td>
+      <td>write the sidecars, print the summary</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bun run kg:audit:check</code></td>
+      <td>fail on a <code class="language-plaintext highlighter-rouge">critical</code> finding, or on a stale sidecar</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bun run kg:audit:strict</code></td>
+      <td>…and on <code class="language-plaintext highlighter-rouge">major</code> too</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bun run scripts/kg-audit.ts --json</code></td>
+      <td>the full report set, for a tool</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="why-sidecars-rather-than-a-console-report">
+  
+  
+    <a href="#why-sidecars-rather-than-a-console-report" class="anchor-heading" aria-labelledby="why-sidecars-rather-than-a-console-report"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why sidecars rather than a console report
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">check-workflow-refs.ts</code> prints and exits, so its <strong>previous</strong> answer is gone.
+That makes <em>“this lane has been unbound since the day it was drawn”</em> and
+<em>“this lane broke in the commit under review”</em> indistinguishable, and a
+reviewer cannot separate a new defect from inherited debt. The 53 sidecars are
+committed, under <code class="language-plaintext highlighter-rouge">kg-qa/</code> beside whatever they audit, so the diff says exactly
+which findings a change introduced. Same argument and same file shape as the
+block sweep’s <code class="language-plaintext highlighter-rouge">*.qa.json</code> and the script sweep’s <code class="language-plaintext highlighter-rouge">*.script-qa.json</code>.</p>
+<h3 id="three-states-and-what-unknown-costs">
+  
+  
+    <a href="#three-states-and-what-unknown-costs" class="anchor-heading" aria-labelledby="three-states-and-what-unknown-costs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three states, and what <code class="language-plaintext highlighter-rouge">unknown</code> costs
+  
+  
+</h3>
+    
+
+<p>A criterion returns <code class="language-plaintext highlighter-rouge">pass</code>, <code class="language-plaintext highlighter-rouge">fail</code>, <code class="language-plaintext highlighter-rouge">n/a</code> (does not apply to this subject) or
+<code class="language-plaintext highlighter-rouge">unknown</code> (could not be evaluated — the file would not parse, a dependency was
+absent). <strong><code class="language-plaintext highlighter-rouge">unknown</code> is never written as a pass.</strong> It counts as a failure at
+its criterion’s own severity.</p>
+
+<p>It is not <em>promoted</em> to <code class="language-plaintext highlighter-rouge">major</code> either, and the distinction matters: a diagram
+that will not load records <code class="language-plaintext highlighter-rouge">unknown</code> against its <code class="language-plaintext highlighter-rouge">critical</code> criteria too, so it
+still fails the gate — which is the case promotion was reaching for. Promoting
+an unevaluable <code class="language-plaintext highlighter-rouge">minor</code> criterion as well would gate the build on something
+nobody agreed was blocking, and a gate that fires on those is a gate somebody
+switches off.</p>
+<h3 id="severity-and-why-coverage-is-only-minor">
+  
+  
+    <a href="#severity-and-why-coverage-is-only-minor" class="anchor-heading" aria-labelledby="severity-and-why-coverage-is-only-minor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Severity, and why coverage is only <code class="language-plaintext highlighter-rouge">minor</code>
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">critical</code> is a <strong>broken reference</strong> — something names a thing that does not
+exist, and a consumer following it gets nothing. <code class="language-plaintext highlighter-rouge">major</code> is a <strong>missing join</strong> —
+the graph is intact but a question has no answer, e.g. a lane bound to no role.
+<code class="language-plaintext highlighter-rouge">minor</code> is <strong>coverage</strong>: a real gap with legitimate instances. A human signing
+something off is not implemented by a markdown file, so failing on
+<code class="language-plaintext highlighter-rouge">activity-names-skill</code> would force a fake ref onto a real step, which is worse
+than the gap.</p>
+<h2 id="what-counts-as-a-skill">
+  
+  
+    <a href="#what-counts-as-a-skill" class="anchor-heading" aria-labelledby="what-counts-as-a-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What counts as a skill
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">scripts/known-skills.ts</code> is the single answer, shared by <code class="language-plaintext highlighter-rouge">kg-audit</code> and
+<code class="language-plaintext highlighter-rouge">check-workflow-refs</code> so the two cannot disagree.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">.claude/skills/</code> is not uniformly skills</strong>, and reading it as though it were
+was a live defect: <code class="language-plaintext highlighter-rouge">actors/</code> holds participants, <code class="language-plaintext highlighter-rouge">capabilities/</code> holds
+environment probes (<code class="language-plaintext highlighter-rouge">docker</code>, <code class="language-plaintext highlighter-rouge">pandoc</code>, <code class="language-plaintext highlighter-rouge">python3</code>), <code class="language-plaintext highlighter-rouge">roles/</code> holds an assignment
+table and <code class="language-plaintext highlighter-rouge">hooks/</code> holds a shell script. Scanning all of them put 46 non-skills
+into the set, so <code class="language-plaintext highlighter-rouge">&lt;folio:skill ref="viewer"/&gt;</code> or <code class="language-plaintext highlighter-rouge">ref="latex-compiler"</code> would
+have resolved. <code class="language-plaintext highlighter-rouge">NON_SKILL_GROUPS</code> excludes them — 176 names down to 136, with no
+existing reference becoming dangling.</p>
+
+<p>It is a <strong>deny-list of groups known not to hold skills</strong>, not an allow-list of
+<code class="language-plaintext highlighter-rouge">local/</code>, so a new group of real skills is picked up automatically and a new
+group of something else is a one-line addition.</p>
+<h2 id="adding-a-role">
+  
+  
+    <a href="#adding-a-role" class="anchor-heading" aria-labelledby="adding-a-role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a role
+  
+  
+</h2>
+    
+
+<ol>
+  <li>Add it to <code class="language-plaintext highlighter-rouge">skills/roles/roles.json</code> with a <code class="language-plaintext highlighter-rouge">summary</code> that says what the
+<strong>position</strong> is, not what it is called. <code class="language-plaintext highlighter-rouge">actorKind</code> is <code class="language-plaintext highlighter-rouge">person</code>, <code class="language-plaintext highlighter-rouge">agent</code>,
+<code class="language-plaintext highlighter-rouge">system</code> or <code class="language-plaintext highlighter-rouge">external</code>.</li>
+  <li>Bind its lanes — <code class="language-plaintext highlighter-rouge">&lt;folio:role ref&gt;</code> in new diagrams, <code class="language-plaintext highlighter-rouge">lanes[]</code> for an
+existing name you are not renaming.</li>
+  <li>Give it the skills its lane’s activities name. <code class="language-plaintext highlighter-rouge">role-carries-activity-skill</code>
+fails if an activity demands something its performer was never given.</li>
+  <li><code class="language-plaintext highlighter-rouge">bun run kg:audit</code> and commit the sidecars.</li>
+</ol>
+
+<p>A role that binds no lane in any diagram is reported by <code class="language-plaintext highlighter-rouge">role-binds-a-lane</code>:
+either a lane name has drifted, or the role is dead.</p>
 
           
 
