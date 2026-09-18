@@ -1,0 +1,309 @@
+{
+  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane — a persona an actor takes on because of the lane it is acting in — and it carries the skills needed to perform that lane's tasks. Actors (who) are in .claude/skills/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. `lanes` lists the EXACT lane names this role binds across skills/workflows/*.bpmn. It is a list because the corpus spells one position several ways — sixty distinct lane strings for roughly two dozen positions, measured 2026-09-18 — and declaring the synonyms resolves the existing diagrams without editing twenty BPMN files. A NEW diagram should bind explicitly with <folio:role ref=\"...\"/> on the lane and need not add a name here. `bun run kg:audit` reports any lane no role binds, any role no lane uses, and any activity whose skill its lane's role does not carry.",
+  "name": "folio-assistant",
+  "roles": [
+    {
+      "id": "user",
+      "name": "User",
+      "summary": "The person the assistant is working for. States intent, answers the questions the agent cannot decide from the filesystem, and confirms anything irreversible.",
+      "actorKind": "person",
+      "lanes": ["User (person)", "Contributor (human or agent)"],
+      "skills": ["dispatch-agent", "getting-started", "interaction-modality", "repo-conversion"]
+    },
+    {
+      "id": "author",
+      "name": "Author",
+      "summary": "Writes and revises folio content. The position, not the person: an editor and a guideline developer both act as author when they are changing a block.",
+      "actorKind": "person",
+      "lanes": [
+        "Author (person)",
+        "Author (source content)",
+        "Author / guideline developer (person)",
+        "Content Author",
+        "Editor / author (person)"
+      ],
+      "skills": ["content-plan", "content-author", "content-review", "staging-review"]
+    },
+    {
+      "id": "editor",
+      "name": "Editor",
+      "summary": "Author plus the authority to accept a change into the corpus. The lane that sees QA findings and decides.",
+      "actorKind": "person",
+      "lanes": ["Editors + authoring agents"],
+      "inherits": ["author"],
+      "skills": ["content-validate"]
+    },
+    {
+      "id": "reviewer",
+      "name": "Reviewer / SME",
+      "summary": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits.",
+      "actorKind": "person",
+      "lanes": [
+        "Reviewer / SME",
+        "Reviewer / subject-matter expert",
+        "Reviewer (SME or editor)",
+        "Review team and SMEs",
+        "Review team (content · QC · technical officer)",
+        "Review Committee",
+        "Subject-Matter Expert / Reviewer",
+        "Non-mechanical validation (review agent or SME)"
+      ],
+      "skills": ["content-review", "content-feedback", "staging-review", "document-intake", "translation-manager"]
+    },
+    {
+      "id": "qc-reviewer",
+      "name": "QC reviewer",
+      "summary": "Reviewer with the publication quality gate. Checks the built artefact, not only the source.",
+      "actorKind": "person",
+      "lanes": ["QC reviewer", "PR reviewer / QC reviewer"],
+      "inherits": ["reviewer"],
+      "skills": ["quality-control", "content-publish"]
+    },
+    {
+      "id": "clinical-sme",
+      "name": "Clinical / scientific SME",
+      "summary": "Reviewer whose judgement is about the subject matter rather than the artefact.",
+      "actorKind": "person",
+      "lanes": ["Clinical SME", "Clinical / scientific SMEs"],
+      "inherits": ["reviewer"],
+      "skills": []
+    },
+    {
+      "id": "programme-manager",
+      "name": "Programme manager",
+      "summary": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
+      "actorKind": "person",
+      "lanes": [
+        "Programme manager",
+        "Programme manager (release authority)",
+        "Programme manager / technical officer"
+      ],
+      "skills": ["content-plan", "content-retire", "content-publish"]
+    },
+    {
+      "id": "publication-manager",
+      "name": "Publication manager",
+      "summary": "Takes an authorised release to its published form and is accountable for what is live.",
+      "actorKind": "person",
+      "lanes": ["Publication manager", "Publication manager — deploy and seed"],
+      "skills": ["content-publish", "content-review", "ig-publication"]
+    },
+    {
+      "id": "business-analyst",
+      "name": "Business analyst",
+      "summary": "Turns a stated need into a modelled requirement. Owns the CRDM lane and the BPMN/DMN that come out of it.",
+      "actorKind": "person",
+      "lanes": ["Business analyst", "BA / Feature Requestor"],
+      "skills": ["bpmn-authoring", "dmn-authoring", "content-validate", "l2-dak-authoring"]
+    },
+    {
+      "id": "terminologist",
+      "name": "Terminologist",
+      "summary": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
+      "actorKind": "person",
+      "lanes": ["Terminologist"],
+      "skills": ["terminology-management"]
+    },
+    {
+      "id": "fhir-modeller",
+      "name": "FHIR modeller",
+      "summary": "Authors the L3 profiles, extensions and examples an IG is built from.",
+      "actorKind": "person",
+      "lanes": ["FHIR modeller", "FHIR modeller / PR author (person + authoring agent)"],
+      "skills": ["l3-fhir-authoring"]
+    },
+    {
+      "id": "translation-coordinator",
+      "name": "Translation coordinator",
+      "summary": "Decides what is translated, into which languages, and when a translation is accepted.",
+      "actorKind": "person",
+      "lanes": ["Translation Coordinator"],
+      "skills": ["translation-manager"]
+    },
+    {
+      "id": "translator",
+      "name": "Human translator",
+      "summary": "Produces the target-language text. Distinct from the coordinator because accepting one's own translation is the gate this separation removes.",
+      "actorKind": "person",
+      "lanes": ["Human Translator"],
+      "skills": ["translation-manager"]
+    },
+    {
+      "id": "translation-adjudicator",
+      "name": "Translation adjudicator",
+      "summary": "Reviewer who settles a disagreement between machine and human translation.",
+      "actorKind": "person",
+      "lanes": ["Human reviewer / adjudicator"],
+      "inherits": ["reviewer"],
+      "skills": ["translation-manager"]
+    },
+    {
+      "id": "stakeholder",
+      "name": "Stakeholder",
+      "summary": "Signs off that a requirement is met. Carries no skills deliberately: sign-off is a judgement, not a procedure, and a skill here would suggest an agent could supply it.",
+      "actorKind": "person",
+      "lanes": ["Stakeholders"],
+      "skills": []
+    },
+    {
+      "id": "authoring-agent",
+      "name": "Authoring agent",
+      "summary": "The session agent doing the work. The broadest skill set here, and the one whose membership most needs auditing.",
+      "actorKind": "agent",
+      "lanes": [
+        "Authoring agent (system)",
+        "Folio-Assistant Agent",
+        "Agent",
+        "Agent (this session)",
+        "Agent / platform (automated)"
+      ],
+      "skills": [
+        "bean-coordination",
+        "bpmn-authoring",
+        "content-author",
+        "content-graph",
+        "content-plan",
+        "crdm-detect",
+        "crdm-requirements-workflow",
+        "delivery-summary",
+        "document-authoring",
+        "document-structure",
+        "feature-staging",
+        "normative-statements",
+        "prepare-merge",
+        "prepare-merge-auto",
+        "semantic-review-scoping",
+        "todo-manager",
+        "translation-manager"
+      ]
+    },
+    {
+      "id": "onboarding-agent",
+      "name": "Onboarding agent",
+      "summary": "The authoring agent acting before there is a folio: clarifying what the user means by \"create a folio\", scanning an existing repo, and scaffolding.",
+      "actorKind": "agent",
+      "lanes": ["Onboarding agent (system)"],
+      "inherits": ["authoring-agent"],
+      "skills": ["getting-started", "interaction-modality", "repo-conversion", "document-intake"]
+    },
+    {
+      "id": "ingestion-agent",
+      "name": "Ingestion engine",
+      "summary": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material.",
+      "actorKind": "agent",
+      "lanes": ["Ingestion Engine (agent, runs unattended)"],
+      "skills": ["document-intake"]
+    },
+    {
+      "id": "evidence-agent",
+      "name": "Evidence agent",
+      "summary": "Retrieves and appraises external evidence for a guideline claim.",
+      "actorKind": "agent",
+      "lanes": ["Evidence agent (system)"],
+      "skills": ["document-intake"]
+    },
+    {
+      "id": "sibling-session",
+      "name": "Sibling session",
+      "summary": "Another agent or human working the same store. Present in bean-lifecycle precisely to mark what is NOT yours to close.",
+      "actorKind": "agent",
+      "lanes": ["Sibling session or human (not yours to close)"],
+      "skills": ["bean-coordination"]
+    },
+    {
+      "id": "build-pipeline",
+      "name": "Build pipeline",
+      "summary": "Validates, renders and publishes. A system lane: it runs a fixed program and exercises no judgement, so anything needing a decision belongs in a different lane.",
+      "actorKind": "system",
+      "lanes": [
+        "Build pipeline — validate · render · publish",
+        "Build pipeline — SUSHI · validator · IG Publisher",
+        "Corpus + build pipeline (system)",
+        "Incremental build (system)",
+        "CI/CD Pipeline",
+        "Automated Pipeline"
+      ],
+      "skills": [
+        "content-publish",
+        "content-test",
+        "content-validate",
+        "document-publishing",
+        "feature-staging",
+        "fhir-validation",
+        "ig-publication",
+        "l3-fhir-authoring",
+        "latex-authoring",
+        "quality-control",
+        "translation-manager"
+      ]
+    },
+    {
+      "id": "validation-pipeline",
+      "name": "Validation pipeline",
+      "summary": "The mechanical half of the HCI validation gate. Its findings are inputs to the editor's decision, never the decision.",
+      "actorKind": "system",
+      "lanes": [
+        "HCI validation pipeline (system)",
+        "Mechanical validation (system)",
+        "Validation and QA (mechanical + agents)"
+      ],
+      "skills": ["content-test", "content-validate"]
+    },
+    {
+      "id": "publish-target",
+      "name": "Publish target",
+      "summary": "GitHub Pages, or wherever the folio is served from. Reached, probed and reported on — never assumed live.",
+      "actorKind": "system",
+      "actedUpon": true,
+      "lanes": ["Publish — GitHub Pages"],
+      "skills": ["getting-started"]
+    },
+    {
+      "id": "lean-toolchain",
+      "name": "Lean toolchain",
+      "summary": "Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.",
+      "actorKind": "system",
+      "lanes": ["Lean toolchain (lean-mcp)"],
+      "skills": ["lean-formalization", "proof-verification"]
+    },
+    {
+      "id": "ig-publisher-service",
+      "name": "IG publisher + validator",
+      "summary": "The JVM services an IG build shells out to. External in behaviour, internal in configuration.",
+      "actorKind": "system",
+      "lanes": ["Publisher + validator services (JVM)"],
+      "skills": ["fhir-validation", "ig-publication"]
+    },
+    {
+      "id": "work-plan",
+      "name": "Work plan (beans)",
+      "summary": "The shared store, modelled as a lane because tasks act ON it and a reader needs to see where the plan is touched. No actor takes this role on; it is acted upon.",
+      "actorKind": "system",
+      "actedUpon": true,
+      "lanes": [
+        "Work plan — beans (shared by humans and agents)",
+        "Work plan — beans (shared)",
+        "Work plan (beans)"
+      ],
+      "skills": ["todo-manager", "content-feedback"]
+    },
+    {
+      "id": "corpus",
+      "name": "Corpus",
+      "summary": "The versioned content store and the L1 source knowledge graph. Like the work plan, a lane that is written to rather than a participant that acts.",
+      "actorKind": "system",
+      "actedUpon": true,
+      "lanes": ["Corpus — L1 source knowledge graph", "Corpus (versioned store)"],
+      "skills": ["document-intake"]
+    },
+    {
+      "id": "external-registry",
+      "name": "External registry",
+      "summary": "Trusted registries and observatories outside this instance's control. Carries no skills because nothing here instructs it.",
+      "actorKind": "external",
+      "actedUpon": true,
+      "lanes": ["Trusted registries and observatories (external)"],
+      "skills": []
+    }
+  ]
+}

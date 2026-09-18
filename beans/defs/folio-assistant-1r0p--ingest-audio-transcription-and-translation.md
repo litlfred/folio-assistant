@@ -20,4 +20,4 @@ translation, both referenced from `manifest.jsonld`, both carrying the
 provenance stamp (`folio-assistant-iqim`), and both subject to the round-trip
 QA (`folio-assistant-ktt2`).
 
-Diagram: `docs/workflows/ingest-derive-content.bpmn`, `Task_Audio`.
+Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Audio`.

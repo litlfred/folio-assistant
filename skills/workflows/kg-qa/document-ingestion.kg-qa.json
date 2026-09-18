@@ -1,0 +1,63 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_Ingestion",
+    "path": "skills/workflows/document-ingestion.bpmn"
+  },
+  "source_hash": "sha256:314cab783932459ad30029b152b8cda0ab8a12b58b0ff39e4adbddbd92c3593c",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "CallActivity_Gate",
+          "detail": "\"L1 completeness gate\" names no skill."
+        },
+        {
+          "where": "Task_OpenBean",
+          "detail": "\"Record the gap as a bean\" names no skill."
+        },
+        {
+          "where": "Task_Citeable",
+          "detail": "\"Available to cite as an L1 source\" names no skill."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 0
+  }
+}

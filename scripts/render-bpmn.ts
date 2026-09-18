@@ -1,7 +1,7 @@
 /**
  * Render BPMN 2.0 sources to standalone SVG.
  *
- * The `.bpmn` files under `docs/workflows/` are the source of truth — they are
+ * The `.bpmn` files under `skills/workflows/` are the source of truth — they are
  * plain BPMN 2.0 with diagram interchange, so they open in bpmn.io, Camunda
  * Modeler, or any other BPMN tool. This script rasterises them to SVG for the
  * docs site and for GitHub's Markdown renderer, which cannot draw BPMN itself.
@@ -20,7 +20,7 @@ import { basename, join, resolve } from "node:path";
 import { chromiumExecutable } from "./bpmn-render";
 
 const ROOT = resolve(import.meta.dir, "..");
-const SRC_DIR = join(ROOT, "docs/workflows");
+const SRC_DIR = join(ROOT, "skills/workflows");
 const OUT_DIR = join(ROOT, "docs/assets/img/workflows");
 const VIEWER = join(ROOT, "node_modules/bpmn-js/dist/bpmn-viewer.production.min.js");
 

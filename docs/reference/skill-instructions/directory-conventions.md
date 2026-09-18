@@ -47,8 +47,7 @@ The vocabulary is **open**, and split across two layers.
 | `tools` | **harness** | Tool definitions, themselves nodes in the KG | no |
 | `kg` | **harness** | skills, workflows, roles — the instance's own knowledge graph | no |
 | `schemas` | **harness** | schema definitions, self-declared in the smart-base manner | no |
-| `workplan` | **harness** | work items — what is being worked on (`beans/`) | no |
-| `process-state` | **harness** | running BPMN instances — where each got to (`beans/workflow/`) | no |
+| `beans` | **harness** | the work plan, and where each running BPMN instance got to (`beans/`) | no |
 | `folio` | **`folio-assist-core`** | authored content | **yes** — just-the-docs renders it to a website |
 
 **Why the work plan is the harness's and not core's.** The test is whether the
@@ -57,37 +56,33 @@ content, and `agentic-harness` carries a `beans/` store for its own. A Tool repo
 and a Test repo have work plans too. That is a different test from the one that
 sent `folio` to core, which is about capability — only core can render.
 
-**Why `workplan` and `process-state` are two kinds.** They sit in nested directories
-and are easy to conflate, which is exactly why they are separated. `workplan` is
-WHAT IS BEING WORKED ON — authored by people and agents, carrying judgement.
-`process-state` is WHERE A RUNNING PROCESS GOT TO — a token marking the interpreter
-owns, that no human is invited to edit. A consumer asking for the work plan must
-not be handed BPMN instance state.
+**One `beans` kind, and the distinction it used to carry moved inward.** An
+earlier version declared **two** directories here — `workplan` at `beans/` and
+`process-state` at `beans/workflow/` — on the reasoning that WHAT IS BEING
+WORKED ON and WHERE A RUNNING PROCESS GOT TO are different things, authored by
+different parties, and a consumer asking for the work plan must not be handed
+BPMN instance state. **That reasoning still holds. The mechanism was the
+mistake.**
 
-> **Nesting is not inheritance.** `beans/workflow/` sits inside `beans/` and
-> holds a *different* graph. A consumer scanning a declared directory must not
-> assume it owns everything beneath it — check whether a deeper path is itself
-> declared. Today the two happen to be distinguishable by extension (`.md`
-> beans, `.json` instance state), but that is a coincidence of the current
-> layout, not a contract.
+The second directory sat *inside* the first, so a consumer scanning a declared
+directory could not assume it owned what lay beneath it, and the two were told
+apart only by file extension — a coincidence of the layout rather than a
+contract. Expressing the distinction as two sibling entries in a flat list
+misrepresented a containment relation.
 
-`renderable` is the **only** behavioural distinction, and it is why `folio` is
-not the harness's to declare: **`agent-harness` is not self-documenting.** It
-has no just-the-docs pipeline and no webpage content type, so a layer that
-cannot render must not own the renderable kind. Core registers it, through the
-same load-time registration the contribution mechanism uses.
+`beans/` is now a graph with named nodes, declared by `beans/beans.json`
+(schema: `schemas/bean-graph.ts`): `defs` holds the work plan, `workflows`
+holds running-instance state. So the harness says which directories exist and
+what kind of graph each holds, and the bean graph says what its own nodes are.
+**One fact, one place, at each level** — and the consumer that must not be
+handed instance state now asks for a node by name instead of inferring it from
+a file extension.
 
-This is enforced rather than described. A bare `GraphKindRegistry` — the
-harness with nothing above it — genuinely **does not know `folio` exists**, and
-a declaration naming it is refused with an error listing the kinds that *are*
-known. A test pins that. The version where `folio` stays in the harness's table
-with a comment saying core owns it reads fine and means nothing: the harness
-would still know the string, and the boundary would live only in prose.
-
-**Registering is idempotent for an identical definition and throws on a
-conflicting one** — the same rule `schemas/contributions.ts` follows, so a
-diamond dependency graph reaching core twice is not an error while two layers
-claiming one name is.
+> **The general rule survives the specific case.** *Nesting is not
+> inheritance.* A consumer scanning a declared directory must not assume it
+> owns everything beneath it — check whether a deeper path is declared, here
+> or in a graph's own node list. The `beans` collapse removed one instance of
+> the trap, not the trap.
 
 ## The conventional layout
 
@@ -168,6 +163,28 @@ downstream instance inherits its dependencies' skills through the same
 inheritance rules above. A hardcoded path breaks on the first relocation, which
 is the whole reason overrides match on `id`.
 
+### Roles, processes and decisions are KG content too
+
+The `kg` graph is not only skills. It holds the whole
+actor → role → skill → task model:
+
+```
+skills/                       ← this instance's `kg`
+  roles/roles.json            the ROLE GRAPH — a role is a BPMN swimlane
+  roles/kg-qa/*.kg-qa.json    its audit sidecars
+  folio-core/*.md             skills
+  <pkg>/package-manifest.json which skills a package publishes
+```
+
+and the processes those roles act in — `skills/workflows/*.bpmn` and
+`skills/workflows/decisions/*.dmn` — are reached **through the skill that
+describes them**, not as standalone artefacts. A BPMN activity names the skill
+that implements it (`<folio:skill ref>`); a lane names the role that performs it
+(`<folio:role ref>`, or an exact lane-name match in `roles.json`); a role carries
+the skills its lane's activities need. `bun run kg:audit` checks every one of
+those joins and writes a sidecar per node. Model and resolution rules:
+[`role-model.md`](role-model.md); schema: `schemas/role-graph.ts`.
+
 **Not yet true end to end.** `resolveSkillDirs` (`schemas/harness-config.ts`)
 computes the cross-instance overlay and has **no caller**, so skill discovery is
 root-only in practice today and a dependency's skills are not reachable. Stated
@@ -196,6 +213,54 @@ the old home so existing importers are untouched.
 `agent-harness.test.ts` pins the property structurally — it asserts the module
 does not import `./jsonld` or `./block-kinds`. Reach for that test when adding
 anything else at the harness layer.
+
+## What lives in the `schemas` graph — one authored form, many renderings
+
+The `schemas` directory holds schema definitions, and the convention for every
+one of them is the same: **the Zod schema in `.ts` is authoritative, and every
+other form is generated from it.**
+
+```
+schemas/<thing>.ts                    ← AUTHORED.  Zod + the inferred type.
+  ├─→ schemas/generated/<Thing>.schema.json    JSON Schema  (validators, editors)
+  └─→ a JSON-LD projection                     KG node      (queryable)
+```
+
+The TypeScript type is `z.infer<typeof Schema>`, never declared alongside the
+schema — two declarations of one shape drift, and the drift is invisible until
+something reads the stale one.
+
+Both renderings already have their mechanism, so adding a schema introduces no
+new machinery: `scripts/generate-schemas.ts` walks a map of Zod schemas through
+`zodToJsonSchema` into `schemas/generated/`, and `toJsonLd()` in
+`schemas/agent-harness.ts` is the worked example of the graph projection.
+
+**Generate as many renderings as have a consumer, and no more.** JSON Schema
+because validators and editors speak it; JSON-LD because the KG query path
+does. A third — SHACL, an OpenAPI fragment, Turtle — is added when something
+needs it, not in anticipation: each is another file to regenerate and another
+chance for a stale artefact to be read as current.
+
+**A rendering is never where a fix lands.** If a generated `.schema.json` is
+wrong, the `.ts` is wrong; edit that and regenerate. A `--check` mode in CI —
+the pattern `gen-skill-docs.ts --check` already uses — is what makes that
+enforceable rather than merely asserted.
+
+### Why not author the rendering and validate backwards
+
+The tempting inversion is to hand-author the JSON-LD node, because it is the
+form the KG consumes, and validate it against Zod in CI. That is the same two
+artefacts with the authority pointing the wrong way, and it is worse for one
+reason: **a hand-authored node is unchecked until CI runs.** With Zod
+authoritative the schema *is* the type, so a malformed definition fails at
+`tsc`, in the editor, before it is committed. Validation-after-the-fact catches
+the same error strictly later and only if CI is green — and bean `dzl3` is this
+repository's evidence that a suite can sit non-running for as long as it has
+existed.
+
+Decided 2026-09-18 by the repository owner, for the Tools schema and for
+everything else in the `schemas` graph. Worked through in
+`docs/architecture/agent-harness-minimum.md` §"Carrying it".
 
 ## Adding a graph kind
 

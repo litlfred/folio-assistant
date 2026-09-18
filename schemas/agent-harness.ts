@@ -97,11 +97,10 @@ export interface GraphKindDef {
 /**
  * The graph kinds the **harness itself** defines.
  *
- * Five, and deliberately none of them renderable. Everything here is a graph a
+ * Four, and deliberately none of them renderable. Everything here is a graph a
  * tool reads: how work is done (`tools`), what an actor knows and which process
- * governs it (`kg`), the shapes both are typed against (`schemas`), what is
- * being worked on (`workplan`), and where each running process got to
- * (`process-state`).
+ * governs it (`kg`), the shapes both are typed against (`schemas`), and the
+ * work plan with its running-process state (`beans`).
  *
  * ## Why the work plan is the harness's and not core's
  *
@@ -112,15 +111,28 @@ export interface GraphKindDef {
  * So it is declared here — the test for "does this belong to the harness" is
  * whether the harness has one, and it does.
  *
- * ## Why `workplan` and `process-state` are two kinds and not one
+ * ## One `beans` kind, and where the distinction it carried went
  *
- * They sit in nested directories and are easy to conflate, which is exactly
- * why they are separated. `workplan` is WHAT IS BEING WORKED ON — human- and
- * agent-authored items, edited by hand, carrying judgement. `process-state` is WHERE
- * A RUNNING PROCESS GOT TO — a token marking the interpreter owns, that no
- * human is invited to edit. A consumer asking for the work plan must not be
- * handed BPMN instance state, and collapsing them into one kind is how it
- * would be.
+ * This map used to hold five kinds, splitting the work plan in two: `workplan`
+ * at `beans/` and `process-state` at `beans/workflow/`. The reasoning was that
+ * WHAT IS BEING WORKED ON is human- and agent-authored and carries judgement,
+ * while WHERE A RUNNING PROCESS GOT TO is a token the interpreter owns and no
+ * human is invited to edit — and that a consumer asking for the work plan must
+ * not be handed BPMN instance state.
+ *
+ * That reasoning holds; the mechanism was wrong. The second directory sat
+ * INSIDE the first, so a consumer scanning a declared directory could not
+ * assume it owned what lay beneath it, and the two were distinguishable only by
+ * file extension — which the declaring comment itself called "a coincidence of
+ * the current layout, not a contract". Two sibling entries in a flat list
+ * misrepresented a containment relation.
+ *
+ * `beans/` is now a graph with named nodes (`beans/beans.json`,
+ * `schemas/bean-graph.ts`), so the distinction lives INSIDE the graph that
+ * declares it rather than out here where it had to be inferred. The harness
+ * says which directories exist and what kind of graph each holds; the bean
+ * graph says what its own nodes are. One fact, one place, at each level — and
+ * the consumer that must not be handed instance state asks for a node by name.
  */
 export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   tools: {
@@ -138,20 +150,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     summary: "Schema definitions, self-declared in the smart-base manner.",
   },
-  // ONE kind for the whole work plan, not one per store.
-  //
-  // #263 declared two directories here — `workplan` at `beans/` and
-  // `process-state` at `beans/workflow/` — and its own comment flagged the
-  // problem that creates: the second sits INSIDE the first, so a consumer
-  // scanning a declared directory cannot assume it owns what is beneath it,
-  // and the two were told apart only by file extension, "a coincidence of the
-  // current layout, not a contract".
-  //
-  // `beans/` is now a graph with named nodes (`beans/beans.json`,
-  // schemas/bean-graph.ts), so that distinction lives INSIDE the graph where it
-  // is declared rather than out here where it has to be inferred. The harness
-  // says which directories exist and what kind of graph each holds; the bean
-  // graph says what its own nodes are. One fact, one place, at each level.
+  // ONE kind for the whole work plan, not one per store. It replaced `workplan`
+  // + `process-state` in #266; the rationale is in this map's doc comment above,
+  // and the #263 version it supersedes is preserved there too. PR #266 changed
+  // the map and left that comment describing the old five-kind design.
   beans: {
     type: `${FOLIO_NS}BeanGraph`,
     renderable: false,

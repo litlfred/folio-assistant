@@ -31,6 +31,7 @@
 
 import { isActivity, type ProcessModel, type ProcessNode } from "./process-model.js";
 import { evaluate } from "./decision-table.js";
+import { roleForLane, resolveRoleSkills, type RoleGraph } from "../../schemas/role-graph.js";
 
 export interface HistoryEntry {
   at: string;
@@ -86,8 +87,25 @@ export interface EnabledActivity {
   kind: "activity";
   node: string;
   name: string;
-  /** The role that performs it, from the lane. */
+  /** The lane's name, as the diagram spells it. */
   lane?: string;
+  /**
+   * The declared ROLE that lane binds, when a role graph was supplied.
+   *
+   * The lane name is free text and sixty of them spell two dozen positions;
+   * this is the joined answer. `undefined` means either no role graph was
+   * passed or the lane binds nothing — which `kg:audit` reports as a finding
+   * rather than leaving to be inferred here.
+   */
+  role?: string;
+  /**
+   * Every skill that role carries, closed over `inherits`.
+   *
+   * Distinct from `skills`, which is what the ACTIVITY names. The difference is
+   * the interesting part: an activity naming a skill absent from this list is
+   * demanding something its performer was never given.
+   */
+  roleSkills?: string[];
   skills: string[];
   touchesWorkPlan: boolean;
   documentation?: string;
@@ -100,6 +118,8 @@ export interface EnabledDecision {
   /** The gateway's own label — normally a question. */
   name: string;
   lane?: string;
+  /** The declared role that lane binds, when a role graph was supplied. */
+  role?: string;
   /** The outcomes that will be accepted, taken from the flow labels. */
   outcomes: string[];
   /**
@@ -218,7 +238,20 @@ function outcomesOf(model: ProcessModel, node: ProcessNode): string[] {
   return node.outgoing.map((f, i) => model.flows.get(f)!.name ?? `flow-${i + 1}`);
 }
 
-export function enabled(model: ProcessModel, state: InstanceState): Enabled[] {
+/**
+ * What is enabled now.
+ *
+ * `roles` is optional so that the interpreter keeps working in an instance that
+ * declares no role graph — an unmigrated repo is not an error. When it IS
+ * supplied, every enabled step reports the role its lane binds and the skills
+ * that role carries, which is the whole point of declaring roles: an agent
+ * handed a step should be told what it is acting AS, not only which lane the
+ * box was drawn in.
+ */
+export function enabled(model: ProcessModel, state: InstanceState, roles?: RoleGraph): Enabled[] {
+  const roleFor = (node: { lane?: string; roleRef?: string }): string | undefined =>
+    roles ? roleForLane(roles, node.lane, node.roleRef)?.id : undefined;
+
   return state.tokens.map((id) => {
     const node = model.nodes.get(id)!;
     if (node.kind === "exclusive") {
@@ -228,17 +261,21 @@ export function enabled(model: ProcessModel, state: InstanceState): Enabled[] {
         node: node.id,
         name: node.name,
         lane: node.lane,
+        role: roleFor(node),
         outcomes: outcomesOf(model, node),
         computed: table
           ? { decision: table.id, facts: table.inputs.map((i) => i.expression) }
           : undefined,
       };
     }
+    const roleId = roleFor(node);
     return {
       kind: "activity" as const,
       node: node.id,
       name: node.name,
       lane: node.lane,
+      role: roleId,
+      roleSkills: roleId && roles ? resolveRoleSkills(roles, roleId).map((s) => s.skill) : undefined,
       skills: node.skills,
       touchesWorkPlan: node.touchesWorkPlan,
       documentation: node.documentation,
@@ -359,20 +396,27 @@ export function complete(
 }
 
 /** A short human- and agent-readable rendering of where an instance is. */
-export function describe(model: ProcessModel, state: InstanceState): string {
+/**
+ * The human-readable rendering. `roles` is threaded through rather than
+ * resolved here so that `describe` and `enabled` cannot give different answers
+ * about who performs a step.
+ */
+export function describe(model: ProcessModel, state: InstanceState, roles?: RoleGraph): string {
   const lines: string[] = [
     `instance ${state.id} — ${model.name} (${state.processId})`,
     `  subject: ${state.subject}${state.bean ? `   bean: ${state.bean}` : ""}`,
     `  status:  ${state.status}`,
   ];
-  const open = enabled(model, state);
+  const open = enabled(model, state, roles);
   if (open.length === 0) {
     lines.push(state.status === "completed" ? "  nothing left to do" : "  nothing enabled — stuck");
   } else {
     lines.push("", "  enabled now:");
     for (const e of open) {
       if (e.kind === "decision") {
-        lines.push(`    ? ${e.name}  [${e.node}]${e.lane ? `  — ${e.lane}` : ""}`);
+        lines.push(
+          `    ? ${e.name}  [${e.node}]${e.lane ? `  — ${e.lane}` : ""}${e.role ? `  (role: ${e.role})` : ""}`,
+        );
         if (e.computed) {
           lines.push(
             `        computed by ${e.computed.decision} — supply facts: ${e.computed.facts.join(", ")}`,
@@ -384,7 +428,11 @@ export function describe(model: ProcessModel, state: InstanceState): string {
       } else {
         lines.push(
           `    • ${e.name}  [${e.node}]${e.lane ? `  — ${e.lane}` : ""}`,
+          ...(e.role ? [`        acting as: ${e.role}`] : []),
           ...(e.skills.length ? [`        skill: ${e.skills.join(", ")}`] : []),
+          ...(e.role && e.roleSkills?.length
+            ? [`        that role also carries: ${e.roleSkills.filter((s) => !e.skills.includes(s)).join(", ") || "nothing further"}`]
+            : []),
           ...(e.touchesWorkPlan ? [`        touches the work plan (beans/)`] : []),
           ...(e.calledElement ? [`        expands into: ${e.calledElement}`] : []),
         );

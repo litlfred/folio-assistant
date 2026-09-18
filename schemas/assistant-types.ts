@@ -97,8 +97,25 @@ export interface ActorDefinition {
   type: ActorType;
   /** What this actor can do. */
   description: string;
-  /** Actor IDs this role inherits from (DAG — no cycles). */
-  inherits: string[];
+  /**
+   * @deprecated An actor does not inherit; a **role** does.
+   *
+   * This field carried a role lattice under an actor's name — `author`
+   * inherits `reviewer` inherits `viewer` — which is a property of a position,
+   * not of a person. The lattice now lives in `skills/roles/roles.json`
+   * (`schemas/role-graph.ts`), where `inherits` means what it says. Optional
+   * so an unmigrated registry still validates.
+   */
+  inherits?: string[];
+  /**
+   * Roles this actor may take on — ids from the role graph.
+   *
+   * An actor performs a task in a process **as a role**; this says which roles
+   * are open to it. Absent means unstated (nothing is asserted); `[]` means it
+   * takes on none, which is the honest value for a read-only identity that
+   * never appears in a swimlane.
+   */
+  roles?: string[];
   /** Capability IDs directly granted to this actor. */
   capabilities: string[];
   /** Arbitrary metadata (e.g., MCP endpoint, config path). */

@@ -96,7 +96,7 @@ export async function stakeholderMap(root: string, changed: string[]): Promise<S
 
   const changedSkills = new Set(skills.map((s) => s.name));
   const lanes: LaneImpact[] = [];
-  const wfDir = join(root, "docs", "workflows");
+  const wfDir = join(root, "skills", "workflows");
 
   if (existsSync(wfDir) && changedSkills.size > 0) {
     for (const file of readdirSync(wfDir).filter((f) => f.endsWith(".bpmn")).sort()) {

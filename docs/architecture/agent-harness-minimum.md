@@ -112,7 +112,18 @@ no TypeScript schema; the only Bean-shaped type is `BeanRef`
 schema for one. A workflow-state format with no schema cannot be validated,
 cannot carry a QA sidecar, and cannot be a KG node.
 
-### Skills — 17 of the 55 in `folio-core`
+### Skills — 24: 21 from `folio-core`, plus 3 written for MCP projection
+
+> **The count was wrong and is corrected here.** This heading read "17" while
+> the table below it listed **19** rows, and named a twentieth — the narrative
+> process skill — as not yet written. That skill now exists as `process-state`,
+> and `skills-and-tools` was added with it, bringing the moved-from-`folio-core`
+> figure to **19 + 2 = 21**. The "17" was never recomputed after rows were
+> appended. Three further skills — `mcp-projection`, `mcp-assembly`,
+> `mcp-contract` — are **new writing rather than moves**, for a harness total
+> of **24**. Counted 2026-09-18 with `grep -c` over the table; the grouping
+> below sums to the same number, which is the check that catches the next
+> drift.
 
 Classified by reading each skill's description, not its filename — the
 [bean `dh4f`](https://github.com/litlfred/folio-assistant/issues/223) lesson.
@@ -139,10 +150,16 @@ Classified by reading each skill's description, not its filename — the
 | `integration-watcher` *(abstract parent only)* | the shared watcher mechanics; the concrete watchers are downstream |
 | `directory-conventions` | the declaration and its graph kinds |
 
-Plus the **narrative skill the 16:13 comment asks for and which does not yet
-exist**: how an agent reads a BPMN swimlane and its tasks as process state for
-the role it is playing, and how it recovers when it finds itself outside the
-process. That is new writing, not a move.
+| `process-state` | reading a BPMN swimlane as process state for the role you are playing, and recovering when you find yourself outside it |
+| `skills-and-tools` | the skill/Tool separation — the SOP every other skill follows |
+| `mcp-projection` *(new)* | mapping a Tool node onto the MCP standard — how an agent stands a service up from a CLI tool |
+| `mcp-assembly` *(new)* | composing many Tools into one service: naming, collisions, prefixes, versioning |
+| `mcp-contract` *(new)* | verifying a served tool still matches the node it was projected from |
+
+`process-state` and `skills-and-tools` were the 16:13 comment's "narrative
+skill that does not yet exist"; both are now written, which is why the
+moved-from-`folio-core` figure is 21 rather than 17. The three `mcp-*` skills
+are **new writing, not moves** — nothing in `folio-core` covered projection.
 
 ### Documentation — the smallest set
 
@@ -155,14 +172,34 @@ Prose an agent reads, not pages a reader browses:
 - how Tools are made available in shell/CLI and optionally as MCP, and how a
   Task's I/O corresponds to a Tool's inputs and outputs (16:28).
 
-### Tools — exactly one
+### Tools — three nodes, and no MCP
 
-Per 16:28, the harness may hold **beans and nothing else**: the bean-management
-skills, plus the Tool node describing how to install the CLI. MCP not required.
+Per 16:28 the harness holds **beans and nothing else** as a *dependency*. That
+is still true, and it is about what must be installed — not about how many Tool
+nodes exist. The forge decision below adds a second subject, and beans turns out
+to need two nodes rather than one:
 
-**The Tool KG stays in the harness**, per 16:13 — that is what makes the
-harness bootstrappable: it can describe its one tool using its own vocabulary,
-without a renderer.
+| Tool node | satisfies | invocation |
+|---|---|---|
+| `beans-cli` | the six work-plan skills | `shell` — installed by `scripts/install-beans.sh` |
+| `beans-manual` | the same six | `shell` — `scripts/beans-fallback.ts`, or a hand edit of the front matter |
+| `github` | the four PR-choreography skills | `shell` — `gh`, or the REST call it wraps |
+
+**Two beans nodes, not one.** The CLI is absent from a fresh container, and an
+agent that knows only the CLI reads the plan and touches nothing — the
+2026-09-18 failure where a session completed two merged PRs' worth of durable
+work unclaimed. The fallback is a Tool of equal standing, not a footnote, and
+modelling it as one is what forces the skill to say *when* to reach for it.
+
+**No MCP.** None of the three needs a tool server: `ToolDefinition.invoke`
+carries `mcp` as one optional arm beside `shell` and `container`, and the
+harness relies on `shell`. A Tool whose only invocation is an MCP call is not
+usable by the harness that defines it. MCP is acknowledged as a transport a
+downstream instance may offer, and assumed nowhere.
+
+**The Tool KG stays in the harness**, per 16:13 — that is what makes the harness
+bootstrappable: it can describe its own tools in its own vocabulary, with no
+renderer and no server.
 
 ## `agent-harness-tools` — the minimum
 
@@ -180,53 +217,139 @@ is a QA audit criterion, not a style note — see the strawperson below.
 ## Strawperson: the Tools-repo schema
 
 The 16:13 comment asks for a schema for Tools-repo contents plus options with
-pros and cons. Here is the shape, then three ways to carry it.
+pros and cons. Here is the shape, written in the carrier the section below
+settles on — **Zod is the authoritative form**, and the TypeScript type is
+inferred from it rather than declared alongside it, so there is one definition
+and not two that can drift.
 
 ```ts
-interface ToolDefinition {
-  id: string;                    // stable KG node id
-  title: string;
-  summary: string;
+// schemas/tool.ts
+export const ToolDefinitionSchema = z.object({
+  id: z.string(),                                   // stable KG node id
+  title: z.string(),
+  summary: z.string(),
+
   /** How to obtain it. */
-  install: { cli?: string; container?: string; service?: string };
+  install: z.object({
+    cli:       z.string().optional(),
+    container: z.string().optional(),
+    service:   z.string().optional(),
+  }),
+
   /** How to run it, per environment. */
-  invoke: { shell?: string; mcp?: { tool: string }; container?: string };
+  invoke: z.object({
+    shell:     z.string().optional(),
+    mcp:       z.object({ tool: z.string() }).optional(),
+    container: z.string().optional(),
+  }),
+
   /** The contract a Task binds against — the 16:28 requirement. */
-  io: {
-    inputs:  Array<{ name: string; schema: string; required: boolean }>;
-    outputs: Array<{ name: string; schema: string }>;
-  };
+  io: z.object({
+    inputs:  z.array(z.object({
+      name: z.string(), schema: z.string(), required: z.boolean(),
+    })),
+    outputs: z.array(z.object({
+      name: z.string(), schema: z.string(),
+    })),
+  }),
+
   /** Skills this tool can satisfy. One skill may have several tools. */
-  satisfies: string[];
-  requires?: { os?: string[]; runtime?: string[]; network?: boolean };
-}
+  satisfies: z.array(z.string()),
+
+  requires: z.object({
+    os:      z.array(z.string()).optional(),
+    runtime: z.array(z.string()).optional(),
+    network: z.boolean().optional(),
+  }).optional(),
+});
+
+export type ToolDefinition = z.infer<typeof ToolDefinitionSchema>;
 ```
 
 The `io` block is the part that earns its keep: it is what lets a Task's inputs
 and outputs be checked against the Tool that will execute it, rather than
 hoping they line up.
 
-### Three ways to carry it — pros and cons
+Two fields are deliberately loose at this stage and should be tightened before
+anything is built on them. `io.*.schema` is a `string` — presumably an IRI into
+the schema graph, but nothing yet says which, and an unresolvable reference is
+the failure mode the `io` block exists to prevent. `satisfies` is a bare array
+of skill ids with no check that the skills exist; that is the same
+declared-but-absent defect `dh4f` found in the pipeline scripts, where a
+consumer scans nothing and reports a clean run.
+### Carrying it — authored once in Zod, rendered downstream
 
-| | **A. JSON-LD nodes in `kg/`** | **B. TypeScript modules** | **C. Front-matter in the skill** |
-|---|---|---|---|
-| **shape** | one `.jsonld` per tool | one `.ts` per tool, Zod-validated | YAML block in the skill `.md` |
-| **pro** | native KG node; queryable with everything else; no toolchain to read | author-time type checking; same builder pattern as content blocks | zero new files; tool and its skill never drift apart |
-| **pro** | language-agnostic — a Python or shell consumer reads it | refactorable; IDE support | simplest possible migration |
-| **con** | no author-time checking; a typo is a runtime discovery | needs a TS toolchain to read, which a shell-only consumer may not have | **contradicts "code in tools, not skills"**; unqueryable without parsing Markdown |
-| **con** | two files per tool if you also want prose | not a KG node without a projection step | one tool per skill only — kills "several Tools for one Skill" |
-| **verdict** | **recommended** | good second | **do not** |
+**Decided (2026-09-18, by the repository owner): the `.ts` Zod schema is
+authoritative, and as many downstream renderings are generated from it as make
+sense — JSON-LD and JSON Schema to begin with.** That is how every other schema
+in this repository is defined, and the Tools schema gets no exception.
 
-**Recommendation: A, with B's checking bolted on.** Author the Tool node as
-JSON-LD so it is a first-class KG citizen readable without a toolchain, and
-validate it in CI against a Zod schema that lives in the harness. That is
-exactly the split the `AgentHarness` declaration already uses — authored form
-stored, graph form derived, schema validating both — so it introduces no new
-pattern.
+```
+schemas/tool.ts            ← AUTHORITATIVE.  Zod + the inferred TS type.
+  │
+  ├─→ schemas/generated/Tool.schema.json      JSON Schema  (validation, editors)
+  └─→ kg/tools/<id>.jsonld                    JSON-LD      (KG node, queryable)
+```
 
-**C is worth rejecting explicitly** because it is the tempting one: it is the
-least work today and it directly contradicts the 16:13 instruction that code
-snippets belong in tools rather than skills.
+The generation direction is the whole decision. `scripts/generate-schemas.ts`
+already walks a map of Zod schemas through `zodToJsonSchema` into
+`schemas/generated/*.schema.json`; adding `Tool` is one entry in that map, not a
+new mechanism. The JSON-LD side has its precedent too — `toJsonLd()` in
+`schemas/agent-harness.ts` projects a Zod-validated declaration into the folio
+namespace. Both renderings are derived artefacts: regenerate, never hand-edit,
+exactly as `docs/reference/skills/` and `docs/reference/skill-instructions/` are
+already treated.
+
+#### Why not the other three, including the one I first recommended
+
+| | **Zod `.ts`, rendered down** | **JSON-LD authored** | **TS, no renderings** | **Skill front-matter** |
+|---|---|---|---|---|
+| **shape** | one Zod schema; per-tool instances validated against it | one hand-written `.jsonld` per tool | one `.ts` per tool, and nothing else | YAML block in the skill `.md` |
+| **author-time checking** | yes | **no** — a typo is a runtime discovery | yes | no |
+| **KG node** | yes, generated | yes, natively | **no** — needs a projection nobody wrote | no — unqueryable without parsing Markdown |
+| **readable without a TS toolchain** | yes, via the renderings | yes | **no** | no |
+| **number of truths** | **one** | one | one | one |
+| **verdict** | **decided** | superseded | insufficient | **do not** |
+
+An earlier draft of this page recommended authoring the JSON-LD directly, with
+Zod validating it in CI. **That is the same two artefacts with the authority
+pointing the wrong way**, and the difference is not cosmetic:
+
+- **A hand-authored JSON-LD node is unchecked until CI runs.** Under the decided
+  direction the Zod schema *is* the type, so a malformed tool definition fails
+  at `tsc`, in the editor, before it is committed. Validation-after-the-fact
+  catches the same error strictly later and only if CI is green — and this
+  repository has just spent a bean (`dzl3`) on a suite that was not running at
+  all, so "CI will catch it" is a claim with a poor local record.
+- **It would have been a fourth pattern in a repo that already has one.** Zod →
+  JSON Schema is `generate-schemas.ts`; Zod → docs is `generate-docs.ts`; Zod →
+  JSON-LD is `toJsonLd`. Authoring the rendering and validating backwards is the
+  only shape here that would have run against all three.
+- **"Language-agnostic" was never the trade it looked like.** A shell or Python
+  consumer reads the *generated* JSON-LD and JSON Schema under the decided
+  direction just as well as it reads a hand-authored one. Nothing is lost by
+  generating them; what is gained is that they cannot disagree with the type.
+
+**C — front-matter in the skill — is still worth rejecting explicitly**, and for
+unchanged reasons: it is the least work today, it directly contradicts the
+instruction that code snippets belong in tools rather than skills, and it caps
+the model at one tool per skill, which kills "several Tools may satisfy one
+Skill" before it is built.
+
+#### What "as many renderings as make sense" means in practice
+
+Two now, and a test for any third. A rendering earns its place when a real
+consumer cannot read the ones that exist: JSON Schema because editors and
+validators speak it, JSON-LD because the KG query path does. A third — SHACL, an
+OpenAPI fragment, a Turtle serialisation — is added when something needs it, not
+in anticipation. Each one is another file to regenerate and another chance for a
+stale artefact to be read as current, so the bar is a consumer, not a
+possibility.
+
+The corresponding rule: **a rendering is never the place a fix lands.** If a
+generated `Tool.schema.json` is wrong, `schemas/tool.ts` is wrong; edit that and
+regenerate. A `--check` mode in CI (the pattern `gen-skill-docs.ts --check`
+already uses) is what makes that enforceable rather than merely stated.
 
 ## The documentation move-table
 
@@ -272,7 +395,7 @@ Legend — **AH** `agent-harness` · **AHT** `agent-harness-tools` ·
 | `who-smart-dak.md` | 97 | **W** | L2. |
 | `who-smart-ig.md` | 144 | **W** | L3. |
 
-### BPMN processes (`docs/workflows/`) — 20 files
+### BPMN processes (`skills/workflows/`) — 20 files
 
 | process | → | reasoning |
 |---|---|---|
@@ -332,21 +455,118 @@ the Todo schema stays in the harness. This is the 16:28 rule applied
 consistently, and it is what keeps a headless agent able to read and write
 Todos with no renderer present.
 
-## What I would cut further
+## Decided: 17 stays, and the forge is isolated at the Tool layer
 
-If 17 harness skills is more than you want, these four are where I would push,
-and each is a judgement you may reverse:
+Settled 2026-09-18 by the repository owner. **All 17 skills stay in
+`agentic-harness`. There is no sixth repository.**
 
-- **`prepare-merge-auto`, `pickup`, `watch`, `coordinate`** are all *PR
-  choreography*. They are genuinely agent-workflow, but they assume GitHub.
-  A harness that must run without a forge would put them in a
-  `agent-harness-github` sibling rather than the core.
-- **`repo-conversion` and `getting-started`** overlap heavily; they are
-  plausibly one bootstrap skill.
-- **`symbiotic-interaction` and `interaction-modality`** are both "how to read
-  the person"; one skill with two sections would do.
+The proposal was to split the four PR-choreography skills —
+`prepare-merge-auto`, `pickup`, `watch`, `coordinate` — into an
+`agent-harness-github` sibling, so the harness could run on GitLab or on
+sovereign compute with no forge at all. The goal was right and the mechanism
+was wrong, which the measurement makes plain.
 
-That would take 17 → about 11.
+**Measured on `main`, 2026-09-18.** The four skills total 1,404 lines.
+`coordinate.md` alone is 731 lines carrying 94 matches for GitHub-ish terms —
+of which **12** are concrete invocations (`mcp__github__*`, `gh pr`, `gh api`)
+and the other 82 are conceptual: "pull request", "PR", "GitHub" as a noun.
+
+```sh
+# what was actually counted
+grep -ciE 'github|gh pr|pull request|\bPR\b|mcp__github' skills/folio-core/coordinate.md   # 94
+grep -cE  'mcp__github|gh api|gh pr|gh issue'             skills/folio-core/coordinate.md   # 12
+```
+
+So the split would have moved **1,404 lines of portable prose to isolate on the
+order of a few dozen lines of mechanism** — and would have done it by cutting
+along a repository boundary, the most expensive cut available, to separate
+things that are not actually separable at that grain. The skills are already
+forge-neutral; only their invocations are not.
+
+**Isolate at the Tool layer instead.** A skill states the capability
+generically; a `github` Tool node carries the invocations and names the skills
+it satisfies. Adding GitLab later is a second Tool node against the same
+skills — not a repository, not a fork, not a rewrite. The SOP is
+[`skills-and-tools`](../../skills/folio-core/skills-and-tools.md); the Tool
+schema is the strawperson above, whose `satisfies` field is exactly this edge.
+
+The two consolidations also considered — `repo-conversion` into
+`getting-started`, and `symbiotic-interaction` into `interaction-modality` —
+are **not** taken. Both pairs overlap, but merging them is editorial tidying
+with no architectural consequence, and the grouping below addresses the
+find-the-right-one problem that motivated it.
+
+### No MCP in the harness — but the harness knows how to emit one
+
+**`agentic-harness` assumes no MCP server.** Everything it needs is files in
+declared directories, readable with a filesystem and `agent-harness.json`
+alone. `ToolDefinition.invoke` carries `mcp` as **one optional arm** beside
+`shell` and `container`, and the harness relies on `shell`; a Tool whose only
+invocation is an MCP call is not usable by the harness that defines it.
+
+**That is a statement about dependency, not about ignorance.** MCP is an
+*output* of this harness, not an input to it: the three `mcp-*` skills above
+are how an agent takes a Tool node describing a CLI and produces a working MCP
+service from it. The harness is the thing that knows the mapping; it just does
+not need the result in order to run.
+
+The projection is close to free, and that is the carrier decision paying off
+rather than a coincidence. An MCP tool declaration is a name, a description and
+a JSON Schema for its input — and `schemas/tool.ts` is authoritative Zod, whose
+JSON Schema rendering is already generated (§"Carrying it"). `io.inputs` and
+`io.outputs` are already the I/O contract; `invoke.shell` is already the
+mechanism. **The projection is a rename, not a translation**, which is the sign
+the Tool schema was shaped correctly.
+
+Stating it this way settles what would otherwise look like a contradiction —
+"no MCP" alongside three MCP skills — and it is the reason sovereign-compute
+and air-gapped operation are reachable later without a second design: an
+instance with no server loses a transport, not a capability.
+
+## The `kg/` layout — group them, do not flatten them
+
+Keeping all of them raises the problem the cuts were partly aimed at: a flat
+directory of 24 files gives a reader no way to tell which one governs the task
+in front of them. So the `kg` graph is **grouped**, and the group is part of
+the address:
+
+```
+kg/
+  work-plan/          bean-coordination, todo-manager, pending-show,          [6]
+                      session-intent, continual-progress, idle-backlog
+  pr-choreography/    prepare-merge-auto, pickup, watch, coordinate           [4]
+  interaction/        interaction-modality, symbiotic-interaction             [2]
+  process/            crdm-detect, crdm-requirements-workflow,                [4]
+                      process-state, dispatch-agent
+  bootstrap/          getting-started, repo-conversion,                       [7]
+                      directory-conventions, skills-and-tools,
+                      mcp-projection, mcp-assembly, mcp-contract
+  watchers/           integration-watcher (abstract parent; the concrete       [1]
+                      watchers are downstream)
+                                                                        total  24
+```
+
+The three `mcp-*` skills sit in `bootstrap/` because standing a service up is
+bootstrapping — that is the owner's classification, and it is the right one:
+an agent looking for "how do I make this tool reachable" is asking a
+setup question, not an MCP question. If `bootstrap/` keeps growing, an
+`mcp/` subgroup under it is the natural split, and splitting a group is a
+`git mv` rather than a decision to relitigate.
+
+**The totals are written down deliberately.** The figure above this section was
+wrong for as long as it took someone to append rows without recounting; a
+grouping whose parts sum to a stated whole is the cheapest guard against that
+happening again, and it is checkable by eye.
+
+Two things this buys beyond tidiness. **`pr-choreography/` is the group the
+forge Tools attach to**, so the boundary the sixth repo would have drawn is
+still legible — as a directory, reversible for the price of a `git mv`, rather
+than as a repository. And a group is the natural unit for the "which skill
+governs this?" question, which is the one a flat list answers worst.
+
+**The grouping is not implemented here.** This repo is pre-split and its `kg`
+id points at `skills/`, flat. The layout above is the target for
+`agentic-harness`, recorded so the split does not land as a flat dump of 17.
 
 ## What is deliberately not here
 

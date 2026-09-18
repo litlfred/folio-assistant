@@ -81,7 +81,7 @@ flowchart LR
 ## How a change gets published
 
 The editing and publication processes are modelled as **BPMN 2.0 swimlane
-diagrams**. Sources live in [`docs/workflows/`](docs/workflows) — open them in
+diagrams**. Sources live in [`skills/workflows/`](skills/workflows) — open them in
 [bpmn.io](https://demo.bpmn.io/) or Camunda Modeler; the SVGs below are
 generated from them by `bun run render:bpmn`.
 
@@ -98,13 +98,13 @@ editor; only an accepted change is written to the corpus.
 
 <img src="docs/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
 
-[BPMN source](docs/workflows/editing-hci-validation.bpmn)
+[BPMN source](skills/workflows/editing-hci-validation.bpmn)
 
 ### Corpus → draft → review team → published
 
 <img src="docs/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
 
-[BPMN source](docs/workflows/draft-to-publication.bpmn)
+[BPMN source](skills/workflows/draft-to-publication.bpmn)
 
 ### One cycle of a folio, plan → retire
 
@@ -115,16 +115,16 @@ findings, resolved on commit — so a human and an agent read the same answer to
 
 <img src="docs/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
 
-[BPMN source](docs/workflows/content-lifecycle.bpmn)
+[BPMN source](skills/workflows/content-lifecycle.bpmn)
 
 ### Per content type
 
 | Diagram | Content type |
 |---------|--------------|
-| [`authoring-a-document.bpmn`](docs/workflows/authoring-a-document.bpmn) · [SVG](docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
-| [`authoring-a-paper.bpmn`](docs/workflows/authoring-a-paper.bpmn) · [SVG](docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
-| [`l2-dak-authoring.bpmn`](docs/workflows/l2-dak-authoring.bpmn) · [SVG](docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
-| [`l3-fhir-pipeline.bpmn`](docs/workflows/l3-fhir-pipeline.bpmn) · [SVG](docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
+| [`authoring-a-document.bpmn`](skills/workflows/authoring-a-document.bpmn) · [SVG](docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
+| [`authoring-a-paper.bpmn`](skills/workflows/authoring-a-paper.bpmn) · [SVG](docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
+| [`l2-dak-authoring.bpmn`](skills/workflows/l2-dak-authoring.bpmn) · [SVG](docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
+| [`l3-fhir-pipeline.bpmn`](skills/workflows/l3-fhir-pipeline.bpmn) · [SVG](docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
 
 ---
 

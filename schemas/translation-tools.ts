@@ -209,7 +209,7 @@ export const CONTENT_TYPE_TRANSLATIONS: ContentTypeTranslation[] = [
     ],
     rtlSupported: true,
     bpmnDiagrams: [
-      // Was "docs/workflows/publication-workflow.bpmn", which has never
+      // Was "skills/workflows/publication-workflow.bpmn", which has never
       // existed — `docs/publication-workflow.md` is a PAGE that embeds three
       // diagrams, and no .bpmn of that name was ever written. The publication
       // process itself is draft-to-publication ("From corpus to published
@@ -217,9 +217,9 @@ export const CONTENT_TYPE_TRANSLATIONS: ContentTypeTranslation[] = [
       // resolve makes the re-render silently skip it, which reads exactly
       // like a diagram that needed no work. `check:workflow-refs` now fails
       // on it.
-      "docs/workflows/draft-to-publication.bpmn",
-      "docs/workflows/translation-workflow.bpmn",
-      "docs/workflows/human-translation-workflow.bpmn",
+      "skills/workflows/draft-to-publication.bpmn",
+      "skills/workflows/translation-workflow.bpmn",
+      "skills/workflows/human-translation-workflow.bpmn",
     ],
     notes: "Full smart-base translation coverage. PlantUML, SVG, and " +
            "ArchiMate extractors are the Python originals; TypeScript " +

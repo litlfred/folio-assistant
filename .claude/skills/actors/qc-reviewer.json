@@ -3,10 +3,19 @@
   "name": "QC Reviewer",
   "type": "person",
   "description": "Quality control reviewer who validates publication readiness across L1-L4 layers, runs QA reports, and verifies conformance.",
-  "inherits": ["reviewer"],
-  "capabilities": ["ig-publisher", "fhir-validator", "qa-reporting"],
+  "roles": [
+    "qc-reviewer"
+  ],
+  "capabilities": [
+    "ig-publisher",
+    "fhir-validator",
+    "qa-reporting"
+  ],
   "meta": {
     "smartBaseAnalog": "SGAuthoring.Persona.QCReviewer",
-    "lifecycle": ["validate", "test"]
+    "lifecycle": [
+      "validate",
+      "test"
+    ]
   }
 }

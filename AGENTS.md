@@ -213,13 +213,35 @@ first. A node declared `.defs` resolves to `beans/.defs` and is exactly as
 invisible as the stores this move existed to fix; checking only the head would
 have made the guard unfireable.
 
-`agent-harness.json` declares `beans/` **once**, as a `beans` graph, beside
-`schemas/` and `kg/` — the same pattern as any other directory. Its internal
-split is declared by `beans/beans.json`, not restated there. #263 declared the
-two halves as separate sibling directories with one nested inside the other,
-and its own comment conceded a consumer could not then tell which owned what
-beneath it; named directories inside the graph are that contract. See
-[`directory-conventions`](skills/folio-core/directory-conventions.md).
+`agent-harness.json` declares `beans/` **once**, as a `beans` graph, alongside
+`schemas/` and `kg/`; `beans/beans.json` declares what is inside it — the
+`defs` node (work items) and the `workflows` node (running BPMN instance
+state). The harness says which directories exist and what kind of graph each
+holds; the graph says what its own nodes are. One fact, one place, at each
+level, so neither file has to infer the other's business.
+
+#263 declared those two as **separate directories** — `workplan` at `beans/`
+and `process-state` at `beans/workflow/` — and its own comment named the defect
+that creates: the second sits *inside* the first, so a consumer scanning a
+declared directory cannot assume it owns what lies beneath it, and the two were
+told apart only by file extension, "a coincidence of the current layout, not a
+contract". Named nodes are that contract. The graph kinds `workplan` and
+`process-state` are replaced by the single `beans` kind for the same reason.
+See [`directory-conventions`](skills/folio-core/directory-conventions.md).
+
+**`schemas/` declares TWO graphs — the first real use of the array.**
+`graphs: ["schemas", "kg"]`: the schema definitions themselves, and `kg`
+because a schema **is** a knowledge-graph node rather than a separate island
+beside one. A directory is a place to look, and may hold more than one part
+of the graph.
+
+**Not every declared graph's files declare themselves yet.** `kg`
+(skill front matter), `bean-defs` (bean front matter) and `workflow-state`
+(`$schema`) do. `schemas/*.ts` does not: `@module` names the path rather than
+the node type, four files carry none at all, and three `.test.ts` files sit in
+the declared directory without being schema nodes — told apart only by
+filename, which is the coincidence-not-contract problem again. Bean `xxxb`.
+
 
 **Not every declared graph's files declare themselves yet.** `kg`,
 `bean-defs` and `workflow-state` do; `schemas/*.ts` does not — `@module`
@@ -449,6 +471,89 @@ than closing it: the watchdog going blind must not read as good news, and a red
 Complements `5rfy`, which fixed workflows that never *fire*. This is the
 opposite defect — one that fires constantly and fails every time.
 
+## Actors, roles and skills — a role is a swimlane
+
+One sentence, and every word in it is a distinct declared object:
+
+> **An actor performs a task in a process as a role, using that role's skills.**
+
+| object | what it is | declared in |
+|---|---|---|
+| **Actor** | a concrete participant — human or agentic. Persists across processes. | `.claude/skills/actors/*.json` |
+| **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
+| **Skill** | the instruction body the actor needs to perform the task. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
+| **Process / Decision** | BPMN + DMN. Lanes bind roles, activities name skills, gateways may compute a branch. | `skills/workflows/` |
+
+All four live in the **`kg` graph** the instance declares in `agent-harness.json`
+— in this repo that id maps to `skills/`. BPMN and DMN are **not standalone
+artefacts**: a diagram is reached through the skill that describes the process,
+and a task is performed with the skills its lane's role carries.
+
+**Nothing *is* a reviewer.** Somebody **acts as** reviewer inside a process for
+the duration of a lane, and the same actor is a different role in another
+diagram — the session agent is `Lane_Agent` in `crdm-requirements.bpmn` and the
+*sibling session* in `bean-lifecycle.bpmn`, whose whole point is marking what is
+not yours to close.
+
+**Roles compose two ways and they are not the same thing.** `inherits` is IS-A
+and static (`qc-reviewer` has `reviewer`'s skills everywhere, always). The
+**subprocess stack** is scoped: descending into a subprocess, the actor keeps the
+outer role *and* takes on the inner lane's, and the skills are the union along
+that call path only. Merging them would give every role every caller's skills,
+and a closure that broad cannot fail an audit.
+
+**The discipline is in the skill, not here** —
+[`skills/folio-core/role-model.md`](skills/folio-core/role-model.md) carries the
+resolution rules, how to bind a lane, the severity scale, and how to add a role.
+
+### The audit — `bun run kg:audit`
+
+Fourteen criteria, one per join above, written as **committed QA sidecars** under
+`kg-qa/` beside whatever they audit: `skills/workflows/kg-qa/`,
+`skills/workflows/decisions/kg-qa/`, `skills/roles/kg-qa/`. Schema:
+`schemas/kg-qa.ts`. This is the **third** QA subject kind, after the block sweep's
+`*.qa.json` and the script sweep's `*.script-qa.json`, and it shares their shape.
+
+```sh
+bun run kg:audit          # write the sidecars, print the summary
+bun run kg:audit:check    # fail on a `critical` finding, or on a stale sidecar
+bun run kg:audit:strict   # ...and on `major` too
+```
+
+**A sidecar rather than a console report, for one reason:** `check-workflow-refs`
+prints and exits, so its previous answer is gone — which makes "this lane has been
+unbound since it was drawn" and "this lane broke in the commit under review"
+indistinguishable. A reviewer who cannot separate a new defect from inherited debt
+will not act on either.
+
+`critical` is a broken reference; `major` is a missing join; `minor` is coverage,
+which has legitimate instances (a human sign-off step has no skill to name) and so
+must not gate — forcing a fake ref onto a real step is worse than the gap.
+**`unknown` is never written as a pass**, and it is not promoted either: it counts
+at its own criterion's severity, so a diagram that will not load still fails on its
+`critical` rows while an unevaluable `minor` does not gate the build.
+
+**What it found, and none of it was noise.** First run: 60 distinct lane names
+for roughly two dozen positions, bound to nothing; 42 activities naming no skill;
+6 skills nothing reaches; 13 actor entries carrying `inherits` — a role lattice
+wearing an actor's name; and `role-has-actor` `unknown` for all 28 roles, because
+no actor entry said which roles it could take on.
+
+**After fixing what it found:** every lane bound, the registry rewritten to carry
+`roles[]`, six missing participants added (the end user, a stakeholder, the
+onboarding / ingestion / evidence agents, the CI pipeline), and the four lanes
+that are *acted upon* rather than performed — the work plan, the corpus, the
+publish target, the external registries — marked `actedUpon` so their
+`role-has-actor` is `n/a` rather than a failure nobody can act on. **Zero
+`unknown` rows.** What remains is 42 activities naming no skill and 6 unreachable
+skills, both `minor`, both real.
+
+**What counts as a skill is one answer, in `scripts/known-skills.ts`,** shared by
+`kg-audit` and `check-workflow-refs` so they cannot disagree. `.claude/skills/` is
+**not uniformly skills** — `actors/`, `capabilities/` (`docker`, `pandoc`,
+`python3`), `roles/` and `hooks/` are other node kinds, and reading them as skills
+put 46 non-skills in the set, so `<folio:skill ref="viewer"/>` would have resolved.
+
 ## Subagents with persistent memory (`.claude/agents/`)
 
 Three subagents are defined under [`.claude/agents/`](.claude/agents/), each
@@ -575,7 +680,7 @@ the full six-phase process is in
 [`skills/folio-core/crdm-requirements-workflow.md`](skills/folio-core/crdm-requirements-workflow.md).
 
 **The CRDM process is executable — do not hand-roll a phase tracker.**
-`docs/workflows/crdm-requirements.bpmn` loads like every other diagram here,
+`skills/workflows/crdm-requirements.bpmn` loads like every other diagram here,
 so `workflow_start` / `workflow_next` / `workflow_complete` run it, and
 `workflow_complete` refuses a step that is not enabled. Every activity in the
 agent's lane carries `<folio:skill ref>`, so `workflow_next` returns the skill
@@ -898,7 +1003,7 @@ Full protocol, with the worked example:
   LeanDojo) — where each earns a place and how it wires into existing skills:
   `docs/proposals/llm-authoring-tool-integration.md`.
 - **Every process in this repo is BPMN** — six `.bpmn` files under
-  `docs/workflows/`, indexed by `docs/publication-workflow.md`. Read that page
+  `skills/workflows/`, indexed by `docs/publication-workflow.md`. Read that page
   before changing how a proposed edit is validated, who approves what, or where
   beans are claimed: it is the normative picture of the HCI validation gate
   (mechanical + non-mechanical), the draft-review-publish path, and the work-plan
@@ -912,13 +1017,13 @@ Full protocol, with the worked example:
   `<folio:bean store="beans/"/>` where it touches the work plan — add both when
   you add an activity.
   **Adding a diagram:** if it has actors, activities and a control flow, it is a
-  process — author it as BPMN under `docs/workflows/`, not as a Mermaid fence.
+  process — author it as BPMN under `skills/workflows/`, not as a Mermaid fence.
   Mermaid stays for the things that are *not* processes (component maps, the
   role-inheritance lattice, the docs navigation graph); the audit of which is
   which is in `docs/publication-workflow.md`.
 - **The diagrams are executable** — `workflow_list` / `workflow_start` /
   `workflow_next` / `workflow_complete` (MCP) run a process from
-  `docs/workflows/*.bpmn`. `workflow_next` tells you what is enabled **now**,
+  `skills/workflows/*.bpmn`. `workflow_next` tells you what is enabled **now**,
   which lane owns it and which skill implements it; `workflow_complete` refuses
   a step that is not enabled, so work cannot be claimed out of order. State is
   committed under `beans/workflows/`, like beans, so a sibling session sees it.
@@ -941,7 +1046,7 @@ Full protocol, with the worked example:
   as a manifest but will not import is refused rather than waved through.
   `.qa.json` is excluded (the sweep writes it). Use `--warn` to adopt gradually.
   **Some gateways are computed, not chosen.** One carrying `<folio:decision/>`
-  is backed by a DMN table in `docs/workflows/decisions/`: pass `facts` (e.g.
+  is backed by a DMN table in `skills/workflows/decisions/`: pass `facts` (e.g.
   `{ failCritical: 0, failMajor: 2 }` from `qa_sweep` totals) and the table
   returns the branch. `workflow_complete` refuses a hand-supplied `outcome`
   there — asserting the answer would defeat the point. Adding one means adding

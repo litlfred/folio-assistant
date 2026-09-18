@@ -14,11 +14,11 @@ import { join } from "node:path";
 import { extractBpmn, injectBpmn, decodeLabel } from "../../content/pipeline/bpmn-translate.ts";
 
 const ROOT = join(import.meta.dir, "../..");
-const XML = readFileSync(join(ROOT, "docs/workflows/crdm-requirements.bpmn"), "utf-8");
+const XML = readFileSync(join(ROOT, "skills/workflows/crdm-requirements.bpmn"), "utf-8");
 
 describe("extractBpmn", () => {
   test("finds the labels a reader sees", () => {
-    const entries = extractBpmn(XML, "docs/workflows/crdm-requirements.bpmn");
+    const entries = extractBpmn(XML, "skills/workflows/crdm-requirements.bpmn");
     const msgids = entries.map((e) => e.msgid);
     expect(msgids).toContain("BA / Feature Requestor");
     expect(msgids).toContain("Detect feature request (crdm-detect skill)");

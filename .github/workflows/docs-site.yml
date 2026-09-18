@@ -21,6 +21,12 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
+      # The BPMN/DMN sources moved OUT of docs/ into the `kg` graph, where the
+      # roles and skills they reference live. The SVGs the site embeds are
+      # still rendered from them at deploy time, so without this path a diagram
+      # edit would not rebuild the site and the published page would serve a
+      # stale render — exactly the "move the wiring with the script" failure.
+      - 'skills/workflows/**'
       - 'schemas/**'
       - 'scripts/gen-schema-docs.ts'
       - 'scripts/gen-docs-pages.ts'
@@ -63,7 +69,7 @@ jobs:
       - name: Regenerate content-backed docs pages
         run: bun run scripts/gen-docs-pages.ts
 
-      # The BPMN sources under docs/workflows/ are the source of truth; the SVGs
+      # The BPMN sources under skills/workflows/ are the source of truth; the SVGs
       # the workflow pages embed are rendered from them with bpmn-js in headless
       # Chromium, so the published site can never show a stale diagram.
       - name: Render BPMN workflow diagrams

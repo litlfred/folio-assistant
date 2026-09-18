@@ -1,0 +1,15 @@
+{
+  "id": "evidence-agent",
+  "name": "Evidence agent",
+  "type": "system",
+  "description": "Retrieves and appraises external evidence for a guideline claim, against trusted registries it does not control.",
+  "roles": [
+    "evidence-agent"
+  ],
+  "capabilities": [
+    "content-authoring"
+  ],
+  "meta": {
+    "workflow": "skills/workflows/evidence-retrieval.bpmn#Lane_Agent"
+  }
+}

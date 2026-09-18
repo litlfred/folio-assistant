@@ -30,4 +30,4 @@ transcription of the source, and the two have very different standing.
 Each image in `manifest.jsonld` has a description per configured language, each
 stamped with its author, and the PDF-extraction path produces them too.
 
-Diagram: `docs/workflows/ingest-derive-content.bpmn`, `Task_Image`.
+Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Image`.
