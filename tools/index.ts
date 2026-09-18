@@ -23,6 +23,7 @@ import { fileURLToPath } from "node:url";
 
 import { defineTool, type ToolDefinition } from "../schemas/tool.js";
 import { toolTypeIri } from "../schemas/tool-types.js";
+import { mcpTools } from "./mcp.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -137,5 +138,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       satisfies: ["kg-export"],
       requires: { network: true },
     }),
+
+    // The twenty tools this instance already serves over MCP. Kept in a sibling
+    // module because they are a MIGRATION of an existing surface rather than
+    // hand-authored nodes: they are regenerable from `bun run mcp:capture`, and
+    // mixing them in here would blur which of the two a reader is looking at.
+    ...mcpTools(t),
   ];
 }

@@ -86,11 +86,44 @@ export const ToolInputSchema = ToolPortSchema.extend({
   /** Whether a caller must supply it. Explicit, never inferred from a default. */
   required: z.boolean(),
   /**
+   * The input is a **list** of the named type rather than one value.
+   *
+   * ## Why cardinality is a flag and not a type
+   *
+   * Three of the tools this instance serves take lists — `folio_init.authors`,
+   * `stakeholder_map.paths`, `readme_sync.only` — so without this the migration
+   * could not describe the surface it was migrating. The alternative was an
+   * `ArrayOfRepoPath` beside `RepoPath` in the shared vocabulary, which
+   * multiplies the `$defs` by the number of types and, worse, breaks the
+   * identity property `tool-types` exists for: two tools taking "a list of repo
+   * paths" would have to agree on a *second* name as well as the element one.
+   *
+   * ## What it means for injection safety
+   *
+   * Nothing changes, and that is the point. Each element is parsed by the
+   * element schema, so a list of an injection-safe type cannot contain an
+   * element that is a payload — the element type already made that
+   * unrepresentable. `scripts/check-tools.ts` therefore asks the same question
+   * of a repeated input as of a scalar one, and needs no new case.
+   *
+   * ## How it projects
+   *
+   * A repeated `flag` emits the flag once per element (`--author A --author B`),
+   * never one comma-joined word: joining would invent a separator the tool never
+   * agreed to and would make a value containing that separator ambiguous. A
+   * repeated `positional` emits the elements as trailing words, so at most one
+   * repeated positional can appear and it must be last.
+   */
+  repeated: z.boolean().optional(),
+  /**
    * Where this input goes when the tool is invoked. Absent means the input is
    * part of the contract but not passed on the command line — a Tool invoked
-   * `manual`ly has no command line at all.
+   * `manual`ly or `inProcess` has no command line at all.
    */
   arg: ToolArgSchema.optional(),
+}).refine((i) => !(i.repeated === true && i.arg !== undefined && "stdin" in i.arg), {
+  message: "a repeated input cannot be passed on stdin — stdin is one stream, not a list",
+  path: ["repeated"],
 });
 
 /**
@@ -116,6 +149,34 @@ export const ToolInvokeSchema = z.object({
   shell: z.string().optional(),
   container: z.string().optional(),
   mcp: z.object({ tool: z.string().min(1) }).optional(),
+  /**
+   * A function in **this instance's own code**.
+   *
+   * Added because 17 of the 20 tools this repository already serves have no
+   * shell equivalent — they are TypeScript registered on the MCP server, and
+   * without this arm they cannot be expressed as Tool nodes at all.
+   *
+   * ## Why the mcp-only refusal does not apply
+   *
+   * That refinement exists because a Tool reachable only over MCP is not
+   * runnable by the harness and projecting it would emit a server that proxies
+   * itself. An in-process function is the opposite case on both counts: the
+   * harness can call it directly with no server at all, and it is the
+   * projection **source** rather than something to proxy. `src/server.ts`
+   * already does exactly this projection by hand.
+   *
+   * `module` locates the code; it is NOT a unique key, because one module
+   * registers several tools (`workflow.ts` registers five). The Tool's `id` is
+   * the key, and it is the MCP name the module registers.
+   */
+  inProcess: z
+    .object({
+      /** Repo-relative path to the module, e.g. `src/tools/workflow.ts`. */
+      module: z.string().min(1),
+      /** The registrar export, when the module has more than one. */
+      register: z.string().min(1).optional(),
+    })
+    .optional(),
   /**
    * The tool is performed by a person following the skill, with no command.
    * `beans-manual` is the case: editing a bean's front matter by hand is a real
@@ -146,13 +207,21 @@ export const ToolDefinitionSchema = z
     satisfies: z.array(z.string().min(1)).min(1, "a Tool must satisfy at least one skill"),
     requires: ToolRequiresSchema.optional(),
   })
-  .refine((t) => t.invoke.shell !== undefined || t.invoke.container !== undefined || t.invoke.manual === true, {
-    message:
-      "invoke needs an arm the harness can run (shell, container or manual). " +
-      "A Tool reachable only over MCP is not usable by the harness that defines it, " +
-      "and projecting it would emit a server that proxies itself.",
-    path: ["invoke"],
-  });
+  .refine(
+    (t) =>
+      t.invoke.shell !== undefined ||
+      t.invoke.container !== undefined ||
+      t.invoke.inProcess !== undefined ||
+      t.invoke.manual === true,
+    {
+      message:
+        "invoke needs an arm the harness can run (shell, container, inProcess or manual). " +
+        "A Tool reachable only over MCP is not usable by the harness that defines it, " +
+        "and projecting it would emit a server that proxies itself. An inProcess function " +
+        "is not that case: the harness calls it directly, and it is the projection source.",
+      path: ["invoke"],
+    },
+  );
 
 export type ToolDefinition = z.infer<typeof ToolDefinitionSchema>;
 export type ToolInput = z.infer<typeof ToolInputSchema>;

@@ -151,21 +151,57 @@ not fine for the only statement of what to do to be `gh pr create`.
    here: the Tool worked, the Tool is absent and here is the fallback, and *we
    could not tell* — which is never rendered as success.
 
-## Where this stands — the schema is real, the migration is not
+## Where this stands — the schema is real, the migration is half done
 
-**`schemas/tool.ts` exists**, `tools/` holds four nodes (`beans-cli`,
-`beans-manual`, `github`, `pages-publish`), and `bun run check:tools` fails when
-a `satisfies` names a skill that does not exist. So a Tool is now something you
-can reach for rather than a shape described in prose.
+**`schemas/tool.ts` exists**, `tools/` holds **24** nodes, and
+`bun run check:tools` fails when a `satisfies` names a skill that does not exist.
+So a Tool is something you can reach for rather than a shape described in prose.
 
-**The skills still carry their invocations inline.** Measured when the Tools
-landed: 4 Tools cover **11 of 138** skills. That number is the migration debt
-made visible, and most of the remainder is fine — a great many skills are pure
-judgement (`interaction-modality`, `one-voice-style-guide`) and have no
-mechanism to name. `check:tools` reports the count rather than failing on it,
-for exactly that reason. What it cannot tell you, and what needs a human eye, is
-which of the uncovered skills *describe an action* — those are the ones whose
-mechanism is still swallowed.
+Four of the 24 were authored by hand (`beans-cli`, `beans-manual`, `github`,
+`pages-publish`). The other twenty are the **migration of this instance's
+existing MCP surface** into `tools/mcp.ts` — every `server.tool()` registration
+the server serves, now with a declared contract and a declared set of skills it
+satisfies.
+
+### How that migration was done, because the method matters more than the result
+
+**The contracts were read from the registrars, not from the source text.**
+`bun run mcp:capture` mounts each `register*` export against a capture object
+and reads the real Zod shapes. The first attempt regex-scanned
+`server.tool("name", "description", {shape}, handler)` and produced parameter
+names lifted out of the *description prose* — `skill_fetch` appeared to take
+`Examples`, `Local` and `Reference`, and `paper_preferences` an `Action`.
+Authoring `io` from that would have shipped a contract agreeing with nothing,
+which is worse than no contract because the next check trusts it.
+
+A test compares the two sides on every run: every served tool has a node, every
+node's ports are served, and the required/optional split agrees. That is what
+keeps the migration true rather than true-on-the-day.
+
+### Two things the vocabulary could not express, and what was added
+
+**Cardinality.** `folio_init.authors`, `stakeholder_map.paths` and
+`readme_sync.only` are lists, so `ToolInput.repeated` was added rather than
+minting an `ArrayOfRepoPath` beside every scalar type — which would have
+multiplied the `$defs` and broken the identity property the shared vocabulary
+exists for.
+
+**In-process invocation.** Seventeen of the twenty have no shell equivalent at
+all; they are TypeScript functions. `invoke.inProcess` names the module.
+The existing refusal of an mcp-only Tool still stands and does not reach this
+case: an in-process function is runnable by the harness directly, and it is the
+projection *source* rather than something to proxy.
+
+### The remaining debt
+
+**Many skills still carry their invocations inline.** Measured after the
+migration: 24 Tools cover **26 of 141** skills, up from 11. Most of the
+remainder is fine — a great many skills are pure judgement
+(`interaction-modality`, `one-voice-style-guide`) and have no mechanism to name.
+`check:tools` reports the count rather than failing on it, for exactly that
+reason. What it cannot tell you, and what needs a human eye, is which of the
+uncovered skills *describe an action* — those are the ones whose mechanism is
+still swallowed.
 
 ### Which uncovered skills actually need one — `bun run tools:coverage`
 
