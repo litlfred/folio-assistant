@@ -3,10 +3,10 @@
  * The harness's two stores are declared in two files. This is what keeps them
  * from disagreeing.
  *
- * `folio.config.json`'s `harness` block is where a folio STATES where its work
+ * `harness.config.json`'s `harness` block is where a folio STATES where its work
  * plan and workflow state live. `.beans.yml` is what the `beans` binary
  * actually READS — it is a third-party tool and does not know
- * `folio.config.json` exists. So the same path is written twice by necessity,
+ * `harness.config.json` exists. So the same path is written twice by necessity,
  * and two configs that can drift is precisely the defect this repository has
  * paid for repeatedly.
  *
@@ -24,7 +24,7 @@
  *
  * ## Third state
  *
- * A folio with no `folio.config.json`, or with no `harness` block, is **not** a
+ * A folio with no `harness.config.json`, or with no `harness` block, is **not** a
  * failure: the schema defaults are the answer, and a folio that has not opted in
  * is reported as `not configured` rather than as wrong. Exit 2 is "could not
  * check" and is never rendered as a pass — same rule as `check-ci-health.ts`.
@@ -39,14 +39,15 @@
  */
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, resolve, basename } from "node:path";
 
 import { WORKFLOW_DIR } from "../src/workflow/store.js";
+import { resolveHarnessConfigPath } from "../schemas/harness-config.js";
 
 export interface HarnessDirsReport {
-  /** `harness` block present in folio.config.json. */
+  /** `harness` block present in harness.config.json. */
   configured: boolean;
-  /** From folio.config.json, or the schema default when absent. */
+  /** From harness.config.json, or the schema default when absent. */
   declaredWorkPlan: string;
   declaredWorkflowState: string;
   /** From `.beans.yml`, which is what the CLI reads. `undefined` if absent. */
@@ -83,8 +84,9 @@ export function checkHarnessDirs(root: string): HarnessDirsReport {
   let declaredWorkPlan = "beans";
   let declaredWorkflowState = "beans/workflow";
 
-  const cfgPath = join(root, "folio.config.json");
-  if (existsSync(cfgPath)) {
+  const found = resolveHarnessConfigPath(root);
+  if (found) {
+    const cfgPath = found.path;
     try {
       const cfg = JSON.parse(readFileSync(cfgPath, "utf-8")) as {
         harness?: { workPlan?: string; workflowState?: string };
@@ -94,13 +96,13 @@ export function checkHarnessDirs(root: string): HarnessDirsReport {
         declaredWorkPlan = cfg.harness.workPlan ?? declaredWorkPlan;
         declaredWorkflowState = cfg.harness.workflowState ?? declaredWorkflowState;
       } else {
-        notes.push("folio.config.json has no `harness` block — using schema defaults.");
+        notes.push("harness.config.json has no `harness` block — using schema defaults.");
       }
     } catch (e) {
-      problems.push(`folio.config.json will not parse: ${e instanceof Error ? e.message : e}`);
+      problems.push(`${basename(cfgPath)} will not parse: ${e instanceof Error ? e.message : e}`);
     }
   } else {
-    notes.push("No folio.config.json (this is the platform, not a folio) — using schema defaults.");
+    notes.push("No harness.config.json (this is the platform, not a folio) — using schema defaults.");
   }
 
   const ymlPath = beansYmlPath(root);
@@ -108,7 +110,7 @@ export function checkHarnessDirs(root: string): HarnessDirsReport {
     notes.push("No `.beans.yml`, or no `path:` in it — the CLI's view could not be read.");
   } else if (ymlPath !== declaredWorkPlan) {
     problems.push(
-      `Work-plan path disagrees: folio.config.json says "${declaredWorkPlan}", ` +
+      `Work-plan path disagrees: harness.config.json says "${declaredWorkPlan}", ` +
         `.beans.yml says "${ymlPath}". The CLI follows .beans.yml, so beans would ` +
         `be written to a store nothing else reads.`,
     );
@@ -116,7 +118,7 @@ export function checkHarnessDirs(root: string): HarnessDirsReport {
 
   if (WORKFLOW_DIR !== declaredWorkflowState) {
     problems.push(
-      `Workflow-state path disagrees: folio.config.json says "${declaredWorkflowState}", ` +
+      `Workflow-state path disagrees: harness.config.json says "${declaredWorkflowState}", ` +
         `workflow/store.ts compiled in "${WORKFLOW_DIR}".`,
     );
   }

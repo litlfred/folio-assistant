@@ -150,15 +150,15 @@ fi
 
 # ── Step 5: Sync PDFs to Google Drive (if configured) ────────────
 # Reads target folder from GDRIVE_FOLDER_PATH env var or
-# folio.config.json googleDrive.folderPath field. Unset = no egress.
+# harness.config.json googleDrive.folderPath field. Unset = no egress.
 _gdrive_folder=""
 if [[ -n "${GDRIVE_FOLDER_PATH:-}" ]]; then
   _gdrive_folder="$GDRIVE_FOLDER_PATH"
-elif [[ -f "$REPO_ROOT/folio.config.json" ]] && command -v python3 &>/dev/null; then
+elif [[ -f "$REPO_ROOT/harness.config.json" ]] && command -v python3 &>/dev/null; then
   _gdrive_folder="$(python3 -c "
 import json
 try:
-  cfg=json.load(open('$REPO_ROOT/folio.config.json'))
+  cfg=json.load(open('$REPO_ROOT/harness.config.json'))
   print((cfg.get('googleDrive') or {}).get('folderPath',''))
 except Exception:
   pass
@@ -193,7 +193,7 @@ if [[ -n "${_gdrive_folder:-}" ]] && command -v python3 &>/dev/null; then
     echo "==> Drive MCP not found at $GDRIVE_MCP — skipping Drive sync"
   fi
 else
-  echo "==> Google Drive not configured (set GDRIVE_FOLDER_PATH or folio.config.json googleDrive.folderPath to enable)"
+  echo "==> Google Drive not configured (set GDRIVE_FOLDER_PATH or harness.config.json googleDrive.folderPath to enable)"
 fi
 
 echo "==> Build complete."

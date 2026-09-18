@@ -67,7 +67,7 @@ jobs:
             "folio-assistant-${{ steps.version.outputs.version }}.tgz" \
             --transform 's,^,package/,' \
             src/ ui/ viewer/sw-pyodide-cache.js viewer/register-sw.js \
-            folio.config.example.json package.json tsconfig.json README.md 2>/dev/null || true
+            harness.config.example.json package.json tsconfig.json README.md 2>/dev/null || true
           ls -la *.tgz
 
       - name: Create GitHub Release

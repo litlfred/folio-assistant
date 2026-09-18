@@ -748,7 +748,7 @@ export interface BlockBase {
    * 1. **Block-level:** `translations/<locale>/<block-stem>.po`
    * 2. **Chapter-level:** `translations/<locale>/<chapter-slug>.po`
    * 3. **Folio-level:** `translations/<locale>/global.po`
-   * 4. **Dependency walk:** walk `folio.config.json` dependencies
+   * 4. **Dependency walk:** walk `harness.config.json` dependencies
    *    depth-first, looking for matching PO files in each dependency's
    *    `translations/<locale>/` directory
    *

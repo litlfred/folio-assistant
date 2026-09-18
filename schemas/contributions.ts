@@ -12,7 +12,7 @@
  *
  * ## Shape: load-time registration
  *
- * A dependency names a module in its `folio.config.json`:
+ * A dependency names a module in its `harness.config.json`:
  *
  * ```jsonc
  * { "contributes": "./contributions.ts" }

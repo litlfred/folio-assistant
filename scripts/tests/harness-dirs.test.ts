@@ -5,7 +5,7 @@
  * Three claims are worth a test here, and they are the three that would fail
  * silently:
  *
- *   1. `folio.config.json`, `.beans.yml` and `workflow/store.ts` agree. They are
+ *   1. `harness.config.json`, `.beans.yml` and `workflow/store.ts` agree. They are
  *      three files naming the same two paths, and nothing but a check stops them
  *      drifting — at which point beans go to a store nothing else reads.
  *   2. The fallback writes what the CLI reads. If the layouts diverge, the
@@ -22,6 +22,7 @@ import { join, resolve } from "node:path";
 
 import { WORKFLOW_DIR } from "../../src/workflow/store.js";
 import { beansYmlPath, checkHarnessDirs } from "../check-harness-dirs.js";
+import { readHarnessConfig, resolveHarnessConfigPath } from "../../schemas/harness-config.js";
 import {
   createBean,
   findBean,
@@ -69,7 +70,7 @@ describe("the two stores are visible and agreed upon", () => {
     const root = scratchStore();
     try {
       // The folio declares one path; the CLI is pointed at another.
-      writeFileSync(join(root, "folio.config.json"), JSON.stringify({ harness: { workPlan: "beans" } }));
+      writeFileSync(join(root, "harness.config.json"), JSON.stringify({ harness: { workPlan: "beans" } }));
       writeFileSync(join(root, ".beans.yml"), "beans:\n    path: somewhere-else\n");
       const r = checkHarnessDirs(root);
       expect(r.problems.some((p) => p.includes("Work-plan path disagrees"))).toBe(true);
@@ -82,7 +83,7 @@ describe("the two stores are visible and agreed upon", () => {
     const root = scratchStore();
     try {
       writeFileSync(
-        join(root, "folio.config.json"),
+        join(root, "harness.config.json"),
         JSON.stringify({ harness: { workPlan: ".beans", workflowState: "beans/workflow" } }),
       );
       writeFileSync(join(root, ".beans.yml"), "beans:\n    path: .beans\n");
@@ -206,5 +207,73 @@ describe("the fallback can work the plan, not just read it", () => {
     expect(beans.length).toBeGreaterThan(100);
     expect(beans.every((b) => b.id.startsWith("folio-assistant-"))).toBe(true);
     expect(beans.every((b) => b.title !== "(untitled)")).toBe(true);
+  });
+});
+
+describe("the config rename — harness.config.json, with folio.config.json still read", () => {
+  test("the new name is found", () => {
+    const root = scratchStore();
+    try {
+      writeFileSync(join(root, "harness.config.json"), JSON.stringify({ contentType: "document" }));
+      const found = resolveHarnessConfigPath(root)!;
+      expect(found.legacy).toBe(false);
+      expect(found.path.endsWith("harness.config.json")).toBe(true);
+      expect(readHarnessConfig(root)?.contentType).toBe("document");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the old name still works, and is flagged as legacy", () => {
+    // Every folio in existence has this file. A rename that stranded them
+    // would be a rename nobody could adopt.
+    const root = scratchStore();
+    try {
+      writeFileSync(join(root, "folio.config.json"), JSON.stringify({ contentType: "paper" }));
+      const found = resolveHarnessConfigPath(root)!;
+      expect(found.legacy).toBe(true);
+      expect(readHarnessConfig(root)?.contentType).toBe("paper");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the new name wins when a folio has both, mid-migration", () => {
+    const root = scratchStore();
+    try {
+      writeFileSync(join(root, "folio.config.json"), JSON.stringify({ contentType: "paper" }));
+      writeFileSync(join(root, "harness.config.json"), JSON.stringify({ contentType: "document" }));
+      expect(resolveHarnessConfigPath(root)!.legacy).toBe(false);
+      expect(readHarnessConfig(root)?.contentType).toBe("document");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("neither present is `undefined`, not an error — the platform itself has none", () => {
+    const root = scratchStore();
+    try {
+      expect(resolveHarnessConfigPath(root)).toBeUndefined();
+      expect(readHarnessConfig(root)).toBeNull();
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("check:harness-dirs reads a legacy config rather than ignoring it", () => {
+    // The trap: a folio that has not renamed yet must still have its `harness`
+    // block honoured, or the drift check silently compares against defaults.
+    const root = scratchStore();
+    try {
+      writeFileSync(
+        join(root, "folio.config.json"),
+        JSON.stringify({ harness: { workPlan: "beans", workflowState: "beans/workflow" } }),
+      );
+      const r = checkHarnessDirs(root);
+      expect(r.configured).toBe(true);
+      expect(r.problems).toEqual([]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 });

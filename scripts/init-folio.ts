@@ -8,7 +8,7 @@
  * Standing one up by hand means knowing six conventions that were only ever
  * written down implicitly: where the document manifest lives and that it must
  * be named after its own directory, that block manifests import builders
- * through a `content/schema/` shim, that `folio.config.json` selects the
+ * through a `content/schema/` shim, that `harness.config.json` selects the
  * adapter, that `AGENTS.md` is the agent-generic entry point with `CLAUDE.md`
  * and `GEMINI.md` as stubs, that `beans/` is the work plan, and that the
  * folio-assistant checkout has to be reachable from the shim's relative path.
@@ -518,7 +518,7 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   if (!o.dryRun) mkdirSync(root, { recursive: true });
 
   // 1. Configuration and the platform link.
-  write("folio.config.json", folioConfig(o, assistant));
+  write("harness.config.json", folioConfig(o, assistant));
   write(".mcp.json", mcpJson(assistant));
   write(".claude/settings.json", claudeSettings(assistant));
   write(".gitignore", gitignore(o));
@@ -572,7 +572,7 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
 }
 
 /**
- * Put the platform where `folio.config.json` says it is.
+ * Put the platform where `harness.config.json` says it is.
  *
  * Failure here is a **note, not an error**: every file this scaffolder writes
  * is already correct, and the remedy is one command the caller can run. Dying

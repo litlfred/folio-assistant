@@ -33,7 +33,7 @@ unclassified. Keep that derivation — do not hand-maintain both lists.
 
 `content/pipeline/profile-check.ts` runs on every `content_validate` and
 catches what Zod cannot: a `theorem` is a valid `theorem` whatever folio it
-sits in, and `constraints.ts` cannot read `folio.config.json`.
+sits in, and `constraints.ts` cannot read `harness.config.json`.
 
 Two rules: kind-within-profile, and (document only) **no `lean` field and no
 `.lean` sibling** — because `remark`, `example`, `algorithm` and `simulator`
@@ -75,7 +75,7 @@ Each shipped once:
 2. **Workflow descriptions from a hardcoded map of twelve `qou` filenames**,
    consulted *before* the workflow's own `name:`. Now always the `name:`.
 3. **The simulator directory as the literal `folio-assistant/simulators`.**
-   Now `folio.config.json`.
+   Now `harness.config.json`.
 
 ## TRAP — "could not determine" is a THIRD state, everywhere
 
@@ -118,13 +118,13 @@ without a token, and a browser session cookie does not authenticate it.
 Default is **`blob`** (`github.com/<owner>/<repo>/blob/<ref>/<path>`): follows
 the viewer's GitHub session, works public or private, renders PDFs inline.
 `pages` and `raw` remain available under `readme.linkStyle` in
-`folio.config.json`, and each prints a note under the table saying who can
+`harness.config.json`, and each prints a note under the table saying who can
 follow its links.
 
 ## STABLE — the builder shim, and why `folio_init` is generic
 
 `bun run init-folio` / the `folio_init` MCP tool writes a folio's `content/`,
-`uploads/`, `library/`, manifests, `folio.config.json`, the `content/schema/`
+`uploads/`, `library/`, manifests, `harness.config.json`, the `content/schema/`
 builder shim, `AGENTS.md` + `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the
 session-start hook and the beans store.
 

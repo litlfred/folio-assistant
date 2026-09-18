@@ -88,7 +88,7 @@ describe("what gets written", () => {
     const d = tmp();
     const r = initFolio(opts(d));
     for (const f of [
-      "folio.config.json",
+      "harness.config.json",
       ".mcp.json",
       ".beans.yml",
       "content/schema/builders.ts",
@@ -111,13 +111,13 @@ describe("what gets written", () => {
   test("the config selects the adapter matching the content type", () => {
     const doc = tmp();
     initFolio(opts(doc));
-    const docCfg = JSON.parse(readFileSync(join(doc, "folio.config.json"), "utf-8"));
+    const docCfg = JSON.parse(readFileSync(join(doc, "harness.config.json"), "utf-8"));
     expect(docCfg.contentType).toBe("document");
     expect(docCfg.adapterModule).toContain("adapters/document/index.ts");
 
     const pap = tmp();
     initFolio(opts(pap, { contentType: "paper" }));
-    const papCfg = JSON.parse(readFileSync(join(pap, "folio.config.json"), "utf-8"));
+    const papCfg = JSON.parse(readFileSync(join(pap, "harness.config.json"), "utf-8"));
     expect(papCfg.contentType).toBe("paper");
     expect(papCfg.adapterModule).toContain("adapters/paper/index.ts");
   });
@@ -188,7 +188,7 @@ describe("re-running is safe", () => {
     const d = tmp();
     const r = initFolio(opts(d, { dryRun: true }));
     expect(r.created.length).toBeGreaterThan(10);
-    expect(existsSync(join(d, "folio.config.json"))).toBe(false);
+    expect(existsSync(join(d, "harness.config.json"))).toBe(false);
     expect(existsSync(join(d, "content"))).toBe(false);
   });
 
@@ -203,7 +203,7 @@ describe("the scaffolded folio actually builds", () => {
   test("renders to Markdown with no issues, through its own shim", async () => {
     const d = tmp();
     initFolio(opts(d));
-    // Link the platform where folio.config.json says it is. Everything below
+    // Link the platform where harness.config.json says it is. Everything below
     // then resolves exactly as it would in a real folio.
     symlinkSync(PLATFORM, join(d, "folio-assistant"));
 
@@ -233,7 +233,7 @@ describe("the scaffolded folio actually builds", () => {
     const { checkFolioProfile } = await import("../../content/pipeline/profile-check");
     const r = checkFolioProfile(d);
     expect(r.profile).toBe("document");
-    expect(r.declaredBy).toContain("folio.config.json");
+    expect(r.declaredBy).toContain("harness.config.json");
     expect(r.blocksChecked).toBe(1);
     expect(r.violations).toEqual([]);
   });

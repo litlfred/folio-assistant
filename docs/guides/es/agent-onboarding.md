@@ -157,7 +157,7 @@ realmente puedan afectar.
 registra únicamente cuando el folio opta por él:
 
 ```json
-// folio.config.json
+// harness.config.json
 { "qaAxes": ["q-usage"] }
 ```
 

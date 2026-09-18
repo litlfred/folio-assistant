@@ -57,11 +57,11 @@ if command -v bun &>/dev/null && tex_local; then
   DRIVE_CONFIGURED=false
   if [[ -n "${GDRIVE_FOLDER_PATH:-}" ]]; then
     DRIVE_CONFIGURED=true
-  elif [[ -f "$REPO_ROOT/folio.config.json" ]]; then
+  elif [[ -f "$REPO_ROOT/harness.config.json" ]]; then
     FOLDER="$(python3 -c "
 import json
 try:
-  cfg=json.load(open('$REPO_ROOT/folio.config.json'))
+  cfg=json.load(open('$REPO_ROOT/harness.config.json'))
   print((cfg.get('googleDrive') or {}).get('folderPath',''))
 except Exception:
   pass

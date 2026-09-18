@@ -10,7 +10,7 @@
  * @module folio-assistant/index
  */
 
-import { resolve } from "path";
+import { resolve, join } from "path";
 import { existsSync, readFileSync } from "fs";
 import { FolioServer } from "./server.js";
 import { PaperContentAdapter } from "../adapters/paper/index.js";
@@ -18,6 +18,7 @@ import { DocumentContentAdapter } from "../adapters/document/index.js";
 import { GitHelper } from "./core/git.js";
 import { FeedbackStore } from "./core/feedback.js";
 import { log } from "./core/logging.js";
+import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../schemas/harness-config";
 
 // ── Parse CLI args ───────────────────────────────────────────────
 
@@ -90,8 +91,8 @@ let adapterModule: string | undefined;
 let feedbackDir = resolve(repoRoot, ".folio-feedback");
 let viewerPort: number | undefined;
 
-// folio.config.json (preferred)
-const folioConfigPath = resolve(repoRoot, "folio.config.json");
+// harness.config.json (preferred)
+const folioConfigPath = resolveHarnessConfigPath(repoRoot)?.path ?? join(repoRoot, HARNESS_CONFIG);
 if (existsSync(folioConfigPath)) {
   try {
     const config = JSON.parse(readFileSync(folioConfigPath, "utf-8"));
@@ -99,9 +100,9 @@ if (existsSync(folioConfigPath)) {
     adapterModule = config.adapterModule;
     if (config.feedbackDir) feedbackDir = resolve(repoRoot, config.feedbackDir);
     if (config.viewer?.port) viewerPort = config.viewer.port;
-    log("init", `Loaded folio.config.json: adapter=${adapterType}`);
+    log("init", `Loaded harness.config.json: adapter=${adapterType}`);
   } catch (e) {
-    log("init", `Failed to read folio.config.json: ${e}`);
+    log("init", `Failed to read harness.config.json: ${e}`);
   }
 }
 

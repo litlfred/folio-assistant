@@ -26,6 +26,7 @@ import { join, resolve, dirname } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { Paper } from "../../../schemas/types";
 import { REPO_ROOT, BUILD_DIR, MAIN_TEX, CHAPTERS_DIR } from "../paths.js";
+import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../../schemas/harness-config";
 // Note: paths are resolved from the paper adapter's paths module.
 
 /** Check if a command is available on PATH. */
@@ -66,7 +67,7 @@ export function registerLatexRenderTools(server: McpServer): void {
       upload_drive: z.boolean().default(false)
         .describe("Push the rendered PDF to Google Drive (requires Drive MCP configured)"),
       drive_folder: z.string().optional()
-        .describe("Override Drive destination folder (default: from folio.config.json googleDrive.folderPath)"),
+        .describe("Override Drive destination folder (default: from harness.config.json googleDrive.folderPath)"),
     },
     async ({ scope, target, engine, clean, print_mode, upload_drive, drive_folder }) => {
       // Check deps
@@ -86,10 +87,10 @@ export function registerLatexRenderTools(server: McpServer): void {
       const pushToDrive = (pdfPath: string, subfolder: string): string => {
         const gdriveMcp = join(REPO_ROOT, "src", "google-drive-mcp.py");
         if (!existsSync(gdriveMcp)) return "(Drive MCP not found)";
-        // Read base folder from folio.config.json or env
+        // Read base folder from harness.config.json or env
         let baseFolder = process.env.GDRIVE_FOLDER_PATH ?? "";
         if (!baseFolder) {
-          const cfgPath = join(REPO_ROOT, "folio.config.json");
+          const cfgPath = resolveHarnessConfigPath(REPO_ROOT)?.path ?? join(REPO_ROOT, HARNESS_CONFIG);
           if (existsSync(cfgPath)) {
             try {
               const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));

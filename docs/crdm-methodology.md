@@ -168,7 +168,7 @@ folio-assistant already has the primitives it needs:
 
 | CRDM concept | folio-assistant primitive |
 |---|---|
-| Stakeholder identification | `folio.config.json` roles, GitHub CODEOWNERS |
+| Stakeholder identification | `harness.config.json` roles, GitHub CODEOWNERS |
 | Business process documentation | BPMN workflow diagrams under `docs/workflows/` |
 | Requirements artefact | GitHub issue with structured fields |
 | Work-plan items | `beans` — the single todo mechanism |
@@ -651,9 +651,9 @@ work is done is a judgement.
 
 ### `stakeholder_map` — built, but not from the sources proposed
 
-It was specified here as reading "affected roles from `folio.config.json` and
+It was specified here as reading "affected roles from `harness.config.json` and
 CODEOWNERS". **Neither exists.** This repository has no CODEOWNERS file, and
-`schemas/folio-config.ts` declares no role, owner, maintainer or contact
+`schemas/harness-config.ts` declares no role, owner, maintainer or contact
 field. Built as written, the tool would have reported no stakeholders for
 every change, forever, and looked like it worked.
 
@@ -704,7 +704,7 @@ there, or lets them assume something exists because nobody updated the list.
 - **`stakeholder_map`** — reports which skills a change touches, the roles
   they declare, and the process lanes accountable for work that uses them.
   Built against skills and BPMN lanes rather than the CODEOWNERS and
-  `folio.config.json` fields it was specified from, because neither exists
+  `harness.config.json` fields it was specified from, because neither exists
   here. It does not name people, because the process says the agent does not
   guess.
 - **The process is executable** — `crdm-requirements.bpmn` loads like every

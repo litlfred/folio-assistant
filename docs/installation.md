@@ -81,7 +81,7 @@ Copy the example config into your **content** repository (not into
 folio-assistant) and adjust it for your content type:
 
 ```sh
-cp folio.config.example.json /path/to/your/content-repo/folio.config.json
+cp harness.config.example.json /path/to/your/content-repo/harness.config.json
 ```
 
 ```json

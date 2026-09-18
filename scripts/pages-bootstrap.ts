@@ -45,7 +45,9 @@
 
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
+
+import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../schemas/harness-config.js";
 
 export type Probe = "ok" | "not-found" | "error" | "unchecked";
 export type PagesOutcome = "live" | "not-yet" | "unknown";
@@ -59,7 +61,7 @@ export interface PagesFacts {
 export interface PagesReport extends PagesFacts {
   url?: string;
   /** How the URL was arrived at, so a wrong one can be traced. */
-  urlSource?: "folio.config.json" | "git remote";
+  urlSource?: string;
   owner?: string;
   repo?: string;
   /** Workflow files that look like they publish a site. */
@@ -102,12 +104,13 @@ function gitRemote(root: string): string | undefined {
 }
 
 /**
- * Where the site lives. `folio.config.json` wins when it says, because an
+ * Where the site lives. `harness.config.json` wins when it says, because an
  * author with a custom domain has said something the remote cannot tell us.
  */
 export function derivePagesUrl(root: string): Pick<PagesReport, "url" | "urlSource" | "owner" | "repo"> {
-  const cfgPath = join(root, "folio.config.json");
-  if (existsSync(cfgPath)) {
+  const found = resolveHarnessConfigPath(root);
+  if (found) {
+    const cfgPath = found.path;
     try {
       const cfg = JSON.parse(readFileSync(cfgPath, "utf-8")) as {
         readme?: { pagesBaseUrl?: string };
@@ -115,7 +118,7 @@ export function derivePagesUrl(root: string): Pick<PagesReport, "url" | "urlSour
       };
       const base = cfg.readme?.pagesBaseUrl ?? cfg.pagesBaseUrl;
       if (typeof base === "string" && base.startsWith("http")) {
-        return { url: base.replace(/\/+$/, "") + "/", urlSource: "folio.config.json" };
+        return { url: base.replace(/\/+$/, "") + "/", urlSource: basename(cfgPath) };
       }
     } catch {
       // Unparseable config is not a reason to guess. Fall through to the remote,
@@ -244,7 +247,8 @@ export function formatReport(r: PagesReport): string {
   } else {
     out.push("Site address: COULD NOT DETERMINE");
     out.push(
-      "  No `readme.pagesBaseUrl` in folio.config.json and no parseable `origin` remote.\n" +
+      `  No \`readme.pagesBaseUrl\` in ${HARNESS_CONFIG} and no parseable \`origin\` remote.\n` +
+       +
         "  Not guessed from the directory name — a wrong URL is worse than none, because\n" +
         "  it is what the author will paste to somebody else.",
     );

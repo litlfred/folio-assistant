@@ -35,7 +35,7 @@
  * harness` declares `tools/`, `kg/` and `schemas/`; `folio-assist-core`
  * declares `folio/` and **also scans the three it inherits**, without
  * restating them. This is the same depth-first walk as
- * `schemas/folio-config.ts`, and the same overlay order — deepest dependency
+ * `schemas/harness-config.ts`, and the same overlay order — deepest dependency
  * first, root last, so the root wins.
  *
  * Overriding is by graph **id**, not by path: an instance that wants its

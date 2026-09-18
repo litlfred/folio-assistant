@@ -125,7 +125,7 @@ const SKIP_FILES = new Set([
  * scaffolding it wrote last time.
  */
 const FOLIO_FILES = new Set([
-  "folio.config.json", "agents.md", "claude.md", "gemini.md", ".mcp.json",
+  "harness.config.json", "agents.md", "claude.md", "gemini.md", ".mcp.json",
 ]);
 
 function isSkipped(rel: string): boolean {

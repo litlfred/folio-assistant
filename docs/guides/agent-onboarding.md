@@ -155,7 +155,7 @@ can actually affect.
 registered only when the folio opts in:
 
 ```json
-// folio.config.json
+// harness.config.json
 { "qaAxes": ["q-usage"] }
 ```
 

@@ -44,7 +44,7 @@ means discovering in Phase II that the target shape is unreachable.
 
 **Decision (2026-09-18, maintainer): load-time registration.**
 
-A dependency names a module in its `folio.config.json`:
+A dependency names a module in its `harness.config.json`:
 
 ```jsonc
 { "contributes": "./contributions.ts" }
@@ -52,7 +52,7 @@ A dependency names a module in its `folio.config.json`:
 
 Its default export is called as the root walks the dependency tree, and returns
 the block kinds, adapter and MCP tools it adds. `schemas/contributions.ts` holds
-the registry; `loadContributions()` in `schemas/folio-config.ts` walks and loads.
+the registry; `loadContributions()` in `schemas/harness-config.ts` walks and loads.
 
 **Gate met.** A synthetic two-repo fixture in which the dependency contributes
 one block kind, one adapter and one MCP tool, and the root resolves all three —
@@ -103,7 +103,7 @@ the same reason, so the MCP SDK type never reaches the content model.
 #### Still open under 0.1
 
 `resolveSkillDirs` still has no caller, and there is no content-directory
-resolver at all. The docstring table in `schemas/folio-config.ts` has been
+resolver at all. The docstring table in `schemas/harness-config.ts` has been
 corrected to say so rather than claiming both work. Wiring them is finishing
 work, not a design question, and does not block Phase I.
 
@@ -147,7 +147,7 @@ section per node in the folio instance.
 
 The rename is mechanical and wide — **2,408 literal `content/` occurrences
 across 429 files**. The schema is not mechanical and is the part that matters:
-today `folio.config.json` has a single `contentType` and a single adapter, so
+today `harness.config.json` has a single `contentType` and a single adapter, so
 "a folio" and "a content instance" are the same object. Making a folio a
 container of zero-or-more instances is a model change that touches
 `adapterForKind`, the profile check, the render path and the viewer.
@@ -159,7 +159,7 @@ model; a settled model does not land cleanly on a corpus mid-rename.
 
 Everything here happens **inside** `litlfred/folio-assistant`. Nothing is
 extracted. The output is a repo whose directory structure is the future state,
-so Phase II can be `git filter-repo` plus a `folio.config.json` rather than
+so Phase II can be `git filter-repo` plus a `harness.config.json` rather than
 archaeology.
 
 | # | work | gate |

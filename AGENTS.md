@@ -42,7 +42,7 @@ are thin stubs pointing here.
 > [`skills/folio-core/directory-conventions.md`](skills/folio-core/directory-conventions.md).
 >
 > **Known gap, so you are not surprised:** `resolveSkillDirs` in
-> `schemas/folio-config.ts` computes the cross-instance skill overlay and has
+> `schemas/harness-config.ts` computes the cross-instance skill overlay and has
 > **no caller** — so today skill discovery is root-only in practice, and a
 > dependency's skills are not yet reachable. Wiring it is outstanding Phase 0.1
 > work.
@@ -93,7 +93,7 @@ only rules, it is a profile plus a subclass, not an adapter.
 Enforcement is `content/pipeline/profile-check.ts`, run on every
 `content_validate`. It catches what schema validation structurally cannot: a
 `theorem` is a valid `theorem` whatever folio it sits in, and `constraints.ts`
-cannot read `folio.config.json`. Two rules — kind within profile, and (document
+cannot read `harness.config.json`. Two rules — kind within profile, and (document
 only) no `lean` field and no `.lean` sibling, because `remark`, `example`,
 `algorithm` and `simulator` all *declare* an optional `lean` that the type
 permits and the profile forbids.
@@ -119,7 +119,7 @@ folio, where `definition`'s `lean` field is required.
 
 `bun run init-folio --help`, or the `folio_init` MCP tool. It writes `content/`,
 `uploads/`, `library/`, the document + chapter + first block manifests,
-`folio.config.json`, the `content/schema/` builder shim, `AGENTS.md` with
+`harness.config.json`, the `content/schema/` builder shim, `AGENTS.md` with
 `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the session-start hook and the beans
 store — and links the platform as a submodule or a sibling checkout.
 
@@ -160,8 +160,8 @@ They were `.beans/` and `.folio/workflow/`. A dot-prefixed directory is absent
 from a plain `ls`, from most file browsers and from GitHub's web tree, so the two
 artefacts a person looks for first were the two hardest to find. Moved 2026-09-18.
 
-Both are **declared** in `folio.config.json` under `harness`
-(`HarnessDirsSchema` in `schemas/folio-config.ts`) rather than assumed. The
+Both are **declared** in `harness.config.json` under `harness`
+(`HarnessDirsSchema` in `schemas/harness-config.ts`) rather than assumed. The
 `beans` binary is third-party and does not read that file — it reads
 `.beans.yml` — so the same path is necessarily written twice, and
 `bun run check:harness-dirs` fails when the declaration, `.beans.yml` and
@@ -273,7 +273,7 @@ namespace is worse than none, because it is what a reader pastes into an
 `import`); workflow descriptions came from a hardcoded map of twelve `qou`
 filenames consulted *before* the workflow's own `name:` (now always the
 `name:`); and the simulator directory was the literal
-`folio-assistant/simulators` (now `folio.config.json`).
+`folio-assistant/simulators` (now `harness.config.json`).
 
 **"Could not determine" is a third state, everywhere.** A section returns
 `skip` and the region is left exactly as it was. That is not decoration: qou
@@ -312,7 +312,7 @@ without a token, and a browser session cookie does not authenticate it. The
 default is `blob` — `github.com/<owner>/<repo>/blob/<ref>/<path>` — which
 follows the viewer's GitHub session, works whether the repo is public or
 private, and renders PDFs inline. `pages` and `raw` remain available in
-`folio.config.json` under `readme.linkStyle`, and each prints a note under
+`harness.config.json` under `readme.linkStyle`, and each prints a note under
 the table saying who can follow its links.
 
 **Adding a section** is one entry in `SECTIONS`: a marker, a one-line summary

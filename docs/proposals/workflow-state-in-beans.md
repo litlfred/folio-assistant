@@ -42,7 +42,7 @@ really about two stores. It was about two **hidden** stores. Putting them side
 by side under one visible directory answers that without giving machine state to
 a human-editable file.
 
-Both paths are now declared in `folio.config.json` under `harness`
+Both paths are now declared in `harness.config.json` under `harness`
 (`HarnessDirsSchema`), and `bun run check:harness-dirs` fails if that
 declaration, `.beans.yml` and `workflow/store.ts` ever disagree.
 

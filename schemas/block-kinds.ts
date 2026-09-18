@@ -75,7 +75,7 @@ export const BLOCK_KIND_ALT = BLOCK_KINDS.join("|");
 /**
  * The content adapters a folio can hold.
  *
- * `folio.config.json` already carries `contentType` and `adapter`, and the
+ * `harness.config.json` already carries `contentType` and `adapter`, and the
  * platform ships `adapters/paper/`. This names the dimension so that block
  * kinds and QA criteria can be scoped to it instead of living in one global
  * pool.
@@ -224,7 +224,7 @@ export function kindsOutsideProfile(
 }
 
 /**
- * The profile a folio declares, from its `folio.config.json` `contentType`.
+ * The profile a folio declares, from its `harness.config.json` `contentType`.
  *
  * `paper` is the fallback for an unrecognised or absent value, which is the
  * safe direction here and only here: the paper profile is the *wider* set, so

@@ -1,4 +1,4 @@
-`folio.config.json`'s `contentType` is the switch.
+`harness.config.json`'s `contentType` is the switch.
 
 **document → paper** is a one-line change. You are adding toolchains, not
 removing content.

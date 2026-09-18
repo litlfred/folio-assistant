@@ -48,6 +48,7 @@ import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 
 import { findPapers } from "./repo-root";
+import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
 
 // ── Configuration ───────────────────────────────────────────────────────────
 
@@ -104,14 +105,14 @@ const DEFAULT_CONFIG: ReadmeTocConfig = {
 };
 
 /**
- * Read the `readme` block of `folio.config.json`, over the defaults.
+ * Read the `readme` block of `harness.config.json`, over the defaults.
  *
  * Absent config is not an error: a folio that has never thought about this
  * gets `blob` links against `gh-pages`, which is the option that works
  * whether or not the repository is public.
  */
 export function loadReadmeConfig(root: string): ReadmeTocConfig {
-  const configPath = join(root, "folio.config.json");
+  const configPath = resolveHarnessConfigPath(root)?.path ?? join(root, HARNESS_CONFIG);
   let fromFile: Partial<ReadmeTocConfig> = {};
   if (existsSync(configPath)) {
     try {
@@ -120,7 +121,7 @@ export function loadReadmeConfig(root: string): ReadmeTocConfig {
       };
       fromFile = parsed.readme ?? {};
     } catch {
-      // A folio.config.json that will not parse is reported by the tools that
+      // A harness.config.json that will not parse is reported by the tools that
       // own it; the TOC falling back to defaults is better than refusing.
     }
   }
@@ -409,14 +410,14 @@ function accessNote(cfg: ReadmeTocConfig, published: Set<string> | undefined): s
       return (
         `> PDF links point at the GitHub Pages site, which resolves **only while Pages is ` +
         `public**. For a private folio set \`readme.linkStyle\` to \`blob\` in ` +
-        `\`folio.config.json\`. A chapter with no published PDF shows \`—\`.\n`
+        `\`harness.config.json\`. A chapter with no published PDF shows \`—\`.\n`
       );
     case "raw":
       return (
         `> PDF links point at \`raw.githubusercontent.com\`, which serves **public ` +
         `repositories only** — it returns 404 for a private repo unless the request carries a ` +
         `token, and a browser session does not supply one. For a private folio set ` +
-        `\`readme.linkStyle\` to \`blob\` in \`folio.config.json\`.\n`
+        `\`readme.linkStyle\` to \`blob\` in \`harness.config.json\`.\n`
       );
   }
 }

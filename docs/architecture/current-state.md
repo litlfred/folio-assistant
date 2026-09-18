@@ -165,7 +165,7 @@ as a number that will sit still.
 
 This is the most important finding on the page, and it cuts both ways.
 
-`folio.config.json` already declares cross-instance dependencies:
+`harness.config.json` already declares cross-instance dependencies:
 
 ```jsonc
 "dependencies": {
@@ -176,10 +176,10 @@ This is the most important finding on the page, and it cuts both ways.
 }
 ```
 
-`schemas/folio-config.ts` implements a **depth-first, listed-order, later-
+`schemas/harness-config.ts` implements a **depth-first, listed-order, later-
 overlays-earlier** resolution with cycle detection — explicitly the FHIR/SUSHI
 dependency methodology, applied upstream of it. `resolveDependencyTree`
-(`schemas/folio-config.ts:239`) and `flattenDependencies` are real, tested code.
+(`schemas/harness-config.ts:239`) and `flattenDependencies` are real, tested code.
 
 **That is exactly the mechanism a five-repo future state needs.** The split does
 not require inventing composition; it requires finishing it.
@@ -189,7 +189,7 @@ not require inventing composition; it requires finishing it.
 ```sh
 for f in resolveSkillDirs resolveTranslationDirs resolveContentDirs; do
   echo "$f: $(grep -rn "$f" --include='*.ts' . --exclude-dir=node_modules \
-    | grep -v 'schemas/folio-config' | wc -l) external refs"
+    | grep -v 'schemas/harness-config' | wc -l) external refs"
 done
 ```
 
