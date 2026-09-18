@@ -70,6 +70,26 @@ for the duration of a lane.
 > fill the corpus" is a finding nobody can act on, and a check that produces
 > those is a check somebody switches off.
 
+> **Some roles perform, but by judgement.** `stakeholder` carries
+> `judgementOnly: true`: somebody really does sign off, deliberates and is
+> accountable — they simply cannot be handed a procedure that produces the
+> answer. That is a different thing from `actedUpon`, where nobody acts at all,
+> and the two must not be merged: marking the stakeholder `actedUpon` would say
+> no one signs off, which is false and would take the lane out of every
+> actor-coverage question it belongs in.
+>
+> The flag exists because prose did not hold. The role's own summary has said
+> "carries no skills deliberately: sign-off is a judgement, not a procedure, and
+> a skill here would suggest an agent could supply it" since the graph was
+> written — and a later pass, reading four `activity-names-skill` findings on
+> that lane, came within one commit of resolving them by giving the role a
+> skill. A decision recorded only in a summary is a decision the next agent
+> re-litigates.
+>
+> Effect: `activity-names-skill` records **n/a** for activities in the lane,
+> which is what lets that criterion gate on the undeclared ones instead of
+> staying advisory for ever.
+
 ## An actor has three lists, and they answer three different questions
 
 ```jsonc

@@ -556,8 +556,31 @@ onboarding / ingestion / evidence agents, the CI pipeline), and the four lanes
 that are *acted upon* rather than performed — the work plan, the corpus, the
 publish target, the external registries — marked `actedUpon` so their
 `role-has-actor` is `n/a` rather than a failure nobody can act on. **Zero
-`unknown` rows.** What remains is 42 activities naming no skill and 6 unreachable
-skills, both `minor`, both real.
+`unknown` rows.** The 42 activities naming no skill are now **zero**, and the
+criterion is `major` rather than `minor` — see below. 6 unreachable skills
+remain, `minor` and real.
+
+**`activity-names-skill` could not gate until its exemptions became
+declarations.** A stakeholder's sign-off, a corpus being written into, and a
+skill nobody has written all read as "names no skill", so failing on the count
+would have forced a fake `<folio:skill ref>` onto a real step — worse than the
+gap. Three declarations separate them, and each is READ rather than inferred:
+a lane whose role is **`actedUpon`** (written to, never acts), a lane whose role
+is **`judgementOnly`** (acts, but no procedure yields the answer — the
+stakeholder), and **`<folio:no-skill reason="…"/>`** on the activity itself.
+The reason is required at LOAD time, so a reasonless exemption makes the diagram
+record `unknown` instead of quietly passing: silencing the criterion must cost
+more than satisfying it.
+
+`judgementOnly` exists because prose was not enough. `stakeholder`'s summary had
+said "carries no skills deliberately: sign-off is a judgement, not a procedure"
+since the graph was written, and a later pass still came within one commit of
+"fixing" its four findings by giving the role a skill. The flag is that sentence
+made machine-readable.
+
+Enforced by `scripts/tests/activity-skill-coverage.test.ts` rather than by
+switching CI to `kg:audit:strict`, which would promote every `major` criterion
+at once — a far larger commitment than the change that earned it.
 
 **What counts as a skill is one answer, in `scripts/known-skills.ts`,** shared by
 `kg-audit` and `check-workflow-refs` so they cannot disagree. `.claude/skills/` is

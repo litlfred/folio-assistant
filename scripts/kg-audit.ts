@@ -170,6 +170,27 @@ async function auditProcess(
   const skillNotCarried: KgFinding[] = [];
   const unresolvedCall: KgFinding[] = [];
   const calls = activities.filter((n) => n.calledElement !== undefined);
+
+  // Lane ids whose role is declared `actedUpon` — a store or an external
+  // system that is written to rather than a participant that acts.
+  const actedUponLanes = new Set(
+    graph
+      ? m.lanes.filter((l) => roleForLane(graph, l.name, l.roleRef)?.actedUpon === true).map((l) => l.id)
+      : [],
+  );
+  const actedUponNode = (n: { laneId?: string }): boolean =>
+    n.laneId !== undefined && actedUponLanes.has(n.laneId);
+
+  // Lane ids whose role PERFORMS but by judgement — a stakeholder signing off.
+  // Unlike `actedUpon`, somebody really does the step; no instruction body can
+  // produce the answer for them.
+  const judgementLanes = new Set(
+    graph
+      ? m.lanes.filter((l) => roleForLane(graph, l.name, l.roleRef)?.judgementOnly === true).map((l) => l.id)
+      : [],
+  );
+  const judgementNode = (n: { laneId?: string }): boolean =>
+    n.laneId !== undefined && judgementLanes.has(n.laneId);
   for (const n of activities) {
     for (const ref of n.skills) {
       if (!skills.has(ref)) {
@@ -180,8 +201,32 @@ async function auditProcess(
     // Demanding a `<folio:skill ref>` of it asks the diagram to name a second,
     // redundant implementation — and the one that matters is checked by
     // `call-activity-resolves` below, so the exemption leaves no gap.
-    if (n.skills.length === 0 && n.calledElement === undefined) {
-      noSkill.push({ where: n.id, detail: `"${n.name}" names no skill.` });
+    //
+    // An `actedUpon` lane is the same category error one level up: the corpus
+    // and an external registry are WRITTEN TO, not participants that act, and
+    // the role graph already says so — `role-has-actor` is `n/a` for them for
+    // exactly this reason. Asking what skill the corpus uses to be committed
+    // into has no answer to give.
+    //
+    // Three declared exemptions, and each one is READ from a declaration
+    // rather than inferred: an `actedUpon` lane (nothing performs it), a
+    // `judgementOnly` lane (somebody performs it, but no procedure yields the
+    // answer), and `<folio:no-skill reason>` on the activity itself. Because
+    // every legitimate case now SAYS SO, what is left is a real gap — which is
+    // what lets this criterion gate instead of staying advisory.
+    if (
+      n.skills.length === 0 &&
+      n.calledElement === undefined &&
+      !actedUponNode(n) &&
+      !judgementNode(n) &&
+      n.noSkillReason === undefined
+    ) {
+      noSkill.push({
+        where: n.id,
+        detail:
+          `"${n.name}" names no skill. Give it <folio:skill ref="…"/>, or, if none could exist, ` +
+          `declare <folio:no-skill reason="…"/> saying why.`,
+      });
     }
     if (n.calledElement !== undefined && !processIds.has(n.calledElement)) {
       unresolvedCall.push({

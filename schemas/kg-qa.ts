@@ -133,10 +133,23 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "activity-names-skill",
     applies: ["process"],
-    severity: "minor",
+    // `major`, not `minor`, SINCE the exemptions became declarations.
+    //
+    // It was `minor` because it had legitimate instances it could not tell
+    // from real gaps — a stakeholder's sign-off and an unwritten skill both
+    // showed up as "names no skill", so gating would have forced a fake ref
+    // onto a real step. That is no longer true: an `actedUpon` lane, a
+    // `judgementOnly` lane and `<folio:no-skill reason>` each SAY SO, and are
+    // recorded `n/a`. What remains is an activity whose performer is handed
+    // nothing and which has not said why — a missing join, which is `major`.
+    //
+    // Not `critical`: nothing dangles. Every reference that exists resolves;
+    // the defect is one that is absent, which is what the scale calls major.
+    severity: "major",
     summary:
-      "An activity names no skill. Legitimate for a human judgement step; a gap everywhere else. " +
-      "A call activity is exempt: it is implemented by the process it calls, which `call-activity-resolves` checks instead.",
+      "An activity names no skill and declares no reason for having none. Exempt: a call activity (implemented " +
+      "by the process it calls), a lane whose role is `actedUpon` (written to, never acts) or `judgementOnly` " +
+      "(acts, but no procedure yields the answer), and an activity carrying `<folio:no-skill reason=\"…\"/>`.",
   },
   {
     id: "call-activity-resolves",

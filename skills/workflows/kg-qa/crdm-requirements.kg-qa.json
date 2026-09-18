@@ -8,7 +8,7 @@
   "source_hash": "sha256:f7227283379cb2293ea9b8f374d4fb4cc35058495d66537a84a1034b251e7f89",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:fd86e120ed4c0f1fe08c22354b901ce1400683e45baedeec0dcb0e4d1f4c43fe",
+    "script_hash": "sha256:0f00819b8600f680ebb54e31dd4d2475a4c0905e8a70221bb23c6b0df499d0bf",
     "engine_version": "1"
   },
   "criteria": {
@@ -41,25 +41,8 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "S_ConfirmNeeds",
-          "detail": "\"Confirm needs statement\" names no skill."
-        },
-        {
-          "where": "S_ApproveReqs",
-          "detail": "\"Approve requirements\" names no skill."
-        },
-        {
-          "where": "S_TestMVP",
-          "detail": "\"Test MVP in own context\" names no skill."
-        },
-        {
-          "where": "S_FeatureSignoff",
-          "detail": "\"Feature sign-off on issue\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "call-activity-resolves": {
       "result": "n/a",
@@ -67,8 +50,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 7,
+    "fail": 0,
     "n/a": 2,
     "unknown": 0
   }
