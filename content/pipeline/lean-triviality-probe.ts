@@ -83,7 +83,7 @@ import { tmpdir } from "os";
 import { mkdtempSync } from "fs";
 import { walkBlocks } from "./qa-utils";
 import { parseLeanRef, refToDecl } from "./content-graph";
-import { splitDeclarations, stripLeanComments } from "./lean-atlas-ingest";
+import { splitDeclarations, stripLeanComments } from "./lean-lexer";
 import { findContentRepoRoot } from "./repo-root";
 
 /** Cheapest-first. Position in this list becomes `steps`. */

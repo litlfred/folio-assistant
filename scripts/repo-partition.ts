@@ -295,6 +295,16 @@ const RULES: Rule[] = [
     triaged: true,
     exact: [
       "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
+      // Statement-level hashing for `.lean` files, by the same test: the
+      // `lean_granularity: "statement"` field is on `QaCriterionDefinition` in
+      // core, and `qa-utils` consults it on every freshness check. The
+      // grammar belongs wherever the field does.
+      "content/pipeline/lean-signature.ts",
+      // The Lean LEXER — comment stripping and declaration splitting — which
+      // `lean-signature.ts` is built on. Same test again: finding a
+      // declaration in a file is grammar; what you then DO with it (Atlas
+      // ingestion, triviality probing, coverage tables) is the science layer.
+      "content/pipeline/lean-lexer.ts",
     ],
   },
 
@@ -309,6 +319,12 @@ const RULES: Rule[] = [
       "adapters/mcp-server/tools/render.ts",   // PDF, HTML, formula preview — LaTeX
       "adapters/mcp-server/tools/lean.ts",     // Lean LSP proxy
       "adapters/mcp-server/tools/preview.ts",  // opens rendered LaTeX output
+      // The refactoring-strategy DATABASE loader: version-gated candidate
+      // rewrites for `proof-simplifier`, keyed by Lean version. Its schema is
+      // already `sci` (`schemas/refactor-strategy.ts`) and the two were split
+      // across the boundary by directory alone. Nothing in the pipeline
+      // imports it; its only other consumer is its own test.
+      "content/pipeline/refactor-strategy.ts",
     ],
   },
 
