@@ -1,11 +1,11 @@
 ---
 # folio-assistant-luke
 title: Wire folio:skill refs for the 90 uncovered BPMN activities
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
-updated_at: 2026-09-18T15:07:53Z
+updated_at: 2026-09-18T15:08:32Z
 ---
 
 **Measured 2026-09-18**, `bun run check:workflow-refs`: **90 activities** across

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xfoh
 title: 'crdm-detect: add missing exclusions and re-measure against the 71/63 baseline'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
-updated_at: 2026-09-18T15:08:06Z
+updated_at: 2026-09-18T15:08:32Z
 blocked_by:
     - folio-assistant-vjbl
 ---
