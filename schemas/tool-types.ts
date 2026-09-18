@@ -130,18 +130,26 @@ export const NodeIdSchema = z
   .describe("A node id within a BPMN process, e.g. A_Implement");
 
 /**
- * A running process instance, as `beans/workflow/<id>.json` names it.
+ * A running process instance — the stem of a file in the `workflow-state` node
+ * of the bean graph.
+ *
+ * **Named by its graph kind rather than by a path, deliberately.** An earlier
+ * draft of this comment named a directory that had already been relocated, and
+ * a path written into a doc comment is checked by nothing. The instance
+ * declares where that node lives (`beans/beans.json`), so a reader who needs
+ * the directory resolves it there and a relocation costs one edit rather than a
+ * corpus sweep.
  *
  * Constrained to the same word shape as a filename stem on purpose: the id is
- * used to *build a path* into the process-state store, so a value containing a
- * slash or a `..` would be a traversal rather than a lookup.
+ * used to *build a path* into that store, so a value containing a slash or a
+ * `..` would be a traversal rather than a lookup.
  */
 export const InstanceIdSchema = z
   .string()
   .min(1)
   .regex(/^[A-Za-z0-9][A-Za-z0-9._-]*$/, "an instance id is alphanumerics, dot, underscore and hyphen")
   .refine((i) => !i.includes(".."), "an instance id may not contain `..`")
-  .describe("A workflow instance id — the stem of a file under beans/workflow/");
+  .describe("A workflow instance id — the stem of a file in the bean graph's workflow-state node");
 
 /** A BCP-47 language tag, e.g. `en`, `fr-CA`. */
 export const LocaleSchema = z
