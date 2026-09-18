@@ -90,16 +90,16 @@
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T22:38:53.086Z",
+  "generatedAt": "2026-09-18T22:48:25.875Z",
   "counts": {
-    "Skill": 141,
+    "Skill": 142,
     "Actor": 24,
     "Capability": 23,
-    "Role": 62,
+    "Role": 64,
     "SkillPackage": 14,
-    "Process": 20,
-    "SequenceFlow": 363,
-    "ProcessNode": 329,
+    "Process": 23,
+    "SequenceFlow": 391,
+    "ProcessNode": 357,
     "Tool": 4,
     "GraphKind": 7,
     "Directory": 4
@@ -935,6 +935,23 @@
       ],
       "instructions": "skills/folio-core/voice-editorial-review.md",
       "lines": 114,
+      "hasInstructions": true,
+      "hasIOContract": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/code-node-review",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "code-node-review",
+      "title": "Code node review",
+      "description": "Review the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/` — for the joins a reader cannot see: that a node declares what it is, that what it names resolves, and that the mechanism it describes is the one that actually runs.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/code-node-review.md",
+      "lines": 112,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -2549,7 +2566,8 @@
       "roles": [
         "reviewer",
         "programme-manager",
-        "translation-coordinator"
+        "translation-coordinator",
+        "code-reviewer"
       ],
       "permissions": [
         "first-pass-review",
@@ -2592,7 +2610,8 @@
       "type": "person",
       "description": "A person who reads a change and judges it. Acting as `reviewer` does not carry the authority to accept — that is the editor's lane.",
       "roles": [
-        "reviewer"
+        "reviewer",
+        "narrative-reviewer"
       ],
       "permissions": [
         "review-comments"
@@ -2767,7 +2786,8 @@
       "description": "Formal approval and sign-off authority who gates phase transitions and ensures alignment with source guidelines.",
       "roles": [
         "reviewer",
-        "translation-adjudicator"
+        "translation-adjudicator",
+        "narrative-reviewer"
       ],
       "permissions": [
         "approval-authority"
@@ -2941,7 +2961,8 @@
         "publication-manager",
         "editor",
         "author",
-        "reviewer"
+        "reviewer",
+        "code-reviewer"
       ],
       "permissions": [
         "admin-settings",
@@ -3504,6 +3525,7 @@
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/block-density",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/canonical-watcher",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/chapter-complexity-review",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/code-node-review",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/compute-integration-watcher",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-graph",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/continual-progress",
@@ -6000,6 +6022,287 @@
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Publication/flow/G20"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Process",
+      "name": "Narrative review",
+      "enforcement": "strict",
+      "source": "skills/workflows/review-narrative.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Start_ProseChanged"
+      ],
+      "nodeCount": 9,
+      "flowCount": 9
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N1",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Start_ProseChanged",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReadFindings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N2",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReadFindings",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_AdjudicateVoice"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N3",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_AdjudicateVoice",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReviewUses"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N4",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReviewUses",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/GW_Translated"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N5",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/GW_Translated",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReviewTranslation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N6",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/GW_Translated",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/GW_Join"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N7",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReviewTranslation",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/GW_Join"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N8",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/GW_Join",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_RecordFindings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N9",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_RecordFindings",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/End_NarrativeReviewed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Role",
+      "name": "Narrative reviewer",
+      "source": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Start_ProseChanged",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Prose changed",
+      "kind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReadFindings",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Read the sidecar findings",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-review"
+      ],
+      "implementsSkillNames": [
+        "content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N2"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_AdjudicateVoice",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Adjudicate the voice findings",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/voice-editorial-review"
+      ],
+      "implementsSkillNames": [
+        "voice-editorial-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N3"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReviewUses",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Review the editorial dependencies",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/uses-editorial-review"
+      ],
+      "implementsSkillNames": [
+        "uses-editorial-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N4"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/GW_Translated",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Translated?",
+      "kind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N5",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N6"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReviewTranslation",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Review the translation",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "implementsSkillNames": [
+        "translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N7"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/GW_Join",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "GW_Join",
+      "kind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N6",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N8"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_RecordFindings",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Record findings as advice",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-feedback"
+      ],
+      "implementsSkillNames": [
+        "content-feedback"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N9"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/End_NarrativeReviewed",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Narrative reviewed",
+      "kind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N9"
       ],
       "outgoing": []
     },
@@ -9009,6 +9312,256 @@
       "outgoing": []
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Process",
+      "name": "Code node review",
+      "enforcement": "strict",
+      "source": "skills/workflows/review-code.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Start_CodeNodes"
+      ],
+      "nodeCount": 8,
+      "flowCount": 8
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C1",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Start_CodeNodes",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_RunNodeAudits"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C2",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_RunNodeAudits",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/GW_NodeKind"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C3",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "Tool",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/GW_NodeKind",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_ReviewTool"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C4",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "schema",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/GW_NodeKind",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_ReviewSchema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C5",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_ReviewTool",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/GW_Join"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C6",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_ReviewSchema",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/GW_Join"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C7",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/GW_Join",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_RecordVerdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C8",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_RecordVerdict",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/End_CodeReviewed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Code%20reviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Role",
+      "name": "Code reviewer",
+      "source": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Start_CodeNodes",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Code nodes changed",
+      "kind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Code%20reviewer",
+      "laneName": "Code reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_RunNodeAudits",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Run the node audits",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Code%20reviewer",
+      "laneName": "Code reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/code-node-review"
+      ],
+      "implementsSkillNames": [
+        "code-node-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C2"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/GW_NodeKind",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Which node kind?",
+      "kind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Code%20reviewer",
+      "laneName": "Code reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C3",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C4"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_ReviewTool",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Review the Tool node",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Code%20reviewer",
+      "laneName": "Code reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/skills-and-tools"
+      ],
+      "implementsSkillNames": [
+        "skills-and-tools"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C5"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_ReviewSchema",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Review the schema definition node",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Code%20reviewer",
+      "laneName": "Code reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/code-node-review"
+      ],
+      "implementsSkillNames": [
+        "code-node-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C6"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/GW_Join",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "GW_Join",
+      "kind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Code%20reviewer",
+      "laneName": "Code reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C5",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C7"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/Task_RecordVerdict",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Record the verdict on the node",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Code%20reviewer",
+      "laneName": "Code reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/code-node-review"
+      ],
+      "implementsSkillNames": [
+        "code-node-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C8"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/node/End_CodeReviewed",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Code nodes reviewed",
+      "kind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Code%20reviewer",
+      "laneName": "Code reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CodeReview/flow/F_C8"
+      ],
+      "outgoing": []
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Editing",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Process",
       "name": "Editing and HCI validation",
@@ -11731,6 +12284,273 @@
       "outgoing": []
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Process",
+      "name": "Review task",
+      "enforcement": "strict",
+      "source": "skills/workflows/review-task.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Start_ChangeToReview"
+      ],
+      "nodeCount": 9,
+      "flowCount": 9
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R1",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Start_ChangeToReview",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Task_ClassifyChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R2",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Task_ClassifyChange",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/GW_Kind"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R3",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "prose",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/GW_Kind",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Call_NarrativeReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R4",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "code nodes",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/GW_Kind",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Call_CodeReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R5",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Call_NarrativeReview",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/GW_Join"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R6",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Call_CodeReview",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/GW_Join"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R7",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/GW_Join",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Task_Consolidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R8",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Task_Consolidate",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Task_EditorDecides"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R9",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Task_EditorDecides",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/End_Reviewed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Start_ChangeToReview",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Change to review",
+      "kind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "laneName": "Reviewer / SME",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Task_ClassifyChange",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Classify what changed",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "laneName": "Reviewer / SME",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/semantic-review-scoping"
+      ],
+      "implementsSkillNames": [
+        "semantic-review-scoping"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R2"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/GW_Kind",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Prose, code, or both?",
+      "kind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "laneName": "Reviewer / SME",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R3",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R4"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Call_NarrativeReview",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Narrative review",
+      "kind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "laneName": "Reviewer / SME",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R5"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Call_CodeReview",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Code node review",
+      "kind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "laneName": "Reviewer / SME",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R6"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/GW_Join",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "GW_Join",
+      "kind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "laneName": "Reviewer / SME",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R5",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R7"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Task_Consolidate",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Consolidate findings",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "laneName": "Reviewer / SME",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-review"
+      ],
+      "implementsSkillNames": [
+        "content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R8"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/Task_EditorDecides",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Accept, or send back",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Editors%20+%20authoring%20agents",
+      "laneName": "Editors + authoring agents",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-validate"
+      ],
+      "implementsSkillNames": [
+        "content-validate"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R9"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/node/End_Reviewed",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Decision recorded",
+      "kind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "laneName": "Reviewer / SME",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Review/flow/F_R9"
+      ],
+      "outgoing": []
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_DocumentAuthoring",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Process",
       "name": "Authoring a document",
@@ -12158,8 +12978,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/Start_BA"
       ],
-      "nodeCount": 36,
-      "flowCount": 41
+      "nodeCount": 38,
+      "flowCount": 43
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_1",
@@ -12349,6 +13169,13 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/A_Implement",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/A_CodeAudit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_25b",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/A_CodeAudit",
       "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/A_Summary"
     },
     {
@@ -12395,6 +13222,13 @@
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/GW_MVPReady",
+      "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/A_DeployStaging"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_31b",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
+      "from": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/A_DeployStaging",
       "to": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/BA_ShareMVP"
     },
     {
@@ -12666,7 +13500,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_31"
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_31b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_32"
@@ -13123,6 +13957,50 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/A_CodeAudit",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Audit the code nodes the increment adds",
+      "kind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Agent",
+      "laneName": "Agent",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_25"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_25b"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/A_DeployStaging",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Deploy the MVP to staging",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM",
+      "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Agent",
+      "laneName": "Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/feature-staging"
+      ],
+      "implementsSkillNames": [
+        "feature-staging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_31"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_31b"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/node/A_Summary",
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Post summary to issue",
@@ -13140,7 +14018,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_25"
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_25b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_CRDM/flow/SF_26"
