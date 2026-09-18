@@ -1,0 +1,90 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:fr/overview",
+  "block": "sec:crdm-overview",
+  "locale": "fr",
+  "paths": {
+    "md": "content/docs/crdm-methodology/overview.md",
+    "ts": "content/docs/crdm-methodology/overview.ts"
+  },
+  "po": "translations/fr/crdm-methodology.po",
+  "source_hashes": {
+    "md": "b56349095158",
+    "ts": "c3c8a5e7ab3b",
+    "po": "3b44eb0af5dd"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "b56349095158",
+          "ts": "c3c8a5e7ab3b",
+          "po": "3b44eb0af5dd"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "313feb03bf0f",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-09-18T20:22:56.833Z",
+        "reviewed_sha": "182155352743167c50af1549571ae59571758628",
+        "metrics": {
+          "translated": 1,
+          "total": 1,
+          "pct": 100
+        }
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "b56349095158",
+          "ts": "c3c8a5e7ab3b",
+          "po": "3b44eb0af5dd"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "313feb03bf0f",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-09-18T20:22:56.841Z",
+        "reviewed_sha": "182155352743167c50af1549571ae59571758628",
+        "metrics": {
+          "checked": 1,
+          "missing": 0
+        }
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "b56349095158",
+          "ts": "c3c8a5e7ab3b",
+          "po": "3b44eb0af5dd"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "script_hash": "313feb03bf0f",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-09-18T20:22:56.852Z",
+        "reviewed_sha": "182155352743167c50af1549571ae59571758628",
+        "metrics": {
+          "echoed": 0,
+          "translated": 1
+        }
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-09-18T20:22:56.853Z"
+}

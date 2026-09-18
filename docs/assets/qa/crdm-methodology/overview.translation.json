@@ -1,0 +1,88 @@
+{
+  "$schema": "qa-witness/v1",
+  "family": "translation",
+  "subject": "overview — translations",
+  "sidecars": [
+    "content/docs/crdm-methodology/overview.fr.translation-qa.json"
+  ],
+  "state": "pass",
+  "counts": {
+    "fail": 0,
+    "warn": 0,
+    "pass": 3,
+    "na": 0,
+    "unknown": 1
+  },
+  "criteria": [
+    {
+      "id": "translation-semantic-roundtrip",
+      "result": "unknown",
+      "locale": "fr",
+      "witnesses": []
+    },
+    {
+      "id": "translation-coverage",
+      "result": "pass",
+      "locale": "fr",
+      "metrics": {
+        "translated": 1,
+        "total": 1,
+        "pct": 100
+      },
+      "witnesses": [
+        {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "at": "2026-09-18T20:22:56.833Z",
+          "sha": "182155352743167c50af1549571ae59571758628",
+          "scriptHash": "313feb03bf0f",
+          "scriptCommitSha": "unknown",
+          "freshness": "fresh"
+        }
+      ]
+    },
+    {
+      "id": "translation-not-echo",
+      "result": "pass",
+      "locale": "fr",
+      "metrics": {
+        "echoed": 0,
+        "translated": 1
+      },
+      "witnesses": [
+        {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "at": "2026-09-18T20:22:56.852Z",
+          "sha": "182155352743167c50af1549571ae59571758628",
+          "scriptHash": "313feb03bf0f",
+          "scriptCommitSha": "unknown",
+          "freshness": "fresh"
+        }
+      ]
+    },
+    {
+      "id": "translation-terms-preserved",
+      "result": "pass",
+      "locale": "fr",
+      "metrics": {
+        "checked": 1,
+        "missing": 0
+      },
+      "witnesses": [
+        {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "version": "v1",
+          "at": "2026-09-18T20:22:56.841Z",
+          "sha": "182155352743167c50af1549571ae59571758628",
+          "scriptHash": "313feb03bf0f",
+          "scriptCommitSha": "unknown",
+          "freshness": "fresh"
+        }
+      ]
+    }
+  ]
+}

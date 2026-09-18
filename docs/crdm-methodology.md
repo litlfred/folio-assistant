@@ -3,6 +3,7 @@ layout: default
 title: CRDM methodology
 nav_order: 5
 lang: en
+available_locales: ["fr"]
 ---
 
 # CRDM methodology
@@ -17,7 +18,7 @@ lang: en
 
 _This page is generated from [`content/docs/crdm-methodology/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/crdm-methodology) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/overview.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/overview.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/overview.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">○</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/overview.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/overview.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/crdm-methodology/overview.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">○</span></button> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-translation" data-qa-family="translation" data-qa-src="{{ '/assets/qa/crdm-methodology/overview.translation.json' | relative_url }}" aria-expanded="false" title="Translation QA: 0 fail, 0 warn, 3 pass, 0 n/a, 1 no verdict — open for witnesses" aria-label="Translation QA: 0 fail, 0 warn, 3 pass, 0 n/a, 1 no verdict — open for witnesses"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">○</span></button></span>
 
 How folio-assistant uses the **Collaborative Requirements Development
 Methodology** (CRDM) — a structured, participatory framework from the
