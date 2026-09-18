@@ -128,6 +128,45 @@ so it declares `schemas/` and `skills/` — which exist — and deliberately doe
 also that its `kg` id points at `skills/`: ids are stable across a relocation,
 paths are not.
 
+## Naming — one fixed config, stub-named artefacts (STRICT)
+
+The declaration carries three publication fields beside `name`:
+
+| field | meaning |
+|---|---|
+| `stub` | filename stem of every artefact this instance publishes. Defaults to `name`. |
+| `canonicalUrl` | where those artefacts live — the base every `@id`/`$id` is minted against |
+| `previewUrl` | where CI previews are served, when that differs |
+
+Modelled on `WorldHealthOrganization/smart-base`'s `dak.json`, which carries
+`canonicalUrl`, `publicationUrl` and `previewUrl` and derives its stub by
+stripping the repository's prefix (`smart-base` → `base` →
+`https://smart.who.int/base`), so stub, directory and published path are one
+word.
+
+**The rule, and it is enforced by test:**
+
+- **Every published artefact is named `<stub>.*`** — `<stub>.jsonld`,
+  `<stub>.schema.json`. Never a generic `kg.json`. Compute it with
+  `artefactStub()`, never by re-deriving it, so two exporters cannot disagree
+  about what this instance is called.
+- **The declaration file is `agent-harness.json` and is NOT stub-named.**
+
+That second half is the one that looks inconsistent, so here is why. A consumer
+bootstrapping into a repository it knows nothing about needs **one fixed
+filename to open first**. Everything that config *describes* is free to be
+named after the repository, because by the time you fetch those you have read
+the config that names them. smart-base makes exactly this split: `dak.json`
+fixed, artefacts stub-named. Renaming the config to match the repo buys
+consistency and costs discovery — and fails **silently**, since a resolver
+computing `basename($PWD) + ".json"` finds nothing when a repo is cloned into a
+differently-named directory, and reports no config rather than an error.
+
+**No `canonicalUrl` → no absolute IRIs.** The exporters emit none and say so,
+rather than inventing a plausible base. A fabricated absolute IRI is the README
+generator's composed-link defect in another costume: it looks dereferenceable
+and resolves to nothing.
+
 ## The declaration is itself a graph
 
 `toJsonLd()` projects a declaration into the folio namespace: each directory is

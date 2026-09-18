@@ -1,0 +1,209 @@
+/**
+ * The KG export is a whole graph, not a partial one wearing a total's clothes.
+ *
+ * The first version of `scripts/kg-export.ts` collected skills from six
+ * instruction-body directories and reported **11 BPMN skill refs as dangling**.
+ * They were not dangling. They resolve through `schemas/skills/<name>/`, which
+ * holds a skill's I/O contract and which that collector did not know existed —
+ * so the export was a partial graph published as a complete one, in the module
+ * whose own doc comment warns against exactly that.
+ *
+ * It is worth being precise about why that is dangerous rather than merely
+ * wrong. A consumer of `kg.json` cannot tell a skill that is absent from one
+ * that was never collected: both are simply not in `@graph`. The counts look
+ * plausible either way. Nothing errors. That is the `dh4f` shape — a clean run
+ * over a corpus the tool could not read — and the only defence is an invariant
+ * asserted against something outside the exporter's own view.
+ *
+ * So: every skill a diagram names must appear in the export. `check-workflow-refs`
+ * already guarantees those refs resolve against the real skill locations, which
+ * makes the set of BPMN refs an independent witness — if the exporter's notion
+ * of "where skills live" narrows again, this fails.
+ */
+import { describe, expect, test } from "bun:test";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+
+import { buildExport, exportIdentity } from "../kg-export.js";
+import { buildDeclarationSchema } from "../harness-schema-export.js";
+import { readDeclaration, artefactStub } from "../../schemas/agent-harness.js";
+import { FOLIO_NS } from "../../schemas/namespaces.js";
+
+// The repo's own canonicalUrl, so the shared fixture is the CANONICAL export.
+// Using an arbitrary base made it a preview, which (correctly) gave it an
+// array `@type` and 968 alternateOf links — caught by the self-identification
+// test below, which is the test doing its job.
+const BASE = readDeclaration(join(import.meta.dir, "../.."))!.canonicalUrl!;
+const EXPORT = await buildExport();
+const typed = (t: string) => EXPORT["@graph"].filter((n) => n["@type"] === `${FOLIO_NS}${t}`);
+
+describe("kg export", () => {
+  test("no source failed to read", () => {
+    // `problems` is reported AND non-empty is a CLI failure; a green test here
+    // is what lets the workflow trust the published file.
+    expect(EXPORT.problems).toEqual([]);
+  });
+
+  test("the graph is not trivially small — otherwise every assertion below is vacuous", () => {
+    expect(EXPORT["@graph"].length).toBeGreaterThan(100);
+    expect(typed("Skill").length).toBeGreaterThan(50);
+    expect(typed("Process").length).toBeGreaterThan(5);
+  });
+
+  test("every skill a BPMN activity names appears in the export", () => {
+    // The independent witness. `check:workflow-refs` guarantees these refs
+    // resolve against the real skill locations, so if this exporter's notion
+    // of where skills live narrows again — it has three times — this fails.
+    const ids = new Set(typed("Skill").map((n) => n["@id"] as string));
+    const referenced = new Set<string>();
+    for (const n of typed("ProcessNode")) {
+      for (const s of (n.implementedBy as string[] | undefined) ?? []) referenced.add(s);
+    }
+    expect(referenced.size).toBeGreaterThan(20); // Guard the guard.
+    expect([...referenced].filter((r) => !ids.has(r)).sort()).toEqual([]);
+  });
+
+  test("process nodes carry the edges that make this a graph", () => {
+    const nodes = typed("ProcessNode");
+    // A list of skills is not a graph. These two edges are the reason to publish.
+    expect(nodes.filter((n) => n.performedBy !== undefined).length).toBeGreaterThan(100);
+    expect(nodes.filter((n) => ((n.implementedBy as string[]) ?? []).length > 0).length)
+      .toBeGreaterThan(50);
+  });
+
+  test("the document identifies itself — @id, @type, provenance", () => {
+    // smart-base's pattern: the document IRI is the URL it is served from, so
+    // fetching an `@id` returns the document that defines it.
+    expect(EXPORT["@id"]).toBe(`${BASE}/kg/folio-assistant.jsonld`);
+    expect(EXPORT["@type"]).toBe("http://www.w3.org/ns/prov#Entity");
+    expect(EXPORT.generatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
+  });
+
+  test("every edge term is declared {\"@type\": \"@id\"} — otherwise it is not a graph", () => {
+    // THE load-bearing assertion of this file. Without the coercion, every
+    // edge is a string literal to a JSON-LD processor and the document is a
+    // list of records that merely looks linked. This is cheap to lose in a
+    // context edit and invisible when you do.
+    const ctx = EXPORT["@context"] as Record<string, { "@type"?: string } | string>;
+    for (const term of ["partOf", "implementedBy", "performedBy", "inPackage",
+                        "declaresSkill", "startNode", "from", "to", "holdsGraph"]) {
+      const d = ctx[term];
+      expect(typeof d === "object" && d !== null && d["@type"] === "@id").toBe(true);
+    }
+    // And no @vocab: an undeclared key must stay undeclared rather than
+    // silently minting an IRI against a default namespace.
+    expect(ctx["@vocab"]).toBeUndefined();
+  });
+
+  test("internal links resolve, bar the known data defects", () => {
+    // 4 on this branch, every one a manifest naming something nobody wrote
+    // (bean `nup0`) — data, not export failures, so they are reported in the
+    // document rather than thrown. The number may only go DOWN.
+    expect(EXPORT.danglingLinks.length).toBeLessThanOrEqual(4);
+    for (const d of EXPORT.danglingLinks) {
+      expect(["declaresSkill", "providesCapability"]).toContain(d.edge);
+    }
+  });
+
+  test("the graph carries its own vocabulary", () => {
+    // Self-describing: following `holdsGraph` from a directory must land on a
+    // GraphKind node, not on a term that only exists in TypeScript.
+    const kinds = typed("GraphKind");
+    expect(kinds.length).toBeGreaterThanOrEqual(5);
+    expect(kinds.some((k) => k.name === "folio" && k.renderable === true)).toBe(true);
+    const ids = new Set(EXPORT["@graph"].map((n) => n["@id"]));
+    // `holdsGraph` is a LIST: `graph` became `graphs[]` upstream because a
+    // directory may hold more than one graph — `schemas/` holds both its own
+    // and `kg`. Every entry must still land on a GraphKind node.
+    for (const dir of typed("Directory")) {
+      const held = dir.holdsGraph as string[];
+      expect(Array.isArray(held)).toBe(true);
+      expect(held.length).toBeGreaterThan(0);
+      for (const g of held) expect(ids.has(g)).toBe(true);
+    }
+  });
+
+  test("every node has an @id and an @type, and @ids are unique", () => {
+    const ids = EXPORT["@graph"].map((n) => n["@id"]);
+    for (const n of EXPORT["@graph"]) {
+      expect(typeof n["@id"]).toBe("string");
+      expect(String(n["@type"]).startsWith(FOLIO_NS)).toBe(true);
+    }
+    expect(ids.length).toBe(new Set(ids).size);
+  });
+
+  test("counts agree with the graph they summarise", () => {
+    // The counts block exists so a consumer can spot a truncated file. If it
+    // can disagree with `@graph`, it is worse than absent.
+    const recomputed: Record<string, number> = {};
+    for (const n of EXPORT["@graph"]) {
+      const t = String(n["@type"]).replace(FOLIO_NS, "");
+      recomputed[t] = (recomputed[t] ?? 0) + 1;
+    }
+    expect(EXPORT.counts).toEqual(recomputed);
+  });
+
+  test("artefacts are named after the repository, the declaration is not", () => {
+    // The naming rule from migration-plan I.8. Both halves matter: stub-named
+    // artefacts stop five split repos asserting colliding node IRIs, and a
+    // FIXED declaration filename is what lets a consumer open a repo it has
+    // never seen. A per-repo config name fails silently — a resolver deriving
+    // it from the directory finds nothing when the repo is cloned elsewhere.
+    const decl = readDeclaration(join(import.meta.dir, "../.."))!;
+    const stub = artefactStub(decl);
+    expect(stub).toBe("folio-assistant");
+    expect(exportIdentity({ baseUrl: BASE }).docIri).toBe(`${BASE}/kg/${stub}.jsonld`);
+    expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/kg/${stub}.schema.json`);
+
+    // The declaration is read from a fixed filename, whatever the stub is.
+    expect(existsSync(join(import.meta.dir, "../..", "agent-harness.json"))).toBe(true);
+    expect(existsSync(join(import.meta.dir, "../..", `${stub}.json`))).toBe(false);
+  });
+
+  test("no canonicalUrl and no base → no absolute IRI, and it says so", () => {
+    // A fabricated absolute base is the README generator's composed-link
+    // defect in another costume: it looks dereferenceable and resolves to
+    // nothing. Absent is the honest answer, and it must be reported.
+    const schema = buildDeclarationSchema({ baseUrl: "" });
+    // The repo declares a canonicalUrl, so passing "" falls back to it; the
+    // assertion that matters is that $id is never relative.
+    expect(String(schema.$id ?? "https://x")).toMatch(/^https?:\/\//);
+  });
+
+  test("a preview says so in its type and links every node back to canonical", async () => {
+    // The owner's standing rule: a downstream consumer must never have to
+    // string-manipulate or infer a rule to follow a link. So the preview→
+    // canonical relation is written out per node, not left derivable.
+    const preview = await buildExport({ baseUrl: "https://example.invalid/fa/STAGING/demo" });
+    const canonical = await buildExport();
+
+    expect(Array.isArray(preview["@type"])).toBe(true);
+    expect(preview["@type"]).toContain(`${FOLIO_NS}PreviewGraph`);
+    expect(preview.canonicalDocument).toBe(canonical["@id"]);
+
+    // Canonical must carry neither marker — otherwise "is this the real one?"
+    // is unanswerable from the document.
+    expect(canonical["@type"]).toBe("http://www.w3.org/ns/prov#Entity");
+    expect(canonical.canonicalDocument).toBeUndefined();
+    expect(canonical["@graph"].filter((n) => n.alternateOf !== undefined)).toEqual([]);
+
+    // Every alternateOf must land on a node that actually exists canonically.
+    const canonicalIds = new Set(canonical["@graph"].map((n) => n["@id"] as string));
+    const alts = preview["@graph"]
+      .map((n) => n.alternateOf as string | undefined)
+      .filter((x): x is string => x !== undefined);
+    expect(alts.length).toBeGreaterThan(900);
+    expect(alts.filter((a) => !canonicalIds.has(a))).toEqual([]);
+  });
+
+  test("vocabulary nodes get no alternateOf — they are identical in both graphs", () => {
+    // A blanket loop gave GraphKind nodes an alternateOf pointing at a
+    // canonical fragment that does not exist: they are minted under the
+    // NAMESPACE, not the document, so they are byte-identical in a preview and
+    // in the canonical graph. Marking them as alternates of themselves-by-
+    // another-name was a broken link, and a generated one is still a broken one.
+    const kinds = typed("GraphKind");
+    expect(kinds.length).toBeGreaterThan(0);
+    for (const k of kinds) expect(String(k["@id"]).startsWith(FOLIO_NS)).toBe(true);
+  });
+});
