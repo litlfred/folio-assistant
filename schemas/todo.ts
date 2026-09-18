@@ -88,6 +88,35 @@ export const ExternalIdentitySchema = z.object({
 export type ExternalIdentity = z.infer<typeof ExternalIdentitySchema>;
 
 /**
+ * A reference to any other node of the knowledge graph.
+ *
+ * The four tag axes — role, process, task, identity — are the ones with
+ * MEANING: they say who this is outstanding for and where in the work it sits.
+ * This is the open one, for everything a todo merely needs to POINT AT: the
+ * skill it is about, the requirement it blocks, the block it was raised
+ * against, a workflow decision it disagrees with.
+ *
+ * `kind` is an open string rather than an enum on purpose. The node kinds are
+ * an open registry (`BASE_GRAPH_KINDS`), and a closed list here would refuse a
+ * reference to a kind a downstream instance added — which is the one thing a
+ * general-purpose reference must not do.
+ *
+ * It is deliberately NOT a place to re-express a tag. A `references` entry
+ * naming a role says "see also"; the `roles` tag says "this is outstanding in
+ * that lane". Collapsing them would lose the distinction every consumer of the
+ * tags depends on.
+ */
+export const KgRefSchema = z.object({
+  /** The node kind — `skill`, `requirement`, `block`, `process`, … */
+  kind: z.string().min(1),
+  /** The node's id within that kind. */
+  id: z.string().min(1),
+  /** Why it is referenced, when that is not obvious from the pair. */
+  note: z.string().optional(),
+});
+export type KgRef = z.infer<typeof KgRefSchema>;
+
+/**
  * The knowledge-graph edges a todo carries.
  *
  * Every array defaults to empty, and an empty array is a **determined empty**:
@@ -103,8 +132,16 @@ export const TodoTagsSchema = z.object({
   processes: z.array(z.string()).default([]),
   /** Specific activities, each with its process. */
   tasks: z.array(TaskRefSchema).default([]),
-  /** Who it is outstanding FOR, or who raised it. */
+  /**
+   * Who it is outstanding FOR, or who raised it.
+   *
+   * An array because **several people can be tagged on one todo** — a question
+   * for two reviewers is one item, not two, and splitting it would lose that
+   * they are being asked the same thing.
+   */
   identities: z.array(ExternalIdentitySchema).default([]),
+  /** Anything else in the graph this points at. See {@link KgRefSchema}. */
+  references: z.array(KgRefSchema).default([]),
 });
 export type TodoTags = z.infer<typeof TodoTagsSchema>;
 
@@ -203,7 +240,14 @@ export const TodoNodeSchema = z.object({
   id: z.string().min(1),
   /** One line. */
   summary: z.string().min(1),
-  /** Markdown narrative — context, rationale, the question being asked. */
+  /**
+   * The markdown narrative — context, rationale, the question being asked.
+   *
+   * Read AFTER the tags, and that ordering is the point rather than a style
+   * choice: the tags say who this is for and where it sits, which is what a
+   * reader needs before prose means anything. A renderer that leads with the
+   * narrative makes every todo look like an undifferentiated note.
+   */
   comment: z.string().default(""),
   /** `TodoStatus` from `types.ts`, not re-enumerated here. */
   status: z.string().min(1),
@@ -217,7 +261,7 @@ export const TodoNodeSchema = z.object({
   /** Block label this is attached to, when it is attached to one. */
   targetLabel: z.string().optional(),
   /** The knowledge-graph edges — see {@link TodoTagsSchema}. */
-  tags: TodoTagsSchema.default({ roles: [], processes: [], tasks: [], identities: [] }),
+  tags: TodoTagsSchema.default({ roles: [], processes: [], tasks: [], identities: [], references: [] }),
   /**
    * What this file IS, declared inside it.
    *

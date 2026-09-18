@@ -29,7 +29,7 @@ const KG: KgIndex = {
 };
 
 const tags = (o: Partial<Record<string, unknown>> = {}) =>
-  TodoTagsSchema.parse({ roles: [], processes: [], tasks: [], identities: [], ...o });
+  TodoTagsSchema.parse({ roles: [], processes: [], tasks: [], identities: [], references: [], ...o });
 
 describe("tag shapes", () => {
   test("a task reference is a PAIR, never a bare id", () => {
@@ -53,7 +53,29 @@ describe("tag shapes", () => {
 
   test("every tag axis defaults to an empty array", () => {
     const t = TodoTagsSchema.parse({});
-    expect(t).toEqual({ roles: [], processes: [], tasks: [], identities: [] });
+    expect(t).toEqual({ roles: [], processes: [], tasks: [], identities: [], references: [] });
+  });
+
+  test("several people can be tagged on ONE todo", () => {
+    // A question for two reviewers is one item. Splitting it would lose that
+    // they are being asked the same thing.
+    const t = TodoTagsSchema.parse({
+      identities: [
+        { provider: "github", id: "a" },
+        { provider: "github", id: "b" },
+      ],
+    });
+    expect(t.identities).toHaveLength(2);
+  });
+
+  test("references point at any node kind, including unregistered ones", () => {
+    // The kind vocabulary is an open registry; a closed enum here would refuse
+    // a reference to a kind a downstream instance added.
+    const t = TodoTagsSchema.parse({
+      references: [{ kind: "skill", id: "todo-review" }, { kind: "some-future-kind", id: "x", note: "why" }],
+    });
+    expect(t.references).toHaveLength(2);
+    expect(t.references[1].note).toBe("why");
   });
 
   test("a todo file declares what it is", () => {

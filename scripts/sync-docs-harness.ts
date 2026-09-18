@@ -30,6 +30,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { readDeclaration } from "../schemas/cat-harness.js";
+import { imagesForRole } from "../schemas/kg-node.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const OUT = join(ROOT, "docs/_data/harness.json");
@@ -47,12 +48,40 @@ if (!decl) {
 }
 
 const icon = decl.images?.find((i) => i.id === decl.icon);
+
+// The landing backdrop's variants, keyed by layout, so the template can pick
+// by viewport rather than parse a filename. An instance with none gets `{}`,
+// and the template renders its description plainly — see `landing.html`, which
+// treats a missing backdrop as a reason to draw no overlay rather than as a
+// reason to guess where the quiet part of an image it does not have might be.
+const landing: Record<string, unknown> = {};
+for (const [layout, img] of imagesForRole(decl.images, "landing")) {
+  landing[layout] = {
+    src: siteRelative(img.src),
+    width: img.width ?? null,
+    height: img.height ?? null,
+    // Percentages, because that is what CSS wants and computing them in
+    // Liquid is worse than computing them here.
+    region: img.textRegion
+      ? {
+          x: +(img.textRegion.x * 100).toFixed(3),
+          y: +(img.textRegion.y * 100).toFixed(3),
+          w: +(img.textRegion.w * 100).toFixed(3),
+          h: +(img.textRegion.h * 100).toFixed(3),
+        }
+      : null,
+    title: img.title ?? "",
+    description: img.description ?? "",
+  };
+}
+
 const payload = {
   _generated: "scripts/sync-docs-harness.ts — do not hand-edit; edit cat-harness.json",
   name: decl.name,
   title: decl.title ?? decl.name,
   description: decl.description ?? "",
   icon: icon ? { src: siteRelative(icon.src), title: icon.title ?? "", description: icon.description ?? "" } : null,
+  landing,
 };
 const next = `${JSON.stringify(payload, null, 2)}\n`;
 const current = existsSync(OUT) ? readFileSync(OUT, "utf-8") : "";
