@@ -85,6 +85,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Production vs exploratory vs numerology](production-vs-exploratory-discipline.html) | `production-vs-exploratory-discipline` | — | N_TRUNCATION = 5 |
 | [Readability Editing](readability-editing.html) | `readability-editing` | — |  |
 | [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`docs/workflows/getting-started.bpmn`](../../docs/workflows/getting-started.bpmn), |
+| [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Capability: `review` · Package: `folio-core` |

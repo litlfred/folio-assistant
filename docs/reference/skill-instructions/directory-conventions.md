@@ -168,6 +168,28 @@ downstream instance inherits its dependencies' skills through the same
 inheritance rules above. A hardcoded path breaks on the first relocation, which
 is the whole reason overrides match on `id`.
 
+### Roles, processes and decisions are KG content too
+
+The `kg` graph is not only skills. It holds the whole
+actor → role → skill → task model:
+
+```
+skills/                       ← this instance's `kg`
+  roles/roles.json            the ROLE GRAPH — a role is a BPMN swimlane
+  roles/kg-qa/*.kg-qa.json    its audit sidecars
+  folio-core/*.md             skills
+  <pkg>/package-manifest.json which skills a package publishes
+```
+
+and the processes those roles act in — `docs/workflows/*.bpmn` and
+`docs/workflows/decisions/*.dmn` — are reached **through the skill that
+describes them**, not as standalone artefacts. A BPMN activity names the skill
+that implements it (`<folio:skill ref>`); a lane names the role that performs it
+(`<folio:role ref>`, or an exact lane-name match in `roles.json`); a role carries
+the skills its lane's activities need. `bun run kg:audit` checks every one of
+those joins and writes a sidecar per node. Model and resolution rules:
+[`role-model.md`](role-model.md); schema: `schemas/role-graph.ts`.
+
 **Not yet true end to end.** `resolveSkillDirs` (`schemas/harness-config.ts`)
 computes the cross-instance overlay and has **no caller**, so skill discovery is
 root-only in practice today and a dependency's skills are not reachable. Stated

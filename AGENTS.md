@@ -415,6 +415,81 @@ than closing it: the watchdog going blind must not read as good news, and a red
 Complements `5rfy`, which fixed workflows that never *fire*. This is the
 opposite defect — one that fires constantly and fails every time.
 
+## Actors, roles and skills — a role is a swimlane
+
+One sentence, and every word in it is a distinct declared object:
+
+> **An actor performs a task in a process as a role, using that role's skills.**
+
+| object | what it is | declared in |
+|---|---|---|
+| **Actor** | a concrete participant — human or agentic. Persists across processes. | `.claude/skills/actors/*.json` |
+| **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
+| **Skill** | the instruction body the actor needs to perform the task. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
+| **Process / Decision** | BPMN + DMN. Lanes bind roles, activities name skills, gateways may compute a branch. | `docs/workflows/` |
+
+All four live in the **`kg` graph** the instance declares in `agent-harness.json`
+— in this repo that id maps to `skills/`. BPMN and DMN are **not standalone
+artefacts**: a diagram is reached through the skill that describes the process,
+and a task is performed with the skills its lane's role carries.
+
+**Nothing *is* a reviewer.** Somebody **acts as** reviewer inside a process for
+the duration of a lane, and the same actor is a different role in another
+diagram — the session agent is `Lane_Agent` in `crdm-requirements.bpmn` and the
+*sibling session* in `bean-lifecycle.bpmn`, whose whole point is marking what is
+not yours to close.
+
+**Roles compose two ways and they are not the same thing.** `inherits` is IS-A
+and static (`qc-reviewer` has `reviewer`'s skills everywhere, always). The
+**subprocess stack** is scoped: descending into a subprocess, the actor keeps the
+outer role *and* takes on the inner lane's, and the skills are the union along
+that call path only. Merging them would give every role every caller's skills,
+and a closure that broad cannot fail an audit.
+
+**The discipline is in the skill, not here** —
+[`skills/folio-core/role-model.md`](skills/folio-core/role-model.md) carries the
+resolution rules, how to bind a lane, the severity scale, and how to add a role.
+
+### The audit — `bun run kg:audit`
+
+Fourteen criteria, one per join above, written as **committed QA sidecars** under
+`kg-qa/` beside whatever they audit: `docs/workflows/kg-qa/`,
+`docs/workflows/decisions/kg-qa/`, `skills/roles/kg-qa/`. Schema:
+`schemas/kg-qa.ts`. This is the **third** QA subject kind, after the block sweep's
+`*.qa.json` and the script sweep's `*.script-qa.json`, and it shares their shape.
+
+```sh
+bun run kg:audit          # write the sidecars, print the summary
+bun run kg:audit:check    # fail on a `critical` finding, or on a stale sidecar
+bun run kg:audit:strict   # ...and on `major` too
+```
+
+**A sidecar rather than a console report, for one reason:** `check-workflow-refs`
+prints and exits, so its previous answer is gone — which makes "this lane has been
+unbound since it was drawn" and "this lane broke in the commit under review"
+indistinguishable. A reviewer who cannot separate a new defect from inherited debt
+will not act on either.
+
+`critical` is a broken reference; `major` is a missing join; `minor` is coverage,
+which has legitimate instances (a human sign-off step has no skill to name) and so
+must not gate — forcing a fake ref onto a real step is worse than the gap.
+**`unknown` is never written as a pass**, and it is not promoted either: it counts
+at its own criterion's severity, so a diagram that will not load still fails on its
+`critical` rows while an unevaluable `minor` does not gate the build.
+
+**What it found at baseline, and none of it was noise:** 60 distinct lane names
+for roughly two dozen positions, now all bound; 42 activities naming no skill; 6
+skills nothing reaches; 13 actor entries carrying `inherits` — a role lattice
+wearing an actor's name, the migration debt this model names rather than inherits
+silently. And `role-has-actor` is `unknown` for all 28 roles because no actor
+entry declares `roles` at all: a gap in the registry, reported as one.
+
+**What counts as a skill is one answer, in `scripts/known-skills.ts`,** shared by
+`kg-audit` and `check-workflow-refs` so they cannot disagree. `.claude/skills/` is
+**not uniformly skills** — `actors/`, `capabilities/` (`docker`, `pandoc`,
+`python3`), `roles/` and `hooks/` are other node kinds, and reading them as skills
+put 46 non-skills in the set, so `<folio:skill ref="viewer"/>` would have resolved.
+
 ## Subagents with persistent memory (`.claude/agents/`)
 
 Three subagents are defined under [`.claude/agents/`](.claude/agents/), each
