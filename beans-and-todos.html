@@ -324,7 +324,7 @@
 
 <p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/content/docs/beans-and-todos"><code class="language-plaintext highlighter-rouge">content/docs/beans-and-todos/</code></a> — each section below links to its own source.</em></p>
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/overview.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/overview.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/overview.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/overview.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="/folio-assistant/assets/qa/beans-and-todos/overview.block.json" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
 
 <p><strong>Beans are for agents. Todos are for humans.</strong> They share a word in ordinary
 speech and nothing else, and conflating them is how a work plan comes to hold
@@ -350,7 +350,7 @@ says so.</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-things-one-word.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/two-things-one-word.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-things-one-word.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/two-things-one-word.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="/folio-assistant/assets/qa/beans-and-todos/two-things-one-word.block.json" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
 
 <p>The distinction is not terminology. The two have different owners, different
 lifecycles and different failure modes.</p>
@@ -417,7 +417,7 @@ first.</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/bean-lifecycle.bpmn" class="fa-node-edit" title="Edit skills/workflows/bean-lifecycle.bpmn">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/bean-lifecycle.bpmn" class="fa-node-edit" title="Edit skills/workflows/bean-lifecycle.bpmn">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="/folio-assistant/assets/qa/beans-and-todos/the-agent-bean-lifecycle.block.json" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="/folio-assistant/assets/qa/beans-and-todos/the-agent-bean-lifecycle.kg.json" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span></p>
 
 <div class="bpmn-figure" id="figure-the-agent-bean-lifecycle">
   <img src="assets/img/workflows/bean-lifecycle.svg" alt="BPMN swimlane diagram with two lanes. In the agent's lane: durable work is identified, the agent runs an exact-title search before creating anything, then a gateway asks whether the bean already exists. If not, it creates one; if it does, a second gateway asks whose it is. A bean owned by someone else routes to the lower lane — sibling session or human — where the only action is to leave it alone and coordinate, ending there. The agent's own or an unclaimed bean is claimed as in-progress, worked on with the body kept current, and then reaches an outcome gateway with three branches: done goes to complete, not wanted goes to scrap with reasons and never delete, and blocked goes to recording the blocker and handing it back. All three converge on a single end event, state recorded." />
@@ -452,7 +452,7 @@ every other session, as active work.</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/never-delete.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/never-delete.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/never-delete.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/never-delete.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="/folio-assistant/assets/qa/beans-and-todos/never-delete.block.json" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
 
 <p><code class="language-plaintext highlighter-rouge">beans delete</code> exists in the CLI. <strong>Do not use it.</strong></p>
 
@@ -480,7 +480,7 @@ noticing a command is not a rule.</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-layers.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/two-layers.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-layers.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/two-layers.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="/folio-assistant/assets/qa/beans-and-todos/two-layers.block.json" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
 
 <p>Two different things can change a bean, and a step that confuses them will
 announce an effect it does not have.</p>
@@ -515,7 +515,7 @@ engine never reads.</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/human-todos.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/human-todos.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/human-todos.md" class="fa-node-edit" title="Edit content/docs/beans-and-todos/human-todos.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="/folio-assistant/assets/qa/beans-and-todos/human-todos.block.json" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 23 pass, 25 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
 
 <p><strong>Not built yet</strong>, and stated here rather than left as an absence somebody has
 to notice.</p>
@@ -551,7 +551,7 @@ agent should be acting on.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35391342244"><code>7f197cd</code></a> &middot; 2026-09-18T20:25:55Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35393395775"><code>aa3b5e6</code></a> &middot; 2026-09-18T20:48:42Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
