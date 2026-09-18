@@ -9,9 +9,13 @@ import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { readFileSync } from "node:fs";
+import { registerFolioGraphKind } from "./folio-graph-kind";
 import {
+  BASE_GRAPH_KINDS,
+  defaultGraphKinds,
+  GraphKindRegistry,
+  GraphKindConflictError,
   DECLARATION_FILENAME,
-  GRAPH_KIND_NAMES,
   isRenderable,
   readDeclaration,
   renderableDirectories,
@@ -88,7 +92,18 @@ describe("reading a declaration", () => {
       JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", graph: "wishful" }] }),
       "utf-8",
     );
-    expect(() => readDeclaration(bad)).toThrow(/not a valid AgentHarness declaration/);
+    // The message must name the offending kind AND what is known, so the
+    // author can see whether they typo'd or forgot to register a dependency's
+    // contribution — those need different fixes.
+    let err: unknown;
+    try {
+      readDeclaration(bad);
+    } catch (e) {
+      err = e;
+    }
+    expect((err as Error).message).toContain('unknown graph kind "wishful"');
+    expect((err as Error).message).toContain("Known kinds:");
+    expect((err as Error).message).toContain("tools");
   });
 
   it("accepts the JSON-LD projection as input, not just the authored form", () => {
@@ -168,18 +183,53 @@ describe("layering", () => {
   });
 });
 
-describe("graph kinds", () => {
-  it("folio is the renderable kind; the others are graphs tools read", () => {
-    expect(isRenderable("folio")).toBe(true);
-    for (const k of GRAPH_KIND_NAMES.filter((k) => k !== "folio")) {
-      expect(isRenderable(k)).toBe(false);
+describe("graph kinds — the harness declares three, core adds folio", () => {
+  it("the harness's own vocabulary contains no renderable kind", () => {
+    // The whole point of the re-siting: agent-harness is NOT self-documenting,
+    // so a layer that cannot render must not own the renderable kind.
+    expect(Object.keys(BASE_GRAPH_KINDS).sort()).toEqual(["kg", "schemas", "tools"]);
+    for (const def of Object.values(BASE_GRAPH_KINDS)) {
+      expect(def.renderable).toBe(false);
     }
   });
 
-  it("every graph kind projects to a distinct @type in the folio namespace", () => {
-    const decl = { name: "x", directories: GRAPH_KIND_NAMES.map((g) => ({ id: g, path: `${g}/`, graph: g })) };
-    const types = (toJsonLd(decl).directories as Array<{ "@type": string }>).map((d) => d["@type"]);
-    expect(new Set(types).size).toBe(GRAPH_KIND_NAMES.length);
-    for (const t of types) expect(t).toContain("folio-assistant");
+  it("a bare harness registry does not know `folio` at all", () => {
+    // Not merely "documented as core's" — genuinely absent. A declaration
+    // naming it against a bare registry is refused.
+    const bare = new GraphKindRegistry();
+    expect(bare.has("folio")).toBe(false);
+    expect(bare.names().sort()).toEqual(["kg", "schemas", "tools"]);
+  });
+
+  it("core's registration adds it, and it is the renderable one", () => {
+    const reg = new GraphKindRegistry();
+    registerFolioGraphKind(reg);
+    expect(reg.has("folio")).toBe(true);
+    expect(isRenderable("folio", reg)).toBe(true);
+    for (const k of ["tools", "kg", "schemas"]) expect(isRenderable(k, reg)).toBe(false);
+  });
+
+  it("importing core registers folio into the shared registry", () => {
+    // folio-graph-kind.ts registers on import; this file imports it.
+    expect(defaultGraphKinds.has("folio")).toBe(true);
+  });
+
+  it("registering the same kind twice is a no-op — a diamond is not a conflict", () => {
+    const reg = new GraphKindRegistry();
+    registerFolioGraphKind(reg);
+    expect(() => registerFolioGraphKind(reg)).not.toThrow();
+  });
+
+  it("registering a DIFFERENT definition under one name throws", () => {
+    const reg = new GraphKindRegistry();
+    registerFolioGraphKind(reg);
+    expect(() => reg.register("folio", { type: "urn:other", renderable: false, summary: "x" }))
+      .toThrow(GraphKindConflictError);
+  });
+
+  it("every registered kind projects to a distinct @type", () => {
+    const names = defaultGraphKinds.names();
+    const types = names.map((n) => defaultGraphKinds.get(n)!.type);
+    expect(new Set(types).size).toBe(names.length);
   });
 });
