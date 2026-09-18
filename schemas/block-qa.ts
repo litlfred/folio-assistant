@@ -70,6 +70,27 @@ export interface QaReviewer {
    * (see `QaCriterionDefinition.extra_inputs`). Mismatch ⇒ stale.
    */
   deps_hash?: string;
+  /**
+   * 12-char SHA-256 prefix over the criterion DEFINITION's run-affecting
+   * fields — `profiles`, `adapters`, `applies_to`, `depends_on`,
+   * `default_severity`, `lean_granularity`. Mismatch ⇒ stale.
+   *
+   * `script_hash` covers the checker's CODE and `deps_hash` its extra INPUTS;
+   * neither covers the criterion itself, so re-scoping one left every cached
+   * verdict in place. Measured 2026-09-19: adding `profiles: ["paper"]` to
+   * `voice-scholarly-default` and re-sweeping a `document` corpus changed
+   * nothing — `qa-sweep --only` reported `fresh-skip` for every block, short-
+   * circuiting before the profile gate. Same failure the registry documents
+   * for Lean docstrings on that criterion (qou #4673): a verdict that can
+   * fail to CLEAR is worse than one that can fail to appear.
+   *
+   * Deliberately NOT over `description`: for a script criterion the prose is
+   * documentation, and hashing it would invalidate a whole corpus on a typo
+   * fix. An agent-adjudicated criterion's description IS its meaning, but
+   * agent entries are never invalidated by this field — only `kind: "script"`
+   * entries are compared.
+   */
+  def_hash?: string;
 
   // ── Agent-specific provenance (populated when kind === "agent") ──
 

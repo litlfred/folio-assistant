@@ -286,6 +286,7 @@ async function run(): Promise<void> {
       getCriterionSourceFile(id),
       getCriterionExtraInputs(id),
       REPO_ROOT,
+      QA_CRITERIA_BY_ID[id],
     );
   }
   const engineVersion = `bun-${Bun.version}`;
@@ -467,6 +468,7 @@ async function run(): Promise<void> {
         script_commit_sha:
           scriptHashes?.script_commit_sha || undefined,
         deps_hash: scriptHashes?.deps_hash,
+        def_hash: scriptHashes?.def_hash,
       };
 
       // Adapter gate, ahead of the companion gate. A criterion written for
