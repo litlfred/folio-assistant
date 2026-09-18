@@ -63,7 +63,7 @@ flowchart LR
 
 | Content type | Artifacts | Skill package |
 |--------------|-----------|---------------|
-| **Documents & policy guidance** | Markdown → HTML/PDF (no TeX) | `authoring-document` |
+| **Documents & policy guidance** | Markdown → HTML/PDF (no TeX) | `folio-document-adapter` |
 | **Scientific papers & books** | Lean 4 + LaTeX/Markdown | `authoring-math` |
 | **WHO SMART Guidelines DAKs (L2)** | BPMN, DMN, Excel, terminology | `authoring-who-smart-guidelines` |
 | **WHO SMART Implementation Guides (L3)** | FHIR / FSH / IG Publisher | `authoring-who-smart-guidelines` |

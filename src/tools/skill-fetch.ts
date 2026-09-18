@@ -45,7 +45,6 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 //                              components, FSH/SUSHI, validation, IG publication
 //   - authoring-math         : the formal-math entry points (Lean, LaTeX) that
 //                              route into folio-paper-adapter's depth
-//   - authoring-document     : bundle over folio-document-adapter's bodies
 //   - folio-core             : content-agnostic platform bundle (skills/folio-core)
 //   - folio-document-adapter : prose-folio bundle, no Lean and no required TeX
 //   - folio-paper-adapter    : formal-math paper-adapter bundle (skills/folio-paper-adapter)
@@ -81,7 +80,12 @@ export const LOCAL_PACKAGES: Record<string, string> = {
   // `skill-servable` criterion is what surfaced it and is what keeps it shut.
   "authoring-who-smart-guidelines": resolve(__dirname, "..", "..", "skills", "authoring-who-smart-guidelines"),
   "authoring-math": resolve(__dirname, "..", "..", "skills", "authoring-math"),
-  "authoring-document": resolve(__dirname, "..", "..", "skills", "authoring-document"),
+  // `authoring-document` was registered here as a "bundle over
+  // folio-document-adapter's bodies". It pointed at a directory holding a
+  // manifest and no instruction body, so `skill_fetch` on it returned nothing
+  // while `folio-document-adapter` — registered below, and holding all four —
+  // served them. Bean `nup0` consolidated the manifest into the live package
+  // and removed the empty one; nothing is lost here because nothing was served.
   "folio-core": resolve(__dirname, "..", "..", "skills", "folio-core"),
   "folio-document-adapter": resolve(__dirname, "..", "..", "skills", "folio-document-adapter"),
   "folio-paper-adapter": resolve(__dirname, "..", "..", "skills", "folio-paper-adapter"),
@@ -117,7 +121,7 @@ export function registerSkillFetchTools(server: McpServer): void {
       package_name: z.string().default("folio-core").describe(
         "Package name. Local: 'folio-assistant' | 'content-lifecycle' | 'folio-core' | " +
         "'folio-document-adapter' | 'folio-paper-adapter' | " +
-        "'authoring-who-smart-guidelines' | 'authoring-math' | 'authoring-document'. " +
+        "'authoring-who-smart-guidelines' | 'authoring-math'. " +
         "Reference: 'academic-research-skills'."
       ),
     },
