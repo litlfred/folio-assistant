@@ -6,7 +6,7 @@ nav_order: 0.1
 lang: fr
 translation_status: unverified
 translation_source: guides/agent-onboarding.md
-available_locales: ["fr"]
+available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 qa_translation_pass: 22
 qa_translation_warn: 3
 qa_translation_fail: 1
