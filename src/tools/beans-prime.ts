@@ -17,6 +17,7 @@ import { existsSync, readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { listInstances } from "../workflow/store.js";
+import { positionOf } from "../workflow/instance.js";
 import type { InstanceState } from "../workflow/instance.js";
 
 /** Run a command in the repo, returning trimmed stdout or "" on failure. */
@@ -83,7 +84,7 @@ function workflowPositions(repoRoot: string): string {
       i.status === "completed"
         ? "completed"
         : i.tokens.length
-          ? `at ${i.tokens.join(", ")}`
+          ? `at ${positionOf(i).join(", ")}`
           : "running, nothing enabled (stuck)";
     lines.push(
       `- \`${i.id}\` — ${i.subject} · ${where}` + (i.bean ? `  ← bean \`${i.bean}\`` : "  (no bean)"),

@@ -42,8 +42,8 @@
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import type { ProcessModel } from "./process-model.js";
-import { enabled, type InstanceState } from "./instance.js";
+import { findInModel, type ProcessModel } from "./process-model.js";
+import { enabled, resolveStep, type InstanceState } from "./instance.js";
 
 export class PolicyError extends Error {}
 
@@ -168,6 +168,24 @@ export function checkGate(
 ): GateVerdict {
   const node = model.nodes.get(activity);
   if (!node) {
+    // It may be a step of a subprocess running inside this one, which is where
+    // most steps live once a process is decomposed. The gate is answered by the
+    // process that OWNS the step, with that process's own enforcement and
+    // relaxations — a phase's package decides what adequate means inside it.
+    const owner = resolveStep(model, state, activity);
+    if (owner) {
+      const verdict = checkGate(owner.model, owner.state, activity, relaxations);
+      return { ...verdict, reason: `${owner.phase.join(" ▸ ")} ▸ ${verdict.reason}` };
+    }
+    const declared = findInModel(model, activity);
+    if (declared) {
+      return {
+        allowed: false,
+        reason:
+          `${activity} is a step of ${declared.phase.join(" ▸ ")}, a phase ${state.id} has not ` +
+          `entered. It becomes answerable when the process reaches that phase.`,
+      };
+    }
     return { allowed: false, reason: `${activity} is not a step in ${model.id}` };
   }
   if (model.enforcement === "advisory") {

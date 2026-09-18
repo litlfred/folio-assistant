@@ -157,7 +157,8 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
     "What is enabled RIGHT NOW in an instance — the activities that may be worked, " +
       "with the lane (role) that performs each and the skill that implements it, plus " +
       "any decision waiting on an outcome. Derived from the diagram: a step not listed " +
-      "here has not been reached yet.",
+      "here has not been reached yet. A call activity is entered automatically, so what " +
+      "is reported is the leaf step, with the phases it sits inside shown as `inside:`.",
     { instance: z.string().describe("Instance id, from workflow_start or workflow_list") },
     async ({ instance }) => {
       const state = loadInstance(root, instance);
@@ -198,7 +199,10 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
     "workflow_complete",
     "Record that an enabled step is done, or answer a decision, and advance the " +
       "process. Refuses a step that is not currently enabled — that refusal is the " +
-      "point: it is what keeps work from being claimed out of order.",
+      "point: it is what keeps work from being claimed out of order. A step inside " +
+      "a subprocess is named by its own id, exactly as workflow_next reported it; " +
+      "the call activity itself is not completable, because a phase is done when " +
+      "its steps are.",
     {
       instance: z.string(),
       node: z.string().describe("Node id from workflow_next, e.g. `Task_DraftEdit`"),

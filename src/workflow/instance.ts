@@ -81,6 +81,24 @@ export interface InstanceState {
   status: "running" | "completed";
   startedAt: string;
   updatedAt: string;
+  /**
+   * Sub-instances entered through a call activity, keyed by the call activity's
+   * node id.
+   *
+   * A subprocess is ENTERED automatically the moment a token reaches its call
+   * activity, and the parent's token stays there until the child finishes. That
+   * is deliberate: making the caller "complete" the call activity would let a
+   * whole phase be recorded as done without any of its steps being reached,
+   * which is precisely the out-of-order claim the token machine exists to
+   * refuse.
+   *
+   * A completed child is KEPT — it is the record of what happened inside that
+   * phase. It is replaced only when the phase is re-entered, which the loops in
+   * these diagrams do routinely (`document-ingestion` routes a completeness gap
+   * straight back into `Derive content`). The parent's own history carries a
+   * line per pass, so a replaced run is not a lost one.
+   */
+  children?: Record<string, InstanceState>;
 }
 
 export interface EnabledActivity {
@@ -110,6 +128,16 @@ export interface EnabledActivity {
   touchesWorkPlan: boolean;
   documentation?: string;
   calledElement?: string;
+  /**
+   * The chain of call activities this step sits inside, outermost first, as
+   * their names read on the parent diagram. Absent at the top level.
+   *
+   * This is the context a decomposed process buys: the step is `Synthesise
+   * needs from sources`, and it is inside `Phase 1 — Needs`, which is inside
+   * `CRDM requirements`. A reader handed only the leaf has to go and find the
+   * diagram to know which phase they are in.
+   */
+  phase?: string[];
 }
 
 export interface EnabledDecision {
@@ -128,6 +156,8 @@ export interface EnabledDecision {
    * `facts` names exactly what the table reads.
    */
   computed?: { decision: string; facts: string[] };
+  /** The chain of call activities this decision sits inside. See {@link EnabledActivity.phase}. */
+  phase?: string[];
 }
 
 export type Enabled = EnabledActivity | EnabledDecision;
@@ -207,6 +237,105 @@ function settle(
   }
 }
 
+/**
+ * Enter every subprocess whose call activity now holds a token.
+ *
+ * Run after the start event settles and after every advance, so a token never
+ * sits on a call activity with the phase behind it unopened. Idempotent: a call
+ * activity whose child is already recorded is left alone, which is what makes
+ * it safe to call on every transition.
+ */
+function enterSubprocesses(model: ProcessModel, state: InstanceState): void {
+  for (const tokenId of state.tokens) {
+    const child = model.children.get(tokenId);
+    if (!child) continue;
+    // Re-enter on a loop. A phase that ran, completed, and has been routed back
+    // into has to RUN AGAIN — treating the old record as "already entered" is
+    // how a re-validation silently becomes a no-op.
+    if (state.children?.[tokenId]?.status === "running") continue;
+    state.children = {
+      ...state.children,
+      [tokenId]: startInstance(child, {
+        id: `${state.id}/${tokenId}`,
+        subject: state.subject,
+        bean: state.bean,
+      }),
+    };
+  }
+}
+
+/**
+ * Where an instance actually IS — the deepest running steps, with the phases
+ * they sit inside.
+ *
+ * Reads only the instance, never a model, so a reporter that has state on disk
+ * and no diagram in hand can still say something true. `at CallActivity_Extract`
+ * is true and useless; `at Extract structure ▸ Task_Ocr` is what a reader needs.
+ */
+export function positionOf(state: InstanceState, phase: readonly string[] = []): string[] {
+  return state.tokens.flatMap((token) => {
+    const child = state.children?.[token];
+    if (child && child.status === "running") return positionOf(child, [...phase, token]);
+    return [[...phase, token].join(" ▸ ")];
+  });
+}
+
+/**
+ * Find the process (and its instance) that owns `nodeId`, descending through
+ * subprocesses.
+ *
+ * Searches COMPLETED children as well as running ones on purpose: a step in a
+ * phase that has already finished must resolve and be reported as not enabled,
+ * not as "no such step". The two answers send a reader to different places.
+ *
+ * Returns the chain of call-activity names it descended through, so a caller
+ * can say which phase the step lives in rather than only that it exists.
+ */
+export function resolveStep(
+  model: ProcessModel,
+  state: InstanceState,
+  nodeId: string,
+): { model: ProcessModel; state: InstanceState; phase: string[] } | undefined {
+  if (model.nodes.has(nodeId)) return { model, state, phase: [] };
+  for (const [call, child] of Object.entries(state.children ?? {})) {
+    const childModel = model.children.get(call);
+    if (!childModel) continue;
+    const hit = resolveStep(childModel, child, nodeId);
+    if (hit) return { ...hit, phase: [model.nodes.get(call)!.name, ...hit.phase] };
+  }
+  return undefined;
+}
+
+/** Whether this instance, or any subprocess still running inside it, holds a token on `nodeId`. */
+function holds(model: ProcessModel, state: InstanceState, nodeId: string): boolean {
+  if (state.tokens.includes(nodeId)) return true;
+  for (const [call, child] of Object.entries(state.children ?? {})) {
+    const childModel = model.children.get(call);
+    if (!childModel || child.status !== "running") continue;
+    if (holds(childModel, child, nodeId)) return true;
+  }
+  return false;
+}
+
+/**
+ * The running subprocess that owns `nodeId`, if one does.
+ *
+ * Returns the call activity's own node id, so the caller knows which parent
+ * token to release when the child finishes.
+ */
+function subprocessOwning(
+  model: ProcessModel,
+  state: InstanceState,
+  nodeId: string,
+): { call: string; model: ProcessModel; state: InstanceState } | undefined {
+  for (const [call, child] of Object.entries(state.children ?? {})) {
+    const childModel = model.children.get(call);
+    if (!childModel || child.status !== "running") continue;
+    if (holds(childModel, child, nodeId)) return { call, model: childModel, state: child };
+  }
+  return undefined;
+}
+
 export function startInstance(
   model: ProcessModel,
   opts: { id: string; subject: string; bean?: string; startNode?: string },
@@ -229,6 +358,7 @@ export function startInstance(
     updatedAt: now(),
   };
   settle(model, state, startNode, "");
+  enterSubprocesses(model, state);
   state.updatedAt = now();
   return state;
 }
@@ -252,11 +382,25 @@ export function enabled(model: ProcessModel, state: InstanceState, roles?: RoleG
   const roleFor = (node: { lane?: string; roleRef?: string }): string | undefined =>
     roles ? roleForLane(roles, node.lane, node.roleRef)?.id : undefined;
 
-  return state.tokens.map((id) => {
+  return state.tokens.flatMap((id): Enabled[] => {
     const node = model.nodes.get(id)!;
+
+    // A call activity with a subprocess running inside it is not itself work —
+    // the work is in there. Report the child's enabled steps, tagged with the
+    // phase they sit in, so a reader gets MORE context from the decomposition
+    // rather than an opaque box they cannot act on.
+    const child = state.children?.[id];
+    const childModel = model.children.get(id);
+    if (child && childModel && child.status === "running") {
+      return enabled(childModel, child, roles).map((e) => ({
+        ...e,
+        phase: [node.name, ...(e.phase ?? [])],
+      }));
+    }
+
     if (node.kind === "exclusive") {
       const table = model.decisions.get(node.id);
-      return {
+      return [{
         kind: "decision" as const,
         node: node.id,
         name: node.name,
@@ -266,10 +410,10 @@ export function enabled(model: ProcessModel, state: InstanceState, roles?: RoleG
         computed: table
           ? { decision: table.id, facts: table.inputs.map((i) => i.expression) }
           : undefined,
-      };
+      }];
     }
     const roleId = roleFor(node);
-    return {
+    return [{
       kind: "activity" as const,
       node: node.id,
       name: node.name,
@@ -280,7 +424,7 @@ export function enabled(model: ProcessModel, state: InstanceState, roles?: RoleG
       touchesWorkPlan: node.touchesWorkPlan,
       documentation: node.documentation,
       calledElement: node.calledElement,
-    };
+    }];
   });
 }
 
@@ -307,14 +451,31 @@ export function complete(
     throw new WorkflowError(`instance ${state.id} is ${state.status}`);
   }
   const node = model.nodes.get(nodeId);
-  if (!node) throw new WorkflowError(`no such node: ${nodeId}`);
+  if (!node) {
+    // Not a node of THIS process — but it may be a step of a subprocess running
+    // inside it, which is the normal case once a diagram is decomposed. The
+    // caller names the leaf step, exactly as `workflow_next` reported it.
+    const owner = subprocessOwning(model, state, nodeId);
+    if (owner) return completeInSubprocess(model, state, owner, nodeId, opts);
+    throw new WorkflowError(`no such node: ${nodeId}`);
+  }
   if (!state.tokens.includes(nodeId)) {
+    const owner = subprocessOwning(model, state, nodeId);
+    if (owner) return completeInSubprocess(model, state, owner, nodeId, opts);
     const open = enabled(model, state).map((e) => e.node);
     throw new WorkflowError(
       `${nodeId} is not enabled in instance ${state.id}. ` +
         (open.length
           ? `Enabled now: ${open.join(", ")}.`
           : `Nothing is enabled; the instance is finished or stuck.`),
+    );
+  }
+  if (state.children?.[nodeId]?.status === "running") {
+    const open = enabled(model, state).map((e) => e.node);
+    throw new WorkflowError(
+      `${nodeId} ("${node.name}") is a subprocess, not a step. It finishes when its own ` +
+        `steps do — complete those instead` +
+        (open.length ? `: ${open.join(", ")}.` : "."),
     );
   }
 
@@ -389,10 +550,39 @@ export function complete(
     const flow = model.flows.get(flowId)!;
     settle(model, state, flow.to, flow.id);
   }
+  enterSubprocesses(model, state);
 
   if (state.tokens.length === 0) state.status = "completed";
   state.updatedAt = now();
   return state;
+}
+
+/**
+ * Record a step that belongs to a subprocess, and release the parent when the
+ * subprocess finishes.
+ *
+ * The parent's token sits on the call activity for as long as the child runs,
+ * so there is nothing to do here until the child completes — at which point the
+ * phase is genuinely done and the parent advances the same way it would off any
+ * other activity. `complete` is re-entered rather than open-coded so the
+ * parent's own history entry, bean operation and onward routing are the ones
+ * every other step gets.
+ */
+function completeInSubprocess(
+  model: ProcessModel,
+  state: InstanceState,
+  owner: { call: string; model: ProcessModel; state: InstanceState },
+  nodeId: string,
+  opts: Parameters<typeof complete>[3],
+): InstanceState {
+  const child = complete(owner.model, owner.state, nodeId, opts);
+  state.children = { ...state.children, [owner.call]: child };
+  state.updatedAt = now();
+  if (child.status !== "completed") return state;
+  return complete(model, state, owner.call, {
+    actor: opts?.actor,
+    note: `subprocess ${child.processId} completed`,
+  });
 }
 
 /** A short human- and agent-readable rendering of where an instance is. */
@@ -417,6 +607,7 @@ export function describe(model: ProcessModel, state: InstanceState, roles?: Role
         lines.push(
           `    ? ${e.name}  [${e.node}]${e.lane ? `  — ${e.lane}` : ""}${e.role ? `  (role: ${e.role})` : ""}`,
         );
+        if (e.phase?.length) lines.push(`        inside: ${e.phase.join(" ▸ ")}`);
         if (e.computed) {
           lines.push(
             `        computed by ${e.computed.decision} — supply facts: ${e.computed.facts.join(", ")}`,
@@ -428,6 +619,7 @@ export function describe(model: ProcessModel, state: InstanceState, roles?: Role
       } else {
         lines.push(
           `    • ${e.name}  [${e.node}]${e.lane ? `  — ${e.lane}` : ""}`,
+          ...(e.phase?.length ? [`        inside: ${e.phase.join(" ▸ ")}`] : []),
           ...(e.role ? [`        acting as: ${e.role}`] : []),
           ...(e.skills.length ? [`        skill: ${e.skills.join(", ")}`] : []),
           ...(e.role && e.roleSkills?.length
