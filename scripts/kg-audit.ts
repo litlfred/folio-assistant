@@ -43,7 +43,7 @@
 
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { basename, join, relative, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 
 import {
   KG_QA_SCHEMA,
@@ -312,6 +312,91 @@ async function auditDecisions(
 
 // ── Per-role criteria ───────────────────────────────────────────
 
+/**
+ * Every skill file, across every package.
+ *
+ * Walks `skills/` rather than reading a manifest: a skill a manifest forgot is
+ * still a file an agent can be pointed at, and the audit should see it.
+ * `kg-qa/` is excluded — those are this audit's own sidecars.
+ */
+function skillFiles(): string[] {
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = join(dir, e.name);
+      if (e.isDirectory()) {
+        if (e.name !== KG_QA_DIRNAME) walk(p);
+      } else if (e.name.endsWith(".md")) {
+        out.push(p);
+      }
+    }
+  };
+  walk(KG_ROOT);
+  return out.sort();
+}
+
+/**
+ * Brevity, measured per skill and recorded in a sidecar.
+ *
+ * Brevity is a property of an artefact, so it belongs here rather than as
+ * advice inside the skill files. "Aim for shortness" in twenty skills is
+ * twenty sentences nothing measures, nothing enforces, and every future edit
+ * quietly ignores. A number in a sidecar is checkable and its trend is
+ * visible in the diff.
+ *
+ * Thresholds measured across 123 skill files on 2026-09-18: median 178,
+ * p75 279, p90 391, max 1280 lines. 280 and 400 are those two percentiles
+ * rounded — "longer than three quarters of its peers" rather than an opinion.
+ */
+function auditSkills(auditorHash: string): KgQaReport[] {
+  const out: KgQaReport[] = [];
+  for (const file of skillFiles()) {
+    const rel = relative(root, file);
+    const lines = readFileSync(file, "utf-8").split("\n");
+    const n = lines.length;
+
+    // Headings only, and only at the same depth — two `### Why` under
+    // different `##` sections are not a repeat. Comparing across depths would
+    // flag every skill with a conventional structure.
+    const seen = new Map<string, number>();
+    const repeats: KgFinding[] = [];
+    let inFence = false;
+    for (const l of lines) {
+      if (/^```/.test(l.trim())) { inFence = !inFence; continue; }
+      if (inFence) continue;
+      const m = /^(#{2,6})\s+(.+?)\s*$/.exec(l);
+      if (!m) continue;
+      const key = `${m[1]!.length}:${m[2]!.toLowerCase()}`;
+      const prior = seen.get(key);
+      if (prior !== undefined) {
+        repeats.push({ where: rel, detail: `heading "${m[2]}" repeated (also at line ${prior})` });
+      } else {
+        seen.set(key, lines.indexOf(l) + 1);
+      }
+    }
+
+    out.push(
+      report(
+        "skill",
+        basename(file, ".md"),
+        rel,
+        createHash("sha256").update(readFileSync(file)).digest("hex").slice(0, 12),
+        {
+          "skill-is-brief": entry(
+            n > 280 ? [{ where: rel, detail: `${n} lines; p75 of the skill corpus is 279.` }] : [],
+          ),
+          "skill-not-a-document": entry(
+            n > 400 ? [{ where: rel, detail: `${n} lines; p90 is 391. At this length it is a document.` }] : [],
+          ),
+          "skill-no-repeated-heading": entry(repeats),
+        },
+        auditorHash,
+      ),
+    );
+  }
+  return out;
+}
+
 function auditRoles(
   graph: RoleGraph,
   graphPath: string,
@@ -474,10 +559,18 @@ function auditGraph(
 // ── Sidecar IO ──────────────────────────────────────────────────
 
 function sidecarPath(r: KgQaReport): string {
+  // A skill's sidecar sits beside the skill, because skills live under
+  // several packages and a single directory would collide two packages'
+  // same-named skills into one file.
+  if (r.subject.kind === "skill" && r.subject.path) {
+    const abs = join(root, r.subject.path);
+    return join(dirname(abs), KG_QA_DIRNAME, `${basename(abs, ".md")}.kg-qa.json`);
+  }
   const dirFor: Record<KgSubjectKind, string> = {
     process: join(WORKFLOW_DIR, KG_QA_DIRNAME),
     decision: join(DECISION_DIR, KG_QA_DIRNAME),
     role: join(KG_ROOT, "roles", KG_QA_DIRNAME),
+    skill: join(KG_ROOT, KG_QA_DIRNAME),
     graph: join(KG_ROOT, "roles", KG_QA_DIRNAME),
   };
   const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json)$/, "") : r.subject.id;
@@ -520,6 +613,7 @@ reports.push(...(await auditDecisions(processes, auditorHash)));
 if (graph) {
   reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills, auditorHash));
 }
+reports.push(...auditSkills(auditorHash));
 reports.push(auditGraph(graph, processes, actors, skills, auditorHash));
 
 // Write or compare.

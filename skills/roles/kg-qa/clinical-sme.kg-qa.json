@@ -5,10 +5,10 @@
     "id": "clinical-sme",
     "path": "skills/roles/roles.json"
   },
-  "source_hash": "sha256:3c9ac5a35afb8012ba26a28c7dc56c9f3c93aca10a6aad45e784e1e099d5e9c5",
+  "source_hash": "sha256:5deabb7e7017ab48d05ba59d82af9a5e002cb3c931e1e713f7c81d6d842abb2f",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:26eb3a8cd4f3263885177f20a482fda44fbefb59d6c9e5171ac87c993478abe4",
+    "script_hash": "sha256:94a2c9526927c4b50baf499fdcb9001569ab28d97b93df7680b752596c28da07",
     "engine_version": "1"
   },
   "criteria": {
@@ -25,31 +25,16 @@
       "findings": []
     },
     "role-has-persona": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "clinical-sme",
-          "detail": "role \"clinical-sme\" has no persona — an author has nobody to write for."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "role-declares-voice": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "clinical-sme",
-          "detail": "role \"clinical-sme\" declares no voice — authoring and QA would each pick their own."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "role-has-use-cases": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "clinical-sme",
-          "detail": "role \"clinical-sme\" declares no use cases — nothing says what this reader came to do."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "role-has-actor": {
       "result": "pass",
@@ -57,8 +42,8 @@
     }
   },
   "totals": {
-    "pass": 4,
-    "fail": 3,
+    "pass": 7,
+    "fail": 0,
     "n/a": 0,
     "unknown": 0
   }

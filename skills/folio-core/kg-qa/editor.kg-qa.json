@@ -1,0 +1,39 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "editor",
+    "path": "skills/folio-core/editor.md"
+  },
+  "source_hash": "45f873c2cc63",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:94a2c9526927c4b50baf499fdcb9001569ab28d97b93df7680b752596c28da07",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/editor.md",
+          "detail": "331 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 2,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

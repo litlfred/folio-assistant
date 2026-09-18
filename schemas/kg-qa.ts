@@ -58,7 +58,7 @@ export const KG_QA_SCHEMA = "kg-qa/v1";
 export const KG_QA_DIRNAME = "kg-qa";
 
 /** What kind of node a sidecar audits. */
-export const KG_SUBJECT_KINDS = ["process", "decision", "role", "graph"] as const;
+export const KG_SUBJECT_KINDS = ["process", "decision", "role", "skill", "graph"] as const;
 export type KgSubjectKind = (typeof KG_SUBJECT_KINDS)[number];
 
 /** Outcome of one criterion. `unknown` is never a pass. */
@@ -185,6 +185,44 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "A role declares no `useCases` — what this reader is trying to do. 'Is this well written' is " +
       "unanswerable; 'does this let them do the thing they came for' is not.",
+  },
+  // ── Is this skill short enough to be READ? ────────────────────
+  //
+  // A skill is read before acting, every time, by an agent with a finite
+  // context. Length is a cost paid on every invocation, so it is a property of
+  // the artefact and belongs in a sidecar — not an exhortation in the skill
+  // files themselves, which is advice nothing measures and nothing enforces.
+  //
+  // Thresholds are MEASURED, not chosen. Across 123 skill files on
+  // 2026-09-18 (`find skills -name "*.md" -not -path "*/kg-qa/*" -exec wc -l`):
+  // 26,532 lines total, median 178, p75 279, p90 391, max 1280.
+  //
+  // `major` at 400 is roughly p90 — the tenth of files that are documents
+  // rather than instructions. `minor` at 280 is roughly p75. Neither is a
+  // style opinion; both say "this is longer than three quarters of its peers".
+  {
+    id: "skill-is-brief",
+    applies: ["skill"],
+    severity: "minor",
+    summary:
+      "A skill is longer than 280 lines (p75 of the corpus) — an agent reads it before acting, " +
+      "every time, and length is a cost paid on every invocation.",
+  },
+  {
+    id: "skill-not-a-document",
+    applies: ["skill"],
+    severity: "major",
+    summary:
+      "A skill is longer than 400 lines (p90) — at that length it is a document, and an agent that " +
+      "skims it follows the part it happened to read.",
+  },
+  {
+    id: "skill-no-repeated-heading",
+    applies: ["skill"],
+    severity: "minor",
+    summary:
+      "A skill repeats a heading. The same section said twice is the redundancy that makes a long " +
+      "skill long, and it leaves an agent no way to tell which copy governs.",
   },
   {
     id: "decision-outcomes-used",
