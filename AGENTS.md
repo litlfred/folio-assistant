@@ -21,8 +21,34 @@ are thin stubs pointing here.
 > Sections below that still carry substantive rules rather than pointers are
 > **migration debt**, not precedent. Adding to them widens it.
 >
+> ### Getting skills
+>
+> **Skills are knowledge-graph content, not a directory you memorise.** They
+> live in the `kg` graph an instance declares in its root
+> `agent-harness.json` — in this repo that id maps to `skills/`, but an
+> instance may put it anywhere, and a downstream instance **inherits** its
+> dependencies' skills through the same declaration. Hardcoding a path is how
+> a skill goes missing the moment the layout moves.
+>
+> Ask for a skill rather than opening a file:
+>
+> - **`skill_list`** — what skills exist here, with their one-line summaries.
+> - **`skill_fetch`** — load a named skill's instructions.
+> - **`work_plan_prime`** — the work plan, for any MCP-connected agent.
+> - No MCP? Resolve the `kg` graph from `agent-harness.json`
+>   (`schemas/agent-harness.ts`) and read from the directory it names.
+>
+> Conventions for the declaration and its graph kinds:
+> [`skills/folio-core/directory-conventions.md`](skills/folio-core/directory-conventions.md).
+>
+> **Known gap, so you are not surprised:** `resolveSkillDirs` in
+> `schemas/folio-config.ts` computes the cross-instance skill overlay and has
+> **no caller** — so today skill discovery is root-only in practice, and a
+> dependency's skills are not yet reachable. Wiring it is outstanding Phase 0.1
+> work.
+>
 > Start here: [`docs/guides/agent-onboarding.md`](docs/guides/agent-onboarding.md),
-> then the skill for your task under [`skills/`](skills/).
+> then ask for the skill that governs your task.
 
 > **folio-assistant is the platform, not the content.** It holds the skills,
 > schemas, pipeline, and MCP server an agent uses to author a *folio* — a paper,

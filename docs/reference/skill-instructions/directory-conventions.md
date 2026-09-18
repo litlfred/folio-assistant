@@ -121,6 +121,22 @@ the projection emits `@type` *instead of* `graph`, so reading the published
 form back without the reverse lookup silently loses the one field that says
 what a directory holds.
 
+## Skills are KG content
+
+The `kg` graph is where skills live, and that is why they are addressed through
+the declaration rather than by path. An agent asks `skill_list` / `skill_fetch`
+for a skill; it does not open `skills/<something>.md` from memory. An instance
+may site its `kg` anywhere — this repo's `kg` id points at `skills/` — and a
+downstream instance inherits its dependencies' skills through the same
+inheritance rules above. A hardcoded path breaks on the first relocation, which
+is the whole reason overrides match on `id`.
+
+**Not yet true end to end.** `resolveSkillDirs` (`schemas/folio-config.ts`)
+computes the cross-instance overlay and has **no caller**, so skill discovery is
+root-only in practice today and a dependency's skills are not reachable. Stated
+here rather than implied, because an agent that assumes inheritance works will
+silently miss half its instructions.
+
 ## Layering — a harness module must not import the content vocabulary
 
 The declaration schema needs the platform's IRI namespace to mint `@type`
