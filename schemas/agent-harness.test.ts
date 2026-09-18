@@ -8,10 +8,9 @@
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
-import { FOLIO_NS } from "./jsonld";
+import { readFileSync } from "node:fs";
 import {
   DECLARATION_FILENAME,
-  HARNESS_NS,
   GRAPH_KIND_NAMES,
   isRenderable,
   readDeclaration,
@@ -153,12 +152,19 @@ describe("inheritance — the Phase 0.3 gate", () => {
   });
 });
 
-describe("namespace", () => {
-  it("HARNESS_NS equals FOLIO_NS — same platform, one namespace", () => {
-    // The harness declares its own constant rather than importing the content
-    // vocabulary, so that agentic-harness does not depend on folio-assist-core
-    // for its own type IRIs. This test is what stops the two drifting.
-    expect(HARNESS_NS).toBe(FOLIO_NS);
+describe("layering", () => {
+  it("does not import the content vocabulary", () => {
+    // The property, pinned structurally rather than by a drift guard: this is
+    // a HARNESS-layer module, and `schemas/jsonld.ts` is folio-assist-core's
+    // content vocabulary (block kinds, DoCO types, SPAR citation terms).
+    // Importing it would make agentic-harness depend on the content model for
+    // its own type IRIs — a harness -> core edge, already the largest
+    // wrong-direction group, and the coupling the split exists to undo.
+    // The namespace comes from the leaf `./namespaces` instead.
+    const src = readFileSync(join(import.meta.dir, "agent-harness.ts"), "utf-8");
+    expect(src).not.toMatch(/from "\.\/jsonld"/);
+    expect(src).not.toMatch(/from "\.\/block-kinds"/);
+    expect(src).toMatch(/from "\.\/namespaces"/);
   });
 });
 

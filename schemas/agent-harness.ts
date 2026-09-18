@@ -59,22 +59,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { z } from "zod";
 
-/**
- * The published namespace, declared here rather than imported from
- * `schemas/jsonld.ts`.
- *
- * It is the same IRI, and that is deliberate — one platform, one namespace.
- * But `jsonld.ts` is the **content** vocabulary (block kinds, DoCO types,
- * citation terms), which belongs to `folio-assist-core`. A harness-layer
- * module importing it would make `agentic-harness` depend on the content model
- * for its own type IRIs, which is precisely the coupling
- * `bun run check:partition` reports 21 instances of and the split has to undo.
- *
- * `agent-harness.test.ts` asserts this equals `FOLIO_NS`, so the two cannot
- * drift apart without a test failing. A duplicated constant with a guard beats
- * an import that inverts a dependency.
- */
-export const HARNESS_NS = "https://litlfred.github.io/folio-assistant/ns#";
+import { FOLIO_NS } from "./namespaces";
 
 /** Root-relative filename carrying an instance's declaration. */
 export const DECLARATION_FILENAME = "agent-harness.json";
@@ -93,22 +78,22 @@ export const DECLARATION_FILENAME = "agent-harness.json";
  */
 export const GRAPH_KINDS = {
   folio: {
-    type: `${HARNESS_NS}FolioGraph`,
+    type: `${FOLIO_NS}FolioGraph`,
     renderable: true,
     summary: "Authored content, rendered to a website by the just-the-docs pipeline.",
   },
   tools: {
-    type: `${HARNESS_NS}ToolGraph`,
+    type: `${FOLIO_NS}ToolGraph`,
     renderable: false,
     summary: "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
   },
   kg: {
-    type: `${HARNESS_NS}KnowledgeGraph`,
+    type: `${FOLIO_NS}KnowledgeGraph`,
     renderable: false,
     summary: "Skills, workflows, roles — the instance's own knowledge graph.",
   },
   schemas: {
-    type: `${HARNESS_NS}SchemaGraph`,
+    type: `${FOLIO_NS}SchemaGraph`,
     renderable: false,
     summary: "Schema definitions, self-declared in the smart-base manner.",
   },
@@ -292,8 +277,8 @@ export function renderableDirectories(dirs: ResolvedDirectory[]): ResolvedDirect
  */
 export function toJsonLd(decl: AgentHarnessDeclaration): Record<string, unknown> {
   return {
-    "@context": { fa: HARNESS_NS, path: `${HARNESS_NS}path`, directories: `${HARNESS_NS}scans` },
-    "@type": `${HARNESS_NS}AgentHarness`,
+    "@context": { fa: FOLIO_NS, path: `${FOLIO_NS}path`, directories: `${FOLIO_NS}scans` },
+    "@type": `${FOLIO_NS}AgentHarness`,
     name: decl.name,
     directories: decl.directories.map((d) => ({
       "@id": `#${d.id}`,

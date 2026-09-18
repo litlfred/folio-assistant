@@ -121,6 +121,29 @@ the projection emits `@type` *instead of* `graph`, so reading the published
 form back without the reverse lookup silently loses the one field that says
 what a directory holds.
 
+## Layering — a harness module must not import the content vocabulary
+
+The declaration schema needs the platform's IRI namespace to mint `@type`
+values. That namespace used to live in `schemas/jsonld.ts`, which is
+`folio-assist-core`'s **content** vocabulary — block kinds, DoCO structural
+types, SPAR citation terms. Importing it would have made `agentic-harness`
+depend on the content model for its own type IRIs: a `harness → core` edge,
+already the largest wrong-direction group `bun run check:partition` reports.
+
+It is now `schemas/namespaces.ts`, a leaf that imports nothing, classified to
+the harness. The direction only works one way round — **core may import the
+harness; the harness may not import core** — so a constant both layers need has
+to live at or below the harness. Putting it in core reintroduces the edge.
+
+The first attempt was a duplicated constant in the harness module with a test
+asserting the two stayed equal. That works and is worse: **a drift guard is an
+admission that there are two definitions.** Extract instead, and re-export from
+the old home so existing importers are untouched.
+
+`agent-harness.test.ts` pins the property structurally — it asserts the module
+does not import `./jsonld` or `./block-kinds`. Reach for that test when adding
+anything else at the harness layer.
+
 ## Adding a graph kind
 
 One entry in `GRAPH_KINDS` (`schemas/agent-harness.ts`): its `@type` IRI, its
