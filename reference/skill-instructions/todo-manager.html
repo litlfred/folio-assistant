@@ -567,13 +567,38 @@ is urgent, adjacent, or already obsolete without opening the store — and askin
 someone to go look things up is the cost this report exists to remove. Link to
 the bean file so one click gets the full body.</p>
 
-<p><strong>2. Asking for review means linking the artefact.</strong> If a turn ends with
-“please look at this”, it must carry the <strong>staging URL</strong>, the PR link, and — if
-the change is a page — the direct path to the page that changed. <code class="language-plaintext highlighter-rouge">AGENTS.md</code>
-already records why (PR #178, 2026-09-16): a human cannot assess a rendered
-artefact from a description, and withholding it makes assessment harder rather
-than safer. Making the reader <em>find</em> the preview is the same failure one step
-down.</p>
+<p><strong>2. Asking for review means linking the artefact — deep, not the root.</strong> If a
+turn ends with “please look at this”, it must carry the <strong>PR link</strong> and a
+<strong>direct link to every page that changed</strong>, not the staging root.</p>
+
+<blockquote>
+  <p>✗ <code class="language-plaintext highlighter-rouge">https://…/STAGING/claude-my-branch/</code></p>
+
+  <p>✓ <strong>Staging:</strong></p>
+  <ul>
+    <li><a href="https://…/STAGING/claude-my-branch/swarm-management.html">Swarm management</a> — new page</li>
+    <li><a href="https://…/STAGING/claude-my-branch/reference/skill-instructions/process-state.html">process-state</a> — new skill</li>
+    <li><a href="https://…/STAGING/claude-my-branch/architecture.html">Architecture</a> — nav entry added</li>
+  </ul>
+</blockquote>
+
+<p>Handing over the root makes the reader navigate a site to find what you
+changed. You already know which pages those are — you wrote them — so the
+lookup is yours to do, not theirs. Say what each link <em>is</em>, too: a bare URL
+does not tell a reader whether it is new, changed, or just context.</p>
+
+<p><code class="language-plaintext highlighter-rouge">AGENTS.md</code> records the underlying rule (PR #178, 2026-09-16): a human cannot
+assess a rendered artefact from a description, and withholding it makes
+assessment harder rather than safer. <strong>A root-only link is a partial
+withholding</strong> — the artefact is technically reachable and practically hidden.</p>
+
+<p><strong>Where to get the links.</strong> The staging workflow deploys to
+<code class="language-plaintext highlighter-rouge">…/STAGING/&lt;branch-slug&gt;/</code>, and Jekyll rewrites <code class="language-plaintext highlighter-rouge">baseurl</code> so paths mirror
+<code class="language-plaintext highlighter-rouge">docs/</code>. A page at <code class="language-plaintext highlighter-rouge">docs/architecture/foo.md</code> is at
+<code class="language-plaintext highlighter-rouge">…/STAGING/&lt;slug&gt;/architecture/foo.html</code>; a skill at
+<code class="language-plaintext highlighter-rouge">skills/&lt;pkg&gt;/bar.md</code> is at
+<code class="language-plaintext highlighter-rouge">…/STAGING/&lt;slug&gt;/reference/skill-instructions/bar.html</code>. Derive one per
+changed file rather than guessing which the reader wants.</p>
 
 <p><strong>3. Say what to review, not just that it is green.</strong> “Green on all three
 workflows” says the PR is not broken. It does not say what the change <strong>does</strong>,
@@ -767,7 +792,7 @@ You can map out sequence blockers using:
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35375577046"><code>d2afb84</code></a> &middot; 2026-09-18T17:39:40Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35376117215"><code>80d5b84</code></a> &middot; 2026-09-18T17:45:22Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
