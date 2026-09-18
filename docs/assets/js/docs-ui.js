@@ -853,6 +853,16 @@
   }
 
   function init() {
+    // RTL detection — Arabic pages get dir="rtl" on <html> which
+    // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
+    var meta = getTranslationMeta();
+    var pageLang = (meta && meta.lang) || "en";
+    var RTL_LANGS = ["ar", "he", "fa", "ur"];
+    if (RTL_LANGS.indexOf(pageLang) !== -1) {
+      document.documentElement.setAttribute("dir", "rtl");
+      document.documentElement.setAttribute("lang", pageLang);
+    }
+
     mountQr();
     mountTranslationBadges();
     // Figures are mounted only after the inlining settles, so the scan sees the
