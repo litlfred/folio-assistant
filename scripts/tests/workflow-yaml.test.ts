@@ -22,6 +22,7 @@
  * being discovered as an uninformative red X afterwards.
  */
 import { describe, test, expect } from "bun:test";
+import { checkWorkflows, GH_PAGES_GROUP } from "../check-workflows.js";
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 
@@ -75,6 +76,21 @@ describe("GitHub Actions workflows", () => {
    * A dispatch-only gate is indistinguishable from a working one until you
    * look at the Actions tab and find no runs. This is the check that looks.
    */
+  test("every job that pushes gh-pages shares one concurrency group", () => {
+    // A concurrency group serialises only the jobs that NAME it, and this one
+    // has been incomplete twice. First `eoix` gave it to feature-staging's two
+    // jobs alone, so six other push sites still raced — PR #297 lost a staging
+    // push to exactly that on 2026-09-18. Then, less visibly, `blueprint` and
+    // `lean_ci` turned out to have had the right idea under a DIFFERENT name
+    // (`gh-pages-deploy`), which queues against nothing while reading like a
+    // solved problem.
+    expect(checkWorkflows().filter((f) => f.kind === "gh-pages-ungrouped")).toEqual([]);
+  });
+
+  test("the group is one literal string, because a group matches on the literal", () => {
+    expect(GH_PAGES_GROUP).toBe("gh-pages-push");
+  });
+
   test("code-quality-gates.yml actually triggers on pull_request", () => {
     const doc = Bun.YAML.parse(
       readFileSync(join(WORKFLOW_DIR, "code-quality-gates.yml"), "utf-8"),
