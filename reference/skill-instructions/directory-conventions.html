@@ -605,6 +605,65 @@ the old home so existing importers are untouched.</p>
 <p><code class="language-plaintext highlighter-rouge">agent-harness.test.ts</code> pins the property structurally — it asserts the module
 does not import <code class="language-plaintext highlighter-rouge">./jsonld</code> or <code class="language-plaintext highlighter-rouge">./block-kinds</code>. Reach for that test when adding
 anything else at the harness layer.</p>
+<h2 id="what-lives-in-the-schemas-graph--one-authored-form-many-renderings">
+  
+  
+    <a href="#what-lives-in-the-schemas-graph--one-authored-form-many-renderings" class="anchor-heading" aria-labelledby="what-lives-in-the-schemas-graph--one-authored-form-many-renderings"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What lives in the <code class="language-plaintext highlighter-rouge">schemas</code> graph — one authored form, many renderings
+  
+  
+</h2>
+    
+
+<p>The <code class="language-plaintext highlighter-rouge">schemas</code> directory holds schema definitions, and the convention for every
+one of them is the same: <strong>the Zod schema in <code class="language-plaintext highlighter-rouge">.ts</code> is authoritative, and every
+other form is generated from it.</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>schemas/&lt;thing&gt;.ts                    ← AUTHORED.  Zod + the inferred type.
+  ├─→ schemas/generated/&lt;Thing&gt;.schema.json    JSON Schema  (validators, editors)
+  └─→ a JSON-LD projection                     KG node      (queryable)
+</code></pre></div></div>
+
+<p>The TypeScript type is <code class="language-plaintext highlighter-rouge">z.infer&lt;typeof Schema&gt;</code>, never declared alongside the
+schema — two declarations of one shape drift, and the drift is invisible until
+something reads the stale one.</p>
+
+<p>Both renderings already have their mechanism, so adding a schema introduces no
+new machinery: <code class="language-plaintext highlighter-rouge">scripts/generate-schemas.ts</code> walks a map of Zod schemas through
+<code class="language-plaintext highlighter-rouge">zodToJsonSchema</code> into <code class="language-plaintext highlighter-rouge">schemas/generated/</code>, and <code class="language-plaintext highlighter-rouge">toJsonLd()</code> in
+<code class="language-plaintext highlighter-rouge">schemas/agent-harness.ts</code> is the worked example of the graph projection.</p>
+
+<p><strong>Generate as many renderings as have a consumer, and no more.</strong> JSON Schema
+because validators and editors speak it; JSON-LD because the KG query path
+does. A third — SHACL, an OpenAPI fragment, Turtle — is added when something
+needs it, not in anticipation: each is another file to regenerate and another
+chance for a stale artefact to be read as current.</p>
+
+<p><strong>A rendering is never where a fix lands.</strong> If a generated <code class="language-plaintext highlighter-rouge">.schema.json</code> is
+wrong, the <code class="language-plaintext highlighter-rouge">.ts</code> is wrong; edit that and regenerate. A <code class="language-plaintext highlighter-rouge">--check</code> mode in CI —
+the pattern <code class="language-plaintext highlighter-rouge">gen-skill-docs.ts --check</code> already uses — is what makes that
+enforceable rather than merely asserted.</p>
+<h3 id="why-not-author-the-rendering-and-validate-backwards">
+  
+  
+    <a href="#why-not-author-the-rendering-and-validate-backwards" class="anchor-heading" aria-labelledby="why-not-author-the-rendering-and-validate-backwards"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why not author the rendering and validate backwards
+  
+  
+</h3>
+    
+
+<p>The tempting inversion is to hand-author the JSON-LD node, because it is the
+form the KG consumes, and validate it against Zod in CI. That is the same two
+artefacts with the authority pointing the wrong way, and it is worse for one
+reason: <strong>a hand-authored node is unchecked until CI runs.</strong> With Zod
+authoritative the schema <em>is</em> the type, so a malformed definition fails at
+<code class="language-plaintext highlighter-rouge">tsc</code>, in the editor, before it is committed. Validation-after-the-fact catches
+the same error strictly later and only if CI is green — and bean <code class="language-plaintext highlighter-rouge">dzl3</code> is this
+repository’s evidence that a suite can sit non-running for as long as it has
+existed.</p>
+
+<p>Decided 2026-09-18 by the repository owner, for the Tools schema and for
+everything else in the <code class="language-plaintext highlighter-rouge">schemas</code> graph. Worked through in
+<code class="language-plaintext highlighter-rouge">docs/architecture/agent-harness-minimum.md</code> §”Carrying it”.</p>
 <h2 id="adding-a-graph-kind">
   
   
@@ -645,7 +704,7 @@ rendering pipeline depends on.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35379907945"><code>8623bfd</code></a> &middot; 2026-09-18T18:24:26Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35380148647"><code>b1948ca</code></a> &middot; 2026-09-18T18:26:54Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

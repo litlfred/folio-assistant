@@ -335,7 +335,11 @@
   </li>
   <li><a href="#agent-harness-tools--the-minimum" id="markdown-toc-agent-harness-tools--the-minimum"><code class="language-plaintext highlighter-rouge">agent-harness-tools</code> — the minimum</a></li>
   <li><a href="#strawperson-the-tools-repo-schema" id="markdown-toc-strawperson-the-tools-repo-schema">Strawperson: the Tools-repo schema</a>    <ol>
-      <li><a href="#three-ways-to-carry-it--pros-and-cons" id="markdown-toc-three-ways-to-carry-it--pros-and-cons">Three ways to carry it — pros and cons</a></li>
+      <li><a href="#carrying-it--authored-once-in-zod-rendered-downstream" id="markdown-toc-carrying-it--authored-once-in-zod-rendered-downstream">Carrying it — authored once in Zod, rendered downstream</a>        <ol>
+          <li><a href="#why-not-the-other-three-including-the-one-i-first-recommended" id="markdown-toc-why-not-the-other-three-including-the-one-i-first-recommended">Why not the other three, including the one I first recommended</a></li>
+          <li><a href="#what-as-many-renderings-as-make-sense-means-in-practice" id="markdown-toc-what-as-many-renderings-as-make-sense-means-in-practice">What “as many renderings as make sense” means in practice</a></li>
+        </ol>
+      </li>
     </ol>
   </li>
   <li><a href="#the-documentation-move-table" id="markdown-toc-the-documentation-move-table">The documentation move-table</a>    <ol>
@@ -696,98 +700,205 @@ is a QA audit criterion, not a style note — see the strawperson below.</p>
     
 
 <p>The 16:13 comment asks for a schema for Tools-repo contents plus options with
-pros and cons. Here is the shape, then three ways to carry it.</p>
+pros and cons. Here is the shape, written in the carrier the section below
+settles on — <strong>Zod is the authoritative form</strong>, and the TypeScript type is
+inferred from it rather than declared alongside it, so there is one definition
+and not two that can drift.</p>
 
-<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">ToolDefinition</span> <span class="p">{</span>
-  <span class="nl">id</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>                    <span class="c1">// stable KG node id</span>
-  <span class="nl">title</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
-  <span class="nl">summary</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// schemas/tool.ts</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">ToolDefinitionSchema</span> <span class="o">=</span> <span class="nx">z</span><span class="p">.</span><span class="nx">object</span><span class="p">({</span>
+  <span class="na">id</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">(),</span>                                   <span class="c1">// stable KG node id</span>
+  <span class="na">title</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">(),</span>
+  <span class="na">summary</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">(),</span>
+
   <span class="cm">/** How to obtain it. */</span>
-  <span class="nl">install</span><span class="p">:</span> <span class="p">{</span> <span class="nx">cli</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">container</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">service</span><span class="p">?:</span> <span class="kr">string</span> <span class="p">};</span>
+  <span class="na">install</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">object</span><span class="p">({</span>
+    <span class="na">cli</span><span class="p">:</span>       <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">().</span><span class="nx">optional</span><span class="p">(),</span>
+    <span class="na">container</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">().</span><span class="nx">optional</span><span class="p">(),</span>
+    <span class="na">service</span><span class="p">:</span>   <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">().</span><span class="nx">optional</span><span class="p">(),</span>
+  <span class="p">}),</span>
+
   <span class="cm">/** How to run it, per environment. */</span>
-  <span class="nl">invoke</span><span class="p">:</span> <span class="p">{</span> <span class="nx">shell</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">mcp</span><span class="p">?:</span> <span class="p">{</span> <span class="na">tool</span><span class="p">:</span> <span class="kr">string</span> <span class="p">};</span> <span class="nl">container</span><span class="p">?:</span> <span class="kr">string</span> <span class="p">};</span>
+  <span class="na">invoke</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">object</span><span class="p">({</span>
+    <span class="na">shell</span><span class="p">:</span>     <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">().</span><span class="nx">optional</span><span class="p">(),</span>
+    <span class="na">mcp</span><span class="p">:</span>       <span class="nx">z</span><span class="p">.</span><span class="nx">object</span><span class="p">({</span> <span class="na">tool</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">()</span> <span class="p">}).</span><span class="nx">optional</span><span class="p">(),</span>
+    <span class="na">container</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">().</span><span class="nx">optional</span><span class="p">(),</span>
+  <span class="p">}),</span>
+
   <span class="cm">/** The contract a Task binds against — the 16:28 requirement. */</span>
-  <span class="nl">io</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">inputs</span><span class="p">:</span>  <span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">schema</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">required</span><span class="p">:</span> <span class="nx">boolean</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">;</span>
-    <span class="nl">outputs</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">schema</span><span class="p">:</span> <span class="kr">string</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="p">};</span>
+  <span class="na">io</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">object</span><span class="p">({</span>
+    <span class="na">inputs</span><span class="p">:</span>  <span class="nx">z</span><span class="p">.</span><span class="nx">array</span><span class="p">(</span><span class="nx">z</span><span class="p">.</span><span class="nx">object</span><span class="p">({</span>
+      <span class="na">name</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">(),</span> <span class="na">schema</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">(),</span> <span class="na">required</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">boolean</span><span class="p">(),</span>
+    <span class="p">})),</span>
+    <span class="na">outputs</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">array</span><span class="p">(</span><span class="nx">z</span><span class="p">.</span><span class="nx">object</span><span class="p">({</span>
+      <span class="na">name</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">(),</span> <span class="na">schema</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">(),</span>
+    <span class="p">})),</span>
+  <span class="p">}),</span>
+
   <span class="cm">/** Skills this tool can satisfy. One skill may have several tools. */</span>
-  <span class="nl">satisfies</span><span class="p">:</span> <span class="kr">string</span><span class="p">[];</span>
-  <span class="nl">requires</span><span class="p">?:</span> <span class="p">{</span> <span class="nx">os</span><span class="p">?:</span> <span class="kr">string</span><span class="p">[];</span> <span class="nl">runtime</span><span class="p">?:</span> <span class="kr">string</span><span class="p">[];</span> <span class="nl">network</span><span class="p">?:</span> <span class="nx">boolean</span> <span class="p">};</span>
-<span class="p">}</span>
+  <span class="na">satisfies</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">array</span><span class="p">(</span><span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">()),</span>
+
+  <span class="na">requires</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">object</span><span class="p">({</span>
+    <span class="na">os</span><span class="p">:</span>      <span class="nx">z</span><span class="p">.</span><span class="nx">array</span><span class="p">(</span><span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">()).</span><span class="nx">optional</span><span class="p">(),</span>
+    <span class="na">runtime</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">array</span><span class="p">(</span><span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">()).</span><span class="nx">optional</span><span class="p">(),</span>
+    <span class="na">network</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">boolean</span><span class="p">().</span><span class="nx">optional</span><span class="p">(),</span>
+  <span class="p">}).</span><span class="nx">optional</span><span class="p">(),</span>
+<span class="p">});</span>
+
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">ToolDefinition</span> <span class="o">=</span> <span class="nx">z</span><span class="p">.</span><span class="nx">infer</span><span class="o">&lt;</span><span class="k">typeof</span> <span class="nx">ToolDefinitionSchema</span><span class="o">&gt;</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p>The <code class="language-plaintext highlighter-rouge">io</code> block is the part that earns its keep: it is what lets a Task’s inputs
 and outputs be checked against the Tool that will execute it, rather than
 hoping they line up.</p>
-<h3 id="three-ways-to-carry-it--pros-and-cons">
+
+<p>Two fields are deliberately loose at this stage and should be tightened before
+anything is built on them. <code class="language-plaintext highlighter-rouge">io.*.schema</code> is a <code class="language-plaintext highlighter-rouge">string</code> — presumably an IRI into
+the schema graph, but nothing yet says which, and an unresolvable reference is
+the failure mode the <code class="language-plaintext highlighter-rouge">io</code> block exists to prevent. <code class="language-plaintext highlighter-rouge">satisfies</code> is a bare array
+of skill ids with no check that the skills exist; that is the same
+declared-but-absent defect <code class="language-plaintext highlighter-rouge">dh4f</code> found in the pipeline scripts, where a
+consumer scans nothing and reports a clean run.</p>
+<h3 id="carrying-it--authored-once-in-zod-rendered-downstream">
   
   
-    <a href="#three-ways-to-carry-it--pros-and-cons" class="anchor-heading" aria-labelledby="three-ways-to-carry-it--pros-and-cons"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three ways to carry it — pros and cons
+    <a href="#carrying-it--authored-once-in-zod-rendered-downstream" class="anchor-heading" aria-labelledby="carrying-it--authored-once-in-zod-rendered-downstream"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Carrying it — authored once in Zod, rendered downstream
   
   
 </h3>
+    
+
+<p><strong>Decided (2026-09-18, by the repository owner): the <code class="language-plaintext highlighter-rouge">.ts</code> Zod schema is
+authoritative, and as many downstream renderings are generated from it as make
+sense — JSON-LD and JSON Schema to begin with.</strong> That is how every other schema
+in this repository is defined, and the Tools schema gets no exception.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>schemas/tool.ts            ← AUTHORITATIVE.  Zod + the inferred TS type.
+  │
+  ├─→ schemas/generated/Tool.schema.json      JSON Schema  (validation, editors)
+  └─→ kg/tools/&lt;id&gt;.jsonld                    JSON-LD      (KG node, queryable)
+</code></pre></div></div>
+
+<p>The generation direction is the whole decision. <code class="language-plaintext highlighter-rouge">scripts/generate-schemas.ts</code>
+already walks a map of Zod schemas through <code class="language-plaintext highlighter-rouge">zodToJsonSchema</code> into
+<code class="language-plaintext highlighter-rouge">schemas/generated/*.schema.json</code>; adding <code class="language-plaintext highlighter-rouge">Tool</code> is one entry in that map, not a
+new mechanism. The JSON-LD side has its precedent too — <code class="language-plaintext highlighter-rouge">toJsonLd()</code> in
+<code class="language-plaintext highlighter-rouge">schemas/agent-harness.ts</code> projects a Zod-validated declaration into the folio
+namespace. Both renderings are derived artefacts: regenerate, never hand-edit,
+exactly as <code class="language-plaintext highlighter-rouge">docs/reference/skills/</code> and <code class="language-plaintext highlighter-rouge">docs/reference/skill-instructions/</code> are
+already treated.</p>
+<h4 id="why-not-the-other-three-including-the-one-i-first-recommended">
+  
+  
+    <a href="#why-not-the-other-three-including-the-one-i-first-recommended" class="anchor-heading" aria-labelledby="why-not-the-other-three-including-the-one-i-first-recommended"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why not the other three, including the one I first recommended
+  
+  
+</h4>
     
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
       <th> </th>
-      <th><strong>A. JSON-LD nodes in <code class="language-plaintext highlighter-rouge">kg/</code></strong></th>
-      <th><strong>B. TypeScript modules</strong></th>
-      <th><strong>C. Front-matter in the skill</strong></th>
+      <th><strong>Zod <code class="language-plaintext highlighter-rouge">.ts</code>, rendered down</strong></th>
+      <th><strong>JSON-LD authored</strong></th>
+      <th><strong>TS, no renderings</strong></th>
+      <th><strong>Skill front-matter</strong></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><strong>shape</strong></td>
-      <td>one <code class="language-plaintext highlighter-rouge">.jsonld</code> per tool</td>
-      <td>one <code class="language-plaintext highlighter-rouge">.ts</code> per tool, Zod-validated</td>
+      <td>one Zod schema; per-tool instances validated against it</td>
+      <td>one hand-written <code class="language-plaintext highlighter-rouge">.jsonld</code> per tool</td>
+      <td>one <code class="language-plaintext highlighter-rouge">.ts</code> per tool, and nothing else</td>
       <td>YAML block in the skill <code class="language-plaintext highlighter-rouge">.md</code></td>
     </tr>
     <tr>
-      <td><strong>pro</strong></td>
-      <td>native KG node; queryable with everything else; no toolchain to read</td>
-      <td>author-time type checking; same builder pattern as content blocks</td>
-      <td>zero new files; tool and its skill never drift apart</td>
+      <td><strong>author-time checking</strong></td>
+      <td>yes</td>
+      <td><strong>no</strong> — a typo is a runtime discovery</td>
+      <td>yes</td>
+      <td>no</td>
     </tr>
     <tr>
-      <td><strong>pro</strong></td>
-      <td>language-agnostic — a Python or shell consumer reads it</td>
-      <td>refactorable; IDE support</td>
-      <td>simplest possible migration</td>
+      <td><strong>KG node</strong></td>
+      <td>yes, generated</td>
+      <td>yes, natively</td>
+      <td><strong>no</strong> — needs a projection nobody wrote</td>
+      <td>no — unqueryable without parsing Markdown</td>
     </tr>
     <tr>
-      <td><strong>con</strong></td>
-      <td>no author-time checking; a typo is a runtime discovery</td>
-      <td>needs a TS toolchain to read, which a shell-only consumer may not have</td>
-      <td><strong>contradicts “code in tools, not skills”</strong>; unqueryable without parsing Markdown</td>
+      <td><strong>readable without a TS toolchain</strong></td>
+      <td>yes, via the renderings</td>
+      <td>yes</td>
+      <td><strong>no</strong></td>
+      <td>no</td>
     </tr>
     <tr>
-      <td><strong>con</strong></td>
-      <td>two files per tool if you also want prose</td>
-      <td>not a KG node without a projection step</td>
-      <td>one tool per skill only — kills “several Tools for one Skill”</td>
+      <td><strong>number of truths</strong></td>
+      <td><strong>one</strong></td>
+      <td>one</td>
+      <td>one</td>
+      <td>one</td>
     </tr>
     <tr>
       <td><strong>verdict</strong></td>
-      <td><strong>recommended</strong></td>
-      <td>good second</td>
+      <td><strong>decided</strong></td>
+      <td>superseded</td>
+      <td>insufficient</td>
       <td><strong>do not</strong></td>
     </tr>
   </tbody>
 </table></div>
 
-<p><strong>Recommendation: A, with B’s checking bolted on.</strong> Author the Tool node as
-JSON-LD so it is a first-class KG citizen readable without a toolchain, and
-validate it in CI against a Zod schema that lives in the harness. That is
-exactly the split the <code class="language-plaintext highlighter-rouge">AgentHarness</code> declaration already uses — authored form
-stored, graph form derived, schema validating both — so it introduces no new
-pattern.</p>
+<p>An earlier draft of this page recommended authoring the JSON-LD directly, with
+Zod validating it in CI. <strong>That is the same two artefacts with the authority
+pointing the wrong way</strong>, and the difference is not cosmetic:</p>
 
-<p><strong>C is worth rejecting explicitly</strong> because it is the tempting one: it is the
-least work today and it directly contradicts the 16:13 instruction that code
-snippets belong in tools rather than skills.</p>
+<ul>
+  <li><strong>A hand-authored JSON-LD node is unchecked until CI runs.</strong> Under the decided
+direction the Zod schema <em>is</em> the type, so a malformed tool definition fails
+at <code class="language-plaintext highlighter-rouge">tsc</code>, in the editor, before it is committed. Validation-after-the-fact
+catches the same error strictly later and only if CI is green — and this
+repository has just spent a bean (<code class="language-plaintext highlighter-rouge">dzl3</code>) on a suite that was not running at
+all, so “CI will catch it” is a claim with a poor local record.</li>
+  <li><strong>It would have been a fourth pattern in a repo that already has one.</strong> Zod →
+JSON Schema is <code class="language-plaintext highlighter-rouge">generate-schemas.ts</code>; Zod → docs is <code class="language-plaintext highlighter-rouge">generate-docs.ts</code>; Zod →
+JSON-LD is <code class="language-plaintext highlighter-rouge">toJsonLd</code>. Authoring the rendering and validating backwards is the
+only shape here that would have run against all three.</li>
+  <li><strong>“Language-agnostic” was never the trade it looked like.</strong> A shell or Python
+consumer reads the <em>generated</em> JSON-LD and JSON Schema under the decided
+direction just as well as it reads a hand-authored one. Nothing is lost by
+generating them; what is gained is that they cannot disagree with the type.</li>
+</ul>
+
+<p><strong>C — front-matter in the skill — is still worth rejecting explicitly</strong>, and for
+unchanged reasons: it is the least work today, it directly contradicts the
+instruction that code snippets belong in tools rather than skills, and it caps
+the model at one tool per skill, which kills “several Tools may satisfy one
+Skill” before it is built.</p>
+<h4 id="what-as-many-renderings-as-make-sense-means-in-practice">
+  
+  
+    <a href="#what-as-many-renderings-as-make-sense-means-in-practice" class="anchor-heading" aria-labelledby="what-as-many-renderings-as-make-sense-means-in-practice"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What “as many renderings as make sense” means in practice
+  
+  
+</h4>
+    
+
+<p>Two now, and a test for any third. A rendering earns its place when a real
+consumer cannot read the ones that exist: JSON Schema because editors and
+validators speak it, JSON-LD because the KG query path does. A third — SHACL, an
+OpenAPI fragment, a Turtle serialisation — is added when something needs it, not
+in anticipation. Each one is another file to regenerate and another chance for a
+stale artefact to be read as current, so the bar is a consumer, not a
+possibility.</p>
+
+<p>The corresponding rule: <strong>a rendering is never the place a fix lands.</strong> If a
+generated <code class="language-plaintext highlighter-rouge">Tool.schema.json</code> is wrong, <code class="language-plaintext highlighter-rouge">schemas/tool.ts</code> is wrong; edit that and
+regenerate. A <code class="language-plaintext highlighter-rouge">--check</code> mode in CI (the pattern <code class="language-plaintext highlighter-rouge">gen-skill-docs.ts --check</code>
+already uses) is what makes that enforceable rather than merely stated.</p>
 <h2 id="the-documentation-move-table">
   
   
@@ -1213,7 +1324,7 @@ separate skill set and is not designed here.</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35379907945"><code>8623bfd</code></a> &middot; 2026-09-18T18:24:26Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35380148647"><code>b1948ca</code></a> &middot; 2026-09-18T18:26:54Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
