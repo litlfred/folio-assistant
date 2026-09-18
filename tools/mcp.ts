@@ -367,7 +367,11 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
         ],
         outputs: [{ name: "findings", schema: t("Markdown"), description: "Missing, obsolete and malformed entries." }],
       },
-      satisfies: ["translation-manager", "content-validate"],
+      // NOT `content-validate`: that edge was here and `check:tools` now
+      // refuses it. The skill's contract requires `targetPath` — it validates
+      // a folio's content — while this validates a .po against its .pot. Two
+      // things called validation are not one skill.
+      satisfies: ["translation-manager"],
       requires: { network: false },
     }),
 
@@ -485,7 +489,11 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
         ],
         outputs: [{ name: "position", schema: t("Markdown"), description: "The instance's new position, and what is enabled next." }],
       },
-      satisfies: ["process-state", "dmn-authoring", "bean-coordination"],
+      // NOT `dmn-authoring`: EVALUATING a decision table is not AUTHORING
+      // one, and the skill's contract says so — it requires `decisionName` and
+      // `inputVariables`, which are what you supply to write a table, not to
+      // answer one. `check:tools` refuses the edge.
+      satisfies: ["process-state", "bean-coordination"],
       requires: { network: false },
     }),
   ];

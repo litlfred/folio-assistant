@@ -1,25 +1,46 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/litlfred/folio-assistant/schemas/skills/content-plan/output.schema.json",
+  "$id": "https://litlfred.github.io/folio-assistant/kg/skills/content-plan/output.schema.json",
   "title": "Content Plan Output",
   "description": "Output schema for content planning.",
   "type": "object",
-  "required": ["plan"],
+  "required": [
+    "plan"
+  ],
   "properties": {
     "plan": {
       "type": "object",
-      "required": ["projectName", "sprints", "team"],
+      "required": [
+        "projectName",
+        "sprints",
+        "team"
+      ],
       "properties": {
-        "projectName": { "type": "string" },
+        "projectName": {
+          "type": "string"
+        },
         "sprints": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
-              "number": { "type": "integer" },
-              "startDate": { "type": "string", "format": "date" },
-              "endDate": { "type": "string", "format": "date" },
-              "goals": { "type": "array", "items": { "type": "string" } }
+              "number": {
+                "type": "integer"
+              },
+              "startDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "endDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "goals": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
             }
           }
         },
@@ -28,9 +49,18 @@
           "items": {
             "type": "object",
             "properties": {
-              "actorId": { "type": "string" },
-              "name": { "type": "string" },
-              "responsibilities": { "type": "array", "items": { "type": "string" } }
+              "actorId": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "responsibilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
             }
           }
         }

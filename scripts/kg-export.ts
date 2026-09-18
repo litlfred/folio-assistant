@@ -49,6 +49,7 @@ import { FOLIO_NS } from "../schemas/namespaces.js";
 import { artefactStub, defaultGraphKinds, readDeclaration } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
+import { skillIoIri } from "./harness-schema-export.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -217,6 +218,24 @@ function buildContext(): Record<string, unknown> {
     alternateOf: { "@id": `${PROV}alternateOf`, ...link },
     canonicalDocument: { "@id": `${FOLIO_NS}canonicalDocument`, ...link },
     typeIri: { "@id": `${FOLIO_NS}typeIri`, "@type": "@id" },
+
+    // A skill's I/O contract, as a LINK to the published schema document.
+    //
+    // These were missing, and their absence was invisible in a way worth
+    // recording. `collectSkills` has always set `inputSchema`/`outputSchema`
+    // on the 22 skills that have a contract, and the values appeared in the
+    // emitted file — so reading the export as plain JSON showed the edge and
+    // everything looked correct. But a term that is neither in the `@context`
+    // nor an absolute IRI is **dropped** by JSON-LD processing, so the
+    // association evaporated on the one consumer path this export exists to
+    // serve. It was written, published, and not there.
+    //
+    // Both halves had to be fixed together: a term here with a relative value
+    // would resolve against the document IRI and give
+    // `<base>/kg/schemas/skills/…`, which nothing serves. The values are now
+    // the published `$id` of each contract — see `skillIoIri`.
+    inputSchema: { "@id": `${FOLIO_NS}inputSchema`, ...link },
+    outputSchema: { "@id": `${FOLIO_NS}outputSchema`, ...link },
   };
 }
 
@@ -335,7 +354,7 @@ interface SkillFacts {
   outputSchema?: string;
 }
 
-function collectSkills(doc: string, problems: string[]): Node[] {
+function collectSkills(doc: string, base: string, problems: string[]): Node[] {
   const byName = new Map<string, SkillFacts>();
   const get = (n: string): SkillFacts =>
     byName.get(n) ?? (byName.set(n, { packages: [] }), byName.get(n)!);
@@ -374,8 +393,13 @@ function collectSkills(doc: string, problems: string[]): Node[] {
       const s = get(e.name);
       const inp = join(ioRoot, e.name, "input.schema.json");
       const out = join(ioRoot, e.name, "output.schema.json");
-      if (existsSync(inp)) s.inputSchema = `${SKILL_IO_DIR}/${e.name}/input.schema.json`;
-      if (existsSync(out)) s.outputSchema = `${SKILL_IO_DIR}/${e.name}/output.schema.json`;
+      // The PUBLISHED IRI, minted by the one function that owns it — not the
+      // repo-relative path. A relative value here resolves against this
+      // document's own IRI and names something nothing serves; and since the
+      // context now coerces these to `@id`, a relative value would silently
+      // become a wrong absolute one rather than an obviously local string.
+      if (existsSync(inp)) s.inputSchema = skillIoIri(base, e.name, "input");
+      if (existsSync(out)) s.outputSchema = skillIoIri(base, e.name, "output");
     }
   }
 
@@ -793,6 +817,16 @@ function commitIri(remote: string | undefined, sha: string): string | undefined 
 export function exportIdentity(opts: ExportOptions = {}): {
   stub: string;
   docIri: string;
+  /**
+   * The publication base every IRI in this export is minted against.
+   *
+   * Returned rather than re-derived by each caller. `collectTools` used to
+   * recover it by stripping `/kg/<file>` off `docIri` with a regular
+   * expression — which works, and is exactly the "process the string to get
+   * back a fact you already had" that this project keeps removing. Two callers
+   * doing it is two chances to disagree about what the base is.
+   */
+  base: string;
   /** The canonical document's IRI, when one is declared. */
   canonicalIri?: string;
   /** True when this export is published somewhere other than canonical. */
@@ -807,12 +841,12 @@ export function exportIdentity(opts: ExportOptions = {}): {
   // absolute one: see makeIri's note on links that look dereferenceable.
   const docIri = base ? `${base}/kg/${stub}.jsonld` : `${stub}.jsonld`;
   const canonicalIri = canonicalBase ? `${canonicalBase}/kg/${stub}.jsonld` : undefined;
-  return { stub, docIri, canonicalIri, isPreview: canonicalIri !== undefined && docIri !== canonicalIri };
+  return { stub, docIri, base, canonicalIri, isPreview: canonicalIri !== undefined && docIri !== canonicalIri };
 }
 
 export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   const problems: string[] = [];
-  const { stub, docIri, canonicalIri, isPreview } = exportIdentity(opts);
+  const { stub, docIri, base, canonicalIri, isPreview } = exportIdentity(opts);
 
   // Provenance of the SOURCE. Absent fields are absent, never placeholders:
   // a consumer must be able to tell "this export did not know" from "this
@@ -841,11 +875,11 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   }
 
   const graph = [
-    ...collectSkills(docIri, problems),
+    ...collectSkills(docIri, base, problems),
     ...collectRegistryNodes(docIri, problems),
     ...collectPackages(docIri, problems),
     ...(await collectProcesses(docIri, problems)),
-    ...collectTools(docIri, docIri.replace(/\/kg\/[^/]+$/, ""), problems),
+    ...collectTools(docIri, base, problems),
     ...collectGraphKinds(),
     ...collectDeclaration(docIri, problems),
   ].map(compact);
