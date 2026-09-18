@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(48)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(58)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(48) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(58) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(48) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(58) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(48) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(58) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Content Validation | folio-assistant</title>
+<title>Evidence Appraisal | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Content Validation" />
+<meta property="og:title" content="Evidence Appraisal" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/content-validation.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/content-validation.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/evidence-appraisal.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/evidence-appraisal.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Content Validation" />
+<meta property="twitter:title" content="Evidence Appraisal" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Content Validation","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/content-validation.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Evidence Appraisal","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/evidence-appraisal.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -296,7 +296,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Content Validation</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Evidence Appraisal</span></li>
   </ol>
 </nav>
 
@@ -305,563 +305,181 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/content-validation.md"><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/content-validation.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/evidence-appraisal.md"><code class="language-plaintext highlighter-rouge">skills/content-lifecycle/evidence-appraisal.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/content-validation.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/evidence-appraisal.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="content-validation-skill">
+<h1 id="evidence-appraisal">
   
   
-    <a href="#content-validation-skill" class="anchor-heading" aria-labelledby="content-validation-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content Validation Skill
+    <a href="#evidence-appraisal" class="anchor-heading" aria-labelledby="evidence-appraisal"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Evidence Appraisal
   
   
 </h1>
     
-<h2 id="role">
+
+<p>Appraise and grade a <strong>body of evidence</strong> against the grading system the folio
+declares. This skill supplies the <em>procedure</em>; it does not supply the <em>system</em>.</p>
+<h2 id="why-this-skill-names-no-grading-system">
   
   
-    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
+    <a href="#why-this-skill-names-no-grading-system" class="anchor-heading" aria-labelledby="why-this-skill-names-no-grading-system"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this skill names no grading system
   
   
 </h2>
     
 
-<p>Validate content objects (<code class="language-plaintext highlighter-rouge">.ts</code> manifests + <code class="language-plaintext highlighter-rouge">.md</code> content + <code class="language-plaintext highlighter-rouge">.lean</code> files)
-for structural integrity, constraint compliance, and LaTeX AST correctness.</p>
-<h2 id="content-object-infrastructure">
+<p><code class="language-plaintext highlighter-rouge">Task_AppraiseGrade</code> in <code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code> says the certainty is judged
+“per the grading system the folio declares”, and the diagram’s header marks the
+choice deliberately unfixed. That split is the right one and this skill keeps
+it: <strong>which</strong> system applies is a methodological commitment belonging to the
+folio and the body that publishes it. A platform that hardcoded one would be
+writing subject matter into the harness — the failure <code class="language-plaintext highlighter-rouge">AGENTS.md</code> opens by
+warning about — and every folio that uses a different system would then have to
+work around the platform rather than with it.</p>
+
+<p>So: the folio declares the system. This skill covers what appraisal <em>is</em>, what
+it attaches to, and what has to survive as a record afterwards — the parts that
+are the same whichever system you have declared.</p>
+<h2 id="responsibilities">
   
   
-    <a href="#content-object-infrastructure" class="anchor-heading" aria-labelledby="content-object-infrastructure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content-object infrastructure
+    <a href="#responsibilities" class="anchor-heading" aria-labelledby="responsibilities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Responsibilities
   
   
 </h2>
     
+
+<ul>
+  <li>Appraise the <strong>body</strong> of evidence assembled for one question, not a citation</li>
+  <li>Record the grade <strong>with its reasons</strong>, not as a bare label</li>
+  <li>Distinguish “the evidence is weak” from “there is not enough to judge”</li>
+  <li>Re-appraise when the body changes, and say what moved the grade</li>
+  <li>Refuse to grade when no system is declared, rather than picking one</li>
+</ul>
+<h2 id="the-unit-is-the-body-not-the-citation">
+  
+  
+    <a href="#the-unit-is-the-body-not-the-citation" class="anchor-heading" aria-labelledby="the-unit-is-the-body-not-the-citation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The unit is the body, not the citation
+  
+  
+</h2>
+    
+
+<p>The grade attaches to the body of evidence for <strong>one PICO question</strong>. This is
+why <code class="language-plaintext highlighter-rouge">Task_AppraiseGrade</code> sits after the parallel join in the diagram and not
+inside the fan-out: the three retrieval classes (trusted L1 sources, trusted
+L2/L3 content, data repositories) contribute to one judgement, and grading each
+branch separately would produce three numbers that answer no question anyone
+asked.</p>
+
+<p>A single citation does not carry a certainty grade. If you find yourself
+writing one onto a reference, the unit has slipped.</p>
+<h2 id="cannot-appraise-is-a-third-state">
+  
+  
+    <a href="#cannot-appraise-is-a-third-state" class="anchor-heading" aria-labelledby="cannot-appraise-is-a-third-state"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> “Cannot appraise” is a third state
+  
+  
+</h2>
+    
+
+<p>The same rule the rest of this platform follows. Three outcomes, and the third
+is not a low grade:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Path</th>
-      <th>Purpose</th>
+      <th>outcome</th>
+      <th>means</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/schema/types.ts</code></td>
-      <td>TypeScript types for all block kinds</td>
+      <td>graded</td>
+      <td>the body was appraised and carries a certainty</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/schema/constraints.ts</code></td>
-      <td>Zod schemas + constraint rules</td>
+      <td><strong>not appraisable</strong></td>
+      <td>too little retrieved, or no declared system, or the question was not framed as PICO</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/schema/builders.ts</code></td>
-      <td>Builder functions (<code class="language-plaintext highlighter-rouge">definition()</code>, <code class="language-plaintext highlighter-rouge">theorem()</code>, etc.)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/validate.ts</code></td>
-      <td>Validation pipeline (schema + constraints + AST)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/render-latex.ts</code></td>
-      <td>Block → LaTeX rendering + AST validation</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/build.ts</code></td>
-      <td>Full document build (all chapters)</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="directory-convention">
-  
-  
-    <a href="#directory-convention" class="anchor-heading" aria-labelledby="directory-convention"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Directory convention
-  
-  
-</h2>
-    
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>content/
-  &lt;paper-name&gt;/
-    &lt;paper-name&gt;.ts                    — Paper manifest (ChapterRef[])
-    &lt;chapter-dir&gt;/
-      &lt;chapter-dir&gt;.ts                 — Chapter manifest (sections, block refs)
-      &lt;block-name&gt;.ts                  — Block manifest (kind, label, lean, constraints)
-      &lt;block-name&gt;.md                  — Narrative content (markdown + TeX snippets)
-      &lt;block-name&gt;.lean                — Lean formalization (when required by kind)
-</code></pre></div></div>
-<h2 id="validation-levels">
-  
-  
-    <a href="#validation-levels" class="anchor-heading" aria-labelledby="validation-levels"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Validation levels
-  
-  
-</h2>
-    
-<h3 id="level-1-zod-schema-validation">
-  
-  
-    <a href="#level-1-zod-schema-validation" class="anchor-heading" aria-labelledby="level-1-zod-schema-validation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Level 1: Zod schema validation
-  
-  
-</h3>
-    
-<ul>
-  <li>Block kind matches discriminated union</li>
-  <li>Label prefix matches kind (def: for definitions, thm: for theorems, etc.)</li>
-  <li>Required fields present (e.g. definitions MUST have <code class="language-plaintext highlighter-rouge">lean</code>)</li>
-  <li>Status enum values are valid</li>
-</ul>
-<h3 id="level-2-constraint-rules">
-  
-  
-    <a href="#level-2-constraint-rules" class="anchor-heading" aria-labelledby="level-2-constraint-rules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Level 2: Constraint rules
-  
-  
-</h3>
-    
-<ul>
-  <li><strong>md-exists</strong>: Every block has a sibling <code class="language-plaintext highlighter-rouge">.md</code> file</li>
-  <li><strong>lean-file-exists</strong>: Definitions have a sibling <code class="language-plaintext highlighter-rouge">.lean</code> or <code class="language-plaintext highlighter-rouge">lean.file</code> reference</li>
-  <li><strong>no-orphan-lean</strong>: Every <code class="language-plaintext highlighter-rouge">.lean</code> file MUST have a <code class="language-plaintext highlighter-rouge">.ts</code> manifest sibling — <code class="language-plaintext highlighter-rouge">.lean</code> files are NEVER standalone, always part of a content triple (<code class="language-plaintext highlighter-rouge">.ts</code> + <code class="language-plaintext highlighter-rouge">.md</code> + <code class="language-plaintext highlighter-rouge">.lean</code>)</li>
-  <li><strong>uses-resolve</strong>: All labels in <code class="language-plaintext highlighter-rouge">uses[]</code> exist in the document
-(or are qualified cross-paper refs in <code class="language-plaintext highlighter-rouge">"paper-dir:label"</code> format,
-which are skipped — resolved at folio level)</li>
-  <li><strong>provable-lean-warning</strong>: Theorems/lemmas without Lean get warnings</li>
-</ul>
-<h3 id="level-5-witnessed-value-directive-validation">
-  
-  
-    <a href="#level-5-witnessed-value-directive-validation" class="anchor-heading" aria-labelledby="level-5-witnessed-value-directive-validation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Level 5: Witnessed-value directive validation
-  
-  
-</h3>
-    
-
-<p>Five rules check <code class="language-plaintext highlighter-rouge">:val[name]</code> directive usage in every block kind
-(definitions, propositions, theorems, lemmas, conjectures, proofs,
-examples, remarks, prose, equations):</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Rule</th>
-      <th>Level</th>
-      <th>What it checks</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">val-registered</code></td>
-      <td>error</td>
-      <td>name appears in <code class="language-plaintext highlighter-rouge">WITNESSED_VALUES</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">val-resolves</code></td>
-      <td>error</td>
-      <td>witness file exists, dotted path resolves</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">val-precision-bounded</code></td>
-      <td>error</td>
-      <td>requested precision ≤ source precision</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">val-units-consistent</code></td>
-      <td>warn</td>
-      <td><code class="language-plaintext highlighter-rouge">units=plain</code> only when entry has units</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">val-pending</code></td>
-      <td>warn</td>
-      <td><code class="language-plaintext highlighter-rouge">needsReview: true</code> entry was cited</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">val-block-computation</code></td>
-      <td>warn</td>
-      <td>block cites <code class="language-plaintext highlighter-rouge">:val[…]</code> but <code class="language-plaintext highlighter-rouge">computation:</code> is absent or refers to a different witness file</td>
+      <td>gap recorded</td>
+      <td>nothing authoritative was found, and that is the finding</td>
     </tr>
   </tbody>
 </table></div>
 
-<p>When you spot a hard-coded computed literal in <strong>any</strong> block
-kind (a numeric bound in a proposition, a constant in a conjecture, a
-calibration value in a definition, a quoted intermediate in a proof,
-etc.), flag it as drift risk and migrate it to <code class="language-plaintext highlighter-rouge">:val[name]</code>.  The
-<code class="language-plaintext highlighter-rouge">content/pipeline/codemod-val.ts</code> codemod handles bulk migration.
-See <a href="/folio-assistant/reference/skill-instructions/witnessed-values.html"><code class="language-plaintext highlighter-rouge">witnessed-values.md</code></a> for full details.</p>
-<h3 id="level-3-latex-ast-validation">
+<p>Collapsing “not appraisable” into the lowest grade is the defect worth naming:
+it reads downstream as <em>“we looked and the evidence is poor”</em> when the truth is
+<em>“we could not look”</em>. A recommendation resting on the first is weak; one
+resting on the second is unsupported, and only one of those is honest about
+what was done.</p>
+<h2 id="inputs">
   
   
-    <a href="#level-3-latex-ast-validation" class="anchor-heading" aria-labelledby="level-3-latex-ast-validation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Level 3: LaTeX AST validation
+    <a href="#inputs" class="anchor-heading" aria-labelledby="inputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs
   
   
-</h3>
+</h2>
     
-<ul>
-  <li>Rendered LaTeX parses through unified-latex without errors</li>
-  <li>Environment balance (\begin matches \end)</li>
-  <li>No malformed macro syntax</li>
-  <li>No unbalanced braces</li>
-</ul>
-<h3 id="level-4-tex-snippet-validation-in-md-files">
-  
-  
-    <a href="#level-4-tex-snippet-validation-in-md-files" class="anchor-heading" aria-labelledby="level-4-tex-snippet-validation-in-md-files"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Level 4: TeX snippet validation (in .md files)
-  
-  
-</h3>
-    
-
-<p>The <code class="language-plaintext highlighter-rouge">.md</code> files are parsed using <strong>remark + remark-gfm + remark-math</strong>
-(formal markdown grammar with GFM table support and math extension).
-GFM pipe tables are converted to <code class="language-plaintext highlighter-rouge">\begin{tabular}</code> with <code class="language-plaintext highlighter-rouge">booktabs</code>
-rules; inline code (backticks) renders as <code class="language-plaintext highlighter-rouge">\texttt{}</code> with LaTeX
-escaping. Each extracted TeX snippet is validated via <strong>unified-latex</strong>
-AST parsing. This catches:</p>
 
 <ul>
-  <li>Non-math environments inside math mode (e.g. <code class="language-plaintext highlighter-rouge">\begin{itemize}</code> inside <code class="language-plaintext highlighter-rouge">$$</code>)</li>
-  <li>Unbalanced braces or environments in inline/display math</li>
-  <li>Malformed TeX in fenced ` ```tex ` blocks</li>
+  <li>The PICO question from <code class="language-plaintext highlighter-rouge">Task_FramePico</code> — without it the search is not
+reproducible and the appraisal is not checkable</li>
+  <li>Candidates that passed <code class="language-plaintext highlighter-rouge">Task_VerifyAuthority</code>, so authority is a resolved
+fact rather than an assertion in the citation</li>
+  <li>The grading system declared by the folio</li>
 </ul>
-
-<p>The markdown AST node types used:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Markdown syntax</th>
-      <th>remark AST node</th>
-      <th>Validated as</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">$...$</code></td>
-      <td><code class="language-plaintext highlighter-rouge">inlineMath</code></td>
-      <td>Math-mode TeX</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">$$...$$</code></td>
-      <td><code class="language-plaintext highlighter-rouge">math</code> (display)</td>
-      <td>Display-mode TeX</td>
-    </tr>
-    <tr>
-      <td>` <code class="language-plaintext highlighter-rouge">tex</code> `</td>
-      <td><code class="language-plaintext highlighter-rouge">code</code> (lang=tex)</td>
-      <td>Raw LaTeX</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="running-validation">
+<h2 id="outputs">
   
   
-    <a href="#running-validation" class="anchor-heading" aria-labelledby="running-validation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running validation
+    <a href="#outputs" class="anchor-heading" aria-labelledby="outputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Outputs
   
   
 </h2>
     
-
-<blockquote>
-  <p><strong>Currency.</strong> The content pipeline + schemas live in the
-separate <code class="language-plaintext highlighter-rouge">folio-assistant</code> platform repo. Run
-<a href="../../../scripts/setup-folio-assistant.sh"><code class="language-plaintext highlighter-rouge">scripts/setup-folio-assistant.sh</code></a>
-<strong>once</strong> (clones the platform as a sibling + symlinks <code class="language-plaintext highlighter-rouge">folio-assistant/</code>), then
-validate via the standalone entry <code class="language-plaintext highlighter-rouge">bun run scripts/run-validate.ts content/&lt;paper&gt;</code>.
-The <code class="language-plaintext highlighter-rouge">pipeline/*.ts</code> paths live under <code class="language-plaintext highlighter-rouge">folio-assistant/content/pipeline/</code>; the
-<code class="language-plaintext highlighter-rouge">bun run &lt;name&gt;</code> package.json shortcuts below (<code class="language-plaintext highlighter-rouge">validate</code>, <code class="language-plaintext highlighter-rouge">validate-tex</code>,
-<code class="language-plaintext highlighter-rouge">build-glossary</code>, <code class="language-plaintext highlighter-rouge">migrate-lean-refs</code>) are retained for their flags/semantics.</p>
-</blockquote>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Validate all objects in a paper (schema + constraints + LaTeX AST)</span>
-bun run scripts/run-validate.ts content/&lt;paper&gt;   <span class="c"># after setup-folio-assistant.sh</span>
-<span class="c"># (legacy form: cd content &amp;&amp; bun run pipeline/validate.ts &lt;paper&gt;/)</span>
-
-<span class="c"># Full build with validation</span>
-<span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/build.ts &lt;paper&gt;/&lt;paper&gt;.ts
-
-<span class="c"># Validate TeX snippets in .md files (AST-based, no compilation)</span>
-<span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/validate-tex.ts
-
-<span class="c"># Validate specific file</span>
-<span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/validate-tex.ts <span class="nt">--file</span> path/to/block.md
-
-<span class="c"># Validate with pdflatex compilation (slower, catches more)</span>
-<span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/validate-tex.ts <span class="nt">--compile</span>
-
-<span class="c"># JSON output (for programmatic use by skills)</span>
-<span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/validate-tex.ts <span class="nt">--json</span>
-
-<span class="c"># Strict mode: also fire `term-mention-coverage` on bare-text</span>
-<span class="c"># mentions of known glossary slugs. Run once a chapter has been</span>
-<span class="c"># backfilled with `:refterm[…]`.</span>
-<span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run validate &lt;paper&gt; <span class="nt">--strict</span>
-
-<span class="c"># Build the glossary index (committed) + LaTeX chapter (gitignored)</span>
-<span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/build-glossary.ts &lt;paper&gt;
-
-<span class="c"># CI gate: non-zero exit on duplicates or out-of-date glossary.json</span>
-<span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/build-glossary.ts &lt;paper&gt; <span class="nt">--check</span>
-</code></pre></div></div>
-<h2 id="post-rebase--merge-run-the-lean-ref-migration-first">
-  
-  
-    <a href="#post-rebase--merge-run-the-lean-ref-migration-first" class="anchor-heading" aria-labelledby="post-rebase--merge-run-the-lean-ref-migration-first"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Post-rebase / merge: run the lean-ref migration first
-  
-  
-</h2>
-    
-
-<p><strong>Before</strong> running validation after a rebase, merge, or cherry-pick
-from upstream, <strong>always run</strong> the idempotent <code class="language-plaintext highlighter-rouge">lean.ref</code> migration:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run migrate-lean-refs
-</code></pre></div></div>
-
-<p>Coexisting forks may have authored content blocks against the legacy
-<code class="language-plaintext highlighter-rouge">lean: { decl: "...", file? }</code> shape; the migration converts them to
-the package-qualified URI form <code class="language-plaintext highlighter-rouge">lean: { ref: "&lt;pkg&gt;:&lt;Decl&gt;" }</code> that
-the current Zod schema requires. Running validation first will fail
-with <code class="language-plaintext highlighter-rouge">Lean ref must be "&lt;package&gt;:&lt;Decl.Path&gt;"</code> errors that are
-trivially fixed by the migration.</p>
-
-<p>When the schema’s Zod error message names this script in its
-output, <strong>do not hand-edit the failing block</strong> — run the script.</p>
-<h2 id="when-to-validate">
-  
-  
-    <a href="#when-to-validate" class="anchor-heading" aria-labelledby="when-to-validate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to validate
-  
-  
-</h2>
-    
-
-<ol>
-  <li><strong>Before commit</strong>: Run validation on changed content objects</li>
-  <li><strong>After editing .md files</strong>: Run <code class="language-plaintext highlighter-rouge">validate-tex.ts</code> on changed files —
-this uses the remark AST parser to extract and validate all TeX snippets</li>
-  <li><strong>After adding new blocks</strong>: Check constraints (lean file exists, labels resolve)</li>
-  <li><strong>After modifying schema</strong>: Run validation across all content</li>
-  <li><strong>After creating .md content</strong>: Any skill that creates or edits <code class="language-plaintext highlighter-rouge">.md</code> files</li>
-  <li><strong>After Lean changes</strong>: Run <code class="language-plaintext highlighter-rouge">bun run scripts/lean-audit.ts</code> for sorry/trivial/witness audit</li>
-  <li><strong>After computation changes</strong>: Run <code class="language-plaintext highlighter-rouge">bun run scripts/witness-audit.ts</code> for staleness check
-MUST run <code class="language-plaintext highlighter-rouge">validate-tex.ts --file &lt;path&gt;</code> before considering the task complete</li>
-  <li><strong>After rebase / merge from upstream</strong>: <strong>first</strong> run
-<code class="language-plaintext highlighter-rouge">bun run migrate-lean-refs</code> (see top of this section), then run
-<code class="language-plaintext highlighter-rouge">bun run validate</code> to confirm the schema is clean</li>
-</ol>
-<h2 id="adding-custom-constraints">
-  
-  
-    <a href="#adding-custom-constraints" class="anchor-heading" aria-labelledby="adding-custom-constraints"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding custom constraints
-  
-  
-</h2>
-    
-
-<p>Add rules to <code class="language-plaintext highlighter-rouge">CONSTRAINT_RULES</code> array in <code class="language-plaintext highlighter-rouge">content/schema/constraints.ts</code>:</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">CONSTRAINT_RULES</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
-  <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-rule</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">description</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Custom constraint</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">appliesTo</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">definition</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">theorem</span><span class="dl">"</span><span class="p">],</span>
-  <span class="na">check</span><span class="p">:</span> <span class="p">(</span><span class="nx">block</span><span class="p">,</span> <span class="nx">ctx</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="c1">// Return error message string or null</span>
-    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
-  <span class="p">},</span>
-<span class="p">});</span>
-</code></pre></div></div>
-<h2 id="mandatory-fallback-participation">
-  
-  
-    <a href="#mandatory-fallback-participation" class="anchor-heading" aria-labelledby="mandatory-fallback-participation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mandatory fallback participation
-  
-  
-</h2>
-    
-
-<p>This skill is invoked automatically by the editor’s <strong>content-change fallback</strong>
-(see <code class="language-plaintext highlighter-rouge">editor.md § Content-change fallback</code>). Whenever any content is modified
-during a session, the editor runs <code class="language-plaintext highlighter-rouge">content_validate</code> on affected chapters
-before the task is considered complete.</p>
-<h2 id="block-kind-classification-rules">
-  
-  
-    <a href="#block-kind-classification-rules" class="anchor-heading" aria-labelledby="block-kind-classification-rules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Block-kind classification rules
-  
-  
-</h2>
-    
-
-<p>When auditing or creating blocks, use these criteria to assign the correct kind:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Criterion</th>
-      <th>Kind</th>
-      <th>Example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Introduces new structure/axioms</td>
-      <td><code class="language-plaintext highlighter-rouge">definition</code></td>
-      <td>a new categorical structure, a new connection</td>
-    </tr>
-    <tr>
-      <td>Asserts a consequence of upstream defs</td>
-      <td><code class="language-plaintext highlighter-rouge">proposition</code> / <code class="language-plaintext highlighter-rouge">theorem</code></td>
-      <td>a derived property of an earlier definition</td>
-    </tr>
-    <tr>
-      <td>Proves something can be <em>constructed</em> from upstream</td>
-      <td><code class="language-plaintext highlighter-rouge">theorem</code> (existence)</td>
-      <td><code class="language-plaintext highlighter-rouge">&lt;name&gt;-exists</code></td>
-    </tr>
-    <tr>
-      <td>Lightweight wrapper / synonym for a library type</td>
-      <td><code class="language-plaintext highlighter-rouge">remark</code> (glossary)</td>
-      <td>a Mathlib type alias</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>Key test</strong>: “Does this block introduce new mathematics, or does it assert
-something that <em>follows</em> from existing definitions?” If the latter, it should
-be a proposition/theorem, not a definition.</p>
-
-<p><strong>Conditional definitions</strong>: Some definitions are only meaningful given
-upstream results (e.g. a definition that requires an earlier emergence
-theorem). These remain definitions but MUST list the immediate upstream
-theorem in <code class="language-plaintext highlighter-rouge">uses[]</code> if it is a direct prerequisite.</p>
-<h2 id="propositiontheorem-purity-rule">
-  
-  
-    <a href="#propositiontheorem-purity-rule" class="anchor-heading" aria-labelledby="propositiontheorem-purity-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proposition/theorem purity rule
-  
-  
-</h2>
-    
-
-<p><strong>Propositions and theorems contain ONLY the mathematical statement.</strong>
-The <code class="language-plaintext highlighter-rouge">.md</code> file of a <code class="language-plaintext highlighter-rouge">proposition</code>, <code class="language-plaintext highlighter-rouge">theorem</code>, <code class="language-plaintext highlighter-rouge">lemma</code>, or <code class="language-plaintext highlighter-rouge">corollary</code>
-block must contain only:</p>
 
 <ul>
-  <li>Hypotheses (the “let” / “given” clauses)</li>
-  <li>The conclusion (the “then” statement)</li>
-  <li>Limiting-case statements (if part of the formal result)</li>
+  <li>A certainty judgement for the body, in the declared system’s own vocabulary</li>
+  <li><strong>The reasons</strong>, in enough detail that a later reader can tell whether they
+would still hold — this is what <code class="language-plaintext highlighter-rouge">decision-audit</code> exists for, and a grade
+without them cannot be reviewed, only re-litigated</li>
+  <li>Any gap, recorded as a gap rather than as a low grade</li>
 </ul>
-
-<p>The following belong in <strong>companion remark</strong> blocks, not in the
-statement block:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Content type</th>
-      <th>Where it goes</th>
-      <th>Naming convention</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Domain interpretation</td>
-      <td><code class="language-plaintext highlighter-rouge">rem:&lt;label&gt;-interpretation</code></td>
-      <td><code class="language-plaintext highlighter-rouge">interprets: "prop:original"</code></td>
-    </tr>
-    <tr>
-      <td>Proof sketch / strategy</td>
-      <td><code class="language-plaintext highlighter-rouge">rem:&lt;label&gt;-proof-strategy</code></td>
-      <td><code class="language-plaintext highlighter-rouge">interprets: "thm:original"</code></td>
-    </tr>
-    <tr>
-      <td>Testable predictions</td>
-      <td><code class="language-plaintext highlighter-rouge">rem:&lt;label&gt;-prediction</code></td>
-      <td><code class="language-plaintext highlighter-rouge">interprets: "prop:original"</code></td>
-    </tr>
-    <tr>
-      <td>Limiting-case discussion</td>
-      <td><code class="language-plaintext highlighter-rouge">rem:&lt;label&gt;-limit</code></td>
-      <td><code class="language-plaintext highlighter-rouge">interprets: "prop:original"</code></td>
-    </tr>
-    <tr>
-      <td>Comparison tables</td>
-      <td><code class="language-plaintext highlighter-rouge">rem:&lt;label&gt;-comparison</code></td>
-      <td><code class="language-plaintext highlighter-rouge">interprets: "prop:original"</code></td>
-    </tr>
-    <tr>
-      <td>Connection to other topics</td>
-      <td><code class="language-plaintext highlighter-rouge">rem:&lt;label&gt;-connection</code></td>
-      <td><code class="language-plaintext highlighter-rouge">interprets: "prop:original"</code></td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>Rationale</strong>: Theorems are cited, cross-referenced, and formalised
-in Lean.  Explication clutters the formal statement and makes it
-harder to extract the precise mathematical content.  Companion
-remarks provide the interpretive layer without contaminating the
-statement.</p>
-
-<p><strong>Remark length rule</strong>: A remark block should cover <strong>one topical
-group</strong>.  If a remark exceeds ~60 lines and covers multiple
-distinct topics (each with its own header), split it into
-separate remarks with focused titles.  Each sub-remark should
-<code class="language-plaintext highlighter-rouge">interprets:</code> the same parent block.</p>
-<h2 id="dependency-completeness-checks">
+<h2 id="this-has-nothing-to-do-with-formal-content">
   
   
-    <a href="#dependency-completeness-checks" class="anchor-heading" aria-labelledby="dependency-completeness-checks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Dependency completeness checks
+    <a href="#this-has-nothing-to-do-with-formal-content" class="anchor-heading" aria-labelledby="this-has-nothing-to-do-with-formal-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> This has nothing to do with formal content
   
   
 </h2>
     
 
-<p><strong>Immediate neighbors only.</strong> The <code class="language-plaintext highlighter-rouge">uses[]</code> array lists only direct
-dependencies — not the full transitive chain. If A→B and B→C, then A
-lists only B. Run <code class="language-plaintext highlighter-rouge">bun run pipeline/prune-transitive-deps.ts</code> to
-enforce this after edits.</p>
+<p>A graded body of empirical evidence is <strong>never</strong> an input to a mathematical
+proof. In a paper folio, a <code class="language-plaintext highlighter-rouge">theorem</code>’s assertion is discharged by its <code class="language-plaintext highlighter-rouge">.lean</code>
+sibling and by nothing else; certainty grading belongs to guidance about the
+world, where the question is what the evidence supports. The two live in one
+platform and must not meet: an empirical grade appearing in a proof obligation
+would be a category error that the Lean build would not catch, because it never
+reaches Lean.</p>
 
-<p>When auditing <code class="language-plaintext highlighter-rouge">uses[]</code> arrays:</p>
-
-<ol>
-  <li><strong>Narrative cross-refs</strong>: Every <code class="language-plaintext highlighter-rouge">[text](#label)</code> in the <code class="language-plaintext highlighter-rouge">.md</code> file should
-have a corresponding entry in <code class="language-plaintext highlighter-rouge">uses[]</code> only if the referenced block is
-a <strong>direct</strong> dependency (not if it’s already reachable transitively
-through another <code class="language-plaintext highlighter-rouge">uses[]</code> entry). Forward references and example/remark
-references do not need entries.</li>
-  <li><strong>Shared-foundation references</strong>: Any block that references a foundational
-object should depend on the theorem that introduces it — but only
-through the nearest intermediate block, not by listing the foundational
-theorem directly when it’s already reachable.</li>
-  <li><strong>Existence links</strong>: Every definition that bundles fields should have a
-corresponding existence theorem (<code class="language-plaintext highlighter-rouge">thm:&lt;name&gt;-exists</code>) that proves the
-fields can be constructed from upstream structures.</li>
-  <li><strong>Lazy-loading caveat</strong>: The viewer dep graph force-loads all sections
-before building edges. If edges appear missing in the UI, verify the
-data is correct before assuming the <code class="language-plaintext highlighter-rouge">uses[]</code> is wrong.</li>
-</ol>
-<h2 id="integration-with-test-engineer">
+<p>If you are appraising evidence inside a paper folio, check first whether you
+are in the right repository at all.</p>
+<h2 id="actors">
   
   
-    <a href="#integration-with-test-engineer" class="anchor-heading" aria-labelledby="integration-with-test-engineer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Integration with test-engineer
+    <a href="#actors" class="anchor-heading" aria-labelledby="actors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Actors
   
   
 </h2>
     
 
-<p>The content-validation skill produces <code class="language-plaintext highlighter-rouge">ValidationResult</code> objects that the
-test-engineer skill can consume in unit tests:</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">validateObjects</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../content/pipeline/validate</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="nx">test</span><span class="p">(</span><span class="dl">"</span><span class="s2">all content objects valid</span><span class="dl">"</span><span class="p">,</span> <span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">validateObjects</span><span class="p">(</span><span class="dl">"</span><span class="s2">content/&lt;paper&gt;/&lt;chapter&gt;/</span><span class="dl">"</span><span class="p">);</span>
-  <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">valid</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div></div>
+<ul>
+  <li>Author / guideline developer (lead)</li>
+  <li>Clinical SME (domain judgement, where the question is clinical)</li>
+  <li>Content Reviewer (checks the grade’s reasons survive, not the grade itself)</li>
+</ul>
 
           
 

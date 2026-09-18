@@ -90,9 +90,9 @@
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T22:48:25.875Z",
+  "generatedAt": "2026-09-18T22:54:11.501Z",
   "counts": {
-    "Skill": 142,
+    "Skill": 143,
     "Actor": 24,
     "Capability": 23,
     "Role": 64,
@@ -405,6 +405,22 @@
       ],
       "instructions": "skills/content-lifecycle/content-retire.md",
       "lines": 28,
+      "hasInstructions": true,
+      "hasIOContract": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/evidence-appraisal",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "evidence-appraisal",
+      "title": "Evidence Appraisal",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/content-lifecycle"
+      ],
+      "packagePaths": [
+        "skills/content-lifecycle"
+      ],
+      "instructions": "skills/content-lifecycle/evidence-appraisal.md",
+      "lines": 92,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -1001,7 +1017,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/role-model.md",
-      "lines": 307,
+      "lines": 327,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -3447,6 +3463,7 @@
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-author",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-validate",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/evidence-appraisal",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-test",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/content-feedback",
@@ -4348,8 +4365,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_ContentChangeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Content%20Author",
       "laneName": "Content Author",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/staging-review"
+      ],
+      "implementsSkillNames": [
+        "staging-review"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -4368,8 +4389,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_ContentChangeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Content%20Author",
       "laneName": "Content Author",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/staging-review"
+      ],
+      "implementsSkillNames": [
+        "staging-review"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -6885,8 +6910,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_HumanTranslation",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Human%20Translator",
       "laneName": "Human Translator",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "implementsSkillNames": [
+        "translation-manager"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -11220,8 +11249,12 @@
       "partOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_EvidenceRetrieval",
       "performedBy": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#role/Author%20/%20guideline%20developer%20(person)",
       "laneName": "Author / guideline developer (person)",
-      "implementedBy": [],
-      "implementsSkillNames": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/evidence-appraisal"
+      ],
+      "implementsSkillNames": [
+        "evidence-appraisal"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
