@@ -130,13 +130,8 @@ import { AUTOMATED_CHECKERS } from "./qa-checkers-voice";
 import { DAK_AUTOMATED_CHECKERS } from "./qa-checkers-dak";
 import { usesGraphHash } from "./uses-graph-hash";
 
-import type { CheckerResult } from "./qa-checkers-extended";
-import type {
-  BlockQaReport,
-  QaCriterionEntry,
-  QaScriptSidecar,
-  CompanionRole,
-} from "../../schemas/block-qa";
+
+import type { BlockQaReport, CheckerResult, CompanionRole, QaCriterionEntry, QaScriptSidecar} from "../../schemas/block-qa";
 import {
   criterionAdapters,
   criterionProfiles,

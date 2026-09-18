@@ -54,6 +54,7 @@
  * @module schemas/contributions
  */
 
+import type { CheckerPaths, CheckerResult } from "./block-qa";
 import { ADAPTER_BLOCK_KINDS, CONTENT_ADAPTERS, type ContentAdapter } from "./block-kinds";
 
 // ── What a dependency may contribute ────────────────────────────
@@ -88,18 +89,40 @@ export interface ToolContribution {
 }
 
 /** Everything one dependency adds. Returned by its `contributes` module. */
+/**
+ * A QA checker a dependency adds, keyed by the criterion it answers.
+ *
+ * The reason this exists: `content/pipeline/qa-sweep.ts` dispatched with
+ *
+ * ```ts
+ * const checker = AUTOMATED_CHECKERS[id] ?? DAK_AUTOMATED_CHECKERS[id];
+ * ```
+ *
+ * — the generic sweep naming one adapter's checker table. That is a
+ * wrong-direction dependency (core → smart-base) and it does not generalise:
+ * a third adapter means a third `??`, and a folio that brings its own criteria
+ * has nowhere to put them at all.
+ */
+export interface QaCheckerContribution {
+  /** The criterion id this answers. Must be a criterion the sweep knows. */
+  criterion: string;
+  /** The checker itself. */
+  check: (paths: CheckerPaths) => CheckerResult;
+}
+
 export interface FolioContribution {
   /** The contributing instance's name, as declared in the dependency entry. */
   name: string;
   blockKinds?: BlockKindContribution[];
   adapter?: AdapterContribution;
   tools?: ToolContribution[];
+  qaCheckers?: QaCheckerContribution[];
 }
 
 /** Thrown when two contributors claim the same kind, adapter or tool name. */
 export class ContributionCollisionError extends Error {
   constructor(
-    readonly what: "kind" | "adapter" | "tool",
+    readonly what: "kind" | "adapter" | "tool" | "checker",
     readonly id: string,
     readonly incumbent: string,
     readonly challenger: string,
@@ -132,6 +155,7 @@ export class ContributionRegistry {
   private kinds = new Map<string, KindEntry>();
   private adapters = new Map<string, { module: string; contributor: string }>();
   private toolGroups = new Map<string, { register: (server: unknown) => void; contributor: string }>();
+  private checkers = new Map<string, { check: (paths: CheckerPaths) => CheckerResult; contributor: string }>();
 
   /**
    * Register one dependency's contribution.
@@ -178,6 +202,15 @@ export class ContributionRegistry {
       }
       this.toolGroups.set(t.name, { register: t.register, contributor: who });
     }
+
+    for (const c of contribution.qaCheckers ?? []) {
+      const existing = this.checkers.get(c.criterion);
+      if (existing) {
+        if (existing.contributor === who) continue; // diamond
+        throw new ContributionCollisionError("checker", c.criterion, existing.contributor, who);
+      }
+      this.checkers.set(c.criterion, { check: c.check, contributor: who });
+    }
   }
 
   /**
@@ -209,6 +242,22 @@ export class ContributionRegistry {
   /** Run every contributed tool registrar against the built server. */
   registerTools(server: unknown): void {
     for (const { register } of this.toolGroups.values()) register(server);
+  }
+
+  /**
+   * The checker a dependency contributed for this criterion, or `undefined`.
+   *
+   * `undefined` is never defaulted to a pass: a criterion the sweep knows but
+   * nobody implements is `needs-agent`, which is what the sweep already does
+   * for its own unimplemented criteria.
+   */
+  qaChecker(criterion: string): ((paths: CheckerPaths) => CheckerResult) | undefined {
+    return this.checkers.get(criterion)?.check;
+  }
+
+  /** Every contributed checker, with the criterion it answers and who added it. */
+  contributedQaCheckers(): Array<{ criterion: string; contributor: string }> {
+    return [...this.checkers].map(([criterion, e]) => ({ criterion, contributor: e.contributor }));
   }
 
   /** Every contributed tool group name. */

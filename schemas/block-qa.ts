@@ -148,6 +148,23 @@ export type CompanionRole = (typeof COMPANION_ROLES)[number];
 export type CheckerPaths = Partial<Record<CompanionRole, string>>;
 
 /**
+ * One place a checker found what it was looking for.
+ *
+ * Moved here from `content/pipeline/qa-checkers-extended.ts` on 2026-09-18, to
+ * sit beside {@link CheckerPaths} — a checker's input and its output belong
+ * together, and `CheckerPaths` was already here. The move is what lets
+ * `schemas/contributions.ts` type a CONTRIBUTED checker: a dependency that
+ * adds QA criteria has to describe them in a shape the registry can hold, and
+ * the registry cannot import the pipeline.
+ */
+export interface CheckerHit {
+  file: string;
+  line: number;
+  text: string;
+}
+
+
+/**
  * Which companion roles each adapter's blocks can actually have.
  *
  * `md` and `ts` are shared: every block has a manifest, and either kind of
@@ -604,4 +621,32 @@ export interface QaScriptSidecar {
   last_run_sha: string;
   /** Engine fingerprint — e.g. `bun-1.3.11+node-22`. */
   engine_version?: string;
+}
+
+/**
+ * What a checker concluded.
+ */
+export interface CheckerResult {
+  /**
+   * Outcome. `warn` is preserved end-to-end (matches block-qa/v1's
+   * `QaCriterionEntry.result` union) so a soft finding lands in the
+   * sidecar without being silently coerced to `pass`.
+   */
+  result: "pass" | "fail" | "warn" | "n/a";
+  hits: CheckerHit[];
+  /**
+   * Optional human-readable context threaded into the sidecar entry's
+   * `notes` field. Used by cache-backed checkers (e.g.
+   * `proof-lean-compiles`) to record WHY a result is `n/a` — for
+   * instance "cached diagnostics are stale relative to current .lean".
+   */
+  notes?: string;
+  /**
+   * Optional structured numeric/heuristic measures persisted into the
+   * sidecar entry's `metrics` field (see `QaCriterionEntry.metrics`).
+   * Used by the detangler axis to record per-block graph measures
+   * (degree, dependency-cone size, edge span, graph energy, topic
+   * coherence) alongside the pass/fail verdict.
+   */
+  metrics?: Record<string, number | string>;
 }

@@ -23,7 +23,7 @@
  */
 
 import { existsSync, readFileSync, readdirSync } from "fs";
-import type { CheckerPaths } from "../../schemas/block-qa";
+import type { CheckerPaths, CheckerHit, CheckerResult } from "../../schemas/block-qa";
 import { resolve, dirname, join, relative } from "path";
 import { fileURLToPath } from "url";
 import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
@@ -52,36 +52,6 @@ const CONTENT_DIR = join(REPO_ROOT, "content");
 const COMPUTATIONS_DIR = join(REPO_ROOT, "computations");
 const BIB_QA_REPORT = join(CONTENT_DIR, "bib-qa.json");
 
-export interface CheckerHit {
-  file: string;
-  line: number;
-  text: string;
-}
-
-export interface CheckerResult {
-  /**
-   * Outcome. `warn` is preserved end-to-end (matches block-qa/v1's
-   * `QaCriterionEntry.result` union) so a soft finding lands in the
-   * sidecar without being silently coerced to `pass`.
-   */
-  result: "pass" | "fail" | "warn" | "n/a";
-  hits: CheckerHit[];
-  /**
-   * Optional human-readable context threaded into the sidecar entry's
-   * `notes` field. Used by cache-backed checkers (e.g.
-   * `proof-lean-compiles`) to record WHY a result is `n/a` — for
-   * instance "cached diagnostics are stale relative to current .lean".
-   */
-  notes?: string;
-  /**
-   * Optional structured numeric/heuristic measures persisted into the
-   * sidecar entry's `metrics` field (see `QaCriterionEntry.metrics`).
-   * Used by the detangler axis to record per-block graph measures
-   * (degree, dependency-cone size, edge span, graph energy, topic
-   * coherence) alongside the pass/fail verdict.
-   */
-  metrics?: Record<string, number | string>;
-}
 
 // ── Lazy-loaded bib-qa report (cached across calls per process) ─
 
