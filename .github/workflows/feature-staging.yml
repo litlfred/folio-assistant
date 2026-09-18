@@ -278,6 +278,33 @@ jobs:
           done < <(find ./_site -name "*.html")
           echo "Injected staging banner into ${INJECTED} HTML files (${NEW_PAGES} with no counterpart on main)"
 
+      # The branch's KG, published beside the branch's site, so the graph a
+      # reviewer inspects is the one this PR produces rather than main's. The
+      # export is data, not a page, so the banner injection above does not
+      # touch it — which is why the `branch`/`sha` fields below matter: they
+      # are the only thing saying which commit a JSON file came from.
+      # The branch's graph, published beside the branch's site. --base-url is
+      # load-bearing: without it every staged export would mint @ids pointing
+      # at main's published document, and two different graphs would assert the
+      # same IRIs — the preview would claim to BE the canonical graph.
+      - name: Export the knowledge graph and its schema
+        env:
+          KG_BRANCH: ${{ steps.slug.outputs.branch }}
+          SLUG: ${{ steps.slug.outputs.slug }}
+        run: |
+          BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
+          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/agent-harness.ts");console.log(artefactStub(readDeclaration(".")))')
+          bun run scripts/kg-export.ts             --base-url "$BASE" --out "./_site/kg/${STUB}.jsonld"
+          bun run scripts/harness-schema-export.ts --base-url "$BASE" --out "./_site/kg/${STUB}.schema.json"
+          STUB="$STUB" bun -e '
+            const f = `./_site/kg/${process.env.STUB}.jsonld`;
+            const d = JSON.parse(await Bun.file(f).text());
+            d.staging = { branch: process.env.KG_BRANCH, sha: process.env.GITHUB_SHA,
+                          pr: process.env.GITHUB_REF_NAME, run: process.env.GITHUB_RUN_ID };
+            await Bun.write(f, JSON.stringify(d, null, 2) + "\n");
+          ' 
+        shell: bash
+
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
 

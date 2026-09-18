@@ -90,3 +90,10 @@ content/schema/
 # Build stamp written by .github/workflows/docs-site.yml at deploy time.
 # Never committed: a sha in the repo names the commit BEFORE the deploy.
 docs/_data/build.yml
+
+# Build artifacts: regenerated from the tree, stale the moment they are
+# committed. `_kg/` is the published KG export; `registry.json` is the runtime
+# manifest `scripts/generate-registry.ts` writes. Neither was ignored before,
+# and `registry.json` was nearly committed by accident while writing kg-export.
+_kg/
+.claude/skills/registry.json
