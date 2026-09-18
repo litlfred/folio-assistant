@@ -184,14 +184,21 @@ first. A node declared `.defs` resolves to `beans/.defs` and is exactly as
 invisible as the stores this move existed to fix; checking only the head would
 have made the guard unfireable.
 
-`agent-harness.json` declares this instance's other graphs (`schemas/`,
-`skills/`) and deliberately declares **no** work-plan directory. #263 added
-`workplan` and `process-state` entries there; they are reverted, because two
-files answering "where is the work plan" is the drift both changes set out to
-remove. The trade-off is real and was taken knowingly: a consumer reading only
-`agent-harness.json` will not learn that `beans/` exists, and must read
-`beans/beans.json` for the work plan. See
-[`directory-conventions`](skills/folio-core/directory-conventions.md).
+`agent-harness.json` declares `beans/` **once**, as a `beans` graph, alongside
+`schemas/` and `kg/`; `beans/beans.json` declares what is inside it — the
+`defs` node (work items) and the `workflows` node (running BPMN instance
+state). The harness says which directories exist and what kind of graph each
+holds; the graph says what its own nodes are. One fact, one place, at each
+level, so neither file has to infer the other's business.
+
+#263 declared those two as **separate directories** — `workplan` at `beans/`
+and `process-state` at `beans/workflow/` — and its own comment named the defect
+that creates: the second sits *inside* the first, so a consumer scanning a
+declared directory cannot assume it owns what lies beneath it, and the two were
+told apart only by file extension, "a coincidence of the current layout, not a
+contract". Named nodes are that contract. The graph kinds `workplan` and
+`process-state` are replaced by the single `beans` kind for the same reason.
+See [`directory-conventions`](skills/folio-core/directory-conventions.md).
 
 
 `.harness/` still exists and still holds `interaction.json` and `issue-comments/`;
