@@ -1,0 +1,50 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_L2Dak",
+    "path": "skills/workflows/l2-dak-authoring.bpmn"
+  },
+  "source_hash": "sha256:a5c659929fff1dcf18651a4efc15e2ab18ec2dbb9992e4b64b703fa880693f0c",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 6,
+    "fail": 0,
+    "n/a": 1,
+    "unknown": 0
+  }
+}

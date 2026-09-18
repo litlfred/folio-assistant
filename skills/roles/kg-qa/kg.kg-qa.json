@@ -1,0 +1,59 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "graph",
+    "id": "kg",
+    "path": null
+  },
+  "source_hash": null,
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-reachable": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "commit-hygiene",
+          "detail": "skill \"commit-hygiene\" is listed by no package manifest, carried by no role and named by no activity."
+        },
+        {
+          "where": "content-lifecycle",
+          "detail": "skill \"content-lifecycle\" is listed by no package manifest, carried by no role and named by no activity."
+        },
+        {
+          "where": "corpus-grep",
+          "detail": "skill \"corpus-grep\" is listed by no package manifest, carried by no role and named by no activity."
+        },
+        {
+          "where": "language-trap-agent-audit",
+          "detail": "skill \"language-trap-agent-audit\" is listed by no package manifest, carried by no role and named by no activity."
+        },
+        {
+          "where": "lean-verification",
+          "detail": "skill \"lean-verification\" is listed by no package manifest, carried by no role and named by no activity."
+        },
+        {
+          "where": "session-start",
+          "detail": "skill \"session-start\" is listed by no package manifest, carried by no role and named by no activity."
+        }
+      ]
+    },
+    "actor-roles-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-is-not-a-role": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 2,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

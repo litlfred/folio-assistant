@@ -169,7 +169,7 @@ folio-assistant already has the primitives it needs:
 | CRDM concept | folio-assistant primitive |
 |---|---|
 | Stakeholder identification | `harness.config.json` roles, GitHub CODEOWNERS |
-| Business process documentation | BPMN workflow diagrams under `docs/workflows/` |
+| Business process documentation | BPMN workflow diagrams under `skills/workflows/` |
 | Requirements artefact | GitHub issue with structured fields |
 | Work-plan items | `beans` — the single todo mechanism |
 | Impact analysis | Content graph (`content-graph.ts`), schema constraints, QA registry |
@@ -223,14 +223,14 @@ When the agent detects a CRDM trigger, it should:
 ## The process
 {: #the-process }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/crdm-requirements.bpmn){: .fa-node-edit title="Edit docs/workflows/crdm-requirements.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/crdm-requirements.bpmn){: .fa-node-edit title="Edit skills/workflows/crdm-requirements.bpmn" }
 
 <div class="bpmn-figure" id="figure-the-process">
   <img src="assets/img/workflows/crdm-requirements.svg"
        alt="BPMN swimlane diagram: three lanes — BA/Feature Requestor, Agent, and Stakeholders. The BA submits a request; the agent detects whether it is a feature, scans for issues, and runs through the six CRDM phases. The BA reviews and coordinates with stakeholders at each phase. In Phase 6, two loops: an inner loop where the BA and agent iterate rapidly on increments, and an outer loop where the BA shares accumulated MVPs with stakeholders for testing. Stakeholders provide findings, the BA translates them into agent direction, and the cycle repeats until feature sign-off.">
 </div>
 
-[Open the BPMN source](workflows/crdm-requirements.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/crdm-requirements.bpmn){: .btn .btn-outline }
 
 The diagram above shows the full CRDM workflow as a BPMN 2.0 collaboration
 with three swim lanes:
@@ -319,7 +319,7 @@ gap actually sits.
 **What the agent does in this phase:**
 
 1. **Map the current workflow** — use the existing BPMN diagrams under
-   `docs/workflows/` as a starting point. If the affected workflow is already
+   `skills/workflows/` as a starting point. If the affected workflow is already
    diagrammed (e.g. the content lifecycle, the publication pipeline, the
    document ingestion flow), read it and identify the specific activity or
    decision point where the gap appears.
@@ -615,7 +615,7 @@ distinction is kept explicit.
 
 **`crdm_start` and `crdm_status` were proposed here and should not be built.**
 The generic workflow tools already run this process, because
-`docs/workflows/crdm-requirements.bpmn` is a loadable BPMN process like every
+`skills/workflows/crdm-requirements.bpmn` is a loadable BPMN process like every
 other diagram in this repository:
 
 | Instead of | Use |
@@ -716,7 +716,7 @@ there, or lets them assume something exists because nobody updated the list.
   they would be a second answer to "where are we", free to disagree with the
   first.
 - **BPMN diagram of the process itself** —
-  [`docs/workflows/crdm-requirements.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/docs/workflows/crdm-requirements.bpmn),
+  [`skills/workflows/crdm-requirements.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/crdm-requirements.bpmn),
   with lanes for the BA / feature requestor, the agent, and stakeholders.
 - **The six-phase workflow as a skill** —
   [`skills/folio-core/crdm-requirements-workflow.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/crdm-requirements-workflow.md),

@@ -212,6 +212,21 @@ jobs:
       - name: workflow skill refs
         run: bun run check:workflow-refs
 
+      # The rest of the actor -> role -> skill -> task joins, and the committed
+      # sidecars that record them. A `critical` finding is a broken reference:
+      # a lane binding a role that is not declared, a role carrying a skill
+      # that does not exist, a gateway naming a decision table that will not
+      # load. `--check` also fails on a STALE sidecar, which is the point of
+      # committing them — without a durable previous answer, a lane that has
+      # been unbound since it was drawn and one that broke in the commit under
+      # review look identical to a reviewer.
+      #
+      # Not `--strict`: `major` findings are missing joins rather than broken
+      # ones, and gating on them today would fail the build on debt this gate
+      # was added to make visible.
+      - name: knowledge-graph audit
+        run: bun run kg:audit:check
+
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
       # source change. document-intake.md sat 35 lines behind its source and

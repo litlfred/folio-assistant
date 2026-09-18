@@ -29,4 +29,4 @@ descriptions can be re-generated or re-reviewed *as a set*.
 The provenance field is required by the schema, not merely permitted, and the
 L1 completeness gate (`folio-assistant-pn6j`) fails a narrative that lacks it.
 
-Diagram: `docs/workflows/ingest-derive-content.bpmn`, `Task_Provenance`.
+Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Provenance`.

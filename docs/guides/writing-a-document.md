@@ -28,7 +28,7 @@ with an LLM, published without a TeX installation.
 ## What a document folio is
 {: #what-a-document-folio-is }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/authoring-a-document.bpmn){: .fa-node-edit title="Edit docs/../workflows/authoring-a-document.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/authoring-a-document.bpmn){: .fa-node-edit title="Edit skills/workflows/authoring-a-document.bpmn" }
 
 Everything a paper folio is, minus the formal layer. The same tree of chapters
 and sections over typed **blocks**, the same editorial `uses[]` graph, the same
@@ -48,7 +48,7 @@ them. No Lean. No LaTeX.
        alt="BPMN swimlane diagram of document authoring, plan to published.">
 </div>
 
-[BPMN 2.0 source](../workflows/authoring-a-document.bpmn)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/authoring-a-document.bpmn)
 {: .bpmn-source }
 
 ---
@@ -300,4 +300,4 @@ lists exactly what is in the way.
 | Skill package | `skills/authoring-document/package-manifest.json` |
 | Adapter | `adapters/document/` |
 | Vocabulary | `schemas/block-kinds.ts` — `DOCUMENT_BLOCK_KINDS`, `MATH_BLOCK_KINDS` |
-| Process | [`authoring-a-document.bpmn`](../workflows/authoring-a-document.bpmn) |
+| Process | [`authoring-a-document.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/authoring-a-document.bpmn) |

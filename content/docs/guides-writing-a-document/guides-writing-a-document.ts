@@ -16,11 +16,11 @@ export default webpage({
       title: "What a document folio is",
       asset: {
         kind: "bpmn",
-        source: "docs/../workflows/authoring-a-document.bpmn",
+        source: "skills/workflows/authoring-a-document.bpmn",
         rendered: "../assets/img/workflows/authoring-a-document.svg",
         alt: "BPMN swimlane diagram of document authoring, plan to published.",
         sourceLinks: [
-          { text: "BPMN 2.0 source", href: "../workflows/authoring-a-document.bpmn" },
+          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/authoring-a-document.bpmn" },
         ],
         linkStyle: "caption",
       },

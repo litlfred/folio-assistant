@@ -1,0 +1,71 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_ContentChangeReview",
+    "path": "skills/workflows/content-change-review.bpmn"
+  },
+  "source_hash": "sha256:4b0ded71cb277ef096a2278cbad673aa236d07a7b4c3b682460fe1909fdac281",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_DescribeChange",
+          "detail": "\"Describe the desired change\" names no skill."
+        },
+        {
+          "where": "Task_RequestRevision",
+          "detail": "\"Request further revisions\" names no skill."
+        },
+        {
+          "where": "Task_SubmitForReview",
+          "detail": "\"Submit to review committee\" names no skill."
+        },
+        {
+          "where": "Task_RequestChanges",
+          "detail": "\"Request changes\" names no skill."
+        },
+        {
+          "where": "Task_Approve",
+          "detail": "\"Approve and merge\" names no skill."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 0
+  }
+}

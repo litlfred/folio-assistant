@@ -1,7 +1,7 @@
 /**
  * Read a `.bpmn` file into a graph the interpreter can walk.
  *
- * The workflow diagrams under `docs/workflows/` are already the normative
+ * The workflow diagrams under `skills/workflows/` are already the normative
  * picture of how a change reaches the corpus, and every activity already names
  * the skill that implements it (`<folio:skill ref="…"/>`) and whether it
  * touches the work plan (`<folio:bean/>`). Until now nothing read them at
@@ -63,6 +63,16 @@ export interface ProcessNode {
   type: string;
   /** Name of the lane this node sits in — i.e. the role that performs it. */
   lane?: string;
+  /** Id of that lane, so a finding can name the element rather than a string. */
+  laneId?: string;
+  /**
+   * `<folio:role ref="…"/>` on the lane, when the diagram binds explicitly.
+   *
+   * A lane NAME is free text and sixty of them spell two dozen positions
+   * (`schemas/role-graph.ts`); an explicit ref is the join that does not
+   * depend on spelling, and it wins over name matching when present.
+   */
+  roleRef?: string;
   /** `<folio:skill ref="…"/>`, possibly several. */
   skills: string[];
   /** True when `<folio:bean/>` marks this step as touching the work plan. */
@@ -101,6 +111,24 @@ export interface ProcessFlow {
   to: string;
 }
 
+/**
+ * One swimlane, which is to say one **role**.
+ *
+ * Kept as a first-class part of the model rather than only as a string on each
+ * node, because the questions worth asking are about the lane: does it bind a
+ * declared role, does that role carry the skills its activities name, is there
+ * an actor who can take it on. A `lane?: string` per node cannot answer any of
+ * those — it cannot even report a lane that holds no activities.
+ */
+export interface LaneDef {
+  id: string;
+  name?: string;
+  /** `<folio:role ref="…"/>` on the lane, when declared. */
+  roleRef?: string;
+  /** Ids of the flow nodes in this lane. */
+  nodes: string[];
+}
+
 export interface ProcessModel {
   /** `bpmn:process/@id`, e.g. `Process_Editing`. */
   id: string;
@@ -120,6 +148,8 @@ export interface ProcessModel {
    * judgement about its domain applies.
    */
   enforcement: "strict" | "advisory";
+  /** The process's lanes, in document order. A lane IS a role — see below. */
+  lanes: LaneDef[];
   /** Every start event, in document order. */
   startNodes: string[];
   /**
@@ -184,7 +214,14 @@ interface ModdleElement {
   sourceRef?: { id: string };
   targetRef?: { id: string };
   flowElements?: ModdleElement[];
-  laneSets?: { lanes?: { name?: string; flowNodeRef?: { id: string }[] }[] }[];
+  laneSets?: {
+    lanes?: {
+      id?: string;
+      name?: string;
+      flowNodeRef?: { id: string }[];
+      extensionElements?: { values?: { $type: string; ref?: string }[] };
+    }[];
+  }[];
   rootElements?: ModdleElement[];
 }
 
@@ -218,9 +255,20 @@ export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> 
 
   // lane membership, so every node can report the role that performs it
   const laneOf = new Map<string, string>();
+  const laneIdOf = new Map<string, string>();
+  const roleRefOf = new Map<string, string>();
+  const lanes: LaneDef[] = [];
   for (const lane of proc.laneSets?.[0]?.lanes ?? []) {
-    for (const ref of lane.flowNodeRef ?? []) {
-      if (lane.name) laneOf.set(ref.id, lane.name);
+    const laneId = lane.id ?? lane.name ?? `lane_${lanes.length}`;
+    const roleRef = (lane.extensionElements?.values ?? []).find(
+      (v) => v.$type === "folio:role" && v.ref,
+    )?.ref;
+    const nodeIds = (lane.flowNodeRef ?? []).map((r) => r.id);
+    lanes.push({ id: laneId, name: lane.name, roleRef, nodes: nodeIds });
+    for (const id of nodeIds) {
+      if (lane.name) laneOf.set(id, lane.name);
+      laneIdOf.set(id, laneId);
+      if (roleRef) roleRefOf.set(id, roleRef);
     }
   }
 
@@ -236,6 +284,8 @@ export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> 
       kind: kindOf(el.$type),
       type: el.$type,
       lane: laneOf.get(el.id),
+      laneId: laneIdOf.get(el.id),
+      roleRef: roleRefOf.get(el.id),
       skills: ext.filter((v) => v.$type === "folio:skill" && v.ref).map((v) => v.ref!),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
       workPlanOp: readWorkPlanOp(el.id, ext),
@@ -290,6 +340,7 @@ export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> 
     enforcement,
     nodes,
     flows,
+    lanes,
     startNodes,
     decisions,
   };

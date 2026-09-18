@@ -42,7 +42,7 @@ import { instanceId, loadInstance } from "./store.js";
 
 /** The step a corpus write must have been authorised by. */
 export const COMMIT_ACTIVITY = "Task_Commit";
-const EDITING_PROCESS = join("docs", "workflows", "editing-hci-validation.bpmn");
+const EDITING_PROCESS = join("skills", "workflows", "editing-hci-validation.bpmn");
 
 /** Extensions that are a block's own content. `.qa.json` is machine-written. */
 const CONTENT_SIBLINGS = [".ts", ".md", ".lean"];
@@ -94,7 +94,7 @@ function labelFor(tsPath: string): string | undefined {
 export interface CorpusGateOptions {
   /** Files changed in this commit, repo-relative. */
   files: string[];
-  /** Where the folio's `docs/workflows/` lives — the platform checkout. */
+  /** Where the folio's `skills/workflows/` lives — the platform checkout. */
   platformRoot: string;
 }
 

@@ -63,14 +63,14 @@ first.
 ## The agent bean lifecycle
 {: #the-agent-bean-lifecycle }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/bean-lifecycle.bpmn){: .fa-node-edit title="Edit docs/workflows/bean-lifecycle.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/bean-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/bean-lifecycle.bpmn" }
 
 <div class="bpmn-figure" id="figure-the-agent-bean-lifecycle">
   <img src="assets/img/workflows/bean-lifecycle.svg"
        alt="BPMN swimlane diagram with two lanes. In the agent's lane: durable work is identified, the agent runs an exact-title search before creating anything, then a gateway asks whether the bean already exists. If not, it creates one; if it does, a second gateway asks whose it is. A bean owned by someone else routes to the lower lane — sibling session or human — where the only action is to leave it alone and coordinate, ending there. The agent's own or an unclaimed bean is claimed as in-progress, worked on with the body kept current, and then reaches an outcome gateway with three branches: done goes to complete, not wanted goes to scrap with reasons and never delete, and blocked goes to recording the blocker and handing it back. All three converge on a single end event, state recorded.">
 </div>
 
-[Open the BPMN source](workflows/bean-lifecycle.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/bean-lifecycle.bpmn){: .btn .btn-outline }
 
 The diagram above is the whole cycle, and three of its edges are the ones
 worth reading twice.

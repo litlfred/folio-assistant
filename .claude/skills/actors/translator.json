@@ -3,10 +3,17 @@
   "name": "Translator",
   "type": "person",
   "description": "Localization specialist who adapts content for UN-supported languages.",
-  "inherits": ["author"],
-  "capabilities": ["git-push", "translation"],
+  "roles": [
+    "translator"
+  ],
+  "capabilities": [
+    "git-push",
+    "translation"
+  ],
   "meta": {
     "smartBaseAnalog": "SGAuthoring.Persona.Translator",
-    "lifecycle": ["author"]
+    "lifecycle": [
+      "author"
+    ]
   }
 }

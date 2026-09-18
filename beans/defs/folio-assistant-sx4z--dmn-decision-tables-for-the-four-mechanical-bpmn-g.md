@@ -26,7 +26,7 @@ comma-lists) that **throws on anything else naming the expression** rather than
 treating it as a non-match — an unimplemented test evaluating to `false` looks
 exactly like a rule that legitimately did not apply.
 
-Tables shipped, under `docs/workflows/decisions/`:
+Tables shipped, under `skills/workflows/decisions/`:
 
 - `lean-build-gate.dmn` — `Build green, no sorries?` from `buildOk`
   (`lean_build`) and `deferredSorries` (`proof_status`).

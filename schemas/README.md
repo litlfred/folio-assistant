@@ -11,6 +11,27 @@ The core document model, organized as atomic knowledge units:
 - **[constraints.ts](./constraints.ts)** — Zod runtime schemas + constraint rules
 - **[builders.ts](./builders.ts)** — Validated constructor functions (`definition()`, `theorem()`, etc.)
 
+## The harness graphs — what an instance is, and who works in it
+
+Not content. These describe the **instance** and the people and processes
+around it, and they are read by tools rather than rendered.
+
+- **[agent-harness.ts](./agent-harness.ts)** — the root `agent-harness.json`
+  declaration: which directories an instance scans and what **kind of graph**
+  each holds (`tools`, `kg`, `schemas`, `beans`, and `folio`, which core
+  registers because only core can render).
+- **[bean-graph.ts](./bean-graph.ts)** — what `beans/` is: a graph with named
+  nodes (`defs` for work items, `workflows` for running BPMN state), declared by
+  `beans/beans.json` so the whole store relocates by moving one folder.
+- **[role-graph.ts](./role-graph.ts)** — **Actor, Role, Skill.** *An actor
+  performs a task in a process as a role, using that role's skills.* A role **is
+  a BPMN swimlane**; `inherits` is a static IS-A closure and the subprocess stack
+  is a scoped union along a call path, and the two are deliberately not merged.
+  Declared in `skills/roles/roles.json`.
+- **[kg-qa.ts](./kg-qa.ts)** — the QA sidecar for that graph: 14 criteria, one
+  per join, written to `kg-qa/` beside each audited node by
+  `scripts/kg-audit.ts`. The third QA subject kind, after blocks and scripts.
+
 ## CI/Output Schemas
 
 Types consumed by CI pipelines and published to GitHub Pages:

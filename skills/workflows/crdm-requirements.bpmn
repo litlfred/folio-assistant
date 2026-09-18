@@ -136,7 +136,7 @@ The BA knows the domain — the agent does not guess.</bpmn:documentation>
     <bpmn:exclusiveGateway id="GW_Needs" name="BA approves?"/>
     <bpmn:task id="A_MapWorkflow" name="Phase 2: Map current&#10;workflow (BPA)">
       <bpmn:documentation>Business-process analysis here means reading the
-existing diagrams under docs/workflows/ and drawing the gap, so the skill
+existing diagrams under skills/workflows/ and drawing the gap, so the skill
 that implements this step is the BPMN one.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="bpmn-authoring"/></bpmn:extensionElements>
     </bpmn:task>

@@ -29,4 +29,4 @@ One documented command takes a file from `uploads/` to `library/<bib-slug>/`
 with structure, derived content, the Dublin Core record and the manifest, and
 every other path is a wrapper around it or is deleted.
 
-Diagram: `docs/workflows/document-ingestion.bpmn` (`Process_Ingestion`).
+Diagram: `skills/workflows/document-ingestion.bpmn` (`Process_Ingestion`).

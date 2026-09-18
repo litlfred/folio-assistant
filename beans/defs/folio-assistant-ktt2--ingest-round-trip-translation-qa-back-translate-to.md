@@ -32,4 +32,4 @@ The round trip runs over every localized narrative in the completeness gate,
 mismatches become reviewer-adjudicated findings, and a terminology miss is
 distinguishable in the output from a general semantic drift.
 
-Diagram: `docs/workflows/ingest-l1-completeness-gate.bpmn`, `Task_RoundTrip`.
+Diagram: `skills/workflows/ingest-l1-completeness-gate.bpmn`, `Task_RoundTrip`.

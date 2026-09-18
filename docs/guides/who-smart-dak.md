@@ -31,14 +31,14 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 ## The L2 artifacts
 {: #the-l2-artifacts }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit docs/../workflows/l2-dak-authoring.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit skills/workflows/l2-dak-authoring.bpmn" }
 
 <div class="bpmn-figure" id="figure-the-l2-artifacts">
   <img src="../assets/img/workflows/l2-dak-authoring.svg"
        alt="BPMN swimlane diagram: the programme manager scopes the DAK, the plan is seeded as beans, then a parallel gateway fans out the five business-analyst artifacts (personas, BPMN processes, DMN decision logic, data dictionary, indicators) alongside the terminologist's bindings; a clinical SME validates, and the DAK is assembled once accurate.">
 </div>
 
-[BPMN 2.0 source](../workflows/l2-dak-authoring.bpmn) · [full-size SVG](../assets/img/workflows/l2-dak-authoring.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/l2-dak-authoring.bpmn) · [full-size SVG](../assets/img/workflows/l2-dak-authoring.svg)
 {: .bpmn-source }
 
 | Artifact | Skill | Format |

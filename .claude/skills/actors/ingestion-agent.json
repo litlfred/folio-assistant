@@ -1,0 +1,15 @@
+{
+  "id": "ingestion-agent",
+  "name": "Ingestion engine",
+  "type": "system",
+  "description": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material itself.",
+  "roles": [
+    "ingestion-agent"
+  ],
+  "capabilities": [
+    "content-authoring"
+  ],
+  "meta": {
+    "workflow": "skills/workflows/document-ingestion.bpmn#Lane_1"
+  }
+}
