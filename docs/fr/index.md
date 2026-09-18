@@ -111,3 +111,4 @@ flowchart TD
 ```
 
 > Les nœuds de la carte sont cliquables sur le site de documentation.
+<!-- staging preview trigger -->
