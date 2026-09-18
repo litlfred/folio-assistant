@@ -106,16 +106,16 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T20:15:39.664Z",
+  "generatedAt": "2026-09-18T20:20:06.700Z",
   "counts": {
-    "Skill": 138,
+    "Skill": 139,
     "Actor": 24,
     "Capability": 23,
     "Role": 62,
     "SkillPackage": 14,
     "Process": 20,
-    "SequenceFlow": 362,
-    "ProcessNode": 328,
+    "SequenceFlow": 363,
+    "ProcessNode": 329,
     "GraphKind": 7,
     "Directory": 3
   },
@@ -264,7 +264,7 @@
         "skills/content-lifecycle"
       ],
       "instructions": "skills/content-lifecycle/content-review.md",
-      "lines": 28,
+      "lines": 38,
       "inputSchema": "schemas/skills/content-review/input.schema.json",
       "outputSchema": "schemas/skills/content-review/output.schema.json",
       "hasInstructions": true,
@@ -938,6 +938,24 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/dispatch-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/decision-audit",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "decision-audit",
+      "title": "A decision is not a finding, and neither is a substitute for the other",
+      "description": "Record why a decision was made, or why a finding in it was left. Required of whoever adjudicates a gate, and of the agent that assembles the citations for them. Every overrule of a mechanical finding carries a note, and every note cites corpus evidence.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/decision-audit.md",
+      "lines": 85,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/decision-audit"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/feature-staging",
@@ -3579,6 +3597,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/coordinate",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/crdm-requirements-workflow",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/delivery-summary",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/deployment-auth",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/detangler-integration-watcher",
@@ -9432,8 +9451,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/node/StartEvent_EditRequested"
       ],
-      "nodeCount": 24,
-      "flowCount": 28,
+      "nodeCount": 25,
+      "flowCount": 29,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Editing"
     },
     {
@@ -9613,8 +9632,16 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/node/Task_ReviewFindings",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/node/Gateway_EditorDecision",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/node/Task_RecordDecision",
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21b",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/node/Task_RecordDecision",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/node/Gateway_EditorDecision",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/flow/Flow_22",
@@ -10116,6 +10143,31 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Editing/node/Task_ReviewFindings"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/node/Task_RecordDecision",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Record the decision and its audit note",
+      "kind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#role/Editor%20/%20author%20(person)",
+      "laneName": "Editor / author (person)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/decision-audit"
+      ],
+      "implementsSkillNames": [
+        "decision-audit"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21b"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Editing/node/Task_RecordDecision"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/node/Gateway_EditorDecision",
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Accept, revise or discard?",
@@ -10129,7 +10181,7 @@
       "touchesWorkPlan": false,
       "relaxable": false,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#process/Process_Editing/flow/Flow_22",
@@ -15150,8 +15202,8 @@
   ],
   "staging": {
     "branch": "claude/festive-galileo-s7ibx0",
-    "sha": "8f6960c1ed20ba4317526c136a239fe59c8f4bf1",
+    "sha": "0fef73305662b69a98fc29a0051519988231024a",
     "pr": "280/merge",
-    "run": "35390316260"
+    "run": "35390769321"
   }
 }
