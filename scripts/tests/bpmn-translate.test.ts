@@ -15,6 +15,16 @@ import { extractBpmn, injectBpmn, decodeLabel } from "../../content/pipeline/bpm
 
 const ROOT = join(import.meta.dir, "../..");
 const XML = readFileSync(join(ROOT, "skills/workflows/crdm-requirements.bpmn"), "utf-8");
+/**
+ * A phase of the same process, read for the things the parent no longer carries.
+ *
+ * `crdm-requirements` is now the outer diagram — detection, a decision, and six
+ * call activities — so its bean operations and its Stakeholders lane live in the
+ * phases. Reading both keeps these tests on the real corpus, where a translation
+ * pass actually runs, rather than on an inline fixture that cannot go stale
+ * because it is not connected to anything.
+ */
+const PHASE_XML = readFileSync(join(ROOT, "skills/workflows/crdm-deliver.bpmn"), "utf-8");
 
 describe("extractBpmn", () => {
   test("finds the labels a reader sees", () => {
@@ -56,7 +66,10 @@ describe("injectBpmn", () => {
     expect(out).toContain('id="Lane_BA"');
     expect(out).toContain("<bpmn:flowNodeRef>BA_Submit</bpmn:flowNodeRef>");
     expect(out).toContain('<folio:skill ref="crdm-detect"/>');
-    expect(out).toContain('<folio:bean op="note"/>');
+
+    // A bean operation is structure too, and this diagram's are in its phases.
+    const phase = injectBpmn(PHASE_XML, new Map([["Agent", "Agent (fr)"]]));
+    expect(phase).toContain('<folio:bean op="claim"/>');
   });
 
   test("an untranslated msgid keeps its source text", () => {
@@ -67,10 +80,11 @@ describe("injectBpmn", () => {
 
   test("round-trips: inject then re-extract sees the translation", () => {
     const fr = new Map([["Agent", "Agent (fr)"], ["Stakeholders", "Parties prenantes"]]);
-    const out = injectBpmn(XML, fr);
-    const msgids = extractBpmn(out, "x.bpmn").map((e) => e.msgid);
-    expect(msgids).toContain("Agent (fr)");
-    expect(msgids).toContain("Parties prenantes");
+    expect(extractBpmn(injectBpmn(XML, fr), "x.bpmn").map((e) => e.msgid)).toContain("Agent (fr)");
+    // The Stakeholders lane is in the phases now, not the outer diagram.
+    expect(extractBpmn(injectBpmn(PHASE_XML, fr), "x.bpmn").map((e) => e.msgid)).toContain(
+      "Parties prenantes",
+    );
   });
 
   test("escapes a translation containing XML metacharacters", () => {

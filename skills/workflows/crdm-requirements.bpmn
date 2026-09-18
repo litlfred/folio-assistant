@@ -1,441 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  folio-assistant — the CRDM requirements workflow.
-
-  Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
-  BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-  by `bun run render:bpmn` — never hand-edit the SVG.
-
-  Three lanes: BA / Feature Requestor, Agent, Stakeholders.
-  Shows feature detection, issue linking, the six CRDM phases, and the
-  dual-loop iterative MVP development cycle.
--->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
-                  id="Definitions_CRDM"
-                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  id="Definitions_Process_CRDM" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
-
-  <bpmn:collaboration id="Collaboration_CRDM">
-    <bpmn:participant id="Participant_CRDM" name="CRDM requirements workflow" processRef="Process_CRDM"/>
+  <bpmn:collaboration id="Collaboration_Process_CRDM">
+    <bpmn:participant id="Participant_Process_CRDM" name="CRDM requirements" processRef="Process_CRDM"/>
   </bpmn:collaboration>
-
-  <bpmn:process id="Process_CRDM" name="CRDM requirements workflow" isExecutable="false">
-    <bpmn:documentation>
-      CRDM requirements workflow — from feature detection through iterative
-      MVP development to stakeholder sign-off. Three lanes:
-      BA/Feature Requestor (coordinates), Agent (implements), Stakeholders (approve).
-    </bpmn:documentation>
-
-    <bpmn:laneSet id="LaneSet_CRDM">
+  <bpmn:process id="Process_CRDM" name="CRDM requirements" isExecutable="false">
+    <bpmn:documentation>The CRDM requirements process, decomposed. Each phase is a real subprocess in its own file: `workflow_next` reports the step you are on and the phase it sits inside, and `workflow_complete` takes the step&#39;s own id. Detection stays here rather than in a child because its &#34;not a feature&#34; branch ends the whole process — inside a subprocess the parent would have to re-ask the same question to route on the answer.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_Process_CRDM">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
         <bpmn:flowNodeRef>Start_BA</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>BA_Submit</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>BA_ReviewNeeds</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>BA_ReviewReqs</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>BA_Signoff</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>BA_ReviewIncrement</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_IncrementOK</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_MVPReady</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>BA_ShareMVP</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>BA_TranslateFeedback</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>BA_Confirm</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_BA</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:flowNodeRef>A_Detect</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Feature</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Content</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_ScanIssues</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_Issue</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_AskCreate</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_LinkIssue</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_Stakeholders</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_Synthesise</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_Needs</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_MapWorkflow</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_DefineReqs</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_Reqs</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_CreateBeans</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_AnnounceBranch</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_Implement</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_CodeAudit</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_DeployStaging</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_Summary</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>A_Close</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_A</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="Lane_Stakeholders" name="Stakeholders">
-        <bpmn:flowNodeRef>S_ConfirmNeeds</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>S_ApproveReqs</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>S_TestMVP</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_StakeholderOK</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>S_FeatureSignoff</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Issue</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Needs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Requirements</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Signoff</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Deliver</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Close</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_CRDM</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-
-    <!-- ═══ BA lane ═══ -->
     <bpmn:startEvent id="Start_BA" name="Need identified"/>
-    <bpmn:task id="BA_Submit" name="Describe the need&#10;(chat, issue, discussion)">
+    <bpmn:task id="BA_Submit" name="Describe the need
+(chat, issue, discussion)">
       <bpmn:documentation>The BA describes the capability gap in their own words.
 They do not need to know it is called CRDM.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow" />
-      </bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:task id="BA_ReviewNeeds" name="Review synthesised&#10;needs statement">
-      <bpmn:documentation>The BA reviews what the agent synthesised and
-checks it against what they actually need.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow" />
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="BA_ReviewReqs" name="Review requirements&#10;and impact analysis">
-      <bpmn:documentation>The BA reviews the formal requirements and the
-impact analysis the agent produced.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow" />
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="BA_Signoff" name="Sign off on&#10;requirements">
-      <bpmn:extensionElements>
-        <folio:skill ref="decision-audit" />
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="BA_ReviewIncrement" name="Review increment&#10;(test behaviour)">
-      <bpmn:documentation>Inner loop: the BA tests each delivered increment
-against the acceptance criteria. They do not review code — they test behaviour.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow" />
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_IncrementOK" name="Meets criteria?"/>
-    <bpmn:exclusiveGateway id="GW_MVPReady" name="MVP ready&#10;for stakeholders?"/>
-    <bpmn:task id="BA_ShareMVP" name="Share MVP with&#10;stakeholders">
-      <bpmn:documentation>Outer loop: the BA presents the accumulated increments
-to stakeholders as a testable MVP. Staging URL, demo, or walkthrough.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow" />
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="BA_TranslateFeedback" name="Translate feedback&#10;into agent direction">
-      <bpmn:documentation>The BA translates stakeholder findings into
-actionable direction: new beans or bean updates for the agent.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow" />
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="BA_Confirm" name="Confirm all criteria&#10;met">
-      <bpmn:extensionElements>
-        <folio:skill ref="decision-audit" />
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:endEvent id="End_BA" name="Feature delivered"/>
-
-    <!-- ═══ Agent lane ═══ -->
-    <bpmn:task id="A_Detect" name="Detect feature request&#10;(crdm-detect skill)">
+    <bpmn:task id="A_Detect" name="Detect feature request
+(crdm-detect skill)">
       <bpmn:extensionElements><folio:skill ref="crdm-detect"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Feature" name="Feature?"/>
     <bpmn:endEvent id="End_Content" name="Continue authoring"/>
-    <bpmn:task id="A_ScanIssues" name="Scan open issues&#10;for match">
+    <bpmn:callActivity id="Call_Issue" name="Link the work&#10;to an issue" calledElement="Process_CRDM_Issue">
+      <bpmn:documentation>Feature work must be linked to a GitHub issue. Scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Issue" name="Issue found?"/>
-    <bpmn:task id="A_AskCreate" name="Ask BA to create&#10;or link issue">
-      <bpmn:documentation>Ask — never create. Creating an issue without the
-BA's permission is the thing this step exists to prevent.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="A_LinkIssue" name="Link to existing issue">
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="A_Stakeholders" name="Phase 1: Identify&#10;stakeholders">
-      <bpmn:documentation>The agent asks the BA who is affected by this change.
-The BA knows the domain — the agent does not guess.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="A_Synthesise" name="Phase 1: Synthesise&#10;needs from sources">
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Needs" name="BA approves?"/>
-    <bpmn:task id="A_MapWorkflow" name="Phase 2: Map current&#10;workflow (BPA)">
-      <bpmn:documentation>Business-process analysis here means reading the
-existing diagrams under skills/workflows/ and drawing the gap, so the skill
-that implements this step is the BPMN one.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="bpmn-authoring"/></bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="A_DefineReqs" name="Phases 3–4: Define&#10;requirements + impact">
-      <bpmn:documentation>Two skills, because this step is two things: the
-requirements come from the CRDM process, the impact half is a dependency
-question the content graph answers.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow"/>
-        <folio:skill ref="content-graph"/>
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Reqs" name="BA approves?"/>
-    <bpmn:task id="A_CreateBeans" name="Phase 5: Create beans">
-      <bpmn:documentation>The agent mints the implementation beans itself with
-`beans create`, running the exact-title existence check first. The engine has
-no `create` op — it claims, notes and resolves the instance's OWN bean — so
-what this step records here is a note that the plan now exists.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="todo-manager"/>
-        <folio:bean op="note"/>
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="A_AnnounceBranch" name="Announce the branch&#10;on the issue">
-      <bpmn:documentation>On CREATING the feature branch, comment on the issue:
-the branch name, the process and phase, and the beans claimed. Visibility is
-the whole point — without it a sibling session or a human cannot tell that work
-has begun, only that it has finished.
-
-Deliberately on this edge and not inside Phase 6. The three loops back into
-A_Implement (increment rejected, MVP not ready, feedback translated) re-enter
-implementation on the SAME branch, and re-announcing on each would be noise.
-Announce once, when the branch is created.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow"/>
-        <folio:bean op="claim"/>
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="A_Implement" name="Phase 6: Implement&#10;(feature branch + PR)">
-      <bpmn:documentation>Inner loop: agent claims a bean, implements on
-feature branch, opens PR, posts summary to the issue.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="prepare-merge"/>
-        <folio:bean op="claim"/>
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:callActivity id="A_CodeAudit" name="Audit the code nodes&#10;the increment adds" calledElement="Process_Review">
-      <bpmn:documentation>Descend into the review task for what this increment
-CHANGED IN THE GRAPH — Tool definitions in `tools/` and schema definition nodes
-under `schemas/`. It runs before the summary, and therefore before an MVP can
-be shared: a Tool or schema node shipped in an MVP is the version stakeholders
-start building expectations on, and a node that names a skill nobody wrote is
-cheaper to catch here than after sign-off.
-
-Called, not inherited: the agent keeps its implementing role and takes on the
-`code-reviewer` lane inside Process_CodeReview for that call path only.</bpmn:documentation>
     </bpmn:callActivity>
-    <bpmn:task id="A_DeployStaging" name="Deploy the MVP&#10;to staging">
-      <bpmn:documentation>An MVP is shared AS A STAGING DEPLOY, not as a
-description of one. `feature-staging.yml` publishes the branch under
-`STAGING/&lt;branch-slug&gt;/` on gh-pages and comments the URL on the PR, so the
-stakeholder who tests it is looking at the built artefact rather than at a
-screenshot — the same argument the merge discipline makes about rendered work.
-
-Measured in this repo on 2026-09-16: holding a rendered change back for
-assessment made assessment harder, not safer.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="feature-staging"/></bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="A_Summary" name="Post summary&#10;to issue">
-      <bpmn:documentation>What was accomplished, what remains, and links to
-the updated content for review.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="delivery-summary"/></bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:task id="A_Close" name="Close issue ONLY on&#10;BA authorisation">
-      <bpmn:documentation>Reachable only through BA_Confirm, which is the BA
-saying every criterion is met. An agent must never close an issue without
-that explicit authorisation — the gate is the preceding task, and this name
-says so rather than leaving a reader to trace the flow for it.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow"/>
-        <folio:bean op="resolve"/>
-      </bpmn:extensionElements>
-    </bpmn:task>
-    <bpmn:endEvent id="End_A" name="CRDM complete"/>
-
-    <!-- ═══ Stakeholder lane ═══ -->
-    <bpmn:task id="S_ConfirmNeeds" name="Confirm needs&#10;statement"/>
-    <bpmn:task id="S_ApproveReqs" name="Approve&#10;requirements"/>
-    <bpmn:task id="S_TestMVP" name="Test MVP&#10;in own context">
-      <bpmn:documentation>Stakeholders test the delivered feature in their own
-workflow, with their own data. They report what works and what does not.</bpmn:documentation>
-    </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_StakeholderOK" name="Accepted?"/>
-    <bpmn:task id="S_FeatureSignoff" name="Feature sign-off&#10;on issue"/>
-
-    <!-- ═══ Flows: Detection + Issue linking ═══ -->
-    <bpmn:sequenceFlow id="SF_1" sourceRef="Start_BA" targetRef="BA_Submit"/>
-    <bpmn:sequenceFlow id="SF_2" sourceRef="BA_Submit" targetRef="A_Detect"/>
-    <bpmn:sequenceFlow id="SF_3" sourceRef="A_Detect" targetRef="GW_Feature"/>
-    <bpmn:sequenceFlow id="SF_4" name="no" sourceRef="GW_Feature" targetRef="End_Content"/>
-    <bpmn:sequenceFlow id="SF_5" name="yes" sourceRef="GW_Feature" targetRef="A_ScanIssues"/>
-    <bpmn:sequenceFlow id="SF_6" sourceRef="A_ScanIssues" targetRef="GW_Issue"/>
-    <bpmn:sequenceFlow id="SF_7" name="no" sourceRef="GW_Issue" targetRef="A_AskCreate"/>
-    <bpmn:sequenceFlow id="SF_8" name="yes" sourceRef="GW_Issue" targetRef="A_LinkIssue"/>
-    <bpmn:sequenceFlow id="SF_9" sourceRef="A_AskCreate" targetRef="A_Stakeholders"/>
-    <bpmn:sequenceFlow id="SF_10" sourceRef="A_LinkIssue" targetRef="A_Stakeholders"/>
-
-    <!-- ═══ Flows: Phase 1 — Needs ═══ -->
-    <bpmn:sequenceFlow id="SF_11" sourceRef="A_Stakeholders" targetRef="A_Synthesise"/>
-    <bpmn:sequenceFlow id="SF_12" sourceRef="A_Synthesise" targetRef="BA_ReviewNeeds"/>
-    <bpmn:sequenceFlow id="SF_13" sourceRef="BA_ReviewNeeds" targetRef="S_ConfirmNeeds"/>
-    <bpmn:sequenceFlow id="SF_14" sourceRef="S_ConfirmNeeds" targetRef="GW_Needs"/>
-    <bpmn:sequenceFlow id="SF_15" name="revise" sourceRef="GW_Needs" targetRef="A_Synthesise"/>
-    <bpmn:sequenceFlow id="SF_16" name="yes" sourceRef="GW_Needs" targetRef="A_MapWorkflow"/>
-
-    <!-- ═══ Flows: Phases 2–4 — BPA + Requirements ═══ -->
-    <bpmn:sequenceFlow id="SF_17" sourceRef="A_MapWorkflow" targetRef="A_DefineReqs"/>
-    <bpmn:sequenceFlow id="SF_18" sourceRef="A_DefineReqs" targetRef="BA_ReviewReqs"/>
-    <bpmn:sequenceFlow id="SF_19" sourceRef="BA_ReviewReqs" targetRef="S_ApproveReqs"/>
-    <bpmn:sequenceFlow id="SF_20" sourceRef="S_ApproveReqs" targetRef="GW_Reqs"/>
-    <bpmn:sequenceFlow id="SF_21" name="revise" sourceRef="GW_Reqs" targetRef="A_DefineReqs"/>
-    <bpmn:sequenceFlow id="SF_22" name="yes" sourceRef="GW_Reqs" targetRef="A_CreateBeans"/>
-
-    <!-- ═══ Flows: Phase 5 — Sign-off ═══ -->
-    <bpmn:sequenceFlow id="SF_23" sourceRef="A_CreateBeans" targetRef="BA_Signoff"/>
-    <bpmn:sequenceFlow id="SF_24" sourceRef="BA_Signoff" targetRef="A_AnnounceBranch"/>
-    <bpmn:sequenceFlow id="SF_24b" sourceRef="A_AnnounceBranch" targetRef="A_Implement"/>
-
-    <!-- ═══ Flows: Phase 6 — Inner loop (BA ↔ Agent) ═══ -->
-    <bpmn:sequenceFlow id="SF_25" sourceRef="A_Implement" targetRef="A_CodeAudit"/>
-    <bpmn:sequenceFlow id="SF_25b" sourceRef="A_CodeAudit" targetRef="A_Summary"/>
-    <bpmn:sequenceFlow id="SF_26" sourceRef="A_Summary" targetRef="BA_ReviewIncrement"/>
-    <bpmn:sequenceFlow id="SF_27" sourceRef="BA_ReviewIncrement" targetRef="GW_IncrementOK"/>
-    <bpmn:sequenceFlow id="SF_28" name="no" sourceRef="GW_IncrementOK" targetRef="A_Implement"/>
-    <bpmn:sequenceFlow id="SF_29" name="yes" sourceRef="GW_IncrementOK" targetRef="GW_MVPReady"/>
-
-    <!-- ═══ Flows: Phase 6 — Outer loop (BA → Stakeholders) ═══ -->
-    <bpmn:sequenceFlow id="SF_30" name="not yet" sourceRef="GW_MVPReady" targetRef="A_Implement"/>
-    <bpmn:sequenceFlow id="SF_31" name="yes" sourceRef="GW_MVPReady" targetRef="A_DeployStaging"/>
-    <bpmn:sequenceFlow id="SF_31b" sourceRef="A_DeployStaging" targetRef="BA_ShareMVP"/>
-    <bpmn:sequenceFlow id="SF_32" sourceRef="BA_ShareMVP" targetRef="S_TestMVP"/>
-    <bpmn:sequenceFlow id="SF_33" sourceRef="S_TestMVP" targetRef="GW_StakeholderOK"/>
-    <bpmn:sequenceFlow id="SF_34" name="findings" sourceRef="GW_StakeholderOK" targetRef="BA_TranslateFeedback"/>
-    <bpmn:sequenceFlow id="SF_35" sourceRef="BA_TranslateFeedback" targetRef="A_Implement"/>
-    <bpmn:sequenceFlow id="SF_36" name="accepted" sourceRef="GW_StakeholderOK" targetRef="S_FeatureSignoff"/>
-
-    <!-- ═══ Flows: Exit ═══ -->
-    <bpmn:sequenceFlow id="SF_37" sourceRef="S_FeatureSignoff" targetRef="BA_Confirm"/>
-    <bpmn:sequenceFlow id="SF_38" sourceRef="BA_Confirm" targetRef="A_Close"/>
-    <bpmn:sequenceFlow id="SF_39" sourceRef="A_Close" targetRef="End_A"/>
-    <bpmn:sequenceFlow id="SF_40" sourceRef="BA_Confirm" targetRef="End_BA"/>
+    <bpmn:callActivity id="Call_Needs" name="Phase 1&#10;Needs" calledElement="Process_CRDM_Needs">
+      <bpmn:documentation>Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it. The loop is the phase: a needs statement nobody confirmed is an agent's summary, not a requirement.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+    </bpmn:callActivity>
+    <bpmn:callActivity id="Call_Requirements" name="Phases 2–4&#10;BPA + requirements" calledElement="Process_CRDM_Requirements">
+      <bpmn:documentation>Map the current workflow, then define the requirements and the impact they carry, and loop until approved. Same shape as Phase 1 and for the same reason: an unapproved requirement is a proposal.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+    </bpmn:callActivity>
+    <bpmn:callActivity id="Call_Signoff" name="Phase 5&#10;Beans + sign-off" calledElement="Process_CRDM_Signoff">
+      <bpmn:documentation>The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue. The announcement is on the single edge into delivery, so the three loops back into implementation do not re-announce.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+    </bpmn:callActivity>
+    <bpmn:callActivity id="Call_Deliver" name="Phase 6&#10;Implement + acceptance" calledElement="Process_CRDM_Deliver">
+      <bpmn:documentation>One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation. A subprocess has one exit and cannot be re-entered once finished, so splitting this region would have changed what the diagram says.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+    </bpmn:callActivity>
+    <bpmn:callActivity id="Call_Close" name="Close-out" calledElement="Process_CRDM_Close">
+      <bpmn:documentation>The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue. Never the other way round: an agent must never assume completion.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+    </bpmn:callActivity>
+    <bpmn:endEvent id="End_CRDM" name="Feature delivered"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_1" sourceRef="Start_BA" targetRef="BA_Submit"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_2" sourceRef="BA_Submit" targetRef="A_Detect"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_3" sourceRef="A_Detect" targetRef="GW_Feature"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_4" name="no" sourceRef="GW_Feature" targetRef="End_Content"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_5" name="yes" sourceRef="GW_Feature" targetRef="Call_Issue"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_6" sourceRef="Call_Issue" targetRef="Call_Needs"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_7" sourceRef="Call_Needs" targetRef="Call_Requirements"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_8" sourceRef="Call_Requirements" targetRef="Call_Signoff"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_9" sourceRef="Call_Signoff" targetRef="Call_Deliver"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_10" sourceRef="Call_Deliver" targetRef="Call_Close"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_11" sourceRef="Call_Close" targetRef="End_CRDM"/>
   </bpmn:process>
-
-  <bpmndi:BPMNDiagram id="Diagram_CRDM">
-    <bpmndi:BPMNPlane id="Plane_CRDM" bpmnElement="Collaboration_CRDM">
-      <!-- Pool -->
-      <bpmndi:BPMNShape id="Participant_CRDM_di" bpmnElement="Participant_CRDM" isHorizontal="true">
-        <dc:Bounds x="120" y="60" width="3100" height="660"/>
+  <bpmndi:BPMNDiagram id="Diagram_Process_CRDM">
+    <bpmndi:BPMNPlane id="Plane_Process_CRDM" bpmnElement="Collaboration_Process_CRDM">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_CRDM" bpmnElement="Participant_Process_CRDM" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="2466" height="380" />
       </bpmndi:BPMNShape>
-      <!-- Lanes -->
-      <bpmndi:BPMNShape id="Lane_BA_di" bpmnElement="Lane_BA" isHorizontal="true">
-        <dc:Bounds x="150" y="60" width="3070" height="200"/>
+      <bpmndi:BPMNShape id="Shape_Lane_BA_Process_CRDM" bpmnElement="Lane_BA" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="2436" height="170" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_Agent_di" bpmnElement="Lane_Agent" isHorizontal="true">
-        <dc:Bounds x="150" y="260" width="3070" height="260"/>
+      <bpmndi:BPMNShape id="Shape_Lane_Agent_Process_CRDM" bpmnElement="Lane_Agent" isHorizontal="true">
+        <dc:Bounds x="190" y="250" width="2436" height="170" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_Stakeholders_di" bpmnElement="Lane_Stakeholders" isHorizontal="true">
-        <dc:Bounds x="150" y="520" width="3070" height="200"/>
+      <bpmndi:BPMNShape id="Shape_Start_BA" bpmnElement="Start_BA">
+        <dc:Bounds x="310" y="147" width="36" height="36" />
       </bpmndi:BPMNShape>
-
-      <!-- BA shapes -->
-      <bpmndi:BPMNShape id="Start_BA_di" bpmnElement="Start_BA"><dc:Bounds x="192" y="142" width="36" height="36"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BA_Submit_di" bpmnElement="BA_Submit"><dc:Bounds x="270" y="120" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BA_ReviewNeeds_di" bpmnElement="BA_ReviewNeeds"><dc:Bounds x="900" y="120" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BA_ReviewReqs_di" bpmnElement="BA_ReviewReqs"><dc:Bounds x="1380" y="120" width="150" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BA_Signoff_di" bpmnElement="BA_Signoff"><dc:Bounds x="1700" y="120" width="130" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BA_ReviewIncrement_di" bpmnElement="BA_ReviewIncrement"><dc:Bounds x="2050" y="120" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_IncrementOK_di" bpmnElement="GW_IncrementOK" isMarkerVisible="true"><dc:Bounds x="2225" y="135" width="50" height="50"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_MVPReady_di" bpmnElement="GW_MVPReady" isMarkerVisible="true"><dc:Bounds x="2315" y="135" width="50" height="50"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BA_ShareMVP_di" bpmnElement="BA_ShareMVP"><dc:Bounds x="2410" y="120" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BA_TranslateFeedback_di" bpmnElement="BA_TranslateFeedback"><dc:Bounds x="2720" y="120" width="150" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BA_Confirm_di" bpmnElement="BA_Confirm"><dc:Bounds x="2920" y="120" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="End_BA_di" bpmnElement="End_BA"><dc:Bounds x="3102" y="142" width="36" height="36"/></bpmndi:BPMNShape>
-
-      <!-- Agent shapes -->
-      <bpmndi:BPMNShape id="A_Detect_di" bpmnElement="A_Detect"><dc:Bounds x="270" y="350" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_Feature_di" bpmnElement="GW_Feature" isMarkerVisible="true"><dc:Bounds x="445" y="365" width="50" height="50"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="End_Content_di" bpmnElement="End_Content"><dc:Bounds x="452" y="462" width="36" height="36"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_ScanIssues_di" bpmnElement="A_ScanIssues"><dc:Bounds x="530" y="350" width="130" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_Issue_di" bpmnElement="GW_Issue" isMarkerVisible="true"><dc:Bounds x="685" y="365" width="50" height="50"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_AskCreate_di" bpmnElement="A_AskCreate"><dc:Bounds x="660" y="280" width="130" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_LinkIssue_di" bpmnElement="A_LinkIssue"><dc:Bounds x="660" y="430" width="130" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_Stakeholders_di" bpmnElement="A_Stakeholders"><dc:Bounds x="830" y="350" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_Synthesise_di" bpmnElement="A_Synthesise"><dc:Bounds x="1000" y="350" width="150" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_Needs_di" bpmnElement="GW_Needs" isMarkerVisible="true"><dc:Bounds x="1175" y="365" width="50" height="50"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_MapWorkflow_di" bpmnElement="A_MapWorkflow"><dc:Bounds x="1250" y="350" width="150" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_DefineReqs_di" bpmnElement="A_DefineReqs"><dc:Bounds x="1430" y="350" width="160" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_Reqs_di" bpmnElement="GW_Reqs" isMarkerVisible="true"><dc:Bounds x="1615" y="365" width="50" height="50"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_CreateBeans_di" bpmnElement="A_CreateBeans"><dc:Bounds x="1700" y="350" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_AnnounceBranch_di" bpmnElement="A_AnnounceBranch"><dc:Bounds x="1880" y="240" width="150" height="70"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_Implement_di" bpmnElement="A_Implement"><dc:Bounds x="1880" y="350" width="150" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_CodeAudit_di" bpmnElement="A_CodeAudit"><dc:Bounds x="1880" y="435" width="150" height="70"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_DeployStaging_di" bpmnElement="A_DeployStaging"><dc:Bounds x="2240" y="350" width="150" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_Summary_di" bpmnElement="A_Summary"><dc:Bounds x="2060" y="350" width="130" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="A_Close_di" bpmnElement="A_Close"><dc:Bounds x="2920" y="350" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="End_A_di" bpmnElement="End_A"><dc:Bounds x="3102" y="372" width="36" height="36"/></bpmndi:BPMNShape>
-
-      <!-- Stakeholder shapes -->
-      <bpmndi:BPMNShape id="S_ConfirmNeeds_di" bpmnElement="S_ConfirmNeeds"><dc:Bounds x="1050" y="580" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="S_ApproveReqs_di" bpmnElement="S_ApproveReqs"><dc:Bounds x="1510" y="580" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="S_TestMVP_di" bpmnElement="S_TestMVP"><dc:Bounds x="2500" y="580" width="140" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_StakeholderOK_di" bpmnElement="GW_StakeholderOK" isMarkerVisible="true"><dc:Bounds x="2680" y="595" width="50" height="50"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="S_FeatureSignoff_di" bpmnElement="S_FeatureSignoff"><dc:Bounds x="2820" y="580" width="140" height="80"/></bpmndi:BPMNShape>
-
-      <!-- Edges: Detection + Issue linking -->
-      <bpmndi:BPMNEdge id="SF_25b_di" bpmnElement="SF_25b"><di:waypoint x="2030" y="470"/><di:waypoint x="2125" y="470"/><di:waypoint x="2125" y="430"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_31b_di" bpmnElement="SF_31b"><di:waypoint x="2390" y="390"/><di:waypoint x="2480" y="390"/><di:waypoint x="2480" y="200"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_1_di" bpmnElement="SF_1"><di:waypoint x="228" y="160"/><di:waypoint x="270" y="160"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_2_di" bpmnElement="SF_2"><di:waypoint x="340" y="200"/><di:waypoint x="340" y="350"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_3_di" bpmnElement="SF_3"><di:waypoint x="410" y="390"/><di:waypoint x="445" y="390"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_4_di" bpmnElement="SF_4"><di:waypoint x="470" y="415"/><di:waypoint x="470" y="462"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_5_di" bpmnElement="SF_5"><di:waypoint x="495" y="390"/><di:waypoint x="530" y="390"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_6_di" bpmnElement="SF_6"><di:waypoint x="660" y="390"/><di:waypoint x="685" y="390"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_7_di" bpmnElement="SF_7"><di:waypoint x="710" y="365"/><di:waypoint x="710" y="360"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_8_di" bpmnElement="SF_8"><di:waypoint x="710" y="415"/><di:waypoint x="710" y="430"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_9_di" bpmnElement="SF_9"><di:waypoint x="790" y="320"/><di:waypoint x="900" y="320"/><di:waypoint x="900" y="350"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_10_di" bpmnElement="SF_10"><di:waypoint x="790" y="470"/><di:waypoint x="900" y="470"/><di:waypoint x="900" y="430"/></bpmndi:BPMNEdge>
-
-      <!-- Edges: Phase 1 Needs (Agent → BA → Stakeholders → Agent) -->
-      <bpmndi:BPMNEdge id="SF_11_di" bpmnElement="SF_11"><di:waypoint x="970" y="390"/><di:waypoint x="1000" y="390"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_12_di" bpmnElement="SF_12"><di:waypoint x="1075" y="350"/><di:waypoint x="1075" y="200"/><di:waypoint x="970" y="200"/><di:waypoint x="970" y="200"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_13_di" bpmnElement="SF_13"><di:waypoint x="970" y="200"/><di:waypoint x="1120" y="200"/><di:waypoint x="1120" y="580"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_14_di" bpmnElement="SF_14"><di:waypoint x="1190" y="620"/><di:waypoint x="1200" y="620"/><di:waypoint x="1200" y="415"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_15_di" bpmnElement="SF_15"><di:waypoint x="1200" y="415"/><di:waypoint x="1200" y="480"/><di:waypoint x="1075" y="480"/><di:waypoint x="1075" y="430"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_16_di" bpmnElement="SF_16"><di:waypoint x="1225" y="390"/><di:waypoint x="1250" y="390"/></bpmndi:BPMNEdge>
-
-      <!-- Edges: Phases 2–4 (Agent → BA → Stakeholders → Agent) -->
-      <bpmndi:BPMNEdge id="SF_17_di" bpmnElement="SF_17"><di:waypoint x="1400" y="390"/><di:waypoint x="1430" y="390"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_18_di" bpmnElement="SF_18"><di:waypoint x="1510" y="350"/><di:waypoint x="1510" y="200"/><di:waypoint x="1455" y="200"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_19_di" bpmnElement="SF_19"><di:waypoint x="1455" y="200"/><di:waypoint x="1580" y="200"/><di:waypoint x="1580" y="580"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_20_di" bpmnElement="SF_20"><di:waypoint x="1650" y="620"/><di:waypoint x="1640" y="620"/><di:waypoint x="1640" y="415"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_21_di" bpmnElement="SF_21"><di:waypoint x="1640" y="415"/><di:waypoint x="1640" y="480"/><di:waypoint x="1510" y="480"/><di:waypoint x="1510" y="430"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_22_di" bpmnElement="SF_22"><di:waypoint x="1665" y="390"/><di:waypoint x="1700" y="390"/></bpmndi:BPMNEdge>
-
-      <!-- Edges: Phase 5 sign-off -->
-      <bpmndi:BPMNEdge id="SF_23_di" bpmnElement="SF_23"><di:waypoint x="1770" y="350"/><di:waypoint x="1770" y="200"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_24_di" bpmnElement="SF_24"><di:waypoint x="1830" y="160"/><di:waypoint x="1955" y="160"/><di:waypoint x="1955" y="240"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_24b_di" bpmnElement="SF_24b"><di:waypoint x="1955" y="310"/><di:waypoint x="1955" y="350"/></bpmndi:BPMNEdge>
-
-      <!-- Edges: Phase 6 inner loop (Agent → BA → Agent) -->
-      <bpmndi:BPMNEdge id="SF_25_di" bpmnElement="SF_25"><di:waypoint x="1955" y="430"/><di:waypoint x="1955" y="435"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_26_di" bpmnElement="SF_26"><di:waypoint x="2125" y="350"/><di:waypoint x="2125" y="200"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_27_di" bpmnElement="SF_27"><di:waypoint x="2190" y="160"/><di:waypoint x="2225" y="160"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_28_di" bpmnElement="SF_28"><di:waypoint x="2250" y="185"/><di:waypoint x="2250" y="230"/><di:waypoint x="1955" y="230"/><di:waypoint x="1955" y="350"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_29_di" bpmnElement="SF_29"><di:waypoint x="2275" y="160"/><di:waypoint x="2315" y="160"/></bpmndi:BPMNEdge>
-
-      <!-- Edges: Phase 6 outer loop (BA → Stakeholders → BA → Agent) -->
-      <bpmndi:BPMNEdge id="SF_30_di" bpmnElement="SF_30"><di:waypoint x="2340" y="185"/><di:waypoint x="2340" y="230"/><di:waypoint x="1955" y="230"/><di:waypoint x="1955" y="350"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_31_di" bpmnElement="SF_31"><di:waypoint x="2340" y="185"/><di:waypoint x="2340" y="350"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_32_di" bpmnElement="SF_32"><di:waypoint x="2480" y="200"/><di:waypoint x="2480" y="540"/><di:waypoint x="2570" y="540"/><di:waypoint x="2570" y="580"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_33_di" bpmnElement="SF_33"><di:waypoint x="2640" y="620"/><di:waypoint x="2680" y="620"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_34_di" bpmnElement="SF_34"><di:waypoint x="2705" y="595"/><di:waypoint x="2705" y="540"/><di:waypoint x="2795" y="540"/><di:waypoint x="2795" y="200"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_35_di" bpmnElement="SF_35"><di:waypoint x="2795" y="200"/><di:waypoint x="2795" y="280"/><di:waypoint x="1955" y="280"/><di:waypoint x="1955" y="350"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_36_di" bpmnElement="SF_36"><di:waypoint x="2730" y="620"/><di:waypoint x="2820" y="620"/></bpmndi:BPMNEdge>
-
-      <!-- Edges: Exit -->
-      <bpmndi:BPMNEdge id="SF_37_di" bpmnElement="SF_37"><di:waypoint x="2890" y="580"/><di:waypoint x="2890" y="540"/><di:waypoint x="2990" y="540"/><di:waypoint x="2990" y="200"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_38_di" bpmnElement="SF_38"><di:waypoint x="2990" y="200"/><di:waypoint x="2990" y="350"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_39_di" bpmnElement="SF_39"><di:waypoint x="3060" y="390"/><di:waypoint x="3102" y="390"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SF_40_di" bpmnElement="SF_40"><di:waypoint x="3060" y="160"/><di:waypoint x="3102" y="160"/></bpmndi:BPMNEdge>
-
+      <bpmndi:BPMNShape id="Shape_BA_Submit" bpmnElement="BA_Submit">
+        <dc:Bounds x="510" y="125" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Detect" bpmnElement="A_Detect">
+        <dc:Bounds x="710" y="295" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Feature" bpmnElement="GW_Feature" isMarkerVisible="true">
+        <dc:Bounds x="910" y="310" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Content" bpmnElement="End_Content">
+        <dc:Bounds x="1110" y="317" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Issue" bpmnElement="Call_Issue">
+        <dc:Bounds x="1310" y="295" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Needs" bpmnElement="Call_Needs">
+        <dc:Bounds x="1510" y="295" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Requirements" bpmnElement="Call_Requirements">
+        <dc:Bounds x="1710" y="295" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Signoff" bpmnElement="Call_Signoff">
+        <dc:Bounds x="1910" y="295" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Deliver" bpmnElement="Call_Deliver">
+        <dc:Bounds x="2110" y="295" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Close" bpmnElement="Call_Close">
+        <dc:Bounds x="2310" y="295" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_CRDM" bpmnElement="End_CRDM">
+        <dc:Bounds x="2510" y="317" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_1" bpmnElement="SF_Process_CRDM_1">
+        <di:waypoint x="346" y="165" />
+        <di:waypoint x="510" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_2" bpmnElement="SF_Process_CRDM_2">
+        <di:waypoint x="650" y="165" />
+        <di:waypoint x="680" y="165" />
+        <di:waypoint x="680" y="335" />
+        <di:waypoint x="710" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_3" bpmnElement="SF_Process_CRDM_3">
+        <di:waypoint x="850" y="335" />
+        <di:waypoint x="910" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_4" bpmnElement="SF_Process_CRDM_4">
+        <di:waypoint x="960" y="335" />
+        <di:waypoint x="1110" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_5" bpmnElement="SF_Process_CRDM_5">
+        <di:waypoint x="960" y="335" />
+        <di:waypoint x="1310" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_6" bpmnElement="SF_Process_CRDM_6">
+        <di:waypoint x="1450" y="335" />
+        <di:waypoint x="1510" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_7" bpmnElement="SF_Process_CRDM_7">
+        <di:waypoint x="1650" y="335" />
+        <di:waypoint x="1710" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_8" bpmnElement="SF_Process_CRDM_8">
+        <di:waypoint x="1850" y="335" />
+        <di:waypoint x="1910" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_9" bpmnElement="SF_Process_CRDM_9">
+        <di:waypoint x="2050" y="335" />
+        <di:waypoint x="2110" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_10" bpmnElement="SF_Process_CRDM_10">
+        <di:waypoint x="2250" y="335" />
+        <di:waypoint x="2310" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_11" bpmnElement="SF_Process_CRDM_11">
+        <di:waypoint x="2450" y="335" />
+        <di:waypoint x="2510" y="335" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

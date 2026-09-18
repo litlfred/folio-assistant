@@ -33,7 +33,7 @@
 
 import { createHash } from "crypto";
 import { existsSync, readFileSync } from "fs";
-import { splitDeclarations, stripLeanComments } from "./lean-atlas-ingest";
+import { splitDeclarations, stripLeanComments } from "./lean-lexer";
 
 /** Same 12-char SHA-256 prefix convention as `qa-utils.hashFile`. */
 function sha12(s: string): string {

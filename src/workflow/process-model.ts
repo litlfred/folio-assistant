@@ -30,7 +30,7 @@
  */
 
 import { BpmnModdle } from "bpmn-moddle";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { loadDecisionTable, possibleOutcomes, type DecisionTable } from "./decision-table.js";
 import { WORK_PLAN_OPS, type WorkPlanOp } from "./bean-link.js";
@@ -175,6 +175,18 @@ export interface ProcessModel {
    * route is a *load* error rather than a surprise at the moment of decision.
    */
   decisions: Map<string, DecisionTable>;
+  /**
+   * The process each call activity expands into, keyed by the call activity's
+   * node id.
+   *
+   * Resolved at LOAD time rather than when a token arrives, for the same reason
+   * `decisions` is: a `calledElement` naming a process no file defines is a
+   * defect in the diagram, and discovering it at the moment the subprocess is
+   * entered is discovering it at the worst possible time. A call activity whose
+   * target is absent is simply not in this map — it stays an opaque single step,
+   * which is what it was before subprocess descent existed.
+   */
+  children: Map<string, ProcessModel>;
 }
 
 export class UnsupportedBpmn extends Error {}
@@ -273,7 +285,47 @@ interface ModdleElement {
   rootElements?: ModdleElement[];
 }
 
-export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> {
+/**
+ * Find the process that declares `nodeId`, descending through call activities.
+ *
+ * Model-only, so it answers for a phase no instance has entered yet. That is the
+ * difference between "there is no such step" and "that step is in a phase you
+ * have not reached", and a gate that cannot tell them apart sends its reader to
+ * look for a typo that is not there.
+ */
+export function findInModel(
+  model: ProcessModel,
+  nodeId: string,
+): { model: ProcessModel; phase: string[] } | undefined {
+  if (model.nodes.has(nodeId)) return { model, phase: [] };
+  for (const [call, child] of model.children) {
+    const hit = findInModel(child, nodeId);
+    if (hit) return { ...hit, phase: [model.nodes.get(call)!.name, ...hit.phase] };
+  }
+  return undefined;
+}
+
+/**
+ * Map every `bpmn:process` id declared in a directory to the file declaring it.
+ *
+ * Read from disk on every load rather than cached. The corpus is twenty small
+ * files, and a cache keyed by directory is exactly the thing that makes a test
+ * which rewrites a fixture see the previous run's answer.
+ */
+function processIndex(dir: string): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const file of readdirSync(dir).filter((f) => f.endsWith(".bpmn")).sort()) {
+    const xml = readFileSync(join(dir, file), "utf-8");
+    for (const m of xml.matchAll(/<bpmn:process\s+id="([^"]+)"/g)) out.set(m[1], join(dir, file));
+  }
+  return out;
+}
+
+export async function loadProcessModel(
+  bpmnPath: string,
+  /** Process ids already on the load path, so a call-activity cycle is refused. */
+  seen: readonly string[] = [],
+): Promise<ProcessModel> {
   const moddle = new BpmnModdle();
   const { rootElement, warnings } = await moddle.fromXML(readFileSync(bpmnPath, "utf-8"));
   if (warnings.length > 0) {
@@ -381,6 +433,27 @@ export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> 
 
   const decisions = await loadDecisions(bpmnPath, nodes, flows);
 
+  // Subprocess descent. A call activity naming a process defined in a sibling
+  // file expands into it; one naming a process no file defines stays opaque,
+  // because a folio may legitimately call out to a process it does not host.
+  // A CYCLE is not legitimate and is refused here rather than at run time:
+  // an interpreter that enters A → B → A settles forever.
+  const children = new Map<string, ProcessModel>();
+  const index = processIndex(dirname(bpmnPath));
+  const path = [...seen, proc.id];
+  for (const node of nodes.values()) {
+    if (!node.calledElement) continue;
+    if (path.includes(node.calledElement)) {
+      throw new UnsupportedBpmn(
+        `${basename(bpmnPath)}: ${node.id} calls ${node.calledElement}, which is already ` +
+          `on the call path (${path.join(" → ")}). A process cannot contain itself.`,
+      );
+    }
+    const home = index.get(node.calledElement);
+    if (!home) continue;
+    children.set(node.id, await loadProcessModel(home, path));
+  }
+
   return {
     id: proc.id,
     name: cleanName(proc.name) || proc.id,
@@ -392,6 +465,7 @@ export async function loadProcessModel(bpmnPath: string): Promise<ProcessModel> 
     lanes,
     startNodes,
     decisions,
+    children,
   };
 }
 

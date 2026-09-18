@@ -33,11 +33,11 @@ function withKg(graph: unknown): string {
 const base = {
   name: "t",
   roles: [
-    { id: "viewer", name: "Viewer", summary: "reads", actorKind: "person", lanes: ["Viewer"], skills: ["read"] },
+    { id: "viewer", title: "Viewer", description: "reads", actorKind: "person", lanes: ["Viewer"], skills: ["read"] },
     {
       id: "reviewer",
-      name: "Reviewer",
-      summary: "judges",
+      title: "Reviewer",
+      description: "judges",
       actorKind: "person",
       lanes: ["Reviewer / SME", "Review Committee"],
       skills: ["review"],
@@ -45,8 +45,8 @@ const base = {
     },
     {
       id: "editor",
-      name: "Editor",
-      summary: "decides",
+      title: "Editor",
+      description: "decides",
       actorKind: "person",
       lanes: ["Editor"],
       skills: ["commit"],
@@ -73,7 +73,7 @@ describe("readRoleGraph", () => {
   test("a dangling `inherits` is refused at read, so no closure is silently short", () => {
     const root = withKg({
       name: "t",
-      roles: [{ id: "a", name: "A", summary: "s", actorKind: "person", lanes: [], skills: [], inherits: ["ghost"] }],
+      roles: [{ id: "a", title: "A", description: "s", actorKind: "person", lanes: [], skills: [], inherits: ["ghost"] }],
     });
     expect(() => readRoleGraph(root)).toThrow(/inherits "ghost"/);
     rmSync(root, { recursive: true, force: true });
@@ -83,8 +83,8 @@ describe("readRoleGraph", () => {
     const root = withKg({
       name: "t",
       roles: [
-        { id: "a", name: "A", summary: "s", actorKind: "person", lanes: [], skills: [] },
-        { id: "a", name: "A2", summary: "s", actorKind: "person", lanes: [], skills: [] },
+        { id: "a", title: "A", description: "s", actorKind: "person", lanes: [], skills: [] },
+        { id: "a", title: "A2", description: "s", actorKind: "person", lanes: [], skills: [] },
       ],
     });
     expect(() => readRoleGraph(root)).toThrow(/declared twice/);
@@ -95,8 +95,8 @@ describe("readRoleGraph", () => {
     const root = withKg({
       name: "t",
       roles: [
-        { id: "a", name: "A", summary: "s", actorKind: "person", lanes: [], skills: [], inherits: ["b"] },
-        { id: "b", name: "B", summary: "s", actorKind: "person", lanes: [], skills: [], inherits: ["a"] },
+        { id: "a", title: "A", description: "s", actorKind: "person", lanes: [], skills: [], inherits: ["b"] },
+        { id: "b", title: "B", description: "s", actorKind: "person", lanes: [], skills: [], inherits: ["a"] },
       ],
     });
     expect(() => readRoleGraph(root)).toThrow(/cycle/);
@@ -106,7 +106,7 @@ describe("readRoleGraph", () => {
   test("an unknown actorKind is rejected, not accepted and ignored", () => {
     const root = withKg({
       name: "t",
-      roles: [{ id: "a", name: "A", summary: "s", actorKind: "wizard", lanes: [], skills: [] }],
+      roles: [{ id: "a", title: "A", description: "s", actorKind: "wizard", lanes: [], skills: [] }],
     });
     expect(() => readRoleGraph(root)).toThrow();
     rmSync(root, { recursive: true, force: true });
@@ -178,8 +178,8 @@ describe("roleForLane", () => {
 describe("readActors", () => {
   test("maps the legacy `type` field and flags entries that are really roles", () => {
     const dir = mkdtempSync(join(tmpdir(), "actors-"));
-    writeFileSync(join(dir, "a.json"), JSON.stringify({ id: "a", name: "A", type: "person", inherits: ["b"] }));
-    writeFileSync(join(dir, "b.json"), JSON.stringify({ id: "b", name: "B", type: "system" }));
+    writeFileSync(join(dir, "a.json"), JSON.stringify({ id: "a", title: "A", type: "person", inherits: ["b"] }));
+    writeFileSync(join(dir, "b.json"), JSON.stringify({ id: "b", title: "B", type: "system" }));
     const actors = readActors(dir);
     expect(actors.map((a) => a.kind)).toEqual(["person", "system"]);
     expect(actors.map((a) => a.looksLikeRole)).toEqual([true, false]);
@@ -199,11 +199,11 @@ describe("this repository's own role graph", () => {
   });
 
   test("every role's summary says what the position is, not just its name", () => {
-    for (const r of g!.roles) expect(r.summary.length).toBeGreaterThan(20);
+    for (const r of g!.roles) expect(r.description.length).toBeGreaterThan(20);
   });
 
   test("findRole and toJsonLd agree on the declared set", () => {
-    expect(findRole(g!, "author")?.name).toBe("Author");
+    expect(findRole(g!, "author")?.title).toBe("Author");
     const ld = toJsonLd(g!) as { roles: { "@id": string }[] };
     expect(ld.roles.length).toBe(g!.roles.length);
     expect(ld.roles[0]!["@id"]).toBe("#user");

@@ -1744,7 +1744,11 @@ const BIBLIOGRAPHY: QaCriterionDefinition[] = [
 //                                  no hardcoded numerics, reads
 //                                  from witness JSONs)
 
-const SCRIPT_QUALITY: QaCriterionDefinition[] = [
+// Every entry is marked `subject: "script"` at the bottom of this array
+// rather than one criterion at a time, so a criterion added here cannot be
+// handed to the block sweep by omission. The block sweep would pass it a
+// `CheckerPaths` object where its checker expects a path string.
+const SCRIPT_QUALITY: QaCriterionDefinition[] = ([
   {
     id: "does_not_default_to_float",
     domain: "script-quality",
@@ -1941,7 +1945,7 @@ const SCRIPT_QUALITY: QaCriterionDefinition[] = [
     automated: true,
     source_file: "content/pipeline/qa-checkers-python.ts",
   },
-];
+] satisfies QaCriterionDefinition[]).map((c) => ({ ...c, subject: "script" as const }));
 
 // ── Domain: devils-advocate ─────────────────────────────────────
 //

@@ -13,8 +13,29 @@ this workflow to gather, validate, and implement requirements collaboratively.
 
 ## BPMN reference
 
-The full process is diagrammed in
-[`skills/workflows/crdm-requirements.bpmn`](../../skills/workflows/crdm-requirements.bpmn).
+[`skills/workflows/crdm-requirements.bpmn`](../../skills/workflows/crdm-requirements.bpmn)
+is the outer process — detection, the `Feature?` decision, then six phases, each
+a real subprocess in its own file:
+
+| phase | file | what happens |
+|---|---|---|
+| Link the work to an issue | `crdm-issue-linking.bpmn` | scan, then link or ask; never create without permission |
+| Phase 1 — needs | `crdm-needs.bpmn` | stakeholders, needs statement, loop until recognised |
+| Phases 2–4 — BPA + requirements | `crdm-requirements-definition.bpmn` | current workflow, requirements, impact, loop until approved |
+| Phase 5 — beans + sign-off | `crdm-signoff.bpmn` | requirements become beans, BA signs off, branch announced |
+| Phase 6 — implement + acceptance | `crdm-deliver.bpmn` | implement, review increment, share MVP, take findings |
+| Close-out | `crdm-close.bpmn` | stakeholder sign-off, BA confirmation, then the close |
+
+**Nothing about running it changes.** Step ids are unchanged, so
+`workflow_complete` still takes `A_Implement`, `A_Close`, `BA_Signoff` by name;
+the interpreter enters a phase by itself and `workflow_next` tells you which one
+you are in (`inside: Phase 6 Implement + acceptance`). You cannot complete a
+phase — a phase is done when its steps are.
+
+**Phase 6 is one subprocess and not three** because the loops say so: a rejected
+increment, an MVP that is not ready, and stakeholder findings all route back into
+implementation. A subprocess has one exit and cannot be re-entered once finished,
+so splitting that region would have changed what the diagram says.
 
 ## Every question you put to the BA carries its context first (STRICT)
 

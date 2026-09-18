@@ -70,8 +70,9 @@
  */
 
 import { existsSync, readFileSync } from "fs";
+import type { CheckerResult } from "../../schemas/block-qa";
 import { join, resolve, extname, sep } from "path";
-import type { CheckerResult } from "./qa-checkers-extended";
+
 import { parseLeanRef, refToDecl } from "./content-graph";
 import { hashFile } from "./qa-utils";
 import { findContentRepoRoot } from "./repo-root";

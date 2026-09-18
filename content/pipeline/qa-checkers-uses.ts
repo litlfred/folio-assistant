@@ -18,8 +18,9 @@
  */
 
 import { existsSync, readFileSync } from "fs";
+import type { CheckerResult } from "../../schemas/block-qa";
 import { join } from "path";
-import type { CheckerResult } from "./qa-checkers-extended";
+
 import {
   buildContentGraph,
   extractUses,

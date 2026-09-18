@@ -3,6 +3,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
 import { checkCorpusGate, COMMIT_ACTIVITY } from "../../src/workflow/corpus-gate";
+import { drainSubprocess } from "./helpers";
 import { loadProcessModel } from "../../src/workflow/process-model";
 import { complete, startInstance } from "../../src/workflow/instance";
 import { instanceId, saveInstance } from "../../src/workflow/store";
@@ -43,10 +44,11 @@ const authorise = async (label: string, decision = "accept"): Promise<void> => {
   const state = startInstance(model, { id: instanceId(model.id, label), subject: label });
   // CallActivity_Evidence sits between claiming the bean and drafting: a
   // recommendation gathers its evidence BEFORE the change is written. It is a
-  // step of the process, so a walk of the process has to take it.
-  for (const n of ["Task_DescribeChange", "Task_ClaimBean", "CallActivity_Evidence",
-                   "Task_DraftEdit",
-                   "Task_SchemaValidate", "Task_SyntaxSpell", "Task_BuildGates"]) {
+  // whole SUBPROCESS, so a walk of the process has to walk that too.
+  complete(model, state, "Task_DescribeChange");
+  complete(model, state, "Task_ClaimBean");
+  drainSubprocess(model, state, "CallActivity_Evidence");
+  for (const n of ["Task_DraftEdit", "Task_SchemaValidate", "Task_SyntaxSpell", "Task_BuildGates"]) {
     complete(model, state, n);
   }
   complete(model, state, "Gateway_ReviewerKind", { outcome: "no" });

@@ -415,7 +415,7 @@ function generateActorsMd(): string {
   function printTree(id: string, indent: string): void {
     const actor = actors.find(a => a.data.id === id);
     if (!actor) return;
-    L.push(`${indent}${actor.data.id} (${actor.data.type}) — ${actor.data.name}`);
+    L.push(`${indent}${actor.data.id} (${actor.data.type}) — ${actor.data.title}`);
     const children = actors.filter(a => a.data.inherits?.includes(id));
     for (const c of children) {
       printTree(c.data.id, indent + "  ");
@@ -432,14 +432,14 @@ function generateActorsMd(): string {
   L.push("|----|------|------|----------|-------------|");
   for (const a of actors) {
     const d = a.data;
-    L.push(`| \`${d.id}\` | ${d.name} | ${d.type} | ${(d.inherits || []).map((i: string) => `\`${i}\``).join(", ") || "—"} | ${(d.capabilities || []).map((c: string) => `\`${c}\``).join(", ") || "—"} |`);
+    L.push(`| \`${d.id}\` | ${d.title} | ${d.type} | ${(d.inherits || []).map((i: string) => `\`${i}\``).join(", ") || "—"} | ${(d.capabilities || []).map((c: string) => `\`${c}\``).join(", ") || "—"} |`);
   }
   L.push("");
 
   // Detail sections
   for (const a of actors) {
     const d = a.data;
-    L.push(`### ${d.name}`);
+    L.push(`### ${d.title}`);
     L.push("");
     L.push(`**ID:** \`${d.id}\`  `);
     L.push(`**Type:** ${d.type}  `);
@@ -797,7 +797,7 @@ function generateCatalog(): object {
       hasScripts: !!(s.data.scripts?.length),
       lifecycleStages: s.data.lifecycleStages || [],
     })),
-    actors: actors.map(a => ({ id: a.data.id, name: a.data.name, type: a.data.type })),
+    actors: actors.map(a => ({ id: a.data.id, title: a.data.title, type: a.data.type })),
     capabilities: capabilities.map(c => ({ id: c.data.id, name: c.data.name })),
     requirements: requirements.map(r => ({ id: r.data.id, title: r.data.title })),
     packages: packages.map(p => ({ name: p.data.name, version: p.data.version, skills: p.data.skills })),

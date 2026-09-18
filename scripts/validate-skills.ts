@@ -18,7 +18,7 @@ import {
   CapabilityDefinitionSchema,
   RequirementSchema,
   SkillDefinitionSchema,
-} from "../schemas/constraints.js";
+} from "../schemas/skill-package.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "..");

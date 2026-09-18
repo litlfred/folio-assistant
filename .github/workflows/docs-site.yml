@@ -133,11 +133,11 @@ jobs:
       # A non-zero exit means a source could not be read, and a partial graph
       # must not be published as a whole one.
       # Both artefacts are named after the repository (the `stub` in
-      # agent-harness.json) and land at the URLs their own `@id`/`$id` claim.
+      # cat-harness.json) and land at the URLs their own `@id`/`$id` claim.
       # No --base-url: the declaration's canonicalUrl is correct for main.
       - name: Export the knowledge graph and its schema
         run: |
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/agent-harness.ts");console.log(artefactStub(readDeclaration(".")))')
+          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
           bun run scripts/kg-export.ts           --out "./_site/kg/${STUB}.jsonld"
           bun run scripts/harness-schema-export.ts --out-dir ./_site/kg
 

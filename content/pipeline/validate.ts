@@ -26,7 +26,8 @@ import {
   type ConstraintContext,
 } from "../../schemas/constraints";
 import type { Block, Paper, Chapter, Section, ValidationIssue, ValidationResult } from "../../schemas/types";
-import { renderBlock, validateLatexAst } from "./render-latex";
+import { resolveRenderTarget } from "./render-discovery";
+import { readDeclaredFolioProfile } from "./profile-check";
 import { validateDefterms } from "./validate-defterm";
 import { validateValueDirectives } from "./validate-value";
 import { findContentRepoRoot, findPapers } from "./repo-root";
@@ -655,27 +656,61 @@ export async function validateObjects(
   }
 
   // Phase 3: AST validation (render → parse)
-  for (const [name, { block }] of allBlocks) {
-    const mdContent = mdCache.get(name) ?? "";
+  //
+  // The render target comes from the folio's declared PROFILE, not from this
+  // file. It used to render every block to LaTeX unconditionally, which on a
+  // document folio raises `LaTeX AST:` errors against output that folio never
+  // produces — its render path goes through pandoc and deliberately never
+  // falls back to `latexmk`. See `schemas/render-targets.ts`.
+  const declaredProfile = readDeclaredFolioProfile(REPO_ROOT);
+  const lookup = await resolveRenderTarget(declaredProfile.profile);
+  if (lookup.miss) {
+    // NOT a pass. A `warning` so a folio that has not declared a profile is
+    // not blocked, and so the gap is visible rather than inferred from an
+    // absence of LaTeX errors.
+    issues.push({
+      level: "warning",
+      block: "(folio)",
+      message:
+        `Render/AST validation not performed: ${lookup.miss.detail} ` +
+        `(${declaredProfile.declaredBy}).`,
+    });
+  } else {
+    const { render, validate, format } = lookup.target;
+    for (const [name, { block }] of allBlocks) {
+      const mdContent = mdCache.get(name) ?? "";
 
-    try {
-      const latex = renderBlock(block, mdContent);
-      const astResult = validateLatexAst(latex);
-      if (!astResult.valid) {
-        for (const err of astResult.errors) {
-          issues.push({
-            level: "error",
-            block: name,
-            message: `LaTeX AST: ${err}`,
-            file: `${name}.md`,
-          });
+      try {
+        const rendered = render(block, mdContent);
+        // A target with no `validate` renders but has no structural invariant
+        // to check. Reported once below, not per block, and never as a pass.
+        if (!validate) continue;
+        const astResult = validate(rendered);
+        if (!astResult.valid) {
+          for (const err of astResult.errors) {
+            issues.push({
+              level: "error",
+              block: name,
+              message: `${format} AST: ${err}`,
+              file: `${name}.md`,
+            });
+          }
         }
+      } catch (e) {
+        issues.push({
+          level: "error",
+          block: name,
+          message: `Render error: ${e instanceof Error ? e.message : String(e)}`,
+        });
       }
-    } catch (e) {
+    }
+    if (!validate && allBlocks.size > 0) {
       issues.push({
-        level: "error",
-        block: name,
-        message: `Render error: ${e instanceof Error ? e.message : String(e)}`,
+        level: "warning",
+        block: "(folio)",
+        message:
+          `Blocks render to ${format}, which has no structural check — ` +
+          `rendering succeeded, well-formedness was not verified.`,
       });
     }
   }

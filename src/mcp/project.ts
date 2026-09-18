@@ -148,7 +148,7 @@ export function project(tools: ToolDefinition[], host: HostFacts = {}): Projecti
     declarations.push({
       name: t.id.replace(/-/g, "_"),
       title: t.title,
-      description: t.summary,
+      description: t.description,
       inputSchema: inputSchemaFor(t),
     });
   }

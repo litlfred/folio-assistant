@@ -73,7 +73,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "check-dependencies",
       title: "Dependency probe",
-      summary:
+      description:
         "Report which of the harness's optional and required dependencies are present on this machine, and what each unmet one blocks.",
       install: bundled,
       invoke: { ...inProcess("src/tools/check-deps.ts", "check_dependencies"), shell: "bun run src/index.ts --check-deps" },
@@ -96,7 +96,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "folio-init",
       title: "Scaffold a folio",
-      summary:
+      description:
         "Create a new folio repository that uses this platform — content/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform.",
       install: bundled,
       invoke: { ...inProcess("src/tools/folio-init.ts", "folio_init"), shell: "bun run init-folio" },
@@ -131,7 +131,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "paper-preferences",
       title: "Rendering preferences",
-      summary: "Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode.",
+      description: "Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode.",
       install: bundled,
       invoke: inProcess("src/tools/preferences.ts", "paper_preferences"),
       io: {
@@ -156,7 +156,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "paper-preview",
       title: "Open a render",
-      summary: "Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open.",
+      description: "Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open.",
       install: bundled,
       invoke: inProcess("src/tools/preview.ts", "paper_preview"),
       io: {
@@ -176,7 +176,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "readme-audit",
       title: "Audit README links",
-      summary:
+      description:
         "Verify every Markdown link in a folio's README still resolves — relative paths against the tree, repo refs against a real ls-tree, Pages URLs against the publish ref. Writes nothing.",
       install: bundled,
       invoke: { ...inProcess("src/tools/readme-audit.ts", "readme_audit"), shell: "bun run readme:audit" },
@@ -201,7 +201,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "readme-sync",
       title: "Sync generated README sections",
-      summary:
+      description:
         "Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched.",
       install: bundled,
       invoke: { ...inProcess("src/tools/readme-sync.ts", "readme_sync"), shell: "bun run readme:sync" },
@@ -229,7 +229,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "skill-fetch",
       title: "Fetch a skill",
-      summary: "Load one skill's instruction body for the agent to follow, from the local packages or an external bundle.",
+      description: "Load one skill's instruction body for the agent to follow, from the local packages or an external bundle.",
       install: bundled,
       invoke: inProcess("src/tools/skill-fetch.ts", "skill_fetch"),
       io: {
@@ -246,7 +246,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "skill-list",
       title: "List skills",
-      summary: "Every skill this instance can resolve, with its one-line summary. The entry point AGENTS.md sends an agent to first.",
+      description: "Every skill this instance can resolve, with its one-line summary. The entry point AGENTS.md sends an agent to first.",
       install: bundled,
       invoke: inProcess("src/tools/skill-fetch.ts", "skill_list"),
       io: {
@@ -260,7 +260,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "stakeholder-map",
       title: "Stakeholder map",
-      summary:
+      description:
         "Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review.",
       install: bundled,
       invoke: { ...inProcess("src/tools/stakeholder-map.ts", "stakeholder_map"), shell: "bun run stakeholder-map" },
@@ -284,7 +284,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "translation-extract",
       title: "Extract translatable strings",
-      summary: "Segment a folio's prose into a GNU gettext .pot template, leaving code, math and identifiers untranslated.",
+      description: "Segment a folio's prose into a GNU gettext .pot template, leaving code, math and identifiers untranslated.",
       install: bundled,
       invoke: inProcess("src/tools/translation.ts", "translation_extract"),
       io: {
@@ -302,7 +302,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "translation-inject",
       title: "Inject translations",
-      summary: "Produce a translated copy of a source markdown file from a .po, using the same segmentation the extractor used.",
+      description: "Produce a translated copy of a source markdown file from a .po, using the same segmentation the extractor used.",
       install: bundled,
       invoke: inProcess("src/tools/translation.ts", "translation_inject"),
       io: {
@@ -320,7 +320,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "translation-status",
       title: "Translation coverage",
-      summary: "Per-locale translation coverage, computed from the .po files under the translations directory.",
+      description: "Per-locale translation coverage, computed from the .po files under the translations directory.",
       install: bundled,
       invoke: inProcess("src/tools/translation.ts", "translation_status"),
       io: {
@@ -334,7 +334,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "translation-signoff",
       title: "Sign off a translation",
-      summary:
+      description:
         "Record a translation as official — who signed off, when, and the hash of the source it was signed against, so a later source edit is detectable.",
       install: bundled,
       invoke: inProcess("src/tools/translation.ts", "translation_signoff"),
@@ -356,7 +356,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "translation-validate",
       title: "Validate a translation",
-      summary: "Check a .po against its .pot — every msgid present, none obsolete, placeholders preserved.",
+      description: "Check a .po against its .pot — every msgid present, none obsolete, placeholders preserved.",
       install: bundled,
       invoke: inProcess("src/tools/translation.ts", "translation_validate"),
       io: {
@@ -374,7 +374,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "work-plan-prime",
       title: "Prime the work plan",
-      summary:
+      description:
         "Load the current work plan for this session — the same committed beans store the CLI reads, so a fresh container starts from the plan rather than from nothing.",
       install: bundled,
       invoke: { ...inProcess("src/tools/beans-prime.ts", "work_plan_prime"), shell: "beans prime" },
@@ -392,7 +392,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "workflow-list",
       title: "List processes",
-      summary: "The BPMN processes this instance defines, and the instances currently open against them.",
+      description: "The BPMN processes this instance defines, and the instances currently open against them.",
       install: bundled,
       invoke: inProcess("src/tools/workflow.ts", "workflow_list"),
       io: {
@@ -406,7 +406,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "workflow-start",
       title: "Start a process instance",
-      summary:
+      description:
         "Open an instance of a process for a subject. Idempotent: an existing instance for the same subject is returned rather than duplicated.",
       install: bundled,
       invoke: inProcess("src/tools/workflow.ts", "workflow_start"),
@@ -425,7 +425,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "workflow-next",
       title: "What is enabled now",
-      summary: "The activities an instance may work right now, each with the lane that owns it and the skill that implements it.",
+      description: "The activities an instance may work right now, each with the lane that owns it and the skill that implements it.",
       install: bundled,
       invoke: inProcess("src/tools/workflow.ts", "workflow_next"),
       io: {
@@ -439,7 +439,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "workflow-gate",
       title: "May this step be performed?",
-      summary:
+      description:
         "Ask before doing work a strict process governs. The content-agnostic processes refuse a step that is not enabled; the per-content-type ones advise.",
       install: bundled,
       invoke: inProcess("src/tools/workflow.ts", "workflow_gate"),
@@ -457,7 +457,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     defineTool({
       id: "workflow-complete",
       title: "Complete a step",
-      summary:
+      description:
         "Record an enabled step as done — or supply the facts a decision gateway is computed from — and advance the instance. Refuses a step that is not enabled.",
       install: bundled,
       invoke: inProcess("src/tools/workflow.ts", "workflow_complete"),

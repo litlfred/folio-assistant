@@ -16,7 +16,7 @@
  *
  * ## Three constraints the strawperson did not have
  *
- * The version in `docs/architecture/agent-harness-minimum.md` flagged two
+ * The version in `docs/architecture/cat-harness-minimum.md` flagged two
  * fields as too loose to build on. Both are tightened here, and a third
  * constraint fell out of writing the first real Tools.
  *
@@ -196,7 +196,7 @@ export const ToolDefinitionSchema = z
   .object({
     id: ToolId,
     title: z.string().min(1),
-    summary: z.string().min(1),
+    description: z.string().min(1),
     install: ToolInstallSchema,
     invoke: ToolInvokeSchema,
     io: z.object({

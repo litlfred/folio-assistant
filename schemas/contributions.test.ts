@@ -178,3 +178,97 @@ describe("loadContributions — the Phase 0.1 gate", () => {
     expect(r.contributedKinds()).toEqual([]);
   });
 });
+
+describe("contributed QA checkers", () => {
+  const checker = (result: "pass" | "fail") => () => ({ result, hits: [] });
+
+  it("a dependency's checker is reachable by the criterion it answers", () => {
+    const r = new ContributionRegistry();
+    r.register({ name: "smart-base", qaCheckers: [{ criterion: "dak-bpmn-has-process", check: checker("pass") }] });
+    expect(r.qaChecker("dak-bpmn-has-process")).toBeDefined();
+    expect(r.contributedQaCheckers()).toEqual([
+      { criterion: "dak-bpmn-has-process", contributor: "smart-base" },
+    ]);
+  });
+
+  it("an unimplemented criterion is undefined, never a default pass", () => {
+    const r = new ContributionRegistry();
+    expect(r.qaChecker("nobody-implements-this")).toBeUndefined();
+  });
+
+  it("two contributors claiming one criterion throws, naming both", () => {
+    const r = new ContributionRegistry();
+    r.register({ name: "smart-base", qaCheckers: [{ criterion: "shared", check: checker("pass") }] });
+    expect(() =>
+      r.register({ name: "folio-asst-sci", qaCheckers: [{ criterion: "shared", check: checker("fail") }] }),
+    ).toThrow(/both "smart-base" and "folio-asst-sci"/);
+  });
+
+  it("the same contributor re-registering is a no-op, so a diamond loads", () => {
+    const r = new ContributionRegistry();
+    const c = { name: "smart-base", qaCheckers: [{ criterion: "shared", check: checker("pass") }] };
+    r.register(c);
+    expect(() => r.register(c)).not.toThrow();
+    expect(r.contributedQaCheckers()).toHaveLength(1);
+  });
+});
+
+describe("contributed renderers", () => {
+  const tex = {
+    format: "latex",
+    adapters: ["paper"],
+    render: () => "\\begin{theorem}x\\end{theorem}",
+    validate: (s: string) => ({ valid: s.includes("\\end"), errors: [] }),
+  };
+
+  it("a render target is reachable by format and by adapter", () => {
+    const r = new ContributionRegistry();
+    r.register({ name: "folio-asst-sci", renderers: [tex] });
+    expect(r.renderer("latex")).toBeDefined();
+    expect(r.renderersFor("paper")).toHaveLength(1);
+  });
+
+  it("an adapter with no contributed target gets a DETERMINED empty", () => {
+    // Not the same as having no registry: this caller knows there is nothing,
+    // rather than knowing nothing.
+    const r = new ContributionRegistry();
+    r.register({ name: "folio-asst-sci", renderers: [tex] });
+    expect(r.renderersFor("dak")).toEqual([]);
+  });
+
+  it("a target may render without validating, and says so by omission", () => {
+    // `validate` absent means NO STRUCTURAL CHECK, which a caller must report
+    // as not-checked rather than as a pass.
+    const r = new ContributionRegistry();
+    r.register({
+      name: "folio-assist-core",
+      renderers: [{ format: "markdown", adapters: ["document"], render: () => "# x" }],
+    });
+    expect(r.renderer("markdown")?.validate).toBeUndefined();
+    expect(r.renderer("markdown")?.render).toBeDefined();
+  });
+
+  it("two contributors claiming one format throws, naming both", () => {
+    const r = new ContributionRegistry();
+    r.register({ name: "folio-asst-sci", renderers: [tex] });
+    expect(() =>
+      r.register({ name: "other", renderers: [{ ...tex, render: () => "" }] }),
+    ).toThrow(/both "folio-asst-sci" and "other"/);
+  });
+
+  it("the same contributor re-registering is a no-op, so a diamond loads", () => {
+    const r = new ContributionRegistry();
+    const c = { name: "folio-asst-sci", renderers: [tex] };
+    r.register(c);
+    expect(() => r.register(c)).not.toThrow();
+    expect(r.contributedRenderers()).toHaveLength(1);
+  });
+
+  it("the listing names the format, its adapters and its contributor", () => {
+    const r = new ContributionRegistry();
+    r.register({ name: "folio-asst-sci", renderers: [tex] });
+    expect(r.contributedRenderers()).toEqual([
+      { format: "latex", adapters: ["paper"], contributor: "folio-asst-sci" },
+    ]);
+  });
+});

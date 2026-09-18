@@ -237,7 +237,83 @@ The same three states are a decision table —
 and `scripts/pages-bootstrap.ts` is tested to agree with it exactly, so the
 script and the table cannot drift.
 
-## 8. Track the work with `beans`
+## 8. Make the landing page yours
+
+Your site's home page opens with your instance's **own** description, drawn
+inside your **own** backdrop. Both come from one file — `cat-harness.json` at
+the repository root — and nothing about the platform's grumpy cat is written
+into the template. Change the file; the page follows.
+
+### The markdown node you edit
+
+```jsonc
+// cat-harness.json
+{
+  "title": "My Folio",              // the left sidebar's heading
+  "description": "One line.\nAnother line.",   // ← the landing markdown
+  "icon": "mark-small",             // which image is the browser tab's
+  "images": [ /* … */ ]
+}
+```
+
+`description` is **markdown**, rendered as-is. It is the node the landing page
+draws; there is no separate page to keep in step with it, which is the point —
+a description that appears in two places is a description that will disagree
+with itself.
+
+### Your own backdrop
+
+An image becomes the landing backdrop by declaring `role: "landing"` and which
+viewport it is cut for:
+
+```jsonc
+{
+  "id": "landing-laptop",
+  "src": "docs/assets/img/my-backdrop.webp",
+  "role": "landing",
+  "layout": "laptop",               // also: "mobile", "card"
+  "width": 1671, "height": 941,
+  "textRegion": { "x": 0.205, "y": 0.285, "w": 0.625, "h": 0.235 }
+}
+```
+
+`textRegion` is where the words may safely go, as fractions of the image. **It
+is authored, not computed**, because it states where the picture is *quiet* —
+a judgement about composition that no pixel analysis substitutes for. The
+platform's own laptop backdrop has a thought-cloud with a clear lower interior,
+a mark occupying its top third and a cat's ear rising into its lower left; the
+box that avoids all three was found by rendering candidates and looking at them.
+Do the same for yours.
+
+Declare one variant per viewport. Each carries its **own** region, because the
+same composition sits differently in a portrait crop.
+
+Then:
+
+```sh
+bun run docs:harness         # push the declaration into docs/_data/
+bun run docs:harness -- --check   # ...and fail if stale (for CI)
+```
+
+### Three things it will not do
+
+| you declare | the page does |
+|---|---|
+| a backdrop **with** a region | draws your description inside it |
+| a backdrop with **no** region | shows the picture, puts the words **below** it |
+| **no** backdrop | shows the words alone |
+
+The middle row is deliberate. Text positioned by guesswork lands on the cat, so
+an undeclared region means "do not overlay", never "anywhere is fine". And a
+folio with no art is ordinary, not broken.
+
+If you declare a `mobile` variant and a phone arrives, it gets that file — and
+if you have not, it gets the widest one you do have. That fallback is a real
+degradation, because the wide crop's region is wrong for a narrow screen; it is
+reported rather than hidden, so a renderer can decline to overlay instead of
+placing text somewhere nobody chose.
+
+## 9. Track the work with `beans`
 
 folio-assistant uses [`beans`](https://github.com/hmans/beans) as the single
 work-plan mechanism — durable across sessions, shared between agents, committed

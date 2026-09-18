@@ -42,10 +42,11 @@
  */
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname, relative } from "node:path";
+import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { FOLIO_NS } from "../schemas/namespaces.js";
-import { artefactStub, defaultGraphKinds, readDeclaration } from "../schemas/agent-harness.js";
+import { artefactStub, defaultGraphKinds, readDeclaration } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
@@ -186,6 +187,12 @@ function buildContext(): Record<string, unknown> {
     description: "rdfs:comment",
     summary: "rdfs:comment",
     generatedAt: { "@id": `${PROV}generatedAtTime`, "@type": `${XSD}dateTime` },
+    // Provenance of the SOURCE, as against provenance of the run above.
+    sourceCommit: { "@id": `${PROV}wasDerivedFrom`, "@type": "@id" },
+    sourceCommitSha: `${FOLIO_NS}sourceCommitSha`,
+    sourceCommitAt: { "@id": `${FOLIO_NS}sourceCommitAt`, "@type": `${XSD}dateTime` },
+    sourceTreeDirty: { "@id": `${FOLIO_NS}sourceTreeDirty`, "@type": `${XSD}boolean` },
+    sourceCommitUnavailable: `${FOLIO_NS}sourceCommitUnavailable`,
 
     // Edges. Each of these is a LINK, not a string — see above.
     partOf: { "@id": `${FOLIO_NS}partOf`, ...link },
@@ -253,6 +260,32 @@ interface Export {
   canonicalDocument?: string;
   repository: string;
   generatedAt: string;
+  /**
+   * The commit the graph was generated from, as a dereferenceable IRI when the
+   * repository's web host is known. `prov:wasDerivedFrom`, which is exactly
+   * what it is.
+   */
+  sourceCommit?: string;
+  /** That commit's SHA, unabbreviated. */
+  sourceCommitSha?: string;
+  /** When that commit was made — distinct from when this export ran. */
+  sourceCommitAt?: string;
+  /**
+   * True when the working tree had uncommitted or untracked changes, so the
+   * SHA above does NOT reproduce this graph. Absent means the question was not
+   * answerable, which is not the same as `false`.
+   */
+  sourceTreeDirty?: boolean;
+  /**
+   * Why there is no source commit, when there is none.
+   *
+   * Carried here rather than in `problems` because it is not an unread source:
+   * a tarball or an export-stripped checkout exports a complete graph, it just
+   * cannot say which commit it came from. Present exactly when
+   * `sourceCommitSha` is absent, so a consumer never has to infer the reason
+   * for a missing field.
+   */
+  sourceCommitUnavailable?: string;
   /** Node counts by `@type`, so a consumer can spot a truncated graph. */
   counts: Record<string, number>;
   /** Sources that could not be read. NEVER empty-by-omission — see module doc. */
@@ -554,7 +587,7 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
     "@type": `${FOLIO_NS}Tool`,
     name: t.id,
     title: t.title,
-    summary: t.summary,
+    description: t.description,
     install: t.install,
     invoke: t.invoke,
     io: t.io,
@@ -579,17 +612,25 @@ function collectGraphKinds(): Node[] {
 }
 
 function collectDeclaration(doc: string, problems: string[]): Node[] {
-  const f = join(ROOT, "agent-harness.json");
+  const f = join(ROOT, "cat-harness.json");
   if (!existsSync(f)) return [];
   try {
     const d = JSON.parse(readFileSync(f, "utf-8")) as {
-      directories?: Array<{ id: string; path: string; graphs?: string[]; graph?: string; summary?: string }>;
+      title?: string;
+      description?: string;
+      directories?: Array<{
+        id: string;
+        path: string;
+        graphs?: string[];
+        title?: string;
+        description?: string;
+      }>;
     };
     return (d.directories ?? []).map((x) => {
       // `graph` became `graphs[]` — a directory may hold more than one graph,
       // and `schemas/` is the first real use of that. Both spellings are read
       // so this does not break on a declaration written before the change.
-      const kinds = x.graphs ?? (x.graph !== undefined ? [x.graph] : []);
+      const kinds = x.graphs ?? [];
       return {
         "@id": makeIri(doc, "directory", x.id),
         "@type": `${FOLIO_NS}Directory`,
@@ -597,11 +638,12 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
         path: x.path,
         holdsGraph: kinds.map((k) => `${FOLIO_NS}graphKind/${k}`),
         graphKinds: kinds,
-        summary: x.summary,
+        title: x.title,
+        description: x.description,
       };
     });
   } catch (e) {
-    problems.push(`unparseable agent-harness.json: ${e instanceof Error ? e.message : String(e)}`);
+    problems.push(`unparseable cat-harness.json: ${e instanceof Error ? e.message : String(e)}`);
     return [];
   }
 }
@@ -660,6 +702,94 @@ export interface ExportOptions {
 }
 
 /** Filename stem and document IRI for this instance's published graph. */
+/**
+ * The commit this graph was generated from, or why that could not be
+ * determined.
+ *
+ * ## Why the timestamp alone was not enough
+ *
+ * `generatedAt` says WHEN the export ran. It does not say what it ran over,
+ * so two graphs differing in content are indistinguishable from two runs of
+ * the same content, and a consumer holding a published `.jsonld` has no way
+ * back to the tree that produced it. The commit is the missing half: with it,
+ * the graph is reproducible and every node in it is traceable to a diff.
+ *
+ * ## Dirty is a THIRD state, not a detail
+ *
+ * A SHA reported from a tree with uncommitted changes is a false provenance
+ * claim — it names a commit that does not contain what was exported, which is
+ * strictly worse than reporting nothing, because it invites a consumer to
+ * check out that commit and find a different graph. So `dirty` is carried
+ * beside the SHA rather than suppressing it: the commit is still the best
+ * available anchor, and the flag says not to trust it as exact.
+ *
+ * ## And unavailable is a fourth
+ *
+ * A tarball, a shallow or export-stripped checkout, or a machine with no
+ * `git` produces no SHA at all. That is reported in `problems` — the same
+ * channel as an unreadable source — and the fields are simply absent, never
+ * filled with a placeholder that would parse as a commit.
+ */
+interface SourceProvenance {
+  sha?: string;
+  /** The commit's web URL, when the remote names a forge we can address. */
+  iri?: string;
+  committedAt?: string;
+  dirty?: boolean;
+  /** Why there is no SHA, when there is none. */
+  unavailable?: string;
+}
+
+function readSourceProvenance(): SourceProvenance {
+  const git = (args: string[]): string | undefined => {
+    const r = spawnSync("git", args, { cwd: ROOT, encoding: "utf-8" });
+    if (r.status !== 0 || r.error) return undefined;
+    return r.stdout.trim();
+  };
+
+  const sha = git(["rev-parse", "HEAD"]);
+  if (!sha) {
+    return {
+      unavailable:
+        "git reported no HEAD here (a tarball, an export-stripped checkout, " +
+        "or no git on PATH), so the graph names no source commit",
+    };
+  }
+
+  // `--porcelain` is empty exactly when the tree matches HEAD. Untracked files
+  // count: an export walks the tree, so a file git does not know about is
+  // still a file that could have contributed a node.
+  const status = git(["status", "--porcelain"]);
+  return {
+    sha,
+    iri: commitIri(git(["remote", "get-url", "origin"]), sha),
+    committedAt: git(["show", "-s", "--format=%cI", sha]) || undefined,
+    // `undefined` rather than `false` when status itself failed: "the tree is
+    // clean" is a claim, and an unanswered question is not that claim.
+    dirty: status === undefined ? undefined : status.length > 0,
+  };
+}
+
+/**
+ * A dereferenceable commit URL from a git remote, or `undefined`.
+ *
+ * Only forge URLs whose commit-page layout is known are turned into an IRI —
+ * `undefined` for anything else, never a guessed path. Same rule as
+ * `makeIri`'s: a link that looks dereferenceable and 404s is worse than an
+ * absent one, because a consumer treats the first as a fact about the graph
+ * and the second as a fact about this export.
+ */
+function commitIri(remote: string | undefined, sha: string): string | undefined {
+  if (!remote) return undefined;
+  const m =
+    remote.match(/^https?:\/\/(github\.com|gitlab\.com)\/(.+?)(?:\.git)?\/?$/) ??
+    remote.match(/^git@(github\.com|gitlab\.com):(.+?)(?:\.git)?\/?$/);
+  if (!m) return undefined;
+  const [, host, path] = m;
+  // GitHub and GitLab both serve a commit at /<owner>/<repo>/commit/<sha>.
+  return `https://${host}/${path}/commit/${sha}`;
+}
+
 export function exportIdentity(opts: ExportOptions = {}): {
   stub: string;
   docIri: string;
@@ -683,11 +813,29 @@ export function exportIdentity(opts: ExportOptions = {}): {
 export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   const problems: string[] = [];
   const { stub, docIri, canonicalIri, isPreview } = exportIdentity(opts);
+
+  // Provenance of the SOURCE. Absent fields are absent, never placeholders:
+  // a consumer must be able to tell "this export did not know" from "this
+  // export knew the tree was clean".
+  // NOT folded into `problems`, whose contract is "sources that could not be
+  // read". A dirty tree is not an unread source — the export saw everything —
+  // it is a caveat on the SHA, and a dirty checkout is the normal state of a
+  // developer's machine. Putting it there would make `problems: []` fail on
+  // every local run and train the reader to ignore the field that exists to
+  // report real failures.
+  const src = readSourceProvenance();
+  const commitFields = {
+    ...(src.unavailable ? { sourceCommitUnavailable: src.unavailable } : {}),
+    ...(src.iri ? { sourceCommit: src.iri } : {}),
+    ...(src.sha ? { sourceCommitSha: src.sha } : {}),
+    ...(src.committedAt ? { sourceCommitAt: src.committedAt } : {}),
+    ...(src.dirty === undefined ? {} : { sourceTreeDirty: src.dirty }),
+  };
   if (!docIri.startsWith("http")) {
     // Reported, not silently tolerated: a graph whose nodes have no absolute
     // identity cannot be merged with anyone else's, which is most of the point.
     problems.push(
-      "no canonicalUrl in agent-harness.json and no --base-url given: " +
+      "no canonicalUrl in cat-harness.json and no --base-url given: " +
         "@id values are document-relative and will not dereference",
     );
   }
@@ -743,6 +891,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     ...(isPreview && canonicalIri !== undefined ? { canonicalDocument: canonicalIri } : {}),
     repository: stub,
     generatedAt: new Date().toISOString(),
+    ...commitFields,
     counts,
     problems,
     "@graph": graph,
