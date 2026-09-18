@@ -58,7 +58,7 @@ export const KG_QA_SCHEMA = "kg-qa/v1";
 export const KG_QA_DIRNAME = "kg-qa";
 
 /** What kind of node a sidecar audits. */
-export const KG_SUBJECT_KINDS = ["process", "decision", "role", "graph"] as const;
+export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "graph"] as const;
 export type KgSubjectKind = (typeof KG_SUBJECT_KINDS)[number];
 
 /** Outcome of one criterion. `unknown` is never a pass. */
@@ -159,6 +159,36 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["role"],
     severity: "minor",
     summary: "No declared actor is eligible for this role. Advisory: the actor registry is not a permission system.",
+  },
+  {
+    id: "requirement-satisfied-by-resolves",
+    applies: ["requirement"],
+    severity: "critical",
+    summary:
+      "A statement's `satisfiedBy` names a skill or capability that does not exist, so the thing claimed to " +
+      "discharge the requirement cannot be opened.",
+  },
+  {
+    id: "requirement-actors-resolve",
+    applies: ["requirement"],
+    severity: "critical",
+    summary: "A requirement or statement binds an actor id the registry does not declare.",
+  },
+  {
+    id: "requirement-derived-from-resolves",
+    applies: ["requirement"],
+    severity: "critical",
+    summary:
+      "A requirement derives from a parent requirement that does not exist, so the conformance lattice has a " +
+      "hole where a reader expects the broader obligation.",
+  },
+  {
+    id: "requirement-statements-graded",
+    applies: ["requirement"],
+    severity: "major",
+    summary:
+      "A statement carries no `conformance` grade. SHALL and SHOULD are the whole point of writing a " +
+      "requirement rather than a note; an ungraded statement cannot be conformance-tested.",
   },
   {
     id: "decision-outcomes-used",

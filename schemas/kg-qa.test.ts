@@ -165,3 +165,56 @@ describe("reachability reads the serving registry, not just manifests", () => {
     expect(served.has("folio-core")).toBe(true);
   });
 });
+
+describe("requirements are the fifth node kind and only point", () => {
+  test("`requirement` is a subject kind with criteria of its own", () => {
+    expect(criteriaFor("requirement").length).toBeGreaterThan(0);
+  });
+
+  test("a broken reference out of a requirement is critical, like any other", () => {
+    for (const id of [
+      "requirement-satisfied-by-resolves",
+      "requirement-actors-resolve",
+      "requirement-derived-from-resolves",
+    ]) {
+      expect(KG_CRITERIA_BY_ID[id]!.severity, id).toBe("critical");
+    }
+  });
+
+  test("an ungraded statement is major, not critical — readable, just not testable", () => {
+    expect(KG_CRITERIA_BY_ID["requirement-statements-graded"]!.severity).toBe("major");
+  });
+
+  test("every committed requirement resolves every reference it makes", async () => {
+    const { readdirSync, readFileSync, existsSync } = await import("node:fs");
+    const { join } = await import("node:path");
+    const root = join(import.meta.dir, "..");
+    const dir = join(root, "skills", "requirements");
+    expect(existsSync(dir)).toBe(true);
+
+    const files = readdirSync(dir).filter((f) => f.endsWith(".json"));
+    const reqs = files.map((f) => JSON.parse(readFileSync(join(dir, f), "utf-8")));
+    const ids = new Set(reqs.map((r) => r.id));
+    const actors = new Set(
+      readdirSync(join(root, ".claude", "skills", "actors")).map((f: string) => f.replace(/\.json$/, "")),
+    );
+
+    const bad: string[] = [];
+    for (const r of reqs) {
+      for (const d of r.derivedFrom ?? []) if (!ids.has(d)) bad.push(`${r.id} derivedFrom ${d}`);
+      for (const a of r.actors ?? []) if (!actors.has(a)) bad.push(`${r.id} actor ${a}`);
+      for (const st of r.statements ?? []) {
+        // The grade is the reason a requirement is a requirement.
+        expect(st.conformance, `${r.id}/${st.key} has no conformance grade`).toBeDefined();
+        for (const a of st.actors ?? []) if (!actors.has(a)) bad.push(`${r.id}/${st.key} actor ${a}`);
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+
+  test("`req:agent-workflow` exists — three requirements derive from it", async () => {
+    const { existsSync } = await import("node:fs");
+    const { join } = await import("node:path");
+    expect(existsSync(join(import.meta.dir, "..", "skills", "requirements", "agent-workflow.json"))).toBe(true);
+  });
+});

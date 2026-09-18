@@ -79,6 +79,8 @@ const WORKFLOW_DIR = join(root, "skills", "workflows");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
 const ACTOR_DIR = join(root, ".claude", "skills", "actors");
+const CAPABILITY_DIR = join(root, ".claude", "skills", "capabilities");
+const REQUIREMENT_DIR = join(KG_ROOT, "requirements");
 
 const sha256 = (s: string) => `sha256:${createHash("sha256").update(s).digest("hex")}`;
 
@@ -377,6 +379,108 @@ function auditRoles(
   });
 }
 
+// ── Per-requirement criteria ────────────────────────────────────
+
+/**
+ * Requirements are the fifth KG node kind, and the last one whose joins went
+ * unchecked.
+ *
+ * A requirement is not a skill and not a role: it is a conformance obligation
+ * that POINTS AT them. `satisfiedBy` names the skill or capability that
+ * discharges a statement, `actors` names who is bound by it, and `derivedFrom`
+ * names the broader requirement it specialises. Three reference types, and
+ * until now nothing resolved any of them — measured on 2026-09-18, one
+ * `satisfiedBy` and three `derivedFrom` refs pointed at nothing.
+ *
+ * They are `critical` rather than `major` for the same reason a dangling
+ * `<folio:skill ref>` is: a reader following the reference gets nothing. The
+ * grading check is `major` — an ungraded statement is still readable, it just
+ * cannot be conformance-tested.
+ */
+interface LoadedRequirement {
+  id: string;
+  file: string;
+  path: string;
+  raw: {
+    id?: string;
+    derivedFrom?: string[];
+    actors?: string[];
+    statements?: { key?: string; conformance?: string; actors?: string[]; satisfiedBy?: { kind?: string; ref?: string }[] }[];
+  };
+}
+
+function readRequirements(): LoadedRequirement[] {
+  if (!existsSync(REQUIREMENT_DIR)) return [];
+  const out: LoadedRequirement[] = [];
+  for (const f of readdirSync(REQUIREMENT_DIR).filter((f) => f.endsWith(".json")).sort()) {
+    const p = join(REQUIREMENT_DIR, f);
+    try {
+      const raw = JSON.parse(readFileSync(p, "utf-8")) as LoadedRequirement["raw"];
+      out.push({ id: raw.id ?? f.slice(0, -5), file: f, path: p, raw });
+    } catch (e) {
+      throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : e}`);
+    }
+  }
+  return out;
+}
+
+function auditRequirements(
+  reqs: LoadedRequirement[],
+  skills: Set<string>,
+  actors: LoadedActor[],
+  auditorHash: string,
+): KgQaReport[] {
+  const capabilities = new Set<string>();
+  if (existsSync(CAPABILITY_DIR)) {
+    for (const f of readdirSync(CAPABILITY_DIR)) {
+      if (f.endsWith(".json")) capabilities.add(f.slice(0, -5));
+    }
+  }
+  const actorIds = new Set(actors.map((a) => a.id));
+  const reqIds = new Set(reqs.map((r) => r.id));
+
+  return reqs.map((r) => {
+    const hash = sha256(readFileSync(r.path, "utf-8"));
+    const satisfied: KgFinding[] = [];
+    const badActors: KgFinding[] = [];
+    const ungraded: KgFinding[] = [];
+
+    for (const a of r.raw.actors ?? []) {
+      if (!actorIds.has(a)) badActors.push({ where: r.id, detail: `binds actor "${a}", which the registry does not declare.` });
+    }
+    for (const st of r.raw.statements ?? []) {
+      const key = st.key ?? "(unkeyed)";
+      if (!st.conformance) {
+        ungraded.push({ where: key, detail: `statement "${key}" carries no \`conformance\` grade — it cannot be conformance-tested.` });
+      }
+      for (const a of st.actors ?? []) {
+        if (!actorIds.has(a)) badActors.push({ where: `${r.id}/${key}`, detail: `binds actor "${a}", which the registry does not declare.` });
+      }
+      for (const sb of st.satisfiedBy ?? []) {
+        const ref = sb.ref ?? "";
+        const ok = sb.kind === "skill" ? skills.has(ref) : sb.kind === "capability" ? capabilities.has(ref) : true;
+        if (!ok) {
+          satisfied.push({
+            where: `${r.id}/${key}`,
+            detail: `is satisfiedBy ${sb.kind} "${ref}", which does not exist — the thing claimed to discharge this statement cannot be opened.`,
+          });
+        }
+      }
+    }
+    const badParents = (r.raw.derivedFrom ?? [])
+      .filter((d) => !reqIds.has(d))
+      .map((d) => ({ where: r.id, detail: `derives from "${d}", which is not a declared requirement.` }));
+
+    const criteria: Record<string, KgCriterionEntry> = {
+      "requirement-satisfied-by-resolves": entry(satisfied),
+      "requirement-actors-resolve": entry(badActors),
+      "requirement-derived-from-resolves": entry(badParents, (r.raw.derivedFrom ?? []).length > 0),
+      "requirement-statements-graded": entry(ungraded, (r.raw.statements ?? []).length > 0),
+    };
+    return report("requirement", r.id, relative(root, r.path), hash, criteria, auditorHash);
+  });
+}
+
 // ── Graph roll-up ───────────────────────────────────────────────
 
 function manifestSkills(): Set<string> {
@@ -556,10 +660,11 @@ function sidecarPath(r: KgQaReport): string {
     process: join(WORKFLOW_DIR, KG_QA_DIRNAME),
     decision: join(DECISION_DIR, KG_QA_DIRNAME),
     role: join(KG_ROOT, "roles", KG_QA_DIRNAME),
+    requirement: join(KG_ROOT, "requirements", KG_QA_DIRNAME),
     graph: join(KG_ROOT, "roles", KG_QA_DIRNAME),
   };
   const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json)$/, "") : r.subject.id;
-  const name = r.subject.kind === "role" ? r.subject.id : stem;
+  const name = r.subject.kind === "role" || r.subject.kind === "requirement" ? r.subject.id : stem;
   return join(dirFor[r.subject.kind], `${name}.kg-qa.json`);
 }
 
@@ -598,6 +703,7 @@ reports.push(...(await auditDecisions(processes, auditorHash)));
 if (graph) {
   reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills, auditorHash));
 }
+reports.push(...auditRequirements(readRequirements(), skills, actors, auditorHash));
 reports.push(auditGraph(graph, processes, actors, skills, auditorHash));
 
 // Write or compare.

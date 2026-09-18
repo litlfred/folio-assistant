@@ -106,7 +106,7 @@ const registry: RegistryOutput = {
   actors: loadJsonFiles<ActorDefinition>(join(rootDir, ".claude", "skills", "actors")),
   capabilities: loadJsonFiles<CapabilityDefinition>(join(rootDir, ".claude", "skills", "capabilities")),
   skills: loadJsonFiles<SkillDefinition>(join(rootDir, ".claude", "skills", "local")),
-  requirements: loadJsonFiles<Requirement>(join(rootDir, ".claude", "skills", "requirements")),
+  requirements: loadJsonFiles<Requirement>(join(rootDir, "skills", "requirements")),
   packages: loadPackageManifests(),
   hooks: [],
   roleAssignments: loadRoleAssignments(),

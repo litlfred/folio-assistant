@@ -1,38 +1,38 @@
 {
   "$schema": "kg-qa/v1",
   "subject": {
-    "kind": "role",
-    "id": "editor",
-    "path": "skills/roles/roles.json"
+    "kind": "requirement",
+    "id": "req:agent-workflow",
+    "path": "skills/requirements/agent-workflow.json"
   },
-  "source_hash": "sha256:cfc1d4c35c77f464312242edd3e5af6f3de8b540b9ae231034c063e8b19bcc7a",
+  "source_hash": "sha256:108dc4484c634293fc1d5158934c78e64c352ad41d909e58951d0733c338bea5",
   "auditor": {
     "script": "scripts/kg-audit.ts",
     "script_hash": "sha256:00595e763f7aba5e07af2babbd677ecab6a1142e4a40fb2b79ea908640e23161",
     "engine_version": "1"
   },
   "criteria": {
-    "role-skills-resolve": {
+    "requirement-satisfied-by-resolves": {
       "result": "pass",
       "findings": []
     },
-    "role-inherits-resolves": {
+    "requirement-actors-resolve": {
       "result": "pass",
       "findings": []
     },
-    "role-binds-a-lane": {
-      "result": "pass",
+    "requirement-derived-from-resolves": {
+      "result": "n/a",
       "findings": []
     },
-    "role-has-actor": {
+    "requirement-statements-graded": {
       "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 4,
+    "pass": 3,
     "fail": 0,
-    "n/a": 0,
+    "n/a": 1,
     "unknown": 0
   }
 }
