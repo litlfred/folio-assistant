@@ -81,11 +81,27 @@ export interface QaSummary {
   na: number;
 }
 
+/**
+ * The state mark, and it has to say GOOD or BAD without a legend.
+ *
+ * `● ◐ ○ ·` shipped in #274 and was reported unreadable by the first person to
+ * use it: filled-vs-open circles encode a scale, but nothing in them says which
+ * end is the good one, and at 0.75rem `●` and `·` differ only in size.
+ *
+ * `✓ ! ✕` carry their meaning on their own, survive monochrome, and keep colour
+ * as reinforcement rather than as the message.
+ *
+ * **`unswept` has no mark at all — the icon is simply dulled.** Any glyph there
+ * is a claim about a check nobody ran, and the previous `·` read as a very
+ * small "pass". Absence of a mark, at reduced opacity, is the one rendering
+ * that cannot be mistaken for a verdict. The icon is still PRESENT, because a
+ * missing icon and a clean one look identical and only one of them is true.
+ */
 const QA_GLYPH: Record<QaState, string> = {
-  fail: "●",
-  warn: "◐",
-  pass: "○",
-  unswept: "·",
+  fail: "✕",
+  warn: "!",
+  pass: "✓",
+  unswept: "",
 };
 
 /**
@@ -237,7 +253,7 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
       const glyph = QA_GLYPH[state];
       const mark =
         `<span class="fa-qa-tag">${tag}</span>` +
-        `<span class="fa-qa-glyph" aria-hidden="true">${glyph}</span>`;
+        (glyph === "" ? "" : `<span class="fa-qa-glyph" aria-hidden="true">${glyph}</span>`);
       if (!doc) {
         out.push(
           ` <span class="fa-qa-badge fa-qa-${state} fa-qa-fam-${family}" ` +

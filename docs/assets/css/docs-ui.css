@@ -860,11 +860,16 @@
  * look past, while a failing QA verdict is the one thing on the row a reader
  * might want to notice.
  *
- * Colour is not the only channel. Each state has its own glyph — ● fail,
- * ◐ warn, ○ pass, · unswept — so the badge survives monochrome, a colour-vision
- * deficiency, and the theme's dark mode, and the `title` carries the counts in
- * words. That is deliberate rather than defensive: a status icon whose only
- * difference is hue is unreadable to a sizable fraction of readers.
+ * Colour is not the only channel. Each state carries its own mark — ✕ fail,
+ * ! warn, ✓ pass, and nothing at all for unswept — so the badge survives
+ * monochrome, a colour-vision deficiency, and the theme's dark mode, and the
+ * `title` carries the counts in words. That is deliberate rather than
+ * defensive: a status icon whose only difference is hue is unreadable to a
+ * sizable fraction of readers.
+ *
+ * The marks replace `● ◐ ○ ·`, which shipped in #274 and was reported
+ * unreadable: filled-vs-open circles encode a scale without saying which end is
+ * good, and at this size `●` and `·` differ only in size.
  *
  * `unswept` is a real state, shown rather than omitted. A missing icon and a
  * clean one look identical, and only one of them is true. */
@@ -939,7 +944,10 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-qa-fail { color: #b3261e; opacity: 1; }
 .fa-qa-warn { color: #8a6100; opacity: 1; }
 .fa-qa-pass { color: #1b5e20; opacity: 0.55; }
-.fa-qa-unswept { color: currentcolor; opacity: 0.3; }
+ /* No mark, just a dulled tag. A glyph here is a claim about a check nobody
+  * ran, and the `·` it replaces read as a very small "pass". */
+.fa-qa-unswept { color: currentcolor; opacity: 0.38; }
+.fa-qa-unswept .fa-qa-tag { font-weight: 600; }
 
 /* Dark mode: the light-mode reds and greens sit too dark on a dark surface to
  * meet contrast. Guarded the same way the rest of this file guards its dark
