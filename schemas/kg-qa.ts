@@ -230,16 +230,48 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary: "A decision table is referenced by no gateway, or returns an outcome no branch is named for.",
   },
   {
-    id: "skill-reachable",
+    id: "skill-has-entry-point",
     applies: ["graph"],
     severity: "minor",
+    // Renamed from `skill-reachable`, which was the honest check under a name
+    // that promised more than it delivered. "Reachable" reads as "something in
+    // the knowledge graph points at it"; what it means is "there is SOME way in
+    // at all", and the servable clause alone covers nearly the whole corpus —
+    // so it passes near-trivially and a reader took its green for an answer to
+    // the graph question. Measured 2026-09-18: 143 known skills, this criterion
+    // 0 findings, while 96 of those 143 are carried by no role and named by no
+    // activity. Both numbers are true; only one was visible.
+    //
+    // `skill-in-role-or-process` below is the other question, asked separately
+    // instead of folded in here, because the answers differ by two orders of
+    // magnitude and one check cannot report both.
     summary:
-      "A skill exists on disk but nothing reaches it — `skill_fetch` cannot serve it, no package manifest " +
-      "lists it, no role carries it, no activity names it. Reachability is a union deliberately: most " +
-      "skills are invoked directly by name and never appear in a diagram, so requiring a role or an " +
-      "activity would report most of the corpus as orphaned, and a wall of false findings is how a check " +
-      "gets switched off. The SERVING registry is the load-bearing member — a skill nothing can fetch is " +
-      "unreachable however many manifests name it.",
+      "A skill exists on disk but there is no way in at all — `skill_fetch` cannot serve it, no package " +
+      "manifest lists it, no role carries it, no activity names it. The union is deliberate and the " +
+      "SERVING registry is its load-bearing member: a skill nothing can fetch is unreachable however many " +
+      "manifests name it. It does NOT mean the process model reaches the skill — that is " +
+      "`skill-in-role-or-process`, which is a much larger number and not a defect list.",
+  },
+  {
+    id: "skill-in-role-or-process",
+    applies: ["graph"],
+    severity: "minor",
+    // NEVER gate on this, and it is `minor` so that it cannot.
+    //
+    // A skill invoked directly by name — `corpus-grep`, `diff`, `kg-export`,
+    // `mcp-contract`, the watcher family — is doing its job without appearing
+    // in any diagram, and `skill_fetch` by name is a first-class entry point.
+    // Requiring a role or an activity would report ~two thirds of the corpus as
+    // orphaned, and a wall of false findings is how a check gets switched off.
+    //
+    // It is reported rather than enforced because the question is real and was
+    // unanswerable without re-deriving it by hand: "what does the actor → role
+    // → task model actually reach?" The count moving is the signal, not its
+    // absolute value.
+    summary:
+      "COVERAGE, not a defect: no role carries this skill and no activity names it, so nothing in the " +
+      "actor/role/process model reaches it. Legitimate for a skill invoked directly by name, which most " +
+      "are. Expect this to be large and to stay large; watch it move, do not drive it to zero.",
   },
   {
     id: "manifest-skill-exists",

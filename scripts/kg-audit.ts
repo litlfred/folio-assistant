@@ -680,6 +680,24 @@ function auditGraph(
     .sort()
     .map((s) => ({ where: s, detail: `skill "${s}" is listed by no package manifest, carried by no role and named by no activity.` }));
 
+  // The OTHER question, asked separately because the answers differ by two
+  // orders of magnitude: what does the actor → role → task model actually
+  // reach? `reachable` above is dominated by the servable clause, so it passes
+  // over almost everything; this counts only the two clauses that are part of
+  // the process model. Coverage, never a gate — see the criterion's note.
+  const modelled = new Set<string>();
+  for (const r of graph?.roles ?? []) for (const s of r.skills) modelled.add(s);
+  for (const p of processes) {
+    for (const n of p.model?.nodes.values() ?? []) for (const s of n.skills) modelled.add(s);
+  }
+  const unmodelled = [...skills]
+    .filter((s) => !modelled.has(s))
+    .sort()
+    .map((s) => ({
+      where: s,
+      detail: `no role carries "${s}" and no activity names it — reached, if at all, by direct invocation.`,
+    }));
+
   const declaredRoles = new Set((graph?.roles ?? []).map((r) => r.id));
   const badActorRoles = actors.flatMap((a) =>
     (a.roles ?? [])
@@ -729,7 +747,14 @@ function auditGraph(
     null,
     null,
     {
-      "skill-reachable": entry(orphans),
+      "skill-has-entry-point": entry(orphans),
+      // `unknown` when there is no role graph: with no roles declared, every
+      // skill looks unmodelled and the count would be the whole corpus — a
+      // number that says nothing about the corpus and everything about the
+      // missing file. Reporting it as a finding would be a wall of noise.
+      "skill-in-role-or-process": graph
+        ? entry(unmodelled)
+        : { result: "unknown" as KgResult, findings: [{ where: "—", detail: "no role graph declared." }] },
       "manifest-skill-exists": (() => {
         const remote = remotePackageSkills();
         return entry(
