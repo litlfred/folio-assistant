@@ -128,14 +128,20 @@ export function gitHeadSha(repoRoot?: string): string {
  * robust regardless of where the qa-sweep process is invoked from.
  */
 /**
- * Is this checkout truncated? Cached: the answer cannot change mid-process,
- * and `gitFileCommitSha` is called once per criterion.
+ * Is this checkout truncated? Cached PER REPOSITORY — `gitFileCommitSha` is
+ * called once per criterion, so the probe is worth caching, but keying it on
+ * nothing is a bug: one process can legitimately ask about two repositories
+ * (a test fixture, a folio plus the platform), and a shared boolean answers
+ * the second question with the first one's answer. Caught by the test that
+ * builds a full clone and a shallow clone in the same run.
  */
-let shallowCache: boolean | undefined;
+const shallowCache = new Map<string, boolean>();
 function isShallowRepo(repoRoot: string): boolean {
-  if (shallowCache !== undefined) return shallowCache;
+  const hit = shallowCache.get(repoRoot);
+  if (hit !== undefined) return hit;
+  let value: boolean;
   try {
-    shallowCache =
+    value =
       execFileSync("git", ["-C", repoRoot, "rev-parse", "--is-shallow-repository"], {
         stdio: ["ignore", "pipe", "ignore"],
       })
@@ -144,15 +150,20 @@ function isShallowRepo(repoRoot: string): boolean {
   } catch {
     // Cannot tell ⇒ assume truncated. The safe direction is to decline to
     // answer, never to answer wrongly.
-    shallowCache = true;
+    value = true;
   }
-  return shallowCache;
+  shallowCache.set(repoRoot, value);
+  return value;
 }
 
 /** The commits at a shallow clone's graft boundary, where history stops. */
+const boundaryCache = new Map<string, Set<string>>();
 function graftBoundary(repoRoot: string): Set<string> {
+  const hit = boundaryCache.get(repoRoot);
+  if (hit) return hit;
+  let value: Set<string>;
   try {
-    return new Set(
+    value = new Set(
       execFileSync("git", ["-C", repoRoot, "rev-list", "--max-parents=0", "HEAD"], {
         stdio: ["ignore", "pipe", "ignore"],
       })
@@ -162,8 +173,10 @@ function graftBoundary(repoRoot: string): Set<string> {
         .filter(Boolean),
     );
   } catch {
-    return new Set();
+    value = new Set();
   }
+  boundaryCache.set(repoRoot, value);
+  return value;
 }
 
 export function gitFileCommitSha(relPath: string, repoRoot: string): string {

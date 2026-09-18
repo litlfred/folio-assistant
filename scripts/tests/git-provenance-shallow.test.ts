@@ -11,63 +11,82 @@
  * of 78 sidecars to the single boundary sha, collapsing provenance that
  * carried NINE distinct commits. The corruption is silent and reads as a
  * tidy-up.
+ *
+ * THESE TESTS BUILD THEIR OWN REPOSITORIES. The first version read the
+ * ambient checkout, which passed locally (102 commits, some files committed
+ * inside the window) and failed in CI, where `actions/checkout` fetches
+ * depth 1 — there EVERY file resolves to the single commit, so no fixture
+ * satisfying "committed inside the window" exists at all. A test of
+ * shallow-clone behaviour must not itself depend on how deep the ambient
+ * clone happens to be.
  */
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test, beforeAll, afterAll } from "bun:test";
 import { execFileSync } from "node:child_process";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { gitFileCommitSha, GIT_SHA_UNKNOWN } from "../../content/pipeline/qa-utils.ts";
 
-const ROOT = join(import.meta.dir, "../..");
+let full = "";
+let shallow = "";
+let firstSha = "";
 
-function sh(args: string[]): string {
-  return execFileSync("git", ["-C", ROOT, ...args], { stdio: ["ignore", "pipe", "ignore"] })
+function git(cwd: string, args: string[]): string {
+  return execFileSync("git", ["-C", cwd, ...args], {
+    stdio: ["ignore", "pipe", "ignore"],
+    env: { ...process.env, GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@t", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@t" },
+  })
     .toString()
     .trim();
 }
 
-describe("git provenance under a shallow clone", () => {
-  test("a file changed inside the fetched window resolves to a real commit", () => {
-    // Control: without this the suite is satisfiable by always answering
-    // "unknown", which would be useless rather than safe.
-    //
-    // The file is CHOSEN, not hard-coded. Naming one is a trap: pick a file
-    // that happens not to have been committed inside the fetched window and
-    // the control fails for the right reason on the wrong grounds, which is
-    // how I first wrote it.
-    const boundary = new Set(sh(["rev-list", "--max-parents=0", "HEAD"]).split("\n").filter(Boolean));
-    const files = sh(["ls-files", "content/pipeline"]).split("\n").filter((f) => f.endsWith(".ts"));
-    const inWindow = files.find((f) => {
-      const raw = sh(["log", "-n", "1", "--format=%H", "--", f]);
-      return raw && !boundary.has(raw);
-    });
-    expect({ found: inWindow !== undefined }).toEqual({ found: true });
-    const sha = gitFileCommitSha(inWindow!, ROOT);
-    expect(sha).not.toBe(GIT_SHA_UNKNOWN);
-    expect(sha).toMatch(/^[0-9a-f]{40}$/);
+beforeAll(() => {
+  full = mkdtempSync(join(tmpdir(), "prov-full-"));
+  git(full, ["init", "-q", "-b", "main"]);
+
+  // Commit 1 touches early.txt and nothing after does, so in a depth-1 clone
+  // early.txt attributes to the boundary — the exact case being guarded.
+  writeFileSync(join(full, "early.txt"), "one\n");
+  git(full, ["add", "early.txt"]);
+  git(full, ["commit", "-q", "-m", "first"]);
+  firstSha = git(full, ["rev-parse", "HEAD"]);
+
+  writeFileSync(join(full, "later.txt"), "two\n");
+  git(full, ["add", "later.txt"]);
+  git(full, ["commit", "-q", "-m", "second"]);
+
+  shallow = mkdtempSync(join(tmpdir(), "prov-shallow-"));
+  rmSync(shallow, { recursive: true, force: true });
+  execFileSync("git", ["clone", "-q", "--depth", "1", `file://${full}`, shallow], {
+    stdio: ["ignore", "pipe", "ignore"],
+  });
+});
+
+afterAll(() => {
+  for (const d of [full, shallow]) if (d) rmSync(d, { recursive: true, force: true });
+});
+
+describe("git provenance", () => {
+  test("a full clone answers with the real commit", () => {
+    // The control. Without it the suite is satisfiable by a function that
+    // always says "unknown" — useless rather than safe.
+    expect(git(full, ["rev-parse", "--is-shallow-repository"])).toBe("false");
+    expect(gitFileCommitSha("early.txt", full)).toBe(firstSha);
   });
 
-  test("a boundary-attributed file is reported unknown, not as the boundary", () => {
-    const shallow = sh(["rev-parse", "--is-shallow-repository"]) === "true";
-    if (!shallow) {
-      // Full clone: `git log` can answer, so there is nothing to decline and
-      // this property is vacuous. Stated rather than silently passing.
-      expect(shallow).toBe(false);
-      return;
-    }
-    const boundary = new Set(sh(["rev-list", "--max-parents=0", "HEAD"]).split("\n").filter(Boolean));
-    expect(boundary.size).toBeGreaterThan(0);
+  test("a shallow clone declines rather than reporting the boundary", () => {
+    expect(git(shallow, ["rev-parse", "--is-shallow-repository"])).toBe("true");
 
-    // Find any tracked file whose raw `git log` answer IS the boundary.
-    const files = sh(["ls-files", "content/pipeline"]).split("\n").filter((f) => f.endsWith(".ts"));
-    const attributed = files.find((f) => {
-      const raw = sh(["log", "-n", "1", "--format=%H", "--", f]);
-      return boundary.has(raw);
-    });
-    if (!attributed) {
-      // Nothing in this checkout hits the case; the guard is untestable here
-      // rather than broken, and saying so beats a green that proves nothing.
-      return;
-    }
-    expect(gitFileCommitSha(attributed, ROOT)).toBe(GIT_SHA_UNKNOWN);
+    // What raw git says here IS the boundary, and looks like an answer.
+    const raw = git(shallow, ["log", "-n", "1", "--format=%H", "--", "early.txt"]);
+    const boundary = new Set(git(shallow, ["rev-list", "--max-parents=0", "HEAD"]).split("\n"));
+    expect(boundary.has(raw)).toBe(true);
+    expect(raw).not.toBe(firstSha); // and it is the WRONG commit
+
+    expect(gitFileCommitSha("early.txt", shallow)).toBe(GIT_SHA_UNKNOWN);
+  });
+
+  test("a file absent from the repository is unknown, not invented", () => {
+    expect(gitFileCommitSha("no-such-file.txt", full)).toBe(GIT_SHA_UNKNOWN);
   });
 });
