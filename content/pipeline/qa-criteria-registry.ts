@@ -188,6 +188,28 @@ const VOICE: QaCriterionDefinition[] = [
     // reflowing the offending line left the stale `fail` in place because
     // the `.md` hash had not moved. Observed live on qou #4673.
     also_invalidated_by: ["lean"],
+    // Scoped to the paper profile, bean `hbsh`. "Scholarly third-person by
+    // default" is the register of a PAPER; documentation's register is to
+    // address the reader, and the two are not reconcilable per block. Measured
+    // on this repo's own `content/docs/` (a `contentType: "document"` corpus),
+    // 2026-09-19: ten findings, ten guide or reference pages, zero writing
+    // defects — `guides-who-smart-ig/prerequisites.md:3` is "locally you
+    // need:" and `guides-writing-a-paper/before-you-start.md:2` is "For papers
+    // you want `bun`, `latexmk`/`texlive`, and Lean". Both are the correct
+    // sentence for a prerequisites page AND a match, which is the definition of
+    // a scoping defect rather than an authoring one.
+    //
+    // Ten instances of one criterion across ten pages is evidence about the
+    // criterion's scope, not about ten authors — so this is one edit rather
+    // than ten reviewer entries, and it leaves the reason on the record
+    // (`skills/folio-core/voice-editorial-review.md` §"The scoping question").
+    //
+    // NOT final: a document folio that DOES want scholarly register — a WHO
+    // guideline states recommendations in third person — should re-enable this
+    // by activating a voice, once the voice-overlay mechanism of issue #208 /
+    // PR #210 exists. `profiles` is the only scoping axis available today, and
+    // is the wrong axis for a rule that varies by genre within a profile.
+    profiles: ["paper"],
     automated: true,
   },
   {

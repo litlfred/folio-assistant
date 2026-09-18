@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2jfq
 title: 'Voice axis: adjudicate 3 voice-author-notes-pollution findings in content/docs'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T22:23:37Z
-updated_at: 2026-09-18T22:23:57Z
+updated_at: 2026-09-18T23:38:02Z
 ---
 
 The QA sweep over `content/docs/` flags 3 blocks on `voice-author-notes-pollution`

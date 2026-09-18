@@ -1,11 +1,11 @@
 ---
 # folio-assistant-c5pa
 title: 'Voice axis: adjudicate 1 voice-first-person-work finding in content/docs'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T22:23:37Z
-updated_at: 2026-09-18T22:23:57Z
+updated_at: 2026-09-18T23:38:02Z
 ---
 
 The QA sweep over `content/docs/` flags 1 block on `voice-first-person-work`

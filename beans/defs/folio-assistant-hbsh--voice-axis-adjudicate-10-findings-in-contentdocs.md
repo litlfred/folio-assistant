@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hbsh
 title: 'Voice axis: adjudicate 10 voice-scholarly-default findings in content/docs'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T22:23:37Z
-updated_at: 2026-09-18T22:23:57Z
+updated_at: 2026-09-18T23:38:02Z
 ---
 
 The QA sweep over `content/docs/` flags 10 blocks on `voice-scholarly-default`

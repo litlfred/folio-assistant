@@ -386,6 +386,31 @@ const MATH_IDIOM_EXEMPT =
 // every occurrence removed; used only in `.replace`, never stateful `.test`).
 const DOMAIN_PHRASE_EXEMPT = /\bnaturally\s+occurring\b/gi;
 
+// Comparative-degree exemption: `merely` and `just` inside an explicit
+// contrast — "X rather than merely Y", "does not merely X, it Y" — are degree
+// markers carrying the sentence's claim, not the author admiring the result.
+// The criterion is after the author commenting on quality ("surprisingly", "a
+// beautiful result"); a comparative marks the WEAKER alternative, which is the
+// opposite move.
+//
+// Measured on this repo's own `content/docs/` (122 blocks), 2026-09-19: four
+// `merely` hits, four comparative, ZERO genuine. Same shape as bean `fl5m`
+// mechanism #2 — a word in a phrase list matching the construction the word
+// is actually for. Global, so it is a STRIP like the domain phrase above and
+// cannot mask a second hit on the same line.
+const COMPARATIVE_EXEMPT =
+  /(?:rather\s+than|instead\s+of|as\s+opposed\s+to|and\s+not|but\s+not)\s+(?:merely|just)\b|\b(?:does|do|did|is|are|was|were|can|could|will|would|need|needs|would\s+be)\s+not\s+(?:merely|just)\b|\bnot\s+(?:merely|just)\b/gi;
+
+// ...and the negation can sit on the PREVIOUS line when prose is hard-wrapped,
+// which a line-based scan cannot see. This is bean `fl5m` mechanism #5 ("wrap
+// continuations scanned as sentence starts") in the editorializing rule: one of
+// the four hits above was `does not` / `merely go unread` across a break. Kept
+// deliberately narrow — the continuation must OPEN the line, and the line
+// before must END in the comparative or the negator.
+const COMPARATIVE_TAIL =
+  /\b(?:rather\s+than|instead\s+of|as\s+opposed\s+to|does|do|did|is|are|was|were|can|could|will|would|need|needs|not)\s*$/i;
+const OPENS_COMPARATIVE = /^\s*(?:not\s+)?(?:merely|just)\b/i;
+
 export function checkEditorializing(mdPath: string): CheckerResult {
   // Skip lines that are clearly in fenced code (Lean / TeX snippets).
   const lines = readLines(mdPath);
@@ -400,7 +425,13 @@ export function checkEditorializing(mdPath: string): CheckerResult {
     // Strip fixed scientific noun-phrases ("naturally occurring") from a
     // scratch copy first, so an adverb bound inside one is not flagged
     // WITHOUT masking other editorializing terms elsewhere on the line.
-    const scan = l.replace(DOMAIN_PHRASE_EXEMPT, "");
+    let scan = l
+      .replace(DOMAIN_PHRASE_EXEMPT, "")
+      .replace(COMPARATIVE_EXEMPT, "");
+    // Hard-wrapped comparative: the negator is on the line before.
+    if (OPENS_COMPARATIVE.test(l) && COMPARATIVE_TAIL.test(lines[i - 1] ?? "")) {
+      scan = scan.replace(OPENS_COMPARATIVE, "");
+    }
     if (!EDITORIALIZING_RE.test(scan)) return;
     // Math-idiom exemption: if the editorial adverb is in a math
     // construction (e.g. "naturally an algebra", "non-simply-laced",
