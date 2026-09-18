@@ -181,6 +181,34 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Running BPMN instances — one JSON file each, carrying " +
       "`\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
   },
+  // The todo graph. NOT a second work plan: `beans` is the agent work plan and
+  // `AGENTS.md` forbids standing up another. This is the thing that document
+  // already carves out beside it — "the content-review feedback workflow … a
+  // separate domain feature, not the agent work-plan" — and it is CONTENT,
+  // owned by the folio. A todo records a PERSON's outstanding work, tagged by
+  // the four coordinates of the role model: who, as which role, in which
+  // process, on which task.
+  todos: {
+    type: `${FOLIO_NS}TodoGraph`,
+    renderable: false,
+    summary:
+      "Human actors' outstanding work — content, owned by the folio, tagged by role, " +
+      "process, task and identity. Its inner directories are declared by `todos/todos.json`.",
+  },
+  "todo-items": {
+    type: `${FOLIO_NS}TodoItemsGraph`,
+    renderable: false,
+    summary:
+      "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
+      "Authored by people and by agents on their behalf.",
+  },
+  "todo-feedback": {
+    type: `${FOLIO_NS}TodoFeedbackGraph`,
+    renderable: false,
+    summary:
+      "Feedback items — todos raised against a specific block, carrying the submitter's " +
+      "identity. Read by the `todo-review` skill.",
+  },
 };
 
 /** A graph kind name. Open, not a closed union — downstream layers add kinds. */

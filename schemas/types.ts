@@ -1195,15 +1195,34 @@ export type TodoOrigin =
   | "extracted";    // extracted from existing proof-objects/comments
 
 /**
- * A todo item attached to a content block or section.
+ * A todo item — one person's outstanding work, attached to a block or section.
  *
- * Serves as the unit of agent-to-agent and human-to-agent communication.
- * Each todo lives in the `todos` field of a block manifest (.ts) or in a
- * standalone todos manifest for section/chapter-level items.
+ * The `comment` field is a quick markdown narrative. The optional `data` field
+ * carries structured context at the discretion of the creating agent or user.
  *
- * The `comment` field is a quick markdown narrative.  The optional `data`
- * field carries structured context at the discretion of the creating
- * agent or user.
+ * **Corrected 2026-09-18.** This comment previously read "Each todo lives in
+ * the `todos` field of a block manifest (.ts) or in a standalone todos
+ * manifest". **No block manifest has ever carried a `todos` field** —
+ * `BlockBase` does not declare one and nothing reads one. The claim was
+ * load-bearing in the wrong direction: it was cited, in this session, as
+ * evidence that the todo vocabulary is part of the block content model, and
+ * the conclusion happened to be right for an entirely different reason (a todo
+ * is a human actor's state, which is content) while the stated premise was
+ * false. A doc comment describing a field that does not exist is worse than no
+ * comment, because it is quoted.
+ *
+ * Where todos actually live: the `todos` graph
+ * (`schemas/todo-graph.ts`), declared by a folio's `todos/todos.json`. The
+ * feedback store is one of its nodes; see `FeedbackItem` below.
+ *
+ * **This is not the agent work plan.** That is `beans/`, and `AGENTS.md`
+ * forbids standing up a second one. A todo records what a PERSON has
+ * outstanding — the content-review feedback workflow that document already
+ * carves out beside beans.
+ *
+ * Knowledge-graph tagging — by role, process, task and identity — is
+ * `TodoTags` in `schemas/todo.ts`, kept there rather than added here so this
+ * shape stays what the existing store and the `todo-review` skill already read.
  */
 export interface TodoItem {
   /** Unique ID (e.g. "todo-001" or a nanoid). */

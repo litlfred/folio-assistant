@@ -38,7 +38,51 @@ The vocabulary is **open**, and split across two layers.
 | `beans` | **harness** | the work plan as a whole (`beans/`); its inner nodes are declared by `beans/beans.json` | no |
 | `bean-defs` | **harness** | work items — one Markdown file each, in the layout the `beans` CLI reads. Authored by people and agents. | no |
 | `workflow-state` | **harness** | running BPMN instances — one JSON each, `"$schema": "folio-workflow-instance/v1"`. Owned by the interpreter, never hand-edited. | no |
+| `todos` | **harness** | human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json` | no |
+| `todo-items` | **harness** | todo nodes — one file each, `"$schema": "folio-todo/v1"`. Authored by people, and by agents on their behalf. | no |
+| `todo-feedback` | **harness** | feedback items — todos raised against a specific block, carrying the submitter's identity. Read by `todo-review`. | no |
 | `folio` | **`folio-assist-core`** | authored content | **yes** — just-the-docs renders it to a website |
+
+> **`todos` is not a second work plan, and the distinction is the one
+> `AGENTS.md` already draws.** `beans/` is the AGENT work plan and no second
+> store may be stood up beside it. `todos/` is the other thing that document
+> carves out — *"the content-review feedback workflow … a separate domain
+> feature, not the agent work-plan"* — and it is **content**: a todo records
+> that a **person** has something outstanding, and it is owned and authored by
+> the folio.
+>
+> **A todo carries the four coordinates of the role model**, because they are
+> already declared and inventing a fifth vocabulary for them would be the drift
+> this file exists to prevent. `AGENTS.md`: *an actor performs a task in a
+> process as a role.* A todo is that sentence left unfinished, so it is tagged
+> by `roles`, `processes`, `tasks` and `identities` (`schemas/todo.ts`).
+>
+> Two things about those tags are load-bearing rather than incidental:
+>
+> - **A task reference carries its process.** A BPMN activity id is unique only
+>   *within* its process, so a task tag is the pair `{ process, task }` and never
+>   a bare string. Same lesson as the subprocess interpreter: a step id without
+>   its phase is not an address.
+> - **An identity is provider-qualified, and its link to an actor is optional.**
+>   `litlfred` is not an identity; `github:litlfred` is. The link to a declared
+>   actor is absent whenever the person is not in `.claude/skills/actors/` — and
+>   somebody who comments on a pull request is a real person with a real
+>   outstanding item whether or not the registry has heard of them. Absent means
+>   **not linked**, a third state; never anonymous, and never defaulted.
+>
+> `resolveTodoTags` reports each tag as `resolved`, `dangling` or
+> **`not-checked`**, and the third is the one that matters: a checkout with no
+> `skills/` must report every role tag as unchecked, never as dangling. A wall
+> of false findings is how a check gets switched off.
+>
+> **`todos/` was previously a machine-queue directory, and that is retired, not
+> revived.** Four audit scripts defaulted their bulk JSON into `todos/*.json`
+> (bean `bfyw`); all four now write under `build/`, and
+> `scripts/tests/audit-output-paths.test.ts` pins that none of them regresses.
+> That guard forbids machine output landing there. It does not forbid the
+> declared content graph described here, and the two must not be confused:
+> bulk machine-generated queues stay bulk JSON under `build/`, exactly as
+> before.
 
 > **`bean-defs` and `workflow-state` are the distinction `beans` swallowed.**
 > Collapsing `workplan` + `process-state` into one `beans` kind was right about
