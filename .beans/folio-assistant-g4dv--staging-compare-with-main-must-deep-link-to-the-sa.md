@@ -64,3 +64,43 @@ that point is unverified.
 Nothing here has been measured — the banner source has not been located, and
 the claim that the generator knows the page's own relative path is an
 assumption, not a finding.
+
+---
+
+## 2026-09-18 — still open after #260; banner located, assumption resolved
+
+PR #260 ("deep staging links in turn reports; banner links back to its
+issue") merged to `main` at 17:44. It is **adjacent but not this**: it added
+deep links to agent *turn reports* and an *issue* link to the banner. The
+compare link is untouched.
+
+Verified by reading the merged workflow rather than the PR description:
+
+```
+.github/workflows/feature-staging.yml:177
+  MAIN_URL="https://${owner}.github.io/${repo}/"
+
+.github/workflows/feature-staging.yml:196
+  <a href="${MAIN_URL}">compare with main ↗</a>
+```
+
+Still a bare site root.
+
+**A second site has the same defect, and it was not in the ask.** Line 237
+is the comment the bot posts on every staging PR:
+
+```
+> Compare with [main site](https://${owner}.github.io/${repo}/)
+```
+
+Both need fixing, or the PR comment keeps sending reviewers to the root
+after the banner stops doing so.
+
+## The "Not verified" above is now resolved
+
+The banner is injected per-page while walking the built site, so the page's
+own relative path **is** in hand at injection time. Option (1) — resolve the
+target against the publish ref, fall back to differently-worded text when
+the page is new — is implementable rather than speculative.
+
+Still unclaimed, still not started.
