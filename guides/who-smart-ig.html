@@ -335,7 +335,7 @@
 
 <p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/content/docs/guides-who-smart-ig"><code class="language-plaintext highlighter-rouge">content/docs/guides-who-smart-ig/</code></a> — each section below links to its own source.</em></p>
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/overview.md" class="fa-node-edit" title="Edit content/docs/guides-who-smart-ig/overview.md">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/overview.md" class="fa-node-edit" title="Edit content/docs/guides-who-smart-ig/overview.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <p>The <em>L3</em> layer turns an L2 DAK into a computable <strong>FHIR Implementation Guide</strong>.
 This guide covers authoring FHIR artifacts as FSH, compiling with SUSHI,
@@ -351,7 +351,7 @@ validating, and publishing with the HL7 IG Publisher — all driven by the LLM.<
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/prerequisites.md" class="fa-node-edit" title="Edit content/docs/guides-who-smart-ig/prerequisites.md">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/prerequisites.md" class="fa-node-edit" title="Edit content/docs/guides-who-smart-ig/prerequisites.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <p>The L3 toolchain is heavier than the platform baseline. The
 <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> package’s Docker manifest provisions it; to run
@@ -399,7 +399,7 @@ locally you need:</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l3-fhir-pipeline.bpmn" class="fa-node-edit" title="Edit skills/workflows/l3-fhir-pipeline.bpmn">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l3-fhir-pipeline.bpmn" class="fa-node-edit" title="Edit skills/workflows/l3-fhir-pipeline.bpmn">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <div class="bpmn-figure" id="figure-the-l3-pipeline">
   <img src="../assets/img/workflows/l3-fhir-pipeline.svg" alt="BPMN swimlane diagram: the FHIR modeller maps L2 to L3 and authors FSH, the build pipeline compiles with SUSHI and validates against profiles, a failed validation returns to FSH authoring, the QC reviewer's gates file findings as beans when they fail, and a clean run goes through the IG Publisher to a published IG site." />
@@ -442,7 +442,7 @@ locally you need:</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/workflow.md" class="fa-node-edit" title="Edit content/docs/guides-who-smart-ig/workflow.md">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/workflow.md" class="fa-node-edit" title="Edit content/docs/guides-who-smart-ig/workflow.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <ol>
   <li><strong>Map L2 → L3</strong> — <code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code>: turn each data element into a FHIR
@@ -463,7 +463,7 @@ resources.</li>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ig-incremental-build.bpmn" class="fa-node-edit" title="Edit skills/workflows/ig-incremental-build.bpmn">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ig-incremental-build.bpmn" class="fa-node-edit" title="Edit skills/workflows/ig-incremental-build.bpmn">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <div class="bpmn-figure" id="figure-making-the-build-incremental">
   <img src="../assets/img/workflows/ig-incremental-build.svg" alt="BPMN swimlane diagram: a source change restores the derived state; if the cache is usable the build computes the change's dependency cone, posts the cone report for the reviewer, checks out and compiles only the cone, validates it against the warm validator service, re-renders the cone's records, merges them with the restored ones, rebuilds the meta-index and assembles the site; a cache miss or a moved toolchain falls back to a full publisher build; QC gates run on the aggregate QA and file findings as beans; a PR branch deploys a preview and never seeds, while main or a release deploys the site and seeds the cache from the green build." />
@@ -526,7 +526,7 @@ to today’s full build, and only a green build of <code class="language-plainte
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/a-mock-session.md" class="fa-node-edit" title="Edit content/docs/guides-who-smart-ig/a-mock-session.md">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/a-mock-session.md" class="fa-node-edit" title="Edit content/docs/guides-who-smart-ig/a-mock-session.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <blockquote>
   <p><strong>You:</strong> Generate the FHIR profile and value set for the immunization data
@@ -551,7 +551,7 @@ conformance ✓, terminology bindings resolved ✓.</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/next.md" class="fa-node-edit" title="Edit content/docs/guides-who-smart-ig/next.md">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/next.md" class="fa-node-edit" title="Edit content/docs/guides-who-smart-ig/next.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <ul>
   <li><a href="../content-types.html#who-smart-implementation-guides-l3">Content types — WHO SMART IGs</a></li>
@@ -571,7 +571,7 @@ conformance ✓, terminology bindings resolved ✓.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35385397868"><code>121abfc</code></a> &middot; 2026-09-18T19:21:24Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35386100476"><code>52ee58e</code></a> &middot; 2026-09-18T19:29:03Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

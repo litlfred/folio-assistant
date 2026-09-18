@@ -331,7 +331,7 @@
 
 <p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/content/docs/document-ingestion"><code class="language-plaintext highlighter-rouge">content/docs/document-ingestion/</code></a> — each section below links to its own source.</em></p>
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/overview.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/overview.md">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/overview.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/overview.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <p>How a dropped file becomes an <strong>L1 source</strong> the corpus can cite — expressed as
 <strong>BPMN 2.0 swimlane diagrams</strong>, with the Ingestion Engine as a named actor and
@@ -345,7 +345,7 @@ every not-yet-built step linked to the bean that tracks it.</p><hr />
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <p>They are not the same directory under two names, and the distinction is
 load-bearing:</p>
@@ -391,7 +391,7 @@ absent one, because it produces false confidence rather than a gap.</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/library-is-l1.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/library-is-l1.md">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/library-is-l1.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/library-is-l1.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <p>Anything under <code class="language-plaintext highlighter-rouge">library/</code> is <strong>L1 source content</strong>. Any knowledge-graph
 reference to a source — from a paper, an L2 DAK, an L3 IG, or any other
@@ -412,7 +412,7 @@ placed there is silently dropped.</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/document-ingestion.bpmn" class="fa-node-edit" title="Edit skills/workflows/document-ingestion.bpmn">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/document-ingestion.bpmn" class="fa-node-edit" title="Edit skills/workflows/document-ingestion.bpmn">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <div class="bpmn-figure" id="figure-the-pipeline">
   <img src="assets/img/workflows/document-ingestion.svg" alt="BPMN swimlane diagram: a contributor drops a file in uploads; the Ingestion Engine detects its media type and mints a doc id, then calls four subprocesses in turn — extract structure, derive content, build the L1 knowledge graph, and the L1 completeness gate; an incomplete result opens a bean on the shared work plan and returns to the derive step, while a complete one is moved into library under its bibliography slug and becomes citeable as an L1 source." />
@@ -447,7 +447,7 @@ same corpus an author edits and a reviewer reviews.</p>
 </h3>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-extract-structure.bpmn" class="fa-node-edit" title="Edit skills/workflows/ingest-extract-structure.bpmn">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-extract-structure.bpmn" class="fa-node-edit" title="Edit skills/workflows/ingest-extract-structure.bpmn">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <div class="bpmn-figure" id="figure-extract-structure">
   <img src="assets/img/workflows/ingest-extract-structure.svg" alt="BPMN diagram: from a binary, an exclusive gateway asks whether there is an embedded text layer; if yes the text layer is extracted, if no the document is OCR'd to per-page text files; both paths split the result into section markdown files carrying a document brief, then write structure.json and extract claim candidates." />
@@ -473,7 +473,7 @@ a hit is interpretable without opening anything else.</p>
 </h3>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-derive-content.bpmn" class="fa-node-edit" title="Edit skills/workflows/ingest-derive-content.bpmn">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-derive-content.bpmn" class="fa-node-edit" title="Edit skills/workflows/ingest-derive-content.bpmn">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <div class="bpmn-figure" id="figure-derive-content">
   <img src="assets/img/workflows/ingest-derive-content.svg" alt="BPMN diagram: a parallel gateway fans out per asset kind — archive contents manifest, technical file metadata, localized image descriptions, audio transcription and translation, and tabular metadata — then joins, and every generated narrative is stamped with the human or agent that authored it." />
@@ -500,7 +500,7 @@ descriptions findable as a set later. It is unrecoverable once lost.</p>
 </h3>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-build-l1-kg.bpmn" class="fa-node-edit" title="Edit skills/workflows/ingest-build-l1-kg.bpmn">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-build-l1-kg.bpmn" class="fa-node-edit" title="Edit skills/workflows/ingest-build-l1-kg.bpmn">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <div class="bpmn-figure" id="figure-build-the-l1-knowledge-graph">
   <img src="assets/img/workflows/ingest-build-l1-kg.svg" alt="BPMN diagram: the engine writes a Dublin Core record, then a manifest referencing it, then the assets array with local paths or remote URLs, then binds the folder name to the bibliography slug; the corpus lane links the resulting L1 nodes into the knowledge graph." />
@@ -523,7 +523,7 @@ directory are the same string.</p>
 </h3>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-l1-completeness-gate.bpmn" class="fa-node-edit" title="Edit skills/workflows/ingest-l1-completeness-gate.bpmn">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-l1-completeness-gate.bpmn" class="fa-node-edit" title="Edit skills/workflows/ingest-l1-completeness-gate.bpmn">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <div class="bpmn-figure" id="figure-the-l1-completeness-gate">
   <img src="assets/img/workflows/ingest-l1-completeness-gate.svg" alt="BPMN swimlane diagram: the engine checks that every derived artefact is present, runs round-trip translation QA, and an exclusive gateway routes drift or bad terminology to a reviewer for adjudication before the L1 completeness verdict is recorded." />
@@ -550,7 +550,7 @@ that edge goes to a reviewer.</p><hr />
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/what-is-not-built-yet.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/what-is-not-built-yet.md">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/what-is-not-built-yet.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/what-is-not-built-yet.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <p>Every one of these is drawn in the diagrams above and tracked as a bean. None is
 implemented.</p>
@@ -620,7 +620,7 @@ implemented.</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <p>Some of it, and it is worth being exact about which, because the answer decides
 whether a field is a <code class="language-plaintext highlighter-rouge">dcterms</code> term or something this project invents.</p>
@@ -650,7 +650,7 @@ memory.</p>
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/editing-an-ingested-source.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/editing-an-ingested-source.md">✎ Edit</a></p>
+<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/editing-an-ingested-source.md" class="fa-node-edit" title="Edit content/docs/document-ingestion/editing-an-ingested-source.md">✎ Edit</a> <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span></p>
 
 <p>Ingestion never edits corpus content. It produces L1 records; authoring and
 review consume them through the ordinary flow in
@@ -674,7 +674,7 @@ new source becomes citeable when the gate passes — not before.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35385397868"><code>121abfc</code></a> &middot; 2026-09-18T19:21:24Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35386100476"><code>52ee58e</code></a> &middot; 2026-09-18T19:29:03Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
