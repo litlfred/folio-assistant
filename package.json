@@ -52,6 +52,8 @@
     "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
     "check:workflow-policy": "bun run scripts/check-workflow-policy.ts",
+    "check:partition": "bun run scripts/repo-partition.ts",
+    "check:partition:edges": "bun run scripts/repo-partition.ts --edges",
     "readme:sync": "bun run content/pipeline/readme-sections.ts",
     "readme:sync:check": "bun run content/pipeline/readme-sections.ts --check",
     "readme:sections": "bun run content/pipeline/readme-sections.ts --list",

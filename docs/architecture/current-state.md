@@ -62,23 +62,86 @@ thing in the repo to split out.
 
 ## Where the domains already separate — and where they do not
 
-```sh
-find src schemas skills content adapters scripts -type f \
-  \( -name '*.ts' -o -name '*.py' -o -name '*.sh' -o -name '*.md' \) | wc -l          # 805
-… | grep -icE '(lean|latex|/tex|-tex|tex-|proof|simulator|sage|knot|witness)'          # 101
-… | grep -icE '(who|smart|dak|fhir|fsh|ig-|-ig|ocl|l2-|l3-)'                           # 94
-```
+An early version of this page answered by matching filenames. That is a lower
+bound by construction — it finds `lean-build-bg.sh` and misses a Lean special
+case inside a generic validator — so it has been replaced by a real import-graph
+partition, `bun run check:partition`
+(`scripts/repo-partition.ts`).
 
-Of 805 source files, **101 are scientific-authoring specific** (Lean, LaTeX,
-proofs, simulators, Sage, witnesses) and **94 are WHO/SMART specific** (DAK,
-FHIR, FSH, OCL, L2/L3). Those are the two candidate extractions —
-`folio-asst-sci` and the `smart-*` family — and at roughly 12 % of files each
-they are large enough to be worth moving and small enough that the remainder is
-still a coherent core.
+The tool walks every `.ts` module under `src/`, `schemas/`, `adapters/`,
+`content/`, `scripts/`, `tests/` and `types/`, resolves each relative import
+(the codebase writes bare, `.js`-for-`.ts`, and directory forms, so all three
+are tried), assigns each module to one of the five proposed repositories, and
+reports the edges that cross a boundary **in the wrong direction**.
 
-The filename heuristic is a **lower bound and nothing more**: it finds
-`lean-build-bg.sh` and misses a Lean special case buried in a generic validator.
-Phase I's first task is to replace it with a real dependency scan.
+### The partition
+
+**331 modules, 655 internal import edges** (2026-09-18):
+
+| proposed repo | modules | by explicit rule | by keyword | fell through |
+|---|---:|---:|---:|---:|
+| `agentic-harness` | 43 | 43 | 0 | 0 |
+| `folio-assist-core` | **119** | 119 | 0 | 0 |
+| `folio-asst-sci` | 28 | 8 | 20 | 0 |
+| `smart-kg` | **0** | 0 | 0 | 0 |
+| `smart-base` | 4 | 1 | 3 | 0 |
+| *(test material)* | 110 | 107 | 3 | 0 |
+| **unassigned** | **27** | — | — | 27 |
+
+Three things in that table are worth reading carefully.
+
+**`smart-kg` is zero.** Not small — zero. Nothing in this repo is WHO L1
+material today, which confirms from the code what
+[the future state](future-state.html#smart-kg) says from the prose: the L1/L2
+line has to be drawn by someone with the domain context, because there is no
+existing code to infer it from.
+
+**`smart-base` is four modules.** The WHO material here is overwhelmingly prose,
+BPMN and schemas rather than TypeScript, so a file-count partition understates
+it badly. Do not read 4 as "nearly done".
+
+**27 modules are unassigned, and stay that way.** They are platform
+meta-scripts — `gen-schema-docs`, `check-ci-health`, `render-bpmn`,
+`generate-registry`, and so on. Most are probably `agentic-harness`, and the
+tool deliberately does not say so: an assignment it guessed would be
+indistinguishable in the report from one it derived. That list is a human's
+call, and it is 27 items long, which is a tractable afternoon.
+
+### The wrong-direction edges — Phase I's worklist
+
+**41 edges** import across a proposed boundary in a direction the dependency
+DAG forbids:
+
+| importer | imports from | edges |
+|---|---|---:|
+| `folio-assist-core` | `folio-asst-sci` | **19** |
+| `agentic-harness` | `folio-assist-core` | **17** |
+| `agentic-harness` | `folio-asst-sci` | 3 |
+| `folio-assist-core` | `smart-base` | 2 |
+
+`bun run check:partition:edges` prints all 41 by name. The two large groups have
+different causes and different fixes:
+
+**core → sci (19)** is Lean and LaTeX reaching into generic code.
+`content/pipeline/build.ts` imports `render-latex`, `generate-main-tex`,
+`latex-preflight` and `lean-coverage`; `qa-utils.ts` imports `lean-signature`;
+`schemas/constraints.ts` imports `lean-packages`. These are the seven math block
+kinds' machinery embedded in the document pipeline — the profile split
+`AGENTS.md` describes at the *schema* level, not yet carried through to imports.
+
+**harness → core (17)** is the harness knowing about the content model.
+`src/core/feedback.ts`, `src/routes/feedback.ts`, `src/types.ts` and
+`schemas/assistant-types.ts` all import `schemas/types.ts`. This is the more
+interesting group, because it is the harness's defining constraint —
+[it must not "do" anything](future-state.html#agentic-harness) — failing in
+practice: a harness that imports the content-object model cannot be extracted
+from underneath core.
+
+**A caution on the count.** The first run of this tool reported 33 cross-edges
+with 135 modules unassigned; classifying the test material and the standalone
+MCP server raised it to 41. **Classifying more modules finds more violations,
+not fewer** — so 41 is itself a lower bound while 27 modules remain unassigned.
+Treat it as a floor that rises as triage proceeds, never as a burn-down number.
 
 ## The mechanism the split already has
 
