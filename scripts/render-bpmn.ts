@@ -189,10 +189,19 @@ for (const file of sources) {
       `${tag}<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#ffffff" />`,
   );
 
+  // `height` is DROPPED rather than set to "auto". An SVG presentation
+  // attribute must be a length, and "auto" is not one: every browser logged
+  //   Error: <svg> attribute height: Expected length, "auto".
+  // on every page carrying a diagram. The rendering survived only because the
+  // inline `style` beside it is CSS, where `height:auto` IS valid and wins
+  // over the attribute anyway — so the attribute was contributing nothing but
+  // the error. With it gone the intrinsic ratio comes from `viewBox`, which
+  // is what sizes the element in both the `<img>` case and the inlined-`<svg>`
+  // case that docs-ui.js produces.
   const responsive = opaque.replace(
     /<svg([^>]*?)\swidth="[\d.]+"\sheight="[\d.]+"/,
     (_m: string, attrs: string) =>
-      `<svg${attrs} width="100%" height="auto" style="max-width:100%;height:auto"`,
+      `<svg${attrs} width="100%" style="max-width:100%;height:auto"`,
   );
   if (responsive === opaque || opaque === stable) {
     console.error(`✗ ${file}: could not make the SVG responsive — bpmn-js output changed shape`);
