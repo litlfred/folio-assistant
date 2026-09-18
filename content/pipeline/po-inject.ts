@@ -39,7 +39,10 @@ import { cleanMarkdownText } from "./pot-extract";
 
 /** Prefix used by pot-extract for Liquid output variables. */
 const LQD_PREFIX = "lqd_";
-const LQD_VAR_RE = /\{lqd_([^{}\n]+)\}/g;
+// Built from LQD_PREFIX so the prefix is written once. It was previously
+// repeated as a literal here, leaving the constant read by nothing and free
+// to drift from the pattern that actually matches.
+const LQD_VAR_RE = new RegExp("\\{" + LQD_PREFIX + "([^{}\n]+)\\}", "g");
 
 /**
  * Restore `{lqd_expr}` gettext variables back to `{{ expr }}` Liquid

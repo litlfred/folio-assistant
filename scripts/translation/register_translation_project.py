@@ -47,7 +47,6 @@ from translation_config import (
     TranslationComponent,
     discover_components,
     get_enabled_services,
-    get_languages,
     get_project_slug,
     load_dak_config,
 )
@@ -311,8 +310,10 @@ def _list_crowdin_project_files(
             break
 
         if resp.status_code != 200:
+            # A service's error body is text of unknown provenance; some
+            # echo the offending request, auth header included.
             logger.error("  Crowdin list-files HTTP %d: %s",
-                         resp.status_code, resp.text[:500])
+                         resp.status_code, redact_for_log(resp.text[:500]))
             break
 
         data = resp.json().get("data", [])

@@ -447,6 +447,19 @@ export const BlockBaseSchema = z.object({
   // Forward reference: ComputationSchema is declared further down in the
   // same module.  z.lazy keeps the cyclic reference safe.
   computation: z.lazy(() => ComputationSchema).optional(),
+  /**
+   * BCP 47 language tag of this block's **source** content. See
+   * `BlockBase.lang` in folio-assistant/schemas/types.ts for the authoring
+   * contract and the defaulting rule (absent means the folio's
+   * `translation.defaultLocale`).
+   */
+  lang: z.string().optional(),
+  /**
+   * PO sources carrying translations for this block, in load order. See
+   * `BlockBase.poSources` in folio-assistant/schemas/types.ts for the
+   * resolution order and why declaring it disables the convention walk.
+   */
+  poSources: z.array(z.string()).optional(),
 });
 
 export const DefinitionSchema = BlockBaseSchema.extend({

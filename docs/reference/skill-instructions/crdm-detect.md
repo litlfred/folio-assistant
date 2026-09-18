@@ -1,0 +1,136 @@
+---
+layout: default
+title: Feature-request detection (CRDM trigger)
+parent: Skill instructions
+---
+
+{: .note }
+> Generated from [`skills/folio-core/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/crdm-detect.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/crdm-detect.md){: .fa-edit-source }
+
+{% raw %}
+# Feature-request detection (CRDM trigger)
+
+Detect when a user request is a **feature request** (platform capability change)
+rather than a **content request** (writing, editing, reviewing folio content).
+When a feature request is detected, the agent enters the CRDM requirements
+workflow rather than implementing directly.
+
+## Detection signals
+
+Scan every user request for these categories of phrasing. A single match is
+enough to flag; two or more from different categories is high confidence.
+
+### Direct capability requests
+
+Phrases where the user explicitly asks for new functionality:
+
+- "I need a way to …", "can you add …", "we need a tool that …"
+- "there should be a skill for …", "add a QA check for …"
+- "the renderer should support …", "make the pipeline do …"
+- "can we add a new block kind for …", "we need a content type for …"
+- "it would be great if the agent could …"
+- "build me …", "create a tool …", "develop a feature …"
+
+### Workflow gap descriptions
+
+Phrases where the user describes a process that does not work today:
+
+- "right now I have to manually …", "there is no way to …"
+- "the current process for … is broken", "this workflow doesn't handle …"
+- "we can't do … yet", "it's missing …", "it doesn't support …"
+- "every time I need to …, I have to …" (manual workaround pattern)
+- "other people need to be able to …"
+
+### Platform-level change requests
+
+Phrases that imply changes to folio-assistant itself (not folio content):
+
+- "change the schema to …", "modify the pipeline …"
+- "add a new adapter …", "the constraint should …"
+- "update the CI to …", "the workflow should fire when …"
+- "the MCP tool needs to …", "register a new tool for …"
+- References to files under `schemas/`, `content/pipeline/`, `adapters/`,
+  `src/`, `scripts/`, `.github/workflows/`
+
+### Cross-cutting concerns
+
+Phrases that affect multiple folios or content types:
+
+- "for all papers …", "every folio should …", "across all content types …"
+- "when any user …", "the platform should …"
+- "this needs to work for both document and paper folios"
+
+### Review-surfaced needs
+
+Phrases that emerge during content review:
+
+- "this review process would be easier if …"
+- "we need a way to triage these comments …"
+- "the feedback workflow should …"
+- "stakeholders need to be able to see …"
+- "can we make the review process more …"
+
+## What is NOT a feature request
+
+Do not trigger CRDM for:
+
+- "Write the next section of chapter 3" — content authoring
+- "Fix the typo in the overview" — content editing
+- "Run content_validate" — tool invocation
+- "What does this block kind mean?" — information request
+- "Review chapter 5" — content review within existing workflow
+- "Create a bean for …" — work-plan management
+- Bug reports about existing features (unless they imply a redesign)
+
+## On detection — what to do
+
+Do NOT use the term "CRDM" with the user. It is internal methodology jargon.
+
+**If new session** and the first request is a feature:
+1. Acknowledge the request as a feature/capability change
+2. Explain that you will help them work through the requirements before building
+3. Start Phase 1 (needs assessment)
+
+**If existing session** and the user is already in a CRDM cycle:
+1. Incorporate the new request into the current requirements document
+2. Continue with the current phase
+
+**If existing session** and the user is doing content work (not in CRDM):
+1. Synthesise what you have heard as a feature need
+2. Ask the user:
+   - "This sounds like a platform change rather than content work. Would you
+     like to pause and work through the requirements now, or should I note it
+     for later?"
+   - If **pause**: enter CRDM Phase 1, return to content work when done
+   - If **later**: create a bean with as much context as possible, linking to
+     any relevant GitHub issue
+
+## Issue association
+
+Feature work should be linked to a GitHub issue:
+
+1. **Scan open issues** for a match — search by title/body keywords
+2. **If match found** — ask user: "This looks related to #NNN — should I add
+   your requirements there?"
+3. **If no match in open issues** — scan recently closed issues
+4. **If no match at all** — ask the user to create an issue (do NOT create
+   without permission)
+5. **Do not proceed without an issue link** — the issue is where stakeholders
+   do feature sign-off; without it, there is no review surface
+
+Requirements may span multiple issues. The agent should link to all relevant
+ones and note the relationship.
+
+## After implementation
+
+When a PR is merged that addresses a feature from this process:
+
+1. **Post a summary comment** on the linked GitHub issue describing what the
+   PR accomplished
+2. **PRs are for code review** (agent and human coders, code reviewers)
+3. **Issues are for CRDM stakeholders** — the requestor, the BA, and updates
+   from the coding team for feature sign-off
+4. Many beans per issue — they are not synonymous
+{% endraw %}

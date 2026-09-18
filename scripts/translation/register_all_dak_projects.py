@@ -102,7 +102,13 @@ def register_single_repo(
             capture_output=True, text=True, timeout=120,
         )
         if result.returncode != 0:
-            logger.error("Clone failed for %s: %s", repo_name, result.stderr[:500])
+            # git echoes the URL it was handed. In CI that URL is often
+            # rewritten to carry a token (`url.insteadOf`, a credential
+            # helper, `http.extraheader`), so clone stderr is a standing
+            # way for a credential to reach the log unasked.
+            logger.error(
+                "Clone failed for %s: %s", repo_name, redact_for_log(result.stderr[:500])
+            )
             return False
 
         # Call register_translation_project.py
