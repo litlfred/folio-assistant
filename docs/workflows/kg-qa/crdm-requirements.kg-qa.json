@@ -1,0 +1,99 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CRDM",
+    "path": "docs/workflows/crdm-requirements.bpmn"
+  },
+  "source_hash": "sha256:0d128fcadebea5909a3c9e48f9bdc58a39b08880899f037ebbfa1dc7245d45a8",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:9db63d141f69d769de5dbdd1a0cbd15a358227aae7f0921d9655fe94ed75d970",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "BA_Submit",
+          "detail": "\"Describe the need (chat, issue, discussion)\" names no skill."
+        },
+        {
+          "where": "BA_ReviewNeeds",
+          "detail": "\"Review synthesised needs statement\" names no skill."
+        },
+        {
+          "where": "BA_ReviewReqs",
+          "detail": "\"Review requirements and impact analysis\" names no skill."
+        },
+        {
+          "where": "BA_Signoff",
+          "detail": "\"Sign off on requirements\" names no skill."
+        },
+        {
+          "where": "BA_ReviewIncrement",
+          "detail": "\"Review increment (test behaviour)\" names no skill."
+        },
+        {
+          "where": "BA_ShareMVP",
+          "detail": "\"Share MVP with stakeholders\" names no skill."
+        },
+        {
+          "where": "BA_TranslateFeedback",
+          "detail": "\"Translate feedback into agent direction\" names no skill."
+        },
+        {
+          "where": "BA_Confirm",
+          "detail": "\"Confirm all criteria met\" names no skill."
+        },
+        {
+          "where": "S_ConfirmNeeds",
+          "detail": "\"Confirm needs statement\" names no skill."
+        },
+        {
+          "where": "S_ApproveReqs",
+          "detail": "\"Approve requirements\" names no skill."
+        },
+        {
+          "where": "S_TestMVP",
+          "detail": "\"Test MVP in own context\" names no skill."
+        },
+        {
+          "where": "S_FeatureSignoff",
+          "detail": "\"Feature sign-off on issue\" names no skill."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 0
+  }
+}

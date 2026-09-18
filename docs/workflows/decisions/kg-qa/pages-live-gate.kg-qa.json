@@ -1,0 +1,26 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "decision",
+    "id": "pages-live-gate",
+    "path": "docs/workflows/decisions/pages-live-gate.dmn"
+  },
+  "source_hash": "sha256:8a0c78811187bbaca85ac8ebde4c2ce000b0ee86d9176e83e6923441b1dd6801",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:9db63d141f69d769de5dbdd1a0cbd15a358227aae7f0921d9655fe94ed75d970",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "decision-outcomes-used": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 1,
+    "fail": 0,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

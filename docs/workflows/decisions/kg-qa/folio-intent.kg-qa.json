@@ -1,0 +1,26 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "decision",
+    "id": "folio-intent",
+    "path": "docs/workflows/decisions/folio-intent.dmn"
+  },
+  "source_hash": "sha256:ed4e09a3feda213f624e8e9630bdcaa00ad80f54217292585d7343e6f9972f63",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:9db63d141f69d769de5dbdd1a0cbd15a358227aae7f0921d9655fe94ed75d970",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "decision-outcomes-used": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 1,
+    "fail": 0,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

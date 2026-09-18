@@ -32,60 +32,12 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { loadProcessModel, isActivity } from "../src/workflow/process-model.js";
+import { knownSkills } from "./known-skills.js";
 
 const root = resolve(import.meta.dir, "..");
 const strict = process.argv.includes("--strict");
 
-/**
- * Where a skill may live. Kept in step with `GROUPS` in gen-skill-docs.ts,
- * plus the two homes that file does not generate from: `schemas/skills/<name>/`
- * (a directory holding the JSON schemas) and `.claude/skills/<group>/`.
- *
- * Getting this list WRONG is the failure mode worth guarding: a checker that
- * does not know where skills live reports every ref as dangling, and a wall of
- * false findings is how a check gets switched off.
- */
-function knownSkills(): Set<string> {
-  const names = new Set<string>();
-
-  const mdDirs = [
-    join(root, "skills", "content-lifecycle"),
-    join(root, "skills", "folio-core"),
-    join(root, "skills", "folio-document-adapter"),
-    join(root, "skills", "folio-paper-adapter"),
-    join(root, "src", "skills"),
-  ];
-  for (const dir of mdDirs) {
-    if (!existsSync(dir)) continue;
-    for (const f of readdirSync(dir)) {
-      if (f.endsWith(".md")) names.add(f.slice(0, -3));
-    }
-  }
-
-  // `schemas/skills/<name>/` — a directory per skill, beside loose .json files.
-  const schemaDir = join(root, "schemas", "skills");
-  if (existsSync(schemaDir)) {
-    for (const e of readdirSync(schemaDir, { withFileTypes: true })) {
-      if (e.isDirectory()) names.add(e.name);
-    }
-  }
-
-  // `.claude/skills/<group>/<name>.{md,json}`
-  const localRoot = join(root, ".claude", "skills");
-  if (existsSync(localRoot)) {
-    for (const g of readdirSync(localRoot, { withFileTypes: true })) {
-      if (!g.isDirectory()) continue;
-      for (const f of readdirSync(join(localRoot, g.name))) {
-        if (f.endsWith(".md")) names.add(f.slice(0, -3));
-        else if (f.endsWith(".json")) names.add(f.slice(0, -5));
-      }
-    }
-  }
-
-  return names;
-}
-
-const skills = knownSkills();
+const skills = knownSkills(root);
 const dir = join(root, "docs", "workflows");
 const files = readdirSync(dir).filter((f) => f.endsWith(".bpmn")).sort();
 

@@ -1,0 +1,108 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "graph",
+    "id": "kg",
+    "path": null
+  },
+  "source_hash": null,
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:9db63d141f69d769de5dbdd1a0cbd15a358227aae7f0921d9655fe94ed75d970",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-reachable": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "commit-hygiene",
+          "detail": "skill \"commit-hygiene\" is listed by no package manifest, carried by no role and named by no activity."
+        },
+        {
+          "where": "content-lifecycle",
+          "detail": "skill \"content-lifecycle\" is listed by no package manifest, carried by no role and named by no activity."
+        },
+        {
+          "where": "corpus-grep",
+          "detail": "skill \"corpus-grep\" is listed by no package manifest, carried by no role and named by no activity."
+        },
+        {
+          "where": "language-trap-agent-audit",
+          "detail": "skill \"language-trap-agent-audit\" is listed by no package manifest, carried by no role and named by no activity."
+        },
+        {
+          "where": "lean-verification",
+          "detail": "skill \"lean-verification\" is listed by no package manifest, carried by no role and named by no activity."
+        },
+        {
+          "where": "session-start",
+          "detail": "skill \"session-start\" is listed by no package manifest, carried by no role and named by no activity."
+        }
+      ]
+    },
+    "actor-is-not-a-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "admin",
+          "detail": ".claude/skills/actors/admin.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "author",
+          "detail": ".claude/skills/actors/author.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "business-analyst",
+          "detail": ".claude/skills/actors/business-analyst.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "clinical-sme",
+          "detail": ".claude/skills/actors/clinical-sme.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "content-reviewer",
+          "detail": ".claude/skills/actors/content-reviewer.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "fhir-modeller",
+          "detail": ".claude/skills/actors/fhir-modeller.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "programme-manager",
+          "detail": ".claude/skills/actors/programme-manager.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "publication-manager",
+          "detail": ".claude/skills/actors/publication-manager.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "qc-reviewer",
+          "detail": ".claude/skills/actors/qc-reviewer.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "reviewer",
+          "detail": ".claude/skills/actors/reviewer.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "technical-officer",
+          "detail": ".claude/skills/actors/technical-officer.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "terminologist",
+          "detail": ".claude/skills/actors/terminologist.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        },
+        {
+          "where": "translator",
+          "detail": ".claude/skills/actors/translator.json carries `inherits` — an actor does not inherit, a role does. Migration debt from before roles were declared."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 0,
+    "fail": 2,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

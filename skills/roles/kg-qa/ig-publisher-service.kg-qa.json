@@ -1,0 +1,43 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "role",
+    "id": "ig-publisher-service",
+    "path": "skills/roles/roles.json"
+  },
+  "source_hash": "sha256:41f64692488ee208f3d6d5cb8acc7759b22c8c7690e1ee9754ce1a630dfd3a52",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:9db63d141f69d769de5dbdd1a0cbd15a358227aae7f0921d9655fe94ed75d970",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "role-skills-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-inherits-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-binds-a-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-has-actor": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "ig-publisher-service",
+          "detail": "the actor registry declares no `roles` on any entry, so actor-to-role eligibility could not be evaluated. This is a gap in the registry, not a pass."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 2,
+    "fail": 0,
+    "n/a": 1,
+    "unknown": 1
+  }
+}
