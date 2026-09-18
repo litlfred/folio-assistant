@@ -34,6 +34,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from 
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
+import { availableLocales } from "../content/pipeline/po-resolve.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Platform documentation lives under `content/docs/`. It is NOT folio content
@@ -140,11 +141,19 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
 
 function renderPage(page: WebPage): string {
   const lines: string[] = [];
+  // Auto-detect available translations for this page
+  const stem = page.slug.replace(/\//g, "-");
+  const locales = availableLocales(REPO_ROOT, stem);
+
   lines.push("---");
   lines.push("layout: default");
   lines.push(`title: ${page.title}`);
   if (page.parent) lines.push(`parent: ${page.parent}`);
   if (page.navOrder !== undefined) lines.push(`nav_order: ${page.navOrder}`);
+  lines.push("lang: en");
+  if (locales.length > 0) {
+    lines.push(`available_locales: ${JSON.stringify(locales)}`);
+  }
   lines.push("---");
   lines.push("");
   lines.push(`# ${page.heading ?? page.title}`);

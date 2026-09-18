@@ -2,6 +2,7 @@
 layout: default
 title: Content types
 nav_order: 4
+lang: en
 ---
 
 # Content types
