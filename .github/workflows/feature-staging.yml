@@ -143,8 +143,22 @@ jobs:
             schemas/lean-packages.ts 2>&1 | tail -10
 
       # Add a staging banner to every HTML page so a reviewer never
-      # mistakes staged content for the published site. Bright magenta
-      # with a link to the source branch on GitHub.
+      # mistakes staged content for the published site.
+      #
+      # Muted sage (#4F6F52) with white text — 5.63:1, comfortably past the
+      # 4.5:1 WCAG AA threshold for normal text. It replaced #d946ef, which
+      # measured 3.46:1 against its own white text and so FAILED AA: the
+      # banner was not merely glaring, it was the least readable element on
+      # every staged page. Any replacement must be checked the same way; the
+      # pale decorator sages (#9CAF88, #87A96B) all land near 2.5:1.
+      #
+      # Every monospace chip is a <span>, deliberately NOT a <code>. The
+      # branch name used to be <code>, which picks up the theme's own `code`
+      # rule — a near-white background in LIGHT mode — while inheriting the
+      # banner's white text. White on white: the one piece of information the
+      # banner exists to convey was invisible to exactly the readers using
+      # the default theme. A <span> the theme has no selector for cannot
+      # regress that way in either mode.
       - name: Inject staging banner
         run: |
           SHA="${GITHUB_SHA:0:7}"
@@ -153,8 +167,15 @@ jobs:
           PR="${{ github.event.pull_request.number || 'n/a' }}"
           BRANCH_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/${BRANCH}"
           MAIN_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
-          BANNER="<div style=\"background:#d946ef;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui\">🔀 <b>FEATURE BRANCH</b> — <a href=\"${BRANCH_URL}\" style=\"color:#fff;text-decoration:underline\"><code>${BRANCH}</code></a> · commit <code>${SHA}</code> · built ${BUILT} · PR #${PR} · <a href=\"${MAIN_URL}\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a> · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\" style=\"color:#fff;text-decoration:underline\">build log</a></div>"
-          find ./_site -name "*.html" -exec sed -i "s|<body|<body>${BANNER}|" {} + 2>/dev/null || true
+          CHIP='font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px'
+          BANNER="<div style=\"background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui\">🔀 <b>FEATURE BRANCH</b> — <a href=\"${BRANCH_URL}\" style=\"color:#fff;text-decoration:underline\"><span style=\"${CHIP}\">${BRANCH}</span></a> · commit <span style=\"${CHIP}\">${SHA}</span> · built ${BUILT} · PR #${PR} · <a href=\"${MAIN_URL}\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a> · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\" style=\"color:#fff;text-decoration:underline\">build log</a></div>"
+          # Match the WHOLE opening tag, not the literal "<body". Matching
+          # "<body" alone re-emitted "<body>" and left the original tag's own
+          # ">" behind, so every staged page carried a stray ">" after the
+          # banner — and any <body> carrying attributes came out as
+          # "<body>BANNER class="..."">: attributes orphaned as visible text,
+          # and the real tag stripped of them.
+          find ./_site -name "*.html" -exec sed -i "s|<body\([^>]*\)>|<body\1>${BANNER}|" {} + 2>/dev/null || true
           echo "Injected staging banner into $(find ./_site -name '*.html' | wc -l) HTML files"
 
       - name: Disable Jekyll on published branch
