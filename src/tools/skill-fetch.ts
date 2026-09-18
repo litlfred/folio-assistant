@@ -41,6 +41,11 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 //   - content-lifecycle      : plan → author → validate → review → test →
 //                              publish → feedback, the skills every BPMN
 //                              content process names
+//   - authoring-who-smart-guidelines : WHO SMART Guidelines L2/L3 — DAK
+//                              components, FSH/SUSHI, validation, IG publication
+//   - authoring-math         : the formal-math entry points (Lean, LaTeX) that
+//                              route into folio-paper-adapter's depth
+//   - authoring-document     : bundle over folio-document-adapter's bodies
 //   - folio-core             : content-agnostic platform bundle (skills/folio-core)
 //   - folio-document-adapter : prose-folio bundle, no Lean and no required TeX
 //   - folio-paper-adapter    : formal-math paper-adapter bundle (skills/folio-paper-adapter)
@@ -68,6 +73,15 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 export const LOCAL_PACKAGES: Record<string, string> = {
   "folio-assistant": resolve(__dirname, "..", "skills"),
   "content-lifecycle": resolve(__dirname, "..", "..", "skills", "content-lifecycle"),
+  // The two domain packages whose instruction bodies were written in 2026-09
+  // (bean `x180`). Their metadata and JSON Schemas had existed since the
+  // packages were created, and six BPMN diagrams named eleven of their skills,
+  // but no package held a body — so `workflow_next` handed an agent
+  // `l3-fhir-authoring` and `skill_fetch` had nothing to return. `kg:audit`'s
+  // `skill-servable` criterion is what surfaced it and is what keeps it shut.
+  "authoring-who-smart-guidelines": resolve(__dirname, "..", "..", "skills", "authoring-who-smart-guidelines"),
+  "authoring-math": resolve(__dirname, "..", "..", "skills", "authoring-math"),
+  "authoring-document": resolve(__dirname, "..", "..", "skills", "authoring-document"),
   "folio-core": resolve(__dirname, "..", "..", "skills", "folio-core"),
   "folio-document-adapter": resolve(__dirname, "..", "..", "skills", "folio-document-adapter"),
   "folio-paper-adapter": resolve(__dirname, "..", "..", "skills", "folio-paper-adapter"),
@@ -97,11 +111,13 @@ export function registerSkillFetchTools(server: McpServer): void {
         "Skill identifier. Examples: 'lean-generation' (package_name 'folio-paper-adapter'), " +
         "'bean-coordination' (package_name 'folio-core'), 'corpus-grep' (package_name 'folio-assistant'), " +
         "'content-validate' (package_name 'content-lifecycle'), " +
+        "'l3-fhir-authoring' (package_name 'authoring-who-smart-guidelines'), " +
         "'academic-paper-reviewer' (package_name 'academic-research-skills')"
       ),
       package_name: z.string().default("folio-core").describe(
         "Package name. Local: 'folio-assistant' | 'content-lifecycle' | 'folio-core' | " +
-        "'folio-document-adapter' | 'folio-paper-adapter'. " +
+        "'folio-document-adapter' | 'folio-paper-adapter' | " +
+        "'authoring-who-smart-guidelines' | 'authoring-math' | 'authoring-document'. " +
         "Reference: 'academic-research-skills'."
       ),
     },

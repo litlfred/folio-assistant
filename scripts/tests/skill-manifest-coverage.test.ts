@@ -24,14 +24,17 @@
  * this commit `skills/` is clean under it.
  *
  * A manifest entry with no file is a dangling reference the registry will
- * publish, and 19 of those already exist, in three packages that predate this
- * test. They are not typos. `authoring-document` lists four skills of which
- * two — `document-authoring`, `normative-statements` — exist under
- * `folio-document-adapter/`, a directory carrying no manifest at all; so that
- * pair is a package rename left half-finished, not a missing file.
- * `authoring-math` lists six that exist nowhere in the tree. Resolving them
- * means deciding, per package, whether the skill was renamed, moved, or never
- * written — which is editorial work on someone else's packages, not a fix.
+ * publish. **19 when this test was written; 8 now** — bean `x180` wrote the
+ * eleven missing instruction bodies in 2026-09, and the ratchet below shrank
+ * accordingly.
+ *
+ * The 8 that remain are not gaps, and each is annotated inline with why.
+ * Four are `authoring-document` bundling over `folio-document-adapter/`, where
+ * the bodies actually live; three are supplied by a declared REMOTE package;
+ * one is `content-review`, whose body is in `content-lifecycle/`. None is a
+ * missing file, and resolving them means deciding what a bundle manifest
+ * should say about a skill it does not itself hold — a modelling question,
+ * not a fix.
  *
  * So that direction is a ratchet rather than a gate: the known set is pinned
  * below and may only shrink. A new dangling entry fails; an existing one is
@@ -73,25 +76,20 @@ function packages(): Array<{ name: string; dir: string; listed: string[] }> {
  * entry here without fixing the underlying package turns the other test red.
  */
 const KNOWN_DANGLING: readonly string[] = [
+  // `authoring-document` is a BUNDLE manifest: all four bodies exist, under
+  // `folio-document-adapter/`. A package rename left half-finished, not a gap.
   "authoring-document/document-authoring",
   "authoring-document/document-publishing",
   "authoring-document/document-structure",
   "authoring-document/normative-statements",
+  // Supplied by a REMOTE package — `skills/remote-packages/claude-scientific-skills.json`
+  // declares all three under `wrapper.skills`. Naming a dependency's skill is
+  // not a dangling entry; `kg:audit`'s `manifest-skill-exists` resolves them.
   "authoring-math/hypothesis-generation",
-  "authoring-math/latex-authoring",
-  "authoring-math/lean-formalization",
-  "authoring-math/proof-verification",
   "authoring-math/scientific-critical-thinking",
   "authoring-math/scientific-visualization",
-  "authoring-who-smart-guidelines/bpmn-authoring",
+  // Body lives in `content-lifecycle/`, which this package bundles over.
   "authoring-who-smart-guidelines/content-review",
-  "authoring-who-smart-guidelines/dmn-authoring",
-  "authoring-who-smart-guidelines/fhir-validation",
-  "authoring-who-smart-guidelines/ig-publication",
-  "authoring-who-smart-guidelines/l2-dak-authoring",
-  "authoring-who-smart-guidelines/l3-fhir-authoring",
-  "authoring-who-smart-guidelines/quality-control",
-  "authoring-who-smart-guidelines/terminology-management",
 ];
 
 describe("skill package manifests cover the package", () => {
