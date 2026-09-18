@@ -112,28 +112,76 @@ actionable direction: new beans or bean updates for the agent.</bpmn:documentati
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Feature" name="Feature?"/>
     <bpmn:endEvent id="End_Content" name="Continue authoring"/>
-    <bpmn:task id="A_ScanIssues" name="Scan open issues&#10;for match"/>
+    <bpmn:task id="A_ScanIssues" name="Scan open issues&#10;for match">
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+    </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Issue" name="Issue found?"/>
-    <bpmn:task id="A_AskCreate" name="Ask BA to create&#10;or link issue"/>
-    <bpmn:task id="A_LinkIssue" name="Link to existing issue"/>
+    <bpmn:task id="A_AskCreate" name="Ask BA to create&#10;or link issue">
+      <bpmn:documentation>Ask — never create. Creating an issue without the
+BA's permission is the thing this step exists to prevent.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:task id="A_LinkIssue" name="Link to existing issue">
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+    </bpmn:task>
     <bpmn:task id="A_Stakeholders" name="Phase 1: Identify&#10;stakeholders">
       <bpmn:documentation>The agent asks the BA who is affected by this change.
 The BA knows the domain — the agent does not guess.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:task id="A_Synthesise" name="Phase 1: Synthesise&#10;needs from sources"/>
+    <bpmn:task id="A_Synthesise" name="Phase 1: Synthesise&#10;needs from sources">
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+    </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Needs" name="BA approves?"/>
-    <bpmn:task id="A_MapWorkflow" name="Phase 2: Map current&#10;workflow (BPA)"/>
-    <bpmn:task id="A_DefineReqs" name="Phases 3–4: Define&#10;requirements + impact"/>
+    <bpmn:task id="A_MapWorkflow" name="Phase 2: Map current&#10;workflow (BPA)">
+      <bpmn:documentation>Business-process analysis here means reading the
+existing diagrams under docs/workflows/ and drawing the gap, so the skill
+that implements this step is the BPMN one.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="bpmn-authoring"/></bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:task id="A_DefineReqs" name="Phases 3–4: Define&#10;requirements + impact">
+      <bpmn:documentation>Two skills, because this step is two things: the
+requirements come from the CRDM process, the impact half is a dependency
+question the content graph answers.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="crdm-requirements-workflow"/>
+        <folio:skill ref="content-graph"/>
+      </bpmn:extensionElements>
+    </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Reqs" name="BA approves?"/>
     <bpmn:task id="A_CreateBeans" name="Phase 5: Create beans">
-      <bpmn:extensionElements><folio:bean action="create"/></bpmn:extensionElements>
+      <bpmn:documentation>The agent mints the implementation beans itself with
+`beans create`, running the exact-title existence check first. The engine has
+no `create` op — it claims, notes and resolves the instance's OWN bean — so
+what this step records here is a note that the plan now exists.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="todo-manager"/>
+        <folio:bean op="note"/>
+      </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Implement" name="Phase 6: Implement&#10;(feature branch + PR)">
       <bpmn:documentation>Inner loop: agent claims a bean, implements on
 feature branch, opens PR, posts summary to the issue.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="prepare-merge"/>
+        <folio:bean op="claim"/>
+      </bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:task id="A_Summary" name="Post summary&#10;to issue"/>
-    <bpmn:task id="A_Close" name="Close issue with&#10;delivery summary"/>
+    <bpmn:task id="A_Summary" name="Post summary&#10;to issue">
+      <bpmn:documentation>What was accomplished, what remains, and links to
+the updated content for review.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="delivery-summary"/></bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:task id="A_Close" name="Close issue ONLY on&#10;BA authorisation">
+      <bpmn:documentation>Reachable only through BA_Confirm, which is the BA
+saying every criterion is met. An agent must never close an issue without
+that explicit authorisation — the gate is the preceding task, and this name
+says so rather than leaving a reader to trace the flow for it.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="crdm-requirements-workflow"/>
+        <folio:bean op="resolve"/>
+      </bpmn:extensionElements>
+    </bpmn:task>
     <bpmn:endEvent id="End_A" name="CRDM complete"/>
 
     <!-- ═══ Stakeholder lane ═══ -->

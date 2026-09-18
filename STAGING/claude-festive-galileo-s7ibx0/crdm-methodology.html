@@ -153,7 +153,7 @@
 
 </head>
 
-<body><div style="background:#d946ef;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><code>claude/festive-galileo-s7ibx0</code></a> · commit <code>53dc2ed</code> · built 2026-09-18T14:32:26Z · PR #241 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35356736519" style="color:#fff;text-decoration:underline">build log</a></div>>
+<body><div style="background:#d946ef;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><code>claude/festive-galileo-s7ibx0</code></a> · commit <code>87f582c</code> · built 2026-09-18T14:36:30Z · PR #241 · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35357147545" style="color:#fff;text-decoration:underline">build log</a></div>>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -335,7 +335,8 @@
       <li><a href="#existing-capabilities" id="markdown-toc-existing-capabilities">Existing capabilities</a></li>
       <li><a href="#skills-that-now-exist" id="markdown-toc-skills-that-now-exist">Skills that now exist</a></li>
       <li><a href="#proposed-skills" id="markdown-toc-proposed-skills">Proposed skills</a></li>
-      <li><a href="#proposed-tooling" id="markdown-toc-proposed-tooling">Proposed tooling</a></li>
+      <li><a href="#running-the-process--it-is-already-executable" id="markdown-toc-running-the-process--it-is-already-executable">Running the process — it is already executable</a></li>
+      <li><a href="#still-proposed" id="markdown-toc-still-proposed">Still proposed</a></li>
     </ol>
   </li>
   <li><a href="#what-is-not-built-yet" id="markdown-toc-what-is-not-built-yet">What is not built yet</a></li>
@@ -1269,10 +1270,106 @@ distinction is kept explicit.</p>
     </tr>
   </tbody>
 </table></div>
-<h3 id="proposed-tooling">
+<h3 id="running-the-process--it-is-already-executable">
   
   
-    <a href="#proposed-tooling" class="anchor-heading" aria-labelledby="proposed-tooling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proposed tooling
+    <a href="#running-the-process--it-is-already-executable" class="anchor-heading" aria-labelledby="running-the-process--it-is-already-executable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running the process — it is already executable
+  
+  
+</h3>
+    
+
+<p><strong><code class="language-plaintext highlighter-rouge">crdm_start</code> and <code class="language-plaintext highlighter-rouge">crdm_status</code> were proposed here and should not be built.</strong>
+The generic workflow tools already run this process, because
+<code class="language-plaintext highlighter-rouge">docs/workflows/crdm-requirements.bpmn</code> is a loadable BPMN process like every
+other diagram in this repository:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Instead of</th>
+      <th>Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">crdm_start</code></td>
+      <td><code class="language-plaintext highlighter-rouge">workflow_start</code> with <code class="language-plaintext highlighter-rouge">crdm-requirements</code> and the bean the work hangs on</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">crdm_status</code></td>
+      <td><code class="language-plaintext highlighter-rouge">workflow_next</code> — what is enabled now, which lane owns it, which skill implements it</td>
+    </tr>
+    <tr>
+      <td>a phase checklist</td>
+      <td><code class="language-plaintext highlighter-rouge">workflow_complete</code>, which <strong>refuses a step that is not enabled</strong>, so phases cannot be claimed out of order</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>A second set of tools over the same diagram would be a second answer to
+“where are we”, free to disagree with the first. State lives under
+<code class="language-plaintext highlighter-rouge">.folio/workflow/</code> and is committed, so a sibling session sees the same
+position — which is the property a chat-local phase tracker could never have.</p>
+
+<p>Every activity in the agent’s lane carries the skill that implements it, so
+<code class="language-plaintext highlighter-rouge">workflow_next</code> returns something actionable rather than a step name:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Step</th>
+      <th>Skill</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Detect feature request</td>
+      <td><code class="language-plaintext highlighter-rouge">crdm-detect</code></td>
+    </tr>
+    <tr>
+      <td>Scan / link / ask about the issue</td>
+      <td><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></td>
+    </tr>
+    <tr>
+      <td>Phase 1 — stakeholders, synthesise needs</td>
+      <td><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></td>
+    </tr>
+    <tr>
+      <td>Phase 2 — map the current workflow</td>
+      <td><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></td>
+    </tr>
+    <tr>
+      <td>Phases 3–4 — requirements and impact</td>
+      <td><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code> + <code class="language-plaintext highlighter-rouge">content-graph</code></td>
+    </tr>
+    <tr>
+      <td>Phase 5 — create beans</td>
+      <td><code class="language-plaintext highlighter-rouge">todo-manager</code></td>
+    </tr>
+    <tr>
+      <td>Phase 6 — implement</td>
+      <td><code class="language-plaintext highlighter-rouge">prepare-merge</code></td>
+    </tr>
+    <tr>
+      <td>Post the round summary</td>
+      <td><code class="language-plaintext highlighter-rouge">delivery-summary</code></td>
+    </tr>
+    <tr>
+      <td>Close the issue</td>
+      <td><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Three steps also carry a work-plan effect the engine performs: implementing
+claims the bean, creating beans notes it, and closing resolves it — and
+resolve only lands once the instance itself has completed, because whether
+work is done is a judgement.</p>
+<h3 id="still-proposed">
+  
+  
+    <a href="#still-proposed" class="anchor-heading" aria-labelledby="still-proposed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Still proposed
   
   
 </h3>
@@ -1286,14 +1383,6 @@ distinction is kept explicit.</p>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><strong><code class="language-plaintext highlighter-rouge">crdm_start</code> MCP tool</strong></td>
-      <td>Enter CRDM mode for a given issue; scaffold the phases in the issue body</td>
-    </tr>
-    <tr>
-      <td><strong><code class="language-plaintext highlighter-rouge">crdm_status</code> MCP tool</strong></td>
-      <td>Report which phase the current CRDM cycle is in and what deliverables are pending</td>
-    </tr>
     <tr>
       <td><strong><code class="language-plaintext highlighter-rouge">stakeholder_map</code> MCP tool</strong></td>
       <td>Given a proposed change, identify affected roles from <code class="language-plaintext highlighter-rouge">folio.config.json</code> and CODEOWNERS</td>
@@ -1326,6 +1415,14 @@ gives the agent five categories of detection phrasing, an explicit “what is
 existing session already in the process, existing session doing content
 work). The judgement is written down; it is not yet <em>measured</em>, so see the
 caveat below.</li>
+  <li><strong>The process is executable</strong> — <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> loads like every
+other diagram here, so <code class="language-plaintext highlighter-rouge">workflow_start</code> / <code class="language-plaintext highlighter-rouge">workflow_next</code> /
+<code class="language-plaintext highlighter-rouge">workflow_complete</code> run it today, and <code class="language-plaintext highlighter-rouge">workflow_complete</code> refuses a step
+that is not enabled. Every activity in the agent’s lane names the skill
+that implements it, and three carry the bean operation the engine performs.
+<strong>This is why <code class="language-plaintext highlighter-rouge">crdm_start</code> and <code class="language-plaintext highlighter-rouge">crdm_status</code> are not on the list below</strong> —
+they would be a second answer to “where are we”, free to disagree with the
+first.</li>
   <li><strong>BPMN diagram of the process itself</strong> —
 <a href="https://github.com/litlfred/folio-assistant/blob/main/docs/workflows/crdm-requirements.bpmn"><code class="language-plaintext highlighter-rouge">docs/workflows/crdm-requirements.bpmn</code></a>,
 with lanes for the BA / feature requestor, the agent, and stakeholders.</li>
@@ -1340,10 +1437,6 @@ including the actors table and the issue-association rules.</li>
   <li><strong>Structured requirements templates</strong> — no MCP tool scaffolds the CRDM
 phases into a GitHub issue. The structure described above is written by
 hand each time.</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">crdm_start</code> / <code class="language-plaintext highlighter-rouge">crdm_status</code> MCP tools</strong> — there is no way to ask the
-platform which phase a cycle is in. <code class="language-plaintext highlighter-rouge">grep -ri crdm src/</code> returns nothing:
-the process is documented and skilled, but it is not <em>instrumented</em>, so
-“where are we” is answered by reading the issue.</li>
   <li><strong>Automated impact analysis</strong> — the agent can read the content graph and
 the schema files, but no dedicated tool produces an impact report for a
 proposed change.</li>
@@ -1375,7 +1468,7 @@ honest claim is that the guidance exists, not that detection works.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35356736519"><code>53dc2ed</code></a> &middot; 2026-09-18T14:32:00Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35357147545"><code>87f582c</code></a> &middot; 2026-09-18T14:36:03Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
