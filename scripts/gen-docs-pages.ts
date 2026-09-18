@@ -55,6 +55,69 @@ const EDIT_BASE = `${REPO_WEB}/edit/main`;
 /** Matches gen-skill-docs.ts / gen-schema-docs.ts — one glyph, no inline SVG. */
 const EDIT_GLYPH = "✎";
 
+/**
+ * The QA state of one block, for the icon beside its heading.
+ *
+ * Deliberately three states and not two. A block with no sidecar has not been
+ * swept; a block whose sidecar holds only `n/a` verdicts was swept and found
+ * nothing applicable. Rendering either as "clean" would be the false pass this
+ * repository keeps paying for — a sweep that reports a healthy corpus it never
+ * checked is indistinguishable downstream from one that found nothing wrong.
+ */
+export type QaState = "fail" | "warn" | "pass" | "unswept";
+
+export interface QaSummary {
+  state: QaState;
+  /** Counts, for the tooltip. `na` is reported, not hidden. */
+  fail: number;
+  warn: number;
+  pass: number;
+  na: number;
+}
+
+const QA_GLYPH: Record<QaState, string> = {
+  fail: "●",
+  warn: "◐",
+  pass: "○",
+  unswept: "·",
+};
+
+/**
+ * Read a block's `<stem>.qa.json`, beside its `<stem>.md`.
+ *
+ * Returns `undefined` when there is no sidecar — the caller renders that as
+ * `unswept` rather than omitting the icon, because a missing icon and a clean
+ * one look identical to a reader and only one of them is true.
+ *
+ * A sidecar that will not parse is `unswept` too, not a crash: one malformed
+ * file must not take down the whole docs build, and "could not read this" is
+ * honestly the same answer to the reader as "nobody has checked".
+ */
+export function readQaSummary(blockDir: string, block: string): QaSummary | undefined {
+  const p = join(blockDir, `${block}.qa.json`);
+  if (!existsSync(p)) return undefined;
+  let doc: { criteria?: Record<string, Array<{ result?: string; severity?: string }>> };
+  try {
+    doc = JSON.parse(readFileSync(p, "utf-8"));
+  } catch {
+    return undefined;
+  }
+  const sum: QaSummary = { state: "pass", fail: 0, warn: 0, pass: 0, na: 0 };
+  for (const entries of Object.values(doc.criteria ?? {})) {
+    // The FIRST entry per criterion is the operative one — later entries are
+    // superseded reviews, and counting them all would double-report a verdict
+    // that was revised.
+    const e = entries?.[0];
+    if (!e) continue;
+    if (e.result === "fail") sum.fail++;
+    else if (e.result === "warn") sum.warn++;
+    else if (e.result === "pass") sum.pass++;
+    else sum.na++;
+  }
+  sum.state = sum.fail > 0 ? "fail" : sum.warn > 0 ? "warn" : sum.pass > 0 ? "pass" : "unswept";
+  return sum;
+}
+
 const check = process.argv.includes("--check");
 let stale = 0;
 let written = 0;
@@ -84,6 +147,23 @@ function readBlock(page: WebPage, nodeId: string, block: string): string {
   return readFileSync(mdPath, "utf-8").trim();
 }
 
+/**
+ * The QA icon markup for a block, or "" when the node carries no block.
+ *
+ * A `<span>` rather than a link: there is nowhere useful to send a reader yet
+ * (the sidecar is JSON), and a link that goes nowhere is worse than none. The
+ * counts live in `title` so the state is readable without one.
+ */
+function qaBadge(page: WebPage, block: string): string {
+  const q = readQaSummary(join(SRC_DIR, page.slug.replace(/\//g, "-")), block);
+  const state: QaState = q?.state ?? "unswept";
+  const title =
+    q === undefined
+      ? "QA: not swept — no sidecar for this block"
+      : `QA: ${q.fail} fail, ${q.warn} warn, ${q.pass} pass, ${q.na} n/a`;
+  return ` <span class="fa-qa-badge fa-qa-${state}" title="${title}">${QA_GLYPH[state]}</span>`;
+}
+
 function emitNode(page: WebPage, node: WebPageNode): string[] {
   const out: string[] = [];
   const level = node.level ?? 2;
@@ -98,7 +178,12 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
 
   const target = editTarget(page, node);
   if (target) {
-    out.push(`[${EDIT_GLYPH} Edit](${EDIT_BASE}/${target}){: .fa-node-edit title="Edit ${target}" }`);
+    // The QA icon rides the same line as Edit: both are per-block affordances
+    // about THIS block, and a second row would separate them for no reason.
+    const qa = node.block ? qaBadge(page, node.block) : "";
+    out.push(
+      `[${EDIT_GLYPH} Edit](${EDIT_BASE}/${target}){: .fa-node-edit title="Edit ${target}" }${qa}`,
+    );
     out.push("");
   }
 
@@ -202,6 +287,13 @@ if (!existsSync(SRC_DIR)) {
   process.exit(0);
 }
 
+// Guarded so IMPORTING this module does not regenerate the site.
+//
+// `readQaSummary` is exported for its own test, and without this guard that
+// import rewrote all 11 pages as a side effect of `bun test` — a test run that
+// silently edits the working tree is a test run nobody can trust, and on a
+// `--check` CI job it would compare freshly written output against itself.
+if (import.meta.main) {
 const slugs = readdirSync(SRC_DIR, { withFileTypes: true })
   .filter((d) => d.isDirectory())
   .map((d) => d.name)
@@ -233,3 +325,4 @@ if (check && stale > 0) {
   process.exit(1);
 }
 console.log(check ? "\ngenerated pages are up to date" : `\nWrote ${written} page(s) to ${OUT_DIR}`);
+}

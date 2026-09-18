@@ -17,7 +17,7 @@ lang: en
 
 _This page is generated from [`content/docs/evidence/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/evidence) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/overview.md){: .fa-node-edit title="Edit content/docs/evidence/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/overview.md){: .fa-node-edit title="Edit content/docs/evidence/overview.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 How a recommendation in a guideline gets its evidence — who looks, where they
 look, and what makes a source *authoritative* rather than merely cited.
@@ -33,7 +33,7 @@ so there is something concrete to refine.
 ## Why this is a subprocess of editing
 {: #why-this-is-a-subprocess }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/why-this-is-a-subprocess.md){: .fa-node-edit title="Edit content/docs/evidence/why-this-is-a-subprocess.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/why-this-is-a-subprocess.md){: .fa-node-edit title="Edit content/docs/evidence/why-this-is-a-subprocess.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 It runs inside the editing loop, between claiming the bean and drafting the
 change — see [Editing and the HCI validation
@@ -79,7 +79,7 @@ lane inside the system boundary would make "authoritative" a self-assessment.
 ## Step one looks inward
 {: #review-first }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/review-first.md){: .fa-node-edit title="Edit content/docs/evidence/review-first.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/review-first.md){: .fa-node-edit title="Edit content/docs/evidence/review-first.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 **The first step looks inward, not outward.**
 
@@ -93,7 +93,7 @@ This is also the cheapest step by far, and it is the one most often skipped.
 ## Framing the question as PICO
 {: #pico }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/pico.md){: .fa-node-edit title="Edit content/docs/evidence/pico.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/pico.md){: .fa-node-edit title="Edit content/docs/evidence/pico.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 **Population, Intervention, Comparator, Outcome.**
 
@@ -110,7 +110,7 @@ recommendation or a different one.
 ## Three classes of evidence, not one
 {: #three-classes }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/three-classes.md){: .fa-node-edit title="Edit content/docs/evidence/three-classes.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/three-classes.md){: .fa-node-edit title="Edit content/docs/evidence/three-classes.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Retrieval fans out across **three classes that are not interchangeable**, and
 keeping them apart is the point of the parallel gateway:
@@ -138,7 +138,7 @@ population, a period and a method attached — not a claim in prose.
 ## Verifying authority, not asserting it
 {: #authority }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/authority.md){: .fa-node-edit title="Edit content/docs/evidence/authority.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/authority.md){: .fa-node-edit title="Edit content/docs/evidence/authority.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Each candidate is resolved against the **standard API of the body that publishes
 it**, so that "authoritative" is a resolved fact rather than an assertion in a
@@ -165,7 +165,7 @@ nobody re-checks.
 ## Grading the body, and recording a gap
 {: #grading-and-gaps }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/grading-and-gaps.md){: .fa-node-edit title="Edit content/docs/evidence/grading-and-gaps.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/grading-and-gaps.md){: .fa-node-edit title="Edit content/docs/evidence/grading-and-gaps.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 The grade attaches to the **body** of evidence for one PICO question — which is
 why appraisal sits after the join and not inside the fan-out. A single citation
@@ -186,7 +186,7 @@ block. A reader can then retrace the chain from the sentence back to the source.
 ## What is not built
 {: #what-is-not-built }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/what-is-not-built.md){: .fa-node-edit title="Edit content/docs/evidence/what-is-not-built.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/what-is-not-built.md){: .fa-node-edit title="Edit content/docs/evidence/what-is-not-built.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Everything below is **absent**, not partially working. The diagram is a model of
 the intended process; these are the parts with no code behind them.

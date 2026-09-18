@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g6yr
 title: 'Per-block QA icons: rework translation-qa-sweep to per-node granularity'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
-updated_at: 2026-09-18T17:18:31Z
+updated_at: 2026-09-18T19:20:59Z
 ---
 
 Asked for directly on #203: "where are the QA icons next to each content block

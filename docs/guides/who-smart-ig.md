@@ -18,7 +18,7 @@ lang: en
 
 _This page is generated from [`content/docs/guides-who-smart-ig/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/guides-who-smart-ig) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/overview.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/overview.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/overview.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 The *L3* layer turns an L2 DAK into a computable **FHIR Implementation Guide**.
 This guide covers authoring FHIR artifacts as FSH, compiling with SUSHI,
@@ -31,7 +31,7 @@ validating, and publishing with the HL7 IG Publisher — all driven by the LLM.
 ## Prerequisites
 {: #prerequisites }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/prerequisites.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/prerequisites.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/prerequisites.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/prerequisites.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 The L3 toolchain is heavier than the platform baseline. The
 `authoring-who-smart-guidelines` package's Docker manifest provisions it; to run
@@ -49,7 +49,7 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 ## The L3 pipeline
 {: #the-l3-pipeline }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit skills/workflows/l3-fhir-pipeline.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit skills/workflows/l3-fhir-pipeline.bpmn" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 <div class="bpmn-figure" id="figure-the-l3-pipeline">
   <img src="../assets/img/workflows/l3-fhir-pipeline.svg"
@@ -69,7 +69,7 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 ## Workflow
 {: #workflow }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/workflow.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/workflow.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/workflow.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/workflow.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 1. **Map L2 → L3** — `l3-fhir-authoring`: turn each data element into a FHIR
    profile, each value set into a `ValueSet`, each decision into a
@@ -83,7 +83,7 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 ## Making the build incremental
 {: #making-the-build-incremental }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ig-incremental-build.bpmn){: .fa-node-edit title="Edit skills/workflows/ig-incremental-build.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ig-incremental-build.bpmn){: .fa-node-edit title="Edit skills/workflows/ig-incremental-build.bpmn" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 <div class="bpmn-figure" id="figure-making-the-build-incremental">
   <img src="../assets/img/workflows/ig-incremental-build.svg"
@@ -120,7 +120,7 @@ to today's full build, and only a green build of `main` or a release seeds the c
 ## A mock session
 {: #a-mock-session }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/a-mock-session.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/a-mock-session.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/a-mock-session.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/a-mock-session.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 > **You:** Generate the FHIR profile and value set for the immunization data
 > dictionary from the L2 DAK, then build the IG.
@@ -138,7 +138,7 @@ to today's full build, and only a green build of `main` or a release seeds the c
 ## Next
 {: #next }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/next.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/next.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/next.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/next.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 - [Content types — WHO SMART IGs](../content-types.html#who-smart-implementation-guides-l3)
 - [Authoring a WHO SMART DAK (L2)](who-smart-dak.html) — the upstream L2 layer
