@@ -223,6 +223,30 @@ if (import.meta.main) {
   const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8")) as { name?: string };
   const stub = decl ? artefactStub(decl) : (pkg.name ?? "instance");
 
+  // `--check` VERIFIES AND WRITES NOTHING.
+  //
+  // A check that writes is a check that can pass by fixing the thing it was
+  // asked to report. It would also mean CI's verification step mutating the
+  // tree it is verifying, which makes a later "the tree is clean" assertion
+  // meaningless. So the two modes are exclusive and the check runs first.
+  if (process.argv.includes("--check")) {
+    // Deliberately against the DECLARED base, not `--base-url`: a source `$id`
+    // is always canonical. A preview overrides the base at export time only —
+    // `feature-staging.yml` passes its own — and checking a staging build's
+    // base against the committed files would report all 44 as stale on every
+    // branch build.
+    const stale = staleSkillIoIds();
+    if (stale.length > 0) {
+      console.error(`${stale.length} skill I/O schema(s) carry an $id that is not where they publish:`);
+      for (const b of stale) console.error(`  ✗ ${b.source}\n      stored   ${b.stored}\n      expected ${b.expected}`);
+      console.error("\nRun `bun run kg:schema` to rewrite them.");
+      process.exit(1);
+    }
+    const n = buildSkillIoContracts().length;
+    console.log(`✓ every skill I/O $id matches its published location (${n} contract(s))`);
+    process.exit(0);
+  }
+
   const outDir = arg("--out-dir") ?? join(ROOT, "_kg");
   mkdirSync(outDir, { recursive: true });
 
@@ -248,21 +272,10 @@ if (import.meta.main) {
     writeFileSync(out, JSON.stringify(c.schema, null, 2) + "\n");
   }
   if (contracts.length > 0) {
-    console.log(`_kg/skills/  (${contracts.length} contract(s) across ${new Set(contracts.map((c) => c.skill)).size} skill(s))`);
+    console.log(
+      `${relative(ROOT, join(outDir, "skills"))}/  ` +
+        `(${contracts.length} contract(s) across ${new Set(contracts.map((c) => c.skill)).size} skill(s))`,
+    );
     console.log(`  $id  ${contracts[0].schema.$id ?? "(none — no canonicalUrl declared)"}  …`);
-  }
-
-  // `--check`: the source `$id`s agree with where they are published. Run in
-  // CI so a hand-edited identity is caught at the commit that introduces it,
-  // rather than at the fetch that finds a 403 months later.
-  if (process.argv.includes("--check")) {
-    const stale = staleSkillIoIds({ baseUrl });
-    if (stale.length > 0) {
-      console.error(`\n${stale.length} skill I/O schema(s) carry an $id that is not where they are published:`);
-      for (const b of stale) console.error(`  ✗ ${b.source}\n      stored   ${b.stored}\n      expected ${b.expected}`);
-      console.error("\nRun `bun run kg:schema` to rewrite them.");
-      process.exit(1);
-    }
-    console.log("\n✓ every skill I/O $id matches its published location");
   }
 }
