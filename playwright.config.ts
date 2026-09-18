@@ -18,7 +18,13 @@ export default defineConfig({
     headless: true,
     trace: 'on-first-retry',
     launchOptions: {
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      // Some images ship Chromium at a pinned path under
+      // PLAYWRIGHT_BROWSERS_PATH with PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD set,
+      // and the installed @playwright/test asks for a `chrome-headless-shell`
+      // build they do not carry. Point it at the Chromium that IS present
+      // rather than downloading one. Unset elsewhere, so the default applies.
+      executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH || undefined,
     }
   },
   projects: [
@@ -27,8 +33,11 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
+  // `test-server.mjs` serves the repo root statically. It was referenced here
+  // long before it existed — see bean `dzl3` — so no e2e test in this repo was
+  // runnable until it was written.
   webServer: {
-    command: 'node test-server.cjs',
+    command: 'node test-server.mjs',
     port: 8080,
     reuseExistingServer: !process.env.CI,
   },

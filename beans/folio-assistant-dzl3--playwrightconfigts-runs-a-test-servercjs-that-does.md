@@ -1,10 +1,11 @@
 ---
 # folio-assistant-dzl3
 title: playwright.config.ts runs a test-server.cjs that does not exist — bunx playwright test fails before any test
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-18T17:59:38Z
-updated_at: 2026-09-18T17:59:38Z
+updated_at: 2026-09-18T18:16:30Z
 ---
 
 AGENTS.md lists `bunx playwright test` under Commands. It cannot work:
