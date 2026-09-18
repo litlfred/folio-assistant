@@ -32,7 +32,7 @@ architecture but the *address* — both stores are now at top level and adjacent
 | | was | is |
 |---|---|---|
 | work plan | `.beans/` | **`beans/`** |
-| workflow state | `.folio/workflow/` | **`beans/workflow/`** |
+| workflow state | `.harness/workflow/` | **`beans/workflow/`** |
 
 The reasoning that made A right survives the move intact: the interpreter keeps
 a file no human is invited to hand-edit, one file per instance means no write

@@ -26,13 +26,13 @@
  *
  * It does not fetch. An agent reads comments through its own GitHub tooling;
  * this records what was read so the NEXT session, in a fresh container, can
- * tell new from already-handled. State lives under `.folio/`, committed, for
+ * tell new from already-handled. State lives under `.harness/`, committed, for
  * the same reason workflow state does: a sibling session must see it.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-export const SEEN_DIR = ".folio/issue-comments";
+export const SEEN_DIR = ".harness/issue-comments";
 
 export interface SeenState {
   /** `owner/repo#number`, for readability when someone opens the file. */
@@ -57,7 +57,7 @@ export interface CommentLike {
   created_at?: string;
 }
 
-/** `.folio/issue-comments/<owner>-<repo>-<number>.json` */
+/** `.harness/issue-comments/<owner>-<repo>-<number>.json` */
 export function seenPath(root: string, owner: string, repo: string, issue: number): string {
   return join(root, SEEN_DIR, `${owner}-${repo}-${issue}.json`);
 }

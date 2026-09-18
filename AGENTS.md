@@ -156,7 +156,7 @@ Two stores, adjacent and at top level:
 | `beans/` | the work plan — WHAT is being worked on | yes |
 | `beans/workflow/` | one JSON file per running BPMN instance — WHERE IT GOT TO | yes |
 
-They were `.beans/` and `.folio/workflow/`. A dot-prefixed directory is absent
+They were `.beans/` and `.harness/workflow/`. A dot-prefixed directory is absent
 from a plain `ls`, from most file browsers and from GitHub's web tree, so the two
 artefacts a person looks for first were the two hardest to find. Moved 2026-09-18.
 
@@ -168,7 +168,7 @@ Both are **declared** in `harness.config.json` under `harness`
 `workflow/store.ts` disagree. The duplication is unavoidable; an unchecked one
 is not.
 
-`.folio/` still exists and still holds `interaction.json` and `issue-comments/`;
+`.harness/` still exists and still holds `interaction.json` and `issue-comments/`;
 only the workflow state moved.
 
 This is **Option A** from
@@ -476,7 +476,7 @@ somebody has to act on is weaker than the act itself.
 
 The sweep emits, in order:
 
-1. **Interaction preferences** (`.folio/interaction.json`) — first, because it
+1. **Interaction preferences** (`.harness/interaction.json`) — first, because it
    changes the form of every question that follows. See
    `skills/folio-core/interaction-modality.md`.
 2. `beans prime` and `beans list`.
@@ -576,7 +576,7 @@ single edge from `BA_Signoff` into Phase 6 — the three loops back into
 
 **Re-check the issue for new and edited comments while you work.** Checking once
 at session start is not checking. Track what you have already read in
-`.folio/issue-comments/<owner>-<repo>-<number>.json`
+`.harness/issue-comments/<owner>-<repo>-<number>.json`
 (`src/issue-watch/seen-comments.ts`): a comment-id high-water mark plus the
 newest edit timestamp, because an edited comment keeps its id and an edited
 requirement is a changed requirement. With no stored mark everything counts as

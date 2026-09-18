@@ -107,7 +107,7 @@ const CONTENT_DIRS = new Set([
 
 /** Paths that are neither the author's material nor a question — just noise. */
 const SKIP_DIRS = new Set([
-  ".git", ".github", ".vscode", ".idea", "beans", ".folio", ".claude",
+  ".git", ".github", ".vscode", ".idea", "beans", ".harness", ".claude",
   "node_modules", ".venv", "venv", "__pycache__", "dist", "build", "target",
   ".next", ".cache", "coverage", ".lake", ".pytest_cache", "vendor",
 ]);

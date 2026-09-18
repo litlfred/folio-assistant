@@ -92,10 +92,10 @@ let feedbackDir = resolve(repoRoot, ".folio-feedback");
 let viewerPort: number | undefined;
 
 // harness.config.json (preferred)
-const folioConfigPath = resolveHarnessConfigPath(repoRoot)?.path ?? join(repoRoot, HARNESS_CONFIG);
-if (existsSync(folioConfigPath)) {
+const harnessConfigPath = resolveHarnessConfigPath(repoRoot)?.path ?? join(repoRoot, HARNESS_CONFIG);
+if (existsSync(harnessConfigPath)) {
   try {
-    const config = JSON.parse(readFileSync(folioConfigPath, "utf-8"));
+    const config = JSON.parse(readFileSync(harnessConfigPath, "utf-8"));
     adapterType = config.contentType || config.adapter || "paper";
     adapterModule = config.adapterModule;
     if (config.feedbackDir) feedbackDir = resolve(repoRoot, config.feedbackDir);

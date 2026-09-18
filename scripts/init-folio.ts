@@ -93,7 +93,7 @@ const RESERVED_SLUGS = new Set(["schema", "pipeline", "node_modules", "build"]);
 
 // ── Templates ────────────────────────────────────────────────────
 
-function folioConfig(o: InitFolioOptions, assistant: string): string {
+function harnessConfig(o: InitFolioOptions, assistant: string): string {
   return JSON.stringify(
     {
       contentType: o.contentType,
@@ -518,7 +518,7 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   if (!o.dryRun) mkdirSync(root, { recursive: true });
 
   // 1. Configuration and the platform link.
-  write("harness.config.json", folioConfig(o, assistant));
+  write("harness.config.json", harnessConfig(o, assistant));
   write(".mcp.json", mcpJson(assistant));
   write(".claude/settings.json", claudeSettings(assistant));
   write(".gitignore", gitignore(o));

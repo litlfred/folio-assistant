@@ -194,7 +194,7 @@ export const HarnessDirsSchema = z.object({
   /** One JSON file per running BPMN process instance. */
   workflowState: z.string().default("beans/workflow"),
   /** Per-user interaction preferences, read at session start. */
-  interaction: z.string().default(".folio/interaction.json"),
+  interaction: z.string().default(".harness/interaction.json"),
 });
 
 export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;
@@ -240,42 +240,29 @@ export interface ResolvedDependency {
  */
 export const HARNESS_CONFIG = "harness.config.json";
 
-/** The pre-rename name. Still read, so no existing folio breaks. */
-export const LEGACY_HARNESS_CONFIG = "folio.config.json";
-
 /**
- * Find the harness config in `dir`, new name first.
+ * Find the harness config in `dir`.
  *
- * **Every reader goes through this.** Before the rename the path was built
- * independently at eleven sites; a fallback re-implemented eleven times is a
- * fallback that diverges at ten of them, and the one that forgets is the one a
- * folio silently stops being configured by.
+ * **Every reader goes through this.** The path was previously built
+ * independently at eleven sites — `src/index.ts`, four `content/pipeline`
+ * modules, three scripts, the document adapter, `folio_init` and `qa-sweep`.
+ * Eleven hardcoded literals is eleven places to miss when the name changes,
+ * and the one that is missed is the one where a folio silently stops being
+ * configured.
  *
- * Returns `undefined` when neither name is present — which is a legitimate
- * state, not an error: the platform itself has no harness config, and a bare
- * repo has none until `folio_init` writes one.
+ * Returns `undefined` when the file is absent — a legitimate state, not an
+ * error: the platform itself has no harness config, and a bare repo has none
+ * until `folio_init` writes one.
+ *
+ * ## `folio.config.json` is not read
+ *
+ * That was this file's name before 2026-09-18. It is **not** a fallback: a
+ * folio still carrying the old name is not configured, rather than quietly
+ * half-configured by a path nothing else agrees about. Rename the file.
  */
-export function resolveHarnessConfigPath(
-  dir: string,
-): { path: string; legacy: boolean } | undefined {
-  const current = join(dir, HARNESS_CONFIG);
-  if (existsSync(current)) return { path: current, legacy: false };
-  const legacy = join(dir, LEGACY_HARNESS_CONFIG);
-  if (existsSync(legacy)) return { path: legacy, legacy: true };
-  return undefined;
-}
-
-/** Warn once per directory, not once per read — eleven readers would shout. */
-const warnedLegacy = new Set<string>();
-
-function noteLegacy(dir: string): void {
-  if (warnedLegacy.has(dir)) return;
-  warnedLegacy.add(dir);
-  console.error(
-    `note: ${dir}/${LEGACY_HARNESS_CONFIG} is the pre-2026-09-18 name. ` +
-      `Rename it to ${HARNESS_CONFIG}; both are read, and the old name will ` +
-      `keep working until a release says otherwise.`,
-  );
+export function resolveHarnessConfigPath(dir: string): { path: string } | undefined {
+  const p = join(dir, HARNESS_CONFIG);
+  return existsSync(p) ? { path: p } : undefined;
 }
 
 /**
@@ -284,7 +271,6 @@ function noteLegacy(dir: string): void {
 export function readHarnessConfig(dir: string): HarnessConfig | null {
   const found = resolveHarnessConfigPath(dir);
   if (!found) return null;
-  if (found.legacy) noteLegacy(dir);
   const configPath = found.path;
   try {
     const raw = JSON.parse(readFileSync(configPath, "utf-8"));

@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T17:33:26Z
-updated_at: 2026-09-18T17:33:43Z
+updated_at: 2026-09-18T17:39:02Z
 ---
 ## What
 
@@ -33,3 +33,5 @@ a note printed once per directory, not once per read.
 tsc, lint, 1650 tests, and the five new fallback tests green; every reference
 swept; `check:harness-dirs` honours a legacy config rather than falling back to
 schema defaults.
+
+_2026-09-18T17:39:02Z_ — Hard break on author's instruction: folio.config.json is no longer read at all, and .folio/ became .harness/.

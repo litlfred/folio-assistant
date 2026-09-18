@@ -34,7 +34,7 @@ flock 200 2>/dev/null || true
 # asked twice, which is WCAG 2.2 SC 3.3.7 (Redundant Entry) — and for a user
 # who types with difficulty, "just ask again" is not a small cost.
 # See skills/folio-core/interaction-modality.md.
-INTERACTION="$REPO_ROOT/.folio/interaction.json"
+INTERACTION="$REPO_ROOT/.harness/interaction.json"
 if [ -f "$INTERACTION" ]; then
   echo "## Interaction preferences"
   echo
@@ -44,7 +44,7 @@ if [ -f "$INTERACTION" ]; then
       "- **\(.key)** — profiles: \(.value.profiles | join(", ") | if . == "" then "(none)" else . end)  \n  \(.value.note // "")  \n  _source: \(.value.source // "unrecorded")_"
     ' "$INTERACTION" 2>/dev/null || echo "- (could not parse $INTERACTION — read it by hand)"
   else
-    echo "- jq not installed; read \`.folio/interaction.json\` by hand."
+    echo "- jq not installed; read \`.harness/interaction.json\` by hand."
   fi
   echo
 fi

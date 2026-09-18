@@ -210,47 +210,32 @@ describe("the fallback can work the plan, not just read it", () => {
   });
 });
 
-describe("the config rename — harness.config.json, with folio.config.json still read", () => {
-  test("the new name is found", () => {
+describe("the config name — harness.config.json, and only that", () => {
+  test("the config is found by its name", () => {
     const root = scratchStore();
     try {
       writeFileSync(join(root, "harness.config.json"), JSON.stringify({ contentType: "document" }));
-      const found = resolveHarnessConfigPath(root)!;
-      expect(found.legacy).toBe(false);
-      expect(found.path.endsWith("harness.config.json")).toBe(true);
+      expect(resolveHarnessConfigPath(root)!.path.endsWith("harness.config.json")).toBe(true);
       expect(readHarnessConfig(root)?.contentType).toBe("document");
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
   });
 
-  test("the old name still works, and is flagged as legacy", () => {
-    // Every folio in existence has this file. A rename that stranded them
-    // would be a rename nobody could adopt.
+  test("folio.config.json is NOT read — the old name is dead, not deprecated", () => {
+    // A fallback would leave a folio half-configured by a path nothing else
+    // agrees about. Not configured is the honest state, and the loud one.
     const root = scratchStore();
     try {
       writeFileSync(join(root, "folio.config.json"), JSON.stringify({ contentType: "paper" }));
-      const found = resolveHarnessConfigPath(root)!;
-      expect(found.legacy).toBe(true);
-      expect(readHarnessConfig(root)?.contentType).toBe("paper");
+      expect(resolveHarnessConfigPath(root)).toBeUndefined();
+      expect(readHarnessConfig(root)).toBeNull();
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
   });
 
-  test("the new name wins when a folio has both, mid-migration", () => {
-    const root = scratchStore();
-    try {
-      writeFileSync(join(root, "folio.config.json"), JSON.stringify({ contentType: "paper" }));
-      writeFileSync(join(root, "harness.config.json"), JSON.stringify({ contentType: "document" }));
-      expect(resolveHarnessConfigPath(root)!.legacy).toBe(false);
-      expect(readHarnessConfig(root)?.contentType).toBe("document");
-    } finally {
-      rmSync(root, { recursive: true, force: true });
-    }
-  });
-
-  test("neither present is `undefined`, not an error — the platform itself has none", () => {
+  test("an absent config is `undefined`, not an error — the platform has none", () => {
     const root = scratchStore();
     try {
       expect(resolveHarnessConfigPath(root)).toBeUndefined();
@@ -260,18 +245,33 @@ describe("the config rename — harness.config.json, with folio.config.json stil
     }
   });
 
-  test("check:harness-dirs reads a legacy config rather than ignoring it", () => {
-    // The trap: a folio that has not renamed yet must still have its `harness`
-    // block honoured, or the drift check silently compares against defaults.
+  test("check:harness-dirs reads the harness block from the new name", () => {
     const root = scratchStore();
     try {
       writeFileSync(
-        join(root, "folio.config.json"),
+        join(root, "harness.config.json"),
         JSON.stringify({ harness: { workPlan: "beans", workflowState: "beans/workflow" } }),
       );
       const r = checkHarnessDirs(root);
       expect(r.configured).toBe(true);
       expect(r.problems).toEqual([]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a folio still on the old name reads as NOT configured, not as misconfigured", () => {
+    const root = scratchStore();
+    try {
+      writeFileSync(
+        join(root, "folio.config.json"),
+        JSON.stringify({ harness: { workPlan: "somewhere-else" } }),
+      );
+      const r = checkHarnessDirs(root);
+      expect(r.configured).toBe(false);
+      // Schema defaults apply, and they agree with .beans.yml — so no false alarm.
+      expect(r.problems).toEqual([]);
+      expect(r.notes.join(" ")).toContain("defaults");
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
