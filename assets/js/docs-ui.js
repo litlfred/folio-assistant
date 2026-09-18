@@ -1097,36 +1097,13 @@
     }, "\uD83C\uDF10 " + availLangs + "/" + (totalLangs - 1) + " languages");
     container.appendChild(langBadge);
 
-    // QA badge — only on translated pages (has QA data)
-    var qa = meta.qa || {};
-    if (qa.total > 0) {
-      var qaBg, qaBorder, qaIcon, qaLabel;
-      if (qa.fail > 0) {
-        qaBg = "#991b1b"; qaBorder = "#ef4444"; qaIcon = "\u274C";
-        qaLabel = "QA: " + qa.fail + " drift";
-      } else if (qa.warn > 0) {
-        qaBg = "#78350f"; qaBorder = "#d97706"; qaIcon = "\u26A0\uFE0F";
-        qaLabel = "QA: " + qa.warn + " warn";
-      } else {
-        qaBg = "#14532d"; qaBorder = "#22c55e"; qaIcon = "\u2705";
-        qaLabel = "QA: all pass";
-      }
-
-      var qaBadge = el("span", {
-        class: "fa-qa-badge",
-        style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
-               "background:" + qaBg + ";border:1px solid " + qaBorder + ";" +
-               "border-radius:4px;font-size:0.75rem;color:#fef3c7;cursor:default;",
-        title: "Round-trip semantic verification: " + qa.pass + "/" + qa.total +
-               " pass, " + qa.warn + " warn, " + qa.fail + " fail. Coverage: " + qa.coveragePct + "%"
-      });
-      qaBadge.textContent = qaIcon + " " + qaLabel;
-      var qaDetail = el("span", {
-        style: "opacity:0.7;font-size:0.7rem;"
-      }, "(" + qa.pass + "/" + qa.total + ")");
-      qaBadge.appendChild(qaDetail);
-      container.appendChild(qaBadge);
-    }
+    // The round-trip QA badge that stood here is gone, and the data behind it
+    // with it. It read `page.qa_translation_*`, stamped from a node-level
+    // `roundTripQA` whose back-translation map held 6 entries against 36
+    // strings: every string nobody back-translated scored 0 similarity and was
+    // published as semantic drift. Per-block translation QA replaces it —
+    // `<stem>.<locale>.translation-qa.json`, opened from the `TR` icon beside
+    // each block, where a verdict names the witness that reached it.
 
     // QA sweep completeness badge — indicates whether sidecars have been run
     var sweep = meta.sweep || {};

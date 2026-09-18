@@ -133,13 +133,6 @@
   "translationSource": "",
   "supportedLocales": ["ar","zh","en","fr","ru","es"],
   "availableLocales": null,
-  "qa": {
-    "pass": 0,
-    "warn": 0,
-    "fail": 0,
-    "total": 0,
-    "coveragePct": 0
-  },
   "sweep": {
     "run": true,
     "sweptAt": "2026-09-18T13:35:56.610Z",
@@ -388,7 +381,6 @@ PO/POT pipeline with <code class="language-plaintext highlighter-rouge">Translat
   <span class="na">poFile</span><span class="p">:</span> <span class="dl">"</span><span class="s2">translations/fr/index.po</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">status</span><span class="p">:</span> <span class="p">{</span> <span class="na">locale</span><span class="p">:</span> <span class="dl">"</span><span class="s2">fr</span><span class="dl">"</span><span class="p">,</span> <span class="na">official</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">generatedBy</span><span class="p">:</span> <span class="dl">"</span><span class="s2">agent</span><span class="dl">"</span> <span class="p">},</span>
   <span class="na">coverage</span><span class="p">:</span> <span class="p">{</span> <span class="na">translated</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span> <span class="na">total</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span> <span class="na">pct</span><span class="p">:</span> <span class="mi">100</span> <span class="p">},</span>
-  <span class="na">roundTripQA</span><span class="p">:</span> <span class="p">{</span> <span class="na">pass</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="na">warn</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="na">fail</span><span class="p">:</span> <span class="mi">21</span><span class="p">,</span> <span class="na">total</span><span class="p">:</span> <span class="mi">36</span> <span class="p">},</span>
 <span class="p">};</span>
 <span class="k">export</span> <span class="k">default</span> <span class="nx">node</span><span class="p">;</span>
 </code></pre></div></div>
@@ -569,9 +561,11 @@ Validate with <code class="language-plaintext highlighter-rouge">TranslationNode
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/translation-qa.ts <span class="nt">--locale</span> &lt;locale&gt;
 </code></pre></div></div>
 
-<p>Or use the <code class="language-plaintext highlighter-rouge">translation_validate</code> MCP tool. Back-translates and compares
-meaning. Results are stored in the <code class="language-plaintext highlighter-rouge">TranslationNode.roundTripQA</code> field.
-Routes drift to a human reviewer.</p>
+<p>Or use the <code class="language-plaintext highlighter-rouge">translation_validate</code> MCP tool for coverage and staleness.
+<strong>Semantic verification is per block and lives in the sidecar</strong>, not in a
+node-level summary field: <code class="language-plaintext highlighter-rouge">TranslationNode.roundTripQA</code> was removed with the
+numbers it held. See §”Per-block translation QA” below, and route drift to a
+human reviewer.</p>
 <h3 id="6-sign-off">
   
   
@@ -649,12 +643,19 @@ this criterion mechanically.</strong> A green tick nobody should trust is worse 
 gap that says it is a gap — a reader who sees the tick stops asking.</p>
 
 <blockquote>
-  <p>The page-level numbers already show that failure from the other side.
-<code class="language-plaintext highlighter-rouge">translations/fr/index.ts</code> records
+  <p>This was not hypothetical. <code class="language-plaintext highlighter-rouge">translations/fr/index.ts</code> carried
 <code class="language-plaintext highlighter-rouge">roundTripQA: { fail: 21, total: 36, method: "jaccard-word-overlap" }</code>, and
-its own <code class="language-plaintext highlighter-rouge">description</code> explains those failures away as expected “with limited
-vocabulary back-translator”. A measurement whose author has to explain it away
-is about the instrument, not the translation.</p>
+its own <code class="language-plaintext highlighter-rouge">description</code> explained those failures away as expected “with limited
+vocabulary back-translator” — a measurement whose author has to explain it
+away is about the instrument, not the translation. The generator’s
+back-translation map held <strong>6 entries for 36 strings</strong>: every string nobody
+had back-translated scored 0 similarity and was counted as drift, so <code class="language-plaintext highlighter-rouge">fail:
+21</code> was a count of absences. A second script back-translated by applying a
+40-pair word-substitution table to the French and wrote the result as a
+<code class="language-plaintext highlighter-rouge">block-qa/v1</code> sidecar with an <strong>agent</strong> reviewer.</p>
+
+  <p>All of it is removed — the numbers, the <code class="language-plaintext highlighter-rouge">roundTripQA</code> field, the page badge
+that displayed them, and both scripts.</p>
 </blockquote>
 <h3 id="the-agentic-round-trip--a-pair-of-agents-and-the-separation-is-the-measurement">
   
@@ -769,7 +770,6 @@ matter</li>
     <ul>
       <li><strong>🌐 Language coverage badge</strong> — <code class="language-plaintext highlighter-rouge">0/5 languages</code> (grey), <code class="language-plaintext highlighter-rouge">1/5</code> (amber),
 <code class="language-plaintext highlighter-rouge">5/5</code> (green)</li>
-      <li><strong>QA badge</strong> — only on translated pages with <code class="language-plaintext highlighter-rouge">qa_translation_total &gt; 0</code></li>
       <li><strong>⚠️ Unverified warning</strong> — auto-injected when <code class="language-plaintext highlighter-rouge">translation_status:
 unverified</code></li>
     </ul>
@@ -795,16 +795,18 @@ unverified</code></li>
 <span class="na">translation_status</span><span class="pi">:</span> <span class="s">unverified</span>     <span class="c1"># or "official"</span>
 <span class="na">translation_source</span><span class="pi">:</span> <span class="s">index.md</span>       <span class="c1"># source file</span>
 <span class="na">available_locales</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">fr"</span><span class="pi">]</span>
-<span class="na">qa_translation_pass</span><span class="pi">:</span> <span class="m">11</span>            <span class="c1"># round-trip QA results</span>
-<span class="na">qa_translation_warn</span><span class="pi">:</span> <span class="m">4</span>
-<span class="na">qa_translation_fail</span><span class="pi">:</span> <span class="m">21</span>
-<span class="na">qa_translation_total</span><span class="pi">:</span> <span class="m">36</span>
-<span class="na">qa_coverage_pct</span><span class="pi">:</span> <span class="m">100</span>
 </code></pre></div></div>
 
-<p><strong>Do not</strong> manually add <code class="language-plaintext highlighter-rouge">{% include qa-translation-badge.html %}</code> or
-<code class="language-plaintext highlighter-rouge">{% include translation-warning.html %}</code> to pages. These are now deprecated
-includes — <code class="language-plaintext highlighter-rouge">docs-ui.js</code> handles everything automatically.</p>
+<p>The <code class="language-plaintext highlighter-rouge">qa_translation_*</code> keys are <strong>gone</strong>, along with the badge that read them.
+They were stamped from a node-level round trip whose back-translation map held
+6 entries for 36 strings, so every string nobody had back-translated was
+published as semantic drift. Per-block QA replaces them: the <code class="language-plaintext highlighter-rouge">TR</code> icon beside
+each block opens <code class="language-plaintext highlighter-rouge">&lt;stem&gt;.&lt;locale&gt;.translation-qa.json</code>, where a verdict names
+the witness that reached it.</p>
+
+<p><strong>Do not</strong> manually add <code class="language-plaintext highlighter-rouge">{% include translation-warning.html %}</code> to pages —
+<code class="language-plaintext highlighter-rouge">docs-ui.js</code> handles it automatically. (<code class="language-plaintext highlighter-rouge">qa-translation-badge.html</code> is deleted,
+not deprecated: it rendered the removed numbers.)</p>
 <h2 id="official-vs-unofficial">
   
   
@@ -975,8 +977,14 @@ pipeline (IG Publisher) are complementary and independent.</p>
 
 <ul>
   <li><strong>Do not manually add badge includes.</strong> <code class="language-plaintext highlighter-rouge">docs-ui.js</code> renders them automatically
-from front matter. The <code class="language-plaintext highlighter-rouge">{% include qa-translation-badge.html %}</code> and
-<code class="language-plaintext highlighter-rouge">{% include translation-warning.html %}</code> calls are deprecated.</li>
+from front matter; the <code class="language-plaintext highlighter-rouge">{% include translation-warning.html %}</code> call is
+deprecated.</li>
+  <li><strong>Do not publish a semantic-QA number a script cannot establish.</strong> A
+back-translation from this repo’s own PO map, or from a word-substitution
+table, scores the table rather than the translation — and a string with no
+back-translation at all scores 0 and reads as drift. If no independent
+back-translator has run, the criterion has no verdict, and saying so is the
+honest output.</li>
   <li><strong>Do not put non-PO files in translations/.</strong> Only <code class="language-plaintext highlighter-rouge">.pot</code>, <code class="language-plaintext highlighter-rouge">.po</code>, and <code class="language-plaintext highlighter-rouge">.ts</code>
 manifests belong there. Rendered <code class="language-plaintext highlighter-rouge">.md</code> goes in <code class="language-plaintext highlighter-rouge">docs/&lt;locale&gt;/</code>.</li>
   <li><strong>Do not vendor smart-base translation scripts.</strong> Load from checkout.</li>
@@ -1082,7 +1090,7 @@ skill to provide before/after URL comparison tables. See
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35400456709"><code>b1d2c3c</code></a> &middot; 2026-09-18T22:12:42Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35400480688"><code>daeced8</code></a> &middot; 2026-09-18T22:14:08Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
