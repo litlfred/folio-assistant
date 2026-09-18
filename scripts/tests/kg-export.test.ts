@@ -112,7 +112,15 @@ describe("kg export", () => {
     expect(kinds.length).toBeGreaterThanOrEqual(5);
     expect(kinds.some((k) => k.name === "folio" && k.renderable === true)).toBe(true);
     const ids = new Set(EXPORT["@graph"].map((n) => n["@id"]));
-    for (const dir of typed("Directory")) expect(ids.has(dir.holdsGraph as string)).toBe(true);
+    // `holdsGraph` is a LIST: `graph` became `graphs[]` upstream because a
+    // directory may hold more than one graph — `schemas/` holds both its own
+    // and `kg`. Every entry must still land on a GraphKind node.
+    for (const dir of typed("Directory")) {
+      const held = dir.holdsGraph as string[];
+      expect(Array.isArray(held)).toBe(true);
+      expect(held.length).toBeGreaterThan(0);
+      for (const g of held) expect(ids.has(g)).toBe(true);
+    }
   });
 
   test("every node has an @id and an @type, and @ids are unique", () => {

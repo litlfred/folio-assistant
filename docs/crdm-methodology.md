@@ -17,7 +17,7 @@ lang: en
 
 _This page is generated from [`content/docs/crdm-methodology/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/crdm-methodology) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/overview.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/overview.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/overview.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 How folio-assistant uses the **Collaborative Requirements Development
 Methodology** (CRDM) — a structured, participatory framework from the
@@ -32,7 +32,7 @@ agent enters a CRDM-guided workflow rather than improvising a solution.
 ## What is CRDM?
 {: #what-is-crdm }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-crdm.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/what-is-crdm.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-crdm.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/what-is-crdm.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 The **Collaborative Requirements Development Methodology** (CRDM)™ is a
 structured, facilitated approach developed by the
@@ -67,7 +67,7 @@ a feature request at the surface level.
 ## Roles — who does what
 {: #roles }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/roles.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/roles.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/roles.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/roles.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 Three distinct roles participate in a CRDM cycle. The boundaries between
 them matter — collapsing the first two into one person loses the quality
@@ -147,7 +147,7 @@ Stakeholders ──review/approve──▶ BA ──directs──▶ Agent
 ## Why CRDM for folio-assistant
 {: #why-crdm-for-folio-assistant }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/why-crdm-for-folio-assistant.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/why-crdm-for-folio-assistant.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/why-crdm-for-folio-assistant.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/why-crdm-for-folio-assistant.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 folio-assistant is a **platform**, not an application with a fixed feature set.
 Authors, editors, and reviewers working in folio repositories regularly discover
@@ -169,7 +169,7 @@ folio-assistant already has the primitives it needs:
 | CRDM concept | folio-assistant primitive |
 |---|---|
 | Stakeholder identification | `harness.config.json` roles, GitHub CODEOWNERS |
-| Business process documentation | BPMN workflow diagrams under `docs/workflows/` |
+| Business process documentation | BPMN workflow diagrams under `skills/workflows/` |
 | Requirements artefact | GitHub issue with structured fields |
 | Work-plan items | `beans` — the single todo mechanism |
 | Impact analysis | Content graph (`content-graph.ts`), schema constraints, QA registry |
@@ -182,7 +182,7 @@ mode rather than jumping straight to implementation.
 ## When the CRDM workflow activates
 {: #when-crdm-activates }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/when-crdm-activates.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/when-crdm-activates.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/when-crdm-activates.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/when-crdm-activates.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 An agent enters the CRDM workflow when it recognises that a request is about
 **platform capability** rather than **folio content**. The triggers are:
@@ -223,14 +223,14 @@ When the agent detects a CRDM trigger, it should:
 ## The process
 {: #the-process }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/crdm-requirements.bpmn){: .fa-node-edit title="Edit docs/workflows/crdm-requirements.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/crdm-requirements.bpmn){: .fa-node-edit title="Edit skills/workflows/crdm-requirements.bpmn" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 <div class="bpmn-figure" id="figure-the-process">
   <img src="assets/img/workflows/crdm-requirements.svg"
        alt="BPMN swimlane diagram: three lanes — BA/Feature Requestor, Agent, and Stakeholders. The BA submits a request; the agent detects whether it is a feature, scans for issues, and runs through the six CRDM phases. The BA reviews and coordinates with stakeholders at each phase. In Phase 6, two loops: an inner loop where the BA and agent iterate rapidly on increments, and an outer loop where the BA shares accumulated MVPs with stakeholders for testing. Stakeholders provide findings, the BA translates them into agent direction, and the cycle repeats until feature sign-off.">
 </div>
 
-[Open the BPMN source](workflows/crdm-requirements.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/crdm-requirements.bpmn){: .btn .btn-outline }
 
 The diagram above shows the full CRDM workflow as a BPMN 2.0 collaboration
 with three swim lanes:
@@ -273,7 +273,7 @@ workflow fits into the broader agent–user interaction model.
 ## Phase 1 — Needs assessment
 {: #phase-1-needs-assessment }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-1-needs-assessment.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-1-needs-assessment.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-1-needs-assessment.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-1-needs-assessment.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 The agent helps the user articulate **what they need and why**, before anyone
 discusses how to build it. This is where most ad-hoc requests go wrong — the
@@ -310,7 +310,7 @@ solution is specified before the problem is understood.
 ## Phase 2 — Business process analysis
 {: #phase-2-business-process-analysis }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-2-business-process-analysis.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-2-business-process-analysis.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-2-business-process-analysis.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-2-business-process-analysis.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 Before changing the platform, understand **how the work is done today**. The
 agent maps the current workflow — manually if needed — and identifies where the
@@ -319,7 +319,7 @@ gap actually sits.
 **What the agent does in this phase:**
 
 1. **Map the current workflow** — use the existing BPMN diagrams under
-   `docs/workflows/` as a starting point. If the affected workflow is already
+   `skills/workflows/` as a starting point. If the affected workflow is already
    diagrammed (e.g. the content lifecycle, the publication pipeline, the
    document ingestion flow), read it and identify the specific activity or
    decision point where the gap appears.
@@ -345,7 +345,7 @@ identifying exactly where the capability gap sits.
 ## Phase 3 — Requirements definition
 {: #phase-3-requirements-definition }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-3-requirements-definition.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-3-requirements-definition.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-3-requirements-definition.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-3-requirements-definition.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 Translate the understood need into **specific, actionable requirements** with
 proposed tooling descriptions. All requirements should be developed fully, with
@@ -385,7 +385,7 @@ links back to the need (Phase 1) and the workflow gap (Phase 2) it addresses.
 ## Phase 4 — Impact analysis and migration planning
 {: #phase-4-impact-analysis }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-4-impact-analysis.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-4-impact-analysis.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-4-impact-analysis.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-4-impact-analysis.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 Before implementation begins, assess **what the proposed changes affect** across
 the platform and any active folios.
@@ -425,7 +425,7 @@ affected file, folio, and workflow, with a migration plan if applicable.
 ## Phase 5 — Sign-off and bean creation
 {: #phase-5-sign-off-and-beans }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-5-sign-off-and-beans.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-5-sign-off-and-beans.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-5-sign-off-and-beans.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-5-sign-off-and-beans.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 The requirements and impact analysis are presented to the user (and any
 identified stakeholders) for review and sign-off. This is the gate between
@@ -467,7 +467,7 @@ requirements and implementation.
 ## Phase 6 — Iterative MVP development and stakeholder review
 {: #phase-6-iterative-development }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-6-iterative-development.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-6-iterative-development.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/phase-6-iterative-development.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/phase-6-iterative-development.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 Once requirements are signed off and beans are created, the agent and BA
 enter the **iterative MVP development cycle**. This is where the feature
@@ -573,7 +573,7 @@ other features.
 ## Agent skills and tooling
 {: #agent-skills-and-tooling }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/agent-skills-and-tooling.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/agent-skills-and-tooling.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/agent-skills-and-tooling.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/agent-skills-and-tooling.md" } <span class="fa-qa-badge fa-qa-pass" title="QA: 0 fail, 0 warn, 23 pass, 25 n/a">○</span>
 
 The CRDM workflow is supported by skills and tools that the agent uses at each
 phase. Some exist today; others are proposed.
@@ -615,7 +615,7 @@ distinction is kept explicit.
 
 **`crdm_start` and `crdm_status` were proposed here and should not be built.**
 The generic workflow tools already run this process, because
-`docs/workflows/crdm-requirements.bpmn` is a loadable BPMN process like every
+`skills/workflows/crdm-requirements.bpmn` is a loadable BPMN process like every
 other diagram in this repository:
 
 | Instead of | Use |
@@ -685,7 +685,7 @@ an MCP tool.
 ## What is not built yet
 {: #what-is-not-built-yet }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-not-built-yet.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/what-is-not-built-yet.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/crdm-methodology/what-is-not-built-yet.md){: .fa-node-edit title="Edit content/docs/crdm-methodology/what-is-not-built-yet.md" } <span class="fa-qa-badge fa-qa-fail" title="QA: 1 fail, 0 warn, 22 pass, 25 n/a">●</span>
 
 This page documents the methodology; the skills and tooling that implement it
 are in various stages of development. What follows is checked against the
@@ -716,7 +716,7 @@ there, or lets them assume something exists because nobody updated the list.
   they would be a second answer to "where are we", free to disagree with the
   first.
 - **BPMN diagram of the process itself** —
-  [`docs/workflows/crdm-requirements.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/docs/workflows/crdm-requirements.bpmn),
+  [`skills/workflows/crdm-requirements.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/crdm-requirements.bpmn),
   with lanes for the BA / feature requestor, the agent, and stakeholders.
 - **The six-phase workflow as a skill** —
   [`skills/folio-core/crdm-requirements-workflow.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/crdm-requirements-workflow.md),

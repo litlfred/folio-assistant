@@ -14,277 +14,277 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: docs/workflows/editing-hci-validation.bpmn:155
+#: skills/workflows/editing-hci-validation.bpmn:155
 #. Diagram element documentation
 msgid "A review agent judges what no checker can: accuracy, voice, exposition, whether the change says what the editor meant."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:268
+#: skills/workflows/editing-hci-validation.bpmn:268
 #. Diagram label
 msgid "accept"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:204
+#: skills/workflows/editing-hci-validation.bpmn:204
 #. Diagram label
 msgid "Accept, revise or discard?"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:154
+#: skills/workflows/editing-hci-validation.bpmn:154
 #. Diagram label
 msgid "Agent review of the change [content-review]"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:175
+#: skills/workflows/editing-hci-validation.bpmn:175
 #. Diagram label
 msgid "All checks reported"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:52
+#: skills/workflows/editing-hci-validation.bpmn:52
 #. Diagram label
 msgid "Authoring agent (system)"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:96
+#: skills/workflows/editing-hci-validation.bpmn:96
 #. Diagram element documentation
 msgid "Before anything is drafted: the author reads the guidance ALREADY in this content, frames the question as PICO, retrieves candidates across the three evidence classes, and has each candidate's authority resolved against its publisher's own API. A recommendation reaches the drafting step with its evidence attached, or with the gap recorded. This step has nothing to do for content that carries no recommendations -- a mathematics folio has none -- and is skipped there rather than satisfied vacuously."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:126
+#: skills/workflows/editing-hci-validation.bpmn:126
 #. Diagram element documentation
 msgid "Block schema, label prefixes, required fields, constraint rules."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:141
+#: skills/workflows/editing-hci-validation.bpmn:141
 #. Diagram label
 msgid "Build and QA gates [content-test]"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:220
+#: skills/workflows/editing-hci-validation.bpmn:220
 #. Diagram label
 msgid "Change discarded"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:240
+#: skills/workflows/editing-hci-validation.bpmn:240
 #. Diagram label
 msgid "Change is in the corpus"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:86
+#: skills/workflows/editing-hci-validation.bpmn:86
 #. Diagram label
 msgid "Claim or open the bean [todo-manager]"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:182
+#: skills/workflows/editing-hci-validation.bpmn:182
 #. Diagram label
 msgid "Collate findings into a report"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:223
+#: skills/workflows/editing-hci-validation.bpmn:223
 #. Diagram label
 msgid "Commit into the corpus"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:73
+#: skills/workflows/editing-hci-validation.bpmn:73
 #. Diagram label
 msgid "Corpus (versioned store)"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:81
+#: skills/workflows/editing-hci-validation.bpmn:81
 #. Diagram label
 msgid "Describe the intended change"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:267
+#: skills/workflows/editing-hci-validation.bpmn:267
 #. Diagram label
 msgid "discard"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:105
+#: skills/workflows/editing-hci-validation.bpmn:105
 #. Diagram label
 msgid "Draft the block edit [content-author]"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:78
+#: skills/workflows/editing-hci-validation.bpmn:78
 #. Diagram label
 msgid "Edit requested"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:25
+#: skills/workflows/editing-hci-validation.bpmn:25
 #. Diagram label
 msgid "Editing and HCI validation"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:39
+#: skills/workflows/editing-hci-validation.bpmn:39
 #. Diagram label
 msgid "Editor / author (person)"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:163
+#: skills/workflows/editing-hci-validation.bpmn:163
 #. Diagram element documentation
 msgid "Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:87
+#: skills/workflows/editing-hci-validation.bpmn:87
 #. Diagram element documentation
 msgid "Every edit is tracked as a bean in .beans/. Check for an existing bean by exact title first; claim it (status in-progress) rather than minting a duplicate."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:188
+#: skills/workflows/editing-hci-validation.bpmn:188
 #. Diagram element documentation
 msgid "Findings are appended to the bean, so the next agent or human sees what is outstanding."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:23
+#: skills/workflows/editing-hci-validation.bpmn:23
 #. Diagram label
 msgid "Folio editing — one proposed change to a content block"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:26
+#: skills/workflows/editing-hci-validation.bpmn:26
 #. Diagram element documentation
 msgid "folio-assistant — editing a content block and its HCI validation gate. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in .beans/."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:95
+#: skills/workflows/editing-hci-validation.bpmn:95
 #. Diagram label
 msgid "Gather and verify the evidence [evidence-retrieval]"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:57
+#: skills/workflows/editing-hci-validation.bpmn:57
 #. Diagram label
 msgid "HCI validation pipeline (system)"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:162
+#: skills/workflows/editing-hci-validation.bpmn:162
 #. Diagram label
 msgid "Human / SME review [content-review]"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:149
+#: skills/workflows/editing-hci-validation.bpmn:149
 #. Diagram label
 msgid "Judgement call?"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:142
+#: skills/workflows/editing-hci-validation.bpmn:142
 #. Diagram element documentation
 msgid "Lean build and proof status, LaTeX compile, FHIR/SUSHI validation, QA axes."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:187
+#: skills/workflows/editing-hci-validation.bpmn:187
 #. Diagram label
 msgid "Log findings on the bean [todo-manager]"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:249
+#: skills/workflows/editing-hci-validation.bpmn:249
 #. Diagram label
 msgid "mechanical"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:183
+#: skills/workflows/editing-hci-validation.bpmn:183
 #. Diagram element documentation
 msgid "Mechanical results and review findings are merged into one report against the proposed change."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:62
+#: skills/workflows/editing-hci-validation.bpmn:62
 #. Diagram label
 msgid "Mechanical validation (system)"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:253
+#: skills/workflows/editing-hci-validation.bpmn:253
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:252
+#: skills/workflows/editing-hci-validation.bpmn:252
 #. Diagram label
 msgid "non-mechanical"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:67
+#: skills/workflows/editing-hci-validation.bpmn:67
 #. Diagram label
 msgid "Non-mechanical validation (review agent or SME)"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:224
+#: skills/workflows/editing-hci-validation.bpmn:224
 #. Diagram element documentation
 msgid "Only now does the change become corpus content, together with its QA sidecars. Subject to the commit-hygiene requirement."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:113
+#: skills/workflows/editing-hci-validation.bpmn:113
 #. Diagram label
 msgid "Proposed change ready"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:266
+#: skills/workflows/editing-hci-validation.bpmn:266
 #. Diagram label
 msgid "re-validate"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:231
+#: skills/workflows/editing-hci-validation.bpmn:231
 #. Diagram label
 msgid "Resolve or re-open the bean [todo-manager]"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:232
+#: skills/workflows/editing-hci-validation.bpmn:232
 #. Diagram element documentation
 msgid "Resolved when the change landed clean; left open with the residue when it did not."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:196
+#: skills/workflows/editing-hci-validation.bpmn:196
 #. Diagram label
 msgid "Review the findings"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:265
+#: skills/workflows/editing-hci-validation.bpmn:265
 #. Diagram label
 msgid "revise"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:213
+#: skills/workflows/editing-hci-validation.bpmn:213
 #. Diagram label
 msgid "Revise the proposed change [content-author]"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:118
+#: skills/workflows/editing-hci-validation.bpmn:118
 #. Diagram label
 msgid "Run HCI validation"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:125
+#: skills/workflows/editing-hci-validation.bpmn:125
 #. Diagram label
 msgid "Schema and constraint checks [content-validate]"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:133
+#: skills/workflows/editing-hci-validation.bpmn:133
 #. Diagram label
 msgid "Syntax, spelling and links [content-validate]"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:134
+#: skills/workflows/editing-hci-validation.bpmn:134
 #. Diagram element documentation
 msgid "Syntax, spelling, cross-references, citation and link resolution."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:106
+#: skills/workflows/editing-hci-validation.bpmn:106
 #. Diagram element documentation
 msgid "The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:82
+#: skills/workflows/editing-hci-validation.bpmn:82
 #. Diagram element documentation
 msgid "The editor states the change in natural language; no content has moved yet."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:197
+#: skills/workflows/editing-hci-validation.bpmn:197
 #. Diagram element documentation
 msgid "THE GATE: the editor sees every finding BEFORE anything reaches the corpus."
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:47
+#: skills/workflows/editing-hci-validation.bpmn:47
 #. Diagram label
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: docs/workflows/editing-hci-validation.bpmn:254
+#: skills/workflows/editing-hci-validation.bpmn:254
 #. Diagram label
 msgid "yes"
 msgstr ""

@@ -19,4 +19,4 @@ columns per sheet), and a narrative description of what the data is about.
 `manifest.jsonld` carries a tabular record per sheet, the narrative carries its
 provenance stamp, and a grep for a column header finds the dataset that has it.
 
-Diagram: `docs/workflows/ingest-derive-content.bpmn`, `Task_Tabular`.
+Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Tabular`.

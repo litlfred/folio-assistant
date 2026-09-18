@@ -36,7 +36,7 @@ import { formatPot } from "../content/pipeline/pot-extract.js";
 import { parsePo } from "../content/pipeline/po-inject.js";
 
 const root = resolve(import.meta.dir, "..");
-const WF = join(root, "docs", "workflows");
+const WF = join(root, "skills", "workflows");
 const argv = process.argv.slice(2);
 
 function flag(name: string): string | undefined {
@@ -82,7 +82,7 @@ if (wantExtract) {
   let total = 0;
   for (const file of diagrams) {
     const xml = readFileSync(join(WF, file), "utf-8");
-    const rel = `docs/workflows/${file}`;
+    const rel = `skills/workflows/${file}`;
     const entries = extractBpmn(xml, rel);
     total += entries.length;
     for (const loc of targets) {

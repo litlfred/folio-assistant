@@ -101,7 +101,37 @@ const REGISTRY_GROUPS: Record<string, string> = {
   requirements: "Requirement",
 };
 
-const WORKFLOW_DIR = "docs/workflows";
+/**
+ * Directories holding BPMN processes, DISCOVERED.
+ *
+ * This was the literal `docs/workflows`, and a sibling PR moved the diagrams
+ * to `skills/workflows/` while this branch was open. A hardcoded path does not
+ * fail when its target moves — it finds nothing and reports a clean run over
+ * zero processes, which is bean `dh4f` exactly. That is the FOURTH hardcoded
+ * path in this module to be wrong; the pattern is now a rule: this exporter
+ * locates corpora, it does not remember where they were.
+ */
+function findBpmnDirs(): string[] {
+  const out = new Set<string>();
+  const skip = new Set(["node_modules", ".git", "_site", "_kg", ".beans"]);
+  const walk = (rel: string, depth: number): void => {
+    if (depth > 4) return;
+    let entries;
+    try {
+      entries = readdirSync(join(ROOT, rel), { withFileTypes: true });
+    } catch {
+      return;
+    }
+    if (entries.some((e) => e.isFile() && e.name.endsWith(".bpmn"))) out.add(rel);
+    for (const e of entries) {
+      if (e.isDirectory() && !skip.has(e.name) && !e.name.startsWith(".")) {
+        walk(rel === "." ? e.name : `${rel}/${e.name}`, depth + 1);
+      }
+    }
+  };
+  walk(".", 0);
+  return [...out];
+}
 
 
 // ── JSON-LD context ─────────────────────────────────────────────
@@ -410,8 +440,13 @@ function collectPackages(doc: string, problems: string[]): Node[] {
 async function collectProcesses(doc: string, problems: string[]): Promise<Node[]> {
   const nodes: Node[] = [];
   const lanes = new Set<string>();
-  const dir = join(ROOT, WORKFLOW_DIR);
-  if (!existsSync(dir)) return nodes;
+  const dirs = findBpmnDirs();
+  if (dirs.length === 0) {
+    // Zero diagrams is a determined empty ONLY if we looked. Say which.
+    problems.push("no directory containing .bpmn files was found under the repository root");
+  }
+  for (const rel of dirs) {
+  const dir = join(ROOT, rel);
   for (const f of readdirSync(dir)) {
     if (!f.endsWith(".bpmn")) continue;
     const path = join(dir, f);
@@ -473,8 +508,9 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
         });
       }
     } catch (e) {
-      problems.push(`unloadable process ${WORKFLOW_DIR}/${f}: ${e instanceof Error ? e.message : String(e)}`);
+      problems.push(`unloadable process ${rel}/${f}: ${e instanceof Error ? e.message : String(e)}`);
     }
+  }
   }
   return nodes;
 }
@@ -513,17 +549,23 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
   if (!existsSync(f)) return [];
   try {
     const d = JSON.parse(readFileSync(f, "utf-8")) as {
-      directories?: Array<{ id: string; path: string; graph: string; summary?: string }>;
+      directories?: Array<{ id: string; path: string; graphs?: string[]; graph?: string; summary?: string }>;
     };
-    return (d.directories ?? []).map((x) => ({
-      "@id": makeIri(doc, "directory", x.id),
-      "@type": `${FOLIO_NS}Directory`,
-      name: x.id,
-      path: x.path,
-      holdsGraph: `${FOLIO_NS}graphKind/${x.graph}`,
-      graphKind: x.graph,
-      summary: x.summary,
-    }));
+    return (d.directories ?? []).map((x) => {
+      // `graph` became `graphs[]` — a directory may hold more than one graph,
+      // and `schemas/` is the first real use of that. Both spellings are read
+      // so this does not break on a declaration written before the change.
+      const kinds = x.graphs ?? (x.graph !== undefined ? [x.graph] : []);
+      return {
+        "@id": makeIri(doc, "directory", x.id),
+        "@type": `${FOLIO_NS}Directory`,
+        name: x.id,
+        path: x.path,
+        holdsGraph: kinds.map((k) => `${FOLIO_NS}graphKind/${k}`),
+        graphKinds: kinds,
+        summary: x.summary,
+      };
+    });
   } catch (e) {
     problems.push(`unparseable agent-harness.json: ${e instanceof Error ? e.message : String(e)}`);
     return [];

@@ -851,3 +851,52 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
 }
+
+/* ── Per-block QA badge (bean g6yr) ─────────────────────────────────
+ *
+ * Rides beside the edit pencil, inside the same floated row, because both are
+ * per-block affordances about the same block. It is NOT dimmed the way the
+ * pencil is: the pencil is a maintenance affordance a reader should be able to
+ * look past, while a failing QA verdict is the one thing on the row a reader
+ * might want to notice.
+ *
+ * Colour is not the only channel. Each state has its own glyph — ● fail,
+ * ◐ warn, ○ pass, · unswept — so the badge survives monochrome, a colour-vision
+ * deficiency, and the theme's dark mode, and the `title` carries the counts in
+ * words. That is deliberate rather than defensive: a status icon whose only
+ * difference is hue is unreadable to a sizable fraction of readers.
+ *
+ * `unswept` is a real state, shown rather than omitted. A missing icon and a
+ * clean one look identical, and only one of them is true. */
+.fa-qa-badge {
+  float: right;
+  margin: -2.2rem 0.35em 0 0;
+  padding: 0.05em 0.4em;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  cursor: help;
+}
+
+.fa-qa-fail { color: #b3261e; opacity: 1; }
+.fa-qa-warn { color: #8a6100; opacity: 1; }
+.fa-qa-pass { color: #1b5e20; opacity: 0.55; }
+.fa-qa-unswept { color: currentcolor; opacity: 0.3; }
+
+/* Dark mode: the light-mode reds and greens sit too dark on a dark surface to
+ * meet contrast. Guarded the same way the rest of this file guards its dark
+ * rules, so an explicitly-light reader is unaffected. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .fa-qa-fail { color: #ff8a80; }
+  :root:not([data-theme="light"]) .fa-qa-warn { color: #ffcc66; }
+  :root:not([data-theme="light"]) .fa-qa-pass { color: #a5d6a7; }
+}
+
+:root[data-theme="dark"] .fa-qa-fail { color: #ff8a80; }
+:root[data-theme="dark"] .fa-qa-warn { color: #ffcc66; }
+:root[data-theme="dark"] .fa-qa-pass { color: #a5d6a7; }
+
+/* Same breakpoint rule as the edit link: below the theme's md breakpoint the
+ * heading wraps and a floated badge lands on the text. */
+@media (max-width: 43.99rem) {
+  .fa-qa-badge { float: none; margin: 0 0 0 0.35em; }
+}

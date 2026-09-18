@@ -12,8 +12,8 @@ parent: Skill instructions
 {% raw %}
 # /getting-started — what did they actually ask for?
 
-Process: [`docs/workflows/getting-started.bpmn`](../../docs/workflows/getting-started.bpmn).
-Decision table: [`decisions/folio-intent.dmn`](../../docs/workflows/decisions/folio-intent.dmn).
+Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn).
+Decision table: [`decisions/folio-intent.dmn`](../../skills/workflows/decisions/folio-intent.dmn).
 
 ## 0. Why this skill exists
 

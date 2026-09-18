@@ -17,7 +17,7 @@ lang: en
 
 _This page is generated from [`content/docs/publication-workflow/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/publication-workflow) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/overview.md){: .fa-node-edit title="Edit content/docs/publication-workflow/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/overview.md){: .fa-node-edit title="Edit content/docs/publication-workflow/overview.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 How a change gets from *an editor had an idea* to *the folio is officially
 published* — expressed as **BPMN 2.0 swimlane diagrams**, with the roles, the
@@ -28,10 +28,10 @@ validation gate, the skills, and the shared work plan all named.
 ## Every workflow in the repo
 {: #every-workflow-in-the-repo }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/every-workflow-in-the-repo.md){: .fa-node-edit title="Edit content/docs/publication-workflow/every-workflow-in-the-repo.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/every-workflow-in-the-repo.md){: .fa-node-edit title="Edit content/docs/publication-workflow/every-workflow-in-the-repo.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Nineteen BPMN 2.0 files, all under
-[`docs/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/docs/workflows)
+[`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
 (counted on `main`, 2026-09-18 — this line said "six" for long enough that it is
 worth saying where the number came from).
 Each is a real BPMN 2.0 document with diagram interchange — open it in
@@ -101,7 +101,7 @@ the outer process; the rest are its call activities:
 | `evidence-retrieval.bpmn` | Framing a question, searching trusted sources, appraising what comes back |
 
 > **This list is checked, not maintained by hand.** `bun run check:workflow-refs`
-> fails when a `.bpmn` under `docs/workflows/` is absent from this page. It was
+> fails when a `.bpmn` under `skills/workflows/` is absent from this page. It was
 > added because the page opened by counting nineteen files and then listed
 > eight — the eleven above were present in the repository and invisible here,
 > which is the same defect as a table of contents that stops halfway.
@@ -109,7 +109,7 @@ the outer process; the rest are its call activities:
 ### They also run
 {: #they-also-run }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/they-also-run.md){: .fa-node-edit title="Edit content/docs/publication-workflow/they-also-run.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/they-also-run.md){: .fa-node-edit title="Edit content/docs/publication-workflow/they-also-run.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Since bean `fq0b` these files are not only pictures. The MCP server interprets
 them: `workflow_start` opens an instance for a subject, `workflow_next` reports
@@ -126,7 +126,7 @@ that the commit boundary is the right place — is in
 ### Some decisions are computed, not judged
 {: #some-decisions-are-computed-not-judged }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/some-decisions-are-computed-not-judged.md){: .fa-node-edit title="Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/some-decisions-are-computed-not-judged.md){: .fa-node-edit title="Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Ten exclusive gateways sit across the six diagrams, and they are not all the
 same kind of question. `Accept, revise or discard?` is the editor's call.
@@ -134,7 +134,7 @@ same kind of question. `Accept, revise or discard?` is the editor's call.
 
 A gateway carrying `<folio:decision ref="decisions/x.dmn#Decision_Id"/>` has its
 outcome computed from a **DMN decision table** under
-[`docs/workflows/decisions/`](https://github.com/litlfred/folio-assistant/tree/main/docs/workflows/decisions).
+[`skills/workflows/decisions/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows/decisions).
 The agent supplies facts — `{ failCritical: 0, failMajor: 2 }` — and the table
 returns the branch; `workflow_complete` refuses a hand-supplied outcome there,
 and records which rule fired.
@@ -151,7 +151,7 @@ tool emits looks authoritative and is not.
 ### The base processes are strict
 {: #the-base-processes-are-strict }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-base-processes-are-strict.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-base-processes-are-strict.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-base-processes-are-strict.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-base-processes-are-strict.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 The three content-agnostic diagrams — editing, draft-to-publication, lifecycle —
 carry `<folio:policy enforcement="strict"/>`. `workflow_gate` refuses a step
@@ -186,7 +186,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 ### How to read them
 {: #how-to-read-them }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/how-to-read-them.md){: .fa-node-edit title="Edit content/docs/publication-workflow/how-to-read-them.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/how-to-read-them.md){: .fa-node-edit title="Edit content/docs/publication-workflow/how-to-read-them.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 - **A lane is a role.** Every lane maps to an actor in
   [`.claude/skills/actors/`](https://github.com/litlfred/folio-assistant/tree/main/.claude/skills/actors) —
@@ -205,7 +205,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 ## Editing and the HCI validation gate
 {: #editing-and-the-hci-validation-gate }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/editing-hci-validation.bpmn){: .fa-node-edit title="Edit docs/workflows/editing-hci-validation.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/editing-hci-validation.bpmn){: .fa-node-edit title="Edit skills/workflows/editing-hci-validation.bpmn" }
 
 This is the diagram that matters most day to day: **one proposed change to one
 content block**.
@@ -215,12 +215,12 @@ content block**.
        alt="BPMN swimlane diagram: an editor describes a change, an authoring agent drafts it, the proposed change fans out through mechanical and non-mechanical validation, the findings are shown to the editor, and only an accepted change is committed to the corpus.">
 </div>
 
-[Open the BPMN source](workflows/editing-hci-validation.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/editing-hci-validation.bpmn){: .btn .btn-outline }
 
 ### The one rule this diagram exists to state
 {: #the-one-rule-this-diagram-exists-to-state }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 **Nothing reaches the corpus before the editor has seen the findings.** The
 authoring agent produces a *proposed* change, not a commit. That proposal fans
@@ -232,7 +232,7 @@ only step that writes content.
 ### Mechanical vs non-mechanical validation
 {: #mechanical-vs-non-mechanical-validation }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md){: .fa-node-edit title="Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md){: .fa-node-edit title="Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 The parallel gateway splits the pipeline in two, and the split is the point:
 
@@ -254,7 +254,7 @@ excuse a missing review, and a clean review does not excuse a red build.
 ### Activities and the skills that implement them
 {: #activities-and-the-skills-that-implement-them }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md){: .fa-node-edit title="Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md){: .fa-node-edit title="Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 | Activity | Lane | Skill |
 |----------|------|-------|
@@ -286,7 +286,7 @@ content type:
 ## From corpus to published folio
 {: #from-corpus-to-published-folio }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/draft-to-publication.bpmn){: .fa-node-edit title="Edit docs/workflows/draft-to-publication.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/draft-to-publication.bpmn){: .fa-node-edit title="Edit skills/workflows/draft-to-publication.bpmn" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 The corpus is not the publication. A **draft** is built from it, reviewed as a
 whole by the review team, and only then released.
@@ -296,7 +296,7 @@ whole by the review team, and only then released.
        alt="BPMN swimlane diagram: the corpus is built into a draft publication, QA gates run, the publication manager circulates it, the review team and SMEs review in parallel, change requests become beans that re-enter editing, and an approved draft is authorised by the programme manager and published.">
 </div>
 
-[Open the BPMN source](workflows/draft-to-publication.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/draft-to-publication.bpmn){: .btn .btn-outline }
 
 Three things to note:
 
@@ -337,7 +337,7 @@ This diagram implements the `req:content-lifecycle` phase gates —
 ## Content lifecycle overview
 {: #content-lifecycle-overview }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/content-lifecycle.bpmn){: .fa-node-edit title="Edit docs/workflows/content-lifecycle.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/content-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/content-lifecycle.bpmn" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 One cycle of a folio, plan to retire. Both diagrams above appear here as call
 activities.
@@ -347,7 +347,7 @@ activities.
        alt="BPMN swimlane diagram: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs, integration test and QA sweep, draft-review-publish, feedback is triaged and filed as beans, then either another cycle or retirement.">
 </div>
 
-[Open the BPMN source](workflows/content-lifecycle.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/content-lifecycle.bpmn){: .btn .btn-outline }
 
 This is the same lifecycle as the linear
 [plan → author → validate → review → test → publish → feedback → retire](content-types.html#the-content-lifecycle)
@@ -360,7 +360,7 @@ cycle — the linear strip flattens that.
 ## The work plan — tasks as beans
 {: #the-work-plan-tasks-as-beans }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-work-plan-tasks-as-beans.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-work-plan-tasks-as-beans.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Every diagram has a **Work plan** lane, and it is not decoration. Editing work
 is tracked as **beans** ([hmans/beans](https://github.com/hmans/beans)) in a
@@ -395,7 +395,7 @@ Why it is modelled as a lane rather than a note:
 ## Who is who
 {: #who-is-who }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/who-is-who.md){: .fa-node-edit title="Edit content/docs/publication-workflow/who-is-who.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/who-is-who.md){: .fa-node-edit title="Edit content/docs/publication-workflow/who-is-who.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 The roles in the lanes, and the actor definition each one maps to. Roles
 **inherit** (`viewer` → `reviewer` → `author` → `admin`) and a role's
@@ -405,7 +405,7 @@ capabilities bound what the agent may do on its behalf (RBAC,
 ### People
 {: #people }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/people.md){: .fa-node-edit title="Edit content/docs/publication-workflow/people.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/people.md){: .fa-node-edit title="Edit content/docs/publication-workflow/people.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 | In the diagrams | Actor | Authority |
 |-----------------|-------|-----------|
@@ -426,7 +426,7 @@ own lane: `business-analyst` (L2 DAK), `fhir-modeller` (L3 FHIR),
 ### Agents and system actors
 {: #agents-and-system-actors }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/agents-and-system-actors.md){: .fa-node-edit title="Edit content/docs/publication-workflow/agents-and-system-actors.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/agents-and-system-actors.md){: .fa-node-edit title="Edit content/docs/publication-workflow/agents-and-system-actors.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 | In the diagrams | Actor | What it does — and what it cannot do |
 |-----------------|-------|--------------------------------------|
@@ -448,12 +448,12 @@ see [Skills & roles](skills.html#roles-actors).
 ## Changing these diagrams
 {: #changing-these-diagrams }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/changing-these-diagrams.md){: .fa-node-edit title="Edit content/docs/publication-workflow/changing-these-diagrams.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/changing-these-diagrams.md){: .fa-node-edit title="Edit content/docs/publication-workflow/changing-these-diagrams.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 The `.bpmn` files are the source of truth.
 
 ```sh
-# 1. edit docs/workflows/<diagram>.bpmn — in a modeler, or by hand
+# 1. edit skills/workflows/<diagram>.bpmn — in a modeler, or by hand
 # 2. regenerate the SVGs
 bun run render:bpmn
 # 3. or, in CI, just check they are not stale
@@ -473,7 +473,7 @@ failure this page exists to prevent.
 ### Which diagrams are BPMN, and which are not
 {: #which-diagrams-are-bpmn-and-which-are-not }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md){: .fa-node-edit title="Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md){: .fa-node-edit title="Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Every **process** in the docs is BPMN. The diagrams that remain Mermaid are not
 processes, and BPMN would be the wrong notation for them — a pool with lanes
@@ -490,14 +490,14 @@ implies actors performing activities over time, which none of these have:
 | [Writing a paper](guides/writing-a-paper.html) — the Lean session | Mermaid `sequenceDiagram` | An interaction transcript between you, the assistant and the MCP server. BPMN's equivalent — a collaboration with message flows — would add ceremony without adding meaning |
 
 If you add a diagram that *does* have actors, activities and a control flow,
-it belongs in `docs/workflows/` as BPMN, not in a Mermaid fence.
+it belongs in `skills/workflows/` as BPMN, not in a Mermaid fence.
 
 ---
 
 ## See also
 {: #see-also }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/see-also.md){: .fa-node-edit title="Edit content/docs/publication-workflow/see-also.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/see-also.md){: .fa-node-edit title="Edit content/docs/publication-workflow/see-also.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 - [Content types](content-types.html) — the linear lifecycle and what each type produces
 - [Skills & roles](skills.html) — every skill and role, and how they compose with the LLM

@@ -18,7 +18,7 @@ lang: en
 
 _This page is generated from [`content/docs/guides-who-smart-dak/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/guides-who-smart-dak) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/overview.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/overview.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/overview.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 A **Digital Adaptation Kit (DAK)** is the *L2* — machine-readable but
 implementation-neutral — representation of a WHO SMART Guideline. This guide
@@ -31,14 +31,14 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 ## The L2 artifacts
 {: #the-l2-artifacts }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/../workflows/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit docs/../workflows/l2-dak-authoring.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit skills/workflows/l2-dak-authoring.bpmn" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 <div class="bpmn-figure" id="figure-the-l2-artifacts">
   <img src="../assets/img/workflows/l2-dak-authoring.svg"
        alt="BPMN swimlane diagram: the programme manager scopes the DAK, the plan is seeded as beans, then a parallel gateway fans out the five business-analyst artifacts (personas, BPMN processes, DMN decision logic, data dictionary, indicators) alongside the terminologist's bindings; a clinical SME validates, and the DAK is assembled once accurate.">
 </div>
 
-[BPMN 2.0 source](../workflows/l2-dak-authoring.bpmn) · [full-size SVG](../assets/img/workflows/l2-dak-authoring.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/l2-dak-authoring.bpmn) · [full-size SVG](../assets/img/workflows/l2-dak-authoring.svg)
 {: .bpmn-source }
 
 | Artifact | Skill | Format |
@@ -52,7 +52,7 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 ## Workflow
 {: #workflow }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/workflow.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/workflow.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/workflow.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/workflow.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 1. **Plan** — `content-plan`: enumerate the processes, decisions, and data
    elements the guideline implies; identify actors (business analyst, clinical
@@ -71,7 +71,7 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 ## A mock session
 {: #a-mock-session }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/a-mock-session.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/a-mock-session.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/a-mock-session.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/a-mock-session.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 > **You:** Plan the L2 DAK for the immunization guideline — I need the
 > "administer vaccine" process and the "is the client due" decision.
@@ -91,7 +91,7 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 ## Next
 {: #next }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/next.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/next.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/next.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/next.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Turn the L2 DAK into a computable FHIR Implementation Guide →
 [Authoring a WHO SMART IG (L3)](who-smart-ig.html).

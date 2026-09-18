@@ -26,7 +26,7 @@ this workflow to gather, validate, and implement requirements collaboratively.
 ## BPMN reference
 
 The full process is diagrammed in
-[`docs/workflows/crdm-requirements.bpmn`](../../docs/workflows/crdm-requirements.bpmn).
+[`skills/workflows/crdm-requirements.bpmn`](../../skills/workflows/crdm-requirements.bpmn).
 
 ## Every question you put to the BA carries its context first (STRICT)
 
@@ -92,7 +92,7 @@ comments up is the same defect wearing a different hat.
 
 **Input:** approved needs statement
 
-1. **Find the current workflow** — check `docs/workflows/*.bpmn` for existing
+1. **Find the current workflow** — check `skills/workflows/*.bpmn` for existing
    process diagrams that cover the affected area
 2. **Map the gap** — where in the current workflow does the need appear?
    Identify the specific activity or decision point

@@ -17,7 +17,7 @@ lang: en
 
 _This page is generated from [`content/docs/agentic-harness/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/agentic-harness) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/overview.md){: .fa-node-edit title="Edit content/docs/agentic-harness/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/overview.md){: .fa-node-edit title="Edit content/docs/agentic-harness/overview.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 The **agentic harness** is the interaction model that folio-assistant runs on —
 the rules, states, and workflows that govern how an agent and a user collaborate
@@ -36,7 +36,7 @@ enters for each class, and what the user should expect at each stage.
 ## Interaction states
 {: #interaction-states }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/interaction-states.md){: .fa-node-edit title="Edit content/docs/agentic-harness/interaction-states.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/interaction-states.md){: .fa-node-edit title="Edit content/docs/agentic-harness/interaction-states.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 A user–agent interaction is always in exactly one of two states:
 
@@ -56,13 +56,13 @@ Active workflows in this platform:
 
 | Workflow | BPMN source | Entered when |
 |---|---|---|
-| **Authoring (paper)** | [`authoring-a-paper.bpmn`](../../docs/workflows/authoring-a-paper.bpmn) | User requests content authoring in a paper folio |
-| **Authoring (document)** | [`authoring-a-document.bpmn`](../../docs/workflows/authoring-a-document.bpmn) | User requests content authoring in a document folio |
-| **Content lifecycle** | [`content-lifecycle.bpmn`](../../docs/workflows/content-lifecycle.bpmn) | Content moves through validate → render → publish |
-| **Document ingestion** | [`document-ingestion.bpmn`](../../docs/workflows/document-ingestion.bpmn) | User drops a file in `uploads/` |
-| **Draft to publication** | [`draft-to-publication.bpmn`](../../docs/workflows/draft-to-publication.bpmn) | Content moves from draft to published |
-| **CRDM requirements** | [`crdm-requirements.bpmn`](../../docs/workflows/crdm-requirements.bpmn) | Agent detects a feature request |
-| **Evidence retrieval** | [`evidence-retrieval.bpmn`](../../docs/workflows/evidence-retrieval.bpmn) | Agent searches for evidence to support a claim |
+| **Authoring (paper)** | [`authoring-a-paper.bpmn`](../../skills/workflows/authoring-a-paper.bpmn) | User requests content authoring in a paper folio |
+| **Authoring (document)** | [`authoring-a-document.bpmn`](../../skills/workflows/authoring-a-document.bpmn) | User requests content authoring in a document folio |
+| **Content lifecycle** | [`content-lifecycle.bpmn`](../../skills/workflows/content-lifecycle.bpmn) | Content moves through validate → render → publish |
+| **Document ingestion** | [`document-ingestion.bpmn`](../../skills/workflows/document-ingestion.bpmn) | User drops a file in `uploads/` |
+| **Draft to publication** | [`draft-to-publication.bpmn`](../../skills/workflows/draft-to-publication.bpmn) | Content moves from draft to published |
+| **CRDM requirements** | [`crdm-requirements.bpmn`](../../skills/workflows/crdm-requirements.bpmn) | Agent detects a feature request |
+| **Evidence retrieval** | [`evidence-retrieval.bpmn`](../../skills/workflows/evidence-retrieval.bpmn) | Agent searches for evidence to support a claim |
 
 **State transitions:** a workflow can be **suspended** when the user asks to
 switch context. The agent records where it was (the current BPMN activity) and
@@ -75,7 +75,7 @@ not, it is in the idle state, and the next request starts a new workflow.
 ## Session lifecycle
 {: #session-lifecycle }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/session-lifecycle.md){: .fa-node-edit title="Edit content/docs/agentic-harness/session-lifecycle.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/session-lifecycle.md){: .fa-node-edit title="Edit content/docs/agentic-harness/session-lifecycle.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Every agent session follows the same lifecycle:
 
@@ -104,7 +104,7 @@ Every agent session follows the same lifecycle:
 ## Request classification
 {: #request-classification }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/request-classification.md){: .fa-node-edit title="Edit content/docs/agentic-harness/request-classification.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/request-classification.md){: .fa-node-edit title="Edit content/docs/agentic-harness/request-classification.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Every user request is classified into one of these categories. The
 classification determines which workflow the agent enters.
@@ -138,7 +138,7 @@ content model?"
 ## Content workflows
 {: #content-workflows }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/content-workflows.md){: .fa-node-edit title="Edit content/docs/agentic-harness/content-workflows.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/content-workflows.md){: .fa-node-edit title="Edit content/docs/agentic-harness/content-workflows.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 When a request is classified as content work (authoring, review, ingestion),
 the agent follows the corresponding BPMN workflow. The existing documentation
@@ -167,12 +167,12 @@ switches context.
 ## Feature-request workflow (CRDM)
 {: #feature-request-workflow }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/feature-request-workflow.md){: .fa-node-edit title="Edit content/docs/agentic-harness/feature-request-workflow.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/feature-request-workflow.md){: .fa-node-edit title="Edit content/docs/agentic-harness/feature-request-workflow.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 When a request is classified as a feature request, the agent enters the
 **CRDM requirements workflow**
 ([full documentation](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
-[BPMN](../../docs/workflows/crdm-requirements.bpmn)).
+[BPMN](../../skills/workflows/crdm-requirements.bpmn)).
 
 The feature-request workflow is where this harness document adds the most
 value, because it describes a behaviour that was previously implicit. The
@@ -216,7 +216,7 @@ On exit, if a content workflow was suspended, the agent resumes it.
 ## User-provided content and sources
 {: #user-provided-content }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/user-provided-content.md){: .fa-node-edit title="Edit content/docs/agentic-harness/user-provided-content.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/user-provided-content.md){: .fa-node-edit title="Edit content/docs/agentic-harness/user-provided-content.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Users provide content and source material through multiple channels. The agent
 should accept all of them and route them into the appropriate pipeline:
@@ -247,7 +247,7 @@ and synthesises them into requirements for the review triage tool.
 ## Issue and bean discipline
 {: #issue-and-bean-discipline }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/issue-and-bean-discipline.md){: .fa-node-edit title="Edit content/docs/agentic-harness/issue-and-bean-discipline.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/issue-and-bean-discipline.md){: .fa-node-edit title="Edit content/docs/agentic-harness/issue-and-bean-discipline.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Feature work must be linked to a GitHub issue. Content work uses beans. The
 two are related but not synonymous.
@@ -296,7 +296,7 @@ two are related but not synonymous.
 ## Consolidated skill references
 {: #consolidated-skill-references }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/consolidated-skill-references.md){: .fa-node-edit title="Edit content/docs/agentic-harness/consolidated-skill-references.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/consolidated-skill-references.md){: .fa-node-edit title="Edit content/docs/agentic-harness/consolidated-skill-references.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 The behaviour described on this page draws from skills and guidance documents
 scattered across the repository. This section maps the consolidated behaviour
@@ -323,7 +323,7 @@ consolidation, not a new authority. If you find a discrepancy, fix this page.
 ## What is not built yet
 {: #what-is-not-built-yet }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/what-is-not-built-yet.md){: .fa-node-edit title="Edit content/docs/agentic-harness/what-is-not-built-yet.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/what-is-not-built-yet.md){: .fa-node-edit title="Edit content/docs/agentic-harness/what-is-not-built-yet.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 - **Workflow state persistence** — the harness describes workflow suspension
   and resumption, but there is no mechanism to persist the agent's workflow

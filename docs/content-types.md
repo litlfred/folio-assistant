@@ -17,7 +17,7 @@ lang: en
 
 _This page is generated from [`content/docs/content-types/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/content-types) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/overview.md){: .fa-node-edit title="Edit content/docs/content-types/overview.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/overview.md){: .fa-node-edit title="Edit content/docs/content-types/overview.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 folio-assistant is **content-agnostic**: the platform knows nothing about any
 particular paper or guideline. Each *kind* of content is supported by a
@@ -33,7 +33,7 @@ a **skill package** (the authoring formalism — what an author and the LLM do).
 ## The content lifecycle
 {: #the-content-lifecycle }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/content-lifecycle.bpmn){: .fa-node-edit title="Edit docs/workflows/content-lifecycle.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/content-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/content-lifecycle.bpmn" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 Every content type moves through the same lifecycle, provided by the
 cross-cutting **`content-lifecycle`** skill package:
@@ -43,7 +43,7 @@ cross-cutting **`content-lifecycle`** skill package:
        alt="BPMN swimlane diagram of one folio cycle: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs per proposed change, an integration test and QA sweep follows, then draft-review-publish; feedback is triaged and filed as beans, and the cycle either repeats or the folio is retired.">
 </div>
 
-[BPMN 2.0 source](workflows/content-lifecycle.bpmn) · [full-size SVG](assets/img/workflows/content-lifecycle.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/content-lifecycle.bpmn) · [full-size SVG](assets/img/workflows/content-lifecycle.svg)
 {: .bpmn-source }
 
 | Stage | Skill | What happens |
@@ -73,7 +73,7 @@ assembled draft. Both expand into their own diagrams on the
 ## Documents & policy guidance
 {: #documents-policy-guidance }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/authoring-a-document.bpmn){: .fa-node-edit title="Edit docs/workflows/authoring-a-document.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/authoring-a-document.bpmn){: .fa-node-edit title="Edit skills/workflows/authoring-a-document.bpmn" }
 
 **Skill package:** `authoring-document` ·
 **Adapter:** `document` ·
@@ -106,13 +106,13 @@ Relevant skill schemas:
        alt="BPMN swimlane diagram of document authoring: the author plans, the plan is seeded as beans, an agent scaffolds the folio and authors blocks, the build pipeline checks the declared profile before validating and rendering to Markdown, HTML and PDF, and a reviewer gates publication.">
 </div>
 
-[BPMN 2.0 source](workflows/authoring-a-document.bpmn) · [full-size SVG](assets/img/workflows/authoring-a-document.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/authoring-a-document.bpmn) · [full-size SVG](assets/img/workflows/authoring-a-document.svg)
 {: .bpmn-source }
 
 ### Carrying a normative statement
 {: #carrying-a-normative-statement }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/carrying-a-normative-statement.md){: .fa-node-edit title="Edit content/docs/content-types/carrying-a-normative-statement.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/carrying-a-normative-statement.md){: .fa-node-edit title="Edit content/docs/content-types/carrying-a-normative-statement.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 A recommendation, requirement or rule is the block readers cite and
 implementers trace to. It wants a label, a stable identity and a place in the
@@ -132,7 +132,7 @@ predates this content type and is wrong for a document folio, where
 ## Scientific papers & books
 {: #scientific-papers-books }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/scientific-papers-books.md){: .fa-node-edit title="Edit content/docs/content-types/scientific-papers-books.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/scientific-papers-books.md){: .fa-node-edit title="Edit content/docs/content-types/scientific-papers-books.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 **Skill package:** `authoring-math` ·
 **Adapter:** `paper` ·
@@ -192,7 +192,7 @@ Relevant skill schemas:
 ## WHO SMART Guidelines DAKs (L2)
 {: #who-smart-guidelines-daks-l2 }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit docs/workflows/l2-dak-authoring.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit skills/workflows/l2-dak-authoring.bpmn" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 **Skill package:** `authoring-who-smart-guidelines` ·
 **Guide:** [Authoring a WHO SMART DAK](guides/who-smart-dak.html)
@@ -218,7 +218,7 @@ Relevant skill schemas:
        alt="BPMN swimlane diagram of L2 DAK authoring: a parallel gateway fans out personas, BPMN processes, DMN decision logic, the data dictionary and indicators across the business-analyst lane alongside the terminologist's bindings, then clinical SME validation gates assembly of the DAK.">
 </div>
 
-[BPMN 2.0 source](workflows/l2-dak-authoring.bpmn) · [full-size SVG](assets/img/workflows/l2-dak-authoring.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/l2-dak-authoring.bpmn) · [full-size SVG](assets/img/workflows/l2-dak-authoring.svg)
 {: .bpmn-source }
 
 ---
@@ -226,7 +226,7 @@ Relevant skill schemas:
 ## WHO SMART Implementation Guides (L3)
 {: #who-smart-implementation-guides-l3 }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/docs/workflows/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit docs/workflows/l3-fhir-pipeline.bpmn" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit skills/workflows/l3-fhir-pipeline.bpmn" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 **Skill package:** `authoring-who-smart-guidelines` ·
 **Guide:** [Authoring a WHO SMART IG](guides/who-smart-ig.html)
@@ -250,7 +250,7 @@ Relevant skill schemas:
        alt="BPMN swimlane diagram of the L3 pipeline: map L2 to L3, author FSH, SUSHI compile, validate against profiles with a loop back to FSH on failure, QC gates that file findings as beans, IG Publisher build, and publication of the IG site.">
 </div>
 
-[BPMN 2.0 source](workflows/l3-fhir-pipeline.bpmn) · [full-size SVG](assets/img/workflows/l3-fhir-pipeline.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/l3-fhir-pipeline.bpmn) · [full-size SVG](assets/img/workflows/l3-fhir-pipeline.svg)
 {: .bpmn-source }
 
 ---
@@ -258,7 +258,7 @@ Relevant skill schemas:
 ## Others — extending folio-assistant
 {: #others-extending-folio-assistant }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/others-extending-folio-assistant.md){: .fa-node-edit title="Edit content/docs/content-types/others-extending-folio-assistant.md" }
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/others-extending-folio-assistant.md){: .fa-node-edit title="Edit content/docs/content-types/others-extending-folio-assistant.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
 
 New content types are first-class: add a content **adapter** and a skill
 **package**, and the lifecycle, RBAC, and MCP plumbing come for free. See

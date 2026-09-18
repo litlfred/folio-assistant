@@ -9,8 +9,8 @@
  * {
  *   "name": "folio-assistant",
  *   "nodes": [
- *     { "id": "defs",      "path": "defs",      "kind": "bean-defs" },
- *     { "id": "workflows", "path": "workflows", "kind": "workflow-state" }
+ *     { "id": "defs",      "path": "defs",      "kinds": ["bean-defs"] },
+ *     { "id": "workflows", "path": "workflows", "kinds": ["workflow-state"] }
  *   ]
  * }
  * ```
@@ -50,10 +50,35 @@
  * - **Unknown node kind** → rejected, not accepted and ignored. A node whose
  *   kind nothing understands is a store nothing will read.
  *
+ * ## It defers to `agent-harness.ts`, and does not restate it
+ *
+ * A bean-graph entry IS a {@link ContentDirectory}: an id, a path, and the
+ * graph kinds found there. Same schema, same open registry, same JSON-LD
+ * projection.
+ *
+ * This file briefly had its own parallel vocabulary — `nodes` with
+ * `kinds: BeanNodeKind[]`, a closed Zod enum — which said exactly what
+ * `directories` with `graphs: GraphKind[]` already said, in different words.
+ * Two spellings of one concept is the drift this repository keeps paying for,
+ * so the kinds moved into `BASE_GRAPH_KINDS` and the shape is now imported
+ * rather than redeclared.
+ *
+ * What remains here is only what is SPECIFIC to the bean graph and not true
+ * of declarations generally: paths resolve against this file's own directory
+ * rather than the instance root, and at most one directory may hold
+ * `workflow-state`.
+ *
  * @module schemas/bean-graph
  */
 
 import { z } from "zod";
+
+import {
+  ContentDirectorySchema,
+  defaultGraphKinds,
+  type ContentDirectory,
+  type GraphKindRegistry,
+} from "./agent-harness";
 
 /**
  * The kinds of store a bean-graph node can be.
@@ -69,24 +94,36 @@ import { z } from "zod";
  * was considered in `docs/proposals/workflow-state-in-beans.md` and rejected
  * (Option A: two stores, one link).
  */
+/**
+ * The graph kinds a bean graph's directories hold.
+ *
+ * Both are registered in {@link BASE_GRAPH_KINDS}, not defined here — the
+ * vocabulary is shared with `agent-harness.json`, so a consumer that knows
+ * one declaration knows the other. This constant is a convenience for callers
+ * that want the bean-specific subset, never a second source of truth.
+ */
 export const BEAN_NODE_KINDS = ["bean-defs", "workflow-state"] as const;
 export type BeanNodeKind = (typeof BEAN_NODE_KINDS)[number];
 
-export const BeanGraphNodeSchema = z.object({
-  /** Stable identifier. Overrides and references match on this, never on `path`. */
-  id: z.string().min(1),
-  /** Directory, relative to the graph root. Never absolute, never escaping the root. */
-  path: z.string().min(1),
-  /** What this node holds. */
-  kind: z.enum(BEAN_NODE_KINDS),
-});
+/**
+ * A bean-graph directory — the shared {@link ContentDirectorySchema}, reused
+ * rather than redeclared.
+ *
+ * `graphs` is an array for the reason it is one there: a directory is a PLACE
+ * TO LOOK and may hold more than one part of the graph. It does not say how to
+ * tell the contents apart, deliberately — **the files declare what they are.**
+ * A bean carries its id, `title`, `status` and `type` in front matter; a
+ * workflow instance carries `"$schema": "folio-workflow-instance/v1"`.
+ */
+export const BeanGraphNodeSchema = ContentDirectorySchema;
 
-export type BeanGraphNode = z.infer<typeof BeanGraphNodeSchema>;
+export type BeanGraphNode = ContentDirectory;
 
 export const BeanGraphSchema = z.object({
   /** Display name — which instance's work plan this is. */
   name: z.string().min(1),
-  nodes: z.array(BeanGraphNodeSchema).min(1),
+  /** Named `directories`, like the harness declaration, not `nodes`. */
+  directories: z.array(BeanGraphNodeSchema).min(1),
 });
 
 export type BeanGraph = z.infer<typeof BeanGraphSchema>;
@@ -105,9 +142,9 @@ export const DEFAULT_BEAN_GRAPH_ROOT = "beans";
  */
 export const DEFAULT_BEAN_GRAPH: BeanGraph = {
   name: "default",
-  nodes: [
-    { id: "defs", path: "defs", kind: "bean-defs" },
-    { id: "workflows", path: "workflows", kind: "workflow-state" },
+  directories: [
+    { id: "defs", path: "defs", graphs: ["bean-defs"] },
+    { id: "workflows", path: "workflows", graphs: ["workflow-state"] },
   ],
 };
 
@@ -135,11 +172,30 @@ function pathEscapesRoot(p: string): boolean {
  * Throws on malformed input — see the module docstring for why "present but
  * unreadable" is a hard failure rather than a fallback to defaults.
  */
-export function parseBeanGraph(raw: unknown): BeanGraph {
+export function parseBeanGraph(
+  raw: unknown,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): BeanGraph {
   const graph = BeanGraphSchema.parse(raw);
 
   const seen = new Set<string>();
-  for (const node of graph.nodes) {
+  for (const node of graph.directories) {
+    // Kind validation lives here rather than in the Zod shape for the reason
+    // `readDeclaration` gives: the vocabulary is OPEN, so the valid set is
+    // whatever has been registered by the time the graph is read, not what
+    // existed at module load. Reusing `ContentDirectorySchema` brought the
+    // shape but not this check, and a test caught the gap — an unknown kind
+    // was being accepted and ignored, which is the failure mode this schema's
+    // own docstring forbids.
+    for (const g of node.graphs) {
+      if (!registry.has(g)) {
+        throw new Error(
+          `bean graph: directory "${node.id}" declares unknown graph kind "${g}". ` +
+            `Known kinds: ${registry.names().join(", ")}.`,
+        );
+      }
+    }
+
     if (seen.has(node.id)) {
       throw new Error(
         `bean graph: duplicate node id "${node.id}". Ids are what overrides and ` +
@@ -159,7 +215,7 @@ export function parseBeanGraph(raw: unknown): BeanGraph {
   // Not a uniqueness rule in general — a graph may one day hold several
   // definition stores — but exactly one workflow-state node is what every
   // consumer today assumes, and an unnoticed second would split the state.
-  const stateNodes = graph.nodes.filter((n) => n.kind === "workflow-state");
+  const stateNodes = graph.directories.filter((n) => n.graphs.includes("workflow-state"));
   if (stateNodes.length > 1) {
     throw new Error(
       `bean graph: ${stateNodes.length} workflow-state nodes ` +
@@ -171,7 +227,14 @@ export function parseBeanGraph(raw: unknown): BeanGraph {
   return graph;
 }
 
-/** The single node of `kind`, or undefined when the graph declares none. */
+/**
+ * The first node declaring `kind`, or undefined when the graph declares none.
+ *
+ * "First" rather than "the": a kind may appear on several nodes now that
+ * `kinds` is an array. Only `workflow-state` is constrained to one node (see
+ * {@link parseBeanGraph}), because splitting process state is a correctness
+ * problem rather than a layout choice.
+ */
 export function nodeOfKind(graph: BeanGraph, kind: BeanNodeKind): BeanGraphNode | undefined {
-  return graph.nodes.find((n) => n.kind === kind);
+  return graph.directories.find((n) => n.graphs.includes(kind));
 }

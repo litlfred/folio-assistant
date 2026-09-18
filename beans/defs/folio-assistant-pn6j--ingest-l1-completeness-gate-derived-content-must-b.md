@@ -31,4 +31,4 @@ ingest time, which is the one moment the context is still in hand.
 The gate runs in the ingest path, a failure opens a bean and holds the document
 in `uploads/`, and the verdict is recorded on the document.
 
-Diagram: `docs/workflows/ingest-l1-completeness-gate.bpmn`.
+Diagram: `skills/workflows/ingest-l1-completeness-gate.bpmn`.

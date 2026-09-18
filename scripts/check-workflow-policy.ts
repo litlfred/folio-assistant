@@ -20,7 +20,7 @@ import { loadProcessModel } from "../src/workflow/process-model.js";
 import { loadRelaxations, validateRelaxations, PolicyError } from "../src/workflow/gate.js";
 
 const root = resolve(import.meta.dir, "..");
-const dir = join(root, "docs", "workflows");
+const dir = join(root, "skills", "workflows");
 
 const models = await Promise.all(
   readdirSync(dir)

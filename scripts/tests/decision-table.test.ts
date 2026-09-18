@@ -24,7 +24,7 @@ import { complete, enabled, startInstance, WorkflowError } from "../../src/workf
  * able to assert the answer would defeat the whole mechanism.
  */
 
-const WF = resolve(import.meta.dir, "../../docs/workflows");
+const WF = resolve(import.meta.dir, "../../skills/workflows");
 const DEC = join(WF, "decisions");
 
 describe("the FEEL subset", () => {

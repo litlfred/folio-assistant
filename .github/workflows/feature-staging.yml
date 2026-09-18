@@ -168,13 +168,44 @@ jobs:
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
+        # bash explicitly: the loop uses process substitution and ${var//a/b}.
+        shell: bash
         run: |
           SHA="${GITHUB_SHA:0:7}"
           BRANCH="${{ steps.slug.outputs.branch }}"
           BUILT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           PR="${{ github.event.pull_request.number || 'n/a' }}"
           BRANCH_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/${BRANCH}"
-          MAIN_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          MAIN_SITE="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          # Which pages actually EXIST on the published main site.
+          #
+          # The compare link exists to put this page beside its counterpart on
+          # main, so it has to name the page — landing the reader on the site
+          # root asks them to re-navigate from memory to do the comparison the
+          # link is for, and the deeper the page the less likely they bother.
+          #
+          # But a staging page may have NO counterpart: it is a page the branch
+          # ADDS. Deep-linking unconditionally would publish a 404 on exactly
+          # the pages a reviewer most wants to see. So the target is resolved
+          # against the publish ref rather than composed by convention — the
+          # same rule `readme-sections.ts` follows for PDF cells.
+          #
+          # `gh-pages` is not in this checkout (checkout@v4, depth 1), so fetch
+          # a shallow copy of just that ref. Paths under STAGING/ are other
+          # branches' previews, not the main site, and are excluded.
+          MAIN_PAGES=""
+          MAIN_PAGES_KNOWN=0
+          if git fetch --depth=1 origin gh-pages >/dev/null 2>&1; then
+            MAIN_PAGES="$(git ls-tree -r --name-only FETCH_HEAD 2>/dev/null | grep -v '^STAGING/' || true)"
+            # An empty tree is a determined empty, but a failed read is not —
+            # only claim knowledge when the listing actually produced paths.
+            [ -n "$MAIN_PAGES" ] && MAIN_PAGES_KNOWN=1
+          fi
+          if [ "$MAIN_PAGES_KNOWN" = "1" ]; then
+            echo "Read $(printf '%s\n' "$MAIN_PAGES" | wc -l) page(s) from the publish ref"
+          else
+            echo "Could not read the publish ref — compare links fall back to the site root"
+          fi
           PR_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pull/${PR}"
           # The issue this branch is FOR. A reviewer landing on a staged page
           # can see the branch, the commit and the PR, but not WHY the work
@@ -208,15 +239,44 @@ jobs:
           OFFSET_STYLE="<style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style>"
           OFFSET_SCRIPT="<script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>"
           CHIP='font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px'
-          BANNER="<div data-fa-staging-banner style=\"background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui\">🔀 <b>FEATURE BRANCH</b> — <a href=\"${BRANCH_URL}\" style=\"color:#fff;text-decoration:underline\"><span style=\"${CHIP}\">${BRANCH}</span></a> · commit <span style=\"${CHIP}\">${SHA}</span> · built ${BUILT} · <a href=\"${PR_URL}\" style=\"color:#fff;text-decoration:underline\">PR #${PR}</a>${ISSUE_FRAGMENT} · <a href=\"${MAIN_URL}\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a> · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\" style=\"color:#fff;text-decoration:underline\">build log</a></div>${OFFSET_STYLE}${OFFSET_SCRIPT}"
+          BANNER="<div data-fa-staging-banner style=\"background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui\">🔀 <b>FEATURE BRANCH</b> — <a href=\"${BRANCH_URL}\" style=\"color:#fff;text-decoration:underline\"><span style=\"${CHIP}\">${BRANCH}</span></a> · commit <span style=\"${CHIP}\">${SHA}</span> · built ${BUILT} · <a href=\"${PR_URL}\" style=\"color:#fff;text-decoration:underline\">PR #${PR}</a>${ISSUE_FRAGMENT} · @@COMPARE@@ · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\" style=\"color:#fff;text-decoration:underline\">build log</a></div>${OFFSET_STYLE}${OFFSET_SCRIPT}"
           # Match the WHOLE opening tag, not the literal "<body". Matching
           # "<body" alone re-emitted "<body>" and left the original tag's own
           # ">" behind, so every staged page carried a stray ">" after the
           # banner — and any <body> carrying attributes came out as
           # "<body>BANNER class="..."">: attributes orphaned as visible text,
           # and the real tag stripped of them.
-          find ./_site -name "*.html" -exec sed -i "s|<body\([^>]*\)>|<body\1>${BANNER}|" {} + 2>/dev/null || true
-          echo "Injected staging banner into $(find ./_site -name '*.html' | wc -l) HTML files"
+          #
+          # Per-file, not one sed over everything: the compare link names THIS
+          # page, so the banner is no longer a constant. Everything else in it
+          # is, so only the one fragment is rebuilt per file.
+          #
+          # Three states, and the middle one is the reason this is not a
+          # one-line change:
+          #   present on main      -> deep link to the same page
+          #   absent from main     -> site root, and SAY the page is new
+          #   publish ref unread   -> site root, worded as today
+          # "Could not tell" must never render as "this page is new": that
+          # would label every page new on any run where the fetch failed.
+          INJECTED=0
+          NEW_PAGES=0
+          while IFS= read -r f; do
+            REL="${f#./_site/}"
+            if [ "$MAIN_PAGES_KNOWN" = "1" ]; then
+              if printf '%s\n' "$MAIN_PAGES" | grep -qxF "$REL"; then
+                COMPARE="<a href=\"${MAIN_SITE}/${REL}\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a>"
+              else
+                COMPARE="<a href=\"${MAIN_SITE}/\" style=\"color:#fff;text-decoration:underline\">main ↗</a> <span style=\"opacity:.85\">(new page)</span>"
+                NEW_PAGES=$((NEW_PAGES + 1))
+              fi
+            else
+              COMPARE="<a href=\"${MAIN_SITE}/\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a>"
+            fi
+            PAGE_BANNER="${BANNER//@@COMPARE@@/$COMPARE}"
+            sed -i "s|<body\([^>]*\)>|<body\1>${PAGE_BANNER}|" "$f" 2>/dev/null || true
+            INJECTED=$((INJECTED + 1))
+          done < <(find ./_site -name "*.html")
+          echo "Injected staging banner into ${INJECTED} HTML files (${NEW_PAGES} with no counterpart on main)"
 
       # The branch's KG, published beside the branch's site, so the graph a
       # reviewer inspects is the one this PR produces rather than main's. The
