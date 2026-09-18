@@ -10,13 +10,17 @@ parent: Skill instructions
 > [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/directory-conventions.md){: .fa-edit-source }
 
 {% raw %}
-# Directory conventions — what a folio-assistant instance declares it scans
+# Directory conventions — what an instance declares it scans
 
-Every folio-assistant instance carries a **`folio-assistant.json`** at its
-repository root. It declares the directories the instance scans for content,
+Every instance carries an **`agent-harness.json`** at its repository root. It declares the directories the instance scans for content,
 and what **kind of graph** each one holds.
 
-Schema and resolution: `schemas/folio-assistant.ts`. Issue
+Schema and resolution: `schemas/agent-harness.ts`.
+
+**It is the *harness's* schema, not folio-assistant's.** `agentic-harness` is
+the layer that defines Roles, Skills, Tools and these conventions, and every
+other instance inherits from it — so an instance need not be a folio-assistant
+to carry one. A Tool repo or a Test repo carries the same declaration. Issue
 [#223](https://github.com/litlfred/folio-assistant/issues/223), Phase 0.3.
 
 ## Why directories rather than a content type
@@ -52,7 +56,7 @@ graphs — but only a renderable one is wired to the site build.
 
 ```
 agentic-harness/          folio-assist-core/
-  folio-assistant.json      folio-assistant.json
+  agent-harness.json        agent-harness.json
   tools/     → tools        folio/     → folio
   kg/        → kg           (inherits tools/, kg/, schemas/)
   schemas/   → schemas
@@ -83,7 +87,7 @@ moving to the end — a relocation should not reshuffle what is scanned first.
 
 ## Three states, as everywhere else here
 
-- **No `folio-assistant.json`** → `readDeclaration` returns `undefined`. An
+- **No `agent-harness.json`** → `readDeclaration` returns `undefined`. An
   instance not yet migrated is ordinary, and callers fall back to today's
   conventions. Not an error.
 - **Present but unreadable** → **throws.** A declaration nobody can parse
@@ -119,7 +123,7 @@ what a directory holds.
 
 ## Adding a graph kind
 
-One entry in `GRAPH_KINDS` (`schemas/folio-assistant.ts`): its `@type` IRI, its
+One entry in `GRAPH_KINDS` (`schemas/agent-harness.ts`): its `@type` IRI, its
 `renderable` flag, and a one-line summary. The Zod enum, the JSON-LD projection
 and the reverse lookup all derive from that object, so nothing else needs
 touching — and a kind that is added without deciding `renderable` will not

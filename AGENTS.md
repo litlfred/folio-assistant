@@ -720,7 +720,7 @@ Full protocol, with the worked example:
   because whether work is done is a judgement and `AGENTS.md` says a bean is not
   closed on someone else's say-so. `work_plan_prime` reports every instance's
   position next to its bean, so the plan and the process are one answer.
-- **An instance declares the directories it scans — `folio-assistant.json` at
+- **An instance declares the directories it scans — `agent-harness.json` at
   the repo root.** Each entry names a directory and the **kind of graph** it
   holds: `folio` (authored content, rendered to a website by just-the-docs),
   `tools` (Tool definitions, themselves KG nodes), `kg` (skills, workflows,
@@ -736,7 +736,7 @@ Full protocol, with the worked example:
   exists** — a declared-but-absent directory is the bean `dh4f` defect, where a
   consumer scans nothing and reports a clean run over it. This repo is
   pre-split and declares `schemas/` and `skills/` only. Schema:
-  `schemas/folio-assistant.ts`; conventions:
+  `schemas/agent-harness.ts`; conventions:
   [`skills/folio-core/directory-conventions.md`](skills/folio-core/directory-conventions.md).
 - Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).

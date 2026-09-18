@@ -1,5 +1,5 @@
 /**
- * Tests for the FolioAssistant root declaration — issue #223, Phase 0.3.
+ * Tests for the AgentHarness root declaration — issue #223, Phase 0.3.
  *
  * The shape under test: an instance declares the directories it scans and the
  * graph kind each holds, and a downstream instance INHERITS its dependencies'
@@ -8,17 +8,19 @@
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
+import { FOLIO_NS } from "./jsonld";
 import {
   DECLARATION_FILENAME,
+  HARNESS_NS,
   GRAPH_KIND_NAMES,
   isRenderable,
   readDeclaration,
   renderableDirectories,
   resolveDirectories,
   toJsonLd,
-} from "./folio-assistant";
+} from "./agent-harness";
 
-const TMP = join(import.meta.dir, "__test_folio_assistant__");
+const TMP = join(import.meta.dir, "__test_agent_harness__");
 const HARNESS = join(TMP, "agentic-harness");
 const CORE = join(TMP, "folio-assist-core");
 const RELOCATED = join(TMP, "relocated");
@@ -87,7 +89,7 @@ describe("reading a declaration", () => {
       JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", graph: "wishful" }] }),
       "utf-8",
     );
-    expect(() => readDeclaration(bad)).toThrow(/not a valid FolioAssistant declaration/);
+    expect(() => readDeclaration(bad)).toThrow(/not a valid AgentHarness declaration/);
   });
 
   it("accepts the JSON-LD projection as input, not just the authored form", () => {
@@ -148,6 +150,15 @@ describe("inheritance — the Phase 0.3 gate", () => {
 
   it("a chain of instances with no declarations resolves to nothing, not an error", () => {
     expect(resolveDirectories([{ name: "bare", root: join(TMP, "nope"), own: true }])).toEqual([]);
+  });
+});
+
+describe("namespace", () => {
+  it("HARNESS_NS equals FOLIO_NS — same platform, one namespace", () => {
+    // The harness declares its own constant rather than importing the content
+    // vocabulary, so that agentic-harness does not depend on folio-assist-core
+    // for its own type IRIs. This test is what stops the two drifting.
+    expect(HARNESS_NS).toBe(FOLIO_NS);
   });
 });
 

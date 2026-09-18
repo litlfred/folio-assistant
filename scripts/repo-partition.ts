@@ -197,6 +197,11 @@ const RULES: Rule[] = [
       "schemas/assistant-package.ts",
       "schemas/assistant-types.ts",
       "schemas/assistant-workflow.ts",
+      // The AgentHarness root declaration is harness-layer by concept even
+      // though it sits in schemas/. It declares its own HARNESS_NS rather than
+      // importing the content vocabulary, so classifying it here adds no
+      // wrong-direction edge — see schemas/agent-harness.ts.
+      "schemas/agent-harness.ts",
     ],
     prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "adapters/mcp-server/", "skills/framework/", "skills/remote-packages/"],
   },

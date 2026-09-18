@@ -1,8 +1,16 @@
 /**
- * The `FolioAssistant` declaration — what an instance IS, at its root.
+ * The `AgentHarness` declaration — what an instance IS, at its root.
+ *
+ * Named for the **harness**, not for folio-assistant, and the distinction is
+ * the point: `agentic-harness` is the layer that defines Roles, Skills, Tools
+ * and the conventional directories, and every other instance — including
+ * `folio-assist-core` — inherits from it. Calling this a "FolioAssistant"
+ * declaration would put the platform family's name on a harness-layer concept
+ * and imply that an instance must be a folio-assistant to have one. It need
+ * not: a Tool repo or a Test repo carries the same declaration.
  *
  * Issue #223, Phase 0.3. Every folio-assistant instance carries one of these
- * at its repository root (`folio-assistant.json`). It declares the directories
+ * at its repository root (`agent-harness.json`). It declares the directories
  * the instance scans for content, and what **kind of graph** each one holds.
  *
  * ## Why a directory declaration rather than a content-type field
@@ -44,17 +52,32 @@
  * else in the knowledge graph, rather than being configuration that only this
  * module understands.
  *
- * @module schemas/folio-assistant
+ * @module schemas/agent-harness
  */
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { z } from "zod";
 
-import { FOLIO_NS } from "./jsonld";
+/**
+ * The published namespace, declared here rather than imported from
+ * `schemas/jsonld.ts`.
+ *
+ * It is the same IRI, and that is deliberate — one platform, one namespace.
+ * But `jsonld.ts` is the **content** vocabulary (block kinds, DoCO types,
+ * citation terms), which belongs to `folio-assist-core`. A harness-layer
+ * module importing it would make `agentic-harness` depend on the content model
+ * for its own type IRIs, which is precisely the coupling
+ * `bun run check:partition` reports 21 instances of and the split has to undo.
+ *
+ * `agent-harness.test.ts` asserts this equals `FOLIO_NS`, so the two cannot
+ * drift apart without a test failing. A duplicated constant with a guard beats
+ * an import that inverts a dependency.
+ */
+export const HARNESS_NS = "https://litlfred.github.io/folio-assistant/ns#";
 
 /** Root-relative filename carrying an instance's declaration. */
-export const DECLARATION_FILENAME = "folio-assistant.json";
+export const DECLARATION_FILENAME = "agent-harness.json";
 
 // ── Graph kinds ─────────────────────────────────────────────────
 
@@ -70,22 +93,22 @@ export const DECLARATION_FILENAME = "folio-assistant.json";
  */
 export const GRAPH_KINDS = {
   folio: {
-    type: `${FOLIO_NS}FolioGraph`,
+    type: `${HARNESS_NS}FolioGraph`,
     renderable: true,
     summary: "Authored content, rendered to a website by the just-the-docs pipeline.",
   },
   tools: {
-    type: `${FOLIO_NS}ToolGraph`,
+    type: `${HARNESS_NS}ToolGraph`,
     renderable: false,
     summary: "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
   },
   kg: {
-    type: `${FOLIO_NS}KnowledgeGraph`,
+    type: `${HARNESS_NS}KnowledgeGraph`,
     renderable: false,
     summary: "Skills, workflows, roles — the instance's own knowledge graph.",
   },
   schemas: {
-    type: `${FOLIO_NS}SchemaGraph`,
+    type: `${HARNESS_NS}SchemaGraph`,
     renderable: false,
     summary: "Schema definitions, self-declared in the smart-base manner.",
   },
@@ -131,7 +154,7 @@ export interface ContentDirectory {
 }
 
 /** An instance's root declaration. */
-export interface FolioAssistantDeclaration {
+export interface AgentHarnessDeclaration {
   /** The instance's name, e.g. `"agentic-harness"`. */
   name: string;
   /** Directories this instance scans, before inheritance. */
@@ -145,7 +168,7 @@ export const ContentDirectorySchema = z.object({
   summary: z.string().optional(),
 });
 
-export const FolioAssistantDeclarationSchema = z.object({
+export const AgentHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   directories: z.array(ContentDirectorySchema).default([]),
 });
@@ -161,7 +184,7 @@ export const FolioAssistantDeclarationSchema = z.object({
  * read leaves every consumer scanning the wrong directories, which is worse
  * than not having one.
  */
-export function readDeclaration(instanceRoot: string): FolioAssistantDeclaration | undefined {
+export function readDeclaration(instanceRoot: string): AgentHarnessDeclaration | undefined {
   const p = join(instanceRoot, DECLARATION_FILENAME);
   if (!existsSync(p)) return undefined;
   let raw: unknown;
@@ -170,9 +193,9 @@ export function readDeclaration(instanceRoot: string): FolioAssistantDeclaration
   } catch (e) {
     throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
   }
-  const parsed = FolioAssistantDeclarationSchema.safeParse(stripJsonLd(raw));
+  const parsed = AgentHarnessDeclarationSchema.safeParse(stripJsonLd(raw));
   if (!parsed.success) {
-    throw new Error(`${p} is not a valid FolioAssistant declaration: ${parsed.error.message}`);
+    throw new Error(`${p} is not a valid AgentHarness declaration: ${parsed.error.message}`);
   }
   return parsed.data;
 }
@@ -267,10 +290,10 @@ export function renderableDirectories(dirs: ResolvedDirectory[]): ResolvedDirect
  * Kept as a function rather than as the stored form so there is one authored
  * shape and one derived shape, not two truths.
  */
-export function toJsonLd(decl: FolioAssistantDeclaration): Record<string, unknown> {
+export function toJsonLd(decl: AgentHarnessDeclaration): Record<string, unknown> {
   return {
-    "@context": { fa: FOLIO_NS, path: `${FOLIO_NS}path`, directories: `${FOLIO_NS}scans` },
-    "@type": `${FOLIO_NS}Instance`,
+    "@context": { fa: HARNESS_NS, path: `${HARNESS_NS}path`, directories: `${HARNESS_NS}scans` },
+    "@type": `${HARNESS_NS}AgentHarness`,
     name: decl.name,
     directories: decl.directories.map((d) => ({
       "@id": `#${d.id}`,
