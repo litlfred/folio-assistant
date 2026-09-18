@@ -34,7 +34,8 @@ import type { ContentAdapter, ContentProfile } from "./block-kinds";
  * - `human`: the repo owner (or a human collaborator) adjudicated.
  *   Final authority. `id` is the GitHub login.
  */
-export type QaReviewerKind = "script" | "agent" | "human";
+export const QA_REVIEWER_KINDS = ["script", "agent", "human"] as const;
+export type QaReviewerKind = (typeof QA_REVIEWER_KINDS)[number];
 
 /**
  * Identity + provenance of a single QA reviewer entry.
