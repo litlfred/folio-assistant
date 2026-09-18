@@ -92,6 +92,46 @@
     return path.replace(new RegExp("/" + currentLang + "/"), "/");
   }
 
+  /**
+   * Put a disclosure panel where the sidebar header cannot clip it.
+   *
+   * just-the-docs hard-caps `.site-header` height at the desktop breakpoint,
+   * so a panel left inside it is cut off. The QR panel solved this by moving
+   * itself into `.side-bar` as a sibling of the header, where it joins the
+   * flex column in NORMAL FLOW: it pushes the nav down instead of covering
+   * anything, and inherits the sidebar's fixed positioning for free.
+   *
+   * The reading-preferences and language panels did not use that route. They
+   * stayed inside the header — the language bar additionally opening UPWARD
+   * (`bottom: 100%`) to escape the cap, which only traded one clipping for
+   * another: it then ran off the top of the column and under the staging
+   * banner. Both are reported broken by readers; the QR panel is not. Same
+   * problem, one fix, so this is shared rather than copied a third time.
+   *
+   * Returns true when the panel reached the sidebar column, so a caller can
+   * style the two cases differently.
+   */
+  function mountPanelInSidebarColumn(host, panel) {
+    var sideBar = host.closest ? host.closest(".side-bar") : null;
+    if (sideBar) {
+      // The direct child of `.side-bar` that contains `host` — normally
+      // `.site-header`. Walking up rather than assuming `host.parentNode`
+      // keeps this correct if the host is nested any deeper.
+      var anchor = host;
+      while (anchor.parentNode && anchor.parentNode !== sideBar) anchor = anchor.parentNode;
+      if (anchor.parentNode === sideBar) {
+        sideBar.insertBefore(panel, anchor.nextSibling);
+        panel.classList.add("fa-panel-in-sidebar");
+        return true;
+      }
+    }
+    // No sidebar of the expected shape: anchor to the host as before. The
+    // control still works, it is just positioned less well.
+    if (host.parentNode) host.parentNode.insertBefore(panel, host.nextSibling);
+    else host.appendChild(panel);
+    return false;
+  }
+
   function mountLanguageSwitcher(host, before) {
     var meta = getTranslationMeta();
     var currentLang = (meta && meta.lang) || "en";
@@ -109,15 +149,12 @@
     btn.innerHTML = GLOBE_GLYPH;
 
     // Horizontal language bar — shows all 6 UN languages
-    // z-index 9999 to sit above the search box. Opens upward (bottom:100%)
-    // to avoid being clipped by the sidebar's constrained height.
     var bar = el("div", {
       class: "fa-lang-bar",
       "data-open": "false",
-      style: "display:none;position:absolute;left:0;bottom:100%;margin-bottom:4px;" +
-             "background:#1e293b;border:1px solid #475569;border-radius:6px;" +
-             "padding:4px 6px;z-index:9999;box-shadow:0 -4px 12px rgba(0,0,0,0.3);" +
-             "white-space:nowrap;"
+      // Positioning lives in CSS so the in-sidebar and fallback cases can
+      // differ. Inline styles here would win over both.
+      style: "display:none;"
     });
 
     var remembered = rememberedLocale(currentLang, available);
@@ -178,10 +215,8 @@
       }
     });
 
-    var wrap = el("span", { style: "position:relative;display:inline-block;" });
-    host.insertBefore(wrap, before);
-    wrap.appendChild(btn);
-    wrap.appendChild(bar);
+    host.insertBefore(btn, before);
+    mountPanelInSidebarColumn(host, bar);
     return btn;
   }
 
@@ -508,11 +543,7 @@
 
     if (before && before.parentNode === host) host.insertBefore(btn, before);
     else host.appendChild(btn);
-    // The panel is a sibling of the header for the same reason the QR panel is:
-    // just-the-docs hard-caps `.site-header` height at the desktop breakpoint,
-    // so anything placed inside it is clipped rather than making it taller.
-    if (host.parentNode) host.parentNode.insertBefore(panel, host.nextSibling);
-    else host.appendChild(panel);
+    mountPanelInSidebarColumn(host, panel);
   }
 
   function firstMatch(selectors) {
