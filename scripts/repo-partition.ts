@@ -234,11 +234,31 @@ const RULES: Rule[] = [
     prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "src/issue-watch/", "adapters/mcp-server/", "skills/framework/", "skills/remote-packages/"],
   },
 
+  // ── Mechanism that carries a domain keyword. Hand-triaged, and placed
+  //    BEFORE the domain rules because first match wins: the `lean` keyword
+  //    would otherwise claim a module the generic content model depends on.
+  //
+  //    The test applied is not "does the name mention Lean" but "would core
+  //    compile and function without the science layer installed". For
+  //    `lean-packages.ts` it would not: `BlockBase` carries an optional `lean`
+  //    field in `schemas/types.ts`, `schemas/constraints.ts` validates its
+  //    `ref` against `LEAN_REF_PATTERN`, and the field is on shared block
+  //    kinds by design — the document profile forbids its USE rather than its
+  //    existence. So the grammar belongs wherever the field does. Only the
+  //    package list is a property of a folio, and that is injected.
+  {
+    repo: "core",
+    triaged: true,
+    exact: [
+      "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
+    ],
+  },
+
   // ── folio-asst-sci: Lean, LaTeX, simulators, proofs
   {
     repo: "sci",
     prefixes: ["adapters/paper/", "skills/authoring-math/", "skills/folio-paper-adapter/", "simulators/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
-    exact: ["schemas/formalization-types.ts", "schemas/lean-packages.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
+    exact: ["schemas/formalization-types.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
   },
   {
     repo: "sci",
