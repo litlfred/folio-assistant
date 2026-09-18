@@ -23,6 +23,7 @@ Four objects, each with a home:
 | **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
 | **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
 | **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `skills/workflows/*.bpmn`, `skills/workflows/decisions/*.dmn` |
+| **Requirement** | a conformance obligation that **points at** the others: `satisfiedBy` names the skill or capability discharging it, `actors` who is bound, `derivedFrom` the broader requirement it specialises. | `skills/requirements/*.json` |
 
 Schema: [`schemas/role-graph.ts`](../../schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](../../scripts/kg-audit.ts), sidecar schema
@@ -66,6 +67,43 @@ for the duration of a lane.
 > `role-has-actor` records **n/a** rather than failing. Reporting "no actor can
 > fill the corpus" is a finding nobody can act on, and a check that produces
 > those is a check somebody switches off.
+
+## Requirements are the fifth node kind, and they only point
+
+A requirement is not a skill and not a role. It is an obligation *about* them:
+
+```jsonc
+{ "id": "req:commit-hygiene",
+  "derivedFrom": ["req:agent-workflow"],
+  "actors": ["author", "admin"],
+  "statements": [
+    { "key": "no-secrets", "conformance": "SHALL",
+      "requirement": "Commits SHALL NOT include secrets, API keys, tokens…",
+      "satisfiedBy": [{ "kind": "skill", "ref": "content-plan" }] } ] }
+```
+
+Three reference types, all audited: `requirement-satisfied-by-resolves`,
+`requirement-actors-resolve` and `requirement-derived-from-resolves` are all
+`critical`, because a reader following a broken one gets nothing — the same test
+as a dangling `<folio:skill ref>`. `requirement-statements-graded` is `major`: an
+ungraded statement is readable, it just cannot be conformance-tested, and
+SHALL-vs-SHOULD is the whole reason to write a requirement rather than a note.
+
+**Do not fold a requirement into the skill that satisfies it.** The grading, the
+`derivedFrom` lattice, the actor binding and the many-to-many `satisfiedBy` are
+the only machine-checkable things about it, and prose in a skill doc carries
+none of them. `satisfiedBy` is many-to-many in both directions — one skill
+discharges statements in several requirements — so inlining duplicates rather
+than relocates.
+
+**They were in `.claude/skills/requirements/` until 2026-09-18**, which is a
+Claude-Code-only directory that Gemini, Cursor and Copilot never read, and their
+joins were unchecked the whole time. Moving them into the `kg` graph found four
+broken references on the first run: `req:agent-workflow` did not exist although
+three requirements declared `derivedFrom` it, and `capability:role-detection`
+did not exist either — capabilities here are environment probes
+(`detection: { method: "command" }`), and role detection is the actor registry
+read against the session identity, which is a skill.
 
 ## Two compositions, and they are not the same
 

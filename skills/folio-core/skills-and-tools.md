@@ -143,19 +143,29 @@ not fine for the only statement of what to do to be `gh pr create`.
    here: the Tool worked, the Tool is absent and here is the fallback, and *we
    could not tell* — which is never rendered as success.
 
-## Migration is not done, and that is stated rather than implied
+## Where this stands — the schema is real, the migration is not
 
-As of 2026-09-18 the skills still carry their invocations inline and no
-`schemas/tool.ts` exists, so **there is no Tool node to reach for yet**. This
-skill is the SOP that new and edited skills follow, and the target the existing
-ones move toward — not a description of the current tree.
+**`schemas/tool.ts` exists**, `tools/` holds four nodes (`beans-cli`,
+`beans-manual`, `github`, `pages-publish`), and `bun run check:tools` fails when
+a `satisfies` names a skill that does not exist. So a Tool is now something you
+can reach for rather than a shape described in prose.
 
-An agent reading a skill today will find `mcp__github__*` and
-`beans update` written into the prose. That is the debt, not the pattern. Do
-not propagate it into anything you write.
+**The skills still carry their invocations inline.** Measured when the Tools
+landed: 4 Tools cover **11 of 138** skills. That number is the migration debt
+made visible, and most of the remainder is fine — a great many skills are pure
+judgement (`interaction-modality`, `one-voice-style-guide`) and have no
+mechanism to name. `check:tools` reports the count rather than failing on it,
+for exactly that reason. What it cannot tell you, and what needs a human eye, is
+which of the uncovered skills *describe an action* — those are the ones whose
+mechanism is still swallowed.
 
-The `mcp__github__*` half of that debt is doubly wrong under the no-MCP rule
-above: it is both an inlined mechanism and one that the harness cannot execute.
-When those skills are migrated, the `github` Tool node's `invoke.shell` arm
-(`gh`, or a plain REST call) is the one the harness relies on, and `invoke.mcp`
-is the convenience a server-equipped instance may take instead.
+So when you write or edit a skill: follow the checklist above and reference a
+Tool. When you read one that inlines `gh pr create` or `beans update`, that is
+the debt, not the pattern — do not propagate it.
+
+Authoring a Tool node: `tools/index.ts`, calling `defineTool`. It is TypeScript
+rather than JSON so a malformed node fails at `tsc` and in the editor, which is
+the carrier decision applied to instances as well as to the schema. `io` ports
+reference the shared vocabulary in `schemas/tool-types.ts` by absolute IRI —
+never a hand-written string, because a reference nothing checks is a reference
+that is eventually wrong.

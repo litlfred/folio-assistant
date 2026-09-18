@@ -1,0 +1,38 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:agent-workflow",
+    "path": "skills/requirements/agent-workflow.json"
+  },
+  "source_hash": "sha256:108dc4484c634293fc1d5158934c78e64c352ad41d909e58951d0733c338bea5",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:4e9020c5a66aff63a269a13a3e81b26f64e2c96870df8d7623bee30ea8e287f6",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "requirement-satisfied-by-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 0,
+    "n/a": 1,
+    "unknown": 0
+  }
+}

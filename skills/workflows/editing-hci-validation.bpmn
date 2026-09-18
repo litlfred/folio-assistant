@@ -40,6 +40,7 @@
         <bpmn:flowNodeRef>StartEvent_EditRequested</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DescribeChange</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviewFindings</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RecordDecision</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_EditorDecision</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Discarded</bpmn:flowNodeRef>
               <bpmn:flowNodeRef>CallActivity_Evidence</bpmn:flowNodeRef>
@@ -201,11 +202,20 @@ This step has nothing to do for content that carries no recommendations -- a mat
       <bpmn:incoming>Flow_20</bpmn:incoming>
       <bpmn:outgoing>Flow_21</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:userTask id="Task_RecordDecision" name="Record the decision and its audit note&#10;[decision-audit]">
+      <bpmn:documentation>A decision is an act ABOUT the findings, not a finding. Record the outcome, every finding it weighed, every finding it overrules — and an audit note saying why it was made, or why a finding in it was left. Each note cites corpus evidence: a witness, another finding, a QA report, a block, a file range. An overruled mechanical finding stays on the record; a gate whose findings vanish when somebody disagrees with them cannot be audited. An agent may assemble the citations and is recorded as `proposed_by`; the author is whoever decided.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="decision-audit" />
+        <folio:policy relaxable="false" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_21</bpmn:incoming>
+      <bpmn:outgoing>Flow_21b</bpmn:outgoing>
+    </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_EditorDecision" name="Accept, revise or discard?">
       <bpmn:extensionElements>
         <folio:policy relaxable="false" />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_21</bpmn:incoming>
+      <bpmn:incoming>Flow_21b</bpmn:incoming>
       <bpmn:outgoing>Flow_22</bpmn:outgoing>
       <bpmn:outgoing>Flow_24</bpmn:outgoing>
       <bpmn:outgoing>Flow_25</bpmn:outgoing>
@@ -261,7 +271,8 @@ This step has nothing to do for content that carries no recommendations -- a mat
     <bpmn:sequenceFlow id="Flow_18" sourceRef="Gateway_ValidationJoin" targetRef="Task_CollateFindings" />
     <bpmn:sequenceFlow id="Flow_19" sourceRef="Task_CollateFindings" targetRef="Task_LogFindings" />
     <bpmn:sequenceFlow id="Flow_20" sourceRef="Task_LogFindings" targetRef="Task_ReviewFindings" />
-    <bpmn:sequenceFlow id="Flow_21" sourceRef="Task_ReviewFindings" targetRef="Gateway_EditorDecision" />
+    <bpmn:sequenceFlow id="Flow_21" sourceRef="Task_ReviewFindings" targetRef="Task_RecordDecision" />
+    <bpmn:sequenceFlow id="Flow_21b" sourceRef="Task_RecordDecision" targetRef="Gateway_EditorDecision" />
     <bpmn:sequenceFlow id="Flow_22" name="revise" sourceRef="Gateway_EditorDecision" targetRef="Task_ReviseEdit" />
     <bpmn:sequenceFlow id="Flow_23" name="re-validate" sourceRef="Task_ReviseEdit" targetRef="Gateway_ProposalReady" />
     <bpmn:sequenceFlow id="Flow_24" name="discard" sourceRef="Gateway_EditorDecision" targetRef="EndEvent_Discarded" />
@@ -272,28 +283,28 @@ This step has nothing to do for content that carries no recommendations -- a mat
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_FolioEditing">
       <bpmndi:BPMNShape id="Participant_FolioEditing_di" bpmnElement="Participant_FolioEditing" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="2960" height="1310" />
+        <dc:Bounds x="160" y="80" width="3180" height="1310" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Editor_di" bpmnElement="Lane_Editor" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="2930" height="150" />
+        <dc:Bounds x="190" y="80" width="3150" height="150" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_WorkPlan_di" bpmnElement="Lane_WorkPlan" isHorizontal="true">
-        <dc:Bounds x="190" y="230" width="2930" height="150" />
+        <dc:Bounds x="190" y="230" width="3150" height="150" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Agent_di" bpmnElement="Lane_Agent" isHorizontal="true">
-        <dc:Bounds x="190" y="380" width="2930" height="150" />
+        <dc:Bounds x="190" y="380" width="3150" height="150" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Pipeline_di" bpmnElement="Lane_Pipeline" isHorizontal="true">
-        <dc:Bounds x="190" y="530" width="2930" height="150" />
+        <dc:Bounds x="190" y="530" width="3150" height="150" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Mechanical_di" bpmnElement="Lane_Mechanical" isHorizontal="true">
-        <dc:Bounds x="190" y="680" width="2930" height="330" />
+        <dc:Bounds x="190" y="680" width="3150" height="330" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_NonMechanical_di" bpmnElement="Lane_NonMechanical" isHorizontal="true">
-        <dc:Bounds x="190" y="1010" width="2930" height="230" />
+        <dc:Bounds x="190" y="1010" width="3150" height="230" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Corpus_di" bpmnElement="Lane_Corpus" isHorizontal="true">
-        <dc:Bounds x="190" y="1240" width="2930" height="150" />
+        <dc:Bounds x="190" y="1240" width="3150" height="150" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_EditRequested_di" bpmnElement="StartEvent_EditRequested">
         <dc:Bounds x="262" y="137" width="36" height="36" />
@@ -364,31 +375,34 @@ This step has nothing to do for content that carries no recommendations -- a mat
       <bpmndi:BPMNShape id="Task_ReviewFindings_di" bpmnElement="Task_ReviewFindings">
         <dc:Bounds x="2135" y="110" width="130" height="90" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RecordDecision_di" bpmnElement="Task_RecordDecision">
+        <dc:Bounds x="2300" y="110" width="130" height="90" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_EditorDecision_di" bpmnElement="Gateway_EditorDecision" isMarkerVisible="true">
-        <dc:Bounds x="2335" y="130" width="50" height="50" />
+        <dc:Bounds x="2555" y="130" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2295" y="90" width="130" height="28" />
+          <dc:Bounds x="2515" y="90" width="130" height="28" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ReviseEdit_di" bpmnElement="Task_ReviseEdit">
-        <dc:Bounds x="2295" y="410" width="130" height="90" />
+        <dc:Bounds x="2515" y="410" width="130" height="90" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_Discarded_di" bpmnElement="EndEvent_Discarded">
-        <dc:Bounds x="2502" y="137" width="36" height="36" />
+        <dc:Bounds x="2722" y="137" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2465" y="177" width="110" height="30" />
+          <dc:Bounds x="2685" y="177" width="110" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Commit_di" bpmnElement="Task_Commit">
-        <dc:Bounds x="2615" y="1270" width="130" height="90" />
+        <dc:Bounds x="2835" y="1270" width="130" height="90" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ResolveBean_di" bpmnElement="Task_ResolveBean">
-        <dc:Bounds x="2775" y="260" width="130" height="90" />
+        <dc:Bounds x="2995" y="260" width="130" height="90" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_InCorpus_di" bpmnElement="EndEvent_InCorpus">
-        <dc:Bounds x="2982" y="1297" width="36" height="36" />
+        <dc:Bounds x="3202" y="1297" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2945" y="1337" width="110" height="30" />
+          <dc:Bounds x="3165" y="1337" width="110" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_01_di" bpmnElement="Flow_01">
@@ -507,47 +521,51 @@ This step has nothing to do for content that carries no recommendations -- a mat
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_21_di" bpmnElement="Flow_21">
         <di:waypoint x="2265" y="155" />
-        <di:waypoint x="2335" y="155" />
+        <di:waypoint x="2300" y="155" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_21b_di" bpmnElement="Flow_21b">
+        <di:waypoint x="2430" y="155" />
+        <di:waypoint x="2555" y="155" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_22_di" bpmnElement="Flow_22">
-        <di:waypoint x="2360" y="180" />
-        <di:waypoint x="2360" y="410" />
+        <di:waypoint x="2580" y="180" />
+        <di:waypoint x="2580" y="410" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2370" y="280" width="60" height="27" />
+          <dc:Bounds x="2590" y="280" width="60" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_23_di" bpmnElement="Flow_23">
-        <di:waypoint x="2295" y="455" />
+        <di:waypoint x="2515" y="455" />
         <di:waypoint x="945" y="455" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1600" y="422" width="90" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_24_di" bpmnElement="Flow_24">
-        <di:waypoint x="2385" y="155" />
-        <di:waypoint x="2502" y="155" />
+        <di:waypoint x="2605" y="155" />
+        <di:waypoint x="2722" y="155" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2400" y="122" width="70" height="27" />
+          <dc:Bounds x="2620" y="122" width="70" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_25_di" bpmnElement="Flow_25">
-        <di:waypoint x="2373" y="180" />
-        <di:waypoint x="2373" y="215" />
-        <di:waypoint x="2680" y="215" />
-        <di:waypoint x="2680" y="1270" />
+        <di:waypoint x="2593" y="180" />
+        <di:waypoint x="2593" y="215" />
+        <di:waypoint x="2900" y="215" />
+        <di:waypoint x="2900" y="1270" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2600" y="186" width="60" height="27" />
+          <dc:Bounds x="2820" y="186" width="60" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_26_di" bpmnElement="Flow_26">
-        <di:waypoint x="2745" y="1315" />
-        <di:waypoint x="2840" y="1315" />
-        <di:waypoint x="2840" y="350" />
+        <di:waypoint x="2965" y="1315" />
+        <di:waypoint x="3060" y="1315" />
+        <di:waypoint x="3060" y="350" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_27_di" bpmnElement="Flow_27">
-        <di:waypoint x="2905" y="305" />
-        <di:waypoint x="3000" y="305" />
-        <di:waypoint x="3000" y="1297" />
+        <di:waypoint x="3125" y="305" />
+        <di:waypoint x="3220" y="305" />
+        <di:waypoint x="3220" y="1297" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

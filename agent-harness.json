@@ -5,6 +5,14 @@
   "canonicalUrl": "https://litlfred.github.io/folio-assistant",
   "directories": [
     {
+      "id": "tools",
+      "path": "tools/",
+      "summary": "Tool definitions — one concrete way to exercise a skill, each naming the skills it satisfies. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
+      "graphs": [
+        "tools"
+      ]
+    },
+    {
       "id": "schemas",
       "path": "schemas/",
       "summary": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
@@ -16,7 +24,7 @@
     {
       "id": "kg",
       "path": "skills/",
-      "summary": "Skill packages. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not.",
+      "summary": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), and the `kg-qa/` audit sidecars beside each. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not.",
       "graphs": [
         "kg"
       ]

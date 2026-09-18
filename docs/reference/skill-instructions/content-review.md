@@ -34,7 +34,17 @@ Formal review and approval of validated content before publication.
 - Change log / diff from previous version
 
 ## Outputs
-- Review decision (approve / request-changes / reject)
-- Review comments and required modifications
-- Approval record (who, when, conditions)
+Findings and a decision — two things, not one. See
+[`decision-audit`](../folio-core/decision-audit.md) and
+[`schemas/qa-review.ts`](../../schemas/qa-review.ts).
+
+- **Findings** — one per observation, each carrying the axis this reviewer can
+  speak on: `blocking | suggestion | praise` for a person, `critical | major |
+  minor` for a checker. Neither defaults into the other, and `praise` has no
+  machine equivalent.
+- **A decision** — `approve | request-changes | reject`, naming every finding it
+  weighed and every one it overruled. An overruled finding stays on the record.
+- **Audit notes** — why this outcome, and why each overruled finding was left.
+  At least one per decision, each citing corpus evidence. Approving over an open
+  `critical` or `blocking` finding without overruling it is a reported problem.
 {% endraw %}

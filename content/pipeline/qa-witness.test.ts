@@ -73,6 +73,36 @@ describe("freshnessOf — three states, and `unknown` is never `fresh`", () => {
     expect(r.changed?.[0]).toContain("lean");
   });
 
+  test("a DERIVED input the entry hashed is `partial`, not a missing file", () => {
+    // `graph` is the chapter's edge set, not a path. Reporting it as "reviewed,
+    // now missing on disk" put 1012 of 5424 witnesses into `unknown` on the
+    // first corpus-wide run — a fifth of the panel alarming about a file that
+    // never existed.
+    const r = freshnessOf({ md: "aaa", graph: "ggg" }, { md: "aaa" });
+    expect(r.freshness).toBe("partial");
+    expect(r.notCompared?.[0]).toContain("graph");
+    expect(r.changed).toBeUndefined();
+  });
+
+  test("`partial` is not `fresh`: it says how much was established, not that all was", () => {
+    const r = freshnessOf({ md: "aaa", lean_statement: "sss" }, { md: "aaa" });
+    expect(r.freshness).not.toBe("fresh");
+    expect(r.freshness).toBe("partial");
+  });
+
+  test("a changed FILE outranks an unchecked derived input", () => {
+    // A verdict that is definitely wrong must not be softened to "current on
+    // files" by something nobody looked at.
+    const r = freshnessOf({ md: "aaa", graph: "ggg" }, { md: "zzz" });
+    expect(r.freshness).toBe("stale");
+    expect(r.changed).toEqual(["md"]);
+  });
+
+  test("a genuinely missing FILE outranks an unchecked derived input", () => {
+    const r = freshnessOf({ md: "aaa", graph: "ggg" }, {});
+    expect(r.freshness).toBe("unknown");
+  });
+
   test("a reviewed file that is gone is `unknown`, not `fresh`", () => {
     const r = freshnessOf({ md: "aaa" }, {});
     expect(r.freshness).toBe("unknown");

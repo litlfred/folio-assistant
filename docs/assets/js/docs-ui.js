@@ -1226,6 +1226,7 @@
 
   var QA_FRESH_LABEL = {
     fresh: "current",
+    partial: "current on files",
     stale: "STALE",
     unknown: "currency unknown"
   };
@@ -1287,18 +1288,31 @@
         ? "The files this verdict was measured against have changed since."
         : fresh === "unknown"
           ? "This verdict's currency could not be established -- it is not reported as current."
-          : "Measured against the files as they stand."
+          : fresh === "partial"
+            ? "Every file this verdict was measured against still matches. A derived input -- one computed rather than read off disk -- was not re-checked here."
+            : "Measured against the files as they stand."
     }, QA_FRESH_LABEL[fresh] || fresh));
     card.appendChild(head);
 
+    var why = null;
     if (fresh !== "fresh" && w.changed && w.changed.length) {
-      var why = el("div", { class: "fa-qa-changed" });
+      why = el("div", { class: "fa-qa-changed" });
       why.appendChild(el("span", { class: "fa-qa-field-label" },
         fresh === "stale" ? "changed since review" : "could not compare"));
       var ul = el("ul");
       w.changed.forEach(function (c) { ul.appendChild(el("li", null, c)); });
       why.appendChild(ul);
       card.appendChild(why);
+    }
+    // Named, not implied: "current on files" is only readable next to WHICH
+    // input went unchecked.
+    if (w.notCompared && w.notCompared.length) {
+      var nc = el("div", { class: "fa-qa-changed" });
+      nc.appendChild(el("span", { class: "fa-qa-field-label" }, "not re-checked"));
+      var ncl = el("ul");
+      w.notCompared.forEach(function (c) { ncl.appendChild(el("li", null, c)); });
+      nc.appendChild(ncl);
+      card.appendChild(nc);
     }
 
     var when = qaWhen(w.at);

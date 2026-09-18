@@ -1088,6 +1088,9 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-qa-kind-script { border-left: 3px solid rgba(128, 128, 128, 0.6); }
 
 .fa-qa-fresh-fresh { color: #1b5e20; }
+/* Verified on every file, with a derived input left unchecked. Neither green
+ * nor alarming: it is a true statement about how much was established. */
+.fa-qa-fresh-partial { color: #4a5568; }
 /* `stale` and `unknown` are BOTH marked. A verdict whose currency could not be
  * established is not reported as current — that is the whole freshness rule. */
 .fa-qa-fresh-stale { color: #b3261e; }
@@ -1140,6 +1143,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   :root:not([data-theme="light"]) .fa-qa-fresh-unknown { color: #ffcc66; }
   :root:not([data-theme="light"]) .fa-qa-res-pass,
   :root:not([data-theme="light"]) .fa-qa-fresh-fresh { color: #a5d6a7; }
+  :root:not([data-theme="light"]) .fa-qa-fresh-partial { color: #b8c2cc; }
   :root:not([data-theme="light"]) .fa-qa-res-unknown { color: #d8b4fe; }
   :root:not([data-theme="light"]) .fa-qa-kind-agent { border-left-color: #d8b4fe; }
   :root:not([data-theme="light"]) .fa-qa-kind-human { border-left-color: #a5d6a7; }
@@ -1153,6 +1157,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 :root[data-theme="dark"] .fa-qa-fresh-unknown { color: #ffcc66; }
 :root[data-theme="dark"] .fa-qa-res-pass,
 :root[data-theme="dark"] .fa-qa-fresh-fresh { color: #a5d6a7; }
+:root[data-theme="dark"] .fa-qa-fresh-partial { color: #b8c2cc; }
 :root[data-theme="dark"] .fa-qa-res-unknown { color: #d8b4fe; }
 :root[data-theme="dark"] .fa-qa-kind-agent { border-left-color: #d8b4fe; }
 :root[data-theme="dark"] .fa-qa-kind-human { border-left-color: #a5d6a7; }

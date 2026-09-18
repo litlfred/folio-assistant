@@ -1,0 +1,38 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:content-lifecycle",
+    "path": "skills/requirements/content-lifecycle.json"
+  },
+  "source_hash": "sha256:a3e0a9577f58b3a4bdb7e27997d5019269cb059be82e4d054bf8d2181f643cb6",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:4e9020c5a66aff63a269a13a3e81b26f64e2c96870df8d7623bee30ea8e287f6",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "requirement-satisfied-by-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 0,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

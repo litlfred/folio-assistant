@@ -60,7 +60,7 @@ validateDir(
 
 // Validate requirements
 validateDir(
-  join(rootDir, ".claude", "skills", "requirements"),
+  join(rootDir, "skills", "requirements"),
   RequirementSchema,
   "requirements",
 );

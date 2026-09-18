@@ -35,12 +35,15 @@
  * subject's files on disk and compares them with what the entry recorded, the
  * same way `qa-staleness.ts` does.
  *
- * **Three states, and the third is the point.** `fresh` and `stale` both mean
- * the comparison happened. `unknown` means it could not: the entry recorded no
- * hash for a file that exists, or the file it hashed is gone. An `unknown` is
- * never rendered as `fresh` — a witness whose currency cannot be established is
- * the one a reader most needs flagged, and the same rule governs the state
- * roll-up (`unswept`) that `g6yr` argued for.
+ * **Four states, and only one of them means fully verified.** `fresh` and
+ * `stale` both mean the comparison happened. `partial` means every FILE the
+ * entry recorded still matches while a DERIVED input (`graph`,
+ * `lean_statement`) was not re-computed here. `unknown` means it could not be
+ * established at all: the entry recorded no hash for a file that exists, or the
+ * file it hashed is gone. Neither `partial` nor `unknown` is ever rendered as
+ * `fresh` — a witness whose currency cannot be established is the one a reader
+ * most needs flagged, and the same rule governs the state roll-up (`unswept`)
+ * that `g6yr` argued for.
  *
  * Hash formats differ between families and are normalised, not assumed:
  * `block-qa` writes a 12-char SHA-256 prefix, `kg-qa` writes
@@ -87,8 +90,32 @@ export const QA_FAMILY_LABEL: Record<QaFamily, { tag: string; label: string }> =
  */
 export type QaState = "fail" | "warn" | "pass" | "unswept";
 
-/** Whether a witness's verdict still applies to the files on disk. */
-export type QaFreshness = "fresh" | "stale" | "unknown";
+/**
+ * Whether a witness's verdict still applies to the files on disk.
+ *
+ * `partial` exists because some criteria hash something that is not a file.
+ * `graph` is the chapter's `uses[]` edge set and `lean_statement` is the
+ * declaration signatures lexed out of a `.lean`; both are DERIVED, and
+ * recomputing them here would mean re-running a slice of the sweep on every
+ * docs build. Reporting them as "reviewed, now missing on disk" made 1012 of
+ * 5424 witnesses read `unknown` in the first corpus-wide run — a fifth of the
+ * panel alarming about files that never existed.
+ *
+ * So `partial` says exactly what happened: every FILE the entry recorded still
+ * matches, and a named derived input was not re-checked. It is not folded into
+ * `fresh`, because `fresh` means fully verified and nothing should quietly
+ * widen it.
+ */
+export type QaFreshness = "fresh" | "partial" | "stale" | "unknown";
+
+/**
+ * Hashed inputs that are computed rather than read off disk.
+ *
+ * See {@link QaFieldHash} in `schemas/block-qa.ts`: `graph` is a property of
+ * the whole chapter's edge set, `lean_statement` of the declarations lexed out
+ * of the `.lean`.
+ */
+const DERIVED_INPUTS = new Set(["graph", "lean_statement"]);
 
 /** One reviewer's provenance for one criterion, flattened for publication. */
 export interface QaWitness {
@@ -119,6 +146,8 @@ export interface QaWitness {
    * comparison could not be made, one phrase per unresolved input.
    */
   changed?: string[];
+  /** On `partial`, the derived inputs that were not re-computed. */
+  notCompared?: string[];
   notes?: string;
 }
 
@@ -193,9 +222,10 @@ export function digestsAgree(a: string | undefined, b: string | undefined): bool
 export function freshnessOf(
   recorded: Record<string, string | undefined>,
   live: Record<string, string | undefined>,
-): { freshness: QaFreshness; changed?: string[] } {
+): { freshness: QaFreshness; changed?: string[]; notCompared?: string[] } {
   const changed: string[] = [];
   const unresolved: string[] = [];
+  const notCompared: string[] = [];
   const names = new Set([...Object.keys(recorded), ...Object.keys(live)]);
   if (names.size === 0) {
     return { freshness: "unknown", changed: ["the entry records no input hashes"] };
@@ -203,7 +233,12 @@ export function freshnessOf(
   for (const name of [...names].sort()) {
     const agree = digestsAgree(recorded[name], live[name]);
     if (agree === undefined) {
-      if (recorded[name] && !live[name]) unresolved.push(`${name}: reviewed, now missing on disk`);
+      if (recorded[name] && DERIVED_INPUTS.has(name)) {
+        // Computed, not read: absent from `live` because nothing recomputed it,
+        // which is not the same as a file that has gone.
+        notCompared.push(`${name} (derived, not re-computed here)`);
+      } else if (recorded[name] && !live[name])
+        unresolved.push(`${name}: reviewed, now missing on disk`);
       else if (!recorded[name] && live[name]) unresolved.push(`${name}: on disk, no hash recorded`);
       else unresolved.push(`${name}: no hash on either side`);
       continue;
@@ -213,6 +248,7 @@ export function freshnessOf(
   if (changed.length > 0) return { freshness: "stale", changed };
   // An unresolved input can hide a change, so it cannot come back `fresh`.
   if (unresolved.length > 0) return { freshness: "unknown", changed: unresolved };
+  if (notCompared.length > 0) return { freshness: "partial", notCompared };
   return { freshness: "fresh" };
 }
 
@@ -289,7 +325,7 @@ function witnessOf(
 ): QaWitness {
   const r = entry.reviewer ?? { kind: "script" as const, id: "unrecorded" };
   const recorded: Record<string, string | undefined> = { ...(entry.field_hash ?? {}) };
-  const { freshness, changed } = freshnessOf(recorded, live);
+  const { freshness, changed, notCompared } = freshnessOf(recorded, live);
   return {
     kind: r.kind ?? "script",
     id: r.id ?? "unrecorded",
@@ -305,6 +341,7 @@ function witnessOf(
     method: typeof entry.metrics?.method === "string" ? entry.metrics.method : undefined,
     freshness,
     changed,
+    notCompared,
     notes: entry.notes,
   };
 }

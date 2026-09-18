@@ -8,42 +8,134 @@
   "source_hash": null,
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:23931aa74ec87d4cb28f1360c16558216da2e97cac523fd5e25c650416b17014",
+    "script_hash": "sha256:4e9020c5a66aff63a269a13a3e81b26f64e2c96870df8d7623bee30ea8e287f6",
     "engine_version": "1"
   },
   "criteria": {
     "skill-reachable": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "commit-hygiene",
-          "detail": "skill \"commit-hygiene\" is listed by no package manifest, carried by no role and named by no activity."
-        },
-        {
-          "where": "content-lifecycle",
-          "detail": "skill \"content-lifecycle\" is listed by no package manifest, carried by no role and named by no activity."
-        },
-        {
-          "where": "corpus-grep",
-          "detail": "skill \"corpus-grep\" is listed by no package manifest, carried by no role and named by no activity."
-        },
-        {
-          "where": "language-trap-agent-audit",
-          "detail": "skill \"language-trap-agent-audit\" is listed by no package manifest, carried by no role and named by no activity."
-        },
-        {
-          "where": "lean-verification",
-          "detail": "skill \"lean-verification\" is listed by no package manifest, carried by no role and named by no activity."
-        },
-        {
-          "where": "session-start",
-          "detail": "skill \"session-start\" is listed by no package manifest, carried by no role and named by no activity."
-        }
-      ]
+      "result": "pass",
+      "findings": []
+    },
+    "manifest-skill-exists": {
+      "result": "pass",
+      "findings": []
     },
     "actor-roles-resolve": {
       "result": "pass",
       "findings": []
+    },
+    "actor-capabilities-resolve": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "admin",
+          "detail": ".claude/skills/actors/admin.json claims capability \"admin-settings\", which the registry does not declare."
+        },
+        {
+          "where": "admin",
+          "detail": ".claude/skills/actors/admin.json claims capability \"role-management\", which the registry does not declare."
+        },
+        {
+          "where": "admin",
+          "detail": ".claude/skills/actors/admin.json claims capability \"release-authorization\", which the registry does not declare."
+        },
+        {
+          "where": "author",
+          "detail": ".claude/skills/actors/author.json claims capability \"content-authoring\", which the registry does not declare."
+        },
+        {
+          "where": "authoring-agent",
+          "detail": ".claude/skills/actors/authoring-agent.json claims capability \"content-authoring\", which the registry does not declare."
+        },
+        {
+          "where": "business-analyst",
+          "detail": ".claude/skills/actors/business-analyst.json claims capability \"bpmn-authoring\", which the registry does not declare."
+        },
+        {
+          "where": "business-analyst",
+          "detail": ".claude/skills/actors/business-analyst.json claims capability \"dmn-authoring\", which the registry does not declare."
+        },
+        {
+          "where": "business-analyst",
+          "detail": ".claude/skills/actors/business-analyst.json claims capability \"data-dictionary-authoring\", which the registry does not declare."
+        },
+        {
+          "where": "ci-pipeline",
+          "detail": ".claude/skills/actors/ci-pipeline.json claims capability \"qa-reporting\", which the registry does not declare."
+        },
+        {
+          "where": "clinical-sme",
+          "detail": ".claude/skills/actors/clinical-sme.json claims capability \"clinical-validation\", which the registry does not declare."
+        },
+        {
+          "where": "content-reviewer",
+          "detail": ".claude/skills/actors/content-reviewer.json claims capability \"approval-authority\", which the registry does not declare."
+        },
+        {
+          "where": "evidence-agent",
+          "detail": ".claude/skills/actors/evidence-agent.json claims capability \"content-authoring\", which the registry does not declare."
+        },
+        {
+          "where": "fhir-modeller",
+          "detail": ".claude/skills/actors/fhir-modeller.json claims capability \"cql-authoring\", which the registry does not declare."
+        },
+        {
+          "where": "ig-publisher-service",
+          "detail": ".claude/skills/actors/ig-publisher-service.json claims capability \"qa-reporting\", which the registry does not declare."
+        },
+        {
+          "where": "ingestion-agent",
+          "detail": ".claude/skills/actors/ingestion-agent.json claims capability \"content-authoring\", which the registry does not declare."
+        },
+        {
+          "where": "lean-mcp",
+          "detail": ".claude/skills/actors/lean-mcp.json claims capability \"lean-diagnostics\", which the registry does not declare."
+        },
+        {
+          "where": "onboarding-agent",
+          "detail": ".claude/skills/actors/onboarding-agent.json claims capability \"content-authoring\", which the registry does not declare."
+        },
+        {
+          "where": "programme-manager",
+          "detail": ".claude/skills/actors/programme-manager.json claims capability \"project-governance\", which the registry does not declare."
+        },
+        {
+          "where": "programme-manager",
+          "detail": ".claude/skills/actors/programme-manager.json claims capability \"release-authorization\", which the registry does not declare."
+        },
+        {
+          "where": "publication-manager",
+          "detail": ".claude/skills/actors/publication-manager.json claims capability \"release-management\", which the registry does not declare."
+        },
+        {
+          "where": "qc-reviewer",
+          "detail": ".claude/skills/actors/qc-reviewer.json claims capability \"qa-reporting\", which the registry does not declare."
+        },
+        {
+          "where": "review-agent",
+          "detail": ".claude/skills/actors/review-agent.json claims capability \"review-comments\", which the registry does not declare."
+        },
+        {
+          "where": "reviewer",
+          "detail": ".claude/skills/actors/reviewer.json claims capability \"review-comments\", which the registry does not declare."
+        },
+        {
+          "where": "technical-officer",
+          "detail": ".claude/skills/actors/technical-officer.json claims capability \"first-pass-review\", which the registry does not declare."
+        },
+        {
+          "where": "technical-officer",
+          "detail": ".claude/skills/actors/technical-officer.json claims capability \"sme-coordination\", which the registry does not declare."
+        },
+        {
+          "where": "terminologist",
+          "detail": ".claude/skills/actors/terminologist.json claims capability \"terminology-management\", which the registry does not declare."
+        },
+        {
+          "where": "translator",
+          "detail": ".claude/skills/actors/translator.json claims capability \"translation\", which the registry does not declare."
+        }
+      ]
     },
     "actor-is-not-a-role": {
       "result": "pass",
@@ -51,7 +143,7 @@
     }
   },
   "totals": {
-    "pass": 2,
+    "pass": 4,
     "fail": 1,
     "n/a": 0,
     "unknown": 0
