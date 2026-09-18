@@ -18,7 +18,7 @@ lang: en
 
 _This page is generated from [`content/docs/guides-writing-a-document/`](https://github.com/litlfred/folio-assistant/tree/main/content/docs/guides-writing-a-document) — each section below links to its own source._
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/overview.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/overview.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/overview.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/overview.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 Policy guidance, a standard, a report, a handbook — structured prose, authored
 with an LLM, published without a TeX installation.
@@ -28,7 +28,7 @@ with an LLM, published without a TeX installation.
 ## What a document folio is
 {: #what-a-document-folio-is }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/authoring-a-document.bpmn){: .fa-node-edit title="Edit skills/workflows/authoring-a-document.bpmn" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/authoring-a-document.bpmn){: .fa-node-edit title="Edit skills/workflows/authoring-a-document.bpmn" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 6 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 6 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">○</span></button>
 
 Everything a paper folio is, minus the formal layer. The same tree of chapters
 and sections over typed **blocks**, the same editorial `uses[]` graph, the same
@@ -56,7 +56,7 @@ them. No Lean. No LaTeX.
 ## 1 · Scaffold the folio
 {: #1-scaffold-the-folio }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/1-scaffold-the-folio.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/1-scaffold-the-folio.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/1-scaffold-the-folio.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/1-scaffold-the-folio.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 In a new, empty repository:
 
@@ -90,7 +90,7 @@ The starter block is a placeholder that says so. Replace it.
 ## 2 · The content model
 {: #2-the-content-model }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/2-the-content-model.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/2-the-content-model.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/2-the-content-model.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/2-the-content-model.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 ```
 content/cold-chain-guidance/
@@ -110,7 +110,7 @@ reviewed, and the block renders nowhere because nothing lists it.
 ### The kinds you may use
 {: #the-kinds-you-may-use }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/the-kinds-you-may-use.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/the-kinds-you-may-use.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/the-kinds-you-may-use.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/the-kinds-you-may-use.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 `prose`, `example`, `remark`, `algorithm`, `simulator`, `equation`, `diagram`,
 `table`.
@@ -123,7 +123,7 @@ when you try to publish.
 ### `uses[]` matters more here than in a paper
 {: #uses-matters-more-here-than-in-a-paper }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 `uses[]` lists the blocks a **reader** must already have read to follow this
 one. It is an editorial judgement — nothing derives it, and nothing should.
@@ -139,7 +139,7 @@ it. List direct neighbours only.
 ## 3 · Author with the agent
 {: #3-author-with-the-agent }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/3-author-with-the-agent.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/3-author-with-the-agent.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/3-author-with-the-agent.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/3-author-with-the-agent.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 Ask in plain language. The agent loads the skills it needs over MCP.
 
@@ -161,7 +161,7 @@ Reads `uses[]` and the content graph.
 ### Carrying a recommendation
 {: #carrying-a-recommendation }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/carrying-a-recommendation.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/carrying-a-recommendation.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/carrying-a-recommendation.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/carrying-a-recommendation.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 A normative statement is the block readers cite and implementers trace to. It
 wants a label, a stable identity and a place in the dependency graph.
@@ -198,7 +198,7 @@ skill.
 ## 4 · Validate
 {: #4-validate }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/4-validate.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/4-validate.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/4-validate.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/4-validate.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 ```
 content_validate          schema + constraints + profile conformance
@@ -223,7 +223,7 @@ when that is what you actually meant.
 ## 5 · Render
 {: #5-render }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/5-render.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/5-render.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/5-render.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/5-render.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 ```
 content/**  →  document_render_md   →  build/<slug>.md
@@ -257,7 +257,7 @@ outputs cannot drift.
 ### Not implemented
 {: #not-implemented }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/not-implemented.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/not-implemented.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/not-implemented.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/not-implemented.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 No citations, no bibliography, no glossary, no automatic cross-reference
 numbering. `\cite{…}` passes through **verbatim**, visible in the output rather
@@ -275,7 +275,7 @@ working.
 ## Moving between content types
 {: #moving-between-content-types }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/moving-between-content-types.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/moving-between-content-types.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/moving-between-content-types.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/moving-between-content-types.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 `harness.config.json`'s `contentType` is the switch.
 
@@ -291,7 +291,7 @@ lists exactly what is in the way.
 ## Where things are
 {: #where-things-are }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/where-things-are.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/where-things-are.md" } <span class="fa-qa-badge fa-qa-unswept" title="QA: not swept — no sidecar for this block">·</span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/where-things-are.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/where-things-are.md" } <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">·</span></span>
 
 | | |
 |---|---|
