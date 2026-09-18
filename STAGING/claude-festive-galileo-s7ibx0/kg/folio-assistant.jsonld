@@ -110,9 +110,9 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T21:51:32.080Z",
+  "generatedAt": "2026-09-18T21:54:18.429Z",
   "counts": {
-    "Skill": 139,
+    "Skill": 140,
     "Actor": 24,
     "Capability": 23,
     "Role": 62,
@@ -596,7 +596,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/skills-and-tools.md",
-      "lines": 172,
+      "lines": 176,
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/skills-and-tools"
@@ -684,7 +684,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/mcp-projection.md",
-      "lines": 116,
+      "lines": 132,
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/mcp-projection"
@@ -724,6 +724,24 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/devils-advocate-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/untrusted-input",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "untrusted-input",
+      "title": "Untrusted input — the value must never become program text",
+      "description": "Keep attacker-controlled values out of program text — in GitHub Actions, in command lines, in anything that is parsed before it runs. Read before interpolating any value into a script, and before giving a Tool a command-line input.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/untrusted-input.md",
+      "lines": 140,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/untrusted-input"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/diff",
@@ -1212,7 +1230,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/mcp-contract.md",
-      "lines": 87,
+      "lines": 88,
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/mcp-contract"
@@ -3679,6 +3697,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/todo-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/untrusted-input",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/uses-editorial-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/watch"
       ],
@@ -15674,17 +15693,26 @@
             "name": "id",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/tool-types.schema.json#/$defs/BeanId",
             "description": "The bean to act on; absent for list/create.",
-            "required": false
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
           },
           {
             "name": "status",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/tool-types.schema.json#/$defs/BeanStatus",
-            "required": false
+            "required": false,
+            "arg": {
+              "flag": "--status"
+            }
           },
           {
             "name": "body",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/tool-types.schema.json#/$defs/Markdown",
-            "required": false
+            "required": false,
+            "arg": {
+              "stdin": true
+            }
           }
         ],
         "outputs": [
@@ -15737,17 +15765,26 @@
           {
             "name": "id",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/tool-types.schema.json#/$defs/BeanId",
-            "required": false
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
           },
           {
             "name": "status",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/tool-types.schema.json#/$defs/BeanStatus",
-            "required": false
+            "required": false,
+            "arg": {
+              "flag": "--status"
+            }
           },
           {
             "name": "body",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/tool-types.schema.json#/$defs/Markdown",
-            "required": false
+            "required": false,
+            "arg": {
+              "stdin": true
+            }
           }
         ],
         "outputs": [
@@ -15798,17 +15835,26 @@
           {
             "name": "branch",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/tool-types.schema.json#/$defs/Branch",
-            "required": false
+            "required": false,
+            "arg": {
+              "flag": "--head"
+            }
           },
           {
             "name": "number",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/tool-types.schema.json#/$defs/ChangeProposalNumber",
-            "required": false
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
           },
           {
             "name": "body",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/tool-types.schema.json#/$defs/Markdown",
-            "required": false
+            "required": false,
+            "arg": {
+              "stdin": true
+            }
           }
         ],
         "outputs": [
@@ -15854,13 +15900,19 @@
             "name": "directory",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/tool-types.schema.json#/$defs/RepoPath",
             "description": "The built tree to publish.",
-            "required": true
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
           },
           {
             "name": "baseUrl",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/tool-types.schema.json#/$defs/Url",
             "description": "Publication base; a preview passes its own.",
-            "required": false
+            "required": false,
+            "arg": {
+              "flag": "--base-url"
+            }
           }
         ],
         "outputs": [
@@ -15999,8 +16051,8 @@
   ],
   "staging": {
     "branch": "claude/festive-galileo-s7ibx0",
-    "sha": "454d6ff149efc811cbb608490cf930985ae5c48a",
+    "sha": "c32b32056a2d234fb6c82348528a7076b172f6b8",
     "pr": "282/merge",
-    "run": "35398733330"
+    "run": "35398943176"
   }
 }
