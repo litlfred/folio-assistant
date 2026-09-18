@@ -2341,6 +2341,29 @@ export const COST_CHECKER_FILE = "content/pipeline/qa-checkers-cost.ts";
 /** Hosts the machine-triviality oracle checker (scaffold). */
 export const TRIVIALITY_CHECKER_FILE = "content/pipeline/qa-checkers-triviality.ts";
 
+/** Hosts the WHO L2 DAK companion checkers. */
+export const DAK_CHECKER_FILE = "content/pipeline/qa-checkers-dak.ts";
+
+// ── The allow-list, and why getting it wrong is silent ─────────────
+//
+// `getCriterionSourceFile` falls through to EXTENDED_CHECKER_FILE for
+// anything it does not recognise. That default is not a harmless guess: the
+// resolved path is what `script_hash` is computed over, so a criterion
+// pointed at a file that does not contain its checker NEVER INVALIDATES.
+// Its verdicts stay "fresh" forever, and editing the real checker changes
+// nothing — the sweep keeps serving the answer it cached before the fix.
+//
+// Measured 2026-09-18: ELEVEN criteria were in exactly that state — the six
+// added below plus all five `dak-*`. Found because a fix to
+// `checkAuthorNotesPollution` (in qa-checkers-voice.ts) did not change its
+// verdict: the sidecar was hashing qa-checkers-extended.ts, which the fix
+// never touched. A wrong `pass` is believed; a verdict that cannot go stale
+// is worse, because nothing about it ever looks wrong.
+//
+// `scripts/tests/qa-criterion-source-file.test.ts` now pins declared ==
+// actual for every automated criterion, so a new checker in a new file
+// cannot re-enter this state unnoticed. Prefer an explicit `source_file` on
+// the registry entry over adding an id here.
 const VOICE_FILE_IDS = new Set<string>([
   "voice-status-leak",
   "voice-emoji-content",
@@ -2352,6 +2375,23 @@ const VOICE_FILE_IDS = new Set<string>([
   "voice-scholarly-default",
   "framework-canonical",
   "wall-side-correct",
+  // Added 2026-09-18 — all six dispatch from qa-checkers-voice.ts and were
+  // silently hashing qa-checkers-extended.ts.
+  "voice-probe-narrative",
+  "voice-agent-speak",
+  "voice-author-notes-pollution",
+  "voice-status-section",
+  "wall-base-ring-minimal",
+  "cite-named-theorem",
+]);
+
+/** The five WHO L2 DAK companion criteria, all in `qa-checkers-dak.ts`. */
+const DAK_FILE_IDS = new Set<string>([
+  "dak-companion-present",
+  "dak-bpmn-has-process",
+  "dak-dmn-has-decision-table",
+  "dak-fsh-declares-kind",
+  "dak-label-prefix-matches-kind",
 ]);
 
 /**
@@ -2363,6 +2403,7 @@ export function getCriterionSourceFile(criterionId: string): string {
   const def = QA_CRITERIA_BY_ID[criterionId];
   if (def?.source_file) return def.source_file;
   if (VOICE_FILE_IDS.has(criterionId)) return VOICE_CHECKER_FILE;
+  if (DAK_FILE_IDS.has(criterionId)) return DAK_CHECKER_FILE;
   if (criterionId.startsWith("uses-") || criterionId === "lean-ref-owns-decl")
     return USES_CHECKER_FILE;
   if (criterionId === "proof-compile-cost" || criterionId === "proof-no-cost-regression")
