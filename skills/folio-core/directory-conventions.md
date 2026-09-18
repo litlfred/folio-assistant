@@ -28,17 +28,32 @@ graph**. `folio` is one graph kind among several.
 
 ## The graph kinds
 
-| kind | holds | renderable |
-|---|---|---|
-| `folio` | authored content | **yes** — the just-the-docs pipeline renders it to a website |
-| `tools` | Tool definitions, themselves nodes in the KG | no |
-| `kg` | skills, workflows, roles — the instance's own knowledge graph | no |
-| `schemas` | schema definitions, self-declared in the smart-base manner | no |
+The vocabulary is **open**, and split across two layers.
 
-`renderable` is the **only** behavioural distinction in the table, and it is
-what makes `folio` special. The others are graphs that tools read. Nothing
-stops a consumer treating them uniformly — that is the point of making them all
-graphs — but only a renderable one is wired to the site build.
+| kind | declared by | holds | renderable |
+|---|---|---|---|
+| `tools` | **harness** | Tool definitions, themselves nodes in the KG | no |
+| `kg` | **harness** | skills, workflows, roles — the instance's own knowledge graph | no |
+| `schemas` | **harness** | schema definitions, self-declared in the smart-base manner | no |
+| `folio` | **`folio-assist-core`** | authored content | **yes** — just-the-docs renders it to a website |
+
+`renderable` is the **only** behavioural distinction, and it is why `folio` is
+not the harness's to declare: **`agent-harness` is not self-documenting.** It
+has no just-the-docs pipeline and no webpage content type, so a layer that
+cannot render must not own the renderable kind. Core registers it, through the
+same load-time registration the contribution mechanism uses.
+
+This is enforced rather than described. A bare `GraphKindRegistry` — the
+harness with nothing above it — genuinely **does not know `folio` exists**, and
+a declaration naming it is refused with an error listing the kinds that *are*
+known. A test pins that. The version where `folio` stays in the harness's table
+with a comment saying core owns it reads fine and means nothing: the harness
+would still know the string, and the boundary would live only in prose.
+
+**Registering is idempotent for an identical definition and throws on a
+conflicting one** — the same rule `schemas/contributions.ts` follows, so a
+diamond dependency graph reaching core twice is not an error while two layers
+claiming one name is.
 
 ## The conventional layout
 
@@ -150,8 +165,18 @@ anything else at the harness layer.
 
 ## Adding a graph kind
 
-One entry in `GRAPH_KINDS` (`schemas/agent-harness.ts`): its `@type` IRI, its
-`renderable` flag, and a one-line summary. The Zod enum, the JSON-LD projection
-and the reverse lookup all derive from that object, so nothing else needs
-touching — and a kind that is added without deciding `renderable` will not
-compile.
+Decide which layer owns it first — **if it renders, it is not the harness's.**
+
+- A harness kind: one entry in `BASE_GRAPH_KINDS` (`schemas/agent-harness.ts`).
+- A kind belonging to a layer above: a module like
+  `schemas/folio-graph-kind.ts` that calls `registry.register(name, def)` at
+  import, so the harness never learns the name until that layer is loaded.
+
+Either way the definition is `@type` IRI + `renderable` + summary, and the
+JSON-LD projection and the reverse lookup both derive from it. A kind added
+without deciding `renderable` will not compile.
+
+Note the declaration's `graph` field is validated **against the registry at
+read time**, not by a closed Zod enum. An enum would be built at module load —
+before core has registered `folio` — so it would reject the one kind the entire
+rendering pipeline depends on.

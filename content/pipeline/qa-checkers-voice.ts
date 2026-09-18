@@ -113,6 +113,39 @@ function isConjectureBlock(tsPath?: string): boolean {
   return /\bexport\s+default\s+conjecture\s*\(/.test(readFileSync(tsPath, "utf-8"));
 }
 
+/**
+ * Mask the LABEL CELL of a definition-table row.
+ *
+ * A row shaped `| **Term** (qualifier) | what it means |` is a definition
+ * list: the first cell names a term and the rest of the row defines it. A
+ * status word inside that label is a proper noun for a process stage, not an
+ * assertion about the work — `| **Needs review** (Phase 1) | Confirm the BA's
+ * needs statement … |` is a row in a table OF CHECKPOINT NAMES, and flagging
+ * it as a work-tracker leak is a category error of the same shape as the one
+ * the profile axis fixed.
+ *
+ * Deliberately conservative, because a table is also a plausible place to
+ * hide a real leak:
+ *
+ * - only the FIRST cell is masked; a status marker in the definition half of
+ *   the row is still a hit;
+ * - the cell must be ENTIRELY a bolded term plus an optional parenthetical.
+ *   `| **Pending.** the proof is stalled |` is prose in a table and is not
+ *   masked, because the cell is not purely a label.
+ *
+ * Same principle as {@link isConjectureBlock}: a block whose declared subject
+ * is the open question is not leaking status by naming it.
+ */
+function maskTableLabelCell(line: string): string {
+  if (!/^\s*\|/.test(line)) return line;
+  const cells = line.split("|");
+  // cells[0] is the empty string before the leading pipe.
+  if (cells.length < 3) return line;
+  const first = cells[1];
+  if (/^\s*\*\*[^*]+\*\*(?:\s*\([^)]*\))?\s*$/.test(first)) cells[1] = " ";
+  return cells.join("|");
+}
+
 export function checkStatusLeak(mdPath: string, tsPath?: string): CheckerResult {
   // Conjecture blocks are exempt from the open-derivation patterns (a
   // conjecture legitimately says what remains open); the hard work-tracker
@@ -122,7 +155,7 @@ export function checkStatusLeak(mdPath: string, tsPath?: string): CheckerResult 
   const re = isConjectureBlock(tsPath)
     ? STATUS_LEAK_RE
     : new RegExp(`${STATUS_LEAK_RE.source}|${OPEN_DERIVATION_RE.source}`, "i");
-  const hits = scanProse(mdPath, re);
+  const hits = scanProse(mdPath, re, maskTableLabelCell);
   return { result: hits.length > 0 ? "fail" : "pass", hits };
 }
 
@@ -131,7 +164,12 @@ export function checkStatusLeak(mdPath: string, tsPath?: string): CheckerResult 
  * backtick spans (so a keyword inside a code sample is not a prose hit).
  * Shared by the prose-voice checkers below and `checkStatusLeak`'s idiom.
  */
-function scanProse(mdPath: string, re: RegExp): CheckerHit[] {
+function scanProse(
+  mdPath: string,
+  re: RegExp,
+  /** Optional extra masking applied after code/link stripping. */
+  premask?: (line: string) => string,
+): CheckerHit[] {
   return scan(mdPath, re, (l, i, lines) => {
     let inFence = false;
     for (let j = 0; j < i; j++) {
@@ -146,7 +184,7 @@ function scanProse(mdPath: string, re: RegExp): CheckerHit[] {
       .replace(/`[^`]+`/g, "")
       .replace(/\]\([^)]*\)/g, "]")
       .replace(/<[^>\s]+>/g, "");
-    return re.test(stripped);
+    return re.test(premask ? premask(stripped) : stripped);
   });
 }
 
@@ -1127,6 +1165,24 @@ const AUTHOR_NOTES_AGENT_RE =
 const AUTHOR_NOTES_DATE_RE =
   /\b20(?:25|26)-(?:0[1-9]|1[0-2])-(?:[0-2]\d|3[01])\b/;
 
+// P4 exemption: the DATE OF A MEASUREMENT is mandated provenance, not
+// author-tracking pollution.
+//
+// `AGENTS.md` requires exactly this form — "a number without its date and
+// command is a claim, not evidence" — and the BASELINE rule for agent memory
+// says a measured number is stored "with the command that produced it and the
+// date". So P4 was firing on the house style it is supposed to coexist with,
+// and the only way for an author to satisfy both was to omit the provenance
+// that makes a number checkable.
+//
+// Deliberately narrow: it exempts a date bound to the word `measured` within
+// the same clause, not dates generally. `as of 2026-05-28 this remains open`
+// is still a P4 hit, because that is status speech about the work rather than
+// provenance of a number. Bounded by `[^.\n]` so the exemption cannot reach
+// across a sentence boundary and launder an unrelated date.
+const MEASURED_PROVENANCE_RE =
+  /\b(?:re-)?measured\b[^.\n]{0,40}?\b20(?:25|26)-(?:0[1-9]|1[0-2])-(?:[0-2]\d|3[01])\b/gi;
+
 export function checkAuthorNotesPollution(mdPath: string): CheckerResult {
   const { lines } = readSource(mdPath);
   const hits: CheckerHit[] = [];
@@ -1150,7 +1206,8 @@ export function checkAuthorNotesPollution(mdPath: string): CheckerResult {
     // (audit-doc cross-references) do not.
     const dateProbe = stripped
       .replace(/\]\([^)]*\)/g, "]")
-      .replace(/[\w./-]*\d{4}-\d{2}-\d{2}[\w./-]*\.(?:md|json|py|tex|lean|txt|svg|png)\b/g, "");
+      .replace(/[\w./-]*\d{4}-\d{2}-\d{2}[\w./-]*\.(?:md|json|py|tex|lean|txt|svg|png)\b/g, "")
+      .replace(MEASURED_PROVENANCE_RE, "");
     if (AUTHOR_NOTES_DATE_RE.test(dateProbe) && !/^\$/.test(dateProbe) && !/Ref:/.test(dateProbe))
       hits.push({ file: mdPath, line: i + 1, text: `P4:date-ref: ${l.trim().slice(0, 200)}` });
   }

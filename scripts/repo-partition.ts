@@ -177,6 +177,7 @@ const RULES: Rule[] = [
       "scripts/section-story-audit.ts",      // section + chapter narrative
       "scripts/pages-bootstrap.ts",          // where a folio publishes, and whether it is there
       "scripts/scan-repo-content.ts",        // scans a repo for material a folio could take over
+      "scripts/translate-bpmn.ts",           // BPMN string extraction/injection per locale
     ],
   },
 
@@ -208,7 +209,7 @@ const RULES: Rule[] = [
       // it was extracted to remove.
       "schemas/namespaces.ts",
     ],
-    prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "adapters/mcp-server/", "skills/framework/", "skills/remote-packages/"],
+    prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "src/issue-watch/", "adapters/mcp-server/", "skills/framework/", "skills/remote-packages/"],
   },
 
   // ── folio-asst-sci: Lean, LaTeX, simulators, proofs
