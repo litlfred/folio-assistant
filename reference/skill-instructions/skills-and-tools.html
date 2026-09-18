@@ -539,29 +539,39 @@ between them is judgement and judgement is skill.</li>
 here: the Tool worked, the Tool is absent and here is the fallback, and <em>we
 could not tell</em> — which is never rendered as success.</li>
 </ol>
-<h2 id="migration-is-not-done-and-that-is-stated-rather-than-implied">
+<h2 id="where-this-stands--the-schema-is-real-the-migration-is-not">
   
   
-    <a href="#migration-is-not-done-and-that-is-stated-rather-than-implied" class="anchor-heading" aria-labelledby="migration-is-not-done-and-that-is-stated-rather-than-implied"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Migration is not done, and that is stated rather than implied
+    <a href="#where-this-stands--the-schema-is-real-the-migration-is-not" class="anchor-heading" aria-labelledby="where-this-stands--the-schema-is-real-the-migration-is-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where this stands — the schema is real, the migration is not
   
   
 </h2>
     
 
-<p>As of 2026-09-18 the skills still carry their invocations inline and no
-<code class="language-plaintext highlighter-rouge">schemas/tool.ts</code> exists, so <strong>there is no Tool node to reach for yet</strong>. This
-skill is the SOP that new and edited skills follow, and the target the existing
-ones move toward — not a description of the current tree.</p>
+<p><strong><code class="language-plaintext highlighter-rouge">schemas/tool.ts</code> exists</strong>, <code class="language-plaintext highlighter-rouge">tools/</code> holds four nodes (<code class="language-plaintext highlighter-rouge">beans-cli</code>,
+<code class="language-plaintext highlighter-rouge">beans-manual</code>, <code class="language-plaintext highlighter-rouge">github</code>, <code class="language-plaintext highlighter-rouge">pages-publish</code>), and <code class="language-plaintext highlighter-rouge">bun run check:tools</code> fails when
+a <code class="language-plaintext highlighter-rouge">satisfies</code> names a skill that does not exist. So a Tool is now something you
+can reach for rather than a shape described in prose.</p>
 
-<p>An agent reading a skill today will find <code class="language-plaintext highlighter-rouge">mcp__github__*</code> and
-<code class="language-plaintext highlighter-rouge">beans update</code> written into the prose. That is the debt, not the pattern. Do
-not propagate it into anything you write.</p>
+<p><strong>The skills still carry their invocations inline.</strong> Measured when the Tools
+landed: 4 Tools cover <strong>11 of 138</strong> skills. That number is the migration debt
+made visible, and most of the remainder is fine — a great many skills are pure
+judgement (<code class="language-plaintext highlighter-rouge">interaction-modality</code>, <code class="language-plaintext highlighter-rouge">one-voice-style-guide</code>) and have no
+mechanism to name. <code class="language-plaintext highlighter-rouge">check:tools</code> reports the count rather than failing on it,
+for exactly that reason. What it cannot tell you, and what needs a human eye, is
+which of the uncovered skills <em>describe an action</em> — those are the ones whose
+mechanism is still swallowed.</p>
 
-<p>The <code class="language-plaintext highlighter-rouge">mcp__github__*</code> half of that debt is doubly wrong under the no-MCP rule
-above: it is both an inlined mechanism and one that the harness cannot execute.
-When those skills are migrated, the <code class="language-plaintext highlighter-rouge">github</code> Tool node’s <code class="language-plaintext highlighter-rouge">invoke.shell</code> arm
-(<code class="language-plaintext highlighter-rouge">gh</code>, or a plain REST call) is the one the harness relies on, and <code class="language-plaintext highlighter-rouge">invoke.mcp</code>
-is the convenience a server-equipped instance may take instead.</p>
+<p>So when you write or edit a skill: follow the checklist above and reference a
+Tool. When you read one that inlines <code class="language-plaintext highlighter-rouge">gh pr create</code> or <code class="language-plaintext highlighter-rouge">beans update</code>, that is
+the debt, not the pattern — do not propagate it.</p>
+
+<p>Authoring a Tool node: <code class="language-plaintext highlighter-rouge">tools/index.ts</code>, calling <code class="language-plaintext highlighter-rouge">defineTool</code>. It is TypeScript
+rather than JSON so a malformed node fails at <code class="language-plaintext highlighter-rouge">tsc</code> and in the editor, which is
+the carrier decision applied to instances as well as to the schema. <code class="language-plaintext highlighter-rouge">io</code> ports
+reference the shared vocabulary in <code class="language-plaintext highlighter-rouge">schemas/tool-types.ts</code> by absolute IRI —
+never a hand-written string, because a reference nothing checks is a reference
+that is eventually wrong.</p>
 
           
 
@@ -576,7 +586,7 @@ is the convenience a server-equipped instance may take instead.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35390064842"><code>e25e10f</code></a> &middot; 2026-09-18T20:11:57Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35391174709"><code>2695418</code></a> &middot; 2026-09-18T20:24:08Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

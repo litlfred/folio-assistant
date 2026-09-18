@@ -334,6 +334,7 @@
     </ol>
   </li>
   <li><a href="#agent-harness-tools--the-minimum" id="markdown-toc-agent-harness-tools--the-minimum"><code class="language-plaintext highlighter-rouge">agent-harness-tools</code> — the minimum</a></li>
+  <li><a href="#the-tools-schema--built-and-where-the-strawperson-bent" id="markdown-toc-the-tools-schema--built-and-where-the-strawperson-bent">The Tools schema — built, and where the strawperson bent</a></li>
   <li><a href="#strawperson-the-tools-repo-schema" id="markdown-toc-strawperson-the-tools-repo-schema">Strawperson: the Tools-repo schema</a>    <ol>
       <li><a href="#carrying-it--authored-once-in-zod-rendered-downstream" id="markdown-toc-carrying-it--authored-once-in-zod-rendered-downstream">Carrying it — authored once in Zod, rendered downstream</a>        <ol>
           <li><a href="#why-not-the-other-three-including-the-one-i-first-recommended" id="markdown-toc-why-not-the-other-three-including-the-one-i-first-recommended">Why not the other three, including the one I first recommended</a></li>
@@ -787,6 +788,39 @@ renderer and no server.</p>
 <p><strong>All code snippets live here, not in skills</strong> (16:13). Skills should carry
 minimal code; a snippet in a skill is a Tool that has not been declared. That
 is a QA audit criterion, not a style note — see the strawperson below.</p>
+<h2 id="the-tools-schema--built-and-where-the-strawperson-bent">
+  
+  
+    <a href="#the-tools-schema--built-and-where-the-strawperson-bent" class="anchor-heading" aria-labelledby="the-tools-schema--built-and-where-the-strawperson-bent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The Tools schema — built, and where the strawperson bent
+  
+  
+</h2>
+    
+
+<blockquote>
+  <p><strong>No longer a strawperson.</strong> <code class="language-plaintext highlighter-rouge">schemas/tool.ts</code> is real, <code class="language-plaintext highlighter-rouge">tools/</code> holds four
+nodes, and <code class="language-plaintext highlighter-rouge">bun run check:tools</code> gates them in CI. The shape below is what
+shipped; three things changed in contact with the first real Tools, and each
+is the kind of thing only writing them would have surfaced:</p>
+
+  <ul>
+    <li><strong><code class="language-plaintext highlighter-rouge">invoke.manual</code></strong> was added. <code class="language-plaintext highlighter-rouge">beans-manual</code> — editing a bean’s front
+matter by hand — is a real mechanism with equal standing to the CLI, and
+modelling it as an absent <code class="language-plaintext highlighter-rouge">shell</code> would have made it indistinguishable from
+an unfinished record.</li>
+    <li><strong><code class="language-plaintext highlighter-rouge">install.none</code></strong> for the same reason: “nothing to install” and “not filled
+in” must not render identically.</li>
+    <li><strong><code class="language-plaintext highlighter-rouge">invoke</code> is refined to require an arm the harness can run.</strong> A Tool whose
+only invocation is <code class="language-plaintext highlighter-rouge">invoke.mcp</code> is unusable by the layer that defines it and
+would make a projector emit a server that proxies itself. Rejected at parse
+time.</li>
+  </ul>
+
+  <p>The two fields flagged below as too loose are both tightened: <code class="language-plaintext highlighter-rouge">io.*.schema</code> is
+an absolute IRI into a published <code class="language-plaintext highlighter-rouge">$defs</code> document (<code class="language-plaintext highlighter-rouge">schemas/tool-types.ts</code>),
+and <code class="language-plaintext highlighter-rouge">satisfies</code> must be non-empty — with <code class="language-plaintext highlighter-rouge">check:tools</code> resolving the names,
+which a schema cannot do because it does not get to read the tree.</p>
+</blockquote>
 <h2 id="strawperson-the-tools-repo-schema">
   
   
@@ -1526,7 +1560,7 @@ separate skill set and is not designed here.</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35390064842"><code>e25e10f</code></a> &middot; 2026-09-18T20:11:57Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35391174709"><code>2695418</code></a> &middot; 2026-09-18T20:24:08Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

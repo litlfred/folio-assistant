@@ -45,6 +45,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/ns#requiresCapability",
       "@type": "@id"
     },
+    "satisfies": {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#satisfies",
+      "@type": "@id"
+    },
     "holdsGraph": {
       "@id": "https://litlfred.github.io/folio-assistant/ns#holdsGraph",
       "@type": "@id"
@@ -102,7 +106,7 @@
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T20:12:26.230Z",
+  "generatedAt": "2026-09-18T20:24:34.884Z",
   "counts": {
     "Skill": 138,
     "Actor": 24,
@@ -112,8 +116,9 @@
     "Process": 20,
     "SequenceFlow": 362,
     "ProcessNode": 328,
+    "Tool": 4,
     "GraphKind": 7,
-    "Directory": 3
+    "Directory": 4
   },
   "problems": [],
   "@graph": [
@@ -562,7 +567,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/skills-and-tools.md",
-      "lines": 162,
+      "lines": 172,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -645,7 +650,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/mcp-projection.md",
-      "lines": 112,
+      "lines": 116,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -1127,7 +1132,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/mcp-contract.md",
-      "lines": 80,
+      "lines": 87,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -14073,6 +14078,228 @@
       "outgoing": []
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/beans-cli",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "beans-cli",
+      "title": "beans CLI",
+      "summary": "Read and write the work plan with the `beans` binary. The normal mechanism when it is installed.",
+      "install": {
+        "cli": "scripts/install-beans.sh"
+      },
+      "invoke": {
+        "shell": "beans"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "id",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanId",
+            "description": "The bean to act on; absent for list/create.",
+            "required": false
+          },
+          {
+            "name": "status",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanStatus",
+            "required": false
+          },
+          {
+            "name": "body",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "bean",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanId",
+            "description": "The bean created or updated."
+          }
+        ]
+      },
+      "requires": {
+        "runtime": [
+          "go"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/bean-coordination",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/pending-show",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/session-intent",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/continual-progress",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/idle-backlog"
+      ],
+      "satisfiesSkillNames": [
+        "bean-coordination",
+        "todo-manager",
+        "pending-show",
+        "session-intent",
+        "continual-progress",
+        "idle-backlog"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/beans-manual",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "beans-manual",
+      "title": "beans, by hand",
+      "summary": "Read and write the same work plan without the CLI — `scripts/beans-fallback.ts`, or editing a bean's front matter directly. Equal standing to the CLI, not a degraded mode.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run beans:fallback",
+        "manual": true
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "id",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanId",
+            "required": false
+          },
+          {
+            "name": "status",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanStatus",
+            "required": false
+          },
+          {
+            "name": "body",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "bean",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/BeanId"
+          }
+        ]
+      },
+      "requires": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/bean-coordination",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/pending-show",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/session-intent",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/continual-progress",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/idle-backlog"
+      ],
+      "satisfiesSkillNames": [
+        "bean-coordination",
+        "todo-manager",
+        "pending-show",
+        "session-intent",
+        "continual-progress",
+        "idle-backlog"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/github",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "github",
+      "title": "GitHub",
+      "summary": "Open and drive change proposals on GitHub — branches, pull requests, reviews, checks. One forge among possible others; the skills it satisfies name none.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh",
+        "mcp": {
+          "tool": "mcp__github__*"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "branch",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Branch",
+            "required": false
+          },
+          {
+            "name": "number",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/ChangeProposalNumber",
+            "required": false
+          },
+          {
+            "name": "body",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Markdown",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Url",
+            "description": "The change proposal or comment created."
+          }
+        ]
+      },
+      "requires": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/pickup",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/watch",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/coordinate"
+      ],
+      "satisfiesSkillNames": [
+        "prepare-merge-auto",
+        "pickup",
+        "watch",
+        "coordinate"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#tool/pages-publish",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "pages-publish",
+      "title": "GitHub Pages publish",
+      "summary": "Push a built directory to the `gh-pages` branch, where it is served. How the knowledge graph and its schema reach a URL.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": ".github/workflows/docs-site.yml"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "directory",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The built tree to publish.",
+            "required": true
+          },
+          {
+            "name": "baseUrl",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Url",
+            "description": "Publication base; a preview passes its own.",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/kg/tool-types.schema.json#/$defs/Url",
+            "description": "Where the tree is served."
+          }
+        ]
+      },
+      "requires": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "satisfiesSkillNames": [
+        "kg-export"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/tools",
       "@type": "https://litlfred.github.io/folio-assistant/ns#GraphKind",
       "name": "tools",
@@ -14127,6 +14354,19 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/ns#FolioGraph",
       "renderable": true,
       "summary": "Authored content, rendered to a website by the just-the-docs pipeline."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#directory/tools",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
+      "name": "tools",
+      "path": "tools/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/ns#graphKind/tools"
+      ],
+      "graphKinds": [
+        "tools"
+      ],
+      "summary": "Tool definitions — one concrete way to exercise a skill, each naming the skills it satisfies. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#directory/schemas",

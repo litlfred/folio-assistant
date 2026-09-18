@@ -510,10 +510,14 @@ swallowed a Tool.</p>
 </h2>
     
 
-<p><strong>Not implemented.</strong> <code class="language-plaintext highlighter-rouge">schemas/tool.ts</code> does not exist yet and there is no
-projector. This skill is the mapping an implementation follows, written now so
-that the first one does not invent its own and become the de-facto standard by
-accident.</p>
+<p><strong>Half built.</strong> <code class="language-plaintext highlighter-rouge">schemas/tool.ts</code> and four Tool nodes now exist, so the <em>source</em>
+of a projection is real and its shape is fixed. <strong>There is still no projector.</strong></p>
+
+<p>That is the useful state to be in: the mapping table above can now be checked
+against something rather than imagined. Two of its rows are already load-bearing
+in the schema itself — <code class="language-plaintext highlighter-rouge">ToolDefinitionSchema</code> refuses a Tool whose only
+invocation is <code class="language-plaintext highlighter-rouge">invoke.mcp</code>, which is the “never a projection source” rule
+enforced at parse time rather than left to the projector to remember.</p>
 
           
 
@@ -528,7 +532,7 @@ accident.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35390064842"><code>e25e10f</code></a> &middot; 2026-09-18T20:11:57Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35391174709"><code>2695418</code></a> &middot; 2026-09-18T20:24:08Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

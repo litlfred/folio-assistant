@@ -436,10 +436,17 @@ check does not have.</p>
 </h2>
     
 
-<p><strong>Not implemented</strong>, like the two skills it sits beside: there is no
-<code class="language-plaintext highlighter-rouge">schemas/tool.ts</code>, no projector, and so nothing to check. Written now because
-the contract is easiest to state before an implementation exists to be
-described instead.</p>
+<p><strong>The source side exists now; the served side does not.</strong> <code class="language-plaintext highlighter-rouge">schemas/tool.ts</code>,
+<code class="language-plaintext highlighter-rouge">schemas/tool-types.ts</code> and four Tool nodes are real, and <code class="language-plaintext highlighter-rouge">bun run check:tools</code>
+already does the <em>satisfaction</em> check in this table’s third row: every
+<code class="language-plaintext highlighter-rouge">satisfies</code> resolves to a skill that exists.</p>
+
+<p>Schema equivalence and coverage still wait on a projector — there is no served
+<code class="language-plaintext highlighter-rouge">tools/list</code> to compare against. One thing did become concrete in the meantime:
+because <code class="language-plaintext highlighter-rouge">io</code> ports reference a shared <code class="language-plaintext highlighter-rouge">$defs</code> document by absolute IRI rather
+than restating a structure per tool, “these two Tools accept the same input” is
+<em>identity</em> rather than a structural comparison. That is what makes the
+equivalence check in row one tractable when it is written.</p>
 
           
 
@@ -454,7 +461,7 @@ described instead.</p>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35390064842"><code>e25e10f</code></a> &middot; 2026-09-18T20:11:57Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35391174709"><code>2695418</code></a> &middot; 2026-09-18T20:24:08Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
