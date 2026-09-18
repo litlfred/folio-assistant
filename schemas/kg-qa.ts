@@ -134,7 +134,18 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     id: "activity-names-skill",
     applies: ["process"],
     severity: "minor",
-    summary: "An activity names no skill. Legitimate for a human judgement step; a gap everywhere else.",
+    summary:
+      "An activity names no skill. Legitimate for a human judgement step; a gap everywhere else. " +
+      "A call activity is exempt: it is implemented by the process it calls, which `call-activity-resolves` checks instead.",
+  },
+  {
+    id: "call-activity-resolves",
+    applies: ["process"],
+    severity: "critical",
+    summary:
+      "A call activity's `calledElement` names a process this instance can load. It is the join that makes a call " +
+      "activity's skill exemption safe — without it, a typo in `calledElement` would satisfy both criteria and " +
+      "implement the step with nothing at all.",
   },
   {
     id: "role-skills-resolve",

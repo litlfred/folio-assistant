@@ -125,6 +125,11 @@ or fuzzy strings that need attention.</bpmn:documentation>
 - Style guide and WHO terminology references
 
 Tools: Poedit, Weblate, Crowdin, or direct .po editing.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager" />
+        <folio:skill ref="translation-manager" />
+        <folio:skill ref="translation-manager" />
+      </bpmn:extensionElements>
     </bpmn:userTask>
 
     <bpmn:userTask id="Task_TranslateInTool" name="Translate strings&#10;in preferred tool">
@@ -142,6 +147,11 @@ to the pipeline. This may happen via:
 - Git commit + push
 - Weblate/Crowdin sync
 - File upload to the coordinator</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager" />
+        <folio:skill ref="translation-manager" />
+        <folio:skill ref="translation-manager" />
+      </bpmn:extensionElements>
     </bpmn:userTask>
 
     <!-- ══════ REVIEWER LANE ══════════════════════════════════ -->
@@ -157,6 +167,11 @@ markdown for:
 For WHO content: the SME verifies that normative statements
 ("SHALL", "SHOULD", "MAY") are translated with the correct
 force in the target language.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="translation-manager" />
+        <folio:skill ref="translation-manager" />
+        <folio:skill ref="translation-manager" />
+      </bpmn:extensionElements>
     </bpmn:userTask>
 
     <bpmn:exclusiveGateway id="Gateway_Accurate" name="Translation accurate?" />

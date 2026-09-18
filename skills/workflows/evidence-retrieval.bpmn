@@ -96,11 +96,21 @@ existed. It is not `corpus-grep`, whose job is the pre-declaration check
 that something really is an open gap — searching adjudicated L2/L3 content
 for evidence is a different task, so pointing the ref there would have been
 a plausible-looking wrong answer. Left uncovered until the skill is written.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake" />
+        <folio:skill ref="document-intake" />
+        <folio:skill ref="document-intake" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_05</bpmn:incoming>
       <bpmn:outgoing>Flow_08</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_DataRepos" name="Query data repositories and statistical datasets">
       <bpmn:documentation>Indicator and microdata sources. Distinct from the two above because the unit of evidence is a MEASUREMENT with a population, a period and a method, not a claim in prose.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <folio:skill ref="document-intake" />
+        <folio:skill ref="document-intake" />
+        <folio:skill ref="document-intake" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_06</bpmn:incoming>
       <bpmn:outgoing>Flow_09</bpmn:outgoing>
     </bpmn:serviceTask>

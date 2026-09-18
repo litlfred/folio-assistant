@@ -152,6 +152,7 @@ async function auditProcess(
   p: LoadedProcess,
   graph: RoleGraph | undefined,
   skills: Set<string>,
+  processIds: Set<string>,
   auditorHash: string,
 ): Promise<KgQaReport> {
   const rel = relative(root, join(WORKFLOW_DIR, p.file));
@@ -167,13 +168,27 @@ async function auditProcess(
   const noSkill: KgFinding[] = [];
   const noLane: KgFinding[] = [];
   const skillNotCarried: KgFinding[] = [];
+  const danglingCall: KgFinding[] = [];
+  const calls = activities.filter((n) => n.calledElement !== undefined);
   for (const n of activities) {
     for (const ref of n.skills) {
       if (!skills.has(ref)) {
         danglingSkill.push({ where: n.id, detail: `names skill "${ref}", which resolves to no skill in this instance.` });
       }
     }
-    if (n.skills.length === 0) noSkill.push({ where: n.id, detail: `"${n.name}" names no skill.` });
+    // A call activity is implemented by the process it calls, not by a skill.
+    // Demanding a `<folio:skill ref>` of it asks the diagram to name a second,
+    // redundant implementation — and the one that matters is checked by
+    // `call-activity-resolves` below, so the exemption leaves no gap.
+    if (n.skills.length === 0 && n.calledElement === undefined) {
+      noSkill.push({ where: n.id, detail: `"${n.name}" names no skill.` });
+    }
+    if (n.calledElement !== undefined && !processIds.has(n.calledElement)) {
+      danglingCall.push({
+        where: n.id,
+        detail: `calls "${n.calledElement}", which is the id of no process this instance can load.`,
+      });
+    }
     if (!n.lane) noLane.push({ where: n.id, detail: `"${n.name}" sits in no lane, so no role — and therefore no actor — performs it.` });
   }
 
@@ -255,6 +270,7 @@ async function auditProcess(
     "lane-binds-role": entry(unboundLane, Boolean(graph) && m.lanes.length > 0),
     "role-carries-activity-skill": entry(skillNotCarried, Boolean(graph) && m.lanes.length > 0),
     "activity-names-skill": entry(noSkill),
+    "call-activity-resolves": entry(danglingCall, calls.length > 0),
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
@@ -730,7 +746,8 @@ if (graphError) {
 
 const processes = await loadProcesses();
 const reports: KgQaReport[] = [];
-for (const p of processes) reports.push(await auditProcess(p, graph, skills, auditorHash));
+const processIds = new Set(processes.flatMap((p) => (p.model ? [p.model.id] : [])));
+for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, auditorHash));
 reports.push(...(await auditDecisions(processes, auditorHash)));
 if (graph) {
   reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills, auditorHash));

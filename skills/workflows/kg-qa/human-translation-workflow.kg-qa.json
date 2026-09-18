@@ -5,10 +5,10 @@
     "id": "Process_HumanTranslation",
     "path": "skills/workflows/human-translation-workflow.bpmn"
   },
-  "source_hash": "sha256:01641751fa52c6d5cec71757e7a1576f05da100a74f8149650d677bae730a0a9",
+  "source_hash": "sha256:5ac6bd8870e283ce2c8ae3aed9a53fa99cf78a6eb2226181dba98b282430ccc7",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:565c0baa00bdb6212732c82e3176d395af13d4f8ce84524cca9a2be5b37203da",
+    "script_hash": "sha256:7b95e94dd08f6b13bbad3c50e4b25ed87bea9f2ed6896e49c2e28eef6af09018",
     "engine_version": "1"
   },
   "criteria": {
@@ -44,28 +44,20 @@
       "result": "fail",
       "findings": [
         {
-          "where": "Task_ReceiveAssignment",
-          "detail": "\"Receive assignment and materials\" names no skill."
-        },
-        {
           "where": "Task_TranslateInTool",
           "detail": "\"Translate strings in preferred tool\" names no skill."
-        },
-        {
-          "where": "Task_SubmitPO",
-          "detail": "\"Submit completed .po file\" names no skill."
-        },
-        {
-          "where": "Task_SMEReview",
-          "detail": "\"Review translation for accuracy\" names no skill."
         }
       ]
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
     "pass": 6,
     "fail": 1,
-    "n/a": 1,
+    "n/a": 2,
     "unknown": 0
   }
 }
