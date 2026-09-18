@@ -720,6 +720,24 @@ Full protocol, with the worked example:
   because whether work is done is a judgement and `AGENTS.md` says a bean is not
   closed on someone else's say-so. `work_plan_prime` reports every instance's
   position next to its bean, so the plan and the process are one answer.
+- **An instance declares the directories it scans — `folio-assistant.json` at
+  the repo root.** Each entry names a directory and the **kind of graph** it
+  holds: `folio` (authored content, rendered to a website by just-the-docs),
+  `tools` (Tool definitions, themselves KG nodes), `kg` (skills, workflows,
+  roles) or `schemas`. `renderable` is the only behavioural difference in that
+  table, and it is what makes `folio` special — the rest are graphs tools read.
+  An instance **inherits its dependencies' directories**: `agentic-harness`
+  declares `tools/`, `kg/` and `schemas/`; `folio-assist-core` declares only
+  `folio/` and gets the other three. **Overrides match on the entry's `id`, not
+  its `path`** — matching on path makes two knowledge graphs out of one
+  relocation, and every consumer then scans a directory that is not there.
+  Absent declaration is fine (an unmigrated instance falls back to today's
+  conventions); a present-but-unreadable one throws. **Declare only what
+  exists** — a declared-but-absent directory is the bean `dh4f` defect, where a
+  consumer scans nothing and reports a clean run over it. This repo is
+  pre-split and declares `schemas/` and `skills/` only. Schema:
+  `schemas/folio-assistant.ts`; conventions:
+  [`skills/folio-core/directory-conventions.md`](skills/folio-core/directory-conventions.md).
 - Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this

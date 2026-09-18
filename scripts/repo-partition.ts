@@ -175,6 +175,8 @@ const RULES: Rule[] = [
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
+      "scripts/pages-bootstrap.ts",          // where a folio publishes, and whether it is there
+      "scripts/scan-repo-content.ts",        // scans a repo for material a folio could take over
     ],
   },
 
