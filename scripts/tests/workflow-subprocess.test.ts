@@ -13,7 +13,7 @@ import { join, resolve } from "node:path";
 
 import { complete, enabled, positionOf, startInstance, WorkflowError } from "../../src/workflow/instance";
 import { checkGate } from "../../src/workflow/gate";
-import { loadProcessModel, UnsupportedBpmn } from "../../src/workflow/process-model";
+import { findInModel, loadProcessModel, UnsupportedBpmn } from "../../src/workflow/process-model";
 
 const WORKFLOWS = resolve(import.meta.dir, "../../skills/workflows");
 const bpmn = (stem: string): string => join(WORKFLOWS, `${stem}.bpmn`);
@@ -196,6 +196,24 @@ describe("positionOf", () => {
     for (const p of position) {
       expect(p.startsWith("CallActivity_Extract ▸ ")).toBe(true);
       expect(p).not.toBe("CallActivity_Extract");
+    }
+  });
+});
+
+describe("a bean-marked step in a phase is still a work-plan write", () => {
+  test("findInModel reaches it — a parent-only lookup would find nothing", async () => {
+    const model = await loadProcessModel(bpmn("document-ingestion"));
+
+    // Every bean-marked step of this process lives in one of its phases; none
+    // is a node of the parent. A lookup that only knew the parent would perform
+    // no work-plan operation at all, silently.
+    const marked = [...model.children.values()].flatMap((child) =>
+      [...child.nodes.values()].filter((n) => n.workPlanOp).map((n) => n.id),
+    );
+    expect(marked.length).toBeGreaterThan(0);
+    for (const id of marked) {
+      expect(model.nodes.has(id)).toBe(false);
+      expect(findInModel(model, id)?.model.nodes.get(id)?.workPlanOp).toBeDefined();
     }
   });
 });

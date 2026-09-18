@@ -36,7 +36,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { existsSync, readdirSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
-import { loadProcessModel, type ProcessModel } from "../workflow/process-model.js";
+import { findInModel, loadProcessModel, type ProcessModel } from "../workflow/process-model.js";
 import { complete, describe, startInstance } from "../workflow/instance.js";
 import { instanceId, listInstances, loadInstance, saveInstance } from "../workflow/store.js";
 import { applyWorkPlanOp } from "../workflow/bean-link.js";
@@ -231,7 +231,15 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       // A bean-marked step IS the work-plan operation, not a step about it.
       // Done after the advance so `resolve` can see whether the process it
       // tracks actually finished.
-      const op = model.nodes.get(node)?.workPlanOp;
+      //
+      // Looked up through the subprocess tree, not in the top-level process:
+      // once a diagram is decomposed the bean-marked steps live in its phases
+      // (`A_Close` carries `op="resolve"` and sits in CRDM's close-out), and a
+      // lookup that only knew the parent would find nothing and perform nothing
+      // — silently, which is the worst way for a work-plan write to stop.
+      // `instanceCompleted` stays the PARENT's status on purpose: a bean is
+      // resolved when the whole process finished, not when one phase did.
+      const op = findInModel(model, node)?.model.nodes.get(node)?.workPlanOp;
       const plan = op
         ? applyWorkPlanOp(root, next.bean, op, {
             note,
