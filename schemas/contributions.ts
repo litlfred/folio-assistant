@@ -110,6 +110,54 @@ export interface QaCheckerContribution {
   check: (paths: CheckerPaths) => CheckerResult;
 }
 
+/**
+ * A render target: how a block becomes typeset output, and how to tell
+ * whether that output is well-formed.
+ *
+ * ## Why the validator needs this and could not have it
+ *
+ * `validate.ts` Phase 3 is "AST validation (render → parse)" and it read:
+ *
+ * ```ts
+ * const latex = renderBlock(block, mdContent);
+ * const astResult = validateLatexAst(latex);
+ * ```
+ *
+ * — the GENERIC validator rendering every block to LaTeX. On a document folio
+ * that is a category error twice over: the document render path goes through
+ * pandoc and `content/pipeline/render-markdown.ts`, and deliberately never
+ * falls back to `latexmk`, so a "LaTeX AST" error there is raised against
+ * output the folio will never produce. It is also a wrong-direction dependency
+ * (core → sci), since the LaTeX renderer is the science layer's.
+ *
+ * ## `validate` is separate from `render` on purpose
+ *
+ * A renderer that produces output and a validator that judges it are different
+ * obligations, and a target may honestly have only the first. `validate`
+ * returning `undefined` means **could not determine**, and the validator must
+ * report that as such — never as a pass. A render target with no structural
+ * check is a real state (an HTML target whose well-formedness the browser
+ * decides), and silently counting it as valid is how a folio acquires a clean
+ * validation record over output nobody checked.
+ */
+export interface RendererContribution {
+  /**
+   * The output format this renders to — `latex`, `markdown`, `html`. One
+   * contributor per format; two renderers for `latex` is a collision, not a
+   * fallback chain.
+   */
+  format: string;
+  /** Which content adapters this target applies to. */
+  adapters: string[];
+  /** Render one block's manifest plus its Markdown body to the target format. */
+  render: (block: unknown, markdown: string) => string;
+  /**
+   * Structural check on rendered output. `undefined` means this target has no
+   * structural check — reported as "not checked", never as a pass.
+   */
+  validate?: (rendered: string) => { valid: boolean; errors: string[] };
+}
+
 export interface FolioContribution {
   /** The contributing instance's name, as declared in the dependency entry. */
   name: string;
@@ -117,12 +165,13 @@ export interface FolioContribution {
   adapter?: AdapterContribution;
   tools?: ToolContribution[];
   qaCheckers?: QaCheckerContribution[];
+  renderers?: RendererContribution[];
 }
 
 /** Thrown when two contributors claim the same kind, adapter or tool name. */
 export class ContributionCollisionError extends Error {
   constructor(
-    readonly what: "kind" | "adapter" | "tool" | "checker",
+    readonly what: "kind" | "adapter" | "tool" | "checker" | "renderer",
     readonly id: string,
     readonly incumbent: string,
     readonly challenger: string,
@@ -156,6 +205,7 @@ export class ContributionRegistry {
   private adapters = new Map<string, { module: string; contributor: string }>();
   private toolGroups = new Map<string, { register: (server: unknown) => void; contributor: string }>();
   private checkers = new Map<string, { check: (paths: CheckerPaths) => CheckerResult; contributor: string }>();
+  private renderers = new Map<string, { renderer: RendererContribution; contributor: string }>();
 
   /**
    * Register one dependency's contribution.
@@ -211,6 +261,15 @@ export class ContributionRegistry {
       }
       this.checkers.set(c.criterion, { check: c.check, contributor: who });
     }
+
+    for (const r of contribution.renderers ?? []) {
+      const existing = this.renderers.get(r.format);
+      if (existing) {
+        if (existing.contributor === who) continue; // diamond
+        throw new ContributionCollisionError("renderer", r.format, existing.contributor, who);
+      }
+      this.renderers.set(r.format, { renderer: r, contributor: who });
+    }
   }
 
   /**
@@ -263,6 +322,33 @@ export class ContributionRegistry {
   /** Every contributed tool group name. */
   contributedTools(): string[] {
     return [...this.toolGroups.keys()];
+  }
+
+  /**
+   * The render targets that apply to one content adapter.
+   *
+   * An empty array is a determined empty — this adapter has no contributed
+   * render target — and is not the same as the registry being absent. A caller
+   * with no registry at all knows nothing; this caller knows there is nothing.
+   */
+  renderersFor(adapter: string): RendererContribution[] {
+    return [...this.renderers.values()]
+      .filter((e) => e.renderer.adapters.includes(adapter))
+      .map((e) => e.renderer);
+  }
+
+  /** A contributed render target by format, or `undefined`. */
+  renderer(format: string): RendererContribution | undefined {
+    return this.renderers.get(format)?.renderer;
+  }
+
+  /** Every contributed render target, with its format and who added it. */
+  contributedRenderers(): Array<{ format: string; adapters: string[]; contributor: string }> {
+    return [...this.renderers].map(([format, e]) => ({
+      format,
+      adapters: e.renderer.adapters,
+      contributor: e.contributor,
+    }));
   }
 }
 

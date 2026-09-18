@@ -301,6 +301,32 @@ const RULES: Rule[] = [
     ],
   },
 
+  // ── The LaTeX build path. Triaged, and BEFORE the `content/pipeline/`
+  //    core prefix that would otherwise claim it by directory.
+  //
+  //    The test is purpose, not location. `build.ts`'s own module doc reads
+  //    "content objects → LaTeX chapters": it renders to TeX, generates
+  //    `main.tex`, runs a LaTeX preflight and resolves Lean files for the
+  //    coverage table. A document folio never reaches any of it — its render
+  //    path is `render-markdown.ts` → pandoc, which `AGENTS.md` records as
+  //    deliberately never falling back to `latexmk`. So these modules are the
+  //    science layer's sitting in the pipeline directory, and classifying
+  //    them by directory produced five wrong-direction edges out of one
+  //    misreading.
+  //
+  //    Nothing IMPORTS `build.ts` except `generate-main-tex.ts`, which moves
+  //    with it; every other caller spawns it as a subprocess, which is not an
+  //    import edge and does not move.
+  {
+    repo: "sci",
+    triaged: true,
+    exact: [
+      "content/pipeline/build.ts",              // content objects → LaTeX chapters
+      "content/pipeline/generate-main-tex.ts",  // assembles main.tex
+      "content/pipeline/latex-preflight.ts",    // checks the TeX toolchain
+    ],
+  },
+
   // ── folio-asst-sci: Lean, LaTeX, simulators, proofs
   {
     repo: "sci",
