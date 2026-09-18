@@ -91,10 +91,27 @@
   }
   .folio-landing__text {
     position: absolute;
+    /* The properties are set by `landing.html`, per breakpoint, from each
+       variant's OWN region — the swap has to happen at the same breakpoint as
+       the `<picture>` swap or the words stay where the wide crop was quiet. */
     left: var(--fl-x); top: var(--fl-y);
     width: var(--fl-w); height: var(--fl-h);
+    /* The type scales with THIS BOX, not with the picture and not with the
+       viewport — so `cqw` below is a fraction of the space the words actually
+       have. Sizing against the picture was the second attempt and it is wrong
+       for a reason worth keeping: each layout's box is a different fraction of
+       its image (62.5% wide on the laptop crop, 72% on the phone), so one
+       ratio against the image is too small on one and too large on another.
+       Against the box, one ratio is right everywhere. */
+    container-type: inline-size;
     display: flex; flex-direction: column; justify-content: center;
-    overflow: hidden;
+    /* `overflow: visible`, deliberately. The region is where the text is AIMED,
+       not a clip path: it is centred in the quiet area, so a description too
+       long for the box grows symmetrically into the margin that area has on
+       either side. `hidden` was the first version and it silently truncated
+       the last line on the square crop — a landing page that drops words is
+       strictly worse than one whose words sit a little proud of their box. */
+    overflow: visible;
     /* The cloud is cream in both colour schemes — it is part of the picture,
        not of the theme — so the overlay fixes its own ink rather than
        inheriting a light-on-light body colour under `color_scheme: dark`. */
@@ -104,10 +121,23 @@
   .folio-landing__text > :last-child { margin-bottom: 0; }
   .folio-landing__text p {
     margin: 0; line-height: 1.35; font-weight: 600;
-    /* Scales with the picture, so the words keep their place in the cloud as
-       the viewport narrows. Bounded at both ends: `vw` alone is unreadable on
-       a phone and absurd on a 4K monitor. */
-    font-size: clamp(0.72rem, 1.7vw, 1.45rem);
+    /* 3.1% of the picture's width. Bounded at both ends because the picture is
+       not the only constraint: below ~11px nobody can read it however roomy
+       the cloud, and on a 4K monitor an unbounded ratio is absurd. The
+       fallback is for browsers without container queries — they get the old
+       viewport-relative behaviour rather than a default 16px that overflows. */
+    /* 3.6% of the box's width, ceiling 1.35rem. Derived rather than picked:
+       the longest line here is 47 characters, a bold sans runs about 0.52em
+       per character, and 47 x 0.52 x F must stay under the box width — which
+       gives F <= 0.0387 of it. 4.2% was the first try and it wrapped that line
+       on the laptop crop, pushing a fifth line down onto the cat's ear. Bounded at both ends
+       because the box is not the only constraint — below ~11px nobody can read
+       it however roomy the cloud, and on a 4K monitor an unbounded ratio is
+       absurd. The first declaration is the fallback for browsers without
+       container queries: viewport-relative, rather than a default 16px that
+       overflows the cloud. */
+    font-size: clamp(0.7rem, 1.6vw, 1.35rem);
+    font-size: clamp(0.7rem, 3.6cqw, 1.35rem);
   }
 
   /* No declared region → the picture stands alone and the words go beneath it.

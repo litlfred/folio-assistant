@@ -82,6 +82,23 @@ describe("landing backdrops — layout variants", () => {
 });
 
 describe("this instance's own declaration", () => {
+  test("all three layouts are declared, each with its own region", async () => {
+    // One region per layout is the point: the same cloud sits differently in a
+    // portrait crop, and the square crop is pushed right by the cat. Sharing
+    // one set of numbers puts the words on the cat at two of the three.
+    const { readDeclaration } = await import("./cat-harness");
+    const decl = readDeclaration(new URL("..", import.meta.url).pathname);
+    const variants = imagesForRole(decl?.images, "landing");
+    expect([...variants.keys()].sort()).toEqual(["card", "laptop", "mobile"]);
+    const regions = [...variants.values()].map((v) => JSON.stringify(v.textRegion));
+    expect(new Set(regions).size).toBe(3);
+    for (const v of variants.values()) {
+      expect(v.width).toBeGreaterThan(0);
+      expect(v.height).toBeGreaterThan(0);
+      expect(v.textRegion).toBeDefined();
+    }
+  });
+
   test("the laptop backdrop is declared, with a region inside the cloud", async () => {
     // Guards the numbers that were found by rendering candidates and looking
     // at them — a later re-crop of the image must not silently keep a region

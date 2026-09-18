@@ -32,8 +32,40 @@
         "w": 0.625,
         "h": 0.235
       },
-      "title": "Thinking about it",
-      "description": "The landing backdrop, wide crop. A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. The text region is the cloud's lower interior, below the mark and clear of the ear that rises into the lower left \u2014 found by rendering candidate boxes over the image and looking at them, which is the only way to find it."
+      "title": "Thinking about it \u2014 wide",
+      "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Wide crop. The region is the cloud's lower interior, below the mark and clear of the ear that rises into its lower left. The text region was found by rendering candidate boxes over the image and looking at them \u2014 the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
+    },
+    {
+      "id": "landing-mobile",
+      "src": "docs/assets/img/harness/landing-mobile.webp",
+      "role": "landing",
+      "layout": "mobile",
+      "width": 941,
+      "height": 1670,
+      "textRegion": {
+        "x": 0.13,
+        "y": 0.245,
+        "w": 0.72,
+        "h": 0.185
+      },
+      "title": "Thinking about it \u2014 tall",
+      "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Portrait crop for a phone: the cloud fills the upper half and the cat sits below it, so the region is wider in fraction and shallower than the laptop's, and the cat is nowhere near it. The text region was found by rendering candidate boxes over the image and looking at them \u2014 the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
+    },
+    {
+      "id": "landing-card",
+      "src": "docs/assets/img/harness/landing-card.webp",
+      "role": "landing",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "textRegion": {
+        "x": 0.27,
+        "y": 0.29,
+        "w": 0.6,
+        "h": 0.19
+      },
+      "title": "Thinking about it \u2014 square",
+      "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Square crop for a card or sticker. The cloud is pushed right by the cat at the lower left, so the region starts further in than either other variant \u2014 the clearest case for why each layout carries its own. The text region was found by rendering candidate boxes over the image and looking at them \u2014 the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
     }
   ],
   "stub": "folio-assistant",
