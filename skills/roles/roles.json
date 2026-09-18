@@ -36,7 +36,7 @@
     {
       "id": "reviewer",
       "name": "Reviewer / SME",
-      "summary": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits.",
+      "summary": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits. The GENERIC review position: what kind of thing changed decides which subprocess it descends into (review-task.bpmn), and the actor takes on that inner lane's role for the call path only.",
       "actorKind": "person",
       "lanes": [
         "Reviewer / SME",
@@ -48,7 +48,27 @@
         "Subject-Matter Expert / Reviewer",
         "Non-mechanical validation (review agent or SME)"
       ],
-      "skills": ["content-review", "content-feedback", "staging-review", "document-intake", "translation-manager", "decision-audit"]
+      "skills": ["content-review", "content-feedback", "staging-review", "document-intake", "translation-manager", "decision-audit", "semantic-review-scoping"]
+    },
+    {
+      "id": "narrative-reviewer",
+      "name": "Narrative reviewer",
+      "summary": "Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
+      "actorKind": "person",
+      "lanes": [
+        "Narrative reviewer"
+      ],
+      "skills": ["voice-editorial-review", "uses-editorial-review", "content-review", "content-feedback", "translation-manager"]
+    },
+    {
+      "id": "code-reviewer",
+      "name": "Code reviewer",
+      "summary": "Judges the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound — does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs — which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.",
+      "actorKind": "person",
+      "lanes": [
+        "Code reviewer"
+      ],
+      "skills": ["code-node-review", "skills-and-tools", "test-engineer"]
     },
     {
       "id": "qc-reviewer",

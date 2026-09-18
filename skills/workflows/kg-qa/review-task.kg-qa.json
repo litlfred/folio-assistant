@@ -1,0 +1,63 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_Review",
+    "path": "skills/workflows/review-task.bpmn"
+  },
+  "source_hash": "sha256:5d37def2b7379235c283625e0e354a2a84fc7fd3643a8d80c7542b8a7ee823ec",
+  "auditor": {
+    "script": "scripts/kg-audit.ts",
+    "script_hash": "sha256:565c0baa00bdb6212732c82e3176d395af13d4f8ce84524cca9a2be5b37203da",
+    "engine_version": "1"
+  },
+  "criteria": {
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Call_NarrativeReview",
+          "detail": "\"Narrative review\" names no skill."
+        },
+        {
+          "where": "Call_CodeReview",
+          "detail": "\"Code node review\" names no skill."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 6,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 0
+  }
+}

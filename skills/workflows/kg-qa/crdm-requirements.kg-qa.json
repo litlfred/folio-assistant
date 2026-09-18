@@ -5,7 +5,7 @@
     "id": "Process_CRDM",
     "path": "skills/workflows/crdm-requirements.bpmn"
   },
-  "source_hash": "sha256:aacb53470a46b2c1fc095f7c468b7638390b6dd79c7533fe7686447b8116098f",
+  "source_hash": "sha256:76deb6db84c46163b1b21dcde6e51b316dc80831283a0fe102922635a5b3c01e",
   "auditor": {
     "script": "scripts/kg-audit.ts",
     "script_hash": "sha256:565c0baa00bdb6212732c82e3176d395af13d4f8ce84524cca9a2be5b37203da",
@@ -74,6 +74,10 @@
         {
           "where": "BA_Confirm",
           "detail": "\"Confirm all criteria met\" names no skill."
+        },
+        {
+          "where": "A_CodeAudit",
+          "detail": "\"Audit the code nodes the increment adds\" names no skill."
         },
         {
           "where": "S_ConfirmNeeds",
