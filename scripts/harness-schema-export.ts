@@ -38,6 +38,8 @@ import { fileURLToPath } from "node:url";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 import { AgentHarnessDeclarationSchema, artefactStub, readDeclaration } from "../schemas/agent-harness.js";
+import { ToolDefinitionSchema } from "../schemas/tool.js";
+import { TOOL_TYPES } from "../schemas/tool-types.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -69,6 +71,52 @@ export function buildDeclarationSchema(opts: SchemaExportOptions = {}): Record<s
   };
 }
 
+/**
+ * The shared I/O type vocabulary Tool ports reference, as one `$defs` document.
+ *
+ * Named for what it DEFINES (`tool-types.schema.json`), not for the instance —
+ * unlike `<stub>.schema.json`. The rule: an instance artefact takes the
+ * instance's name; a vocabulary document takes the vocabulary's, because the
+ * same vocabulary means the same thing in every instance and renaming it per
+ * repo would make two copies of one type look like two types.
+ */
+export function buildToolTypes(opts: SchemaExportOptions = {}): Record<string, unknown> {
+  const decl = readDeclaration(ROOT);
+  const base = (opts.baseUrl ?? decl?.canonicalUrl ?? "").replace(/\/+$/, "");
+  const defs: Record<string, unknown> = {};
+  for (const [name, schema] of Object.entries(TOOL_TYPES)) {
+    defs[name] = zodToJsonSchema(schema, { $refStrategy: "none" });
+  }
+  return {
+    $schema: "http://json-schema.org/draft-07/schema#",
+    ...(base ? { $id: `${base}/kg/tool-types.schema.json` } : {}),
+    title: "Tool I/O types",
+    description:
+      "The shared types a Tool's io.inputs/io.outputs reference by absolute IRI. " +
+      "Generated from schemas/tool-types.ts, which is authoritative.",
+    $defs: defs,
+  };
+}
+
+/** What a Tool node is. Generated from `ToolDefinitionSchema`. */
+export function buildToolSchema(opts: SchemaExportOptions = {}): Record<string, unknown> {
+  const decl = readDeclaration(ROOT);
+  const base = (opts.baseUrl ?? decl?.canonicalUrl ?? "").replace(/\/+$/, "");
+  const schema = zodToJsonSchema(ToolDefinitionSchema, {
+    name: "ToolDefinition",
+    $refStrategy: "none",
+  }) as Record<string, unknown>;
+  return {
+    ...schema,
+    ...(base ? { $id: `${base}/kg/tool.schema.json` } : {}),
+    title: "Tool definition",
+    description:
+      "One concrete way to exercise a skill. A skill states a capability generically; " +
+      "a Tool names the skills it satisfies and how to install and invoke it. " +
+      "Generated from schemas/tool.ts, which is authoritative.",
+  };
+}
+
 if (import.meta.main) {
   const arg = (f: string): string | undefined => {
     const i = process.argv.indexOf(f);
@@ -79,11 +127,20 @@ if (import.meta.main) {
   const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8")) as { name?: string };
   const stub = decl ? artefactStub(decl) : (pkg.name ?? "instance");
 
-  const out = arg("--out") ?? join(ROOT, "_kg", `${stub}.schema.json`);
-  const schema = buildDeclarationSchema({ baseUrl });
+  const outDir = arg("--out-dir") ?? join(ROOT, "_kg");
+  mkdirSync(outDir, { recursive: true });
 
-  mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, JSON.stringify(schema, null, 2) + "\n");
-  console.log(`Declaration schema → ${relative(ROOT, out)}`);
-  console.log(`  $id  ${schema.$id ?? "(none — no canonicalUrl declared)"}`);
+  // Instance artefact takes the instance's name; vocabulary documents take
+  // the vocabulary's. See buildToolTypes.
+  const files: Array<[string, Record<string, unknown>]> = [
+    [`${stub}.schema.json`, buildDeclarationSchema({ baseUrl })],
+    ["tool.schema.json", buildToolSchema({ baseUrl })],
+    ["tool-types.schema.json", buildToolTypes({ baseUrl })],
+  ];
+  for (const [name, schema] of files) {
+    const out = join(outDir, name);
+    writeFileSync(out, JSON.stringify(schema, null, 2) + "\n");
+    console.log(`${relative(ROOT, out)}`);
+    console.log(`  $id  ${schema.$id ?? "(none — no canonicalUrl declared)"}`);
+  }
 }

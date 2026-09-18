@@ -105,7 +105,11 @@ swallowed a Tool.
 
 ## Status
 
-**Not implemented.** `schemas/tool.ts` does not exist yet and there is no
-projector. This skill is the mapping an implementation follows, written now so
-that the first one does not invent its own and become the de-facto standard by
-accident.
+**Half built.** `schemas/tool.ts` and four Tool nodes now exist, so the *source*
+of a projection is real and its shape is fixed. **There is still no projector.**
+
+That is the useful state to be in: the mapping table above can now be checked
+against something rather than imagined. Two of its rows are already load-bearing
+in the schema itself — `ToolDefinitionSchema` refuses a Tool whose only
+invocation is `invoke.mcp`, which is the "never a projection source" rule
+enforced at parse time rather than left to the projector to remember.
