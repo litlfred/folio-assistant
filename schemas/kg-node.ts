@@ -74,12 +74,18 @@ export function displayTitle(node: { id?: string; name?: string; title?: string 
  * An image the graph names.
  *
  * A mark is not decoration bolted onto a config file — it is a node, with an
- * id other nodes reference, a translatable {@link KgNodeLabels.title} and
- * alt text in {@link KgNodeLabels.description}. That matters for the obvious
- * reason (a screen reader needs the alt text, and alt text is prose, so it is
- * translatable) and for a less obvious one: the docs site, the README and the
- * browser tab all want the same picture, and a node is what stops three
- * consumers each hardcoding a different path to it.
+ * id other nodes reference and a translatable {@link KgNodeLabels.title}. The
+ * docs site, the README and the browser tab all want the same picture, and a
+ * node is what stops three consumers each hardcoding a different path to it.
+ *
+ * **`description` is not alt text**, and wiring it into an `alt` attribute is
+ * a mistake this module made and shipped. Alt text is a property of the
+ * PLACEMENT, not of the image: the same mark is decorative beside a heading
+ * that already names the site, and load-bearing on its own in a README. So
+ * `description` describes the node — what the picture is, what it is for, why
+ * it looks the way it does — and each consumer decides what to announce.
+ * The sidebar announced a paragraph about sub-pixel whiskers until this was
+ * fixed; see `docs/_includes/title.html`.
  */
 export interface KgImage extends KgNodeLabels {
   /** Stable id, referenced by {@link KgNodeLabels} carriers such as `icon`. */
