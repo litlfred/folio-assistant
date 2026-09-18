@@ -841,7 +841,88 @@ manifests belong there. Rendered <code class="language-plaintext highlighter-rou
 it just needs re-review.</li>
   <li><strong>Do not conflate FHIR resource translation with prose translation.</strong> They
 are different pipelines with different tooling.</li>
+  <li><strong>Do not auto-remove staging previews.</strong> Require <code class="language-plaintext highlighter-rouge">staging:cleanup</code> label.</li>
 </ul>
+<h2 id="content-type-specific-translation-tools">
+  
+  
+    <a href="#content-type-specific-translation-tools" class="anchor-heading" aria-labelledby="content-type-specific-translation-tools"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content-type-specific translation tools
+  
+  
+</h2>
+    
+
+<p>Each content type declares what formats it can translate and what scripts
+handle each format. See <code class="language-plaintext highlighter-rouge">schemas/translation-tools.ts</code> for the full
+registry.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Content type</th>
+      <th>Formats</th>
+      <th>RTL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>document</strong></td>
+      <td>Markdown</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td><strong>paper</strong></td>
+      <td>Markdown + LaTeX</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>dak</strong> (WHO L2)</td>
+      <td>Markdown + PlantUML + SVG + ArchiMate + Excel + BPMN</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td><strong>ig</strong> (WHO L3)</td>
+      <td>Markdown + FSH + FHIR JSON</td>
+      <td>✅</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The generic pipeline (<code class="language-plaintext highlighter-rouge">pot-extract.ts</code>, <code class="language-plaintext highlighter-rouge">po-inject.ts</code>) handles Markdown.
+Adapter-specific tools extend it with format-specific extractors. The
+Python originals from smart-base live in <code class="language-plaintext highlighter-rouge">scripts/translation/</code> and are
+referenced in the registry.</p>
+<h3 id="rtl-support">
+  
+  
+    <a href="#rtl-support" class="anchor-heading" aria-labelledby="rtl-support"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> RTL support
+  
+  
+</h3>
+    
+
+<p>Arabic (and Hebrew, Farsi, Urdu) pages are detected at load time by
+<code class="language-plaintext highlighter-rouge">docs-ui.js</code> and get <code class="language-plaintext highlighter-rouge">dir="rtl"</code> on <code class="language-plaintext highlighter-rouge">&lt;html&gt;</code>. The CSS in <code class="language-plaintext highlighter-rouge">docs-ui.css</code>
+provides smooth 0.4s transitions for sidebar and content layout:</p>
+
+<ul>
+  <li>Sidebar slides to the right side</li>
+  <li>Content flows RTL</li>
+  <li>Mermaid diagrams and badges stay LTR</li>
+  <li>BPMN diagrams need re-rendering with translated labels</li>
+</ul>
+<h3 id="staging-review">
+  
+  
+    <a href="#staging-review" class="anchor-heading" aria-labelledby="staging-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Staging review
+  
+  
+</h3>
+    
+
+<p>When presenting translated content for review, use the <code class="language-plaintext highlighter-rouge">staging-review</code>
+skill to provide before/after URL comparison tables. See
+<code class="language-plaintext highlighter-rouge">schemas/staging.ts</code> for the <code class="language-plaintext highlighter-rouge">StagingComparison</code> schema.</p>
 
           
 
@@ -856,7 +937,7 @@ are different pipelines with different tooling.</li>
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35348283803"><code>4f96182</code></a> &middot; 2026-09-18T13:07:04Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35348525505"><code>bf4dc30</code></a> &middot; 2026-09-18T13:09:45Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

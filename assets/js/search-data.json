@@ -9059,585 +9059,592 @@
   },"1294": {
     "doc": "Translation manager",
     "title": "Do not",
-    "content": ". | Do not manually add badge includes. docs-ui.js renders them automatically from front matter. The {% include qa-translation-badge.html %} and {% include translation-warning.html %} calls are deprecated. | Do not put non-PO files in translations/. Only .pot, .po, and .ts manifests belong there. Rendered .md goes in docs/&lt;locale&gt;/. | Do not vendor smart-base translation scripts. Load from checkout. | Do not translate math, labels, or code. Exclude in extraction. | Do not auto-sign-off. Official status requires a human. | Do not treat staleness as “wrong”. A stale translation is still useful; it just needs re-review. | Do not conflate FHIR resource translation with prose translation. They are different pipelines with different tooling. | . ",
+    "content": ". | Do not manually add badge includes. docs-ui.js renders them automatically from front matter. The {% include qa-translation-badge.html %} and {% include translation-warning.html %} calls are deprecated. | Do not put non-PO files in translations/. Only .pot, .po, and .ts manifests belong there. Rendered .md goes in docs/&lt;locale&gt;/. | Do not vendor smart-base translation scripts. Load from checkout. | Do not translate math, labels, or code. Exclude in extraction. | Do not auto-sign-off. Official status requires a human. | Do not treat staleness as “wrong”. A stale translation is still useful; it just needs re-review. | Do not conflate FHIR resource translation with prose translation. They are different pipelines with different tooling. | Do not auto-remove staging previews. Require staging:cleanup label. | . ",
     "url": "/folio-assistant/reference/skill-instructions/translation-manager.html#do-not",
     
     "relUrl": "/reference/skill-instructions/translation-manager.html#do-not"
   },"1295": {
+    "doc": "Translation manager",
+    "title": "Content-type-specific translation tools",
+    "content": "Each content type declares what formats it can translate and what scripts handle each format. See schemas/translation-tools.ts for the full registry. | Content type | Formats | RTL | . | document | Markdown | ✅ | . | paper | Markdown + LaTeX | — | . | dak (WHO L2) | Markdown + PlantUML + SVG + ArchiMate + Excel + BPMN | ✅ | . | ig (WHO L3) | Markdown + FSH + FHIR JSON | ✅ | . The generic pipeline (pot-extract.ts, po-inject.ts) handles Markdown. Adapter-specific tools extend it with format-specific extractors. The Python originals from smart-base live in scripts/translation/ and are referenced in the registry. RTL support . Arabic (and Hebrew, Farsi, Urdu) pages are detected at load time by docs-ui.js and get dir=\"rtl\" on &lt;html&gt;. The CSS in docs-ui.css provides smooth 0.4s transitions for sidebar and content layout: . | Sidebar slides to the right side | Content flows RTL | Mermaid diagrams and badges stay LTR | BPMN diagrams need re-rendering with translated labels | . Staging review . When presenting translated content for review, use the staging-review skill to provide before/after URL comparison tables. See schemas/staging.ts for the StagingComparison schema. ",
+    "url": "/folio-assistant/reference/skill-instructions/translation-manager.html#content-type-specific-translation-tools",
+    
+    "relUrl": "/reference/skill-instructions/translation-manager.html#content-type-specific-translation-tools"
+  },"1296": {
     "doc": "Translation manager",
     "title": "Translation manager",
     "content": "Generated from skills/folio-core/translation-manager.md — do not edit here. ✎ Edit this page’s source . ",
     "url": "/folio-assistant/reference/skill-instructions/translation-manager.html",
     
     "relUrl": "/reference/skill-instructions/translation-manager.html"
-  },"1296": {
+  },"1297": {
     "doc": "Translation support",
     "title": "Translation support",
     "content": "This document is the single reference for how translation works in folio-assistant. It covers the content model, the gettext PO/POT pipeline, the official/unofficial distinction, staleness tracking, the viewer language switcher, and the integration with WHO smart-base’s existing translation subsystem. Status: Architecture and work plan. No operational translation pipeline exists today. This document defines the target and tracks what has been built toward it. | Terminology | Content model for translations . | Principle: translations are content nodes | TranslationNode — .ts manifests as KG nodes | Language and PO sources on BlockBase | PO source resolution (fallback behavior) | Chapter and section level translations | . | Official vs unofficial translations . | Unofficial (agentic) | Official (human-adjudicated) | Staleness detection | Sign-off at any hierarchy level | . | Gettext PO/POT pipeline . | Why gettext | Organizational scope | PO resolution chain | Pipeline overview | Pre-processing (from smart-base) | Post-processing | Extraction (POT generation) | Injection (PO → Markdown) | Round-trip QA (bean ktt2) | . | Human translator process . | Steps | WHO disclaimer | . | Unverified translation display . | Warning indicator | Stale translation indicator | Viewer rendering rules | . | Dependency walking . | Declaration | Resolution order | . | Configuration . | folio.config.json additions | . | Viewer language switcher . | Location | Behaviour | Kind heading translations | . | Integration with WHO smart-base . | What to import vs wrap | IG Publisher translation | . | MCP tools | BPMN workflow . | Stages | . | Content audit: block kinds and translation support | Work plan | Related beans | References | . ",
     "url": "/folio-assistant/translation-support.html",
     
     "relUrl": "/translation-support.html"
-  },"1297": {
+  },"1298": {
     "doc": "Translation support",
     "title": "Terminology",
     "content": "| Term | Meaning | . | Source language | The language in which a content node is authored. Defaults to en unless the folio declares otherwise. | . | Target language | A language into which the source is translated. | . | Official translation | A translation that has received human adjudication / sign-off. Persisted as a sibling content node. | . | Unofficial translation | An agentic (machine) translation, starting from .po if available. Has not been reviewed by a human. | . | Stale translation | An official translation whose source content has changed since sign-off. Requires re-adjudication. | . | PO file | A GNU gettext Portable Object file containing msgid/msgstr pairs. | . | POT file | A PO Template — the extracted translatable strings without translations. | . | Content node | A block, section, chapter, or any structural unit in content/. | . | UN languages | Arabic (ar), Chinese (zh), English (en), French (fr), Russian (ru), Spanish (es). | . ",
     "url": "/folio-assistant/translation-support.html#terminology",
     
     "relUrl": "/translation-support.html#terminology"
-  },"1298": {
+  },"1299": {
     "doc": "Translation support",
     "title": "Content model for translations",
     "content": "Principle: translations are content nodes . An official translation of a content node is persisted as its own translated content node within the source content node’s directory. This follows the FRBR pattern already argued for in bean p2en: a block varies along two axes — format (.md, .lean, .tex) and language — and the translation is an Expression of the same Work. translations/ ├── fr/ │ ├── index.ts # TranslationNode manifest (KG node) │ ├── index.pot # POT template (extractable strings) │ ├── index.po # PO translated strings │ ├── agent-onboarding.ts │ ├── agent-onboarding.pot │ ├── agent-onboarding.po │ ├── glossary.ts # shared glossary PO (no POT) │ └── glossary.po ├── es/ │ └── ... └── ar/ └── ... The translations/ directory contains only .pot templates, .po translated files, and their .ts manifests (TranslationNode). Rendered output (.md) lives in docs/&lt;locale&gt;/; QA results and status metadata are properties of the TranslationNode manifest, not separate files. TranslationNode — .ts manifests as KG nodes . Each .po/.pot pair is wrapped by a .ts manifest that makes it a first-class node in the knowledge graph: . import type { TranslationNode } from \"../../schemas/translation\"; const node: TranslationNode = { label: \"trans:fr/index\", // KG-addressable label locale: \"fr\", sourceFile: \"docs/index.md\", potFile: \"translations/fr/index.pot\", poFile: \"translations/fr/index.po\", status: { locale: \"fr\", official: false, generatedBy: \"agent\" }, coverage: { translated: 37, total: 37, pct: 100 }, roundTripQA: { pass: 11, warn: 4, fail: 21, total: 36 }, }; export default node; . This makes translation files: . | Addressable by label (\"trans:fr/index\") | Referenceable in poSources[] on content blocks | Validatable by the same Zod-based schema infrastructure | Queryable as edges in the knowledge graph | . Language and PO sources on BlockBase . The block manifest has two optional fields for translation: . export interface BlockBase { // ... existing fields ... /** BCP 47 language tag of the source content. Defaults to folio's defaultLocale. */ lang?: string; /** * One or more PO file sources for this block. Each entry is a path * to a .po file or a TranslationNode .ts manifest. Multiple entries * enable compositional translation (e.g. glossary + block-level PO). */ poSources?: string[]; } . PO source resolution (fallback behavior) . When poSources is not declared (the common case), the pipeline resolves PO files by convention: . | Block-level: translations/&lt;locale&gt;/&lt;block-stem&gt;.po | Chapter-level: translations/&lt;locale&gt;/&lt;chapter-slug&gt;.po | Folio-level: translations/&lt;locale&gt;/global.po | Dependency walk: walk folio.config.json dependencies depth-first, looking for matching PO files in each dependency’s translations/&lt;locale&gt;/ | . When poSources is declared, only the listed files are consulted (no fallback). Each source is loaded in array order; later entries override earlier ones for the same msgid, so the most specific source should be last. Chapter and section level translations . The same convention applies at every level of the content hierarchy. The translations/ directory is always at the folio root — not nested inside content/&lt;chapter&gt;/ — because PO files are translation artifacts, not content companions. They are referenced from content blocks via poSources[] or resolved by the fallback chain above. ",
     "url": "/folio-assistant/translation-support.html#content-model-for-translations",
     
     "relUrl": "/translation-support.html#content-model-for-translations"
-  },"1299": {
+  },"1300": {
     "doc": "Translation support",
     "title": "Official vs unofficial translations",
     "content": "Unofficial (agentic) . | An agent generates a translation using available .po files or LLM translation. | The result is written to translations/&lt;locale&gt;/block.md and translations/&lt;locale&gt;/block.po. | status.json records { \"official\": false, \"generatedBy\": \"agent\", \"generatedAt\": \"...\" }. | The translation is usable but carries a visible “unofficial” badge in the viewer. | . Official (human-adjudicated) . | A human reviewer reviews the unofficial translation. | They sign off at whatever level in the content/ hierarchy they choose (a single block, a section, a chapter, or the entire folio). | status.json is updated: { \"official\": true, \"signedOffBy\": \"reviewer-id\", \"signedOffAt\": \"ISO-date\", \"sourceHash\": \"&lt;sha256-of-source-md&gt;\" }. | The viewer shows an “official” badge and removes the “unofficial” warning. | . Staleness detection . When the source content changes: . | The pipeline computes sha256(block.md) and compares it to the sourceHash in each translation’s status.json. | If they differ, the translation is marked stale: { \"official\": true, \"stale\": true, ... }. | The viewer shows a “stale — needs re-adjudication” indicator. | The translation remains visible but with a warning. A human must re-sign-off to clear the stale flag, which also updates sourceHash. | . Sign-off at any hierarchy level . A user can sign off at any level of the content/ tree: . | Block level: signs off one block’s translation. | Section level: signs off all blocks in the section. | Chapter level: signs off all blocks in the chapter. | Folio level: signs off the entire folio’s translation for a locale. | . The sign-off is recorded in status.json at the level chosen. A lower-level sign-off overrides a higher-level one for that specific node. ",
     "url": "/folio-assistant/translation-support.html#official-vs-unofficial-translations",
     
     "relUrl": "/translation-support.html#official-vs-unofficial-translations"
-  },"1300": {
+  },"1301": {
     "doc": "Translation support",
     "title": "Gettext PO/POT pipeline",
     "content": "Why gettext . Gettext is the WHO smart-base standard for translations. It provides: . | A proven extraction → translation → injection cycle. | Compatibility with professional translation tools (Weblate, Crowdin, Launchpad, Poedit, Lokalize). | Fuzzy matching for partial translations after source changes. | Context and plural support. | . Organizational scope . PO/POT files are organized at two levels: . | Content-block level — content/&lt;chapter&gt;/&lt;section&gt;/&lt;block&gt;/translations/&lt;locale&gt;/block.po. This is the default working unit. Each block’s translatable content has its own PO file. | Top-level global scope — translations/&lt;locale&gt;/messages.po. Shared translations (kind headings, UI strings, common terms) that apply across the entire folio. | . All .pot and .po files are stored under either the content node’s own translations/ subdirectory or the top-level translations/ directory. They are not scattered through the source tree. PO resolution chain . When resolving a translation for a content node, the tooling searches in this order: . | Content-block scope — the block’s own translations/&lt;locale&gt;/block.po. | Global scope — translations/&lt;locale&gt;/messages.po at the folio root. | Folio-assistant dependencies — walk the folio-assistant instance’s declared content dependencies (see Dependency walking) and look for matching translations in each dependency’s translations/. | Agent fallback — if no translation is found in any of the above, the agent may attempt its own translation of missing terms. These are always tagged as unofficial. | . This chain ensures that shared vocabulary (e.g., WHO standard terminology) translates consistently across a folio and its dependencies without duplicating PO files. Pipeline overview . PRE-PROCESSING (smart-base) ───────────────────────────── Markdown → segment → normalize ↓ ┌──────────────────────────────────────────────────────┐ │ EXTRACT │ │ content/**/*.md → pot-extract → messages.pot │ │ (per-block or per-chapter granularity) │ └──────────────────────────┬───────────────────────────┘ │ ▼ ┌──────────────────────────────────────────────────────┐ │ TRANSLATE │ │ messages.pot → translator → &lt;locale&gt;/messages.po │ │ (Weblate / Crowdin / agent / human) │ └──────────────────────────┬───────────────────────────┘ │ ▼ ┌──────────────────────────────────────────────────────┐ │ INJECT │ │ &lt;locale&gt;/messages.po → po-inject → block.md │ │ (produces translated .md in translations/&lt;locale&gt;/) │ └──────────────────────────┬───────────────────────────┘ │ ▼ POST-PROCESSING ───────────────────────────── Re-assemble → validate → render . Pre-processing (from smart-base) . The extraction state machine is a direct port of smart-base’s extract_translations.py (function extract_markdown, lines 700–856) and its text-cleaning helper _clean_markdown_text (lines 633–697). The same state machine handles: . | YAML front matter — skipped entirely (delimited by ---). | Fenced code blocks — tracked by fence character and length, skipped. | HTML skip blocks — &lt;style&gt;, &lt;script&gt;, &lt;pre&gt; content skipped. | Headings — each heading text → one msgid. | List items — bullet/number stripped, item text → one msgid. | Blockquotes — &gt; prefix stripped, content → one msgid. | Table cells — each cell → one msgid, separator rows skipped. | Kramdown attributes — {: .class}, {:toc} skipped entirely. | Paragraph accumulation — continuation lines joined, flushed on blank. | Text cleaning — inline markdown stripped: HTML comments, images (→ alt text), links (→ link text), autolinks, code spans, bold/italic markers, HTML tags, Liquid {% %} tags, Liquid {{ expr }} → {lqd_expr} gettext brace variables. | . The TypeScript port lives in content/pipeline/pot-extract.ts (extractMarkdown + cleanMarkdownText). It is copied into folio-assistant (not loaded from smart-base) because the markdown parsing is generic prose processing. The smart-base Python originals remain as-is. Source scripts in smart-base (input/scripts/): . | Script | Lines | Role | . | extract_translations.py | 1,158 | POT extraction: PlantUML, SVG, ArchiMate, Markdown | . | inject_translations.py | 933 | PO injection: PlantUML, SVG, ArchiMate, Markdown | . | extract_script_strings.py | 276 | Script/template string extraction | . | pull_translations.py | 269 | Orchestrator for Weblate/Crowdin/Launchpad pulls | . | pull_weblate_translations.py | 401 | Weblate API sync | . | pull_crowdin_translations.py | 313 | Crowdin API sync | . | pull_launchpad_translations.py | 196 | Launchpad API sync | . | register_translation_project.py | 630 | Per-project Weblate registration | . | register_all_dak_projects.py | 182 | Bulk DAK project registration | . | generate_weblate_yaml.py | 274 | Weblate component discovery config | . Post-processing . After injection, the translated markdown goes through post-processing that: . | Unshields placeholders — replaces {1}, {2} etc. back with the original math, code, and label tokens. | Validates structure — checks that the translated markdown has the same block structure as the source (same number of paragraphs, same heading levels, same list nesting). | Validates completeness — flags any msgid with an empty msgstr as an untranslated segment. | Runs linting — catches common translation artifacts (doubled punctuation, unclosed brackets, orphaned placeholders). | . Extraction (POT generation) . The pot-extract tool scans content nodes and extracts translatable strings: . | Block titles — from block.ts manifests. | Prose bodies — from block.md files, segmented by paragraph. | Chapter and section titles — from chapter.ts and section.ts. | Kind headings — now a translatable catalogue in schemas/translation.ts. | Alt text and captions — from diagram and table blocks. | . Non-translatable content is excluded via shielding: . | LaTeX math ($...$, $$...$$, \\begin{equation}...) | Block labels (def:quantum-universe) | Code blocks (fenced and inline) | lean companion content | URLs and file paths | . Injection (PO → Markdown) . The po-inject tool takes a completed .po file and produces a translated .md file: . | Reads the source .md and the .po file. | For each translatable segment, substitutes the msgstr for the msgid. | Unshields placeholder tokens back to their original content. | Preserves non-translatable elements (math, labels, code) in place. | Writes the result to translations/&lt;locale&gt;/block.md. | . Round-trip QA (bean ktt2) . After injection, the round-trip translation QA back-translates the result into the source language and compares meaning. Drift or bad terminology is routed to a human reviewer. See bean folio-assistant-ktt2 and the BPMN diagram docs/workflows/ingest-l1-completeness-gate.bpmn (Task_RoundTrip). ",
     "url": "/folio-assistant/translation-support.html#gettext-popot-pipeline",
     
     "relUrl": "/translation-support.html#gettext-popot-pipeline"
-  },"1301": {
+  },"1302": {
     "doc": "Translation support",
     "title": "Human translator process",
     "content": "The human translator workflow is a dedicated path for professional translation, distinct from the agentic/machine path. See BPMN: docs/workflows/human-translation-workflow.bpmn. Steps . | Translation coordinator identifies content requiring human translation and selects the target locale. | POT extraction produces the translatable string set. | Translation assignment — the coordinator assigns the POT to a qualified translator (ideally a domain SME for the content area). | Translation — the human translator works in their preferred tool (Poedit, Weblate, Crowdin, or directly editing .po files). They receive: . | The .pot file with source strings | Context notes (block kind, chapter title, surrounding content) | A glossary of domain terms with approved translations | . | Completeness check — the coordinator verifies that all msgid entries have msgstr translations. Partial translations are acceptable but flagged. | PO injection — the completed .po file is injected to produce translated markdown. | SME review — a subject-matter expert (may be the same translator or a different domain expert) reviews the translation for clinical/technical accuracy. This is especially critical for WHO content where terminology precision has policy implications. | Round-trip QA — automated back-translation comparison (bean ktt2). | Sign-off — the reviewer signs off, making the translation official. | . WHO disclaimer . For WHO SMART Guidelines content, all derivative translations must embed the WHO legal disclaimer stating that: . | The translation was not created by WHO. | The English edition is the authoritative and binding original. | WHO is not responsible for the content or accuracy of the translation. | . This disclaimer is automatically appended during post-processing when the folio’s contentType includes WHO/DAK content. ",
     "url": "/folio-assistant/translation-support.html#human-translator-process",
     
     "relUrl": "/translation-support.html#human-translator-process"
-  },"1302": {
+  },"1303": {
     "doc": "Translation support",
     "title": "Unverified translation display",
     "content": "Unverified (unofficial) translated content displays a visible warning in the viewer: . Warning indicator . | Icon: ⚠️ amber triangle, positioned next to the locale badge. | Notice text: “This translation has not been verified by a human reviewer. It may contain errors.” | How-to-fix: The notice includes an actionable link/instruction: “To verify: review the translation and use translation_signoff to mark it as official.” | . Stale translation indicator . | Icon: 🔄 circular arrows, next to the locale badge. | Notice text: “This translation was verified, but the source content has changed since. Re-review is needed.” | How-to-fix: “Source changed on &lt;date&gt;. Review the diff and re-sign-off with translation_signoff.” | . Viewer rendering rules . | Status | Badge | Background | Content shown? | . | Official, current | ✅ Official (green) | Normal | Yes | . | Official, stale | 🔄 Stale (amber) | Yellow tint | Yes, with warning | . | Unofficial | ⚠️ Unverified (grey) | Grey tint | Yes, with warning (unless officialRequired) | . | No translation | — Not translated | — | Source language shown | . ",
     "url": "/folio-assistant/translation-support.html#unverified-translation-display",
     
     "relUrl": "/translation-support.html#unverified-translation-display"
-  },"1303": {
+  },"1304": {
     "doc": "Translation support",
     "title": "Dependency walking",
     "content": "Folio-assistant instances can declare content and skill dependencies on other folio-assistant instances, following the same methodology as FHIR/SUSHI dependencies but upstream from them. Declaration . In folio.config.json: . { \"dependencies\": [ { \"name\": \"smart-base\", \"uri\": \"https://github.com/WorldHealthOrganization/smart-base\", \"version\": \"1.0.0\" }, { \"name\": \"smart-immunization\", \"uri\": \"https://github.com/WorldHealthOrganization/smart-immunization\", \"version\": \"0.1.0\" } ] } . Resolution order . When loading skills and content, the folio-assistant agent starts at the root folio and walks the dependency tree depth-first, in the order dependencies are listed, overlaying content and skills on top. A dependency’s translations are visible to the root folio but do not override the root’s own translations. For translation specifically: . | Root folio’s block-level translations | Root folio’s global translations/ directory | First dependency’s translations (recursively) | Second dependency’s translations (recursively) | … and so on | Agent fallback (generate unofficial translation) | . ",
     "url": "/folio-assistant/translation-support.html#dependency-walking",
     
     "relUrl": "/translation-support.html#dependency-walking"
-  },"1304": {
+  },"1305": {
     "doc": "Translation support",
     "title": "Configuration",
     "content": "folio.config.json additions . { \"translation\": { \"defaultLocale\": \"en\", \"supportedLocales\": [\"en\", \"ar\", \"zh\", \"fr\", \"ru\", \"es\"], \"translationDir\": \"translations\", \"potGranularity\": \"block\", \"officialRequired\": false } } . | Field | Type | Default | Description | . | defaultLocale | string | \"en\" | BCP 47 tag for the source language. | . | supportedLocales | string[] | [\"en\", \"ar\", \"zh\", \"fr\", \"ru\", \"es\"] | The six UN languages by default. Folios may add or remove. | . | translationDir | string | \"translations\" | Subdirectory name within content nodes. | . | potGranularity | \"block\" | \"chapter\" | \"folio\" | \"block\" | Whether to generate one POT per block, per chapter, or one for the whole folio. | . | officialRequired | boolean | false | If true, only official translations are shown in the viewer. | . ",
     "url": "/folio-assistant/translation-support.html#configuration",
     
     "relUrl": "/translation-support.html#configuration"
-  },"1305": {
+  },"1306": {
     "doc": "Translation support",
     "title": "Viewer language switcher",
     "content": "Location . A globe icon (🌐) in the left sidebar, positioned after the QR code icon and before the bibliography. On mobile, it appears in the sidebar overlay. Behaviour . | Click the globe to open a dropdown listing the folio’s supportedLocales. | Each locale shows its native name and a status indicator: . | ✅ Official translation available | 🔄 Unofficial translation available | ⚠️ Official but stale | — No translation | . | Selecting a locale: . | Swaps all prose content to the selected locale’s translations. | Kind headings (Definition, Theorem, etc.) switch to the locale’s equivalents. | Non-translatable content (math, code, labels, Lean) is unchanged. | The URL gains a ?lang=&lt;locale&gt; parameter for bookmarking. | . | The selected locale persists in localStorage. | . Kind heading translations . The hardcoded KIND_HEADING map in render-markdown.ts is replaced by a translatable catalogue: . const KIND_HEADINGS: Record&lt;string, Record&lt;string, string&gt;&gt; = { en: { definition: \"Definition\", theorem: \"Theorem\", ... }, fr: { definition: \"Définition\", theorem: \"Théorème\", ... }, es: { definition: \"Definición\", theorem: \"Teorema\", ... }, ar: { definition: \"تعريف\", theorem: \"مبرهنة\", ... }, zh: { definition: \"定义\", theorem: \"定理\", ... }, ru: { definition: \"Определение\", theorem: \"Теорема\", ... }, }; . ",
     "url": "/folio-assistant/translation-support.html#viewer-language-switcher",
     
     "relUrl": "/translation-support.html#viewer-language-switcher"
-  },"1306": {
+  },"1307": {
     "doc": "Translation support",
     "title": "Integration with WHO smart-base",
     "content": "The WHO smart-base repository contains a ~5,500-line translation subsystem that wires Weblate, Crowdin, and Launchpad with extraction, injection, per-project registration, and completeness reporting. This subsystem is the upstream authority for DAK translation workflows. What to import vs wrap . Following the principle in skills/authoring-who-smart-guidelines/smart-base-tools.md — load it; never vendor it — folio-assistant does not copy smart-base’s translation scripts. Instead: . | Extraction/injection scripts are invoked from the smart-base checkout (like bpmn2fsh and dmn2html today). | PO file format is shared — smart-base produces PO, folio-assistant consumes it, and vice versa. | Completeness reporting is re-used — smart-base’s coverage metrics become inputs to folio-assistant’s QA sweep. | . IG Publisher translation . IG Publisher has its own translation support for FHIR resources. This is a separate pipeline from prose translation: . | FHIR resources carry language and designation elements. | ValueSet translations use FHIR’s native designation system. | IG Publisher’s translation framework is documented in the FHIR spec. | . The IG publication pipeline migration to just-the-docs is tracked separately. For now, the prose translation pipeline and the FHIR translation pipeline are independent. ",
     "url": "/folio-assistant/translation-support.html#integration-with-who-smart-base",
     
     "relUrl": "/translation-support.html#integration-with-who-smart-base"
-  },"1307": {
+  },"1308": {
     "doc": "Translation support",
     "title": "MCP tools",
     "content": "The following MCP tools will be registered: . | Tool | Adapter | Description | . | translation_extract | generic | Extract translatable strings to a POT file. | . | translation_inject | generic | Inject translations from a PO file into content nodes. | . | translation_status | generic | Report translation coverage and staleness per locale. | . | translation_signoff | generic | Mark a translation as officially signed off at a given level. | . | translation_validate | generic | Run round-trip QA on translations. | . These are generic tools (not adapter-specific) because translation applies to all content types — documents, papers, and DAK folios alike. ",
     "url": "/folio-assistant/translation-support.html#mcp-tools",
     
     "relUrl": "/translation-support.html#mcp-tools"
-  },"1308": {
+  },"1309": {
     "doc": "Translation support",
     "title": "BPMN workflow",
     "content": "The translation workflow integrates with the existing content lifecycle: . See: docs/workflows/translation-workflow.bpmn . Stages . | Content authored — source content exists in the default locale. | POT extracted — translatable strings are extracted. | Translation produced — agent or human creates PO file + translated .md. | Round-trip QA — back-translation detects semantic drift (bean ktt2). | Human review gateway — drift or bad terminology routes to reviewer. | Sign-off — human adjudicator marks translation as official. | Staleness watch — source changes trigger re-extraction + stale marking. | . ",
     "url": "/folio-assistant/translation-support.html#bpmn-workflow",
     
     "relUrl": "/translation-support.html#bpmn-workflow"
-  },"1309": {
+  },"1310": {
     "doc": "Translation support",
     "title": "Content audit: block kinds and translation support",
     "content": "Every block kind must support translation. The audit: . | Kind | Translatable content | Non-translatable | Notes | . | definition | title, .md body | label, .lean | lean field is language-independent | . | theorem | title, .md body | label, .lean |   | . | lemma | title, .md body | label, .lean |   | . | proposition | title, .md body | label, .lean |   | . | corollary | title, .md body | label, .lean |   | . | algorithm | title, .md body | label, .lean (opt) |   | . | conjecture | title, .md body | label |   | . | example | title, .md body | label |   | . | remark | title, .md body | label |   | . | proof | title, .md body | label, .lean (opt) |   | . | simulator | title, .md body | label, .py/.html code | Simulator code is not translated | . | prose | title, .md body | label | Primary translation target | . | equation | title, caption | label, TeX math | Math notation is universal | . | diagram | title, caption, alt text | label, SVG/image | Alt text IS translatable | . | table | title, caption, cell text | label | Table content is translatable | . | DAK kinds | title, .md body | label, FHIR resources | FHIR resources use their own i18n | . Finding: All block kinds support translation through their title and .md body. The extraction pipeline handles the non-translatable exclusions (math, code, labels) uniformly. ",
     "url": "/folio-assistant/translation-support.html#content-audit-block-kinds-and-translation-support",
     
     "relUrl": "/translation-support.html#content-audit-block-kinds-and-translation-support"
-  },"1310": {
+  },"1311": {
     "doc": "Translation support",
     "title": "Work plan",
     "content": "See the beans created for this work and the BPMN workflow diagram. | Phase | Bean | Description | Status | . | 1. Documentation | (this document) | Consolidated translation reference | ✅ Done | . | 2. Schema changes | — | Add lang to BlockBase, TranslationStatus schema | Todo | . | 3. Config support | — | Add translation section to folio.config.json | Todo | . | 4. POT extraction | — | content/pipeline/pot-extract.ts | Todo | . | 5. PO injection | — | content/pipeline/po-inject.ts | Todo | . | 6. MCP tools | — | Register 5 translation tools | Todo | . | 7. Viewer language switcher | — | Globe icon + locale dropdown | Todo | . | 8. Kind heading catalogue | — | Replace hardcoded KIND_HEADING with i18n map | Todo | . | 9. Staleness tracking | — | Hash-based change detection | Todo | . | 10. Sign-off workflow | — | Multi-level sign-off UI + persistence | Todo | . | 11. Round-trip QA | ktt2 | Back-translation drift detection | Todo (existing bean) | . | 12. smart-base integration | — | Wrap extraction/injection scripts | Todo | . | 13. BPMN diagram | — | Translation workflow BPMN | Todo | . ",
     "url": "/folio-assistant/translation-support.html#work-plan",
     
     "relUrl": "/translation-support.html#work-plan"
-  },"1311": {
+  },"1312": {
     "doc": "Translation support",
     "title": "Related beans",
     "content": ". | folio-assistant-ktt2 — Round-trip translation QA | folio-assistant-1r0p — Audio transcription + translation | folio-assistant-d5f1 — Localized image descriptions | folio-assistant-p2en — FRBR model for multilingual content | . ",
     "url": "/folio-assistant/translation-support.html#related-beans",
     
     "relUrl": "/translation-support.html#related-beans"
-  },"1312": {
+  },"1313": {
     "doc": "Translation support",
     "title": "References",
     "content": ". | GNU gettext manual | BCP 47 — Tags for Identifying Languages | FRBR — Functional Requirements for Bibliographic Records | Dublin Core dcterms:language | WHO smart-base translation subsystem (~5,500 lines, Weblate/Crowdin/Launchpad) | . ",
     "url": "/folio-assistant/translation-support.html#references",
     
     "relUrl": "/translation-support.html#references"
-  },"1313": {
+  },"1314": {
     "doc": "Verify Anchor Connectivity",
     "title": "Verify Anchor Connectivity",
     "content": " ",
     "url": "/folio-assistant/reference/skill-instructions/verify-local-substrate.html#verify-anchor-connectivity",
     
     "relUrl": "/reference/skill-instructions/verify-local-substrate.html#verify-anchor-connectivity"
-  },"1314": {
+  },"1315": {
     "doc": "Verify Anchor Connectivity",
     "title": "Overview",
     "content": "This skill checks a key structural invariant of the paper: every result block of a designated class must trace back to a designated anchor definition through the uses[] dependency DAG. The anchor is typically the bridge definition between the project’s foundational layer and its downstream predictions. A result block that does not connect to the anchor is either: . | Missing dependency declarations in its uses[] array, or | Genuinely independent of the anchor (rare — flag for review). | . Configure two things per project: the anchor label (the definition every claim must reach) and the result class (which block kinds / tags are required to connect). ",
     "url": "/folio-assistant/reference/skill-instructions/verify-local-substrate.html#overview",
     
     "relUrl": "/reference/skill-instructions/verify-local-substrate.html#overview"
-  },"1315": {
+  },"1316": {
     "doc": "Verify Anchor Connectivity",
     "title": "Scope",
     "content": "The verification covers the configured result class, for example: . | Block kinds checked | Where to look | . | proposition, conjecture | the results chapters | . | remark with a configured observational tag | all chapters | . | definition with a configured tag | wherever introduced | . ",
     "url": "/folio-assistant/reference/skill-instructions/verify-local-substrate.html#scope",
     
     "relUrl": "/reference/skill-instructions/verify-local-substrate.html#scope"
-  },"1316": {
+  },"1317": {
     "doc": "Verify Anchor Connectivity",
     "title": "Algorithm",
     "content": "Step 1: Collect result blocks . Scan all .ts manifest files under the paper directory for blocks matching the configured class — provable blocks in the results chapters, or any block whose tags include a configured tag. Step 2: Trace each block’s dependency chain . For each result block, do a breadth-first traversal of uses[], resolving labels to .ts files and reading their uses[] in turn. Stop when: . | the anchor label is found → CONNECTED; | a leaf (empty uses[] or already-visited node) is reached without finding the anchor → continue to the next branch; | all branches exhausted → GAP. | . Set a maximum traversal depth a couple hops beyond the deepest known chain. Step 3: Classify results . | Status | Meaning | Action | . | CONNECTED | traces to the anchor | none | . | GAP | no path found | add a missing uses[] entry or flag for review | . | ISOLATED | empty uses[] on a result block | add dependencies | . Step 4: Report . Output a table: . | Block label | Kind | Status | Shortest path | Action needed | . For GAPs, suggest which intermediate block should be added to uses[] to restore connectivity. Common fix patterns: a result about external/measured data → add the anchor directly; a result about a derived quantity → add the relevant intermediate definition; a conjecture about structure → check whether a known foundational definition provides the link. ",
     "url": "/folio-assistant/reference/skill-instructions/verify-local-substrate.html#algorithm",
     
     "relUrl": "/reference/skill-instructions/verify-local-substrate.html#algorithm"
-  },"1317": {
+  },"1318": {
     "doc": "Verify Anchor Connectivity",
     "title": "Known dependency chains",
     "content": "Maintain, per project, a table of the verified paths from key result blocks to the anchor (direct 1-hop connections and the longer indirect chains). This serves as the regression baseline: a path that was CONNECTED and becomes a GAP signals a dropped uses[] edge. Record the anchor’s own upstream chain to the foundational axioms too, so the anchor itself is grounded. ",
     "url": "/folio-assistant/reference/skill-instructions/verify-local-substrate.html#known-dependency-chains",
     
     "relUrl": "/reference/skill-instructions/verify-local-substrate.html#known-dependency-chains"
-  },"1318": {
+  },"1319": {
     "doc": "Verify Anchor Connectivity",
     "title": "Tabulated-data connectivity",
     "content": "Data tables (formula tables, periodic/summary tables) are result blocks too — they tabulate predicted quantities derived through the anchor. Every such table must trace to the anchor. Record the known table blocks and their connection paths in the same baseline table. ",
     "url": "/folio-assistant/reference/skill-instructions/verify-local-substrate.html#tabulated-data-connectivity",
     
     "relUrl": "/reference/skill-instructions/verify-local-substrate.html#tabulated-data-connectivity"
-  },"1319": {
+  },"1320": {
     "doc": "Verify Anchor Connectivity",
     "title": "Checklist",
     "content": ". | All provable blocks of the result class trace to the anchor | All blocks carrying a configured result tag trace to the anchor | No result block has an empty uses[] array | The report table is complete with a shortest path for each block | GAPs have suggested fixes with specific uses[] entries to add | . ",
     "url": "/folio-assistant/reference/skill-instructions/verify-local-substrate.html#checklist",
     
     "relUrl": "/reference/skill-instructions/verify-local-substrate.html#checklist"
-  },"1320": {
+  },"1321": {
     "doc": "Verify Anchor Connectivity",
     "title": "Verify Anchor Connectivity",
     "content": "Generated from skills/folio-paper-adapter/verify-local-substrate.md — do not edit here. ✎ Edit this page’s source . ",
     "url": "/folio-assistant/reference/skill-instructions/verify-local-substrate.html",
     
     "relUrl": "/reference/skill-instructions/verify-local-substrate.html"
-  },"1321": {
+  },"1322": {
     "doc": "/watch",
     "title": "/watch — background watcher with integration check",
     "content": "A unified watcher that handles branches (poll git ls-remote) and pull requests (subscribe via the GitHub MCP). On every event, walk the §3 integration checklist and either act, defer, or flag the user. ",
     "url": "/folio-assistant/reference/skill-instructions/watch.html#watch--background-watcher-with-integration-check",
     
     "relUrl": "/reference/skill-instructions/watch.html#watch--background-watcher-with-integration-check"
-  },"1322": {
+  },"1323": {
     "doc": "/watch",
     "title": "Invocation",
     "content": "The user’s request maps to one of three modes; pick the right one without asking: . | user phrase | mode | how | . | “watch main” / “watch upstream” / no target | branch:main | poll origin/main every 5 min | . | “watch PR 516” / “watch the PR” / “watch this PR” | pr:N | mcp__github__subscribe_pr_activity (event-driven) | . | “watch branch foo/bar” / “watch claude/x-y” | branch:foo/bar | poll origin/foo/bar every 5 min | . | “watch foo/bar PR 42” | pr:42 + maybe branch | subscribe + poll | . If ambiguous, default to branch:main. ",
     "url": "/folio-assistant/reference/skill-instructions/watch.html#invocation",
     
     "relUrl": "/reference/skill-instructions/watch.html#invocation"
-  },"1323": {
+  },"1324": {
     "doc": "/watch",
     "title": "1.  Stash the baseline",
     "content": "Before arming anything, record the current state so the §3 review compares cleanly: . # Explicit refspec, ALWAYS. `git fetch origin &lt;BRANCH&gt;` writes FETCH_HEAD and # refreshes refs/remotes/origin/&lt;BRANCH&gt; only when the clone's configured # refspec covers it — and exits 0 either way. A baseline read from a tracking # ref that was never updated is not a baseline. git fetch origin \"+refs/heads/&lt;BRANCH&gt;:refs/remotes/origin/&lt;BRANCH&gt;\" 2&gt;/dev/null # Sanitize branch name for use in a file path: replace `/` with `_` # (e.g. `feature/foo` → `feature_foo`). Without this, branches with # slashes silently land in non-existent directory trees. SAFE_BRANCH=$(printf '%s' \"&lt;BRANCH&gt;\" | tr '/' '_') git rev-parse \"origin/&lt;BRANCH&gt;\" &gt; \"/tmp/_watch_baseline_${SAFE_BRANCH}.sha\" . For PR mode, instead capture the latest PR head SHA: . mcp__github__pull_request_read(method=\"get\", pullNumber=N, owner=..., repo=...) # stash result[\"head\"][\"sha\"] . ",
     "url": "/folio-assistant/reference/skill-instructions/watch.html#1--stash-the-baseline",
     
     "relUrl": "/reference/skill-instructions/watch.html#1--stash-the-baseline"
-  },"1324": {
+  },"1325": {
     "doc": "/watch",
     "title": "2.  Arm the watcher",
     "content": "Branch mode — Monitor with poll loop . Use the Monitor tool, persistent: true, 5-minute poll: . Monitor: description: \"origin/&lt;BRANCH&gt; new commits\" persistent: true command: | BRANCH=\"&lt;BRANCH&gt;\" last=$(git ls-remote origin \"$BRANCH\" | cut -f1) while true; do cur=$(git ls-remote origin \"$BRANCH\" 2&gt;/dev/null | cut -f1) if [ -n \"$cur\" ] &amp;&amp; [ \"$cur\" != \"$last\" ]; then git fetch origin \"$BRANCH\" 2&gt;/dev/null # one line per new commit, oldest first git log --reverse --oneline \"$last..$cur\" | head -20 last=$cur fi sleep 300 done . Each new commit becomes one notification line. PR mode — GitHub MCP subscription . Use mcp__github__subscribe_pr_activity directly. Already event-driven — no polling needed. The harness delivers &lt;github-webhook-activity&gt; events for comments, CI status, reviews, and merges. See the existing PR-subscription guidance in the system prompt for handling. ",
     "url": "/folio-assistant/reference/skill-instructions/watch.html#2--arm-the-watcher",
     
     "relUrl": "/reference/skill-instructions/watch.html#2--arm-the-watcher"
-  },"1325": {
+  },"1326": {
     "doc": "/watch",
     "title": "3.  Per-event integration checklist",
     "content": "For every notification (branch commit or PR event), run through these four questions in order — stop at the first “no” or “no action”: . Q1 — Should we integrate? . | Is the change on a file we touch in this branch? Quick check: git diff --name-only HEAD &lt;NEW_SHA&gt; -- $(git diff --name-only $(git merge-base HEAD origin/main)..HEAD). | If yes and the change is small, rebase / pull now. | If yes but large, defer until the immediate task ships and add a TODO. | If no overlap, skip Q2/Q3/Q4 and acknowledge with a one-liner. | . Q2 — Does it conflict? . | Try a dry rebase in a fresh worktree. Use mktemp -d so the path is unique (avoids collisions with previous failed runs and with parallel /watch invocations) and clean up unconditionally via trap: . PROBE=$(mktemp -d /tmp/rebase-probe.XXXXXX) trap 'git worktree remove --force \"$PROBE\" 2&gt;/dev/null; rm -rf \"$PROBE\"' EXIT git worktree add \"$PROBE\" HEAD &gt;/dev/null ( cd \"$PROBE\" &amp;&amp; git rebase \"origin/&lt;BRANCH&gt;\" ) status=$? # trap fires on EXIT . | Conflicts (status != 0) → first attempt auto-resolve for the recurring drift-conflict pattern (see §2a below); only flag the user if auto-resolve fails or the conflict is non-trivial (overlapping logic edits, schema rewrites, etc.). | . §2a — Auto-resolve drift-conflict pattern (CI-regenerated artifacts) . Some artifacts (*.witness.json sidecars, generated caches, derived reference files) are routinely regenerated by the CI validate job and frequently conflict on rebase against fast-moving main. These conflicts are always the same shape: our branch’s committed artifact was regenerated against an older main; main now has a fresher version. Resolution is mechanical: regenerate against current main and recommit. The recipe (run on the real branch, not the probe worktree): . # When `git rebase origin/&lt;BRANCH&gt;` halts with a regenerated artifact # in the conflict list, do NOT hand-merge the JSON. Instead: # 1. If the conflicting commit was a pure regen of these generated # artifacts (no other changes), skip it — main already has the regen: git diff --name-only --cached | grep -qE '\\.witness\\.json$' &amp;&amp; \\ ! git diff --name-only --cached | grep -vE '\\.witness\\.json$' &amp;&amp; \\ git rebase --skip # 2. Otherwise, abort the rebase, regenerate the artifacts # on the rebased branch, then re-rebase. This produces a clean # apply because the regenerated artifact now matches main. git rebase --abort git rebase origin/&lt;BRANCH&gt; # re-rebase, skipping bad commits as above # regenerate the affected artifacts via the project's generator(s), e.g. bun run validate &lt;paper&gt; git add &lt;regenerated-artifact-paths&gt; git commit -m \"Regen generated artifacts post-rebase against latest main\" git push --force-with-lease . Only flag the user if: . | The conflict is in a source file (.py, .lean, .ts, .md) — those are real semantic conflicts that need human judgment. | The conflict is in a generated artifact whose regenerated content differs substantively from a simple drift (e.g. a numerical value changed, not just a timestamp/hash) — that means a CI-run generator on main produced different output, which deserves a closer look before blindly accepting. | The auto-resolve recipe itself fails (regen script errors out, push rejected for non-fast-forward reasons, etc.). | . For generated artifacts specifically: if upstream regenerated files our branch also touched, prefer rebase-and-regenerate over hand-merging. Drift is structural; merging is fragile. Q3 — Can we reuse? . Apply the four reuse questions from prepare-merge.md §2a: . | Definitions / lemmas / helpers / witnesses — does the new commit add something our branch is duplicating, paraphrasing, or reinventing? Replace with uses[] / a citation and delete the local stand-in. | Proofs — does a new lemma or tactic discharge a hypothesis, collapse a chain, or close a gap? Apply via the project’s proof-simplification / build-fix skills. | Exposition — does our .md re-derive what main now defines upstream? Replace with a forward-reference; route through the project’s accuracy / readability skills. | Computation — does a new script or witness supersede a hand-rolled loop or stale witness in our branch? Swap in and regenerate the artifact. (See §2a for the routine drift-conflict pattern.) . | When the upstream commit adds or modifies a prop: / thm: / lem: / cor: block (or its sibling formalization), delegate to the project’s compute-integration watcher to check whether the new claim is wired into the production compute chain. Capture the verdict here and feed it into Q4. | . | . Q3a — Did upstream land a new skill file? . For each main-refresh, check whether .claude/skills/local/*.md (or .claude/skills/&lt;pkg&gt;/*.md) gained a new file between this branch’s prior baseline and the new origin/main: . git diff --name-only --diff-filter=A \"$LAST_BASE..origin/main\" \\ -- '.claude/skills/local/*.md' '.claude/skills/*/*.md' . For each new skill file: . | Read its frontmatter — extract name, roles, description, and any inherits field. | Match against branch scope — does the skill’s description overlap with what this branch is doing? Heuristics: . | skill description mentions a file kind / domain / pattern that appears in this branch’s git diff origin/main..HEAD --name-only, OR | skill is a new integration-watcher child (inherits: local/integration-watcher) and your branch is itself an integration-watcher PR, OR | skill is a content-block QA skill (e.g. one-voice-*, proof-*, compute-*) and your branch touches .md / .ts / .lean content blocks. | . | Surface to the user via AskUserQuestion with the standard 3-chip pattern: . New skill &lt;name&gt; landed on main: . &lt;one-line description from frontmatter&gt; . This branch’s scope overlaps because &lt;one-line match rationale + file paths&gt;. 1) Adopt now — invoke the skill on the relevant subset of this branch’s diff before continuing. 2) Defer to follow-up branch — record the decision and note for the next branch; don’t change this branch. 3) Not relevant — record so the watcher doesn’t re-prompt on future main-refreshes. | Record the decision in the watcher’s ledger (.beans/&lt;watcher-name&gt;-ledger.md for integration-watcher children, or chat-only for the bare /watch flow) so subsequent main-refreshes don’t re-prompt for the same skill. | . This rule applies to skill files only (.claude/skills/local/*.md and .claude/skills/&lt;pkg&gt;/*.md). Skills landing on sibling PRs that haven’t merged yet do NOT trigger this check — only main commits count, mirroring the §2 “watch origin/main” scope. Q4 — Report or act? . | Acted (made the change): one-line summary + the new commit SHA. | Will act after current task: add a TODO with what + why. | Skipped: one-line reason (“no overlap”, “blocked on $TASK”). | . ",
     "url": "/folio-assistant/reference/skill-instructions/watch.html#3--per-event-integration-checklist",
     
     "relUrl": "/reference/skill-instructions/watch.html#3--per-event-integration-checklist"
-  },"1326": {
+  },"1327": {
     "doc": "/watch",
     "title": "4.  Stop the watcher",
     "content": "Stop when the branch ships (PR merged, or you switch branches): . | Branch mode: call TaskStop on the Monitor task ID. | PR mode: the harness auto-unsubscribes when the PR merges/closes; otherwise call mcp__github__unsubscribe_pr_activity. | . ",
     "url": "/folio-assistant/reference/skill-instructions/watch.html#4--stop-the-watcher",
     
     "relUrl": "/reference/skill-instructions/watch.html#4--stop-the-watcher"
-  },"1327": {
+  },"1328": {
     "doc": "/watch",
     "title": "5.  Common upstream patterns (heuristics)",
     "content": ". | Artifact drift: upstream regenerated generated artifacts (*.witness.json, caches) while we also modified them → rebase-and-regenerate, never hand-merge. | Toolchain version bumps: a dependency/toolchain hash changed → check our branch’s toolchain pin aligns before continuing a build. | Schema migrations: if content/schema/ changed, run cd content &amp;&amp; bun run migrate-lean-refs and bun run validate before continuing. | Routine review-cycle commits (Gemini/Copilot fixes on unrelated PRs): almost always Q1 = no overlap = skip with one-liner. | . ",
     "url": "/folio-assistant/reference/skill-instructions/watch.html#5--common-upstream-patterns-heuristics",
     
     "relUrl": "/reference/skill-instructions/watch.html#5--common-upstream-patterns-heuristics"
-  },"1328": {
+  },"1329": {
     "doc": "/watch",
     "title": "5b.  Monitor-timeout recovery (MANDATORY when re-arming)",
     "content": "Background Monitors time out ([Monitor timed out — re-arm if needed]). Do not just re-arm and continue — between the last event and the timeout, main may have moved substantially. Mandatory steps on timeout-recovery: . # Compare the stashed baseline against the WATCHED BRANCH's actual head. # # This fetched `main` and then measured `origin/&lt;BRANCH&gt;` — a different ref # from the one it refreshed. The recovery step that exists to catch what was # missed while the watcher was down therefore compared the baseline against a # tracking ref nothing had updated, found them equal, and reported 0 missed # every time. Fetch the ref you are about to read, with an explicit refspec so # the tracking ref is actually written. git fetch origin \"+refs/heads/&lt;BRANCH&gt;:refs/remotes/origin/&lt;BRANCH&gt;\" 2&gt;/dev/null SAFE=$(echo \"&lt;BRANCH&gt;\" | tr '/' '_') LAST=$(cat /tmp/_watch_baseline_${SAFE}.sha 2&gt;/dev/null || echo \"\") CUR=$(git rev-parse origin/&lt;BRANCH&gt;) if [ \"$LAST\" != \"$CUR\" ]; then MISSED=$(git log --oneline \"$LAST..$CUR\" 2&gt;/dev/null | wc -l) echo \"MISSED $MISSED commits while watcher was down\" git log --oneline \"$LAST..$CUR\" | head -10 # Update baseline AFTER reporting git rev-parse origin/&lt;BRANCH&gt; &gt; /tmp/_watch_baseline_${SAFE}.sha fi . If MISSED &gt;= 5 OR any missed commit touches a file in your branch’s diff, run the §3 integration checklist on the missed range BEFORE arming a fresh monitor. This catches the failure mode where a focused work session (axiom discharge sweep, content authoring marathon, witness regeneration loop) silently lets main move 10+ commits ahead while the watcher is timed out. ",
     "url": "/folio-assistant/reference/skill-instructions/watch.html#5b--monitor-timeout-recovery-mandatory-when-re-arming",
     
     "relUrl": "/reference/skill-instructions/watch.html#5b--monitor-timeout-recovery-mandatory-when-re-arming"
-  },"1329": {
+  },"1330": {
     "doc": "/watch",
     "title": "6.  Output style",
     "content": "Match user-accessibility note in AGENTS.md: . | One sentence per commit / event by default | Numbered choices when integration is non-obvious | Run small fixes proactively; flag big ones | . ",
     "url": "/folio-assistant/reference/skill-instructions/watch.html#6--output-style",
     
     "relUrl": "/reference/skill-instructions/watch.html#6--output-style"
-  },"1330": {
+  },"1331": {
     "doc": "/watch",
     "title": "/watch",
     "content": "Generated from skills/folio-core/watch.md — do not edit here. ✎ Edit this page’s source . ",
     "url": "/folio-assistant/reference/skill-instructions/watch.html",
     
     "relUrl": "/reference/skill-instructions/watch.html"
-  },"1331": {
+  },"1332": {
     "doc": "Authoring a WHO SMART DAK (L2)",
     "title": "Authoring a WHO SMART DAK (L2)",
     "content": "On this page . | The L2 artifacts | Workflow | A mock session | Next | . This page is generated from content/docs/guides-who-smart-dak/ — each section below links to its own source. ✎ Edit . A Digital Adaptation Kit (DAK) is the L2 — machine-readable but implementation-neutral — representation of a WHO SMART Guideline. This guide covers authoring the L2 artifacts with folio-assistant and an LLM. Skill package: authoring-who-smart-guidelines . ",
     "url": "/folio-assistant/guides/who-smart-dak.html",
     
     "relUrl": "/guides/who-smart-dak.html"
-  },"1332": {
+  },"1333": {
     "doc": "Authoring a WHO SMART DAK (L2)",
     "title": "The L2 artifacts",
     "content": "✎ Edit . BPMN 2.0 source · full-size SVG . | Artifact | Skill | Format | . | Business processes | bpmn-authoring | BPMN 2.0 XML | . | Decision logic | dmn-authoring | DMN tables | . | Data dictionary | l2-dak-authoring | Excel / structured | . | Terminology | terminology-management | code systems / value sets | . | Review | content-review | criteria-based | . ",
     "url": "/folio-assistant/guides/who-smart-dak.html#the-l2-artifacts",
     
     "relUrl": "/guides/who-smart-dak.html#the-l2-artifacts"
-  },"1333": {
+  },"1334": {
     "doc": "Authoring a WHO SMART DAK (L2)",
     "title": "Workflow",
     "content": "✎ Edit . | Plan — content-plan: enumerate the processes, decisions, and data elements the guideline implies; identify actors (business analyst, clinical SME, terminologist). | Author business processes — ask the agent to draft BPMN for each clinical workflow (bpmn-authoring); it produces valid BPMN 2.0. | Author decision logic — capture recommendations as DMN decision tables (dmn-authoring), linked to the data dictionary. | Author the data dictionary — define core data elements with types, cardinality, and terminology bindings (l2-dak-authoring). | Manage terminology — define code systems / value sets and bind them (terminology-management). | Validate &amp; review — content-validate then content-review against the DAK criteria. | . ",
     "url": "/folio-assistant/guides/who-smart-dak.html#workflow",
     
     "relUrl": "/guides/who-smart-dak.html#workflow"
-  },"1334": {
+  },"1335": {
     "doc": "Authoring a WHO SMART DAK (L2)",
     "title": "A mock session",
     "content": "✎ Edit . You: Plan the L2 DAK for the immunization guideline — I need the “administer vaccine” process and the “is the client due” decision. Assistant: (loads content-plan) Proposed: 1 BPMN process administer-vaccine, 1 DMN decision client-due-for-vaccine, 4 core data elements (client id, antigen, dose number, date administered), 1 value set (antigen codes). Scaffold it? . You: Yes. Assistant: (loads bpmn-authoring, dmn-authoring, l2-dak-authoring) Created the BPMN with start → check eligibility → administer → record, the DMN table keyed on age/last-dose, and the data dictionary. (calls content_validate) All artifacts valid. ",
     "url": "/folio-assistant/guides/who-smart-dak.html#a-mock-session",
     
     "relUrl": "/guides/who-smart-dak.html#a-mock-session"
-  },"1335": {
+  },"1336": {
     "doc": "Authoring a WHO SMART DAK (L2)",
     "title": "Next",
     "content": "✎ Edit . Turn the L2 DAK into a computable FHIR Implementation Guide → Authoring a WHO SMART IG (L3). ",
     "url": "/folio-assistant/guides/who-smart-dak.html#next",
     
     "relUrl": "/guides/who-smart-dak.html#next"
-  },"1336": {
+  },"1337": {
     "doc": "Authoring a WHO SMART IG (L3)",
     "title": "Authoring a WHO SMART IG (L3)",
     "content": "On this page . | Prerequisites | The L3 pipeline | Workflow | Making the build incremental | A mock session | Next | . This page is generated from content/docs/guides-who-smart-ig/ — each section below links to its own source. ✎ Edit . The L3 layer turns an L2 DAK into a computable FHIR Implementation Guide. This guide covers authoring FHIR artifacts as FSH, compiling with SUSHI, validating, and publishing with the HL7 IG Publisher — all driven by the LLM. Skill package: authoring-who-smart-guidelines . ",
     "url": "/folio-assistant/guides/who-smart-ig.html",
     
     "relUrl": "/guides/who-smart-ig.html"
-  },"1337": {
+  },"1338": {
     "doc": "Authoring a WHO SMART IG (L3)",
     "title": "Prerequisites",
     "content": "✎ Edit . The L3 toolchain is heavier than the platform baseline. The authoring-who-smart-guidelines package’s Docker manifest provisions it; to run locally you need: . | Tool | Purpose | Install | . | Java 21 (JRE) | IG Publisher | apt install openjdk-21-jre-headless | . | FHIR IG Publisher | build the IG | download publisher.jar from HL7/fhir-ig-publisher | . | SUSHI (fsh-sushi) | compile FSH → FHIR | npm i -g fsh-sushi | . | Jekyll | IG site rendering | gem install jekyll bundler | . Run bun run check-deps and the agent’s check_dependencies tool to confirm. ",
     "url": "/folio-assistant/guides/who-smart-ig.html#prerequisites",
     
     "relUrl": "/guides/who-smart-ig.html#prerequisites"
-  },"1338": {
+  },"1339": {
     "doc": "Authoring a WHO SMART IG (L3)",
     "title": "The L3 pipeline",
     "content": "✎ Edit . BPMN 2.0 source · full-size SVG . | Step | Skill | . | Author FSH (profiles, extensions, value sets, examples) | l3-fhir-authoring | . | Validate against FHIR profiles | fhir-validation | . | QC gates | quality-control | . | Publish the IG | ig-publication | . ",
     "url": "/folio-assistant/guides/who-smart-ig.html#the-l3-pipeline",
     
     "relUrl": "/guides/who-smart-ig.html#the-l3-pipeline"
-  },"1339": {
+  },"1340": {
     "doc": "Authoring a WHO SMART IG (L3)",
     "title": "Workflow",
     "content": "✎ Edit . | Map L2 → L3 — l3-fhir-authoring: turn each data element into a FHIR profile, each value set into a ValueSet, each decision into a PlanDefinition / Library as appropriate. | Author FSH — the agent writes FHIR Shorthand; SUSHI compiles it to FHIR resources. | Validate — fhir-validation runs the validator against the profiles. | QC — quality-control enforces the IG’s quality gates. | Publish — ig-publication runs the IG Publisher and renders the site. | . ",
     "url": "/folio-assistant/guides/who-smart-ig.html#workflow",
     
     "relUrl": "/guides/who-smart-ig.html#workflow"
-  },"1340": {
+  },"1341": {
     "doc": "Authoring a WHO SMART IG (L3)",
     "title": "Making the build incremental",
     "content": "✎ Edit . BPMN 2.0 source · full-size SVG . Every trigger in a DAK repository — a push to a PR branch, /validate, /deploy, a push to main, a release — runs the same full IG Publisher build, and a one-line edit to one profile costs all of it. Proposal: incremental IG build measures why that is avoidable: on smart-immunizations the median artefact has no dependents and the 90th percentile has six, so almost every edit invalidates a handful of resources and the index. Its overview lists the eleven changes and pins each to the stage of the review and publish pipeline where it runs. The process above is the L3 pipeline’s build lane once the derived artefacts are cached by dependency cone. Restore first; compute the change’s cone with bun run content/pipeline/fsh-cone.ts &lt;ig-root&gt; --changed &lt;files&gt;; compile and validate only the cone against the warm validator; re-render the cone’s records; rebuild the meta-index; assemble the site. A cache miss or a moved toolchain falls back to today’s full build, and only a green build of main or a release seeds the cache. | Step | Implemented by | . | Restore and seed the derived state | ig-cache.sh (proposed; the lake-cache.sh contract) | . | Compute the cone of the change | content/pipeline/fsh-cone.ts | . | Validate the cone | fhir-validation over the warm validator service (proposed MCP tools) | . | Rebuild the meta-index, assemble the site | ig_metaindex_rebuild (proposed), ig-publication | . | QC gates, deploy | quality-control, content-publish | . ",
     "url": "/folio-assistant/guides/who-smart-ig.html#making-the-build-incremental",
     
     "relUrl": "/guides/who-smart-ig.html#making-the-build-incremental"
-  },"1341": {
+  },"1342": {
     "doc": "Authoring a WHO SMART IG (L3)",
     "title": "A mock session",
     "content": "✎ Edit . You: Generate the FHIR profile and value set for the immunization data dictionary from the L2 DAK, then build the IG. Assistant: (loads l3-fhir-authoring) Authored ImmunizationRecord profile + AntigenCodes value set as FSH. (runs SUSHI) Compiled to FHIR R4. (loads fhir-validation) Validator: 0 errors, 2 warnings. (loads ig-publication) Built the IG with the HL7 publisher — site is in output/. You: Show me the QA report. Assistant: (loads quality-control) QA: broken links 0, profile conformance ✓, terminology bindings resolved ✓. ",
     "url": "/folio-assistant/guides/who-smart-ig.html#a-mock-session",
     
     "relUrl": "/guides/who-smart-ig.html#a-mock-session"
-  },"1342": {
+  },"1343": {
     "doc": "Authoring a WHO SMART IG (L3)",
     "title": "Next",
     "content": "✎ Edit . | Content types — WHO SMART IGs | Authoring a WHO SMART DAK (L2) — the upstream L2 layer | . ",
     "url": "/folio-assistant/guides/who-smart-ig.html#next",
     
     "relUrl": "/guides/who-smart-ig.html#next"
-  },"1343": {
+  },"1344": {
     "doc": "Witnessed Values",
     "title": "Witnessed Values Skill",
     "content": " ",
     "url": "/folio-assistant/reference/skill-instructions/witnessed-values.html#witnessed-values-skill",
     
     "relUrl": "/reference/skill-instructions/witnessed-values.html#witnessed-values-skill"
-  },"1344": {
+  },"1345": {
     "doc": "Witnessed Values",
     "title": "Purpose",
     "content": "Eliminate numerical drift between the paper’s prose and the canonical witness/computation files. Every literal value the paper quotes for a computed quantity must come from a single source of truth — the canonical witness file — so updating a witness automatically propagates to every place the value is mentioned. ",
     "url": "/folio-assistant/reference/skill-instructions/witnessed-values.html#purpose",
     
     "relUrl": "/reference/skill-instructions/witnessed-values.html#purpose"
-  },"1345": {
+  },"1346": {
     "doc": "Witnessed Values",
     "title": "How it works",
     "content": "A typed registry (e.g. content/values/registry.ts) maps short names to the canonical witness file and a dotted JSON path. In .md content, authors write a directive instead of the literal: . The computed parameter is :val[param_0]{precision=6}, which gives $\\text{derived} \\approx :val[derived_sq]$. At build time the renderer loads each witness JSON, extracts the value, and substitutes it with the requested precision and units. If the witness file changes, the rendered prose changes automatically. Directive syntax . :val[&lt;name&gt;] # uses defaultPrecision, default format :val[&lt;name&gt;]{precision=8} # override precision :val[&lt;name&gt;]{format=scientific} :val[&lt;name&gt;]{format=measured} # value ± err (requires errorEntry) :val[&lt;name&gt;]{units=none} # suppress units suffix . Authors do not write $…$ around :val[…] themselves — the renderer does. The directive also works inside an existing math context (the math-mode pass picks it up): . $\\mathrm{Vol}(K) = :val[vol_K]{precision=8}$ . Why the :val[…] syntax (not Liquid {{…}}) . The :directive[arg]{attrs} form is CommonMark generic-directive syntax, already used for :defterm[…] / :refterm[…] (the glossary system). Liquid {{ … }} would collide with math’s heavy use of {…} braces. Using :val[…] keeps the syntax disjoint from math markup, reuses the existing directive infrastructure, and mirrors the muscle memory authors already have for term references. ",
     "url": "/folio-assistant/reference/skill-instructions/witnessed-values.html#how-it-works",
     
     "relUrl": "/reference/skill-instructions/witnessed-values.html#how-it-works"
-  },"1346": {
+  },"1347": {
     "doc": "Witnessed Values",
     "title": "Authoring rules",
     "content": "When to use :val[name] . Use it for every literal whose value is derived from a computation witness — in every block kind, not just prose. The codemod and validator are kind-agnostic: they walk every .md file regardless of the wrapping block kind. | Block kind | Apply :val[…]? | . | definition | yes — body, illustrative numerals | . | theorem / lemma / proposition / corollary | yes — statement body and any quoted bound | . | conjecture | yes — even more important: the conjectured value must track its witness | . | proof | yes — including witness-citing steps | . | example | yes — concrete numerical instantiations | . | remark | yes — interpretive numerals | . | prose | yes — narrative literals | . | algorithm / pseudo-code | yes — anywhere a witness-derived literal appears | . | table | yes (manual) — the codemod skips tables; author rewrites by hand | . | equation | yes — picked up inside $…$ and display math | . | simulator / diagram | n/a — no .md body for the codemod to scan | . Short literals below the match threshold . The codemod only auto-migrates literals carrying at least MATCH_PRECISION significant digits. Lower-precision literals must be migrated by hand — edit them in place to use :val[name], or first extend the literal to the required precision and re-run the codemod. This is by design: at low precision a literal may agree with several registry canonicals, so the codemod refuses to guess. When not to use :val[name] . | Pure exposition examples not asserting the actual numerical value (illustrating an algebraic identity with a toy value). | Values not in the registry. First add a registry entry (with needsReview: true if the canonical witness has not yet been pinned), then use :val[name]. | Inside fenced derivation code blocks — the codemod skips these because they typically show the literal as part of a derivation, not as a final asserted value. | . Adding a new entry . | Identify the canonical witness JSON. | Pick a stable, snake-case name mirroring the symbol when possible. | Set defaultPrecision no larger than the underlying witness precision. | units is plain text rendered after the number; use null for dimensionless values. | If the canonical witness is uncertain, set needsReview: true with a placeholder witness file/path. The codemod skips such entries; the validator emits a warning. | . ",
     "url": "/folio-assistant/reference/skill-instructions/witnessed-values.html#authoring-rules",
     
     "relUrl": "/reference/skill-instructions/witnessed-values.html#authoring-rules"
-  },"1347": {
+  },"1348": {
     "doc": "Witnessed Values",
     "title": "Validation",
     "content": "Rules run as a phase of the project validator: . | Rule | Level | Checks | . | val-registered | error | name appears in the registry | . | val-resolves | error | witness file exists, dotted path resolves | . | val-precision-bounded | error | requested precision ≤ source precision | . | val-units-consistent | warn | units overrides only when the entry has units | . | val-pending | warn | a needsReview: true entry was cited | . | val-block-computation | warn | a block cites :val[…] but its computation: field is absent or refers to a different witness | . The last is informational: the renderer never blocks on it. It lets the witness-staleness audit pick up the implicit dependency. ",
     "url": "/folio-assistant/reference/skill-instructions/witnessed-values.html#validation",
     
     "relUrl": "/reference/skill-instructions/witnessed-values.html#validation"
-  },"1348": {
+  },"1349": {
     "doc": "Witnessed Values",
     "title": "Codemod (mass migration)",
     "content": "A codemod rewrites known literals inside math contexts to their :val[…] equivalent. Properties: math-only (prose and fenced derivation blocks are untouched; tables skipped); idempotent (existing :val[…] regions are carved out before replacement); verified-only (needsReview entries are never auto-applied); conservative match (a literal must agree with the witness to at least MATCH_PRECISION significant digits — set high on purpose, since at low precision distinct quantities collide). ",
     "url": "/folio-assistant/reference/skill-instructions/witnessed-values.html#codemod-mass-migration",
     
     "relUrl": "/reference/skill-instructions/witnessed-values.html#codemod-mass-migration"
-  },"1349": {
+  },"1350": {
     "doc": "Witnessed Values",
     "title": "Failure modes",
     "content": "The renderer surfaces every failure in the rendered output rather than dropping content silently: . | Situation | Rendered output | . | Unknown name | the :val[name] literal verbatim | . | Witness file missing | the :val[name] literal | . | Path does not resolve | the :val[name] literal | . | needsReview: true entry | a [TODO name] marker | . If you see any of these in a rendered chapter, fix the registry or backfill the canonical witness — never paper over the failure with a hard-coded literal. ",
     "url": "/folio-assistant/reference/skill-instructions/witnessed-values.html#failure-modes",
     
     "relUrl": "/reference/skill-instructions/witnessed-values.html#failure-modes"
-  },"1350": {
+  },"1351": {
     "doc": "Witnessed Values",
     "title": "Disjoint from tunable knobs (EVOLVE-VALUE fences)",
     "content": ":val[…] is for derived / fixed values — things a witness computes and the text must not drift from. The complementary case — values that are legitimately tunable (a truncation order, an exploratory coefficient) — is handled by the EVOLVE-VALUE fence convention in production-vs-exploratory-discipline.md. The two are disjoint: a value is either witnessed-derived (:val) or fenced-tunable (EVOLVE-VALUE), never both. A :val-witnessed literal inside an exploratory fence is a contradiction to resolve. ",
     "url": "/folio-assistant/reference/skill-instructions/witnessed-values.html#disjoint-from-tunable-knobs-evolve-value-fences",
     
     "relUrl": "/reference/skill-instructions/witnessed-values.html#disjoint-from-tunable-knobs-evolve-value-fences"
-  },"1351": {
+  },"1352": {
     "doc": "Witnessed Values",
     "title": "Skill routing",
     "content": "When asked to write or revise paper content that quotes witness-derived literals, first check the registry. If registered, use :val[name]. If it should be registered but isn’t, add it (with needsReview: true if the witness is uncertain) and then cite it. Avoid hard-coded literals in newly-authored prose. ",
     "url": "/folio-assistant/reference/skill-instructions/witnessed-values.html#skill-routing",
     
     "relUrl": "/reference/skill-instructions/witnessed-values.html#skill-routing"
-  },"1352": {
+  },"1353": {
     "doc": "Witnessed Values",
     "title": "Formal-source companion: :leanval[...] codemod",
     "content": "When the project carries a formal-proof layer, numeric literals inside its source files use the same registry via a sibling codemod. Tag syntax (line-anchored, end-of-line comment), e.g. for a Lean source: . volume := 2.029883212819307 -- :leanval[vol_K]{precision=15} . The codemod scans the formal-source files (skipping build/cache dirs), finds lines whose final end-of-line comment starts -- :leanval[NAME], and rewrites the immediately preceding decimal literal on the same line to the witness value at the registry path, formatted to the per-occurrence {precision=N} attribute or the registry default. Modes: dry-run (summarise diffs), --write (apply), --check (CI gate, exit 1 on drift). Wire --check into CI after the witness producers so a formal literal that has drifted from its witness fails before merge; the fix is always --write. When to use the formal-source tag — any field/literal that quotes a numerical invariant tracked by a witness JSON. When not — opaque constants computed inline by formal tactics (1/2, √2 from a decision procedure); the codemod is a drift safety net, not a generic literal rewriter. ",
     "url": "/folio-assistant/reference/skill-instructions/witnessed-values.html#formal-source-companion-leanval-codemod",
     
     "relUrl": "/reference/skill-instructions/witnessed-values.html#formal-source-companion-leanval-codemod"
-  },"1353": {
+  },"1354": {
     "doc": "Witnessed Values",
     "title": "Witnessed Values",
     "content": "Generated from skills/folio-paper-adapter/witnessed-values.md — do not edit here. ✎ Edit this page’s source . ",
     "url": "/folio-assistant/reference/skill-instructions/witnessed-values.html",
     
     "relUrl": "/reference/skill-instructions/witnessed-values.html"
-  },"1354": {
+  },"1355": {
     "doc": "Writing a document",
     "title": "Writing a document with folio-assistant",
     "content": "On this page . | What a document folio is | 1 · Scaffold the folio | 2 · The content model . | The kinds you may use | uses[] matters more here than in a paper | . | 3 · Author with the agent . | Carrying a recommendation | . | 4 · Validate | 5 · Render . | Not implemented | . | Moving between content types | Where things are | . This page is generated from content/docs/guides-writing-a-document/ — each section below links to its own source. ✎ Edit . Policy guidance, a standard, a report, a handbook — structured prose, authored with an LLM, published without a TeX installation. ",
     "url": "/folio-assistant/guides/writing-a-document.html#writing-a-document-with-folio-assistant",
     
     "relUrl": "/guides/writing-a-document.html#writing-a-document-with-folio-assistant"
-  },"1355": {
+  },"1356": {
     "doc": "Writing a document",
     "title": "What a document folio is",
     "content": "✎ Edit . Everything a paper folio is, minus the formal layer. The same tree of chapters and sections over typed blocks, the same editorial uses[] graph, the same QA sidecars, the same HCI validation gate, the same publication pipeline. What it does not have is the seven block kinds whose assertion is a formal mathematical claim — and therefore neither of the two toolchains that serve them. No Lean. No LaTeX. A paper is a document plus Lean-bearing blocks. That is not a metaphor: PaperContentAdapter extends DocumentContentAdapter in code, and adds the Lean lifecycle and the LaTeX renderer on top. If you find yourself wanting a feature “the paper adapter has”, check first — you probably already have it. BPMN 2.0 source . ",
     "url": "/folio-assistant/guides/writing-a-document.html#what-a-document-folio-is",
     
     "relUrl": "/guides/writing-a-document.html#what-a-document-folio-is"
-  },"1356": {
+  },"1357": {
     "doc": "Writing a document",
     "title": "1 · Scaffold the folio",
     "content": "✎ Edit . In a new, empty repository: . git init git submodule add https://github.com/litlfred/folio-assistant.git folio-assistant (cd folio-assistant &amp;&amp; bun install) bun run folio-assistant/scripts/init-folio.ts \\ --type document \\ --title \"Cold Chain Guidance\" \\ --author \"A. Author\" . Or, if your agent already has a folio-assistant server connected, ask it: . initialize a new document folio here using litlfred/folio-assistant, titled “Cold Chain Guidance”, author A. Author . Either way you get content/, uploads/, library/, the manifests for one document with one chapter and one block, folio.config.json, the builder shim, AGENTS.md with CLAUDE.md / GEMINI.md stubs, .mcp.json, and the beans work plan. See the README quickstart for the full file list. The starter block is a placeholder that says so. Replace it. ",
     "url": "/folio-assistant/guides/writing-a-document.html#1--scaffold-the-folio",
     
     "relUrl": "/guides/writing-a-document.html#1--scaffold-the-folio"
-  },"1357": {
+  },"1358": {
     "doc": "Writing a document",
     "title": "2 · The content model",
     "content": "✎ Edit . content/cold-chain-guidance/ cold-chain-guidance.ts the document manifest — chapters, in reading order introduction/ introduction.ts the chapter manifest — sections, in reading order overview.ts a block manifest: kind, label, title, uses[] overview.md that block's prose overview.qa.json QA sidecar — machine-written, never hand-edited . Three ordered lists hold the whole structure, and a block reaches the output only if some section’s blocks[] names it. This is the single most common way authored work disappears: the .ts and .md are written, committed and reviewed, and the block renders nowhere because nothing lists it. The kinds you may use . ✎ Edit . prose, example, remark, algorithm, simulator, equation, diagram, table. Not definition, theorem, lemma, proposition, corollary, conjecture or proof. content_profile_check rejects them, and runs on every content_validate — so the failure arrives while you are writing rather than when you try to publish. uses[] matters more here than in a paper . ✎ Edit . uses[] lists the blocks a reader must already have read to follow this one. It is an editorial judgement — nothing derives it, and nothing should. In a paper folio there is a second, machine-derived dependency graph beside it (from lean.ref). In a document folio there is not. So uses[] is the only dependency signal the corpus carries, and every ordering metric, every “what else changes if this changes?” question, and the reading-order review all read it. List direct neighbours only. ",
     "url": "/folio-assistant/guides/writing-a-document.html#2--the-content-model",
     
     "relUrl": "/guides/writing-a-document.html#2--the-content-model"
-  },"1358": {
+  },"1359": {
     "doc": "Writing a document",
     "title": "3 · Author with the agent",
     "content": "✎ Edit . Ask in plain language. The agent loads the skills it needs over MCP. add a chapter on cold-chain monitoring . document-structure — creates the directory, writes the chapter manifest, adds the entry to chapters[] in the right position. add a section on temperature excursions, with a recommendation that facilities audit the cold chain quarterly . document-authoring for the section and its blocks; normative-statements for the recommendation. what does the audit recommendation depend on? . Reads uses[] and the content graph. Carrying a recommendation . ✎ Edit . A normative statement is the block readers cite and implementers trace to. It wants a label, a stable identity and a place in the dependency graph. There is no first-class recommendation block kind yet. The carrier today is a prose block with a label and a title: . export default prose({ label: \"rec:cold-chain-audit\", title: \"Audit the cold chain quarterly\", uses: [\"rec:scope\", \"prose:cold-chain-terms\"], }); . Rules that make this work rather than merely compile: . | One statement per block. A block holding three cannot be cited, reviewed, superseded or traced individually. | State the strength in the prose (must, should, the issuing body’s own grading). Nothing in the block structure encodes it. | Keep the published number out of the label. Numbers are renumbered between editions; the label has to survive that. Put it in the title. | Do not use definition. Its lean field is required, so it will not validate here at all. Earlier guidance in document-intake suggested that mapping — it predates this content type. | . The full convention, and what it is missing, is in the normative-statements skill. ",
     "url": "/folio-assistant/guides/writing-a-document.html#3--author-with-the-agent",
     
     "relUrl": "/guides/writing-a-document.html#3--author-with-the-agent"
-  },"1359": {
+  },"1360": {
     "doc": "Writing a document",
     "title": "4 · Validate",
     "content": "✎ Edit . content_validate schema + constraints + profile conformance content_profile_check profile conformance alone, over the whole folio qa_sweep the QA axes, per block . Profile conformance is the check a paper folio does not have. It catches two things schema validation structurally cannot, because a theorem is a valid theorem whatever folio it sits in: . | a block whose kind is outside the declared profile; and | a lean field or a .lean sibling on a kind the profile otherwise allows — remark, example, algorithm and simulator all declare an optional lean, so the type permits what the profile forbids. | . Both name the file and the remedy, including “declare contentType: \"paper\"” when that is what you actually meant. ",
     "url": "/folio-assistant/guides/writing-a-document.html#4--validate",
     
     "relUrl": "/guides/writing-a-document.html#4--validate"
-  },"1360": {
+  },"1361": {
     "doc": "Writing a document",
     "title": "5 · Render",
     "content": "✎ Edit . content/** → document_render_md → build/&lt;slug&gt;.md → document_render_html → build/&lt;slug&gt;.html → document_render_pdf → build/&lt;slug&gt;.pdf . Read the Markdown first. It is the only place the whole document appears in reading order in one file, and ordering problems are invisible block-by-block. Look for sections that came out empty, blocks in an order that does not read, and the &gt; **Missing block:** marker. HTML needs only pandoc. PDF additionally needs one TeX-free engine — weasyprint (recommended), prince, or wkhtmltopdf: . apt install pandoc pip install weasyprint . If none is installed, document_render_pdf says which are missing and stops. It does not fall back to latexmk, even where TeX is present: a PDF that silently came out of LaTeX would misreport what the folio needs to build, and the next person on a clean machine pays for that. Both renderers take a css path relative to the repo root. Keep the stylesheet in the folio — a house style is content — and put the print rules (@page, page breaks, running heads) in the same file as the screen rules, so the two outputs cannot drift. Not implemented . ✎ Edit . No citations, no bibliography, no glossary, no automatic cross-reference numbering. \\cite{…} passes through verbatim, visible in the output rather than silently dropped, so a folio that needs references today should write them as Markdown links or footnotes. Cross-references do work: every labelled block emits an HTML anchor, so [see the scope statement](#rec:scope) resolves in both HTML and PDF. Use the block’s label, never a heading-derived anchor — the heading anchor changes whenever the title is edited, which is exactly when the link most needs to keep working. ",
     "url": "/folio-assistant/guides/writing-a-document.html#5--render",
     
     "relUrl": "/guides/writing-a-document.html#5--render"
-  },"1361": {
+  },"1362": {
     "doc": "Writing a document",
     "title": "Moving between content types",
     "content": "✎ Edit . folio.config.json’s contentType is the switch. document → paper is a one-line change. You are adding toolchains, not removing content. paper → document additionally means removing every math block and every lean field. Run content_profile_check after flipping the switch and it lists exactly what is in the way. ",
     "url": "/folio-assistant/guides/writing-a-document.html#moving-between-content-types",
     
     "relUrl": "/guides/writing-a-document.html#moving-between-content-types"
-  },"1362": {
+  },"1363": {
     "doc": "Writing a document",
     "title": "Where things are",
     "content": "✎ Edit . |   |   | . | Skills | document-authoring · document-structure · normative-statements · document-publishing | . | Typed contracts | schema reference | . | Skill package | skills/authoring-document/package-manifest.json | . | Adapter | adapters/document/ | . | Vocabulary | schemas/block-kinds.ts — DOCUMENT_BLOCK_KINDS, MATH_BLOCK_KINDS | . | Process | authoring-a-document.bpmn | . ",
     "url": "/folio-assistant/guides/writing-a-document.html#where-things-are",
     
     "relUrl": "/guides/writing-a-document.html#where-things-are"
-  },"1363": {
+  },"1364": {
     "doc": "Writing a document",
     "title": "Writing a document",
     "content": " ",
     "url": "/folio-assistant/guides/writing-a-document.html",
     
     "relUrl": "/guides/writing-a-document.html"
-  },"1364": {
+  },"1365": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Tutorial — writing a paper with folio-assistant",
     "content": "On this page . | The end-to-end workflow | Before you start | Step 1 — Plan the paper | Step 2 — Scaffold the repository . | Required .gitignore baseline | . | Step 3 — Author the content | Step 4 — Formalize in Lean | Step 5 — Validate | Step 6 — Render | Step 7 — Review &amp; feedback | Step 8 — Publish | What you end up with | Where to go deeper | . This page is generated from content/docs/guides-writing-a-paper/ — each section below links to its own source. ✎ Edit . This tutorial walks through authoring a rigorous scientific paper with an LLM driving folio-assistant: the agent plans the paper, drafts blocks, formalizes theorems in Lean 4, renders LaTeX, and publishes — while you steer. It uses a small running example — “A note on the harmonic series” — purely to illustrate the workflow. The content is not the point; the formalism and the LLM workflow are. ",
     "url": "/folio-assistant/guides/writing-a-paper.html#tutorial--writing-a-paper-with-folio-assistant",
     
     "relUrl": "/guides/writing-a-paper.html#tutorial--writing-a-paper-with-folio-assistant"
-  },"1365": {
+  },"1366": {
     "doc": "Writing a paper with folio-assistant",
     "title": "The end-to-end workflow",
     "content": "✎ Edit . BPMN 2.0 source · full-size SVG . Every step is something the LLM does for you by calling folio-assistant’s MCP tools — you converse in natural language and approve the work. Approve is literal: steps 3–5 are a loop, and the assistant’s edit is a proposal until you have seen the validation findings and accepted it. The publication workflow models that gate, and the review and release that follow, as BPMN swimlane diagrams. ",
     "url": "/folio-assistant/guides/writing-a-paper.html#the-end-to-end-workflow",
     
     "relUrl": "/guides/writing-a-paper.html#the-end-to-end-workflow"
-  },"1366": {
+  },"1367": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Before you start",
     "content": "✎ Edit . | Install folio-assistant and run bun run check-deps. For papers you want bun, latexmk/texlive, and Lean (elan). | Connect your LLM harness (Claude Code, Antigravity, …) so the agent has the MCP tools. | Create an (empty) content repository for your paper and add a folio.config.json with \"contentType\": \"paper\". | . ",
     "url": "/folio-assistant/guides/writing-a-paper.html#before-you-start",
     
     "relUrl": "/guides/writing-a-paper.html#before-you-start"
-  },"1367": {
+  },"1368": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Step 1 — Plan the paper",
     "content": "✎ Edit . Start by asking the agent to load the planning skill and propose a structure. Behind the scenes it calls skill_fetch content-plan. You: I want to write a short paper, “A note on the harmonic series”. It should define the partial sums, state and prove that the series diverges, and include one worked example. Plan it out. Assistant: (loads content-plan) Here’s a proposed plan: . | prose — Introduction &amp; motivation | definition def:harmonic-partial-sum — the partial sum $H_n$ | theorem thm:harmonic-diverges — $H_n \\to \\infty$ | proof prf:harmonic-diverges — Oresme’s grouping argument | example ex:H4 — compute $H_4$ | . The definition and theorem will get Lean counterparts. Shall I scaffold the repo and create these blocks as drafts? . You: Yes, go ahead. This is also where you’d open work-plan items so the plan survives across sessions: . beans create \"Draft harmonic-series paper: blocks + Lean\" beans &lt;id&gt; --status in-progress . ",
     "url": "/folio-assistant/guides/writing-a-paper.html#step-1-plan-the-paper",
     
     "relUrl": "/guides/writing-a-paper.html#step-1-plan-the-paper"
-  },"1368": {
+  },"1369": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Step 2 — Scaffold the repository",
     "content": "✎ Edit . The agent creates the block files and a main.tex, then confirms with content_list. Required .gitignore baseline . ✎ Edit . Every new folio repository starts with these entries. They are not optional polish — agent sandboxes accumulate scratch directories as untracked state, and a single git add -A then commits all of it under a message describing something else. In the qou folio that mechanism produced one commit adding 46,155 files / 11.4 M insertions under a one-file Lean subject line, including 14,688 duplicate beans. # Agent scratch state — transient tooling state, never repository content. # Leading slash = root-level only. Keep it (see the warning below). /.agents/ /amalgamated_done/ /amalgamated_input/ /_deprecated/ /scratch/ .claude/worktrees/ # Python bytecode __pycache__/ *.py[cod] . Keep the leading slashes. A gitignore pattern containing no internal slash matches at every directory depth, not just the root. Written unanchored, the _deprecated/ line above silently captured two documented archives in the qou folio — computations/_deprecated/ (1,449 tracked files, including script-qa/*.script-qa.json QA sidecars) and docs/audits/_deprecated/ (66) — and scratch/ reached every content/**/scratch/. Already-tracked files were unaffected, because an ignore rule never untracks; the hazard is that any new file under such a path is skipped by git add with no error and no output. If your folio keeps a nested archive or scratch area under one of these names, the anchored form is what keeps it committable. Two deliberate exclusions: . | .beans/ stays tracked. It is the durable, cross-session work plan; a sibling agent has to be able to read it. Bean duplication is prevented by the create-guard in skills/folio-core/todo-manager.md, not by ignoring the directory. | Any directory your folio documents as a real pipeline stays tracked — in qou, uploads/ is the document-intake stage and belongs in git. Check your own AGENTS.md §Project structure before adding a path to this list: if it is documented there, it is content, not scratch. | . Assistant: (creates blocks, calls content_list) Scaffolded 5 blocks under content/harmonic-series/. Current artifacts: . content/harmonic-series/ ├── 00-intro.prose.md ├── 10-def-partial-sum.definition.md ├── 20-thm-diverges.theorem.md ├── 21-prf-diverges.proof.md └── 30-ex-h4.example.md . Each block carries typed front-matter validated against the content-object model. A definition block, for example: . --- kind: definition id: def:harmonic-partial-sum title: Harmonic partial sum lean: HarmonicSeries.partialSum --- For $n \\ge 1$, the *$n$-th harmonic partial sum* is $$ H_n = \\sum_{k=1}^{n} \\frac{1}{k}. $$ . ",
     "url": "/folio-assistant/guides/writing-a-paper.html#step-2-scaffold-the-repository",
     
     "relUrl": "/guides/writing-a-paper.html#step-2-scaffold-the-repository"
-  },"1369": {
+  },"1370": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Step 3 — Author the content",
     "content": "✎ Edit . Ask the agent to draft prose and statements; review and refine conversationally. You: Draft the introduction and the divergence theorem statement. Assistant: (loads content-author, edits the blocks) Done. The theorem reads: “The sequence $(H_n)$ is unbounded; equivalently $\\sum 1/k$ diverges.” I kept the statement Lean-friendly so it maps cleanly to Filter.Tendsto. A mock of the chat-driven authoring session: . ",
     "url": "/folio-assistant/guides/writing-a-paper.html#step-3-author-the-content",
     
     "relUrl": "/guides/writing-a-paper.html#step-3-author-the-content"
-  },"1370": {
+  },"1371": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Step 4 — Formalize in Lean",
     "content": "✎ Edit . Now the agent sets up Lean and formalizes the definition and theorem, calling lean_setup, lean_build, and lean_check. You: Formalize the definition and theorem in Lean and make it build. Assistant: (loads lean-formalization; calls lean_setup) Toolchain ready (Lean 4.16.0). I added: . namespace HarmonicSeries def partialSum (n : ℕ) : ℝ := ∑ k ∈ Finset.range n, 1 / (k + 1 : ℝ) theorem diverges : ¬ ∃ B, ∀ n, partialSum n ≤ B := by sorry -- Ref: [oresme] grouping argument . (calls lean_build) Build is green with 1 sorry remaining. (calls lean_status) Proof coverage: 1/2 blocks fully proved. You: Discharge the sorry using the grouping bound. Assistant: (edits, lean_build) ✅ Build green, 0 sorries. proof-verification reports the axiom set is clean (no sorryAx). sequenceDiagram participant You participant LLM as Assistant participant MCP as folio-assistant You-&gt;&gt;LLM: Formalize + make it build LLM-&gt;&gt;MCP: lean_setup MCP--&gt;&gt;LLM: toolchain ready LLM-&gt;&gt;MCP: lean_build MCP--&gt;&gt;LLM: green, 1 sorry LLM-&gt;&gt;MCP: lean_check / lean_status MCP--&gt;&gt;LLM: coverage 1/2 You-&gt;&gt;LLM: discharge the sorry LLM-&gt;&gt;MCP: lean_build MCP--&gt;&gt;LLM: green, 0 sorries . ",
     "url": "/folio-assistant/guides/writing-a-paper.html#step-4-formalize-in-lean",
     
     "relUrl": "/guides/writing-a-paper.html#step-4-formalize-in-lean"
-  },"1371": {
+  },"1372": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Step 5 — Validate",
     "content": "✎ Edit . Validation checks every block against its schema and the project’s constraint rules (label prefixes, required Lean links, citation resolution, …). You: Validate the whole paper. Assistant: (calls content_validate) All 5 blocks valid. Constraints: def: block has its required Lean link ✓, theorem has a proof block ✓, example references a defined symbol ✓. ",
     "url": "/folio-assistant/guides/writing-a-paper.html#step-5-validate",
     
     "relUrl": "/guides/writing-a-paper.html#step-5-validate"
-  },"1372": {
+  },"1373": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Step 6 — Render",
     "content": "✎ Edit . The agent renders a PDF (and/or HTML) with the paper adapter. You: Render the PDF and show me a preview. Assistant: (calls paper_render_pdf, then paper_preview) Rendered harmonic-series.pdf (3 pages). Preview below. You can set rendering preferences (engine, scope, math renderer) via the paper_preferences tool: . You: Use lualatex and render only the theorem section next time. Assistant: (calls paper_preferences action=set latex_engine=lualatex render_scope=section) Saved. ",
     "url": "/folio-assistant/guides/writing-a-paper.html#step-6-render",
     
     "relUrl": "/guides/writing-a-paper.html#step-6-render"
-  },"1373": {
+  },"1374": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Step 7 — Review &amp; feedback",
     "content": "✎ Edit . Reviewer feedback is captured in the feedback store and routed back into the authoring loop (content-review / content-feedback). You: A reviewer says the example should also show $H_8$. Log it and address it. Assistant: (records feedback, edits ex:H4 → adds $H_8$, re-validates, re-renders) Done; feedback item resolved. ",
     "url": "/folio-assistant/guides/writing-a-paper.html#step-7-review-feedback",
     
     "relUrl": "/guides/writing-a-paper.html#step-7-review-feedback"
-  },"1374": {
+  },"1375": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Step 8 — Publish",
     "content": "✎ Edit . Finally, publish the rendered artifacts. In CI this is the publish workflow; locally the agent runs content_build and the render tools, then commits. You: Publish it. Assistant: (loads content-publish, content_build, commits + pushes) Published. PDF, HTML, and the Lean blueprint are built; the work-plan item is marked resolved. beans &lt;id&gt; --status resolved . ",
     "url": "/folio-assistant/guides/writing-a-paper.html#step-8-publish",
     
     "relUrl": "/guides/writing-a-paper.html#step-8-publish"
-  },"1375": {
+  },"1376": {
     "doc": "Writing a paper with folio-assistant",
     "title": "What you end up with",
     "content": "✎ Edit . | A paper as a tree of typed, validated blocks | A Lean 4 formalization with zero sorrys and a clean axiom audit | PDF + HTML renders and an interactive blueprint | A reproducible CI pipeline (validate → build → render → publish) | . ",
     "url": "/folio-assistant/guides/writing-a-paper.html#what-you-end-up-with",
     
     "relUrl": "/guides/writing-a-paper.html#what-you-end-up-with"
-  },"1376": {
+  },"1377": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Where to go deeper",
     "content": "✎ Edit . | Content types — papers &amp; books | Skill contracts: latex-authoring, lean-formalization, proof-verification | TypeScript API reference — the block model in detail | Architecture — how the paper adapter is wired | . Note on the screenshots. The images above are mockups illustrating the chat-driven workflow and the viewer. Replace them with real screenshots from your own session under docs/assets/img/ to keep the tutorial current. ",
     "url": "/folio-assistant/guides/writing-a-paper.html#where-to-go-deeper",
     
     "relUrl": "/guides/writing-a-paper.html#where-to-go-deeper"
-  },"1377": {
+  },"1378": {
     "doc": "Writing a paper with folio-assistant",
     "title": "Writing a paper with folio-assistant",
     "content": " ",
