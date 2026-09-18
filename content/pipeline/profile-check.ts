@@ -56,22 +56,35 @@ export interface ProfileCheckResult {
 }
 
 /**
- * Read the profile a folio declares.
+ * Read the profile a folio DECLARES, keeping "could not determine" distinct
+ * from "declared `paper`".
  *
- * A folio with no `folio.config.json` reads as `paper` — see
- * {@link profileForContentType} for why the wider profile is the safe
- * default. `declaredBy` records which it was, so a report never leaves the
- * reader guessing whether the profile was chosen or inherited.
+ * `profile` is `undefined` when the folio does not say: no
+ * `folio.config.json`, no `contentType` in it, or a file that will not parse.
+ * Those three are genuinely different from a folio that declares
+ * `contentType: "paper"`, and the difference matters to any consumer whose
+ * response to "the folio says document" is to *stop doing something* —
+ * {@link profileForContentType} resolves the unknown case to `paper` because
+ * the wider vocabulary is the safe answer for a *validator*, but a consumer
+ * that skips work on the strength of a profile must not skip it on the
+ * strength of a guess.
+ *
+ * `declaredBy` says which of the four cases it was in words, so a report
+ * never leaves the reader wondering whether the profile was chosen or
+ * inherited.
  */
-export function readFolioProfile(repoRoot: string): { profile: ContentProfile; declaredBy: string } {
+export function readDeclaredFolioProfile(repoRoot: string): {
+  profile?: ContentProfile;
+  declaredBy: string;
+} {
   const configPath = join(repoRoot, "folio.config.json");
   if (!existsSync(configPath)) {
-    return { profile: "paper", declaredBy: "default (no folio.config.json)" };
+    return { declaredBy: "undetermined (no folio.config.json)" };
   }
   try {
     const config = JSON.parse(readFileSync(configPath, "utf-8")) as { contentType?: string };
     if (!config.contentType) {
-      return { profile: "paper", declaredBy: "default (folio.config.json declares no contentType)" };
+      return { declaredBy: "undetermined (folio.config.json declares no contentType)" };
     }
     return {
       profile: profileForContentType(config.contentType),
@@ -82,10 +95,24 @@ export function readFolioProfile(repoRoot: string): { profile: ContentProfile; d
     // folio's whole configuration is unread in that state and every other
     // tool reading it is equally in the dark.
     return {
-      profile: "paper",
-      declaredBy: `default (folio.config.json unreadable: ${e instanceof Error ? e.message : String(e)})`,
+      declaredBy: `undetermined (folio.config.json unreadable: ${e instanceof Error ? e.message : String(e)})`,
     };
   }
+}
+
+/**
+ * Read the profile a folio declares, resolved for a VALIDATOR.
+ *
+ * A folio that does not say reads as `paper` — see
+ * {@link profileForContentType} for why the wider profile is the safe default
+ * when the question is "may this folio contain this block?". Consumers that
+ * need to tell "undetermined" from "declared paper" call
+ * {@link readDeclaredFolioProfile} instead.
+ */
+export function readFolioProfile(repoRoot: string): { profile: ContentProfile; declaredBy: string } {
+  const declared = readDeclaredFolioProfile(repoRoot);
+  if (declared.profile) return { profile: declared.profile, declaredBy: declared.declaredBy };
+  return { profile: "paper", declaredBy: declared.declaredBy.replace(/^undetermined/, "default") };
 }
 
 /**

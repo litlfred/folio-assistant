@@ -19,7 +19,9 @@
  * @module schemas/block-qa
  */
 
-import type { ContentAdapter } from "./block-kinds";
+import { CONTENT_PROFILES } from "./block-kinds";
+
+import type { ContentAdapter, ContentProfile } from "./block-kinds";
 
 /**
  * The kind of reviewer that produced this finding.
@@ -181,6 +183,44 @@ export function criterionAdapters(def: {
   adapters?: ContentAdapter[];
 }): readonly ContentAdapter[] {
   return def.adapters ?? ["paper"];
+}
+
+/**
+ * The profiles a criterion applies to, with the documented default applied.
+ *
+ * Note the default runs the OTHER WAY from {@link criterionAdapters}: absent
+ * means **every** profile, not one of them. See `QaCriterionDefinition.profiles`
+ * for why the two axes default in opposite directions.
+ */
+export function criterionProfiles(def: {
+  profiles?: ContentProfile[];
+}): readonly ContentProfile[] {
+  return def.profiles ?? CONTENT_PROFILES;
+}
+
+/**
+ * Should the profile axis exclude this criterion from a folio declaring
+ * `folioProfile`?
+ *
+ * `folioProfile` is `undefined` for a folio that does not say — no
+ * `folio.config.json`, no `contentType` in it, or a config that will not
+ * parse. That third state returns **`false`**: the criterion runs.
+ *
+ * That is the whole reason this is a named function rather than an inline
+ * `!includes(...)` at the one call site. "Could not determine" is not
+ * "document", and a folio whose configuration a tool cannot read must not
+ * quietly lose QA coverage on the strength of a guess — the resulting clean
+ * sweep is indistinguishable from a real one. `profileForContentType`
+ * resolves the unknown case to `paper` because a *validator* asking "may this
+ * folio contain this block?" is safest with the wider vocabulary; a *gate*
+ * asking "may I skip this check?" is safest running it.
+ */
+export function profileExcludesCriterion(
+  def: { profiles?: ContentProfile[] },
+  folioProfile: ContentProfile | undefined,
+): boolean {
+  if (!folioProfile) return false;
+  return !criterionProfiles(def).includes(folioProfile);
 }
 
 /**
@@ -413,6 +453,56 @@ export interface QaCriterionDefinition {
    * Resolve with `criterionAdapters()` rather than reading this directly.
    */
   adapters?: ContentAdapter[];
+  /**
+   * Which content **profiles** this criterion applies to.
+   *
+   * **Absent means every profile**, not one of them — the exact opposite of
+   * `adapters` directly above, and deliberately so. The two fields look alike
+   * and read alike, so the reason they default in opposite directions is
+   * worth stating rather than inferring:
+   *
+   * | | `adapters` | `profiles` |
+   * |---|---|---|
+   * | members are | disjoint namespaces | nested restrictions |
+   * | absent means | `["paper"]` — narrow | all of them — wide |
+   * | a wrong default produces | a criterion that never runs | a criterion that misfires |
+   *
+   * Adapters partition. A criterion written for the paper vocabulary has
+   * *nothing* to say about a FHIR ValueSet, so widening by default would have
+   * pointed ~47 existing criteria at a corpus none of them was written for.
+   *
+   * Profiles nest: every `document` kind is also a `paper` kind, and every
+   * criterion in the registry predating this field was written against
+   * `prose`, `remark`, `example` and the rest — which is to say, against the
+   * document vocabulary — with the paper-only kinds as an *addition*.
+   * Narrowing by default would therefore stop those criteria running on
+   * document folios and report the result as a clean sweep. That is a **false
+   * pass**, and a false pass is strictly worse than a false fail here: a
+   * wrong `fail` is read by a reviewer and argued with, while a wrong `pass`
+   * is read by nobody and silently becomes the folio's QA record.
+   *
+   * So the field is an **opt-out for the genuinely paper-only**, declared one
+   * criterion at a time with its reason written beside it: a criterion whose
+   * verdict rests on a TeX toolchain the document render path does not have
+   * (`document_render_*` goes through pandoc and never falls back to
+   * `latexmk`), or on Lean formalization that {@link DOCUMENT_FORBIDS_LEAN}
+   * bars a document folio from carrying at all.
+   *
+   * Two things this field is **not** for, because both are easy to mistake
+   * for it:
+   *
+   * - **Folio-specific axes.** A criterion that assumes one folio's subject
+   *   matter — CODATA calibration anchors, a q-deformation regime, a named
+   *   chapter directory — is not paper-only, it is *that folio*-only, and a
+   *   paper folio about anything else is equally miscategorised by it. That
+   *   is what `folioOptionalAxes()` in the registry exists for.
+   * - **Kind scoping.** A criterion that only makes sense on a `theorem`
+   *   already says so in `applies_to`, and a document folio cannot hold one.
+   *   Restating it here adds a second answer to the same question.
+   *
+   * Resolve with `criterionProfiles()` rather than reading this directly.
+   */
+  profiles?: ContentProfile[];
   depends_on: CompanionRole[];
   /**
    * Extra files that invalidate a cached verdict WITHOUT gating

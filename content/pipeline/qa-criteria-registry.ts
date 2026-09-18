@@ -144,6 +144,12 @@ const VOICE: QaCriterionDefinition[] = [
       "No Unicode characters that crash pdflatex (↦, ⁻, √, ─, ✅, ·, ²) " +
       "outside preamble-mapped sets. Use LaTeX equivalents in math.",
     default_severity: "critical",
+    // TeX. The defect IS the pdflatex crash — these characters are valid and
+    // render correctly everywhere else, and the document render path
+    // (`render-markdown.ts` → pandoc → weasyprint) never invokes latexmk. On
+    // `content/docs/crdm-methodology` this was 5 of the sweep's 8 failures,
+    // every one a `critical` on prose that builds fine.
+    profiles: ["paper"],
     depends_on: ["md"],
     automated: true,
   },
@@ -350,6 +356,12 @@ const WALL: QaCriterionDefinition[] = [
     // declarations referenced by a block are therefore in scope. Files
     // referenced by NO block (orphans) are swept separately, content-
     // based + chapter-independent, by `q-usage-audit`'s orphan pass.
+    //
+    // Lean. The verdict is read out of the block's `.lean` body, and
+    // `DOCUMENT_FORBIDS_LEAN` means a document folio has none to read — not
+    // "this block happens to lack one", which is what the `n/a-no-lean` the
+    // companion gate would otherwise write implies.
+    profiles: ["paper"],
     depends_on: ["md", "lean", "ts"],
     automated: true,
   },
@@ -372,6 +384,9 @@ const WALL: QaCriterionDefinition[] = [
       "statement is Laurent-rewritable. PASS if already over a CommRing / " +
       "Laurent ring, archimedean, or the field is essential.",
     default_severity: "minor",
+    // Lean. Reads the `.lean` for base-ring structure; a document folio is
+    // barred from carrying one at all.
+    profiles: ["paper"],
     depends_on: ["lean"],
     automated: true,
   },
@@ -717,6 +732,11 @@ const PROOF: QaCriterionDefinition[] = [
       "`docs/audits/2026-05-08-trivial-skeleton-audit.json` (keyed " +
       "by `.lean` path).",
     default_severity: "major",
+    // Lean. Proof-structure assumption end to end: the criterion is about
+    // what a `.lean` declaration encodes, and a document folio has none.
+    // The only entry in PROOF without an `applies_to` restricted to the math
+    // kinds, so the profile axis is what excludes it rather than the kind.
+    profiles: ["paper"],
     depends_on: ["lean"],
     automated: true,
   },
@@ -1396,6 +1416,11 @@ const DETANGLER: QaCriterionDefinition[] = [
       "Companion to `wall-side-correct` (per-block) — this one is " +
       "per-chapter placement.",
     default_severity: "major",
+    // Lean. Classifies a block by reading its `.lean` for archimedean
+    // constructs, which a document folio cannot have. (Its chapter list is
+    // also one folio's directory names — a separate, folio-specific defect
+    // that `folioOptionalAxes()` is the right home for, not this axis.)
+    profiles: ["paper"],
     depends_on: ["ts", "lean"],
     automated: true,
     // Verdict is a property of the chapter uses[] GRAPH, so an edit to
@@ -1585,6 +1610,10 @@ const USES: QaCriterionDefinition[] = [
       "Atlas cache (`docs/audits/lean-atlas-deps.json`) is absent — an " +
       "empty formal edge set means 'unavailable', not 'clean'.",
     default_severity: "minor",
+    // Lean. The whole criterion is the difference between the FORMAL (Lean
+    // `lean.ref` decl) graph and the editorial `uses[]` graph. A document
+    // folio has only the editorial one, so there is no gap to report.
+    profiles: ["paper"],
     depends_on: ["ts", "lean"],
     automated: true,
     extra_inputs: [
@@ -1607,6 +1636,13 @@ const USES: QaCriterionDefinition[] = [
       "have had. In practice these are copy-paste errors. Reported from every " +
       "claimant so the finding is visible on each side.",
     default_severity: "major",
+    // Lean. The subject is the `lean.ref` field, which the document profile
+    // forbids outright (`DOCUMENT_FORBIDS_LEAN`) — so in a document folio the
+    // criterion has nothing to collide. Note it does NOT declare `lean` in
+    // `depends_on` (it reads the `.ts`), so the companion gate never excluded
+    // it: it ran on all 14 crdm-methodology blocks and returned the checker's
+    // own bare `n/a`, which says nothing about why.
+    profiles: ["paper"],
     depends_on: ["ts"],
     automated: true,
     extra_inputs: ["content/pipeline/content-graph.ts"],
@@ -1921,7 +1957,18 @@ const DEVILS_ADVOCATE: QaCriterionDefinition[] = [
   // Candidate lister is print-only; only an agent verdict writes a sidecar.
   // Four questions + full measurement: qou `local/devils-advocate-watcher`.
   { id: "da-arity-conflation", domain: "devils-advocate", description: "A predicate that VARIES (over states, levels, or instances) conflated with the single truth value of its universal closure: a level-indexed family read as one Prop; a pointwise claim (forall P, v <-> Pred P) refuted where the corpus asserts the universal closure (v <-> forall P, Pred P, which is trivially inhabited); a one-instance theorem read as a cross-instance identification; a set-level fact (undecidable / not cut out by an ideal / cofinite locus) used to deny a truth-value equivalence.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
-  { id: "da-lean-narrative-divergence", domain: "devils-advocate", description: "Lean proves something weaker/different/vacuously-implied vs the .md claim (proof-statement-integrity).", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
+  // Lean. The only `da-*` entry whose whole question is Lean-vs-narrative;
+  // the rest (overclaim, citation misuse, reproducibility, non sequitur, …)
+  // are objections a reviewer can raise against any prose and stay unscoped.
+  //
+  // INERT TODAY, and deliberately declared anyway. `qa-sweep` short-circuits
+  // `automated: false` criteria to `needs-agent` BEFORE either scoping gate,
+  // so neither `adapters` nor `profiles` can scope an agent-adjudicated
+  // criterion at present — this one will still be queued against document
+  // prose. The declaration is the correct metadata and takes effect the day a
+  // checker lands or the gates move ahead of the `needs-agent` branch; what
+  // it must not do is leave a reader believing the scoping is already live.
+  { id: "da-lean-narrative-divergence", domain: "devils-advocate", description: "Lean proves something weaker/different/vacuously-implied vs the .md claim (proof-statement-integrity).", default_severity: "major", profiles: ["paper"], depends_on: ["md", "ts", "lean"], automated: false },
   { id: "da-citation-misuse", domain: "devils-advocate", description: "Cited reference (cites[] or -- Ref:) does not contain / is mis-attributed for the invoked result.", default_severity: "minor", depends_on: ["md", "ts", "lean"], automated: false },
   { id: "da-definitional-ambiguity", domain: "devils-advocate", description: "Key term undefined / multiple incompatible readings / 'the unique X' without uniqueness / implicit regime or base ring.", default_severity: "minor", depends_on: ["md", "ts", "lean"], automated: false },
   { id: "da-empirical-fragility", domain: "devils-advocate", description: "Numerical match inside fit noise / cherry-picked precision / hidden cross-anchor swing / stale vs current q0 pin.", default_severity: "major", depends_on: ["md", "ts", "lean"], automated: false },
