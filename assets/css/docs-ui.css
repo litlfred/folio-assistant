@@ -610,3 +610,84 @@
     opacity: 0.6;
   }
 }
+
+/* ── RTL (right-to-left) support ───────────────────────────────────────── */
+
+/* Applied when <html dir="rtl"> or when docs-ui.js detects lang=ar.
+   Smooth transition so the navbar slides across when switching LTR↔RTL. */
+
+/* Base transition for all major layout elements */
+.side-bar,
+.main,
+.main-content-wrap,
+.main-content,
+.site-nav {
+  transition: margin 0.4s ease, padding 0.4s ease, left 0.4s ease, right 0.4s ease;
+}
+
+/* RTL overrides */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Sidebar moves to right in RTL */
+[dir="rtl"] .side-bar {
+  left: auto;
+  right: 0;
+  border-left: 1px solid var(--border-color, #44434d);
+  border-right: none;
+}
+
+[dir="rtl"] .main {
+  margin-left: 0;
+  margin-right: 264px; /* matches just-the-docs sidebar width */
+}
+
+@media (max-width: 799.98px) {
+  [dir="rtl"] .main {
+    margin-right: 0;
+  }
+  [dir="rtl"] .side-bar {
+    left: auto;
+    right: -264px;
+    border-left: none;
+  }
+  /* When sidebar is open on mobile in RTL */
+  [dir="rtl"] .side-bar.open {
+    right: 0;
+  }
+}
+
+/* Flip navigation elements */
+[dir="rtl"] .site-nav .nav-list > li > a {
+  padding-left: 0;
+  padding-right: 1em;
+}
+
+[dir="rtl"] .site-nav .nav-list > li > a::before {
+  left: auto;
+  right: 0;
+}
+
+/* Badge and icon containers: flex direction stays LTR for mixed content */
+[dir="rtl"] .fa-lang-bar,
+[dir="rtl"] .fa-lang-coverage-badge,
+[dir="rtl"] .fa-qa-badge,
+[dir="rtl"] .fa-sweep-badge {
+  direction: ltr;
+}
+
+/* Mermaid diagrams: always LTR for flowchart arrows */
+[dir="rtl"] .mermaid,
+[dir="rtl"] .language-mermaid {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Edit button flips to left side in RTL */
+[dir="rtl"] .fa-node-edit {
+  float: left;
+  margin: -1.8em 0 0 0;
+}
+
