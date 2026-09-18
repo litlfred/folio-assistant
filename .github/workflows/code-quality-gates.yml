@@ -213,6 +213,13 @@ jobs:
           bun run scripts/gen-skill-docs.ts --check
           bun run scripts/gen-docs-pages.ts --check
 
+      # Every .sh a user runs by hand or wires into a config has a .bat beside
+      # it, generated from one template by scripts/gen-bat-wrappers.sh. A
+      # script added to WRAPPED without a regenerate, or a wrapper edited by
+      # hand, is the drift this catches; --check writes nothing.
+      - name: windows .bat wrappers are current
+        run: bun run bat:sync:check
+
   rust-wildcard:
     name: Rust wildcard imports (warn-only)
     runs-on: ubuntu-latest

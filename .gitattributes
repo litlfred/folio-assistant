@@ -1,0 +1,6 @@
+# Line endings the interpreters require, whatever core.autocrlf says.
+# bash chokes on CRLF; cmd.exe mis-parses some LF-only batch files. Both are
+# stored LF in the repo and checked out as the interpreter wants them, so
+# scripts/gen-bat-wrappers.sh --check compares like with like on every OS.
+*.sh   text eol=lf
+*.bat  text eol=crlf

@@ -100,6 +100,8 @@ bun run readme:sync                 # refresh a folio README's generated section
 bun run readme:sync:check           # ...and fail if any is stale (for CI)
 bun run readme:sections             # list the sections a README can opt into
 bun run readme:audit                # verify the README's links still resolve
+bun run bat:sync                    # regenerate the Windows .bat wrapper beside each user-run .sh
+bun run bat:sync:check              # ...and fail if any is missing or stale (for CI)
 ```
 
 ## Work-plan & todos — use `beans`
