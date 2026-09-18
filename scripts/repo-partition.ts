@@ -176,6 +176,11 @@ const RULES: Rule[] = [
       // core `schemas/` prefix and made four harness modules read as depending
       // on the content layer. None of it describes a folio's content.
       "schemas/skill-package.ts",
+      // The composition root's own inventory of which content adapters this
+      // instance ships. `src/` is claimed by subdirectory, so a new file at
+      // its top level falls through — reported `unassigned`, which is the
+      // tool working: it declined to guess rather than defaulting.
+      "src/builtin-adapters.ts",
 
       // `adapters/mcp-server/` was claimed wholesale by the harness prefix
       // rule, but `server.ts` opens "QOU Paper Writing Assistant — MCP
