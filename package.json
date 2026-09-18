@@ -79,7 +79,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "check:workflows": "bun run scripts/check-workflows.ts",
     "tools:coverage": "bun run scripts/tool-coverage.ts",
-    "mcp:capture": "bun run scripts/capture-mcp-tools.ts"
+    "mcp:capture": "bun run scripts/capture-mcp-tools.ts",
+    "check:xml-comments": "bun run scripts/xml-comment-check.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
