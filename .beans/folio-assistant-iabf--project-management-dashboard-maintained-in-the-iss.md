@@ -1,11 +1,11 @@
 ---
 # folio-assistant-iabf
 title: Project-management dashboard maintained in the issue body
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T16:15:27Z
-updated_at: 2026-09-18T16:16:02Z
+updated_at: 2026-09-18T16:48:24Z
 ---
 
 From #203 comment 5731858210 (2026-09-18 14:58).
