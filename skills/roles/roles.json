@@ -22,7 +22,7 @@
         "Content Author",
         "Editor / author (person)"
       ],
-      "skills": ["content-plan", "content-author", "content-review", "staging-review", "decision-audit"]
+      "skills": ["content-plan", "content-author", "content-review", "staging-review", "decision-audit", "evidence-appraisal"]
     },
     {
       "id": "editor",
@@ -36,7 +36,7 @@
     {
       "id": "reviewer",
       "title": "Reviewer / SME",
-      "description": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits.",
+      "description": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits. The GENERIC review position: what kind of thing changed decides which subprocess it descends into (review-task.bpmn), and the actor takes on that inner lane's role for the call path only.",
       "actorKind": "person",
       "lanes": [
         "Reviewer / SME",
@@ -48,7 +48,27 @@
         "Subject-Matter Expert / Reviewer",
         "Non-mechanical validation (review agent or SME)"
       ],
-      "skills": ["content-review", "content-feedback", "staging-review", "document-intake", "translation-manager", "decision-audit"]
+      "skills": ["content-review", "content-feedback", "staging-review", "document-intake", "translation-manager", "decision-audit", "semantic-review-scoping"]
+    },
+    {
+      "id": "narrative-reviewer",
+      "title": "Narrative reviewer",
+      "description": "Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
+      "actorKind": "person",
+      "lanes": [
+        "Narrative reviewer"
+      ],
+      "skills": ["voice-editorial-review", "uses-editorial-review", "content-review", "content-feedback", "translation-manager"]
+    },
+    {
+      "id": "code-reviewer",
+      "title": "Code reviewer",
+      "description": "Judges the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound — does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs — which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.",
+      "actorKind": "person",
+      "lanes": [
+        "Code reviewer"
+      ],
+      "skills": ["code-node-review", "skills-and-tools", "test-engineer"]
     },
     {
       "id": "qc-reviewer",
@@ -94,7 +114,7 @@
       "description": "Turns a stated need into a modelled requirement. Owns the CRDM lane and the BPMN/DMN that come out of it.",
       "actorKind": "person",
       "lanes": ["Business analyst", "BA / Feature Requestor"],
-      "skills": ["bpmn-authoring", "dmn-authoring", "content-validate", "l2-dak-authoring"]
+      "skills": ["bpmn-authoring", "dmn-authoring", "content-validate", "l2-dak-authoring", "crdm-requirements-workflow", "decision-audit"]
     },
     {
       "id": "terminologist",
@@ -143,6 +163,7 @@
       "description": "Signs off that a requirement is met. Carries no skills deliberately: sign-off is a judgement, not a procedure, and a skill here would suggest an agent could supply it.",
       "actorKind": "person",
       "lanes": ["Stakeholders"],
+      "judgementOnly": true,
       "skills": []
     },
     {

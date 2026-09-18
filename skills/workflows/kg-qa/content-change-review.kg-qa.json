@@ -5,10 +5,10 @@
     "id": "Process_ContentChangeReview",
     "path": "skills/workflows/content-change-review.bpmn"
   },
-  "source_hash": "sha256:4b0ded71cb277ef096a2278cbad673aa236d07a7b4c3b682460fe1909fdac281",
+  "source_hash": "sha256:8d4d6a10dc372a1df3d1ef22279e69d0c66ac0ce67d6870f86630ac817257e4a",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:565c0baa00bdb6212732c82e3176d395af13d4f8ce84524cca9a2be5b37203da",
+    "script_hash": "sha256:0f00819b8600f680ebb54e31dd4d2475a4c0905e8a70221bb23c6b0df499d0bf",
     "engine_version": "1"
   },
   "criteria": {
@@ -41,35 +41,18 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_DescribeChange",
-          "detail": "\"Describe the desired change\" names no skill."
-        },
-        {
-          "where": "Task_RequestRevision",
-          "detail": "\"Request further revisions\" names no skill."
-        },
-        {
-          "where": "Task_SubmitForReview",
-          "detail": "\"Submit to review committee\" names no skill."
-        },
-        {
-          "where": "Task_RequestChanges",
-          "detail": "\"Request changes\" names no skill."
-        },
-        {
-          "where": "Task_Approve",
-          "detail": "\"Approve and merge\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
-    "n/a": 1,
+    "pass": 7,
+    "fail": 0,
+    "n/a": 2,
     "unknown": 0
   }
 }

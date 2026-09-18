@@ -5,10 +5,10 @@
     "id": "Process_EvidenceRetrieval",
     "path": "skills/workflows/evidence-retrieval.bpmn"
   },
-  "source_hash": "sha256:5a7d303df5ee477932f8906fb7b92f3e6a83ee240fd099b876ce3e7379d8d044",
+  "source_hash": "sha256:681cf9ec843e447e6401e9bc385caed05a738961fe267662aeca75737315025e",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:565c0baa00bdb6212732c82e3176d395af13d4f8ce84524cca9a2be5b37203da",
+    "script_hash": "sha256:0f00819b8600f680ebb54e31dd4d2475a4c0905e8a70221bb23c6b0df499d0bf",
     "engine_version": "1"
   },
   "criteria": {
@@ -41,31 +41,18 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_L2L3Content",
-          "detail": "\"Search trusted CONTENT — L2 DAKs, L3 IGs\" names no skill."
-        },
-        {
-          "where": "Task_DataRepos",
-          "detail": "\"Query data repositories and statistical datasets\" names no skill."
-        },
-        {
-          "where": "Task_VerifyAuthority",
-          "detail": "\"Verify authority against the observatory / registry API\" names no skill."
-        },
-        {
-          "where": "Task_AppraiseGrade",
-          "detail": "\"Appraise and grade the body of evidence\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
-    "n/a": 1,
+    "pass": 7,
+    "fail": 0,
+    "n/a": 2,
     "unknown": 0
   }
 }

@@ -41,6 +41,7 @@ needs from sources">
 needs statement">
       <bpmn:documentation>The BA reviews what the agent synthesised and
 checks it against what they actually need.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="S_ConfirmNeeds" name="Confirm needs
 statement"/>

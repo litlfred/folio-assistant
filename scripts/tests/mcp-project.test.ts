@@ -145,6 +145,98 @@ describe("mcp projection", () => {
     }
   });
 
+  test("a repeated flag is emitted once per element, never comma-joined", () => {
+    // Joining would invent a separator the tool never agreed to, and make an
+    // element containing that separator ambiguous.
+    const tool = tools(B).find((x) => x.id === "readme-sync")!;
+    const { argv } = buildArgv(tool, { only: ["folio:toc", "folio:simulators"], check: true });
+    expect(argv).toEqual([
+      "bun run readme:sync",
+      "--check",
+      "--only",
+      "folio:toc",
+      "--only",
+      "folio:simulators",
+    ]);
+  });
+
+  test("a repeated positional becomes trailing words", () => {
+    const tool = tools(B).find((x) => x.id === "stakeholder-map")!;
+    expect(buildArgv(tool, { paths: ["src/a.ts", "skills/folio-core/x.md"] }).argv).toEqual([
+      "bun run stakeholder-map",
+      "src/a.ts",
+      "skills/folio-core/x.md",
+    ]);
+  });
+
+  test("each element of a repeated input is parsed by the element type", () => {
+    // The injection guarantee carries through cardinality unchanged: a list of
+    // an injection-safe type cannot hold an element that is a payload.
+    const tool = tools(B).find((x) => x.id === "stakeholder-map")!;
+    expect(() => buildArgv(tool, { paths: ["src/a.ts", "../../etc/passwd"] })).toThrow();
+    expect(() => buildArgv(tool, { paths: ["src/a.ts; rm -rf /"] })).toThrow();
+  });
+
+  test("a repeated input given a scalar is an error, not something to coerce", () => {
+    // Coercing would let the caller decide the arity of the command.
+    const tool = tools(B).find((x) => x.id === "stakeholder-map")!;
+    expect(() => buildArgv(tool, { paths: "src/a.ts" })).toThrow(/needs an array/);
+  });
+
+  test("a boolean projects to the presence of its flag, and false to nothing", () => {
+    // `--force true` is a command nobody writes; `--force false` would enable
+    // the very thing it reads as disabling.
+    const tool = tools(B).find((x) => x.id === "readme-audit")!;
+    expect(buildArgv(tool, { file: "README.md", fetch: true }).argv).toEqual([
+      "bun run readme:audit",
+      "README.md",
+      "--fetch",
+    ]);
+    expect(buildArgv(tool, { file: "README.md", fetch: false }).argv).toEqual([
+      "bun run readme:audit",
+      "README.md",
+    ]);
+  });
+
+  test("an in-process Tool says so rather than reading as a broken record", () => {
+    const tool = tools(B).find((x) => x.id === "skill-fetch")!;
+    expect(() => buildArgv(tool, { skill: "todo-manager" })).toThrow(/in-process/);
+  });
+
+  test("the migrated MCP surface matches what the server actually serves", async () => {
+    // The whole point of the migration: a Tool node whose `io` disagrees with
+    // the registrar is worse than no node, because the next check trusts it.
+    // `mcp:capture` mounts the real registrars, so this compares against the
+    // Zod shapes rather than against the source text.
+    const { captureTools } = await import("../capture-mcp-tools.js");
+    const { tools: served, problems } = await captureTools();
+    expect(problems).toEqual([]);
+
+    const nodes = new Map(
+      tools(B)
+        .filter((x) => x.invoke.mcp !== undefined && x.invoke.inProcess !== undefined)
+        .map((x) => [x.invoke.mcp!.tool, x]),
+    );
+
+    for (const s of served) {
+      const node = nodes.get(s.name);
+      expect(node, `no Tool node for served tool ${s.name}`).toBeDefined();
+      expect(node!.invoke.inProcess!.module).toBe(s.module);
+
+      const declared = new Set(node!.io.inputs.map((i) => i.name));
+      for (const k of [...s.required, ...s.optional]) {
+        expect(declared.has(k), `${s.name}: served input \`${k}\` is not in the Tool node`).toBe(true);
+      }
+      for (const i of node!.io.inputs) {
+        expect(
+          s.required.includes(i.name) || s.optional.includes(i.name),
+          `${s.name}: Tool node declares \`${i.name}\`, which is not served`,
+        ).toBe(true);
+        expect(i.required, `${s.name}.${i.name}: required flag disagrees`).toBe(s.required.includes(i.name));
+      }
+    }
+  });
+
   test("an invocation records who, in which role, at which task", () => {
     const inv = recordInvocation({
       id: "inv-1", tool: beanTool(), skill: "todo-manager",

@@ -54,16 +54,34 @@ than a sign that MCP is trivial.
 | `io.outputs` | `tools[].outputSchema` | omit entirely when the tool returns unstructured text |
 | `invoke.shell` | what the server runs on `tools/call` | the harness's arm |
 | `io.inputs[].arg` | position in argv, or stdin | `{flag}`, `{positional}` or `{stdin}` — explicit per input, never a template |
+| `io.inputs[].repeated` | `"type": "array"` in the input schema | the flag is emitted once per element; a repeated positional is the trailing words |
 | `invoke.container` | same, in a container | for a tool with host dependencies |
+| `invoke.inProcess` | the function the server calls directly | the projection **source**, not something to proxy |
 | `invoke.mcp` | **nothing** | already MCP; projecting it would be circular |
 | `requires` | not expressible | becomes a startup precondition, not a tool field |
 | `satisfies` | not expressible | a KG edge; it has no MCP counterpart and must not be smuggled into the description |
 
-Two rows are the ones that go wrong.
+Three rows are the ones that go wrong.
 
 **`invoke.mcp` is not a source for projection.** A Tool already reachable over
 MCP is not re-wrapped; the projector skips it. A generator that treats every
 arm uniformly will emit a server that proxies itself.
+
+**`invoke.inProcess` is the opposite case, and looks deceptively similar.** It
+is a function in the instance's own code, so the server calls it directly rather
+than spawning anything — there is no argv, and asking for one is an error rather
+than a gap in the node. It is what most of a mature instance's Tools turn out to
+be: of the twenty-four `folio-assistant` declares, twenty are in-process and
+only seven have a shell equivalent at all. A projector that handles `shell`
+alone will find nothing to project.
+
+**A repeated input's elements are parsed individually, and that is the whole
+safety story.** A list of an injection-safe type cannot contain an element that
+is a payload, because the element type already made one unrepresentable — so
+cardinality needs no new check. What it does need is the projection rule: emit
+the flag once per element, **never comma-joined**. Joining invents a separator
+the tool never agreed to, and makes an element containing that separator
+ambiguous.
 
 **`requires` does not become a tool.** An agent cannot satisfy "needs network"
 by calling something. It is checked when the server starts, and a tool whose
@@ -75,8 +93,8 @@ cannot run makes every plan containing it wrong.
 
 Same rule as everywhere here, and it is easy to lose in a generator:
 
-- **Projected** — the Tool has a `shell` or `container` arm and a complete `io`
-  block. It is listed.
+- **Projected** — the Tool has a `shell`, `container` or `inProcess` arm and a
+  complete `io` block. It is listed.
 - **Deliberately not projected** — `invoke.mcp` only, or `requires` unmet on
   this host. Omitted, and the omission is *reported* at startup.
 - **Could not determine** — the Tool node will not parse, or its `io.*.schema`

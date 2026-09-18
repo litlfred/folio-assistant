@@ -5,10 +5,10 @@
     "id": "Process_IgIncremental",
     "path": "skills/workflows/ig-incremental-build.bpmn"
   },
-  "source_hash": "sha256:a60b0a5d795f8301fb2b00b8598c6c1f29051ec8f853e1ec602adbeaffc6f720",
+  "source_hash": "sha256:c1878b8cea1707ac58b96ba5b8a4f9fa46145c215645e9a0e8dd5c144170d7ac",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:565c0baa00bdb6212732c82e3176d395af13d4f8ce84524cca9a2be5b37203da",
+    "script_hash": "sha256:0f00819b8600f680ebb54e31dd4d2475a4c0905e8a70221bb23c6b0df499d0bf",
     "engine_version": "1"
   },
   "criteria": {
@@ -41,47 +41,18 @@
       "findings": []
     },
     "activity-names-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Cone",
-          "detail": "\"Compute the cone of the change (fsh-cone --changed)\" names no skill."
-        },
-        {
-          "where": "Task_ConeReport",
-          "detail": "\"Post the cone report on the PR\" names no skill."
-        },
-        {
-          "where": "Task_Checkout",
-          "detail": "\"Restricted checkout of the backward cone\" names no skill."
-        },
-        {
-          "where": "Task_ContextLoad",
-          "detail": "\"Load or reuse the warm context (fhir_context_load)\" names no skill."
-        },
-        {
-          "where": "Task_Render",
-          "detail": "\"Re-render the cone's records (fhir_narrative · skip lists)\" names no skill."
-        },
-        {
-          "where": "Task_Merge",
-          "detail": "\"Merge restored and rebuilt records\" names no skill."
-        },
-        {
-          "where": "Task_Index",
-          "detail": "\"Rebuild the meta-index (ig_metaindex_rebuild)\" names no skill."
-        },
-        {
-          "where": "Task_Seed",
-          "detail": "\"Seed the cache from the green build (ig-cache seed · verify · promote)\" names no skill."
-        }
-      ]
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
-    "n/a": 1,
+    "pass": 7,
+    "fail": 0,
+    "n/a": 2,
     "unknown": 0
   }
 }

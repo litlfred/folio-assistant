@@ -80,7 +80,8 @@
     "translation:block-qa:check": "bun run content/pipeline/translation-block-qa.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "check:workflows": "bun run scripts/check-workflows.ts",
-    "tools:coverage": "bun run scripts/tool-coverage.ts"
+    "tools:coverage": "bun run scripts/tool-coverage.ts",
+    "mcp:capture": "bun run scripts/capture-mcp-tools.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",

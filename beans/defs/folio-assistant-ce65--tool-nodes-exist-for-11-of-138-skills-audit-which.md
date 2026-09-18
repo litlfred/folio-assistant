@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ce65
 title: Tool nodes exist for 11 of 138 skills — audit which uncovered skills describe an action
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-18T20:21:01Z
-updated_at: 2026-09-18T20:21:01Z
+updated_at: 2026-09-18T22:50:27Z
 ---
 
 
@@ -120,3 +121,5 @@ is written.
 legitimately quote a command as an example while stating its capability
 generically. That is tier C, and it is precisely the set where no mechanical
 signal decides it.
+
+_2026-09-18T22:50:27Z_ — Migrated this instance's twenty served MCP tools into Tool nodes (tools/mcp.ts) on branch claude/migrate-mcp-tools. Coverage 11/138 -> 26/141 skills. Contracts read from the live registrars via 'bun run mcp:capture' rather than from source text — an earlier regex pass over server.tool(...) produced parameter names lifted out of description prose. A test compares the two sides on every run. Two vocabulary gaps closed: ToolInput.repeated (folio_init.authors, stakeholder_map.paths, readme_sync.only are lists) and invoke.inProcess (17 of 20 are TypeScript functions with no shell arm). Shared type vocabulary 14 -> 31 defs, 27 of them injection-safe by construction.
