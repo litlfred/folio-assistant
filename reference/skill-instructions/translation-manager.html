@@ -719,8 +719,18 @@ verdict and leads the criterion (the first entry is the operative one
 everywhere in this repo); the back-translator’s sits behind it with
 <code class="language-plaintext highlighter-rouge">result: "n/a"</code> and the back-translation itself in <code class="language-plaintext highlighter-rouge">notes</code>, because a reader
 asking “on what basis?” needs the intermediate text and a reader asking “who
-did this?” needs both names. <code class="language-plaintext highlighter-rouge">agent_model</code> is optional — absent renders as
-“not recorded” in the panel rather than as a blank.</p>
+did this?” needs both names.</p>
+
+<p><strong>Record <code class="language-plaintext highlighter-rouge">model</code> with <code class="language-plaintext highlighter-rouge">modelSource</code>, or not at all.</strong> A subagent’s serving
+model is not directly observable from the session that dispatched it: it
+inherits the parent unless the harness overrides, and the hand-back does not
+say which model served the turn. A bare model string on an agent witness is
+therefore an inference printed as a fact — the same move as the round-trip
+numbers this skill tells you not to write. <code class="language-plaintext highlighter-rouge">modelSource</code> states how the
+identifier was established (for example: read from <code class="language-plaintext highlighter-rouge">get_session</code> at record
+time, subagent inheritance assumed, not independently observed), and the panel
+renders it beside the model. Absent both, the panel prints “not recorded”,
+which is a true statement and an acceptable one.</p>
 <h3 id="two-traps-this-process-has-already-sprung">
   
   
@@ -1090,7 +1100,7 @@ skill to provide before/after URL comparison tables. See
 
   <p class="text-small mb-0">folio-assistant — MIT licensed. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35400480688"><code>daeced8</code></a> &middot; 2026-09-18T22:14:08Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35401170234"><code>1ad04e0</code></a> &middot; 2026-09-18T22:22:11Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
