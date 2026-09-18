@@ -76,12 +76,33 @@ export const DECLARATION_FILENAME = "agent-harness.json";
  * the point of making them all graphs — but only a renderable one is wired to
  * the site build.
  */
-export const GRAPH_KINDS = {
-  folio: {
-    type: `${FOLIO_NS}FolioGraph`,
-    renderable: true,
-    summary: "Authored content, rendered to a website by the just-the-docs pipeline.",
-  },
+/** What a declared directory's graph kind means. */
+export interface GraphKindDef {
+  /** The `@type` IRI this kind projects to. */
+  type: string;
+  /**
+   * Is a graph of this kind expected to render as a website?
+   *
+   * The only behavioural distinction in the vocabulary — and the reason
+   * `folio` is not declared here. The harness **cannot render**: the
+   * just-the-docs pipeline and the webpage content type belong to
+   * `folio-assist-core`. A layer that cannot render must not own the
+   * renderable kind, so `folio` is REGISTERED by core rather than declared
+   * here. See `schemas/folio-graph-kind.ts`.
+   */
+  renderable: boolean;
+  summary: string;
+}
+
+/**
+ * The graph kinds the **harness itself** defines.
+ *
+ * Deliberately three, and deliberately none of them renderable. Everything
+ * here is a graph a tool reads: how work is done (`tools`), what an actor
+ * knows and which process governs it (`kg`), and the shapes both are typed
+ * against (`schemas`).
+ */
+export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   tools: {
     type: `${FOLIO_NS}ToolGraph`,
     renderable: false,
@@ -97,28 +118,76 @@ export const GRAPH_KINDS = {
     renderable: false,
     summary: "Schema definitions, self-declared in the smart-base manner.",
   },
-} as const;
+};
 
-export type GraphKind = keyof typeof GRAPH_KINDS;
+/** A graph kind name. Open, not a closed union — downstream layers add kinds. */
+export type GraphKind = string;
 
-export const GRAPH_KIND_NAMES = Object.keys(GRAPH_KINDS) as GraphKind[];
-
-/** Is a graph of this kind expected to render as a website? */
-export function isRenderable(kind: GraphKind): boolean {
-  return GRAPH_KINDS[kind].renderable;
+/** Thrown when a kind is registered twice with different meanings. */
+export class GraphKindConflictError extends Error {
+  constructor(name: string) {
+    super(
+      `graph kind "${name}" is already registered with a different definition. ` +
+        `Kinds are a shared vocabulary — rename, or register once.`,
+    );
+    this.name = "GraphKindConflictError";
+  }
 }
 
 /**
- * The graph kind behind a projected `@type`, or `undefined`.
+ * The graph-kind vocabulary, extensible by the layers above the harness.
  *
- * The inverse of {@link GRAPH_KINDS}. It exists because the projection is
- * lossy in the naive direction: `toJsonLd` emits `@type` INSTEAD of `graph`,
- * so a declaration published in its JSON-LD form and read back without this
- * lookup loses the one field that says what the directory holds. A round-trip
- * test pins it.
+ * An instance registry rather than a bare module constant, so that a test — or
+ * a process resolving more than one instance — cannot leak registrations into
+ * the next. `defaultGraphKinds` is the convenience shared instance; every read
+ * accepts an explicit one.
+ *
+ * Registration is **idempotent for an identical definition** and throws on a
+ * conflicting one, the same rule `schemas/contributions.ts` uses: a diamond
+ * dependency graph reaches core twice and must not fail for it, while two
+ * different layers claiming one name is a real collision.
  */
-export function graphKindForType(type: string): GraphKind | undefined {
-  return GRAPH_KIND_NAMES.find((k) => GRAPH_KINDS[k].type === type);
+export class GraphKindRegistry {
+  private kinds = new Map<string, GraphKindDef>();
+
+  constructor(seed: Readonly<Record<string, GraphKindDef>> = BASE_GRAPH_KINDS) {
+    for (const [k, v] of Object.entries(seed)) this.kinds.set(k, v);
+  }
+
+  register(name: string, def: GraphKindDef): void {
+    const existing = this.kinds.get(name);
+    if (existing) {
+      if (existing.type === def.type && existing.renderable === def.renderable) return; // diamond
+      throw new GraphKindConflictError(name);
+    }
+    this.kinds.set(name, def);
+  }
+
+  has(name: string): boolean {
+    return this.kinds.has(name);
+  }
+
+  get(name: string): GraphKindDef | undefined {
+    return this.kinds.get(name);
+  }
+
+  names(): string[] {
+    return [...this.kinds.keys()];
+  }
+
+  /** The kind behind a projected `@type`, or `undefined`. */
+  forType(type: string): string | undefined {
+    for (const [k, v] of this.kinds) if (v.type === type) return k;
+    return undefined;
+  }
+}
+
+/** The shared registry. Core registers `folio` into this at load. */
+export const defaultGraphKinds = new GraphKindRegistry();
+
+/** Is a graph of this kind expected to render as a website? */
+export function isRenderable(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return registry.get(kind)?.renderable === true;
 }
 
 // ── The declaration ─────────────────────────────────────────────
@@ -149,7 +218,11 @@ export interface AgentHarnessDeclaration {
 export const ContentDirectorySchema = z.object({
   id: z.string().min(1),
   path: z.string().min(1),
-  graph: z.enum(GRAPH_KIND_NAMES as [GraphKind, ...GraphKind[]]),
+  // Open string here, checked against the registry in `readDeclaration`.
+  // A closed enum would have to be built at module load, which is before core
+  // has registered `folio` — so the enum would reject the one kind the whole
+  // rendering pipeline depends on.
+  graph: z.string().min(1),
   summary: z.string().optional(),
 });
 
@@ -169,7 +242,10 @@ export const AgentHarnessDeclarationSchema = z.object({
  * read leaves every consumer scanning the wrong directories, which is worse
  * than not having one.
  */
-export function readDeclaration(instanceRoot: string): AgentHarnessDeclaration | undefined {
+export function readDeclaration(
+  instanceRoot: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): AgentHarnessDeclaration | undefined {
   const p = join(instanceRoot, DECLARATION_FILENAME);
   if (!existsSync(p)) return undefined;
   let raw: unknown;
@@ -178,9 +254,22 @@ export function readDeclaration(instanceRoot: string): AgentHarnessDeclaration |
   } catch (e) {
     throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
   }
-  const parsed = AgentHarnessDeclarationSchema.safeParse(stripJsonLd(raw));
+  const parsed = AgentHarnessDeclarationSchema.safeParse(stripJsonLd(raw, registry));
   if (!parsed.success) {
     throw new Error(`${p} is not a valid AgentHarness declaration: ${parsed.error.message}`);
+  }
+  // Kind validation is here rather than in the Zod schema because the
+  // vocabulary is open: the set of valid kinds is whatever has been registered
+  // by the time the declaration is read, not what existed at module load.
+  for (const dir of parsed.data.directories) {
+    if (!registry.has(dir.graph)) {
+      throw new Error(
+        `${p}: directory "${dir.id}" declares unknown graph kind "${dir.graph}". ` +
+          `Known kinds: ${registry.names().join(", ")}. ` +
+          `A kind contributed by a dependency must be registered before the ` +
+          `declaration is read.`,
+      );
+    }
   }
   return parsed.data;
 }
@@ -194,7 +283,7 @@ export function readDeclaration(instanceRoot: string): AgentHarnessDeclaration |
  * the graph projection stays derivable — the same split as
  * `schemas/jsonld.ts` draws for blocks.
  */
-function stripJsonLd(raw: unknown): unknown {
+function stripJsonLd(raw: unknown, registry: GraphKindRegistry): unknown {
   if (typeof raw !== "object" || raw === null) return raw;
   const o = { ...(raw as Record<string, unknown>) };
   delete o["@context"];
@@ -205,7 +294,7 @@ function stripJsonLd(raw: unknown): unknown {
       if (typeof d !== "object" || d === null) return d;
       const e = { ...(d as Record<string, unknown>) };
       if (typeof e["@type"] === "string" && e.graph === undefined) {
-        const kind = graphKindForType(e["@type"] as string);
+        const kind = registry.forType(e["@type"] as string);
         if (kind) e.graph = kind;
       }
       delete e["@type"];
@@ -240,11 +329,12 @@ export interface ResolvedDirectory extends ContentDirectory {
  */
 export function resolveDirectories(
   chain: Array<{ name: string; root: string; own?: boolean }>,
+  registry: GraphKindRegistry = defaultGraphKinds,
 ): ResolvedDirectory[] {
   const byId = new Map<string, ResolvedDirectory>();
 
   for (const link of chain) {
-    const decl = readDeclaration(link.root);
+    const decl = readDeclaration(link.root, registry);
     if (!decl) continue;
     for (const dir of decl.directories) {
       // Override by id, replacing in place so the inherited ORDER is kept: a
@@ -262,8 +352,11 @@ export function resolveDirectories(
 }
 
 /** The resolved directories holding renderable (website) graphs. */
-export function renderableDirectories(dirs: ResolvedDirectory[]): ResolvedDirectory[] {
-  return dirs.filter((d) => isRenderable(d.graph));
+export function renderableDirectories(
+  dirs: ResolvedDirectory[],
+  registry: GraphKindRegistry = defaultGraphKinds,
+): ResolvedDirectory[] {
+  return dirs.filter((d) => isRenderable(d.graph, registry));
 }
 
 // ── Graph projection ────────────────────────────────────────────
@@ -275,14 +368,17 @@ export function renderableDirectories(dirs: ResolvedDirectory[]): ResolvedDirect
  * Kept as a function rather than as the stored form so there is one authored
  * shape and one derived shape, not two truths.
  */
-export function toJsonLd(decl: AgentHarnessDeclaration): Record<string, unknown> {
+export function toJsonLd(
+  decl: AgentHarnessDeclaration,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Record<string, unknown> {
   return {
     "@context": { fa: FOLIO_NS, path: `${FOLIO_NS}path`, directories: `${FOLIO_NS}scans` },
     "@type": `${FOLIO_NS}AgentHarness`,
     name: decl.name,
     directories: decl.directories.map((d) => ({
       "@id": `#${d.id}`,
-      "@type": GRAPH_KINDS[d.graph].type,
+      "@type": registry.get(d.graph)?.type ?? `${FOLIO_NS}UnknownGraph`,
       path: d.path,
       ...(d.summary ? { summary: d.summary } : {}),
     })),
