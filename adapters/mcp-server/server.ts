@@ -28,18 +28,18 @@ import {
 // types as `any` — so nothing checked what was handed to it, and a
 // `ResolvedBlock` went in for two years where a `Block` was declared. The
 // module is already loaded eagerly for `leanStatusBucket`, so the dynamic
-// import deferred nothing; importing it here is what makes the call site
-// typecheck.
-import { renderBlock } from "../../content/pipeline/render-latex";
+// import deferred nothing.
+//
+// The LaTeX renderer itself is no longer imported: this is a GENERIC server
+// and the TeX renderer belongs to the science layer, so it is resolved from
+// the folio's declared profile through `resolveRenderTarget`. See
+// `schemas/render-targets.ts`.
+import { resolveRenderTarget } from "../../content/pipeline/render-discovery.js";
+import { readDeclaredFolioProfile } from "../../content/pipeline/profile-check.js";
+import { registerDeclaredToolGroups } from "./tool-groups.js";
 import { leanStatusBucket } from "../../schemas/types";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { registerRenderTools } from "./tools/render.js";
-import { registerValidateTools } from "./tools/validate.js";
-import { registerPreviewTools } from "./tools/preview.js";
-import { registerPreferenceTools } from "./tools/preferences.js";
-import { registerLeanTools } from "./tools/lean.js";
-import { registerDepsTools } from "./tools/check-deps.js";
 import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT, LIBRARY_DIR } from "./paths.js";
 import { executeGraphTool } from "./tools/graph.js";
 import {
@@ -1969,17 +1969,34 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
       // blocks emitted their generic shell and lost their body, silently,
       // because `as any` let a `ResolvedBlock` stand in for a `Block`. Load
       // the block's own manifest, which is what `renderBlock` is typed for.
+      //
+      // The renderer comes from the folio's declared PROFILE rather than from
+      // an import of the LaTeX one. A document folio reaching this path would
+      // otherwise be typeset through a toolchain its render path deliberately
+      // never uses.
+      const declaredProfile = readDeclaredFolioProfile(REPO_ROOT);
+      const renderLookup = await resolveRenderTarget(declaredProfile.profile);
       const blockTexParts: string[] = [];
-      for (const b of chainBlocks) {
-        const chDir = chapterDirOf.get(b.rootName);
-        if (!chDir) continue;
-        try {
-          const blockObj = await importTsBranch<Block>(
-            undefined, `content/${paperId}/${chDir}/${b.rootName}.ts`,
-          );
-          blockTexParts.push(renderBlock(blockObj, b.md || ""));
-        } catch (e) {
-          blockTexParts.push(`% Error rendering ${b.label}: ${String(e)}`);
+      if (renderLookup.miss) {
+        // Reported in the output itself, as a TeX comment, so the caller sees
+        // WHY the body is empty rather than receiving a valid-looking preamble
+        // wrapped around nothing.
+        blockTexParts.push(
+          `% No render target: ${renderLookup.miss.detail} (${declaredProfile.declaredBy})`,
+        );
+      } else {
+        const { render } = renderLookup.target;
+        for (const b of chainBlocks) {
+          const chDir = chapterDirOf.get(b.rootName);
+          if (!chDir) continue;
+          try {
+            const blockObj = await importTsBranch<Block>(
+              undefined, `content/${paperId}/${chDir}/${b.rootName}.ts`,
+            );
+            blockTexParts.push(render(blockObj, b.md || ""));
+          } catch (e) {
+            blockTexParts.push(`% Error rendering ${b.label}: ${String(e)}`);
+          }
         }
       }
 
@@ -3334,12 +3351,16 @@ server.tool = function (...args: Parameters<typeof origTool>) {
 
 // ── Register all tool groups ─────────────────────────────────────
 
-registerRenderTools(server);
-registerValidateTools(server);
-registerPreviewTools(server);
-registerPreferenceTools(server);
-registerLeanTools(server);
-registerDepsTools(server);
+// Declared in `tool-groups.ts`, not listed here: three of these groups need a
+// TeX installation or a Lean toolchain and belong to the science layer, so a
+// generic server naming them is a wrong-direction dependency that stops
+// resolving once the repositories are separated. An absent layer is SKIPPED
+// AND REPORTED — a server that quietly starts without `paper_render_pdf` looks
+// identical to one where rendering is broken.
+for (const o of await registerDeclaredToolGroups(server)) {
+  if (o.state === "absent") log("mcp", `− ${o.id}`, `${o.layer} layer: ${o.detail}`);
+  else if (o.state === "failed") log("mcp", `✗ ${o.id}`, o.detail);
+}
 
 // ── Transport selection ──────────────────────────────────────────
 
