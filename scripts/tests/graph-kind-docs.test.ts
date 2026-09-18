@@ -33,7 +33,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { defaultGraphKinds } from "../../schemas/agent-harness.js";
+import { defaultGraphKinds } from "../../schemas/cat-harness.js";
 import "../../schemas/folio-graph-kind.js"; // registers `folio`
 
 const SKILL = join(import.meta.dir, "../../skills/folio-core/directory-conventions.md");
@@ -71,7 +71,7 @@ describe("graph kinds: docs and registry agree", () => {
     // The direction that drifted twice. Silent when it breaks: a reader
     // consults the table and cannot learn that it is short.
     const documented = new Set(documentedKinds());
-    const missing = defaultGraphKinds.names().filter((k) => !documented.has(k));
+    const missing = defaultGraphKinds.names().filter((k: string) => !documented.has(k));
     expect(missing).toEqual([]);
   });
 });
