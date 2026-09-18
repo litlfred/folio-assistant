@@ -19,7 +19,9 @@ repositories**, so the number has to reach zero.
 | start, 2026-09-18 | 51 | 4 |
 | after `lean-packages` | 44 | 4 |
 | after `markdown-ast` | 43 | 4 |
-| after judging the last six | **49** | **0** |
+| after judging the last six | 49 | 0 |
+| after four harness-owned schemas | 41 | 0 |
+| after splitting the MCP server | **35** | **0** |
 
 **The count rose at the end because the measurement improved.** Thirteen edges
 were excluded while one endpoint was unjudged — the tool says so itself: "these
@@ -86,3 +88,76 @@ thing as "all renderings should be able to fire up in a dependency tree".
 
 `check:partition` reports 0 wrong-direction edges and 0 unassigned, with the
 full gate battery green — and the re-analysis says whether the cut can be made.
+
+## Update — 51 → 35, and the misclassification seam is exhausted
+
+Two more tranches, both pure classification, nothing moved or rewired:
+
+**Four harness-owned schemas** (−8). Grouping the 33 harness→core edges by
+TARGET showed 21 of them pointing into `schemas/`, a directory claimed
+wholesale by a core prefix rule while holding schemas from all three layers.
+`tool.ts` and `tool-types.ts` (Tools are a harness graph kind), `kg-node.ts`
+(the KG is harness) and `harness-config.ts` (the harness by name) were being
+imported BY the harness that owns them. `jsonld.ts` and `types.ts` were
+checked the same way and stay core — both are about the content BLOCK model.
+
+**The MCP server** (−6). `adapters/mcp-server/` was harness by prefix, but
+`server.ts` opens "QOU Paper Writing Assistant — MCP Server" and offers PDF
+rendering, content validation, a Lean LSP proxy and a content viewer. It is a
+CONTENT server. Split: core for the server, graph tools, validate, git, paths
+and preferences; sci for `render.ts`, `lean.ts`, `preview.ts` (each needs TeX
+or a Lean toolchain); harness for `check-deps.ts`. core→sci rose 12 → 16 in
+the process, because `server.ts` is core now and still reaches for
+`render-latex` — the edge moved rather than vanished, and saying so matters.
+
+**All 16 edges drained so far were misclassification** — modules read by the
+directory they sit in rather than by what they are for. That is now
+exhausted: everything remaining is architectural.
+
+## The blocker, stated once
+
+**A composition root imports every layer, because that is its job.
+`check:partition` measures imports, not intent.** Three independent clusters
+have landed on this:
+
+- `content/pipeline/qa-sweep.ts` — `AUTOMATED_CHECKERS[id] ?? DAK_AUTOMATED_CHECKERS[id]`
+- `content/pipeline/build.ts` and `validate.ts` — calling `renderChapter` / `validateLatexAst`
+- `adapters/mcp-server/server.ts` — wiring core and sci tools into one server
+
+Three is not a coincidence; it is a missing concept in the model. The split
+has to choose:
+
+- **A** — a declared composition root, exempt from the partition rule. Honest,
+  but exemptions grow.
+- **B** — no built-ins: `dak` and the paper renderer become real dependencies
+  with `contributes` modules, so the registry is the only path. Cleanest end
+  state, most upheaval, and `CONTENT_ADAPTERS` stops being a compile-time
+  union.
+- **C** — built-ins self-register at the CLI entry point, pushing the edges to
+  the outermost layer where they arguably belong.
+
+Read: **B** as the destination, **C** as the step that reaches it without a
+flag day. Not decided — it shapes the split, so it is the owner's call.
+
+## Landed toward it
+
+`ContributionRegistry` now carries `qaCheckers` under the rules it already
+applied to block kinds, adapters and tools: registration walks the resolved
+dependency tree, a collision throws naming both contributors rather than
+resolving by load order, a diamond re-registration is a no-op, and an
+unimplemented criterion returns `undefined` rather than a default pass.
+`CheckerHit` / `CheckerResult` moved to `schemas/block-qa.ts` beside
+`CheckerPaths` so the registry can type a contributed checker without
+importing the pipeline.
+
+The seam exists. What it is missing is a decision about who registers a
+BUILT-IN adapter's contributions.
+
+## Watch out for
+
+Twice in one session CI went red on a collision invisible locally: main's MCP
+projector read `ToolDefinition.summary` while this branch renamed it to
+`description`, and main's `graph-kind-docs.test.ts` imported
+`schemas/agent-harness.js` after this branch renamed it to `cat-harness.ts`.
+CI builds the PR MERGED WITH MAIN — 1829 tests across 134 files locally, 1883
+across 138 there. Merge main before trusting a local green.
