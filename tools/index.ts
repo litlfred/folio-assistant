@@ -52,9 +52,9 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: "beans" },
       io: {
         inputs: [
-          { name: "id", schema: t("BeanId"), required: false, description: "The bean to act on; absent for list/create." },
-          { name: "status", schema: t("BeanStatus"), required: false },
-          { name: "body", schema: t("Markdown"), required: false },
+          { name: "id", schema: t("BeanId"), required: false, arg: { positional: 0 }, description: "The bean to act on; absent for list/create." },
+          { name: "status", schema: t("BeanStatus"), required: false, arg: { flag: "--status" } },
+          { name: "body", schema: t("Markdown"), required: false, arg: { stdin: true } },
         ],
         outputs: [{ name: "bean", schema: t("BeanId"), description: "The bean created or updated." }],
       },
@@ -77,9 +77,9 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: "bun run beans:fallback", manual: true },
       io: {
         inputs: [
-          { name: "id", schema: t("BeanId"), required: false },
-          { name: "status", schema: t("BeanStatus"), required: false },
-          { name: "body", schema: t("Markdown"), required: false },
+          { name: "id", schema: t("BeanId"), required: false, arg: { positional: 0 } },
+          { name: "status", schema: t("BeanStatus"), required: false, arg: { flag: "--status" } },
+          { name: "body", schema: t("Markdown"), required: false, arg: { stdin: true } },
         ],
         outputs: [{ name: "bean", schema: t("BeanId") }],
       },
@@ -108,9 +108,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       io: {
         inputs: [
-          { name: "branch", schema: t("Branch"), required: false },
-          { name: "number", schema: t("ChangeProposalNumber"), required: false },
-          { name: "body", schema: t("Markdown"), required: false },
+          { name: "branch", schema: t("Branch"), required: false, arg: { flag: "--head" } },
+          { name: "number", schema: t("ChangeProposalNumber"), required: false, arg: { positional: 0 } },
+          // Free prose is NOT a command-line word. `gh` takes it as
+          // `--body-file -`, which is why `stdin` exists as an arg kind.
+          { name: "body", schema: t("Markdown"), required: false, arg: { stdin: true } },
         ],
         outputs: [{ name: "url", schema: t("Url"), description: "The change proposal or comment created." }],
       },
@@ -127,8 +129,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: ".github/workflows/docs-site.yml" },
       io: {
         inputs: [
-          { name: "directory", schema: t("RepoPath"), required: true, description: "The built tree to publish." },
-          { name: "baseUrl", schema: t("Url"), required: false, description: "Publication base; a preview passes its own." },
+          { name: "directory", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The built tree to publish." },
+          { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" }, description: "Publication base; a preview passes its own." },
         ],
         outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is served." }],
       },

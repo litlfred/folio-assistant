@@ -133,6 +133,10 @@ not fine for the only statement of what to do to be `gh pr create`.
    been declared.
 2. **State the capability first**, in a sentence that survives the mechanism
    being replaced.
+2b. **If an input reaches a command line, give it a type that cannot be a
+   payload** — and put free prose on stdin. See
+   [`untrusted-input`](untrusted-input.md); `check:tools` fails CI on a
+   violation.
 3. **Say a mechanism exists and where to find it** — never inline it. A Tool is
    reached the same way a skill is: resolve the `kg` graph from the instance's
    `agent-harness.json` and read from the directory it names. Not a remembered

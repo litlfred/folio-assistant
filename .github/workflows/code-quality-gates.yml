@@ -221,6 +221,19 @@ jobs:
       - name: tool definitions
         run: bun run check:tools
 
+      # Workflow YAML GitHub will actually parse, and no attacker-controlled
+      # expression interpolated into a run body.
+      #
+      # This exists because a workflow GitHub cannot parse does NOT fail
+      # loudly — it produces a run named by its file PATH instead of its
+      # `name:`, because there is no name to read. Two workflows sat red for a
+      # day that way in 2026-08; I reproduced it on 2026-09-18 by adding a
+      # second `env:` to a step that already had one, after `yaml.safe_load`
+      # accepted the file. Most loaders take the last duplicate silently, so
+      # "it parses locally" was never evidence.
+      - name: workflow yaml
+        run: bun run check:workflows
+
       # The rest of the actor -> role -> skill -> task joins, and the committed
       # sidecars that record them. A `critical` finding is a broken reference:
       # a lane binding a role that is not declared, a role carrying a skill
