@@ -540,10 +540,11 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
  * the item before you work" to the two mechanisms that do it, without knowing
  * that a bare string was meant to be a skill name.
  */
-function collectTools(doc: string, problems: string[]): Node[] {
+function collectTools(doc: string, base: string, problems: string[]): Node[] {
   let defs;
   try {
-    defs = tools();
+    // The SAME base the document is published against — see tools/index.ts.
+    defs = tools(base);
   } catch (e) {
     problems.push(`tools/ did not load: ${e instanceof Error ? e.message : String(e)}`);
     return [];
@@ -696,7 +697,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     ...collectRegistryNodes(docIri, problems),
     ...collectPackages(docIri, problems),
     ...(await collectProcesses(docIri, problems)),
-    ...collectTools(docIri, problems),
+    ...collectTools(docIri, docIri.replace(/\/kg\/[^/]+$/, ""), problems),
     ...collectGraphKinds(),
     ...collectDeclaration(docIri, problems),
   ].map(compact);

@@ -92,4 +92,36 @@ describe("tools", () => {
     expect(s.has("lean-formalization")).toBe(true); // schemas/skills/<name>/
     expect(s.has("kg-export")).toBe(true); // skills/folio-core
   });
+
+  test("io IRIs follow the publication base, not the declaration", async () => {
+    // A staging build published tool-types.schema.json at the STAGING url while
+    // its Tool nodes referenced the CANONICAL one — a document that did not
+    // exist yet, because the same PR introduced it. The refs looked resolvable
+    // and 404'd. Found by fetching the published artefacts rather than assuming
+    // they agreed.
+    //
+    // The rule this pins: anything that mints an IRI takes its base from the
+    // same source as the document it will be published beside.
+    const { buildExport } = await import("../kg-export.js");
+    const STAGING = "https://example.invalid/fa/STAGING/demo";
+    const g = await buildExport({ baseUrl: STAGING });
+    const toolNodes = g["@graph"].filter((n) => String(n["@type"]).endsWith("Tool"));
+    expect(toolNodes.length).toBeGreaterThanOrEqual(4);
+
+    for (const t of toolNodes) {
+      const io = t.io as { inputs: Array<{ schema: string }>; outputs: Array<{ schema: string }> };
+      for (const port of [...io.inputs, ...io.outputs]) {
+        expect(port.schema.startsWith(`${STAGING}/kg/tool-types.schema.json#/$defs/`)).toBe(true);
+      }
+    }
+  });
+
+  test("tools() honours an explicit base", () => {
+    const B = "https://example.invalid/other";
+    for (const t of tools(B)) {
+      for (const p of [...t.io.inputs, ...t.io.outputs]) {
+        expect(p.schema.startsWith(`${B}/kg/tool-types.schema.json`)).toBe(true);
+      }
+    }
+  });
 });

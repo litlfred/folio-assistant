@@ -38,8 +38,8 @@ function base(): string {
   }
 }
 
-export function tools(): ToolDefinition[] {
-  const B = base();
+export function tools(baseUrl?: string): ToolDefinition[] {
+  const B = baseUrl ?? base();
   const t = (n: Parameters<typeof toolTypeIri>[1]): string => toolTypeIri(B, n);
 
   return [
