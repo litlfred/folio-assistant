@@ -90,7 +90,7 @@ is declared rather than inferred.
 |---|---|---|---|
 | 1 | **forge** | `none` (local git only) · `github` · `self-hosted` (GitLab, Gitea, …) · `jurisdiction-hosted` | where change proposals live |
 | 2 | **visibility** | `public` · `private` · `internal` | who can reach the repository |
-| 3 | **publication host** | `github-pages` · `local-server` · `jurisdiction-endpoint` · `none` | where a rendering is served from |
+| 3 | **publication host** | `github-pages` · `local-server` · `jurisdiction-endpoint` · `none` | where a rendering is served from. **The first axis actually declared** — `publication.host` in `harness.json` |
 | 4 | **compute** | `workstation` · `vendor-cloud` · `jurisdiction-cloud` · `own-infrastructure` | whose hardware runs the harness |
 | 5 | **network reach** | `internet` · `egress-restricted` · `air-gapped` | what the harness may call out to |
 | 6 | **tool surface** | `mcp` · `cli` · `both` | how a capability is invoked |
@@ -130,6 +130,40 @@ separately — a second declaration is a second thing to disagree with.
 | where did this render, and what URL do I tell the author? | axis 3 | bean `folio-assistant-1lfx` — today this is composed on the assumption of Pages |
 | may a capability probe install a missing tool? | axis 5 | `--check-deps` assumes it may. On `air-gapped` it may not |
 | is a pull request the term of art? | axis 1 | GitHub says pull request, GitLab says merge request. Bean `folio-assistant-4dbr` |
+
+### Axis 3 is declared — `publication.host`
+
+The first of these axes to exist in code rather than only in this table.
+`publication.host` in `harness.json`, values exactly the four above, and
+`publicationHost()` in `schemas/cat-harness.ts` reads it. Bean
+`folio-assistant-1lfx`.
+
+**Absent is a third state and callers must keep it one.** It means the
+deployment has not said, NOT `github-pages`. Defaulting would put the very
+defect this closes one layer lower, where nobody looks: an agent telling an
+author "your page is at …" on a deployment that publishes nowhere near there.
+
+**It is deliberately NOT the same field as `readme.linkStyle`**, which lives
+in `harness.config.json` and answers how a link to a published artefact is
+*written* (`blob` | `pages` | `raw`). Three adjacent questions, kept apart:
+
+| field | question |
+|---|---|
+| `canonicalUrl` | what base are `@id`s minted against? |
+| `publication.host` | what kind of thing serves the rendering? |
+| `readme.linkStyle` | how is a link to a published artefact written? |
+
+Two fields in two files can disagree, and that is the cost of separating
+them. `publicationLinkStyleConflict()` is the check that pays it, with
+**exactly one rule**, an entailment: `linkStyle: "pages"` writes links
+against a Pages site, so any other declared host makes them dead.
+
+**`raw` is deliberately unruled.** It resolves through
+`raw.githubusercontent.com` and so depends on the forge and on repository
+**visibility** — and measured 2026-09-19, the schema declares neither. A rule
+needing a fact the harness does not have is a guess wearing a gate's
+authority. There is a test recording that gap, so it is checked rather than
+remembered.
 
 ---
 

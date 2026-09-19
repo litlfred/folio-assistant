@@ -539,6 +539,34 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   canonicalUrl?: string;
   /** Where CI previews are served, when that differs from `canonicalUrl`. */
   previewUrl?: string;
+  /**
+   * WHAT KIND of host serves this instance's renderings.
+   *
+   * The `publication host` axis of
+   * `docs/proposals/deployment-topologies.md`, accepted 2026-09-19. Four
+   * topologies in issue #363 — local git only, private repo, developer and
+   * self-sovereign — do not publish to GitHub Pages, and before this nothing
+   * could say so.
+   *
+   * **Distinct from `canonicalUrl`, and from `readme.linkStyle`.** Three
+   * different questions that are easy to run together:
+   *
+   * | field | question | lives in |
+   * |---|---|---|
+   * | `canonicalUrl` | what base are `@id`s minted against? | `harness.json` |
+   * | `publication.host` | what kind of thing serves the rendering? | `harness.json` |
+   * | `readme.linkStyle` | how is a link to a published artefact written? | `harness.config.json` |
+   *
+   * **Absent is a third state and must stay one.** It means the deployment
+   * has not said, NOT that it is `github-pages`. Defaulting to Pages is
+   * exactly how a local-server deployment gets told it publishes somewhere it
+   * does not — the failure this field exists to end.
+   *
+   * **No `url` here, deliberately.** `canonicalUrl` already holds that fact,
+   * and a second URL field is two places to disagree. A local server's
+   * address is a `--port` at run time, not a property of the instance.
+   */
+  publication?: Publication;
   /** Directories this instance scans, before inheritance. */
   directories: ContentDirectory[];
 }
@@ -619,6 +647,35 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   { id: "voices", path: "voices/", graphs: ["voices"] },
 ];
 
+/**
+ * The kinds of host that can serve an instance's renderings.
+ *
+ * The values are the `publication host` axis of
+ * `docs/proposals/deployment-topologies.md` verbatim. Keep them in step: the
+ * proposal is what a reader reasons with, this is what a machine reads, and a
+ * fifth value invented here without a row there is a vocabulary nobody agreed.
+ *
+ * `none` is a real answer, not a missing one — a developer checkout that
+ * renders nothing publishes nowhere, and saying so is different from not
+ * saying.
+ */
+export const PUBLICATION_HOSTS = [
+  "github-pages",
+  "local-server",
+  "jurisdiction-endpoint",
+  "none",
+] as const;
+
+export type PublicationHost = (typeof PUBLICATION_HOSTS)[number];
+
+export interface Publication {
+  host: PublicationHost;
+}
+
+export const PublicationSchema = z.object({
+  host: z.enum(PUBLICATION_HOSTS),
+});
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
@@ -627,6 +684,7 @@ export const CatHarnessDeclarationSchema = z.object({
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   previewUrl: z.string().url().optional(),
+  publication: PublicationSchema.optional(),
   directories: z.array(ContentDirectorySchema).default([]),
 });
 
@@ -742,6 +800,73 @@ export function renderingPath(base: string, ...segments: string[]): string {
   const b = base.replace(/\/+$/, "");
   const tail = segments.filter((s) => s.length > 0).join("/");
   return b ? `${b}/${tail}` : tail;
+}
+
+/**
+ * The declared publication host for the instance rooted at `root`, or
+ * `undefined` when it has not said.
+ *
+ * **`undefined` is never to be read as `github-pages`.** A caller that wants
+ * to tell somebody where a thing rendered must report "not declared" as its
+ * own answer — that is the whole defect this field closes, and defaulting
+ * here would reintroduce it one layer down where nobody would see it.
+ *
+ * A RAW read of the one field, like `siteDirFor` and for the same reason: a
+ * consumer asking where the site publishes must not fail because some
+ * unrelated directory declares a graph kind this layer has not registered.
+ */
+export function publicationHost(root: string): PublicationHost | undefined {
+  const p = join(root, DECLARATION_FILENAME);
+  if (!existsSync(p)) return undefined;
+  try {
+    const raw = JSON.parse(readFileSync(p, "utf-8")) as { publication?: { host?: unknown } };
+    const host = raw.publication?.host;
+    return PUBLICATION_HOSTS.includes(host as PublicationHost)
+      ? (host as PublicationHost)
+      : undefined;
+  } catch {
+    // Unreadable is "has not said", not an error to throw at a caller whose
+    // question was only "where does this publish". `readDeclaration` throws
+    // for the callers that need a valid declaration.
+    return undefined;
+  }
+}
+
+/**
+ * The one conflict decidable from `publication.host` and `readme.linkStyle`
+ * together, or `undefined` when there is none.
+ *
+ * Two facts in two files — the host in `harness.json`, the link style in
+ * `harness.config.json` — can now disagree, and that is the cost of making
+ * the host its own axis rather than overloading `linkStyle`. This is the
+ * check that pays it.
+ *
+ * **Exactly one rule, and it is an entailment.** `linkStyle: "pages"` writes
+ * every published-artefact link under `pagesBaseUrl`, i.e. against a GitHub
+ * Pages site. A deployment that declares any other host is saying that site
+ * is not where it publishes, so those links point at nothing.
+ *
+ * **`raw` is deliberately NOT ruled on.** It resolves through
+ * `raw.githubusercontent.com` and therefore depends on the FORGE and on
+ * repository VISIBILITY — and measured 2026-09-19, this schema declares
+ * neither. A rule needing a fact the harness does not have would be a guess
+ * wearing a gate's authority, which is the trap
+ * `do-not-encode-a-rule-against-a-working-setup` records. When visibility
+ * becomes declarable, revisit; until then this returns nothing for `raw`,
+ * which is "could not determine", not "fine".
+ */
+export function publicationLinkStyleConflict(
+  host: PublicationHost | undefined,
+  linkStyle: string | undefined,
+): string | undefined {
+  if (host === undefined || linkStyle !== "pages") return undefined;
+  if (host === "github-pages") return undefined;
+  return (
+    `harness.json declares \`publication.host: "${host}"\`, but ` +
+    `harness.config.json sets \`readme.linkStyle: "pages"\`, which writes every ` +
+    `published-artefact link against a GitHub Pages site this deployment says ` +
+    `it does not publish to. Set \`linkStyle\` to \`blob\`, or correct the host.`
+  );
 }
 
 /**

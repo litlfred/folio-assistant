@@ -70,6 +70,10 @@
   ],
   "stub": "folio-assistant",
   "canonicalUrl": "https://litlfred.github.io/folio-assistant",
+  "_publication_comment": "The `publication host` axis of docs/proposals/deployment-topologies.md, accepted 2026-09-19 (issue #363). WHAT KIND of host serves the renderings \u2014 distinct from `canonicalUrl` (the base @ids are minted against) and from `readme.linkStyle` in harness.config.json (how a link to a published artefact is written). This instance really does publish to GitHub Pages, so it declares so; an instance that has not said is `undefined`, which is a third state and must never be read as `github-pages`.",
+  "publication": {
+    "host": "github-pages"
+  },
   "directories": [
     {
       "id": "tools",
