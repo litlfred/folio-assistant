@@ -26,7 +26,7 @@ import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 import { buildExport, exportIdentity } from "../kg-export.js";
-import { buildDeclarationSchema } from "../harness-schema-export.js";
+import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
 import { readDeclaration, artefactStub } from "../../schemas/cat-harness.js";
 import { FOLIO_NS } from "../../schemas/namespaces.js";
 
@@ -75,7 +75,7 @@ describe("kg export", () => {
   test("the document identifies itself — @id, @type, provenance", () => {
     // smart-base's pattern: the document IRI is the URL it is served from, so
     // fetching an `@id` returns the document that defines it.
-    expect(EXPORT["@id"]).toBe(`${BASE}/kg/folio-assistant.jsonld`);
+    expect(EXPORT["@id"]).toBe(`${BASE}/folio-assistant.jsonld`);
     expect(EXPORT["@type"]).toBe("http://www.w3.org/ns/prov#Entity");
     expect(EXPORT.generatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
   });
@@ -153,8 +153,8 @@ describe("kg export", () => {
     const decl = readDeclaration(join(import.meta.dir, "../.."))!;
     const stub = artefactStub(decl);
     expect(stub).toBe("folio-assistant");
-    expect(exportIdentity({ baseUrl: BASE }).docIri).toBe(`${BASE}/kg/${stub}.jsonld`);
-    expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/kg/${stub}.schema.json`);
+    expect(exportIdentity({ baseUrl: BASE }).docIri).toBe(`${BASE}/${stub}.jsonld`);
+    expect(buildDeclarationSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/${stub}.schema.json`);
 
     // The declaration is read from a fixed filename, whatever the stub is.
     expect(existsSync(join(import.meta.dir, "../..", "cat-harness.json"))).toBe(true);
@@ -273,5 +273,73 @@ describe("source provenance — what the graph was generated FROM", () => {
     for (const k of ["sourceCommit", "sourceCommitSha", "sourceCommitAt", "sourceTreeDirty"]) {
       expect(ctx[k]).toBeDefined();
     }
+  });
+});
+
+describe("every self-URL the export publishes resolves to something published", () => {
+  /**
+   * The check that would have caught the `kg/` relocation, and did not exist
+   * when it was needed.
+   *
+   * Moving the renderings from `<base>/kg/` to `<base>/` touched six places.
+   * Five were found by searching the two exporters; the sixth was
+   * `toolTypeIri` in `schemas/tool-types.ts`, which computed its FRAGMENT with
+   * a function and wrote `kg/tool-types.schema.json` as a literal. Every `@id`
+   * in the document moved correctly and **95 `schema` refs still pointed at a
+   * URL that 404s** — the document they named sat one directory away, and
+   * nothing in the suite could tell.
+   *
+   * That is the `dh4f` shape on a link instead of a corpus: a graph that is
+   * internally consistent, externally dead, and silent about it. The defence
+   * is an invariant asserted against something outside the exporter's own
+   * view — here, the set of paths the publish step actually writes.
+   */
+  const PUB = `${BASE}/`;
+
+  /** Every path the deploy emits, built the way the workflows build it. */
+  function publishedPaths(): Set<string> {
+    const stub = artefactStub(readDeclaration(join(import.meta.dir, "../.."))!);
+    const out = new Set<string>([
+      `${stub}.jsonld`,
+      `${stub}.json`,
+      `${stub}.schema.json`,
+      "tool.schema.json",
+      "tool-types.schema.json",
+      `${stub}/`,
+    ]);
+    for (const c of buildSkillIoContracts({ baseUrl: BASE })) out.add(c.published.split("\\").join("/"));
+    return out;
+  }
+
+  test("no absolute self-URL names a path the deploy does not write", async () => {
+    const doc = await buildExport({ baseUrl: BASE });
+    const seen = new Set<string>();
+    const walk = (o: unknown) => {
+      if (Array.isArray(o)) o.forEach(walk);
+      else if (o && typeof o === "object") Object.values(o as Record<string, unknown>).forEach(walk);
+      else if (typeof o === "string" && o.startsWith(PUB)) seen.add(o);
+    };
+    walk(doc);
+
+    const published = publishedPaths();
+    const dead: string[] = [];
+    for (const url of seen) {
+      // Strip the fragment: `…/x.schema.json#/$defs/BeanId` is a pointer INTO
+      // a document, so the document is what has to exist.
+      const rel = url.slice(PUB.length).split("#")[0];
+      // The term namespace is an IRI stem, not a file — nothing serves it and
+      // nothing should try to. Excluded by name rather than by pattern so a
+      // new non-file stem has to be declared here to be exempt.
+      if (rel === "ns" || rel.startsWith("ns/")) continue;
+      if (!published.has(rel)) dead.push(rel);
+    }
+    expect([...new Set(dead)].sort()).toEqual([]);
+  });
+
+  test("nothing published still names the retired `kg/` directory", async () => {
+    // Pinned as a literal, not derived: the point is that this exact string
+    // stopped being a path, and a derived check would move with the mistake.
+    const doc = await buildExport({ baseUrl: BASE });
+    expect(JSON.stringify(doc)).not.toContain("/kg/");
   });
 });

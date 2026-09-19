@@ -61,7 +61,7 @@ describe("tools", () => {
       expect(id).toBe(skillIoIri(BASE, c.skill, c.io));
       // The published path must be exactly what the IRI's tail says, or the
       // deploy writes the file somewhere the identity does not name.
-      expect(`${BASE}/kg/${c.published}`).toBe(id);
+      expect(`${BASE}/${c.published}`).toBe(id);
     }
   });
 
@@ -123,8 +123,8 @@ describe("tools", () => {
   });
 
   test("the generated schemas carry an absolute $id", () => {
-    expect(buildToolSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/kg/tool.schema.json`);
-    expect(buildToolTypes({ baseUrl: BASE }).$id).toBe(`${BASE}/kg/tool-types.schema.json`);
+    expect(buildToolSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/tool.schema.json`);
+    expect(buildToolTypes({ baseUrl: BASE }).$id).toBe(`${BASE}/tool-types.schema.json`);
   });
 
   test("skill discovery is not a hardcoded list", () => {
@@ -154,7 +154,7 @@ describe("tools", () => {
     for (const t of toolNodes) {
       const io = t.io as { inputs: Array<{ schema: string }>; outputs: Array<{ schema: string }> };
       for (const port of [...io.inputs, ...io.outputs]) {
-        expect(port.schema.startsWith(`${STAGING}/kg/tool-types.schema.json#/$defs/`)).toBe(true);
+        expect(port.schema.startsWith(`${STAGING}/tool-types.schema.json#/$defs/`)).toBe(true);
       }
     }
   });
@@ -163,7 +163,7 @@ describe("tools", () => {
     const B = "https://example.invalid/other";
     for (const t of tools(B)) {
       for (const p of [...t.io.inputs, ...t.io.outputs]) {
-        expect(p.schema.startsWith(`${B}/kg/tool-types.schema.json`)).toBe(true);
+        expect(p.schema.startsWith(`${B}/tool-types.schema.json`)).toBe(true);
       }
     }
   });

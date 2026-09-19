@@ -151,17 +151,31 @@ jobs:
       # A non-zero exit means a source could not be read, and a partial graph
       # must not be published as a whole one.
       # Both artefacts are named after the repository (the `stub` in
-      # cat-harness.json) and land at the URLs their own `@id`/`$id` claim.
-      # `index.html` beside them is the viewer — bean `1dfh`. It carries no
-      # data of its own and fetches its SIBLING document at load, so it is
-      # correct at whatever base it is served from.
+      # cat-harness.json) and land AT THE BASE, at the URLs their own
+      # `@id`/`$id` claim. There is no `kg/` subdirectory: the repository IS
+      # its declaration that it holds a graph, and the stub is what separates
+      # one instance's renderings from another's in a tree that overlays
+      # several.
+      #
+      # `<stub>/index.html` is the viewer — bean `1dfh`. It carries no data of
+      # its own and reads `../<stub>.jsonld` at load, so it is correct at
+      # whatever base it is served from. It is a DIRECTORY because Pages
+      # resolves an extensionless `<base>/<stub>` only to a directory index.
+      #
+      # `<stub>.json` is the same bytes as `<stub>.jsonld`. Pages has no media
+      # type for `.jsonld` and serves it as octet-stream; `.json` is the only
+      # way to get a correct `Content-Type` out of this host at all. The
+      # `.jsonld` stays canonical — it is what every `@id` names — so this is
+      # an alias, not a rename. See `skills/folio-core/serving-renderings.md`.
+      #
       # No --base-url: the declaration's canonicalUrl is correct for main.
       - name: Export the knowledge graph and its schema
         run: |
           STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
-          bun run scripts/kg-export.ts           --out "./_site/kg/${STUB}.jsonld"
-          bun run scripts/harness-schema-export.ts --out-dir ./_site/kg
-          bun run scripts/kg-viewer.ts             --out ./_site/kg/index.html
+          bun run scripts/kg-export.ts             --out "./_site/${STUB}.jsonld"
+          bun run scripts/harness-schema-export.ts --out-dir ./_site
+          bun run scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
+          cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
