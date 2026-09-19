@@ -592,6 +592,92 @@ A reader looking at a staged graph must be able to tell it is staged <strong>fro
 data</strong>, not from an injected banner that a JSON file would not carry anyway —
 and <code class="language-plaintext highlighter-rouge">sourceTreeDirty</code> is the difference between a graph a SHA reproduces and
 one it does not.</p>
+<h2 id="translate-the-chrome-from-the-generator-never-from-the-page">
+  
+  
+    <a href="#translate-the-chrome-from-the-generator-never-from-the-page" class="anchor-heading" aria-labelledby="translate-the-chrome-from-the-generator-never-from-the-page"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Translate the chrome from the GENERATOR, never from the page
+  
+  
+</h2>
+    
+
+<p>A generated artefact is not a translation source. Its generator is.</p>
+
+<p>Run an extractor over the emitted HTML and the <code class="language-plaintext highlighter-rouge">.pot</code> fills with the
+generator’s OUTPUT: regenerate for any reason — a new node kind, a changed
+commit line — and every reference churns while no string has changed, and
+every sign-off is invalidated by the regeneration rather than by an edit.</p>
+
+<p>So the viewer’s own words live in a <strong>declared table in the source</strong>
+(<code class="language-plaintext highlighter-rouge">scripts/kg-viewer-strings.ts</code>): the English text, which IS the <code class="language-plaintext highlighter-rouge">msgid</code> as
+everywhere else here, plus the translator comment naming where it appears and
+what each <code class="language-plaintext highlighter-rouge">{placeholder}</code> will hold. <code class="language-plaintext highlighter-rouge">bun run translate-kg-viewer --extract</code>
+turns the table into <code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/kg-viewer.pot</code> through the shared
+<code class="language-plaintext highlighter-rouge">formatPot</code>, and the generator reads each <code class="language-plaintext highlighter-rouge">.po</code> back through the shared
+<code class="language-plaintext highlighter-rouge">parsePo</code> and embeds the catalogues. <strong>There is no inject step</strong>: generating
+the page is the injection, and a second artefact would serve nothing.</p>
+
+<p><code class="language-plaintext highlighter-rouge">--check</code> separates two things that look alike. <strong>Drift fails</strong>: a <code class="language-plaintext highlighter-rouge">.pot</code> that
+no longer matches the table, a translation that dropped a <code class="language-plaintext highlighter-rouge">{placeholder}</code>, an
+entry for a string the page no longer says. <strong>Coverage only reports</strong>: a string
+nobody has translated is the ordinary state of a translation in progress, and
+the page falls back to English string by string.</p>
+<h2 id="say-where-the-translation-stops">
+  
+  
+    <a href="#say-where-the-translation-stops" class="anchor-heading" aria-labelledby="say-where-the-translation-stops"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Say where the translation stops
+  
+  
+</h2>
+    
+
+<p><strong>Chrome-only translation is half a translation, and the half that is missing
+is the half the reader came for.</strong> Node titles, descriptions and property names
+arrive in the graph document in whatever language the corpus is written in; no
+catalogue in the viewer can reach them.</p>
+
+<p>Draw that boundary <strong>on the page</strong>, in the language the reader chose. A screen
+that is two-thirds translated and silent about it is worse than one that states
+its edge: the reader cannot tell a missing translation from a corpus that is
+simply English, and will read the gap as a defect or as a claim, depending on
+which way they guess.</p>
+
+<p>The same rule that governs an unreadable document governs this: three states,
+never two.</p>
+<h2 id="a-language-switcher-is-a-ui-control">
+  
+  
+    <a href="#a-language-switcher-is-a-ui-control" class="anchor-heading" aria-labelledby="a-language-switcher-is-a-ui-control"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A language switcher is a UI control
+  
+  
+</h2>
+    
+
+<p>It is bound by <a href="/folio-assistant/reference/skill-instructions/ui-accessibility.html"><code class="language-plaintext highlighter-rouge">ui-accessibility</code></a> like everything else,
+and four things are easy to get wrong:</p>
+
+<ul>
+  <li><strong>Label each option in ITS OWN language</strong> — Français, العربية, 中文 — and set
+<code class="language-plaintext highlighter-rouge">lang</code> on the control. That is what a reader scanning for their language
+looks for, it leaves no accessible name to mistranslate, and it is what lets
+a screen reader switch voice.</li>
+  <li><strong>Translate the accessible names too.</strong> A page whose visible text is Spanish
+and whose <code class="language-plaintext highlighter-rouge">aria-label</code>s are English is a page that is translated for sighted
+readers only, and nothing on screen says so.</li>
+  <li><strong>Announce the change.</strong> The panel is rewritten in place and the reader’s
+cursor has not moved.</li>
+  <li><strong>Turn the page, not just the words.</strong> A right-to-left language needs <code class="language-plaintext highlighter-rouge">dir</code>
+on the document, and the layout has to be checked in it — axe over an RTL
+render catches what an LTR one cannot.</li>
+</ul>
+
+<p><strong>Do not invent a second locale mechanism.</strong> The docs site already stores the
+reader’s choice in the <code class="language-plaintext highlighter-rouge">fa-locale</code> key; read that, let a <code class="language-plaintext highlighter-rouge">lang</code> query parameter
+override it for a shared link, and fall back to the browser’s own preference.</p>
+
+<p><strong>Offer only what the page can show.</strong> A catalogue with nothing translated is
+not a language the viewer can render, and listing it would promise a
+translation the reader would not get.</p>
 <h2 id="verifying-it">
   
   
@@ -632,7 +718,7 @@ test would have said so.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35425955048"><code>d4b9f74</code></a> &middot; 2026-09-19T06:12:41Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35426369918"><code>29f315e</code></a> &middot; 2026-09-19T06:21:59Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

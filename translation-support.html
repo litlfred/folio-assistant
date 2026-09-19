@@ -508,6 +508,11 @@ toward it.</p>
       <li><a href="#kind-heading-translations" id="markdown-toc-kind-heading-translations">Kind heading translations</a></li>
     </ol>
   </li>
+  <li><a href="#generated-interfaces--the-knowledge-graph-viewer" id="markdown-toc-generated-interfaces--the-knowledge-graph-viewer">Generated interfaces — the knowledge-graph viewer</a>    <ol>
+      <li><a href="#the-boundary-is-drawn-on-the-page" id="markdown-toc-the-boundary-is-drawn-on-the-page">The boundary is drawn on the page</a></li>
+      <li><a href="#what-ships-today-the-stubs-and-deliberately-nothing-in-them" id="markdown-toc-what-ships-today-the-stubs-and-deliberately-nothing-in-them">What ships today: the stubs, and deliberately nothing in them</a></li>
+    </ol>
+  </li>
   <li><a href="#integration-with-who-smart-base" id="markdown-toc-integration-with-who-smart-base">Integration with WHO smart-base</a>    <ol>
       <li><a href="#what-to-import-vs-wrap" id="markdown-toc-what-to-import-vs-wrap">What to import vs wrap</a></li>
       <li><a href="#ig-publisher-translation" id="markdown-toc-ig-publisher-translation">IG Publisher translation</a></li>
@@ -1441,6 +1446,115 @@ translatable catalogue:</p>
   <span class="na">ru</span><span class="p">:</span> <span class="p">{</span> <span class="na">definition</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Определение</span><span class="dl">"</span><span class="p">,</span> <span class="na">theorem</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Теорема</span><span class="dl">"</span><span class="p">,</span> <span class="p">...</span> <span class="p">},</span>
 <span class="p">};</span>
 </code></pre></div></div><hr />
+<h2 id="generated-interfaces--the-knowledge-graph-viewer">
+  
+  
+    <a href="#generated-interfaces--the-knowledge-graph-viewer" class="anchor-heading" aria-labelledby="generated-interfaces--the-knowledge-graph-viewer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Generated interfaces — the knowledge-graph viewer
+  
+  
+</h2>
+    
+
+<p>Everything above extracts from <strong>authored</strong> files. The knowledge-graph viewer
+(<code class="language-plaintext highlighter-rouge">scripts/kg-viewer.ts</code>) is not one: it is a generator that writes a
+single-file HTML page, and its interface strings sit inside the code that
+emits it.</p>
+
+<p><strong>Extracting from the generated page would be the obvious move and is the
+wrong one.</strong> The <code class="language-plaintext highlighter-rouge">.pot</code> would fill with the generator’s <em>output</em>, so any
+regeneration — a new node kind, a changed commit line — churns every entry and
+invalidates every sign-off, without a single string having changed.</p>
+
+<p>So the strings are lifted into a declared table in the source,
+<code class="language-plaintext highlighter-rouge">scripts/kg-viewer-strings.ts</code>, and extracted from <strong>there</strong>:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run translate-kg-viewer <span class="nt">--extract</span> <span class="o">[</span><span class="nt">--locale</span> fr]  <span class="c"># table → translations/&lt;loc&gt;/kg-viewer.pot</span>
+bun run translate-kg-viewer:check                    <span class="c"># drift between table, .pot and .po</span>
+bun run kg:viewer                                    <span class="c"># reads every .po, embeds the catalogues</span>
+</code></pre></div></div>
+
+<p>It is the same pipeline as everything else — <code class="language-plaintext highlighter-rouge">formatPot</code> from
+<code class="language-plaintext highlighter-rouge">content/pipeline/pot-extract.ts</code>, <code class="language-plaintext highlighter-rouge">parsePo</code> from <code class="language-plaintext highlighter-rouge">po-inject.ts</code> — with the
+same shape as <code class="language-plaintext highlighter-rouge">scripts/translate-bpmn.ts</code>, which does this for diagram labels.
+<strong>There is no inject step</strong>: generating the page <em>is</em> the injection, so a
+separate translated copy would be an artefact nothing serves.</p>
+
+<p><code class="language-plaintext highlighter-rouge">--check</code> distinguishes two things that look alike:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>finding</th>
+      <th>fails the check?</th>
+      <th>why</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.pot</code> no longer matches the table</td>
+      <td><strong>yes</strong></td>
+      <td>a translator is working from a document that no longer describes the page</td>
+    </tr>
+    <tr>
+      <td>a translation dropped a <code class="language-plaintext highlighter-rouge">{placeholder}</code></td>
+      <td><strong>yes</strong></td>
+      <td>the sentence silently loses its number</td>
+    </tr>
+    <tr>
+      <td>an entry for a string the page no longer says</td>
+      <td><strong>yes</strong></td>
+      <td>dead work, and a msgid nothing will ever look up</td>
+    </tr>
+    <tr>
+      <td>a string with no translation yet</td>
+      <td>no</td>
+      <td>the ordinary state of a translation in progress; the page falls back to English per string</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="the-boundary-is-drawn-on-the-page">
+  
+  
+    <a href="#the-boundary-is-drawn-on-the-page" class="anchor-heading" aria-labelledby="the-boundary-is-drawn-on-the-page"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The boundary is drawn on the page
+  
+  
+</h3>
+    
+
+<p>The chrome is translatable. <strong>The graph is not</strong>: node titles, descriptions and
+property names arrive in the JSON-LD document in whatever language the corpus
+is written in, and no catalogue in the viewer can reach them.</p>
+
+<p>The page says so, in the language the reader chose, whenever that is not
+English. A screen that is two-thirds translated and silent about it is worse
+than one that states its edge — a reader cannot otherwise tell a missing
+translation from a corpus that is simply English.</p>
+<h3 id="what-ships-today-the-stubs-and-deliberately-nothing-in-them">
+  
+  
+    <a href="#what-ships-today-the-stubs-and-deliberately-nothing-in-them" class="anchor-heading" aria-labelledby="what-ships-today-the-stubs-and-deliberately-nothing-in-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What ships today: the stubs, and deliberately nothing in them
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">translations/&lt;locale&gt;/kg-viewer.po</code> exists for every locale with every
+<code class="language-plaintext highlighter-rouge">msgid</code> present and every <code class="language-plaintext highlighter-rouge">msgstr</code> <strong>empty</strong>. That is the decision, not an
+omission: machine-translating a user interface into languages nobody here
+reads produces an artefact whose correctness cannot be checked here, and a
+<code class="language-plaintext highlighter-rouge">X-Folio-Official: no</code> header does not change what a reader sees. A translator
+fills them.</p>
+
+<p>Until one does, the viewer offers English alone — an empty catalogue is not a
+language the page can show, so it is not listed. Fill a <code class="language-plaintext highlighter-rouge">.po</code>, run
+<code class="language-plaintext highlighter-rouge">bun run kg:viewer</code>, and that language appears in the switcher.</p>
+
+<p>The language switcher is a UI control and carries the obligations in
+<a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/ui-accessibility.html"><code class="language-plaintext highlighter-rouge">ui-accessibility</code></a>:
+each option named in its own language with <code class="language-plaintext highlighter-rouge">lang</code> set, accessible names
+translated alongside visible text, the change announced, and <code class="language-plaintext highlighter-rouge">dir</code> flipped for
+a right-to-left language. The reader’s choice is the <strong>same <code class="language-plaintext highlighter-rouge">fa-locale</code>
+localStorage key the docs site writes</strong>, overridable per link with <code class="language-plaintext highlighter-rouge">?lang=</code>.</p><hr />
 <h2 id="integration-with-who-smart-base">
   
   
@@ -1847,7 +1961,7 @@ code, labels) uniformly.</p><hr />
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35425955048"><code>d4b9f74</code></a> &middot; 2026-09-19T06:12:41Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35426369918"><code>29f315e</code></a> &middot; 2026-09-19T06:21:59Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

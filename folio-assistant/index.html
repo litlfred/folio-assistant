@@ -80,6 +80,28 @@
      glyphs. */
   .meta a { display: inline-flex; align-items: center; min-height: 24px; padding: 0 2px;
             color: var(--accent); text-underline-offset: 2px; }
+  /*
+   * The language switcher, and the note that says where the translation stops.
+   *
+   * Each button carries a language's name IN THAT LANGUAGE, which is what a
+   * reader looking for one is looking for -- so the control needs no label of
+   * its own per button, and there is no accessible name to get wrong in a
+   * language nobody here reads. 32px like the facets: the floor is 24, and
+   * this instance's declared interaction profile is low-dexterity.
+   *
+   * --fg on --panel is 17.3:1 in light and 13.3:1 in dark; the pressed state
+   * is --on-accent on --accent, the pair already measured above.
+   */
+  .langs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+  .langs[hidden] { display: none; }
+  .lang { display: inline-flex; align-items: center; min-height: 32px; padding: 2px 11px;
+          border: 1px solid var(--line); border-radius: 5px; background: var(--panel);
+          color: var(--fg); font: inherit; font-size: 13px; cursor: pointer; }
+  .lang:hover { background: var(--accent-bg); }
+  .lang[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .boundary { background: var(--panel); border: 1px solid var(--line); color: var(--fg);
+              padding: 8px 11px; border-radius: 6px; font-size: 12.5px;
+              margin: 10px 0 0; max-width: 78ch; }
   main { display: grid; grid-template-columns: 210px minmax(0,1fr) minmax(0,1.15fr); gap: 0; align-items: start; }
   @media (max-width: 860px) { main { grid-template-columns: 1fr; } .facets { border-right: none !important; } }
   .facets, .list, .detail { padding: 14px 16px; }
@@ -153,10 +175,17 @@
 <body>
 <!-- A keyboard user lands on the facet column first and would otherwise tab
      through a dozen filters to reach the results. -->
-<a class="skip" href="#list">Skip to results</a>
+<a class="skip" id="skip" href="#list">Skip to results</a>
 <header>
   <h1 id="title">folio-assistant — knowledge graph</h1>
   <div class="meta" id="meta">loading <code>../folio-assistant.jsonld</code>…</div>
+  <!-- One button per language that has a catalogue, drawn only when there is
+       more than English to offer. A switcher with one option is furniture. -->
+  <div class="langs" id="langs" role="group" aria-label="Interface language" hidden></div>
+  <!-- Where the translation stops. Hidden in English, because in English
+       there is no boundary to draw. -->
+  <p class="boundary" id="boundary" hidden></p>
+  <p class="visually-hidden" id="langstatus" role="status" aria-live="polite"></p>
 </header>
 <main>
   <nav class="facets" aria-labelledby="facets-h">
@@ -167,7 +196,7 @@
     <h2 id="list-h">Nodes</h2>
     <!-- A real label, not a placeholder. A placeholder IS the accessible name
          until the moment somebody types, and then the field has none. -->
-    <label class="visually-hidden" for="q">Search nodes by name, id or description</label>
+    <label class="visually-hidden" id="q-label" for="q">Search nodes by name, id or description</label>
     <input type="search" id="q" placeholder="search name, id, title…" autocomplete="off">
     <ol id="list" tabindex="-1" aria-labelledby="list-h"></ol>
     <p class="visually-hidden" id="count" role="status" aria-live="polite"></p>
@@ -187,14 +216,190 @@
 // composed one. The same bytes therefore work at the canonical base and under
 // STAGING/<slug>/ with no configuration.
 const DOC = "../folio-assistant.jsonld";
+const STUB = "folio-assistant";
+
+/*
+ * The chrome's words, per language.
+ *
+ * Extracted from scripts/kg-viewer-strings.ts and translated in
+ * translations/<locale>/kg-viewer.po, both read when this page is GENERATED,
+ * so the page still fetches nothing but its own graph document.
+ *
+ * The msgid IS the English text, so a string a catalogue does not carry falls
+ * back to English by itself -- per string, not per page. A catalogue that is
+ * half written shows the half it has.
+ */
+const STRINGS = {};
+const LOCALES = [{"locale":"en","name":"English","dir":"ltr","official":true,"translated":38,"total":38}];
+// The SAME key the docs site writes (docs/assets/js/docs-ui.js), so a reader
+// who chose a language there arrives here in it. A second key would be a
+// second answer to one question.
+const LOCALE_KEY = "fa-locale";
 
 const el = (id) => document.getElementById(id);
 let G = [], byId = new Map(), backlinks = new Map(), declared = new Set(),
-    linkTerms = new Set(), kind = null, sel = null, undeclared = [];
+    linkTerms = new Set(), kind = null, sel = null, undeclared = [],
+    counts = {}, loaded = null, loadError = null, preview = false, LOC = "en";
 
 const short = (iri) => String(iri).includes("#") ? String(iri).split("#").pop() : String(iri);
 const typeOf = (n) => short(n["@type"] ?? "").split("/").pop();
 const label = (n) => n.title ?? n.name ?? n.localId ?? short(n["@id"]);
+
+const localeMeta = (loc) => LOCALES.filter((l) => l.locale === loc)[0] ?? LOCALES[0];
+const known = (loc) => loc === "en" || Object.prototype.hasOwnProperty.call(STRINGS, loc);
+
+/**
+ * One of the page's own strings, in the reader's language, with its
+ * placeholders filled. An untranslated string returns its English self, which
+ * is what a msgid IS.
+ */
+function T(s, vars) {
+  const c = STRINGS[LOC] ?? {};
+  let out = Object.prototype.hasOwnProperty.call(c, s) ? c[s] : s;
+  if (vars) {
+    for (const k of Object.keys(vars)) out = out.split("{" + k + "}").join(String(vars[k]));
+  }
+  return out;
+}
+
+/**
+ * The same, where a slot holds MARKUP rather than text.
+ *
+ * The sentence is escaped FIRST and the fragments substituted after, so a
+ * filename can still sit in a code element while nothing a catalogue carries
+ * can introduce an element of its own.
+ */
+function fill(s, frags) {
+  let out = escape(s);
+  for (const k of Object.keys(frags)) out = out.split("{" + k + "}").join(frags[k]);
+  return out;
+}
+
+/**
+ * Which language to open in.
+ *
+ * The query parameter first, because it is what a link carries and what a
+ * reader pasted; then the choice they saved on the docs site; then what their
+ * browser asks for. Never a language this page cannot actually show: a locale
+ * with no catalogue is not offered and not selected.
+ */
+function chooseLocale() {
+  let asked = null;
+  try { asked = new URLSearchParams(window.location.search).get("lang"); } catch (e) { asked = null; }
+  if (asked && known(asked)) return asked;
+  let saved = null;
+  try { saved = window.localStorage.getItem(LOCALE_KEY); } catch (e) { saved = null; }
+  if (saved && known(saved)) return saved;
+  const prefs = navigator.languages ?? [navigator.language ?? "en"];
+  for (const tag of prefs) {
+    const base = String(tag).split("-")[0];
+    if (known(base)) return base;
+  }
+  return "en";
+}
+
+function setLocale(loc) {
+  LOC = loc;
+  try { window.localStorage.setItem(LOCALE_KEY, loc); } catch (e) { /* private window */ }
+  // Bookmarkable, and shareable to somebody whose browser asks for something
+  // else. replaceState rather than push: a language is not a place, and a
+  // reader pressing Back should leave the page rather than retrace languages.
+  try {
+    const u = new URL(window.location.href);
+    u.searchParams.set("lang", loc);
+    window.history.replaceState(null, "", u.toString());
+  } catch (e) { /* no history to write to, e.g. an opened file */ }
+  renderAll();
+  // The whole page was just rewritten and the reader's cursor did not move.
+  el("langstatus").textContent = T("Interface language: {language}", { language: localeMeta(loc).name });
+}
+
+/**
+ * Every word the page says, redrawn in the current language.
+ *
+ * Chrome first, then whatever state the document is in. A failed load draws
+ * NO facets and NO list: an empty index and an unreadable document look
+ * identical on screen and mean opposite things.
+ */
+function renderAll() {
+  applyChrome();
+  drawLangs();
+  renderMeta();
+  if (loadError !== null) { renderDetail(); return; }
+  if (loaded === null) return;
+  drawFacets(counts);
+  drawList();
+  renderDetail();
+}
+
+function applyChrome() {
+  const root = document.documentElement;
+  root.setAttribute("lang", LOC);
+  // Arabic reads right to left, and a frame that does not turn with it is a
+  // translation of the words only.
+  root.setAttribute("dir", localeMeta(LOC).dir);
+  const heading = T("{stub} — knowledge graph", { stub: STUB }) + (preview ? " " + T("(preview)") : "");
+  el("title").textContent = heading;
+  document.title = heading;
+  el("skip").textContent = T("Skip to results");
+  el("facets-h").textContent = T("Kind");
+  el("list-h").textContent = T("Nodes");
+  el("q-label").textContent = T("Search nodes by name, id or description");
+  el("q").setAttribute("placeholder", T("search name, id, title…"));
+  el("detail").setAttribute("aria-label", T("Selected node"));
+  el("langs").setAttribute("aria-label", T("Interface language"));
+  drawBoundary();
+}
+
+/**
+ * Where the translation stops, said on the page rather than left to be
+ * inferred from a half-English screen.
+ *
+ * The chrome is translated; the graph is not, and it cannot be from here --
+ * node names, descriptions and property names arrive in the document in the
+ * language the corpus was written in. In English there is no boundary to
+ * draw, so nothing is shown.
+ */
+function drawBoundary() {
+  const b = el("boundary");
+  const m = localeMeta(LOC);
+  if (LOC === "en") { b.hidden = true; b.textContent = ""; return; }
+  let text = T(
+    "The interface is shown in {language}. The graph itself — node names, " +
+    "descriptions and property names — comes from this repository and is shown " +
+    "as written, in English.",
+    { language: m.name });
+  if (!m.official) {
+    text += " " + T("This interface translation was produced by an agent and has not been reviewed by a person.");
+  }
+  b.textContent = text;
+  b.hidden = false;
+}
+
+/**
+ * One button per language with a catalogue, each labelled in ITS OWN language
+ * -- which is what a reader looking for that language is looking for, and
+ * which leaves no accessible name to get wrong in a language nobody here
+ * reads. Nothing is drawn when English is the only option: a switcher with one
+ * choice is furniture.
+ */
+function drawLangs() {
+  const box = el("langs");
+  box.innerHTML = "";
+  if (LOCALES.length < 2) { box.hidden = true; return; }
+  box.hidden = false;
+  for (const l of LOCALES) {
+    const b = document.createElement("button");
+    b.className = "lang";
+    b.type = "button";
+    b.setAttribute("lang", l.locale);
+    b.setAttribute("dir", l.dir);
+    b.setAttribute("aria-pressed", String(l.locale === LOC));
+    b.textContent = l.name;
+    b.onclick = () => setLocale(l.locale);
+    box.appendChild(b);
+  }
+}
 
 fetch(DOC)
   .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
@@ -203,13 +408,17 @@ fetch(DOC)
     // Three states, not two: a graph that could not be LOADED is never drawn
     // as an empty graph. An empty index and a failed fetch look identical on
     // screen and mean opposite things.
-    el("meta").innerHTML =
-      '<span class="undeclared">could not load <code>' + DOC + "</code> — " + String(e.message) + "</span>";
-    el("detail").innerHTML = '<p class="empty">The graph could not be read, so nothing is shown. ' +
-      "This is not an empty graph.</p>";
+    loadError = String(e.message);
+    renderAll();
   });
 
+// The chrome is in the reader's language before the document arrives, so a
+// slow fetch does not mean a page in English that then changes under them.
+LOC = chooseLocale();
+renderAll();
+
 function init(doc) {
+  loaded = doc;
   G = doc["@graph"] ?? [];
   const ctx = doc["@context"] ?? {};
   declared = new Set(Object.keys(ctx).filter((k) => !k.startsWith("@")));
@@ -217,6 +426,8 @@ function init(doc) {
     if (v && typeof v === "object" && v["@type"] === "@id") linkTerms.add(k);
   }
   undeclared = doc.undeclaredTerms ?? [];
+  counts = doc.counts ?? {};
+  preview = Boolean(doc["@type"] && String(doc["@type"]).includes("Preview"));
 
   for (const n of G) byId.set(n["@id"], n);
   // Back-links are computed here rather than published: they are derivable, and
@@ -231,11 +442,56 @@ function init(doc) {
     }
   }
 
-  const bits = [G.length + " nodes"];
-  if (doc.sourceCommitSha) bits.push("commit " + String(doc.sourceCommitSha).slice(0, 8));
-  if (doc.sourceTreeDirty) bits.push("tree dirty");
-  if (doc.generatedAt) bits.push(String(doc.generatedAt).slice(0, 19).replace("T", " ") + "Z");
-  el("meta").textContent = bits.join(" · ");
+  // Bound once, not on every redraw: renderAll runs again on every language
+  // change, and a listener added there would fire once more each time.
+  el("q").addEventListener("input", drawList);
+  renderAll();
+}
+
+/**
+ * The provenance line: what was loaded, from which commit, and a way back to
+ * the document itself.
+ */
+function renderMeta() {
+  const m = el("meta");
+  if (loadError !== null) {
+    m.innerHTML = '<span class="undeclared">' +
+      fill(T("could not load {doc} — {error}"), {
+        doc: "<code>" + escape(DOC) + "</code>",
+        error: escape(loadError),
+      }) + "</span>";
+    return;
+  }
+  if (loaded === null) {
+    m.innerHTML = fill(T("loading {doc}…"), { doc: "<code>" + escape(DOC) + "</code>" });
+    return;
+  }
+
+  const bits = [T("{n} nodes", { n: G.length })];
+  if (loaded.sourceCommitSha) bits.push(T("commit {sha}", { sha: String(loaded.sourceCommitSha).slice(0, 8) }));
+  if (loaded.sourceTreeDirty) bits.push(T("tree dirty"));
+  // A timestamp is data rather than a sentence, and is shown as the document
+  // wrote it.
+  if (loaded.generatedAt) bits.push(String(loaded.generatedAt).slice(0, 19).replace("T", " ") + "Z");
+
+  // Each bit is ISOLATED, and this line is where it stopped being optional.
+  //
+  // Rendered right to left, the line was "source commit · JSON-LD · nodes ·
+  // commit dac179a6 · 2026-09-19 … 1148": the digits of "1148 nodes" are a
+  // weak run, the middots between the bits are neutral, and the bidi
+  // algorithm merged them into one sequence and moved the number to the far
+  // end of the line. The count was no longer next to the word it counted.
+  //
+  // Found by LOOKING at the page, in the language, which is the half of the
+  // accessibility rule no checker performs: every assertion still passed,
+  // because textContent is in DOM order whatever the display does.
+  m.textContent = "";
+  bits.forEach((b, i) => {
+    if (i > 0) m.appendChild(document.createTextNode(" · "));
+    const bdi = document.createElement("bdi");
+    bdi.textContent = b;
+    m.appendChild(bdi);
+  });
 
   // A way back to the document this page renders.
   //
@@ -250,32 +506,24 @@ function init(doc) {
   // points at the commit the graph was generated FROM, on the forge, which is
   // not derivable from here and is absent when the export could not determine
   // it.
-  const meta = el("meta");
-  meta.appendChild(document.createTextNode(" · "));
+  m.appendChild(document.createTextNode(" · "));
   const src = document.createElement("a");
   src.href = DOC;
-  src.textContent = "JSON-LD";
+  src.appendChild(document.createElement("bdi")).textContent = T("JSON-LD");
   // The visible text is the format; the accessible name says what it gets you
   // and from where, because "JSON-LD" out of context names a syntax rather
   // than a destination.
-  src.setAttribute("aria-label", "Download this graph as JSON-LD (" + DOC + ")");
-  meta.appendChild(src);
+  src.setAttribute("aria-label", T("Download this graph as JSON-LD ({doc})", { doc: DOC }));
+  m.appendChild(src);
 
-  if (doc.sourceCommit) {
-    meta.appendChild(document.createTextNode(" · "));
+  if (loaded.sourceCommit) {
+    m.appendChild(document.createTextNode(" · "));
     const c = document.createElement("a");
-    c.href = String(doc.sourceCommit);
+    c.href = String(loaded.sourceCommit);
     c.rel = "noreferrer";
-    c.textContent = "source commit";
-    meta.appendChild(c);
+    c.appendChild(document.createElement("bdi")).textContent = T("source commit");
+    m.appendChild(c);
   }
-  if (doc["@type"] && String(doc["@type"]).includes("Preview")) {
-    el("title").textContent += " (preview)";
-  }
-
-  drawFacets(doc.counts ?? {});
-  el("q").addEventListener("input", drawList);
-  drawList();
 }
 
 function drawFacets(counts) {
@@ -296,7 +544,10 @@ function drawFacets(counts) {
     b.onclick = () => { kind = kind === value ? null : value; drawFacets(counts); drawList(); };
     f.appendChild(b);
   };
-  add("All", G.length, null);
+  // "All" is the page's own word and is translated. The kinds beside it are
+  // the graph's own vocabulary and are not: they are the values a reader
+  // types into a query, and a translated type name resolves to nothing.
+  add(T("All"), G.length, null);
   for (const [t, n] of Object.entries(counts).sort((a, b) => b[1] - a[1])) add(t, n, t);
 }
 
@@ -314,9 +565,11 @@ function drawList() {
   ol.setAttribute("data-count", String(hits.length));
   // Filtering changes the list silently otherwise: a sighted user sees it
   // shrink, a screen-reader user gets nothing.
-  el("count").textContent = hits.length === 1 ? "1 node matches" : hits.length + " nodes match";
+  el("count").textContent = hits.length === 1
+    ? T("1 node matches")
+    : T("{n} nodes match", { n: hits.length });
   if (hits.length === 0) {
-    ol.innerHTML = '<li class="empty">No node matches.</li>';
+    ol.innerHTML = '<li class="empty">' + escape(T("No node matches.")) + "</li>";
     return;
   }
   for (const n of hits.slice(0, 400)) {
@@ -332,7 +585,7 @@ function drawList() {
   if (hits.length > 400) {
     const li = document.createElement("li");
     li.className = "empty";
-    li.textContent = "… and " + (hits.length - 400) + " more; narrow the search.";
+    li.textContent = T("… and {n} more; narrow the search.", { n: hits.length - 400 });
     ol.appendChild(li);
   }
 }
@@ -344,30 +597,62 @@ function escape(s) {
 function select(id) {
   sel = id;
   drawList();
+  renderDetail();
+}
+
+/**
+ * The right-hand panel, in whatever state the page is in: unreadable
+ * document, nothing selected, or a node.
+ */
+function renderDetail() {
+  const d = el("detail");
+  if (loadError !== null) {
+    d.innerHTML = '<p class="empty">' +
+      escape(T("The graph could not be read, so nothing is shown. This is not an empty graph.")) + "</p>";
+    return;
+  }
+  if (sel === null) {
+    d.innerHTML = '<p class="empty">' + escape(T("Select a node.")) + "</p>";
+    return;
+  }
+  drawNode(sel);
+}
+
+function drawNode(id) {
   const n = byId.get(id);
   const d = el("detail");
   d.setAttribute("tabindex", "-1");
-  if (!n) { d.innerHTML = '<p class="empty">No such node.</p>'; return; }
+  if (!n) { d.innerHTML = '<p class="empty">' + escape(T("No such node.")) + "</p>"; return; }
 
   let h = "<h3>" + escape(label(n)) + "</h3>";
   h += '<div class="iri">' + escape(n["@id"]) + "</div>";
 
   const undeclaredHere = Object.keys(n).filter((k) => !k.startsWith("@") && !declared.has(k));
   if (undeclaredHere.length > 0) {
-    h += '<p class="note"><strong>' + undeclaredHere.length + " of this node's properties are not in the " +
-      "<code>@context</code></strong>, so a JSON-LD processor drops them. They are shown below, marked. " +
-      "Across the graph: " + undeclared.length + " such property names.</p>";
+    // "@context" is a JSON-LD keyword: it stays as it is in every language,
+    // and the code element is put back around it after escaping rather than
+    // being carried inside a string a translator can break.
+    h += '<p class="note"><strong>' +
+      escape(T("{n} of this node's properties are not in the @context", { n: undeclaredHere.length }))
+        .replace("@context", "<code>@context</code>") +
+      "</strong>, " +
+      escape(T(
+        "so a JSON-LD processor drops them. They are shown below, marked. " +
+        "Across the graph: {n} such property names.",
+        { n: undeclared.length })) +
+      "</p>";
   }
 
   h += "<table><tbody>";
-  h += row("type", escape(typeOf(n)), false);
+  h += row(T("type"), escape(typeOf(n)), false);
   for (const [k, v] of Object.entries(n)) {
     if (k.startsWith("@")) continue;
+    // The key is the graph's own property name, not the page's word for it.
     h += row(k, value(k, v), !declared.has(k));
   }
   const back = backlinks.get(id) ?? [];
   if (back.length > 0) {
-    h += row("← referenced by", back.map((b) =>
+    h += row(T("← referenced by"), back.map((b) =>
       btn(b.from, label(byId.get(b.from)) + " (" + b.via + ")")).join("<br>"), false);
   }
   h += "</tbody></table>";
@@ -396,7 +681,11 @@ function btn(id, text) {
 }
 
 function value(key, v) {
-  if (Array.isArray(v)) return v.length === 0 ? '<span class="empty">none</span>' : v.map((x) => value(key, x)).join("<br>");
+  if (Array.isArray(v)) {
+    return v.length === 0
+      ? '<span class="empty">' + escape(T("none")) + "</span>"
+      : v.map((x) => value(key, x)).join("<br>");
+  }
   // A nested object goes behind a disclosure, pretty-printed.
   //
   // Dumping it inline was the first thing that showed up when the page was
@@ -427,7 +716,7 @@ function neighbourhood(n, back) {
     for (const v of [].concat(n[t] ?? [])) if (byId.has(v)) out.push({ id: v, via: t, dir: "out" });
   }
   const nodes = out.concat(back.map((b) => ({ id: b.from, via: b.via, dir: "in" }))).slice(0, 14);
-  if (nodes.length === 0) return '<p class="empty">No links to or from this node.</p>';
+  if (nodes.length === 0) return '<p class="empty">' + escape(T("No links to or from this node.")) + "</p>";
 
   const W = 560, cx = W / 2, cy = 150, R = 112;
   // role="group", not role="img". An img is a LEAF in the accessibility tree,
@@ -435,8 +724,10 @@ function neighbourhood(n, back) {
   // it as nested-interactive, and it appeared the moment the neighbours
   // became real buttons. The diagram stopped being a picture when it became a
   // set of controls.
-  let s = '<svg viewBox="0 0 ' + W + ' 300" role="group" aria-label="One-hop neighbourhood, ' +
-    nodes.length + ' linked node' + (nodes.length === 1 ? "" : "s") + '">';
+  const drawn = nodes.length === 1
+    ? T("One-hop neighbourhood, 1 linked node")
+    : T("One-hop neighbourhood, {n} linked nodes", { n: nodes.length });
+  let s = '<svg viewBox="0 0 ' + W + ' 300" role="group" aria-label="' + escape(drawn) + '">';
   nodes.forEach((m, i) => {
     const a = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
     const x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R * 0.82;
@@ -457,8 +748,18 @@ function neighbourhood(n, back) {
     // fine — and no automated checker said so, because a <circle> with an
     // onclick is not RECOGNISED as interactive, so there is nothing to flag.
     // Found by reading the diff against the rule, not by a tool.
+    //
+    // The sentence is the page's; the node's name and the property it travels
+    // are the graph's, and are substituted into it untranslated.
+    //
+    // Two calls rather than one with a conditional argument: a msgid that is
+    // computed cannot be read out of the source, and the check that every
+    // string the page asks for is one the table declares would skip both.
+    const says = m.dir === "in"
+      ? T("Referenced by {name} via {via}", { name: name, via: m.via })
+      : T("Links to {name} via {via}", { name: name, via: m.via });
     s += '<g class="node" role="button" tabindex="0" data-goto="' + escape(m.id) +
-      '" aria-label="' + escape((m.dir === "in" ? "Referenced by " : "Links to ") + name + " via " + m.via) + '">';
+      '" aria-label="' + escape(says) + '">';
     // A 16px invisible disc, so the pointer target is not the 5px dot.
     s += '<circle class="hit" cx="' + x + '" cy="' + y + '" r="16"></circle>';
     s += '<circle cx="' + x + '" cy="' + y + '" r="5"></circle>';
