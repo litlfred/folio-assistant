@@ -95,9 +95,27 @@ describe("applying a verdict", () => {
     expect(c.witnesses.map((w) => w.kind)).toEqual(["script"]);
   });
 
-  test("counts move with the verdict — a header must not contradict its rows", () => {
+  test("counts are RECOMPUTED from the rows, not adjusted by a delta", () => {
+    // #319's version recomputes and mine incremented; recomputing is the more
+    // robust of the two. An increment is right only if every prior count was
+    // right and no override touches one criterion twice — a recount cannot
+    // drift from the rows it summarises. Every bucket is emitted, including
+    // the zeroes, so a reader never has to tell "none" from "not counted".
     const d = apply("c.json");
-    expect(d.counts).toEqual({ fail: 1, warn: 0, pass: 1, na: 0 });
+    expect(d.counts).toEqual({ fail: 1, warn: 0, pass: 1, na: 0, unknown: 0 });
+  });
+
+  test("`state` follows the worst row, and is left absent if the doc had none", () => {
+    const withState = JSON.parse(
+      sidecarWithVerdicts(write("st.json", { ...DOC, state: "pass" }), [
+        { id: "a-passes", result: "fail" },
+      ]),
+    ) as { state?: string };
+    expect(withState.state).toBe("fail");
+    // A document that never carried `state` does not gain one: inventing a
+    // field the generator does not write is how a fixture stops being a
+    // fixture of the real output.
+    expect((apply("st2.json") as { state?: string }).state).toBeUndefined();
   });
 
   test("other criteria are untouched", () => {

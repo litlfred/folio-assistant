@@ -18,6 +18,16 @@ import { fileURLToPath } from "node:url";
  * height-capped header, and a sticky banner like the staging one — because the
  * bug only appears when the cap is present. Testing against a page without it
  * would pass on the broken code.
+ *
+ * ## Three panels became one, and the property did not change
+ *
+ * Bean `1le7` collapsed the four header toggles into a single action-tile
+ * launcher, so there is now ONE panel in the sidebar column with a view per
+ * action. That removes the class of bug by construction — three panels cannot
+ * solve one placement problem three different ways if there is one panel — but
+ * "cannot recur by construction" is a claim, and this file is what checks it.
+ * Every assertion below is the same assertion it was, asked of the panel that
+ * exists now and of each view that renders into it.
  */
 
 // `import.meta.dir` is a Bun extension and is undefined under Node, which is
@@ -58,33 +68,40 @@ const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8"><sty
   <script>${JS}<\/script>
 </body></html>`;
 
-const PANELS = [
-  { name: "language", toggle: ".fa-lang-toggle", panel: ".fa-lang-bar" },
-  { name: "reading preferences", toggle: ".fa-a11y-toggle", panel: ".fa-a11y-panel" },
-  { name: "QR", toggle: ".fa-qr-toggle:not(.fa-theme-toggle):not(.fa-lang-toggle):not(.fa-a11y-toggle)", panel: ".fa-qr-panel" },
+/** Each action's tile, and the thing its view must actually show. */
+const VIEWS = [
+  { name: "settings", tile: "Settings", content: ".fa-a11y-panel" },
+  { name: "language", tile: "Language", content: ".fa-lang-bar" },
+  { name: "QR", tile: "QR code", content: ".fa-qr-panel" },
 ];
 
+/** Open the launcher, then the named tile's view. */
+async function openView(page: import("@playwright/test").Page, tile: string): Promise<void> {
+  await page.locator(".fa-tiles-toggle").click();
+  await page.locator(".fa-tile", { hasText: tile }).first().click();
+}
+
 test.describe("sidebar disclosure panels", () => {
-  for (const p of PANELS) {
-    test(`${p.name}: panel escapes the height-capped header`, async ({ page }) => {
-      await page.setContent(HARNESS);
-      const panel = page.locator(p.panel).first();
-      await expect(panel).toHaveCount(1);
-      // The whole bug in one assertion: a panel inside .site-header is clipped
-      // by its max-height, whatever else is done to it.
-      const inHeader = await panel.evaluate((el) => !!el.closest(".site-header"));
-      expect(inHeader).toBe(false);
-      const inSideBar = await panel.evaluate((el) => !!el.closest(".side-bar"));
-      expect(inSideBar).toBe(true);
-    });
+  test("the one panel escapes the height-capped header", async ({ page }) => {
+    await page.setContent(HARNESS);
+    const panel = page.locator(".fa-tiles");
+    await expect(panel).toHaveCount(1);
+    // The whole bug in one assertion: a panel inside .site-header is clipped
+    // by its max-height, whatever else is done to it.
+    const inHeader = await panel.evaluate((el) => !!el.closest(".site-header"));
+    expect(inHeader).toBe(false);
+    const inSideBar = await panel.evaluate((el) => !!el.closest(".side-bar"));
+    expect(inSideBar).toBe(true);
+  });
 
-    test(`${p.name}: opens fully visible, not under the banner`, async ({ page }) => {
+  for (const v of VIEWS) {
+    test(`${v.name}: opens fully visible, not under the banner`, async ({ page }) => {
       await page.setContent(HARNESS);
-      await page.locator(p.toggle).first().click();
-      const panel = page.locator(p.panel).first();
-      await expect(panel).toBeVisible();
+      await openView(page, v.tile);
+      const content = page.locator(v.content).first();
+      await expect(content).toBeVisible();
 
-      const box = await panel.boundingBox();
+      const box = await content.boundingBox();
       expect(box).not.toBeNull();
       // Non-zero area — a clipped panel collapses.
       expect(box!.height).toBeGreaterThan(0);
@@ -109,20 +126,29 @@ test.describe("sidebar disclosure panels", () => {
     const sideBar = (await page.locator(".side-bar").boundingBox())!;
     expect(sideBar.y).toBeGreaterThanOrEqual(banner.y + banner.height - 1);
 
-    // And the toolbar controls are therefore actually clickable rather than
+    // And the toolbar control is therefore actually clickable rather than
     // sitting under the banner.
-    for (const sel of [".fa-theme-toggle", ".fa-a11y-toggle", ".fa-lang-toggle"]) {
-      const b = (await page.locator(sel).first().boundingBox())!;
-      expect(b.y).toBeGreaterThanOrEqual(banner.y + banner.height - 1);
-    }
+    const b = (await page.locator(".fa-tiles-toggle").boundingBox())!;
+    expect(b.y).toBeGreaterThanOrEqual(banner.y + banner.height - 1);
   });
 
   test("an opened panel does not overlap the nav — it pushes it down", async ({ page }) => {
     await page.setContent(HARNESS);
-    await page.locator(".fa-a11y-toggle").first().click();
-    const panel = (await page.locator(".fa-a11y-panel").boundingBox())!;
+    await page.locator(".fa-tiles-toggle").click();
+    const panel = (await page.locator(".fa-tiles").boundingBox())!;
     const nav = (await page.locator(".site-nav").boundingBox())!;
     // Normal flow, not an overlay: the nav starts at or below the panel's end.
+    expect(nav.y).toBeGreaterThanOrEqual(panel.y + panel.height - 1);
+  });
+
+  test("a view pushes the nav down too, not just the grid", async ({ page }) => {
+    // The grid is short; a view is taller. Checking only the grid would let a
+    // view that overflows the column pass — which is the original bug in a new
+    // place, since the content that used to be clipped now lives in a view.
+    await page.setContent(HARNESS);
+    await openView(page, "Settings");
+    const panel = (await page.locator(".fa-tiles").boundingBox())!;
+    const nav = (await page.locator(".site-nav").boundingBox())!;
     expect(nav.y).toBeGreaterThanOrEqual(panel.y + panel.height - 1);
   });
 });

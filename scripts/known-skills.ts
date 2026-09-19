@@ -12,17 +12,8 @@
  *
  * @module scripts/known-skills
  */
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-
-/** Directories holding one `<skill>.md` per skill. */
-export const SKILL_MD_DIRS = [
-  ["skills", "content-lifecycle"],
-  ["skills", "folio-core"],
-  ["skills", "folio-document-adapter"],
-  ["skills", "folio-paper-adapter"],
-  ["src", "skills"],
-] as const;
 
 /**
  * Groups under `.claude/skills/` that hold something other than skills.
@@ -45,15 +36,136 @@ export const SKILL_MD_DIRS = [
  */
 export const NON_SKILL_GROUPS = new Set(["actors", "capabilities", "roles", "hooks", "requirements"]);
 
+/**
+ * Is this `.md` a skill, or another node kind that happens to live here?
+ *
+ * **Declaration over location.** A markdown file whose front matter carries
+ * `$schema:` is declaring what it IS, and a skill does not — skills declare
+ * `name` / `summary`. So a `$schema` is a positive statement that this file is
+ * something else, and it is the same contract `part-of:` carries for a split
+ * skill's siblings.
+ *
+ * ## This module's own header was falsified, and this is the repair
+ *
+ * {@link skillMdDirs} says non-skill directories under `skills/` "are excluded
+ * by carrying **no `.md`**, which is the same test that admits a package", and
+ * that "a directory that later grows a `.md` is a decision somebody makes
+ * visibly". `skills/memory/` is exactly that directory: 25 agent-memory nodes,
+ * every one a `.md`, none a skill. Measured 2026-09-19 — before this guard,
+ * `skill-coverage.test.ts` demanded a published reference page for all 25, and
+ * `kg-audit` had already written 25 bogus `kg-qa/` sidecars beside them
+ * asserting brevity and heading rules against files that are not instruction
+ * bodies.
+ *
+ * The visible decision the header asks for is the `$schema` line inside each
+ * file, not the directory's name — a name list is the thing this module exists
+ * to stop, and a directory's contents can be mixed.
+ *
+ * Unreadable is **not** "not a skill": an unreadable file returns `true` and is
+ * counted, so a permissions error or a truncated read cannot silently shrink
+ * the skill set. Undercounting here is what produces a clean run over nothing.
+ */
+export function isSkillMd(path: string): boolean {
+  let text: string;
+  try {
+    text = readFileSync(path, "utf-8");
+  } catch {
+    return true;
+  }
+  const fm = /^---\n([\s\S]*?)\n---/.exec(text);
+  return fm === null || !/^\$schema:\s*\S+/m.test(fm[1]!);
+}
+
+/**
+ * Directories holding one `<skill>.md` per skill, DISCOVERED rather than listed.
+ *
+ * ## Why it stopped being a literal
+ *
+ * It was five hardcoded entries, four of them under `skills/`. Measured
+ * 2026-09-19: **six** `skills/` directories hold `.md`, so `authoring-math`
+ * (3 skills) and `authoring-who-smart-guidelines` (9) were absent from the one
+ * function that answers "does this skill exist".
+ *
+ * Nothing had broken, and that is the point. All twelve resolved anyway
+ * through a SECOND home — eleven because they also have a
+ * `schemas/skills/<name>/` I/O contract, and `smart-base-tools` because it
+ * also has `.claude/skills/local/smart-base-tools.json`. Delete any one of
+ * those second homes and `check-workflow-refs` reports a real, present skill
+ * as dangling: the "wall of false dangling refs" this module's own header says
+ * it exists to prevent, arriving from the module itself.
+ *
+ * `kg-export.ts`'s `skillMdDirs()` already scanned `skills/*` dynamically and
+ * saw all six, so the two definitions disagreed BY CONSTRUCTION and agreed only
+ * BY COINCIDENCE. A list somebody has to remember to extend is not a single
+ * answer; it is a copy that happens to match today.
+ *
+ * ## Why scanning is safe here
+ *
+ * `skills/` is not uniformly skill packages — `framework/`, `permissions/`,
+ * `remote-packages/`, `requirements/`, `roles/` and `workflows/` are other
+ * node kinds. Most are excluded by carrying **no `.md`**, which is the same
+ * test that admits a package, rather than by a name list that would need the
+ * same remembering.
+ *
+ * **That test alone was not enough, and it was falsified within the day.**
+ * This doc said "a directory that later grows a `.md` is a decision somebody
+ * makes visibly"; `skills/memory/` then arrived with 25 of them, none a skill.
+ * So the admitting test is now `.md` **that {@link isSkillMd} accepts** — the
+ * visible decision is the `$schema` line inside each file rather than the
+ * directory's name, because a name list is the thing this module exists to
+ * stop and a directory's contents can be mixed.
+ */
+export function skillMdDirs(root: string): string[][] {
+  const dirs: string[][] = [];
+  const skillsRoot = join(root, "skills");
+  if (existsSync(skillsRoot)) {
+    for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
+      if (!d.isDirectory()) continue;
+      const inner = join(skillsRoot, d.name);
+      if (readdirSync(inner).some((f) => f.endsWith(".md") && isSkillMd(join(inner, f))))
+        dirs.push(["skills", d.name]);
+    }
+  }
+  // Not under `skills/`, so not reachable by the scan above.
+  if (existsSync(join(root, "src", "skills"))) dirs.push(["src", "skills"]);
+
+  // `.claude/skills/<group>/`, minus the groups that hold other node kinds.
+  //
+  // A DENY-list, so a new group of real skills is picked up automatically and a
+  // new group of something else is a one-line addition to
+  // {@link NON_SKILL_GROUPS}. `kg-export.ts` had its own copy of this that
+  // hardcoded `local` alone; measured 2026-09-19 by creating
+  // `.claude/skills/probegroup/probe-skill.md`, which `knownSkills()` resolved
+  // and the exported graph did not — a skill by this repository's own
+  // definition, absent from the graph. Latent rather than live (only `local`
+  // exists today), and now impossible: the exporter reads this function.
+  const localRoot = join(root, ".claude", "skills");
+  if (existsSync(localRoot)) {
+    for (const g of readdirSync(localRoot, { withFileTypes: true })) {
+      if (!g.isDirectory() || NON_SKILL_GROUPS.has(g.name)) continue;
+      if (readdirSync(join(localRoot, g.name)).some((f) => f.endsWith(".md"))) {
+        dirs.push([".claude", "skills", g.name]);
+      }
+    }
+  }
+  return dirs;
+}
+
+
+
 /** Every skill name this instance can resolve. */
 export function knownSkills(root: string): Set<string> {
   const names = new Set<string>();
 
-  for (const parts of SKILL_MD_DIRS) {
+  for (const parts of skillMdDirs(root)) {
     const dir = join(root, ...parts);
     if (!existsSync(dir)) continue;
     for (const f of readdirSync(dir)) {
-      if (f.endsWith(".md")) names.add(f.slice(0, -3));
+      // Filtered per FILE, not per directory: admitting a package says the
+      // directory holds skills, never that everything in it is one. A mixed
+      // directory is explicitly allowed here -- #263's rule that a place to
+      // look may hold more than one part of the graph.
+      if (f.endsWith(".md") && isSkillMd(join(dir, f))) names.add(f.slice(0, -3));
     }
   }
 
@@ -80,13 +192,14 @@ export function knownSkills(root: string): Set<string> {
   // rather than an allow-list of `local/`, so that a NEW group of real skills
   // is picked up automatically and a new group of something else is a one-line
   // addition here.
+  // Only `.json` here: the `.md` files come through `skillMdDirs()` above, so
+  // the deny-list is applied in ONE place rather than two that can disagree.
   const localRoot = join(root, ".claude", "skills");
   if (existsSync(localRoot)) {
     for (const g of readdirSync(localRoot, { withFileTypes: true })) {
       if (!g.isDirectory() || NON_SKILL_GROUPS.has(g.name)) continue;
       for (const f of readdirSync(join(localRoot, g.name))) {
-        if (f.endsWith(".md")) names.add(f.slice(0, -3));
-        else if (f.endsWith(".json")) names.add(f.slice(0, -5));
+        if (f.endsWith(".json")) names.add(f.slice(0, -5));
       }
     }
   }

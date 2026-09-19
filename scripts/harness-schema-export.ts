@@ -37,7 +37,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
-import { CatHarnessDeclarationSchema, artefactStub, readDeclaration } from "../schemas/cat-harness.js";
+import { CatHarnessDeclarationSchema, artefactStub, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
 import { ToolDefinitionSchema } from "../schemas/tool.js";
 import { TOOL_TYPES } from "../schemas/tool-types.js";
 
@@ -61,13 +61,13 @@ export function buildDeclarationSchema(opts: SchemaExportOptions = {}): Record<s
   return {
     ...schema,
     // Absolute or absent — never relative. See the module note.
-    ...(base ? { $id: `${base}/kg/${stub}.schema.json` } : {}),
+    ...(base ? { $id: renderingPath(base, `${stub}.schema.json`) } : {}),
     title: "CatHarness declaration",
     description:
       "The root declaration every instance carries as `cat-harness.json`: what it is called, " +
       "where it publishes, and which directories it scans for which kind of graph. " +
       "Generated from `CatHarnessDeclarationSchema` in schemas/cat-harness.ts, which is authoritative.",
-    ...(base ? { $comment: `Instance graph: ${base}/kg/${stub}.jsonld` } : {}),
+    ...(base ? { $comment: `Instance graph: ${renderingPath(base, `${stub}.jsonld`)}` } : {}),
   };
 }
 
@@ -89,7 +89,7 @@ export function buildToolTypes(opts: SchemaExportOptions = {}): Record<string, u
   }
   return {
     $schema: "http://json-schema.org/draft-07/schema#",
-    ...(base ? { $id: `${base}/kg/tool-types.schema.json` } : {}),
+    ...(base ? { $id: renderingPath(base, "tool-types.schema.json") } : {}),
     title: "Tool I/O types",
     description:
       "The shared types a Tool's io.inputs/io.outputs reference by absolute IRI. " +
@@ -108,7 +108,7 @@ export function buildToolSchema(opts: SchemaExportOptions = {}): Record<string, 
   }) as Record<string, unknown>;
   return {
     ...schema,
-    ...(base ? { $id: `${base}/kg/tool.schema.json` } : {}),
+    ...(base ? { $id: renderingPath(base, "tool.schema.json") } : {}),
     title: "Tool definition",
     description:
       "One concrete way to exercise a skill. A skill states a capability generically; " +
@@ -141,7 +141,7 @@ export function buildToolSchema(opts: SchemaExportOptions = {}): Record<string, 
  * while the identity did not, and nothing had ever dereferenced an `$id`.
  */
 export function skillIoIri(base: string, skill: string, io: string): string {
-  return `${base.replace(/\/+$/, "")}/kg/skills/${skill}/${io}.schema.json`;
+  return renderingPath(base, "skills", skill, `${io}.schema.json`);
 }
 
 /** One skill I/O contract, as found on disk. */
@@ -213,6 +213,43 @@ export function staleSkillIoIds(opts: SchemaExportOptions = {}): Array<{ source:
   return bad;
 }
 
+/**
+ * Rewrite each source file's stored `$id` to where it actually publishes.
+ *
+ * **This existed only as a sentence until 2026-09-19.** `--check` printed
+ * "Run `bun run kg:schema` to rewrite them", and `kg:schema` writes `_kg/` —
+ * build output — leaving the committed sources untouched. So the one remedy
+ * the gate named did not perform it, and the only way past a legitimate
+ * relocation was to hand-edit 44 identities: precisely the act the gate exists
+ * to catch. Found by moving the renderings off `kg/`, which made all 44 stale
+ * at once.
+ *
+ * **It writes the `$id` and nothing else.** The source is authoritative for its
+ * content; only the identity is computed. Keys keep their order because the
+ * object is rebuilt from the parsed file with `$id` replaced in place, so the
+ * diff is one line per file and reviewable as such.
+ *
+ * Separate from `--check` on the repo's own rule: a check that writes can pass
+ * by fixing what it was asked to report.
+ */
+export function writeSkillIoIds(opts: SchemaExportOptions = {}): string[] {
+  const written: string[] = [];
+  for (const { source, stored, expected } of staleSkillIoIds(opts)) {
+    const abs = join(ROOT, source);
+    const doc = JSON.parse(readFileSync(abs, "utf-8")) as Record<string, unknown>;
+    if (stored === "(none)" && !("$id" in doc)) {
+      // A file with no `$id` at all: put it FIRST, which is where every other
+      // one carries it and where a reader looks for a document's identity.
+      writeFileSync(abs, JSON.stringify({ $id: expected, ...doc }, null, 2) + "\n");
+    } else {
+      doc.$id = expected;
+      writeFileSync(abs, JSON.stringify(doc, null, 2) + "\n");
+    }
+    written.push(source);
+  }
+  return written;
+}
+
 if (import.meta.main) {
   const arg = (f: string): string | undefined => {
     const i = process.argv.indexOf(f);
@@ -229,6 +266,16 @@ if (import.meta.main) {
   // asked to report. It would also mean CI's verification step mutating the
   // tree it is verifying, which makes a later "the tree is clean" assertion
   // meaningless. So the two modes are exclusive and the check runs first.
+  if (process.argv.includes("--write-ids")) {
+    const written = writeSkillIoIds();
+    if (written.length === 0) console.log("✓ every skill I/O $id already matches its published location");
+    else {
+      console.log(`Rewrote ${written.length} skill I/O $id(s):`);
+      for (const w of written) console.log(`  ${w}`);
+    }
+    process.exit(0);
+  }
+
   if (process.argv.includes("--check")) {
     // Deliberately against the DECLARED base, not `--base-url`: a source `$id`
     // is always canonical. A preview overrides the base at export time only —
@@ -239,7 +286,7 @@ if (import.meta.main) {
     if (stale.length > 0) {
       console.error(`${stale.length} skill I/O schema(s) carry an $id that is not where they publish:`);
       for (const b of stale) console.error(`  ✗ ${b.source}\n      stored   ${b.stored}\n      expected ${b.expected}`);
-      console.error("\nRun `bun run kg:schema` to rewrite them.");
+      console.error("\nRun `bun run kg:schema:ids` to rewrite them.");
       process.exit(1);
     }
     const n = buildSkillIoContracts().length;

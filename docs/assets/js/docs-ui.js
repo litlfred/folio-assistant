@@ -132,7 +132,16 @@
     return false;
   }
 
-  function mountLanguageSwitcher(host, before) {
+  /**
+   * The language bar, as content for an action tile's view.
+   *
+   * It used to mount its own header toggle and its own outside-click and
+   * Escape handlers. Both now belong to the tile panel that contains it: two
+   * things listening for Escape is two things that can disagree about whether
+   * anything is open, and the bug this whole area already paid for was a
+   * control fighting its container for position.
+   */
+  function buildLanguageBar() {
     var meta = getTranslationMeta();
     var currentLang = (meta && meta.lang) || "en";
     var available = (meta && meta.availableLocales) || [];
@@ -140,22 +149,10 @@
     var path = window.location.pathname;
     var basePath = deriveBasePath(path, currentLang);
 
-    var btn = el("button", {
-      type: "button",
-      class: "fa-qr-toggle fa-lang-toggle",
-      "aria-label": "Switch language",
-      "aria-expanded": "false",
-    });
-    btn.innerHTML = GLOBE_GLYPH;
-
-    // Horizontal language bar — shows all 6 UN languages
-    var bar = el("div", {
-      class: "fa-lang-bar",
-      "data-open": "false",
-      // Positioning lives in CSS so the in-sidebar and fallback cases can
-      // differ. Inline styles here would win over both.
-      style: "display:none;"
-    });
+    // Horizontal language bar — shows all 6 UN languages. Inside a tile view
+    // it is simply present: the view's own disclosure decides whether anyone
+    // can see it, so the bar carries no open/closed state of its own.
+    var bar = el("div", { class: "fa-lang-bar fa-tile-content", "data-open": "true" });
 
     var remembered = rememberedLocale(currentLang, available);
 
@@ -193,31 +190,7 @@
       bar.appendChild(tab);
     }
 
-    btn.addEventListener("click", function () {
-      var isOpen = bar.getAttribute("data-open") === "true";
-      bar.setAttribute("data-open", isOpen ? "false" : "true");
-      bar.style.display = isOpen ? "none" : "block";
-      btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
-    });
-    document.addEventListener("click", function (e) {
-      if (!btn.contains(e.target) && !bar.contains(e.target)) {
-        bar.setAttribute("data-open", "false");
-        bar.style.display = "none";
-        btn.setAttribute("aria-expanded", "false");
-      }
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && bar.getAttribute("data-open") === "true") {
-        bar.setAttribute("data-open", "false");
-        bar.style.display = "none";
-        btn.setAttribute("aria-expanded", "false");
-        btn.focus();
-      }
-    });
-
-    host.insertBefore(btn, before);
-    mountPanelInSidebarColumn(host, bar);
-    return btn;
+    return bar;
   }
 
   /**
@@ -359,8 +332,18 @@
     return true;
   }
 
-  function mountThemeToggle(host, before) {
-    var btn = el("button", { type: "button", class: "fa-qr-toggle fa-theme-toggle" });
+  /**
+   * The light/dark control, as a tile.
+   *
+   * The owner placed it "under settings" rather than in the top row, which is
+   * the right call and worth recording: it is the one control here a reader
+   * sets once and then never touches, so it costs a row of prime space for a
+   * single use. It keeps its own class so the e2e spec and any muscle memory
+   * in the stylesheet still find it.
+   */
+  function buildThemeTile() {
+    var btn = el("button", { type: "button", class: "fa-tile fa-theme-toggle" });
+    var caption = el("span", { class: "fa-tile-caption" });
 
     function paint(name) {
       // The icon shows the scheme you are IN, not the one you would get. A
@@ -368,6 +351,10 @@
       // the destination instead is the other convention and is a coin-flip
       // either way; what is not optional is that the label says which.
       btn.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
+      btn.appendChild(caption);
+      // The caption is the visible half of the same fact the label states, so
+      // a reader who cannot tell the two bulbs apart at 16px does not have to.
+      caption.textContent = name === "light" ? "Light" : "Dark";
       btn.setAttribute("aria-label",
         name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light");
       btn.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
@@ -394,7 +381,6 @@
       // that coupling is gone and the reload went with it.
     });
 
-    host.insertBefore(btn, before);
     return btn;
   }
 
@@ -490,19 +476,12 @@
     });
   }
 
-  function mountReadingPrefs(host, before) {
+  /** The reading-preference rows, as content for the settings tile's view. */
+  function buildReadingPrefs() {
     var prefs = storedPrefs() || defaultPrefs();
     applyPrefs(prefs);
 
-    var btn = el("button", {
-      type: "button",
-      class: "fa-qr-toggle fa-a11y-toggle",
-      "aria-label": "Reading preferences",
-      "aria-expanded": "false"
-    });
-    btn.innerHTML = GEAR_GLYPH; // static markup above, no input involved
-
-    var panel = el("div", { class: "fa-a11y-panel", hidden: "hidden", role: "group",
+    var panel = el("div", { class: "fa-a11y-panel fa-tile-content", role: "group",
                             "aria-label": "Reading preferences" });
 
     A11Y_OPTIONS.forEach(function (opt) {
@@ -534,16 +513,7 @@
       "Saved in this browser only. It is not sent anywhere.");
     panel.appendChild(note);
 
-    btn.addEventListener("click", function () {
-      var open = btn.getAttribute("aria-expanded") === "true";
-      btn.setAttribute("aria-expanded", open ? "false" : "true");
-      if (open) panel.setAttribute("hidden", "hidden");
-      else panel.removeAttribute("hidden");
-    });
-
-    if (before && before.parentNode === host) host.insertBefore(btn, before);
-    else host.appendChild(btn);
-    mountPanelInSidebarColumn(host, panel);
+    return panel;
   }
 
   function firstMatch(selectors) {
@@ -554,24 +524,120 @@
     return null;
   }
 
-  function mountQr() {
-    if (typeof qrcode !== "function") {
-      console.warn("docs-ui: QR encoder not loaded; vendor/qrcode.js must be included first.");
-      return;
+  /* ── Action tiles ────────────────────────────────────────────────────── */
+
+  // A three-by-three of rounded squares: the launcher. It says "there are
+  // several things here" without naming one of them, which the gear and the
+  // globe both did while standing for the whole row.
+  var TILES_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<rect x="3" y="3" width="6" height="6" rx="1.4"/>' +
+    '<rect x="15" y="3" width="6" height="6" rx="1.4"/>' +
+    '<rect x="3" y="15" width="6" height="6" rx="1.4"/>' +
+    '<rect x="15" y="15" width="6" height="6" rx="1.4"/>' +
+    '<rect x="9.5" y="9.5" width="5" height="5" rx="1.2"/>' +
+    "</svg>";
+
+  // A net: nodes joined by edges. The owner asked for "an icon of a net" for
+  // the knowledge graph, which is also what the thing IS, so the glyph is not
+  // a metaphor that has to be learned.
+  var NET_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M12 4.5 5 9.5M12 4.5l7 5M5 9.5l3.5 8M19 9.5l-3.5 8M8.5 17.5h7M5 9.5h14" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+    '<circle cx="12" cy="4.5" r="2.1"/><circle cx="5" cy="9.5" r="2.1"/>' +
+    '<circle cx="19" cy="9.5" r="2.1"/><circle cx="8.5" cy="17.5" r="2.1"/>' +
+    '<circle cx="15.5" cy="17.5" r="2.1"/>' +
+    "</svg>";
+
+  // Angle brackets and a slash: the source.
+  var CODE_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M8.6 6.4 3 12l5.6 5.6 1.5-1.5L6 12l4.1-4.1zM15.4 6.4l-1.5 1.5L18 12l-4.1 4.1 1.5 1.5L21 12z"/>' +
+    '<path d="M13.6 3.6 10 20.4l-1.9-.4L11.7 3.2z"/>' +
+    "</svg>";
+
+  /**
+   * Where the knowledge-graph and source tiles point.
+   *
+   * Read from `#fa-site-links`, which `head_custom.html` fills from
+   * `_config.yml` through `relative_url`. Hardcoding either here would put a
+   * folio's own address inside shared client code and would break under a
+   * `baseurl` -- this site serves from `/folio-assistant/`, so an absolute
+   * `/kg/` is a 404 rather than a wrong-looking link.
+   *
+   * An unreadable or absent block returns an empty object and the affected
+   * tile is NOT DRAWN. A tile that goes nowhere is worse than a missing one,
+   * because the reader cannot tell a broken link from a broken site.
+   */
+  function getSiteLinks() {
+    var node = document.getElementById("fa-site-links");
+    if (!node) return {};
+    try {
+      var parsed = JSON.parse(node.textContent || "{}");
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch (_e) {
+      console.warn("docs-ui: #fa-site-links is not valid JSON; the knowledge-graph " +
+                   "and source tiles were not mounted.");
+      return {};
     }
+  }
+
+  /**
+   * The header's controls, as ONE launcher over a grid of same-sized tiles.
+   *
+   * ## Why one, and not five
+   *
+   * There were four header buttons -- theme, reading preferences, language, QR
+   * -- inside a row just-the-docs caps at `3.75rem` and shares with the site
+   * title. The owner's words were "that navbar is getting crowded", and adding
+   * the knowledge-graph viewer and the source link to that row would have made
+   * it six. One launcher takes the row from four icons to one.
+   *
+   * The alternative reading of the request -- a row of icons that each open a
+   * tile-sized panel -- takes it from four to five and makes the stated
+   * problem worse, which is what decided it.
+   *
+   * ## The tile is the QR panel's footprint
+   *
+   * "build out to the size of the QR code. use that as kind of the template
+   * size for action icons". So the panel is exactly the region the QR code
+   * already occupies -- `16.5rem` in the sidebar column -- and every view
+   * renders into it. Nothing here introduces a new place for content to appear.
+   *
+   * ## The panel is a SIBLING of the header
+   *
+   * Unchanged, and load-bearing: `.site-header` is a hard-capped row, so a
+   * panel left inside it is clipped. `mountPanelInSidebarColumn` puts it in
+   * `.side-bar`'s flex column where it pushes the nav down instead of covering
+   * it. Three separate panels used to solve this three different ways, one of
+   * them by opening upward into the staging banner; there is now one panel and
+   * one answer.
+   *
+   * ## Accessibility (bean `gjli`)
+   *
+   * Tiles are 4rem tall, well over the 24px SC 2.5.8 floor, because this
+   * instance's declared interaction profile is low-dexterity and a target that
+   * is barely legal is a target that is hard to hit. Every tile is a real
+   * `<button>` or `<a>`, so it comes with keyboard activation rather than
+   * needing it added. Opening a view moves focus to the view's own heading and
+   * Back returns it to the tile that was pressed -- a reader who cannot easily
+   * point must never have to hunt for where the keyboard went.
+   */
+  function mountActionTiles() {
     var title = firstMatch(TITLE_SELECTORS);
     var header = title ? title.parentNode : firstMatch(HEADER_SELECTORS);
     if (!header) {
       // The one unrecoverable case: no sidebar header of any shape.
       console.warn("docs-ui: no site header found (tried " + HEADER_SELECTORS.join(", ") +
-                   "); the page QR was not mounted.");
+                   "); the action tiles were not mounted.");
       return;
     }
     if (!title) {
       // Degraded but usable: the control works, it just sits on its own
       // rather than beside a title it could not locate.
       console.warn("docs-ui: no site title found (tried " + TITLE_SELECTORS.join(", ") +
-                   "); mounting the page QR into the header without it.");
+                   "); mounting the action tiles into the header without it.");
     }
 
     var host = el("div", { class: "fa-qr-host", "data-open": "false" });
@@ -584,94 +650,179 @@
 
     var toggle = el("button", {
       type: "button",
-      class: "fa-qr-toggle",
-      "aria-label": "Show a QR code linking to this page",
+      class: "fa-qr-toggle fa-tiles-toggle",
+      "aria-label": "Actions",
       "aria-expanded": "false",
     });
-    toggle.innerHTML = GLYPH; // static markup defined above, no input involved
+    toggle.innerHTML = TILES_GLYPH; // static markup above, no input involved
     host.appendChild(toggle);
 
-    // Left of the QR icon, per the header's reading order: the title, then
-    // the language switch, then the scheme switch, then the code. Inserted
-    // before `toggle` rather than appended, so they stay left of it.
-    mountThemeToggle(host, toggle);
-    mountReadingPrefs(host, toggle);
-    mountLanguageSwitcher(host, toggle);
-
-    var panel = el("button", {
-      type: "button",
-      class: "fa-qr-panel",
+    var panel = el("div", {
+      class: "fa-tiles",
       "data-open": "false",
-      "aria-label": "Hide the QR code",
+      role: "region",
+      "aria-label": "Actions",
+      tabindex: "-1",
     });
-    var art = el("span");
-    var caption = el("span", { class: "fa-qr-caption" });
-    panel.appendChild(art);
-    panel.appendChild(caption);
+    var grid = el("div", { class: "fa-tiles-grid", role: "group", "aria-label": "Actions" });
+    var view = el("div", { class: "fa-tiles-view", hidden: "hidden" });
+    panel.appendChild(grid);
+    panel.appendChild(view);
+    mountPanelInSidebarColumn(host, panel);
 
-    // THE PANEL IS A SIBLING OF THE HEADER, NOT A CHILD OF IT, and the theme's
-    // own numbers are why.
-    //
-    // At the desktop breakpoint just-the-docs makes `.site-header` a
-    // HARD-CAPPED row -- `height: 3.75rem; max-height: 3.75rem` -- inside a
-    // `.side-bar` that is `position: fixed; flex-flow: column nowrap`. A code
-    // placed inside that header cannot make it taller, so it either overflows
-    // the cap or gets clipped. That is what forced the previous version to be
-    // an absolutely-positioned popover that REPLACED the title (the title and
-    // the toggle were both `display: none` while it was open).
-    //
-    // The request is that the code sit below the title with the title still
-    // there, so it has to be a sibling in the sidebar's flex column, between
-    // `.site-header` and `.site-nav`. In that slot it is in normal flow, it
-    // pushes the nav down instead of covering it, and it inherits the
-    // sidebar's fixed positioning for free.
-    //
-    // The fallback matters: a theme with no `.side-bar` still gets a working
-    // control, just anchored to the header as before.
-    var sideBar = header.closest ? header.closest(".side-bar") : null;
-    if (sideBar && header.parentNode === sideBar) {
-      sideBar.insertBefore(panel, header.nextSibling);
-      panel.classList.add("fa-qr-in-sidebar");
-    } else {
-      host.appendChild(panel);
-    }
+    /* ── The views ─────────────────────────────────────────────────────── */
 
-    function render() {
+    // Built once, on first open, and kept. Rebuilding on every open would
+    // discard a half-set checkbox and re-encode the QR for nothing; building
+    // at mount time would run the encoder on every page load for a panel most
+    // readers never open.
+    var built = false;
+    var qrArt = el("span");
+    var qrCaption = el("span", { class: "fa-qr-caption" });
+    var views = {};
+    var openTile = null;   // the tile to return focus to when Back is pressed
+
+    function renderQr() {
       var url = window.location.href;
       var q = qrcode(0, "M");
       q.addData(url);
       q.make();
       // createSvgTag builds the tag from module bits; the URL is not present
       // in the string it returns.
-      art.innerHTML = q.createSvgTag({ scalable: true, margin: 4 });
-      caption.textContent = url;
+      qrArt.innerHTML = q.createSvgTag({ scalable: true, margin: 4 });
+      qrCaption.textContent = url;
     }
 
+    function buildViews() {
+      if (built) return;
+      built = true;
+
+      var settings = el("div", { class: "fa-tile-content" });
+      settings.appendChild(buildThemeTile());
+      settings.appendChild(buildReadingPrefs());
+      views.settings = settings;
+
+      views.language = buildLanguageBar();
+
+      if (typeof qrcode === "function") {
+        var qr = el("div", { class: "fa-qr-panel fa-tile-content", "data-open": "true" });
+        qr.appendChild(qrArt);
+        qr.appendChild(qrCaption);
+        views.qr = qr;
+      }
+    }
+
+    /* ── Navigation between the grid and a view ────────────────────────── */
+
+    function showGrid() {
+      view.setAttribute("hidden", "hidden");
+      view.innerHTML = "";
+      grid.removeAttribute("hidden");
+      if (openTile) openTile.focus();
+      openTile = null;
+    }
+
+    function showView(key, label, tile) {
+      buildViews();
+      openTile = tile;
+      grid.setAttribute("hidden", "hidden");
+      view.innerHTML = "";
+
+      var head = el("div", { class: "fa-tiles-head" });
+      var back = el("button", {
+        type: "button",
+        class: "fa-tiles-back",
+        // The visible text is a chevron and the word; the accessible name says
+        // WHERE back goes, because "Back" alone is a direction, not a place.
+        "aria-label": "Back to all actions",
+      }, "‹ All actions");
+      back.addEventListener("click", showGrid);
+      var heading = el("h3", { class: "fa-tiles-title", tabindex: "-1" }, label);
+      head.appendChild(back);
+      head.appendChild(heading);
+      view.appendChild(head);
+      view.appendChild(views[key]);
+      view.removeAttribute("hidden");
+
+      if (key === "qr") renderQr();
+      // The panel is rewritten in place, so a reader whose cursor did not move
+      // would be told nothing at all about what just happened.
+      heading.focus();
+    }
+
+    /* ── The grid ──────────────────────────────────────────────────────── */
+
+    function tileButton(glyph, label, key) {
+      var b = el("button", { type: "button", class: "fa-tile", "aria-label": label });
+      b.innerHTML = glyph;
+      b.appendChild(el("span", { class: "fa-tile-caption" }, label));
+      b.addEventListener("click", function () { showView(key, label, b); });
+      return b;
+    }
+
+    function tileLink(glyph, label, href, hint) {
+      var a = el("a", { class: "fa-tile", href: href, "aria-label": label + " — " + hint });
+      a.innerHTML = glyph;
+      a.appendChild(el("span", { class: "fa-tile-caption" }, label));
+      return a;
+    }
+
+    grid.appendChild(tileButton(GEAR_GLYPH, "Settings", "settings"));
+    grid.appendChild(tileButton(GLOBE_GLYPH, "Language", "language"));
+    // The encoder is a separate vendor script. Without it the OTHER tiles must
+    // still work -- the old code returned early from the whole mount when it
+    // was missing, so a failed vendor request took the theme switch, the
+    // reading preferences and the language switch down with the QR code.
+    if (typeof qrcode === "function") {
+      grid.appendChild(tileButton(GLYPH, "QR code", "qr"));
+    } else {
+      console.warn("docs-ui: QR encoder not loaded (vendor/qrcode.js must be included " +
+                   "first); the other action tiles were mounted without it.");
+    }
+
+    var links = getSiteLinks();
+    if (links.kg) {
+      grid.appendChild(tileLink(NET_GLYPH, "Knowledge graph", links.kg,
+                                "browse this instance's skills, tools and schemas"));
+    }
+    if (links.source) {
+      grid.appendChild(tileLink(CODE_GLYPH, "Source", links.source,
+                                "this site's repository on the forge"));
+    }
+
+    /* ── Disclosure ────────────────────────────────────────────────────── */
+
     function open(isOpen) {
-      if (isOpen) render();
       host.setAttribute("data-open", isOpen ? "true" : "false");
       // Mirrored onto the panel because the panel is no longer a DESCENDANT of
       // the host -- it lives in the sidebar column now, so a
-      // `.fa-qr-host[data-open] .fa-qr-panel` selector would never match it.
+      // `.fa-qr-host[data-open] .fa-tiles` selector would never match it.
       panel.setAttribute("data-open", isOpen ? "true" : "false");
       toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      (isOpen ? panel : toggle).focus();
+      if (isOpen) {
+        buildViews();
+        panel.focus();
+      } else {
+        showGrid();
+        toggle.focus();
+      }
     }
 
-    // A real toggle now. It used to be one-way (the button hid itself on open
-    // and only the panel could close it), which was the only option while the
-    // panel was covering the button's own slot.
     toggle.addEventListener("click", function () {
       open(host.getAttribute("data-open") !== "true");
     });
-    panel.addEventListener("click", function () { open(false); });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && host.getAttribute("data-open") === "true") open(false);
+      if (e.key !== "Escape" || host.getAttribute("data-open") !== "true") return;
+      // Escape from a view returns to the grid rather than closing outright:
+      // one keystroke should undo one step, not three.
+      if (view.hasAttribute("hidden")) open(false);
+      else showGrid();
     });
     // An in-page anchor changes the address without a reload, so a code left
     // open would go stale and point somewhere the reader is no longer at.
     window.addEventListener("hashchange", function () {
-      if (host.getAttribute("data-open") === "true") render();
+      if (host.getAttribute("data-open") === "true" && !view.hasAttribute("hidden") &&
+          view.contains(qrArt)) renderQr();
     });
   }
 
@@ -1568,7 +1719,7 @@
       document.documentElement.setAttribute("lang", pageLang);
     }
 
-    mountQr();
+    mountActionTiles();
     mountTranslationBadges();
     mountQaPanels();
     mountPageLanguageBar();

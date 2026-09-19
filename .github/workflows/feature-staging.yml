@@ -210,7 +210,9 @@ jobs:
       # load time, from a path written in at generation time. So the order here
       # is free, and this is the useful end of it.
       - name: Emit the knowledge-graph viewer
-        run: bun run scripts/kg-viewer.ts --out ./_site/kg/index.html
+        run: |
+          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
+          bun run scripts/kg-viewer.ts --out "./_site/${STUB}/index.html"
 
       - name: Inject staging banner
         # PR title and body come through `env`, NOT `${{ }}` interpolation.
@@ -349,15 +351,18 @@ jobs:
         run: |
           BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
           STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
-          bun run scripts/kg-export.ts             --base-url "$BASE" --out "./_site/kg/${STUB}.jsonld"
-          bun run scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site/kg
+          bun run scripts/kg-export.ts             --base-url "$BASE" --out "./_site/${STUB}.jsonld"
+          bun run scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
           STUB="$STUB" bun -e '
-            const f = `./_site/kg/${process.env.STUB}.jsonld`;
+            const f = `./_site/${process.env.STUB}.jsonld`;
             const d = JSON.parse(await Bun.file(f).text());
             d.staging = { branch: process.env.KG_BRANCH, sha: process.env.GITHUB_SHA,
                           pr: process.env.GITHUB_REF_NAME, run: process.env.GITHUB_RUN_ID };
             await Bun.write(f, JSON.stringify(d, null, 2) + "\n");
-          ' 
+          '
+          # The `.json` alias is copied AFTER the staging stamp, so the two
+          # documents cannot disagree about which build they came from.
+          cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json" 
         shell: bash
 
       - name: Disable Jekyll on published branch

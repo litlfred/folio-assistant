@@ -15,10 +15,17 @@
  * project keeps re-learning. Generating it means the exporter — which already
  * knows the stub — writes it in, and the page resolves nothing.
  *
- * It fetches its sibling **relative to its own location**, so the same bytes
- * work at `<canonical>/kg/` and at `STAGING/<slug>/kg/` with no configuration.
- * A staging build that needed a different page would be a staging build
- * testing something other than what ships.
+ * It fetches the graph **relative to its own location**, so the same bytes work
+ * at `<canonical>/<stub>/` and at `STAGING/<slug>/<stub>/` with no
+ * configuration. A staging build that needed a different page would be a
+ * staging build testing something other than what ships.
+ *
+ * **The graph is its PARENT, not its sibling.** The renderings sit at the base
+ * — `<base>/<stub>.jsonld` — and the viewer is the directory that makes
+ * `<base>/<stub>` a page a browser can open, since GitHub Pages resolves an
+ * extensionless URL only to a directory index. So the page reads
+ * `../<stub>.jsonld`. It was a sibling while both lived in `kg/`; the relation
+ * moved with the layout, which is why it is written here rather than assumed.
  *
  * ## Why no dependencies, and no force-directed graph
  *
@@ -70,7 +77,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * identifiers in comments bare or in double quotes.
  */
 export function viewerHtml(stub: string): string {
-  const doc = `${stub}.jsonld`;
+  const doc = `../${stub}.jsonld`;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -148,6 +155,11 @@ export function viewerHtml(stub: string): string {
   h1 { margin: 0 0 2px; font-size: 17px; font-weight: 600; }
   .meta { color: var(--dim); font-size: 12.5px; }
   .meta code { font-size: 12px; }
+  /* 24px is the SC 2.5.8 floor; these sit in a dense header line where the
+     text is 12.5px, so the box is what carries the target rather than the
+     glyphs. */
+  .meta a { display: inline-flex; align-items: center; min-height: 24px; padding: 0 2px;
+            color: var(--accent); text-underline-offset: 2px; }
   main { display: grid; grid-template-columns: 210px minmax(0,1fr) minmax(0,1.15fr); gap: 0; align-items: start; }
   @media (max-width: 860px) { main { grid-template-columns: 1fr; } .facets { border-right: none !important; } }
   .facets, .list, .detail { padding: 14px 16px; }
@@ -304,6 +316,39 @@ function init(doc) {
   if (doc.sourceTreeDirty) bits.push("tree dirty");
   if (doc.generatedAt) bits.push(String(doc.generatedAt).slice(0, 19).replace("T", " ") + "Z");
   el("meta").textContent = bits.join(" · ");
+
+  // A way back to the document this page renders.
+  //
+  // DOC, not a composed absolute URL. The page already fetched its sibling by
+  // that relative path, so the link is correct wherever the page is served
+  // from -- canonical or STAGING/<slug>/ -- for the same reason the fetch is.
+  // Composing <base>/kg/<stub>.jsonld from the declaration would have been a
+  // second answer to a question the page has already answered, and the one
+  // that goes wrong on a preview.
+  //
+  // A sourceCommit IRI is a different thing and is linked separately: it
+  // points at the commit the graph was generated FROM, on the forge, which is
+  // not derivable from here and is absent when the export could not determine
+  // it.
+  const meta = el("meta");
+  meta.appendChild(document.createTextNode(" · "));
+  const src = document.createElement("a");
+  src.href = DOC;
+  src.textContent = "JSON-LD";
+  // The visible text is the format; the accessible name says what it gets you
+  // and from where, because "JSON-LD" out of context names a syntax rather
+  // than a destination.
+  src.setAttribute("aria-label", "Download this graph as JSON-LD (" + DOC + ")");
+  meta.appendChild(src);
+
+  if (doc.sourceCommit) {
+    meta.appendChild(document.createTextNode(" · "));
+    const c = document.createElement("a");
+    c.href = String(doc.sourceCommit);
+    c.rel = "noreferrer";
+    c.textContent = "source commit";
+    meta.appendChild(c);
+  }
   if (doc["@type"] && String(doc["@type"]).includes("Preview")) {
     el("title").textContent += " (preview)";
   }
@@ -517,8 +562,8 @@ if (import.meta.main) {
     return i !== -1 ? process.argv[i + 1] : undefined;
   };
   const { stub } = exportIdentity({ baseUrl: arg("--base-url") ?? process.env.KG_BASE_URL });
-  const out = arg("--out") ?? join(ROOT, "_kg", "index.html");
+  const out = arg("--out") ?? join(ROOT, "_kg", stub, "index.html");
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, viewerHtml(stub));
-  console.log(`KG viewer → ${relative(ROOT, out)}\n  reads  ./${stub}.jsonld  (sibling, resolved at load)`);
+  console.log(`KG viewer → ${relative(ROOT, out)}\n  reads  ../${stub}.jsonld  (parent, resolved at load)`);
 }

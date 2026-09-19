@@ -32,14 +32,35 @@ per-repository: after the split, `folio-assist-core` depending on
 `cat-harness` means both are present, and both publish.
 
 ```
-<base>/kg/<stub>.jsonld          the knowledge graph        application/ld+json
+<base>/<stub>.jsonld             the knowledge graph        application/ld+json
+<base>/<stub>.json               the same bytes             application/json
 <base>/<stub>.schema.json        its declaration's schema   application/schema+json
+<base>/<stub>/                   the viewer                 text/html
 ```
 
-So `…/folio-assistant/kg/cat-harness.jsonld` is the *cat-harness* instance's
+So `…/folio-assistant/cat-harness.jsonld` is the *cat-harness* instance's
 rendering, served from a tree whose root happens to be `folio-assistant`. A
 consumer asking for one instance's graph must not be handed another's because
 the paths collided.
+
+**They sit at the base, not in a subdirectory.** An instance's repository IS its
+declaration that it holds a graph — `cat-harness.json` at the root says which
+graphs are here — so there is nothing left for a `kg/` segment to distinguish it
+from, and the stub is already doing the separating that a directory would have
+been doing. The renderings lived under `kg/` until 2026-09-19 and were moved.
+
+**`<stub>/` is a directory because an extensionless URL has to be.** GitHub
+Pages resolves `<base>/<stub>` only to a directory index, so the viewer is what
+makes the bare stub openable. It reads `../<stub>.jsonld` — its PARENT, not its
+sibling, which is the one thing about it that changed with the layout.
+
+**One function computes all of this**, `renderingPath()` in
+`schemas/cat-harness.ts`. The path was written out in six template literals
+across two exporters, a type vocabulary and two workflows — five of them
+minting an `$id`, which is an identity rather than a link. Moving the
+renderings meant editing all six, and the sixth was found only because 95
+published `schema` refs pointed at a URL that 404s. A path a consumer
+dereferences is not a string to type twice.
 
 ## Every endpoint declares its media type
 
@@ -84,10 +105,22 @@ the honest handling is the one this repository applies everywhere else:
 
 A client fetching `<stub>.jsonld` from Pages **will** receive the wrong
 `Content-Type`. A strict JSON-LD processor may refuse it. That is a known and
-accepted cost of publishing there, and the remedy is the local deployment, not
-a different extension: renaming the artefact to `.json` to make Pages serve it
-as JSON would trade a wrong type for a wrong *name*, and the name is the part
-a reader uses.
+accepted cost of publishing there, and the remedy is the local deployment.
+
+**`<stub>.json` is an alias, and the distinction from a rename is the whole
+point.** Renaming the artefact to `.json` would trade a wrong type for a wrong
+*name*, and the name is the part a reader uses — that argument stands. Serving
+the same bytes at BOTH extensions costs nothing and concedes nothing: `.jsonld`
+stays canonical and is what every `@id` in the document names, while `.json` is
+the one path by which a correct `Content-Type` can come out of this host at all.
+A consumer that needs the media type more than the identity has somewhere to
+go, and neither document claims to be the other.
+
+What that does **not** license is a `.json` whose bytes differ, or an `@id`
+pointing at it. Two documents asserting the same IRIs is the defect
+`--base-url` exists to prevent, and an alias is only an alias while it is
+byte-identical — which is why the staging build copies it *after* stamping,
+so the two cannot disagree about which build they came from.
 
 ## What this skill does not cover
 

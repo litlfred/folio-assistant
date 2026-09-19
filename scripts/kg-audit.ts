@@ -70,7 +70,7 @@ import {
 } from "../schemas/role-graph.js";
 import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
-import { knownSkills } from "./known-skills.js";
+import { isSkillMd, knownSkills } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 
 const ENGINE_VERSION = "1";
@@ -425,33 +425,6 @@ async function auditDecisions(
  * named parent exists AND the file sits inside that parent's own directory,
  * so `part-of: something-else` in an arbitrary file excludes nothing.
  */
-/**
- * A `.md` under `skills/` that declares what it IS, and it is not a skill.
- *
- * The `kg` directory's path is `skills/`, and this walk is recursive, so ANY
- * markdown node placed in that tree is audited as a skill unless it says
- * otherwise. `skills/memory/*.md` are the first such nodes: 25 agent-memory
- * entries carrying `$schema: folio-memory/v1`. Measured 2026-09-19 before this
- * guard existed — all 25 were audited as skills and 25 bogus `kg-qa/`
- * sidecars were written beside them, asserting brevity and heading rules
- * against files that are not instruction bodies at all.
- *
- * The test is the file's OWN `$schema` declaration, never its directory. #263:
- * a directory may hold more than one part of a graph, and telling the parts
- * apart by where they sit is "a coincidence of the current layout, not a
- * contract". The same reason `isPartOfASkill` reads `part-of:` rather than
- * matching a path.
- *
- * This cannot hide a skill. A skill file has no `$schema` in its front matter
- * — skills declare `name`/`summary` — so adding one to duck the audit would
- * be declaring the file to be something else, which is a change a reviewer
- * sees rather than a flag they do not.
- */
-function declaresOwnKind(path: string): boolean {
-  const fm = /^---\n([\s\S]*?)\n---/.exec(readFileSync(path, "utf-8"));
-  return fm !== null && /^\$schema:\s*\S+/m.test(fm[1]!);
-}
-
 function isPartOfASkill(path: string): boolean {
   const fm = /^---\n([\s\S]*?)\n---/.exec(readFileSync(path, "utf-8"));
   const parent = fm && /^part-of:\s*(\S+)\s*$/m.exec(fm[1]!)?.[1];
@@ -467,7 +440,7 @@ function skillFiles(): string[] {
       const p = join(dir, e.name);
       if (e.isDirectory()) {
         if (e.name !== KG_QA_DIRNAME) walk(p);
-      } else if (e.name.endsWith(".md") && !isPartOfASkill(p) && !declaresOwnKind(p)) {
+      } else if (e.name.endsWith(".md") && !isPartOfASkill(p) && isSkillMd(p)) {
         out.push(p);
       }
     }

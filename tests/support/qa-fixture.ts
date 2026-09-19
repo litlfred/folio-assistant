@@ -42,6 +42,7 @@ import { readFileSync } from "node:fs";
 
 /** The shape this helper needs. Deliberately partial — a sidecar has more. */
 interface SidecarDoc {
+  state?: string;
   counts: Record<string, number>;
   criteria: Array<{
     id: string;
@@ -55,8 +56,8 @@ interface SidecarDoc {
 export interface VerdictOverride {
   /** The criterion id to put a verdict on. Must be in the sidecar. */
   id: string;
-  /** `fail`, `warn`, … The panel folds anything not "loud". */
-  result: string;
+  /** `fail`, `warn`, … The panel folds anything not "loud". Omit to keep. */
+  result?: string;
   severity?: string;
   /** `file:line: <quote>`, the form the checkers document. */
   evidence?: string[];
@@ -90,21 +91,37 @@ export interface VerdictOverride {
  * the criterion, rather than quietly testing a different row.
  */
 export function sidecarWithVerdicts(path: string, overrides: VerdictOverride[]): string {
-  const doc = JSON.parse(readFileSync(path, "utf8")) as SidecarDoc;
+  return applyVerdicts(readFileSync(path, "utf8"), overrides, path);
+}
+
+/**
+ * The same, over a sidecar already in hand — so fixtures can be CHAINED.
+ *
+ * PR #319's spec derives its stale fixture from its *failing* one rather than
+ * from the pristine corpus, so one named criterion drives both. That is the
+ * better shape and it is why this exists: deriving stale from the untouched
+ * corpus, as I first did, means the row marked stale and the row the spec
+ * clicks are different criteria that happen to coincide.
+ */
+export function applyVerdicts(
+  json: string,
+  overrides: VerdictOverride[],
+  where = "<sidecar>",
+): string {
+  const doc = JSON.parse(json) as SidecarDoc;
 
   for (const o of overrides) {
     const c = doc.criteria.find((x) => x.id === o.id);
     if (!c) {
       throw new Error(
-        `fixture: \`${o.id}\` is no longer a criterion in ${path}. ` +
+        `fixture: \`${o.id}\` is no longer a criterion in ${where}. ` +
           `Every assertion keyed to it would silently test whichever row sorts ` +
           `first instead — so this throws rather than defaulting. Either the ` +
           `criterion was renamed (update the spec) or it was removed (the spec ` +
           `needs a different subject).`,
       );
     }
-    const was = c.result;
-    c.result = o.result;
+    if (o.result !== undefined) c.result = o.result;
     if (o.severity !== undefined) c.severity = o.severity;
     if (o.evidence !== undefined) c.evidence = o.evidence;
     if (o.witnessKinds !== undefined && c.witnesses) {
@@ -114,7 +131,7 @@ export function sidecarWithVerdicts(path: string, overrides: VerdictOverride[]):
       const w = c.witnesses?.[0];
       if (!w) {
         throw new Error(
-          `fixture: \`${o.id}\` has no witness to mark stale in ${path}. ` +
+          `fixture: \`${o.id}\` has no witness to mark stale in ${where}. ` +
             `Marking nothing and reporting success is how a staleness assertion ` +
             `passes over a verdict that was never stale.`,
         );
@@ -122,13 +139,24 @@ export function sidecarWithVerdicts(path: string, overrides: VerdictOverride[]):
       w.freshness = "stale";
       w.changed = o.stale.changed;
     }
-    // Keep `counts` consistent with `criteria`. A panel header that disagrees
-    // with the rows below it is a defect a spec should be able to catch, so
-    // the fixture must not be the thing introducing one.
-    if (was !== o.result) {
-      if (doc.counts[was] !== undefined) doc.counts[was] -= 1;
-      doc.counts[o.result] = (doc.counts[o.result] ?? 0) + 1;
-    }
+  }
+
+  // RECOMPUTED from the rows, not adjusted by a delta — #319's version does
+  // this and it is the more robust of the two. An increment is right only if
+  // every prior count was right and no override touched the same criterion
+  // twice; a recount cannot drift from the rows it summarises, and a panel
+  // header contradicting its own rows is a defect a spec should be able to
+  // catch rather than one the fixture introduces.
+  const tally = (r: string): number => doc.criteria.filter((c) => c.result === r).length;
+  doc.counts = {
+    fail: tally("fail"),
+    warn: tally("warn"),
+    pass: tally("pass"),
+    na: tally("n/a"),
+    unknown: tally("unknown"),
+  };
+  if (doc.state !== undefined) {
+    doc.state = doc.counts.fail ? "fail" : doc.counts.warn ? "warn" : "pass";
   }
   return JSON.stringify(doc);
 }

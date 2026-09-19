@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { sidecarWithVerdicts } from "./support/qa-fixture.js";
+import { applyVerdicts, sidecarWithVerdicts } from "./support/qa-fixture.js";
 
 /**
  * The QA icon has to OPEN, and what it opens has to name its witnesses.
@@ -38,57 +38,106 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
 
-/** The real generator output this suite's fixtures are derived from. */
+/** A block sidecar from the corpus, and two states derived from it. */
 const CORPUS_PATH = join(
   ROOT,
   "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json",
 );
 
 /**
- * The same document with its one `voice-status-leak` finding put back.
+ * The same document with one criterion made to FAIL.
  *
- * This was served straight from the corpus, where that criterion WAS failing.
- * PR #302 adjudicated all 26 `voice-*` findings to zero — correctly — and the
- * two specs keyed to that row went red on a content change that was right.
- * See `tests/support/qa-fixture.ts` for why shape comes off disk and a verdict
- * does not. Bean `folio-assistant-iumj`.
+ * **This used to be served straight from the corpus, and that is why the suite
+ * went red on `main` at 78a399ee5.** The block really did carry a failing
+ * `voice-status-leak` — the assertions below were written against it — and
+ * #302 ("Adjudicate the remaining 12 voice findings") legitimately FIXED that
+ * finding. The sidecar is now 22 pass and 26 n/a with nothing failing, so
+ * "worst criterion first" had no worst criterion to put first, and a test of
+ * the PANEL failed because the CONTENT got better.
  *
- * Three details are restored rather than invented, because a fixture that
- * guesses tests the guess: the adjudicating AGENT witness is dropped so the
- * script that found it is first again; `evidence` is `file:line: <quote>`, the
- * form `qa-checkers-voice.ts` documents at its head, citing the line the
- * adjudicating witness itself names; and `counts` moves with the verdict.
+ * The file already knew this shape of mistake: {@link STALE_JSON} exists
+ * because that block's verdict was stale on the day it was written and stopped
+ * being stale when the sweep re-ran. The same reasoning applies to a failing
+ * row and was simply not applied to it. A test of how the panel RENDERS a
+ * failure must not depend on the corpus containing one — otherwise every
+ * content fix is a CI failure, which teaches exactly the wrong lesson.
+ *
+ * The row is the real one, copied from the sidecar as it stood at c8fbad385^,
+ * so the hash and witness the assertions name are the generator's own output
+ * rather than invented values.
+ */
+/** The criterion this spec drives, named once so both fixtures agree. */
+const LOUD_ID = "voice-status-leak";
+
+/**
+ * The same document with that one criterion made to FAIL.
+ *
+ * **This used to be served straight from the corpus, and that is why the suite
+ * went red on `main` at 78a399ee5.** The block really did carry a failing
+ * `voice-status-leak` — the assertions below were written against it — and
+ * #302 legitimately FIXED that finding. The sidecar became 22 pass and 26 n/a
+ * with nothing failing, so "worst criterion first" had no worst criterion to
+ * put first, and a test of the PANEL failed because the CONTENT got better.
+ *
+ * The file already knew this shape of mistake: {@link STALE_JSON} exists
+ * because that block's verdict was stale on the day it was written and stopped
+ * being stale when the sweep re-ran. The same reasoning applies to a failing
+ * row and was simply not applied to it.
+ *
+ * **FLIPPED WHERE IT SITS — criterion 19 of 48 — rather than hoisted to 0.**
+ * That is what makes "worst criterion first" an assertion about the panel. Put
+ * the failure at index 0 and the row the spec reads is the first row in
+ * DOCUMENT order, so a panel that sorted nothing at all would pass; that is
+ * precisely how the original verbatim fixture managed to assert nothing here.
+ *
+ * The witness stays the corpus's own rather than being written out as a
+ * literal: `scriptHash: "5af6856733f3"` is the value test 2 asserts, and a
+ * frozen copy keeps passing after the voice checker changes — a fixture
+ * drifting from the corpus is the exact defect this section exists to fix.
+ *
+ * Built through `tests/support/qa-fixture.ts`, which throws by name if
+ * `LOUD_ID` ever leaves the sidecar. Bean `iumj`.
  */
 const BLOCK_JSON = sidecarWithVerdicts(CORPUS_PATH, [
   {
-    id: "voice-status-leak",
+    id: LOUD_ID,
     result: "fail",
     severity: "critical",
-    witnessKinds: ["script"],
     evidence: [
       "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
     ],
+    // The script verdict alone. The agent witness that overturned it IS the
+    // adjudication, and a criterion shown as failing has not been adjudicated
+    // yet — keeping both would render a panel no sweep ever produced.
+    witnessKinds: ["script"],
   },
 ]);
 
 /**
- * The same document with one NAMED criterion's witness marked stale.
+ * How many rows the panel folds away: everything but the one failure.
  *
- * This was served straight from the corpus, where that block's verdict WAS
- * stale. Re-running the sweep cleared it — the system behaving correctly and
- * this test then failing for the right reason. Whether a hash comparison
- * yields `stale` is settled in `qa-witness.test.ts` against files it controls;
- * what belongs HERE is whether the panel RENDERS that state.
- *
- * **By id, not by index.** This marked `criteria[0]` until PR #319 pointed out
- * that the spec then asserts on the first *rendered* row: the two coincide
- * only while nothing sorts above it, so the test could pass while asserting a
- * stale badge on a row it had never marked. `canonical-calibration-count` is
- * criterion 0 in document order and the fixture now says so out loud.
+ * Computed from the fixture for the same reason the fixture is computed at all
+ * — the number belongs to this document, and a literal `47` here is one more
+ * way for a content change to turn a panel test red.
  */
-const STALE_JSON = sidecarWithVerdicts(CORPUS_PATH, [
-  { id: "canonical-calibration-count", result: "pass", stale: { changed: ["md"] } },
-]);
+const FOLDED_COUNT = (JSON.parse(BLOCK_JSON) as { criteria: unknown[] }).criteria.length - 1;
+
+/**
+ * The same document with that criterion's witness marked stale.
+ *
+ * Derived from {@link BLOCK_JSON}, not from the pristine corpus, so the row
+ * marked stale and the row the spec clicks are the SAME criterion rather than
+ * two that happen to coincide. **By id, like the fixture above** — marking
+ * `criteria[0]` worked only while the failure was forced to sit there, and
+ * index and render order coinciding is what let this test pass earlier while
+ * asserting a stale badge on a row it had never marked.
+ *
+ * Whether a hash comparison yields `stale` is settled in `qa-witness.test.ts`
+ * against files it controls; what belongs HERE is whether the panel RENDERS
+ * that state — which must not depend on the corpus happening to hold an
+ * out-of-date verdict on the day the suite runs.
+ */
+const STALE_JSON = applyVerdicts(BLOCK_JSON, [{ id: LOUD_ID, stale: { changed: ["md"] } }]);
 
 /** A KG sidecar: one auditor, no timestamp, a `sha256:`-prefixed hash. */
 const KG_JSON = readFileSync(
@@ -119,7 +168,7 @@ const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8">
   <h1>Harness</h1>
   <h2 id="node-a">A block node</h2>
   <p><a class="fa-node-edit" href="#">✎ Edit</a>
-     <span class="fa-qa-badges">${badge("block", "fail", "/assets/qa/block.json", "Content QA: 1 fail, 0 warn, 22 pass, 25 n/a — open for witnesses")}</span></p>
+     <span class="fa-qa-badges">${badge("block", "fail", "/assets/qa/block.json", "Content QA: 1 fail, 0 warn, 21 pass, 26 n/a — open for witnesses")}</span></p>
   <p>Narrative of the block.</p>
   <h2 id="node-b">A diagram node</h2>
   <p><a class="fa-node-edit" href="#">✎ Edit</a>
@@ -175,7 +224,13 @@ test("a block icon opens its sidecar, worst criterion first", async ({ page }) =
   await expect(firstRow.locator(".fa-qa-chip", { hasText: "critical" })).toBeVisible();
 
   // The passing bulk is behind one labelled control that states its own count.
-  await expect(panel.locator(".fa-qa-more")).toContainText("47");
+  //
+  // DERIVED, not pinned. `47` was a literal here, which is a property of the
+  // corpus — how many criteria this one block happens to carry — not of the
+  // panel. Perturbing the sidecar showed the assertion still failing after the
+  // failing row was made synthetic, so the corpus dependency this test was
+  // fixed for survived in the one number nobody looked at.
+  await expect(panel.locator(".fa-qa-more")).toContainText(String(FOLDED_COUNT));
   await expect(panel.locator(".fa-qa-crit-list").nth(1)).toBeHidden();
 });
 
