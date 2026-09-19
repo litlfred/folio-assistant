@@ -14,7 +14,17 @@ parent: Skill instructions
 
 A **QA witness** is what a reader sees when they open the QA badge beside a
 heading on the docs site. One JSON document per subject, all of them
-`"$schema": "qa-witness/v1"`, all of them under `docs/assets/qa/`.
+`"$schema": "qa-witness/v1"`, all of them committed under
+`test/results/witnesses/` and **published** at `/assets/qa/`.
+
+Those are two different questions. Where a witness LIVES follows provenance —
+it is a QA process's output, so it belongs in the declared `test/results/`
+tree with everything else a QA reviewer produced. Where it is SERVED FROM is
+unchanged: every `data-qa-src` in a generated page says `/assets/qa/…`, and
+the publishing workflows copy the directory into `_site/assets/qa/` after
+Jekyll runs. It sat in `docs/` until 2026-09-19 only because that is where
+Jekyll could reach it, which is a fact about the build and not about the
+artefact.
 
 Measured 2026-09-19: **134 documents — 113 `block`, 20 `kg`, 1
 `translation`.**
@@ -31,7 +41,7 @@ into the shape the panel draws and placed where the site can fetch it.
 
 So a wrong verdict is fixed in the checker; a verdict that reads wrongly on the
 page is fixed in `content/pipeline/qa-witness.ts` or in `docs-ui.js`. Editing a
-file under `docs/assets/qa/` by hand fixes neither — it is generated, and the
+file under `test/results/witnesses/` by hand fixes neither — it is generated, and the
 next `gen-docs-pages` run discards the edit.
 
 ## The three families, and why the distinction is load-bearing
@@ -104,7 +114,8 @@ and render order coincide only while nothing sorts above it.
 
 | | |
 |---|---|
-| projections | `docs/assets/qa/**/*.{block,kg,translation}.json` |
+| projections (committed) | `test/results/witnesses/**/*.{block,kg,translation}.json` |
+| projections (published) | `/assets/qa/…`, copied into `_site` by `docs-site.yml` and `feature-staging.yml` |
 | schema + builder | `content/pipeline/qa-witness.ts` |
 | written by | `scripts/gen-docs-pages.ts` |
 | drawn by | `docs/assets/js/docs-ui.js` (`qaBuildPanel`) |

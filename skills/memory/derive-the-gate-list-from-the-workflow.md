@@ -18,14 +18,14 @@ Three CI checks are invoked **by path**, not by npm-script name, so a sweep over
 > Measured `bun run scripts/gen-docs-pages.ts --check` on 2026-09-19 (bean
 > `nup0`): 18 named gates, `tsc`, `eslint`, `bun test` and 60 Playwright tests
 > all green, and `TypeScript — tests, lint, types (hard)` still red on 20 stale
-> `docs/assets/qa/*.kg.json` projections.
+> `test/results/witnesses/**/*.kg.json` projections.
 
 Get the list from the workflow:
 `grep -oE "bun run (scripts/[a-z-]+\.ts[^ ]*|[a-z:.-]+)" .github/workflows/code-quality-gates.yml | sort -u`
 
 **Editing a script that WRITES a witness restales every published projection of
 it.** `kg-audit.ts` records its own `scriptHash` in 220 `kg-qa` sidecars *and*
-20 `docs/assets/qa/*.kg.json`. Regenerate both. Verify by parsing each side and
+20 `test/results/witnesses/**/*.kg.json`. Regenerate both. Verify by parsing each side and
 blanking the hash keys — these are single-line JSON, so `grep -v scriptHash`
 filters nothing.
 

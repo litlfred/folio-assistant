@@ -31,7 +31,7 @@ The kg-export diagnostics are NOT write-only. `scripts/kg-viewer.ts:573` reads `
 Same reasoning bean `x3bd` gives for topical directories: prove the layout on one real case before 349 files commit to it.
 
 - [ ] PR 1: declare `test/results/` as a `qa` directory; kg-export writes its diagnostics there as a verdict instead of into the published document; witness projection keeps the viewer working
-- [ ] PR 2: witnesses move from `docs/assets/qa/` to `test/results/`, docs-site fetch path follows
+- [x] PR 3 (#TBD): witnesses moved to `test/results/witnesses/`; published path unchanged
 - [ ] PR 3: the 227 `*.kg-qa.json`
 - [ ] PR 4: the 122 `*.qa.json`
 - [ ] separately: `*.script-qa.json` is documented and has zero instances — decide whether the family is dead
@@ -104,3 +104,50 @@ edges back to `main`'s baseline of 15 after triaging the new module.
 - PR 5: the 122 `*.qa.json`
 - `*.script-qa.json` is documented in `AGENTS.md` and `schemas/script-qa.ts` and
   has **zero instances** — decide whether the family is dead before migrating it
+
+---
+
+## PR 3 done, 2026-09-19 — the 134 witnesses moved
+
+`docs/assets/qa/` is gone. The witnesses are committed under
+`test/results/witnesses/` and **published** at `/assets/qa/`, which is the same
+URL as before.
+
+**Those are two different questions and only one of them was wrong.** Where a
+witness LIVES follows provenance — it is `qa-witness.ts`'s projection of what a
+checker found, so it belongs in the declared QA tree. It sat in `docs/` only
+because that is where Jekyll could reach it, which is a fact about the build.
+Where it is SERVED FROM was never the problem, so `data-qa-src` still says
+`/assets/qa/…` and `docs-ui.js` is untouched. Moving the URL too would have
+rewritten every badge in every generated page for no gain.
+
+**Jekyll builds only `docs/`, so the publish step is load-bearing.** Both
+`docs-site.yml` and `feature-staging.yml` now `cp -rT test/results/witnesses
+./_site/assets/qa` after the Jekyll step. A test asserts BOTH carry it: missing
+it in one publishes a site where every evidence link 404s, and an empty QA panel
+looks exactly like "nothing has been audited" — the false pass the badges exist
+to remove. Missing it in only one is worse, because the docs site and the
+staging preview would disagree and the preview is where a reviewer looks.
+
+**ONE declaration, not two.** The `qa-results` entry minted earlier today was
+removed and the `qa` entry repointed to `test/results/`. Keeping both would
+have nested a declaration inside a declaration — #263's own comment names that
+defect: "a consumer scanning a declared directory cannot assume it owns what
+lies beneath it". The two kinds under that one root are told apart by their
+`$schema`, not their location: `qa-results/v1` and `qa-witness/v1`. The `qa`
+ID survived the relocation, per the rule that ids are stable and paths are not.
+
+**Found by moving:** `scripts/tests/qa-fixture.test.ts` read the corpus by
+hardcoded path and went red — which is exactly what it was written for. Its own
+comment: it exists so a broken corpus path says so "in `bun test`, which runs
+everywhere, rather than in the browser job". It worked. Four more hardcoded
+references followed in `tests/qa-panel.e2e.ts` and `tests/support/qa-fixture.ts`.
+
+Verified: `bun test` 2174 pass / 0 fail, typecheck, `eslint .`,
+`kg:audit:check`, `gen-skill-docs --check`, `agent-memory:check`,
+`check:harness-dirs`, `check:workflows`.
+
+**Not verified locally:** the Playwright e2e specs cannot run in this container
+— it has `chromium_headless_shell-1194` and Playwright wants `-1228`, so
+`a11y.e2e.ts`, which this change never touches, fails 24 times with the same
+missing-binary error. CI runs them properly.
