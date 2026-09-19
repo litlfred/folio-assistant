@@ -95,3 +95,12 @@ this same stylesheet.
 **Do not fix this without looking at a rendered page.** The whole reason the
 opacity is there is visual noise beside a heading, and a value that passes axe
 while making every heading look cluttered trades one real defect for another.
+
+## APPROVED, 2026-09-19
+
+Owner said yes. Fix it: an explicit resting colour under
+`:root[data-fa-scheme="light"]` that passes 4.5:1, leaving the base
+declaration — which dark uses and which already passes — alone.
+
+Queued behind the `content-pipeline-navigator` retirement, per the owner's
+standing instruction to queue rather than pivot.
