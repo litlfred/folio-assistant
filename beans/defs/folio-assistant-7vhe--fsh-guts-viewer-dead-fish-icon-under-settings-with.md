@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7vhe
 title: 'FSH-GUTS viewer: dead fish icon under settings, with a node counter and a select dialog'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T10:48:10Z
-updated_at: 2026-09-19T12:24:54Z
+updated_at: 2026-09-19T13:24:17Z
 parent: folio-assistant-o3xy
 ---
 
