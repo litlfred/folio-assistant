@@ -262,10 +262,10 @@ jobs:
             --hideGenerator \
             --skipErrorChecking \
             --name "folio-assistant API (staging: ${{ steps.slug.outputs.slug }})" \
-            schemas/types.ts schemas/constraints.ts schemas/builders.ts \
-            schemas/assistant-types.ts schemas/assistant-package.ts \
-            schemas/assistant-workflow.ts schemas/formalization-types.ts \
-            schemas/lean-packages.ts 2>&1 | tail -10
+            cat-harness/schemas/types.ts cat-harness/schemas/constraints.ts cat-harness/schemas/builders.ts \
+            cat-harness/schemas/assistant-types.ts cat-harness/schemas/assistant-package.ts \
+            cat-harness/schemas/assistant-workflow.ts cat-harness/schemas/formalization-types.ts \
+            cat-harness/schemas/lean-packages.ts 2>&1 | tail -10
 
       # Add a staging banner to every HTML page so a reviewer never
       # mistakes staged content for the published site.
@@ -296,7 +296,7 @@ jobs:
       # is free, and this is the useful end of it.
       - name: Emit the knowledge-graph viewer
         run: |
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
+          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./cat-harness/schemas/cat-harness.ts");console.log(artefactStub(readDeclaration("./cat-harness")))')
           bun run cat-harness/scripts/kg-viewer.ts --out "./_site/${STUB}/index.html"
 
       - name: Inject staging banner
@@ -435,7 +435,7 @@ jobs:
           SLUG: ${{ steps.slug.outputs.slug }}
         run: |
           BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
+          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./cat-harness/schemas/cat-harness.ts");console.log(artefactStub(readDeclaration("./cat-harness")))')
           # Both exporters stamp their own output with the build identity, from
           # the one `stagingStamp()` in scripts/staging-stamp.ts. It was an
           # inline `bun -e` here that rewrote the JSON-LD after the fact and

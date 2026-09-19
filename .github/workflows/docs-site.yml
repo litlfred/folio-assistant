@@ -154,10 +154,10 @@ jobs:
             --hideGenerator \
             --skipErrorChecking \
             --name "folio-assistant API" \
-            schemas/types.ts schemas/constraints.ts schemas/builders.ts \
-            schemas/assistant-types.ts schemas/assistant-package.ts \
-            schemas/assistant-workflow.ts schemas/formalization-types.ts \
-            schemas/lean-packages.ts 2>&1 | tail -20
+            cat-harness/schemas/types.ts cat-harness/schemas/constraints.ts cat-harness/schemas/builders.ts \
+            cat-harness/schemas/assistant-types.ts cat-harness/schemas/assistant-package.ts \
+            cat-harness/schemas/assistant-workflow.ts cat-harness/schemas/formalization-types.ts \
+            cat-harness/schemas/lean-packages.ts 2>&1 | tail -20
 
       # Serve the prebuilt static output as-is (just-the-docs is already rendered;
       # /api is TypeDoc HTML).
@@ -187,7 +187,7 @@ jobs:
       # No --base-url: the declaration's canonicalUrl is correct for main.
       - name: Export the knowledge graph and its schema
         run: |
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
+          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./cat-harness/schemas/cat-harness.ts");console.log(artefactStub(readDeclaration("./cat-harness")))')
           bun run cat-harness/scripts/kg-export.ts             --out "./_site/${STUB}.jsonld"
           bun run cat-harness/scripts/harness-schema-export.ts --out-dir ./_site
           bun run cat-harness/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
@@ -233,7 +233,7 @@ jobs:
           #
           # Extensionless because the IRIs are; `.json` alongside because Pages
           # emits no correct Content-Type for `.jsonld`.
-          # `ns/` is a DIRECTORY, not a file. `schemas/jsonld.ts` declares the
+          # `ns/` is a DIRECTORY, not a file. `cat-harness/schemas/jsonld.ts` declares the
           # content `@context` at `<base>/ns/content/v1.jsonld`, and a static
           # host cannot serve both a file and a directory at `<base>/ns`.
           #

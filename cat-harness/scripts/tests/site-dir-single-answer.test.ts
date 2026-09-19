@@ -17,9 +17,9 @@
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 
-import { artefactStub, repoRootFor, siteDir, siteDirFor } from "../../schemas/cat-harness.ts";
+import { repoRootFor, siteDir, siteDirFor } from "../../schemas/cat-harness.ts";
 import { repoFilesWithExt } from "../repo-files.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -154,11 +154,15 @@ describe("the site root is one answer, not a literal", () => {
     // REPO-relative, composed and said so: `git check-ignore` runs at the
     // repository root, while `siteDir` is measured from the instance root.
     // This is the one caller that needs the other form.
-    const decl = JSON.parse(readFileSync(join(ROOT, "harness.json"), "utf-8")) as {
-      name?: string;
-      stub?: string;
-    };
-    const site = `${artefactStub({ name: decl.stub ?? decl.name ?? "", stub: decl.stub })}/${siteDirFor(ROOT)}`;
+    //
+    // Composed from the instance directory's BASENAME, not from `artefactStub`.
+    // Those were the same string until the move (bean `wggr`) and are now two
+    // different facts: the directory is `cat-harness/`, while the stub stays
+    // `folio-assistant` because it names PUBLISHED artefacts — `<stub>.jsonld`
+    // is what every `@id` in the graph is minted against, so renaming it
+    // renames the whole graph. Using the stub here would have made this guard
+    // check `.gitignore` against a directory that does not exist, and pass.
+    const site = `${basename(ROOT)}/${siteDirFor(ROOT)}`;
 
     // Hand-written source Jekyll serves verbatim. Ignoring these is the SILENT
     // failure: `git add` says nothing and the asset never deploys.
