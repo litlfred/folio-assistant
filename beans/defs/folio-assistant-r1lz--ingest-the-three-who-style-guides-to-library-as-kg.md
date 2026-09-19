@@ -1,10 +1,11 @@
 ---
 # folio-assistant-r1lz
 title: Ingest the three WHO style guides to library/ as KG, then derive the three WHO voices
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-18T23:46:13Z
-updated_at: 2026-09-19T09:10:43Z
+updated_at: 2026-09-19T16:24:01Z
 parent: folio-assistant-slw1
 ---
 
@@ -71,3 +72,52 @@ THE OPEN QUESTION WAS whether the platform keeps an ingestion corpus at all once
 AND IT RESHAPES tools/<stub>/ FROM A NAMESPACE INTO A MECHANISM. Under 'one pipeline', tools/<stub>/ merely avoids filename collisions between instances. Under 'several tool sets doing the same job', the stub is how a consumer SAYS WHICH ONE it wants — the same shape ContributionRegistry already uses for adapters, where a folio names the adapter it wants rather than the platform hardcoding one. Worth settling before the directories are created: whether a tool set is an INSTANCE (and so takes a stub) or a CONTRIBUTION registered into one (and so does not). Those are different mechanisms and the stub pattern fits only the first. Getting it wrong means either a tool set that cannot be swapped, or a stub level that means two different things in two directories.
 
 CONCRETE THING TO LOOK AT FIRST, before designing anything: content/docs/document-ingestion/ and scripts/pdf-pages.py are today's implementation, and schemas/ holds no interface that either satisfies. A second implementation with no declared contract to meet is how two pipelines end up disagreeing about what a section IS — which bean rlp5 already records happening ONCE INSIDE the current one, where pdf-ocr and pdf-structure disagreed about what a page contains. Two pipelines reproduce that at a larger scale unless the contract is written down first.
+
+## 2026-09-19T16:25Z — the "still to do" list was STALE; only the #210 reconciliation was left
+
+Re-checked every item rather than trusting the note above, and four of the five
+were already done on `main`:
+
+| item | state |
+|---|---|
+| three PDFs ingested to `library/` as L1 KG | **done** |
+| the L1 completeness gate passes on them | **done** — `check:l1-complete`, all four entries |
+| each voice profile cites the ingested node it derives from | **done** — `check:voices`: 9 / 8 / 8 rules, "every rule cites a source that resolves, with a quote long enough to check" |
+| folio-assistant's own docs carry NO voice, and voices are opt-in | **done** — `harness.json` says it outright: "ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208)" |
+| reconciled with PR #210 | **the only thing left** |
+
+`source: null` — the defect this bean was opened over — is gone. The rules were
+read out of the ingested sections, not asserted.
+
+### PR #210 audit (still open, base `b6fab8ce4`, 17 files, last touched 2026-09-17)
+
+Everything substantive is already on `main`, and in a stronger form:
+`schemas/voices.ts`, all four `voices/*.json`, `voice-authoring-guidance`,
+`voice-overlay-review`, the `voice-review.bpmn` (relocated to
+`skills/workflows/` and rendered), and the `one-voice-style-guide` / `editor` /
+`one-voice-integration-watcher` integrations. `folio.config.example.json` was
+superseded by `harness.config.example.json` in `109beee02`.
+
+**Two things #210 carried that `main` did not.**
+
+1. **The `voices` key in the example config** — fixed here. `readActiveVoices`
+   reads `voices.active` from `harness.config.json`, but the example never
+   showed it, so a folio author had a working mechanism and no way to discover
+   it. Verified by running the real reader over the example (`[]`) and over a
+   copy with one voice active (`["who-editorial"]`), rather than assuming.
+
+2. **Bean `nd1m`**, at the old `.beans/` path, which `main` has never had.
+   **Deliberately NOT imported**: it covers this bean's work, and creating it
+   would be a duplicate — `beans create` dedupes on nothing, which is the
+   14 688-duplicate defect. Recorded here so that whoever closes #210 knows
+   nothing is lost.
+
+`AGENTS.md` has zero mentions of "voice" while #210 added a section to it. That
+is **correct by design, not a gap**: AGENTS.md's own STRICT rule is that
+discipline lives in `skills/`, and `harness.json` already carries the `voices`
+declaration in full.
+
+### What remains, and it is not mine
+
+#210 is the owner's own PR. Closing it is theirs to do; nothing in it is
+unported except the bean above, which is deliberate.

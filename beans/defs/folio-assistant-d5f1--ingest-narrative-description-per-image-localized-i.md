@@ -5,8 +5,10 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-16T06:44:43Z
+updated_at: 2026-09-19T16:20:36Z
 parent: folio-assistant-slw1
+blocked_by:
+    - folio-assistant-68dt
 ---
 
 ## What
@@ -85,3 +87,17 @@ measurement: `len(p.images)` returned 0 while iterating actually raised
 A decision on Python dependencies (see the session report). `pypdf` + `Pillow`
 were installed to take these measurements and then **uninstalled**, so the
 environment does not quietly carry deps CI lacks.
+
+_2026-09-19T16:20Z_ — **Blocked on `folio-assistant-68dt`** (declare Python
+dependencies and install them in CI).
+
+- **waits on**: a working backend for images out of PDFs that CI also has. Measured absent
+  2026-09-19; `pip` reaches an index but CI installs only `ruff`, so anything
+  built now would ship an untested path — the `5rfy` defect.
+- **since**: 2026-09-19.
+- **expires**: 2026-10-19. After that, presume this stale and re-measure rather
+  than trusting it.
+- **handoff**: if `68dt` has landed, this is ordinary work — unblock and
+  proceed. If it has not, do NOT hand-roll a parser; say what is missing.
+  For `d5f1`, read this bean's measurement first: the image count is not the
+  figure count, and 121 of `who-pub-tps-931`'s images are page scans.
