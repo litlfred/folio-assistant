@@ -97,3 +97,8 @@ docs/_data/build.yml
 # and `registry.json` was nearly committed by accident while writing kg-export.
 _kg/
 .claude/skills/registry.json
+
+# Playwright writes its run metadata here. It was TRACKED, which breaks a
+# `git stash` in the middle of an e2e run.
+test-results/
+playwright-report/

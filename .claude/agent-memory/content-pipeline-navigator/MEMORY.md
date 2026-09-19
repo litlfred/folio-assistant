@@ -114,6 +114,28 @@ deleting the stale `criteria.<crit>` entry and re-running
 **A standalone library `.lean` file has no sidecar** and escapes every
 per-block checker. Nothing but an agent checks it.
 
+## TRAP — never assert on a QA VERDICT from the published corpus
+
+`docs/assets/qa/**` is live state. A test that reads a verdict out of it breaks
+when somebody fixes or adjudicates the finding — which is the system working.
+
+Measured 2026-09-19 (bean `tywj`): `tests/qa-panel.e2e.ts` read
+`what-is-not-built-yet.block.json` and asserted the first row was
+`voice-status-leak` / `fail` / `critical`, the folded count was the literal
+`47`, and the checker hash was the literal `5af6856733f3`. An agent
+adjudication in `c8fbad385` turned that criterion `pass`, and four assertions
+went red for reasons unrelated to the panel. The literal hash also meant any
+edit to a checker reddened a UI test.
+
+**Read the SHAPE off real generator output; freeze the VERDICT.**
+`tests/fixtures/block-with-one-failure.block.json` is a captured copy with
+provenance in `tests/fixtures/README.md`, and every expected value in the spec
+is read out of the document rather than written as a literal.
+
+**Adjudication is lossy** — a criterion the agent overturned keeps no
+`severity` and no `evidence`, only the script witness. You cannot reconstruct
+the pre-adjudication document from the corpus, so capture beats derive.
+
 ## STABLE — `uses[]` is EDITORIAL, and immediate-neighbours only
 
 `uses[]` and `interprets` state what a *reader* must have read to follow a
@@ -137,7 +159,8 @@ import graph and not a transitive closure.
 The highest-value entries in this file. Format: *what an agent reached for →
 what is actually right → date*. Append as you find them.
 
-- (none recorded yet)
+- read a QA verdict from `docs/assets/qa/**` in a test → read only the SHAPE
+  from generator output and freeze the verdict in `tests/fixtures/` → 2026-09-19
 
 ## Session log
 

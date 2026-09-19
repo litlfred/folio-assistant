@@ -28,6 +28,13 @@ import { fileURLToPath } from "node:url";
  * The page is served through `page.route` rather than from a committed fixture:
  * the harness is the theme's structure plus one icon, and the JSON is read off
  * disk, so nothing here can drift from what the generator produces.
+ *
+ * The JSON is real generator output, but for the block family it is a FROZEN
+ * copy of it rather than today's corpus — see `BLOCK_JSON` below. A verdict is
+ * live state: the corpus is supposed to stop holding a failure once somebody
+ * fixes or adjudicates it, and a rendering test that breaks when that happens
+ * is measuring the wrong thing. The shape still comes from the generator; only
+ * the verdict is held still.
  */
 
 // `import.meta.dir` is a Bun extension and undefined under Node, which is what
@@ -36,11 +43,61 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
 
-/** A block sidecar carrying the corpus's one real failure, and a stale witness. */
+/**
+ * A block sidecar carrying one failing criterion, and the source of the stale
+ * variant below.
+ *
+ * This is a FROZEN copy of real generator output, not the live corpus, and it
+ * is frozen for the same reason `STALE_JSON` is derived rather than served:
+ * the panel's rendering of a failure must not depend on the corpus still
+ * holding one. It did, and the corpus stopped. The file it was read from —
+ * `docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json` — recorded
+ * `voice-status-leak` as a critical `fail` at 55ee7ca0; an agent adjudication in
+ * PR #302 overturned that verdict, correctly (the block's whole subject is an
+ * inventory of gaps, so "**Not yet implemented:**" is its topic, not a status
+ * leak). The sidecar is now `state: pass` with no failing criterion at all, and
+ * three assertions here went with it: the first row's id, its `fail` chip, and
+ * the folded count.
+ *
+ * Adjudication also DISCARDS what it overturns — the superseded criterion keeps
+ * no `severity` and no `evidence`, only the script witness — so the failing
+ * document cannot be reconstructed from the current file either. Hence a
+ * committed copy, taken from a real sweep: provenance in
+ * `tests/fixtures/README.md`.
+ *
+ * Nothing below is asserted as a literal. Every expected value is read out of
+ * this document, so the test says "the panel shows what the sidecar records"
+ * rather than "the panel shows 47".
+ */
 const BLOCK_JSON = readFileSync(
-  join(ROOT, "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json"),
+  join(ROOT, "tests/fixtures/block-with-one-failure.block.json"),
   "utf8",
 );
+
+interface QaWitness {
+  id: string;
+  scriptHash?: string;
+  freshness: string;
+  changed?: string[];
+}
+interface QaCriterion {
+  id: string;
+  result: string;
+  severity?: string;
+  evidence?: string[];
+  witnesses: QaWitness[];
+}
+interface QaDoc {
+  counts: Record<string, number>;
+  criteria: QaCriterion[];
+}
+
+const BLOCK_DOC = JSON.parse(BLOCK_JSON) as QaDoc;
+/** The one criterion the panel must surface first, and its script witness. */
+const FAIL_CRIT = BLOCK_DOC.criteria[0]!;
+const FAIL_WITNESS = FAIL_CRIT.witnesses[0]!;
+/** What the "show the rest" control has to count: everything not surfaced. */
+const FOLDED = BLOCK_DOC.counts.pass! + BLOCK_DOC.counts.na!;
 /**
  * The same document with its witness marked stale.
  *
@@ -54,9 +111,7 @@ const BLOCK_JSON = readFileSync(
  * runs.
  */
 const STALE_JSON = (() => {
-  const doc = JSON.parse(BLOCK_JSON) as {
-    criteria: Array<{ witnesses: Array<{ freshness: string; changed?: string[] }> }>;
-  };
+  const doc = JSON.parse(BLOCK_JSON) as QaDoc;
   const w = doc.criteria[0]!.witnesses[0]!;
   w.freshness = "stale";
   w.changed = ["md"];
@@ -143,12 +198,12 @@ test("a block icon opens its sidecar, worst criterion first", async ({ page }) =
   // Worst first: the failing criterion is the first row, and it is not folded
   // away with the 47 that pass or do not apply.
   const firstRow = panel.locator(".fa-qa-crit").first();
-  await expect(firstRow.locator(".fa-qa-chip").first()).toHaveText("fail");
-  await expect(firstRow.locator(".fa-qa-crit-id")).toHaveText("voice-status-leak");
-  await expect(firstRow.locator(".fa-qa-chip", { hasText: "critical" })).toBeVisible();
+  await expect(firstRow.locator(".fa-qa-chip").first()).toHaveText(FAIL_CRIT.result);
+  await expect(firstRow.locator(".fa-qa-crit-id")).toHaveText(FAIL_CRIT.id);
+  await expect(firstRow.locator(".fa-qa-chip", { hasText: FAIL_CRIT.severity! })).toBeVisible();
 
   // The passing bulk is behind one labelled control that states its own count.
-  await expect(panel.locator(".fa-qa-more")).toContainText("47");
+  await expect(panel.locator(".fa-qa-more")).toContainText(String(FOLDED));
   await expect(panel.locator(".fa-qa-crit-list").nth(1)).toBeHidden();
 });
 
@@ -166,19 +221,17 @@ test("a criterion expands to the witness that ruled on it, with the checker's ha
   await expect(witness).toBeVisible();
   await expect(witness).toHaveClass(/fa-qa-kind-script/);
   await expect(witness.locator(".fa-qa-chip-kind")).toHaveText("script");
-  await expect(witness.locator(".fa-qa-witness-id")).toHaveText(
-    "content/pipeline/qa-checkers-voice.ts",
-  );
+  await expect(witness.locator(".fa-qa-witness-id")).toHaveText(FAIL_WITNESS.id);
   // The hash of the checker's own source at audit time — the thing that says
-  // whether the verdict came from the logic now in the tree.
+  // whether the verdict came from the logic now in the tree. Read from the
+  // sidecar: pinning the literal made an edit to the checker red this test,
+  // which is the opposite of what a witness hash is for.
   await expect(witness).toContainText("checker source hash");
-  await expect(witness).toContainText("5af6856733f3");
+  await expect(witness).toContainText(FAIL_WITNESS.scriptHash!);
   // Evidence is quoted verbatim out of the content, and reaches the page
   // through textContent — if it were concatenated into markup it would be the
   // string that closes a tag.
-  await expect(page.locator(".fa-qa-evidence pre").first()).toContainText(
-    "**Not yet implemented:**",
-  );
+  await expect(page.locator(".fa-qa-evidence pre").first()).toHaveText(FAIL_CRIT.evidence![0]!);
 });
 
 test("a verdict measured against a file that has since changed says STALE, and names the file", async ({
