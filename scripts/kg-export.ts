@@ -52,6 +52,7 @@ import { auditSchemaNodes } from "./schema-nodes.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
 import { skillIoIri } from "./harness-schema-export.js";
+import { stagingFields } from "./staging-stamp.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -265,6 +266,32 @@ function buildContext(): Record<string, unknown> {
     // a kind, not an IRI.
     localId: `${FOLIO_NS}localId`,
     actorKind: `${FOLIO_NS}actorKind`,
+
+    // Which build produced this document — see `scripts/staging-stamp.ts`.
+    //
+    // **Declared, because the stamp was being dropped.** Until 2026-09-19 the
+    // staging workflow appended `staging` to the document root with an inline
+    // `bun -e`, and no term declared it: a JSON-LD processor discards a
+    // property that is neither in the `@context` nor an absolute IRI, so the
+    // one artefact this build stamped carried its stamp in the one form the
+    // consumer this export exists to serve cannot read. Exactly the `ovkk`
+    // defect recorded on `inputSchema`/`outputSchema` above, one level up on
+    // the document root — where `undeclaredTerms` does not look, because it
+    // walks `@graph`.
+    //
+    // A SCOPED context (JSON-LD 1.1 §4.1.8), not four global terms. `branch`,
+    // `sha`, `pr` and `run` are words a graph node could plausibly use for
+    // something else, and a global term would silently give that other use
+    // this meaning. Scoped, they mean this only inside `staging`.
+    staging: {
+      "@id": `${FOLIO_NS}staging`,
+      "@context": {
+        branch: `${FOLIO_NS}stagingBranch`,
+        sha: `${FOLIO_NS}stagingSha`,
+        pr: `${FOLIO_NS}stagingRef`,
+        run: `${FOLIO_NS}stagingRun`,
+      },
+    },
   };
 }
 
@@ -1173,7 +1200,11 @@ if (import.meta.main) {
   const data = await buildExport({ baseUrl });
 
   mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, JSON.stringify(data, null, 2) + "\n");
+  // The staging stamp, from the same function `harness-schema-export` uses, so
+  // the two documents a build publishes side by side cannot disagree about
+  // which build they came from. It was an inline `bun -e` in
+  // `feature-staging.yml` that reached this document and nothing else.
+  writeFileSync(out, JSON.stringify({ ...data, ...stagingFields() }, null, 2) + "\n");
 
   console.log(`KG export → ${relative(ROOT, out)}\n  @id  ${data["@id"]}`);
   for (const [t, n] of Object.entries(data.counts).sort()) console.log(`  ${String(n).padStart(5)}  ${t}`);
