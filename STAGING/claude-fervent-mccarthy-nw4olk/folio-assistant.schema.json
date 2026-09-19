@@ -93,6 +93,61 @@
             "additionalProperties": false
           }
         },
+        "assets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "src": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ref": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "instance",
+                  "path"
+                ],
+                "additionalProperties": false
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "src"
+            ],
+            "additionalProperties": false
+          }
+        },
         "icon": {
           "type": "string",
           "minLength": 1
@@ -108,6 +163,24 @@
         "previewUrl": {
           "type": "string",
           "format": "uri"
+        },
+        "publication": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "enum": [
+                "github-pages",
+                "local-server",
+                "jurisdiction-endpoint",
+                "none"
+              ]
+            }
+          },
+          "required": [
+            "host"
+          ],
+          "additionalProperties": false
         },
         "directories": {
           "type": "array",
@@ -162,8 +235,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "e036365a786d46c08edb3b6b900335c1634afc2b",
+    "sha": "68c2689fd787026528f1962602c5a2ad6bac83c9",
     "pr": "414/merge",
-    "run": "35443939480"
+    "run": "35444704092"
   }
 }
