@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(149)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(99)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(149) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(99) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(149) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(99) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(149) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(99) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>terminology-management | folio-assistant</title>
+<title>QA witnesses | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="terminology-management" />
+<meta property="og:title" content="QA witnesses" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/terminology-management.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/terminology-management.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/qa-witness.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/qa-witness.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="terminology-management" />
+<meta property="twitter:title" content="QA witnesses" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"terminology-management","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/terminology-management.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"QA witnesses","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/qa-witness.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -434,7 +434,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>terminology-management</span></li>
+    <li class="breadcrumb-nav-list-item"><span>QA witnesses</span></li>
   </ol>
 </nav>
 
@@ -443,104 +443,208 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-who-smart-guidelines/terminology-management.md"><code class="language-plaintext highlighter-rouge">skills/authoring-who-smart-guidelines/terminology-management.md</code></a> — do not edit here. Typed contract: <a href="../skills/terminology-management.html">schema reference</a>.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/qa-witness.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/qa-witness.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-who-smart-guidelines/terminology-management.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/qa-witness.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="terminology-management">
+<h1 id="qa-witnesses--the-published-projection-of-every-verdict">
   
   
-    <a href="#terminology-management" class="anchor-heading" aria-labelledby="terminology-management"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> terminology-management
+    <a href="#qa-witnesses--the-published-projection-of-every-verdict" class="anchor-heading" aria-labelledby="qa-witnesses--the-published-projection-of-every-verdict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> QA witnesses — the published projection of every verdict
   
   
 </h1>
     
 
-<blockquote>
-  <p>Skill id: <code class="language-plaintext highlighter-rouge">terminology-management</code> · Package: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> ·
-Named by <code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code> step <strong>Terminology bindings</strong>, in the
-<code class="language-plaintext highlighter-rouge">Terminologist</code> lane.</p>
-</blockquote>
+<p>A <strong>QA witness</strong> is what a reader sees when they open the QA badge beside a
+heading on the docs site. One JSON document per subject, all of them
+<code class="language-plaintext highlighter-rouge">"$schema": "qa-witness/v1"</code>, all of them under <code class="language-plaintext highlighter-rouge">docs/assets/qa/</code>.</p>
 
-<p>Bind a DAK’s data elements to standard terminologies, and manage the value sets
-and concept maps that result.</p>
-
-<blockquote>
-  <p><strong>Sourcing.</strong> ICD-11, SNOMED CT and LOINC are external code systems with
-their own licences, release cycles and editorial rules; FHIR’s terminology
-layer is HL7’s. This skill states how binding is worked <strong>in this harness</strong>
-and defers to those authorities for the semantics. It is deliberately silent
-on which code to choose for a given concept — that is the terminologist’s
-judgement and the reason the process gives them their own lane.</p>
-</blockquote>
-<h2 id="inputs-and-outputs">
+<p>Measured 2026-09-19: <strong>134 documents — 113 <code class="language-plaintext highlighter-rouge">block</code>, 20 <code class="language-plaintext highlighter-rouge">kg</code>, 1
+<code class="language-plaintext highlighter-rouge">translation</code>.</strong></p>
+<h2 id="it-is-a-projection-not-the-verdict">
   
   
-    <a href="#inputs-and-outputs" class="anchor-heading" aria-labelledby="inputs-and-outputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs and outputs
+    <a href="#it-is-a-projection-not-the-verdict" class="anchor-heading" aria-labelledby="it-is-a-projection-not-the-verdict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> It is a projection, not the verdict
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">schemas/skills/terminology-management/</code>:</p>
+<p>This is the distinction to hold on to, because getting it backwards is how a
+fix lands in the wrong place.</p>
+
+<p>The <strong>verdict</strong> is produced by a sweep and lives beside its subject —
+<code class="language-plaintext highlighter-rouge">*.qa.json</code> beside a content block, <code class="language-plaintext highlighter-rouge">kg-qa/*.kg-qa.json</code> beside a skill or a
+diagram. The <strong>witness</strong> is the same verdict rendered for the web, flattened
+into the shape the panel draws and placed where the site can fetch it.</p>
+
+<p>So a wrong verdict is fixed in the checker; a verdict that reads wrongly on the
+page is fixed in <code class="language-plaintext highlighter-rouge">content/pipeline/qa-witness.ts</code> or in <code class="language-plaintext highlighter-rouge">docs-ui.js</code>. Editing a
+file under <code class="language-plaintext highlighter-rouge">docs/assets/qa/</code> by hand fixes neither — it is generated, and the
+next <code class="language-plaintext highlighter-rouge">gen-docs-pages</code> run discards the edit.</p>
+<h2 id="the-three-families-and-why-the-distinction-is-load-bearing">
+  
+  
+    <a href="#the-three-families-and-why-the-distinction-is-load-bearing" class="anchor-heading" aria-labelledby="the-three-families-and-why-the-distinction-is-load-bearing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The three families, and why the distinction is load-bearing
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">family</code> is a field in the document, not only a suffix on the filename.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>family</th>
+      <th>subject</th>
+      <th>verdict comes from</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">block</code></td>
+      <td>a content block</td>
+      <td>the QA sweep’s <code class="language-plaintext highlighter-rouge">*.qa.json</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">kg</code></td>
+      <td>a process, decision, role or skill</td>
+      <td><code class="language-plaintext highlighter-rouge">kg-audit</code>’s <code class="language-plaintext highlighter-rouge">*.kg-qa.json</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">translation</code></td>
+      <td>a page’s locale coverage</td>
+      <td>the translation sweep</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>They matter apart because <strong>their witnesses are not equally specific.</strong> A
+<code class="language-plaintext highlighter-rouge">block</code> document’s criteria are checked by genuinely different scripts —
+<code class="language-plaintext highlighter-rouge">qa-checkers-voice.ts</code> on one criterion, <code class="language-plaintext highlighter-rouge">qa-checkers-extended.ts</code> on the next
+— so a per-criterion <code class="language-plaintext highlighter-rouge">scriptHash</code> is real information. A <code class="language-plaintext highlighter-rouge">kg</code> document’s
+criteria all come from one auditor, so the same field is the same value
+repeated, and the auditor’s identity is recorded once in
+<code class="language-plaintext highlighter-rouge">skills/kg-qa.manifest.json</code> rather than in each sidecar (bean <code class="language-plaintext highlighter-rouge">cflw</code>).</p>
+
+<p>Read a per-criterion hash as evidence about that criterion only in the <code class="language-plaintext highlighter-rouge">block</code>
+family.</p>
+<h2 id="reading-one">
+  
+  
+    <a href="#reading-one" class="anchor-heading" aria-labelledby="reading-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reading one
+  
+  
+</h2>
+    
 
 <ul>
-  <li><strong>in</strong> — <code class="language-plaintext highlighter-rouge">operation</code> (required), <code class="language-plaintext highlighter-rouge">targetStandard</code>, <code class="language-plaintext highlighter-rouge">inputFile</code></li>
-  <li><strong>out</strong> — <code class="language-plaintext highlighter-rouge">resources</code>, <code class="language-plaintext highlighter-rouge">unmappedConcepts</code></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">state</code></strong> — the roll-up: <code class="language-plaintext highlighter-rouge">pass</code>, <code class="language-plaintext highlighter-rouge">fail</code>, <code class="language-plaintext highlighter-rouge">warn</code>, <code class="language-plaintext highlighter-rouge">unknown</code>, <code class="language-plaintext highlighter-rouge">unswept</code>.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">counts</code></strong> — how many criteria landed in each result. A clean sweep still
+says how much it checked, which is the difference between “nothing wrong” and
+“nothing looked at”.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">criteria[]</code></strong> — one entry per criterion, each with <code class="language-plaintext highlighter-rouge">result</code>, optional
+<code class="language-plaintext highlighter-rouge">evidence</code> quoted verbatim from the content, and <code class="language-plaintext highlighter-rouge">witnesses[]</code>.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">witnesses[]</code></strong> — who ruled, and on what. <code class="language-plaintext highlighter-rouge">kind</code> is <code class="language-plaintext highlighter-rouge">script</code>, <code class="language-plaintext highlighter-rouge">agent</code> or
+<code class="language-plaintext highlighter-rouge">human</code>. A script witness carries the checker’s id and <code class="language-plaintext highlighter-rouge">scriptHash</code>; an agent
+witness carries its model and session; <code class="language-plaintext highlighter-rouge">freshness</code> says whether the inputs
+have moved since.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">sidecars[]</code></strong> — the repo paths of the verdicts this was projected from.
+Follow these to change anything.</li>
 </ul>
 
-<p><strong><code class="language-plaintext highlighter-rouge">unmappedConcepts</code> is the important output.</strong> A binding pass that maps
-everything is either a small dictionary or a pass that guessed. Concepts with
-no defensible code are a normal result, and reporting them is what lets the
-clinical SME see where the DAK is asserting a local meaning.</p>
-<h2 id="why-this-has-its-own-lane">
+<p><strong>Worst first.</strong> The panel partitions criteria into loud (<code class="language-plaintext highlighter-rouge">fail</code>, <code class="language-plaintext highlighter-rouge">warn</code>,
+<code class="language-plaintext highlighter-rouge">unknown</code>) and quiet (<code class="language-plaintext highlighter-rouge">pass</code>, <code class="language-plaintext highlighter-rouge">n/a</code>) and folds the quiet behind one control
+that states its own count. A corpus that is passing is the normal case, so the
+fold is what keeps the two rows that need reading at the top.</p>
+<h2 id="three-states-everywhere">
   
   
-    <a href="#why-this-has-its-own-lane" class="anchor-heading" aria-labelledby="why-this-has-its-own-lane"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this has its own lane
-  
-  
-</h2>
-    
-
-<p><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code> gives the terminologist a lane of their own rather than
-folding binding into authoring, and the reason is that a wrong binding is
-invisible downstream. A data element bound to a plausible-but-wrong code
-compiles, validates, publishes, and is wrong in every derived artefact. The
-separation exists so that the person who chooses codes is not the person under
-pressure to finish the dictionary.</p>
-
-<p>The <code class="language-plaintext highlighter-rouge">terminologist</code> role carries this skill and <code class="language-plaintext highlighter-rouge">clinical-sme</code> does not: they
-are different judgements. A clinician rules on whether the <em>concept</em> is right;
-the terminologist rules on whether the <em>code</em> denotes it.</p>
-<h2 id="do-not-invent-a-code">
-  
-  
-    <a href="#do-not-invent-a-code" class="anchor-heading" aria-labelledby="do-not-invent-a-code"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do not invent a code
+    <a href="#three-states-everywhere" class="anchor-heading" aria-labelledby="three-states-everywhere"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three states, everywhere
   
   
 </h2>
     
 
-<p>If no code in the target standard denotes the concept, the answer is
-<code class="language-plaintext highlighter-rouge">unmappedConcepts</code>, not the nearest neighbour. “Close enough” bindings are the
-mechanism by which a DAK stops meaning what its guideline says, and they are
-unrecoverable once downstream systems have consumed them.</p>
-<h2 id="tooling">
+<p><code class="language-plaintext highlighter-rouge">unknown</code> and <code class="language-plaintext highlighter-rouge">unswept</code> are not <code class="language-plaintext highlighter-rouge">pass</code>, and neither is an absent field.</p>
+
+<ul>
+  <li>A criterion the sweep could not evaluate is <code class="language-plaintext highlighter-rouge">unknown</code>, never <code class="language-plaintext highlighter-rouge">pass</code>.</li>
+  <li>A field the producer does not record — <code class="language-plaintext highlighter-rouge">kg-audit</code> keeps no timestamp — is
+rendered “not recorded”, never blank. A blank cell reads as a value the
+reader failed to notice.</li>
+  <li>A projection that cannot be fetched says so and names the file. A panel that
+opens empty is indistinguishable from a subject with nothing to report.</li>
+</ul>
+<h2 id="do-not-write-a-spec-against-a-live-verdict">
   
   
-    <a href="#tooling" class="anchor-heading" aria-labelledby="tooling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tooling
+    <a href="#do-not-write-a-spec-against-a-live-verdict" class="anchor-heading" aria-labelledby="do-not-write-a-spec-against-a-live-verdict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do not write a spec against a live verdict
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">smart-base</code> carries <code class="language-plaintext highlighter-rouge">generate_jsonld_vocabularies</code> and the <code class="language-plaintext highlighter-rouge">generate_*_schemas</code>
-family; the L2 data dictionary is read by <code class="language-plaintext highlighter-rouge">dd_extractor</code>. Load a checkout
-rather than vendoring — <code class="language-plaintext highlighter-rouge">smart-base-tools</code>, which also states that an absent
-<code class="language-plaintext highlighter-rouge">SMART_BASE_HOME</code> degrades the skill to <code class="language-plaintext highlighter-rouge">skip</code> rather than reporting a clean
-run over a toolchain that was never present.</p>
+<p>The trap this family has already paid for, twice in one day.</p>
 
-<p>Validation of the resulting artefacts is <code class="language-plaintext highlighter-rouge">fhir-validation</code>, not this skill.</p>
+<p><code class="language-plaintext highlighter-rouge">tests/qa-panel.e2e.ts</code> read a real sidecar and asserted the panel put its one
+<code class="language-plaintext highlighter-rouge">fail</code> first. Then the finding was correctly adjudicated to <code class="language-plaintext highlighter-rouge">pass</code>, the block
+went to zero failures, and a test of the PANEL went red because the CONTENT got
+better. <strong>A verdict is not a fixture.</strong> The corpus is supposed to reach zero
+failures.</p>
+
+<p>Drive the shape from the real document and put the state under test back in
+yourself — and locate the criterion <strong>by id</strong>, never by index, because index
+and render order coincide only while nothing sorts above it.</p>
+<h2 id="where-things-are">
+  
+  
+    <a href="#where-things-are" class="anchor-heading" aria-labelledby="where-things-are"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where things are
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>projections</td>
+      <td><code class="language-plaintext highlighter-rouge">docs/assets/qa/**/*.{block,kg,translation}.json</code></td>
+    </tr>
+    <tr>
+      <td>schema + builder</td>
+      <td><code class="language-plaintext highlighter-rouge">content/pipeline/qa-witness.ts</code></td>
+    </tr>
+    <tr>
+      <td>written by</td>
+      <td><code class="language-plaintext highlighter-rouge">scripts/gen-docs-pages.ts</code></td>
+    </tr>
+    <tr>
+      <td>drawn by</td>
+      <td><code class="language-plaintext highlighter-rouge">docs/assets/js/docs-ui.js</code> (<code class="language-plaintext highlighter-rouge">qaBuildPanel</code>)</td>
+    </tr>
+    <tr>
+      <td>block verdicts</td>
+      <td><code class="language-plaintext highlighter-rouge">content/**/*.qa.json</code></td>
+    </tr>
+    <tr>
+      <td>kg verdicts</td>
+      <td><code class="language-plaintext highlighter-rouge">**/kg-qa/*.kg-qa.json</code>, auditor in <code class="language-plaintext highlighter-rouge">skills/kg-qa.manifest.json</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The schema lives in <code class="language-plaintext highlighter-rouge">content/pipeline/</code> rather than <code class="language-plaintext highlighter-rouge">schemas/</code> because it is
+the pipeline’s own output shape. Worth knowing when you go looking for it in
+the declared <code class="language-plaintext highlighter-rouge">schemas/</code> graph and do not find it.</p>
 
           
 

@@ -217,13 +217,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T06:57:08.754Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/739610c22a3f99c687c0876319e2fee7fb3171be",
-  "sourceCommitSha": "739610c22a3f99c687c0876319e2fee7fb3171be",
-  "sourceCommitAt": "2026-09-19T08:55:47+02:00",
+  "generatedAt": "2026-09-19T06:59:15.896Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/91bdc16f50e37592677f30cdeb7c36a9e3ac4b13",
+  "sourceCommitSha": "91bdc16f50e37592677f30cdeb7c36a9e3ac4b13",
+  "sourceCommitAt": "2026-09-19T08:58:04+02:00",
   "sourceTreeDirty": false,
   "counts": {
-    "Skill": 149,
+    "Skill": 150,
     "Actor": 25,
     "Capability": 23,
     "Role": 64,
@@ -233,8 +233,8 @@
     "ProcessNode": 387,
     "Tool": 27,
     "Schema": 37,
-    "GraphKind": 13,
-    "Directory": 8
+    "GraphKind": 14,
+    "Directory": 9
   },
   "problems": [],
   "undeclaredTerms": [],
@@ -1068,7 +1068,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 422,
+      "instructionLines": 423,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1261,6 +1261,21 @@
       ],
       "instructionsPath": "skills/folio-core/one-voice-audit.md",
       "instructionLines": 308,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-witness",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "qa-witness",
+      "title": "QA witnesses — the published projection of every verdict",
+      "description": "The QA projections under `docs/assets/qa/` — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/qa-witness.md",
+      "instructionLines": 114,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -3498,6 +3513,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/process-state",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/production-vs-exploratory-discipline",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-witness",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/readability-editing",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/role-model",
@@ -16682,6 +16698,14 @@
       "summary": "Schema definitions, self-declared in the smart-base manner."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/qa",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#GraphKind",
+      "name": "qa",
+      "typeIri": "https://litlfred.github.io/folio-assistant/ns#QaGraph",
+      "renderable": false,
+      "summary": "QA witnesses — one `qa-witness/v1` document per audited subject, in three families (`block`, `kg`, `translation`), projected for the docs site from the verdicts that live beside their subjects. Generated; never hand-edited."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/beans",
       "@type": "https://litlfred.github.io/folio-assistant/ns#GraphKind",
       "name": "beans",
@@ -16793,6 +16817,16 @@
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), and the `kg-qa/` audit sidecars beside each. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/qa",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
+      "name": "qa",
+      "path": "docs/assets/qa/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/ns#graphKind/qa"
+      ],
+      "description": "QA witnesses — the PUBLISHED PROJECTION of every verdict, one `qa-witness/v1` document per audited subject, in three families: `block` (a content block, from the QA sweep), `kg` (a process, decision, role or skill, from `kg-audit`) and `translation` (a page's locale coverage). Measured 2026-09-19: 134 documents, 113 / 20 / 1. NOT the verdicts: those live beside their subjects as `*.qa.json` and `kg-qa/*.kg-qa.json`, and are what a checker wrote. A witness is that verdict flattened into the shape the docs panel draws and placed where the site can fetch it, so a wrong verdict is fixed in the checker and a verdict that READS wrongly is fixed in the projector — editing a file here fixes neither, because `gen-docs-pages` discards it. Undeclared until 2026-09-19, which is the `dh4f` defect in reverse: 134 committed files that no declaration mentioned, so a consumer scanning the declared directories saw none of them and reported a clean run over the lot."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/beans",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
       "name": "beans",
@@ -16845,8 +16879,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "739610c22a3f99c687c0876319e2fee7fb3171be",
+    "sha": "91bdc16f50e37592677f30cdeb7c36a9e3ac4b13",
     "pr": "main",
-    "run": "35427940485"
+    "run": "35428038720"
   }
 }
