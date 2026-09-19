@@ -30,11 +30,16 @@ validation gate, the skills, and the shared work plan all named.
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/every-workflow-in-the-repo.md){: .fa-node-edit title="Edit content/docs/publication-workflow/every-workflow-in-the-repo.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="every-workflow-in-the-repo.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/publication-workflow/every-workflow-in-the-repo.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-Thirty-two BPMN 2.0 files, all under
-[`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
-(`ls skills/workflows/*.bpmn | wc -l` on 2026-09-19 — this line said "six", then
-"nineteen", then "thirty", each for long enough to be wrong, which is why it now
-carries the command as well as the date).
+Thirty-three BPMN 2.0 files, and **no longer all in one directory**: thirty-two
+under [`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
+and one under [`bootstrap/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/bootstrap/workflows)
+(`bun -e 'console.log((await import("./scripts/known-skills.ts")).workflowFiles(process.cwd()).filter(f=>f.endsWith(".bpmn")).length)'`
+on 2026-09-19 — this line said "six", then "nineteen", then "thirty", then
+"thirty-two, all under `skills/workflows/`", each for long enough to be wrong,
+which is why it now carries the command as well as the date. **The command
+changed too, and that is the point:** `ls skills/workflows/*.bpmn` counts one
+directory, so it would have gone on reporting thirty-two while a diagram sat
+outside it — a literal path answering a question the declaration owns).
 Each is a real BPMN 2.0 document with diagram interchange — open it in
 [bpmn.io](https://demo.bpmn.io/), Camunda Modeler, or any BPMN tool. The SVGs
 throughout the docs are generated from these files by `bun run render:bpmn`;
@@ -45,6 +50,7 @@ that runs when there is no folio yet:
 
 | Diagram | Answers |
 |---------|---------|
+| `bootstrap/workflows/bootstrap.bpmn` | An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an **instance reference**; the harness type, the knowledge graph and the voice are read from *that* instance's declaration. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](../proposals/bootstrap.html) |
 | `getting-started.bpmn` | Somebody said "create a folio". Which of the five things did they mean, and what has to be true before anything is written? |
 
 Its intent gateway is *computed*, not chosen: `decisions/folio-intent.dmn`
