@@ -55,17 +55,21 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [Subagent memory](agent-memory.html) | `agent-memory` | — | A subagent declaring project memory gets its own directory; the first **200 |
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [bib-human-review](bib-human-review.html) | `bib-human-review` | — | Status sidecar: `content/schema/references.review.json`. |
 | [bib-photo-ingestion-watcher](bib-photo-ingestion-watcher.html) | `bib-photo-ingestion-watcher` | — | The automation half of the [`bib-human-review`](bib-human-review.md) workflow. |
 | [Bibliography QA](bib-qa.html) | `bib-qa` | — | cd content && bun run pipeline/bib-qa.ts --check-urls |
 | [Block Density](block-density.html) | `block-density` | — |  |
+| [Processes are BPMN, and the diagrams are executable](bpmn-processes.html) | `bpmn-processes` | — | **The `.bpmn` file is the source of truth.** The rendered SVGs are generated — |
 | [/canonical-watcher](canonical-watcher.html) | `canonical-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [Chapter Complexity Review](chapter-complexity-review.html) | `chapter-complexity-review` | — |  |
+| [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
 | [Code node review](code-node-review.html) | `code-node-review` | — |  |
 | [Compute Integration Watcher](compute-integration-watcher.html) | `compute-integration-watcher` | — |  |
 | [Content Graph](content-graph.html) | `content-graph` | — | cd content && python3 pipeline/content-graph-analysis.py |
+| [Content types](content-profiles.html) | `content-profiles` | — | A **document** folio is structured prose: policy guidance, a standard, a report. |
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
 | [/coordinate](coordinate.html) | `coordinate` | — | When several Claude branches are converging on the same long-term goal |
 | [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | — | Detect when a user request is a **feature request** (platform capability change) |
@@ -86,12 +90,13 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/getting-started](getting-started.html) | `getting-started` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn). |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
-| [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises the AGENTS.md §"5-minute idle trigger" / "Work the queue while idle" |
+| [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that |
 | [/integration-audit](integration-audit.html) | `integration-audit` | — | A maintenance command for the multi-axis QA-sidecar pipeline (`voice`, |
 | [/integration-backlog](integration-backlog.html) | `integration-backlog` | — | A workflow skill that turns each integration-watcher's open findings |
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
 | [integration-watcher (abstract parent)](integration-watcher.html) | `integration-watcher` | — | A concrete watcher (this skill's child) **watches incoming activity** |
 | [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn), |
+| [Working an issue](issue-working.html) | `issue-working` | — | Two rules. Both exist because **your view of an issue and everyone else's |
 | [KG export](kg-export.html) | `kg-export` | — | **`agentic-harness` has no renderer.** `folio` is the only `renderable` graph |
 | [Reading the knowledge graph](kg-navigation.html) | `kg-navigation` | — | You are in a fresh container. You have a task, a filesystem, and no memory of |
 | [Rendering the knowledge graph](kg-viewer.html) | `kg-viewer` | — | `kg-export` serialises the instance's graph to one JSON-LD document. This skill |
@@ -115,6 +120,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Production vs exploratory vs numerology](production-vs-exploratory-discipline.html) | `production-vs-exploratory-discipline` | — | N_TRUNCATION = 5 |
 | [QA witnesses](qa-witness.html) | `qa-witness` | — | A **QA witness** is what a reader sees when they open the QA badge beside a |
 | [Readability Editing](readability-editing.html) | `readability-editing` | — |  |
+| [A folio's README](readme-sections.html) | `readme-sections` | — | Two tools divide the file between them, and **between them no link in a folio |
 | [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn), |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |

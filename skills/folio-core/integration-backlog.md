@@ -135,8 +135,9 @@ For each batch, **before** doing any edits, surface an `AskUserQuestion`
 
 For each authorized batch:
 
-1. **Create branch** under the structured-name convention from AGENTS.md
-   "user accessibility" §:
+1. **Create branch** under the structured-name convention (the folio's own
+   `AGENTS.md` sets it; the accessibility half is
+   [`interaction-modality`](interaction-modality.md)):
    `claude/integration-backlog-<axis>-<theme>-<YYYY-MM-DD>`
    - `axis` ∈ the enabled axes
    - `theme` ≤ 40 chars, lowercase, hyphenated
@@ -254,7 +255,7 @@ This is the resume target for sessions that drop the loop mid-campaign.
   - work-plan policy (beans queue + idle-trigger)
   - User-accessibility (🟡, multi-select default, structured branch
     names)
-  - "Combine related work into one branch / one PR" — interpreted here
+  - `litlfred/qou` `AGENTS.md` "Combine related work into one branch / one PR" — interpreted here
     as "combine related batches when ≤ 49 files; otherwise split"
 
 ## Examples
@@ -303,6 +304,6 @@ User: /integration-backlog all
 - [`local/prepare-merge`](prepare-merge.md) — the merge workflow each
   batch runs through
 - [`local/coordinate`](coordinate.md) — sibling-PR coordination
-- AGENTS.md "Combine related work into one branch / one PR" and
-  "Structured branch names" rules
+- `litlfred/qou` `AGENTS.md` "Combine related work into one branch / one PR"
+  and its structured-branch-name rule
 ```

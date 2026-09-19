@@ -126,5 +126,5 @@ imbalance) — it gates every PR even when the heavy compile job no-ops.
 
 - Strategy + full investigation log:
   [`docs/workplans/2026-06-14-latex-build-caching-strategy.md`](../../../docs/workplans/2026-06-14-latex-build-caching-strategy.md)
-- CI billing signature: `AGENTS.md` §"CI billing failures".
+- CI billing signature: `litlfred/qou` `AGENTS.md` §"CI billing failures".
 {% endraw %}

@@ -75,7 +75,7 @@ watcher and its one-line QA axis, then surface the structured chip set.
 
 ## 0a. Repo-owner preferences (binding for all watchers)
 
-Per AGENTS.md §"User accessibility" the repo owner types with
+Per [`interaction-modality`](interaction-modality.md) the repo owner types with
 difficulty and prefers a small set of binding behavioural defaults.
 These override the historical watcher defaults — every child inherits
 them.
@@ -101,8 +101,8 @@ dispatch fewer agents, ask before parallelising.
 
 ## 0c. Sibling coordination
 
-Per AGENTS.md §"User accessibility" item "Coordinate intent with
-sibling branches":
+Per [`coordinate`](coordinate.md), on coordinating intent with sibling
+branches:
 
 - **At workplan start** (new branch / new tranche), list active
   sibling PRs via `mcp__github__list_pull_requests` (open) and
@@ -128,8 +128,9 @@ now the default.
 
 ## 0d. AskUserQuestion accessibility
 
-Per AGENTS.md §"User accessibility" item "Default `AskUserQuestion` to
-`multiSelect: true` + 🟡 marker": the repo owner types with difficulty.
+Per [`interaction-modality`](interaction-modality.md) and its `low-dexterity`
+profile, which defaults `AskUserQuestion` to `multiSelect: true`: the repo
+owner types with difficulty.
 
 - **Default `multiSelect: true`.** Single-select forces the user to
   type "1, 2" as free text when multiple options apply. Most watcher
@@ -200,8 +201,7 @@ own-branch commit; failure blocks the commit, queues the violation as
 - **collaborator**: may auto-discharge Auto-discharge band findings, may
   commit on this branch, may post asks on PRs.
 - **owner**: same as collaborator plus may commit to main when
-  explicitly requested (still requires per-commit user approval per
-  AGENTS.md "Executing actions with care").
+  explicitly requested (still requires per-commit user approval).
 
 ## Anti-patterns (shared across all children)
 
@@ -254,7 +254,7 @@ idle branch — a watcher processing events never reaches it.
 
 ## 0b. Idle-time backlog policy (5-minute trigger)
 
-Per AGENTS.md §"Agent work-plan policy" item 4 (5-minute idle
+Per [`idle-backlog`](../idle-backlog.md) (the 5-minute idle
 trigger): when this watcher has been idle for > 5 minutes (no
 substantive output beyond TICK heartbeats or empty acks),
 automatically start processing backlog without waiting for the user
@@ -1283,7 +1283,8 @@ question.** Two-part pattern:
 1. **Context preamble (chat text).** Before the `AskUserQuestion` call,
    write a short chat message: the finding (one sentence, with
    severity); the affected file (GitHub blob URL, `.md` preferred per
-   AGENTS.md "Always provide GitHub links"); evidence (verbatim quote
+   [`turn-reporting`](../turn-reporting.md) §"Asking for review means
+   linking the artefact"); evidence (verbatim quote
    with line numbers); what was attempted and what failed.
 2. **Structured question.** Then call `AskUserQuestion` with a tight
    numbered-choice set (2-4 options), each option mapping directly to a
