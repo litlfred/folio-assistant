@@ -144,21 +144,30 @@
 <!--
   Where the action tiles point.
 
-  Computed by Liquid from `_config.yml` rather than written into docs-ui.js,
-  because a URL hardcoded in a stylesheet's sibling script is a folio fact
-  living in shared code: it is right for this site and wrong for every other
-  instance that uses the same assets. `relative_url` also makes it correct
-  under a `baseurl`, which a literal is not.
+  RESOLVED, not composed. `scripts/sync-docs-harness.ts` writes
+  `docs/_data/harness.json` from the instance's own `cat-harness.json`,
+  through `siteLinks` in `scripts/site-links.ts` -- which computes every path
+  with `artefactStub` and `renderingPath`, the same functions the knowledge
+  graph exporter and the Pages workflow use. The tile therefore cannot
+  disagree with what is published.
 
-  `source` is the first `aux_links` entry, which is where a just-the-docs site
-  already records its repository. Absent config leaves the string empty and the
-  tile is simply not drawn -- an action pointing nowhere is worse than one
-  missing, because the reader cannot tell a broken link from a broken site.
+  This block previously wrote `/folio-assistant/kg/` by hand. Nothing
+  has ever been published at `<base>/kg/` -- the renderings sit at the base,
+  named after the stub -- so the only entry point to the viewer anywhere on
+  this site was a 404 from the day it was added. See bean `udx8`, and the
+  identical defect AGENTS.md records against the README's chapter PDFs. A
+  path built by convention is a claim; `bun run site:links --site _site`
+  checks it against the tree that actually ships, and the Pages workflow runs
+  that check after the export.
+
+  `path` is site-ROOT-relative and gets `relative_url`, which is what makes it
+  right under this site's `/folio-assistant/` baseurl. `url` is off-site and
+  is printed as-is. `source` is no longer taken from `aux_links`: those were
+  removed so the forge link stops appearing as text at the top of the main
+  panel (the owner asked for it as an icon, not a header), and the URL is
+  resolved from the git remote instead of written down twice.
 -->
-<script type="application/json" id="fa-site-links">{
-  "kg": "/folio-assistant/kg/",
-  "source": "https://github.com/litlfred/folio-assistant"
-}</script>
+<script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
@@ -411,23 +420,6 @@
   
   
   
-    <nav aria-label="Auxiliary" class="aux-nav">
-  <ul class="aux-nav-list">
-    
-      <li class="aux-nav-list-item">
-        <a href="https://github.com/litlfred/folio-assistant" class="site-button"
-          
-          target="_blank" rel="noopener noreferrer"
-          
-        >
-          GitHub
-        </a>
-      </li>
-    
-  </ul>
-</nav>
-
-  
 </div>
 
     <div class="main-content-wrap">
@@ -551,7 +543,7 @@ nothing ran.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35429983709"><code>dc08354</code></a> &middot; 2026-09-19T07:41:41Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430613025"><code>d128cc4</code></a> &middot; 2026-09-19T07:56:11Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

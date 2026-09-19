@@ -230,7 +230,7 @@ const STUB = "folio-assistant";
  * half written shows the half it has.
  */
 const STRINGS = {};
-const LOCALES = [{"locale":"en","name":"English","dir":"ltr","official":true,"translated":38,"total":38}];
+const LOCALES = [{"locale":"en","name":"English","dir":"ltr","official":true,"translated":39,"total":39}];
 // The SAME key the docs site writes (docs/assets/js/docs-ui.js), so a reader
 // who chose a language there arrives here in it. A second key would be a
 // second answer to one question.
@@ -238,7 +238,7 @@ const LOCALE_KEY = "fa-locale";
 
 const el = (id) => document.getElementById(id);
 let G = [], byId = new Map(), backlinks = new Map(), declared = new Set(),
-    linkTerms = new Set(), kind = null, sel = null, undeclared = [],
+    linkTerms = new Set(), kind = null, sel = null, undeclared = null,
     counts = {}, loaded = null, loadError = null, preview = false, LOC = "en";
 
 const short = (iri) => String(iri).includes("#") ? String(iri).split("#").pop() : String(iri);
@@ -425,7 +425,19 @@ function init(doc) {
   for (const [k, v] of Object.entries(ctx)) {
     if (v && typeof v === "object" && v["@type"] === "@id") linkTerms.add(k);
   }
-  undeclared = doc.undeclaredTerms ?? [];
+  // ABSENT and EMPTY are different answers, so this is not defaulted to an
+  // empty array.
+  //
+  // Since 2026-09-19 the export does not publish undeclaredTerms at all: it is
+  // a QA reviewer's finding and lives in the qa-results/v1 document under
+  // test/results/. A document that predates that change still carries it, and
+  // so might one produced by another instance, so it is read when present.
+  //
+  // Defaulting to empty would render "Across the graph: 0 such property names"
+  // over a document that never said so — a clean bill of health nobody issued,
+  // which is the same false pass the load-error handling above exists to
+  // avoid, one state along.
+  undeclared = Array.isArray(doc.undeclaredTerms) ? doc.undeclaredTerms : null;
   counts = doc.counts ?? {};
   preview = Boolean(doc["@type"] && String(doc["@type"]).includes("Preview"));
 
@@ -636,10 +648,17 @@ function drawNode(id) {
       escape(T("{n} of this node's properties are not in the @context", { n: undeclaredHere.length }))
         .replace("@context", "<code>@context</code>") +
       "</strong>, " +
-      escape(T(
-        "so a JSON-LD processor drops them. They are shown below, marked. " +
-        "Across the graph: {n} such property names.",
-        { n: undeclared.length })) +
+      // The cross-graph count only when the document actually reported one.
+      // See the note in init().
+      escape(
+        undeclared === null
+          ? T("so a JSON-LD processor drops them. They are shown below, marked.")
+          : T(
+              "so a JSON-LD processor drops them. They are shown below, marked. " +
+                "Across the graph: {n} such property names.",
+              { n: undeclared.length },
+            ),
+      ) +
       "</p>";
   }
 
