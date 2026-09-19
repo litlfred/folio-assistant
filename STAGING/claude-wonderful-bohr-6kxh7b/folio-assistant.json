@@ -231,13 +231,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T12:21:55.939Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/48018fab17e3a67b642199efbee706679682669e",
-  "sourceCommitSha": "48018fab17e3a67b642199efbee706679682669e",
-  "sourceCommitAt": "2026-09-19T12:20:15Z",
+  "generatedAt": "2026-09-19T12:48:07.440Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e1ae4b6e6847f170fdaacae042399d4cdf2ea342",
+  "sourceCommitSha": "e1ae4b6e6847f170fdaacae042399d4cdf2ea342",
+  "sourceCommitAt": "2026-09-19T12:46:42Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 163,
+    "Skill": 164,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -1315,7 +1315,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 207,
+      "instructionLines": 211,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true,
@@ -2048,6 +2048,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/one-voice-integration-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/library-ingestion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "library-ingestion",
+      "title": "Library ingestion",
+      "description": "Taking a file from `uploads/` to `library/<bib-slug>/` — which rung to reach for and why, what a complete L1 entry holds, and why an inferred structure is refused rather than guessed. One entry point: `bun run ingest`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/library-ingestion.md",
+      "instructionLines": 105,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/library-ingestion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/coordinate",
@@ -3935,6 +3951,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/kg-export",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/kg-navigation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/kg-viewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/library-ingestion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/markdown-render-check",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/mcp-assembly",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/mcp-contract",
@@ -19239,8 +19256,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "1e8f907e4881ffb497ef05097df62b49f80be517",
+    "sha": "f6206a062cbe68c90479e5053219e65fcea41934",
     "pr": "408/merge",
-    "run": "35442572560"
+    "run": "35443839143"
   }
 }
