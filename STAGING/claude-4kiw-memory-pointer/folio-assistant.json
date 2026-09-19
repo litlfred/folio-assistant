@@ -231,13 +231,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T10:55:27.464Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9789fb33e7040daf0f7ea11c13586368a42d5d5c",
-  "sourceCommitSha": "9789fb33e7040daf0f7ea11c13586368a42d5d5c",
-  "sourceCommitAt": "2026-09-19T10:53:57Z",
+  "generatedAt": "2026-09-19T10:58:46.630Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ee00007b5118b69db99e930ec14251edcfc07eb4",
+  "sourceCommitSha": "ee00007b5118b69db99e930ec14251edcfc07eb4",
+  "sourceCommitAt": "2026-09-19T10:57:05Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 156,
+    "Skill": 162,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -671,6 +671,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-publishing"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/readme-sections",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "readme-sections",
+      "title": "A folio's README — the folio owns the file, the platform owns the markers",
+      "description": "A folio's README is the author's file; the platform owns only the marked regions it generates. How the sync/audit split works, why the whole-file generator it replaced could not, and the third state both tools must report.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/readme-sections.md",
+      "instructionLines": 97,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/readme-sections"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/html-rendering-qc",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "html-rendering-qc",
@@ -806,7 +822,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/process-state.md",
-      "instructionLines": 91,
+      "instructionLines": 112,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -918,7 +934,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/uses-editorial-review.md",
-      "instructionLines": 280,
+      "instructionLines": 309,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1012,7 +1028,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/devils-advocate-watcher.md",
-      "instructionLines": 419,
+      "instructionLines": 420,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1060,7 +1076,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/continual-progress.md",
-      "instructionLines": 82,
+      "instructionLines": 127,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1131,6 +1147,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/docs-generation"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/content-profiles",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "content-profiles",
+      "title": "Content types — `document` is the base, a paper extends it",
+      "description": "Adapters and profiles are different axes and conflating them is costly. What a document folio is, how a paper extends it, which distinction needs code and which needs only rules, and what profile enforcement catches that schema validation structurally cannot.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/content-profiles.md",
+      "instructionLines": 96,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-profiles"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/directory-conventions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "directory-conventions",
@@ -1139,11 +1171,27 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 483,
+      "instructionLines": 511,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/directory-conventions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/bpmn-processes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bpmn-processes",
+      "title": "Processes are BPMN, and the diagrams are executable",
+      "description": "Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/bpmn-processes.md",
+      "instructionLines": 108,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/kg-navigation",
@@ -1171,7 +1219,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 435,
+      "instructionLines": 456,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1218,7 +1266,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 289,
+      "instructionLines": 295,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1272,6 +1320,22 @@
       "hasIOContract": false,
       "ambiguous": true,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bean-coordination"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/issue-working",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "issue-working",
+      "title": "Working an issue — announce, then re-check",
+      "description": "Working a tracked issue — announce the branch when you create it rather than when you finish, and re-check the issue for new AND edited comments while you work. Both rules are about the gap between your view of an issue and everyone else's.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/issue-working.md",
+      "instructionLines": 84,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/issue-working"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/md-authoring",
@@ -1330,7 +1394,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/opening-brief.md",
-      "instructionLines": 105,
+      "instructionLines": 150,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1536,7 +1600,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 198,
+      "instructionLines": 231,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true,
@@ -1668,6 +1732,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/editor"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/ci-health",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "ci-health",
+      "title": "CI health — a red workflow looks exactly like a green one from in here",
+      "description": "A red workflow looks exactly like a green one from inside a checkout. How to read a default-branch health report, the three verdicts that keep it honest, and why a watchdog needs both a session-start print and an unattended run.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/ci-health.md",
+      "instructionLines": 87,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ci-health"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/symbiotic-interaction",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "symbiotic-interaction",
@@ -1698,6 +1778,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/block-density"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/agent-memory",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "agent-memory",
+      "title": "Subagent memory — what a durable entry may claim",
+      "description": "Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as the third state between \"reaches everybody\" and \"deleted\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/agent-memory.md",
+      "instructionLines": 124,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/agent-memory"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/turn-reporting",
@@ -1803,7 +1899,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/integration-backlog.md",
-      "instructionLines": 309,
+      "instructionLines": 310,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2503,7 +2599,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/proof-editor.md",
-      "instructionLines": 247,
+      "instructionLines": 248,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3777,17 +3873,21 @@
       "path": "skills/folio-core",
       "hasManifest": true,
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/agent-memory",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/bean-blocking",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/bean-coordination",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/bib-human-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/bib-qa",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/block-density",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/bpmn-processes",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/canonical-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/chapter-complexity-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/code-node-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/compute-integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/content-graph",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/content-profiles",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/coordinate",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/crdm-detect",
@@ -3814,6 +3914,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/integration-watch",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/interaction-modality",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/issue-working",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/kg-export",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/kg-navigation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/kg-viewer",
@@ -3822,11 +3923,12 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/mcp-contract",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/mcp-projection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/md-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/milnor-exposition-standard",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/one-voice-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/one-voice-integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/one-voice-style-guide",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/milnor-exposition-standard",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/ontologist",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/opening-brief",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/pickup",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/placement",
@@ -3836,6 +3938,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/production-vs-exploratory-discipline",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/qa-witness",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/readability-editing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/readme-sections",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/role-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/scientific-accuracy",
@@ -3846,18 +3949,17 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/test-engineer",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/opening-brief",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/todo-manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/todo-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/ui-accessibility",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/untrusted-input",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/uses-editorial-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/voice-authoring-guidance",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/voice-editorial-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/voice-overlay-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/voice-authoring-guidance",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-4kiw-memory-pointer/folio-assistant.jsonld#skill/watch"
       ],
       "providesCapability": [
@@ -19096,8 +19198,8 @@
   ],
   "staging": {
     "branch": "claude/4kiw-memory-pointer",
-    "sha": "0f0963a101fadbb9a2093cde77ce62aefb045431",
+    "sha": "8b0c8985107ed07b84add149cd806d15f477b303",
     "pr": "402/merge",
-    "run": "35438644777"
+    "run": "35438778783"
   }
 }
