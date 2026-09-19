@@ -104,3 +104,40 @@ declaration — which dark uses and which already passes — alone.
 
 Queued behind the `content-pipeline-navigator` retirement, per the owner's
 standing instruction to queue rather than pivot.
+
+## Fixed, 2026-09-19
+
+Option 2, light scheme only, as recommended and approved.
+
+```css
+:root[data-fa-scheme="light"] .fa-node-edit { opacity: 1; color: #5a5a68; }
+```
+
+plus the `prefers-color-scheme: light` fallback for a reader who has set no
+explicit scheme. **The base rule is untouched** — dark mutes by opacity and
+measures clean, and changing a rendering that is already correct is not a fix.
+
+## What the measurement changed about the fix
+
+`--link-color` (`#7253ed`) measures **5.03:1** on white and would have passed.
+So the opacity was the entire defect and the colour was never the problem —
+which is not what "insufficient colour contrast" reads like at first.
+
+It was still rejected: at full strength the control reads as one of the page's
+content links, and the reason the opacity existed — a link pulled up into a
+heading's line is noisy — is a real concern that deleting the rule would have
+ignored. A muted NEUTRAL keeps it quiet, reads as chrome rather than as body
+text, and measures **6.78:1**.
+
+## The two schemes now differ in MECHANISM
+
+Dark mutes by opacity, light by colour. That asymmetry is the fix, not an
+oversight, and it is written into the stylesheet so the next person to tidy
+them into one finds the reason first.
+
+## Falsified, not asserted
+
+`tests/a11y.e2e.ts` gains a two-scheme axe run driven by `data-fa-scheme` on
+`<html>` — what the page's own JS sets, which the first probe did not
+reproduce. Removing the new rule fails **light** and passes **dark**; restoring
+it passes both. The test measures the real thing.
