@@ -266,7 +266,7 @@
   those are opposite facts.
 
   `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
-  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">e350c7c</span> · built 2026-09-19T15:37:55Z · <a href="https://github.com/litlfred/folio-assistant/pull/413" style="color:#fff;text-decoration:underline">PR #413</a> · <a href="https://github.com/litlfred/folio-assistant/issues/386" style="color:#fff;text-decoration:underline">issue #386</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skills/content-review.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35452352292" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
+  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">5e653cd</span> · built 2026-09-19T15:41:39Z · <a href="https://github.com/litlfred/folio-assistant/pull/413" style="color:#fff;text-decoration:underline">PR #413</a> · <a href="https://github.com/litlfred/folio-assistant/issues/386" style="color:#fff;text-decoration:underline">issue #386</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skills/content-review.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35452541891" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
   works, which is exactly what makes the mistake survive review.
 -->
 <meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/todos/index.json">
@@ -296,6 +296,25 @@
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
 <link rel="stylesheet" href="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/css/themes.css">
+<!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
+     `avatars:css:check` fails the build when it is stale. One stylesheet
+     rather than 68 assets: the glyph is a mask and the colour is a property,
+     so a scheme swap is a custom property and the trash state is a selector. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/css/avatars.css">
+
+<!--
+  The kinds THIS INSTANCE DECLARES, for the avatar fan.
+
+  Owner: "shows the DECLared kinds for that instance, not inheritance." Written
+  by `sync-docs-harness.ts` from the instance's own `harness.json`, BEFORE
+  `resolveDirectories` overlays a dependency's. The effective set is strictly
+  larger, and showing it would name kinds this repository never claimed.
+
+  Inline rather than a fetched URL, unlike the todo index and the discarded
+  document: this is a dozen short strings, it is needed to render the fan at
+  all, and a fetch for that would put a spinner in front of a badge.
+-->
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","fsh-guts","health","library","qa","schemas","todos","tools","translation-sources","uploads","voices"]</script>
 <script src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/js/docs-ui.js" defer></script>
@@ -450,7 +469,7 @@
 
 </head>
 
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">e350c7c</span> · built 2026-09-19T15:37:55Z · <a href="https://github.com/litlfred/folio-assistant/pull/413" style="color:#fff;text-decoration:underline">PR #413</a> · <a href="https://github.com/litlfred/folio-assistant/issues/386" style="color:#fff;text-decoration:underline">issue #386</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skills/content-review.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35452352292" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">5e653cd</span> · built 2026-09-19T15:41:39Z · <a href="https://github.com/litlfred/folio-assistant/pull/413" style="color:#fff;text-decoration:underline">PR #413</a> · <a href="https://github.com/litlfred/folio-assistant/issues/386" style="color:#fff;text-decoration:underline">issue #386</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skills/content-review.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35452541891" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -1038,7 +1057,7 @@
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35452352292"><code>e350c7c</code></a> &middot; 2026-09-19T15:37:24Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35452541891"><code>5e653cd</code></a> &middot; 2026-09-19T15:41:09Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

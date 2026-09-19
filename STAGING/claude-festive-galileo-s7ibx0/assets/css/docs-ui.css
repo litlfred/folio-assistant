@@ -2256,3 +2256,139 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 
 .fa-discarded-restore:hover,
 .fa-discarded-restore:focus-visible { background: rgba(128, 128, 128, 0.15); }
+
+/* ── The kind fan (bean `4kj4`) ────────────────────────────────────────────
+ *
+ * The owner asked for all three of: a fan, an autoplaying fade, and a fade on
+ * hover. They layer — the fan is complete when still, and the cycle is an
+ * EMPHASIS over it. Nothing is conveyed by the motion, which is what makes an
+ * autoplaying loop defensible rather than merely pausable. */
+
+.fa-kind-fan-open {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  border-radius: 0.25rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.fa-kind-fan-open:hover,
+.fa-kind-fan-open:focus-visible { background: rgba(128, 128, 128, 0.15); }
+
+.fa-kind-fan {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* OVERLAPPING, the participant-list pattern: it says "several" at a glance
+ * without needing the reader to count. The negative margin is on the slot and
+ * not the avatar so the lit state can still grow without clipping. */
+.fa-kind-fan-strip {
+  display: inline-flex;
+  align-items: center;
+}
+
+.fa-kind-fan-slot {
+  --fa-avatar-size: 1.15rem;
+  display: inline-flex;
+  margin-left: -0.35rem;
+  opacity: 0.55;
+}
+
+.fa-kind-fan-slot:first-child { margin-left: 0; }
+
+/* The lit one. Opacity and SCALE together, never opacity alone: a highlight
+ * carried by one channel is a highlight somebody cannot see. */
+.fa-kind-fan-slot[data-fa-lit="true"] {
+  opacity: 1;
+  transform: scale(1.18);
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fa-kind-fan-slot {
+    transition: opacity 400ms ease, transform 400ms ease;
+  }
+}
+
+/* Under reduced motion there is no cycle at all — the script never starts the
+ * timer, and this makes sure nothing animates even if it somehow did. The two
+ * guards are deliberate: CSS alone leaves a timer mutating the DOM invisibly,
+ * script alone leaves the transition running on whatever else changes. */
+@media (prefers-reduced-motion: reduce) {
+  .fa-kind-fan-slot {
+    transition: none;
+    /* Every kind at full strength, since nothing will be highlighting them. */
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fa-kind-fan-pause {
+  flex: none;
+  min-width: 1.6rem;
+  min-height: 1.6rem;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  border-radius: 0.25rem;
+  background: transparent;
+  color: inherit;
+  font-size: 0.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fa-kind-fan-pause:hover,
+.fa-kind-fan-pause:focus-visible { background: rgba(128, 128, 128, 0.2); }
+
+/* ── The panel the fan opens ──────────────────────────────────────────── */
+
+.fa-kinds-note,
+.fa-kinds-legend {
+  margin: 0 0 0.5rem;
+  font-size: 0.68rem;
+  opacity: 0.75;
+}
+
+.fa-kinds-legend { margin: 0.5rem 0 0; }
+
+.fa-kinds-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fa-kinds-row {
+  --fa-avatar-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.22rem 0;
+  font-size: 0.74rem;
+}
+
+.fa-kinds-name { flex: 1; overflow-wrap: anywhere; }
+
+/* The discarded twin, shown beside the live one — muted is only legible as
+ * muted next to the thing it is muted against. */
+.fa-kinds-trash { opacity: 0.85; }
+
+/* The fan and its pause are SIBLINGS, never nested: the fan is the face of a
+ * button, and a <button> inside a <button> is closed by the parser — the
+ * whole control never survives to the DOM. Caught by a spec that clicked
+ * pause and found `.fa-kind-fan` did not exist. */
+.fa-kind-fan-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.fa-kind-fan-row .fa-kind-fan-open { margin-top: 0; }
