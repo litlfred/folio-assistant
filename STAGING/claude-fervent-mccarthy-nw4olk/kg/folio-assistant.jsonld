@@ -118,13 +118,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T00:58:37.907Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/359c6f40fea9586a5d01761c1e8e2de7f85fed62",
-  "sourceCommitSha": "359c6f40fea9586a5d01761c1e8e2de7f85fed62",
-  "sourceCommitAt": "2026-09-19T00:57:11Z",
+  "generatedAt": "2026-09-19T01:05:08.278Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7ea453c396bde464674bafdb2be934bbeed2d53f",
+  "sourceCommitSha": "7ea453c396bde464674bafdb2be934bbeed2d53f",
+  "sourceCommitAt": "2026-09-19T01:03:24Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 147,
+    "Skill": 148,
     "Actor": 24,
     "Capability": 23,
     "Role": 64,
@@ -185,35 +185,35 @@
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 147
+      "occurrences": 148
     },
     {
       "term": "hasIOContract",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 147
+      "occurrences": 148
     },
     {
       "term": "instructions",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 147
+      "occurrences": 148
     },
     {
       "term": "lines",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 147
+      "occurrences": 148
     },
     {
       "term": "packagePaths",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 147
+      "occurrences": 148
     },
     {
       "term": "source",
@@ -1823,6 +1823,23 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/test-engineer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/kg/folio-assistant.jsonld#skill/serving-renderings",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "serving-renderings",
+      "title": "Serving a rendering — endpoints, MIME types, and what each host can enforce",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/serving-renderings.md",
+      "lines": 85,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/serving-renderings"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/kg/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher",
@@ -4143,6 +4160,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/kg/folio-assistant.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/kg/folio-assistant.jsonld#skill/role-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/kg/folio-assistant.jsonld#skill/scientific-accuracy",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/kg/folio-assistant.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/kg/folio-assistant.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/kg/folio-assistant.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/kg/folio-assistant.jsonld#skill/staging-review",
@@ -19421,8 +19439,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "9659929884677ba00da6714d10b1525d1abc6e57",
+    "sha": "25c24f9f1f08250406475b937eee683ea0be5928",
     "pr": "302/merge",
-    "run": "35411075691"
+    "run": "35411426983"
   }
 }

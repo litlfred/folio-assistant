@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(100)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(107)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(100) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(107) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(100) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(107) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(100) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(107) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Rendering Auditor | folio-assistant</title>
+<title>Serving a rendering | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Rendering Auditor" />
+<meta property="og:title" content="Serving a rendering" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/reference/skill-instructions/rendering-auditor.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/reference/skill-instructions/rendering-auditor.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/reference/skill-instructions/serving-renderings.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/reference/skill-instructions/serving-renderings.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Rendering Auditor" />
+<meta property="twitter:title" content="Serving a rendering" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Rendering Auditor","url":"https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/reference/skill-instructions/rendering-auditor.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Serving a rendering","url":"https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/reference/skill-instructions/serving-renderings.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -270,7 +270,7 @@
 
 </head>
 
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/fervent-mccarthy-nw4olk" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/fervent-mccarthy-nw4olk</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">25c24f9</span> · built 2026-09-19T01:05:03Z · <a href="https://github.com/litlfred/folio-assistant/pull/302" style="color:#fff;text-decoration:underline">PR #302</a> · <a href="https://github.com/litlfred/folio-assistant/issues/208" style="color:#fff;text-decoration:underline">issue #208</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/rendering-auditor.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35411426983" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/fervent-mccarthy-nw4olk" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/fervent-mccarthy-nw4olk</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">25c24f9</span> · built 2026-09-19T01:05:03Z · <a href="https://github.com/litlfred/folio-assistant/pull/302" style="color:#fff;text-decoration:underline">PR #302</a> · <a href="https://github.com/litlfred/folio-assistant/issues/208" style="color:#fff;text-decoration:underline">issue #208</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/serving-renderings.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35411426983" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -416,7 +416,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Rendering Auditor</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Serving a rendering</span></li>
   </ol>
 </nav>
 
@@ -425,1019 +425,153 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/rendering-auditor.md"><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/rendering-auditor.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/serving-renderings.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/serving-renderings.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/rendering-auditor.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/serving-renderings.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="rendering-auditor">
+<h1 id="serving-a-rendering--endpoints-mime-types-and-what-each-host-can-enforce">
   
   
-    <a href="#rendering-auditor" class="anchor-heading" aria-labelledby="rendering-auditor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rendering Auditor
+    <a href="#serving-a-rendering--endpoints-mime-types-and-what-each-host-can-enforce" class="anchor-heading" aria-labelledby="serving-a-rendering--endpoints-mime-types-and-what-each-host-can-enforce"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Serving a rendering — endpoints, MIME types, and what each host can enforce
   
   
 </h1>
     
-<h2 id="role">
+
+<p>A <strong>rendering</strong> is what an instance publishes about itself. Running it produces
+<strong>one or more endpoints under that instance’s stub</strong>, and every endpoint has a
+media type that says what it is.</p>
+
+<p>This skill is about the second half. The rendering already knows what it
+produced; what keeps going wrong is that the <em>serving</em> forgets to say so, and a
+<code class="language-plaintext highlighter-rouge">.jsonld</code> arrives at a client as <code class="language-plaintext highlighter-rouge">text/plain</code>.</p>
+<h2 id="one-stub-several-endpoints-per-instance-in-the-tree">
   
   
-    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
+    <a href="#one-stub-several-endpoints-per-instance-in-the-tree" class="anchor-heading" aria-labelledby="one-stub-several-endpoints-per-instance-in-the-tree"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One stub, several endpoints, per instance in the tree
   
   
 </h2>
     
 
-<p>Multi-pass linter that catches rendering errors in content blocks before they
-reach the HTML viewer or PDF output. Runs five sequential passes, each
-progressively more expensive. Early passes catch structural issues cheaply;
-later passes catch visual and layout problems that require actual rendering.</p>
-<h2 id="when-to-use">
-  
-  
-    <a href="#when-to-use" class="anchor-heading" aria-labelledby="when-to-use"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use
-  
-  
-</h2>
-    
+<p><code class="language-plaintext highlighter-rouge">artefactStub()</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code> is the stem: <code class="language-plaintext highlighter-rouge">stub</code> when declared,
+otherwise <code class="language-plaintext highlighter-rouge">name</code>. Every artefact an instance publishes is named with it, so a
+reader who knows the repository knows the filename.</p>
 
-<ul>
-  <li><strong>After editing a content block</strong> — author agents should run at least
-passes 1-3 on the edited block before committing</li>
-  <li><strong>QC report</strong> — run all 5 passes across all blocks (or a chapter)</li>
-  <li><strong>“audit rendering”</strong>, <strong>“check rendering”</strong>, <strong>“rendering issues”</strong></li>
-  <li><strong>Before a release or merge</strong> — full audit on changed blocks</li>
-  <li><strong>Debugging rendering failures</strong> — targeted pass on the failing block</li>
-</ul>
-<h2 id="architecture">
-  
-  
-    <a href="#architecture" class="anchor-heading" aria-labelledby="architecture"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Architecture
-  
-  
-</h2>
-    
+<p>The dependency tree is <strong>a set of overlaying instances</strong>, and each renders under
+its own stub. That is the point of the stub being per-instance rather than
+per-repository: after the split, <code class="language-plaintext highlighter-rouge">folio-assist-core</code> depending on
+<code class="language-plaintext highlighter-rouge">cat-harness</code> means both are present, and both publish.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Pass 1: Syntax        (AST-based, fast, catches structural errors)
-Pass 2: Notation      (cross-reference check, medium speed)
-Pass 3: Compilation   (lightweight TeX→SVG/HTML, catches TeX errors)
-Pass 4: Layout        (full pdflatex, catches overfull hbox etc.)
-Pass 5: Visual        (render + inspect both pipelines, catches display bugs)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;base&gt;/kg/&lt;stub&gt;.jsonld          the knowledge graph        application/ld+json
+&lt;base&gt;/&lt;stub&gt;.schema.json        its declaration's schema   application/schema+json
 </code></pre></div></div>
 
-<p>Each pass produces diagnostics at three severities: <strong>error</strong>, <strong>warning</strong>,
-<strong>info</strong>. Errors in an earlier pass should be fixed before running later
-passes (garbage-in-garbage-out).</p><hr />
-<h2 id="pass-1-markdown--tex-syntax">
+<p>So <code class="language-plaintext highlighter-rouge">…/folio-assistant/kg/cat-harness.jsonld</code> is the <em>cat-harness</em> instance’s
+rendering, served from a tree whose root happens to be <code class="language-plaintext highlighter-rouge">folio-assistant</code>. A
+consumer asking for one instance’s graph must not be handed another’s because
+the paths collided.</p>
+<h2 id="every-endpoint-declares-its-media-type">
   
   
-    <a href="#pass-1-markdown--tex-syntax" class="anchor-heading" aria-labelledby="pass-1-markdown--tex-syntax"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pass 1: Markdown + TeX Syntax
+    <a href="#every-endpoint-declares-its-media-type" class="anchor-heading" aria-labelledby="every-endpoint-declares-its-media-type"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Every endpoint declares its media type
   
   
 </h2>
     
 
-<p><strong>Tools</strong>: remark AST (remark-gfm + remark-math), unified-latex AST, Zod schema
-<strong>Speed</strong>: Fast (no compilation)</p>
-<h3 id="checks">
-  
-  
-    <a href="#checks" class="anchor-heading" aria-labelledby="checks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checks
-  
-  
-</h3>
-    
+<p>The declaration is part of the rendering, not of the server. A server is one
+consumer of it; an MCP server is another; a <code class="language-plaintext highlighter-rouge">Link:</code> header generator is a third.
+Writing the type at each of them is three places to disagree.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Check</th>
-      <th>Severity</th>
-      <th>How</th>
+      <th>extension</th>
+      <th>media type</th>
+      <th>why not the obvious one</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Math delimiters balanced (<code class="language-plaintext highlighter-rouge">$...$</code>, <code class="language-plaintext highlighter-rouge">$$...$$</code>)</td>
-      <td><strong>error</strong></td>
-      <td>remark-math parse — unmatched delimiters produce parse errors</td>
+      <td><code class="language-plaintext highlighter-rouge">.jsonld</code></td>
+      <td><code class="language-plaintext highlighter-rouge">application/ld+json</code></td>
+      <td><strong>not</strong> <code class="language-plaintext highlighter-rouge">application/json</code>. A JSON-LD processor keys off this type to know the document carries a <code class="language-plaintext highlighter-rouge">@context</code></td>
     </tr>
     <tr>
-      <td>Display math <code class="language-plaintext highlighter-rouge">$$</code> on own line with preceding blank line</td>
-      <td><strong>error</strong></td>
-      <td>Regex: <code class="language-plaintext highlighter-rouge">$$</code> not preceded by blank line causes mixed <code class="language-plaintext highlighter-rouge">\[</code>/<code class="language-plaintext highlighter-rouge">$$</code> in rendered output</td>
+      <td><code class="language-plaintext highlighter-rouge">.schema.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">application/schema+json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">application/json</code> parses, but loses that it is a schema</td>
     </tr>
     <tr>
-      <td>Braces balanced inside math</td>
-      <td><strong>error</strong></td>
-      <td>unified-latex parse of each math snippet</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">\begin{env}</code> matches <code class="language-plaintext highlighter-rouge">\end{env}</code> in ```tex `` blocks</td>
-      <td><strong>error</strong></td>
-      <td>unified-latex environment balance check</td>
-    </tr>
-    <tr>
-      <td>No raw LaTeX commands outside <code class="language-plaintext highlighter-rouge">$...$</code> or ```tex `` | <strong>error</strong> | Grep for <code class="language-plaintext highlighter-rouge">\mathrm</code>, <code class="language-plaintext highlighter-rouge">\textbf</code>, <code class="language-plaintext highlighter-rouge">\emph</code>, <code class="language-plaintext highlighter-rouge">\begin</code> etc. outside math context — renders as literal text</td>
-      <td> </td>
+      <td><code class="language-plaintext highlighter-rouge">.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">application/json</code></td>
       <td> </td>
     </tr>
-    <tr>
-      <td>No <code class="language-plaintext highlighter-rouge">$$...$$</code> with content on same line as delimiters</td>
-      <td><strong>error</strong></td>
-      <td>Pipeline splits opening <code class="language-plaintext highlighter-rouge">\[</code> from closing <code class="language-plaintext highlighter-rouge">$$</code>, producing mixed-delimiter LaTeX error</td>
-    </tr>
-    <tr>
-      <td>No bare <code class="language-plaintext highlighter-rouge">\eqref{}</code> outside math mode</td>
-      <td><strong>error</strong></td>
-      <td>Renders as literal text in HTML; use <code class="language-plaintext highlighter-rouge">[text](#label)</code> cross-ref instead</td>
-    </tr>
-    <tr>
-      <td>Markdown list syntax correct (<code class="language-plaintext highlighter-rouge">1.</code> / <code class="language-plaintext highlighter-rouge">-</code> with proper indentation)</td>
-      <td><strong>warning</strong></td>
-      <td>remark AST — malformed lists produce paragraph nodes instead</td>
-    </tr>
-    <tr>
-      <td>Markdown table syntax valid (pipe-delimited, header separator)</td>
-      <td><strong>warning</strong></td>
-      <td>remark-gfm AST parse — invalid tables render as plain text; valid tables become <code class="language-plaintext highlighter-rouge">\begin{tabular}</code> with booktabs</td>
-    </tr>
-    <tr>
-      <td>Bare <code class="language-plaintext highlighter-rouge">_</code> in table cells outside math/code</td>
-      <td><strong>error</strong></td>
-      <td>Underscores trigger LaTeX subscript; wrap in backticks or <code class="language-plaintext highlighter-rouge">$...$</code></td>
-    </tr>
-    <tr>
-      <td>Table cells with bare identifiers (Lean decls etc.)</td>
-      <td><strong>error</strong></td>
-      <td>Must use backtick inline code: <code class="language-plaintext highlighter-rouge">`Paper.Foo.bar_baz`</code> → <code class="language-plaintext highlighter-rouge">\texttt{Paper.Foo.bar\_baz}</code></td>
-    </tr>
-    <tr>
-      <td>Block <code class="language-plaintext highlighter-rouge">.ts</code> manifest validates against Zod schema</td>
-      <td><strong>error</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">BlockSchema.safeParse()</code></td>
-    </tr>
-    <tr>
-      <td>Title math preserved in <code class="language-plaintext highlighter-rouge">$...$</code> delimiters (not bare TeX)</td>
-      <td><strong>error</strong></td>
-      <td>Check <code class="language-plaintext highlighter-rouge">.ts</code> title field for bare <code class="language-plaintext highlighter-rouge">\mathrm{}</code> etc. without <code class="language-plaintext highlighter-rouge">$</code> wrapping</td>
-    </tr>
-    <tr>
-      <td>Fenced code blocks have language tag</td>
-      <td><strong>info</strong></td>
-      <td>``` `` without <code class="language-plaintext highlighter-rouge">tex</code> tag won’t pass through correctly</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">&amp;</code> outside math mode</td>
-      <td><strong>error</strong></td>
-      <td>Ampersands in prose become column separators in LaTeX, breaking compilation</td>
-    </tr>
   </tbody>
 </table></div>
-<h3 id="running-pass-1">
+<h2 id="what-each-host-can-enforce--three-states-and-they-are-not-degrees">
   
   
-    <a href="#running-pass-1" class="anchor-heading" aria-labelledby="running-pass-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running Pass 1
-  
-  
-</h3>
-    
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/validate.ts &lt;paper&gt;/&lt;chapter&gt;/&lt;block&gt;.ts
-</code></pre></div></div>
-
-<p>Or for remark + unified-latex AST on the <code class="language-plaintext highlighter-rouge">.md</code> directly:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/validate-tex.ts &lt;paper&gt;/&lt;chapter&gt;/&lt;block&gt;.md
-</code></pre></div></div>
-<h3 id="manual-inspection-when-tools-unavailable">
-  
-  
-    <a href="#manual-inspection-when-tools-unavailable" class="anchor-heading" aria-labelledby="manual-inspection-when-tools-unavailable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Manual inspection (when tools unavailable)
-  
-  
-</h3>
-    
-
-<ol>
-  <li>Read the <code class="language-plaintext highlighter-rouge">.md</code> file</li>
-  <li>Extract all math snippets (between <code class="language-plaintext highlighter-rouge">$...$</code>, <code class="language-plaintext highlighter-rouge">$$...$$</code>, <code class="language-plaintext highlighter-rouge"></code><code class="language-plaintext highlighter-rouge">tex </code><code class="language-plaintext highlighter-rouge">...</code><code class="language-plaintext highlighter-rouge"> </code><code class="language-plaintext highlighter-rouge"></code>)</li>
-  <li>Check brace balance in each snippet</li>
-  <li>Check for raw TeX commands in prose (outside delimiters)</li>
-  <li>Verify markdown table formatting (consistent column counts, separator row)</li>
-  <li>Check that display math has blank line before <code class="language-plaintext highlighter-rouge">$$</code></li>
-</ol><hr />
-<h2 id="pass-2-notation-consistency">
-  
-  
-    <a href="#pass-2-notation-consistency" class="anchor-heading" aria-labelledby="pass-2-notation-consistency"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pass 2: Notation Consistency
+    <a href="#what-each-host-can-enforce--three-states-and-they-are-not-degrees" class="anchor-heading" aria-labelledby="what-each-host-can-enforce--three-states-and-they-are-not-degrees"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What each host can enforce — three states, and they are not degrees
   
   
 </h2>
     
 
-<p><strong>Tools</strong>: Grep, glossary.json, references.ts, AGENTS.md notation register
-<strong>Speed</strong>: Medium (cross-reference lookups)</p>
-<h3 id="checks-1">
-  
-  
-    <a href="#checks-1" class="anchor-heading" aria-labelledby="checks-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checks
-  
-  
-</h3>
-    
+<p><strong>A local HTTP deployment enforces it.</strong> It reads the declared type and sets
+<code class="language-plaintext highlighter-rouge">Content-Type</code>. This is where the declaration is honoured exactly.</p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Check</th>
-      <th>Severity</th>
-      <th>How</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>All math symbols used are defined in the paper or glossary</td>
-      <td><strong>warning</strong></td>
-      <td>Extract symbols from math AST, cross-ref against glossary.json and notation remarks</td>
-    </tr>
-    <tr>
-      <td>Notation register compliance (project AGENTS.md notation section)</td>
-      <td><strong>error</strong></td>
-      <td>Verify each symbol’s font/register matches the project’s notation register; a symbol used with the wrong font/register (e.g. plain where the register calls for fraktur, bold, or calligraphic) should match the project’s notation register defined in the project’s AGENTS.md notation section</td>
-    </tr>
-    <tr>
-      <td>No notation collisions</td>
-      <td><strong>error</strong></td>
-      <td>Flag a single symbol used for two distinct concepts, or a concept written with a symbol that the notation register reserves for something else</td>
-    </tr>
-    <tr>
-      <td>Category notation conventions</td>
-      <td><strong>error</strong></td>
-      <td>Flag font/register used for categories that the notation register reserves for another role (e.g. a calligraphic letter reserved for sheaves/bundles being used for a category)</td>
-    </tr>
-    <tr>
-      <td>Observed/derived values use <code class="language-plaintext highlighter-rouge">$\approx$</code> not <code class="language-plaintext highlighter-rouge">$=$</code></td>
-      <td><strong>error</strong></td>
-      <td>Numerical predictions must use <code class="language-plaintext highlighter-rouge">$\approx$</code> unless an <code class="language-plaintext highlighter-rouge">$O(\cdot)$</code> error term is present</td>
-    </tr>
-    <tr>
-      <td>Defined terms wrapped in <code class="language-plaintext highlighter-rouge">:defterm</code> / <code class="language-plaintext highlighter-rouge">:refterm</code></td>
-      <td><strong>error / warning</strong></td>
-      <td>Every slug in any block’s <code class="language-plaintext highlighter-rouge">defines[]</code> must be wrapped at every mention. Run <code class="language-plaintext highlighter-rouge">bun run validate &lt;paper&gt; --strict</code> to fire <code class="language-plaintext highlighter-rouge">term-mention-coverage</code> warnings on bare-text mentions of known slugs. Bare <code class="language-plaintext highlighter-rouge">\emph{}</code> of a defined term is a register violation.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">\cite{key}</code> keys resolve to references.ts</td>
-      <td><strong>error</strong></td>
-      <td>Every citation key must exist in the bibliography</td>
-    </tr>
-    <tr>
-      <td>Cross-ref labels <code class="language-plaintext highlighter-rouge">[text](#label)</code> resolve</td>
-      <td><strong>error</strong></td>
-      <td>Labels in <code class="language-plaintext highlighter-rouge">uses[]</code> and markdown cross-refs must point to existing blocks</td>
-    </tr>
-    <tr>
-      <td>Undefined macros (custom commands not in preamble)</td>
-      <td><strong>warning</strong></td>
-      <td>Extract <code class="language-plaintext highlighter-rouge">\commandname</code> tokens, check against main.tex preamble and standard LaTeX/amsmath</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="symbol-extraction-procedure">
-  
-  
-    <a href="#symbol-extraction-procedure" class="anchor-heading" aria-labelledby="symbol-extraction-procedure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Symbol extraction procedure
-  
-  
-</h3>
-    
+<p><strong>An MCP server enforces it.</strong> When it serves a rendered artefact it uses the
+declared default media type rather than guessing from the extension — the
+declaration is right there, and guessing is how <code class="language-plaintext highlighter-rouge">.jsonld</code> becomes
+<code class="language-plaintext highlighter-rouge">application/octet-stream</code>.</p>
 
-<ol>
-  <li>Parse <code class="language-plaintext highlighter-rouge">.md</code> with remark-math to get all math nodes</li>
-  <li>From each math node, extract macro names (<code class="language-plaintext highlighter-rouge">\commandname</code>) and single-letter
-variables (Latin and Greek)</li>
-  <li>Cross-reference each against:
-    <ul>
-      <li>The notation register in the project’s AGENTS.md (font/register compliance)</li>
-      <li><code class="language-plaintext highlighter-rouge">glossary.json</code> (term is defined)</li>
-      <li>The block’s <code class="language-plaintext highlighter-rouge">uses[]</code> dependencies (symbol comes from a referenced block)</li>
-      <li>Standard LaTeX/amsmath commands (no check needed for <code class="language-plaintext highlighter-rouge">\frac</code>, <code class="language-plaintext highlighter-rouge">\int</code>, etc.)</li>
-    </ul>
-  </li>
-  <li>Flag anything that doesn’t appear in any of these sources</li>
-</ol>
-<h3 id="common-notation-violations">
-  
-  
-    <a href="#common-notation-violations" class="anchor-heading" aria-labelledby="common-notation-violations"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Common notation violations
-  
-  
-</h3>
-    
+<p><strong>GitHub Pages does not, and cannot be made to.</strong> Pages serves by its own
+extension table with no per-file configuration: no <code class="language-plaintext highlighter-rouge">.htaccess</code>, no headers
+file, no way to say <code class="language-plaintext highlighter-rouge">application/ld+json</code>. An unknown extension is served as
+<code class="language-plaintext highlighter-rouge">application/octet-stream</code> or <code class="language-plaintext highlighter-rouge">text/plain</code> depending on the extension.</p>
 
-<p>The project’s notation register (in AGENTS.md) defines the canonical
-font/symbol for each concept — which font/register each role uses, and which
-symbols are reserved for which concepts. The auditor flags deviations from that
-register: wrong-font symbols, reserved symbols used for the wrong role, and
-symbol collisions. Treat the project’s notation register as the source of truth
-and report any mismatch against it.</p><hr />
-<h2 id="pass-3-compilation-check">
-  
-  
-    <a href="#pass-3-compilation-check" class="anchor-heading" aria-labelledby="pass-3-compilation-check"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pass 3: Compilation Check
-  
-  
-</h2>
-    
+<p>That third row is <strong>not a failure to fix</strong>. It is a property of the host, and
+the honest handling is the one this repository applies everywhere else:</p>
 
-<p><strong>Tools</strong>: KaTeX (for HTML), lightweight TeX compilation (for LaTeX)
-<strong>Speed</strong>: Medium (per-snippet compilation, no full document build)</p>
-<h3 id="purpose">
-  
-  
-    <a href="#purpose" class="anchor-heading" aria-labelledby="purpose"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Purpose
-  
-  
-</h3>
-    
-
-<p>Validate that every math snippet and TeX block actually compiles, without
-running the full pdflatex pipeline. This catches TeX errors early.</p>
-<h3 id="checks-2">
-  
-  
-    <a href="#checks-2" class="anchor-heading" aria-labelledby="checks-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checks
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Check</th>
-      <th>Severity</th>
-      <th>How</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Every <code class="language-plaintext highlighter-rouge">$...$</code> snippet renders in KaTeX without error</td>
-      <td><strong>error</strong></td>
-      <td>Call KaTeX <code class="language-plaintext highlighter-rouge">renderToString()</code> in strict mode</td>
-    </tr>
-    <tr>
-      <td>Every <code class="language-plaintext highlighter-rouge">$$...$$</code> snippet renders in KaTeX display mode</td>
-      <td><strong>error</strong></td>
-      <td>KaTeX display mode rendering</td>
-    </tr>
-    <tr>
-      <td>Every ```tex `` block compiles standalone</td>
-      <td><strong>error</strong></td>
-      <td>Wrap in minimal document, compile with pdflatex or latex→svg</td>
-    </tr>
-    <tr>
-      <td>tikzcd diagrams compile</td>
-      <td><strong>error</strong></td>
-      <td>Standalone compilation with tikz-cd package</td>
-    </tr>
-    <tr>
-      <td>Custom macros from <code class="language-plaintext highlighter-rouge">main.tex</code> preamble are available</td>
-      <td><strong>warning</strong></td>
-      <td>Include preamble definitions in test compilation</td>
-    </tr>
-    <tr>
-      <td>No KaTeX unsupported commands used without fallback</td>
-      <td><strong>warning</strong></td>
-      <td>Some valid LaTeX doesn’t work in KaTeX (e.g. <code class="language-plaintext highlighter-rouge">\operatorname</code> → use <code class="language-plaintext highlighter-rouge">\mathrm</code>)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">\operatorname{}</code> → <code class="language-plaintext highlighter-rouge">\mathrm{}</code></td>
-      <td><strong>error</strong></td>
-      <td>Some markdown/KaTeX renderers reject <code class="language-plaintext highlighter-rouge">\operatorname</code>; project convention is <code class="language-plaintext highlighter-rouge">\mathrm</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">\mathscr{}</code> KaTeX compatibility</td>
-      <td><strong>warning</strong></td>
-      <td>Needs KaTeX &gt;=0.16; consider <code class="language-plaintext highlighter-rouge">\mathcal{}</code> fallback</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="katex-specific-issues-to-check">
-  
-  
-    <a href="#katex-specific-issues-to-check" class="anchor-heading" aria-labelledby="katex-specific-issues-to-check"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> KaTeX-specific issues to check
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Pattern</th>
-      <th>Issue</th>
-      <th>Fix</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">\operatorname{X}</code></td>
-      <td>KaTeX may error</td>
-      <td>Use <code class="language-plaintext highlighter-rouge">\mathrm{X}</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">\DeclareMathOperator</code></td>
-      <td>Not available in KaTeX</td>
-      <td>Pre-define in preamble or use <code class="language-plaintext highlighter-rouge">\mathrm</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">\newcommand</code> in math</td>
-      <td>Not available in KaTeX</td>
-      <td>Define in preamble</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">\mathscr</code></td>
-      <td>Needs font extension</td>
-      <td>Use <code class="language-plaintext highlighter-rouge">\mathcal</code> or configure KaTeX macros</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">\tikzcd</code></td>
-      <td>Not available in KaTeX</td>
-      <td>Render as SVG, embed as image</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="running-pass-3">
-  
-  
-    <a href="#running-pass-3" class="anchor-heading" aria-labelledby="running-pass-3"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running Pass 3
-  
-  
-</h3>
-    
-
-<p>For HTML pipeline validation:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/validate-tex.ts <span class="nt">--katex</span> &lt;block&gt;.md
-</code></pre></div></div>
-
-<p>For LaTeX snippet compilation:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/validate-tex.ts <span class="nt">--compile</span> &lt;block&gt;.md
-</code></pre></div></div>
-<h3 id="manual-check-when-compilation-tools-unavailable">
-  
-  
-    <a href="#manual-check-when-compilation-tools-unavailable" class="anchor-heading" aria-labelledby="manual-check-when-compilation-tools-unavailable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Manual check (when compilation tools unavailable)
-  
-  
-</h3>
-    
-
-<ol>
-  <li>Read the <code class="language-plaintext highlighter-rouge">.md</code> file</li>
-  <li>For each math snippet, check against the KaTeX supported functions list</li>
-  <li>For <code class="language-plaintext highlighter-rouge"></code><code class="language-plaintext highlighter-rouge">tex </code><code class="language-plaintext highlighter-rouge"> blocks, verify all packages are loaded in </code>main.tex`</li>
-  <li>Flag <code class="language-plaintext highlighter-rouge">\operatorname</code>, <code class="language-plaintext highlighter-rouge">\DeclareMathOperator</code>, <code class="language-plaintext highlighter-rouge">\newcommand</code> in inline contexts</li>
-</ol><hr />
-<h2 id="pass-4-layout-check">
-  
-  
-    <a href="#pass-4-layout-check" class="anchor-heading" aria-labelledby="pass-4-layout-check"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pass 4: Layout Check
-  
-  
-</h2>
-    
-
-<p><strong>Tools</strong>: pdflatex with <code class="language-plaintext highlighter-rouge">-interaction=nonstopmode</code>, log parsing
-<strong>Speed</strong>: Slow (full or partial pdflatex compilation)</p>
-<h3 id="purpose-1">
-  
-  
-    <a href="#purpose-1" class="anchor-heading" aria-labelledby="purpose-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Purpose
-  
-  
-</h3>
-    
-
-<p>Catch layout and formatting issues that only appear in the PDF output:
-overfull/underfull boxes, float placement problems, page breaks in bad
-locations, and other pdflatex warnings.</p>
-<h3 id="checks-3">
-  
-  
-    <a href="#checks-3" class="anchor-heading" aria-labelledby="checks-3"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checks
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Check</th>
-      <th>Severity</th>
-      <th>How</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>No <code class="language-plaintext highlighter-rouge">Overfull \hbox</code> warnings</td>
-      <td><strong>warning</strong></td>
-      <td>Parse pdflatex log for <code class="language-plaintext highlighter-rouge">Overfull \\hbox</code></td>
-    </tr>
-    <tr>
-      <td>No <code class="language-plaintext highlighter-rouge">Underfull \hbox</code> warnings (badness &gt; 5000)</td>
-      <td><strong>info</strong></td>
-      <td>Parse log; only flag severe underfull</td>
-    </tr>
-    <tr>
-      <td>No <code class="language-plaintext highlighter-rouge">Overfull \vbox</code> warnings</td>
-      <td><strong>warning</strong></td>
-      <td>Parse log</td>
-    </tr>
-    <tr>
-      <td>No missing font warnings</td>
-      <td><strong>error</strong></td>
-      <td>Parse log for <code class="language-plaintext highlighter-rouge">Font ... not found</code></td>
-    </tr>
-    <tr>
-      <td>No missing package warnings</td>
-      <td><strong>error</strong></td>
-      <td>Parse log for <code class="language-plaintext highlighter-rouge">Package ... not found</code></td>
-    </tr>
-    <tr>
-      <td>Float placement (<code class="language-plaintext highlighter-rouge">[h]</code>, <code class="language-plaintext highlighter-rouge">[t]</code>, <code class="language-plaintext highlighter-rouge">[H]</code>) consistent</td>
-      <td><strong>info</strong></td>
-      <td>Grep for float specs in rendered <code class="language-plaintext highlighter-rouge">.tex</code></td>
-    </tr>
-    <tr>
-      <td>No orphan/widow lines</td>
-      <td><strong>info</strong></td>
-      <td>Parse log for <code class="language-plaintext highlighter-rouge">Underfull \\vbox (badness 10000)</code> at page breaks</td>
-    </tr>
-    <tr>
-      <td>Label multiply defined warnings</td>
-      <td><strong>error</strong></td>
-      <td>Parse log for <code class="language-plaintext highlighter-rouge">multiply defined</code></td>
-    </tr>
-    <tr>
-      <td>Reference undefined warnings</td>
-      <td><strong>error</strong></td>
-      <td>Parse log for <code class="language-plaintext highlighter-rouge">Reference.*undefined</code></td>
-    </tr>
-    <tr>
-      <td>Citation undefined warnings</td>
-      <td><strong>error</strong></td>
-      <td>Parse log for <code class="language-plaintext highlighter-rouge">Citation.*undefined</code></td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="running-pass-4">
-  
-  
-    <a href="#running-pass-4" class="anchor-heading" aria-labelledby="running-pass-4"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running Pass 4
-  
-  
-</h3>
-    
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Build the chapter's .tex file</span>
-<span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/build.ts &lt;paper&gt;/&lt;paper&gt;.ts <span class="se">\</span>
-  <span class="nt">--out-dir</span> ../chapters/
-
-<span class="c"># Compile with nonstopmode and capture log</span>
-<span class="nb">cd</span> &lt;repo-root&gt; <span class="o">&amp;&amp;</span> pdflatex <span class="nt">-interaction</span><span class="o">=</span>nonstopmode <span class="nt">-file-line-error</span> main.tex 2&gt;&amp;1 | <span class="nb">tee </span>build.log
-
-<span class="c"># Parse log for issues</span>
-<span class="nb">grep</span> <span class="nt">-n</span> <span class="s1">'Overfull\\|Underfull\\|Warning\\|Error\\|undefined\\|multiply defined'</span> build.log
-</code></pre></div></div>
-<h3 id="common-layout-fixes">
-  
-  
-    <a href="#common-layout-fixes" class="anchor-heading" aria-labelledby="common-layout-fixes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Common layout fixes
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Issue</th>
-      <th>Typical fix</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Overfull hbox in equation</td>
-      <td>Add <code class="language-plaintext highlighter-rouge">\allowbreak</code> or split into <code class="language-plaintext highlighter-rouge">align</code> environment</td>
-    </tr>
-    <tr>
-      <td>Overfull hbox in text</td>
-      <td>Rephrase or add <code class="language-plaintext highlighter-rouge">\-</code> hyphenation hints</td>
-    </tr>
-    <tr>
-      <td>Overfull hbox in tikzcd</td>
-      <td>Increase <code class="language-plaintext highlighter-rouge">column sep</code></td>
-    </tr>
-    <tr>
-      <td>Float too far from reference</td>
-      <td>Use <code class="language-plaintext highlighter-rouge">[H]</code> (requires <code class="language-plaintext highlighter-rouge">float</code> package) or restructure</td>
-    </tr>
-    <tr>
-      <td>Orphan/widow</td>
-      <td>Add <code class="language-plaintext highlighter-rouge">\needspace{4\baselineskip}</code> before block</td>
-    </tr>
-  </tbody>
-</table></div><hr />
-<h2 id="pass-5-visual-verification">
-  
-  
-    <a href="#pass-5-visual-verification" class="anchor-heading" aria-labelledby="pass-5-visual-verification"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pass 5: Visual Verification
-  
-  
-</h2>
-    
-
-<p><strong>Tools</strong>: HTML rendering (mdToHtml + KaTeX), PDF rendering (pdflatex),
-visual inspection
-<strong>Speed</strong>: Slowest (requires rendering + inspection of output)</p>
-<h3 id="purpose-2">
-  
-  
-    <a href="#purpose-2" class="anchor-heading" aria-labelledby="purpose-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Purpose
-  
-  
-</h3>
-    
-
-<p>Verify that rendered output looks correct in both pipelines. Catches issues
-that pass compilation but produce wrong visual output.</p>
-<h3 id="checks-4">
-  
-  
-    <a href="#checks-4" class="anchor-heading" aria-labelledby="checks-4"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checks
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Check</th>
-      <th>Severity</th>
-      <th>How</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>No unrendered TeX visible in HTML (e.g. <code class="language-plaintext highlighter-rouge">\blah</code> as text)</td>
-      <td><strong>error</strong></td>
-      <td>Inspect HTML output for literal backslash sequences outside <code class="language-plaintext highlighter-rouge">&lt;code&gt;</code></td>
-    </tr>
-    <tr>
-      <td>No KaTeX error boxes (red text) in HTML</td>
-      <td><strong>error</strong></td>
-      <td>Search rendered HTML for <code class="language-plaintext highlighter-rouge">class="katex-error"</code></td>
-    </tr>
-    <tr>
-      <td>Display math renders as centered block (not inline)</td>
-      <td><strong>warning</strong></td>
-      <td>Verify <code class="language-plaintext highlighter-rouge">$$...$$</code> produces display-mode KaTeX spans</td>
-    </tr>
-    <tr>
-      <td>Inline math stays inline (not block-level)</td>
-      <td><strong>warning</strong></td>
-      <td>Verify <code class="language-plaintext highlighter-rouge">$...$</code> produces inline-mode KaTeX spans</td>
-    </tr>
-    <tr>
-      <td>Markdown tables render as HTML tables</td>
-      <td><strong>warning</strong></td>
-      <td>Verify <code class="language-plaintext highlighter-rouge">&lt;table class="md-table"&gt;</code> in output</td>
-    </tr>
-    <tr>
-      <td>Markdown tables have correct column count per row</td>
-      <td><strong>error</strong></td>
-      <td>Check rendered table for ragged columns</td>
-    </tr>
-    <tr>
-      <td>Bold/italic renders correctly (not literal <code class="language-plaintext highlighter-rouge">**</code> or <code class="language-plaintext highlighter-rouge">*</code>)</td>
-      <td><strong>warning</strong></td>
-      <td>Check for literal asterisks in rendered output</td>
-    </tr>
-    <tr>
-      <td>Cross-refs render as links (not raw <code class="language-plaintext highlighter-rouge">[text](#label)</code>)</td>
-      <td><strong>warning</strong></td>
-      <td>Check for <code class="language-plaintext highlighter-rouge">&lt;a class="uref"&gt;</code> in output</td>
-    </tr>
-    <tr>
-      <td>Lists render as <code class="language-plaintext highlighter-rouge">&lt;ol&gt;</code>/<code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code> (not raw numbers/dashes)</td>
-      <td><strong>warning</strong></td>
-      <td>Check for proper list elements in output</td>
-    </tr>
-    <tr>
-      <td>tikzcd diagrams visible (not blank or error)</td>
-      <td><strong>error</strong></td>
-      <td>Check for rendered SVG or image in both pipelines</td>
-    </tr>
-    <tr>
-      <td>PDF equations match HTML equations</td>
-      <td><strong>info</strong></td>
-      <td>Visual comparison of key equations</td>
-    </tr>
-    <tr>
-      <td>No overlapping text in PDF</td>
-      <td><strong>error</strong></td>
-      <td>Check for text collisions in dense sections</td>
-    </tr>
-    <tr>
-      <td>Fenced ```tex `` blocks with pre-rendered SVGs display correctly</td>
-      <td><strong>warning</strong></td>
-      <td>Verify SVG embed or image fallback is present</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="viewer-specific-checks-discovered-2026-04-02-audit">
-  
-  
-    <a href="#viewer-specific-checks-discovered-2026-04-02-audit" class="anchor-heading" aria-labelledby="viewer-specific-checks-discovered-2026-04-02-audit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Viewer-specific checks (discovered 2026-04-02 audit)
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Check</th>
-      <th>Severity</th>
-      <th>How</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Multi-line inline <code class="language-plaintext highlighter-rouge">$...$</code> renders in list items</td>
-      <td><strong>error</strong></td>
-      <td>The viewer <code class="language-plaintext highlighter-rouge">parseMd()</code> joins list continuation lines; <code class="language-plaintext highlighter-rouge">inl()</code> must handle escaped braces <code class="language-plaintext highlighter-rouge">\{</code>/<code class="language-plaintext highlighter-rouge">\}</code> (skip <code class="language-plaintext highlighter-rouge">\</code> + next char, don’t count as depth)</td>
-    </tr>
-    <tr>
-      <td>Title math in <code class="language-plaintext highlighter-rouge">$...$</code> renders (not raw)</td>
-      <td><strong>error</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">mkBlockHeader()</code> calls <code class="language-plaintext highlighter-rouge">inl(title)</code> then <code class="language-plaintext highlighter-rouge">renderMath(div)</code>; if KaTeX is not yet loaded or macros empty, math shows as raw — verify KaTeX loads before block rendering</td>
-    </tr>
-    <tr>
-      <td>Simulator blocks validate against current schema</td>
-      <td><strong>error</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">SimulatorBlock</code> requires <code class="language-plaintext highlighter-rouge">html: string</code> + <code class="language-plaintext highlighter-rouge">defaultView: SimulatorView</code>; deprecated <code class="language-plaintext highlighter-rouge">simulator: {type, source}</code> field causes Zod parse failure</td>
-    </tr>
-    <tr>
-      <td>Content blocks in correct chapter directory</td>
-      <td><strong>error</strong></td>
-      <td>Block <code class="language-plaintext highlighter-rouge">.ts</code>/<code class="language-plaintext highlighter-rouge">.md</code> must be in the chapter directory that references them in its manifest</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">\{</code> and <code class="language-plaintext highlighter-rouge">\}</code> in inline math don’t break <code class="language-plaintext highlighter-rouge">$</code> parser</td>
-      <td><strong>error</strong></td>
-      <td>The <code class="language-plaintext highlighter-rouge">inl()</code> brace-depth tracker must skip <code class="language-plaintext highlighter-rouge">\{</code>/<code class="language-plaintext highlighter-rouge">\}</code> (escaped braces); otherwise the closing <code class="language-plaintext highlighter-rouge">$</code> is never found and math shows as raw text</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="html-visual-verification-procedure">
-  
-  
-    <a href="#html-visual-verification-procedure" class="anchor-heading" aria-labelledby="html-visual-verification-procedure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> HTML visual verification procedure
-  
-  
-</h3>
-    
-
-<ol>
-  <li>Build the paper JSON:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/export-json.ts
-</code></pre></div>    </div>
-  </li>
-  <li>For each content block in the output, check:
-    <ul>
-      <li><strong>Math rendering</strong>: No literal <code class="language-plaintext highlighter-rouge">\</code> sequences visible outside code blocks</li>
-      <li><strong>Table rendering</strong>: Pipe characters <code class="language-plaintext highlighter-rouge">|</code> should not be visible (should be HTML table)</li>
-      <li><strong>List rendering</strong>: Numbers and dashes should be proper list items</li>
-      <li><strong>Cross-refs</strong>: <code class="language-plaintext highlighter-rouge">[text](#label)</code> should be clickable links</li>
-      <li><strong>Display math</strong>: Centered and on its own line</li>
-      <li><strong>Inline math</strong>: Flows with surrounding text</li>
-    </ul>
-  </li>
-  <li>Grep for rendering failures:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Find unrendered LaTeX in HTML output</span>
-<span class="nb">grep</span> <span class="nt">-Pn</span> <span class="s1">'(?&lt;!\\)\\[a-zA-Z]+\{'</span> output.html | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'class="katex"'</span>
-
-<span class="c"># Find KaTeX errors</span>
-<span class="nb">grep</span> <span class="nt">-n</span> <span class="s1">'katex-error'</span> output.html
-
-<span class="c"># Find literal markdown in HTML</span>
-<span class="nb">grep</span> <span class="nt">-Pn</span> <span class="s1">'(?&lt;!\w)\*\*[^*]+\*\*(?!\w)'</span> output.html
-</code></pre></div>    </div>
-  </li>
-</ol>
-<h3 id="pdf-visual-verification-procedure">
-  
-  
-    <a href="#pdf-visual-verification-procedure" class="anchor-heading" aria-labelledby="pdf-visual-verification-procedure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> PDF visual verification procedure
-  
-  
-</h3>
-    
-
-<ol>
-  <li>Compile the document:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pdflatex <span class="nt">-interaction</span><span class="o">=</span>nonstopmode main.tex <span class="o">&amp;&amp;</span> pdflatex main.tex
-</code></pre></div>    </div>
-  </li>
-  <li>For each content block, check:
-    <ul>
-      <li><strong>Equation rendering</strong>: All symbols display correctly</li>
-      <li><strong>Diagram rendering</strong>: tikzcd arrows and labels visible</li>
-      <li><strong>Cross-references</strong>: No <code class="language-plaintext highlighter-rouge">??</code> placeholders</li>
-      <li><strong>Citations</strong>: No <code class="language-plaintext highlighter-rouge">[?]</code> placeholders</li>
-      <li><strong>Page layout</strong>: No text running off page margins</li>
-    </ul>
-  </li>
-</ol><hr />
-<h2 id="output-format">
-  
-  
-    <a href="#output-format" class="anchor-heading" aria-labelledby="output-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Output Format
-  
-  
-</h2>
-    
-<h3 id="per-block-report">
-  
-  
-    <a href="#per-block-report" class="anchor-heading" aria-labelledby="per-block-report"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Per-block report
-  
-  
-</h3>
-    
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Block: def:my-structure (my-structures)
-
-### Pass 1: Syntax ✓
-No issues.
-
-### Pass 2: Notation
-- WARNING line 12: symbol used with the wrong font/register — should match the project's notation register
-- WARNING line 18: Symbol $\xi$ not found in glossary or notation register
-
-### Pass 3: Compilation ✓
-All snippets compile in KaTeX and pdflatex.
-
-### Pass 4: Layout
-- WARNING: Overfull \hbox (12.3pt too wide) in equation at line 24
-- INFO: Underfull \hbox (badness 2100) at line 31
-
-### Pass 5: Visual ✓
-HTML and PDF rendering verified.
-
-**Summary: 0 errors, 2 warnings, 1 info**
-</code></pre></div></div>
-<h3 id="qc-summary-report">
-  
-  
-    <a href="#qc-summary-report" class="anchor-heading" aria-labelledby="qc-summary-report"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> QC summary report
-  
-  
-</h3>
-    
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Rendering Audit — Chapter 3
-Date: 2026-03-29
-Blocks audited: 24
-Passes run: 1-5
-
-| Severity | Count |
-|----------|-------|
-| Error    | 3     |
-| Warning  | 11    |
-| Info     | 5     |
-
-## Errors (fix before merge)
-1. def:some-definition line 8: Unbalanced braces in display math
-2. thm:some-theorem line 22: \operatorname{Ad} — KaTeX compilation failure
-3. rem:some-remark: Dangling remark — no `interprets` field
-
-## Warnings (fix before release)
-1. prop:some-proposition line 15: symbol used with the wrong font/register → should match the notation register
-2. ...
-</code></pre></div></div><hr />
-<h2 id="integration-with-author-workflow">
-  
-  
-    <a href="#integration-with-author-workflow" class="anchor-heading" aria-labelledby="integration-with-author-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Integration with Author Workflow
-  
-  
-</h2>
-    
-<h3 id="after-editing-a-block">
-  
-  
-    <a href="#after-editing-a-block" class="anchor-heading" aria-labelledby="after-editing-a-block"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> After editing a block
-  
-  
-</h3>
-    
-
-<p>Author agents should run passes 1-3 automatically after modifying a content
-block. Add to the edit workflow:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Edit .md and/or .ts file
-2. Run Pass 1 (syntax) — fix any errors
-3. Run Pass 2 (notation) — fix register violations
-4. Run Pass 3 (compilation) — fix TeX errors
-5. Commit
-</code></pre></div></div>
-
-<p>Passes 4-5 are optional per-edit but required for QC reports.</p>
-<h3 id="qc-report-trigger">
-  
-  
-    <a href="#qc-report-trigger" class="anchor-heading" aria-labelledby="qc-report-trigger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> QC report trigger
-  
-  
-</h3>
-    
-
-<p>Run all 5 passes when:</p>
 <ul>
-  <li>Preparing a release</li>
-  <li>Reviewing a chapter</li>
-  <li>Responding to “audit rendering” or “QC report” requests</li>
-  <li>After bulk imports (paper-importer, document-intake)</li>
+  <li><strong>Do not pretend.</strong> A tool reporting “served with the declared type” must not
+say so for a Pages URL it did not check.</li>
+  <li><strong>Do not fall back to a guess that looks authoritative.</strong> “Probably
+<code class="language-plaintext highlighter-rouge">application/json</code>” is worse than “this host does not declare one”, because
+the first is quoted and the second is investigated.</li>
+  <li><strong>Report “could not enforce” as its own state</strong>, distinct from “enforced” and
+from “enforced wrongly”. Same rule as <code class="language-plaintext highlighter-rouge">readme-sections</code>’ third state,
+<code class="language-plaintext highlighter-rouge">ci-health</code>’s “could not check” and <code class="language-plaintext highlighter-rouge">resolveTodoTags</code>’ <code class="language-plaintext highlighter-rouge">not-checked</code>.</li>
 </ul>
-<h3 id="relation-to-other-skills">
+<h2 id="consequences-a-consumer-must-expect">
   
   
-    <a href="#relation-to-other-skills" class="anchor-heading" aria-labelledby="relation-to-other-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Relation to other skills
+    <a href="#consequences-a-consumer-must-expect" class="anchor-heading" aria-labelledby="consequences-a-consumer-must-expect"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Consequences a consumer must expect
   
   
-</h3>
+</h2>
     
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Overlap</th>
-      <th>Division of responsibility</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">latex-validation</code></td>
-      <td>Pass 1 (syntax), Pass 4 (layout)</td>
-      <td>latex-validation focuses on <code class="language-plaintext highlighter-rouge">.tex</code> files; rendering-auditor works on <code class="language-plaintext highlighter-rouge">.md</code> content blocks through both pipelines</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">html-rendering-qc</code></td>
-      <td>Pass 3 (KaTeX), Pass 5 (visual HTML)</td>
-      <td>html-rendering-qc documents known limitations; rendering-auditor actively checks for them</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-validation</code></td>
-      <td>Pass 1 (schema), Pass 2 (cross-refs)</td>
-      <td>content-validation checks structural integrity; rendering-auditor checks rendering correctness</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-block-review</code></td>
-      <td>Pass 1-2 (some overlap)</td>
-      <td>content-block-review is broader (Lean, sorry discipline, etc.); rendering-auditor is deeper on rendering</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">md-authoring</code></td>
-      <td>Pass 1 (conventions)</td>
-      <td>md-authoring defines conventions; rendering-auditor enforces them</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">scientific-accuracy</code></td>
-      <td>Pass 2 (notation)</td>
-      <td>scientific-accuracy checks mathematical correctness; rendering-auditor checks notation register compliance</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="escalation">
+<p>A client fetching <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.jsonld</code> from Pages <strong>will</strong> receive the wrong
+<code class="language-plaintext highlighter-rouge">Content-Type</code>. A strict JSON-LD processor may refuse it. That is a known and
+accepted cost of publishing there, and the remedy is the local deployment, not
+a different extension: renaming the artefact to <code class="language-plaintext highlighter-rouge">.json</code> to make Pages serve it
+as JSON would trade a wrong type for a wrong <em>name</em>, and the name is the part
+a reader uses.</p>
+<h2 id="what-this-skill-does-not-cover">
   
   
-    <a href="#escalation" class="anchor-heading" aria-labelledby="escalation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Escalation
+    <a href="#what-this-skill-does-not-cover" class="anchor-heading" aria-labelledby="what-this-skill-does-not-cover"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this skill does not cover
   
   
-</h3>
+</h2>
     
 
-<p>If rendering-auditor finds issues it cannot diagnose:</p>
-<ul>
-  <li><strong>Structural/schema issues</strong> → defer to <code class="language-plaintext highlighter-rouge">content-validation</code></li>
-  <li><strong>Lean-related issues</strong> → defer to <code class="language-plaintext highlighter-rouge">lean-generation</code> or <code class="language-plaintext highlighter-rouge">lean-build-fix</code></li>
-  <li><strong>Scientific notation questions</strong> → defer to <code class="language-plaintext highlighter-rouge">scientific-accuracy</code> + <code class="language-plaintext highlighter-rouge">ontologist</code></li>
-  <li><strong>Complex layout problems</strong> → defer to <code class="language-plaintext highlighter-rouge">latex-validation</code> with the specific <code class="language-plaintext highlighter-rouge">.tex</code> output</li>
-</ul>
+<p><strong>How to run a server.</strong> No tool is specified here — the media types and the
+per-host enforcement story are the durable part, and a server that reads them
+is an implementation of this, not a prerequisite for it.</p>
 
           
 
