@@ -4,6 +4,7 @@ doc_title: "WHO Editorial Style Manual"
 section_id: page-003
 section_title: "Page 3"
 pages: 3-3
+pdf_page: 3
 source_pdf: WHO_PUB_TPS_93.1.pdf
 source_sha256: ecc88eee99756755
 text_source: ocr

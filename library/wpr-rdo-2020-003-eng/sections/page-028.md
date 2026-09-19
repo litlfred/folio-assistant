@@ -4,6 +4,7 @@ doc_title: "Publication and Information Products Style Guide (WHO Western Pacifi
 section_id: page-028
 section_title: "Page 28"
 pages: 28-28
+pdf_page: 28
 source_pdf: WPR-RDO-2020-003-eng.pdf
 source_sha256: 5021518ccd91e26a
 text_source: text-layer

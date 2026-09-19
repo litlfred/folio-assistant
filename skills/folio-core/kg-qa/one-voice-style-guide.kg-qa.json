@@ -5,7 +5,7 @@
     "id": "one-voice-style-guide",
     "path": "skills/folio-core/one-voice-style-guide.md"
   },
-  "source_hash": "6f30d4f06536",
+  "source_hash": "53e0666c246d",
   "auditor": {
     "script": "scripts/kg-audit.ts",
     "script_hash": "sha256:56f6e5e13e391484d26af5a9640eeae6b1e967cfaa7d4ed48812e472a7b69ab2",
@@ -13,8 +13,13 @@
   },
   "criteria": {
     "skill-is-brief": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/one-voice-style-guide.md",
+          "detail": "311 lines; p75 of the skill corpus is 279."
+        }
+      ]
     },
     "skill-not-a-document": {
       "result": "pass",
@@ -26,8 +31,8 @@
     }
   },
   "totals": {
-    "pass": 3,
-    "fail": 0,
+    "pass": 2,
+    "fail": 1,
     "n/a": 0,
     "unknown": 0
   }

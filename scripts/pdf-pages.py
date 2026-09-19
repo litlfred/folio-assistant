@@ -132,7 +132,7 @@ def main() -> int:
         secdir = a.outdir / doc_id / "sections"
         secdir.mkdir(parents=True, exist_ok=True)
         written = 0
-        ids: list[tuple[str, str, str]] = []
+        ids: list[tuple[str, str, int, int, int]] = []
         for i, text in enumerate(texts, start=1):
             # The printed page number, where the caller gave one. A scholarly
             # source is cited by the page the READER sees, and for a scanned
@@ -169,7 +169,7 @@ def main() -> int:
                 "---",
             ])
             (secdir / f"{section_id}.md").write_text(f"{fm}\n{body}\n", encoding="utf-8")
-            ids.append((section_id, title, label))
+            ids.append((section_id, title, int(label), len(body), len(body.split())))
             written += 1
         manifest = a.outdir / doc_id / "structure.json"
         existing = json.loads(manifest.read_text()) if manifest.exists() else {}
@@ -179,8 +179,26 @@ def main() -> int:
             "toc_source": "none",
             "granularity": "page",
             "text_source": source,
+            # EXACTLY the section shape `pdf-structure.py` writes, field for
+            # field. `content/pipeline/gen-library-jsonld.ts` reads `sec.id`,
+            # `page_start` and `page_end`, and an invented `section_id` crashed
+            # it with `undefined is not an object (evaluating 'sectionId.match')`
+            # — the same "two spellings of one concept" defect this file's own
+            # `_load_slugify` comment is about, made one field further along.
+            # A consumer of `library/` reads one shape; there is no version of
+            # this script that gets to have its own.
             "sections": [
-                {"section_id": sid, "title": t, "pages": [lbl, lbl]} for sid, t, lbl in ids
+                {
+                    "id": sid,
+                    "number": None,
+                    "title": t,
+                    "level": 1,
+                    "page_start": pstart,
+                    "page_end": pstart,
+                    "n_chars": nchars,
+                    "n_words": nwords,
+                }
+                for sid, t, pstart, nchars, nwords in ids
             ],
             "structure_note": (
                 "Ingested at PAGE granularity by scripts/pdf-pages.py. This PDF carries no "

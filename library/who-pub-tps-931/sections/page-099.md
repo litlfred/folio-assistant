@@ -4,6 +4,7 @@ doc_title: "WHO Editorial Style Manual"
 section_id: page-099
 section_title: "Page 99"
 pages: 99-99
+pdf_page: 99
 source_pdf: WHO_PUB_TPS_93.1.pdf
 source_sha256: ecc88eee99756755
 text_source: ocr
