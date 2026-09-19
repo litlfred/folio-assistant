@@ -28,7 +28,8 @@
  * this exists so the BA is asked a sharper question than "who cares?".
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { workflowFiles } from "../../scripts/known-skills.js";
+import { join, relative } from "node:path";
 import { loadProcessModel, isActivity } from "../workflow/process-model.js";
 
 /** Directories whose `.md` files are skills. */
@@ -96,11 +97,15 @@ export async function stakeholderMap(root: string, changed: string[]): Promise<S
 
   const changedSkills = new Set(skills.map((s) => s.name));
   const lanes: LaneImpact[] = [];
-  const wfDir = join(root, "skills", "workflows");
+  // Every declared knowledge-graph directory, not the literal
+  // `skills/workflows/`. An impact report that misses a diagram reports NO
+  // lane affected, which is indistinguishable from a change that affects
+  // nobody — the one wrong answer this analysis must not give.
+  const diagrams = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
 
-  if (existsSync(wfDir) && changedSkills.size > 0) {
-    for (const file of readdirSync(wfDir).filter((f) => f.endsWith(".bpmn")).sort()) {
-      const model = await loadProcessModel(join(wfDir, file));
+  if (diagrams.length > 0 && changedSkills.size > 0) {
+    for (const file of diagrams) {
+      const model = await loadProcessModel(file);
       const hits = new Map<string, { activities: string[]; viaSkills: Set<string> }>();
       for (const node of [...model.nodes.values()].filter(isActivity)) {
         const matched = (node.skills ?? []).filter((s) => changedSkills.has(s));
@@ -112,7 +117,17 @@ export async function stakeholderMap(root: string, changed: string[]): Promise<S
         hits.set(lane, entry);
       }
       for (const [lane, entry] of hits) {
-        lanes.push({ process: file, lane, activities: entry.activities, viaSkills: [...entry.viaSkills].sort() });
+        // REPO-RELATIVE, not the absolute path `workflowFiles` returns and
+        // not the bare basename this used to be. Absolute leaks the
+        // machine into a report; bare hides WHICH declared directory the
+        // diagram came from, which is the thing a topical layout makes
+        // worth knowing.
+        lanes.push({
+          process: relative(root, file),
+          lane,
+          activities: entry.activities,
+          viaSkills: [...entry.viaSkills].sort(),
+        });
       }
     }
   }
