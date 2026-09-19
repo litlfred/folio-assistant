@@ -1,11 +1,11 @@
 ---
 # folio-assistant-d2kp
 title: 'The gen-docs-pages --check gate has never run: a folded YAML line, and pages that carry live QA verdicts'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T07:50:26Z
-updated_at: 2026-09-19T10:05:00Z
+updated_at: 2026-09-19T10:01:17Z
 ---
 
 
