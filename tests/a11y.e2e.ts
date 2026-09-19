@@ -246,12 +246,21 @@ const tilesPage = (scheme: "light" | "dark") => `<!doctype html><html lang="en" 
   ${readFileSync(join(REPO, "docs/assets/css/docs-ui.css"), "utf8")}
 </style></head><body>
   <script type="application/json" id="fa-translation-meta">{"lang":"en","availableLocales":["fr","es"]}<\/script>
-  <script type="application/json" id="fa-site-links">{"kg":"/kg/","source":"https://example.invalid/r"}<\/script>
+  <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://example.invalid/r"}<\/script>
   <div class="side-bar">
     <div class="site-header"><a class="site-title">folio-assistant</a></div>
     <nav class="site-nav"><a href="#">Home</a></nav>
   </div>
-  <div class="main"><div class="main-content"><h1>Harness</h1></div></div>
+  <div class="main"><div class="main-header">
+    <!-- just-the-docs' own search, which docs-ui.js MOVES into the launcher.
+         It is here so axe measures the field WHERE IT ENDS UP -- on the
+         opaque sidebar panel, not on the main column it was written for. -->
+    <div class="search"><div class="search-input-wrap">
+      <input type="text" id="search-input" class="search-input" tabindex="0"
+             placeholder="Search folio-assistant" aria-label="Search folio-assistant" autocomplete="off">
+      <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor"/></svg></label>
+    </div><div id="search-results" class="search-results"></div></div>
+  </div><div class="main-content"><h1>Harness</h1></div></div>
   <script>window.jtd = { theme: "${scheme}", getTheme: function () { return this.theme; },
     setTheme: function (t) { this.theme = t; } };<\/script>
   <script>${readFileSync(join(REPO, "docs/assets/js/vendor/qrcode.js"), "utf8")}<\/script>
@@ -263,6 +272,9 @@ test.describe("accessibility — the docs-site UI", () => {
     for (const [state, open] of [
       ["the grid", [] as string[]],
       ["a view", ["Settings"]],
+      // The search field is the new control and the one most likely to fail
+      // contrast: it lands on an opaque sidebar panel it was not styled for.
+      ["the search view", ["Search"]],
     ] as const) {
       test(`no WCAG A/AA violations — ${state}, ${colorScheme}`, async ({ browser }) => {
         const ctx = await browser.newContext({ colorScheme });

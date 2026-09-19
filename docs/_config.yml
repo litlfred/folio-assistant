@@ -27,10 +27,22 @@ color_scheme: dark
 mermaid:
   version: "10.9.0"
 
-aux_links:
-  "GitHub":
-    - "https://github.com/litlfred/folio-assistant"
-aux_links_new_tab: true
+# NO `aux_links`, deliberately.
+#
+# just-the-docs draws them as text at the top right of the MAIN panel, which
+# is where the words "GitHub" sat above every page. The owner asked for that
+# gone -- "remove the github.com from the top of the display" (bean `udx8`) --
+# and for the forge to be reachable as an icon instead. It is: the Source tile
+# in the header's action launcher, beside the JSON-LD and knowledge-graph
+# tiles.
+#
+# The tile does NOT read this key any more either. `aux_links` was doing two
+# jobs -- displaying a link, and recording where the repository is -- and only
+# the second was wanted. The repository URL is now resolved from the git
+# remote by `scripts/sync-docs-harness.ts` into `docs/_data/harness.json`,
+# alongside the knowledge-graph and JSON-LD targets, so there is one answer to
+# "where is this instance published" rather than one per consumer. Putting a
+# link back here would restore the header text this removed.
 
 footer_content: >-
   folio-assistant — code under the Apache License 2.0, documentation under

@@ -1466,6 +1466,144 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   background: transparent;
 }
 
+/* ── The search field, inside the launcher ────────────────────────────── */
+
+/* THE SEARCH LEFT THE MAIN PANEL. The owner: "move the search to a icon in
+   navbar that expands.... keep main display panel uncluttered."
+
+   `docs-ui.js` MOVES just-the-docs' own `.search` container in here rather
+   than rebuilding it, so the theme's input, label, results list and handlers
+   all arrive intact. What it does not bring is a layout that fits: the theme
+   sizes that container to fill a full-width `.main-header`, with an
+   absolutely-positioned input stretched to its parent's height. Dropped into
+   a 16.5rem sidebar panel with no height of its own, that collapses to
+   nothing. Everything below is the un-stretching.
+
+   The holder is `hidden` while parked. It stays IN THE DOCUMENT the whole
+   time — see the note in `docs-ui.js`: the theme looks its input up by id,
+   and `getElementById` does not find a detached node. */
+.fa-search-holder[hidden] { display: none; }
+
+.fa-tiles .fa-search-holder {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Per-scheme, OPAQUE tokens, for the same reason the language bar carries its
+   own: a translucent field makes its contrast a property of whatever the
+   theme paints underneath, and the numbers below would then be a claim about
+   one page rather than a fact about these colours. Ratios are against
+   `--fa-search-bg`, computed per WCAG relative luminance on the COMPOSITED
+   colour (nothing here is blended by `opacity`) and confirmed by axe.
+
+   Dark is the default, as everywhere else in this file. */
+.fa-tiles .fa-search-holder {
+  --fa-search-bg: #1c2029;
+  --fa-search-fg: #e6e9ee;      /* 13.40:1 — what the reader types            */
+  --fa-search-muted: #9aa4b2;   /*  6.47:1 — the placeholder and result blurb */
+  --fa-search-border: #6b7684;  /*  3.53:1 — a UI component, SC 1.4.11 floor  */
+}
+
+:root[data-fa-scheme="light"] .fa-tiles .fa-search-holder {
+  --fa-search-bg: #ffffff;
+  --fa-search-fg: #1f2933;      /* 14.76:1 */
+  --fa-search-muted: #5a6472;   /*  6.00:1 */
+  --fa-search-border: #767d88;  /*  4.15:1 */
+}
+
+/* The theme gives `.search` `position: relative; height: 100%; flex-grow: 1`
+   and, above 50rem, a width tied to the main column. None of that survives
+   the move, and `height: 100%` of a parent with no height is zero. */
+.fa-tiles .search,
+.fa-tiles .search-input-wrap {
+  position: static;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  flex: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* The input is `position: absolute` in the theme, stretched to the header's
+   height. In normal flow it needs a height of its own. 2.25rem is 36px —
+   above the 24px SC 2.5.8 floor by the same margin the tiles take, because
+   this instance's declared interaction profile is low-dexterity. */
+.fa-tiles .search-input {
+  position: static;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 4px;
+  background: var(--fa-search-bg);
+  color: var(--fa-search-fg);
+  font-size: 0.8rem;
+}
+
+/* `::placeholder` is rendered at a reduced opacity by every engine unless it
+   is told otherwise, and an opacity-blended foreground fails SC 1.4.3 even
+   when the token it was blended from passes. `opacity: 1` is what makes the
+   6.47:1 above a fact about what is on screen. */
+.fa-tiles .search-input::placeholder {
+  color: var(--fa-search-muted);
+  opacity: 1;
+}
+
+.fa-tiles .search-input:focus-visible,
+.fa-tiles .search-input:focus {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
+}
+
+/* The theme's magnifier label is absolutely positioned over its input. There
+   is a magnifier on the tile that opened this view, so a second one inside
+   the field is noise in a panel whose whole point is to be uncluttered. */
+.fa-tiles .search-label { display: none; }
+
+/* Results drop BELOW the field in normal flow rather than floating over the
+   sidebar nav, and the panel scrolls instead of growing past the viewport. */
+.fa-tiles .search-results {
+  position: static;
+  width: 100%;
+  max-height: 16rem;
+  margin-top: 0.4rem;
+  overflow-y: auto;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 4px;
+  background: var(--fa-search-bg);
+  color: var(--fa-search-fg);
+  box-shadow: none;
+}
+
+.fa-tiles .search-results:empty { display: none; }
+
+.fa-tiles .search-result {
+  display: block;
+  padding: 0.35rem 0.5rem;
+  min-height: 2rem;
+  color: var(--fa-search-fg);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.fa-tiles .search-result:hover,
+.fa-tiles .search-result:focus-visible,
+.fa-tiles .search-result.active {
+  background: rgba(128, 128, 128, 0.22);
+}
+
+.fa-tiles .search-result-rel-url,
+.fa-tiles .search-result-previews,
+.fa-tiles .search-no-result {
+  color: var(--fa-search-muted);
+  font-size: 0.72rem;
+}
+
 /* ═══ Sticky todos ═══════════════════════════════════════════════════════
  *
  * Scheme-agnostic BY CONSTRUCTION: every surface here is a neutral rgba
