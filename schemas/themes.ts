@@ -22,14 +22,18 @@
  * contrast ratios against its ink, so the worst point governs, and the whole
  * point of a high-contrast theme is that there is no worst point to find.
  *
- * ## The default is provisional until somebody looks at staging
+ * ## The default was checked on staging, which is the only place it could be
  *
  * `DEFAULT_THEME_ID` is a sage because the owner asked for one that matches the
  * staging bar. **That match cannot be verified from a checkout** — the sticky
  * and the staging banner appear together on exactly one surface, the deployed
  * staging site, and picking a value from a palette in isolation is how a
- * default ends up almost-matching. The value here is a starting point to be
- * looked at, not a measurement.
+ * default ends up almost-matching.
+ *
+ * So it was shipped provisionally and **looked at on the staging preview for
+ * PR #405; the owner confirmed it 2026-09-19**. If the banner's colour ever
+ * changes, this is a judgement to re-make there rather than a number to
+ * recompute here — no test asserts the match, because none can.
  */
 import { THEME_SCHEMA_TAG, ThemeSchema, type Theme } from "./theme.js";
 

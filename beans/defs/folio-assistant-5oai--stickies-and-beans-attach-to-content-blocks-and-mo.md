@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T10:57:53Z
-updated_at: 2026-09-19T10:57:53Z
+updated_at: 2026-09-19T11:25:16Z
 ---
 
 ## The ask, owner 2026-09-19 (verbatim)
@@ -87,3 +87,5 @@ is the **presentation** half — themes, CSS tokens, the three layouts. This is
 the **semantics** half — what a sticky is attached to and what moving it means.
 They share the sticky panel and nothing else, which is why they are two beans;
 say the word and they merge.
+
+_2026-09-19T11:25:16Z_ — READING CONFIRMED by the owner 2026-09-19: a drop is always a MOVE, never an implicit copy. Duplication is a separate, explicit action that mints a new sticky, which you then drop. The 'Done when' item asking for this confirmation is settled; the item requiring a test that a drop never implicitly duplicates stands as written.

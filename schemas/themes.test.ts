@@ -72,6 +72,11 @@ describe("the default", () => {
   // appear together on exactly one surface — the deployed staging site — so a
   // checkout cannot check it, and a test claiming to would be asserting a
   // number nobody measured against the thing it is supposed to match.
+  //
+  // It WAS checked, on the staging preview for PR #405, and confirmed by the
+  // owner 2026-09-19. That is a human judgement with a date, recorded here so
+  // the next reader knows it happened — not a gap, and not something to
+  // "fix" by adding an assertion that cannot see the banner.
 });
 
 describe("the high-contrast pair really is high contrast", () => {
