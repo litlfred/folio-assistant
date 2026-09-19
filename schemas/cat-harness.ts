@@ -116,9 +116,9 @@ export interface GraphKindDef {
    * Where the shape of a node in this graph is defined — a repo-relative
    * module path, or a `$schema` tag the files themselves carry.
    *
-   * Optional because not every kind has one answer: `kg` holds five node kinds
-   * typed in different places, and a single pointer there would be a lie of
-   * precision rather than a fact.
+   * Optional because not every kind has one answer: `cat-harness` holds node
+   * kinds typed in different places — skills, workflows, roles, actors — and a
+   * single pointer there would be a lie of precision rather than a fact.
    */
   schema?: string;
 }
@@ -126,10 +126,19 @@ export interface GraphKindDef {
 /**
  * The graph kinds the **harness itself** defines.
  *
- * Four, and deliberately none of them renderable. Everything here is a graph a
- * tool reads: how work is done (`tools`), what an actor knows and which process
- * governs it (`kg`), the shapes both are typed against (`schemas`), and the
- * work plan with its running-process state (`beans`).
+ * **The map below is the only answer to how many, and this sentence deliberately
+ * does not give one.** It read "Four, and deliberately none of them renderable"
+ * over a map of fourteen — and the version before that read "Five" over a map of
+ * four, which bean `5o3a` records #269 correcting. A count in prose is a claim
+ * that has to be maintained, it was maintained wrongly twice, and nothing checks
+ * it. `Object.keys(BASE_GRAPH_KINDS).length` is checkable and free.
+ *
+ * What IS stable and worth saying: **none of them is renderable.** Everything
+ * here is a graph a tool reads — how work is done (`tools`), what an actor knows
+ * and which process governs it (`cat-harness`), the shapes both are typed against
+ * (`schemas`), the work plan with its running-process state (`beans`), and the
+ * ingestion, voice and translation inputs. Rendering belongs to `folio`, which
+ * the layer above registers.
  *
  * ## Why the work plan is the harness's and not core's
  *
