@@ -14,22 +14,23 @@
 {%- endcomment -%}
 {%- assign h = site.data.harness -%}
 {%- comment -%}
-  The SMALL mark here, not the declared `icon`, because this renders at 24 px.
+  The FULL mark here — whiskers and all — because it is the mark, and the
+  owner asked for this one in this place, twice.
 
-  Both marks are the same glyph; the small one is drawn FOR this size — its
-  white halo is 8 units against the large mark's 3, which at x0.2 is 1.6 px
-  rather than 0.6 px. That halo is the only thing separating the cat from the
-  ring, because the ears cross the ring by design, so at 0.6 px the two sage
-  shapes fuse and the mark renders as a disc with a pale smudge in it.
-  Measured 2026-09-19 from a screenshot of this very element.
+  It was briefly the small mark, on my reasoning that 24 px cannot carry the
+  detail. That was the wrong call in two ways. The small mark is a DIFFERENT
+  DRAWING, so serving it here quietly substitutes a second glyph for the one
+  the instance declares; and my attempt to make it legible at 24 px — an
+  8-unit white halo where the original has 3 — blunted the ear tips under
+  `stroke-linejoin="round"` and read as a fat white outline at full size.
+  Reverted. The lever for legibility is the RENDER SIZE below, which leaves
+  the artwork alone.
 
-  `default:` rather than a conditional: an instance that declares no
-  `browser-icon` image falls back to its `icon`, which is the large mark drawn
-  small — not ideal, and strictly better than no mark at all.
+  `h.icon` is the instance's declared mark, so an instance that declares a
+  different one gets its own here with no template change.
 {%- endcomment -%}
-{%- assign mark = h.smallIcon | default: h.icon -%}
-{%- if mark.src -%}
-  <img src="{{ mark.src | relative_url }}" alt="" aria-hidden="true"
-       class="fa-site-mark" width="24" height="24" />
+{%- if h.icon.src -%}
+  <img src="{{ h.icon.src | relative_url }}" alt="" aria-hidden="true"
+       class="fa-site-mark" width="32" height="32" />
 {%- endif -%}
 <span class="fa-site-title">{{ h.title | default: site.title }}</span>

@@ -1307,9 +1307,16 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
    corrected, because a comment asserting behaviour the asset never had is the
    same "declared, unread, unnoticed" failure as the unconsumed
    `role: "browser-icon"` — see beans/defs/…blv9. */
+/* 2rem, not 1.5rem. The mark's ears CROSS the @ ring by design, and the only
+   thing separating them is a 3-unit white halo against a 120-unit viewBox —
+   0.6 px at 1.5rem, which fuses the two sage shapes into a disc (measured
+   2026-09-19 from a screenshot of this element). At 2rem it is 0.8 px, and
+   the whiskers go 0.48 px -> 0.64 px. Still thin; visibly better, and it
+   changes the ARTWORK not at all, which is the point — the alternative was
+   redrawing the glyph, and that lost the ear tips. */
 .fa-site-mark {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   vertical-align: -0.32em;
   margin-right: 0.4rem;
   flex: none;
