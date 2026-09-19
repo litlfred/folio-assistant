@@ -1,10 +1,11 @@
 ---
 # folio-assistant-1hsf
 title: Migrate AGENTS.md migration debt into skills, and teach a cold agent to read the KG
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-19T07:11:55Z
-updated_at: 2026-09-19T07:11:55Z
+updated_at: 2026-09-19T09:30:05Z
 ---
 
 THE ASK, owner 2026-09-19: 'migrate Agents.md work to skills and point agent to how to read KG use skills.'
@@ -28,3 +29,5 @@ A background survey was commissioned 2026-09-19 to classify every section as POI
 - [ ] rules that exist ONLY in AGENTS.md identified and moved
 - [ ] a cold agent has one documented route to the KG and its skills
 - [ ] the three-copy todo-manager divergence is not widened
+
+_2026-09-19T09:30:05Z_ — Claimed on branch claude/wonderful-bohr-6kxh7b (2026-09-19). Half 2 (cold-agent KG route) first, then half 1 classification + unambiguous slices.

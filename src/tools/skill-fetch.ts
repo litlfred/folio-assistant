@@ -3,6 +3,8 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { resolve, join } from "node:path";
 
+import { nodeSummary } from "../../scripts/front-matter.js";
+
 // Session-level cache (lives for the lifetime of the MCP server process)
 const skillCache = new Map<string, { content: string; fetchedAt: number }>();
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
@@ -91,13 +93,47 @@ export const LOCAL_PACKAGES: Record<string, string> = {
   "folio-paper-adapter": resolve(__dirname, "..", "..", "skills", "folio-paper-adapter"),
 };
 
-/** List skill ids (`<name>` of `<name>.md`) available in a local package dir. */
-function listLocalSkills(dir: string): string[] {
+/** A servable skill: its id, and what it says it is — when it says anything. */
+export interface LocalSkill {
+  id: string;
+  /** `undefined` when the file declares no `description:` and has no heading. */
+  summary?: string;
+}
+
+/**
+ * List the skills available in a local package dir, each with its summary.
+ *
+ * **The summary is the whole point, and it was missing.** `AGENTS.md` tells a
+ * cold agent to reach for `skill_list` because it gives "what skills exist
+ * here, **with their one-line summaries**" — and until 2026-09-19 it gave 150
+ * bare names and the `skill_fetch` call to retrieve each. An agent handed 150
+ * undifferentiated identifiers cannot pick; it can only fetch at random or
+ * fall back to opening files, which is the behaviour the tool exists to
+ * replace. Bean `1hsf`.
+ *
+ * A missing summary stays `undefined` rather than becoming `""`. See
+ * `nodeSummary` — a node that never declared itself must not read as one that
+ * declared itself as nothing.
+ */
+function listLocalSkills(dir: string): LocalSkill[] {
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
     .filter((f) => f.endsWith(".md"))
-    .map((f) => f.slice(0, -3))
-    .sort();
+    .map((f) => {
+      const id = f.slice(0, -3);
+      // A skill whose body cannot be read is listed WITHOUT a summary rather
+      // than dropped: it is servable, `skill_fetch` will report the real error,
+      // and silently shortening the list would hide a skill from the only
+      // inventory an agent has.
+      let summary: string | undefined;
+      try {
+        summary = nodeSummary(readFileSync(join(dir, f), "utf8"));
+      } catch {
+        summary = undefined;
+      }
+      return { id, summary };
+    })
+    .sort((a, b) => a.id.localeCompare(b.id));
 }
 export function registerSkillFetchTools(server: McpServer): void {
   server.tool(
@@ -128,7 +164,7 @@ export function registerSkillFetchTools(server: McpServer): void {
     async ({ skill, package_name }) => {
       const localDir = LOCAL_PACKAGES[package_name];
       if (localDir) {
-        const available = listLocalSkills(localDir);
+        const available = listLocalSkills(localDir).map((s) => s.id);
         if (!available.includes(skill)) {
           return {
             content: [{
@@ -220,8 +256,11 @@ export function registerSkillFetchTools(server: McpServer): void {
 
   server.tool(
     "skill_list",
-    "List available skills — the local platform bundles (folio-assistant, folio-core, " +
-    "folio-paper-adapter) and external reference packages — that can be fetched via skill_fetch.",
+    "List available skills WITH their one-line summaries — the local platform bundles " +
+    "(folio-assistant, content-lifecycle, folio-core, folio-document-adapter, " +
+    "folio-paper-adapter, authoring-who-smart-guidelines, authoring-math) and external " +
+    "reference packages — each fetchable via skill_fetch. Call this before improvising a " +
+    "procedure: the summary is what lets you pick the right skill without fetching several.",
     {},
     async () => {
       const lines: string[] = ["# Available Skills\n"];
@@ -230,8 +269,16 @@ export function registerSkillFetchTools(server: McpServer): void {
         const skills = listLocalSkills(dir);
         lines.push(`## ${pkgName} (local, ${skills.length} skills)\n`);
         for (const s of skills) {
-          lines.push(`- **${s}** — \`skill_fetch skill="${s}" package_name="${pkgName}"\``);
+          // The summary, not the fetch call. Every row previously ended in
+          // `skill_fetch skill="x" package_name="y"` — the same template with
+          // two substitutions, repeated 150 times, telling the reader nothing
+          // they could not derive from the heading and the id. The invocation
+          // is stated once below the list instead, and the row carries the one
+          // fact only the file knows.
+          lines.push(s.summary ? `- **${s.id}** — ${s.summary}` : `- **${s.id}** — _(no summary declared)_`);
         }
+        lines.push("");
+        lines.push(`Fetch any of these with \`skill_fetch skill="<id>" package_name="${pkgName}"\`.`);
         lines.push("");
       }
 
