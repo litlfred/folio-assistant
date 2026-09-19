@@ -32,6 +32,8 @@ every other path is a wrapper around it or is deleted.
 
 Diagram: `skills/workflows/document-ingestion.bpmn` (`Process_Ingestion`).
 
+_2026-09-19T12:23:13Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 _2026-09-19T12:12:22Z_ — Re-measured 2026-09-19 before starting. The bean's description of TODAY is stale in three ways, and the third changes the size of the job.
 
 1. It names scripts/migrate-uploads-to-library.py as the current path. That file DOES NOT EXIST.

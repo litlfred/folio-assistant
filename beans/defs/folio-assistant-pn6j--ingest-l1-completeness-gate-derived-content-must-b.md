@@ -34,6 +34,8 @@ in `uploads/`, and the verdict is recorded on the document.
 
 Diagram: `skills/workflows/ingest-l1-completeness-gate.bpmn`.
 
+_2026-09-19T12:23:18Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 _2026-09-19T12:31:11Z_ — DONE (first cut) as bun run check:l1-complete, wired into CI.
 
 THREE states, never two: met / unmet / not-derivable. The third is what lets this ship before the nine INGEST arms exist -- archive contents, technical metadata, image descriptions, audio transcripts, tabular records and narrative provenance are reported as not-derivable, each naming the bean (twqe, nso8, d5f1, 1r0p, p67i, iqim) that would move it into the checked set. A check that cannot run is not a pass and is not silently dropped; that is dh4f's rule.
