@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1rlj
 title: Pin the just-the-docs remote theme, and a reusable subprocess for adopting an upstream version bump
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T08:24:10Z
-updated_at: 2026-09-19T09:04:33Z
+updated_at: 2026-09-19T09:06:36Z
 ---
 
 
