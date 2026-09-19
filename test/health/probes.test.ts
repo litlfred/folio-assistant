@@ -56,23 +56,40 @@ function repo(files: Record<string, string>): string {
  * cases.
  */
 describe("probeBranches", () => {
-  /** A remote carrying `main`, a branch merged into it, and one that is not. */
+  /** `git`, at a fixed commit date — the dates are what the frontier test turns on. */
+  function runAt(cwd: string, iso: string, args: string[]): void {
+    const r = spawnSync("git", args, {
+      cwd,
+      encoding: "utf-8",
+      env: { ...process.env, GIT_AUTHOR_DATE: iso, GIT_COMMITTER_DATE: iso },
+    });
+    if (r.status !== 0) throw new Error(`git ${args.join(" ")} failed: ${r.stderr}`);
+  }
+
+  /**
+   * A remote carrying `main`, a branch merged into it, and one that is not.
+   *
+   * Dated deliberately and in order: `claude/merged`'s tip is BEFORE the merge
+   * commit and `claude/still-going`'s is AFTER it, which is what lets the
+   * shallow tests tell "the answer is unreliable" from "the answer is sound
+   * even here".
+   */
   function remoteWithBranches(): string {
     const dir = repo({ "a.txt": "a" });
     run(dir, "git", ["checkout", "-q", "-b", "claude/merged"]);
     writeFileSync(join(dir, "b.txt"), "b");
     run(dir, "git", ["add", "-A"]);
-    run(dir, "git", ["commit", "-qm", "work that landed"]);
+    runAt(dir, "2026-09-02T00:00:00Z", ["commit", "-qm", "work that landed"]);
     run(dir, "git", ["checkout", "-q", "main"]);
     // A merge COMMIT, which is how this repository merges — the tip of
     // `claude/merged` becomes an ancestor of `main`. Under squash-merge it
     // would not, and the probe would report every branch as unmerged; that is
     // stated in the check's own documentation as an assumption.
-    run(dir, "git", ["merge", "-q", "--no-ff", "-m", "Merge pull request #1", "claude/merged"]);
+    runAt(dir, "2026-09-03T00:00:00Z", ["merge", "-q", "--no-ff", "-m", "Merge pull request #1", "claude/merged"]);
     run(dir, "git", ["checkout", "-q", "-b", "claude/still-going"]);
     writeFileSync(join(dir, "c.txt"), "c");
     run(dir, "git", ["add", "-A"]);
-    run(dir, "git", ["commit", "-qm", "work that has not landed"]);
+    runAt(dir, "2026-09-04T00:00:00Z", ["commit", "-qm", "work that has not landed"]);
     run(dir, "git", ["checkout", "-q", "main"]);
     run(dir, "git", ["config", "--bool", "core.bare", "true"]);
     return dir;
@@ -144,6 +161,22 @@ describe("probeBranches", () => {
     expect(p.state).toBe("ok");
     if (p.state !== "ok") return;
     expect(p.value.candidates.find((x) => x.ref === "claude/merged")?.mergedIntoDefault).toBe(true);
+  });
+
+  it("still trusts `not merged` for a branch whose tip POSTDATES the graft boundary", () => {
+    // Truncation does not condemn every answer. `claude/still-going`'s tip is
+    // dated after the merge commit the shallow fetch stopped at, so a merge of
+    // it would have to be inside the fetched range — the negative is a fact,
+    // and blinding here would cost the check its only remaining signal on a CI
+    // runner that forgot `fetch-depth: 0`.
+    const dir = local(remoteWithBranches());
+    run(dir, "git", ["fetch", "-q", "--depth=1", "origin", "main"]);
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-still-going"] });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    const c = p.value.candidates.find((x) => x.ref === "claude/still-going");
+    expect(c?.mergedIntoDefault).toBe(false);
+    expect(c?.unevaluated).toBeUndefined();
   });
 
   it("refuses to call a branch unmerged when the default branch's history is truncated past its tip", () => {

@@ -206,7 +206,7 @@ export function probeStaging(o: StagingProbeOptions): Probe<StagingEvidence> {
 }
 
 /**
- * Is this clone's history of `base` cut off at a graft boundary?
+ * Is this clone's history of `base` cut off at a graft boundary, and if so, where?
  *
  * Exact rather than heuristic: git reports a graft boundary as a parentless
  * commit, and every graft boundary is listed in `.git/shallow`. So the
@@ -214,18 +214,23 @@ export function probeStaging(o: StagingProbeOptions): Probe<StagingEvidence> {
  * a real root commit is not in it, and a `--depth` fetch of a DIFFERENT
  * branch puts a boundary in it that `base` cannot reach.
  *
- * Returns a `reason` rather than a boolean when it could not tell, because
+ * `frontier` is the newest such boundary's committer date, in epoch
+ * milliseconds, and `undefined` when the history is complete. It is what
+ * bounds the damage: a branch tip after the frontier cannot have been merged
+ * before it, so the ancestry answer about it is sound even here.
+ *
+ * Returns a `reason` rather than a verdict when it could not tell, because
  * "the history might be truncated" and "the history is fine" are the two
  * answers this decides between, and guessing either way is the failure the
  * whole module is written against.
  */
-function defaultBranchIsTruncated(repoRoot: string, base: string): { truncated: boolean } | { reason: string } {
+function defaultBranchHistory(repoRoot: string, base: string): { frontier?: number } | { reason: string } {
   const shallowPath = git(repoRoot, ["rev-parse", "--git-path", "shallow"]);
   if (shallowPath.code !== 0) {
     return { reason: `git rev-parse --git-path shallow exited ${shallowPath.code}: ${shallowPath.err.trim()}` };
   }
   const path = resolve(repoRoot, shallowPath.out.trim());
-  if (!existsSync(path)) return { truncated: false };
+  if (!existsSync(path)) return {};
   let grafts: Set<string>;
   try {
     grafts = new Set(
@@ -237,17 +242,22 @@ function defaultBranchIsTruncated(repoRoot: string, base: string): { truncated: 
   } catch (e) {
     return { reason: `${path} exists but could not be read: ${String(e).slice(0, 160)}` };
   }
-  if (grafts.size === 0) return { truncated: false };
-  const roots = git(repoRoot, ["rev-list", "--max-parents=0", base]);
+  if (grafts.size === 0) return {};
+  const roots = git(repoRoot, ["log", "--format=%H %cI", "--max-parents=0", base]);
   if (roots.code !== 0) {
-    return { reason: `git rev-list --max-parents=0 ${base.slice(0, 8)} exited ${roots.code}: ${roots.err.trim()}` };
+    return { reason: `git log --max-parents=0 ${base.slice(0, 8)} exited ${roots.code}: ${roots.err.trim()}` };
   }
-  return {
-    truncated: roots.out
-      .split("\n")
-      .map((l) => l.trim())
-      .some((sha) => sha !== "" && grafts.has(sha)),
-  };
+  let frontier: number | undefined;
+  for (const line of roots.out.split("\n")) {
+    const [sha, date] = line.trim().split(" ");
+    if (sha === undefined || !grafts.has(sha)) continue;
+    const t = Date.parse(date ?? "");
+    // A boundary whose date is unreadable is treated as infinitely recent:
+    // every negative ancestry answer under it becomes `unevaluated`, which
+    // reports the blindness rather than guessing past it.
+    frontier = Number.isNaN(t) ? Number.POSITIVE_INFINITY : Math.max(frontier ?? Number.NEGATIVE_INFINITY, t);
+  }
+  return { frontier };
 }
 
 export interface BranchProbeOptions {
@@ -295,10 +305,17 @@ export interface BranchProbeOptions {
  * commit is not. `--is-shallow-repository` cannot be used for this, because
  * `probeStaging` runs first and fetches `gh-pages` with `--depth=1`, which
  * makes the whole repository shallow by that test while `main`'s own history
- * is untouched — it would report every sweep blind. Comparing commit DATES
- * cannot be used either: a branch tip older than the repository's root commit
- * is unusual but legal, and it would blind the sweep for a reason that has
- * nothing to do with truncation.
+ * is untouched — it would report every sweep blind. A date comparison cannot
+ * be used on its own either: a branch tip older than the repository's root
+ * commit is unusual but legal, and it would blind a sweep over a complete
+ * history for a reason that has nothing to do with truncation.
+ *
+ * Truncation alone does not condemn the answer, though, so the two are used
+ * together. A merge of a branch whose tip is NEWER than the graft boundary
+ * must itself be newer than the boundary, and so inside the fetched range —
+ * "not an ancestor" is then a fact. Only a tip at or before the boundary is
+ * `unevaluated`. Where a date is missing or skewed the branch reads as
+ * unmerged, which spares the preview.
  */
 export function probeBranches(o: BranchProbeOptions): Probe<BranchEvidenceSet> {
   const command = `git ls-remote --heads ${o.remote}, then merge-base --is-ancestor per matching branch`;
@@ -363,8 +380,8 @@ export function probeBranches(o: BranchProbeOptions): Probe<BranchEvidenceSet> {
   // Is this clone's history of the default branch complete? See the header:
   // the question is asked of `.git/shallow`, never of a date or of
   // `--is-shallow-repository`.
-  const truncated = defaultBranchIsTruncated(o.repoRoot, base);
-  if ("reason" in truncated) return { state: "unknown", reason: truncated.reason };
+  const history = defaultBranchHistory(o.repoRoot, base);
+  if ("reason" in history) return { state: "unknown", reason: history.reason };
 
   const candidates: BranchEvidence[] = [];
   for (const head of heads) {
@@ -390,8 +407,13 @@ export function probeBranches(o: BranchProbeOptions): Probe<BranchEvidenceSet> {
     else why = `git merge-base --is-ancestor exited ${anc.code}: ${anc.err.trim() || "no output"}`;
 
     // See the header: a "not merged" answer out of a truncated history is an
-    // artefact of the fetch depth, not a fact about the branch.
-    if (mergedIntoDefault === false && truncated.truncated) {
+    // artefact of the fetch depth unless the tip postdates the graft boundary,
+    // in which case any merge of it would be inside the fetched range too.
+    if (
+      mergedIntoDefault === false &&
+      history.frontier !== undefined &&
+      (headCommittedAt === undefined || Date.parse(headCommittedAt) <= history.frontier)
+    ) {
       mergedIntoDefault = undefined;
       why =
         `this clone's history of \`${defaultBranch}\` is truncated at a graft boundary, so "not an ancestor of ` +
