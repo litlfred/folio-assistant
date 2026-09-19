@@ -9,7 +9,7 @@ the harness, and it assumes no connected tools.
 > [`AGENTS.md`](AGENTS.md) is a declared asset of it — both checked by
 > `bun run check:declared-assets`. Still to come: `bootstrap.jsonld`, the two
 > skills and the process diagram. Design and open questions:
-> [`proposals/bootstrap`](../docs/folio-assistant/proposals/bootstrap.md).
+> [`proposals/bootstrap`](../fsh-guts/proposals/bootstrap.md).
 
 ## What `bootstrap <instance>` means
 
