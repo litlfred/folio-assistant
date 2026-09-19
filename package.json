@@ -44,9 +44,12 @@
     "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
     "check:harness-dirs": "bun run scripts/check-harness-dirs.ts",
+    "harness:dirs": "bun run scripts/harness-dirs.ts",
+    "harness:dirs:check": "bun run scripts/harness-dirs.ts --check",
     "check:partition": "bun run scripts/repo-partition.ts",
     "check:partition:edges": "bun run scripts/repo-partition.ts --edges",
     "check:tools": "bun run scripts/check-tools.ts",
+    "check:voices": "bun run scripts/check-voices.ts",
     "check:workflow-policy": "bun run scripts/check-workflow-policy.ts",
     "check:workflow-refs": "bun run scripts/check-workflow-refs.ts",
     "check:workflows": "bun run scripts/check-workflows.ts",
@@ -109,6 +112,7 @@
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.60.0",
     "bpmn-js": "^18.25.1",
     "bun-types": "latest",

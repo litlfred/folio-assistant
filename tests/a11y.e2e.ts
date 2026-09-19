@@ -1,0 +1,194 @@
+/**
+ * The accessibility gate.
+ *
+ * Bean `gjli`: "ALL UI MUST FOLLOW ACCESSIBILITY GUIDELINES." A rule with no
+ * check is an assertion, and the bean's own finding was that nothing here was
+ * checkable — no a11y gate existed in this repository.
+ *
+ * ## Why axe alone is not the standard
+ *
+ * axe-core is necessary and it is not sufficient, and this suite exists in two
+ * halves because of a measured fact rather than a principle.
+ *
+ * Baselined against the knowledge-graph viewer on 2026-09-19, axe found two
+ * defects — insufficient colour contrast and undersized targets — and **none
+ * of the four found by reading the markup against the rule**. The worst of
+ * those four was a one-hop neighbourhood diagram whose every node was a bare
+ * `<circle>` with a click handler: unreachable by keyboard, while the same
+ * edges in the table beside it were fine.
+ *
+ * axe could not flag it. A `<circle>` with an `onclick` is not *recognised* as
+ * interactive, so there is no control there to find a fault with. An automated
+ * pass over a control the checker cannot see is not evidence about that
+ * control.
+ *
+ * The complement holds too, which is the honest other half: making those nodes
+ * real buttons introduced an ARIA contradiction — `role="img"` on the SVG,
+ * which is a leaf in the accessibility tree, wrapped around focusable children
+ * — and **axe caught that immediately** where a human reading the diff had
+ * not. Neither half of this file replaces the other.
+ *
+ * ## Why the thresholds are above the floor
+ *
+ * This instance's declared interaction profile is low-dexterity
+ * (`.harness/interaction.json`). WCAG 2.2 SC 2.5.8 asks for 24x24 CSS pixels;
+ * a target that is barely legal is a target that is hard to hit. The page aims
+ * at 32px for list and facet rows and 28px for inline edge controls, and the
+ * assertion below holds the 24px line so a regression is caught even if the
+ * comfort margin is spent.
+ *
+ * @module tests/a11y.e2e
+ */
+import { test, expect } from "@playwright/test";
+import { AxeBuilder } from "@axe-core/playwright";
+import { existsSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+
+for (const [file, script] of [
+  ["_kg/folio-assistant.jsonld", "scripts/kg-export.ts"],
+  ["_kg/index.html", "scripts/kg-viewer.ts"],
+] as const) {
+  if (!existsSync(file)) execFileSync("bun", ["run", script], { stdio: "inherit" });
+}
+
+const PAGE = "/_kg/index.html";
+
+/** WCAG 2.0/2.1/2.2 A and AA. Level AAA is not the bar being claimed. */
+const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
+
+/** Put the page in its most-populated state: a node selected, panel drawn. */
+async function selectANode(page: import("@playwright/test").Page): Promise<void> {
+  await page.goto(PAGE);
+  await page.locator("#q").fill("beans-cli");
+  await page.locator("#list li button").first().click();
+  await expect(page.locator(".detail h3")).toBeVisible();
+}
+
+test.describe("accessibility — automated", () => {
+  // Both schemes and both widths, because a contrast pair that passes in one
+  // scheme can fail in the other: the viewer shipped `color: #fff` on an
+  // accent that is dark in light mode (5.97:1) and LIGHT in dark mode
+  // (2.19:1). One value written once, never rechecked in the other scheme.
+  for (const colorScheme of ["light", "dark"] as const) {
+    for (const [name, viewport] of [
+      ["desktop", { width: 1280, height: 860 }],
+      ["phone", { width: 390, height: 780 }],
+    ] as const) {
+      test(`no WCAG A/AA violations — ${colorScheme}, ${name}`, async ({ browser }) => {
+        const ctx = await browser.newContext({ colorScheme, viewport });
+        const page = await ctx.newPage();
+        await selectANode(page);
+        const { violations } = await new AxeBuilder({ page }).withTags([...TAGS]).analyze();
+        // Named in the failure, so a red run says WHAT rather than how many.
+        expect(violations.map((v) => `${v.id} (${v.nodes.length})`)).toEqual([]);
+        await ctx.close();
+      });
+    }
+  }
+});
+
+test.describe("accessibility — what axe cannot check", () => {
+  test("the neighbourhood diagram is operable by keyboard", async ({ page }) => {
+    // The gap axe is structurally unable to see. Every node in this diagram
+    // was a <circle> with a click handler: no role, no tabindex, no keyboard
+    // path, and nothing for a checker to report.
+    await selectANode(page);
+    const node = page.locator(".detail svg g.node").first();
+    await expect(node).toHaveAttribute("role", "button");
+    await expect(node).toHaveAttribute("tabindex", "0");
+
+    await node.focus();
+    const active = await page.evaluate(() => document.activeElement?.getAttribute("role"));
+    expect(active).toBe("button");
+  });
+
+  test("Enter and Space follow an edge, as a button must", async ({ page }) => {
+    // A <button> gets these from the platform. An SVG group with role="button"
+    // does not, and a control that only answers the mouse is not a control.
+    for (const key of ["Enter", " "]) {
+      await selectANode(page);
+      const before = await page.locator(".detail h3").textContent();
+      await page.locator(".detail svg g.node").first().focus();
+      await page.keyboard.press(key);
+      await expect(page.locator(".detail h3")).not.toHaveText(String(before));
+    }
+  });
+
+  test("every neighbour announces where it goes and how", async ({ page }) => {
+    // The visible label is aria-hidden and truncated to 26 characters; the
+    // accessible name is the whole thing plus the edge it travels.
+    await selectANode(page);
+    const label = await page.locator(".detail svg g.node").first().getAttribute("aria-label");
+    expect(label).toMatch(/^(Links to|Referenced by) .+ via \w+$/);
+  });
+
+  test("no interactive target is under 24px tall", async ({ page }) => {
+    // WCAG 2.2 SC 2.5.8. The page aims higher — see the module note — and this
+    // holds the floor so the comfort margin can be spent without silence.
+    await selectANode(page);
+    const small = await page.evaluate(() => {
+      const out: string[] = [];
+      for (const e of document.querySelectorAll('button, a[href], [role="button"]')) {
+        const r = e.getBoundingClientRect();
+        if (r.width === 0 && r.height === 0) continue;
+        if (r.height < 24) out.push(`${e.className || e.tagName} ${Math.round(r.width)}x${Math.round(r.height)}`);
+      }
+      return out;
+    });
+    expect(small).toEqual([]);
+  });
+
+  test("a keyboard user can skip the facet column", async ({ page }) => {
+    await page.goto(PAGE);
+    await page.keyboard.press("Tab");
+    const skip = page.locator("a.skip");
+    await expect(skip).toBeFocused();
+    // Visible only when focused — it must not be a permanent artefact, and it
+    // must not be one of those skip links that is hidden from everyone.
+    await expect(skip).toBeVisible();
+  });
+
+  test("the search field has a name that survives typing", async ({ page }) => {
+    // A placeholder IS the accessible name until somebody types, and then the
+    // field has none. axe passes a placeholder-only input; a user does not.
+    await page.goto(PAGE);
+    await page.locator("#q").fill("beans");
+    const name = await page.locator("#q").evaluate((el) => {
+      const id = el.getAttribute("id");
+      const lab = id === null ? null : document.querySelector(`label[for="${id}"]`);
+      return el.getAttribute("aria-label") ?? lab?.textContent ?? null;
+    });
+    expect(name).toBeTruthy();
+    expect(name).not.toBe("");
+  });
+
+  test("selecting a node is announced, not just redrawn", async ({ page }) => {
+    // The panel is rewritten in place. Without a live region a screen-reader
+    // user activates an edge and is told nothing: the page changed and their
+    // cursor did not move.
+    await page.goto(PAGE);
+    const detail = page.locator("#detail");
+    await expect(detail).toHaveAttribute("aria-live", "polite");
+    await expect(detail).toHaveAttribute("role", "region");
+  });
+
+  test("filtering announces how many nodes matched", async ({ page }) => {
+    await page.goto(PAGE);
+    await page.locator("#q").fill("beans-cli");
+    await expect(page.locator("#count")).toHaveAttribute("aria-live", "polite");
+    await expect(page.locator("#count")).toContainText(/node/);
+  });
+
+  test("focus is visible, and not left to the UA default", async ({ page }) => {
+    // The page had no focus styling at all and was never checked against the
+    // accent backgrounds a focused control sits on.
+    await page.goto(PAGE);
+    await page.locator("#q").focus();
+    const outline = await page.locator("#q").evaluate((el) => {
+      const cs = getComputedStyle(el);
+      return { width: cs.outlineWidth, style: cs.outlineStyle };
+    });
+    expect(outline.style).not.toBe("none");
+    expect(parseFloat(outline.width)).toBeGreaterThanOrEqual(2);
+  });
+});

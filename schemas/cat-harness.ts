@@ -55,8 +55,14 @@
  * @module schemas/cat-harness
  */
 
-import { existsSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  writeFileSync,
+} from "node:fs";
+import { isAbsolute, join, relative, resolve } from "node:path";
 import { z } from "zod";
 
 import { KgImageSchema, kgNodeLabelShape, type KgImage, type KgNodeLabels } from "./kg-node";
@@ -201,6 +207,42 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
       "Authored by people and by agents on their behalf.",
+  },
+  // The two stages of the document-ingestion pipeline. They are declared as
+  // SEPARATE kinds rather than one `sources` kind because the whole point of
+  // the pair is that they are not interchangeable: the corpus-grep checklist
+  // searches `library/` and not `uploads/`, so a source still in `uploads/`
+  // makes a clean grep read as "nobody has done this" while the file sits on
+  // disk. Collapsing them into one kind would erase exactly the distinction
+  // `content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md`
+  // exists to state.
+  uploads: {
+    type: `${FOLIO_NS}UploadsGraph`,
+    renderable: false,
+    summary:
+      "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not " +
+      "greppable as corpus: a document here reads as absent to every consumer.",
+  },
+  library: {
+    type: `${FOLIO_NS}LibraryGraph`,
+    renderable: false,
+    summary:
+      "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
+      "`structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every " +
+      "knowledge-graph reference to a source resolves through here, never to a loose path " +
+      "or a bare URL.",
+  },
+  // Named editorial voice profiles, overlaid on the base house voice. A
+  // separate kind from `kg` because a voice is OPT-IN per folio while a skill is
+  // simply available: the activation list in `harness.config.json` is what makes
+  // a voice apply, and a graph kind that conflated the two would have no place
+  // to record that this instance ships four voices and activates none.
+  voices: {
+    type: `${FOLIO_NS}VoiceGraph`,
+    renderable: false,
+    summary:
+      "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
+      "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
   },
   "todo-feedback": {
     type: `${FOLIO_NS}TodoFeedbackGraph`,
@@ -581,6 +623,140 @@ export function resolveDirectories(
     }
 
   return [...byId.values()];
+}
+
+// ── Materialisation ─────────────────────────────────────────────
+
+/**
+ * What the keep-marker in a materialised directory says.
+ *
+ * It is a `.gitignore` because that is the one filename whose presence in an
+ * otherwise-empty directory is unremarkable, and it **ignores nothing**. The
+ * comment is the payload: git tracks files rather than directories, so a
+ * declared-but-empty directory vanishes from the next clone without a file in
+ * it, and the next person deletes it as debris.
+ *
+ * Deliberately no `*` / `!.gitignore` pair. Ignoring the contents of
+ * `uploads/` would reproduce the defect the two-stage pipeline exists to
+ * prevent — a source on disk that every consumer reads as absent — and
+ * `library/` is L1 corpus that MUST be committed and greppable. What a folio
+ * chooses to ignore is the folio's policy; this file only keeps the directory
+ * alive, and is never overwritten once it exists.
+ */
+export function keepMarker(dir: Pick<ContentDirectory, "id" | "description">): string {
+  const what = dir.description?.trim();
+  return [
+    "# do not delete me",
+    "#",
+    "# Git tracks files, not directories, so this directory would vanish from",
+    "# the next clone without a file in it. This is that file. It ignores",
+    "# nothing on purpose — see `keepMarker` in schemas/cat-harness.ts.",
+    "#",
+    `# ${dir.id}/`,
+    ...(what ? wrapComment(what) : []),
+    "",
+  ].join("\n");
+}
+
+/** Wrap a description into `# `-prefixed lines at 76 columns. */
+function wrapComment(text: string, width = 74): string[] {
+  const words = text.replace(/\s+/g, " ").split(" ");
+  const lines: string[] = [];
+  let line = "";
+  for (const w of words) {
+    if (line && (line + " " + w).length > width) {
+      lines.push(`# ${line}`);
+      line = w;
+    } else {
+      line = line ? line + " " + w : w;
+    }
+  }
+  if (line) lines.push(`# ${line}`);
+  return lines;
+}
+
+/** One directory's outcome from {@link materialiseDirectories}. */
+export interface MaterialisedDirectory {
+  id: string;
+  /** Path the directory was (or would be) created at, inside the instance. */
+  absPath: string;
+  /** The instance whose declaration contributed the entry — may be a dependency. */
+  declaredBy: string;
+  /** True when this call created the directory; false when it already existed. */
+  created: boolean;
+  /** True when this call wrote the keep-marker; false when one was already there. */
+  markerWritten: boolean;
+}
+
+/**
+ * Create every declared directory that does not exist yet, in the instance
+ * being set up.
+ *
+ * WHY THIS EXISTS, and why it must land in the same change as any new
+ * declaration: `AGENTS.md` says "declare only what exists — a declared-but-
+ * absent directory is the bean `dh4f` defect, where a consumer scans nothing
+ * and reports a clean run over it". Absent and empty are indistinguishable to
+ * a consumer, so declaring a directory you have not created converts a real
+ * gap into a clean run. Materialising is what makes "empty" a DETERMINED
+ * empty rather than an unanswered question — the same third-state discipline
+ * the README sections and the CI-health report follow.
+ *
+ * PATHS RESOLVE AGAINST THE INSTANCE, NOT THE DECLARER. An instance inherits
+ * its dependencies' directory conventions, so what it inherits is the
+ * CONVENTION — an id and a relative path — and it needs that directory in
+ * ITSELF. `ResolvedDirectory.absPath` points into the declaring checkout,
+ * which for a dependency is somebody else's tree; writing there would be the
+ * equivalent of creating folders inside `node_modules`.
+ *
+ * A path that escapes the instance root is REFUSED rather than created, the
+ * same rule `schemas/bean-graph.ts` applies to its node paths: a directory
+ * outside the instance is not a directory of it.
+ *
+ * Idempotent. Running it twice creates nothing and overwrites nothing — an
+ * existing keep-marker is left exactly as it is, because a folio may have
+ * added real ignore rules to it. A directory that already holds files gets no
+ * marker: it is not at risk of vanishing, so a file explaining that it might
+ * would be both redundant and wrong.
+ */
+export function materialiseDirectories(
+  dirs: ResolvedDirectory[],
+  instanceRoot: string,
+  opts: { dryRun?: boolean } = {},
+): MaterialisedDirectory[] {
+  const rootAbs = resolve(instanceRoot);
+  const out: MaterialisedDirectory[] = [];
+  for (const dir of dirs) {
+    const abs = resolve(rootAbs, dir.path);
+    const rel = relative(rootAbs, abs);
+    if (rel.startsWith("..") || isAbsolute(rel)) {
+      throw new Error(
+        `declared directory "${dir.id}" resolves outside the instance ` +
+          `(${dir.path} -> ${abs}); a directory outside the instance is not a directory of it`,
+      );
+    }
+    const existed = existsSync(abs);
+    const markerPath = join(abs, ".gitignore");
+    const markerExisted = existed && existsSync(markerPath);
+    // The marker earns its place ONLY in a directory that would otherwise be
+    // empty — that is the whole failure it addresses. Writing one into a
+    // directory that already holds files (this instance's `skills/` holds
+    // hundreds) adds a file nobody asked for and says something untrue about
+    // why it is there.
+    const needsMarker =
+      !markerExisted && (!existed || readdirSync(abs).length === 0);
+    if (!opts.dryRun) {
+      if (!existed) mkdirSync(abs, { recursive: true });
+      if (needsMarker) writeFileSync(markerPath, keepMarker(dir), "utf-8");
+    }
+    out.push({
+      id: dir.id,
+      absPath: abs,
+      declaredBy: dir.declaredBy,
+      created: !existed,
+      markerWritten: needsMarker,
+    });
+  }
+  return out;
 }
 
 /** The resolved directories holding renderable (website) graphs. */

@@ -270,6 +270,44 @@ jobs:
           bun run scripts/gen-skill-docs.ts --check
           bun run scripts/gen-docs-pages.ts --check
 
+  # ── End-to-end, including the accessibility gate ────────────────────
+  #
+  # `bunx playwright test` ran in NO workflow before this job. Twenty-nine e2e
+  # tests existed and none of them was ever a gate — they passed on whichever
+  # machine a contributor happened to run them on, which is not a gate, it is a
+  # habit.
+  #
+  # It is added here rather than left to a follow-up because bean `gjli` states
+  # a rule ("ALL UI MUST FOLLOW ACCESSIBILITY GUIDELINES") and a rule whose
+  # check does not run is an assertion. `tests/a11y.e2e.ts` would have been
+  # decoration without this.
+  #
+  # Chromium comes from `playwright install --with-deps`, the same call
+  # `docs-site` and `feature-staging` already make to render BPMN, so this
+  # introduces no new capability requirement.
+  e2e:
+    name: End-to-end + accessibility (hard)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Install Chromium
+        run: npx --yes playwright install --with-deps chromium
+
+      # The suite generates what it needs under _kg/ if absent, so the
+      # artefacts under test are the ones the deploy emits rather than a
+      # committed fixture that could agree with the test and disagree with
+      # what ships.
+      - name: playwright test
+        run: bunx playwright test
+
   rust-wildcard:
     name: Rust wildcard imports (warn-only)
     runs-on: ubuntu-latest

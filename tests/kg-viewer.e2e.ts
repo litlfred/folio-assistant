@@ -53,14 +53,18 @@ test.describe("kg viewer", () => {
   test("every type in the export is offered as a facet, with its count", async ({ page }) => {
     await page.goto("/_kg/folio-assistant/index.html");
     for (const [type, n] of Object.entries(KG.counts)) {
-      const facet = page.locator(".facet", { hasText: new RegExp(`^${n}${type}$`) });
+      // Name THEN count — the facet button's DOM order, which is also the
+      // order a screen reader reads ("ProcessNode 374", not "374 ProcessNode").
+      // These assertions matched count-then-name until the accessibility pass
+      // reordered the markup, and they are how that reorder was caught.
+      const facet = page.locator(".facet", { hasText: new RegExp(`^${type}${n}$`) });
       await expect(facet, `facet for ${type}`).toHaveCount(1);
     }
   });
 
   test("filtering by a facet narrows the list to that kind", async ({ page }) => {
     await page.goto("/_kg/folio-assistant/index.html");
-    await page.locator(".facet", { hasText: /Tool$/ }).click();
+    await page.locator(".facet", { hasText: /^Tool\d+$/ }).click();
     const kinds = await page.locator("#list li button .kind").allTextContents();
     expect(kinds.length).toBeGreaterThan(0);
     expect(new Set(kinds)).toEqual(new Set(["Tool"]));
@@ -100,7 +104,7 @@ test.describe("kg viewer", () => {
     // hide exactly what the first real consumer is for.
     expect(KG.undeclaredTerms.length).toBeGreaterThan(0);
     await page.goto("/_kg/folio-assistant/index.html");
-    await page.locator(".facet", { hasText: /ProcessNode$/ }).click();
+    await page.locator(".facet", { hasText: /^ProcessNode\d+$/ }).click();
     await page.locator("#list li button").first().click();
     await expect(page.locator(".detail .note")).toContainText("not in the");
     await expect(page.locator(".detail th.undeclared").first()).toBeVisible();

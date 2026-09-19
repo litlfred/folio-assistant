@@ -87,6 +87,25 @@ chapter):
 3. Formal definition or theorem
 4. Consequence or example (the running example)
 
+## The Milnor exposition standard — its own skill
+
+The eight hallmarks, their 0/1/2 rubric, and the three places the measurement
+contradicts the profile above now live in
+[`milnor-exposition-standard`](milnor-exposition-standard.md), because a standard
+with its own voice profile (`voices/milnor.json`), its own strict QA gate
+(`expo-milnor-clarity`) and three inbound references is a skill, not a section of
+another one. Extracting it also cleared the `skill-is-brief` finding this file
+picked up at 311 lines.
+
+**Two of its findings override rules stated above in this file**, so read it
+before applying §"Author Voice Profile" to mathematical prose:
+
+- **`clearly` is proof economy, not editorializing.** Milnor uses it fourteen
+  times in 8899 words, every one routing the reader away from a routine
+  verification.
+- **"never `I`" is too blunt.** Exactly one first-person singular in the paper —
+  the acknowledgement — against twenty uses of "we".
+
 ## Project-Level Voice Rules
 
 | Rule | Standard | Violation example |

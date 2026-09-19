@@ -82,6 +82,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [MCP contract](mcp-contract.html) | `mcp-contract` | — | [`mcp-projection`](mcp-projection.md) emits a server. This checks the emitted |
 | [MCP projection](mcp-projection.html) | `mcp-projection` | — | **The harness does not require MCP. It knows how to emit it.** That distinction |
 | [Markdown Authoring Conventions](md-authoring.html) | `md-authoring` | — |  |
+| [The Milnor exposition standard](milnor-exposition-standard.html) | `milnor-exposition-standard` | — | **Three files sent readers here for this section and it did not exist.** |
 | [One-Voice Audit](one-voice-audit.html) | `one-voice-audit` | — | grep -rEn "[✅❌⚠⏳🔧🚧☑☒]\|✓\|✗\|★" "$CONTENT" --include="*.md" |
 | [/one-voice-integration-watcher](one-voice-integration-watcher.html) | `one-voice-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](integration-watcher.md). |
 | [One-Voice Style Guide](one-voice-style-guide.html) | `one-voice-style-guide` | — | > **See also:** `one-voice-audit` is the mechanical sweep (greps for |
@@ -106,9 +107,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Capability: `translation` · Package: |
+| [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
 | [`uses[]` Editorial Review](uses-editorial-review.html) | `uses-editorial-review` | — |  |
+| [Voice authoring guidance](voice-authoring-guidance.html) | `voice-authoring-guidance` | — |  |
 | [Voice editorial review](voice-editorial-review.html) | `voice-editorial-review` | — |  |
+| [Voice overlay review](voice-overlay-review.html) | `voice-overlay-review` | — |  |
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 
 ## Document adapter (folio-document-adapter)
@@ -171,6 +175,14 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Simulator](simulator.html) | `simulator` | — |  |
 | [Verify Anchor Connectivity](verify-local-substrate.html) | `verify-local-substrate` | — |  |
 | [Witnessed Values](witnessed-values.html) | `witnessed-values` | — |  |
+
+## Local skills (.claude/skills/local)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Bean Coordination](local-bean-coordination.html) | `bean-coordination` | — | Canonical, repo-agnostic coordination skill for agents sharing a `beans` |
+| [/language-trap-agent-audit](local-language-trap-agent-audit.html) | `language-trap-agent-audit` | — | The mechanical scanner (`content/pipeline/language-trap-audit.ts`) |
+| [Todo Manager](local-todo-manager.html) | `todo-manager` | — | The session work-plan and cross-agent coordination tracker for this repo is |
 
 > The `authoring-math` and `authoring-who-smart-guidelines` packages ship
 > skill *definitions* + typed schemas today; their prose instruction bodies
