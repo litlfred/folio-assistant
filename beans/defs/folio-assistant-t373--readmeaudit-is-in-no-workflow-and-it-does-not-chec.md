@@ -1,11 +1,11 @@
 ---
 # folio-assistant-t373
 title: readme:audit is in no workflow, and it does not check HTML img src — main carried 8 dead README paths
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-19T10:16:09Z
-updated_at: 2026-09-19T10:16:09Z
+updated_at: 2026-09-19T11:35:38Z
 ---
 
 Found 2026-09-19 after the site root moved to `docs/<stub>/` (bean `x4a6`).
@@ -58,3 +58,5 @@ That is worse than the unwired gate, because it would survive wiring it up.
 
 The eight paths are repointed, on the branch that found them. That is the
 symptom; the two boxes above are the defect.
+
+_2026-09-19T11:35:38Z_ — Claimed by claude/fervent-mccarthy-nw4olk — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
