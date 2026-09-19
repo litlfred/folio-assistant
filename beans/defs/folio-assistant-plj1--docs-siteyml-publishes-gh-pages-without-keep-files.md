@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-19T08:55:17Z
-updated_at: 2026-09-19T09:28:18Z
+updated_at: 2026-09-19T09:40:53Z
 ---
 
 
@@ -28,3 +28,5 @@ The repo's own merge discipline turns on this: AGENTS.md argues at length that a
 ## Not fixing it here
 
 `keep_files: true` on `docs-site.yml` is the obvious one-line change and I have NOT made it, because it is not obviously safe: `keep_files` also stops the main site's own deleted pages from ever disappearing, so a renamed or removed doc page would linger indefinitely. The alternative — have `docs-site.yml` restore `STAGING/` explicitly, or exclude that prefix — needs whoever owns the publishing layout to choose. Related: `lx2s` (staging under gh-pages), `xd1s` (the push queue), `g4dv` (staging deep links).
+
+_2026-09-19T09:40:53Z_ — Fixed on branch `claude/plj1-keep-staging`, PR #377. Chose to RESTORE `STAGING/` into `_site` immediately before the push rather than `keep_files: true`, so the main site keeps delete-on-remove semantics; `scripts/restore-staging.ts` plus a post-push `--verify`, a new `gh-pages-wipes-staging` rule in `check-workflows.ts`, and tests that replay the action's real clone/rm/copy sequence against a real git remote. The action has NO path-scoped retention input — read `action.yml` at v4 to confirm rather than assuming. Residual window: the action re-clones gh-pages itself at push time, so a preview landing in the few seconds between the restore and that clone is still lost — now loud (verify exits 1 naming it) instead of silent.
