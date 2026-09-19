@@ -50,13 +50,41 @@ import type {
 // `skills/*/package-manifest.json` are the other thing of that name, matching
 // `SkillPackageManifestSchema` exactly on all nine keys.
 import type { SkillPackageManifest } from "../schemas/types.ts";
+import { directoryForGraph } from "../schemas/cat-harness.js";
+import { kgRoots } from "./known-skills.js";
+
+/**
+ * The declared knowledge-graph root, or the convention.
+ *
+ * declared-path-literal: the fallback is at the call site so the choice is
+ * visible. `kgRoots()` returns a LIST because a topical layout has several;
+ * this site wants one directory, and takes the first, which is the instance's
+ * own root in every layout shipped so far.
+ */
+function kgRoot(root: string): string {
+  return kgRoots(root)[0] ?? join(root, "skills");
+}
+
+
+/**
+ * The declared `schemas` graph, or the convention.
+ *
+ * declared-path-literal: the fallback is at the call site so the choice is
+ * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
+ * the schema definitions — which is why `directoryForGraph` is asked for the
+ * `schemas` one by name rather than being handed a single-home guess.
+ */
+function schemasRoot(root: string): string {
+  return directoryForGraph(root, "schemas") ?? join(root, "schemas");
+}
+
 
 /** No TS interface mirrors this one — the Zod schema is its definition. */
 type RemotePackageRef = z.infer<typeof RemotePackageRefSchema>;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "..");
-const outDir = join(rootDir, "schemas", "generated");
+const outDir = join(schemasRoot(rootDir), "generated");
 
 mkdirSync(outDir, { recursive: true });
 
@@ -166,7 +194,7 @@ function getTransitiveRoles(actorId: string): Set<string> {
 
 const actors = loadJsonDir<ActorDefinition>(join(rootDir, ".claude", "skills", "actors"));
 const capabilities = loadJsonDir<CapabilityDefinition>(join(rootDir, ".claude", "skills", "capabilities"));
-const requirements = loadJsonDir<Requirement>(join(rootDir, "skills", "requirements"));
+const requirements = loadJsonDir<Requirement>(join(kgRoot(rootDir), "requirements"));
 const skills = loadJsonDir<SkillDefinition>(join(rootDir, ".claude", "skills", "local"));
 const remotePackages = loadJsonDir<RemotePackageRef>(join(rootDir, "skills", "remote-packages"));
 const skillSchemaDirs = existsSync(join(rootDir, "schemas", "skills"))
@@ -178,7 +206,7 @@ const skillSchemaDirs = existsSync(join(rootDir, "schemas", "skills"))
 // `skills/<package>/package-manifest.json`. So the guard was always false,
 // `packages` was always `[]`, and PACKAGES.md shipped with an empty "Package
 // Summary" table and no per-package sections at all, for all five packages.
-const packages = existsSync(join(rootDir, "skills"))
+const packages = existsSync(kgRoot(rootDir))
   ? readdirSync(join(rootDir, "skills"), { withFileTypes: true })
       .filter(d => d.isDirectory())
       .map(d => {

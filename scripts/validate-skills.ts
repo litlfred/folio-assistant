@@ -11,6 +11,20 @@ import type { z } from "zod";
 import { readFileSync, readdirSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { kgRoots } from "./known-skills.js";
+
+/**
+ * The declared knowledge-graph root, or the convention.
+ *
+ * declared-path-literal: the fallback is at the call site so the choice is
+ * visible. `kgRoots()` returns a LIST because a topical layout has several;
+ * this site wants one directory, and takes the first, which is the instance's
+ * own root in every layout shipped so far.
+ */
+function kgRoot(root: string): string {
+  return kgRoots(root)[0] ?? join(root, "skills");
+}
+
 
 import {
   SkillPackageManifestSchema,
@@ -60,7 +74,7 @@ validateDir(
 
 // Validate requirements
 validateDir(
-  join(rootDir, "skills", "requirements"),
+  join(kgRoot(rootDir), "requirements"),
   RequirementSchema,
   "requirements",
 );

@@ -152,7 +152,7 @@ describe("composedKindOwner", () => {
 
 describe("loadContributions — the Phase 0.1 gate", () => {
   it("a dependency contributes a block kind, an adapter and an MCP tool", async () => {
-    const r = await loadContributions(TMP);
+    const r = await loadContributions<FolioContribution, ContributionRegistry>(TMP, new ContributionRegistry());
     expect(r.kindOwner("knot-diagram")).toBe("sci");
     expect(r.adapterModule("sci")).toBe("./adapters/sci/index.ts");
     expect(r.contributedTools()).toEqual(["lean"]);
@@ -161,21 +161,21 @@ describe("loadContributions — the Phase 0.1 gate", () => {
   it("the dependency's declared name wins over whatever the module claims", async () => {
     // A contributor that could rename itself could impersonate another
     // contributor's namespace and turn a collision into a silent merge.
-    const r = await loadContributions(TMP);
+    const r = await loadContributions<FolioContribution, ContributionRegistry>(TMP, new ContributionRegistry());
     expect(r.contributedKinds()[0]?.contributor).toBe("dep-sci");
   });
 
   it("a declared-but-missing contributes module fails loudly", async () => {
     // A stated intention that silently did nothing is the exact failure mode
     // AGENTS.md records under "move wiring and script together".
-    await expect(loadContributions(join(TMP, "root-broken"))).rejects.toThrow(/does not exist/);
+    await expect(loadContributions<FolioContribution, ContributionRegistry>(join(TMP, "root-broken"), new ContributionRegistry())).rejects.toThrow(/does not exist/);
   });
 
   it("a folio with no dependencies loads an empty registry, not an error", async () => {
     const bare = join(TMP, "bare");
     mkdirSync(bare, { recursive: true });
     writeFileSync(join(bare, HARNESS_CONFIG), JSON.stringify({ contentType: "document" }), "utf-8");
-    const r = await loadContributions(bare);
+    const r = await loadContributions<FolioContribution, ContributionRegistry>(bare, new ContributionRegistry());
     expect(r.contributedKinds()).toEqual([]);
   });
 });

@@ -52,7 +52,7 @@ are thin stubs pointing here.
 > dependency's skills are not yet reachable. Wiring it is outstanding Phase 0.1
 > work.
 >
-> Start here: [`docs/folio-assistant/guides/agent-onboarding.md`](docs/folio-assistant/guides/agent-onboarding.md),
+> Start here: [`folio-assistant/docs/guides/agent-onboarding.md`](folio-assistant/docs/guides/agent-onboarding.md),
 > then ask for the skill that governs your task.
 
 > **folio-assistant is the platform, not the content.** It holds the skills,
@@ -64,7 +64,7 @@ are thin stubs pointing here.
 
 ## New here? Start with the onboarding guide
 
-**[`docs/folio-assistant/guides/agent-onboarding.md`](docs/folio-assistant/guides/agent-onboarding.md)** — the
+**[`folio-assistant/docs/guides/agent-onboarding.md`](folio-assistant/docs/guides/agent-onboarding.md)** — the
 orientation this file is not. Which repo you are in and why it matters, what to
 run in your first five minutes, how to find the right skill instead of
 improvising one, the content-object triple, the two dependency relations, beans,
@@ -499,9 +499,9 @@ to spend the words: **do not start the topic.**
   [issue #198](https://github.com/litlfred/folio-assistant/issues/198).
 - **Every process here is BPMN, and the diagrams are executable.** The `.bpmn`
   files under `skills/workflows/` are the source of truth, indexed by
-  [`docs/folio-assistant/publication-workflow.md`](docs/folio-assistant/publication-workflow.md) — the normative
+  [`folio-assistant/docs/publication-workflow.md`](folio-assistant/docs/publication-workflow.md) — the normative
   picture of the HCI validation gate, the draft-review-publish path and the
-  work-plan lane. `docs/folio-assistant/assets/img/workflows/*.svg` is
+  work-plan lane. `folio-assistant/docs/assets/img/workflows/*.svg` is
   generated: `bun run render:bpmn`, and `render:bpmn:check` fails if stale.
   `workflow_list` / `workflow_start` / `workflow_next` / `workflow_complete`
   (MCP) run one, and state is committed under `beans/workflows/` so a sibling
@@ -525,7 +525,7 @@ to spend the words: **do not start the topic.**
   A swarm is **asked for every time**, per swarm, with agent count, model level
   and rough cost —
   [`skills/folio-core/swarm-management.md`](skills/folio-core/swarm-management.md)
-  and the [reader-facing page](docs/folio-assistant/swarm-management.md).
+  and the [reader-facing page](folio-assistant/docs/swarm-management.md).
 - **An instance declares the directories it scans — `harness.json` at
   the repo root.** Each entry names a directory and the **kind of graph** it
   holds: `folio` (authored content, rendered to a website by just-the-docs),
@@ -544,7 +544,7 @@ to spend the words: **do not start the topic.**
   pre-split and declares `schemas/` and `skills/` only. Schema:
   `schemas/cat-harness.ts`; conventions:
   [`skills/folio-core/directory-conventions.md`](skills/folio-core/directory-conventions.md).
-- Migration plan + cross-repo coordination: `docs/folio-assistant/folio-assistant-migration.md`.
+- Migration plan + cross-repo coordination: `folio-assistant/docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this
   folio's **content-type-specific** gates (paper → content_validate / qa_sweep /

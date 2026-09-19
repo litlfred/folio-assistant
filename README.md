@@ -32,27 +32,28 @@ not, do not.
 > The **formalism of authoring is kept separate from any content** — examples in
 > the docs are illustrative only.
 
-## Bootstrapping — what to do with an empty repository
+## Bootstrapping — setting up a repository to write in
 
-**`bootstrap litlfred/cat-harness`** means: *make this repository an instance of
-that one.* You give **one** reference; the harness type, the knowledge graph to
-load and the editorial voice are all **read** from that instance's declaration,
-not asked for one at a time.
+**`bootstrap litlfred/cat-harness`** means *set this repository up the same way
+that one is set up.*
 
-An agent sent to a repository that is not yet an instance starts at
-**[`bootstrap/README.md`](bootstrap/README.md)** and nowhere else. That
-directory is a standalone knowledge graph — it does not import this one, and it
-assumes no connected tools, because an agent cold-starting has neither. It ends
-in three steps: load the graph-navigation skill, load the bootstrap graph, start
-the bootstrap process.
+A repository that has been bootstrapped carries a small file saying what kind
+of thing it holds and where to find the procedures for working on it — how to
+draft, how to check, how to publish. Those procedures are a **harness**, and
+they live in their own repository rather than being copied in.
 
-Design, open questions, and why intent is an *instance reference* rather than a
-menu of content types:
+You give one repository name. What kind of document, which procedures, and
+which editorial style are all read from **that** repository's setup file, so
+there is nothing else to ask.
+
+An agent pointed at a repository that is not set up yet starts at
+**[`bootstrap/README.md`](bootstrap/README.md)**, which is written for someone
+who knows none of the above.
+
+Why it is built this way, and the questions still open:
 [proposals/bootstrap](fsh-guts/proposals/bootstrap.md) — in `fsh-guts/`, which
-is kept and addressable but deliberately not published as a page, so this is a
+is kept and addressable but deliberately not published as a page, so that is a
 repository link rather than a site one.
-**The graph itself is not built yet** — the README is the specification and the
-entry point.
 
 ---
 
@@ -60,7 +61,7 @@ entry point.
 
 🤖 **Are you an LLM agent?** Start with
 **[Agent onboarding](https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html)**
-(source: [`docs/folio-assistant/guides/agent-onboarding.md`](docs/folio-assistant/guides/agent-onboarding.md)) —
+(source: [`folio-assistant/docs/guides/agent-onboarding.md`](folio-assistant/docs/guides/agent-onboarding.md)) —
 which repo you are in, your first five minutes, how to find the right skill, the
 content-object model, and the QA sidecar system. `AGENTS.md` is the command and
 convention reference to come back to.
@@ -125,13 +126,13 @@ gates) and **non-mechanical** validation (a review agent, escalating to a human
 or SME on a judgement call). Both must report; the findings are shown to the
 editor; only an accepted change is written to the corpus.
 
-<img src="docs/folio-assistant/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
+<img src="folio-assistant/docs/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
 
 [BPMN source](skills/workflows/editing-hci-validation.bpmn)
 
 ### Corpus → draft → review team → published
 
-<img src="docs/folio-assistant/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
+<img src="folio-assistant/docs/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
 
 [BPMN source](skills/workflows/draft-to-publication.bpmn)
 
@@ -142,7 +143,7 @@ Both diagrams above appear here as call activities, and the **work plan
 findings, resolved on commit — so a human and an agent read the same answer to
 *what is done, and what is next*.
 
-<img src="docs/folio-assistant/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
+<img src="folio-assistant/docs/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
 
 [BPMN source](skills/workflows/content-lifecycle.bpmn)
 
@@ -150,10 +151,10 @@ findings, resolved on commit — so a human and an agent read the same answer to
 
 | Diagram | Content type |
 |---------|--------------|
-| [`authoring-a-document.bpmn`](skills/workflows/authoring-a-document.bpmn) · [SVG](docs/folio-assistant/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
-| [`authoring-a-paper.bpmn`](skills/workflows/authoring-a-paper.bpmn) · [SVG](docs/folio-assistant/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
-| [`l2-dak-authoring.bpmn`](skills/workflows/l2-dak-authoring.bpmn) · [SVG](docs/folio-assistant/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
-| [`l3-fhir-pipeline.bpmn`](skills/workflows/l3-fhir-pipeline.bpmn) · [SVG](docs/folio-assistant/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
+| [`authoring-a-document.bpmn`](skills/workflows/authoring-a-document.bpmn) · [SVG](folio-assistant/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
+| [`authoring-a-paper.bpmn`](skills/workflows/authoring-a-paper.bpmn) · [SVG](folio-assistant/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
+| [`l2-dak-authoring.bpmn`](skills/workflows/l2-dak-authoring.bpmn) · [SVG](folio-assistant/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
+| [`l3-fhir-pipeline.bpmn`](skills/workflows/l3-fhir-pipeline.bpmn) · [SVG](folio-assistant/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
 
 ---
 

@@ -15,6 +15,7 @@
  * @module scripts/tests/site-dir-single-answer
  */
 import { describe, expect, test } from "bun:test";
+import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -49,12 +50,31 @@ const TREES = ["scripts", "content", "schemas", "src", "test"];
  *
  * `content/docs/` is the generator's INPUT — a different directory that
  * happens to share a segment — so a preceding `content` disqualifies a hit.
+ *
+ * ## `scanSync` and a bare `cwd:` were added after they let one through
+ *
+ * `html-comment-delimiters.test.ts` globbed with `scanSync` and a bare `cwd`
+ * set to the site-root literal — matching none of the named functions, so this
+ * guard passed it. (Spelled around rather than quoted, because writing it out
+ * makes this guard fire on its own rationale; the sibling test reassembles its
+ * fixture from parts for the same reason.) The stub
+ * inversion then broke it in the worst available way: the move left an empty
+ * `docs/` holding only the gitignored bundler tree, so LOCALLY the glob
+ * matched nothing and the test passed over zero files — while in CI
+ * `bundle install` populates that tree and the test reported findings in
+ * third-party gem HTML. Green locally, red in CI, and neither run was looking
+ * at the site.
+ *
+ * The lesson is about the SHAPE of the list, not the one missing entry: a
+ * function allow-list only covers the resolution idioms somebody thought of.
+ * A bare `cwd:`/`dir:`/`root:` property is a path-resolving position whatever
+ * consumes it, so those are matched directly.
  */
 const LITERAL =
   // `[^\n]*` rather than `[^)\n]*`: a nested call -- `join(dirname(x), "..",
   // "docs/…")` -- puts a `)` between the opener and the literal, and the
   // tighter pattern walked straight past exactly that line in `a11y.e2e.ts`.
-  /\b(?:join|resolve|readFileSync|existsSync|readdirSync|statSync)\s*\([^\n]*(["'`])\.?\/?docs(\/[^"'`\n]*)?\1/;
+  /(?:\b(?:join|resolve|readFileSync|existsSync|readdirSync|statSync|scanSync|glob|Glob)\s*\([^\n]*|\b(?:cwd|dir|root|base)\s*:\s*)(["'`])\.?\/?docs(\/[^"'`\n]*)?\1/;
 
 /**
  * Source under the scanned trees — **including files not yet committed**.
@@ -71,10 +91,10 @@ function sourceFiles(): string[] {
 
 describe("the site root is one answer, not a literal", () => {
   test("siteDir composes docs/<stub> and siteDirFor reads this instance's", () => {
-    expect(siteDir({ name: "x", stub: "y" })).toBe("docs/y");
+    expect(siteDir({ name: "x", stub: "y" })).toBe("y/docs");
     // Falls back to `name` exactly as `artefactStub` does — one rule, not two.
-    expect(siteDir({ name: "x" })).toBe("docs/x");
-    expect(siteDirFor(ROOT)).toBe("docs/folio-assistant");
+    expect(siteDir({ name: "x" })).toBe("x/docs");
+    expect(siteDirFor(ROOT)).toBe("folio-assistant/docs");
   });
 
   test("an instance with no name or stub cannot get a guessed site root", () => {
@@ -99,5 +119,60 @@ describe("the site root is one answer, not a literal", () => {
       });
     }
     expect(offenders).toEqual([]);
+  });
+
+  /**
+   * The guard above scans `.ts`/`.mjs`. `.gitignore` is neither, and it names
+   * the site root **five times** — which is how the inversion broke it in both
+   * directions at once, five hours after the repo last paid for exactly this.
+   *
+   * Measured 2026-09-19 on `daf19326c`, after `docs-site.yml` had already been
+   * pointed at `./folio-assistant/docs`:
+   *
+   * - `!docs/assets/js/` no longer reached the moved tree, so the blanket
+   *   `*.js` rule swallowed it. A NEW file under `<stub>/docs/assets/js/`
+   *   would have been invisible to `git add` — the file's own comment records
+   *   that happening before, verbatim: *"`git add` reported nothing and the
+   *   file would simply never have deployed."*
+   * - `docs/.bundle/` and `docs/vendor/` no longer reached it either, so the
+   *   bundler's gem tree was unignored again. The same comment prices that at
+   *   **3,080 files and 53 MB** that any `git add -A` would sweep into a
+   *   commit.
+   *
+   * Neither was visible, and the reason is worth more than the fix: a working
+   * tree that predates the move still HAS a `docs/`, holding build residue, so
+   * the stale rules went on matching something. **A rule matching the wrong
+   * thing reads exactly like a rule matching the right thing.**
+   *
+   * So this asserts the direction that actually matters — what git does to a
+   * path — rather than the spelling. A rename of the stub flips these before
+   * anyone can ship it, which is the point: `folio-assistant/` → `cat-harness/`
+   * is the next move, and it walks straight back into this.
+   */
+  test("`.gitignore` follows the site root, in both directions", () => {
+    const site = siteDirFor(ROOT);
+
+    // Hand-written source Jekyll serves verbatim. Ignoring these is the SILENT
+    // failure: `git add` says nothing and the asset never deploys.
+    const mustBeAddable = [
+      `${site}/assets/js/probe.js`,
+      `${site}/assets/js/vendor/probe.js`,
+      `${site}/_includes/probe.js`,
+    ];
+
+    // Local build state. NOT ignoring these is the loud failure: `git add -A`
+    // commits a gem tree.
+    const mustBeIgnored = [
+      `${site}/.bundle/config`,
+      `${site}/vendor/bundle/probe.rb`,
+      `${site}/_data/build.yml`,
+      `${site}/_site/probe.html`,
+    ];
+
+    const ignored = (rel: string) =>
+      spawnSync("git", ["check-ignore", "-q", "--no-index", "--", rel], { cwd: ROOT }).status === 0;
+
+    expect(mustBeAddable.filter(ignored)).toEqual([]);
+    expect(mustBeIgnored.filter((r) => !ignored(r))).toEqual([]);
   });
 });

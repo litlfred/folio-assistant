@@ -4,9 +4,15 @@
  * @module scripts/tests/kg-export-instance.test
  *
  * Bean `gn4l`. These assertions run against **bootstrap**, a real instance in
- * this repository that has a declaration, two skills, no BPMN, no `tools/`,
- * no `package.json` and no `.claude/` — which is exactly the shape the
- * exporter was never written for.
+ * this repository that has a declaration, two skills, no `tools/`, no
+ * `package.json` and no `.claude/` — which is exactly the shape the exporter
+ * was never written for.
+ *
+ * It had no BPMN too, until this branch gave it `workflows/bootstrap.bpmn`.
+ * Anything asserting on an absence here is asserting on a property of a
+ * REAL instance that is still being built, so it belongs in a fixture — see
+ * the workflow-directory test below, which was written against bootstrap and
+ * broke the day bootstrap grew the feature.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -74,9 +80,40 @@ describe("what was not looked for is not reported as clean", () => {
   test("an absent workflow directory is a problem, not a crash", async () => {
     // It threw ENOENT while this was being written: a directory found under
     // one root and joined against another.
+    //
+    // Built as a FIXTURE rather than asserted against `bootstrap/`, which is
+    // what it named until 2026-09-19. Bootstrap had no `workflows/` then, so
+    // the test passed on a property nobody had chosen — and the moment this
+    // branch gave bootstrap its process diagram, a test about ENOENT handling
+    // started failing because its SUBJECT had grown a feature. The behaviour
+    // under test never changed.
+    //
+    // That is the same defect the two neighbours above are written against,
+    // arriving in the test rather than in the code: a scan that finds nothing
+    // and a scan that was never run look identical from the outside, so an
+    // assertion resting on an incidental absence cannot say which it caught.
+    // A fixture declares the absence, which is the whole point.
+    const root = mkdtempSync(join(tmpdir(), "kgx-noflows-"));
+    mkdirSync(join(root, "skills"), { recursive: true });
+    writeFileSync(join(root, "skills", "a-skill.md"), "# A skill\n\nBody.\n");
+    writeFileSync(
+      join(root, "harness.json"),
+      JSON.stringify({
+        name: "noflows",
+        directories: [{ id: "cat-harness", path: "skills/", graphs: ["cat-harness"] }],
+      }),
+    );
     const problems: string[] = [];
-    await collectInstanceNodes(join(ROOT, "bootstrap"), DOC, BASE, problems);
-    expect(problems.some((p) => p.includes("bpmn"))).toBe(true);
+    await collectInstanceNodes(root, DOC, BASE, problems);
+    rmSync(root, { recursive: true, force: true });
+    // Matched on the WHOLE message, not on the substring "bpmn". Probed
+    // 2026-09-19: a `.includes("bpmn")` passes for an absent directory, for an
+    // empty one AND for a present one holding a file that fails to parse —
+    // three different outcomes, one of them not a problem this test is about.
+    // The loose form was green against all three, so it asserted only that
+    // SOMETHING mentioned bpmn.
+    expect(problems.filter((p) => /no directory containing \.bpmn files was found/.test(p)))
+      .toHaveLength(1);
   });
 
   test("an instance with no declaration at all does not throw", async () => {

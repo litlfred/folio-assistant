@@ -9,7 +9,7 @@
  * nothing and reports a clean run over it.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { readDeclaration } from "../../schemas/cat-harness.js";
@@ -17,6 +17,7 @@ import { BEAN_GRAPH_FILE, parseBeanGraph } from "../../schemas/bean-graph.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../../schemas/todo-graph.js";
 import { ROOT, TODO_ROOT, readTodos, todoDirs } from "../todos.js";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
+import { workflowFiles } from "../known-skills.js";
 
 describe("the declaration and the directory agree", () => {
   test("`harness.json` declares a `todos` graph", () => {
@@ -99,11 +100,21 @@ describe("the published process hierarchy", () => {
     // line and had never run (bean `d2kp`); it failed on its FIRST run, on the
     // PR that un-folded it. Asserting the ORDER rather than merely the set is
     // the point — a set assertion passes under either enumeration.
-    const bpmn = readdirSync(join(ROOT, "skills", "workflows"))
-      .filter((f) => f.endsWith(".bpmn"))
-      .sort();
+    // EVERY declared knowledge-graph root, via the same helper the generator
+    // uses — not the literal `skills/workflows`.
+    //
+    // This hardcoded that path and broke the moment a second root existed:
+    // `bootstrap/workflows/bootstrap.bpmn` is in the published hierarchy and
+    // was not in this expectation, so the test called the GENERATOR wrong for
+    // correctly reading the declaration. A test that pins an order must derive
+    // it from the same source as the thing it pins, or it pins the past.
+    //
+    // Note `check:declared-paths` cannot catch this: it skips `*.test.ts`.
+    // That exemption is worth revisiting — this is the second hardcoded path
+    // in a test to break today.
+    const bpmn = workflowFiles(ROOT).filter((f) => f.endsWith(".bpmn"));
     const idOf = (f: string) =>
-      /<bpmn:process id="([^"]+)"/.exec(readFileSync(join(ROOT, "skills", "workflows", f), "utf8"))?.[1];
+      /<bpmn:process id="([^"]+)"/.exec(readFileSync(f, "utf8"))?.[1];
     const expected = bpmn.map(idOf).filter((x): x is string => Boolean(x));
     expect(expected.length).toBeGreaterThan(5);
     expect(Object.keys(index().processes)).toEqual(expected);
