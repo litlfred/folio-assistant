@@ -49,11 +49,98 @@ fixed.
 | `actor`, `role` | who, and which lane they were acting in |
 | `process`, `task` | the BPMN process and step, when inside one |
 | `bean`, `branch`, `session` | so a run's entries can be found and emptied together |
+| `references[]` | **what this entry points at** — a chat, an issue, a commit, a command. See below |
+| `execution` | command-execution detail, when the entry IS one |
 | `capture` | whether this entry persists — **three-valued**, see below |
 
 `role`, `process` and `task` are **optional and meant to be**. An agent
 writes log lines outside any process, and inventing a lane for those would
 be the fake-reference failure `activity-names-skill` exists to prevent.
+
+## What an entry points at — `references[]` is OPEN
+
+Owner, 2026-09-19:
+
+> log should be rich schema including references to discussion/chats, cmn
+> execution logs, etc.
+
+**The `etc.` is the specification, not a trailing-off.** A closed list is
+wrong within a week — the interesting thing to reference is whatever the work
+touched, and nobody enumerates that in advance. So `kind` is an open string
+with a KNOWN SET, and an unrecognised kind is **accepted and flagged**, never
+refused:
+
+```
+discussion · comment · issue · pull-request · commit · command · workflow · artefact
+```
+
+A reference is `{ kind, ref }` plus an optional `title` and `at`. **`ref` is
+required** — a kind with nothing to point at records that something of that
+sort was involved and gives the reader no way to reach it, which is the
+abandonment-or-accident ambiguity in a different store.
+
+**A list, not named fields.** `issue` / `pr` / `commitSha` would have been the
+obvious shape and is wrong: one entry routinely touches several of one kind. A
+step that answers three review threads has three comments to point at, and
+`comment1`..`comment3` is where that design ends up.
+
+**Unknown kinds are surfaced rather than rejected.** Open is the point, but a
+*silently* open list is how `issue`, `issues` and `gh-issue` end up in one
+store with nothing able to query it. `writeLogEntry` returns
+`unknownRefKinds`, and the one-line report says so — so a typo is noticeable
+without the parser being able to refuse a legitimate extension.
+
+> `cmn` was read as **command**. There is no CMMN in this codebase — the
+> process standards here are BPMN and DMN — and "execution logs" pairs with a
+> command. If CMMN was meant, it arrives as `kind: "case"` with **no schema
+> change**, which is exactly what an open list buys.
+
+### Command execution has its own shape, and no output field
+
+`execution` carries `command`, `argv`, `exitCode`, `durationMs`, `cwd` and
+`outputRef`. It sits beside `references` rather than inside it because an exit
+code is a *queryable fact*, and `ref: "exit 1"` is not a field anyone can
+filter on. **An absent `exitCode` means it did not finish, which is not `0`** —
+the third state again.
+
+**There is deliberately no field to inline output into.** `outputRef` points
+at where stdout and stderr went. Command output is the likeliest place for a
+token or a connection string to appear, and `capture: "on"` puts an entry in
+git in a repository that may be public. An `output: string` field would invite
+exactly the leak the section below warns about, and **an absent field is
+stronger than a warning.** The same caution applies to `command` itself: a
+command line carries its own arguments, and `--token=…` is a command line.
+
+## Turning it on — `<folio:log capture="on"/>` on the process
+
+Owner: *"need explicit like (capture log when agent runs this workflow)."*
+That is a declaration on the **process**, parsed at load and **throwing on a
+value the engine cannot honour**, exactly as `<folio:bean op>` does. A diagram
+asking for a mode that does not exist must not load and quietly log nothing —
+worse here than elsewhere, because the missing artefact *is* the record.
+
+`workflow_start` writes `task-start`; `workflow_complete` writes `task-end`
+for the step just recorded, with the instance's status in the detail. The step
+is the unit, not the whole process: waiting for the process to finish would
+lose every intermediate entry, which is most of what a log is read for.
+
+Marked today: `crdm-requirements`, `editing-hci-validation`,
+`content-lifecycle`.
+
+**Not a call activity, and the reason is load-bearing.** "Connect it to
+existing processes" reads as *add a `callActivity`* — but a call activity is a
+**node in the control flow**, so the log would become a step that must be
+completed in sequence. Two of those three are `enforcement="strict"`, where
+`workflow_gate` refuses a step that is not enabled, so it would have changed
+what those diagrams say and needed policy relaxations for a concern that is
+not a phase of anything. An extension element adds no node and no flow, and
+there is a test asserting the strict processes still enforce exactly what they
+did.
+
+**`unknown` is not writable as a declared value.** It is what the *absence* of
+a declaration resolves to; writing it down would be a diagram asserting that
+nobody could tell, which is not something a diagram is in a position to assert
+about itself.
 
 ## Capture is off by default, and `unknown` is a real answer
 
