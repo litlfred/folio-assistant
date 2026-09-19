@@ -277,6 +277,64 @@ export interface CriterionScriptHashes {
   extra_inputs: string[];
   /** 12-char SHA-256 over concat(extra_inputs). Undefined if no extras. */
   deps_hash?: string;
+  /**
+   * 12-char SHA-256 over the criterion definition's run-affecting fields.
+   * See {@link criterionDefHash} and `QaReviewer.def_hash`.
+   */
+  def_hash?: string;
+}
+
+/**
+ * Hash the fields of a criterion definition that decide WHETHER or HOW it
+ * runs, so that editing one invalidates the verdicts it would now answer
+ * differently.
+ *
+ * The six fields, and why each is here:
+ *
+ * - `profiles` / `adapters` / `voices` — whether the criterion applies to this
+ *   folio at all. `voices` is here for the same reason the other two are: a
+ *   criterion narrowed to a voice nobody activated must go `n/a` on the next
+ *   sweep, not keep its last verdict. These are the ones that were silently inert: the profile gate in
+ *   `qa-sweep` is reached only when the freshness gate lets the block through.
+ * - `applies_to` — whether it applies to this block's KIND.
+ * - `depends_on` — which companion files gate applicability AND which hashes
+ *   `entryIsFresh` compares, so a change here changes the freshness question
+ *   itself.
+ * - `default_severity` — recorded on the entry, so a re-grading has to
+ *   propagate or the sidecar under-reports.
+ * - `lean_granularity` — selects statement-vs-file hash comparison.
+ *
+ * `description` is excluded on purpose: for a script criterion it is
+ * documentation, and hashing it would re-sweep a corpus over a typo.
+ *
+ * Order is fixed by this function rather than by the object's key order, so
+ * two definitions that differ only in field order hash the same. Absent
+ * fields hash as the empty string rather than being omitted, so adding a
+ * field with its default value is not mistaken for a change.
+ */
+export function criterionDefHash(def: {
+  profiles?: readonly string[];
+  voices?: readonly string[];
+  adapters?: readonly string[];
+  applies_to?: readonly string[];
+  depends_on?: readonly string[];
+  default_severity?: string;
+  lean_granularity?: string;
+}): string {
+  // Sorted, so a reordering of a list that is semantically a SET does not
+  // read as a change. All six are sets in use.
+  const list = (v?: readonly string[]) =>
+    v === undefined ? "" : [...v].sort().join(",");
+  const parts = [
+    list(def.profiles),
+    list(def.voices),
+    list(def.adapters),
+    list(def.applies_to),
+    list(def.depends_on),
+    def.default_severity ?? "",
+    def.lean_granularity ?? "",
+  ];
+  return createHash("sha256").update(parts.join("\u0000")).digest("hex").slice(0, 12);
 }
 
 /**
@@ -294,6 +352,12 @@ export function computeCriterionScriptHashes(
   sourceFile: string,
   extraInputs: string[] = [],
   repoRoot: string = process.cwd(),
+  /**
+   * The criterion definition, for `def_hash`. Optional so a caller that has
+   * only the id still compiles — but a bundle without it cannot invalidate on
+   * a re-scoping, which is the whole point of the field, so pass it.
+   */
+  def?: Parameters<typeof criterionDefHash>[0],
 ): CriterionScriptHashes {
   const absSource = join(repoRoot, sourceFile);
   // Hash extra inputs with their repo-relative labels (NOT
@@ -319,6 +383,7 @@ export function computeCriterionScriptHashes(
     script_commit_sha: gitFileCommitSha(sourceFile, repoRoot),
     extra_inputs: extraInputs,
     deps_hash: extraInputs.length > 0 ? hashFiles(labelled) : undefined,
+    def_hash: def ? criterionDefHash(def) : undefined,
   };
 }
 
@@ -1281,6 +1346,20 @@ export function entryIsFresh(
     // current criterion now declares extra_inputs. Treat as stale —
     // the new dep declaration must propagate.
     if (!recordedDepsHash && currentDepsHash) return false;
+
+    // Definition-side staleness, same three-case shape as `deps_hash` above.
+    // The asymmetry matters and is the deliberate direction: an entry written
+    // before this field existed has no `def_hash`, so the FIRST sweep after
+    // this lands re-runs every script criterion once and stamps it. That is a
+    // one-time churn, it replaces only `kind: "script"` entries (see
+    // `preserveNonScriptEntries` — agent and human entries are kept), and the
+    // alternative is presenting a verdict the criterion would no longer give.
+    const recordedDefHash = entry.reviewer.def_hash;
+    const currentDefHash = current_script_hashes.def_hash;
+    if (recordedDefHash && currentDefHash && recordedDefHash !== currentDefHash) {
+      return false; // the criterion's scope or grading changed
+    }
+    if (!recordedDefHash && currentDefHash) return false;
   }
   return true;
 }
@@ -1301,6 +1380,63 @@ export function entryIsFresh(
  * script: delete every `kind:"script"` reviewer entry; sweep re-runs" /
  * "Human: always preserved").
  */
+/**
+ * Place a new agent / human adjudication so that it LEADS its criterion.
+ *
+ * Order is the verdict. `projectEntryArrays` in `qa-witness.ts` reads
+ * `list[0]` as a criterion's effective result, and `qa-sweep` writes
+ * `[...preserveNonScriptEntries(existing), scriptEntry]`, so the invariant
+ * across the pipeline is: non-script entries lead, the script entry trails
+ * (`scripts/tests/qa-sweep-merge.test.ts` §5.4 states it as
+ * `[script_stale, agent] -> [agent, script_fresh]`).
+ *
+ * `qa-merge-findings` appended instead, which broke the invariant in exactly
+ * the case it matters: an adjudication merged onto a block whose script
+ * verdict is FRESH. The sweep then short-circuits and never reorders, so the
+ * script `fail` keeps leading and the reviewer's `pass` is recorded but not in
+ * force. Measured 2026-09-19 on eleven voice adjudications over
+ * `content/docs`: all eleven merged, all eleven still read `fail`.
+ *
+ * The script entry is KEPT, below — nothing is silently rewritten, and the
+ * disagreement between the checker and the reviewer stays legible.
+ */
+export function insertAdjudication(
+  existing: QaCriterionEntry[],
+  entry: QaCriterionEntry,
+): QaCriterionEntry[] {
+  // A reviewer's LATER opinion supersedes their own earlier one, so it goes
+  // ahead of it; a DIFFERENT reviewer's opinion is additional history and keeps
+  // its place. Without the first half, re-adjudicating a criterion leaves the
+  // superseded entry leading — and since `list[0]` is the effective verdict, the
+  // sidecar then serves reasoning its own author has withdrawn.
+  //
+  // Measured 2026-09-19 on `every-workflow-in-the-repo`: the diagram count line
+  // was edited, the script re-fired, and the re-adjudication landed BEHIND the
+  // original — whose notes quoted a sentence that no longer existed. Both said
+  // `pass`, so nothing broke; that is exactly what makes it worth pinning,
+  // because the next such pair will disagree.
+  const sameReviewer = (e: QaCriterionEntry | undefined) =>
+    e?.reviewer?.kind === entry.reviewer.kind &&
+    e?.reviewer?.id === entry.reviewer.id;
+  const firstOwn = existing.findIndex(sameReviewer);
+  if (firstOwn !== -1) {
+    // Replace in place: an audit trail of one reviewer contradicting themselves
+    // is noise, and `preserveNonScriptEntries` exists to stop arrays growing
+    // without bound. The superseded text is in git.
+    return existing.map((e, i) => (i === firstOwn ? entry : e)).filter((e, i) =>
+      i === firstOwn ? true : !sameReviewer(e),
+    );
+  }
+  const firstScript = existing.findIndex((e) => e?.reviewer?.kind === "script");
+  return firstScript === -1
+    ? [...existing, entry]
+    : [
+        ...existing.slice(0, firstScript),
+        entry,
+        ...existing.slice(firstScript),
+      ];
+}
+
 export function preserveNonScriptEntries(
   existing: QaCriterionEntry[],
 ): QaCriterionEntry[] {

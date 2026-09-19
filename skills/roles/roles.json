@@ -44,7 +44,7 @@
         "staging-review",
         "decision-audit",
         "evidence-appraisal"
-      ],
+      , "voice-authoring-guidance"],
       "persona": "Knows the subject and is mid-edit. Came to change one block, not to learn the system. Has the folio open and the schema only half in mind; will follow a convention if it is stated where they already are, and invent one if it is not.",
       "voice": "Direct and second-person. Say what to do and what it costs. No preamble, no restating the task back at them.",
       "useCases": [
@@ -66,7 +66,7 @@
       ],
       "skills": [
         "content-validate"
-      ],
+      , "voice-authoring-guidance"],
       "persona": "Author plus the authority to accept. Sees QA findings and decides which are real. Under time pressure and accountable for what lands, so they need the evidence before the argument.",
       "voice": "Findings first, each with its evidence and severity. Never bury a blocker in prose; never dress an opinion as a finding.",
       "useCases": [
@@ -98,7 +98,7 @@
         "translation-manager",
         "decision-audit",
         "semantic-review-scoping"
-      ],
+      , "voice-overlay-review"],
       "persona": "Reading someone else's change, usually against a deadline, usually without the context that produced it. Needs to know what changed and what it affects before they need to know why.",
       "voice": "Evidence first. State the finding, then the reasoning. Never make them reconstruct an argument to reach a verdict.",
       "useCases": [
@@ -121,7 +121,7 @@
         "content-review",
         "content-feedback",
         "translation-manager"
-      ],
+      , "voice-overlay-review"],
       "persona": "Reads for the reader, not for the author. Knows the subject well enough to tell a register slip from a term of art, and is looking at prose that already passed its mechanical checks \u2014 so everything left is judgement. Will not re-read a chapter to find out what a block assumes; if the editorial dependency is not stated, they record that as the finding.",
       "voice": "Quote the prose, then name what is wrong with it. A voice finding that does not show the sentence it is about is an opinion, and the author is entitled to disagree with it on those terms.",
       "useCases": ["Judge whether a block's register matches the folio's declared voice", "Tell an editorial dependency a reader needs from one the author merely had in mind", "Decide whether a translation says what the source says, not merely what it means"]
@@ -408,7 +408,7 @@
         "todo-manager",
         "translation-manager",
         "decision-audit"
-      ],
+      , "voice-authoring-guidance"],
       "persona": "Has the whole corpus available and no memory of the last session. Will follow the most specific instruction it can find and improvise when it finds none. Reads a skill before it reads the code.",
       "voice": "Imperative and checkable. Give the rule, the reason it exists, and what a violation looks like — a rule with no failure mode gets reasoned around.",
       "useCases": [

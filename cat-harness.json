@@ -103,6 +103,30 @@
       "graphs": [
         "beans"
       ]
+    },
+    {
+      "id": "uploads",
+      "path": "uploads/",
+      "description": "The incoming queue of the document-ingestion pipeline — raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
+      "graphs": [
+        "uploads"
+      ]
+    },
+    {
+      "id": "library",
+      "path": "library/",
+      "description": "L1 source content — one <bib-slug>/ per ingested document, holding sections/*.md, structure.json and, where the source was scanned, ocr/page-NNN.txt. Every knowledge-graph reference to a source resolves THROUGH here, never to a loose path or a bare URL.",
+      "graphs": [
+        "library"
+      ]
+    },
+    {
+      "id": "voices",
+      "path": "voices/",
+      "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208).",
+      "graphs": [
+        "voices"
+      ]
     }
   ]
 }

@@ -277,6 +277,35 @@ if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/check-ci-health.ts
   fi
 fi
 
+# ── 3b. Declared directories exist ──────────────────────────────────────────
+# A declared-but-absent directory is the bean `dh4f` defect: absent and empty
+# are indistinguishable to a consumer, so the declaration turns a real gap into
+# a clean run. The sharp case is ingestion — the corpus checklist greps
+# `library/` and not `uploads/`, so a missing `library/` reads as "nobody has
+# ingested anything". Cheap, quiet, and idempotent: it creates only what is
+# missing and writes a keep-marker only into a directory that would otherwise
+# be empty.
+if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/harness-dirs.ts" ]; then
+  dirs_out=$(timeout 20 bun run "$REPO_ROOT/scripts/harness-dirs.ts" 2>/dev/null || true)
+  # Print only when it actually did something — a clean run is not news, and
+  # the sweep is already long. "Could not check" is not silence either: an
+  # empty result means bun or the declaration failed, and that is said.
+  if [ -z "$dirs_out" ]; then
+    echo "## Declared directories"
+    echo
+    echo "Could not check (bun present but \`scripts/harness-dirs.ts\` produced nothing)."
+    echo "Run it by hand: \`bun run harness:dirs\`."
+    echo
+  elif ! printf '%s' "$dirs_out" | grep -q '0 created\.'; then
+    echo "## Declared directories — created what was missing"
+    echo
+    echo '```'
+    printf '%s\n' "$dirs_out"
+    echo '```'
+    echo
+  fi
+fi
+
 # ── 4. Recommended action (generic) ─────────────────────────────────────────
 cat <<'EOF'
 **Recommended action:**

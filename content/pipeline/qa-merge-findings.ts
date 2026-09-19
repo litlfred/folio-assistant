@@ -39,6 +39,7 @@ import {
   loadQaReport,
   saveQaReport,
   readBlockManifest,
+  insertAdjudication,
 } from "./qa-utils";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 import type {
@@ -229,7 +230,9 @@ function run(): void {
     if (f.notes) entry.notes = f.notes;
 
     const existing = report.criteria[f.criterion] ?? [];
-    report.criteria[f.criterion] = [...existing, entry];
+    // Leads the criterion rather than appending: order IS the verdict here.
+    // Rationale and the measurement in `insertAdjudication`.
+    report.criteria[f.criterion] = insertAdjudication(existing, entry);
     report.updated_at = nowIso;
     saveQaReport(qaPath, report);
     added++;
