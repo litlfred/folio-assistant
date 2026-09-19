@@ -243,13 +243,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T17:23:29.178Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ce864bb80146a99831ddf3021c9245cf92d964b7",
-  "sourceCommitSha": "ce864bb80146a99831ddf3021c9245cf92d964b7",
-  "sourceCommitAt": "2026-09-19T19:21:44+02:00",
+  "generatedAt": "2026-09-19T18:32:04.729Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/dcaee4fd13f582126036e9f7c00fdc6ec3306f85",
+  "sourceCommitSha": "dcaee4fd13f582126036e9f7c00fdc6ec3306f85",
+  "sourceCommitAt": "2026-09-19T20:30:42+02:00",
   "sourceTreeDirty": false,
   "counts": {
-    "Skill": 168,
+    "Skill": 169,
     "Actor": 26,
     "Capability": 23,
     "Role": 100,
@@ -1143,6 +1143,21 @@
       ],
       "instructionsPath": "skills/folio-core/content-profiles.md",
       "instructionLines": 96,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/platform-gates",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "platform-gates",
+      "title": "The platform's own gates — run what CI will run",
+      "description": "`bun test` passing is not the gates passing. What to run before you push, why the list is derived from the CI workflow rather than written down, and what a `*:check` failure is actually telling you to do.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/platform-gates.md",
+      "instructionLines": 148,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -3820,6 +3835,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/pickup",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/placement",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/platform-gates",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/process-state",
@@ -15079,7 +15095,9 @@
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CodeChangeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent",
-      "implementedBy": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/platform-gates"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -19243,6 +19261,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/issue-working",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/normative-statements",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/placement",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/platform-gates",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/semantic-review-scoping",
@@ -19649,8 +19668,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "ce864bb80146a99831ddf3021c9245cf92d964b7",
+    "sha": "dcaee4fd13f582126036e9f7c00fdc6ec3306f85",
     "pr": "main",
-    "run": "35457853158"
+    "run": "35461430266"
   }
 }
