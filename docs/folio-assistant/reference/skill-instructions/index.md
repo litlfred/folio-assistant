@@ -62,6 +62,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [bib-photo-ingestion-watcher](bib-photo-ingestion-watcher.html) | `bib-photo-ingestion-watcher` | — | The automation half of the [`bib-human-review`](bib-human-review.md) workflow. |
 | [Bibliography QA](bib-qa.html) | `bib-qa` | — | cd content && bun run pipeline/bib-qa.ts --check-urls |
 | [Block Density](block-density.html) | `block-density` | — |  |
+| [Processes are BPMN, and the diagrams are executable](bpmn-processes.html) | `bpmn-processes` | — | **The `.bpmn` file is the source of truth.** The rendered SVGs are generated — |
 | [/canonical-watcher](canonical-watcher.html) | `canonical-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [Chapter Complexity Review](chapter-complexity-review.html) | `chapter-complexity-review` | — |  |
 | [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |

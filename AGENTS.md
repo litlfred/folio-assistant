@@ -52,7 +52,7 @@ are thin stubs pointing here.
 > dependency's skills are not yet reachable. Wiring it is outstanding Phase 0.1
 > work.
 >
-> Start here: [`docs/guides/agent-onboarding.md`](docs/guides/agent-onboarding.md),
+> Start here: [`docs/folio-assistant/guides/agent-onboarding.md`](docs/folio-assistant/guides/agent-onboarding.md),
 > then ask for the skill that governs your task.
 
 > **folio-assistant is the platform, not the content.** It holds the skills,
@@ -64,7 +64,7 @@ are thin stubs pointing here.
 
 ## New here? Start with the onboarding guide
 
-**[`docs/guides/agent-onboarding.md`](docs/guides/agent-onboarding.md)** — the
+**[`docs/folio-assistant/guides/agent-onboarding.md`](docs/folio-assistant/guides/agent-onboarding.md)** — the
 orientation this file is not. Which repo you are in and why it matters, what to
 run in your first five minutes, how to find the right skill instead of
 improvising one, the content-object triple, the two dependency relations, beans,
@@ -163,7 +163,7 @@ These were `.beans/` and `.harness/workflow/` until 2026-09-18 (beans `8xzw`,
 `x89g`) — the two artefacts a person looks for first were the two hardest to
 find. `.harness/` still holds `interaction.json` and `issue-comments/`; only the
 workflow state moved. Option A of
-[`docs/proposals/workflow-state-in-beans.md`](docs/proposals/workflow-state-in-beans.md):
+[`docs/folio-assistant/proposals/workflow-state-in-beans.md`](docs/folio-assistant/proposals/workflow-state-in-beans.md):
 the criticism it carried there ("two places to look") was never about two
 stores, but about two *hidden* ones.
 
@@ -489,65 +489,23 @@ to spend the words: **do not start the topic.**
   (agent/human) plus the mechanical `uses` QA axis.
 - Lean tooling roadmap (Lean Atlas / Compass, Nazrin, refactor cluster,
   LeanDojo) — where each earns a place and how it wires into existing skills:
-  `docs/proposals/llm-authoring-tool-integration.md`.
-- **Every process in this repo is BPMN** — six `.bpmn` files under
-  `skills/workflows/`, indexed by `docs/publication-workflow.md`. Read that page
-  before changing how a proposed edit is validated, who approves what, or where
-  beans are claimed: it is the normative picture of the HCI validation gate
-  (mechanical + non-mechanical), the draft-review-publish path, and the work-plan
-  lane. Three are content-agnostic (`editing-hci-validation`,
-  `draft-to-publication`, `content-lifecycle`); three are per content type
-  (`authoring-a-paper`, `l2-dak-authoring`, `l3-fhir-pipeline`).
-  **The `.bpmn` is the source of truth**; `docs/assets/img/workflows/*.svg` is
-  generated — run `bun run render:bpmn` after editing one, and
-  `bun run render:bpmn:check` fails if an SVG is stale. Each activity carries a
-  `<folio:skill ref="…"/>` extension naming the skill that implements it, and
-  `<folio:bean store="beans/"/>` where it touches the work plan — add both when
-  you add an activity.
-  **Adding a diagram:** if it has actors, activities and a control flow, it is a
-  process — author it as BPMN under `skills/workflows/`, not as a Mermaid fence.
-  Mermaid stays for the things that are *not* processes (component maps, the
-  role-inheritance lattice, the docs navigation graph); the audit of which is
-  which is in `docs/publication-workflow.md`.
-- **The diagrams are executable** — `workflow_list` / `workflow_start` /
-  `workflow_next` / `workflow_complete` (MCP) run a process from
-  `skills/workflows/*.bpmn`. `workflow_next` tells you what is enabled **now**,
-  which lane owns it and which skill implements it; `workflow_complete` refuses
-  a step that is not enabled, so work cannot be claimed out of order. State is
-  committed under `beans/workflows/`, like beans, so a sibling session sees it.
-  **The base processes are STRICT.** `editing-hci-validation`,
-  `draft-to-publication` and `content-lifecycle` carry
-  `<folio:policy enforcement="strict"/>`: `workflow_gate` refuses a step that is
-  not enabled. The per-content-type processes are `advisory` — their package
-  owns what adequate means in that domain. Absent policy means strict.
-  **To relax a base step**, declare it in `skills/<package>/workflow-policy.json`
-  with a **reason** — no reason, no load — and never a step marked
-  `relaxable="false"` (`Task_ReviewFindings`, `Gateway_EditorDecision`,
-  `Task_Commit`, `Task_AuthorizeRelease`, `Task_PublishRelease`: the editor
-  seeing the findings, the decision, the write, and release authorisation).
-  `bun run check:workflow-policy` validates every relaxation and runs in CI.
-  Rationale: `docs/proposals/workflow-orchestration.md` §4.
-  **The commit boundary enforces it.** `scripts/check-corpus-gate.ts`, run in a
-  folio repo from a pre-commit hook or CI, refuses a changed block that no
-  instance records the editor having authorised — no instance, not past the
-  decision, or discarded. It refuses when it cannot tell, too: a file that reads
-  as a manifest but will not import is refused rather than waved through.
-  `.qa.json` is excluded (the sweep writes it). Use `--warn` to adopt gradually.
-  **Some gateways are computed, not chosen.** One carrying `<folio:decision/>`
-  is backed by a DMN table in `skills/workflows/decisions/`: pass `facts` (e.g.
-  `{ failCritical: 0, failMajor: 2 }` from `qa_sweep` totals) and the table
-  returns the branch. `workflow_complete` refuses a hand-supplied `outcome`
-  there — asserting the answer would defeat the point. Adding one means adding
-  the `.dmn`, the `folio:decision` ref, and nothing else: the loader checks
-  every outcome the table can return names a real branch.
-  **Bean-marked steps are the bean operation, not a note about it.** An activity
-  with `<folio:bean op="claim|note|resolve"/>` performs it on the instance's bean
-  when you complete the step: `claim` sets `in-progress` (idempotent), `note`
-  appends what you pass as `note`, and `resolve` completes the bean **only once
-  the instance itself has completed** — a still-running process gets a note,
-  because whether work is done is a judgement and `AGENTS.md` says a bean is not
-  closed on someone else's say-so. `work_plan_prime` reports every instance's
-  position next to its bean, so the plan and the process are one answer.
+  [issue #198](https://github.com/litlfred/folio-assistant/issues/198).
+- **Every process here is BPMN, and the diagrams are executable.** The `.bpmn`
+  files under `skills/workflows/` are the source of truth, indexed by
+  [`docs/folio-assistant/publication-workflow.md`](docs/folio-assistant/publication-workflow.md) — the normative
+  picture of the HCI validation gate, the draft-review-publish path and the
+  work-plan lane. `docs/folio-assistant/assets/img/workflows/*.svg` is
+  generated: `bun run render:bpmn`, and `render:bpmn:check` fails if stale.
+  `workflow_list` / `workflow_start` / `workflow_next` / `workflow_complete`
+  (MCP) run one, and state is committed under `beans/workflows/` so a sibling
+  session sees the same position.
+  **The discipline is in the skill, not here** —
+  [`bpmn-processes`](skills/folio-core/bpmn-processes.md) carries how to author
+  an activity (`<folio:skill ref>` and `<folio:bean>`, both required), strict
+  vs advisory and the four steps no package may relax, the commit-boundary
+  corpus gate and why it refuses when it cannot tell, DMN-backed gateways and
+  why a hand-supplied outcome is refused, and what a bean-marked step actually
+  performs. Rationale: [issue #200](https://github.com/litlfred/folio-assistant/issues/200).
 - **Process state, blocking, and swarms are skills, not rules here.** An agent
   holds nested state — a task, inside a process instance, under a role that owns
   a swimlane — and the five detectors for "you are out of process", plus the
@@ -560,7 +518,7 @@ to spend the words: **do not start the topic.**
   A swarm is **asked for every time**, per swarm, with agent count, model level
   and rough cost —
   [`skills/folio-core/swarm-management.md`](skills/folio-core/swarm-management.md)
-  and the [reader-facing page](docs/swarm-management.md).
+  and the [reader-facing page](docs/folio-assistant/swarm-management.md).
 - **An instance declares the directories it scans — `harness.json` at
   the repo root.** Each entry names a directory and the **kind of graph** it
   holds: `folio` (authored content, rendered to a website by just-the-docs),
@@ -579,7 +537,7 @@ to spend the words: **do not start the topic.**
   pre-split and declares `schemas/` and `skills/` only. Schema:
   `schemas/cat-harness.ts`; conventions:
   [`skills/folio-core/directory-conventions.md`](skills/folio-core/directory-conventions.md).
-- Migration plan + cross-repo coordination: `docs/folio-assistant-migration.md`.
+- Migration plan + cross-repo coordination: `docs/folio-assistant/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this
   folio's **content-type-specific** gates (paper → content_validate / qa_sweep /
