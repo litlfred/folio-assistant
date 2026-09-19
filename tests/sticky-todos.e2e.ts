@@ -31,6 +31,13 @@ const ITEMS = [
     origin: "agent",
     createdAt: "2026-09-19",
     tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
+    relations: [
+      { axis: "who", label: "github:litlfred", href: "https://github.com/litlfred" },
+      { axis: "bean", label: "folio-assistant-29ij", href: "https://github.com/litlfred/folio-assistant/blob/main/beans/defs/x.md" },
+      { axis: "PR", label: "#314", href: "https://github.com/litlfred/folio-assistant/pull/314" },
+      // Deliberately unresolvable: a bean nothing on disk carries.
+      { axis: "bean", label: "folio-assistant-gone" },
+    ],
     editHref: "https://github.com/litlfred/folio-assistant/edit/main/todos/items/first-todo.md",
   },
   {
@@ -131,6 +138,39 @@ test("a todo with no body says so rather than opening blank", async ({ page }) =
   const second = page.locator(".fa-sticky").nth(1);
   await second.locator(".fa-sticky-toggle").click();
   await expect(second.locator(".fa-sticky-empty")).toHaveText("No detail recorded.");
+});
+
+test("a sticky shows its knowledge-graph edges, each as axis + label", async ({ page }) => {
+  // The point of a six-axis relationship model is that a reader can SEE the
+  // edges. A card showing only status and priority spends the whole schema on
+  // two enums — which is what this rendered before the owner pointed it out.
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const rels = page.locator(".fa-sticky").first().locator(".fa-sticky-rel");
+  await expect(rels).toHaveCount(4);
+  await expect(rels.nth(0).locator(".fa-sticky-rel-axis")).toHaveText("who");
+  await expect(rels.nth(0).locator("a")).toHaveAttribute("href", "https://github.com/litlfred");
+  await expect(rels.nth(2).locator("a")).toHaveAttribute(
+    "href",
+    "https://github.com/litlfred/folio-assistant/pull/314",
+  );
+});
+
+test("an edge that resolves to nothing is SHOWN, not dropped", async ({ page }) => {
+  // A dangling reference and no reference at all are different facts. Dropping
+  // the first makes it look like the second, and the reader never learns the
+  // todo points at something this site could not reach.
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const dangling = page.locator(".fa-sticky").first().locator(".fa-sticky-rel-dangling");
+  await expect(dangling).toHaveText("folio-assistant-gone");
+  await expect(dangling).toHaveAttribute("title", /No link/);
+  // Read as text, never as a link that goes nowhere.
+  expect(await page.locator(".fa-sticky").first().locator("a[href='']").count()).toBe(0);
 });
 
 test("the pencil is `.fa-node-edit` pointing at the todo's own file", async ({ page }) => {

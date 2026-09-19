@@ -456,6 +456,78 @@ for (const slug of slugs) {
   console.log(`  ${check ? "·" : "✓"} ${slug}.md (${page.nodes.length} nodes)`);
 }
 
+/**
+ * Resolve a todo's knowledge-graph edges to things a reader can follow.
+ *
+ * Composed at BUILD time, like `editHref` and for the same reason: the client
+ * would otherwise need the repo's web URL and the bean store's layout, and
+ * both are this instance's business rather than shared client code's.
+ *
+ * **A reference that cannot be resolved is still rendered, without a link.**
+ * `folio-assistant-29ij` names a bean whether or not a file for it is on disk,
+ * and dropping it would make a dangling edge look like no edge at all — the
+ * distinction `resolveTodoTags` already reports as `dangling` against
+ * `not-checked`. A chip with no href says "this points somewhere I could not
+ * reach", which is a third state and not a failure.
+ */
+function todoRelations(tags: {
+  roles: string[];
+  processes: string[];
+  tasks: Array<{ process: string; task: string }>;
+  identities: Array<{ provider: string; id: string; displayName?: string }>;
+  references: Array<{ kind: string; id: string }>;
+  artefacts: Array<{ kind: string; id: string; repo?: string; provider?: string }>;
+}): Array<{ axis: string; label: string; href?: string }> {
+  const out: Array<{ axis: string; label: string; href?: string }> = [];
+
+  for (const r of tags.roles) out.push({ axis: "role", label: r });
+  for (const p of tags.processes) out.push({ axis: "process", label: p });
+  for (const t of tags.tasks) out.push({ axis: "task", label: `${t.process}▸${t.task}` });
+
+  for (const i of tags.identities) {
+    // Provider-qualified, because `litlfred` is not an identity and
+    // `github:litlfred` is. Only GitHub resolves to a profile; another
+    // provider's handle is shown as written rather than linked to a guess.
+    const label = i.displayName ?? `${i.provider}:${i.id}`;
+    out.push(
+      i.provider === "github"
+        ? { axis: "who", label, href: `https://github.com/${i.id}` }
+        : { axis: "who", label },
+    );
+  }
+
+  for (const r of tags.references) {
+    if (r.kind === "bean") {
+      const file = beanFile(r.id);
+      out.push(file ? { axis: "bean", label: r.id, href: `${REPO_WEB}/blob/main/${file}` }
+                    : { axis: "bean", label: r.id });
+      continue;
+    }
+    out.push({ axis: r.kind, label: r.id });
+  }
+
+  for (const a of tags.artefacts) {
+    // An absent `repo` means THIS repository -- the schema says so, because
+    // requiring it would make every local reference verbose enough that people
+    // go back to writing prose.
+    const base = a.repo ? `https://github.com/${a.repo}` : REPO_WEB;
+    if (a.kind === "pull-request") out.push({ axis: "PR", label: `#${a.id}`, href: `${base}/pull/${a.id}` });
+    else if (a.kind === "issue") out.push({ axis: "issue", label: `#${a.id}`, href: `${base}/issues/${a.id}` });
+    else if (a.kind === "commit") out.push({ axis: "commit", label: a.id.slice(0, 9), href: `${base}/commit/${a.id}` });
+    else out.push({ axis: a.kind, label: a.id });
+  }
+
+  return out;
+}
+
+/** The bean's file, or `undefined` when nothing on disk carries that id. */
+function beanFile(id: string): string | undefined {
+  const dir = join(REPO_ROOT, "beans", "defs");
+  if (!existsSync(dir)) return undefined;
+  const hit = readdirSync(dir).find((f) => f.startsWith(`${id}--`) || f === `${id}.md`);
+  return hit ? `beans/defs/${hit}` : undefined;
+}
+
 // The todo board's data. Published here rather than by a separate script
 // because it is the same job `qaIcons` already does for verdicts: take
 // something the repo holds as files and make it fetchable by a static page.
@@ -472,7 +544,11 @@ for (const slug of slugs) {
     priority: todo.priority,
     origin: todo.origin,
     createdAt: todo.createdAt,
+    targetLabel: todo.targetLabel,
     tags: todo.tags,
+    // The edges, already resolved. A sticky that showed only status and
+    // priority would waste a six-axis relationship model on two enums.
+    relations: todoRelations(todo.tags),
     // The SAME affordance every node already gets, pointed at this todo's own
     // file. A sticky is a content object; it does not need an editor of its own.
     editHref: `${EDIT_BASE}/${path}`,

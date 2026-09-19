@@ -324,6 +324,13 @@ test.describe("the sticky todo board", () => {
       id: "a", summary: "Decide the thing", comment: "Some detail.",
       status: "open", priority: "high", origin: "agent", createdAt: "2026-09-19",
       tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
+      // Relations must be PRESENT here or the axe runs below are green over
+      // chips that never rendered. Silence is not success.
+      relations: [
+        { axis: "who", label: "github:litlfred", href: "https://example.invalid/u" },
+        { axis: "PR", label: "#314", href: "https://example.invalid/pr/314" },
+        { axis: "bean", label: "unresolvable-bean" },
+      ],
       editHref: "https://example.invalid/edit/main/todos/items/a.md",
     },
     {

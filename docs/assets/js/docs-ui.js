@@ -1021,6 +1021,37 @@
     chips.appendChild(el("span", { class: "fa-sticky-chip fa-sticky-prio" }, todo.priority));
     head.appendChild(chips);
 
+    // The EDGES. A todo carries six relationship axes -- who it is for, which
+    // lane and process and task it sits in, what it points at in the knowledge
+    // graph, and which issues, PRs and commits it concerns -- and a sticky that
+    // showed only `status` and `priority` would waste all of it on two enums.
+    //
+    // Each edge is resolved to an href at BUILD time where one exists. An edge
+    // that could not be resolved is still shown, as a chip with no link: a
+    // dangling reference and no reference at all are different facts, and
+    // dropping the first makes it look like the second.
+    var rels = todo.relations || [];
+    if (rels.length) {
+      var relBox = el("ul", { class: "fa-sticky-rels", "aria-label": "Related" });
+      for (var r = 0; r < rels.length; r++) {
+        var rel = rels[r];
+        var li = el("li", { class: "fa-sticky-rel" });
+        li.appendChild(el("span", { class: "fa-sticky-rel-axis" }, rel.axis));
+        if (rel.href) {
+          li.appendChild(el("a", { class: "fa-sticky-rel-link", href: rel.href }, rel.label));
+        } else {
+          // Title says WHY there is no link, so a reader is not left guessing
+          // whether the chip is broken or the target simply is not reachable.
+          li.appendChild(el("span", {
+            class: "fa-sticky-rel-dangling",
+            title: "No link: nothing on this site resolves " + rel.label,
+          }, rel.label));
+        }
+        relBox.appendChild(li);
+      }
+      head.appendChild(relBox);
+    }
+
     var tools = el("div", { class: "fa-sticky-tools" });
     // The SAME affordance every node on this site already has, pointed at this
     // todo's own file. `editHref` is composed at build time.

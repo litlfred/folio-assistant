@@ -1696,3 +1696,35 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 @media (prefers-reduced-motion: no-preference) {
   .fa-sticky-floating { transition: box-shadow 120ms ease; }
 }
+
+/* A sticky's knowledge-graph edges. Each is `axis: label`, because a bare
+ * `#314` or `folio-assistant-29ij` is opaque without the word that says what
+ * kind of thing it is. */
+.fa-sticky-rels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fa-sticky-rel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.1em 0.5em;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.fa-sticky-rel-axis { opacity: 0.75; text-transform: lowercase; }
+
+/* A dangling edge is dashed and italic, NOT hidden and NOT greyed to the point
+ * of illegibility. It points somewhere real that this site cannot reach, which
+ * is a third state — the reader should be able to read the id and go looking. */
+.fa-sticky-rel-dangling {
+  border-bottom: 1px dashed currentColor;
+  font-style: italic;
+}
