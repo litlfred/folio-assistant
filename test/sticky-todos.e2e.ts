@@ -205,15 +205,98 @@ test("pin lifts a sticky onto the page and greys its board slot", async ({ page 
   await expect(recall).not.toBeDisabled();
 });
 
-test("closing a pinned sticky returns it to the board", async ({ page }) => {
+/**
+ * REWRITTEN for bean `d1r6`. This test was "closing a pinned sticky returns
+ * it to the board", and the owner replaced that control with a discard:
+ * *"stikies have an [x] to close/restore to panel... that should now be
+ * replaced with it going into the fsh-guts."*
+ *
+ * It kept passing against the new behaviour, and the way it did is worth
+ * recording. It asserted `.fa-sticky-slot").first()` was not floating — and
+ * the discard REMOVES that slot, so `.first()` silently retargeted to the
+ * NEXT todo's slot, which had never floated. Two items in the fixture was
+ * all it took. A locator that matches a different element after the change
+ * is not a passing test, and it is harder to spot than a vacuous one
+ * because the count is not zero.
+ *
+ * Measured: 2 slots before, 1 after.
+ */
+test("discarding a pinned sticky takes it off the page AND off the board", async ({ page }) => {
   await page.goto(PAGE_URL);
   await page.locator(".fa-qr-toggle").click();
   await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await expect(page.locator(".fa-sticky-slot")).toHaveCount(2);
   await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
 
-  await page.locator(".fa-sticky-layer .fa-sticky-close").click();
+  await page.locator(".fa-sticky-layer .fa-sticky-discard").click();
   await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(0);
-  await expect(page.locator(".fa-sticky-slot").first()).not.toHaveClass(/fa-sticky-slot-floating/);
+  // The COUNT, not `.first()`: that is the assertion the old test should
+  // have made, and the one that would have caught this change.
+  await expect(page.locator(".fa-sticky-slot")).toHaveCount(1);
+});
+
+test("the discard control says where it goes, and that it comes back", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  const discard = page.locator(".fa-sticky").first().locator(".fa-sticky-discard");
+  const name = (await discard.getAttribute("aria-label")) ?? "";
+  // A crumpled icon with no words is a guess. "Close" said neither where it
+  // went nor that it was reversible.
+  expect(name).toContain("Discard");
+  expect(name).toContain("trashcan");
+  expect(name).toContain("restorable");
+  // The limitation is in the name too: a reader who thinks they cleared a
+  // todo for the team has been misled by the control.
+  expect(name).toContain("this browser only");
+});
+
+test("a discarded sticky is RESTORABLE — the rule the crumpled icon stands for", async ({ page }) => {
+  // `fsh-guts` is "the trashcan that is kept": a thing in it can be read,
+  // cited and restored. A one-way dismiss would wear the icon and break the
+  // rule it stands for.
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await page.locator(".fa-sticky").first().locator(".fa-sticky-discard").click();
+  await expect(page.locator(".fa-sticky-slot")).toHaveCount(1);
+
+  // It is listed under Settings → Discarded, in its own labelled section.
+  //
+  // This harness publishes NO `fsh-guts` document, which is the case the
+  // control has to survive: a site that has not deployed one yet still owes
+  // the reader a way back. The first version of this feature removed the
+  // control entirely when the document was absent, which made the discard
+  // one-way — a delete wearing a crumpled icon. This test is what found it.
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator('.fa-tiles-grid .fa-tile:has(.fa-tile-caption:text-is("Settings"))').click();
+  await page.locator(".fa-discarded-open").click();
+  const local = page.locator(".fa-discarded-local");
+  await expect(local).toContainText("1 todo you discarded");
+  // Stated in WORDS, not by colour or placement.
+  await expect(local).toContainText("this browser only");
+  await local.locator(".fa-discarded-restore").click();
+
+  // Back on the board after a reload, which is what "restored" has to mean.
+  await page.reload();
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await expect(page.locator(".fa-sticky-slot")).toHaveCount(2);
+});
+
+test("a discard survives a reload, and the tile count follows it", async ({ page }) => {
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await page.locator(".fa-sticky").first().locator(".fa-sticky-discard").click();
+
+  await page.reload();
+  await page.locator(".fa-qr-toggle").click();
+  const tile = page.locator(".fa-tile", { hasText: "Todos" });
+  // The count is what a reader sees before opening anything, so a discard
+  // that did not move it would read as having done nothing.
+  await expect(tile.locator(".fa-tile-count")).toHaveText("1");
+  await expect(tile).toHaveAttribute("aria-label", "Todos — 1 outstanding");
 });
 
 test("clicking the greyed slot also returns it", async ({ page }) => {
@@ -372,6 +455,7 @@ test.describe("todos attached to a block", () => {
     const first = page.locator(".fa-sticky-inline-list .fa-sticky").first();
     await expect(first.locator(".fa-sticky-pin")).toHaveCount(0);
     await expect(first.locator(".fa-sticky-close")).toHaveCount(0);
+    await expect(first.locator(".fa-sticky-discard")).toHaveCount(0);
     // But it keeps the edit affordance, which is the point of the pencil.
     await expect(first.locator("a.fa-node-edit")).toHaveCount(1);
   });

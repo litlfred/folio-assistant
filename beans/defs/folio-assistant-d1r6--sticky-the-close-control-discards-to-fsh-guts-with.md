@@ -1,11 +1,11 @@
 ---
 # folio-assistant-d1r6
 title: 'STICKY: the close control discards to fsh-guts, with a crumpled-sticky icon'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T11:08:23Z
-updated_at: 2026-09-19T12:24:54Z
+updated_at: 2026-09-19T13:25:33Z
 parent: folio-assistant-o3xy
 ---
 
@@ -70,3 +70,44 @@ work — and which `check-bean-parents` correctly refuses: a feature cannot
 parent a feature, and the roadmap needs an epic. The relationship is recorded
 here because the hierarchy can no longer carry it: **this depends on `t0i3`,
 which is where the store and its JSON-LD endpoint live.**
+
+
+## Implemented
+
+The sticky's `×` is now a crumpled-sticky **discard**. The old job — docking a
+floating sticky — survives on the greyed board slot, which is already a real
+button, so nothing is stranded.
+
+### What "into the fsh-guts" can mean on a static site
+
+The published `fsh-guts.jsonld` is built from the repository; a page cannot
+write to it. So a discard is **per-viewer, in `localStorage`**, and the UI says
+so in words wherever a discarded item appears. A reader who thinks they cleared
+a todo for the team has been misled by the control, which is a worse failure
+than not having it.
+
+**It is restorable**, because that is the rule the crumpled icon stands for:
+`fsh-guts` is the trashcan that is KEPT. Discarded stickies are listed under
+Settings → Discarded, in their own labelled section, each with Restore.
+
+### Two real bugs the specs found, both the same shape
+
+1. **The control vanished when no `fsh-guts` document was published** — so on
+   any folio that has not deployed one, a discard was one-way. A delete
+   wearing a crumpled icon.
+2. **`buildViews()` runs when the LAUNCHER opens and caches forever**, so a
+   reader who opened the launcher, discarded a sticky, then opened Settings
+   found no way back until they reloaded. Now repainted on
+   `fa:todos-discarded`.
+
+Both are the never-delete rule failing through a mechanism rather than a
+decision, which is the way it is most likely to fail again.
+
+### A stale test that passed for the wrong reason
+
+`"closing a pinned sticky returns it to the board"` kept passing against the
+new behaviour: it asserted `.fa-sticky-slot").first()` was not floating, and
+the discard removes that slot, so `.first()` silently retargeted to the NEXT
+todo's slot, which had never floated. Two fixture items was all it took.
+Measured 2 slots before, 1 after. Rewritten to assert the COUNT, which is what
+would have caught it.
