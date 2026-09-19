@@ -305,6 +305,14 @@ const RULES: Rule[] = [
       // declaration in a file is grammar; what you then DO with it (Atlas
       // ingestion, triviality probing, coverage tables) is the science layer.
       "content/pipeline/lean-lexer.ts",
+      // Where a witness lives and whether one is there. Same test a third
+      // time: `export-json.ts` is the GENERIC exporter and emits `witnessed`
+      // for every block carrying a `lean` field, so hashing the file and
+      // looking for the sibling travels with the field. Producing and
+      // invalidating witnesses stays in `scripts/lean-witness.ts`, which is
+      // sci. Named for `witness`, which the sci keyword rule would otherwise
+      // claim — hence the explicit entry.
+      "content/pipeline/witness-address.ts",
     ],
   },
 

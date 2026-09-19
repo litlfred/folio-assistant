@@ -35,7 +35,7 @@ import {
 } from "./references-registry-di";
 import { findContentRepoRoot, findPapers, soleFolioPaper } from "./repo-root";
 import { mergeCitations } from "./citations";
-import { isWitnessed } from "../../scripts/lean-witness";
+import { isWitnessed } from "./witness-address";
 import { leanPackageByName, parseLeanRef } from "../../schemas/lean-packages";
 
 // The FOLIO's root, not the platform's. `resolve(import.meta.dir, "../..")`
