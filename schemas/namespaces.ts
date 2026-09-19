@@ -36,6 +36,7 @@
  * cannot drag a vocabulary into a module that only wanted a string.
  *
  * @module schemas/namespaces
+ * @graphNode none — a single IRI constant, not a schema
  */
 
 /**

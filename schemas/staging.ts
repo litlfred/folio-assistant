@@ -22,6 +22,7 @@
  * ```
  *
  * @module schemas/staging
+ * @graphNode schema
  */
 
 import { z } from "zod";
